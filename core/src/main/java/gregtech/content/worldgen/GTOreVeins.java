@@ -82,7 +82,7 @@ public final class GTOreVeins {
         return append(GTWorldgenDefaults.STONE_LAYERS ? List.of() : OVERWORLD_VEINS, AddonOreVeins.overworldVeins());
     }
 
-    /** Built-in End veins, then addon End veins. Selection uses the sum of this list. */
+    /** Built-in End veins, then addon End veins. Selection also includes the reserved empty weight. */
     public static List<OreVein> activeEndVeins() {
         return append(END_VEINS, AddonOreVeins.endVeins());
     }
@@ -158,16 +158,26 @@ public final class GTOreVeins {
 
     /**
      * GT6's {@code ORE_END} veins in registration order. §51 added the three shared ones
-     * (platinum, molybdenum, cassiterite) — they carry exactly the overworld parameters.
+     * (platinum, molybdenum, cassiterite). End cassiterite and trinium weights are reduced
+     * to 17/290 and 10/290; the removed weight is reserved for empty grid cells.
      */
     public static final List<OreVein> END_VEINS = List.of(
         new OreVein("platinum",    40, 50, 5,   3, 16, gregtech.content.material.generated.OreMaterials.Cooperite, Materials.Palladium,                                                       gregtech.content.material.generated.OreMaterials.Sperrylite, Materials.Iridium),
         new OreVein("molybdenum",  20, 50, 5,   3, 16, gregtech.content.material.generated.OreMaterials.Wulfenite, gregtech.content.material.generated.OreMaterials.Molybdenite, Materials.Molybdenum,                                                     gregtech.content.material.generated.OreMaterials.Powellite),
-        new OreVein("cassiterite", 40, 90, 170, 5, 24, gregtech.content.material.generated.OreMaterials.Stannite,  gregtech.content.material.generated.OreMaterials.Kesterite,   gregtech.content.material.generated.OreMaterials.Huebnerite, gregtech.content.material.generated.OreMaterials.Cassiterite),
+        new OreVein("cassiterite", 40, 90, 17, 5, 24, gregtech.content.material.generated.OreMaterials.Stannite,  gregtech.content.material.generated.OreMaterials.Kesterite,   gregtech.content.material.generated.OreMaterials.Huebnerite, gregtech.content.material.generated.OreMaterials.Cassiterite),
         new OreVein("naquadah",    10, 60, 10,  4, 32, Materials.Naquadah,                                                      Materials.Naquadah,                                                        Materials.Naquadah,                                                       Materials.Naquadah),
-        new OreVein("trinium",     10, 90, 100, 1, 12, Materials.Trinium,                                                       Materials.Trinium,                                                         Materials.Trinium,                                                        Materials.Trinium)
+        new OreVein("trinium",     10, 90, 10, 1, 12, Materials.Trinium,                                                       Materials.Trinium,                                                         Materials.Trinium,                                                        Materials.Trinium)
     );
-    public static final int TOTAL_END_VEIN_WEIGHT = END_VEINS.stream().mapToInt(OreVein::weight).sum();
+    /** Reduced End vein weights remain empty rolls instead of increasing the other veins. */
+    public static final int END_EMPTY_VEIN_WEIGHT = (170 - 17) + (100 - 10);
+    public static final int TOTAL_END_VEIN_WEIGHT = endSelectionWeight(END_VEINS);
+
+    /** Shared by world generation and both recipe viewers, including addon weights. */
+    public static int endSelectionWeight(List<OreVein> veins) {
+        int total = END_EMPTY_VEIN_WEIGHT;
+        for (OreVein vein : veins) total = Math.addExact(total, vein.weight());
+        return total;
+    }
 
     /** GT6 small ores flagged {@code GEN_NETHER}. */
     public static final List<SmallOre> NETHER_SMALL_ORES = List.of(

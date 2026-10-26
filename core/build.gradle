@@ -50,7 +50,8 @@ def centrifugeContracts = tasks.register('centrifugeContracts', JavaExec) {
 }
 tasks.named('check').configure { dependsOn centrifugeContracts }
 
-['configContracts': 'gregtech.util.ConfigContracts',
+['endVeinContracts': 'gregtech.content.worldgen.EndVeinContracts',
+ 'configContracts': 'gregtech.util.ConfigContracts',
  'coverContracts': 'gregtech.content.cover.CoverGeometryContracts',
  'potionBottlingContracts': 'gregtech.content.fluid.PotionBottlingContracts',
  'moldChiselContracts': 'gregtech.content.recipe.MoldChiselContracts',

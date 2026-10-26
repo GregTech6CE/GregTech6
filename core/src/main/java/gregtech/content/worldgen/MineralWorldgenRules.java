@@ -8,6 +8,16 @@ public final class MineralWorldgenRules {
     private MineralWorldgenRules() {
     }
 
+    /** Zero-based weighted draw. A roll beyond all real weights represents an empty cell. */
+    public static GTOreVeins.OreVein selectVein(java.util.List<GTOreVeins.OreVein> veins, int roll) {
+        if (roll < 0) throw new IllegalArgumentException("Negative ore vein roll");
+        for (var vein : veins) {
+            if (roll < vein.weight()) return vein;
+            roll -= vein.weight();
+        }
+        return null;
+    }
+
     public record Point(int x, int z) {
     }
 
