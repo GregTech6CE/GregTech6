@@ -36,10 +36,10 @@ public final class CanvasCoverRenderer {
         int rgb=quad.isTinted()?client.getBlockColors().getColor(state,level,pos,quad.getTintIndex()):0xffffff;
         return new Face(quad.getSprite(),rgb,state.getLightEmission()>0);
     }
-    public static void render(ItemStack stack,Direction side,PoseStack pose,MultiBufferSource buffers,int light,BlockAndTintGetter level,BlockPos pos) {
+    public static void render(ItemStack stack,Direction side,PoseStack pose,MultiBufferSource buffers,int light,net.minecraft.world.level.block.entity.BlockEntity owner) {
         var canvas=(CanvasItem)stack.getItem();var vertices=buffers.getBuffer(RenderType.cutout());
-        CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,0,canvas.variant().rgb());
-        var image=imageFace(stack,side,level,pos);
-        if(image!=null)CoverSurfaceRenderer.draw(pose,buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent()),side,image.sprite(),image.bright()?LightTexture.FULL_BRIGHT:light,1,image.color());
+        CoverSurfaceRenderer.draw(owner,pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,0,canvas.variant().rgb());
+        var image=imageFace(stack,side,owner.getLevel(),owner.getBlockPos());
+        if(image!=null)CoverSurfaceRenderer.draw(image.bright()?null:owner,pose,buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent()),side,image.sprite(),image.bright()?LightTexture.FULL_BRIGHT:light,1,image.color());
     }
 }

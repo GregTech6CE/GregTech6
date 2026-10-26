@@ -82,12 +82,12 @@ public final class PanelCoverRenderer {
             var canvas=(gregtech.content.item.CanvasItem)stack.getItem();
             CoverSurfaceRenderer.attachment(owner,side,pose,buffers.getBuffer(RenderType.cutout()),
                     ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,canvas.variant().rgb());
-            CanvasCoverRenderer.render(stack,side,pose,buffers,light,level,owner.getBlockPos());return true;
+            CanvasCoverRenderer.render(stack,side,pose,buffers,light,owner);return true;
         }
         if(stack.getItem() instanceof gregtech.content.item.PanelItemView panel) {
             var spec=panel.panelSpec();var vertices=buffers.getBuffer(RenderType.cutout());
             CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),light,spec.tint());
-            CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),light,0,spec.tint());return true;
+            CoverSurfaceRenderer.draw(owner,pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),light,0,spec.tint());return true;
         }
         if(stack.getItem() instanceof gregtech.engine.material.MaterialFormItem material){
             var stone=MaterialCoverRules.stoneTextures(material.getPrefix().getName(),material.getMaterial().getName());
@@ -95,7 +95,7 @@ public final class PanelCoverRenderer {
                 var vertices=buffers.getBuffer(RenderType.cutout());
                 var sprite=ArmRenderHelper.getSprite(ResourceLocation.parse(stone.get(Math.floorMod(CoverUtilityBehaviors.design(stack),stone.size()))));
                 CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,sprite,light,-1);
-                CoverSurfaceRenderer.draw(pose,vertices,side,sprite,light,0);return true;
+                CoverSurfaceRenderer.draw(owner,pose,vertices,side,sprite,light,0);return true;
             }
             var textures=MaterialCoverRules.textures(material.getPrefix().getName());
             if(!textures.isEmpty()){
@@ -104,8 +104,8 @@ public final class PanelCoverRenderer {
                 String path="block/material_icons/"+set.folder()+"/"+file;
                 var vertices=buffers.getBuffer(RenderType.cutout());
                 CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path)),light,material.getMaterial().getColor());
-                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path)),light,0,material.getMaterial().getColor());
-                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"_overlay")),light,1);
+                CoverSurfaceRenderer.draw(owner,pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path)),light,0,material.getMaterial().getColor());
+                CoverSurfaceRenderer.draw(owner,pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"_overlay")),light,1);
                 if(CoverSurfaceRenderer.needsAttachment(host.coverOwner(),side))
                     CoverSurfaceRenderer.drawBack(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"_overlay")),light,1,-1);
                 return true;
@@ -115,7 +115,7 @@ public final class PanelCoverRenderer {
             var model=net.minecraft.client.Minecraft.getInstance().getItemRenderer().getModel(stack,host.coverOwner().getLevel(),null,0);
             var vertices=buffers.getBuffer(RenderType.cutout());
             CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,model.getParticleIcon(),light,net.minecraft.client.Minecraft.getInstance().getItemColors().getColor(stack,0));
-            CoverSurfaceRenderer.draw(pose,vertices,side,model.getParticleIcon(),light,0,net.minecraft.client.Minecraft.getInstance().getItemColors().getColor(stack,0));
+            CoverSurfaceRenderer.draw(owner,pose,vertices,side,model.getParticleIcon(),light,0,net.minecraft.client.Minecraft.getInstance().getItemColors().getColor(stack,0));
             return true;
         }
         var vc=buffers.getBuffer(RenderType.cutout());var matrix=pose.last().pose();
@@ -124,7 +124,7 @@ public final class PanelCoverRenderer {
         // attachment (pipe/wire) needs the backing plate and holder.
         if (CoverSurfaceRenderer.needsAttachment(owner,side)) {
             CoverSurfaceRenderer.attachment(owner,side,pose,vc,base,light,-1);
-            CoverSurfaceRenderer.draw(pose,vc,side,base,light,0);
+            CoverSurfaceRenderer.draw(owner,pose,vc,side,base,light,0);
         }
         var component=ComponentCoverRuntime.kind(stack);
         if(component!=null && CoverSurfaceRenderer.needsAttachment(owner,side)) {
@@ -134,7 +134,7 @@ public final class PanelCoverRenderer {
         int layer=1;
         for(String texture:layers(stack)){
             var sprite=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/"+texture));
-            CoverSurfaceRenderer.draw(pose,vc,side,sprite,light,layer++);
+            CoverSurfaceRenderer.draw(owner,pose,vc,side,sprite,light,layer++);
         }
         return true;
     }

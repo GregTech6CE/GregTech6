@@ -1,16 +1,13 @@
 package gregtech.client;
 
-import gregtech.content.cover.CoverFaceCoordinates;
 import gregtech.content.logistics.LogisticsCoverHost;
 import gregtech.content.logistics.LogisticsCoverType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -41,7 +38,7 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
             var base = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath(
                     "gt6ce", "block/machines/covers/logistics/base"));
             CoverSurfaceRenderer.attachment(blockEntity, side, pose, vertices, base, light, -1);
-            CoverSurfaceRenderer.draw(pose, vertices, side, base, light, 0);
+            CoverSurfaceRenderer.draw(blockEntity, pose, vertices, side, base, light, 0);
             if (type.role() == LogisticsCoverType.Role.DISPLAY) {
                 String name = switch (type) {
                     case CPU_LOGIC -> "cpu_logic";
@@ -51,8 +48,8 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
                     default -> throw new IllegalStateException("Unknown CPU display " + type);
                 };
                 String prefix = "block/machines/covers/logistics/display/" + name + "/";
-                drawSurface(pose, vertices, side, prefix + "underlay", surfaceOffset + .0006, light);
-                drawSurface(pose, vertices, side, prefix + host.logisticsCovers().displayVisual(side),
+                drawSurface(blockEntity, pose, vertices, side, prefix + "underlay", surfaceOffset + .0006, light);
+                drawSurface(blockEntity, pose, vertices, side, prefix + host.logisticsCovers().displayVisual(side),
                         surfaceOffset + .0008, light);
             } else {
                 var itemModel = Minecraft.getInstance().getItemRenderer().getModel(stack, blockEntity.getLevel(), null, 0);
@@ -62,40 +59,22 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
                 var icon = itemModel.getParticleIcon(net.minecraftforge.client.model.data.ModelData.EMPTY);
 //?}
                 // Bus items use their original flat icon as the outward-facing plate.
-                drawSurface(pose, vertices, side, icon, surfaceOffset + .0006, light);
+                drawSurface(blockEntity, pose, vertices, side, icon, surfaceOffset + .0006, light);
             }
         }
     }
 
-    private static void drawSurface(PoseStack pose, com.mojang.blaze3d.vertex.VertexConsumer vertices,
+    private static void drawSurface(BlockEntity owner, PoseStack pose, com.mojang.blaze3d.vertex.VertexConsumer vertices,
             Direction side, String texture, double distance, int light) {
-        drawSurface(pose, vertices, side,
+        drawSurface(owner, pose, vertices, side,
                 ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", texture)),
                 distance, light);
     }
 
-    private static void drawSurface(PoseStack pose, com.mojang.blaze3d.vertex.VertexConsumer vertices,
+    private static void drawSurface(BlockEntity owner, PoseStack pose, com.mojang.blaze3d.vertex.VertexConsumer vertices,
             Direction side, net.minecraft.client.renderer.texture.TextureAtlasSprite sprite,
             double distance, int light) {
-        for (int corner = 0; corner < 4; corner++) {
-            double u = corner >= 2 ? 1 : 0;
-            double v = corner == 1 || corner == 2 ? 1 : 0;
-            var pos = CoverFaceCoordinates.to(side, u, v, CoverSurfaceRenderer.distance(0) + distance);
-//? if >=1.21.1 {
-            /*vertices.addVertex(pose.last().pose(), (float) pos.x, (float) pos.y, (float) pos.z)
-                    .setColor(1f, 1f, 1f, 1f).setUv(sprite.getU((float) u),
-                            sprite.getV((float) v))
-                    .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
-                    .setNormal(pose.last(), side.getStepX(), side.getStepY(), side.getStepZ())
-                    ;
-*///?} else {
-            vertices.vertex(pose.last().pose(), (float) pos.x, (float) pos.y, (float) pos.z)
-                    .color(1f, 1f, 1f, 1f).uv(sprite.getU((float) (u * 16)),
-                            sprite.getV((float) (v * 16)))
-                    .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light)
-                    .normal(pose.last().normal(), side.getStepX(), side.getStepY(), side.getStepZ())
-                    .endVertex();
-//?}
-        }
+        CoverSurfaceRenderer.drawAt(owner, pose, vertices, side, sprite, light,
+                CoverSurfaceRenderer.distance(0) + distance, -1);
     }
 }
