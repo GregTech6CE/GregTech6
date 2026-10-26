@@ -47,6 +47,7 @@ public final class SourceMoltenFluidContracts {
         }
         var existing = FluidCatalog.all();
         FluidDefinitions.prepare();
+        FluidCatalogUsageContracts.run();
         for (Expected expected : EXPECTED) {
             GTMaterial material = GTMaterialRegistry.get(expected.name()).resolve();
             var flags = EnumSet.copyOf(originalFlags.get(expected.name()));

@@ -258,7 +258,6 @@ public class FluidCatalog {
             XP = fluid("XP", "xpjuice").withGlint().withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),
             XP_Molten = fluid("XP_Molten", "xp").withGlint().withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),
             Mob = fluid("Mob", "mobessence").withFlags(FluidFlags.MAGIC | FluidFlags.VOID_OVERFLOW),
-            Freezing_Ooze = fluid("Freezing_Ooze", "ooze").withFlags(FluidFlags.BROKEN),
             Mcguffium = fluid("Mcguffium", "mcguffium"),
 
     // =======================================================================
@@ -306,10 +305,6 @@ public class FluidCatalog {
     // =======================================================================
 
             Steam = fluid("Steam", "steam").withGas().withDensity(-1000).withTemperature(373)
-                    .withFlags(FluidFlags.STEAM | FluidFlags.POWER_CONDUCTING),
-            Steam_IC2 = fluid("Steam_IC2", "ic2steam").withGas()
-                    .withFlags(FluidFlags.STEAM | FluidFlags.POWER_CONDUCTING),
-            Steam_IC2_Superheated = fluid("Steam_IC2_Superheated", "ic2superheatedsteam").withGas()
                     .withFlags(FluidFlags.STEAM | FluidFlags.POWER_CONDUCTING),
             Hot_Helium = fluid("Hot_Helium", "hothelium").withGas().withTemperature(1150).withFlags(FluidFlags.POWER_CONDUCTING),
             Hot_Carbon_Dioxide = fluid("Hot_Carbon_Dioxide", "hotcarbondioxide").withGas().withTemperature(950).withFlags(FluidFlags.POWER_CONDUCTING),
@@ -557,52 +552,11 @@ public class FluidCatalog {
             Beer = fluid("Beer", "beer").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
             Beer_Dark = fluid("Beer_Dark", "darkbeer").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
             Beer_Dragonblood = fluid("Beer_Dragonblood", "potion.dragonblood").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-            Beer_Ale = fluid("Beer_Ale", "binnie.beerale").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-            Beer_Corn = fluid("Beer_Corn", "binnie.beercorn").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-            Beer_Lager = fluid("Beer_Lager", "binnie.beerlager").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-            Beer_Rye = fluid("Beer_Rye", "binnie.beerrye").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-            Beer_Stout = fluid("Beer_Stout", "binnie.beerstout").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-            Beer_Wheat = fluid("Beer_Wheat", "binnie.beerwheat").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
 
     // =======================================================================
     // Liquors / Liqueurs / Spirits / Brandies / Whiskeys
     // =======================================================================
 
-            Liqueur_Chocolate = fluid("Liqueur_Chocolate", "binnie.liqueurchocolate").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Almond = fluid("Liqueur_Almond", "binnie.liqueuralmond").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Anise = fluid("Liqueur_Anise", "binnie.liqueuranise").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Banana = fluid("Liqueur_Banana", "binnie.liqueurbanana").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Blackberry = fluid("Liqueur_Blackberry", "binnie.liqueurblackberry").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Blackcurrant = fluid("Liqueur_Blackcurrant", "binnie.liqueurblackcurrant").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Cherry = fluid("Liqueur_Cherry", "binnie.liqueurcherry").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Cinnamon = fluid("Liqueur_Cinnamon", "binnie.liqueurcinnamon").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Coffee = fluid("Liqueur_Coffee", "binnie.liqueurcoffee").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Hazelnut = fluid("Liqueur_Hazelnut", "binnie.liqueurhazelnut").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Herbal = fluid("Liqueur_Herbal", "binnie.liqueurherbal").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Lemon = fluid("Liqueur_Lemon", "binnie.liqueurlemon").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Melon = fluid("Liqueur_Melon", "binnie.liqueurmelon").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Mint = fluid("Liqueur_Mint", "binnie.liqueurmint").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Orange = fluid("Liqueur_Orange", "binnie.liqueurorange").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Peach = fluid("Liqueur_Peach", "binnie.liqueurpeach").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liqueur_Raspberry = fluid("Liqueur_Raspberry", "binnie.liqueurraspberry").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUEUR),
-            Liquor = fluid("Liquor", "binnie.liquorfruit").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUOR),
-            Liquor_Apple = fluid("Liquor_Apple", "binnie.liquorapple").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUOR),
-            Liquor_Apricot = fluid("Liquor_Apricot", "binnie.liquorapricot").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUOR),
-            Liquor_Cherry = fluid("Liquor_Cherry", "binnie.liquorcherry").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUOR),
-            Liquor_Elderberry = fluid("Liquor_Elderberry", "binnie.liquorelderberry").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUOR),
-            Liquor_Pear = fluid("Liquor_Pear", "binnie.liquorpear").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.LIQUOR),
-            Spirit_Gin = fluid("Spirit_Gin", "binnie.spiritgin").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.SPIRIT),
-            Spirit_Cane = fluid("Spirit_Cane", "binnie.spiritneutral").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.SPIRIT),
-            Spirit_Neutral = fluid("Spirit_Neutral", "binnie.spiritsugarcane").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.SPIRIT),
-            Brandy = fluid("Brandy", "binnie.brandyfruit").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Apple = fluid("Brandy_Apple", "binnie.brandyapple").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Apricot = fluid("Brandy_Apricot", "binnie.brandyapricot").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Cherry = fluid("Brandy_Cherry", "binnie.brandycherry").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Citrus = fluid("Brandy_Citrus", "binnie.brandycitrus").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Elderberry = fluid("Brandy_Elderberry", "binnie.brandyelderberry").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Grape = fluid("Brandy_Grape", "binnie.brandygrape").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Pear = fluid("Brandy_Pear", "binnie.brandypear").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
-            Brandy_Plum = fluid("Brandy_Plum", "binnie.brandyplum").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BRANDY),
             Whiskey = fluid("Whiskey", "binnie.whiskey").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WHISKEY),
             Whiskey_Rye = fluid("Whiskey_Rye", "binnie.whiskeyrye").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WHISKEY),
             Whiskey_Corn = fluid("Whiskey_Corn", "binnie.whiskeycorn").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WHISKEY),
@@ -616,7 +570,6 @@ public class FluidCatalog {
             Mead = fluid("Mead", "mead").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             ShortMead = fluid("ShortMead", "short.mead").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             Sake = fluid("Sake", "potion.sake").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
-            Tequila = fluid("Tequila", "binnie.tequila").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             Alcopops = fluid("Alcopops", "potion.alcopops").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
 
     // =======================================================================
@@ -705,7 +658,6 @@ public class FluidCatalog {
             Slime_Pink = fluid("Slime_Pink", "pinkslime").withFlags(FluidFlags.FOOD | FluidFlags.SLIME),
             Slime_Green = fluid("Slime_Green", "slime").withFlags(FluidFlags.FOOD | FluidFlags.SLIME),
             InkSquid = fluid("InkSquid", "squidink"),
-            InkMyst = fluid("InkMyst", "myst.ink.black"),
 
     // =======================================================================
     // Magical / elemental fluids
@@ -730,8 +682,6 @@ public class FluidCatalog {
             Lava = fluid("Lava", "lava", FluidTextureMode.VANILLA_LAVA),
             Lava_Volcanic = fluid("Lava_Volcanic", "volcanic_lava_fluid", FluidTextureMode.VANILLA_LAVA),
             Lava_Pahoehoe = fluid("Lava_Pahoehoe", "ic2pahoehoelava", FluidTextureMode.VANILLA_LAVA).withTemperature(1200).withLuminosity(10).withDensity(50000).withViscosity(250000),
-            Lava_Pure = fluid("Lava_Pure", "purelava", FluidTextureMode.VANILLA_LAVA).withFlags(FluidFlags.BROKEN | FluidFlags.INFINITE),
-            Ender_Goo = fluid("Ender_Goo", "endergoo").withFlags(FluidFlags.MAGIC),
 
     // =======================================================================
     // Molten materials (explicit)
