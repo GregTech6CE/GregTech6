@@ -8,6 +8,7 @@ public final class CentrifugeContracts {
         OptionalCentrifugeContracts.run();
         U235CentrifugeContracts.run();
         BlockDustCentrifugeContracts.run();
+        gregtech.content.recipe.BuiltinEventCentrifugeContracts.run();
         System.out.println("Centrifuge core contracts passed (no native runtime coverage).");
     }
 }
