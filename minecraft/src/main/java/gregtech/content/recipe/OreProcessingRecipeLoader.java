@@ -49,12 +49,14 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     private final List<GTMaterial> mByProductListed = new ArrayList<>();
     /** Deduplicate only immutable builtin raw descriptors, never independent recipe rows. */
     private final java.util.Set<GTMaterial> mRawDefinitions = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+    private SourceOreMacerationAdapter.Snapshot mMaceration;
 
     @Override
     public void run() {
         // Snapshot form provenance before any owned raw descriptors. The following entry loops
         // only add recipe rows; they do not publish material forms or dispatch addon callbacks.
         NonOreMacerationRows.begin();
+        mMaceration = new SourceOreMacerationAdapter.Snapshot();
         processOreToCrushed();
         processOreBlocks();
         processDenseIconOres();
@@ -96,7 +98,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
             // A bearing rock is 9/4 material units, not a complete ore block.
             ItemStack rock = mat(MaterialPrefix.rockGt, material, 1);
-            if (!rock.isEmpty()) {
+            if (!rock.isEmpty() && !SourceOreMacerationAdapter.retireRock(material, rock, mMaceration)) {
                 ItemStack powder = OM.dust(material.getTargetPulverMaterial(),
                         material.getTargetPulverAmount() * 9 / 4);
                 if (!powder.isEmpty()) MachineRecipeMaps.pulverizing(rock, powder);
@@ -333,9 +335,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     //  2.  Maceration  (OreProcessing_Maceration)
     // ========================================================================
 
-    /**
-     * Crushed → dust chain using Crusher + Shredder ({@link RM#pulverizing}).
-     */
+    /** Native prefix Shredder handlers; unsupported contexts retain the former compatibility producer. */
     private void processMaceration() {
         var reviewedSeen = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial, Boolean>());
         for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
@@ -343,67 +343,77 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             if (NonOreMacerationRows.reviewed(material) && !reviewedSeen.add(material)) continue;
             if (!material.isValid()) continue;
 
-            // crushed → dust
-            pulverizeOne(MaterialPrefix.crushed, material, 1, MaterialPrefix.dust, U);
+            var claimed = new java.util.HashSet<MaterialPrefix>();
+            // The legacy shapes below are consulted only when the source handler does not claim that input.
+            if (pulverizeOne(MaterialPrefix.crushed, material, 1, MaterialPrefix.dust, U)) claimed.add(MaterialPrefix.crushed);
             // crushedTiny → dustTiny
-            pulverizeOne(MaterialPrefix.crushedTiny, material, 1, MaterialPrefix.dustTiny, U9);
+            if (pulverizeOne(MaterialPrefix.crushedTiny, material, 1, MaterialPrefix.dustTiny, U9)) claimed.add(MaterialPrefix.crushedTiny);
             // crushedPurified → dust
-            pulverizeOne(MaterialPrefix.crushedPurified, material, 1, MaterialPrefix.dust, U);
+            if (pulverizeOne(MaterialPrefix.crushedPurified, material, 1, MaterialPrefix.dust, U)) claimed.add(MaterialPrefix.crushedPurified);
             // crushedCentrifuged → 11 × dustTiny
-            pulverizeMulti(MaterialPrefix.crushedCentrifuged, material, 1, MaterialPrefix.dustTiny, 11, U9);
+            if (pulverizeMulti(MaterialPrefix.crushedCentrifuged, material, 1, MaterialPrefix.dustTiny, 11, U9)) claimed.add(MaterialPrefix.crushedCentrifuged);
             // crushedCentrifugedTiny → dustTiny
-            pulverizeOne(MaterialPrefix.crushedCentrifugedTiny, material, 1, MaterialPrefix.dustTiny, U9);
+            if (pulverizeOne(MaterialPrefix.crushedCentrifugedTiny, material, 1, MaterialPrefix.dustTiny, U9)) claimed.add(MaterialPrefix.crushedCentrifugedTiny);
             // crushedPurifiedTiny → dustTiny
-            pulverizeOne(MaterialPrefix.crushedPurifiedTiny, material, 1, MaterialPrefix.dustTiny, U9);
-            if (ReviewedCinnabarFacts.supports(material)) SourceOreFollowonRows.shredder(material,ReviewedCinnabarFacts.INSTANCE);
-            else if (ReviewedOreShredderFacts.supports(material))
-                SourceOreFollowonRows.shredder(material, ReviewedOreShredderFacts.INSTANCE);
+            if (pulverizeOne(MaterialPrefix.crushedPurifiedTiny, material, 1, MaterialPrefix.dustTiny, U9)) claimed.add(MaterialPrefix.crushedPurifiedTiny);
+            // Hand off only unclaimed shapes to the previous reviewed producer, not duplicate registrations.
+            if (claimed.size() < SourceOreShreddingRules.shapes().size()) {
+                if (ReviewedCinnabarFacts.supports(material)) SourceOreFollowonRows.shredder(material,ReviewedCinnabarFacts.INSTANCE,claimed);
+                else if (ReviewedOreShredderFacts.supports(material))
+                    SourceOreFollowonRows.shredder(material, ReviewedOreShredderFacts.INSTANCE,claimed);
+            }
         }
     }
 
     /**
-     * Single pulverizing: inputPrefix → outputPrefix with the given material amounts.
-     * Uses RM.pulverizing (Crusher + Shredder).
+     * Retain the port's old single-output compatibility fallback only for unclaimed inputs.
      */
-    private void pulverizeOne(MaterialPrefix inputPref, GTMaterial material, int inCount,
+    private boolean pulverizeOne(MaterialPrefix inputPref, GTMaterial material, int inCount,
                               MaterialPrefix outputPref, long outAmount) {
-        if (!inputPref.isValidFor(material)) return;
         ItemStack input = mat(inputPref, material, inCount);
-        if (input.isEmpty()) return;
+        if (sourceShredding(material, inputPref, input)) return true;
+        if (!inputPref.isValidFor(material) || input.isEmpty()) return false;
         ItemStack output = stackFor(outputPref, material, outAmount);
-        if (output.isEmpty()) return;
+        if (output.isEmpty()) return false;
         if (ReviewedCinnabarFacts.supports(material) || ReviewedOreShredderFacts.supports(material)) {
-            // Preserve the legacy Crusher row; only the reviewed Shredder producer is retired.
+            // Unsupported contexts preserve the former reviewed Crusher/follow-on split.
             MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{10000,1000,1000},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
         } else if (NonOreMacerationRows.reviewed(material)) {
             for (var map : new gregtech.engine.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
                 NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
                         new ItemStack[]{output,ItemStack.EMPTY,ItemStack.EMPTY},new long[]{10000,1000,1000},null,64,16);
         } else MachineRecipeMaps.pulverizing(input, output);
+        return false;
     }
 
     /**
-     * Multi-output pulverizing: inputPrefix → count × outputPrefix.
-     * Registers directly on Crusher + Shredder (RM.pulverizing only handles
-     * 1-3 outputs with vanilla chances).
+     * Retain the port's old counted-output compatibility fallback only for unclaimed inputs.
      */
-    private void pulverizeMulti(MaterialPrefix inputPref, GTMaterial material, int inCount,
+    private boolean pulverizeMulti(MaterialPrefix inputPref, GTMaterial material, int inCount,
                                 MaterialPrefix outputPref, int outCount, long perUnitAmount) {
-        if (!inputPref.isValidFor(material)) return;
         ItemStack input = mat(inputPref, material, inCount);
-        if (input.isEmpty()) return;
+        if (sourceShredding(material, inputPref, input)) return true;
+        if (!inputPref.isValidFor(material) || input.isEmpty()) return false;
         ItemStack output = stackFor(outputPref, material, perUnitAmount);
-        if (output.isEmpty()) return;
+        if (output.isEmpty()) return false;
         ItemStack multiOut = amount(outCount, output);
         if (NonOreMacerationRows.reviewed(material)) {
             for (var map : new gregtech.engine.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
                 NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
                         new ItemStack[]{multiOut},null,null,32,EU_TIER);
-            return;
+            return false;
         }
         MachineRecipeMaps.Crusher .addRecipe1(true, EU_TIER, 32, input, multiOut);
         if (!ReviewedCinnabarFacts.supports(material) && !ReviewedOreShredderFacts.supports(material))
             MachineRecipeMaps.Shredder.addRecipe1(true, EU_TIER, 32, input, multiOut);
+        return false;
+    }
+
+    private boolean sourceShredding(GTMaterial material, MaterialPrefix prefix, ItemStack input) {
+        var outcome = SourceOreMacerationAdapter.shredder(material, prefix, input, mMaceration);
+        if (outcome.action() == SourceOreMacerationAdapter.Action.LEGACY_UNSUPPORTED) return false;
+        if (outcome.row() != null) outcome.row().admit();
+        return true;
     }
 
     // ========================================================================

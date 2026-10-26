@@ -79,19 +79,18 @@ public final class SourceOreFollowonRows {
  }
  /** Source Handlers145-150/139-144; repeated Div72 outputs must not be coalesced. */
  public static List<Recipe> shredder(GTMaterial m,Facts f) {
+  return shredder(m,f,Set.of());
+ }
+ /** OPL retains legacy behavior only for shapes not claimed by its bounded native producer. */
+ public static List<Recipe> shredder(GTMaterial m,Facts f,Set<MaterialPrefix> claimed) {
   if(!admitted(m,f)||f.mortar(m)==Evidence.UNKNOWN)return List.of();
-  MaterialPrefix[] inputs={MaterialPrefix.crushed,MaterialPrefix.crushedPurified,MaterialPrefix.crushedCentrifuged,
-   MaterialPrefix.crushedTiny,MaterialPrefix.crushedPurifiedTiny,MaterialPrefix.crushedCentrifugedTiny};
-  MaterialPrefix d=MaterialPrefix.dust,t=MaterialPrefix.dustTiny,s=MaterialPrefix.dustSmall,v=MaterialPrefix.dustDiv72;
-  MaterialPrefix[][] outputs={{d,t,v},{d,s},{d,s,t,v},{t,v},{t,v,v},{t,v,v,v}};
-  var accepted=new ArrayList<Recipe>();long multiplier=f.mortar(m)==Evidence.YES?16:256;
-  for(int i=0;i<inputs.length;i++) {
-   var out=new ItemStack[outputs[i].length];long units=0;
-   for(int j=0;j<out.length;j++) {out[j]=f.direct(outputs[i][j],m.getTargetPulverMaterial().resolve(),1);units+=outputs[i][j].getMaterialWeight();}
-   long processed=Math.max(inputs[i].getMaterialWeight(),units);
-   long numerator=Math.multiplyExact(processed,Math.multiplyExact(multiplier,m.getToolQuality()+1L));
-   long ticks=Math.max(1,Math.floorDiv(Math.addExact(numerator,U-1),U));
-   var r=emit(MachineRecipeMaps.Shredder,f.direct(inputs[i],m,1),out,new long[0],new FluidStack[0],new FluidStack[0],ticks,16);
+  var accepted=new ArrayList<Recipe>();boolean mortar=f.mortar(m)==Evidence.YES;
+  for(var shape:SourceOreShreddingRules.shapes()) {
+   if(claimed.contains(shape.input()))continue;
+   var out=new ItemStack[shape.outputs().size()];
+   for(int j=0;j<out.length;j++)out[j]=f.direct(shape.outputs().get(j),m.getTargetPulverMaterial().resolve(),1);
+   long ticks=SourceOreShreddingRules.duration(shape,mortar,m.getToolQuality());
+   var r=emit(MachineRecipeMaps.Shredder,f.direct(shape.input(),m,1),out,new long[0],new FluidStack[0],new FluidStack[0],ticks,SourceOreShreddingRules.POWER);
    if(r!=null)accepted.add(r);
   }
   return List.copyOf(accepted);
