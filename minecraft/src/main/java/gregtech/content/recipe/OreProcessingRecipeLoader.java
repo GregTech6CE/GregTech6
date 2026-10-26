@@ -45,12 +45,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     /** Default EU/t for the ore processing tier. */
     private static final long EU_TIER = 16;
 
-    /**
-     * GT6 {@code Loader_Recipes_Ores} chances for the magnetic separator
-     * ({@code tMagnet}): primary output always, five byproduct fines at 6 % each.
-     */
-    private static final long[] MAGNET_CHANCES = {CHANCE_100, 600, 600, 600, 600, 600};
-
     /** GT6 sifting chances for purified ore: legendary → dust, per 10 000. */
     private static final long[] SIFT_GEM_CHANCES = {9, 90, 360, 1_350, 1_800, 3_600, 4_500};
     /** Same route from the tiny purified form (GT6 divides every chance by ten). */
@@ -74,6 +68,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         processMaceration();
         SharedOreWashingRows.initialize();
         SharedPurifiedCentrifugeRows.initialize();
+        SharedOreMagneticRows.initialize();
         processPurifiedRoutes();
         processReviewedFollowonRoutes();
         processByproductList();
@@ -414,18 +409,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     //  3b. Purified routes: Magnetic Separator + Sifting  (GT6 Loader_Recipes_Ores)
     // ========================================================================
 
-    /**
-     * GT6's two downstream routes from purified ore
-     * ({@code Loader_Recipes_Ores} lines 455-461):
-     * <ul>
-     *   <li><b>Magnetic Separator</b>: purified → centrifuged, plus five byproduct fines
-     *       (guaranteed primary, 6 % per byproduct).</li>
-     *   <li><b>Sifting</b>: purified → gem grades and dust, from legendary (0.09 %) down to a
-     *       plain gem and the material's own dust (45 %).</li>
-     * </ul>
-     * Both were missing entirely, which left the Magnetic Separator and Sifter machines with no
-     * recipes at all.
-     */
+    /** Existing purified Sifter producer; Magnetic rows now have their own reload lifecycle. */
     private void processPurifiedRoutes() {
         // Deduplicate only reviewed dormant Sifting definitions, never other producers or UNKNOWN rows.
         var reviewedSiftingSeen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial,Boolean>());
@@ -436,29 +420,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             ItemStack purified = mat(MaterialPrefix.crushedPurified, material, 1);
             ItemStack purifiedTiny = mat(MaterialPrefix.crushedPurifiedTiny, material, 1);
             if (purified.isEmpty() || purifiedTiny.isEmpty()) continue;
-
-            // Source selects only the opposite magnetic class (Loader_Recipes_Ores:389-393).
-            List<GTMaterial> byProds = OreSourcePolicy.magneticCandidates(material);
-
-            // ── Magnetic Separator ────────────────────────────────────────────
-            ItemStack centrifuged = mat(MaterialPrefix.crushedCentrifuged, material, 1);
-            ItemStack centrifugedTiny = mat(MaterialPrefix.crushedCentrifugedTiny, material, 1);
-            if (!byProds.isEmpty() && !centrifuged.isEmpty() && !centrifugedTiny.isEmpty()) {
-                MachineRecipeMaps.MagneticSeparator.addRecipe1(true, EU_TIER, 144, MAGNET_CHANCES,
-                        purified, centrifuged,
-                        byProductCentrifugedTiny(byProds, 0, 18, material),
-                        byProductCentrifugedTiny(byProds, 1, 18, material),
-                        byProductCentrifugedTiny(byProds, 2, 18, material),
-                        byProductCentrifugedTiny(byProds, 3, 18, material),
-                        byProductCentrifugedTiny(byProds, 4, 18, material));
-                MachineRecipeMaps.MagneticSeparator.addRecipe1(true, EU_TIER, 16, MAGNET_CHANCES,
-                        purifiedTiny, centrifugedTiny,
-                        byProductCentrifugedTiny(byProds, 0, 2, material),
-                        byProductCentrifugedTiny(byProds, 1, 2, material),
-                        byProductCentrifugedTiny(byProds, 2, 2, material),
-                        byProductCentrifugedTiny(byProds, 3, 2, material),
-                        byProductCentrifugedTiny(byProds, 4, 2, material));
-            }
 
             // ── Sifting (gem route) ───────────────────────────────────────────
             if (!MaterialPrefix.gem.isValidFor(material)) continue;
@@ -516,17 +477,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     private static ItemStack gradeOrGem(MaterialPrefix prefix, GTMaterial material, int count,
                                        ItemStack gem, int fallbackCount) {
         return SourceGemGradeResolver.gradeOrGem(prefix, material, count, gem, fallbackCount);
-    }
-
-    /** {@code count} tiny centrifuged ore of the byproduct at {@code index}, else of {@code fallback}. */
-    private static ItemStack byProductCentrifugedTiny(List<GTMaterial> byProds, int index, int count,
-                                                     GTMaterial fallback) {
-        GTMaterial product = index < byProds.size() ? byProds.get(index) : fallback;
-        return refinedTinyOrDust(product, count);
-    }
-    private static ItemStack refinedTinyOrDust(GTMaterial material, int count) {
-        ItemStack result = SourceOreInputForms.reviewedOreOutput(MaterialPrefix.crushedCentrifugedTiny, material, count);
-        return result.isEmpty() ? mat(MaterialPrefix.dustTiny, material, count) : result;
     }
 
     // ========================================================================

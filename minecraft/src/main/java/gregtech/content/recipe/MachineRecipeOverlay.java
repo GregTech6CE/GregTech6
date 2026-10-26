@@ -92,6 +92,7 @@ public final class MachineRecipeOverlay {
         gregtech.content.recipe.SourceOreOutputRows.rebuild();
         SharedPurifiedCentrifugeRows.rebuild();
         SharedOreWashingRows.rebuild();
+        SharedOreMagneticRows.rebuild();
         CompatRecipes.rebuild();
         MaterialDisplayBinding.invalidate();
         logged = 0;
@@ -164,6 +165,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(gregtech.content.recipe.SourceOreOutputRows.owned());
         exclude.addAll(SharedPurifiedCentrifugeRows.owned());
         exclude.addAll(SharedOreWashingRows.owned());
+        exclude.addAll(SharedOreMagneticRows.owned());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }
