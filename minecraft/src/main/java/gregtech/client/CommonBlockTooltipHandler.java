@@ -29,5 +29,8 @@ public final class CommonBlockTooltipHandler {
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         CommonBlockTooltips.append(stack, event.getToolTip());
+        if (net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce")) {
+            event.getToolTip().replaceAll(EnergyText::format);
+        }
     }
 }

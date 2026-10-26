@@ -49,11 +49,7 @@ public final class BasicMachineSourceTooltips {
         // CommonBlockTooltips and MaterialTooltipHandler own harvest/blast and exact composition once.
     }
     private static boolean validAuto(int side) {return side>=0&&side<6;}
-    private static ChatFormatting energyColor(String unit) {return switch(unit) {
-        case "HU"->ChatFormatting.RED;case "RU"->ChatFormatting.GREEN;case "KU"->ChatFormatting.DARK_GREEN;
-        case "CU"->ChatFormatting.AQUA;case "LU"->ChatFormatting.YELLOW;case "QU"->ChatFormatting.DARK_PURPLE;case "MU"->ChatFormatting.DARK_GRAY;
-        default->ChatFormatting.BLUE;
-    };}
+    private static ChatFormatting energyColor(String unit) { return EnergyText.color(unit); }
     private static void io(List<Component> lines,String key,int slots,int mask,int auto,ChatFormatting color) {
         var row=OriginalBasicMachineRules.io(slots,mask,auto);if(row==null)return;
         var line=add(lines,key,color).append(": ");

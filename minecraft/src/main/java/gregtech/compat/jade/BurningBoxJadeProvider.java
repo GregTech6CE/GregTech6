@@ -53,14 +53,14 @@ public enum BurningBoxJadeProvider implements IBlockComponentProvider, IServerDa
         if (!data.contains(NBT_HEAT, CompoundTag.TAG_LONG)) {
             return;
         }
-        tooltip.add(Component.translatable("jade.gt6ce.burning_box.heat", format(data.getLong(NBT_HEAT))));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.burning_box.heat", format(data.getLong(NBT_HEAT))));
         if (data.contains(NBT_FUEL, CompoundTag.TAG_COMPOUND)) {
 //? if >=1.21.1 {
             /*ItemStack fuel = ItemStack.parseOptional(accessor.getLevel().registryAccess(),data.getCompound(NBT_FUEL));
 *///?} else {
             ItemStack fuel = ItemStack.of(data.getCompound(NBT_FUEL));
 //?}
-            tooltip.add(Component.translatable("jade.gt6ce.burning_box.fuel",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.burning_box.fuel",
                     fuel.getHoverName(), fuel.getCount()));
         }
         if (data.contains(NBT_ASH, CompoundTag.TAG_COMPOUND)) {
@@ -69,7 +69,7 @@ public enum BurningBoxJadeProvider implements IBlockComponentProvider, IServerDa
 *///?} else {
             ItemStack ash = ItemStack.of(data.getCompound(NBT_ASH));
 //?}
-            tooltip.add(Component.translatable("jade.gt6ce.burning_box.ash",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.burning_box.ash",
                     ash.getHoverName(), ash.getCount()));
         }
     }

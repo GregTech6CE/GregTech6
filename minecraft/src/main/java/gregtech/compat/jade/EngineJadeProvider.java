@@ -134,9 +134,9 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         long capacity = data.getLong(NBT_CAPACITY);
         int eff = data.getInt(NBT_EFF);
 
-        tooltip.add(Component.translatable("jade.gt6ce.engine.title", name));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.title", name));
         if ("diesel".equals(type)) {
-            tooltip.add(Component.translatable("jade.gt6ce.engine.diesel.output", format(outRate),
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel.output", format(outRate),
                     format(data.getBoolean("gt_diesel_emitting") ? outRate : 0), format(stored)));
             for (String tank : new String[]{"fuel", "exhaust"}) {
 //? if >=1.21.1 {
@@ -146,56 +146,56 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
 //?}
                 Component content = fluid.isEmpty() ? Component.translatable("jade.gt6ce.engine.diesel.empty")
                         : fluid.getDisplayName().copy().append(" " + format(fluid.getAmount()) + " L");
-                tooltip.add(Component.translatable("jade.gt6ce.engine.diesel." + tank, content,
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel." + tank, content,
                         format(data.getLong("gt_diesel_" + tank + "_capacity"))));
             }
-            tooltip.add(Component.translatable("jade.gt6ce.engine.diesel.faces",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel.faces",
                     JadeText.direction(data.getString("gt_diesel_front")), JadeText.direction(data.getString("gt_diesel_rear"))));
-            tooltip.add(Component.translatable(!data.getBoolean(NBT_ENABLED) ? "jade.gt6ce.engine.status.off"
+            JadeText.add(tooltip, Component.translatable(!data.getBoolean(NBT_ENABLED) ? "jade.gt6ce.engine.status.off"
                     : data.getBoolean("gt_diesel_emitting") ? "jade.gt6ce.engine.diesel.running" : "jade.gt6ce.engine.diesel.waiting"));
             return;
         }
         if ("steam".equals(type)) {
-            tooltip.add(Component.translatable("jade.gt6ce.engine.steam_batch", data.getInt("gt_eng_steam_batch")));
-            tooltip.add(Component.translatable("jade.gt6ce.engine.steam_stroke",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam_batch", data.getInt("gt_eng_steam_batch")));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam_stroke",
                     format(data.getLong("gt_eng_stroke")), Component.translatable(data.getBoolean("gt_eng_delivering")
                             ? "jade.gt6ce.engine.output_accepted" : "jade.gt6ce.engine.output_unaccepted")));
-        } else tooltip.add(Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
+        } else JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
 
         int pct = capacity > 0 ? (int) Math.min(100, stored * 100 / capacity) : 0;
         boolean inputBuffer = "electric".equals(type) || "flux".equals(type);
-        tooltip.add(Component.translatable(inputBuffer ? "jade.gt6ce.engine.out_input_buffer" : "jade.gt6ce.engine.out",
+        JadeText.add(tooltip, Component.translatable(inputBuffer ? "jade.gt6ce.engine.out_input_buffer" : "jade.gt6ce.engine.out",
                 format(outRate), format(stored), format(capacity), pct, inUnit));
 
         if (eff > 0) {
-            tooltip.add(Component.translatable("jade.gt6ce.engine.eff", formatEfficiency(eff)));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.eff", formatEfficiency(eff)));
         }
 
         if ("steam".equals(type)) {
-            tooltip.add(Component.translatable("jade.gt6ce.engine.steam_shutdown_rule").withStyle(net.minecraft.ChatFormatting.GOLD));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam_shutdown_rule").withStyle(net.minecraft.ChatFormatting.GOLD));
             long steamAmt = data.getLong(NBT_STEAM_AMT);
             long steamCap = data.getLong(NBT_STEAM_CAP);
             if (steamCap > 0) {
                 int steamPct = (int) Math.min(100, steamAmt * 100 / steamCap);
-                tooltip.add(Component.translatable("jade.gt6ce.engine.steam",
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam",
                         format(steamAmt), format(steamCap), steamPct));
             }
             long waterAmt = data.getLong(NBT_WATER_AMT);
             long waterCap = data.getLong(NBT_WATER_CAP);
             if (waterCap > 0) {
                 int waterPct = (int) Math.min(100, waterAmt * 100 / waterCap);
-                tooltip.add(Component.translatable("jade.gt6ce.engine.water",
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.water",
                         format(waterAmt), format(waterCap), waterPct));
             }
 
             if (data.getBoolean(NBT_SHUTDOWN)) {
-                tooltip.add(Component.translatable("jade.gt6ce.engine.status.shutdown").withStyle(net.minecraft.ChatFormatting.RED));
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.shutdown").withStyle(net.minecraft.ChatFormatting.RED));
             } else if (!data.getBoolean(NBT_ENABLED)) {
-                tooltip.add(Component.translatable("jade.gt6ce.engine.status.off"));
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.off"));
             } else if (!data.getBoolean("gt_eng_working")) {
-                tooltip.add(Component.translatable("jade.gt6ce.engine.status.preheating", pct));
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.preheating", pct));
             } else {
-                tooltip.add(Component.translatable("jade.gt6ce.engine.status.running", pct));
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.running", pct));
             }
         }
     }

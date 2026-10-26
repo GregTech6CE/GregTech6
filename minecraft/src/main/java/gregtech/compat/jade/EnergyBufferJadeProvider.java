@@ -62,7 +62,7 @@ public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServer
         long capacity = data.getLong(NBT_CAPACITY);
         String unit = data.getString(NBT_UNIT);
         int pct = percent(stored, capacity);
-        tooltip.add(Component.translatable(
+        JadeText.add(tooltip, Component.translatable(
                 "jade.gt6ce.energy.stored",
                 format(stored),
                 format(capacity),

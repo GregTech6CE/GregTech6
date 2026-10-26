@@ -102,10 +102,10 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         Component label = Component.translatable("jade.gt6ce.boiler.gauge",
                 Component.translatable("jade.gt6ce.boiler.state." + state), steamPct);
         if (BoilerGauge.highPressure(steamAmt, steamCap)) {
-            tooltip.add(Component.translatable("jade.gt6ce.boiler.warn_high_pressure").withStyle(ChatFormatting.RED));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_high_pressure").withStyle(ChatFormatting.RED));
         }
         JadeText.detail(tooltip, "jade.gt6ce.boiler.steam", steamAmt, steamCap, steamPct);
-        if (data.contains("gt_steam_offer")) tooltip.add(Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " L/t"));
+        if (data.contains("gt_steam_offer")) JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " L/t"));
 
         long waterAmt = data.getLong(WATER_AMT);
         long waterCap = data.getLong(WATER_CAP);
@@ -128,22 +128,22 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         int pressure = data.getInt("gt_pressure");
         float power = data.getFloat("gt_explosion_power");
         JadeText.detail(tooltip, "jade.gt6ce.boiler.pressure", pressure);
-        tooltip.add(Component.translatable(pressure > 4 ? "jade.gt6ce.boiler.dismantle_danger" : "jade.gt6ce.boiler.dismantle_safe",
+        JadeText.add(tooltip, Component.translatable(pressure > 4 ? "jade.gt6ce.boiler.dismantle_danger" : "jade.gt6ce.boiler.dismantle_safe",
                 JadeText.decimal(power, 1), JadeText.decimal(power * 2, 1)).withStyle(pressure > 4 ? ChatFormatting.RED : ChatFormatting.GRAY));
-        if (data.contains("gt_contact_damage")) tooltip.add(Component.translatable("jade.gt6ce.boiler.contact_damage",JadeText.decimal(data.getFloat("gt_contact_damage"), 1))
+        if (data.contains("gt_contact_damage")) JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.contact_damage",JadeText.decimal(data.getFloat("gt_contact_damage"), 1))
                 .withStyle(data.getFloat("gt_contact_damage") > 0 ? ChatFormatting.RED : ChatFormatting.GRAY));
-        if (eff < 10000) tooltip.add(Component.translatable(pressure > 15 ? "jade.gt6ce.boiler.descaling_explosion"
+        if (eff < 10000) JadeText.add(tooltip, Component.translatable(pressure > 15 ? "jade.gt6ce.boiler.descaling_explosion"
                 : "jade.gt6ce.boiler.descaling_damage",JadeText.decimal(data.getFloat("gt_descaling_damage"), 1))
                 .withStyle(pressure > 15 || data.getFloat("gt_descaling_damage") > 0 ? ChatFormatting.RED : ChatFormatting.GRAY));
 
         if (steamPct >= 100) {
-            tooltip.add(Component.translatable("jade.gt6ce.boiler.warn_overpressure").withStyle(ChatFormatting.RED));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overpressure").withStyle(ChatFormatting.RED));
         }
         if (maxHeat > 0 && heat > maxHeat) {
-            tooltip.add(Component.translatable("jade.gt6ce.boiler.warn_overheat").withStyle(ChatFormatting.RED));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overheat").withStyle(ChatFormatting.RED));
         }
         if (waterAmt <= 0 && heat > 0) {
-            tooltip.add(Component.translatable("jade.gt6ce.boiler.warn_dry").withStyle(ChatFormatting.RED));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_dry").withStyle(ChatFormatting.RED));
         }
         if (data.contains(WATER_VIEW)) {
             var water = FluidView.readDefault(data.getCompound(WATER_VIEW));

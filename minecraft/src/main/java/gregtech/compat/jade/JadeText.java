@@ -35,14 +35,14 @@ final class JadeText {
         int colon = pattern.indexOf('：');
         if (colon < 0) colon = pattern.indexOf(':');
         if (colon <= 0 || pattern.substring(0, colon).contains("%")) {
-            tooltip.add(Component.translatable(key, args));
+            add(tooltip, Component.translatable(key, args));
             return;
         }
         var helper = IElementHelper.get();
         tooltip.add(Component.literal(pattern.substring(0, colon)).withStyle(ChatFormatting.GRAY));
         tooltip.append(helper.spacer(8, 0));
-        tooltip.append(helper.text(Component.translatableWithFallback(key + ".value", pattern.substring(colon + 1).strip(), args)
-                .withStyle(ChatFormatting.WHITE)).align(IElement.Align.RIGHT));
+        tooltip.append(helper.text(gregtech.client.EnergyText.format(Component.translatableWithFallback(key + ".value", pattern.substring(colon + 1).strip(), args)
+                .withStyle(ChatFormatting.WHITE))).align(IElement.Align.RIGHT));
     }
 
     static MutableComponent status(String key) {
@@ -57,23 +57,14 @@ final class JadeText {
         };
     }
 
-    /** Unit colours follow the supplied GT6 Omni script, without legacy section-sign strings. */
+    static void add(ITooltip tooltip, Component text) {
+        tooltip.add(gregtech.client.EnergyText.format(text));
+    }
+
     static Component unit(String unit) {
-        ChatFormatting color = switch (unit) {
-            case "EU" -> ChatFormatting.BLUE;
-            case "RU" -> ChatFormatting.GREEN;
-            case "KU" -> ChatFormatting.DARK_GREEN;
-            case "HU" -> ChatFormatting.RED;
-            case "CU", "L", "K", "A" -> ChatFormatting.AQUA;
-            case "LU" -> ChatFormatting.YELLOW;
-            case "MU" -> ChatFormatting.DARK_GRAY;
-            case "NU" -> ChatFormatting.BLACK;
-            case "QU" -> ChatFormatting.DARK_PURPLE;
-            case "TU" -> ChatFormatting.DARK_BLUE;
-            case "RF", "MJ" -> ChatFormatting.DARK_RED;
-            case "SU" -> ChatFormatting.GRAY;
-            default -> ChatFormatting.WHITE;
-        };
-        return Component.literal(unit).withStyle(color);
+        // Physical units retain their existing colour; energy units share the item tooltip palette.
+        if (unit.equals("L") || unit.equals("K") || unit.equals("A"))
+            return Component.literal(unit).withStyle(ChatFormatting.AQUA);
+        return gregtech.client.EnergyText.unit(unit);
     }
 }

@@ -117,7 +117,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 
         Component name = JadeText.translated(data, NBT_NAME + "_key", NBT_NAME);
         int tier = data.getInt(NBT_TIER);
-        tooltip.add(Component.translatable("jade.gt6ce.basic_machine.label", name, tier));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.basic_machine.label", name, tier));
 
         if (data.contains(NBT_ENERGY_IN, CompoundTag.TAG_LONG)) {
             long energyIn = data.getLong(NBT_ENERGY_IN);
@@ -126,26 +126,26 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             double average = data.getDouble(NBT_ENERGY_AVERAGE);
             boolean running = data.getBoolean(NBT_RUNNING);
             String unit = data.getString(NBT_UNIT);
-            tooltip.add(Component.translatable("jade.gt6ce.energy.in",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.in",
                     format(energyIn), unit));
-            tooltip.add(Component.translatable("jade.gt6ce.energy.range",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.range",
                     format(energyMin), format(energyMax), unit));
-            tooltip.add(Component.translatable("jade.gt6ce.energy.actual",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.actual",
                     String.format(Locale.US, "%.2f", average), unit));
-            if (energyIn > 0) tooltip.add(Component.translatable("jade.gt6ce.energy.multiplier",
+            if (energyIn > 0) JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.multiplier",
                     String.format(Locale.US, "%.2f", average / energyIn), format(energyIn), unit));
             if (running) {
-                tooltip.add(Component.translatable("jade.gt6ce.energy.active",
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.active",
                         String.format(Locale.US, "%.2f", average), unit));
             } else {
-                tooltip.add(Component.translatable("jade.gt6ce.energy.idle"));
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.energy.idle"));
             }
         }
 
         if (data.contains(NBT_ITEMS_TOTAL, CompoundTag.TAG_INT)) {
             int occupied = data.getInt(NBT_ITEMS_IN);
             int total = data.getInt(NBT_ITEMS_TOTAL);
-            tooltip.add(Component.translatable("jade.gt6ce.basic_machine.items", occupied, total));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.basic_machine.items", occupied, total));
         }
 
         // Omni displays the same tanks with icons and explicit input/output sections.
@@ -169,7 +169,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                 int pct = gregtech.content.energy.BoilerGauge.percent(amount, cap);
                 Component type = Component.translatable(isInput ? "jade.gt6ce.basic_machine.fluid_in"
                         : "jade.gt6ce.basic_machine.fluid_out");
-                tooltip.add(Component.translatable("jade.gt6ce.basic_machine.fluid",
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.basic_machine.fluid",
                         type, fName, format(amount), format(cap), Integer.toString(pct)));
             }
             }
