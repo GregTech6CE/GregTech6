@@ -9,9 +9,8 @@ __pycache__/
 
 # Integration scratch, local runs and generated evidence. Summaries live in docs/integration.
 /work/
-# Local card plans; durable decisions and evidence still go to docs/integration.
-/docs/card-plans/
-/docs/supersymmetry-*.md
+# docs/ is local-only working material and is not tracked.
+/docs/
 **/build/
 **/.gradle/
 **/run/
