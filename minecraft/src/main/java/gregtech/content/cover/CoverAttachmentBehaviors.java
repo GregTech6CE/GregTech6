@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -47,6 +48,9 @@ public final class CoverAttachmentBehaviors {
 
     /** One fluid block is one bucket, GT6 {@code FL.Water.make(1000)} ({@code CoverDrain:129}). */
     public static final int FLUID_BLOCK_AMOUNT = 1000;
+
+    /** One GT6 quantum: {@code BlockBaseFluid}'s 125 mB, i.e. one eighth of a port fluid block. */
+    public static final int QUANTUM_AMOUNT = FLUID_BLOCK_AMOUNT / 8;
 
     private CoverAttachmentBehaviors() {}
 
@@ -100,7 +104,17 @@ public final class CoverAttachmentBehaviors {
         if(field!=null){var fluid=GTFluids.still(field);if(fluid!=null)sink.fill(new FluidStack(fluid.get(),amount),IFluidHandler.FluidAction.EXECUTE);}
     }
 
-    /** Source blocks and bulk waters; original quantum/custom drain callbacks are not implemented. */
+    /**
+     * GT6 {@code CoverDrain:109-155}. World blocks are drained differently by family:
+     *
+     * <ul>
+     *   <li>GT6 finite fluid blocks (the port's {@code GTWorldFluidBlock}s) are drained quantum by
+     *       quantum - 125 mB each, 1-8 quanta - and a partly emptied block keeps its remaining
+     *       quanta. This is also what makes flowing gas, not just a source, drainable.</li>
+     *   <li>Vanilla water and lava keep vanilla's source-block rule and one 1000 mB block.</li>
+     *   <li>River/ocean/swamp blocks keep the original bulk-water shortcut.</li>
+     * </ul>
+     */
     private static boolean drainFluidBlock(Level level, BlockPos machinePos, Direction side, IFluidHandler sink) {
         BlockPos front = machinePos.relative(side);
         if (!level.hasChunkAt(front)) return false;
@@ -119,18 +133,48 @@ public final class CoverAttachmentBehaviors {
             return collected != Fluids.EMPTY
                     && sink.fill(new FluidStack(collected, 16000), IFluidHandler.FluidAction.EXECUTE) > 0;
         }
-        if (!fluidState.isSource()) return false;
+        boolean gtWorldBlock = state.getBlock() instanceof gregtech.content.block.GTWorldFluidBlock;
+        if (!gtWorldBlock && !fluidState.isSource()) return false;
         var biome = level.getBiome(front);
         int waterLevel = level.getSeaLevel();
         boolean infiniteVanilla = fluid == Fluids.WATER && front.getY() >= waterLevel - 15
                 && front.getY() <= waterLevel && biome.is(net.minecraft.tags.BiomeTags.IS_RIVER);
         if (infiniteVanilla) return sink.fill(new FluidStack(fluid, 16000), IFluidHandler.FluidAction.EXECUTE) > 0;
-        if (!drainsAt(side, fluid)) return false;
-        FluidStack bucket = new FluidStack(fluid, FLUID_BLOCK_AMOUNT);
-        if (sink.fill(bucket, IFluidHandler.FluidAction.SIMULATE) < FLUID_BLOCK_AMOUNT) return false;
-        if (sink.fill(bucket, IFluidHandler.FluidAction.EXECUTE) != FLUID_BLOCK_AMOUNT) return false;
-        level.setBlock(front, Blocks.AIR.defaultBlockState(), 3);
+        if (!gtWorldBlock) {
+            if (!drainsAt(side, fluid)) return false;
+            FluidStack bucket = new FluidStack(fluid, FLUID_BLOCK_AMOUNT);
+            if (sink.fill(bucket, IFluidHandler.FluidAction.SIMULATE) < FLUID_BLOCK_AMOUNT) return false;
+            if (sink.fill(bucket, IFluidHandler.FluidAction.EXECUTE) != FLUID_BLOCK_AMOUNT) return false;
+            level.setBlock(front, Blocks.AIR.defaultBlockState(), 3);
+            return true;
+        }
+        if (!drainsAtGtFluid(side, fluid)) return false;
+        int quanta = Math.max(1, fluidState.getAmount());
+        int drained = 0;
+        for (int i = 0; i < quanta; i++) {
+            FluidStack quantum = new FluidStack(fluid, QUANTUM_AMOUNT);
+            if (sink.fill(quantum, IFluidHandler.FluidAction.SIMULATE) < QUANTUM_AMOUNT) break;
+            if (sink.fill(quantum, IFluidHandler.FluidAction.EXECUTE) != QUANTUM_AMOUNT) break;
+            drained++;
+        }
+        if (drained == 0) return false;
+        int left = quanta - drained;
+        if (left <= 0) {
+            level.setBlock(front, Blocks.AIR.defaultBlockState(), 3);
+        } else {
+            FlowingFluid flowing = (FlowingFluid) fluid;
+            FluidState remaining = left >= FLUID_BLOCK_AMOUNT / QUANTUM_AMOUNT
+                    ? flowing.getSource(false) : flowing.getFlowing(left, false);
+            level.setBlock(front, remaining.createLegacyBlock(), 3);
+        }
         return true;
+    }
+
+    /** GT6 {@code BlockBaseFluid:145}: horizontal, or the vertical side gravity allows. */
+    private static boolean drainsAtGtFluid(Direction side, Fluid fluid) {
+        if (side.getAxis().isHorizontal()) return true;
+        return gregtech.engine.fluid.FluidHazards.isLighterThanAir(fluid)
+                ? side == Direction.UP : side == Direction.DOWN;
     }
 
     /**
@@ -141,7 +185,7 @@ public final class CoverAttachmentBehaviors {
     private static boolean drainsAt(Direction side, Fluid fluid) {
         if (side.getAxis().isHorizontal()) return true;
         if (isGas(fluid)) return true;
-        return fluid.getFluidType().isLighterThanAir() ? side == Direction.DOWN : side == Direction.UP;
+        return gregtech.engine.fluid.FluidHazards.isLighterThanAir(fluid) ? side == Direction.DOWN : side == Direction.UP;
     }
 
     /**

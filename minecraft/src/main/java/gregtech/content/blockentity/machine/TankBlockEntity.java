@@ -328,8 +328,10 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     }
 
     private void autoOutputFluid(FluidStack fluid) {
-        boolean isGas = fluid.getFluid().getFluidType().isLighterThanAir();
-        Direction[] outputs = isGas ? Direction.values() : new Direction[]{Direction.DOWN};
+        // Gases rise: a lighter-than-air fluid leaves through the top, everything else falls out
+        // of the bottom. The opposite side stays open as input (see getCapability).
+        boolean isGas = FluidHazards.isLighterThanAir(fluid.getFluid());
+        Direction[] outputs = isGas ? new Direction[]{Direction.UP} : new Direction[]{Direction.DOWN};
         for (Direction side : outputs) {
             if (tank.isEmpty()) break;
             BlockPos targetPos = worldPosition.relative(side);
@@ -349,7 +351,10 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //?}
             if (target == null) continue;
 
-            int toSend = FluidTankGT.bindInt(Math.min(tank.getAmount(), 1000L));
+            // Original TileEntityBase08Barrel uses FL.move(tank, adjacent) with Long.MAX_VALUE:
+            // one transfer per tick is limited only by the target's capacity, not an arbitrary
+            // per-tick amount. Forge's FluidStack amount is an int, so clamp there and no lower.
+            int toSend = FluidTankGT.bindInt(tank.getAmount());
             FluidStack drained = tank.drain(toSend, IFluidHandler.FluidAction.SIMULATE);
             if (drained.isEmpty()) continue;
             int filled = target.fill(drained, IFluidHandler.FluidAction.EXECUTE);
@@ -465,7 +470,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //? if >=1.21.1 {
     /*public @Nullable IFluidHandler capabilityHandler(@Nullable Direction side) {
         if(side!=null&&autoOutput&&!tank.isEmpty()){
-            boolean gas=tank.getFluid().getFluid().getFluidType().isLighterThanAir();
+            boolean gas=FluidHazards.isLighterThanAir(tank.getFluid().getFluid());
             if(gas&&side==Direction.UP||!gas&&side==Direction.DOWN)return null;
 *///?} else {
     @Override
@@ -474,7 +479,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
             // When auto-output is enabled and the tank has fluid, block input from the output side
             // to prevent backflow: liquid outputs DOWN, gas outputs UP
             if (side != null && autoOutput && !tank.isEmpty()) {
-                boolean isGas = tank.getFluid().getFluid().getFluidType().isLighterThanAir();
+                boolean isGas = FluidHazards.isLighterThanAir(tank.getFluid().getFluid());
                 if (isGas && side == Direction.UP) return LazyOptional.empty();
                 if (!isGas && side == Direction.DOWN) return LazyOptional.empty();
             }

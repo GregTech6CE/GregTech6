@@ -1,12 +1,14 @@
 package gregtech.bootstrap.content;
 
 import gregtech.GregTech;
+import gregtech.engine.fluid.FluidPhysicalProperties;
 import gregtech.engine.fluid.FluidRenderLayers;
 import gregtech.content.block.GTWorldFluidBlock;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.item.FluidItem;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.GTWorldWaterFluid;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTFluidItems;
@@ -90,6 +92,9 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
             // GT6's sea/river/swamp water copy minecraft:water completely, so they get vanilla
             // water's block properties, explosion resistance and WaterFluid flow behaviour.
             boolean worldWater = gregtech.engine.fluid.GTWaterParity.isWorldWater(path);
+            // Negative density is the original's densityDir = -1: these fluids rise instead of
+            // falling. Air itself is density 0, so nothing neutrally buoyant is included.
+            boolean lighterThanAir = !worldWater && FluidPhysicalProperties.density(flEntry) < 0;
 
             // World block for the spring fluids (created first: the fluid references it).
             final AtomicReference<RegistryObject<Fluid>> stillRef = new AtomicReference<>();
@@ -109,12 +114,14 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
             // Still fluid
             RegistryObject<Fluid> stillRO = GTFluids.fluids(namespace).register(path, () -> worldWater
                     ? new GTWorldWaterFluid.Source(properties(typeRO, field, blockRef, true))
+                    : lighterThanAir ? new GTGasFluid.Source(properties(typeRO, field, blockRef, false))
                     : new ForgeFlowingFluid.Source(properties(typeRO, field, blockRef, false)));
             stillRef.set(stillRO);
 
             // Flowing fluid
             RegistryObject<Fluid> flowingRO = GTFluids.fluids(namespace).register(path + "_flowing", () -> worldWater
                     ? new GTWorldWaterFluid.Flowing(properties(typeRO, field, blockRef, true))
+                    : lighterThanAir ? new GTGasFluid.Flowing(properties(typeRO, field, blockRef, false))
                     : new ForgeFlowingFluid.Flowing(properties(typeRO, field, blockRef, false)));
 
             GTFluids.bindFluid(field, stillRO, flowingRO,

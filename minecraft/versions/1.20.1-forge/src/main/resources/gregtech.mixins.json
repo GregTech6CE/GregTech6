@@ -49,6 +49,7 @@
     "ItemPaintColorMixin",
     "ColoredBookOpenPacketMixin",
     "ColoredBookLecternScreenMixin",
+    "GasFluidRenderMixin",
     "ReliableEmiNamespaceMixin"
   ]
 }
