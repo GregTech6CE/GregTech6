@@ -20,7 +20,8 @@ public final class ProcessingToolRenderer implements BlockEntityRenderer<Process
         boolean juicer = id.equals("juicer");
         boolean table = id.contains("_table");
         boolean bowl = id.startsWith("mixing_bowl");
-        float topY = bowl ? (table ? 15 / 16f : 7 / 16f) : table ? .875f : .375f;
+        boolean bath = id.startsWith("bathing_pot");
+        float topY = bowl || bath ? (table ? 15 / 16f : 7 / 16f) : table ? .875f : .375f;
         var fluid = tool.displayFluid();
         if (!fluid.isEmpty()) {
 //? if >=1.21.1 {
@@ -35,8 +36,10 @@ public final class ProcessingToolRenderer implements BlockEntityRenderer<Process
         }
         var stack = tool.displayItem();
         if (stack.isEmpty()) return;
-        if (bowl) {
-            // MultiTileEntityMixingBowl:402-408: a blockDust top face, never the ingredient's item model.
+        if (bowl || bath) {
+            // MultiTileEntityMixingBowl:402-408 and MultiTileEntityBathingPot:381-388 show a
+            // material dust top face (gray MT.NULL blockDust when the item has no material),
+            // never the ingredient's item model.
             var material = gregtech.engine.material.ItemMaterialRegistry.get(stack)
                     .map(gregtech.engine.material.ItemComposition::material)
                     .orElse(gregtech.api.material.MaterialSentinels.Invalid).resolve();
