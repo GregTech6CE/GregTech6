@@ -51,3 +51,88 @@ jobs:
             minecraft/versions/${{ matrix.node }}/build/libs/*.jar
             minecraft/versions/${{ matrix.node }}/build/addon-sdk/*.jar
           if-no-files-found: error
+
+  nightly:
+    name: Publish nightly release
+    needs: build
+    if: >-
+      github.event_name != 'pull_request' &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: nightly-release
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      BUILD_SHA: ${{ github.sha }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Download both platform artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: gt6ce-*
+          path: artifacts
+      - name: Collect installable mod jars
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          mkdir -p release
+          for node in 1.20.1-forge 1.21.1-neoforge; do
+            metadata=META-INF/mods.toml
+            if [[ "$node" == 1.21.1-neoforge ]]; then metadata=META-INF/neoforge.mods.toml; fi
+            jars=()
+            for file in artifacts/gt6ce-"$node"/minecraft/versions/"$node"/build/libs/*.jar; do
+              if unzip -p "$file" "$metadata" >/dev/null 2>&1; then jars+=("$file"); fi
+            done
+            if [[ ${#jars[@]} != 1 ]]; then
+              echo "Expected one installable mod jar for $node, found ${#jars[@]}" >&2
+              exit 1
+            fi
+            cp "${jars[0]}" "release/gt6ce-${node}-${BUILD_SHA:0:12}.jar"
+          done
+      - name: Update nightly release
+        run: |
+          set -euo pipefail
+          # An older build must not replace a newer default-branch nightly.
+          current=$(gh api "repos/$GH_REPO/commits/$DEFAULT_BRANCH" --jq '.sha')
+          if [[ "$current" != "$BUILD_SHA" ]]; then
+            echo "Default branch advanced; leave publication to its build."
+            exit 0
+          fi
+          cat > notes.md <<EOF
+          Automated development build of GregTech 6 Community Edition.
+
+          - Commit: $BUILD_SHA
+          - Build: $RUN_URL
+          - Minecraft 1.20.1: install the Forge jar.
+          - Minecraft 1.21.1: install the NeoForge jar.
+
+          Both platform builds passed. This prerelease is updated after successful default-branch builds.
+          EOF
+          release_id=$(gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
+            --jq '.[] | select(.tag_name == "nightly") | .id')
+          if [[ -z "$release_id" ]]; then
+            gh release create nightly release/*.jar --target "$BUILD_SHA" \
+              --title "Latest build" --notes-file notes.md --prerelease --latest=false
+          else
+            # Upload the complete new pair before removing any previous downloads.
+            gh release upload nightly release/*.jar --clobber
+          fi
+          # Only the generated nightly tag moves; branch history is never rewritten.
+          gh api --method PATCH "repos/$GH_REPO/git/refs/tags/nightly" \
+            -f sha="$BUILD_SHA" -F force=true --silent
+          gh release edit nightly --title "Latest build" --notes-file notes.md \
+            --prerelease --latest=false
+          release_id=$(gh api "repos/$GH_REPO/releases/tags/nightly" --jq '.id')
+          gh api --paginate "repos/$GH_REPO/releases/$release_id/assets?per_page=100" \
+            --jq '.[] | select((.name | startswith("gt6ce-1.20.1-forge-") or startswith("gt6ce-1.21.1-neoforge-")) and (.name | endswith(".jar"))) | [.id, .name] | @tsv' |
+          while IFS=$'\t' read -r asset_id name; do
+            if [[ ! -f "release/$name" ]]; then
+              gh api --method DELETE "repos/$GH_REPO/releases/assets/$asset_id" --silent
+            fi
+          done
