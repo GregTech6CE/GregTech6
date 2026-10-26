@@ -25,6 +25,7 @@ public final class CentrifugeContracts {
         gregtech.content.recipe.FurnaceSourcePolicyContracts.run();
         gregtech.content.recipe.SourceOreShreddingContracts.run();
         gregtech.content.recipe.SourceOreCrushingContracts.run();
+        gregtech.content.recipe.SourceOilSandContracts.run();
         System.out.println("Centrifuge core contracts passed (no native runtime coverage).");
     }
 }

@@ -179,7 +179,7 @@ public final class SharedOreCrushingRows {
     }
     private static void restore(Group group) {
         if (group.original == null) return;
-        Recipe accepted = group.map.addRecipe(group.original);
+        Recipe accepted = group.map.addRecipe(group.original, true, group.original.mFakeRecipe, group.original.mHidden);
         if (accepted != null) remember(group.map, accepted);
         else defer(group, "legacy-readmission-rejected");
     }
@@ -194,7 +194,7 @@ public final class SharedOreCrushingRows {
                 Recipe admitted = map.addRecipe(row);
                 if (admitted == null) {
                     accepted.forEach(map::unlink); accepted.clear();
-                    Recipe restored = legacy == null ? null : map.addRecipe(legacy);
+                    Recipe restored = legacy == null ? null : map.addRecipe(legacy, true, legacy.mFakeRecipe, legacy.mHidden);
                     if (restored != null) accepted.add(restored);
                     return new Admission(false, accepted);
                 }
@@ -206,7 +206,7 @@ public final class SharedOreCrushingRows {
             // Exceptional admission still cannot leave a partial source group or lose its old row.
             // Keep any restored accepted identity owned, then propagate the real failure.
             if (legacy != null) try {
-                Recipe restored = map.addRecipe(legacy);
+                Recipe restored = map.addRecipe(legacy, true, legacy.mFakeRecipe, legacy.mHidden);
                 if (restored != null) remember(map, restored);
             } catch (RuntimeException | Error restoration) { failure.addSuppressed(restoration); }
             throw failure;

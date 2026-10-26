@@ -174,8 +174,8 @@ final class SourceOreCrushingAdapter {
             return new HostSelection(Domain.UNKNOWN_HOST, data.host(), data.broken());
         return new HostSelection(Domain.SOURCE_PROFILE, data.host(), data.broken());
     }
-    private record HostData(String host, boolean broken, boolean knownMode) {}
-    private static HostData hostData(ItemStack stack) {
+    record HostData(String host, boolean broken, boolean knownMode) {}
+    static HostData hostData(ItemStack stack) {
         String host = null, mode = null; boolean knownMode = true;
 //? if >=1.21.1 {
         /*var properties = stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
@@ -217,7 +217,8 @@ final class SourceOreCrushingAdapter {
                     && SourceOreCrushingFacts.pulverizingCinnabar(material.getId(), material.getName()) != Decision.UNKNOWN;
         }
         boolean context(GTMaterial material) {
-            return identity(material) && !legacyContinuation(material) && !material.getName().equals("Oilsands")
+            // OilSand's Centrifuge event does not disable these independent source handlers.
+            return identity(material) && !legacyContinuation(material)
                     && !overridden(material, List.of(MaterialPrefix.oreRaw, MaterialPrefix.crushed, MaterialPrefix.crushedTiny,
                     MaterialPrefix.crushedPurified, MaterialPrefix.crushedPurifiedTiny,
                     MaterialPrefix.crushedCentrifuged, MaterialPrefix.crushedCentrifugedTiny));

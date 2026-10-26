@@ -57,6 +57,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         // only add recipe rows; they do not publish material forms or dispatch addon callbacks.
         NonOreMacerationRows.begin();
         SharedOreCrushingRows.begin();
+        SharedOilSandRows.begin();
         mMaceration = new SourceOreMacerationAdapter.Snapshot();
         processOreToCrushed();
         processOreBlocks();
@@ -74,6 +75,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         NonOreMacerationRows.seal();
         SourceOreOutputRows.seal();
         SharedOreCrushingRows.seal();
+        SharedOilSandRows.seal();
     }
 
     // ========================================================================
@@ -136,10 +138,15 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 *///?} else {
         if(oil==null||!oil.isPresent())throw new IllegalStateException("Oilsands require registered crude oil");
 //?}
-        // oreRaw/standard ore are 2 U: 128 ticks, 500 mB oil and 4 U sand.
+        // Preserve this special event's early return: independently wiring the generic machines
+        // must not route OilSand through the standard OPL Furnace/byproduct listener.
+        var candidate = SharedOilSandRows.candidate(input);
+        SharedOreCrushingRows.capture(candidate, MachineRecipeMaps.Crusher, null);
+        SharedOreCrushingRows.capture(candidate, MachineRecipeMaps.Hammer, null);
+        // Capture only the exact old Centrifuge admission; source host rows replace it after tags bind.
         ItemStack sand=OM.dust(lookup("Sand"),4*U);
-        MachineRecipeMaps.Centrifuge.addRecipe1(true,EU_TIER,128,input,(FluidStack)null,
-                new FluidStack(oil.get(),500),sand);
+        SharedOilSandRows.capture(candidate, MachineRecipeMaps.Centrifuge.addRecipe1(true,EU_TIER,128,input,(FluidStack)null,
+                new FluidStack(oil.get(),500),sand));
     }
 
     /** Keep raw-form ownership separate from the ordinary block's crushing-target permission. */
