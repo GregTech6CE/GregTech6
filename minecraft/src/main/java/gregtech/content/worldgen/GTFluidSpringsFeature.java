@@ -19,6 +19,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -112,7 +113,12 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
             }
 
             public void fluid(int x, int y, int z) {
-                level.setBlock(new BlockPos(x, base + y, z), fill, 2);
+                BlockPos p = new BlockPos(x, base + y, z);
+                if (!level.setBlock(p, fill, 2)) return;
+                // WorldGenRegion does not run LiquidBlock.onPlace; schedule the fluid so gas
+                // crater fill starts rising once the chunk is live (see GTDungeonData#set).
+                FluidState fluid = fill.getFluidState();
+                if (!fluid.isEmpty()) level.scheduleTick(p, fluid.getType(), fluid.getType().getTickDelay(level));
             }
 
             public boolean bedrock(int x, int z) {

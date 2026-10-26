@@ -34,6 +34,11 @@ public final class FluidClientSetup {
             for (var binding : GTFluids.entries().entrySet()) {
                 ItemBlockRenderTypes.setRenderLayer(BuiltInRegistries.FLUID.get(binding.getKey()), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath(binding.getKey().getNamespace(), binding.getKey().getPath()+"_flowing")), RenderType.translucent());
+                // Gas world blocks use block models; register the block too (non-world fluids have none).
+                var block = BuiltInRegistries.BLOCK.get(binding.getKey());
+                if (block != net.minecraft.world.level.block.Blocks.AIR) {
+                    ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent());
+                }
             }
         });
     }

@@ -1,10 +1,12 @@
 package gregtech.platform.neoforge.fluid;
 
+import gregtech.engine.fluid.FluidPhysicalProperties;
 import gregtech.engine.fluid.FluidRenderLayers;
 import gregtech.engine.fluid.GTWaterParity;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.GTWorldWaterFluid;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -59,11 +61,18 @@ public final class FluidRegistries {
             var stillRef = new AtomicReference<DeferredHolder<Fluid, ? extends Fluid>>();
             var blockRef = new AtomicReference<DeferredHolder<Block, LiquidBlock>>();
             boolean water = GTWaterParity.isWorldWater(path);
+            // Negative density is the original's densityDir = -1: these fluids rise instead of
+            // falling. Air itself is density 0, so nothing neutrally buoyant is included.
+            boolean lighterThanAir = !water && FluidPhysicalProperties.density(entry) < 0;
             if (FluidRenderLayers.worldFluidPaths().contains(path)) blockRef.set(BLOCKS.register(path, () -> new gregtech.content.block.GTWorldFluidBlock(
                     (FlowingFluid) stillRef.get().get(), BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY))));
-            var still = GTFluids.fluids(namespace).register(path, () -> water ? new GTWorldWaterFluid.Source(properties(field, type, blockRef, true)) : new BaseFlowingFluid.Source(properties(field, type, blockRef, false)));
+            var still = GTFluids.fluids(namespace).register(path, () -> water ? new GTWorldWaterFluid.Source(properties(field, type, blockRef, true))
+                    : lighterThanAir ? new GTGasFluid.Source(properties(field, type, blockRef, false))
+                    : new BaseFlowingFluid.Source(properties(field, type, blockRef, false)));
             stillRef.set(still);
-            var flowing = GTFluids.fluids(namespace).register(path + "_flowing", () -> water ? new GTWorldWaterFluid.Flowing(properties(field, type, blockRef, true)) : new BaseFlowingFluid.Flowing(properties(field, type, blockRef, false)));
+            var flowing = GTFluids.fluids(namespace).register(path + "_flowing", () -> water ? new GTWorldWaterFluid.Flowing(properties(field, type, blockRef, true))
+                    : lighterThanAir ? new GTGasFluid.Flowing(properties(field, type, blockRef, false))
+                    : new BaseFlowingFluid.Flowing(properties(field, type, blockRef, false)));
             GTFluids.bindFluid(field, still, flowing, ResourceLocation.fromNamespaceAndPath(namespace, path), entry);
             items(namespace).register("fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties()));
         }

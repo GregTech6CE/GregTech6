@@ -95,6 +95,20 @@ public final class FluidHazards {
     }
 
     /**
+     * GT6 {@code FL.java:775-776} {@code FL.lighter}: the registered density is below air's.
+     *
+     * <p>Strictly {@code density < 0} in {@code FluidType} units; the native
+     * {@code FluidType.isLighterThanAir()} uses {@code <= 0}, which would also call the three
+     * density-0 air fluids lighter than air. Air itself is the reference and must not rise.
+     */
+    public static boolean isLighterThanAir(Fluid fluid) {
+        if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) return false;
+        RegisteredFluids.FluidEntry entry = GTFluids.entryForFluid(fluid);
+        return entry != null ? FluidPhysicalProperties.density(entry) < 0
+                : fluid.getFluidType().getDensity() < 0;
+    }
+
+    /**
      * GT6 {@code FL.java:760} {@code FL.plasma}: the fluid was created with {@code STATE_PLASMA}
      * ({@code FL.java:1106}), which the port carries as {@link RegisteredFluids.FluidFlags#PLASMA}.
      */
