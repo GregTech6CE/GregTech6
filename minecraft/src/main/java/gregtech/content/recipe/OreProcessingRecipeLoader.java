@@ -69,6 +69,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         SharedPurifiedCentrifugeRows.initialize();
         SharedOreMagneticRows.initialize();
         SharedOreSiftingRows.initialize();
+        SharedPurifiedAcidRows.initialize();
         processReviewedFollowonRoutes();
         processByproductList();
         processRecycling();
