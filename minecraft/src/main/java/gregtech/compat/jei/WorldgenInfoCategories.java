@@ -59,7 +59,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         private final IDrawable background, icon, slot;
 
         public VeinCategory(IGuiHelper gui) {
-            this.background = gui.createBlankDrawable(150, 70);
+            this.background = gui.createBlankDrawable(176, 84);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
         }
@@ -71,6 +71,16 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, VeinInfo vein, IFocusGroup focuses) {
+            if (vein.layer() != null) {
+                var captions = stratumCaptions(vein);
+                builder.addSlot(RecipeIngredientRole.OUTPUT, 1, 1).setBackground(slot, -1, -1)
+                        .addItemStack(oreStack(vein.top()))
+                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
+                builder.addSlot(RecipeIngredientRole.OUTPUT, 19, 1).setBackground(slot, -1, -1)
+                        .addItemStack(smallOreStack(vein.top()))
+                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
+                return;
+            }
             GTMaterial[] mats = {vein.top(), vein.bottom(), vein.between(), vein.spread()};
             for (int i = 0; i < 4; i++) {
                 builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + i * 18, 1)
@@ -82,6 +92,14 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         @Override
         public void draw(VeinInfo vein, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
+            if (vein.layer() != null) {
+                int y = 22;
+                for (Component caption : stratumCaptions(vein)) {
+                    g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
+                    y += 10;
+                }
+                return;
+            }
             int minY = vein.remapped() ? GTWorldgenScale.remapY(vein.minY()) : vein.minY();
             int maxY = vein.remapped() ? GTWorldgenScale.remapY(vein.maxY()) : vein.maxY();
             double pct = 100.0 * vein.weight() / Math.max(1, vein.totalWeight());
@@ -89,7 +107,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
             g.drawString(font, Component.translatable("gt6ce.jei.info.vein_name", vein.name()), 1, y, 0xFF404040, false);
             g.drawString(font, Component.translatable("gt6ce.jei.info.dimension", vein.dimension()), 1, y + 10, 0xFF404040, false);
             g.drawString(font, Component.translatable("gt6ce.jei.info.height", minY, maxY), 1, y + 20, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.chance", String.format("%.1f", pct)), 1, y + 30, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.chance", String.format(java.util.Locale.ROOT, "%.2f", pct)), 1, y + 30, 0xFF404040, false);
             g.drawString(font, Component.translatable("gt6ce.jei.info.biome_none"), 1, y + 40, 0xFF404040, false);
         }
     }

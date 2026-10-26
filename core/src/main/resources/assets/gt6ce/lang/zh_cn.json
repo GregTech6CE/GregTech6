@@ -142666,5 +142666,11 @@
   "jade.gt6ce.omni.sensor_unit_weightometric_super_heavy": "kt",
   "jade.gt6ce.omni.sensor_unit_tps": "TPS",
   "tooltip.gt6ce.cover.pump_blocks": "不能抽取流体方块，请使用%s！",
-  "tooltip.gt6ce.cover.reboot_interval": "重启间隔：%s 游戏刻"
+  "tooltip.gt6ce.cover.reboot_interval": "重启间隔：%s 游戏刻",
+  "gt6ce.jei.info.contact_both": "%1$s / %2$s（双向交界）",
+  "gt6ce.jei.info.contact_ordered": "上层：%1$s；下层：%2$s",
+  "gt6ce.jei.info.stratum_roll": "矿物判定：1/%1$s（%2$s%%）",
+  "gt6ce.jei.info.stratum_conditional": "满足位置条件且前序矿物未命中时判定；不是世界占比。",
+  "gt6ce.jei.info.stratum_contact": "岩层交界处；命中后普通矿石与贫矿各占 50%。",
+  "gt6ce.jei.info.stratum_interior": "在对应岩层内部；中心生成普通矿石，边缘生成贫矿。"
 }

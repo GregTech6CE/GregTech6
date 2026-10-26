@@ -16877,5 +16877,11 @@
   "jade.gt6ce.omni.sensor_unit_tps": "TPS",
   "tooltip.gt6ce.cover.pump_blocks": "Doesn't do Fluid Blocks! Use %s for that instead!",
   "tooltip.gt6ce.cover.reboot_interval": "Reboot interval: %s ticks",
-  "gt.lang.use.controlcover.to.toggle": "Use Cover Controller Cover to toggle ON/OFF"
+  "gt.lang.use.controlcover.to.toggle": "Use Cover Controller Cover to toggle ON/OFF",
+  "gt6ce.jei.info.contact_both": "%1$s / %2$s (either order)",
+  "gt6ce.jei.info.contact_ordered": "Above: %1$s; below: %2$s",
+  "gt6ce.jei.info.stratum_roll": "Ore roll: 1/%1$s (%2$s%%)",
+  "gt6ce.jei.info.stratum_conditional": "Per eligible position, after earlier ore rolls fail; not world abundance.",
+  "gt6ce.jei.info.stratum_contact": "At layer contacts; normal/small ore each 50% after a successful roll.",
+  "gt6ce.jei.info.stratum_interior": "Inside the host layer; normal ore in the core, small ore near its fringe."
 }

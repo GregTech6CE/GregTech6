@@ -29,7 +29,12 @@ public class WorldgenInfoData {
     protected WorldgenInfoData() {}
     public record VeinInfo(String name, String dimension, int minY, int maxY, int weight, int totalWeight,
                            GTMaterial top, GTMaterial bottom, GTMaterial between, GTMaterial spread,
-                           boolean remapped) {}
+                           boolean remapped, StratumInfo layer) {
+        public VeinInfo(String name, String dimension, int minY, int maxY, int weight, int totalWeight,
+                        GTMaterial top, GTMaterial bottom, GTMaterial between, GTMaterial spread, boolean remapped) {
+            this(name, dimension, minY, maxY, weight, totalWeight, top, bottom, between, spread, remapped, null);
+        }
+    }
 
     public record SmallOreInfo(String name, String dimension, int minY, int maxY, int amount,
                                GTMaterial material, boolean remapped) {}
@@ -67,12 +72,64 @@ public class WorldgenInfoData {
                     overworldWeight, v.top(), v.bottom(), v.between(), v.spread(), true));
         }
         var end = GTOreVeins.activeEndVeins();
-        int endWeight = end.stream().mapToInt(GTOreVeins.OreVein::weight).sum();
+        int endWeight = GTOreVeins.endSelectionWeight(end);
         for (GTOreVeins.OreVein v : end) {
             out.add(new VeinInfo(v.name(), "minecraft:the_end", v.minY(), v.maxY(), v.weight(),
                     endWeight, v.top(), v.bottom(), v.between(), v.spread(), false));
         }
+        if (gregtech.content.worldgen.GTWorldgenDefaults.STONE_LAYERS) {
+            java.util.Set<String> seen = new java.util.HashSet<>();
+            for (GTStoneLayersGen.LayerDef layer : GTStoneLayersGen.LAYERS) {
+                appendStratumOres(out, seen, layer.material(), null, false, layer.noDeep(), layer.ores());
+            }
+            for (GTStoneLayersGen.ContactDef contact : GTStoneLayersGen.CONTACTS) {
+                appendStratumOres(out, seen, contact.materialA(), contact.materialB(), contact.bothSides(), false, contact.ores());
+            }
+        }
         return out;
+    }
+
+    public record StratumInfo(Component host, boolean contact, int chanceDiv) {}
+
+    private static Component materialName(String name) {
+        GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(name);
+        String canonical = material == null ? name : material.resolve().getName();
+        return Component.translatable("material.gt6ce." + canonical.toLowerCase(java.util.Locale.ROOT));
+    }
+
+    private static void appendStratumOres(List<VeinInfo> out, java.util.Set<String> seen,
+                                          String above, String below, boolean bothSides, boolean noDeep,
+                                          List<GTStoneLayersGen.OreDef> definitions) {
+        Component host = below == null ? materialName(above)
+                : Component.translatable("gt6ce.jei.info.contact_" + (bothSides ? "both" : "ordered"),
+                        materialName(above), materialName(below));
+        for (GTStoneLayersGen.OreDef def : definitions) {
+            GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(def.material());
+            if (material == null || !material.resolve().isValid()) continue;
+            material = material.resolve();
+            int min = Math.max(GTWorldgenScale.WORLD_FLOOR + 1, GTWorldgenScale.remapY(def.minY()));
+            if (noDeep) min = Math.max(min, GTWorldgenScale.remapY(24));
+            int max = Math.min(GTWorldgenScale.BAND_TOP - 1, GTWorldgenScale.remapY(def.maxY()));
+            if (min > max) continue;
+            int chance = Math.max(1, def.chanceDiv());
+            String key = above + "/" + below + "/" + bothSides + "/" + material.getName() + "/" + min + "/" + max + "/" + chance;
+            if (!seen.add(key)) continue;
+            out.add(new VeinInfo(material.getName(), "minecraft:overworld", min, max, 1, chance,
+                    material, null, null, null, false, new StratumInfo(host, below != null, chance)));
+        }
+    }
+
+    /** Captions shared by JEI and EMI for the conditional, per-position stratum ore roll. */
+    public static List<Component> stratumCaptions(VeinInfo vein) {
+        StratumInfo info = vein.layer();
+        return List.of(
+                Component.translatable("gt6ce.jei.info.layer_stone", info.host()),
+                Component.translatable("gt6ce.jei.info.dimension", vein.dimension()),
+                Component.translatable("gt6ce.jei.info.height", vein.minY(), vein.maxY()),
+                Component.translatable("gt6ce.jei.info.stratum_roll", info.chanceDiv(),
+                        String.format(java.util.Locale.ROOT, "%.2f", 100d / info.chanceDiv())),
+                Component.translatable("gt6ce.jei.info.stratum_conditional"),
+                Component.translatable("gt6ce.jei.info." + (info.contact() ? "stratum_contact" : "stratum_interior")));
     }
 
     public static List<SmallOreInfo> buildSmallOres() {

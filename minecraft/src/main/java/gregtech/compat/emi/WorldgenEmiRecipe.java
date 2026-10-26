@@ -39,13 +39,19 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
         var veins = category(registry, "ore_veins", "ore_veins", gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
         int index = 0;
         for (var vein : WorldgenInfoData.buildVeins()) {
+            if (vein.layer() != null) {
+                registry.addRecipe(new WorldgenEmiRecipe(veins, index++,
+                        List.of(WorldgenInfoData.oreStack(vein.top()), WorldgenInfoData.smallOreStack(vein.top())),
+                        List.of(), WorldgenInfoData.stratumCaptions(vein)));
+                continue;
+            }
             int min = vein.remapped() ? GTWorldgenScale.remapY(vein.minY()) : vein.minY();
             int max = vein.remapped() ? GTWorldgenScale.remapY(vein.maxY()) : vein.maxY();
             registry.addRecipe(new WorldgenEmiRecipe(veins, index++,
                     List.of(WorldgenInfoData.oreStack(vein.top()), WorldgenInfoData.oreStack(vein.bottom()),
                             WorldgenInfoData.oreStack(vein.between()), WorldgenInfoData.oreStack(vein.spread())), List.of(),
                     List.of(line("vein_name", vein.name()), line("dimension", vein.dimension()), line("height", min, max),
-                            line("chance", String.format(Locale.ROOT, "%.1f", 100d * vein.weight() / Math.max(1, vein.totalWeight()))), line("biome_none"))));
+                            line("chance", String.format(Locale.ROOT, "%.2f", 100d * vein.weight() / Math.max(1, vein.totalWeight()))), line("biome_none"))));
         }
         var small = category(registry, "small_ores_info", "small_ores", gregtech.compat.common.RecipeViewerIcons.item("ore_small_iridium"));
         index = 0;
