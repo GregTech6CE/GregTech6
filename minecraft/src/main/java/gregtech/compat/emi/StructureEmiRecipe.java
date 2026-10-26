@@ -15,7 +15,7 @@ import java.util.*;
 public final class StructureEmiRecipe implements EmiRecipe {
     private static final EmiRecipeCategory CATEGORY = new EmiRecipeCategory(
             ResourceLocation.fromNamespaceAndPath("gt6ce", "multiblock_assembly"),
-            EmiStack.of(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BRICKS))) {
+            EmiStack.of(gregtech.compat.common.RecipeViewerIcons.item("distillation_tower_main"))) {
         @Override public Component getName() { return Component.translatable("gt6ce.jei.assembly"); }
     };
     private final MultiblockInfoData.Info info;

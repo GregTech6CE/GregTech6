@@ -61,7 +61,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public VeinCategory(IGuiHelper gui) {
             this.background = gui.createBlankDrawable(150, 70);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(new ItemStack(Items.IRON_ORE));
+            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
         }
 
         @Override public RecipeType<VeinInfo> getRecipeType() { return VEIN_TYPE; }
@@ -101,7 +101,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public SmallOreCategory(IGuiHelper gui) {
             this.background = gui.createBlankDrawable(150, 60);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(new ItemStack(Items.RAW_GOLD));
+            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_small_iridium"));
         }
 
         @Override public RecipeType<SmallOreInfo> getRecipeType() { return SMALL_ORE_TYPE; }
@@ -135,7 +135,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public LayerCategory(IGuiHelper gui) {
             this.background = gui.createBlankDrawable(168, 56);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(new ItemStack(Items.STONE));
+            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("block_ore_salt"));
         }
 
         @Override public RecipeType<LayerInfo> getRecipeType() { return LAYER_TYPE; }
@@ -161,7 +161,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         @Override
         public void draw(LayerInfo layer, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
-            g.drawString(font, Component.translatable("gt6ce.jei.info.layer_stone", layer.stoneDisplay()), 22, 5, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.layer_stone", layer.stone().getHoverName()), 22, 5, 0xFF404040, false);
             if (!layer.ores().isEmpty()) {
                 g.drawString(font, Component.translatable("gt6ce.jei.info.layer_ores"), 22, 14, 0xFF707070, false);
             } else {
@@ -189,7 +189,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public BedrockCategory(IGuiHelper gui) {
             this.background = gui.createBlankDrawable(150, 56);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(new ItemStack(Items.BEDROCK));
+            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.bedrockOre());
         }
 
         @Override public RecipeType<BedrockInfo> getRecipeType() { return BEDROCK_TYPE; }

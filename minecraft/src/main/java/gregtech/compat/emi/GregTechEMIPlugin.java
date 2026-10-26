@@ -68,6 +68,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             if (!map.mViewerAllowed || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)) continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
             ItemStack icon = workstations.isEmpty() ? new ItemStack(Items.ANVIL) : workstations.get(0);
+            var preferred = gregtech.compat.common.RecipeViewerIcons.map(map);
+            if (!preferred.isEmpty()) icon = preferred;
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var category = new EmiRecipeCategory(id, EmiStack.of(icon)) {
                 @Override public Component getName() { return Component.translatableWithFallback(map.mNameInternal, map.mNameLocal); }

@@ -30,7 +30,7 @@ public final class MultiblockInfoCategory extends MultiblockInfoData implements 
             @Override public int getHeight() {return gregtech.client.MultiblockPreviewPanel.preferredHeight();}
             @Override public void draw(GuiGraphics graphics,int x,int y) {}
         };
-        icon=helper.createDrawableItemStack(new ItemStack(GTMultiblocks.findPart(17201).get()));
+        icon=helper.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("distillation_tower_main"));
         slot=helper.getSlotDrawable();
     }
 

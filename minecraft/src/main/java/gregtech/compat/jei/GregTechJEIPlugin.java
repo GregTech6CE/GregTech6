@@ -215,6 +215,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     /** Prefer the machine itself; fall back to a recipe output for maps without a registered machine. */
     private ItemStack iconFor(RecipeMap map) {
+        var preferred = gregtech.compat.common.RecipeViewerIcons.map(map);
+        if (!preferred.isEmpty()) return preferred;
         var catalysts=machines.get(map);
         if (catalysts!=null && !catalysts.isEmpty()) return catalysts.get(0).copy();
         for (Recipe recipe : map.mRecipeList) {

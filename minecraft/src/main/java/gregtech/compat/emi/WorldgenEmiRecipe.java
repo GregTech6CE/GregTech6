@@ -27,8 +27,8 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
         this.catalysts = catalysts.stream().filter(s -> !s.isEmpty()).map(s -> (EmiIngredient)EmiStack.of(s)).toList();
         this.captions = List.copyOf(captions);
     }
-    private static EmiRecipeCategory category(EmiRegistry registry, String path, String title, Item icon) {
-        var category = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce", path), EmiStack.of(new ItemStack(icon))) {
+    private static EmiRecipeCategory category(EmiRegistry registry, String path, String title, ItemStack icon) {
+        var category = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce", path), EmiStack.of(icon)) {
             @Override public Component getName() { return Component.translatable("gt6ce.jei.category." + title); }
         };
         registry.addCategory(category);
@@ -36,7 +36,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
     }
     private static Component line(String key, Object... args) { return Component.translatable("gt6ce.jei.info." + key, args); }
     public static void register(EmiRegistry registry) {
-        var veins = category(registry, "ore_veins", "ore_veins", Items.IRON_ORE);
+        var veins = category(registry, "ore_veins", "ore_veins", gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
         int index = 0;
         for (var vein : WorldgenInfoData.buildVeins()) {
             int min = vein.remapped() ? GTWorldgenScale.remapY(vein.minY()) : vein.minY();
@@ -47,7 +47,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                     List.of(line("vein_name", vein.name()), line("dimension", vein.dimension()), line("height", min, max),
                             line("chance", String.format(Locale.ROOT, "%.1f", 100d * vein.weight() / Math.max(1, vein.totalWeight()))), line("biome_none"))));
         }
-        var small = category(registry, "small_ores_info", "small_ores", Items.RAW_GOLD);
+        var small = category(registry, "small_ores_info", "small_ores", gregtech.compat.common.RecipeViewerIcons.item("ore_small_iridium"));
         index = 0;
         for (var ore : WorldgenInfoData.buildSmallOres()) {
             int min = ore.remapped() ? GTWorldgenScale.remapY(ore.minY()) : ore.minY();
@@ -55,13 +55,13 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
             registry.addRecipe(new WorldgenEmiRecipe(small, index++, List.of(WorldgenInfoData.smallOreStack(ore.material())), List.of(),
                     List.of(line("vein_name", ore.name()), line("dimension", ore.dimension()), line("height", min, max), line("per_chunk", ore.amount()))));
         }
-        var layers = category(registry, "stone_layers_info", "stone_layers", Items.STONE);
+        var layers = category(registry, "stone_layers_info", "stone_layers", gregtech.compat.common.RecipeViewerIcons.item("block_ore_salt"));
         index = 0;
         for (var layer : WorldgenInfoData.buildLayers()) {
             registry.addRecipe(new WorldgenEmiRecipe(layers, index++, layer.ores().stream().map(WorldgenInfoData::oreStack).toList(),
-                    List.of(layer.stone()), List.of(line("layer_stone", layer.stoneDisplay()), line(layer.ores().isEmpty() ? "layer_no_ores" : "layer_ores"))));
+                    List.of(layer.stone()), List.of(line("layer_stone", layer.stone().getHoverName()), line(layer.ores().isEmpty() ? "layer_no_ores" : "layer_ores"))));
         }
-        var bedrock = category(registry, "bedrock_ores", "bedrock_ores", Items.BEDROCK);
+        var bedrock = category(registry, "bedrock_ores", "bedrock_ores", gregtech.compat.common.RecipeViewerIcons.bedrockOre());
         index = 0;
         for (var ore : WorldgenInfoData.buildBedrockOres()) {
             registry.addRecipe(new WorldgenEmiRecipe(bedrock, index++, List.of(WorldgenInfoData.oreStack(ore.material())), List.of(ore.flower()),

@@ -27,7 +27,7 @@ public final class LootEmiRecipe implements EmiRecipe {
     public static void register(EmiRegistry registry) {
         for (boolean mobs : new boolean[]{false,true}) {
             String path=mobs?"mob_drops":"loot_tables";
-            var category=new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce",path),EmiStack.of(new ItemStack(mobs?Items.ZOMBIE_SPAWN_EGG:Items.CHEST))) {
+            var category=new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce",path),EmiStack.of(mobs ? new ItemStack(Items.ZOMBIE_SPAWN_EGG) : gregtech.compat.common.RecipeViewerIcons.item("loot_chest_dungeon"))) {
                 @Override public Component getName() { return Component.translatable("gt6ce.jei.category."+path); }
             };
             registry.addCategory(category);

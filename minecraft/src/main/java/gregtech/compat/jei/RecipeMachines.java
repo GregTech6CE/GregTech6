@@ -117,7 +117,10 @@ public final class RecipeMachines {
 
 
 
+        {
             add(result,MachineRecipeMaps.CrucibleAlloying,new ItemStack(entry.get()));
+            add(result,MachineRecipeMaps.CrucibleSmelting,new ItemStack(entry.get()));
+        }
 
 
 
@@ -187,6 +190,24 @@ public final class RecipeMachines {
 
 
 
+        add(result,MachineRecipeMaps.CryoDistillationTower,new ItemStack(gregtech.content.registry.GTMultiblocks.CRYO_DISTILLATION_MAIN.get()));
+        add(result,MachineRecipeMaps.DistillationTower,new ItemStack(gregtech.content.registry.GTMultiblocks.DISTILLATION_TOWER_MAIN.get()));
+        for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+            if (item instanceof gregtech.content.item.GTToolItem tool
+                    && tool.toolType() == gregtech.engine.tool.GTToolType.HARD_HAMMER)
+                add(result,MachineRecipeMaps.Hammer,gregtech.content.item.GTToolItem.create(tool.toolType(),
+                        gregtech.content.material.Materials.Steel,gregtech.engine.material.GTMaterialRegistry.get("Birch")));
+            if (!(item instanceof net.minecraft.world.item.BlockItem block)) continue;
+            if (block.getBlock() instanceof gregtech.content.block.misc.AutoHammerBlock)
+                add(result,MachineRecipeMaps.Hammer,new ItemStack(item));
+            if (block.getBlock() instanceof gregtech.content.block.machine.LargeCrucibleControllerBlock) {
+                add(result,MachineRecipeMaps.CrucibleAlloying,new ItemStack(item));
+                add(result,MachineRecipeMaps.CrucibleSmelting,new ItemStack(item));
+            }
+            if (block.getBlock() instanceof gregtech.content.block.machine.EngineBlock engine
+                    && engine.engineType() == gregtech.engine.machine.EngineType.DIESEL)
+                add(result,gregtech.content.data.FuelRecipeMaps.Engine,new ItemStack(item));
+        }
         return result;
 
     }
