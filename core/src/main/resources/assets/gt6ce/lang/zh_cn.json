@@ -26374,6 +26374,7 @@
   "gt6ce.jei.assembly_steam_turbine": "实心 3×3×4：前方输入蒸汽，下方排出蒸馏水，后方中央输出 RU。",
   "gt6ce.jei.assembly_tank": "从底到顶逐层俯视。C 朝向图上方。所有壁板均可输入输出流体，浅色格须留空。主控也可位于顶面或底面中央。",
   "gt6ce.jei.catalyst": "不消耗",
+  "gt6ce.jei.ore_host_legacy": "未对齐矿石宿主的旧版兼容配方；所示宿主仅为示例，并非已核实的 GT6 原版配方",
   "gt6ce.jei.category.bedrock_ores": "GT 基岩矿脉",
   "gt6ce.jei.category.loot_tables": "GT 战利品表",
   "gt6ce.jei.category.mob_drops": "GT 生物掉落物",

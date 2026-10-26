@@ -891,8 +891,27 @@ public class RecipeMap {
     public boolean containsInput(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
         var recipes = mRecipeItemMap.get(stack.getItem());
-        if(recipes != null && recipes.stream().anyMatch(r -> r.mEnabled && !r.mFakeRecipe)) return true;
-        return mRecipeList.stream().anyMatch(r->r.mEnabled&&!r.mFakeRecipe&&Arrays.stream(r.mInputs).anyMatch(required->RecipeInputs.matches(required,stack)));
+        if (recipes != null && recipes.stream().anyMatch(r -> containsInput(r, stack, true))) return true;
+        return mRecipeList.stream().anyMatch(r -> containsInput(r, stack, false));
+    }
+
+    private static boolean containsInput(Recipe recipe, ItemStack stack, boolean indexed) {
+        if (!recipe.mEnabled || recipe.mFakeRecipe) return false;
+        if (indexed && !recipe.hasSameItemInputPredicates()) return true;
+        for (int input = 0; input < recipe.mInputs.length; input++) {
+            ItemStack required = recipe.mInputs[input];
+            if (empty(required)) continue;
+            if (recipe.hasSameItemInputPredicate(input) || !indexed) {
+                if (recipe.matchesItemInput(input, stack)) return true;
+            } else {
+                // Preserve the old index-only admission for unmarked inputs, including palette aliases.
+                // An unrelated unmarked slot must not bypass a marked slot's predicate.
+                if (required.is(stack.getItem())) return true;
+                for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required))
+                    if (color.is(stack.getItem())) return true;
+            }
+        }
+        return false;
     }
 
     /** Whether any registered recipe accepts the given fluid as input. */

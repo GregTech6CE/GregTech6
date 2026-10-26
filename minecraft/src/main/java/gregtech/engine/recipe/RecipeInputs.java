@@ -58,7 +58,7 @@ public final class RecipeInputs {
                 long needed = (long) required.getCount() * (catalyst ? 1 : parallel);
                 for (int slot = 0; slot < items.size(); slot++) {
                     var available = items.get(slot);
-                    if (itemCounts[slot] <= 0 || !RecipeInputs.matches(required, available)) continue;
+                    if (itemCounts[slot] <= 0 || !recipe.matchesItemInput(input, available)) continue;
 //? if >=1.21.1 {
                     /*if (recipe.mExactItemInputs && !ItemStack.isSameItemSameComponents(required, available)) continue;
 *///?} else {
@@ -120,18 +120,24 @@ public final class RecipeInputs {
         var colors = gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required);
         if (!colors.isEmpty()) return colors.stream().anyMatch(color -> matches(color, available));
         if(!required.is(available.getItem())) return gregtech.engine.material.MaterialEquivalence.matches(required,available);
-        // An unfilled vessel in a recipe denotes its empty shell. Never silently
-        // destroy stored fluid in recycling/crafting by treating absent NBT as a wildcard.
+        if (!emptyContainerMatches(required, available)) return false;
 //? if >=1.21.1 {
-        /*if(required.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike
-                &&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(required).isEmpty()
-                &&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(available).isPresent())return false;
-        return required.getComponentsPatch().isEmpty() || ItemStack.isSameItemSameComponents(required, available);
+        /*return required.getComponentsPatch().isEmpty() || ItemStack.isSameItemSameComponents(required, available);
 *///?} else {
-        if(required.getItem() instanceof gregtech.content.item.PortableFluidContainerItem
-                &&net.minecraftforge.fluids.FluidUtil.getFluidContained(required).isEmpty()
-                &&net.minecraftforge.fluids.FluidUtil.getFluidContained(available).isPresent())return false;
         return !required.hasTag() || ItemStack.isSameItemSameTags(required, available);
+//?}
+    }
+
+    /** Empty shells must stay empty even when a recipe supplies its own stack-data predicate. */
+    static boolean emptyContainerMatches(ItemStack required, ItemStack available) {
+//? if >=1.21.1 {
+        /*return !(required.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike
+                && net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(required).isEmpty()
+                && net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(available).isPresent());
+*///?} else {
+        return !(required.getItem() instanceof gregtech.content.item.PortableFluidContainerItem
+                && net.minecraftforge.fluids.FluidUtil.getFluidContained(required).isEmpty()
+                && net.minecraftforge.fluids.FluidUtil.getFluidContained(available).isPresent());
 //?}
     }
 }

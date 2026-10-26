@@ -60,6 +60,41 @@ public class Recipe {
 
     private final java.util.BitSet catalystInputs = new java.util.BitSet();
 
+    private java.util.Map<Integer, java.util.function.Predicate<ItemStack>> sameItemInputPredicates = java.util.Map.of();
+
+    /**
+     * Replace only this input's stack-data comparison, never its Item identity or consumption gates.
+     * Configure the final, normalized recipe before publishing it to a map. Predicates must not mutate
+     * the offered stack; they are evaluated again for each candidate slot, including consumption.
+     */
+    public Recipe withSameItemInputPredicate(int index, java.util.function.Predicate<ItemStack> predicate) {
+        if (index < 0 || index >= mInputs.length || mInputs[index] == null || mInputs[index].isEmpty()
+                || predicate == null) throw new IllegalArgumentException("Item input predicate " + index);
+        var predicates = new java.util.HashMap<>(sameItemInputPredicates);
+        predicates.put(index, predicate);
+        sameItemInputPredicates = java.util.Map.copyOf(predicates);
+        return this;
+    }
+
+    public boolean hasSameItemInputPredicate(int index) {
+        return sameItemInputPredicates.containsKey(index);
+    }
+
+    boolean hasSameItemInputPredicates() {
+        return !sameItemInputPredicates.isEmpty();
+    }
+
+    /** Count-independent ingredient match. Exact-input, catalyst and recovery rules remain in Matcher. */
+    public boolean matchesItemInput(int index, ItemStack available) {
+        if (index < 0 || index >= mInputs.length || available == null || available.isEmpty()) return false;
+        ItemStack required = mInputs[index];
+        if (required == null || required.isEmpty()) return false;
+        var predicate = sameItemInputPredicates.get(index);
+        if (predicate == null) return RecipeInputs.matches(required, available);
+        return required.is(available.getItem()) && RecipeInputs.emptyContainerMatches(required, available)
+                && predicate.test(available);
+    }
+
     private final java.util.Map<Integer, java.util.List<ItemStack>> viewerInputAlternatives = new java.util.HashMap<>();
     /** Informational choices for one displayed slot; this never broadens machine matching. */
     public Recipe withViewerInputAlternatives(int index, java.util.List<ItemStack> alternatives) {
@@ -71,6 +106,22 @@ public class Recipe {
         if (!viewerInputAlternatives.containsKey(index))
             return gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(mInputs[index]);
         return viewerInputAlternatives.getOrDefault(index, java.util.List.of()).stream().map(ItemStack::copy).toList();
+    }
+
+    private java.util.Map<Integer, String> viewerInputNotes = java.util.Map.of();
+
+    /** Viewer-only translation key; never stored on an ingredient or used for matching/collisions. */
+    public Recipe withViewerInputNote(int index, String translationKey) {
+        if (index < 0 || index >= mInputs.length || translationKey == null || translationKey.isBlank())
+            throw new IllegalArgumentException("Viewer input note " + index);
+        var notes = new java.util.HashMap<>(viewerInputNotes);
+        notes.put(index, translationKey);
+        viewerInputNotes = java.util.Map.copyOf(notes);
+        return this;
+    }
+
+    public String viewerInputNote(int index) {
+        return viewerInputNotes.getOrDefault(index, "");
     }
 
     /** Mark non-consumable lenses/etc. before publishing this recipe to a map. */
