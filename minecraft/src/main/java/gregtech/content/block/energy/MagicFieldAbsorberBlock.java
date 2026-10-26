@@ -39,7 +39,11 @@ public final class MagicFieldAbsorberBlock extends Block implements EntityBlock,
     @Override public void neighborChanged(BlockState state, Level level, BlockPos pos, Block source, BlockPos from, boolean moving) {
         if (level.getBlockEntity(pos) instanceof MagicFieldAbsorberBlockEntity absorber) absorber.recheck();
     }
-    private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand) {
+    private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
+            BlockHitResult hit) {
+        // The facing spec above is also what the client overlay previews; dispatch it or the wrench does nothing.
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
         if (!GTToolHelper.isSoftHammer(player.getItemInHand(hand))) return InteractionResult.PASS;
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof MagicFieldAbsorberBlockEntity absorber) {
             absorber.setEnabled(!absorber.enabled());
@@ -49,11 +53,11 @@ public final class MagicFieldAbsorberBlock extends Block implements EntityBlock,
     }
 //? if >=1.21.1 {
     /*@Override protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand).consumesAction() ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return interact(state, level, pos, player, hand, hit).consumesAction() ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
     @Override public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tip, TooltipFlag flag) {
 *///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) { return interact(state, level, pos, player, hand); }
+    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) { return interact(state, level, pos, player, hand, hit); }
     @Override public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tip, TooltipFlag flag) {
 //?}
         tip.add(Component.translatable("gt.tooltip.magicenergyabsorber"));
