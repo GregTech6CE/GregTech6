@@ -100,6 +100,7 @@ neoForge {
             systemProperty 'gregtech.integration.longDistanceRuntimeOnly', (rootProject.findProperty('longDistanceRuntimeOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.cokeRuntimeSmoke', (rootProject.findProperty('cokeRuntimeSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.nuclearFluidSmoke', (rootProject.findProperty('nuclearFluidSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientSmokeTimeoutSeconds', (rootProject.findProperty('clientSmokeTimeout') ?: '120').toString()
             systemProperty 'gregtech.integration.clientModelSmoke', (rootProject.findProperty('clientModelSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientWorldSmoke', (rootProject.findProperty('clientWorldSmoke') ?: 'false').toString()
