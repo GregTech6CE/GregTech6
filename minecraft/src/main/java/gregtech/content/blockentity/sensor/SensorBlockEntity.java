@@ -24,9 +24,8 @@ import net.minecraftforge.items.IItemHandler;
 //?}
 
 /**
- * Current sensor panel: measures the selected input every ten game ticks and
- * emits the selected mode's redstone result. Original non-TPS sensors sampled
- * every server post tick; measurement coverage and scaling still differ.
+ * Samples the selected input at the end of each server tick, after machines have worked.
+ * The TPS meter retains its original twenty-tick sampling interval.
  */
 public class SensorBlockEntity extends BlockEntity {
 
@@ -123,6 +122,8 @@ public class SensorBlockEntity extends BlockEntity {
         };
     }
     public boolean control(double x, double y, boolean screwdriver, boolean reset) {
+        boolean click = !reset && gregtech.engine.sensor.SensorControl.thresholdChange(x,y,hexadecimal) != 0
+                && (screwdriver || gregtech.engine.sensor.SensorControl.hasThreshold(mode));
         if (reset) { mode = gregtech.engine.sensor.SensorControl.Mode.DISPLAY; threshold = 0; hexadecimal = false; average.resize(1); }
         else if (screwdriver) {
             if (x >= 2 && x <= 14 && y >= 2 && y <= 4) hexadecimal = !hexadecimal;
@@ -147,6 +148,8 @@ public class SensorBlockEntity extends BlockEntity {
         }
         setChanged();
         if (level != null && !level.isClientSide) {
+            if (click) level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.value(),
+                    net.minecraft.sounds.SoundSource.BLOCKS, 1F, 1F);
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
             level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
         }
@@ -172,18 +175,18 @@ public class SensorBlockEntity extends BlockEntity {
     public int signal() { return signal; }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, SensorBlockEntity be) {
-        if (level.getGameTime() % 10 != 0) return;
-        measure(level, pos, state, be);
+        if (be.kind == Kind.TPS && level.getGameTime() % TPS_TICK_RATE != 0) return;
+        gregtech.engine.sensor.SensorSampling.enqueue(be);
     }
 
     /**
-     * The measurement itself, without the port's ten-tick throttle. Direct calls
-     * from GameTests exercise measurement but do not validate the scheduled sampling
-     * rate, post-tick ordering or capture of short-lived values.
+     * Read the physical source; the server ticker schedules this after machine work.
      */
     public static void measure(Level level, BlockPos pos, BlockState state, SensorBlockEntity be) {
         Direction facing = be.inputSide().getOpposite();
-        BlockEntity target = level.getBlockEntity(pos.relative(be.inputSide()));
+        BlockPos targetPos = pos.relative(be.inputSide());
+        boolean targetLoaded = level.hasChunkAt(targetPos);
+        BlockEntity target = targetLoaded ? level.getBlockEntity(targetPos) : null;
         // MultiTileEntitySensorTE unwraps a bound structural part before every measurement.
         if (target instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
             target = part.sensorTarget();
@@ -192,7 +195,8 @@ public class SensorBlockEntity extends BlockEntity {
         // front of it, so it is sampled on its own 20-tick beat and needs no target at all.
         if (be.kind == Kind.TPS && level.getGameTime() % TPS_TICK_RATE == 0) be.sampleTps();
 
-        long newValue = 0;
+        long newValue = be.kind == Kind.THERMOMETER && targetLoaded
+                ? gregtech.engine.sensor.SensorEnvironment.temperature(level, targetPos) : 0;
         long maximum = 0;
         if (be.addon != null) {
             SensorContext context = new SensorContext(level, pos, target, facing);
@@ -366,8 +370,7 @@ public class SensorBlockEntity extends BlockEntity {
                 case GEIGER -> {
                     if (target instanceof gregtech.content.blockentity.energy.ReactorCoreBlockEntity reactor) {
                         newValue = reactor.neutronTotal();
-                        // The original sums installed rods' neutron maxima, including coolant adjustments.
-                        maximum = Integer.MAX_VALUE;
+                        maximum = reactor.neutronMaximum();
                     }
                 }
                 case LASEROMETER -> {
@@ -401,9 +404,9 @@ public class SensorBlockEntity extends BlockEntity {
                 default -> {}
             }
         }
-        // sample clamps values to int; most maximum values remain long here, unlike
-        // the original base sensor which binds both operands before evaluating modes.
+        // Source SensorTE binds both operands before evaluating its modes.
         newValue = be.average.sample(newValue);
+        maximum = Math.max(Integer.MIN_VALUE, Math.min(Integer.MAX_VALUE, maximum));
         be.measuredValue = newValue;
         be.measuredMaximum = maximum;
         be.hasMeasurement = true;

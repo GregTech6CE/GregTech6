@@ -25,6 +25,11 @@ public final class SensorMeasurements {
     /** GT6's {@code B[16]-1}: the largest value the six-cell display is built for. */
     public static final long MAX_COUNT = 65535;
 
+    /** GT6 WD.envTemp: Celsius offset minus three, with truncation rather than rounding. */
+    public static long environmentKelvin(float biomeTemperature) {
+        return Math.max(1, (long) (gregtech.content.data.GregTechConstants.C - 3 + biomeTemperature * 20));
+    }
+
     public static long timeOfDayMinutes(long ticks) {
         return ((Math.floorMod(ticks, 24000) + 6000) % 24000) * 60 / 1000;
     }

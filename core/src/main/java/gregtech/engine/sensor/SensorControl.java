@@ -1,8 +1,7 @@
 package gregtech.engine.sensor;
 
 /**
- * Original eight mode identities with the port's current threshold and scaling rules.
- * Proportional redstone currently uses floor scaling, unlike the original UT.Code.scale.
+ * Original eight mode identities and UT.Code.scale redstone endpoints.
  */
 public final class SensorControl {
     public enum Mode { DISPLAY, PERCENT, GREATER, EQUAL, SMALLER, SCALE, FULL, NOT_FULL }
@@ -17,17 +16,23 @@ public final class SensorControl {
         };
         int signal = switch (mode) {
             case DISPLAY -> 0;
-            case PERCENT -> (int) scaled(number, 100, 15, 15);
+            case PERCENT -> redstoneScale(number, 100);
             case GREATER -> value > threshold ? 15 : 0;
             case EQUAL -> value == threshold ? 15 : 0;
             case SMALLER -> value < threshold ? 15 : 0;
-            case SCALE -> (int) scaled(value, threshold, 15, 15);
+            case SCALE -> redstoneScale(value, threshold);
             case FULL -> value >= maximum ? 15 : 0;
             case NOT_FULL -> value < maximum ? 15 : 0;
         };
         return new Reading(number, signal);
     }
-    /** Floor-ratio helper; not the original nonzero intermediate redstone scale. */
+    /** Only empty/full readings use 0/15; partial nonzero readings use 1..14. */
+    private static int redstoneScale(long value, long maximum) {
+        if (value <= 0) return 0;
+        if (value >= maximum) return 15;
+        return 1 + (int) scaled(value, maximum, 14, 14);
+    }
+    /** Percentage display uses integer division, independently of the redstone scale. */
     private static long scaled(long value, long maximum, int factor, int limit) {
         if (maximum <= 0 || value <= 0) return 0;
         return java.math.BigInteger.valueOf(value).multiply(java.math.BigInteger.valueOf(factor))

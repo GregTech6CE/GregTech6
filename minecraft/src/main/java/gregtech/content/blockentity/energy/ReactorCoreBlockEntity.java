@@ -147,6 +147,18 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
         return total;
     }
 
+    /** Source GeigerCounter sums the installed nuclear rods, including coolant modifiers. */
+    public long neutronMaximum() {
+        long total = 0;
+        var coolant = coolant();
+        for (var stack : rods) {
+            var rod = RodPhysics.definition(stack);
+            if (rod != null && rod.kind() == gregtech.content.nuclear.ReactorRodCatalog.Kind.NUCLEAR)
+                total += coolant == null ? rod.maximum() : coolant.maximum(rod);
+        }
+        return Math.min(Integer.MAX_VALUE, total);
+    }
+
     public ReactorCoolants coolant() {
         return ReactorCoolants.of(input.getFluid());
     }
