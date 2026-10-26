@@ -23,9 +23,9 @@ public final class OriginSpawnEvents {
 
     @SubscribeEvent
     public static void createSpawn(LevelEvent.CreateSpawnPosition event) {
-        if (!gregtech.GregTechConfig.Worldgen.NEXUS.enabled()) return;
+        if (!gregtech.GregTechConfig.Worldgen.NEXUS.enabled() && !gregtech.GregTechConfig.Rule.STREETS.enabled() && !gregtech.GregTechConfig.Rule.BEACON.enabled()) return;
         if (event.getLevel() instanceof ServerLevel level && level.dimension() == Level.OVERWORLD) {
-            level.setDefaultSpawnPos(new BlockPos(0, level.getSeaLevel() + 8, 0), 0);
+            level.setDefaultSpawnPos(new BlockPos(0, gregtech.GregTechConfig.Number.CENTER_HEIGHT.value() + 5, 0), 0);
             event.setCanceled(true);
         }
     }

@@ -10,6 +10,7 @@
     "OreHostToolSpeedMixin",
     "GasImmersionMixin",
     "ConstructionRecipeMixin",
+    "VanillaOreConfigMixin",
     "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "WaterFluidMixin",
@@ -52,6 +53,7 @@
     "ColoredBookOpenPacketMixin",
     "ColoredBookLecternScreenMixin",
     "GasFluidRenderMixin",
+    "FluidAlphaConfigMixin",
     "EmiStructureFocusMixin",
     "ReliableEmiNamespaceMixin"
   ]

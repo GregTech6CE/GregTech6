@@ -69,7 +69,7 @@ public final class GTLootTables {
         }
         for (String row : GTLootGen.rows()) {
             String[] parts = row.split("\\|");
-            if (parts.length != 5) continue;
+            if (parts.length != 5 || !gregtech.GregTechConfig.lootEnabled(parts[0], parts[4])) continue;
             ItemStack stack = stackOf(parts[4]);
             if (stack.isEmpty()) {
                 UNRESOLVED.add(parts[0] + " " + parts[4]);
@@ -92,7 +92,7 @@ public final class GTLootTables {
         List<Row> rows = new ArrayList<>();
         for (GTMaterial material : GTMaterialDictionary.materials()) {
             ItemStack book = GTMaterialDictionary.bookStack(material);
-            if (book.isEmpty()) continue;
+            if (book.isEmpty() || !gregtech.GregTechConfig.lootEnabled("gt.matdicts", GTMaterialDictionary.MAPPING_PREFIX + material.getName())) continue;
             rows.add(new Row("gt.matdicts", 144, 1, 1,
                     GTMaterialDictionary.MAPPING_PREFIX + material.getName(), book));
         }

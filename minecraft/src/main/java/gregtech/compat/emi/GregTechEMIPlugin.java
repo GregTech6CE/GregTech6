@@ -50,6 +50,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             if(table instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock)
                 registry.addWorkstation(dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING,EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
+        registry.removeEmiStacks(stack -> !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
         for(var item:gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())
             registry.setDefaultComparison(item,dev.emi.emi.api.stack.Comparison.compareData(
                     stack->gregtech.engine.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));

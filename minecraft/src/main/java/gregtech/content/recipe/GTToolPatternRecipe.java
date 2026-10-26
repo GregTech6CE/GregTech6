@@ -42,6 +42,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
 
     protected final GTToolType type;
     protected final GTToolRecipes.Pattern pattern;
+    private final boolean headRecipe;
 
     protected GTToolPatternRecipe(ResourceLocation id, GTToolType type, GTToolRecipes.Pattern pattern) {
         this(id, type, pattern, false);
@@ -57,6 +58,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
                 pattern.mirror());
         this.type = type;
         this.pattern = pattern;
+        this.headRecipe = head;
     }
 
     public GTToolType toolType() { return type; }
@@ -172,7 +174,8 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
 
     /** Whether the resolved material may be used for this row; GT6 gates this per registration. */
     protected boolean acceptsMaterial(GTMaterial material) {
-        if (material == null || !material.isValid()) return false;
+        if (material == null || !material.isValid()
+                || !gregtech.GregTechConfig.toolRecipeEnabled(material.getName(), headRecipe)) return false;
         if (GTToolRecipes.isWoodenRollingPin(type,pattern))
             return material.has(gregtech.api.material.MaterialProperty.WOOD)
                     && !material.has(gregtech.api.material.MaterialProperty.ANTIMATTER);

@@ -39,7 +39,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
             return true;
         });
         var legacy = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
-                .filter(item -> item instanceof gregtech.content.block.misc.LegacyConstructionBlockItem)
+                .filter(item -> !gregtech.content.item.CatalogVisibility.visible(new ItemStack(item)))
                 .map(ItemStack::new).toList();
         runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
     }

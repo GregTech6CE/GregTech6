@@ -99,7 +99,7 @@ public final class GTDungeonPlacement extends RandomSpreadStructurePlacement {
 *///?} else {
                     .apply(instance, GTDungeonPlacement::new)),
 //?}
-            placement -> placement.spacing() == SPACING && placement.separation() == SEPARATION
+            placement -> placement.spacing() == GTDungeonLayout.settings().period() && placement.separation() == SEPARATION
                     ? DataResult.success(placement)
                     : DataResult.error(() -> "gt6ce:gt_dungeon_lattice is GT6's fixed lattice: spacing must be "
 //? if >=1.21.1 {
@@ -111,7 +111,7 @@ public final class GTDungeonPlacement extends RandomSpreadStructurePlacement {
     private GTDungeonPlacement(Vec3i locateOffset, StructurePlacement.FrequencyReductionMethod method,
                                float frequency, int salt, Optional<StructurePlacement.ExclusionZone> exclusionZone,
                                int spacing, int separation) {
-        super(locateOffset, method, frequency, salt, exclusionZone, spacing, separation, RandomSpreadType.LINEAR);
+        super(locateOffset, method, frequency, salt, exclusionZone, GTDungeonLayout.settings().period(), separation, RandomSpreadType.LINEAR);
     }
 
     /** GT6's anchor lattice: {@code abs(chunk) % GRID_PERIOD == ANCHOR_OFFSET} on both axes. */

@@ -91,7 +91,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
             if (!matches(kind, biomes)) continue;
             BlockState fill = blockState(kind.blockId());
             if (fill == null) continue;
-            placed |= convertChunk(level, minX, minZ, level.getSeaLevel(), fill, kind == Kind.SWAMP);
+            placed |= convertChunk(level, minX, minZ, switch (kind) { case OCEAN -> gregtech.GregTechConfig.Number.OCEAN_HEIGHT.value(); case RIVER -> gregtech.GregTechConfig.Number.RIVER_HEIGHT.value(); case SWAMP -> gregtech.GregTechConfig.Number.SWAMP_HEIGHT.value(); }, fill, kind == Kind.SWAMP);
         }
         return placed;
     }

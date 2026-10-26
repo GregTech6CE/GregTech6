@@ -63,7 +63,7 @@ public final class CrateBlockBakedModel implements BakedModel {
     }
 
     private List<BakedQuad> filterQuads(List<BakedQuad> source) {
-        if (source.isEmpty() || itemContext) {
+        if (source.isEmpty() || itemContext || gregtech.GregTechConfig.Rule.CRATE_OVERLAY.enabled()) {
             return source;
         }
         List<BakedQuad> out = new ArrayList<>(source.size());

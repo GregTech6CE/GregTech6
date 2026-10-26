@@ -75,7 +75,7 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled()) return false;
+        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled() || !gregtech.GregTechConfig.Rule.TREES.enabled()) return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
@@ -83,9 +83,9 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
         int minX = context.origin().getX() & ~15;
         int minZ = context.origin().getZ() & ~15;
         boolean placed = false;
-        for (Entry entry : ENTRIES) {
+        for (Entry entry : ENTRIES) for (int attempt = 0; attempt < gregtech.GregTechConfig.Number.TREE_AMOUNT.value(); attempt++) {
             // GT6: one target column per chunk, then a 1/probability roll.
-            if (random.nextInt(entry.probability()) != 0) continue;
+            if (random.nextInt(entry.probability() * gregtech.GregTechConfig.Number.TREE_PROBABILITY.value()) != 0) continue;
             int x = minX + random.nextInt(16);
             int z = minZ + random.nextInt(16);
             if (!entry.biomes().contains(biomeId(level, x, z))) continue;

@@ -99,7 +99,8 @@ public final class CompatCraftingPack extends AbstractPackResources {
             if (!ModList.get().isLoaded(module.modernId())) continue;
             for (var row : module.crafting()) add(generated, row);
             for (var row : module.shaped()) addShaped(generated, row);
-            for (var removal : module.removals()) disable(generated, removal);
+            if (gregtech.GregTechConfig.Rule.REPLACE_MOD_RECIPES.enabled())
+                for (var removal : module.removals()) disable(generated, removal);
         }
         resources = Map.copyOf(generated);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Compat crafting pack: {} files", resources.size());
@@ -269,6 +270,7 @@ public final class CompatCraftingPack extends AbstractPackResources {
         }
 
         private static void strip(RecipeManager manager) {
+            if (!gregtech.GregTechConfig.Rule.REPLACE_MOD_RECIPES.enabled()) return;
             var removed = new HashSet<ResourceLocation>();
             for (var module : CompatSpecs.modules()) {
                 if (!ModList.get().isLoaded(module.modernId())) continue;

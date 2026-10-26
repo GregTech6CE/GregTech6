@@ -100,8 +100,9 @@ public class BottleItem extends Item {
         if (fluid == null || GTDrinks.rowFor(fluid) == null) {
             return InteractionResultHolder.pass(stack);
         }
+        if (!player.canEat(gregtech.GregTechConfig.Rule.ALWAYS_DRINK.enabled())) return InteractionResultHolder.fail(stack);
         if (!level.isClientSide) {
-            GTDrinks.drink(player, new FluidStack(fluid, BOTTLE_AMOUNT));
+            if (!GTDrinks.drink(player, new FluidStack(fluid, BOTTLE_AMOUNT))) return InteractionResultHolder.fail(stack);
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
 //? if >=1.21.1 {

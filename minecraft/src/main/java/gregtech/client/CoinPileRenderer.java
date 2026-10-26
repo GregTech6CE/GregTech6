@@ -36,6 +36,20 @@ public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlock
             MultiBufferSource buffers, int light, int overlay) {
         var material = MaterialItem.getMaterial(pile.coinItem());
         int color = material == null ? 0xFFFFFF : material.getColor();
+        if (!gregtech.GregTechConfig.Rule.COINS_WORLD_3D.enabled()) {
+            for (Direction side : Direction.values()) {
+                var texture = side == Direction.UP ? net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/block/iconsets/coin_top.png")
+                        : side == Direction.DOWN ? net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/block/iconsets/coin_bottom.png") : SIDE_TEXTURE;
+                var out = buffers.getBuffer(RenderType.entityCutout(texture));
+                for (int cell = 0; cell < 16; cell++) {
+                    int count = pile.faceCount(cell);
+                    if (count == 0) continue;
+                    double x = (cell / 4) / 4.0, z = (cell % 4) / 4.0;
+                    quad(pose.last(), out, new AABB(x, 0, z, x + 0.25, count / 16.0, z + 0.25), color, light, side, 0, 0);
+                }
+            }
+            return;
+        }
         CoinGeometry.MintPattern pattern = pile.coinPattern();
         // BufferSource may share a single builder between these render types. Finish each
         // texture pass before requesting the next buffer; never retain both consumers.
@@ -48,8 +62,9 @@ public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlock
                 float cellZ = (face % 4) / 4.0F;
                 pose.pushPose();
                 pose.translate(cellX, 0, cellZ);
-                for (var box : pattern.pixelBoxes(count))
+                for (var box : pattern.pixelBoxes(count)) {
                     drawCoinPixel(pose.last(), out, box, pattern, color, light, pass == 0, cellX, cellZ);
+                }
                 pose.popPose();
             }
         }

@@ -95,6 +95,7 @@ public final class GTDungeonSharedState {
         RandomSource random = RandomSource.create(GTDungeonFeature.cellSeed(seed, i, j));
         Collections.shuffle(candidates, new java.util.Random(random.nextLong()));
         for (GTDungeonChunk candidate : candidates) {
+            if (!GTDungeonFeature.roomEnabled(candidate)) continue;
             String tag = tagFor(candidate);
             if (tag == null || !claimedTags.contains(tag)) return candidate;
         }

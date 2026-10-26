@@ -167,6 +167,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         return spec != null && spec.id().startsWith("rotation_transformer_");
     }
 
+    @Override public boolean isRainProof(Direction side) { return isSolar(); }
+    @Override public boolean isThunderProof(Direction side) { return isSolar(); }
+
     public boolean isSolar() { return spec != null && spec.kind() == EnergyNodeSpec.Kind.SOLAR; }
     public void checkSolarSky() { if (isSolar()) solarEnergy.checkSky(); }
 

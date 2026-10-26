@@ -40,6 +40,6 @@ public final class CanvasCoverRenderer {
         var canvas=(CanvasItem)stack.getItem();var vertices=buffers.getBuffer(RenderType.cutout());
         CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,0,canvas.variant().rgb());
         var image=imageFace(stack,side,level,pos);
-        if(image!=null)CoverSurfaceRenderer.draw(pose,buffers.getBuffer(RenderType.translucent()),side,image.sprite(),image.bright()?LightTexture.FULL_BRIGHT:light,1,image.color());
+        if(image!=null)CoverSurfaceRenderer.draw(pose,buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent()),side,image.sprite(),image.bright()?LightTexture.FULL_BRIGHT:light,1,image.color());
     }
 }

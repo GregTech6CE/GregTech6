@@ -31,7 +31,7 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
         var visual=IClientFluidTypeExtensions.of(fluid.getFluid());var texture=visual.getStillTexture(fluid);
         if(texture==null)return;
         var sprite=CrucibleRenderSprites.resolve(texture);int tint=visual.getTintColor(fluid);
-        var consumer=buffers.getBuffer(RenderType.translucent());
+        var consumer=buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent());
         if (!shape.equals("cell")) {
             float min = shape.equals("measuring_pot") ? 5/16f : 6/16f;
             float max = 1-min;

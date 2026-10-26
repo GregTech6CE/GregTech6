@@ -9,6 +9,7 @@
     "OreHostToolSpeedMixin",
     "GasImmersionMixin",
     "ConstructionRecipeMixin",
+    "VanillaOreConfigMixin",
     "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "CraftingFormPositionMixin",
@@ -47,6 +48,7 @@
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
     "GasFluidRenderMixin",
+    "FluidAlphaConfigMixin",
     "EmiStructureFocusMixin",
     "ReliableEmiNamespaceMixin"
   ]

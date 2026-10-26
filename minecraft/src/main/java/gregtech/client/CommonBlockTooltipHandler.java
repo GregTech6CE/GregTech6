@@ -32,6 +32,10 @@ public final class CommonBlockTooltipHandler {
         CommonBlockTooltips.append(stack, event.getToolTip());
         if (net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce")) {
             event.getToolTip().replaceAll(EnergyText::format);
+            if (gregtech.GregTechConfig.Rule.INTERNAL_NAMES.enabled())
+                event.getToolTip().add(net.minecraft.network.chat.Component.literal(
+                        net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString())
+                        .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         }
     }
 }

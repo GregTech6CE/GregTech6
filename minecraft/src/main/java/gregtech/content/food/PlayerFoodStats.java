@@ -89,6 +89,14 @@ public final class PlayerFoodStats {
      * pass every 100. GT6 runs both off {@code SERVER_TIME}, so the port gates on the level's game time.
      */
     public static void tick(Player player) {
+        if (!player.isCreative() && !player.isSpectator() && player.isAlive()
+                && gregtech.GregTechConfig.Rule.AFK_HUNGER.enabled() && player.tickCount % 2400 == 1200) {
+            int count = 64;
+            for (var stack : player.getInventory().items) if (!stack.isEmpty())
+                count += stack.getCount() * 64 / Math.max(1, stack.getMaxStackSize());
+            for (var stack : player.getInventory().armor) if (!stack.isEmpty()) count += 256;
+            player.causeFoodExhaustion(Math.max(1.0F, count / 666F));
+        }
         long time = player.level().getGameTime();
         if (time % 50 == 0) {
             applyEffects(player);
@@ -104,7 +112,7 @@ public final class PlayerFoodStats {
             return;
         }
         for(int stat=0;stat<GTFoodStats.TRACKED;stat++) {
-            if(!NUTRITION_SYSTEM&&stat>=2)continue;int value=get(player,stat);
+            if(!gregtech.GregTechConfig.Rule.NUTRITION.enabled()&&stat>=2)continue;int value=get(player,stat);
             if(value>=100)overdose(player,switch(stat){case 0->GTDamageTypes.ALCOHOL;case 1->GTDamageTypes.CAFFEINE;case 2->GTDamageTypes.DEHYDRATION;case 3->GTDamageTypes.SUGAR;default->GTDamageTypes.FAT;});
             for(var row:NutritionRules.effects(stat,value)) effect(player,switch(row.id()){case "nausea"->MobEffects.CONFUSION;case "strength"->MobEffects.DAMAGE_BOOST;case "weakness"->MobEffects.WEAKNESS;case "haste"->MobEffects.DIG_SPEED;case "hunger"->MobEffects.HUNGER;case "mining_fatigue"->MobEffects.DIG_SLOWDOWN;case "speed"->MobEffects.MOVEMENT_SPEED;case "jump_boost"->MobEffects.JUMP;case "slowness"->MobEffects.MOVEMENT_SLOWDOWN;default->MobEffects.DAMAGE_RESISTANCE;},row.duration(),row.amplifier());
         }
@@ -129,7 +137,7 @@ public final class PlayerFoodStats {
      * the damage is always 2; the branch for the other config value is kept so the difference is visible.
      */
     private static void overdose(Player player, net.minecraft.resources.ResourceKey<net.minecraft.world.damagesource.DamageType> type) {
-        if (OVERDOSE_DEATH) {
+        if (gregtech.GregTechConfig.Rule.OVERDOSE_DEATH.enabled()) {
             player.hurt(GTDamageTypes.source(player.level(), type), 2.0F);
         } else if (player.getHealth() >= 2.0F) {
             player.hurt(GTDamageTypes.source(player.level(), type), 1.0F);
