@@ -1,6 +1,8 @@
 package gregtech.engine.fluid;
 
+import com.mojang.authlib.GameProfile;
 import gregtech.content.registry.GTFluids;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -11,6 +13,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.wrappers.BucketPickupHandlerWrapper;
@@ -22,13 +26,18 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 public final class WaterBucketRegressionTests {
     private WaterBucketRegressionTests() {}
 
-    @GameTest(template = "centrifuge_empty", timeoutTicks = 100)
+    @GameTest(template = "water_bucket_empty", timeoutTicks = 100)
     public static void vanillaBucketsAndModContainersCollectWorldWater(GameTestHelper helper) {
         var level = helper.getLevel();
+        // The 9x7x9 air fixture contains both the source and the player's entire downward ray.
         BlockPos pos = helper.absolutePos(new BlockPos(4, 3, 4));
-        var player = net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(level);
+        // Do not inherit or alter the world's cached [Minecraft] player's state.
+        var player = new FakePlayer(level, new GameProfile(
+                UUID.fromString("dc731b0b-8079-465f-a8a4-35b0690a4040"), "[WaterBucketTest]"));
         player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
         player.moveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 90);
+        helper.assertTrue(level.isEmptyBlock(pos.above()) && level.isEmptyBlock(pos.above(2)),
+                "Water bucket fixture must leave the player's eye and source approach unobstructed");
         for (String field : new String[]{"Water", "Ocean", "River_Water", "Swampwater"}) {
             var fluid = field.equals("Water") ? Fluids.WATER : GTFluids.still(field).get();
             var source = fluid.defaultFluidState().createLegacyBlock();
@@ -43,7 +52,9 @@ public final class WaterBucketRegressionTests {
                     player.getEyePosition().add(player.getLookAngle().scale(player.getBlockReach())),
                     net.minecraft.world.level.ClipContext.Block.OUTLINE,
                     net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY, player));
-            helper.assertTrue(hit.getBlockPos().equals(pos), field + " ray must target source, got " + hit.getBlockPos());
+            helper.assertTrue(hit.getType() == HitResult.Type.BLOCK && hit.getBlockPos().equals(pos),
+                    field + " ray must target source at " + pos + ", got " + hit.getType() + " at "
+                            + hit.getBlockPos() + " (" + level.getBlockState(hit.getBlockPos()) + ")");
             var filled = Items.BUCKET.use(level, player, InteractionHand.MAIN_HAND);
             helper.assertTrue(filled.getObject().is(Items.WATER_BUCKET), field + " BucketItem.use: "
                     + filled.getResult() + ", " + filled.getObject() + ", remaining " + level.getBlockState(pos));
@@ -71,7 +82,7 @@ public final class WaterBucketRegressionTests {
         helper.succeed();
     }
 
-    @GameTest(template = "centrifuge_empty", timeoutTicks = 100)
+    @GameTest(template = "water_bucket_empty", timeoutTicks = 100)
     public static void fluidsWithoutBucketsAreNotDeleted(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(4, 3, 4));
