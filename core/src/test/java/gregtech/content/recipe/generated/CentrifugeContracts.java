@@ -6,6 +6,7 @@ public final class CentrifugeContracts {
 
     public static void main(String[] args) {
         OptionalCentrifugeContracts.run();
+        U235CentrifugeContracts.run();
         System.out.println("Centrifuge core contracts passed (no native runtime coverage).");
     }
 }

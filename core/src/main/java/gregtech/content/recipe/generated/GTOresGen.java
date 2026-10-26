@@ -22,7 +22,10 @@ final class GTOresGen {
         GeneratedRecipeSink.register(map, eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);
     }
 
-    static void load() {
+    /** The pinned original default is false; pure catalog callers must not silently opt in. */
+    static void load() { load(false); }
+
+    static void load(boolean easyU235Extraction) {
         r("Mixer", 16, 16, null, sp("omdu:SluiceSand:72072000"), sp("w:100"), sp("f:Sluice:100"), NONE);
         r("Mixer", 16, 16, null, sp("omd:SluiceSand:1000"), sp("w:900"), sp("f:Sluice:900"), NONE);
         r("Mixer", 16, 16, null, sp("omdu:SluiceSand:72072000"), sp("f:MnWtr:100"), sp("f:Sluice:100"), NONE);
@@ -159,8 +162,11 @@ final class GTOresGen {
         r("Centrifuge", 256, 2304, ch(10000, 1350, 1350), sp("i:crushedCentrifuged:C:1"), NONE, NONE, sp("i:dust:C:1", "i:dustTiny:C_13:8", "i:dustTiny:C_14:8"));
         r("Centrifuge", 512, 256, ch(10000, 300), sp("i:crushedCentrifugedTiny:Co:1"), NONE, NONE, sp("i:dustTiny:Co:1", "i:dustTiny:Co_60:8"));
         r("Centrifuge", 512, 2304, ch(10000, 2700), sp("i:crushedCentrifuged:Co:1"), NONE, NONE, sp("i:dust:Co:1", "i:dustTiny:Co_60:8"));
-        r("Centrifuge", 1024, 256, ch(10000, 200, 100), sp("i:crushedCentrifugedTiny:U_238:1"), NONE, NONE, sp("i:dustTiny:U_238:1", "i:dustTiny:U_235:8", "i:dustTiny:U_233:8"));
-        r("Centrifuge", 1024, 2304, ch(10000, 1800, 900), sp("i:crushedCentrifuged:U_238:1"), NONE, NONE, sp("i:dust:U_238:1", "i:dustTiny:U_235:8", "i:dustTiny:U_233:8"));
+        // Original Ores371 / W375: only these two refined U238 calls are opt-in.
+        if (easyU235Extraction) {
+            GeneratedRecipeSink.registerSource(true, "Centrifuge", 1024, 256, ch(10000, 200, 100), sp("i:crushedCentrifugedTiny:U_238:1"), NONE, NONE, sp("i:dustTiny:U_238:1", "i:dustTiny:U_235:8", "i:dustTiny:U_233:8"));
+            GeneratedRecipeSink.registerSource(true, "Centrifuge", 1024, 2304, ch(10000, 1800, 900), sp("i:crushedCentrifuged:U_238:1"), NONE, NONE, sp("i:dust:U_238:1", "i:dustTiny:U_235:8", "i:dustTiny:U_233:8"));
+        }
         r("Centrifuge", 1024, 256, ch(10000, 150, 150), sp("i:crushedCentrifugedTiny:Pu:1"), NONE, NONE, sp("i:dustTiny:Pu:1", "i:dustTiny:Pu_241:8", "i:dustTiny:Pu_243:8"));
         r("Centrifuge", 1024, 2304, ch(10000, 1350, 1350), sp("i:crushedCentrifuged:Pu:1"), NONE, NONE, sp("i:dust:Pu:1", "i:dustTiny:Pu_241:8", "i:dustTiny:Pu_243:8"));
         r("Centrifuge", 1024, 256, ch(10000, 300), sp("i:crushedCentrifugedTiny:Am:1"), NONE, NONE, sp("i:dustTiny:Am:1", "i:dustTiny:Am_241:8"));

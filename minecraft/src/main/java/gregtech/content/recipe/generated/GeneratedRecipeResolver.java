@@ -71,7 +71,8 @@ public final class GeneratedRecipeResolver {
         load("extruder", GTExtruderGen::load);
         load("vanilla", GTVanillaGen::load);
         load("temporary", GTTemporaryGen::load);
-        load("ores", GTOresGen::load);
+        // Imported tables are startup-only. Overlay/tag reload restores their captured baseline.
+        load("ores", () -> GTOresGen.load(gregtech.GregTechConfig.easyU235Extraction()));
 //? if >=1.21.1 {
         /*load("technology", GTTechnologyRecipes::load);
         load("combs", GTCombGen::load);

@@ -76,6 +76,13 @@ public final class GregTechConfig {
             "machines.explode_by_overload", false, "Explode and destroy machines on energy overload. Does not control boiler overpressure or other failures.");
     private static final BooleanSupplier OVERLOAD_BREAKING = option(COMMON,
             "machines.break_by_overload", false, "Destroy overloaded machines without an area explosion. Overload explosions always imply destruction.");
+//? if >=1.21.1 {
+    /*private static final BooleanSupplier EASY_U235_EXTRACTION = option(COMMON.gameRestart(),
+*///?} else {
+    private static final BooleanSupplier EASY_U235_EXTRACTION = option(COMMON.worldRestart(),
+//?}
+            "general.EasyU235Extraction", false,
+            "Original GT6: enable only the two refined Uranium-238 centrifuge recipes. Disabled by default. Requires a full game/server process restart; /reload or reopening a world in the same process does not apply changes.");
     private static final BooleanSupplier CHEMICAL_FORMULAS = option(CLIENT,
             "tooltips.chemical_formulas", true, "Show chemical formulas in item and fluid tooltips.");
     private static final BooleanSupplier MATERIAL_DETAILS = option(CLIENT,
@@ -125,6 +132,13 @@ public final class GregTechConfig {
 
     public static boolean breakByOverload() {
         return explodeByOverload() || OVERLOAD_BREAKING.getAsBoolean();
+    }
+
+    /** Loader-exposed common-config value, read by the one-time machine-recipe bootstrap.
+     * This accessor is not a live recipe toggle; existing startup rows survive datapack reloads.
+     */
+    public static boolean easyU235Extraction() {
+        return EASY_U235_EXTRACTION.getAsBoolean();
     }
 
     public static boolean chemicalFormulas() {
