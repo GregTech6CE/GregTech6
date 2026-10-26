@@ -132,7 +132,7 @@ public final class GeneratedRecipeResolver {
         RecipeMap map = map(mapName);
         if (map == null) { skipped++; LOGGER.debug("[gregtech] chem skip (no map): {}", mapName); return; }
 
-        List<ItemStack> inputs = resolveItems(itemIn);
+        List<ItemStack> inputs = mapName.equals("Centrifuge") ? resolveCentrifugeInputs(itemIn) : resolveItems(itemIn);
         List<FluidStack> fIn = resolveFluids(fluidIn);
         List<FluidStack> fOut = resolveFluids(fluidOut);
         CentrifugeOutputs cOutputs = mapName.equals("Centrifuge") ? resolveCentrifugeOutputs(itemOut) : null;
@@ -307,6 +307,47 @@ public final class GeneratedRecipeResolver {
             }
         }
         return new CentrifugeOutputs(out, false);
+    }
+
+    /** Only the seven named source calls use cbd; all legacy i:blockDust semantics stay untouched.
+     * No table sweep/removal: an unavailable exact block simply prevents this producer's submission.
+     */
+    private static List<ItemStack> resolveCentrifugeInputs(String[] specs) {
+        if (java.util.Arrays.stream(specs).noneMatch(s -> s.startsWith("cbd:"))) return resolveItems(specs);
+        if (specs.length != 1) { for (String s : specs) recordMissing(s); return null; }
+        String spec = specs[0];
+        String[] parts = spec.split(":", -1);
+        if (parts.length != 3 || !parts[2].equals("1")) { recordMissing(spec); return null; }
+        var binding = gregtech.content.recipe.SourceCentrifugeBlockDustInputs.binding(parts[1]);
+        GTMaterial selected = binding == null ? null : material(parts[1]);
+        if (selected == null || !selected.isValid()) { recordMissing(spec); return null; }
+        GTMaterial canonical = selected.resolve();
+        ItemStack stack = gregtech.content.registry.GTBlocks.getStack(
+                gregtech.engine.prefix.BlockMaterialPrefix.blockDust, canonical);
+        if (stack == null || stack.isEmpty()) { recordMissing(spec); return null; }
+        boolean typed = stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof gregtech.content.block.MaterialBlockLike form
+                && form.prefix() == gregtech.engine.prefix.BlockMaterialPrefix.blockDust
+                && form.material() != null && form.material().resolve() == canonical;
+        var itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+        boolean registry = typed && itemId != null && itemId.getNamespace().equals("gt6ce")
+                && stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock().asItem() == stack.getItem()
+                && itemId.equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(item.getBlock()));
+        boolean plain = stack.getCount() == 1 && !stack.isDamaged();
+//? if >=1.21.1 {
+        /*plain &= stack.getComponentsPatch().isEmpty();*/
+//?} else {
+        plain &= !stack.hasTag();
+//?}
+        var facts = new gregtech.content.recipe.SourceCentrifugeBlockDustInputs.Facts(true, typed,
+                registry, plain, gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(canonical)
+                && !gregtech.engine.addon.AddonMaterials.owns(canonical), canonical.getName(), canonical.getId());
+        if (gregtech.content.recipe.SourceCentrifugeBlockDustInputs.decide(binding, facts)
+                != gregtech.content.recipe.SourceCentrifugeBlockDustInputs.Decision.PRESENT) {
+            recordMissing(spec); return null;
+        }
+        return java.util.List.of(stack.copy());
     }
 
     private static List<ItemStack> resolveItems(String[] specs) {
