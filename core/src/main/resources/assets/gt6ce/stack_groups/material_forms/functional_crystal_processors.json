@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_crystal_processors",
+  "contents": [
+    "item:gt6ce:crystal_processor_diamond",
+    "item:gt6ce:crystal_processor_emerald",
+    "item:gt6ce:crystal_processor_ruby",
+    "item:gt6ce:crystal_processor_sapphire",
+    "item:gt6ce:crystal_processor_socket"
+  ],
+  "priority": 110
+}

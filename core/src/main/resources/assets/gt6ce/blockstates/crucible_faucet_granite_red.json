@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/blocks/crucible_faucet_granite_red"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/blocks/crucible_faucet_granite_red"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/blocks/crucible_faucet_granite_red"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/blocks/crucible_faucet_granite_red"
+    }
+  }
+}

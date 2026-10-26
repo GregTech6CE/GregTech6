@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    " Bf",
+    "BOB",
+    " Bs"
+  ],
+  "key": {
+    "O": {
+      "item": "gt6ce:slicer_shape_empty"
+    },
+    "B": {
+      "item": "gt6ce:plate_tiny_stainlesssteel"
+    },
+    "f": {
+      "item": "gt6ce:tool_file"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    }
+  },
+  "result": {
+    "item": "gt6ce:slicer_shape_grid",
+    "count": 1
+  }
+}

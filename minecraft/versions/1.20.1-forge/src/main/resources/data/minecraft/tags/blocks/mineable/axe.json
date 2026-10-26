@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:log_dry",
+    "gt6ce:log_rotten",
+    "gt6ce:log_mossy",
+    "gt6ce:log_frozen",
+    "gt6ce:slab_bluespruce",
+    "gt6ce:wood_tank_main_valve",
+    "gt6ce:wood_wall"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "LLB",
+    "CQW"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:lever"
+    },
+    "C": {
+      "item": "gt6ce:circuit_basic"
+    },
+    "L": {
+      "item": "gt6ce:wire_01_lumium"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_tin"
+    }
+  },
+  "result": {
+    "item": "gt6ce:machine_status_display_cover"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

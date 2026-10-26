@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BQB",
+    "WXW"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_tin"
+    },
+    "X": {
+      "item": "minecraft:comparator"
+    }
+  },
+  "result": {
+    "item": "gt6ce:redstone_emitter"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

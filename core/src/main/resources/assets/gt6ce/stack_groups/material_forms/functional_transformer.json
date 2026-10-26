@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_transformer",
+  "contents": [
+    "item:gt6ce:transformer_ev_iv",
+    "item:gt6ce:transformer_hv_ev",
+    "item:gt6ce:transformer_iv_luv",
+    "item:gt6ce:transformer_luv_zpm",
+    "item:gt6ce:transformer_lv_mv",
+    "item:gt6ce:transformer_mv_hv",
+    "item:gt6ce:transformer_ulv_lv",
+    "item:gt6ce:transformer_uv_xv",
+    "item:gt6ce:transformer_zpm_uv"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,23 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "ZPZ",
+    "PMP",
+    "ZPZ"
+  ],
+  "key": {
+    "Z": {
+      "tag": "gt6ce:long_distance/plate/any_plastic"
+    },
+    "P": {
+      "item": "gt6ce:pipe_medium_tungsten"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_tungsten"
+    }
+  },
+  "result": {
+    "item": "gt6ce:long_dist_endpoint_fluid"
+  }
+}

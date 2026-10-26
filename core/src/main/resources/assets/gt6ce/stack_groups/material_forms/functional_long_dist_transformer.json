@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_long_dist_transformer",
+  "contents": [
+    "item:gt6ce:long_dist_transformer_lv",
+    "item:gt6ce:long_dist_transformer_mv",
+    "item:gt6ce:long_dist_transformer_ulv",
+    "item:gt6ce:long_dist_transformer_uv",
+    "item:gt6ce:long_dist_transformer_zpm"
+  ],
+  "priority": 110
+}

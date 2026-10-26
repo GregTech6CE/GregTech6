@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_medicines",
+  "contents": [
+    "item:gt6ce:antidote",
+    "item:gt6ce:blue_pill",
+    "item:gt6ce:cure_all",
+    "item:gt6ce:empty_wax_pill",
+    "item:gt6ce:laxative",
+    "item:gt6ce:medicine",
+    "item:gt6ce:peppermint",
+    "item:gt6ce:radaway",
+    "item:gt6ce:red_pill"
+  ],
+  "priority": 120
+}

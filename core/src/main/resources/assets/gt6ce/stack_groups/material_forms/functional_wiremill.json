@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_wiremill",
+  "contents": [
+    "item:gt6ce:wiremill_bronze",
+    "item:gt6ce:wiremill_steel",
+    "item:gt6ce:wiremill_titanium",
+    "item:gt6ce:wiremill_tungsten_steel"
+  ],
+  "priority": 110
+}

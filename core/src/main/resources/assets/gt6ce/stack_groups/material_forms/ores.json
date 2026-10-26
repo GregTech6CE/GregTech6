@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gt6ce.ore",
+  "regex": "^item:gt6ce:(?:ore_|ore_small_|ore_broken_|ore_bedrock_)[a-z0-9_]+$",
+  "priority": 110
+}

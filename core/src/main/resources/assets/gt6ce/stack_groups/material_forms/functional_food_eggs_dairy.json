@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_eggs_dairy",
+  "contents": [
+    "item:gt6ce:boiled_egg",
+    "item:gt6ce:boiled_egg_2",
+    "item:gt6ce:butter",
+    "item:gt6ce:cheese",
+    "item:gt6ce:cheese_bar",
+    "item:gt6ce:cheese_slice",
+    "item:gt6ce:egg",
+    "item:gt6ce:egg_white",
+    "item:gt6ce:egg_yolk",
+    "item:gt6ce:fried_egg",
+    "item:gt6ce:salted_butter",
+    "item:gt6ce:scrambled_egg",
+    "item:gt6ce:sliced_egg"
+  ],
+  "priority": 120
+}

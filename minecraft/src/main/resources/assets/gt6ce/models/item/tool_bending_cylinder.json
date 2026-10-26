@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gt6ce:item/iconsets/bending_cylinder",
+    "layer1": "gt6ce:item/iconsets/bending_cylinder_overlay"
+  }
+}

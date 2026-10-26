@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:sand_magnetite",
+    "gt6ce:sand_basalt_magnetite",
+    "gt6ce:sand_granite_magnetite"
+  ]
+}

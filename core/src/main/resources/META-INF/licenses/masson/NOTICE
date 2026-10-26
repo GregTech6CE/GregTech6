@@ -1,0 +1,59 @@
+CrucibleCraft third-party notices
+=================================
+
+CrucibleCraft source and authored resources are licensed under
+LGPL-3.0-or-later. See LICENSE.
+
+GregTech 6
+-----------
+
+Source-derived material, recipe, world-generation, and machine evidence is
+traced to GregTech 6 revision 3703e40308c8c030763fd6297dea8b210d2a77b1.
+GregTech 6 is LGPL-3.0-or-later. Its default assets are CC0 1.0; GregTech
+logos and derivative logos are CC-BY-NC-4.0. CrucibleCraft does not use a
+GregTech logo. The anvil block model is GregTech 6 MultiTileEntityAnvil
+empty-state ISBRH geometry (ID 32025). See CREDITS.md and the source-policy
+artifacts in tools/.
+
+GregTech Modern
+---------------
+
+Pipe geometry and naming are reference-only and traceable to GregTech Modern
+revision de5d2c4a4c863b94a10bfb5d0839df2de8246628, licensed LGPL-3.0.
+It is not a runtime dependency.
+
+NeoForged MDK and optional integrations
+---------------------------------------
+
+The NeoForged MDK template files, as originally supplied by
+github.com/NeoForged/MDK, are MIT-licensed:
+
+Copyright (c) 2023 NeoForged project
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Jade, EMI, Reliable EMI (REMI / EMI++), YetAnotherConfigLib, and KubeJS are
+optional, unbundled dependencies and retain their own licenses. Files below
+net/neoforged/ preserve their LGPL-2.1-only SPDX notices.
+
+Other comparison sources
+------------------------
+
+GregTech 6 Unofficial is not bundled with this repository and is not a runtime
+input. Its upstream and pinned revision are listed in CREDITS.md.

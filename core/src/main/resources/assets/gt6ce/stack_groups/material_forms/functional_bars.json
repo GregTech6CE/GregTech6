@@ -1,0 +1,14 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_bars",
+  "contents": [
+    "item:gt6ce:bars_brass",
+    "item:gt6ce:bars_bronze",
+    "item:gt6ce:bars_iron",
+    "item:gt6ce:bars_stainless",
+    "item:gt6ce:bars_steel",
+    "item:gt6ce:bars_tungsten_steel",
+    "item:gt6ce:bars_wrought_iron"
+  ],
+  "priority": 110
+}

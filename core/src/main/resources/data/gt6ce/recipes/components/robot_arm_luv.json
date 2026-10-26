@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_luv"
+    },
+    "S": {
+      "tag": "forge:rods/iridium"
+    },
+    "P": {
+      "item": "gt6ce:compact_electric_piston_luv"
+    },
+    "E": {
+      "item": "gt6ce:circuit_ultimate"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_robot_arm_luv",
+    "count": 1
+  }
+}

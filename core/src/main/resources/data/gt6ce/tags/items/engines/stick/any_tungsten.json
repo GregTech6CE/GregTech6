@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:stick/tungsten",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:stick/tungsten_sintered",
+      "required": false
+    }
+  ]
+}

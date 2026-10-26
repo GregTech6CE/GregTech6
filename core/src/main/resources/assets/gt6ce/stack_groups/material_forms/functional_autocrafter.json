@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_autocrafter",
+  "contents": [
+    "item:gt6ce:autocrafter_aluminium",
+    "item:gt6ce:autocrafter_chromium",
+    "item:gt6ce:autocrafter_galvanized_steel",
+    "item:gt6ce:autocrafter_stainless_steel",
+    "item:gt6ce:autocrafter_titanium"
+  ],
+  "priority": 110
+}

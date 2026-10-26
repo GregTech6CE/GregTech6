@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_reactor_rod_nuclear",
+  "contents": [
+    "item:gt6ce:fuel_rod_am_241",
+    "item:gt6ce:fuel_rod_co_60",
+    "item:gt6ce:fuel_rod_pu_239",
+    "item:gt6ce:fuel_rod_th_232",
+    "item:gt6ce:fuel_rod_u_235",
+    "item:gt6ce:fuel_rod_u_238",
+    "item:gt6ce:reactor_rod_9219",
+    "item:gt6ce:reactor_rod_9222",
+    "item:gt6ce:reactor_rod_9229",
+    "item:gt6ce:reactor_rod_9230",
+    "item:gt6ce:reactor_rod_9231",
+    "item:gt6ce:reactor_rod_9232",
+    "item:gt6ce:reactor_rod_9239",
+    "item:gt6ce:reactor_rod_9240",
+    "item:gt6ce:reactor_rod_9249",
+    "item:gt6ce:reactor_rod_9260",
+    "item:gt6ce:reactor_rod_9261"
+  ],
+  "priority": 110
+}

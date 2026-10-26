@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BTB",
+    "TPT",
+    "BTB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gt6ce:tool_head_sword/red_steel"
+    },
+    "T": {
+      "tag": "gt6ce:screw/red_steel"
+    },
+    "P": {
+      "tag": "gt6ce:plate/red_steel"
+    }
+  },
+  "result": {
+    "item": "gt6ce:spike_steel",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "wall",
+        "secondary": "true"
+      }
+    }
+  }
+}

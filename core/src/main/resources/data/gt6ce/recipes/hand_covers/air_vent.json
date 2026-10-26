@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemTechnological:161",
+  "pattern": [
+    "RRR",
+    "RXR",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:rods/iron"
+    },
+    "X": {
+      "item": "gt6ce:rotor_iron"
+    }
+  },
+  "result": {
+    "item": "gt6ce:air_vent"
+  }
+}

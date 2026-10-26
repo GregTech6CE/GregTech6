@@ -1,0 +1,126 @@
+package gregtech.content.block.misc;
+
+import gregtech.content.blockentity.misc.BumbleHiveBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+/**
+ * GT6's wild bumblebee hive ({@code MultiTileEntityBumbleHive}): a painted block that holds the
+ * colony the world generator put in it.
+ *
+ * <p>Current registrations use {@link FixedBumbleHiveBlock}, with the colour in the registered block
+ * identity. The colour state and migration ticker here support the port's earlier state-based hives;
+ * newly generated fixed variants do not carry that state.</p>
+ *
+ * <p>Breaking rule ({@code MultiTileEntityBumbleHive:97-99}): only a player's break sets
+ * {@code mDroppable}, and only then does the hive hand out its contents — a piston, an explosion or
+ * {@code /setblock} destroys the colony with the block.</p>
+ */
+public class BumbleHiveBlock extends Block implements EntityBlock {
+
+    /** Legacy colour state; current fixed variants omit this property. */
+    public static final EnumProperty<DyeColor> COLOR =
+            EnumProperty.create("color", DyeColor.class);
+
+//? if >=1.21.1 {
+    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
+*///?} else {
+//?}
+    public BumbleHiveBlock(Properties properties) {
+        super(properties);
+        registerDefaultState(stateDefinition.any().hasProperty(COLOR)
+                ? stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY) : stateDefinition.any());
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(COLOR);
+    }
+
+    public static DyeColor colorOf(BlockState state) {
+        return state.getBlock() instanceof FixedBumbleHiveBlock hive ? hive.color() : state.getValue(COLOR);
+    }
+
+    @Override
+    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
+        if (level.isClientSide || this instanceof FixedBumbleHiveBlock) return null;
+        return (world, pos, current, entity) -> {
+            if (entity instanceof BumbleHiveBlockEntity hive) hive.migrateLegacyVariant();
+        };
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new BumbleHiveBlockEntity(pos, state);
+    }
+
+    /** Physical properties only; fire behaviour is inherited from the native block defaults. */
+    public static Properties defaultProperties() {
+        return Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.0F, 1.0F)
+                .sound(SoundType.WOOD).ignitedByLava();
+    }
+
+    @Override
+//? if >=1.21.1 {
+    /*public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+*///?} else {
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+//?}
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof BumbleHiveBlockEntity hive) {
+            for (ItemStack stack : hive.contents()) popResource(level, pos, stack);
+            hive.clearContents();
+        }
+//? if >=1.21.1 {
+        /*return super.playerWillDestroy(level, pos, state, player);
+*///?} else {
+        super.playerWillDestroy(level, pos, state, player);
+//?}
+    }
+
+    /** GT6's thermometer tooltip ({@code addToolTips}), reusing the port's own lang key. */
+    @Override
+//? if >=1.21.1 {
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
+*///?} else {
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
+//?}
+                                TooltipFlag flag) {
+        tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer"));
+//? if >=1.21.1 {
+        /*super.appendHoverText(stack, context, tooltip, flag);
+*///?} else {
+        super.appendHoverText(stack, level, tooltip, flag);
+//?}
+    }
+
+    @Override
+//? if >=1.21.1 {
+    /*public boolean isPathfindable(BlockState state, net.minecraft.world.level.pathfinder.PathComputationType type) {
+*///?} else {
+    public boolean isPathfindable(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos,
+                                  net.minecraft.world.level.pathfinder.PathComputationType type) {
+//?}
+        return false;
+    }
+}

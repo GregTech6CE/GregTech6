@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    " s ",
+    "PxP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_curved_plastic"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:fluid_funnel_plastic"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

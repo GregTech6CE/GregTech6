@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gt6ce:block/machine/multiblock/bedrock_mining_drill_head"
+    }
+  }
+}

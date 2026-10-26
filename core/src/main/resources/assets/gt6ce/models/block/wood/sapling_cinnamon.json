@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "gt6ce:block/iconsets/sapling_small_cinnamon"
+  },
+  "render_type": "minecraft:cutout"
+}

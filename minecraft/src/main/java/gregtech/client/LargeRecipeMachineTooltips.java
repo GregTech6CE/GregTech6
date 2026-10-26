@@ -1,0 +1,58 @@
+/* Copyright (c) 2025 GregTech-6 Team; Gregorius Techneticies; LGPL-3.0-or-later.
+ * Adapted from the twelve original processing controllers and MultiTileEntityBasicMachine.addToolTips. */
+package gregtech.client;
+import gregtech.engine.machine.BasicMachineSpec;
+import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import java.util.List;
+public final class LargeRecipeMachineTooltips {
+    private LargeRecipeMachineTooltips() {}
+    public static void append(BasicMachineSpec spec,List<Component> lines) {
+        add(lines,"gt.lang.structure",ChatFormatting.AQUA).append(":");
+        for(var key:spec.structureKeys()) add(lines,key,ChatFormatting.WHITE);
+        var recipeName = OriginalLargeRecipeMachineData.handles(spec.machineName())
+                ? Component.translatable(OriginalLargeRecipeMachineData.recipeKey(spec.machineName()))
+                : Component.literal(spec.recipeMap().mNameLocal);
+        add(lines,"gt.lang.recipes",ChatFormatting.AQUA).append(": ")
+                .append(recipeName.withStyle(ChatFormatting.WHITE))
+                .append(TooltipHelper.parallel(spec.parallelLimit()).withStyle(ChatFormatting.WHITE));
+        boolean timed=spec.energyType().equals("TU");
+        boolean cheap=spec.cheapOverclocking();
+        if(cheap)add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
+        if(spec.minimumLightAbove()>0)lines.add(Component.translatable("gt.lang.requirement.light.above",spec.minimumLightAbove()).withStyle(ChatFormatting.GOLD));
+        int efficiency=spec.processingEfficiency();
+        if(efficiency!=10000)add(lines,"gt.lang.efficiency",ChatFormatting.YELLOW).append(": ")
+                .append(Component.literal(efficiency/100+"."+String.format(java.util.Locale.ROOT,"%02d",efficiency%100)+"%").withStyle(ChatFormatting.WHITE));
+        if(!timed) {
+            String unit=switch(spec.energyType()) {case "RU"->"gt.td.short.energy.kinetic_rotation";case "HU"->"gt.td.short.energy.heat";default->"gt.td.short.energy.electricity";};
+            var color=switch(spec.energyType()) {case "RU"->ChatFormatting.GREEN;case "HU"->ChatFormatting.RED;default->ChatFormatting.BLUE;};
+            add(lines,"gt.lang.energy.input",ChatFormatting.GREEN).append(": ")
+                    .append(Component.literal(spec.energyIn()+" ").withStyle(ChatFormatting.WHITE))
+                    .append(Component.translatable(unit).withStyle(color))
+                    .append(Component.literal("/t (").append(TooltipHelper.range(spec.energyInMin(), spec.energyInMax())).append(")").withStyle(ChatFormatting.WHITE));
+        }
+        var map=spec.recipeMap();
+        if(map.mInputItemsCount>0)io(lines,"gt.lang.item.input",false,null,ChatFormatting.GREEN);
+        if(map.mOutputItemsCount>0)io(lines,"gt.lang.item.output",true,spec.itemOutputTarget(),ChatFormatting.RED);
+        if(map.mInputFluidCount>0)io(lines,"gt.lang.fluid.input",false,null,ChatFormatting.GREEN);
+        if(map.mOutputFluidCount>0)io(lines,"gt.lang.fluid.output",true,spec.fluidOutputTarget(),ChatFormatting.RED);
+        add(lines,"gt.lang.use.screwdriver.to.toggle",ChatFormatting.DARK_GRAY);
+        add(lines,"gt.lang.use.monkey.wrench.to.toggle.auto.outputs",ChatFormatting.DARK_GRAY);
+        add(lines,"gt.lang.use.soft.hammer.to.reset",ChatFormatting.DARK_GRAY);
+        add(lines,"gt.lang.use.builder.wand.to.ease.building",ChatFormatting.DARK_GRAY);
+        add(lines,"gt.lang.use.magnifyingglass.to.detail",ChatFormatting.DARK_GRAY);
+        StorageBlockTooltips.facing(lines);
+    }
+    private static void io(List<Component> lines,String key,boolean output,gregtech.api.machine.IoTarget target,ChatFormatting color) {
+        var line=add(lines,key,color).append(": ");
+        // A rear cell faces the machine, so its receiver is FRONT. The line names the rear of the structure.
+        String face=output?(target!=null&&target.back()!=0?"gt.lang.face.back":"gt.lang.face.bottom"):"gt.lang.face.any";
+        line.append(Component.translatable(face).withStyle(ChatFormatting.WHITE))
+                .append(Component.translatable(output?"tooltip.gt6ce.ui.auto_any":"tooltip.gt6ce.ui.no_auto").withStyle(ChatFormatting.WHITE));
+    }
+    private static MutableComponent add(List<Component> lines,String key,ChatFormatting color) {
+        var line=Component.translatable(key).withStyle(color);lines.add(line);return line;
+    }
+}

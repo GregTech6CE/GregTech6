@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_debarker",
+  "contents": [
+    "item:gt6ce:debarker_bronze",
+    "item:gt6ce:debarker_steel",
+    "item:gt6ce:debarker_titanium",
+    "item:gt6ce:debarker_tungsten_steel"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=north,active=false": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv"
+    },
+    "facing=north,active=true": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv_active"
+    },
+    "facing=east,active=false": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv",
+      "y": 90
+    },
+    "facing=east,active=true": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv_active",
+      "y": 90
+    },
+    "facing=south,active=false": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv",
+      "y": 180
+    },
+    "facing=south,active=true": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv_active",
+      "y": 180
+    },
+    "facing=west,active=false": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv",
+      "y": 270
+    },
+    "facing=west,active=true": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv_active",
+      "y": 270
+    },
+    "facing=up,active=false": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv",
+      "x": 270
+    },
+    "facing=up,active=true": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv_active",
+      "x": 270
+    },
+    "facing=down,active=false": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv",
+      "x": 90
+    },
+    "facing=down,active=true": {
+      "model": "gt6ce:block/machine/energy/flux_magnet_hv_active",
+      "x": 90
+    }
+  }
+}

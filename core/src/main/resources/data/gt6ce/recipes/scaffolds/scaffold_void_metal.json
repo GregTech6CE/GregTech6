@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8428)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/void_metal"
+    },
+    "P": {
+      "tag": "forge:plates/void_metal"
+    },
+    "S": {
+      "tag": "forge:rods/void_metal"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:scaffold_void_metal"
+  }
+}

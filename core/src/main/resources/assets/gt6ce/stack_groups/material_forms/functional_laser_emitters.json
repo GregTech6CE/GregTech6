@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_laser_emitters",
+  "contents": [
+    "item:gt6ce:co2_laser_ev",
+    "item:gt6ce:co2_laser_hv",
+    "item:gt6ce:co2_laser_iv",
+    "item:gt6ce:co2_laser_lv",
+    "item:gt6ce:co2_laser_mv",
+    "item:gt6ce:laser_emitter_argon",
+    "item:gt6ce:laser_emitter_carbondioxide",
+    "item:gt6ce:laser_emitter_carbonmonoxide",
+    "item:gt6ce:laser_emitter_emptygas",
+    "item:gt6ce:laser_emitter_helium",
+    "item:gt6ce:laser_emitter_heliumneon",
+    "item:gt6ce:laser_emitter_krypton",
+    "item:gt6ce:laser_emitter_neon",
+    "item:gt6ce:laser_emitter_xenon"
+  ],
+  "priority": 110
+}

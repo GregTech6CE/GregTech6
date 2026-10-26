@@ -1,0 +1,11 @@
+{
+  "parent": "gt6ce:block/inventory/data_switch_base",
+  "textures": {
+    "colored_bottom": "gt6ce:block/data_switch/hdd/colored/bottom",
+    "colored_top": "gt6ce:block/data_switch/hdd/colored/top",
+    "colored_side": "gt6ce:block/data_switch/hdd/colored/side",
+    "overlay_bottom": "gt6ce:block/data_switch/hdd/overlay/bottom",
+    "overlay_top": "gt6ce:block/data_switch/hdd/overlay/top",
+    "overlay_side": "gt6ce:block/data_switch/hdd/overlay/side"
+  }
+}

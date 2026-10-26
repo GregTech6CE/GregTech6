@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gt6ce:item/material_icons/rad/toolheadwrench",
+    "layer1": "gt6ce:item/material_icons/rad/toolheadwrench_overlay"
+  }
+}

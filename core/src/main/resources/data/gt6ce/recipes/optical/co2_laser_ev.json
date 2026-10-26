@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "L L",
+    "LWL",
+    "CMC"
+  ],
+  "key": {
+    "L": {
+      "item": "gt6ce:laser_emitter_carbondioxide"
+    },
+    "W": {
+      "item": "gt6ce:cable_04_aluminium"
+    },
+    "C": {
+      "item": "gt6ce:circuit_elite"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_chromium"
+    }
+  },
+  "result": {
+    "item": "gt6ce:co2_laser_ev"
+  }
+}

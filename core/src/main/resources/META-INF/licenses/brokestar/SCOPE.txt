@@ -1,0 +1,23 @@
+Third-party notice scope for this integration
+
+LICENSE and NOTICE.md in this directory are byte-preserved documents from
+brokestar233's supplied gregtech6-main snapshot, corresponding exactly to
+source commit 3118acbf83a84d05fa37d57af1705cf00e423ca9 in
+https://github.com/Meow404club/gregtech6.git.
+
+NOTICE.md describes that source repository, including its ModularUI packaging
+and repository-wide declarations. Those statements have not been rewritten
+as claims about the current integrated project. This project has not bundled
+ModularUI from that source.
+
+The currently adopted derivative is ThermalStep.java, adapted from the
+source's gregapi/util/CruciblePhysics.java thermal arithmetic and the original
+GregTech 6 algorithm. Original authors, revision, line ranges, SHA-256 and
+excluded logic are recorded in core/provenance/thermal-extraction.json.
+The original copyright and LGPL-3.0-or-later header remain on ThermalStep.
+
+These retained component notices do not replace or resolve saltnya's existing
+All Rights Reserved mod declaration or the integration's publication gate.
+Refer to the repository's source and verification records for actual adopted
+content and verification scope. This text is integration documentation; it
+does not modify the accompanying third-party license or notice.

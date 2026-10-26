@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "gt6ce:block/stones/stone_prismarine_dark_small_bricks_slab"
+    },
+    "facing=up": {
+      "model": "gt6ce:block/stones/stone_prismarine_dark_small_bricks_slab",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "gt6ce:block/stones/stone_prismarine_dark_small_bricks_slab_side"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/stones/stone_prismarine_dark_small_bricks_slab_side",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "gt6ce:block/stones/stone_prismarine_dark_small_bricks_slab_side",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "gt6ce:block/stones/stone_prismarine_dark_small_bricks_slab_side",
+      "y": 270
+    }
+  }
+}

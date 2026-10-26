@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BW ",
+    "CQd"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:repeater"
+    },
+    "C": {
+      "item": "gt6ce:circuit_elite"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_tin"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gt6ce:auto_reboot_switch_5m"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,489 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gt6ce:screw_acacia",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_alder",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_applewood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_ashwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_aspen",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_autumnwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_balsa",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_baobab",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_beech",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_birch",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_bluemahoe",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_bluespruce",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_boxwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_brazilwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_butternutwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_castiron",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_cedar",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_cherrywood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_chestnutwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_cinnamonwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_citruswood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_cocobolowood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_coconutwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_crimsonwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_cypress",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_darkoak",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_darkwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_douglasfir",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_ebony",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_elderwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_elm",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_etherealwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_eucalyptus",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_figwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_fir",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_foxfirewood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_giganteumwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_gingko",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_goldwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_greenheart",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_hawthorn",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_hazel",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_hellbark",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_hemlock",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_hickory",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_holly",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_hornbeam",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_ipe",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_iroko",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_iron",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_ironcompressed",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_jacaranda",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_japanesemaple",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_junglewood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_kapok",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_knightmetal",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_larch",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_limewood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_locust",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_logwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_maclura",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_magicwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_mahoe",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_mahogany",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_mangrove",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_maple",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_meteoriciron",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_meteoricsteel",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_meteorite",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_oak",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_ogrewood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_olivewood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_padauk",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_palm",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_papayawood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_pearwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_petrifiedwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_pigiron",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_pine",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_pinkivory",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_plumwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_poplar",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_purpleheart",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_rainboweucalyptus",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_rainbowood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_redwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_rosewood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_rowan",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_sacredoak",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_sakura",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_sequoia",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_silverpine",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_spruce",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_steel",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_sweetgum",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_sycamore",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_syzgium",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_teak",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_thorntree",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_towerwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_walnutwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_warpedwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_wenge",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_whitebeam",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_whitecedar",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_whiteelm",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_willow",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_witchwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodbleached",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodcompressed",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_wooddead",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodfrozen",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodmossy",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodrotten",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodscorched",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodtainted",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_woodvarnished",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_wroughtiron",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_wyvernwood",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_yew",
+      "required": false
+    },
+    {
+      "id": "gt6ce:screw_zebrawood",
+      "required": false
+    }
+  ]
+}

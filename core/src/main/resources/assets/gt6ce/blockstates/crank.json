@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "active=false,facing=north": {
+      "model": "gt6ce:block/machine/tool/crank"
+    },
+    "active=false,facing=east": {
+      "model": "gt6ce:block/machine/tool/crank",
+      "y": 90
+    },
+    "active=false,facing=south": {
+      "model": "gt6ce:block/machine/tool/crank",
+      "y": 180
+    },
+    "active=false,facing=west": {
+      "model": "gt6ce:block/machine/tool/crank",
+      "y": 270
+    },
+    "active=false,facing=up": {
+      "model": "gt6ce:block/machine/tool/crank",
+      "x": 270
+    },
+    "active=false,facing=down": {
+      "model": "gt6ce:block/machine/tool/crank",
+      "x": 90
+    },
+    "active=true,facing=north": {
+      "model": "gt6ce:block/machine/tool/crank_active"
+    },
+    "active=true,facing=east": {
+      "model": "gt6ce:block/machine/tool/crank_active",
+      "y": 90
+    },
+    "active=true,facing=south": {
+      "model": "gt6ce:block/machine/tool/crank_active",
+      "y": 180
+    },
+    "active=true,facing=west": {
+      "model": "gt6ce:block/machine/tool/crank_active",
+      "y": 270
+    },
+    "active=true,facing=up": {
+      "model": "gt6ce:block/machine/tool/crank_active",
+      "x": 270
+    },
+    "active=true,facing=down": {
+      "model": "gt6ce:block/machine/tool/crank_active",
+      "x": 90
+    }
+  }
+}

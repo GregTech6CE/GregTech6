@@ -1,0 +1,56 @@
+# Gradle outputs and local caches (at every module/version depth).
+.gradle/
+build/
+.stonecutter/
+
+# Development instances: saves, mods, configuration and raw evidence.
+run/
+run-*/
+logs/
+crash-reports/
+
+# IDE and OS files.
+.idea/
+.vscode/
+.classpath
+.project
+.settings/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# Local tooling caches and virtual environments.
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+
+# Task scratch, downloads, private deployment inputs and raw evidence.
+# Durable summaries belong in docs/; see docs/development/repository-layout.md.
+/work/
+/tmp/
+/temp/
+/local.properties
+.env
+.env.*
+!.env.example
+!.env.*.example
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# Legacy local planning locations; new task notes should use work/<task>/.
+/docs/card-plans/
+/docs/supersymmetry-*.md
+
+# Avoid blanket *.jar, *.json, *.log or generated/ rules: the Wrapper,
+# game assets, documented fixtures and checked-in catalogs are sources.
+# Keep docs/operations/records/ versioned.

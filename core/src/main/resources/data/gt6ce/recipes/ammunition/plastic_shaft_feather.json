@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S",
+    "F "
+  ],
+  "key": {
+    "S": {
+      "tag": "gt6ce:ammunition/sticks_plastic"
+    },
+    "F": {
+      "tag": "gt6ce:ammunition/feathers"
+    }
+  },
+  "result": {
+    "item": "gt6ce:arrow_gt_plastic_empty"
+  },
+  "_comment": "GT6 Loader_Recipes_Vanilla:475-484 (Gregorius Techneticies)"
+}

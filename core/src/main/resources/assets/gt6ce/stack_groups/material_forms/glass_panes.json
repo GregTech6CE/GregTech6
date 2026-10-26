@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "block.minecraft.glass_pane",
+  "regex": "^item:minecraft:(?:[a-z_]+_stained_)?glass_pane$",
+  "priority": 120
+}

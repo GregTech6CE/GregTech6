@@ -1,0 +1,58 @@
+{
+  "variants": {
+    "facing=down,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/pine_down"
+    },
+    "facing=down,type=top": {
+      "model": "gt6ce:block/wood_slabs/pine_up"
+    },
+    "facing=down,type=double": {
+      "model": "gt6ce:block/wood/planks_pine"
+    },
+    "facing=up,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/pine_up"
+    },
+    "facing=up,type=top": {
+      "model": "gt6ce:block/wood_slabs/pine_up"
+    },
+    "facing=up,type=double": {
+      "model": "gt6ce:block/wood/planks_pine"
+    },
+    "facing=north,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/pine_north"
+    },
+    "facing=north,type=top": {
+      "model": "gt6ce:block/wood_slabs/pine_north"
+    },
+    "facing=north,type=double": {
+      "model": "gt6ce:block/wood/planks_pine"
+    },
+    "facing=south,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/pine_south"
+    },
+    "facing=south,type=top": {
+      "model": "gt6ce:block/wood_slabs/pine_south"
+    },
+    "facing=south,type=double": {
+      "model": "gt6ce:block/wood/planks_pine"
+    },
+    "facing=west,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/pine_west"
+    },
+    "facing=west,type=top": {
+      "model": "gt6ce:block/wood_slabs/pine_west"
+    },
+    "facing=west,type=double": {
+      "model": "gt6ce:block/wood/planks_pine"
+    },
+    "facing=east,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/pine_east"
+    },
+    "facing=east,type=top": {
+      "model": "gt6ce:block/wood_slabs/pine_east"
+    },
+    "facing=east,type=double": {
+      "model": "gt6ce:block/wood/planks_pine"
+    }
+  }
+}

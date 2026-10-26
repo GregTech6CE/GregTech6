@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_compass",
+  "contents": [
+    "item:gt6ce:compass_center",
+    "item:gt6ce:compass_death",
+    "item:gt6ce:compass_face",
+    "item:gt6ce:compass_north",
+    "item:gt6ce:compass_spawn"
+  ],
+  "priority": 110
+}

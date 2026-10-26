@@ -1,0 +1,135 @@
+// NeoForge boundary configuration for the Stonecutter 1.21.1 node.
+apply plugin: 'java-library'
+apply plugin: 'net.neoforged.moddev'
+
+evaluationDependsOn(':core')
+
+group = rootProject.property('mod_group_id')
+version = rootProject.property('mod_version')
+
+base {
+    archivesName = "${rootProject.property('mod_id')}-neoforge-1.21.1"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+repositories {
+    maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
+    maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
+    maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
+    maven { name = 'Latvian'; url = 'https://maven.latvian.dev/releases' }
+}
+
+dependencies {
+    compileOnly "dev.emi:emi-neoforge:1.1.24+1.21.1:api"
+    if (rootProject.findProperty('emiSmoke') == 'true') {
+        runtimeOnly "dev.emi:emi-neoforge:1.1.24+1.21.1"
+    }
+    compileOnly "mezz.jei:jei-1.21.1-common-api:${rootProject.property('neoforge_jei_version')}"
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${rootProject.property('neoforge_jei_version')}"
+    if (rootProject.findProperty('emiOnlySmoke') != 'true') {
+        runtimeOnly "mezz.jei:jei-1.21.1-neoforge:${rootProject.property('neoforge_jei_version')}"
+    }
+    compileOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
+    runtimeOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
+    if (rootProject.findProperty('compatRuntime') == 'ie') {
+        runtimeOnly "maven.modrinth:immersiveengineering:${rootProject.property('neoforge_ie_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'mek') {
+        runtimeOnly "maven.modrinth:mekanism:${rootProject.property('neoforge_mek_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'ae') {
+        runtimeOnly "maven.modrinth:ae2:${rootProject.property('neoforge_ae_version')}"
+        runtimeOnly "maven.modrinth:guideme:${rootProject.property('neoforge_guideme_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'pr') {
+        runtimeOnly "maven.modrinth:project-red-core:${rootProject.property('neoforge_pr_version')}"
+        runtimeOnly "maven.modrinth:codechicken-lib:${rootProject.property('neoforge_ccl_version')}"
+        runtimeOnly "maven.modrinth:cb-multipart:${rootProject.property('neoforge_cbm_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'hc') {
+        runtimeOnly "maven.modrinth:pams-harvestcraft-2-food-core:${rootProject.property('neoforge_hc_version')}"
+    }
+    // KubeJS stays off the production jar. The classes are loaded only when KubeJS reads kubejs.plugins.txt.
+    compileOnly "dev.latvian.mods:kubejs-neoforge:${rootProject.property('kubejs_neoforge_version')}"
+    compileOnly "dev.latvian.mods:rhino:${rootProject.property('rhino_neoforge_version')}"
+    if (rootProject.findProperty('kubejsRuntime')?.toString() == 'true') {
+        runtimeOnly "dev.latvian.mods:kubejs-neoforge:${rootProject.property('kubejs_neoforge_version')}"
+        runtimeOnly "dev.latvian.mods:rhino:${rootProject.property('rhino_neoforge_version')}"
+    }
+
+    if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
+        // Local development can use the same compiled core output directly.
+        // This avoids rebuilding its large resource archive before an ordinary run.
+        implementation files(project(':core').sourceSets.main.output)
+    } else {
+        implementation project(':core')
+    }
+}
+
+neoForge {
+    version = '21.1.243'
+    addModdingDependenciesTo sourceSets.api
+
+    runs {
+        client {
+            client()
+            gameDirectory = project.file('run-client')
+        }
+        server {
+            server()
+            gameDirectory = project.file('run-server')
+            if (rootProject.findProperty('serverDirectory')) {
+                gameDirectory = project.file(rootProject.property('serverDirectory'))
+            }
+            jvmArgument '-Xmx2g'
+            programArgument '--nogui'
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        "${rootProject.property('mod_id')}" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.api
+            sourceSet project(':core').sourceSets.main
+        }
+    }
+}
+
+def modProperties = [
+        mod_id: rootProject.property('mod_id'),
+        mod_name: rootProject.property('mod_name'),
+        mod_version: project.version.toString(),
+        mod_license: rootProject.property('mod_license'),
+        mod_description: rootProject.property('mod_description'),
+        mod_authors: 'saltnya, brokestar233, Lorbineitte Masson, GregTech 6 team'
+]
+
+tasks.named('processResources', ProcessResources).configure {
+    inputs.properties(modProperties)
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand(modProperties)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('jar', Jar).configure {
+    // Embedding the complete shared resource catalog requires ZIP64 too.
+    zip64 = true
+    // The same Java 17 output used by Forge is embedded exactly once.
+    from project(':core').sourceSets.main.output
+    from sourceSets.api.output
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    manifest.attributes('Implementation-Version': project.version.toString())
+}

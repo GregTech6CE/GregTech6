@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_battery_box",
+  "contents": [
+    "item:gt6ce:battery_box_ev",
+    "item:gt6ce:battery_box_hv",
+    "item:gt6ce:battery_box_iv",
+    "item:gt6ce:battery_box_luv",
+    "item:gt6ce:battery_box_lv",
+    "item:gt6ce:battery_box_mv",
+    "item:gt6ce:battery_box_ulv",
+    "item:gt6ce:battery_box_uv",
+    "item:gt6ce:battery_box_xv",
+    "item:gt6ce:battery_box_zpm"
+  ],
+  "priority": 110
+}

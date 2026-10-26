@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gt6ce:item/iconsets/scoop",
+    "layer1": "gt6ce:item/iconsets/scoop_overlay"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:cfoam_slab",
+    "gt6ce:cfoam_slab_white",
+    "gt6ce:cfoam_slab_orange",
+    "gt6ce:cfoam_slab_magenta",
+    "gt6ce:cfoam_slab_light_blue",
+    "gt6ce:cfoam_slab_yellow",
+    "gt6ce:cfoam_slab_lime",
+    "gt6ce:cfoam_slab_pink",
+    "gt6ce:cfoam_slab_gray",
+    "gt6ce:cfoam_slab_light_gray",
+    "gt6ce:cfoam_slab_cyan",
+    "gt6ce:cfoam_slab_purple",
+    "gt6ce:cfoam_slab_blue",
+    "gt6ce:cfoam_slab_brown",
+    "gt6ce:cfoam_slab_green",
+    "gt6ce:cfoam_slab_red",
+    "gt6ce:cfoam_slab_black"
+  ]
+}

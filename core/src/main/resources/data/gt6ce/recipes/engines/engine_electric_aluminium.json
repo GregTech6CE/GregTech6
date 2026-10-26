@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "CIC",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_triple/aluminium"
+    },
+    "I": {
+      "tag": "gt6ce:stick_long/steel_magnetic"
+    },
+    "C": {
+      "tag": "gt6ce:wire_02/any_copper"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_electric_aluminium"
+  },
+  "allow_mirror": false
+}

@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:glass_clear",
+    "gt6ce:glass_clear_white",
+    "gt6ce:glass_clear_orange",
+    "gt6ce:glass_clear_magenta",
+    "gt6ce:glass_clear_light_blue",
+    "gt6ce:glass_clear_yellow",
+    "gt6ce:glass_clear_lime",
+    "gt6ce:glass_clear_pink",
+    "gt6ce:glass_clear_gray",
+    "gt6ce:glass_clear_light_gray",
+    "gt6ce:glass_clear_cyan",
+    "gt6ce:glass_clear_purple",
+    "gt6ce:glass_clear_blue",
+    "gt6ce:glass_clear_brown",
+    "gt6ce:glass_clear_green",
+    "gt6ce:glass_clear_red",
+    "gt6ce:glass_clear_black"
+  ]
+}

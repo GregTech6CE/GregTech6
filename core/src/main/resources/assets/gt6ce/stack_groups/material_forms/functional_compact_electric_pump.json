@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_compact_electric_pump",
+  "contents": [
+    "item:gt6ce:compact_electric_pump_ev",
+    "item:gt6ce:compact_electric_pump_hv",
+    "item:gt6ce:compact_electric_pump_iv",
+    "item:gt6ce:compact_electric_pump_luv",
+    "item:gt6ce:compact_electric_pump_lv",
+    "item:gt6ce:compact_electric_pump_mv",
+    "item:gt6ce:compact_electric_pump_puv1",
+    "item:gt6ce:compact_electric_pump_ulv",
+    "item:gt6ce:compact_electric_pump_uv",
+    "item:gt6ce:compact_electric_pump_xv",
+    "item:gt6ce:compact_electric_pump_zpm"
+  ],
+  "priority": 110
+}

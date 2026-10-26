@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_engine_rotation",
+  "contents": [
+    "item:gt6ce:engine_rotation_adamantium",
+    "item:gt6ce:engine_rotation_arsenic_bronze",
+    "item:gt6ce:engine_rotation_arsenic_copper",
+    "item:gt6ce:engine_rotation_brass",
+    "item:gt6ce:engine_rotation_bronze",
+    "item:gt6ce:engine_rotation_iridium",
+    "item:gt6ce:engine_rotation_iritanium",
+    "item:gt6ce:engine_rotation_steel",
+    "item:gt6ce:engine_rotation_titanium",
+    "item:gt6ce:engine_rotation_trinaquadalloy",
+    "item:gt6ce:engine_rotation_trinitanium",
+    "item:gt6ce:engine_rotation_tungsten_steel",
+    "item:gt6ce:engine_rotation_wood"
+  ],
+  "priority": 110
+}

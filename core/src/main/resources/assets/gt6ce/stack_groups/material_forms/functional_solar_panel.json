@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_solar_panel",
+  "contents": [
+    "item:gt6ce:solar_panel_germanium",
+    "item:gt6ce:solar_panel_silicon"
+  ],
+  "priority": 110
+}

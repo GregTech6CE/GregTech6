@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "h  ",
+    " P ",
+    "   "
+  ],
+  "key": {
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "P": {
+      "item": "gt6ce:foodmold_shape_empty"
+    }
+  },
+  "result": {
+    "item": "gt6ce:foodmold_shape_bun",
+    "count": 1
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "TXO",
+    "dPw",
+    "OMT"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/iridium"
+    },
+    "X": {
+      "item": "gt6ce:rotor_iridium"
+    },
+    "O": {
+      "tag": "forge:rings/rubber"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_iridium"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_luv"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_electric_pump_luv",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

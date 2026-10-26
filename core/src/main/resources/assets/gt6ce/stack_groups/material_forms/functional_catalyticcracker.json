@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_catalyticcracker",
+  "contents": [
+    "item:gt6ce:catalyticcracker_invar",
+    "item:gt6ce:catalyticcracker_steel",
+    "item:gt6ce:catalyticcracker_titanium",
+    "item:gt6ce:catalyticcracker_tungsten_carbide"
+  ],
+  "priority": 110
+}

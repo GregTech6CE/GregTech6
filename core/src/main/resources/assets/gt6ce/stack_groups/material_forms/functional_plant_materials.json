@@ -1,0 +1,30 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_plant_materials",
+  "contents": [
+    "item:gt6ce:apple_core",
+    "item:gt6ce:apple_core_2",
+    "item:gt6ce:apple_core_3",
+    "item:gt6ce:apple_core_4",
+    "item:gt6ce:barley",
+    "item:gt6ce:cerublossom",
+    "item:gt6ce:desert_nova",
+    "item:gt6ce:dry_bark",
+    "item:gt6ce:dry_grass",
+    "item:gt6ce:fruit_remains",
+    "item:gt6ce:grass_2",
+    "item:gt6ce:moldy_grass",
+    "item:gt6ce:mud_2",
+    "item:gt6ce:nut_remains",
+    "item:gt6ce:oats",
+    "item:gt6ce:plant_remains",
+    "item:gt6ce:rice",
+    "item:gt6ce:rotten_grass",
+    "item:gt6ce:rubber_resin",
+    "item:gt6ce:rye",
+    "item:gt6ce:slimeball",
+    "item:gt6ce:sticky_goo",
+    "item:gt6ce:vegetable_remains"
+  ],
+  "priority": 120
+}

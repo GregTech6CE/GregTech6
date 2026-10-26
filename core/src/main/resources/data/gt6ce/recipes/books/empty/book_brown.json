@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "gt6ce.books.binding",
+  "ingredients": [
+    {
+      "tag": "gt6ce:book_binding/paper"
+    },
+    {
+      "tag": "gt6ce:book_binding/paper"
+    },
+    {
+      "tag": "gt6ce:book_binding/paper"
+    },
+    {
+      "tag": "gt6ce:book_binding/leather"
+    },
+    {
+      "tag": "gt6ce:book_binding/dyes/brown"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:book_brown",
+    "count": 1
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "TXT",
+    "PCP",
+    "TdT"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/aluminium"
+    },
+    "X": {
+      "item": "gt6ce:fluid_cell_aluminium"
+    },
+    "P": {
+      "tag": "forge:plates/aluminium"
+    },
+    "C": {
+      "item": "gt6ce:circuit_basic"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gt6ce:geiger_counter_empty"
+  },
+  "require_empty_fluid_containers": true,
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

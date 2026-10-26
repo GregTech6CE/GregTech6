@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:stone_dolomite_stone"
+  },
+  "result": "gt6ce:stone_dolomite_smooth",
+  "experience": 0.0,
+  "cookingtime": 200
+}

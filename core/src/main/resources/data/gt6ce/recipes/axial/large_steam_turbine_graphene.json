@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:block_plate_graphene"
+    },
+    "M": {
+      "item": "gt6ce:implosion_compressor_wall"
+    }
+  },
+  "result": {
+    "item": "gt6ce:graphene_steam_turbine_main_housing",
+    "count": 1
+  }
+}

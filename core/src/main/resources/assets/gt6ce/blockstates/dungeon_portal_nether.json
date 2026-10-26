@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "gt6ce:block/dungeon/dungeon_portal_nether_frame"
+    },
+    "active=true": {
+      "model": "gt6ce:block/dungeon/dungeon_portal_nether"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_shredder",
+  "contents": [
+    "item:gt6ce:shredder_bronze",
+    "item:gt6ce:shredder_steel",
+    "item:gt6ce:shredder_titanium",
+    "item:gt6ce:shredder_tungsten_steel"
+  ],
+  "priority": 110
+}

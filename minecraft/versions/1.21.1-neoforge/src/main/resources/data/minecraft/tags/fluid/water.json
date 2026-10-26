@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:seawater",
+    "gt6ce:seawater_flowing",
+    "gt6ce:riverwater",
+    "gt6ce:riverwater_flowing",
+    "gt6ce:swampwater",
+    "gt6ce:swampwater_flowing"
+  ]
+}

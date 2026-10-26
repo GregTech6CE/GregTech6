@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_panel_concrete",
+  "contents": [
+    "item:gt6ce:panel_concrete",
+    "item:gt6ce:panel_concrete_black",
+    "item:gt6ce:panel_concrete_blue",
+    "item:gt6ce:panel_concrete_brown",
+    "item:gt6ce:panel_concrete_cyan",
+    "item:gt6ce:panel_concrete_gray",
+    "item:gt6ce:panel_concrete_green",
+    "item:gt6ce:panel_concrete_light_blue",
+    "item:gt6ce:panel_concrete_light_gray",
+    "item:gt6ce:panel_concrete_lime",
+    "item:gt6ce:panel_concrete_magenta",
+    "item:gt6ce:panel_concrete_orange",
+    "item:gt6ce:panel_concrete_pink",
+    "item:gt6ce:panel_concrete_purple",
+    "item:gt6ce:panel_concrete_red",
+    "item:gt6ce:panel_concrete_white",
+    "item:gt6ce:panel_concrete_yellow"
+  ],
+  "priority": 110
+}

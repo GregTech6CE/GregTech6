@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_flux_magnet",
+  "contents": [
+    "item:gt6ce:flux_magnet_ev",
+    "item:gt6ce:flux_magnet_hv",
+    "item:gt6ce:flux_magnet_iv",
+    "item:gt6ce:flux_magnet_lv",
+    "item:gt6ce:flux_magnet_mv"
+  ],
+  "priority": 110
+}

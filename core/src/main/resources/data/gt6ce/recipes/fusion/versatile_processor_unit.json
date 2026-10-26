@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCS",
+    "CMC",
+    "RCE"
+  ],
+  "key": {
+    "M": {
+      "item": "gt6ce:casing_machine_steelgalvanized"
+    },
+    "C": {
+      "item": "gt6ce:circuit_ultimate"
+    },
+    "D": {
+      "item": "gt6ce:crystal_processor_diamond"
+    },
+    "S": {
+      "item": "gt6ce:crystal_processor_sapphire"
+    },
+    "R": {
+      "item": "gt6ce:crystal_processor_ruby"
+    },
+    "E": {
+      "item": "gt6ce:crystal_processor_emerald"
+    }
+  },
+  "result": {
+    "item": "gt6ce:versatile_processor_unit"
+  }
+}

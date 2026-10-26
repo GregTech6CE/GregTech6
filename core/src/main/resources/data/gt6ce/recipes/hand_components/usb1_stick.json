@@ -1,0 +1,33 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:796",
+  "pattern": [
+    "xWd",
+    "PCP",
+    "TCT"
+  ],
+  "key": {
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "W": {
+      "item": "gt6ce:wire_01_gold"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_3_plus"
+    },
+    "P": {
+      "tag": "forge:plates/aluminium"
+    },
+    "T": {
+      "tag": "forge:screws/aluminium"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:usb1_stick"
+  }
+}

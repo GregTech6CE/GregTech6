@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BhB",
+    "ByB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gt6ce:gem/quartz"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "y": {
+      "item": "gt6ce:tool_chisel"
+    }
+  },
+  "result": {
+    "item": "gt6ce:smelting_crucible_quartz"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

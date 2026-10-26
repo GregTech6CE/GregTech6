@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_co2_laser",
+  "contents": [
+    "item:gt6ce:co2_laser_ev",
+    "item:gt6ce:co2_laser_hv",
+    "item:gt6ce:co2_laser_iv",
+    "item:gt6ce:co2_laser_lv",
+    "item:gt6ce:co2_laser_mv"
+  ],
+  "priority": 110
+}

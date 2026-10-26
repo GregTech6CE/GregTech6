@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/flower_pot_cross",
+  "textures": {
+    "plant": "gt6ce:block/iconsets/flower_alpine_catchfly"
+  }
+}

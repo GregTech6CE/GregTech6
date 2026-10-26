@@ -1,0 +1,20 @@
+{
+  "type": "gt6ce:book_binding",
+  "category": "misc",
+  "group": "gt6ce.books.binding",
+  "ingredients": [
+    {
+      "item": "gt6ce:many_printed_pages"
+    },
+    {
+      "tag": "gt6ce:book_binding/leather"
+    },
+    {
+      "tag": "gt6ce:book_binding/dyes/brown"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:large_book_brown",
+    "count": 1
+  }
+}

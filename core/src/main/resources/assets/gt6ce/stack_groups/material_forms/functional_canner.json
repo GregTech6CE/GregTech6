@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_canner",
+  "contents": [
+    "item:gt6ce:canner_aluminium",
+    "item:gt6ce:canner_chromium",
+    "item:gt6ce:canner_galvanized_steel",
+    "item:gt6ce:canner_stainless_steel",
+    "item:gt6ce:canner_titanium"
+  ],
+  "priority": 110
+}

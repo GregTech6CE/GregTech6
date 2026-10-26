@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:alcohol",
+    "gt6ce:bumble",
+    "gt6ce:bumble_fire",
+    "gt6ce:caffeine",
+    "gt6ce:dehydration",
+    "gt6ce:exploded",
+    "gt6ce:fat",
+    "gt6ce:radiation",
+    "gt6ce:sugar",
+    "gt6ce:bullet_piercing"
+  ]
+}

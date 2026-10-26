@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_circuit",
+  "contents": [
+    "item:gt6ce:circuit_advanced",
+    "item:gt6ce:circuit_basic",
+    "item:gt6ce:circuit_elite",
+    "item:gt6ce:circuit_enderium",
+    "item:gt6ce:circuit_good",
+    "item:gt6ce:circuit_magic",
+    "item:gt6ce:circuit_master",
+    "item:gt6ce:circuit_signalum",
+    "item:gt6ce:circuit_ultimate"
+  ],
+  "priority": 110
+}

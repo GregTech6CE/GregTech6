@@ -1,0 +1,22 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_sandwiches",
+  "contents": [
+    "item:gt6ce:bacon_sandwich",
+    "item:gt6ce:cheese_burger",
+    "item:gt6ce:cheese_sandwich",
+    "item:gt6ce:chum_burger",
+    "item:gt6ce:fish_burger",
+    "item:gt6ce:hamburger",
+    "item:gt6ce:large_bacon_sandwich",
+    "item:gt6ce:large_cheese_sandwich",
+    "item:gt6ce:large_steak_sandwich",
+    "item:gt6ce:large_veggie_sandwich",
+    "item:gt6ce:soylent_burger",
+    "item:gt6ce:steak_sandwich",
+    "item:gt6ce:tofu_burger",
+    "item:gt6ce:veggie_burger",
+    "item:gt6ce:veggie_sandwich"
+  ],
+  "priority": 120
+}

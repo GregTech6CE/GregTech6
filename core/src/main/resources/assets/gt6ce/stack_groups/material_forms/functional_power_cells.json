@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gt6ce.portable_power_cells",
+  "contents": [
+    "item:gt6ce:power_cell_empty",
+    "item:gt6ce:power_cell_hydrogen",
+    "item:gt6ce:aneutronic_fusion_power_cell_empty",
+    "item:gt6ce:aneutronic_fusion_power_cell_helium_3"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,20 @@
+name: Set up GT6CE build
+description: Java 17/21 and cached Gradle for both Stonecutter targets.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '21'
+    - shell: bash
+      run: echo "JAVA21_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+    - shell: bash
+      run: |
+        echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+        chmod +x gradlew
+    - uses: gradle/actions/setup-gradle@v4

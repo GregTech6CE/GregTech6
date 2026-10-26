@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_scannervisuals",
+  "contents": [
+    "item:gt6ce:scannervisuals_aluminium",
+    "item:gt6ce:scannervisuals_chromium",
+    "item:gt6ce:scannervisuals_galvanized_steel",
+    "item:gt6ce:scannervisuals_stainless_steel",
+    "item:gt6ce:scannervisuals_titanium"
+  ],
+  "priority": 110
+}

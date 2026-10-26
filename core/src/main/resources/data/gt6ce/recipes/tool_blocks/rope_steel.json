@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2091",
+  "pattern": [
+    " P",
+    "PP",
+    "Px"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:wire_fine_steel"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:rope_steel"
+  }
+}

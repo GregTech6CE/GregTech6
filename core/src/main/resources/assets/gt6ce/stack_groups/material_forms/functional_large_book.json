@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_large_book",
+  "contents": [
+    "item:gt6ce:large_book_black",
+    "item:gt6ce:large_book_blue",
+    "item:gt6ce:large_book_bronze",
+    "item:gt6ce:large_book_brown",
+    "item:gt6ce:large_book_cyan",
+    "item:gt6ce:large_book_dictionary",
+    "item:gt6ce:large_book_green",
+    "item:gt6ce:large_book_magenta",
+    "item:gt6ce:large_book_orange",
+    "item:gt6ce:large_book_purple",
+    "item:gt6ce:large_book_radiation",
+    "item:gt6ce:large_book_red",
+    "item:gt6ce:large_book_white",
+    "item:gt6ce:large_book_yellow"
+  ],
+  "priority": 110
+}

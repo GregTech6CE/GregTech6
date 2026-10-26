@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/machine/storage/loot_chest"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/storage/loot_chest",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/storage/loot_chest",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/storage/loot_chest",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gt6ce:block/machine/fusion/logic_processor_unit"
+    }
+  }
+}

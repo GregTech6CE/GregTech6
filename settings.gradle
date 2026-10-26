@@ -1,0 +1,31 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+        maven {
+            name = 'NeoForged'
+            url = 'https://maven.neoforged.net/releases/'
+        }
+    }
+}
+
+plugins {
+    id 'dev.kikugie.stonecutter' version '0.7.11'
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.7.0'
+}
+
+rootProject.name = 'gt6ce'
+include 'core'
+
+// All native Java source sets are managed by Stonecutter version nodes.
+include 'minecraft'
+stonecutter {
+    create(project(':minecraft')) {
+        version('1.20.1-forge', '1.20.1')
+        version('1.21.1-neoforge', '1.21.1')
+        vcsVersion = '1.20.1-forge'
+    }
+}

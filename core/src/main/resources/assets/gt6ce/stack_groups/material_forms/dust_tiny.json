@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gt6ce.dust_tiny",
+  "contents": [
+    "#gt6ce:dust_tiny"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gt6ce:wooden_planks",
+    "item:gt6ce:planks_treated"
+  ],
+  "priority": 100
+}

@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.boiler_main_barometer",
+  "regex": "^gt6ce:[a-z_]+_boiler_main_barometer$",
+  "priority": 110
+}

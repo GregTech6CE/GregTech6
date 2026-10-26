@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_loom",
+  "contents": [
+    "item:gt6ce:loom_bronze",
+    "item:gt6ce:loom_steel",
+    "item:gt6ce:loom_titanium",
+    "item:gt6ce:loom_tungsten_steel"
+  ],
+  "priority": 110
+}

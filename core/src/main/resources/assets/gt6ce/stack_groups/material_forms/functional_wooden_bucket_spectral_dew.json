@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_spectral_dew",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_spectral_dew",
+    "item:gt6ce:wooden_bucket_tin_spectral_dew",
+    "item:gt6ce:wooden_bucket_zinc_spectral_dew",
+    "item:gt6ce:wooden_bucket_lead_spectral_dew",
+    "item:gt6ce:wooden_bucket_bismuth_spectral_dew",
+    "item:gt6ce:wooden_bucket_brass_spectral_dew",
+    "item:gt6ce:wooden_bucket_bronze_spectral_dew",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_spectral_dew",
+    "item:gt6ce:wooden_bucket_gold_spectral_dew"
+  ],
+  "priority": 125
+}

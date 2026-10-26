@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:breads"
+    },
+    {
+      "item": "minecraft:cooked_beef"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:steak_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

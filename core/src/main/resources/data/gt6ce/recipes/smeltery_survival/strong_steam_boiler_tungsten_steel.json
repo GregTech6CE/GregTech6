@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    " P ",
+    "PwP",
+    "PhP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_dense/tungsten_steel"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:strong_steam_boiler_tungsten_steel"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:alcohol",
+    "gt6ce:caffeine",
+    "gt6ce:dehydration",
+    "gt6ce:exploded",
+    "gt6ce:fat",
+    "gt6ce:sugar"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_batteries",
+  "contents": [
+    "item:gt6ce:battery_alkaline_ev",
+    "item:gt6ce:battery_alkaline_hv",
+    "item:gt6ce:battery_alkaline_lv",
+    "item:gt6ce:battery_alkaline_mv",
+    "item:gt6ce:battery_alkaline_ulv",
+    "item:gt6ce:battery_lead_acid_ev",
+    "item:gt6ce:battery_lead_acid_hv",
+    "item:gt6ce:battery_lead_acid_lv",
+    "item:gt6ce:battery_lead_acid_mv",
+    "item:gt6ce:battery_lead_acid_ulv",
+    "item:gt6ce:battery_lithium_cobalt_ev",
+    "item:gt6ce:battery_lithium_cobalt_hv",
+    "item:gt6ce:battery_lithium_cobalt_lv",
+    "item:gt6ce:battery_lithium_cobalt_mv",
+    "item:gt6ce:battery_lithium_cobalt_ulv",
+    "item:gt6ce:battery_lithium_manganese_ev",
+    "item:gt6ce:battery_lithium_manganese_hv",
+    "item:gt6ce:battery_lithium_manganese_lv",
+    "item:gt6ce:battery_lithium_manganese_mv",
+    "item:gt6ce:battery_lithium_manganese_ulv",
+    "item:gt6ce:battery_nickel_cadmium_ev",
+    "item:gt6ce:battery_nickel_cadmium_hv",
+    "item:gt6ce:battery_nickel_cadmium_lv",
+    "item:gt6ce:battery_nickel_cadmium_mv",
+    "item:gt6ce:battery_nickel_cadmium_ulv"
+  ],
+  "priority": 110
+}

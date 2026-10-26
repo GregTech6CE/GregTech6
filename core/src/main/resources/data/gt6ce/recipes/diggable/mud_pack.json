@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "gt6ce:mud_2"
+    }
+  },
+  "result": {
+    "item": "gt6ce:mud"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:engines/plate_double/any_tungsten"
+    },
+    "S": {
+      "tag": "gt6ce:engines/stick/any_tungsten"
+    },
+    "I": {
+      "tag": "gt6ce:engines/spring_small/any_tungsten"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_steam_tungsten"
+  },
+  "allow_mirror": false
+}

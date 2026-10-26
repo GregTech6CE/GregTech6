@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    "C": {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    "X": {
+      "tag": "gt6ce:circuits_tier_6_plus"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_iridium"
+    }
+  },
+  "result": {
+    "item": "gt6ce:battery_box_luv"
+  }
+}

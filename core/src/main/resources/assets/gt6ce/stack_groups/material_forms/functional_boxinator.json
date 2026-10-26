@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_boxinator",
+  "contents": [
+    "item:gt6ce:boxinator_aluminium",
+    "item:gt6ce:boxinator_chromium",
+    "item:gt6ce:boxinator_galvanized_steel",
+    "item:gt6ce:boxinator_stainless_steel",
+    "item:gt6ce:boxinator_titanium"
+  ],
+  "priority": 110
+}

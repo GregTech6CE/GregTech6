@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "facing=north,lit=false": {
+      "model": "gt6ce:block/machine/heat_exchanger",
+      "y": 0
+    },
+    "facing=north,lit=true": {
+      "model": "gt6ce:block/machine/heat_exchanger_active",
+      "y": 0
+    },
+    "facing=east,lit=false": {
+      "model": "gt6ce:block/machine/heat_exchanger",
+      "y": 90
+    },
+    "facing=east,lit=true": {
+      "model": "gt6ce:block/machine/heat_exchanger_active",
+      "y": 90
+    },
+    "facing=south,lit=false": {
+      "model": "gt6ce:block/machine/heat_exchanger",
+      "y": 180
+    },
+    "facing=south,lit=true": {
+      "model": "gt6ce:block/machine/heat_exchanger_active",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "gt6ce:block/machine/heat_exchanger",
+      "y": 270
+    },
+    "facing=west,lit=true": {
+      "model": "gt6ce:block/machine/heat_exchanger_active",
+      "y": 270
+    },
+    "facing=down,lit=false": {
+      "model": "gt6ce:block/machine/heat_exchanger_down",
+      "y": 0
+    },
+    "facing=down,lit=true": {
+      "model": "gt6ce:block/machine/heat_exchanger_down_active",
+      "y": 0
+    },
+    "facing=up,lit=false": {
+      "model": "gt6ce:block/machine/heat_exchanger",
+      "y": 0
+    },
+    "facing=up,lit=true": {
+      "model": "gt6ce:block/machine/heat_exchanger_active",
+      "y": 0
+    }
+  }
+}

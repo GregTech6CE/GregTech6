@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "gt6ce:block/iconsets/log_bluemahoe"
+    },
+    "axis=z": {
+      "model": "gt6ce:block/iconsets/log_bluemahoe_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "gt6ce:block/iconsets/log_bluemahoe_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

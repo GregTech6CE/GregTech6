@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_engine_steam_strong",
+  "contents": [
+    "item:gt6ce:engine_steam_strong_arsenic_bronze",
+    "item:gt6ce:engine_steam_strong_arsenic_copper",
+    "item:gt6ce:engine_steam_strong_brass",
+    "item:gt6ce:engine_steam_strong_bronze",
+    "item:gt6ce:engine_steam_strong_chromium",
+    "item:gt6ce:engine_steam_strong_fiery_steel",
+    "item:gt6ce:engine_steam_strong_invar",
+    "item:gt6ce:engine_steam_strong_ironwood",
+    "item:gt6ce:engine_steam_strong_lead",
+    "item:gt6ce:engine_steam_strong_steel",
+    "item:gt6ce:engine_steam_strong_tin_alloy",
+    "item:gt6ce:engine_steam_strong_titanium",
+    "item:gt6ce:engine_steam_strong_tungsten",
+    "item:gt6ce:engine_steam_strong_tungsten_steel"
+  ],
+  "priority": 110
+}

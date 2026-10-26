@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_lightning",
+  "contents": [
+    "item:gt6ce:lightning_aluminium",
+    "item:gt6ce:lightning_chromium",
+    "item:gt6ce:lightning_galvanized_steel",
+    "item:gt6ce:lightning_stainless_steel",
+    "item:gt6ce:lightning_titanium"
+  ],
+  "priority": 110
+}

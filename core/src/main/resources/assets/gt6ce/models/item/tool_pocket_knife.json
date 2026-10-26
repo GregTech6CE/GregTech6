@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gt6ce:item/iconsets/pocket_multitool_knife",
+    "layer1": "gt6ce:item/iconsets/pocket_multitool_knife_overlay"
+  }
+}

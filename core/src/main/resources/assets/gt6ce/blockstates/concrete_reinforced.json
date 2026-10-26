@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=white": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=orange": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=magenta": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=light_blue": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=yellow": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=lime": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=pink": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=gray": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=light_gray": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=cyan": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=purple": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=blue": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=brown": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=green": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=red": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    },
+    "color=black": {
+      "model": "gt6ce:block/iconsets/concrete_reinforced"
+    }
+  }
+}

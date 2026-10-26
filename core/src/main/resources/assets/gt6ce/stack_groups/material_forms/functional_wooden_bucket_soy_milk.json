@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_soy_milk",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_soy_milk",
+    "item:gt6ce:wooden_bucket_tin_soy_milk",
+    "item:gt6ce:wooden_bucket_zinc_soy_milk",
+    "item:gt6ce:wooden_bucket_lead_soy_milk",
+    "item:gt6ce:wooden_bucket_bismuth_soy_milk",
+    "item:gt6ce:wooden_bucket_brass_soy_milk",
+    "item:gt6ce:wooden_bucket_bronze_soy_milk",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_soy_milk",
+    "item:gt6ce:wooden_bucket_gold_soy_milk"
+  ],
+  "priority": 125
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:bale_grass_dry"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:dry_grass",
+    "count": 9
+  }
+}

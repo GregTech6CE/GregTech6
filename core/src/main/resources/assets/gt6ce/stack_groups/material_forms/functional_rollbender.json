@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_rollbender",
+  "contents": [
+    "item:gt6ce:rollbender_bronze",
+    "item:gt6ce:rollbender_steel",
+    "item:gt6ce:rollbender_titanium",
+    "item:gt6ce:rollbender_tungsten_steel"
+  ],
+  "priority": 110
+}

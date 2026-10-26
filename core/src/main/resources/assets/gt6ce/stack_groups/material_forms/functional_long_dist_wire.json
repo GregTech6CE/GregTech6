@@ -1,0 +1,23 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_long_dist_wire",
+  "contents": [
+    "item:gt6ce:long_dist_wire_aluminium",
+    "item:gt6ce:long_dist_wire_blue_alloy",
+    "item:gt6ce:long_dist_wire_electrotine_alloy",
+    "item:gt6ce:long_dist_wire_electrum",
+    "item:gt6ce:long_dist_wire_ev",
+    "item:gt6ce:long_dist_wire_gold",
+    "item:gt6ce:long_dist_wire_graphene",
+    "item:gt6ce:long_dist_wire_iv",
+    "item:gt6ce:long_dist_wire_lead",
+    "item:gt6ce:long_dist_wire_luv",
+    "item:gt6ce:long_dist_wire_naquadah",
+    "item:gt6ce:long_dist_wire_platinum",
+    "item:gt6ce:long_dist_wire_tungsten",
+    "item:gt6ce:long_dist_wire_tungsten_steel",
+    "item:gt6ce:long_dist_wire_uv",
+    "item:gt6ce:long_dist_wire_zpm"
+  ],
+  "priority": 110
+}

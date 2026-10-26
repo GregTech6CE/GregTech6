@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_electricloom",
+  "contents": [
+    "item:gt6ce:electricloom_aluminium",
+    "item:gt6ce:electricloom_chromium",
+    "item:gt6ce:electricloom_galvanized_steel",
+    "item:gt6ce:electricloom_stainless_steel",
+    "item:gt6ce:electricloom_titanium"
+  ],
+  "priority": 110
+}

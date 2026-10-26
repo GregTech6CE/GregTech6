@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_electricmixer",
+  "contents": [
+    "item:gt6ce:electricmixer_aluminium",
+    "item:gt6ce:electricmixer_chromium",
+    "item:gt6ce:electricmixer_galvanized_steel",
+    "item:gt6ce:electricmixer_stainless_steel",
+    "item:gt6ce:electricmixer_titanium"
+  ],
+  "priority": 110
+}

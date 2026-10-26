@@ -1,0 +1,33 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:810",
+  "pattern": [
+    "xWd",
+    "PCP",
+    "TCT"
+  ],
+  "key": {
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "W": {
+      "item": "gt6ce:wire_01_platinum"
+    },
+    "C": {
+      "item": "gt6ce:cable_01_platinum"
+    },
+    "P": {
+      "tag": "forge:plates/chromium"
+    },
+    "T": {
+      "tag": "forge:screws/chromium"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:usb3_cable"
+  }
+}

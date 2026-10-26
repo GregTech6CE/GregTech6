@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:flat_dough_with_ketchup"
+    },
+    {
+      "tag": "gt6ce:dust/meat_cooked"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:raw_mince_meat_pizza",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

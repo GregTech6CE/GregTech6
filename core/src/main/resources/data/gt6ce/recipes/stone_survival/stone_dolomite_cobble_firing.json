@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:stone_dolomite_cobble"
+  },
+  "result": "gt6ce:stone_dolomite_stone",
+  "experience": 0.0,
+  "cookingtime": 200
+}

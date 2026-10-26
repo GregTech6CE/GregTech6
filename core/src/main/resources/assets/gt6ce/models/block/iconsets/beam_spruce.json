@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "gt6ce:block/iconsets/beam_top_spruce",
+    "side": "gt6ce:block/iconsets/beam_side_spruce"
+  }
+}

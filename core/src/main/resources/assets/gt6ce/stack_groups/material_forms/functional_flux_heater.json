@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_flux_heater",
+  "contents": [
+    "item:gt6ce:flux_heater_ev",
+    "item:gt6ce:flux_heater_hv",
+    "item:gt6ce:flux_heater_iv",
+    "item:gt6ce:flux_heater_lv",
+    "item:gt6ce:flux_heater_mv"
+  ],
+  "priority": 110
+}

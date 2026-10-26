@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2088",
+  "pattern": [
+    " GG",
+    "GGG",
+    "GGq"
+  ],
+  "key": {
+    "G": {
+      "item": "gt6ce:dry_grass"
+    },
+    "q": {
+      "item": "gt6ce:tool_scissors"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:rope_grass"
+  }
+}

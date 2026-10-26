@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_extruder_shape",
+  "regex": "^item:gt6ce:extruder_shape_[a-z0-9_]+$",
+  "priority": 120
+}

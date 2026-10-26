@@ -1,0 +1,70 @@
+package gregtech.content.recipe;
+
+import gregtech.content.tool.CraftingToolDefinitions;
+import gregtech.content.item.GTToolItem;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import java.util.*;
+
+/** GT6 crafting-only identities. World/tool-click dispatch remains with real hand tools. */
+public final class CraftingTools {
+    private CraftingTools() {}
+    private static String id(ItemStack stack) {
+//? if >=1.21.1 {
+        /*var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+*///?} else {
+        var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
+//?}
+        return id != null && id.getNamespace().equals("gt6ce") ? id.getPath() : "";
+    }
+    public static boolean matches(ItemStack stack, gregtech.engine.tool.GTToolType kind) {
+        return CraftingToolDefinitions.matches(id(stack),kind.id())
+            || gregtech.engine.tool.GTToolHelper.matchesTool(stack,kind);
+    }
+    public static boolean infinite(ItemStack stack) { return CraftingToolDefinitions.infinite(id(stack)); }
+    private static boolean hasToolItem(com.google.gson.JsonElement json) {
+        if(json.isJsonArray()) {
+            for(var child : json.getAsJsonArray()) if(hasToolItem(child)) return true;
+        } else if(json.isJsonObject()) {
+            var object = json.getAsJsonObject();
+            return object.has("item") && object.get("item").getAsString().startsWith("gt6ce:tool_");
+        }
+        return false;
+    }
+    public static Ingredient expand(Ingredient ingredient) {
+//? if >=1.21.1 {
+        /*if(ingredient.getCustomIngredient() != null) return ingredient;
+*///?} else {
+        if(ingredient.getClass() != Ingredient.class) return ingredient;
+//?}
+        // Tag ingredients already contain crafting-only tools; do not enumerate large material tags.
+//? if >=1.21.1 {
+        /*if(!hasToolItem(Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,ingredient).getOrThrow())) return ingredient;
+*///?} else {
+        if(!hasToolItem(ingredient.toJson())) return ingredient;
+//?}
+        var kinds = new HashSet<String>();
+        for(var stack : ingredient.getItems())
+            if(stack.getItem() instanceof GTToolItem tool) kinds.add(tool.toolType().id());
+        if(kinds.isEmpty()) return ingredient;
+        var stacks = new ArrayList<ItemStack>(Arrays.asList(ingredient.getItems()));
+        for(var tool : CraftingToolDefinitions.ALL) {
+            if(tool.kinds().stream().noneMatch(kinds::contains)) continue;
+            for(String name : List.of(tool.tip(),tool.token())) {
+//? if >=1.21.1 {
+                /*var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",name));
+*///?} else {
+                var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",name));
+//?}
+                if(item == null || item == Items.AIR) throw new IllegalStateException("Missing crafting tool " + name);
+                if(stacks.stream().noneMatch(s -> s.is(item))) stacks.add(new ItemStack(item));
+            }
+        }
+        // Network ingredients are already expanded. Keep re-expansion idempotent for every tool family.
+        for(var holder:gregtech.content.registry.GTToolItems.all().values())if(holder.get() instanceof gregtech.content.item.PocketToolItem pocket&&kinds.contains(pocket.activeType().id())&&stacks.stream().noneMatch(s->s.is(pocket)))stacks.add(new ItemStack(pocket));
+        for(var spec:gregtech.content.tool.ElectricToolCatalog.ALL){var item=gregtech.content.registry.GTElectricItems.get(spec.id());var sample=new ItemStack(item);var active=item.interactionType(sample);if(active!=null&&kinds.contains(active.id())&&stacks.stream().noneMatch(s->s.is(item)))stacks.add(sample);}
+        return Ingredient.of(stacks.stream());
+    }
+}

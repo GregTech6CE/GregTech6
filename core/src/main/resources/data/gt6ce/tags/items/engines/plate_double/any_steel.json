@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:plate_double/steel",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate_double/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate_double/meteoric_steel",
+      "required": false
+    }
+  ]
+}

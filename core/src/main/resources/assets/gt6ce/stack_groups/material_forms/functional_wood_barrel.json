@@ -1,0 +1,19 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_wood_barrel",
+  "contents": [
+    "item:gt6ce:wood_barrel",
+    "item:gt6ce:wood_barrel_bismuth",
+    "item:gt6ce:wood_barrel_brass",
+    "item:gt6ce:wood_barrel_bronze",
+    "item:gt6ce:wood_barrel_dreamwood",
+    "item:gt6ce:wood_barrel_greatwood",
+    "item:gt6ce:wood_barrel_ironwood",
+    "item:gt6ce:wood_barrel_livingwood",
+    "item:gt6ce:wood_barrel_shimmerwood",
+    "item:gt6ce:wood_barrel_silverwood",
+    "item:gt6ce:wood_barrel_skyroot",
+    "item:gt6ce:wood_barrel_treated"
+  ],
+  "priority": 110
+}

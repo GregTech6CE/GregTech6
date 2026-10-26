@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.decor_concrete_reinforced",
+  "contents": [
+    "item:gt6ce:concrete_reinforced",
+    "item:gt6ce:concrete_reinforced_white",
+    "item:gt6ce:concrete_reinforced_orange",
+    "item:gt6ce:concrete_reinforced_magenta",
+    "item:gt6ce:concrete_reinforced_light_blue",
+    "item:gt6ce:concrete_reinforced_yellow",
+    "item:gt6ce:concrete_reinforced_lime",
+    "item:gt6ce:concrete_reinforced_pink",
+    "item:gt6ce:concrete_reinforced_gray",
+    "item:gt6ce:concrete_reinforced_light_gray",
+    "item:gt6ce:concrete_reinforced_cyan",
+    "item:gt6ce:concrete_reinforced_purple",
+    "item:gt6ce:concrete_reinforced_blue",
+    "item:gt6ce:concrete_reinforced_brown",
+    "item:gt6ce:concrete_reinforced_green",
+    "item:gt6ce:concrete_reinforced_red",
+    "item:gt6ce:concrete_reinforced_black"
+  ],
+  "priority": 120
+}

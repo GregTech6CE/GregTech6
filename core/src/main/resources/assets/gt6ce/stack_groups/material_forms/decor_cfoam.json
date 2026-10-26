@@ -1,0 +1,26 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.decor_cfoam",
+  "contents": [
+    "item:gt6ce:cfoam",
+    "item:gt6ce:cfoam_hardened",
+    "item:gt6ce:cfoam_hardened_owned",
+    "item:gt6ce:cfoam_white",
+    "item:gt6ce:cfoam_orange",
+    "item:gt6ce:cfoam_magenta",
+    "item:gt6ce:cfoam_light_blue",
+    "item:gt6ce:cfoam_yellow",
+    "item:gt6ce:cfoam_lime",
+    "item:gt6ce:cfoam_pink",
+    "item:gt6ce:cfoam_gray",
+    "item:gt6ce:cfoam_light_gray",
+    "item:gt6ce:cfoam_cyan",
+    "item:gt6ce:cfoam_purple",
+    "item:gt6ce:cfoam_blue",
+    "item:gt6ce:cfoam_brown",
+    "item:gt6ce:cfoam_green",
+    "item:gt6ce:cfoam_red",
+    "item:gt6ce:cfoam_black"
+  ],
+  "priority": 120
+}

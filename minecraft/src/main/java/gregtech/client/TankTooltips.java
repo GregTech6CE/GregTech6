@@ -1,0 +1,344 @@
+package gregtech.client;
+
+
+//? if >=1.21.1 {
+//?} else {
+import gregtech.GregTech;
+//?}
+import gregtech.engine.machine.ItemPipeSpec;
+import gregtech.engine.machine.PipeSpec;
+import gregtech.engine.machine.TankSpec;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialTextureSet;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+
+import java.util.List;
+import java.util.Locale;
+
+/** GT6-style tooltips for fluid containers and pipes. */
+public final class TankTooltips {
+    private TankTooltips() {}
+
+    // === Tank Tooltips ===
+
+    public static void appendTank(TankSpec spec, List<Component> tooltip) {
+        appendTankState(spec, new gregtech.engine.fluid.FluidTankGT(spec.capacity()), false, 0, tooltip);
+    }
+
+//? if >=1.21.1 {
+    /*public static void appendTank(TankSpec spec, net.minecraft.world.item.ItemStack stack,
+                                  net.minecraft.core.HolderLookup.Provider lookup, List<Component> tooltip) {
+        var stored = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        var data = stored == null ? null : stored.copyTag();
+*///?} else {
+    public static void appendTank(TankSpec spec, net.minecraft.world.item.ItemStack stack, List<Component> tooltip) {
+        var data = stack.getTagElement("BlockEntityTag");
+//?}
+        var tank = new gregtech.engine.fluid.FluidTankGT(spec.capacity());
+//? if >=1.21.1 {
+        /*if (data != null && data.contains("gt.tank")) tank.readFromNBT(data.getCompound("gt.tank"), lookup == null
+                ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY) : lookup);
+*///?} else {
+        if (data != null && data.contains("gt.tank")) tank.readFromNBT(data.getCompound("gt.tank"));
+//?}
+        appendTankState(spec, tank, data != null && data.getBoolean("gt.soft_hammer"),
+                data == null ? 0 : data.getLong("gt.sealed_time"), tooltip);
+    }
+
+    private static void appendTankState(TankSpec spec, gregtech.engine.fluid.FluidTankGT tank,
+                                        boolean sealed, long sealedTime, List<Component> tooltip) {
+        GTMaterial mat = spec.material();
+
+        var fluid = tank.getFluidLong();
+        if (fluid.isEmpty()) {
+            tooltip.add(Component.translatable("gt.lang.pipe.stats.capacity")
+                    .append(Component.literal(formatLargeNumber(tank.capacity()) + " L")).withStyle(ChatFormatting.AQUA));
+        } else {
+            tooltip.add(Component.literal(formatLargeNumber(tank.getAmount()) + " L of ")
+                    .append(fluid.getDisplayName())
+                    .append(Component.literal(" (" + (gregtech.engine.fluid.FluidHazards.isGas(fluid.getFluid())
+                            ? "Gaseous" : "Liquid") + "); Max: " + formatLargeNumber(tank.capacity()) + " L)"))
+                    .withStyle(ChatFormatting.AQUA));
+        }
+        if (tank.getAmount() > 0 && sealed) tooltip.add(Component.translatable("tooltip.gt6ce.ui.sealed_time", sealedTime)
+                .withStyle(ChatFormatting.AQUA));
+
+        // TileEntityBase08Barrel includes these for wooden barrels as well.
+        tooltip.add(Component.translatable("gt.lang.nogui.funnel.tap.tank").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("gt.lang.no.powerconducting.fluids").withStyle(ChatFormatting.GOLD));
+
+        // Proof flags
+        if (spec.gasProof())
+            tooltip.add(Component.translatable("gt.lang.proof.gas").withStyle(ChatFormatting.GOLD));
+        if (spec.acidProof())
+            tooltip.add(Component.translatable("gt.lang.proof.acid").withStyle(ChatFormatting.GOLD));
+        if (spec.plasmaProof())
+            tooltip.add(Component.translatable("gt.lang.proof.plasma").withStyle(ChatFormatting.GOLD));
+        if (spec.magicProof())
+            tooltip.add(Component.translatable("gt.lang.proof.magic").withStyle(ChatFormatting.GOLD));
+        if (spec.simpleOnly())
+            tooltip.add(Component.translatable("gt.lang.only.simple").withStyle(ChatFormatting.GOLD));
+
+        // Meltdown warning
+        long maxTempK = spec.maxTemperature();
+        if (maxTempK < Long.MAX_VALUE) {
+            tooltip.add(Component.empty()
+                    .append(Component.translatable("gt.lang.hazard.meltdown")
+                            .withStyle(ChatFormatting.RED))
+                    .append(Component.literal(" (" + maxTempK + " K)")
+                            .withStyle(ChatFormatting.WHITE)));
+        }
+
+        // Tool usage hints
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.toggle.auto.outputs")
+                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.soft.hammer.to.toggle")
+                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.magnifyingglass.to.detail")
+                .withStyle(ChatFormatting.GRAY));
+
+        // Blast resistance
+        appendBlastResistance(spec.blastResistance(), tooltip);
+
+        // Harvest info
+        appendHarvestInfo(mat, tooltip);
+    }
+
+    // === Pipe Tooltips ===
+
+    public static void appendPipe(PipeSpec spec, List<Component> tooltip) {
+        GTMaterial mat = spec.material();
+
+        // Bandwidth (throughput per tick)
+        long bandwidth = spec.bandwidthPerTank();
+        tooltip.add(Component.empty()
+                .append(Component.translatable("gt.lang.pipe.stats.bandwidth")
+                        .withStyle(ChatFormatting.AQUA))
+                .append(Component.literal(formatLargeNumber(bandwidth) + " L/t")
+                        .withStyle(ChatFormatting.WHITE)));
+
+        // Capacity
+        tooltip.add(Component.empty()
+                .append(Component.translatable("gt.lang.pipe.stats.capacity")
+                        .withStyle(ChatFormatting.AQUA))
+                .append(Component.literal(formatLargeNumber(spec.capacity()) + " L")
+                        .withStyle(ChatFormatting.WHITE)));
+
+        if (spec.tankCount() > 1) tooltip.add(Component.translatable("gt.lang.pipe.stats.amount")
+                .append(Component.literal(Integer.toString(spec.tankCount()))).withStyle(ChatFormatting.AQUA));
+
+        // Proof flags
+        if (spec.gasProof())
+            tooltip.add(Component.translatable("gt.lang.proof.gas").withStyle(ChatFormatting.GOLD));
+        if (spec.acidProof())
+            tooltip.add(Component.translatable("gt.lang.proof.acid").withStyle(ChatFormatting.GOLD));
+        if (spec.plasmaProof())
+            tooltip.add(Component.translatable("gt.lang.proof.plasma").withStyle(ChatFormatting.GOLD));
+        if (spec.magicProof())
+            tooltip.add(Component.translatable("gt.lang.proof.magic").withStyle(ChatFormatting.GOLD));
+
+        // Meltdown warning
+        long maxTempK = spec.maxTemperature();
+        if (maxTempK < Long.MAX_VALUE) {
+            tooltip.add(Component.empty()
+                    .append(Component.translatable("gt.lang.hazard.meltdown")
+                            .withStyle(ChatFormatting.RED))
+                    .append(Component.literal(" (" + maxTempK + " K)")
+                            .withStyle(ChatFormatting.WHITE)));
+        }
+
+        // Tool usage hints (pipe-specific — no auto output / state toggle)
+        tooltip.add(Component.translatable("gt.lang.use.x.to.toggle.connection.pre")
+                .append(Component.translatable("gt.lang.tool.name.wrench"))
+                .append(Component.translatable("gt.lang.use.x.to.toggle.connection.post"))
+                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.magnifyingglass.to.detail")
+                .withStyle(ChatFormatting.GRAY));
+
+        // Blast resistance
+        appendBlastResistance(spec.blastResistance(), tooltip);
+
+        // Harvest tool info
+        appendHarvestInfo(mat, tooltip);
+    }
+
+    // === Item Pipe Tooltips ===
+
+    public static void appendItemPipe(ItemPipeSpec spec, List<Component> tooltip) {
+        GTMaterial mat = spec.material();
+
+        // Stepsize
+        tooltip.add(Component.empty()
+                .append(Component.translatable("gt.lang.pipe.stats.stepsize")
+                        .withStyle(ChatFormatting.AQUA))
+                .append(Component.literal(formatLargeNumber(spec.stepSize()))
+                        .withStyle(ChatFormatting.WHITE)));
+
+        // Bandwidth (items per second = invSize)
+        tooltip.add(Component.empty()
+                .append(Component.translatable("gt.lang.pipe.stats.bandwidth")
+                        .withStyle(ChatFormatting.AQUA))
+                .append(Component.literal(spec.invSize() + "/s")
+                        .withStyle(ChatFormatting.WHITE)));
+
+        // Tool usage hints
+        tooltip.add(Component.translatable("gt.lang.use.x.to.toggle.connection.pre")
+                .append(Component.translatable("gt.lang.tool.name.wrench"))
+                .append(Component.translatable("gt.lang.use.x.to.toggle.connection.post"))
+                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.set.input.side")
+                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.set.output.side")
+                .withStyle(ChatFormatting.GRAY));
+
+        // Blast resistance
+        appendBlastResistance(spec.blastResistance(), tooltip);
+
+        // Tool harvest info
+        appendHarvestInfo(mat, tooltip);
+    }
+
+    // === Shared helpers ===
+
+    private static void appendBlastResistance(float resistance, List<Component> tooltip) {
+        TooltipHelper.appendBlastResistance(resistance, tooltip);
+    }
+
+    private static void appendHarvestInfo(GTMaterial mat, List<Component> tooltip) {
+        MaterialTextureSet texSet = mat.getTextureSet();
+        String toolKey = resolveHarvestToolKey(texSet);
+        if (mat.hasToolStats()) {
+            tooltip.add(Component.empty()
+//? if >=1.21.1 {
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.tool_label")
+*///?} else {
+                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.tool_label")
+//?}
+                            .withStyle(ChatFormatting.GRAY))
+                    .append(Component.translatable(toolKey)
+                            .withStyle(ChatFormatting.WHITE))
+                    .append(Component.literal(" (" + mat.getToolQuality() + ", ").append(gregtech.engine.material.MaterialPresentation.name(mat)).append(")")
+                            .withStyle(ChatFormatting.GRAY)));
+        } else {
+            tooltip.add(Component.empty()
+//? if >=1.21.1 {
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.hand_harvest")
+*///?} else {
+                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hand_harvest")
+//?}
+                            .withStyle(ChatFormatting.GRAY))
+                    .append(Component.literal(", "))
+//? if >=1.21.1 {
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.but_label")
+*///?} else {
+                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.but_label")
+//?}
+                            .withStyle(ChatFormatting.GRAY))
+                    .append(Component.translatable(toolKey)
+                            .withStyle(ChatFormatting.WHITE))
+//? if >=1.21.1 {
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.faster")
+*///?} else {
+                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.faster")
+//?}
+                            .withStyle(ChatFormatting.GRAY)));
+        }
+    }
+
+    private static String resolveHarvestToolKey(MaterialTextureSet texSet) {
+        if (texSet == MaterialTextureSet.RUBBER) {
+//? if >=1.21.1 {
+            /*return "tooltip." + "gt6ce" + ".machine.harvest_shears";
+*///?} else {
+            return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_shears";
+//?}
+        }
+        if (texSet == MaterialTextureSet.WOOD) {
+//? if >=1.21.1 {
+            /*return "tooltip." + "gt6ce" + ".machine.harvest_axe";
+*///?} else {
+            return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_axe";
+//?}
+        }
+//? if >=1.21.1 {
+        /*return "tooltip." + "gt6ce" + ".machine.harvest_wrench";
+*///?} else {
+        return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_wrench";
+//?}
+    }
+
+    // === Magnifying Glass Info (sent to player chat) ===
+
+    public static void sendTankInfo(gregtech.content.blockentity.machine.TankBlockEntity tank,
+                                    net.minecraft.world.entity.player.Player player) {
+        TankSpec spec = tank.spec();
+        var fluid = tank.getFluidTank().getFluid();
+        boolean autoOutput = tank.isAutoOutput();
+        boolean someState = tank.getSoftHammerState();
+
+        // Auto output status
+        player.sendSystemMessage(Component.empty()
+                .append(autoOutput
+//? if >=1.21.1 {
+/*// Version-specific branch.
+                        ? Component.translatable("tooltip." + "gt6ce" + ".tank.info.auto_output")
+                        : Component.translatable("tooltip." + "gt6ce" + ".tank.info.no_auto_output"))
+*///?} else {
+// Version-specific branch.
+                        ? Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.auto_output")
+                        : Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.no_auto_output"))
+//?}
+                .withStyle(autoOutput ? ChatFormatting.GREEN : ChatFormatting.WHITE));
+
+        // Soft hammer state — GT6 calls this "Sealed" and uses it for barrel fermentation.
+        if (!someState) {
+            player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.normal")
+                    .withStyle(ChatFormatting.GRAY));
+        } else if (tank.getMaxSealedTime() > 0) {
+            player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.sealed_progress", tank.getSealedTime(), tank.getMaxSealedTime())
+                    .withStyle(ChatFormatting.GREEN));
+        } else {
+            player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.sealed")
+                    .withStyle(ChatFormatting.GREEN));
+        }
+        if (someState && !fluid.isEmpty()) {
+            var output = tank.getFermentationOutput();
+            player.sendSystemMessage((output.isEmpty() ? Component.translatable("tooltip.gt6ce.ui.not_fermenting")
+                            : Component.translatable("tooltip.gt6ce.ui.fermenting", output.getDisplayName()))
+                    .withStyle(output.isEmpty() ? ChatFormatting.GRAY : ChatFormatting.AQUA));
+        }
+
+        if (fluid.isEmpty()) {
+            player.sendSystemMessage(Component.empty()
+//? if >=1.21.1 {
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".tank.info.capacity")
+*///?} else {
+                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.capacity")
+//?}
+                            .withStyle(ChatFormatting.WHITE))
+                    .append(Component.literal(": " + formatLargeNumber(spec.capacity()) + " L")
+                            .withStyle(ChatFormatting.AQUA)));
+        } else {
+            player.sendSystemMessage(Component.empty()
+                    .append(Component.translatable("tooltip.gt6ce.ui.liters_of", formatLargeNumber(fluid.getAmount()))
+                            .withStyle(ChatFormatting.WHITE))
+                    .append(fluid.getDisplayName())
+                    .append(Component.translatable("tooltip.gt6ce.ui.max_fluid", formatLargeNumber(spec.capacity()))
+                            .withStyle(ChatFormatting.AQUA)));
+        }
+    }
+
+    // === Number formatting ===
+
+    static String formatLargeNumber(long value) {
+        if (value >= 1_000_000) {
+            return String.format(Locale.ROOT, "%,d", value).replace(',', '_');
+        }
+        if (value >= 1000) {
+            return String.format(Locale.ROOT, "%,d", value);
+        }
+        return Long.toString(value);
+    }
+
+}

@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:220",
+  "ingredients": [
+    {
+      "item": "gt6ce:clay_mold"
+    },
+    {
+      "tag": "gt6ce:molds/forms/bolt/bronze"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:clay_bolt_mold",
+    "count": 1
+  }
+}

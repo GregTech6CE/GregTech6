@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_rollingmill",
+  "contents": [
+    "item:gt6ce:rollingmill_bronze",
+    "item:gt6ce:rollingmill_steel",
+    "item:gt6ce:rollingmill_titanium",
+    "item:gt6ce:rollingmill_tungsten_steel"
+  ],
+  "priority": 110
+}

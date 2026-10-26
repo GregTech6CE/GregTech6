@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_lathe",
+  "contents": [
+    "item:gt6ce:lathe_bronze",
+    "item:gt6ce:lathe_steel",
+    "item:gt6ce:lathe_titanium",
+    "item:gt6ce:lathe_tungsten_steel"
+  ],
+  "priority": 110
+}

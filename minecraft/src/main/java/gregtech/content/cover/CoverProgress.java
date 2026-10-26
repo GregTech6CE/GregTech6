@@ -1,0 +1,86 @@
+package gregtech.content.cover;
+
+import net.minecraft.core.Direction;
+import gregtech.api.machine.MachineControl;
+
+/**
+ * Fallback meter for native capability contents, separate from machine on/off controls.
+ * Occupied items/fluid are not the original pipe-throughput or barrel-fermentation progress.
+ */
+public final class CoverProgress {
+    private CoverProgress() {}
+
+    public static MachineControl control(PanelCoverHost host, Direction side) {
+        // Exact source progress takes precedence over generic contents. This adapter is
+        // local to covers and does not turn a passive host into a MachineControl.Provider.
+        if (gregtech.engine.sensor.ProgressSources.find(host.coverOwner(), side) != null) {
+            return new MachineControl() {
+                @Override public boolean available() { return !host.coverOwner().isRemoved(); }
+                @Override public boolean supportsSwitch() { return false; }
+                @Override public boolean enabled() { return available(); }
+                @Override public boolean setEnabled(boolean value) { return enabled(); }
+                @Override public boolean running() { return false; }
+                @Override public boolean active() { return false; }
+                @Override public long progress() {
+                    var value = gregtech.engine.sensor.ProgressSources.find(host.coverOwner(), side);
+                    return value == null ? 0 : value.value();
+                }
+                @Override public long progressMax() {
+                    var value = gregtech.engine.sensor.ProgressSources.find(host.coverOwner(), side);
+                    return value == null ? 0 : value.maximum();
+                }
+            };
+        }
+        var items = host.componentItems(side);
+        var fluids = host.componentFluids(side);
+        var energy = host.coverOwner() instanceof gregtech.engine.energy.IEnergyBlock block ? block : null;
+        var types = energy == null ? java.util.List.<gregtech.content.data.GregTechTags.Tag>of()
+                : energy.getEnergyCapacitorTypes(side);
+        if (items == null && fluids == null && types.isEmpty()) return null;
+        return new MachineControl() {
+            public boolean available() {
+                return !host.coverOwner().isRemoved();
+            }
+
+            public boolean supportsSwitch() {
+                return false;
+            }
+
+            public boolean enabled() {
+                return available();
+            }
+
+            public boolean setEnabled(boolean value) {
+                return enabled();
+            }
+
+            public boolean running() {
+                return false;
+            }
+
+            public boolean active() {
+                return false;
+            }
+
+            public long progress() {
+                if (!types.isEmpty()) return energy.getEnergyStored(types.iterator().next(), side);
+                long amount = 0;
+                if (fluids != null)
+                    for (int i = 0; i < fluids.getTanks(); i++) amount += fluids.getFluidInTank(i).getAmount();
+                else if (items != null)
+                    for (int i = 0; i < items.getSlots(); i++) amount += items.getStackInSlot(i).getCount();
+                return amount;
+            }
+
+            public long progressMax() {
+                if (!types.isEmpty()) return energy.getEnergyCapacity(types.iterator().next(), side);
+                long capacity = 0;
+                if (fluids != null)
+                    for (int i = 0; i < fluids.getTanks(); i++) capacity += fluids.getTankCapacity(i);
+                else if (items != null)
+                    for (int i = 0; i < items.getSlots(); i++) capacity += items.getSlotLimit(i);
+                return capacity;
+            }
+        };
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_clay_balls",
+  "contents": [
+    "item:gt6ce:blue_clay",
+    "item:gt6ce:brown_clay",
+    "item:gt6ce:red_clay",
+    "item:gt6ce:white_clay",
+    "item:gt6ce:yellow_clay"
+  ],
+  "priority": 110
+}

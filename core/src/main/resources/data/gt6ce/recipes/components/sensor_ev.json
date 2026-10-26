@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_curved_chromium"
+    },
+    "Q": {
+      "item": "minecraft:ender_pearl"
+    },
+    "S": {
+      "item": "gt6ce:wire_01_aluminium"
+    },
+    "C": {
+      "item": "gt6ce:circuit_elite"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_sensor_ev",
+    "count": 1
+  }
+}

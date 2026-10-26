@@ -1,0 +1,12 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": ["PPh", "PMP", "wPP"],
+  "key": {
+    "P": {"tag": "gt6ce:plate_dense/stainless_steel"},
+    "M": {"item": "gt6ce:tank_wall_dense"},
+    "h": {"item": "gt6ce:tool_hammer"},
+    "w": {"item": "gt6ce:tool_wrench"}
+  },
+  "result": {"item": "gt6ce:stainless_steel_boiler_main_barometer"},
+  "allow_mirror": false
+}

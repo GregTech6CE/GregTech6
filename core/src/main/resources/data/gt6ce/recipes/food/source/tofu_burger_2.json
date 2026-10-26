@@ -1,0 +1,19 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:sliced_bun"
+    },
+    {
+      "item": "gt6ce:sliced_bun"
+    },
+    {
+      "tag": "gt6ce:ingot/tofu"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:tofu_burger",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

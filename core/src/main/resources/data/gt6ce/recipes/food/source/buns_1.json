@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:sliced_bun"
+    },
+    {
+      "item": "gt6ce:sliced_bun"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:buns",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

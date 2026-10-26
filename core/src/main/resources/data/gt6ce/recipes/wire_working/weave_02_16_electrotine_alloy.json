@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    },
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    },
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    },
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    },
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    },
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    },
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    },
+    {
+      "item": "gt6ce:wire_02_electrotine_alloy"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_16_electrotine_alloy",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
+}

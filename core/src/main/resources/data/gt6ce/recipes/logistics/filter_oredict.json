@@ -1,0 +1,33 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "XZY",
+    "hMw",
+    "YZX"
+  ],
+  "key": {
+    "M": {
+      "item": "gt6ce:casing_machine_double_steelgalvanized"
+    },
+    "X": {
+      "item": "gt6ce:pipe_medium_galvanized_steel"
+    },
+    "Y": {
+      "item": "gt6ce:item_pipe_medium_electrum"
+    },
+    "Z": {
+      "item": "gt6ce:item_filter"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:filter_oredict"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

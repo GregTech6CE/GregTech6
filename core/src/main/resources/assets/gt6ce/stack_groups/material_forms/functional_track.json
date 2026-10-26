@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_track",
+  "contents": [
+    "item:gt6ce:track_adamantium",
+    "item:gt6ce:track_aluminium",
+    "item:gt6ce:track_bronze",
+    "item:gt6ce:track_magnalium",
+    "item:gt6ce:track_stainlesssteel",
+    "item:gt6ce:track_steel",
+    "item:gt6ce:track_titanium",
+    "item:gt6ce:track_tungsten",
+    "item:gt6ce:track_tungstencarbide",
+    "item:gt6ce:track_tungstensteel"
+  ],
+  "priority": 110
+}

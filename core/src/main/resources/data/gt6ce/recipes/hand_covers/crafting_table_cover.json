@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemTechnological:140",
+  "pattern": [
+    "C",
+    "Q"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    }
+  },
+  "result": {
+    "item": "gt6ce:crafting_table_cover"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": ["Ts", "Pd"],
+  "key": {
+    "T": {"tag": "gt6ce:crates/screws"},
+    "P": {"tag": "minecraft:planks"},
+    "s": {"item": "gt6ce:tool_saw"},
+    "d": {"item": "gt6ce:tool_screwdriver"}
+  },
+  "result": {"item": "gt6ce:crate"}
+}

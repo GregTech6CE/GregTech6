@@ -1,0 +1,20 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 ItemIntegratedCircuit:66",
+  "pattern": [
+    " P",
+    "d "
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:integrated_circuits"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:integrated_circuit_7"
+  }
+}

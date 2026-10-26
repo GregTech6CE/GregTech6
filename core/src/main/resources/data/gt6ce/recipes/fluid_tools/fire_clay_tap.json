@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:clay_tap"
+  },
+  "result": "gt6ce:tap_ceramic",
+  "experience": 0,
+  "cookingtime": 200
+}

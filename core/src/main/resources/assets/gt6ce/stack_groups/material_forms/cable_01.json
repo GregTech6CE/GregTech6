@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.cable_01",
+  "regex": "^gt6ce:cable_01_[a-z0-9_]+$",
+  "priority": 100
+}

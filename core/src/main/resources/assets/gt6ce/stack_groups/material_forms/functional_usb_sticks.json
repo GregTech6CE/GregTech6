@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_usb_sticks",
+  "contents": [
+    "item:gt6ce:usb1_stick",
+    "item:gt6ce:usb2_stick",
+    "item:gt6ce:usb3_stick",
+    "item:gt6ce:usb4_stick"
+  ],
+  "priority": 110
+}

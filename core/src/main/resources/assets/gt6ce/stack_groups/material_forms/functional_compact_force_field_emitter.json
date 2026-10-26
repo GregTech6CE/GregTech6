@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_compact_force_field_emitter",
+  "contents": [
+    "item:gt6ce:compact_force_field_emitter_ev",
+    "item:gt6ce:compact_force_field_emitter_hv",
+    "item:gt6ce:compact_force_field_emitter_iv",
+    "item:gt6ce:compact_force_field_emitter_luv",
+    "item:gt6ce:compact_force_field_emitter_lv",
+    "item:gt6ce:compact_force_field_emitter_mv",
+    "item:gt6ce:compact_force_field_emitter_puv1",
+    "item:gt6ce:compact_force_field_emitter_ulv",
+    "item:gt6ce:compact_force_field_emitter_uv",
+    "item:gt6ce:compact_force_field_emitter_xv",
+    "item:gt6ce:compact_force_field_emitter_zpm"
+  ],
+  "priority": 110
+}

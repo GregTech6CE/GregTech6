@@ -1,0 +1,27 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_planks",
+  "contents": [
+    "item:gt6ce:planks_blue_mahoe",
+    "item:gt6ce:planks_bluemahoe",
+    "item:gt6ce:planks_bluespruce",
+    "item:gt6ce:planks_cinnamon",
+    "item:gt6ce:planks_coconut",
+    "item:gt6ce:planks_compressed",
+    "item:gt6ce:planks_dry",
+    "item:gt6ce:planks_ebony",
+    "item:gt6ce:planks_frozen",
+    "item:gt6ce:planks_hazel",
+    "item:gt6ce:planks_maple",
+    "item:gt6ce:planks_mossy",
+    "item:gt6ce:planks_pine",
+    "item:gt6ce:planks_rainbowood",
+    "item:gt6ce:planks_rotten",
+    "item:gt6ce:planks_rubber",
+    "item:gt6ce:planks_treated",
+    "item:gt6ce:planks_white_mahoe",
+    "item:gt6ce:planks_willow",
+    "item:gt6ce:planks_wood"
+  ],
+  "priority": 110
+}

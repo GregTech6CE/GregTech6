@@ -1,0 +1,20 @@
+plugins { id 'base' }
+
+version = mod_version
+group = mod_group_id
+
+// Incremental resource moves can leave empty old directories in build outputs.
+// Only files define mod content; never retain those directories in a delivered jar.
+subprojects {
+    tasks.withType(org.gradle.jvm.tasks.Jar).configureEach { includeEmptyDirs = false }
+}
+
+apply from: 'gradle/stonecutter-native.gradle'
+
+tasks.named('check').configure {
+    dependsOn ':core:check', ':minecraft:1.20.1-forge:check', ':minecraft:1.21.1-neoforge:check'
+}
+tasks.named('assemble').configure { dependsOn 'assembleBothPlatforms' }
+tasks.named('clean').configure {
+    dependsOn ':core:clean', ':minecraft:1.20.1-forge:clean', ':minecraft:1.21.1-neoforge:clean'
+}

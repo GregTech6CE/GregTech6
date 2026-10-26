@@ -1,0 +1,67 @@
+import org.gradle.api.file.FileTree
+import org.gradle.api.tasks.*
+import org.gradle.language.jvm.tasks.ProcessResources
+import org.gradle.work.Incremental
+import org.gradle.work.InputChanges
+import org.gradle.work.ChangeType
+import java.nio.file.Files
+
+/** Preserve the ForgeGradle ProcessResources/CopySpec contract, but copy only changed inputs.
+ * Gradle handles full rebuilds and snapshots; removed inputs are explicitly removed from output.
+ */
+abstract class IncrementalProcessResources extends ProcessResources {
+    private FileTree trackedSource
+    @Override @InputFiles @SkipWhenEmpty @IgnoreEmptyDirectories @PathSensitive(PathSensitivity.RELATIVE)
+    FileTree getSource() {
+        if (trackedSource == null) trackedSource = super.getSource()
+        trackedSource
+    }
+
+    // The inherited action deletes every previous output before copying. The incremental action
+    // below replaces it; keeping the type lets Forge's IDEA resource task still read rootSpec.
+    @Override protected void copy() {}
+
+    @TaskAction
+    void copyChangedResources(InputChanges changes) {
+        Set<String> changed = new HashSet<>()
+        int removed = 0
+        def output = destinationDir.toPath().toAbsolutePath().normalize()
+        changes.getFileChanges(source).each { change ->
+            if (change.fileType == org.gradle.api.file.FileType.DIRECTORY) return
+            if (change.changeType == ChangeType.REMOVED) {
+                def target = output.resolve(change.normalizedPath).normalize()
+                if (!target.startsWith(output)) throw new GradleException("Resource path escapes output: ${change.normalizedPath}")
+                if (Files.deleteIfExists(target)) removed++
+            } else changed.add(change.normalizedPath.replace('\\', '/'))
+        }
+        if (!changed.isEmpty()) {
+            def original = rootSpec
+            project.copy {
+                with original
+                into output.toFile()
+                includeEmptyDirs = false
+                eachFile { details ->
+                    if (!changed.contains(details.relativePath.pathString)) details.exclude()
+                }
+            }
+        }
+        logger.lifecycle("Resources: ${changed.size()} changed, ${removed} removed (${changes.incremental ? 'incremental' : 'full'}).")
+    }
+}
+
+tasks.replace('processResources', IncrementalProcessResources).configure {
+    from sourceSets.main.resources
+    into layout.buildDirectory.dir('resources/main')
+}
+
+// Small isolated integration fixture; never part of runClient or normal builds.
+if (project.hasProperty('resourceSyncFixture')) {
+    tasks.register('verifyResourceSync', IncrementalProcessResources) {
+        from file("${project.property('resourceSyncFixture')}/source")
+        into file("${project.property('resourceSyncFixture')}/output")
+        filteringCharset = 'UTF-8'
+        def value = project.findProperty('resourceSyncToken') ?: 'first'
+        inputs.property('token', value)
+        filesMatching('metadata.txt') { expand(token: value) }
+    }
+}

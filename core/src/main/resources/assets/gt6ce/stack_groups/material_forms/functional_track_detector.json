@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_track_detector",
+  "contents": [
+    "item:gt6ce:track_detector_adamantium",
+    "item:gt6ce:track_detector_aluminium",
+    "item:gt6ce:track_detector_bronze",
+    "item:gt6ce:track_detector_magnalium",
+    "item:gt6ce:track_detector_stainlesssteel",
+    "item:gt6ce:track_detector_steel",
+    "item:gt6ce:track_detector_titanium",
+    "item:gt6ce:track_detector_tungsten",
+    "item:gt6ce:track_detector_tungstencarbide",
+    "item:gt6ce:track_detector_tungstensteel"
+  ],
+  "priority": 110
+}

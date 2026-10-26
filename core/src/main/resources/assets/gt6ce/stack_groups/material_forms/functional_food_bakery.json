@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_bakery",
+  "contents": [
+    "item:gt6ce:baguette",
+    "item:gt6ce:baguettes",
+    "item:gt6ce:breads",
+    "item:gt6ce:bun",
+    "item:gt6ce:buns",
+    "item:gt6ce:cake_bottom",
+    "item:gt6ce:cookie",
+    "item:gt6ce:loaf_of_toast",
+    "item:gt6ce:raisin_cookie",
+    "item:gt6ce:sliced_baguette",
+    "item:gt6ce:sliced_bread",
+    "item:gt6ce:sliced_bun",
+    "item:gt6ce:toast",
+    "item:gt6ce:toasted_toast"
+  ],
+  "priority": 120
+}

@@ -1,0 +1,40 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "_comment": "GT6 MultiItemRandomTools:424",
+  "pattern": [
+    "CPC",
+    "LMW",
+    "COC"
+  ],
+  "key": {
+    "C": {
+      "tag": "gt6ce:circuits_tier_4_plus"
+    },
+    "P": [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      }
+    ],
+    "M": {
+      "item": "gt6ce:casing_machine_steelgalvanized"
+    },
+    "O": {
+      "item": "gt6ce:extruder_shape_block"
+    },
+    "L": {
+      "type": "gt6ce:finite_fluid_container_1000",
+      "fluid": "Lava"
+    },
+    "W": {
+      "type": "gt6ce:finite_fluid_container_1000",
+      "fluid": "Water"
+    }
+  },
+  "result": {
+    "item": "gt6ce:stone_generator_module"
+  }
+}

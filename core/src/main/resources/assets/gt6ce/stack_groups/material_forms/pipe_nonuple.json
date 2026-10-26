@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.pipe_nonuple",
+  "regex": "^gt6ce:pipe_nonuple_[a-z0-9_]+$",
+  "priority": 100
+}

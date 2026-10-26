@@ -1,0 +1,30 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PCP",
+    "IwI",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/arsenic_copper"
+    },
+    "I": {
+      "tag": "gt6ce:plate_curved/arsenic_copper"
+    },
+    "C": {
+      "tag": "gt6ce:plate_double/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:burning_box_liquid_arsenic_copper"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

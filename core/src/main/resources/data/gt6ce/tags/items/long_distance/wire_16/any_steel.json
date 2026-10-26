@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gt6ce:wire_16_steel",
+      "required": false
+    },
+    {
+      "id": "gt6ce:wire_16_knightmetal",
+      "required": false
+    },
+    {
+      "id": "gt6ce:wire_16_meteoric_steel",
+      "required": false
+    }
+  ]
+}

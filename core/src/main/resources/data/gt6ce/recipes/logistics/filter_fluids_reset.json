@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:filter_fluids"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:filter_fluids"
+  }
+}

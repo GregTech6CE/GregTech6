@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_distillery",
+  "contents": [
+    "item:gt6ce:distillery_invar",
+    "item:gt6ce:distillery_steel",
+    "item:gt6ce:distillery_titanium",
+    "item:gt6ce:distillery_tungsten_carbide"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.real_fluids",
+  "regex": "^fluid:gt6ce:(?!fluid_item_)[a-z0-9_./-]+$",
+  "priority": 120
+}

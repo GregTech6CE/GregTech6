@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:fire_charge",
+    "minecraft:flint_and_steel",
+    "gt6ce:tool_flint_and_tinder",
+    "gt6ce:match",
+    "gt6ce:match_box",
+    "gt6ce:match_box_full",
+    "gt6ce:lighter",
+    "gt6ce:lighter_full",
+    "gt6ce:shiny_lighter",
+    "gt6ce:shiny_lighter_full",
+    "gt6ce:plastic_lighter",
+    "gt6ce:plastic_lighter_full",
+    "gt6ce:fire_starter",
+    "gt6ce:fire_starter_2"
+  ]
+}

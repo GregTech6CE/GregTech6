@@ -1,0 +1,19 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_walls",
+  "contents": [
+    "item:gt6ce:adamantium_wall",
+    "item:gt6ce:bronze_wall",
+    "item:gt6ce:galvanized_steel_wall",
+    "item:gt6ce:invar_wall",
+    "item:gt6ce:lead_wall",
+    "item:gt6ce:steel_wall",
+    "item:gt6ce:tank_wall",
+    "item:gt6ce:tantalum_hafnium_carbide_wall",
+    "item:gt6ce:titanium_wall",
+    "item:gt6ce:tungsten_wall",
+    "item:gt6ce:tungstensteel_wall",
+    "item:gt6ce:wood_wall"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,20 @@
+{
+  "screwdriver": {
+    "subtitle": "subtitles.gt6ce.screwdriver",
+    "sounds": [
+      "gt6ce:screwdriver"
+    ]
+  },
+  "wrench": {
+    "subtitle": "subtitles.gt6ce.wrench",
+    "sounds": [
+      "gt6ce:wrench"
+    ]
+  },
+  "beep": {
+    "subtitle": "subtitles.gt6ce.beep",
+    "sounds": [
+      "gt6ce:beep"
+    ]
+  }
+}

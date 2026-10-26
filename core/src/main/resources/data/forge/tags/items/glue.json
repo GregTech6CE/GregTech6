@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:glue_bottle",
+    "gt6ce:tar_bottle",
+    "gt6ce:green_slime_bottle",
+    "gt6ce:pink_slime_bottle",
+    "gt6ce:blue_slime_bottle",
+    { "id": "#forge:ingots/tar_pitch", "required": false },
+    { "id": "#forge:nuggets/tar_pitch", "required": false }
+  ]
+}

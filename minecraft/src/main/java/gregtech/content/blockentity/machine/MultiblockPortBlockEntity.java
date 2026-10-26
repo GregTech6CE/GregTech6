@@ -1,0 +1,365 @@
+package gregtech.content.blockentity.machine;
+
+import gregtech.engine.multiblock.*;
+import gregtech.engine.multiblock.tracking.WorldStructureClaims;
+import net.minecraft.server.level.ServerLevel;
+import gregtech.content.blockentity.GTEnergyBlockEntity;
+import gregtech.content.data.GregTechTags;
+import net.minecraft.core.*;
+import net.minecraft.world.level.block.state.BlockState;
+//? if >=1.21.1 {
+
+
+/*import net.neoforged.neoforge.fluids.*;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+*///?} else {
+import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+//?}
+import java.util.*;
+
+/** Transient binding is rebuilt after chunk load; no duplicated inventory or heat is stored here. */
+public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
+        gregtech.content.logistics.LogisticsCoverHost,
+        gregtech.engine.machine.ITileEntityCrucible,
+        gregtech.engine.multiblock.BoundMachinePort,
+        gregtech.engine.fluid.FluidToolTarget, MultiblockToolTarget {
+    private final gregtech.content.logistics.LogisticsCovers covers =
+            new gregtech.content.logistics.LogisticsCovers(this, this);
+    private BlockPos controller;
+    private MultiblockLayout.Role role;
+    private boolean chunkUnloading;
+    /** Original {@code gt.design}. Zero is the default texture and is omitted from NBT. */
+    private int design;
+//? if >=1.21.1 {
+/*    public static final net.neoforged.neoforge.client.model.data.ModelProperty<Integer> DESIGN =
+            new net.neoforged.neoforge.client.model.data.ModelProperty<>();
+*///?} else {
+    public static final net.minecraftforge.client.model.data.ModelProperty<Integer> DESIGN =
+            new net.minecraftforge.client.model.data.ModelProperty<>();
+//?}
+    private int designSaved;
+    private boolean designHeld;
+//? if >=1.21.1 {
+//?} else {
+    private LazyOptional<IFluidHandler> fluid=LazyOptional.empty();
+//?}
+    public MultiblockPortBlockEntity(BlockPos pos, BlockState state) {
+        this(gregtech.content.registry.GTBlockEntities.MULTIBLOCK_PORT.get(), pos, state);
+    }
+    protected MultiblockPortBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,
+                                        BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+    protected BlockPos controllerPos() {
+        return level instanceof ServerLevel server ? WorldStructureClaims.owner(server, worldPosition) : controller;
+    }
+    protected MultiblockLayout.Role boundRole() { return role; }
+    private MultiblockPortOwner owner() {
+        BlockPos ownerPos = controllerPos();
+        if(isRemoved() || level==null || ownerPos==null || !level.hasChunkAt(ownerPos)) return null;
+        var entity = level.getBlockEntity(ownerPos);
+        return entity instanceof MultiblockPortOwner owner && !entity.isRemoved() ? owner : null;
+    }
+    /** Original SensorTE reads the cached controller directly, preserving the measured side.
+     * This does not expose an item/fluid transport capability or bypass its role restrictions. */
+    public net.minecraft.world.level.block.entity.BlockEntity sensorTarget() {
+        var target = owner();
+        return target instanceof net.minecraft.world.level.block.entity.BlockEntity entity && !entity.isRemoved()
+                ? entity : this;
+    }
+    /** Original part funnel/tap access checks the formed controller, not transport role bits. */
+    @Override public IFluidHandler fluidToolHandler(Direction side,boolean filling) {
+        return gregtech.engine.fluid.FluidToolTarget.relay(()->{
+            var host=owner();
+            if(host==null||!host.isStructureOk())return null;
+            if(host instanceof gregtech.engine.fluid.FluidToolTarget tools)
+                return tools.fluidToolHandler(side,filling);
+            // Preserve existing access for controllers whose original tool path is not ported yet.
+//? if >=1.21.1 {
+            /*return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,worldPosition,side);
+*///?} else {
+            return getCapability(ForgeCapabilities.FLUID_HANDLER,side).orElse(null);
+//?}
+        });
+    }
+    @Override public boolean containsToolPosition(BlockPos pos) { return worldPosition.equals(pos); }
+    @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,
+                                           List<net.minecraft.network.chat.Component> messages) {
+        if(level==null||level.isClientSide||isRemoved())return 0;
+        var held=context.getItemInHand();
+        if(!gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.BUILDER_WAND)
+                &&!gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))return 0;
+        var host=owner();
+        if(host==null) {
+            messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.NO_CONTROLLER));
+            return MultiblockToolRules.MAGNIFIER_COST;
+        }
+        if(host instanceof MultiblockToolTarget tools) {
+            if(tools.containsToolPosition(worldPosition)) return tools.useMultiblockTool(context,messages);
+            release(controllerPos()); // A stale binding must not route a click outside the owner's shell.
+        }
+        return 0;
+    }
+    public boolean isBoundTo(BlockPos owner) { return owner != null && owner.equals(controllerPos()); }
+    /** Per-cell claim diffing checks the derived cache too after a part BE was recreated. */
+    public boolean hasBindingCache(BlockPos owner, MultiblockLayout.Role role) {
+        return isBoundTo(owner) && owner.equals(controller) && this.role == role;
+    }
+    public boolean canBind(BlockPos owner) {
+        if (level instanceof ServerLevel server)
+            return WorldStructureClaims.canClaim(server, worldPosition, owner);
+        return controller==null || controller.equals(owner) || owner()==null;
+    }
+    public int structureDesign() { return design; }
+
+    /** Remembers the previous index, then writes {@code gt.design}. A second call keeps the first remembered value. */
+    public void applyStructureDesign(int next) {
+        if (next < 0) return;
+        if (!designHeld) {
+            designSaved = design;
+            designHeld = true;
+        }
+        setStructureDesign(next);
+    }
+
+    /** Puts back the index from before {@link #applyStructureDesign}. */
+    public void restoreStructureDesign() {
+        if (!designHeld) return;
+        int previous = designSaved;
+        designHeld = false;
+        designSaved = 0;
+        setStructureDesign(previous);
+    }
+
+    private void setStructureDesign(int next) {
+        int clamped = Math.max(0, Math.min(255, next));
+        if (design == clamped && level != null) {
+            setChanged();
+            return;
+        }
+        design = clamped;
+        gregtech.engine.multiblock.tracking.StructureScanProbe.onDesignWrite();
+        setChanged();
+        if (level != null && !level.isClientSide)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        if (level != null && level.isClientSide) requestModelDataUpdate();
+    }
+
+    public void bind(BlockPos owner,MultiblockLayout.Role role) {
+        gregtech.engine.multiblock.tracking.StructureScanProbe.onBind();
+        gregtech.engine.multiblock.tracking.StructureScanProbe.pause();
+        try {
+            if (level instanceof ServerLevel server && !WorldStructureClaims.claim(server, worldPosition, owner)) return;
+            this.controller=owner.immutable(); this.role=role;
+//? if >=1.21.1 {
+            /*updateCrucibleVisual(owner() instanceof gregtech.engine.multiblock.CrucibleStructureOwner);
+*///?} else {
+            updateCrucibleVisual(owner() instanceof LargeCrucibleControllerBlockEntity);
+//?}
+        } finally {
+            gregtech.engine.multiblock.tracking.StructureScanProbe.resume();
+        }
+    }
+    @Override public void onLoad() {
+        super.onLoad();
+        chunkUnloading = false;
+        // Bindings are rebuilt by the controller; never keep a saved invisible orphan wall.
+        updateCrucibleVisual(false);
+    }
+    @Override public void onChunkUnloaded() {
+        chunkUnloading = true;
+        if (level instanceof ServerLevel server)
+            WorldStructureClaims.partUnloaded(server, worldPosition);
+        super.onChunkUnloaded();
+    }
+    @Override public void setRemoved() {
+        if (!chunkUnloading && level instanceof ServerLevel server)
+            WorldStructureClaims.partRemoved(server, worldPosition);
+        super.setRemoved();
+    }
+    private void updateCrucibleVisual(boolean formed) {
+        if (level == null || level.isClientSide) return;
+        var property = gregtech.content.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
+        var state = level.getBlockState(worldPosition);
+        if (state.hasProperty(property) && state.getValue(property) != formed)
+            level.setBlock(worldPosition, state.setValue(property, formed), 3);
+    }
+    public void release(BlockPos owner) {
+        if (isBoundTo(owner)) {
+            if (level instanceof ServerLevel server)
+                WorldStructureClaims.release(server, worldPosition, owner);
+            gregtech.engine.multiblock.tracking.StructureScanProbe.onRelease();
+            gregtech.engine.multiblock.tracking.StructureScanProbe.pause();
+            try {
+                controller = null;
+                role = null;
+                updateCrucibleVisual(false);
+                restoreStructureDesign();
+            } finally {
+                gregtech.engine.multiblock.tracking.StructureScanProbe.resume();
+            }
+        }
+    }
+    @Override public boolean canLogistics(Direction side) {
+        // GT6 multiblock parts delegate logistics to their owner; only a Logistics Core opts in.
+        return (role == MultiblockLayout.Role.LOGISTICS || role == MultiblockLayout.Role.ENERGY_INPUT)
+                && owner() instanceof gregtech.content.logistics.LogisticsHost host
+                && host.canLogistics(side);
+    }
+    /** GT6 crucible's middle wall serves faucets and molds; upper wall serves hand access. */
+//? if >=1.21.1 {
+    /*public gregtech.engine.multiblock.CrucibleStructureOwner crucibleController() {
+*///?} else {
+    public LargeCrucibleControllerBlockEntity crucibleController() {
+//?}
+        var host = owner();
+//? if >=1.21.1 {
+        /*return host instanceof gregtech.engine.multiblock.CrucibleStructureOwner crucible ? crucible : null;
+*///?} else {
+        return host instanceof LargeCrucibleControllerBlockEntity crucible ? crucible : null;
+//?}
+    }
+    public boolean isCrucibleUpperPort() { return role == MultiblockLayout.Role.ITEM_FLUID_IO && crucibleController() != null; }
+    @Override public boolean fillMoldAtSide(gregtech.engine.machine.ITileEntityMold mold,
+                                             int crucibleSide, int moldSide) {
+        var crucible = crucibleController();
+        return role == MultiblockLayout.Role.CRUCIBLE && crucible != null && crucible.isStructureOk()
+                && crucible.fillMoldAtSide(mold, crucibleSide, moldSide);
+    }
+    @Override public long getCrucibleTemperature() {
+        var crucible = crucibleController();
+        return role == MultiblockLayout.Role.CRUCIBLE && crucible != null && crucible.isStructureOk()
+                ? crucible.getCrucibleTemperature() : 0;
+    }
+    @Override public long getCrucibleContentAmount() {
+        var crucible = crucibleController();
+        return role == MultiblockLayout.Role.CRUCIBLE && crucible != null && crucible.isStructureOk()
+                ? crucible.getCrucibleContentAmount() : 0;
+    }
+    @Override public gregtech.content.logistics.LogisticsCovers logisticsCovers() { return covers; }
+//? if >=1.21.1 {
+    /*@Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag,lookup);
+        covers.save(tag, lookup);
+        saveDesign(tag);
+*///?} else {
+    @Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag) {
+        super.saveAdditional(tag);
+        covers.save(tag);
+        saveDesign(tag);
+//?}
+    }
+//? if >=1.21.1 {
+    /*@Override protected void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag,lookup);
+        covers.load(tag, lookup);
+        loadDesign(tag);
+*///?} else {
+    @Override public void load(net.minecraft.nbt.CompoundTag tag) {
+        super.load(tag);
+        covers.load(tag);
+        loadDesign(tag);
+//?}
+    }
+
+    private void saveDesign(net.minecraft.nbt.CompoundTag tag) {
+        if (design != 0) tag.putByte("gt.design", (byte) design);
+        if (designHeld) {
+            tag.putBoolean("gt.design_held", true);
+            tag.putByte("gt.design_saved", (byte) designSaved);
+        }
+    }
+
+    private void loadDesign(net.minecraft.nbt.CompoundTag tag) {
+        design = tag.contains("gt.design") ? tag.getByte("gt.design") & 255 : 0;
+        designHeld = tag.getBoolean("gt.design_held");
+        designSaved = designHeld && tag.contains("gt.design_saved") ? tag.getByte("gt.design_saved") & 255 : 0;
+        if (level != null && level.isClientSide) requestModelDataUpdate();
+    }
+//? if >=1.21.1 {
+    /*private net.neoforged.neoforge.items.IItemHandler itemTarget() { var owner=owner(); return owner!=null&&owner.isStructureOk()?owner.portItems(role):null; }
+    private final net.neoforged.neoforge.items.IItemHandler itemRelay=new net.neoforged.neoforge.items.IItemHandler() {
+*///?} else {
+    private LazyOptional<net.minecraftforge.items.IItemHandler> items=LazyOptional.empty();
+    private net.minecraftforge.items.IItemHandler itemTarget() { var owner=owner(); return owner!=null&&owner.isStructureOk()?owner.portItems(role):null; }
+    private final net.minecraftforge.items.IItemHandler itemRelay=new net.minecraftforge.items.IItemHandler() {
+//?}
+        public int getSlots() {var t=itemTarget();return t==null?0:t.getSlots();}
+        public net.minecraft.world.item.ItemStack getStackInSlot(int slot) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?net.minecraft.world.item.ItemStack.EMPTY:t.getStackInSlot(slot).copy();}
+        public net.minecraft.world.item.ItemStack insertItem(int slot,net.minecraft.world.item.ItemStack stack,boolean simulate) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?stack:t.insertItem(slot,stack,simulate);}
+        public net.minecraft.world.item.ItemStack extractItem(int slot,int amount,boolean simulate) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?net.minecraft.world.item.ItemStack.EMPTY:t.extractItem(slot,amount,simulate);}
+        public int getSlotLimit(int slot) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?0:t.getSlotLimit(slot);}
+        public boolean isItemValid(int slot,net.minecraft.world.item.ItemStack stack) {var t=itemTarget();return t!=null&&slot>=0&&slot<t.getSlots()&&t.isItemValid(slot,stack);}
+    };
+    private IFluidHandler target() { var owner=owner();return owner!=null&&owner.isStructureOk()?owner.portFluids(role):null; }
+    private final IFluidHandler relay=new IFluidHandler() {
+        public int getTanks() { var t=target();return t==null?0:t.getTanks(); }
+        public FluidStack getFluidInTank(int tank) { var t=target();return t==null?FluidStack.EMPTY:t.getFluidInTank(tank).copy(); }
+        public int getTankCapacity(int tank) { var t=target();return t==null?0:t.getTankCapacity(tank); }
+        public boolean isFluidValid(int tank,FluidStack stack) { var t=target();return t!=null&&t.isFluidValid(tank,stack); }
+        public int fill(FluidStack stack,FluidAction action) { var t=target();return t==null?0:t.fill(stack,action); }
+        public FluidStack drain(int amount,FluidAction action) { var t=target();return t==null?FluidStack.EMPTY:t.drain(amount,action); }
+        public FluidStack drain(FluidStack stack,FluidAction action) { var t=target();return t==null?FluidStack.EMPTY:t.drain(stack,action); }
+    };
+//? if >=1.21.1 {
+    /*public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side){return isRemoved()?null:itemRelay;}
+    public IFluidHandler fluidCapability(Direction side){return isRemoved()?null:relay;}
+*///?} else {
+    @Override public <T> LazyOptional<T> getCapability(Capability<T> cap,Direction side) {
+        if(cap==ForgeCapabilities.ITEM_HANDLER&&!isRemoved()) {
+            if(!items.isPresent()) items=LazyOptional.of(()->itemRelay);
+            return items.cast();
+        }
+        if(cap==ForgeCapabilities.FLUID_HANDLER&&!isRemoved()) {
+            if(!fluid.isPresent()) fluid=LazyOptional.of(() -> relay);
+            return fluid.cast();
+        }
+        return super.getCapability(cap,side);
+    }
+    @Override public void invalidateCaps() {super.invalidateCaps();fluid.invalidate();items.invalidate();}
+    @Override public void reviveCaps() {super.reviveCaps();items=LazyOptional.of(()->itemRelay);fluid=LazyOptional.of(() -> relay);}
+//?}
+    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side) {var o=owner();return o==null?List.of():o.portEnergyTypes(role);}
+    @Override public boolean isEnergyType(GregTechTags.Tag t,Direction side,boolean emitting) {var o=owner();return o!=null&&(emitting?o.emitsPortEnergy(role,t):getEnergyTypes(side).contains(t)&&!o.emitsPortEnergy(role,t));}
+    @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag t,Direction side,boolean theoretical) {var o=owner();return isEnergyType(t,side,false)&&o!=null&&o.isStructureOk();}
+    @Override public boolean isEnergyEmittingTo(GregTechTags.Tag t,Direction side,boolean theoretical) {var o=owner();return o!=null&&o.emitsPortEnergy(role,t)&&o.isStructureOk();}
+    @Override public long getEnergySizeInputRecommended(GregTechTags.Tag t,Direction side) {var o=owner();return o!=null&&isEnergyType(t,side,false)?o.portEnergyInputRecommended(role,t):0;}
+    @Override public long getEnergySizeInputMin(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyInputMin(role,t);}
+    @Override public long getEnergySizeInputMax(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyInputMax(role,t);}
+    @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyOutputSize(role,t);}
+    @Override public long getEnergyOffered(GregTechTags.Tag t,Direction side,long size) {return 0;}
+    @Override public long getEnergyDemanded(GregTechTags.Tag t,Direction side,long size) {var o=owner();return o!=null&&isEnergyAcceptingFrom(t,side,false)?o.portEnergyDemanded(role,t,size):0;}
+    @Override public long getEnergyStored(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyStored(role,t);}
+    @Override public long getEnergyCapacity(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyCapacity(role,t);}
+    @Override public long doInject(GregTechTags.Tag t,Direction side,long size,long amount,boolean execute) {var o=owner();return o!=null&&o.isStructureOk()?o.injectPortEnergy(role,t,size,amount,execute):0;}
+
+//? if >=1.21.1 {
+/*    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
+    }
+    @Override public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
+        return net.neoforged.neoforge.client.model.data.ModelData.builder()
+                .with(DESIGN, design).build();
+    }
+*///?} else {
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
+        if (packet.getTag() != null) load(packet.getTag());
+    }
+    @Override public net.minecraftforge.client.model.data.ModelData getModelData() {
+        return net.minecraftforge.client.model.data.ModelData.builder()
+                .with(DESIGN, design).build();
+    }
+//?}
+}

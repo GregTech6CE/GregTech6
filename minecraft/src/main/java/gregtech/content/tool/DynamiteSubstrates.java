@@ -1,0 +1,51 @@
+package gregtech.content.tool;
+
+//? if >=1.21.1 {
+//?} else {
+import gregtech.content.block.GTGrassBlock;
+//?}
+import gregtech.content.block.RockOreBlock;
+import gregtech.content.block.OreBlock;
+//? if >=1.21.1 {
+//?} else {
+import gregtech.content.block.misc.DiggableBlock;
+//?}
+import gregtech.content.block.stone.GTStoneBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+
+/** GT6 BlocksGT.drillableDynamite + natural stone/ore; shared by placement and support checks. */
+public final class DynamiteSubstrates {
+    public static final TagKey<Block> DRILLABLE = TagKey.create(Registries.BLOCK,
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "drillable_dynamite"));
+    private DynamiteSubstrates() {}
+
+    public static boolean canDrill(BlockGetter level, BlockPos pos) {
+        var state = level.getBlockState(pos);
+        var block = state.getBlock();
+        // Normal and small ores share their ID with an unbreakable bedrock-host state.
+        // Test that state before any whole-block whitelist can admit it.
+        if (block instanceof OreBlock)
+            return !OreBlock.isBedrockOre(state) && state.getDestroySpeed(level, pos) >= 0;
+//? if >=1.21.1 {
+        /*boolean explicit = state.is(DRILLABLE) || block instanceof RockOreBlock;
+*///?} else {
+        boolean explicit = state.is(DRILLABLE) || block instanceof GTGrassBlock
+                || block instanceof DiggableBlock || block instanceof RockOreBlock;
+//?}
+        if (state.getDestroySpeed(level, pos) < 0 && !explicit) return false;
+        // GT6 rejects processed stone variants even when an addon puts them in the whitelist.
+        if (block instanceof GTStoneBlock stone) return stone.variant().meta() < 3;
+        return explicit || state.is(BlockTags.BASE_STONE_OVERWORLD)
+//? if >=1.21.1 {
+                /*|| state.is(BlockTags.BASE_STONE_NETHER) || state.is(net.neoforged.neoforge.common.Tags.Blocks.ORES);
+*///?} else {
+                || state.is(BlockTags.BASE_STONE_NETHER) || state.is(net.minecraftforge.common.Tags.Blocks.ORES);
+//?}
+    }
+}

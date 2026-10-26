@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:cable_01_lead"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_ulv"
+    },
+    "S": {
+      "tag": "forge:rods/tin_alloy"
+    },
+    "P": {
+      "item": "gt6ce:compact_electric_piston_ulv"
+    },
+    "E": {
+      "item": "gt6ce:integrated_circuit_0"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_robot_arm_ulv",
+    "count": 1
+  }
+}

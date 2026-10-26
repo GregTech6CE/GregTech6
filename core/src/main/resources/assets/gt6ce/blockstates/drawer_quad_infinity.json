@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "gt6ce:block/machine/storage/drawer_quad_down"
+    },
+    "facing=up": {
+      "model": "gt6ce:block/machine/storage/drawer_quad_up"
+    },
+    "facing=north": {
+      "model": "gt6ce:block/machine/storage/drawer_quad_north"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/storage/drawer_quad_south"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/storage/drawer_quad_west"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/storage/drawer_quad_east"
+    }
+  }
+}

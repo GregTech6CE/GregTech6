@@ -1,0 +1,58 @@
+{
+  "variants": {
+    "facing=down,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_down"
+    },
+    "facing=down,type=top": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_up"
+    },
+    "facing=down,type=double": {
+      "model": "gt6ce:block/wood/planks_blue_mahoe"
+    },
+    "facing=up,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_up"
+    },
+    "facing=up,type=top": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_up"
+    },
+    "facing=up,type=double": {
+      "model": "gt6ce:block/wood/planks_blue_mahoe"
+    },
+    "facing=north,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_north"
+    },
+    "facing=north,type=top": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_north"
+    },
+    "facing=north,type=double": {
+      "model": "gt6ce:block/wood/planks_blue_mahoe"
+    },
+    "facing=south,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_south"
+    },
+    "facing=south,type=top": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_south"
+    },
+    "facing=south,type=double": {
+      "model": "gt6ce:block/wood/planks_blue_mahoe"
+    },
+    "facing=west,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_west"
+    },
+    "facing=west,type=top": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_west"
+    },
+    "facing=west,type=double": {
+      "model": "gt6ce:block/wood/planks_blue_mahoe"
+    },
+    "facing=east,type=bottom": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_east"
+    },
+    "facing=east,type=top": {
+      "model": "gt6ce:block/wood_slabs/blue_mahoe_east"
+    },
+    "facing=east,type=double": {
+      "model": "gt6ce:block/wood/planks_blue_mahoe"
+    }
+  }
+}

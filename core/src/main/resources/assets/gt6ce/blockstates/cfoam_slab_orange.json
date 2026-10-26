@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "gt6ce:block/decoration/cfoam_slab_down"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/decoration/cfoam_slab_east"
+    },
+    "facing=north": {
+      "model": "gt6ce:block/decoration/cfoam_slab_north"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/decoration/cfoam_slab_south"
+    },
+    "facing=up": {
+      "model": "gt6ce:block/decoration/cfoam_slab_up"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/decoration/cfoam_slab_west"
+    }
+  }
+}

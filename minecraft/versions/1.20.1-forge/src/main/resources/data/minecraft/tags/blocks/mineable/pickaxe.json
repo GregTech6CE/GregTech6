@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:stone_blocks",
+      "required": false
+    },
+    "gt6ce:cfoam_slab"
+  ]
+}

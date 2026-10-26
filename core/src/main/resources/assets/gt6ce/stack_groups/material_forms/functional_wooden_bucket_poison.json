@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_poison",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_poison",
+    "item:gt6ce:wooden_bucket_tin_poison",
+    "item:gt6ce:wooden_bucket_zinc_poison",
+    "item:gt6ce:wooden_bucket_lead_poison",
+    "item:gt6ce:wooden_bucket_bismuth_poison",
+    "item:gt6ce:wooden_bucket_brass_poison",
+    "item:gt6ce:wooden_bucket_bronze_poison",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_poison",
+    "item:gt6ce:wooden_bucket_gold_poison"
+  ],
+  "priority": 125
+}

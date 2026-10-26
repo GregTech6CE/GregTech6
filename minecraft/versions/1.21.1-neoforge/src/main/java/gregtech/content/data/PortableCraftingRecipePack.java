@@ -1,0 +1,148 @@
+package gregtech.content.data;
+
+import com.google.gson.Gson;
+import gregtech.api.material.GTMaterial;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.AbstractPackResources;
+import net.minecraft.server.packs.PackResources;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.server.packs.resources.IoSupplier;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.minecraft.core.registries.BuiltInRegistries;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/** Original portable, equipment and logistics recipes over shared catalogs; native data-pack reload and codecs. */
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+public final class PortableCraftingRecipePack extends AbstractPackResources {
+    private static final Gson GSON=new Gson();
+
+    private Map<ResourceLocation, byte[]> resources;
+
+    public PortableCraftingRecipePack(net.minecraft.server.packs.PackLocationInfo info) {
+        super(info);
+    }
+
+    @SubscribeEvent
+    public static void packs(AddPackFindersEvent event) {
+        if (event.getPackType() != PackType.SERVER_DATA) return;
+        event.addRepositorySource(output -> {
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:portable_crafting_recipes",Component.literal("GregTech original equipment crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
+                public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new PortableCraftingRecipePack(info);}
+                public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new PortableCraftingRecipePack(info);}
+            },PackType.SERVER_DATA,new net.minecraft.server.packs.PackSelectionConfig(true,Pack.Position.BOTTOM,true));
+            if (pack != null) output.accept(pack);
+        });
+    }
+
+    private synchronized Map<ResourceLocation,byte[]> data(){
+        if(resources!=null)return resources;
+        Map<ResourceLocation,byte[]> generated=new HashMap<>();
+        for (String file : gregtech.content.tool.PortableCraftingCatalog.FILES)
+            addOriginal(generated, "fluid_tools/" + file);
+        for (String file : gregtech.content.recipe.EquipmentCraftingCatalog.FILES)
+            addOriginal(generated, file);
+        for (String file : gregtech.content.recipe.ClayMoldCatalog.FILES)
+            addOriginal(generated,file);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original equipment crafting datapack: {} rows ({} retained equipment rows)",
+                generated.size(), gregtech.content.recipe.EquipmentCraftingCatalog.FILES.size());
+        addOriginalToolTag(generated);
+        resources=Map.copyOf(generated);
+        return resources;
+    }
+
+    /** The resource owns balance and tools; this boundary only adapts native JSON shape/path. */
+    private static void addOriginal(Map<ResourceLocation, byte[]> generated, String file) {
+        String path = "data/gt6ce/recipes/" + file;
+        try (var stream = PortableCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)) {
+            if (stream == null) throw new IllegalStateException("Missing shared equipment recipe " + path);
+            var recipe = com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(), StandardCharsets.UTF_8)).getAsJsonObject();
+            var result = recipe.get("result");
+            if (result.isJsonPrimitive()) {
+                var object = new com.google.gson.JsonObject();
+                object.addProperty("id", result.getAsString());
+                recipe.add("result", object);
+            } else {
+                var object = result.getAsJsonObject();
+                if (object.has("item")) object.add("id", object.remove("item"));
+                // Shared spike outputs carry only vanilla BlockStateTag; translate it to 1.21's component.
+                if (file.startsWith("catalog_repairs/spike_") && object.has("nbt")) {
+                    var state = object.remove("nbt").getAsJsonObject().getAsJsonObject("BlockStateTag");
+                    var components = new com.google.gson.JsonObject();
+                    components.add("minecraft:block_state", state);
+                    object.add("components", components);
+                }
+            }
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/" + file);
+            if (generated.putIfAbsent(id, GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8)) != null)
+                throw new IllegalStateException("Duplicate original equipment recipe " + id);
+        } catch (java.io.IOException failure) {
+            throw new java.io.UncheckedIOException(failure);
+        }
+    }
+
+    /** Original ingredient tags merge at native singular paths, preserving their values. */
+    private static void addOriginalToolTag(Map<ResourceLocation, byte[]> generated) {
+        for (String tag : gregtech.content.recipe.EquipmentCraftingCatalog.TAGS) {
+            var key = ResourceLocation.parse(tag);
+            String path = "data/" + key.getNamespace() + "/tags/items/" + key.getPath() + ".json";
+            try (var stream = PortableCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)) {
+                if (stream == null) throw new IllegalStateException("Missing shared ingredient tag " + path);
+                var id = ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "tags/item/" + key.getPath() + ".json");
+                if (generated.putIfAbsent(id, stream.readAllBytes()) != null)
+                    throw new IllegalStateException("Duplicate original ingredient tag " + id);
+            } catch (java.io.IOException failure) {
+                throw new java.io.UncheckedIOException(failure);
+            }
+        }
+    }
+
+    @Override
+    public IoSupplier<InputStream> getRootResource(String... path) {
+        if (path.length != 1 || !path[0].equals("pack.mcmeta")) return null;
+        return () -> new ByteArrayInputStream(("{\"pack\":{\"pack_format\":48,\"description\":"
+                + "\"GregTech original equipment crafting recipes\"}}").getBytes(StandardCharsets.UTF_8));
+    }
+
+    @Override
+    public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
+        if (type != PackType.SERVER_DATA) return null;
+        byte[] bytes = data().get(id);
+        return bytes == null ? null : () -> new ByteArrayInputStream(bytes);
+    }
+
+    @Override
+    public void listResources(PackType type, String namespace, String path,
+                              PackResources.ResourceOutput output) {
+        if (type != PackType.SERVER_DATA) return;
+        data().forEach((id, bytes) -> {
+            if (id.getNamespace().equals(namespace) && id.getPath().startsWith(path + "/")) {
+                output.accept(id, () -> new ByteArrayInputStream(bytes));
+            }
+        });
+    }
+
+    @Override
+    public Set<String> getNamespaces(PackType type) {
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce", "forge") : Set.of();
+    }
+
+    @Override
+    public void close() {
+        resources = null;
+    }
+}

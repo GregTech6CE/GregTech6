@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:stick/steel",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:stick/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:stick/meteoric_steel",
+      "required": false
+    }
+  ]
+}

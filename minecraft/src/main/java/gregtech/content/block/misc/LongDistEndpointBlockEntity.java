@@ -1,0 +1,229 @@
+/**
+ * Copyright (c) 2021 GregTech-6 Team
+ *
+ * This file is part of GregTech.
+ *
+ * GregTech is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GregTech is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package gregtech.content.block.misc;
+import net.minecraft.core.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import gregtech.engine.energy.IEnergyBlock;
+import gregtech.content.data.GregTechTags;
+import java.util.*;
+/** Resolves a cached remote item/fluid endpoint; the base class forwards its sided capabilities. */
+public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.CapabilityRelayBlockEntity implements gregtech.api.machine.MachineControl.Provider {
+    private long temperature;
+
+    public LongDistEndpointBlockEntity(BlockPos pos, BlockState state) {
+        super(gregtech.content.registry.GTBlockEntities.LONG_DIST_ENDPOINT.get(), pos, state);
+        link = new gregtech.content.logistics.LongDistanceLink<>(pos, this,
+                () -> !isRemoved() && (level == null || level.hasChunkAt(worldPosition)));
+    }
+
+    private Direction front() {
+        return getBlockState().getValue(LongDistEndpointBlock.FACING);
+    }
+
+    private final LongDistanceRouteWatch routeWatch = new LongDistanceRouteWatch();
+    private boolean stopped;
+    private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistEndpointBlockEntity> link;
+    private final gregtech.api.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
+            () -> !stopped, value -> setStopped(!value), () -> false, () -> false);
+
+    @Override
+    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+        return control;
+    }
+
+    public boolean isStopped() {
+        return stopped;
+    }
+
+    public void setStopped(boolean value) {
+        stopped = value;
+        setChanged();
+    }
+
+    public void invalidateRoute() {
+        link.reset();
+        routeWatch.clear();
+    }
+
+    private BlockState observe(BlockPos pos) {
+        return routeWatch.observe(level, pos);
+    }
+
+    private boolean changed() {
+        return routeWatch.changed(level);
+    }
+
+    private LongDistEndpointBlockEntity receiver() {
+        if (level == null || level.isClientSide || stopped) return null;
+        if ((link.known() && !routeWatch.validated()) || changed()) invalidateRoute();
+        if (fluid() && link.known() && !worldPosition.equals(link.targetPosition()) && temperature <= 0) invalidateRoute();
+        if (!link.known()) scan();
+        var receiver = link.targetOwner();
+        var position = link.targetPosition();
+        if (receiver == null && position != null && !position.equals(worldPosition) && LongDistanceRouteWatch.ready(level, position)) {
+            var entity = LongDistanceRouteWatch.entity(level, position);
+            if (entity instanceof LongDistEndpointBlockEntity peer && peer.fluid() == fluid()) {
+                link.bind(peer.link);
+                receiver = peer;
+            } else if (entity != null) {
+                invalidateRoute();
+                return null;
+            }
+        }
+        return receiver != null && link.claim() ? receiver : null;
+    }
+
+    public void rescan() {
+        if (link.receiving()) return;
+        invalidateRoute();
+        scan();
+    }
+
+    private void scan() {
+        if (level == null || level.isClientSide || !link.beginScan()) return;
+        temperature = 0;
+        routeWatch.begin(level);
+        if (!routeWatch.loaded(level, worldPosition)) return;
+        observe(worldPosition);
+        var start = worldPosition.relative(front().getOpposite());
+        if (!(observe(start).getBlock() instanceof LongDistPipeBlock line) || !line.acceptsPipeline(fluid())) return;
+        var result = gregtech.engine.logistics.LongDistanceNetwork.scan(worldPosition, start, line.networkIdentity(),
+                new gregtech.engine.logistics.LongDistanceNetwork.World<BlockPos, LongDistEndpointBlockEntity>() {
+
+            public String identity(BlockPos pos) {
+                if (level.isOutsideBuildHeight(pos)) return null;
+                return observe(pos).getBlock() instanceof LongDistPipeBlock candidate && candidate.acceptsPipeline(fluid())
+                        ? candidate.networkIdentity() : null;
+            }
+
+            public Iterable<BlockPos> neighbors(BlockPos pos) {
+                return Arrays.stream(Direction.values()).map(pos::relative).toList();
+            }
+
+            public LongDistEndpointBlockEntity endpoint(BlockPos pos) {
+                return routeWatch.loaded(level, pos) && LongDistanceRouteWatch.entity(level, pos) instanceof LongDistEndpointBlockEntity peer && peer.fluid() == fluid() ? peer : null;
+            }
+
+            public BlockPos front(LongDistEndpointBlockEntity peer) {
+                return peer.worldPosition.relative(peer.front());
+            }
+        });
+        if (result != null) {
+            link.bind(result.receiver().link);
+            routeWatch.resolved();
+            temperature = line.maximumTemperature();
+            setChanged();
+        }
+    }
+
+    public void describe(net.minecraft.world.entity.player.Player player) {
+        var sender = link.senderOwner();
+        if (sender != null) {
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance.receiver"), false);
+            coordinates(player, "sender", sender.worldPosition);
+        } else {
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance." + (receiver() != null
+                    ? "target" : "no_target")), false);
+            var target = link.targetPosition();
+            if (target != null && !target.equals(worldPosition)) coordinates(player, "target_position", target);
+        }
+    }
+
+    private void coordinates(net.minecraft.world.entity.player.Player player, String name, BlockPos pos) {
+        player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance." + name, pos.getX(), pos.getY(),
+                pos.getZ()), false);
+    }
+
+    private boolean fluid() {
+        return ((LongDistEndpointBlock) getBlockState().getBlock()).isFluid();
+    }
+
+    @Override
+    protected boolean supportsItems() {
+        return !fluid();
+    }
+
+    @Override
+    protected boolean supportsFluids() {
+        return fluid();
+    }
+
+    @Override
+    protected boolean supportsFluidExtraction() {
+        return false;
+    }
+//? if >=1.21.1 {
+    /*@Override
+    protected boolean permitsFluid(Direction side, net.neoforged.neoforge.fluids.FluidStack stack) {
+*///?} else {
+    @Override
+    protected boolean permitsFluid(Direction side, net.minecraftforge.fluids.FluidStack stack) {
+//?}
+        if (stack.isEmpty()) return false;
+        var entry = gregtech.content.registry.GTFluids.entryForFluid(stack.getFluid());
+        return (entry == null ? stack.getFluid().getFluidType().getTemperature(stack) : entry.temperature()) <= temperature;
+    }
+
+    @Override
+    protected Target target(Direction side) {
+        var peer = receiver();
+        return peer == null ? null : new Target(peer.worldPosition.relative(peer.front().getOpposite()), peer.front());
+    }
+
+//? if >=1.21.1 {
+    /*@Override
+    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        tag.putBoolean("gt.stopped", stopped);
+        var target = link.targetPosition();
+        if (target != null && !target.equals(worldPosition)) tag.putLong("gt.target", target.asLong());
+        tag.putLong("gt.temperature", temperature);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        stopped = tag.getBoolean("gt.stopped");
+        link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
+        routeWatch.clear();
+        temperature = tag.getLong("gt.temperature");
+    }
+*///?} else {
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putBoolean("gt.stopped", stopped);
+        var target = link.targetPosition();
+        if (target != null && !target.equals(worldPosition)) tag.putLong("gt.target", target.asLong());
+        tag.putLong("gt.temperature", temperature);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        stopped = tag.getBoolean("gt.stopped");
+        link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
+        routeWatch.clear();
+        temperature = tag.getLong("gt.temperature");
+    }
+//?}
+}

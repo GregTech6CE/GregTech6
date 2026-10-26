@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/machine/sensor/superheavyweightometer"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/sensor/superheavyweightometer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/sensor/superheavyweightometer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/sensor/superheavyweightometer",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gt6ce:block/machine/sensor/superheavyweightometer",
+      "x": 270,
+      "y": 180
+    },
+    "facing=down": {
+      "model": "gt6ce:block/machine/sensor/superheavyweightometer",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

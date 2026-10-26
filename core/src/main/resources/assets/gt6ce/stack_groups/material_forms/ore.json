@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gt6ce.ore",
+  "contents": [
+    "#gt6ce:ore"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gt6ce:wooden_planks",
+    "item:gt6ce:planks_treated"
+  ],
+  "priority": 100
+}

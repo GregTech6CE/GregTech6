@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gt6ce:item/iconsets/handle_electric_trimmer",
+    "layer1": "gt6ce:item/iconsets/handle_electric_trimmer_overlay",
+    "layer2": "gt6ce:item/iconsets/tip_electric_trimmer",
+    "layer3": "gt6ce:item/iconsets/tip_electric_trimmer_overlay"
+  }
+}

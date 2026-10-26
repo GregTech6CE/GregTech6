@@ -1,0 +1,19 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PPP",
+    " G "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "G": {
+      "tag": "forge:glue"
+    }
+  },
+  "result": {
+    "item": "gt6ce:tape",
+    "count": 1
+  }
+}

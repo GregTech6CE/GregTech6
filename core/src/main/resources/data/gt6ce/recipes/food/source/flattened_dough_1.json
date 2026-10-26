@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gt6ce:food/fooddough"
+    },
+    {
+      "tag": "forge:tools/rolling_pin"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:flattened_dough",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

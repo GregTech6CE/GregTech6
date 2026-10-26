@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gt6ce:ammunition/sticks_wood"
+    },
+    {
+      "item": "minecraft:baked_potato"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:roasted_potato_on_a_stick",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

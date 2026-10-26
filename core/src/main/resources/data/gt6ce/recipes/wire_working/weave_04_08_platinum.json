@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_04_platinum"
+    },
+    {
+      "item": "gt6ce:wire_04_platinum"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_08_platinum",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
+}

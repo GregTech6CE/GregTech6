@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:clay_bowl"
+  },
+  "result": "gt6ce:mixing_bowl",
+  "experience": 0.0,
+  "cookingtime": 200
+}

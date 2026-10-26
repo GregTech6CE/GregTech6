@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:paper",
+    {
+      "id": "#forge:paper",
+      "required": false
+    },
+    {
+      "id": "#c:paper",
+      "required": false
+    }
+  ]
+}

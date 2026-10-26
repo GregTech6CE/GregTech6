@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "Ch",
+    "Pf"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/tungsten"
+    },
+    "C": {
+      "item": "gt6ce:plate_curved_tungsten"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "f": {
+      "item": "gt6ce:tool_file"
+    }
+  },
+  "result": {
+    "item": "gt6ce:fluid_measuring_pot_tungsten"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

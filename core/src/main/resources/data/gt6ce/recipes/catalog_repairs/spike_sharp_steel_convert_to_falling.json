@@ -1,0 +1,18 @@
+{
+  "type": "gt6ce:spike_conversion",
+  "ingredients": [
+    {
+      "item": "gt6ce:spike_sharp"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:spike_sharp",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "falling",
+        "secondary": "false"
+      }
+    }
+  }
+}

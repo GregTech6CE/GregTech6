@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:sand_magnetite",
+    "gt6ce:sand_basalt_magnetite",
+    "gt6ce:sand_granite_magnetite",
+    "gt6ce:mud",
+    "gt6ce:clay_brown",
+    "gt6ce:turf",
+    "gt6ce:clay_red",
+    "gt6ce:clay_yellow",
+    "gt6ce:clay_blue",
+    "gt6ce:clay_white",
+    "gt6ce:bale_grass",
+    "gt6ce:grassblock_brown",
+    "gt6ce:grassblock_dark",
+    "gt6ce:grassblock_light",
+    "gt6ce:grassblock_medium",
+    "gt6ce:grassblock_normal",
+    "gt6ce:grassblock_yellow"
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gt6ce:block/machines/tools/funnel/colored/bottom"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "bottom": "gt6ce:block/machines/tools/funnel/colored/bottom",
+        "side": "gt6ce:block/machines/tools/funnel/colored/side",
+        "top": "gt6ce:block/machines/tools/funnel/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            2,
+            5
+          ],
+          "to": [
+            11,
+            3,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            1,
+            6
+          ],
+          "to": [
+            10,
+            2,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            7,
+            0,
+            7
+          ],
+          "to": [
+            9,
+            1,
+            9
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "bottom": "gt6ce:block/machines/tools/funnel/overlay/bottom",
+        "side": "gt6ce:block/machines/tools/funnel/overlay/side",
+        "top": "gt6ce:block/machines/tools/funnel/overlay/top"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            2,
+            5
+          ],
+          "to": [
+            11,
+            3,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            1,
+            6
+          ],
+          "to": [
+            10,
+            2,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            7,
+            0,
+            7
+          ],
+          "to": [
+            9,
+            1,
+            9
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

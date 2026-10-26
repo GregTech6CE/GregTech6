@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_04_gold"
+    },
+    "C": {
+      "item": "gt6ce:cable_04_gold"
+    },
+    "X": {
+      "tag": "gt6ce:circuits_tier_3_plus"
+    },
+    "M": {
+      "item": "gt6ce:transformer_hv_ev"
+    }
+  },
+  "result": {
+    "item": "gt6ce:energy_storage_hv"
+  }
+}

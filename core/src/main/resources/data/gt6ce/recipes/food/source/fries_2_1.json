@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gt6ce:plate_double/paper"
+    },
+    {
+      "item": "gt6ce:fries"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:fries_2",
+    "count": 1
+  },
+  "gregtech_autocraftable": false
+}

@@ -1,0 +1,107 @@
+{
+  "loader": "forge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gt6ce:block/material_icons/brick/pipeside",
+        "up": "gt6ce:block/material_icons/brick/pipeside",
+        "north": "gt6ce:block/material_icons/brick/pipeside",
+        "south": "gt6ce:block/material_icons/brick/pipeside",
+        "west": "gt6ce:block/material_icons/brick/pipeside",
+        "east": "gt6ce:block/material_icons/brick/pipeside"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            4
+          ],
+          "to": [
+            12,
+            12,
+            12
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gt6ce:block/material_icons/brick/pipeside_overlay",
+        "up": "gt6ce:block/material_icons/brick/pipeside_overlay",
+        "north": "gt6ce:block/material_icons/brick/pipeside_overlay",
+        "south": "gt6ce:block/material_icons/brick/pipeside_overlay",
+        "west": "gt6ce:block/material_icons/brick/pipeside_overlay",
+        "east": "gt6ce:block/material_icons/brick/pipeside_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            4
+          ],
+          "to": [
+            12,
+            12,
+            12
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down"
+            },
+            "up": {
+              "texture": "#up"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "west": {
+              "texture": "#west"
+            },
+            "east": {
+              "texture": "#east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gt6ce:block/material_icons/brick/pipeside"
+  }
+}

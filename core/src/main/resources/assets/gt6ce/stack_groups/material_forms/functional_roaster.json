@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_roaster",
+  "contents": [
+    "item:gt6ce:roaster_invar",
+    "item:gt6ce:roaster_steel",
+    "item:gt6ce:roaster_titanium",
+    "item:gt6ce:roaster_tungsten_carbide"
+  ],
+  "priority": 110
+}

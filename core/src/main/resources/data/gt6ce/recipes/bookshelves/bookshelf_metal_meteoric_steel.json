@@ -1,0 +1,31 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:143, multi-tile 7124",
+  "pattern": [
+    "PTP",
+    "sdh",
+    "PTP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/meteoric_steel"
+    },
+    "T": {
+      "tag": "forge:screws/meteoric_steel"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:bookshelf_metal_meteoric_steel",
+    "count": 1
+  }
+}

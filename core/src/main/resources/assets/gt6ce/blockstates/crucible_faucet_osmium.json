@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/blocks/crucible_faucet_osmium"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/blocks/crucible_faucet_osmium"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/blocks/crucible_faucet_osmium"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/blocks/crucible_faucet_osmium"
+    }
+  }
+}

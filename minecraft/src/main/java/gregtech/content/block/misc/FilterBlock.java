@@ -1,0 +1,151 @@
+package gregtech.content.block.misc;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+
+/** GT6 Filter block — pipe-insertable item/fluid filter. */
+public class FilterBlock extends net.minecraft.world.level.block.DirectionalBlock implements net.minecraft.world.level.block.EntityBlock,
+        gregtech.engine.tool.ToolInteractionTarget {
+    public static final net.minecraft.world.level.block.state.properties.DirectionProperty SECONDARY =
+            net.minecraft.world.level.block.state.properties.DirectionProperty.create("secondary");
+    public static final net.minecraft.world.level.block.state.properties.BooleanProperty SECONDARY_SET =
+            net.minecraft.world.level.block.state.properties.BooleanProperty.create("secondary_set");
+    private final String filterType;
+
+    public static Direction secondary(BlockState state) {
+        return state.getValue(SECONDARY_SET) ? state.getValue(SECONDARY) : state.getValue(FACING).getOpposite();
+    }
+
+    public FilterBlock(String filterType, Properties properties) {
+        super(properties);
+        this.filterType = filterType;
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SECONDARY, Direction.SOUTH).setValue(SECONDARY_SET,
+                false));
+    }
+
+    public String filterType() {
+        return filterType;
+    }
+//? if >=1.21.1 {
+    /*@Override
+    public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
+            java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+*///?} else {
+    @Override
+    public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+//?}
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.routing"));
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.tools"));
+        if (filterType.equals("oredict")) lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.prefix"));
+    }
+
+//? if >=1.21.1 {
+    /*@Override
+    protected com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.DirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+*///?} else {
+//?}
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, SECONDARY, SECONDARY_SET);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var front = context.getNearestLookingDirection();
+        return defaultBlockState().setValue(FACING, front).setValue(SECONDARY, front.getOpposite()).setValue(SECONDARY_SET, true);
+    }
+
+    @Override
+    public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new FilterBlockEntity(pos, state);
+    }
+//? if >=1.21.1 {
+    /*public net.minecraft.world.InteractionResult interact(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+*///?} else {
+    @Override
+    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+//?}
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand,
+                hit)) return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+        var tool = player.getItemInHand(hand);
+        if (gregtech.engine.tool.GTToolHelper.isScrewdriver(tool) || gregtech.engine.tool.GTToolHelper.isSoftHammer(tool)) {
+            if (!level.isClientSide && level.getBlockEntity(pos) instanceof FilterBlockEntity filter) {
+                if (gregtech.engine.tool.GTToolHelper.isSoftHammer(tool)) filter.clearFilter();
+                else filter.toggleMode();
+                gregtech.engine.tool.GTToolHelper.damageForUse(tool, 1, player);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(filter.blacklist() ? "gt6ce.filter.blacklist"
+                        : "gt6ce.filter.whitelist"), true);
+            }
+            return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer server
+                && level.getBlockEntity(pos) instanceof FilterBlockEntity filter)
+//? if >=1.21.1 {
+            /*server.openMenu(filter, buffer -> buffer.writeBoolean(filter.prefixMode()));
+*///?} else {
+            net.minecraftforge.network.NetworkHooks.openScreen(server, filter, buffer -> buffer.writeBoolean(filter.prefixMode()));
+//?}
+        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        var property = gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool) ? SECONDARY
+                : gregtech.engine.tool.GTToolHelper.isMachineWrench(tool) ? FACING : null;
+        return property == null ? null : gregtech.engine.tool.ToolInteractionSpec.facing(property,
+                gregtech.content.block.machine.MachineRotationType.ALL);
+    }
+
+    @Override
+    public void toolStateChanged(net.minecraft.world.level.Level level, BlockPos pos, BlockState state,
+            gregtech.engine.tool.ToolInteractionSpec operation) {
+        if (operation.facing() == SECONDARY && !state.getValue(SECONDARY_SET)) level.setBlockAndUpdate(pos, state.setValue(SECONDARY_SET, true));
+    }
+
+    @Override
+    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
+            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        var stack = new net.minecraft.world.item.ItemStack(this);
+        var entity = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
+//? if >=1.21.1 {
+        /*if (entity instanceof FilterBlockEntity) stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
+                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(entity,
+                        entity.saveWithId(builder.getLevel().registryAccess()))));
+*///?} else {
+        if (entity instanceof FilterBlockEntity) stack.getOrCreateTag().put("BlockEntityTag",
+                gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithoutMetadata()));
+//?}
+        return java.util.List.of(stack);
+    }
+//? if >=1.21.1 {
+    /*@Override
+    public net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state,
+            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return switch (interact(state, level, pos, player, hand, hit)) {
+            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
+            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
+            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
+            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
+
+*///?} else {
+//?}
+}

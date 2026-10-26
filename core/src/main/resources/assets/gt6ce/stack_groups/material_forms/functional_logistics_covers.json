@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_logistics_covers",
+  "contents": [
+    "item:gt6ce:filtered_logistics_export_bus_fluid",
+    "item:gt6ce:filtered_logistics_export_bus_item",
+    "item:gt6ce:filtered_logistics_import_bus_fluid",
+    "item:gt6ce:filtered_logistics_import_bus_item",
+    "item:gt6ce:filtered_logistics_storage_bus_fluid",
+    "item:gt6ce:filtered_logistics_storage_bus_item",
+    "item:gt6ce:generic_logistics_export_bus",
+    "item:gt6ce:generic_logistics_import_bus",
+    "item:gt6ce:generic_logistics_storage_bus",
+    "item:gt6ce:logistics_display_cpu_control",
+    "item:gt6ce:logistics_display_cpu_conversion",
+    "item:gt6ce:logistics_display_cpu_logic",
+    "item:gt6ce:logistics_display_cpu_storage",
+    "item:gt6ce:logistics_dump_bus_item"
+  ],
+  "priority": 110
+}

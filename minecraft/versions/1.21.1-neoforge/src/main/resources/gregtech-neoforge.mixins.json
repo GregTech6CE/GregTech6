@@ -1,0 +1,49 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "gregtech.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "OreHostHardnessMixin",
+    "OreHostToolSpeedMixin",
+    "GasImmersionMixin",
+    "ConstructionRecipeMixin",
+    "LegacyConstructionStackMixin",
+    "BaseSpawnerAccessor",
+    "CraftingFormPositionMixin",
+    "AbstractMinecartSpeedCapMixin",
+    "BlockEntityPaintMixin",
+    "WolfCollarAccessor",
+    "WaterFluidMixin",
+    "EntityFallingOreDropMixin",
+    "WaterPlacementMixin",
+    "WaterSurfaceMixin",
+    "WaterContainerMixin",
+    "WaterCandleMixin",
+    "WaterFrogspawnMixin",
+    "ColoredBookUseMixin",
+    "ColoredBookLecternMixin",
+    "ComponentCoverHostMixin",
+    "ComponentCoverCapabilitiesMixin",
+    "ComponentCoverRemovalMixin",
+    "LevelChunkStructureWatchMixin",
+    "LevelStructureProbeMixin",
+    "ServerChunkCacheStructureProbeMixin",
+    "ServerLevelStructureDataMixin",
+    "CoverDropMixin",
+    "ExperienceOrbCountAccessor",
+    "CoverWalkMixin",
+    "CoverCollisionMixin",
+    "CoverSignalMixin",
+    "BucketContentAccessor",
+    "CoverHarvestMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "BlockPaintColorMixin",
+    "ItemPaintColorMixin",
+    "ReliableEmiNamespaceMixin"
+  ]
+}

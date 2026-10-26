@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_bridges",
+  "contents": [
+    "item:gt6ce:inventory_bridge",
+    "item:gt6ce:inventory_tank_bridge",
+    "item:gt6ce:tank_bridge",
+    "item:gt6ce:universal_bridge"
+  ],
+  "priority": 110
+}

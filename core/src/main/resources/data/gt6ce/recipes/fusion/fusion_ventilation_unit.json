@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "F F",
+    "CMC",
+    "E E"
+  ],
+  "key": {
+    "F": {
+      "item": "gt6ce:air_vent"
+    },
+    "C": {
+      "item": "gt6ce:circuit_advanced"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_steelgalvanized"
+    },
+    "E": {
+      "item": "gt6ce:compact_electric_motor_lv"
+    }
+  },
+  "result": {
+    "item": "gt6ce:fusion_ventilation_unit"
+  }
+}

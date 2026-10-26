@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:concrete_reinforced",
+    "gt6ce:concrete_reinforced_white",
+    "gt6ce:concrete_reinforced_orange",
+    "gt6ce:concrete_reinforced_magenta",
+    "gt6ce:concrete_reinforced_light_blue",
+    "gt6ce:concrete_reinforced_yellow",
+    "gt6ce:concrete_reinforced_lime",
+    "gt6ce:concrete_reinforced_pink",
+    "gt6ce:concrete_reinforced_gray",
+    "gt6ce:concrete_reinforced_light_gray",
+    "gt6ce:concrete_reinforced_cyan",
+    "gt6ce:concrete_reinforced_purple",
+    "gt6ce:concrete_reinforced_blue",
+    "gt6ce:concrete_reinforced_brown",
+    "gt6ce:concrete_reinforced_green",
+    "gt6ce:concrete_reinforced_red",
+    "gt6ce:concrete_reinforced_black"
+  ]
+}

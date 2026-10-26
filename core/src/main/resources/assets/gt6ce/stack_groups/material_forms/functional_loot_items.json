@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_loot_items",
+  "contents": [
+    "item:gt6ce:bagged_sapling",
+    "item:gt6ce:clouded_bottle",
+    "item:gt6ce:dusty_guide_book",
+    "item:gt6ce:dusty_material_dictionary",
+    "item:gt6ce:gem_pouch",
+    "item:gt6ce:loot_bottle",
+    "item:gt6ce:loot_pouch",
+    "item:gt6ce:seed_pouch"
+  ],
+  "priority": 110
+}

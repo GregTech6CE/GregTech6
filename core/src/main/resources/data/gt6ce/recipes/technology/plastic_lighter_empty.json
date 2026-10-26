@@ -1,0 +1,31 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:388",
+  "allow_mirror": false,
+  "pattern": [
+    "IF",
+    "dP",
+    "xP"
+  ],
+  "key": {
+    "I": {
+      "tag": "gt6ce:screws/any_iron_or_steel"
+    },
+    "F": {
+      "item": "minecraft:flint"
+    },
+    "d": {
+      "tag": "forge:tools/screwdriver"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    },
+    "P": {
+      "tag": "gt6ce:technology/any_plastic_curved_plate"
+    }
+  },
+  "result": {
+    "item": "gt6ce:plastic_lighter_empty",
+    "count": 1
+  }
+}

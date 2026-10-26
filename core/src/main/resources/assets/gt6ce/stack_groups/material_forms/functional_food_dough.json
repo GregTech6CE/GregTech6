@@ -1,0 +1,25 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_dough",
+  "contents": [
+    "item:gt6ce:abyssal_dough",
+    "item:gt6ce:chocolate_dough",
+    "item:gt6ce:cookie_shaped_abyssal_dough",
+    "item:gt6ce:cookie_shaped_chocolate_raisin_dough",
+    "item:gt6ce:cookie_shaped_dough",
+    "item:gt6ce:cookie_shaped_raisin_dough",
+    "item:gt6ce:dough",
+    "item:gt6ce:dough_baguette",
+    "item:gt6ce:dough_bread",
+    "item:gt6ce:dough_bun",
+    "item:gt6ce:dough_toast_loaf",
+    "item:gt6ce:egg_dough",
+    "item:gt6ce:flattened_dough",
+    "item:gt6ce:flattened_egg_dough",
+    "item:gt6ce:raw_cake_bottom",
+    "item:gt6ce:sugary_chocolate_raisin_dough",
+    "item:gt6ce:sugary_dough",
+    "item:gt6ce:sugary_raisin_dough"
+  ],
+  "priority": 120
+}

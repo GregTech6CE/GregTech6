@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_mortar",
+  "contents": [
+    "item:gt6ce:mortar_amethyst",
+    "item:gt6ce:mortar_block",
+    "item:gt6ce:mortar_diamond",
+    "item:gt6ce:mortar_netherite",
+    "item:gt6ce:mortar_sapphire"
+  ],
+  "priority": 110
+}

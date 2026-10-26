@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_double/tin_alloy"
+    },
+    "S": {
+      "tag": "gt6ce:stick/tin_alloy"
+    },
+    "I": {
+      "tag": "gt6ce:spring_small/tin_alloy"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_steam_tin_alloy"
+  },
+  "allow_mirror": false
+}

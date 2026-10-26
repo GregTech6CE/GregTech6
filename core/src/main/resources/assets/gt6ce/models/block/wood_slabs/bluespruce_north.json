@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gt6ce:block/iconsets/planks_bluespruce",
+    "all": "gt6ce:block/iconsets/planks_bluespruce"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        8
+      ],
+      "faces": {
+        "down": {
+          "texture": "#all"
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "north": {
+          "texture": "#all"
+        },
+        "south": {
+          "texture": "#all"
+        },
+        "west": {
+          "texture": "#all"
+        },
+        "east": {
+          "texture": "#all"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:cfoam",
+    "gt6ce:cfoam_white",
+    "gt6ce:cfoam_orange",
+    "gt6ce:cfoam_magenta",
+    "gt6ce:cfoam_light_blue",
+    "gt6ce:cfoam_yellow",
+    "gt6ce:cfoam_lime",
+    "gt6ce:cfoam_pink",
+    "gt6ce:cfoam_gray",
+    "gt6ce:cfoam_light_gray",
+    "gt6ce:cfoam_cyan",
+    "gt6ce:cfoam_purple",
+    "gt6ce:cfoam_blue",
+    "gt6ce:cfoam_brown",
+    "gt6ce:cfoam_green",
+    "gt6ce:cfoam_red",
+    "gt6ce:cfoam_black"
+  ]
+}
