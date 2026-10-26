@@ -1,6 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.GregTechConfig;
+import gregtech.api.material.GTValues;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
@@ -11,6 +14,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -73,18 +77,22 @@ public final class CentrifugeRegressionTests {
 
     private static void physicalBlockInputs() {
         for (String material : List.of("bedrock", "netherrack", "endstone", "whiteendsand",
-                "blackendsand", "spacestone", "moonturf")) {
+                "blackendsand", "spacestone", "moonturf", "moonstone")) {
             require(rows("gt6ce:dust_" + material).stream().noneMatch(r -> r.mInputs[0].getCount() == 9),
                     "physical block input must not become nine dusts: " + material);
         }
-        // These four physical forms are currently absent: fail closed, never fabricate holders.
-        for (String material : List.of("netherrack", "endstone", "spacestone", "moonturf")) {
-            require(!BuiltInRegistries.ITEM.containsKey(new ResourceLocation("gt6ce:block_dust_" + material)),
-                    "new physical holder needs an explicit expectation: " + material);
+        for (String material : List.of("Bedrock", "Netherrack", "Endstone", "WhiteEndSand",
+                "BlackEndSand", "SpaceStone", "MoonTurf", "MoonStone")) {
+            physicalBlock(material);
         }
         checkRecipe(recipe("gt6ce:block_dust_bedrock", 1), 256, 1296,
                 new long[]{7000, 3000, 3000, 3000, 3000, 3000}, bedrockOutputs(9));
-        for (String material : List.of("whiteendsand", "blackendsand")) {
+        checkRecipe(recipe("gt6ce:block_dust_netherrack", 1), 64, 144,
+                new long[]{8000, 1000, 500, 500, 100},
+                new ItemStack[]{item("gt6ce:dust_stone", 9), item("gt6ce:dust_tiny_sulfur", 18),
+                        item("gt6ce:dust_tiny_redstone", 9), item("gt6ce:dust_tiny_coal", 9),
+                        item("gt6ce:dust_tiny_gold", 9)});
+        for (String material : List.of("endstone", "whiteendsand", "blackendsand")) {
             checkRecipe(recipe("gt6ce:block_dust_" + material, 1), 64, 144,
                     new long[]{8000, 100, 300, 100, 10},
                     new ItemStack[]{item("gt6ce:dust_sand", 9), item("gt6ce:dust_tiny_platinum", 9),
@@ -94,9 +102,37 @@ public final class CentrifugeRegressionTests {
                     fluid("gt6ce:nitrogendioxide", 250), fluid("gt6ce:carbondioxide", 250),
                     fluid("gt6ce:hydrogen", 125), fluid("gt6ce:deuterium", 125));
         }
+        checkRecipe(recipe("gt6ce:block_dust_spacestone", 1), 64, 144,
+                new long[]{8000, 100, 100}, new ItemStack[]{item("gt6ce:dust_sand", 9),
+                        item("gt6ce:dust_tiny_platinum", 9), item("gt6ce:dust_tiny_meteoriciron", 9)}, endGases());
+        checkRecipe(recipe("gt6ce:block_dust_moonturf", 1), 64, 288,
+                new long[]{8000, 1000, 1000, 1000, 1000, 100},
+                new ItemStack[]{item("gt6ce:dust_sand", 9), item("gt6ce:dust_tiny_basalt", 9),
+                        item("gt6ce:dust_tiny_alumina", 9), item("gt6ce:dust_tiny_ilmenite", 9),
+                        item("gt6ce:dust_tiny_pyrolusite", 9), item("gt6ce:dust_tiny_meteoriciron", 9)}, endGases());
         // Separate, legitimate source dust1 rule survives the physical-block correction.
         checkRecipe(recipe("gt6ce:dust_bedrock", 1), 256, 144,
                 new long[]{7000, 3000, 3000, 3000, 3000, 3000}, bedrockOutputs(1));
+    }
+
+    private static void physicalBlock(String name) {
+        var material = GTMaterialRegistry.get(name).resolve();
+        ItemStack stack = item("gt6ce:block_dust_" + name.toLowerCase(java.util.Locale.ROOT), 1);
+        require(stack.getItem() instanceof BlockItem, name + " actual physical BlockItem");
+        var block = ((BlockItem) stack.getItem()).getBlock();
+        require(block instanceof MaterialBlockLike, name + " actual material block");
+        var form = (MaterialBlockLike) block;
+        require(form.prefix() == BlockMaterialPrefix.blockDust, name + " blockDust prefix identity");
+        require(form.prefix().getMaterialWeight() == 9 * GTValues.U, name + " physical nine-unit block");
+        require(form.material().resolve() == material, name + " canonical material identity");
+        require(block.asItem() == stack.getItem() && BuiltInRegistries.BLOCK.getKey(block).equals(
+                BuiltInRegistries.ITEM.getKey(stack.getItem())), name + " bound block/item holder identity");
+    }
+
+    private static FluidStack[] endGases() {
+        return new FluidStack[]{fluid("gt6ce:helium", 125), fluid("gt6ce:helium3", 18),
+                fluid("gt6ce:nitrogendioxide", 250), fluid("gt6ce:carbondioxide", 250),
+                fluid("gt6ce:hydrogen", 125), fluid("gt6ce:deuterium", 125)};
     }
 
     private static ItemStack[] bedrockOutputs(int count) {
@@ -135,8 +171,11 @@ public final class CentrifugeRegressionTests {
                 new ItemStack[]{item("gt6ce:dust_basalt", 1), item("gt6ce:dust_tiny_silicondioxide", 1),
                         item("gt6ce:dust_tiny_alumina", 1), item("gt6ce:dust_tiny_ilmenite", 1),
                         item("gt6ce:dust_tiny_rareearth", 1), item("gt6ce:dust_tiny_platinum", 1)});
-        require(!BuiltInRegistries.ITEM.containsKey(new ResourceLocation("gt6ce:block_dust_moonstone")),
-                "dust restoration must not invent a Moon Stone block holder");
+        checkRecipe(recipe("gt6ce:block_dust_moonstone", 1), 64, 144,
+                new long[]{8000, 500, 400, 300, 100, 50},
+                new ItemStack[]{item("gt6ce:dust_basalt", 9), item("gt6ce:dust_tiny_silicondioxide", 9),
+                        item("gt6ce:dust_tiny_alumina", 9), item("gt6ce:dust_tiny_ilmenite", 9),
+                        item("gt6ce:dust_tiny_rareearth", 9), item("gt6ce:dust_tiny_platinum", 9)});
     }
 
     private static List<Recipe> rows(String inputId) {
