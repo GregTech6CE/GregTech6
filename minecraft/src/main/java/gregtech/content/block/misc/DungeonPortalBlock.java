@@ -1,5 +1,7 @@
 package gregtech.content.block.misc;
 
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -134,6 +136,12 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
 //?}
             InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
+        // GT6's magnifying glass report for the link state and the counterpart's coordinates.
+        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
+            if (!level.isClientSide && level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)
+                player.displayClientMessage(portal.linkMessage(), false);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         boolean igniter = target == Target.NETHER && held.is(Items.FLINT_AND_STEEL);
         boolean eye = target == Target.END && held.is(Items.ENDER_EYE);
         if (!igniter && !eye) return InteractionResult.PASS;

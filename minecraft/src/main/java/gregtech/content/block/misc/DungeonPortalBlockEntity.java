@@ -4,6 +4,7 @@ import gregtech.content.item.GTDungeonKeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -268,6 +269,39 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
         GlobalPos pos = findTarget(worldPosition, server.dimension() == Level.OVERWORLD, block, remote,
                 block.distanceFactor(), block.margin());
         return pos != null && remote.getBlockEntity(pos.pos()) instanceof DungeonPortalBlockEntity portal ? portal : null;
+    }
+
+    /**
+     * GT6's magnifying glass report ({@code MultiTileEntityMiniPortal:230-239}): the counterpart's
+     * coordinates, or that there is none. Unlike the source this also tells an inactive portal from
+     * one that cannot reach a counterpart from its dimension.
+     */
+    public Component linkMessage() {
+        if (!(getBlockState().getBlock() instanceof DungeonPortalBlock block)
+                || level == null || block.targetLevel(level) == null)
+            return Component.translatable("message.gt6ce.portal.wrong_dimension");
+        if (!active) return Component.translatable("message.gt6ce.portal.inactive");
+        var remote = linkedPortal();
+        if (remote == null || remote.getLevel() == null)
+            return Component.translatable("message.gt6ce.portal.unlinked");
+        return Component.translatable("message.gt6ce.portal.linked",
+                dimensionName(remote.getLevel().dimension().location().toString()),
+                remote.getBlockPos().getX(), remote.getBlockPos().getY(), remote.getBlockPos().getZ());
+    }
+
+    /** Only the overworld, the Nether and the End are known; other dimension ids are shown as they are. */
+    public static Component dimensionName(String dimensionId) {
+        String key = dimensionKey(dimensionId);
+        return key == null ? Component.literal(dimensionId) : Component.translatable(key);
+    }
+
+    public static String dimensionKey(String dimensionId) {
+        return switch (dimensionId) {
+            case "minecraft:overworld" -> "message.gt6ce.portal.dimension.overworld";
+            case "minecraft:the_nether" -> "message.gt6ce.portal.dimension.nether";
+            case "minecraft:the_end" -> "message.gt6ce.portal.dimension.end";
+            default -> null;
+        };
     }
 
     /** Vanilla queries the opposite of the actual output face, matching source OPOS[query]. */
