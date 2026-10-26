@@ -95,6 +95,8 @@ public final class MachineRecipeOverlay {
         SharedOreMagneticRows.rebuild();
         SharedOreSiftingRows.rebuild();
         CompatRecipes.rebuild();
+        // OPL capture waits until static/addon and tag-owned producers can retain their independent rows.
+        SharedOreCrushingRows.rebuild();
         MaterialDisplayBinding.invalidate();
         logged = 0;
         var tally = new Tally();
@@ -168,6 +170,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(SharedOreWashingRows.owned());
         exclude.addAll(SharedOreMagneticRows.owned());
         exclude.addAll(SharedOreSiftingRows.owned());
+        exclude.addAll(SharedOreCrushingRows.baselineExcluded());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }

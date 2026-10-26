@@ -56,6 +56,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         // Snapshot form provenance before any owned raw descriptors. The following entry loops
         // only add recipe rows; they do not publish material forms or dispatch addon callbacks.
         NonOreMacerationRows.begin();
+        SharedOreCrushingRows.begin();
         mMaceration = new SourceOreMacerationAdapter.Snapshot();
         processOreToCrushed();
         processOreBlocks();
@@ -72,6 +73,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         processRecycling();
         NonOreMacerationRows.seal();
         SourceOreOutputRows.seal();
+        SharedOreCrushingRows.seal();
     }
 
     // ========================================================================
@@ -285,12 +287,21 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     private void registerOreEntryRecipes(GTMaterial material, ItemStack oreInput, int multiplier, boolean builtinRaw) {
         if (isOilsands(material)) { registerOilsandsInput(oreInput); return; }
 
+        var crushing = SharedOreCrushingRows.candidate(material, oreInput, builtinRaw);
         GTMaterial target = material.getTargetCrushingMaterial().resolve();
         int count = (int)Math.min(64, material.getTargetCrushingAmount() * multiplier / U);
-        if (count <= 0) return;
+        if (count <= 0) {
+            SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Crusher, null);
+            SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Hammer, null);
+            return;
+        }
         ItemStack out = mat(MaterialPrefix.crushed, target, count);
         if (out.isEmpty()) out = mat(MaterialPrefix.dust, target, count);
-        if (out.isEmpty()) return;
+        if (out.isEmpty()) {
+            SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Crusher, null);
+            SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Hammer, null);
+            return;
+        }
         long quality = Math.max(1, material.getToolQuality() + 1);
         boolean dormantRaw = builtinRaw && NonOreMacerationRows.reviewed(material)
                 && !SourceOreInputForms.allowGeneratedInput(material, MaterialPrefix.oreRaw, oreInput,
@@ -308,8 +319,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             if (ReviewedCinnabarFacts.supports(material)
                     && oreInput.getItem()==mat(MaterialPrefix.oreRaw,material,1).getItem()) {
                 SourceOreFollowonRows.rawCrusher(material,ReviewedCinnabarFacts.INSTANCE);
-            } else MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy());
-            MachineRecipeMaps.Hammer.addRecipe1(true, EU_TIER, 32L * count * quality, oreInput, out.copy());
+            } else SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Crusher,
+                    MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy()));
+            SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Hammer,
+                    MachineRecipeMaps.Hammer.addRecipe1(true, EU_TIER, 32L * count * quality, oreInput, out.copy()));
         }
         // Furnace ownership/eligibility is separate, even when the two machine rows are dormant.
         // Sifting is for DUST_ORE prefixes, not ordinary raw/stone ores.

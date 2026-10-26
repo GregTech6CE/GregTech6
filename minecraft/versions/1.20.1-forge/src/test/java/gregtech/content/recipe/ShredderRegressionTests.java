@@ -228,11 +228,13 @@ public final class ShredderRegressionTests {
         var rawRecipe = row(MachineRecipeMaps.Crusher, raw);
         check(rawRecipe, 128, new ItemStack[]{crushed, crushed.copy(), form(MaterialPrefix.gem, "Cinnabar", 1)},
                 new long[]{10000, 10000, 3000});
-        // Explicitly preserve the old host-ore route in this slice; this is not a source host-cost parity claim.
+        // Slice2 now owns the host route; raw Cinnabar and all six-prefix Shredder rows remain unchanged.
         var block = GTBlocks.getStack(BlockMaterialPrefix.ore, material("Cinnabar"));
         require(!block.isEmpty(), "actual ordinary Cinnabar ore block");
-        check(row(MachineRecipeMaps.Crusher, block), 128, new ItemStack[]{crushed, crushed.copy()});
-        check(row(MachineRecipeMaps.Hammer, block), 32, new ItemStack[]{crushed});
+        check(row(MachineRecipeMaps.Crusher, block), 640, new ItemStack[]{crushed, crushed.copy(),
+                form(MaterialPrefix.gem, "Cinnabar", 1), form(MaterialPrefix.dust, "Stone", 4)},
+                new long[]{10000, 10000, 3000, 10000});
+        check(row(MachineRecipeMaps.Hammer, block), 544, new ItemStack[]{crushed});
     }
 
     private static void check(Recipe recipe, long ticks, ItemStack[] outputs) {
