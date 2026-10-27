@@ -130,14 +130,15 @@ public final class DiggableBlock extends FallingBlock {
 //? if >=1.21.1 {
     /*@Override public net.neoforged.neoforge.common.util.TriState canSustainPlant(BlockState state,BlockGetter level,BlockPos pos,Direction side,BlockState plant){
         if(variant.isClay())return net.neoforged.neoforge.common.util.TriState.FALSE;
-        if(plant.is(Blocks.SUGAR_CANE)||plant.getBlock() instanceof BushBlock)return net.neoforged.neoforge.common.util.TriState.TRUE;
+        if(plant.is(Blocks.SUGAR_CANE)||gregtech.content.block.plant.GTPlantSign.isPlant(plant.getBlock()))return net.neoforged.neoforge.common.util.TriState.TRUE;
         return net.neoforged.neoforge.common.util.TriState.DEFAULT;
 *///?} else {
     @Override
     public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos,
                                    Direction side, IPlantable plant) {
         if (variant.isClay()) return false;
-        if (plant == Blocks.SUGAR_CANE || plant instanceof BushBlock) return true;
+        if (plant == Blocks.SUGAR_CANE || plant instanceof BushBlock
+                || plant instanceof gregtech.content.block.plant.BushBlock) return true;
         PlantType type = plant.getPlantType(level, pos.relative(side));
         return type == PlantType.PLAINS || type == PlantType.WATER
                 || type == PlantType.DESERT || type == PlantType.BEACH;

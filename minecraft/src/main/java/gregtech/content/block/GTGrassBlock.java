@@ -44,12 +44,14 @@ public final class GTGrassBlock extends IconSetBlock {
     /*public net.neoforged.neoforge.common.util.TriState canSustainPlant(BlockState state,BlockGetter level,BlockPos pos,Direction side,BlockState plant){
         if(side!=Direction.UP)return net.neoforged.neoforge.common.util.TriState.FALSE;
         if(plant.is(Blocks.SUGAR_CANE)){for(Direction horizontal:Direction.Plane.HORIZONTAL)if(level.getFluidState(pos.relative(horizontal)).is(FluidTags.WATER))return net.neoforged.neoforge.common.util.TriState.TRUE;return net.neoforged.neoforge.common.util.TriState.FALSE;}
-        if(plant.getBlock() instanceof net.minecraft.world.level.block.BushBlock)return net.neoforged.neoforge.common.util.TriState.TRUE;
+        if(gregtech.content.block.plant.GTPlantSign.isPlant(plant.getBlock()))return net.neoforged.neoforge.common.util.TriState.TRUE;
         return net.neoforged.neoforge.common.util.TriState.DEFAULT;
 *///?} else {
     public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos,
                                    Direction side, IPlantable plant) {
         if (side != Direction.UP) return false;
+        // GT6 BlockBush covered every plant; the modern plant-type list does not know GT's own bush.
+        if (plant instanceof gregtech.content.block.plant.BushBlock) return true;
         PlantType type = plant.getPlantType(level, pos.above());
         if (type == PlantType.PLAINS) return true;
         if (type != PlantType.BEACH) return false;
