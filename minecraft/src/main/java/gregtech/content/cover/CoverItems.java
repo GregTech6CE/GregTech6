@@ -95,7 +95,8 @@ public final class CoverItems {
     private static boolean portCoverId(String id) {
         if (id.startsWith("logistics_display_cpu_") || id.startsWith("filtered_logistics_")
                 || id.startsWith("generic_logistics_") || id.equals("logistics_dump_bus_item")) return true;
-        return id.endsWith("_cover") || id.equals("drain") || id.equals("air_vent")
+        return id.endsWith("_cover") || id.equals("redstone_conductor_cover_accept")
+                || id.equals("redstone_conductor_cover_emit") || id.equals("drain") || id.equals("air_vent")
                 || id.equals("item_filter") || id.equals("fluid_filter")
                 // §108: GT6 registers these two on items whose names do not end in "_cover" - the
                 // pressure valve is a fluid-pipe cover (CoverPressureValve:44) and the asphalt cover

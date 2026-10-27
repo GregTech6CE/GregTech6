@@ -111,7 +111,7 @@ public final class MachineGuiChrome {
 
     public static int titleWidth(Font font, Component title, ItemStack icon, int maxWidth) {
         int contentWidth = font.width(title) + (icon.isEmpty() ? 0 : 13) + 2;
-        int middleWidth = Math.min(((contentWidth + 3) / 4) * 4, Math.max(0, (maxWidth - 7) / 4 * 4));
+        int middleWidth = Math.min(((contentWidth + 3) / 4) * 4, Math.max(0, (maxWidth - 15) / 4 * 4));
         return 4 + middleWidth + 3;
     }
 

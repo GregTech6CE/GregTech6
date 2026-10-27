@@ -78,6 +78,13 @@ public final class PanelCoverRenderer {
                     ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",base+"side")),light);
             return true;
         }
+        if (CoverAttachmentBehaviors.AIR_VENT.equals(behavior)) {
+            var sprite = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", "item/technological/air_vent"));
+            var vertices = buffers.getBuffer(RenderType.cutout());
+            CoverSurfaceRenderer.attachment(owner, side, pose, vertices, sprite, light, -1);
+            CoverSurfaceRenderer.draw(owner, pose, vertices, side, sprite, light, 0);
+            return true;
+        }
         if(CanvasData.isCanvas(stack)) {
             var canvas=(gregtech.content.item.CanvasItem)stack.getItem();
             CoverSurfaceRenderer.attachment(owner,side,pose,buffers.getBuffer(RenderType.cutout()),
