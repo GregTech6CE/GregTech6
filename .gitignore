@@ -51,6 +51,9 @@ replay_pid*
 /docs/card-plans/
 /docs/supersymmetry-*.md
 
+# Transient subsystem tests: written, run against the matching subsystem, then deleted.
+minecraft/versions/*/src/test/
+
 # Avoid blanket *.jar, *.json, *.log or generated/ rules: the Wrapper,
 # game assets, documented fixtures and checked-in catalogs are sources.
 # Keep docs/operations/records/ versioned.
