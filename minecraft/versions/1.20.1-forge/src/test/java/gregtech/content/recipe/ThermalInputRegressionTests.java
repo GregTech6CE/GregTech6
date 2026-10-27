@@ -49,6 +49,12 @@ public final class ThermalInputRegressionTests {
             new Golden("Ruby", MaterialPrefix.gemFlawless, 1297296000, "GenMolten_Alumina", 756, false),
             new Golden("Ruby", MaterialPrefix.gemExquisite, 2594592000L, "GenMolten_Alumina", 1512, false),
             new Golden("Ruby", MaterialPrefix.gemLegendary, 5189184000L, "GenMolten_Alumina", 3024, false),
+            new Golden("Cinnabar", MaterialPrefix.gem, 648648000, "GenLiquid_Mercury", 48, true),
+            new Golden("Cinnabar", MaterialPrefix.gemChipped, 162162000, "GenLiquid_Mercury", 12, true),
+            new Golden("Cinnabar", MaterialPrefix.gemFlawed, 324324000, "GenLiquid_Mercury", 24, true),
+            new Golden("Cinnabar", MaterialPrefix.gemFlawless, 1297296000, "GenLiquid_Mercury", 96, true),
+            new Golden("Cinnabar", MaterialPrefix.gemExquisite, 2594592000L, "GenLiquid_Mercury", 192, true),
+            new Golden("Cinnabar", MaterialPrefix.gemLegendary, 5189184000L, "GenLiquid_Mercury", 384, true),
             new Golden("Galena", MaterialPrefix.crushedPurified, 810810000, "GenMolten_Lead", 60, true),
             new Golden("Galena", MaterialPrefix.crushedPurifiedTiny, 90090000, "GenMolten_Lead", 6, true),
             new Golden("Galena", MaterialPrefix.crushedCentrifuged, 891891000, "GenMolten_Lead", 66, true),
@@ -90,7 +96,8 @@ public final class ThermalInputRegressionTests {
                         && definition.output().isFluidEqual(fluid(expected.fluid(), expected.amount()))
                         && definition.output().getAmount() == expected.amount(), "selected input/phase/mass reaches native definition");
                 var recipe = row(definition.map(), input);
-                check(recipe, input, expected.fluid(), expected.amount(), -1);
+                check(recipe, input, expected.fluid(), expected.amount(), expected.material().equals("Cinnabar")
+                        ? (expected.prefix() == MaterialPrefix.gemLegendary ? 30 : 16) : -1);
                 require(SharedThermalInputRows.owned().contains(recipe), "new input is actually accepted by this producer");
                 var remaining = RecipeInputs.consume(recipe, List.of(input), List.of(), 1);
                 require(remaining != null && remaining.items().get(0).isEmpty(), "one actual input is consumed, including a single tiny ore");
@@ -133,13 +140,22 @@ public final class ThermalInputRegressionTests {
                         "reviewed Ti/Fe owner includes div72 without granting Melter permission");
             }
         }
-        var cinnabarPrefixes = List.of(MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.crushedPurified,
+        var cinnabarPrefixes = List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.crushedPurified,
                 MaterialPrefix.crushedPurifiedTiny, MaterialPrefix.crushedCentrifuged, MaterialPrefix.crushedCentrifugedTiny);
-        int[] mercury = {12, 5, 60, 6, 66, 7};
+        int[] mercury = {48, 12, 5, 60, 6, 66, 7};
         for (int i = 0; i < cinnabarPrefixes.size(); i++) for (var map : MAPS) {
             var input = form(cinnabarPrefixes.get(i), "Cinnabar", 1); var recipe = row(map, input);
             check(recipe, input, "GenLiquid_Mercury", mercury[i], 16); result.add(recipe);
             require(!SharedThermalInputRows.owned().contains(recipe), "reviewed Cinnabar input is not stolen by the generic extension");
+        }
+        var cinnabarDiv72 = form(MaterialPrefix.dustDiv72, "Cinnabar", 1);
+        var cinnabarBlock = ReviewedCinnabarFacts.INSTANCE.blockDust(material("Cinnabar"), 1);
+        require(!cinnabarBlock.isEmpty(), "real reviewed Cinnabar dust block");
+        for (var map : MAPS) {
+            require(rows(map, cinnabarDiv72).isEmpty(), "reserved Cinnabar div72 remains zero-volume, not rounded up");
+            var recipe = row(map, cinnabarBlock);
+            check(recipe, cinnabarBlock, "GenLiquid_Mercury", 432, 34); result.add(recipe);
+            require(!SharedThermalInputRows.owned().contains(recipe), "reviewed physical block ownership is unchanged");
         }
         for (String name : List.of("Ice", "Snow")) {
             var tiny = form(MaterialPrefix.dustTiny, name, 1);
@@ -159,9 +175,12 @@ public final class ThermalInputRegressionTests {
     }
 
     private static void inventory() {
-        var owned = SharedThermalInputRows.owned(); var admissions = SharedThermalInputRows.admissions();
-        require(!owned.isEmpty() && admissions.stream().filter(SharedThermalInputRows.Admission::accepted).count() == owned.size(),
-                "accepted outcomes count actual owned objects, not the audit definition pool");
+        var owned = SharedThermalInputRows.owned().stream().filter(r -> r.mInputs.length == 1
+                && r.mInputs[0].getItem() instanceof MaterialFormItem form && PREFIXES.contains(form.getPrefix())).toList();
+        var admissions = SharedThermalInputRows.admissions().stream().filter(a -> PREFIXES.contains(a.prefix())).toList();
+        require(owned.size() == 2408 && admissions.size() == 2415
+                && admissions.stream().filter(SharedThermalInputRows.Admission::accepted).count() == owned.size(),
+                "thirteen-prefix census preserves 2396 prior rows plus 12 newly unreserved Cinnabar gem rows and seven normal collisions");
         Map<String, Integer> accepted = new TreeMap<>(), collisions = new TreeMap<>(), deferred = new TreeMap<>();
         Set<String> contracts = new HashSet<>(); Set<MaterialPrefix> prefixes = new HashSet<>();
         var snapshot = new Snapshot();
@@ -196,7 +215,7 @@ public final class ThermalInputRegressionTests {
         }
         for (var admission : admissions) if (!admission.accepted())
             collisions.merge(admission.map() + "/" + admission.prefix().getName(), 1, Integer::sum);
-        for (var entry : SharedThermalInputRows.deferred())
+        for (var entry : SharedThermalInputRows.deferred()) if (PREFIXES.contains(entry.prefix()))
             deferred.merge(entry.action() + "/" + entry.reason(), 1, Integer::sum);
         require(prefixes.equals(new HashSet<>(PREFIXES)), "all thirteen independently selected prefixes have accepted runtime rows");
         System.out.println("[thermal-input-regression] actualAccepted=" + owned.size() + ", plannedAdmissions=" + admissions.size()
@@ -261,6 +280,18 @@ public final class ThermalInputRegressionTests {
                 && cold.rows().stream().allMatch(r -> r.ticks() == 16 && r.output().getAmount() == 36),
                 "runtime density affects heat cost, not verified fraction mass or output volume");
         var snapshot = new SharedThermalInputRows.Snapshot();
+        var cinnabar = material("Cinnabar");
+        for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny,
+                MaterialPrefix.dustDiv72, MaterialPrefix.crushedPurified, MaterialPrefix.crushedPurifiedTiny,
+                MaterialPrefix.crushedCentrifuged, MaterialPrefix.crushedCentrifugedTiny))
+            require(snapshot.reviewedOwner(prefix, cinnabar), "exact old reviewed Cinnabar form retains reservation");
+        for (var prefix : List.of(MaterialPrefix.gem, MaterialPrefix.gemChipped, MaterialPrefix.gemFlawed,
+                MaterialPrefix.gemFlawless, MaterialPrefix.gemExquisite, MaterialPrefix.gemLegendary)) {
+            require(!snapshot.reviewedOwner(prefix, cinnabar), "gem was not a contract of the old reviewed producer");
+            outcome(inspectForm(prefix, cinnabar, form(prefix, "Cinnabar", 1), new Snapshot(FluidCatalog.all(),
+                    (field, amount) -> field.equals("GenLiquid_Mercury") ? FluidStack.EMPTY : GTFluids.stack(field, amount))),
+                    Action.DEFERRED_NO_ROW, Reason.REQUIRED_NATIVE_FLUID_ABSENT);
+        }
         var single = SharedThermalInputRows.definitions(List.of(tin), snapshot);
         var repeated = SharedThermalInputRows.definitions(List.of(tin, tin, GTMaterialRegistry.get("Tin")), new SharedThermalInputRows.Snapshot());
         require(!single.isEmpty() && repeated.size() == single.size(), "material aliases do not multiply selected contracts");
