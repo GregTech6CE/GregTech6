@@ -104,10 +104,13 @@ public final class MachineRecipeBootstrap {
     }
 
     private static void runStep(String name, InitializationStep step) {
+        long started = System.nanoTime();
         try {
             step.run();
         } catch (RuntimeException failure) {
             throw new IllegalStateException("Machine recipe initialization failed: " + name, failure);
         }
+        long elapsedMillis = (System.nanoTime() - started) / 1_000_000L;
+        if (elapsedMillis >= 100) LOGGER.info("Machine recipe initialization: {} took {} ms", name, elapsedMillis);
     }
 }

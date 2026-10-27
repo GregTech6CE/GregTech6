@@ -612,6 +612,20 @@ public class RecipeMap {
             long candidateEmpty = java.util.Arrays.stream(aCandidate.mInputs).filter(RecipeMap::empty).count();
             if (requiredEmpty != candidateEmpty) return false;
         }
+        // Common inputs such as molds put many unrelated recipes in the same index bucket.
+        // Reject an impossible item match before copying any stacks, while retaining the full
+        // count and NBT/component comparison below for every possible match.
+        for (ItemStack required : aExisting.mInputs) {
+            if (empty(required)) continue;
+            boolean present = false;
+            for (ItemStack candidate : aCandidate.mInputs) {
+                if (!empty(candidate) && candidate.getItem() == required.getItem()) {
+                    present = true;
+                    break;
+                }
+            }
+            if (!present) return false;
+        }
         var items = java.util.Arrays.stream(aCandidate.mInputs)
                 .map(s -> empty(s) ? ItemStack.EMPTY : s.copy()).toArray(ItemStack[]::new);
         for (ItemStack in : aExisting.mInputs) {
