@@ -1,10 +1,20 @@
 {
   "variants": {
-    "stage=0": {
-      "model": "gt6ce:block/wood/sapling_rainbowood"
-    },
-    "stage=1": {
-      "model": "gt6ce:block/wood/sapling_rainbowood"
-    }
+    "stage=0": [
+      {
+        "model": "gt6ce:block/iconsets/sapling_small_rainbowood"
+      },
+      {
+        "model": "gt6ce:block/iconsets/sapling_large_rainbowood"
+      }
+    ],
+    "stage=1": [
+      {
+        "model": "gt6ce:block/iconsets/sapling_small_rainbowood"
+      },
+      {
+        "model": "gt6ce:block/iconsets/sapling_large_rainbowood"
+      }
+    ]
   }
 }
