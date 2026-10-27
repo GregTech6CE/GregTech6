@@ -14,7 +14,7 @@ public final class WoodMaterials {
     public static final GTMaterial WoodTreated       = wood(8222, "WoodTreated",  "WoodSealed",                    0x502800).setTextureSet(MaterialTextureSet.WOOD).setLocalName("WoodSealed").setStats(500, 600, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 3F, 24, 0);
     public static final GTMaterial WoodPolished      = wood(8267, "WoodPolished", "WoodPolished",                  0x3C1E00).setTextureSet(MaterialTextureSet.WOOD).setStats(500, 600, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 3F, 24, 0);
     public static final GTMaterial WoodRubber        = wood(8224, "WoodRubber",   "WoodRubber",                    0xB49600).setTextureSet(MaterialTextureSet.WOOD).setStats(350, 450, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 1.5F, 12, 0);
-    public static final GTMaterial Bamboo            = wood(8418, "Bamboo",       "Bamboo",                        0x64C864).setTextureSet(MaterialTextureSet.WOOD).setStats(350, 450, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 2F, 32, 0);
+    public static final GTMaterial Bamboo            = wood(8418, "Bamboo",       "Bamboo",                        0xC6AF4C).setTextureSet(MaterialTextureSet.WOOD).setStats(350, 450, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 2F, 32, 0);
     public static final GTMaterial Skyroot           = wood(8291, "Skyroot",      "Skyroot",                       0x325050).setTextureSet(MaterialTextureSet.WOOD).setStats(350, 450, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 4F, 64, 0);
     public static final GTMaterial Weedwood          = wood(8286, "Weedwood",     "Weedwood",                      0x503200).setTextureSet(MaterialTextureSet.WOOD).setStats(350, 450, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 2F, 32, 0);
     public static final GTMaterial Livingwood        = wood(8289, "Livingwood",   "Livingwood",                    0x3C1E00).setTextureSet(MaterialTextureSet.WOOD).setStats(350, 500, 1.362F).setTooltipChemical("C₆H2O₁₅").setToolStats(1, 4F, 64, 0);
@@ -74,7 +74,7 @@ public final class WoodMaterials {
     public static final GTMaterial Sakura            = woodNormal(9341, "Sakura",            "Sakura",             0xFAA17A, 3F,   32);
     public static final GTMaterial Balsa             = woodNormal(9342, "Balsa",             "Balsa",              0xA59E97, 2F,   16);
     public static final GTMaterial Baobab            = woodNormal(9343, "Baobab",            "Baobab",             0x88915F, 2F,   16);
-    public static final GTMaterial Cherrywood        = woodNormal(9344, "Cherrywood",        "Cherrywood",         0xAD7C32, 2.5F, 24);
+    public static final GTMaterial Cherrywood        = woodNormal(9344, "Cherrywood",        "Cherrywood",         0xE4C8C3, 2.5F, 24);
     public static final GTMaterial Chestnutwood      = woodNormal(9345, "Chestnutwood",      "Chestnutwood",       0xB3A255, 3F,   32);
     public static final GTMaterial Citruswood        = woodNormal(9346, "Citruswood",        "Citruswood",         0x98A31C, 2.5F, 24);
     public static final GTMaterial Cocobolowood      = woodNormal(9347, "Cocobolowood",      "Cocobolowood",       0x791202, 3F,   16);
@@ -100,7 +100,7 @@ public final class WoodMaterials {
     public static final GTMaterial Goldwood          = woodNormal(9369, "Goldwood",          "Goldwood",           0xD2BB97, 2.5F, 24);
     public static final GTMaterial Hellbark          = woodNormal(9370, "Hellbark",          "Hellbark",           0xC89664, 4F,   16);
     public static final GTMaterial Jacaranda         = woodNormal(9371, "Jacaranda",         "Jacaranda",          0xC9ABA2, 2.5F, 16);
-    public static final GTMaterial Mangrove          = woodNormal(9372, "Mangrove",          "Mangrove",           0xECE4D9, 2F,   24);
+    public static final GTMaterial Mangrove          = woodNormal(9372, "Mangrove",          "Mangrove",           0x6E292C, 2F,   24);
     public static final GTMaterial SacredOak         = woodNormal(9373, "SacredOak",         "Sacred Oak",         0x9F844D, 4F,   48);
     public static final GTMaterial Applewood         = woodNormal(9375, "Applewood",         "Applewood",          0x613124, 2F,   24);
     public static final GTMaterial Beech             = woodNormal(9377, "Beech",             "Beech",              0xE29044, 2F,   32);

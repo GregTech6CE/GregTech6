@@ -511,13 +511,18 @@ public final class MaterialModTags {
         ImportedMaterialData.Vulcanite.mod(ModReferences.MET);
         ImportedMaterialData.Vyroxeres.mod(ModReferences.MET);
         ImportedMaterialData.W.mod(ModReferences.RP);
+        ImportedMaterialData.WOODS.Bamboo.mod(ModReferences.MC);
+        ImportedMaterialData.WOODS.Cherry.mod(ModReferences.MC);
+        ImportedMaterialData.WOODS.Crimson.mod(ModReferences.MC);
         ImportedMaterialData.WOODS.Dreamwood.mod(ModReferences.BOTA);
         ImportedMaterialData.WOODS.Greatwood.mod(ModReferences.AspectReferences);
         ImportedMaterialData.WOODS.Livingwood.mod(ModReferences.BOTA);
+        ImportedMaterialData.WOODS.Mangrove.mod(ModReferences.MC);
         ImportedMaterialData.WOODS.Marshmallow.mod(ModReferences.CANDY);
         ImportedMaterialData.WOODS.Shimmerwood.mod(ModReferences.BOTA);
         ImportedMaterialData.WOODS.Silverwood.mod(ModReferences.AspectReferences);
         ImportedMaterialData.WOODS.Skyroot.mod(ModReferences.AETHER);
+        ImportedMaterialData.WOODS.Warped.mod(ModReferences.MC);
         ImportedMaterialData.WOODS.Weedwood.mod(ModReferences.BTL);
         ImportedMaterialData.WOODS.Wood.mod(ModReferences.MC);
         ImportedMaterialData.WOODS.WoodRubber.mod(ModReferences.IC2);
