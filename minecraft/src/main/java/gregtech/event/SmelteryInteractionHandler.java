@@ -145,10 +145,13 @@ public final class SmelteryInteractionHandler {
 //?}
     private static InteractionResult handleMoldInteraction(MoldBlockEntity mold, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
-        // Original ordinary activation works while holding an ingot/rod too. The held
-        // item is never melted: a top click asks the adjacent crucible to pour.
-        if (held.isEmpty() || !GTToolHelper.isInteractionTool(held)
-                || GTToolHelper.matchesTool(held, GTToolType.PINCERS)) {
+        // Original ordinary activation works with any held item or unrelated GT tool.
+        // Only the specific mold tools below take precedence. The held item is never
+        // melted: a top click asks the adjacent crucible to pour.
+        boolean moldTool = GTToolHelper.matchesTool(held, GTToolType.CHISEL)
+                || GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
+                || GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH);
+        if (!moldTool) {
             if (hit.getDirection() == Direction.DOWN) return InteractionResult.PASS;
             boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
             boolean pickedUp = mold.tryPickupWithPincers(player, usingPincers);
@@ -213,8 +216,9 @@ public final class SmelteryInteractionHandler {
 
     private static InteractionResult handleBasinInteraction(MoldBasinBlockEntity basin, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
-        // Pincers or empty hand: pickup when basin has content, pour when empty
-        if (hit.getDirection() == Direction.UP && (held.isEmpty() || GTToolHelper.matchesTool(held, GTToolType.PINCERS))) {
+        // Original basin activation accepts any held item on top; the monkey wrench
+        // keeps its dedicated auto-input toggle instead of picking up or pouring.
+        if (hit.getDirection() == Direction.UP && !GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
             boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
             boolean pickedUp = basin.tryPickupWithPincers(player, usingPincers);
             if (pickedUp) {
