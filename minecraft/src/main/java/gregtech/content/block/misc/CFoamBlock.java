@@ -36,7 +36,7 @@ public class CFoamBlock extends ColoredConstructionBlock {
     }
 
     public CFoamBlock(boolean fresh, Properties properties) {
-        super(properties, net.minecraft.world.item.DyeColor.WHITE);
+        super(properties.isValidSpawn((s, l, p, e) -> false), net.minecraft.world.item.DyeColor.WHITE);
         this.fresh = fresh;
     }
 

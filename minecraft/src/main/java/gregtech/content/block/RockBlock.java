@@ -92,7 +92,7 @@ public class RockBlock extends Block implements EntityBlock {
         return level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP);
     }
 
-    /** Right-click picks the rock up (rockGt item + raw ore when marking a bedrock deposit). */
+    /** Right-click picks the rock up (rockGt item, or only raw ore when marking a bedrock deposit). */
     @Override
 //? if >=1.21.1 {
     /*public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level,
@@ -116,7 +116,7 @@ public class RockBlock extends Block implements EntityBlock {
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    /** rockGt of the material, plus a raw ore chunk when the rock marks a bedrock deposit. */
+    /** rockGt of the material, or only oreRaw when the rock marks a bedrock deposit. */
     public static List<ItemStack> yields(@Nullable BlockEntity be) {
         // GT6's item-on-the-ground mode: the rock carries the exact item it hands out.
         if (be instanceof RockBlockEntity rock && !rock.itemId().isEmpty()) {
@@ -128,15 +128,13 @@ public class RockBlock extends Block implements EntityBlock {
         String materialName = be instanceof RockBlockEntity rock ? rock.getMaterial() : RockBlockEntity.DEFAULT_MATERIAL;
         GTMaterial material = GTMaterialRegistry.get(materialName);
         if (material == null || !material.resolve().isValid()) return Collections.emptyList();
-        java.util.ArrayList<ItemStack> out = new java.util.ArrayList<>(2);
         int amount = be instanceof RockBlockEntity rock ? rock.count() : 1;
-        ItemStack rockItem = MaterialStackItemHelper.mat(MaterialPrefix.rockGt, material.resolve(), amount);
-        if (!rockItem.isEmpty()) out.add(rockItem);
-        if (be instanceof RockBlockEntity rock && rock.hasRawOre()) {
-            ItemStack raw = MaterialStackItemHelper.mat(MaterialPrefix.oreRaw, material.resolve(), 1);
-            if (!raw.isEmpty()) out.add(raw);
-        }
-        return out;
+        // Original bedrock markers carry only oreRaw, not an extra rockGt stack. Also repairs
+        // legacy markers that stored the old rawOre flag instead of an explicit item identity.
+        MaterialPrefix prefix = be instanceof RockBlockEntity rock && rock.hasRawOre()
+                ? MaterialPrefix.oreRaw : MaterialPrefix.rockGt;
+        ItemStack result = MaterialStackItemHelper.mat(prefix, material.resolve(), amount);
+        return result.isEmpty() ? List.of() : List.of(result);
     }
 
     @Override

@@ -15,6 +15,8 @@ public final class StoneBlockProperties {
         float hardness = Math.max(0.1F, Blocks.STONE.defaultDestroyTime() * hardnessMult);
         float resistance = Math.max(0.1F, 6.0F * stoneType.resistanceMultiplier());
         return BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
-                .strength(hardness, resistance).requiresCorrectToolForDrops().sound(SoundType.STONE);
+                .strength(hardness, resistance).requiresCorrectToolForDrops().sound(SoundType.STONE)
+                .isValidSpawn((state, level, pos, entity) -> StoneVariantFlags.spawnsCreatures(variant)
+                        && state.isFaceSturdy(level, pos, net.minecraft.core.Direction.UP));
     }
 }

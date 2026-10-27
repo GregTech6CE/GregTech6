@@ -19,7 +19,7 @@ public final class SharedDecorBlocks {
 
     public static void initialize() {
         if (CRATE != null) throw new IllegalStateException("Decorative blocks registered twice");
-        CRATE = RegisteredBlock.register("crate", () -> new Block(BlockBehaviour.Properties.of()
+        CRATE = RegisteredBlock.register("crate", () -> new gregtech.content.block.CrateBlock(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WOOD).strength(1, 3).sound(SoundType.WOOD).ignitedByLava()));
         LOOT_CRATE = RegisteredBlock.register("loot_crate",
                 () -> new LootCrateBlock(BlockBehaviour.Properties.of()

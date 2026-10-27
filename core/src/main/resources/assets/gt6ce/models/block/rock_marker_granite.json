@@ -1,0 +1,82 @@
+{
+  "textures": {
+    "particle": "minecraft:block/granite",
+    "rock": "minecraft:block/granite"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        5
+      ],
+      "to": [
+        10,
+        4,
+        11
+      ],
+      "faces": {
+        "down": {
+          "texture": "#rock",
+          "uv": [
+            4,
+            5,
+            10,
+            11
+          ],
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#rock",
+          "uv": [
+            4,
+            5,
+            10,
+            11
+          ],
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#rock",
+          "uv": [
+            4,
+            12,
+            10,
+            16.0
+          ],
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#rock",
+          "uv": [
+            4,
+            12,
+            10,
+            16.0
+          ],
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#rock",
+          "uv": [
+            5,
+            12,
+            11,
+            16.0
+          ],
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#rock",
+          "uv": [
+            5,
+            12,
+            11,
+            16.0
+          ],
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

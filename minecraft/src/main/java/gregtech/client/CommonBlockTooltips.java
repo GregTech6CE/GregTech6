@@ -65,6 +65,16 @@ public final class CommonBlockTooltips {
                         .append(Component.literal(Float.toString(Math.min(10, speed / 0.4F)) + "x").withStyle(ChatFormatting.GREEN)));
         }
         if (flammable) rows.add(Component.translatable(FLAMMABLE).withStyle(ChatFormatting.RED));
+        if (block instanceof gregtech.content.block.CrateBlock && !containsKey(lines, "gt.lang.gravity"))
+            rows.add(Component.translatable("gt.lang.gravity").withStyle(ChatFormatting.DARK_GRAY));
+        boolean spawnProof = block instanceof gregtech.content.block.stone.GTStoneSlabBlock
+                || block instanceof gregtech.content.block.stone.GTStoneBlock stone
+                    && !gregtech.content.block.stone.StoneVariantFlags.spawnsCreatures(stone.variant())
+                || block instanceof gregtech.content.block.misc.CFoamBlock
+                || block instanceof gregtech.content.block.misc.CFoamSlabBlock
+                || block instanceof gregtech.content.block.misc.ConcreteBlock;
+        if (spawnProof && !containsKey(lines, "tooltip.gt6ce.no_mob_spawning"))
+            rows.add(Component.translatable("tooltip.gt6ce.no_mob_spawning").withStyle(ChatFormatting.DARK_GRAY));
         if (block instanceof BookShelfBlock && !containsKey(lines, ENCHANT))
             rows.add(Component.translatable(ENCHANT).withStyle(ChatFormatting.DARK_GRAY));
         if (hasAttachedCover(stack) && !containsKey(lines, UNCOVER))
