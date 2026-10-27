@@ -62,7 +62,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     @Override public boolean coverPossible(Direction side){return hasOriginalConverter()||isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
     @Override public boolean attachCover(Direction side,net.minecraft.world.item.ItemStack stack){
         var panel=gregtech.content.cover.PanelCover.of(stack);
-        if(!gregtech.content.cover.CoverItems.isCover(stack)||!getCover(side).isEmpty()||!panels().canAttach(side,stack))return false;
+        if(!gregtech.content.cover.CoverItems.isCover(stack)||!getCover(side).isEmpty()||!panels().canAttach(side,stack)
+                ||!gregtech.content.cover.CoverAdmission.allowCover(this,side,stack))return false;
         batteryCovers.put(side,stack.copyWithCount(1));panels().attached(side);return true;
     }
     @Override public net.minecraft.world.item.ItemStack removeCover(Direction side){
