@@ -20,7 +20,7 @@ public final class PanelCoverInteraction {
         var side = hit.getDirection();
         if(level==null)return InteractionResult.PASS;
         if(!player.mayBuild()||!level.mayInteract(player,owner.getBlockPos()))return InteractionResult.FAIL;
-        if(PanelCover.of(held)!=null){
+        if(player.isShiftKeyDown()&&PanelCover.of(held)!=null){
             if(!CoverAdmission.allowCover(owner,side,held))return InteractionResult.PASS;
             if(!level.isClientSide){
                 if(host.attachCover(side,held)){if(!player.getAbilities().instabuild)held.shrink(1);}

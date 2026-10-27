@@ -16,7 +16,7 @@ public final class CoverPlacement {
     public static boolean coverGrid(BlockGetter level, BlockPos pos, Player player) {
         if (level == null) return false;
         ItemStack stack = held(player);
-        boolean placing = CoverItems.isCover(stack);
+        boolean placing = player.isShiftKeyDown() && CoverItems.isCover(stack);
         boolean removing = GTToolHelper.matchesTool(stack, GTToolType.CROWBAR);
         if (!placing && !removing) return false;
         return level.getBlockEntity(pos) instanceof PanelCoverHost host
