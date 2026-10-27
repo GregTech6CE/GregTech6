@@ -1,4 +1,6 @@
 {
+  "gt.material.Sculk": "Sculk",
+  "material.gt6ce.sculk": "Sculk",
   "gt6ce.jei.category.mold_chisel": "Mold Chiseling",
   "gt6ce.jei.mold_chisel.note": "Dark cells are chiseled out",
   "gt6ce.jei.mold_chisel.carved": "Chisel this cell",
