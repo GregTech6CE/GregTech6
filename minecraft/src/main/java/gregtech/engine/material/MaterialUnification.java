@@ -37,6 +37,7 @@ public final class MaterialUnification {
             case "nugget/Iron" -> Items.IRON_NUGGET;
             case "nugget/Gold" -> Items.GOLD_NUGGET;
             case "gem/Diamond" -> Items.DIAMOND;
+            case "gem/Emerald" -> Items.EMERALD;
             case "gem/Amethyst" -> Items.AMETHYST_SHARD;
             case "gem/Coal" -> Items.COAL;
             case "gem/Charcoal" -> Items.CHARCOAL;

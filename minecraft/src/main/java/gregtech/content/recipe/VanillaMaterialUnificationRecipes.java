@@ -24,7 +24,7 @@ public final class VanillaMaterialUnificationRecipes {
                 count += add(GTBlocks.getStack(prefix, material));
             }
         }
-        for (String name : new String[]{"Iron", "Gold", "Copper", "Netherite", "Diamond", "Amethyst", "Coal",
+        for (String name : new String[]{"Iron", "Gold", "Copper", "Netherite", "Diamond", "Emerald", "Amethyst", "Coal",
                 "Charcoal", "Lapis", "Redstone", "Sugar", "Gunpowder", "Glowstone"}) {
             var material = GTMaterialRegistry.get(name);
             if (material == null) continue;
