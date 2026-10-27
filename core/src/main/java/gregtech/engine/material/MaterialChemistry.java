@@ -65,28 +65,17 @@ public final class MaterialChemistry {
             return List.of();
         }
         if (prefix == MaterialPrefix.toolHeadWrench) {
-            List<WeightedMaterial> out = new ArrayList<>(2);
-            out.add(new WeightedMaterial(material, GTValues.U * 4));
-            out.add(new WeightedMaterial(Materials.Steel, GTValues.U4 + GTValues.U9 * 2));
-            return List.copyOf(out);
+            return headComponents(material, GTValues.U * 4, Materials.Steel, GTValues.U4 + GTValues.U9 * 2);
         }
         if (prefix == MaterialPrefix.toolHeadChainsaw) {
-            List<WeightedMaterial> out = new ArrayList<>(2);
-            out.add(new WeightedMaterial(material, GTValues.U * 2));
-            out.add(new WeightedMaterial(Materials.Steel, GTValues.U * 9 / 2));
-            return List.copyOf(out);
+            return headComponents(material, GTValues.U * 2, Materials.Steel, GTValues.U * 9 / 2);
         }
         if (prefix == MaterialPrefix.toolHeadDrill) {
-            List<WeightedMaterial> out = new ArrayList<>(2);
-            out.add(new WeightedMaterial(material, GTValues.U * 4));
-            out.add(new WeightedMaterial(Materials.Steel, GTValues.U * 4));
-            return List.copyOf(out);
+            return headComponents(material, GTValues.U * 4, Materials.Steel, GTValues.U * 4);
         }
         if (prefix == MaterialPrefix.toolHeadPickaxeGem) {
-            List<WeightedMaterial> out = new ArrayList<>(2);
-            out.add(new WeightedMaterial(material, GTValues.U));
-            out.add(new WeightedMaterial(Materials.WroughtIron, GTValues.U9 * 26));
-            return List.copyOf(out);
+            // OP716: ANY.Iron targets MT.Fe, not the WroughtIron group member.
+            return headComponents(material, GTValues.U, Materials.Iron, GTValues.U9 * 26);
         }
         if (prefix == MaterialPrefix.glasstube) {
             List<WeightedMaterial> out = new ArrayList<>(2);
@@ -189,6 +178,16 @@ public final class MaterialChemistry {
             }
         }
         return sb.toString();
+    }
+
+    /** Keep shared display and recoverable registration totals identical for composite heads. */
+    private static List<WeightedMaterial> headComponents(GTMaterial primary, long primaryUnits,
+                                                         GTMaterial secondary, long secondaryUnits) {
+        primary = primary.resolve();
+        secondary = secondary.resolve();
+        if (primary == secondary)
+            return List.of(new WeightedMaterial(primary, Math.addExact(primaryUnits, secondaryUnits)));
+        return List.of(new WeightedMaterial(primary, primaryUnits), new WeightedMaterial(secondary, secondaryUnits));
     }
 
 }
