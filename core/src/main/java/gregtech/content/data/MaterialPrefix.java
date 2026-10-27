@@ -651,6 +651,12 @@ private final String name;
             case "gem_flawless" -> GTValues.U * 2;
             case "gem_exquisite" -> GTValues.U * 4;
             case "gem_legendary" -> GTValues.U * 8;
+            // OP183: one boule contains four material units, not the generic one-unit fallback.
+            case "boule_gt" -> GTValues.U * 4;
+            // OP356/358/360 and359: botanical drops retain their fractional material content.
+            // plantGtTwig also has a secondary material; it is deliberately a separate correction.
+            case "plant_gt_berry", "plant_gt_blossom", "plant_gt_fiber" -> GTValues.U9;
+            case "plant_gt_wart" -> GTValues.U4;
             // misc
             case "scrap_gt" -> GTValues.U9;
             // gears / rotor
@@ -667,7 +673,8 @@ private final String name;
             case "tool_head_file", "tool_head_raw_chisel" -> GTValues.U2 * 3;
             case "tool_head_chisel" -> GTValues.U2 * 3 - GTValues.U9;
             case "tool_head_wrench" -> GTValues.U * 4;
-            case "tool_head_pickaxe", "tool_head_sense", "tool_head_builderwand" -> GTValues.U9 * 26;
+            // OP250: the construction head has the same primary amount as a finished pickaxe.
+            case "tool_head_pickaxe", "tool_head_sense", "tool_head_construction_pickaxe", "tool_head_builderwand" -> GTValues.U9 * 26;
             case "tool_head_plow" -> GTValues.U9 * 35;
             case "tool_head_arrow" -> GTValues.U9;
             case "tool_head_buzz_saw", "tool_head_drill" -> GTValues.U * 4;

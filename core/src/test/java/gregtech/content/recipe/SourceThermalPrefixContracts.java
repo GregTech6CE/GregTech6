@@ -149,8 +149,9 @@ public final class SourceThermalPrefixContracts {
     }
 
     private static void separatelyScopedBoundaries() {
-        // OP183,356/360/358/359,250/249: recyclable but known source/native main-amount mismatch.
-        var amountMismatch = List.of(MaterialPrefix.bouleGt, MaterialPrefix.plantGtBerry,
+        // OP183,356/360/358/359,250/249: independently scoped quantity corrections.
+        // Correcting metadata alone does not admit these inputs to the thermal producer.
+        var deferredQuantityPrefixes = List.of(MaterialPrefix.bouleGt, MaterialPrefix.plantGtBerry,
                 MaterialPrefix.plantGtBlossom, MaterialPrefix.plantGtFiber, MaterialPrefix.plantGtWart,
                 MaterialPrefix.toolHeadConstructionPickaxe, MaterialPrefix.toolHeadBuilderwand);
         // OP716-719,730-738: source prefix material additions remain multi-component even when
@@ -161,10 +162,10 @@ public final class SourceThermalPrefixContracts {
                 MaterialPrefix.bulletGtMedium, MaterialPrefix.bulletGtLarge);
         // unit/glasstube have no source same-name mapping; OP473 coin is not the independent coin item.
         var identity = List.of(MaterialPrefix.unit, MaterialPrefix.coin, MaterialPrefix.glasstube);
-        eq(7, amountMismatch.size(), "separate amount mismatch group");
+        eq(7, deferredQuantityPrefixes.size(), "separate quantity-correction admission group");
         eq(10, secondary.size(), "separate source secondary group");
         eq(3, identity.size(), "separate identity group");
-        for (var group : List.of(amountMismatch, secondary, identity)) for (var prefix : group) {
+        for (var group : List.of(deferredQuantityPrefixes, secondary, identity)) for (var prefix : group) {
             eq(Truth.UNKNOWN, SourceThermalInputRules.prefixDecision(prefix), "out-of-scope is not source NO");
             eq(null, SourceThermalInputRules.form(prefix), "no admitted single-primary descriptor");
             eq(false, SourceThermalInputRules.isAdditional(prefix), "not accidentally in positive group");
