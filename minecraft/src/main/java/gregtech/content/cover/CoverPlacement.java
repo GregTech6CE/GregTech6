@@ -14,6 +14,7 @@ public final class CoverPlacement {
         return player.getMainHandItem().isEmpty() ? player.getOffhandItem() : player.getMainHandItem();
     }
     public static boolean coverGrid(BlockGetter level, BlockPos pos, Player player) {
+        if (level == null) return false;
         ItemStack stack = held(player);
         boolean placing = CoverItems.isCover(stack);
         boolean removing = GTToolHelper.matchesTool(stack, GTToolType.CROWBAR);
