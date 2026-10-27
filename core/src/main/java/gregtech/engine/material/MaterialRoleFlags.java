@@ -16,7 +16,7 @@ public final class MaterialRoleFlags {
         GTWorldgenMaterials.flagOreMaterials();
         // Imported compound catalogs include natural rocks, notably both granites.
         for (StoneType stone : StoneType.values()) {
-            stone.material().put(MaterialProperty.STONE);
+            gregtech.content.material.SourceLatheMaterialProfiles.applyOfficialStoneRole(stone);
         }
     }
 }

@@ -22,6 +22,8 @@ public final class SourceLatheMaterialProfiles {
     private record Captured(int id, String name, Set<MaterialProperty> eligibility,
                             Set<MaterialProperty> cutterEligibility, Set<MaterialProperty> formingEligibility, Profile profile) {}
     private static final Map<GTMaterial, Captured> DEFAULTS = new IdentityHashMap<>();
+    private record StoneTransition(Set<MaterialProperty> cutterEligibility) {}
+    private static final Map<GTMaterial, StoneTransition> OFFICIAL_STONE_TRANSITIONS = new IdentityHashMap<>();
     private static boolean captured;
     // Native flags consumed by the eleven prefixes and admission. Quality is intentionally live.
     private static final Set<MaterialProperty> ELIGIBILITY = EnumSet.of(
@@ -113,6 +115,45 @@ public final class SourceLatheMaterialProfiles {
                 || GTMaterialRegistry.get(value.name()) != material
                 || value.id() > 0 && GTMaterialRegistry.get(value.id()) != material
                 || !value.formingEligibility().equals(formingEligibility(material))) return null;
+        return value.profile();
+    }
+
+    /** Apply the existing official role and retain provenance only for the three audited granites.
+     * No original snapshot is overwritten, and an already-added STONE flag is never adopted.
+     */
+    public static void applyOfficialStoneRole(gregtech.content.block.stone.StoneType stone) {
+        if (GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.READY)
+            throw new IllegalStateException("Official stone roles require a linked catalog");
+        GTMaterial material = stone.material();
+        boolean granite = material == generatedGranite(stone);
+        Profile before = granite && !material.has(MaterialProperty.STONE)
+                && !OFFICIAL_STONE_TRANSITIONS.containsKey(material) ? findForCutter(material) : null;
+        material.put(MaterialProperty.STONE);
+        if (before == null) return;
+        var expected = EnumSet.noneOf(MaterialProperty.class);
+        expected.addAll(DEFAULTS.get(material).cutterEligibility());
+        expected.add(MaterialProperty.STONE);
+        if (expected.equals(cutterEligibility(material)))
+            OFFICIAL_STONE_TRANSITIONS.put(material, new StoneTransition(Set.copyOf(expected)));
+    }
+
+    private static GTMaterial generatedGranite(gregtech.content.block.stone.StoneType stone) {
+        return switch (stone) {
+            case GRANITE_RED -> gregtech.content.material.generated.CompoundMaterials.GraniteRed;
+            case GRANITE_BLACK -> gregtech.content.material.generated.CompoundMaterials.GraniteBlack;
+            case GRANITE -> gregtech.content.material.generated.CompoundMaterials.Granite;
+            default -> null;
+        };
+    }
+
+    /** Only the Cutter's independently source-proven pairs may consume this separate transition. */
+    public static Profile findForOfficialStoneCutter(GTMaterial material) {
+        StoneTransition transition = OFFICIAL_STONE_TRANSITIONS.get(material);
+        Captured value = DEFAULTS.get(material);
+        if (transition == null || value == null || material.resolve() != material || AddonMaterials.owns(material)
+                || material.getId() != value.id() || !material.getName().equals(value.name())
+                || GTMaterialRegistry.get(value.name()) != material || GTMaterialRegistry.get(value.id()) != material
+                || !transition.cutterEligibility().equals(cutterEligibility(material))) return null;
         return value.profile();
     }
 

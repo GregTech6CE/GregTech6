@@ -55,6 +55,8 @@ public final class SourceCutterRules {
                 || material.resolve().has(MaterialProperty.ANTIMATTER))
             return new Decision(false, 0, 0, false);
         var profile = SourceLatheMaterialProfiles.findForCutter(material);
+        if (profile == null && sourceStonePair(material, rule))
+            profile = SourceLatheMaterialProfiles.findForOfficialStoneCutter(material);
         if (profile == null) {
             // Preserve the old water-only base costs for unknown, redirected or overridden contexts.
             return new Decision(rule.blockInput() == null && coolant.field().equals("Water"),
@@ -66,4 +68,15 @@ public final class SourceCutterRules {
         int fluid = (int) Math.max(0, Math.min(Integer.MAX_VALUE, amount));
         return new Decision(!profile.coated() && fluid > 0, ticks, fluid, true);
     }
+    /** OP205–207 and OP196/198 prove only these forms in the bounded official-STONE recovery. */
+    private static boolean sourceStonePair(GTMaterial material, Rule rule) {
+        if (rule.blockInput() != null) return false;
+        if (rule.equals(Rows.ALL.get(0)) || rule.equals(Rows.ALL.get(1)))
+            return gregtech.content.data.generated.MaterialForms.has(material, "STICKS");
+        return rule.equals(Rows.ALL.get(2))
+                && gregtech.content.data.generated.MaterialForms.has(material, "PLATES")
+                && (gregtech.content.data.generated.MaterialForms.has(material, "INGOTS")
+                    || !gregtech.content.data.generated.MaterialForms.has(material, "GEMS"));
+    }
+
 }
