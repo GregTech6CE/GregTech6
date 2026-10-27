@@ -77,6 +77,7 @@ public final class OvenRecipeBridge {
 //?}
         int mirrored = 0;
         int unsmelted = 0;
+        int dropped = 0;
 
 //? if >=1.21.1 {
         /*for (RecipeHolder<?> holder : new ArrayList<>(manager.getRecipes())) {
@@ -97,6 +98,16 @@ public final class OvenRecipeBridge {
                     && !stack.is(net.minecraft.world.item.Items.BARRIER)))) continue;
             ItemStack result = resultOf(recipe, access);
             boolean cooking = recipe.getType() == RecipeType.SMELTING || recipe.getType() == RecipeType.BLASTING;
+            // GT6 Loader_Recipes_Furnace:103-112 removes every cooking row whose input and output both
+            // carry GT material data; the listener rows add the proper ones back below. Without this a
+            // vanilla furnace turns ore blocks straight into ingots, the step GT6 deliberately removed.
+            // Recipes this mod authors itself already encode the proper conversions (stone firing,
+            // ceramic and mold firing), so only foreign rows are subject to the removal.
+            if (cooking && !recipeId.getNamespace().equals("gt6ce")
+                    && oreDicted(firstInput(recipe)) && oreDicted(result)) {
+                dropped++;
+                continue;
+            }
             boolean neverFurnace = cooking && MachineRecipeMaps.isNeverFurnace(result);
 
             if (neverFurnace) {
@@ -142,8 +153,8 @@ public final class OvenRecipeBridge {
         gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, rewritten);
         GregTech.LOGGER.info("Converted {} vanilla smelting recipes to GT6 oven recipes; {} un-smelted"
 //?}
-                + " (NEVER_FURNACE materials yield scrap instead); {} GT furnace rows added to the"
-                + " vanilla furnace.", mirrored, unsmelted, fuelled);
+                + " (NEVER_FURNACE materials yield scrap instead); {} material rows dropped; {} GT"
+                + " furnace rows added to the vanilla furnace.", mirrored, unsmelted, dropped, fuelled);
         gregtech.content.recipe.MachineRecipeOverlay.reapplyFurnace(manager);
     }
 
@@ -426,6 +437,13 @@ public final class OvenRecipeBridge {
         } catch (RuntimeException e) {
             return ItemStack.EMPTY;
         }
+    }
+
+    /** GT6 {@code OM.anydata}: GT material items plus every unified vanilla item. */
+    private static boolean oreDicted(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return false;
+        if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem) return true;
+        return gregtech.engine.material.ItemMaterialRegistry.get(stack).isPresent();
     }
 
     private static ItemStack firstInput(Recipe<?> recipe) {
