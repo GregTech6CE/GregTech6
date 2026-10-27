@@ -148,7 +148,7 @@ final class GTChemGen {
         r("Mixer", 16, 112, null, NONE, sp("m:Ca:2000", "m:U235F4:5000"), sp("m:CaF2:6000", "m:U_235:1000"), NONE);
         source(true, "Centrifuge", 512, 120, null, NONE, sp("mu:UF6:gas:4540536000:up"), sp("mu:U238F6:gas:3243240000:up", "mu:U235F6:gas:1297296000:up"), NONE);
         r("Bath", 0, 512, null, sp("omd:Fe2O3:5000"), sp("m:Al:2000"), sp("m:Fe:2000"), sp("omd:Al2O3:5000"));
-        r("Bath", 0, 512, null, sp("omd:Nb2O5:7000"), sp("m:Al:3330"), sp("m:Al2O3:8325"), sp("omd:Nb:2000"));
+        r("Bath", 0, 512, null, sp("omd:Nb2O5:7000"), sp("f:GenMolten_Aluminium:480"), sp("f:GenMolten_Alumina:4200"), sp("omd:Nb:2000"));
         r("Bath", 0, 512, null, sp("omd:K2TaF7:10000"), sp("m:Na:5000"), NONE, sp("i:gem:Ta:1", "omd:NaF:10000", "omd:KF:4000"));
         r("Bath", 0, 512, null, sp("omd:NaCl:4000"), sp("m:CaCO3:5000"), NONE, sp("omd:CaCl2:3000", "omd:Na2CO3:3000", "omd:Na2CO3:3000"));
         r("Bath", 0, 512, null, sp("omd:NaCl:4000"), sp("m:MgCO3:5000"), NONE, sp("omd:MgCl2:3000", "omd:Na2CO3:3000", "omd:Na2CO3:3000"));
