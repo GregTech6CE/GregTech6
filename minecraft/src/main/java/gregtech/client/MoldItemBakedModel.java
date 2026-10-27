@@ -88,6 +88,12 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
         return withGrid(super.getQuads(state,side,random,data,layer),side);
     }
     @Override public ItemOverrides getOverrides(){return overrides;}
+    /** BakedModelWrapper otherwise returns the hull and drops the grid before item rendering. */
+    @Override public BakedModel applyTransform(net.minecraft.world.item.ItemDisplayContext context,
+                                               com.mojang.blaze3d.vertex.PoseStack pose, boolean leftHand) {
+        originalModel.applyTransform(context, pose, leftHand);
+        return this;
+    }
     /** The native item renderer otherwise unwraps the hull's passes and loses this cavity grid. */
     @Override public List<BakedModel> getRenderPasses(ItemStack stack, boolean fabulous) { return List.of(this); }
 }

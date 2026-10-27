@@ -109,7 +109,7 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
         poseStack.popPose();
     }
 
-    /** Render the 5x5 mold grid — only top faces with UV from center 12/16 of the texture. */
+    /** Render raised grid cells with the same directional diffuse shade as the baked hull. */
     private static void renderMoldGrid(MoldBlockEntity mold, PoseStack poseStack,
                                        MultiBufferSource bufferSource, int packedLight) {
         int shape = mold.getMoldShape();
@@ -125,6 +125,12 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
         float b = (tint & 0xFF) / 255.0F;
         float a = 1.0F;
         int overlay = OverlayTexture.NO_OVERLAY;
+        var level = mold.getLevel();
+        float topShade = level == null ? 1F : level.getShade(net.minecraft.core.Direction.UP, true);
+        float northShade = level == null ? .8F : level.getShade(net.minecraft.core.Direction.NORTH, true);
+        float southShade = level == null ? .8F : level.getShade(net.minecraft.core.Direction.SOUTH, true);
+        float westShade = level == null ? .6F : level.getShade(net.minecraft.core.Direction.WEST, true);
+        float eastShade = level == null ? .6F : level.getShade(net.minecraft.core.Direction.EAST, true);
 
         // 12px grid area (2/16 to 14/16), each cell 12/5 = 2.4px
         float cellSize = 12.0F / 5.0F / 16.0F;
@@ -159,15 +165,15 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
 
                 // Top face
 //? if >=1.21.1 {
-                /*consumer.addVertex(matrix, cx0, y1, cz0).setColor(r, g, b, a).setUv(cu0, cv0).setOverlay(overlay).setLight(packedLight).setNormal(0, 1, 0);
-                consumer.addVertex(matrix, cx0, y1, cz1).setColor(r, g, b, a).setUv(cu0, cv1).setOverlay(overlay).setLight(packedLight).setNormal(0, 1, 0);
-                consumer.addVertex(matrix, cx1, y1, cz1).setColor(r, g, b, a).setUv(cu1, cv1).setOverlay(overlay).setLight(packedLight).setNormal(0, 1, 0);
-                consumer.addVertex(matrix, cx1, y1, cz0).setColor(r, g, b, a).setUv(cu1, cv0).setOverlay(overlay).setLight(packedLight).setNormal(0, 1, 0);
+                /*consumer.addVertex(matrix, cx0, y1, cz0).setColor(r * topShade, g * topShade, b * topShade, a).setUv(cu0, cv0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 1, 0);
+                consumer.addVertex(matrix, cx0, y1, cz1).setColor(r * topShade, g * topShade, b * topShade, a).setUv(cu0, cv1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 1, 0);
+                consumer.addVertex(matrix, cx1, y1, cz1).setColor(r * topShade, g * topShade, b * topShade, a).setUv(cu1, cv1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 1, 0);
+                consumer.addVertex(matrix, cx1, y1, cz0).setColor(r * topShade, g * topShade, b * topShade, a).setUv(cu1, cv0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 1, 0);
 *///?} else {
-                consumer.vertex(matrix, cx0, y1, cz0).color(r, g, b, a).uv(cu0, cv0).overlayCoords(overlay).uv2(packedLight).normal(0, 1, 0).endVertex();
-                consumer.vertex(matrix, cx0, y1, cz1).color(r, g, b, a).uv(cu0, cv1).overlayCoords(overlay).uv2(packedLight).normal(0, 1, 0).endVertex();
-                consumer.vertex(matrix, cx1, y1, cz1).color(r, g, b, a).uv(cu1, cv1).overlayCoords(overlay).uv2(packedLight).normal(0, 1, 0).endVertex();
-                consumer.vertex(matrix, cx1, y1, cz0).color(r, g, b, a).uv(cu1, cv0).overlayCoords(overlay).uv2(packedLight).normal(0, 1, 0).endVertex();
+                consumer.vertex(matrix, cx0, y1, cz0).color(r * topShade, g * topShade, b * topShade, a).uv(cu0, cv0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 1, 0).endVertex();
+                consumer.vertex(matrix, cx0, y1, cz1).color(r * topShade, g * topShade, b * topShade, a).uv(cu0, cv1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 1, 0).endVertex();
+                consumer.vertex(matrix, cx1, y1, cz1).color(r * topShade, g * topShade, b * topShade, a).uv(cu1, cv1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 1, 0).endVertex();
+                consumer.vertex(matrix, cx1, y1, cz0).color(r * topShade, g * topShade, b * topShade, a).uv(cu1, cv0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 1, 0).endVertex();
 //?}
 
                 // Side faces — render where adjacent cell is cavity (bit=1) or out-of-bounds
@@ -180,57 +186,57 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
                 // North face (z-), CW from south view: LB→RB→RT→LT (X left, Y up)
                 if (row == 0 || (shape & (1 << ((row - 1) * 5 + col))) != 0) {
 //? if >=1.21.1 {
-                    /*consumer.addVertex(matrix, cx1, y0, cz0).setColor(r, g, b, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, -1);
-                    consumer.addVertex(matrix, cx0, y0, cz0).setColor(r, g, b, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, -1);
-                    consumer.addVertex(matrix, cx0, y1, cz0).setColor(r, g, b, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, -1);
-                    consumer.addVertex(matrix, cx1, y1, cz0).setColor(r, g, b, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, -1);
+                    /*consumer.addVertex(matrix, cx1, y0, cz0).setColor(r * northShade, g * northShade, b * northShade, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, -1);
+                    consumer.addVertex(matrix, cx0, y0, cz0).setColor(r * northShade, g * northShade, b * northShade, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, -1);
+                    consumer.addVertex(matrix, cx0, y1, cz0).setColor(r * northShade, g * northShade, b * northShade, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, -1);
+                    consumer.addVertex(matrix, cx1, y1, cz0).setColor(r * northShade, g * northShade, b * northShade, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, -1);
 *///?} else {
-                    consumer.vertex(matrix, cx1, y0, cz0).color(r, g, b, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(0, 0, -1).endVertex();
-                    consumer.vertex(matrix, cx0, y0, cz0).color(r, g, b, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(0, 0, -1).endVertex();
-                    consumer.vertex(matrix, cx0, y1, cz0).color(r, g, b, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(0, 0, -1).endVertex();
-                    consumer.vertex(matrix, cx1, y1, cz0).color(r, g, b, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(0, 0, -1).endVertex();
+                    consumer.vertex(matrix, cx1, y0, cz0).color(r * northShade, g * northShade, b * northShade, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, -1).endVertex();
+                    consumer.vertex(matrix, cx0, y0, cz0).color(r * northShade, g * northShade, b * northShade, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, -1).endVertex();
+                    consumer.vertex(matrix, cx0, y1, cz0).color(r * northShade, g * northShade, b * northShade, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, -1).endVertex();
+                    consumer.vertex(matrix, cx1, y1, cz0).color(r * northShade, g * northShade, b * northShade, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, -1).endVertex();
 //?}
                 }
                 // South face (z+), CW from north view: LB→RB→RT→LT (X right, Y up)
                 if (row == 4 || (shape & (1 << ((row + 1) * 5 + col))) != 0) {
 //? if >=1.21.1 {
-                    /*consumer.addVertex(matrix, cx0, y0, cz1).setColor(r, g, b, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, 1);
-                    consumer.addVertex(matrix, cx1, y0, cz1).setColor(r, g, b, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, 1);
-                    consumer.addVertex(matrix, cx1, y1, cz1).setColor(r, g, b, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, 1);
-                    consumer.addVertex(matrix, cx0, y1, cz1).setColor(r, g, b, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(0, 0, 1);
+                    /*consumer.addVertex(matrix, cx0, y0, cz1).setColor(r * southShade, g * southShade, b * southShade, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, 1);
+                    consumer.addVertex(matrix, cx1, y0, cz1).setColor(r * southShade, g * southShade, b * southShade, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, 1);
+                    consumer.addVertex(matrix, cx1, y1, cz1).setColor(r * southShade, g * southShade, b * southShade, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, 1);
+                    consumer.addVertex(matrix, cx0, y1, cz1).setColor(r * southShade, g * southShade, b * southShade, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 0, 0, 1);
 *///?} else {
-                    consumer.vertex(matrix, cx0, y0, cz1).color(r, g, b, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(0, 0, 1).endVertex();
-                    consumer.vertex(matrix, cx1, y0, cz1).color(r, g, b, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(0, 0, 1).endVertex();
-                    consumer.vertex(matrix, cx1, y1, cz1).color(r, g, b, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(0, 0, 1).endVertex();
-                    consumer.vertex(matrix, cx0, y1, cz1).color(r, g, b, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(0, 0, 1).endVertex();
+                    consumer.vertex(matrix, cx0, y0, cz1).color(r * southShade, g * southShade, b * southShade, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, 1).endVertex();
+                    consumer.vertex(matrix, cx1, y0, cz1).color(r * southShade, g * southShade, b * southShade, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, 1).endVertex();
+                    consumer.vertex(matrix, cx1, y1, cz1).color(r * southShade, g * southShade, b * southShade, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, 1).endVertex();
+                    consumer.vertex(matrix, cx0, y1, cz1).color(r * southShade, g * southShade, b * southShade, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, 1).endVertex();
 //?}
                 }
                 // West face (x-), CW from west view: LB→RB→RT→LT (Z right, Y up)
                 if (col == 0 || (shape & (1 << (row * 5 + (col - 1)))) != 0) {
 //? if >=1.21.1 {
-                    /*consumer.addVertex(matrix, cx0, y0, cz0).setColor(r, g, b, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(-1, 0, 0);
-                    consumer.addVertex(matrix, cx0, y0, cz1).setColor(r, g, b, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(-1, 0, 0);
-                    consumer.addVertex(matrix, cx0, y1, cz1).setColor(r, g, b, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(-1, 0, 0);
-                    consumer.addVertex(matrix, cx0, y1, cz0).setColor(r, g, b, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(-1, 0, 0);
+                    /*consumer.addVertex(matrix, cx0, y0, cz0).setColor(r * westShade, g * westShade, b * westShade, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), -1, 0, 0);
+                    consumer.addVertex(matrix, cx0, y0, cz1).setColor(r * westShade, g * westShade, b * westShade, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), -1, 0, 0);
+                    consumer.addVertex(matrix, cx0, y1, cz1).setColor(r * westShade, g * westShade, b * westShade, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), -1, 0, 0);
+                    consumer.addVertex(matrix, cx0, y1, cz0).setColor(r * westShade, g * westShade, b * westShade, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), -1, 0, 0);
 *///?} else {
-                    consumer.vertex(matrix, cx0, y0, cz0).color(r, g, b, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(-1, 0, 0).endVertex();
-                    consumer.vertex(matrix, cx0, y0, cz1).color(r, g, b, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(-1, 0, 0).endVertex();
-                    consumer.vertex(matrix, cx0, y1, cz1).color(r, g, b, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(-1, 0, 0).endVertex();
-                    consumer.vertex(matrix, cx0, y1, cz0).color(r, g, b, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(-1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx0, y0, cz0).color(r * westShade, g * westShade, b * westShade, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), -1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx0, y0, cz1).color(r * westShade, g * westShade, b * westShade, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), -1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx0, y1, cz1).color(r * westShade, g * westShade, b * westShade, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), -1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx0, y1, cz0).color(r * westShade, g * westShade, b * westShade, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), -1, 0, 0).endVertex();
 //?}
                 }
                 // East face (x+), CW from east view: LB→RB→RT→LT (Z left, Y up)
                 if (col == 4 || (shape & (1 << (row * 5 + (col + 1)))) != 0) {
 //? if >=1.21.1 {
-                    /*consumer.addVertex(matrix, cx1, y0, cz1).setColor(r, g, b, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(1, 0, 0);
-                    consumer.addVertex(matrix, cx1, y0, cz0).setColor(r, g, b, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(1, 0, 0);
-                    consumer.addVertex(matrix, cx1, y1, cz0).setColor(r, g, b, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(1, 0, 0);
-                    consumer.addVertex(matrix, cx1, y1, cz1).setColor(r, g, b, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(1, 0, 0);
+                    /*consumer.addVertex(matrix, cx1, y0, cz1).setColor(r * eastShade, g * eastShade, b * eastShade, a).setUv(sideU0, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 1, 0, 0);
+                    consumer.addVertex(matrix, cx1, y0, cz0).setColor(r * eastShade, g * eastShade, b * eastShade, a).setUv(sideU1, sideV1).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 1, 0, 0);
+                    consumer.addVertex(matrix, cx1, y1, cz0).setColor(r * eastShade, g * eastShade, b * eastShade, a).setUv(sideU1, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 1, 0, 0);
+                    consumer.addVertex(matrix, cx1, y1, cz1).setColor(r * eastShade, g * eastShade, b * eastShade, a).setUv(sideU0, sideV0).setOverlay(overlay).setLight(packedLight).setNormal(poseStack.last(), 1, 0, 0);
 *///?} else {
-                    consumer.vertex(matrix, cx1, y0, cz1).color(r, g, b, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(1, 0, 0).endVertex();
-                    consumer.vertex(matrix, cx1, y0, cz0).color(r, g, b, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(1, 0, 0).endVertex();
-                    consumer.vertex(matrix, cx1, y1, cz0).color(r, g, b, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(1, 0, 0).endVertex();
-                    consumer.vertex(matrix, cx1, y1, cz1).color(r, g, b, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx1, y0, cz1).color(r * eastShade, g * eastShade, b * eastShade, a).uv(sideU0, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx1, y0, cz0).color(r * eastShade, g * eastShade, b * eastShade, a).uv(sideU1, sideV1).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx1, y1, cz0).color(r * eastShade, g * eastShade, b * eastShade, a).uv(sideU1, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 1, 0, 0).endVertex();
+                    consumer.vertex(matrix, cx1, y1, cz1).color(r * eastShade, g * eastShade, b * eastShade, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 1, 0, 0).endVertex();
 //?}
                 }
             }
