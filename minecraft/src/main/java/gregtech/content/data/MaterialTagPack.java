@@ -410,8 +410,11 @@ public final class MaterialTagPack extends AbstractPackResources {
             if (id == null || !id.getNamespace().equals("gt6ce")) continue;
 //? if >=1.21.1 {
             /*if(item instanceof net.minecraft.world.item.BlockItem blockItem
-                    && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodPlanksBlock)
+                    && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodPlanksBlock) {
                 tags.computeIfAbsent("gt6ce:tags/item/wooden_planks.json",key->new TreeSet<>()).add(id.toString());
+                tags.computeIfAbsent("minecraft:tags/item/planks.json",key->new TreeSet<>()).add(id.toString());
+                tags.computeIfAbsent("minecraft:tags/block/planks.json",key->new TreeSet<>()).add(id.toString());
+            }
             if(item instanceof net.minecraft.world.item.BlockItem blockItem
                     && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodStrippedLogBlock)
                 tags.computeIfAbsent("gt6ce:tags/item/stripped_logs.json",key->new TreeSet<>()).add(id.toString());
@@ -420,6 +423,8 @@ public final class MaterialTagPack extends AbstractPackResources {
                     && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodPlanksBlock) {
                 tags.computeIfAbsent("gt6ce:tags/items/wooden_planks.json", k -> new TreeSet<>())
                         .add(id.toString());
+                tags.computeIfAbsent("minecraft:tags/items/planks.json", k -> new TreeSet<>()).add(id.toString());
+                tags.computeIfAbsent("minecraft:tags/blocks/planks.json", k -> new TreeSet<>()).add(id.toString());
             }
             if (item instanceof BlockItem strippedItem
                     && strippedItem.getBlock() instanceof gregtech.content.block.wood.WoodStrippedLogBlock) {

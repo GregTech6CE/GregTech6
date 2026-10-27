@@ -117,6 +117,7 @@ public final class FurnaceSmeltingRecipes {
                 form(material, prefix, row);
             }
         }
+        glass();
         ceramic();
         ClayMoldRecipes.register();
 //? if >=1.21.1 {
@@ -154,6 +155,27 @@ public final class FurnaceSmeltingRecipes {
         if (MachineRecipeMaps.add_smelting(input, output, experience, false, food, !food)) {
             ENTRIES.add(new Entry(prefix.getName(), material, input, output));
             COOKING.put(input.getItem(), new CookingData(experience, food));
+        }
+    }
+
+    /** Explicit glass recycling listeners, not metal-smelting fallback (GT6 OreDict:43-49; Vanilla:963). */
+    private static void glass() {
+        for (String name : List.of("Glass", "Sand", "RedSand", "EndSandWhite", "EndSandBlack")) {
+            var material = GTMaterialRegistry.get(name);
+            if (material == null || !material.isValid()) continue;
+            glassRow("dust", material, GTItems.getStack(MaterialPrefix.dust, material, 1), new ItemStack(Items.GLASS_PANE));
+        }
+        // Requested port extension: Glass is one unit of SiO2; preserve that 1 U -> 1 U ratio.
+        var silica = GTMaterialRegistry.get("SiliconDioxide");
+        glassRow("dust", silica, GTItems.getStack(MaterialPrefix.dust, silica, 1), new ItemStack(Items.GLASS_PANE));
+        glassRow("bottle", GTMaterialRegistry.get("Glass"), new ItemStack(Items.GLASS_BOTTLE), new ItemStack(Items.GLASS_PANE));
+    }
+
+    private static void glassRow(String prefix, GTMaterial material, ItemStack input, ItemStack output) {
+        if (input.isEmpty()) return;
+        if (MachineRecipeMaps.add_smelting(input, output, 0, false, false, false)) {
+            ENTRIES.add(new Entry(prefix, material, input, output));
+            // No cooking metadata: these explicit rows are furnace-only, not blast-furnace rows.
         }
     }
 
