@@ -23,6 +23,24 @@ public final class ToolBreakFatigue {
     public static void onBreak(net.minecraftforge.event.entity.player.PlayerDestroyItemEvent event) {
 //?}
         apply(event.getEntity(), event.getOriginal());
+        refill(event.getEntity(), event.getOriginal());
+    }
+
+    /** GT6 {@code GT_API_Proxy.onPlayerDestroyItem}: a broken tool is replaced from the inventory. */
+    public static void refill(Player player, ItemStack broken) {
+        if (player.level().isClientSide || player.isCreative() || player.isSpectator() || broken.isEmpty()) return;
+        var inventory = player.getInventory();
+        int slot = inventory.selected;
+        if (!inventory.getItem(slot).isEmpty()) return;
+        for (int i = 0; i < 36; i++) {
+            if (i == slot) continue;
+            ItemStack candidate = inventory.getItem(i);
+            if (candidate.isEmpty() || candidate.getItem() != broken.getItem()) continue;
+            inventory.setItem(slot, candidate.copy());
+            inventory.setItem(i, ItemStack.EMPTY);
+            if (player instanceof net.minecraft.server.level.ServerPlayer server) server.containerMenu.broadcastChanges();
+            return;
+        }
     }
 
     public static void apply(Player player, ItemStack broken) {

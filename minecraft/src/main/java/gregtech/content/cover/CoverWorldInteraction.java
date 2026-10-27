@@ -22,6 +22,8 @@ public final class CoverWorldInteraction {
     }
     /** Original AbstractCoverDefault.isSolid; torch/repeater and pressure valve override it false. */
     public static boolean solidCover(BlockGetter level, BlockPos pos, Direction side) {
+        // Shape queries are also issued with a null level while foreign mods build collision tables.
+        if (level == null) return false;
         if (!(level.getBlockEntity(pos) instanceof PanelCoverHost host)
                 || !ComponentCoverFallback.ownClass(host.coverOwner())) return false;
         var stack = host.getCover(side);
@@ -32,6 +34,7 @@ public final class CoverWorldInteraction {
                 && !CoverItems.REDSTONE_REPEATER.equals(id) && !CoverUtilityBehaviors.PRESSURE_VALVE.equals(id);
     }
     public static VoxelShape support(BlockGetter level, BlockPos pos, VoxelShape shape) {
+        if (level == null) return shape;
         for (var side : Direction.values()) if (solidCover(level, pos, side)) {
             var box = CoverPlateGeometry.plate(side.ordinal());
             shape = Shapes.or(shape, Shapes.box(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ()));
@@ -75,6 +78,8 @@ public final class CoverWorldInteraction {
     }
     /** Original ICover.BOXES_COVERS occupies two pixels inside the block boundary; art stays flush. */
     public static VoxelShape collision(BlockGetter level,BlockPos pos,VoxelShape shape){
+        // Never dereference a null level: static initialisers in other mods query shapes without a world.
+        if(level==null)return shape;
         if(!(level.getBlockEntity(pos) instanceof PanelCoverHost host)||!ComponentCoverFallback.ownClass(host.coverOwner()))return shape;
         for(var side:Direction.values()){
             var stack=host.getCover(side);
