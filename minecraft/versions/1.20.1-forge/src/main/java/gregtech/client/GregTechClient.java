@@ -302,6 +302,7 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        WorldWaterBlockColors.register(event::register);
         for(var entry:java.util.List.of(gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS,gregtech.content.registry.GTMiscBlocks.FILTER_FLUIDS,gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS_FLUIDS,gregtech.content.registry.GTMiscBlocks.FILTER_OREDICT))event.register((state,level,pos,index)->index==0?gregtech.content.material.Materials.SteelGalvanized.getColor():0xFFFFFF,entry.get());
         gregtech.content.registry.GTMiscBlocks.SOURCE_EXTENDERS.values().forEach(entry->
                 event.register((state,level,pos,index)->index==0?entry.get().spec().material().getColor():0xFFFFFF,entry.get()));

@@ -16,6 +16,9 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus=EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
 public final class FluidClientSetup {
     private FluidClientSetup() {}
+    @SubscribeEvent public static void blockColors(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.Block event) {
+        WorldWaterBlockColors.register(event::register);
+    }
     @SubscribeEvent public static void extensions(RegisterClientExtensionsEvent event) {
         for (var binding : GTFluids.entries().entrySet()) {
             var entry = binding.getValue();
