@@ -96,10 +96,11 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        // Ordinary device fronts face the placer; solar panels and fixed batteries keep their special sides.
         // GT6 solar panels use inverse clicked-side placement; their top is not an output.
         Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR
                 ? ctx.getClickedFace().getOpposite()
-                : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection();
+                : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection().getOpposite();
         if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
         BlockState placed = defaultBlockState().setValue(FACING, facing);
         return placed.hasProperty(GTWaterloggable.WATERLOGGED)
