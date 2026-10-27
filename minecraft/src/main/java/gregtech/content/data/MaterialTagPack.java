@@ -75,6 +75,8 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
         add(tags,"gt6ce","items","ammunition/sticks_wood","minecraft:stick");
 //?}
+        // Vanilla sticks are the source Wood stick even before material-link bootstrap finishes.
+        add(tags,"gt6ce","items","molds/forms/stick/anywoodplastic","minecraft:stick");
         add(tags,"forge","items","clay_balls","minecraft:clay_ball");
         add(tags,"gt6ce","items","molds/forms/ingot/brick","minecraft:brick");
         add(tags,"gt6ce","items","ingot/brick","minecraft:brick");
@@ -94,6 +96,10 @@ public final class MaterialTagPack extends AbstractPackResources {
         for(var item:ForgeRegistries.ITEMS.getValues()) {
             var id=ForgeRegistries.ITEMS.getKey(item); if(id==null||item==Items.AIR)continue;
 //?}
+            if(item instanceof BlockItem stoneItem
+                    && stoneItem.getBlock() instanceof gregtech.content.block.stone.GTStoneBlock stone
+                    && stone.variant() == gregtech.content.block.stone.StoneVariant.COBBLE)
+                add(tags,"minecraft","items","stone_crafting_materials",id.toString());
             if(item instanceof BlockItem pane && (pane.getBlock() instanceof net.minecraft.world.level.block.StainedGlassPaneBlock
                     || id.toString().equals("minecraft:glass_pane")))
                 add(tags,"forge","items","glass_panes",id.toString());
@@ -114,7 +120,10 @@ public final class MaterialTagPack extends AbstractPackResources {
 //?}
                 if(form.prefix()==MaterialPrefix.stick || form.prefix()==MaterialPrefix.plateTiny) {
                     var material=form.material().resolve();
-                    boolean wood=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Wood");
+                    boolean wood=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Wood")
+                            || java.util.stream.Stream.of(MaterialGroups.Wood, MaterialGroups.WoodNormal,
+                                    MaterialGroups.WoodMagical, MaterialGroups.WoodTreated)
+                            .flatMap(group -> group.getReRegistrations().stream()).anyMatch(member -> member.resolve() == material);
                     boolean plastic=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Plastic");
                     if(form.prefix()==MaterialPrefix.stick && wood)
 //? if >=1.21.1 {
@@ -122,6 +131,9 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                         add(tags,"gt6ce","items","ammunition/sticks_wood",id.toString());
 //?}
+                    // One-way convenience conversion; vanilla sticks must not match their own recipe.
+                    if(form.prefix()==MaterialPrefix.stick && wood && item != Items.STICK)
+                        add(tags,"gt6ce","items","convertible_wooden_rods",id.toString());
                     if(plastic)
 //? if >=1.21.1 {
                         /*add(tags,"gt6ce","item",form.prefix()==MaterialPrefix.stick

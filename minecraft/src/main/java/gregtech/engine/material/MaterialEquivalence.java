@@ -48,7 +48,19 @@ public final class MaterialEquivalence {
         return !alias.equals(path)&&candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",alias)));
 //?}
     }
+    /** Modern vanilla raw metals have their own recipes, not GT6 oreRaw substitutions. */
+    private static boolean vanillaRaw(ItemStack stack) {
+        var item = stack.getItem();
+        return item == net.minecraft.world.item.Items.RAW_COPPER
+                || item == net.minecraft.world.item.Items.RAW_IRON
+                || item == net.minecraft.world.item.Items.RAW_GOLD
+                || item == net.minecraft.world.item.Items.RAW_COPPER_BLOCK
+                || item == net.minecraft.world.item.Items.RAW_IRON_BLOCK
+                || item == net.minecraft.world.item.Items.RAW_GOLD_BLOCK;
+    }
     public static boolean matches(ItemStack required,ItemStack available) {
+        // Common raw_materials tags do not erase the distinct ore/raw and block quantities.
+        if (required.getItem() != available.getItem() && (vanillaRaw(required) || vanillaRaw(available))) return false;
 //? if >=1.21.1 {
         /*if(!required.getComponentsPatch().isEmpty()||!available.getComponentsPatch().isEmpty()||required.isDamaged()||available.isDamaged()) return false;
 *///?} else {

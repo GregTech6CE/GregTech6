@@ -38,6 +38,14 @@ public class SapBagBlock extends ShapedToolBlock implements EntityBlock {
         super(id, properties);
     }
 
+    /** GT6 uses inverse side placement: the bag faces the trunk, not the player. */
+    @Override
+    public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
+        Direction side = context.getClickedFace();
+        return defaultBlockState().setValue(FACING, side.getAxis().isHorizontal()
+                ? side.getOpposite() : context.getHorizontalDirection());
+    }
+
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SapBagBlockEntity(pos, state);

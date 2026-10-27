@@ -10,7 +10,7 @@
       "tag": "gt6ce:ingot/brick"
     },
     "F": {
-      "item": "minecraft:flint_and_steel"
+      "tag": "gt6ce:crafting_firestarters"
     }
   },
   "result": {

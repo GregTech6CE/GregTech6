@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2221, registry 32736",
+  "pattern": [
+    "SSS",
+    "LsL",
+    "LLL"
+  ],
+  "key": {
+    "S": {
+      "tag": "gt6ce:ammunition/sticks_wood"
+    },
+    "L": {
+      "tag": "gt6ce:book_binding/leather"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:sap_bag"
+  }
+}

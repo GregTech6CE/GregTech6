@@ -62,6 +62,13 @@ public final class PilePlacementHandler {
         if (held.isEmpty() || held.getItem() instanceof BlockItem
                 || PileBlockEntity.materialOf(held) == null) return InteractionResult.PASS;
 
+        // The cover event already allows a matching pile's native merge callback, even
+        // while sneaking. Do not steal that click here and create an adjacent pile.
+        // canAccept intentionally stays true when full: the native callback leaves the
+        // held items untouched rather than silently creating a second pile.
+        if (level.getBlockEntity(hit.getBlockPos()) instanceof PileBlockEntity pile
+                && pile.canAccept(held)) return InteractionResult.PASS;
+
         // Manual vessel contents need not have a recipe. Never turn a hand-storage
         // attempt (including a full vessel) into loose-pile placement instead.
         if (level.getBlockEntity(hit.getBlockPos()) instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity tool

@@ -28,7 +28,7 @@ import java.util.List;
 /** The deliberately narrow GT6 Mass Storage form families, not every form of one material. */
 public final class MassStorageMaterialForms {
     private enum Family { DUST, INGOT, WIRE, GEM, PLATE, GEM_PLATE, CRUSHED,
-        CRUSHED_PURIFIED, CRUSHED_CENTRIFUGED, RAW }
+        CRUSHED_PURIFIED, CRUSHED_CENTRIFUGED, RAW, VANILLA_RAW }
 
     private record Form(Family family, GTMaterial material, long units) {}
 
@@ -92,6 +92,17 @@ public final class MassStorageMaterialForms {
             }
             return drops;
         }
+        if (form.family == Family.VANILLA_RAW) {
+            for (var raw : new net.minecraft.world.item.Item[]{net.minecraft.world.item.Items.RAW_COPPER,
+                    net.minecraft.world.item.Items.RAW_IRON, net.minecraft.world.item.Items.RAW_GOLD}) {
+                var candidate = new ItemStack(raw);
+                if (compatibleUnits(template, candidate) > 0) {
+                    appendPartial(drops, template, candidate, units);
+                    break;
+                }
+            }
+            return drops;
+        }
         MaterialPrefix[] candidates = switch (form.family) {
             case DUST -> new MaterialPrefix[]{MaterialPrefix.dust, MaterialPrefix.dustSmall,
                     MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72};
@@ -113,7 +124,7 @@ public final class MassStorageMaterialForms {
             case CRUSHED_PURIFIED -> new MaterialPrefix[]{MaterialPrefix.crushedPurifiedTiny};
             case CRUSHED_CENTRIFUGED -> new MaterialPrefix[]{MaterialPrefix.crushedCentrifugedTiny};
             case RAW -> new MaterialPrefix[]{MaterialPrefix.oreRaw};
-            case WIRE -> throw new IllegalStateException("wire handled above");
+            case WIRE, VANILLA_RAW -> throw new IllegalStateException("special family handled above");
         };
         long remaining = units;
         for (MaterialPrefix prefix : candidates) {
@@ -148,6 +159,13 @@ public final class MassStorageMaterialForms {
 
     private static Form form(ItemStack stack) {
         if (stack.isEmpty()) return null;
+        if (stack.is(net.minecraft.world.item.Items.RAW_COPPER)
+                || stack.is(net.minecraft.world.item.Items.RAW_IRON)
+                || stack.is(net.minecraft.world.item.Items.RAW_GOLD)) {
+            var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
+            return data == null || data.components().size() != 1 ? null
+                    : new Form(Family.VANILLA_RAW, data.material().resolve(), GTValues.U);
+        }
         if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item)
             return form(item.getPrefix().getName(), item.getMaterial().resolve(),
                     item.getPrefix().getMaterialWeight());
@@ -181,7 +199,7 @@ public final class MassStorageMaterialForms {
                 || block == Blocks.LAPIS_BLOCK || block == Blocks.COAL_BLOCK) family = Family.GEM;
         else if (block == Blocks.REDSTONE_BLOCK) family = Family.DUST;
         else if (block == Blocks.RAW_IRON_BLOCK || block == Blocks.RAW_GOLD_BLOCK
-                || block == Blocks.RAW_COPPER_BLOCK) family = Family.RAW;
+                || block == Blocks.RAW_COPPER_BLOCK) family = Family.VANILLA_RAW;
         else return null;
         var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
         if (data == null || data.components().size() != 1) return null;

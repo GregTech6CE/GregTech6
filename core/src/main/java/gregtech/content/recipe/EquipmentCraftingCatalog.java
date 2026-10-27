@@ -4,6 +4,7 @@ package gregtech.content.recipe;
 public final class EquipmentCraftingCatalog {
     private EquipmentCraftingCatalog() {}
     public static final java.util.List<String> FILES = java.util.List.of(
+            "tool_blocks/sap_bag.json",
             "food/source/apple_slice_3_1.json",
             "food/source/cake_1.json",
             "food/source/lemon_slice_1.json",
@@ -2284,8 +2285,6 @@ public final class EquipmentCraftingCatalog {
             "scaffolds/scaffold_tungstensteel.json",
             "scaffolds/scaffold_ultimet.json",
             "scaffolds/scaffold_void_metal.json",
-            "smelting/bauxite.json",
-            "smelting/magnetite.json",
             "stone_survival/stone_andesite_bricks.json",
             "stone_survival/stone_andesite_cobble_firing.json",
             "stone_survival/stone_andesite_stone_polishing.json",

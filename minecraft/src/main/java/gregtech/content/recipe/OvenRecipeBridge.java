@@ -104,14 +104,17 @@ public final class OvenRecipeBridge {
             // Recipes this mod authors itself already encode the proper conversions (stone firing,
             // ceramic and mold firing), so only foreign rows are subject to the removal.
             if (cooking && !recipeId.getNamespace().equals("gt6ce")
-                    && oreDicted(firstInput(recipe)) && oreDicted(result)) {
+                    && oreDicted(firstInput(recipe)) && oreDicted(result)
+                    && !isRetainedVanillaSmelting(recipeId, recipe, result)) {
                 dropped++;
                 continue;
             }
-            boolean neverFurnace = cooking && MachineRecipeMaps.isNeverFurnace(result);
+            boolean vanillaRawIron = cooking && isRetainedVanillaSmelting(recipeId, recipe, result)
+                    && firstInput(recipe).is(net.minecraft.world.item.Items.RAW_IRON);
+            boolean neverFurnace = cooking && (MachineRecipeMaps.isNeverFurnace(result) || vanillaRawIron);
 
             if (neverFurnace) {
-                ItemStack scrap = MachineRecipeMaps.neverFurnaceOutput(result);
+                ItemStack scrap = vanillaRawIron ? vanillaRawIronOutput() : MachineRecipeMaps.neverFurnaceOutput(result);
                 if (recipe instanceof AbstractCookingRecipe cookingRecipe) {
 //? if >=1.21.1 {
                     /*rewritten.add(new RecipeHolder<>(holder.id(), unSmelt(cookingRecipe, scrap)));
@@ -133,9 +136,16 @@ public final class OvenRecipeBridge {
             rewritten.add(recipe);
 //?}
             if (recipe.getType() == RecipeType.SMELTING) {
-                ItemStack input = firstInput(recipe);
-                if (!input.isEmpty() && !result.isEmpty() && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty() && MachineRecipeMaps.add_smelting(input, result)) {
-                    mirrored++;
+                // Vanilla glass has one ingredient containing both sand variants. Mirroring only
+                // its first stack restores the furnace recipe but still strands red sand in the GT oven.
+                var inputs = isRetainedVanillaSmelting(recipeId, recipe, result)
+                        ? recipe.getIngredients().get(0).getItems() : new ItemStack[]{firstInput(recipe)};
+                var seen = new java.util.HashSet<Item>();
+                for (var candidate : inputs) {
+                    ItemStack input = candidate.copyWithCount(1);
+                    if (!input.isEmpty() && seen.add(input.getItem()) && !result.isEmpty()
+                            && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty()
+                            && MachineRecipeMaps.add_smelting(input, result)) mirrored++;
                 }
             }
         }
@@ -437,6 +447,48 @@ public final class OvenRecipeBridge {
         } catch (RuntimeException e) {
             return ItemStack.EMPTY;
         }
+    }
+
+    /** Vanilla ingots are not MaterialFormItem, so apply the same iron material policy explicitly. */
+    private static ItemStack vanillaRawIronOutput() {
+        var iron = gregtech.content.material.Materials.Iron;
+        if (!iron.has(gregtech.api.material.MaterialProperty.NEVER_FURNACE))
+            return new ItemStack(net.minecraft.world.item.Items.IRON_INGOT);
+        return gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.scrapGt, iron,
+                (int) (gregtech.api.material.GTValues.U / gregtech.content.data.MaterialPrefix.scrapGt.getMaterialWeight()));
+    }
+
+    /** Modern composition data also covers sand and clay, but no material listener replaces these rows. */
+    private static boolean isRetainedVanillaSmelting(net.minecraft.resources.ResourceLocation id,
+                                                     Recipe<?> recipe, ItemStack output) {
+        if (!id.getNamespace().equals("minecraft")
+                || (recipe.getType() != RecipeType.SMELTING && recipe.getType() != RecipeType.BLASTING)
+                || recipe.getIngredients().size() != 1) return false;
+        var inputs = recipe.getIngredients().get(0).getItems();
+        if (inputs.length == 0) return false;
+        // Re-applying the bridge must also retain its own exact iron-scrap rewrite.
+        var ironScrap = vanillaRawIronOutput();
+        if (!ironScrap.isEmpty() && output.getCount() == ironScrap.getCount()
+//? if >=1.21.1 {
+                /*&& ItemStack.isSameItemSameComponents(output, ironScrap)
+*///?} else {
+                && ItemStack.isSameItemSameTags(output, ironScrap)
+//?}
+                && java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.RAW_IRON))) return true;
+        if (output.getCount() != 1) return false;
+        // Modern raw-metal items are not GT oreRaw aliases. Keep their ordinary cooking entry;
+        // the existing NEVER_FURNACE output policy below still turns iron into scrap.
+        var raw = output.is(net.minecraft.world.item.Items.COPPER_INGOT) ? net.minecraft.world.item.Items.RAW_COPPER
+                : output.is(net.minecraft.world.item.Items.GOLD_INGOT) ? net.minecraft.world.item.Items.RAW_GOLD
+                : output.is(net.minecraft.world.item.Items.IRON_INGOT) ? net.minecraft.world.item.Items.RAW_IRON : null;
+        if (raw != null) return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(raw));
+        if (recipe.getType() != RecipeType.SMELTING) return false;
+        if (output.is(net.minecraft.world.item.Items.BRICK))
+            return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.CLAY_BALL));
+        if (output.is(net.minecraft.world.item.Items.GLASS))
+            return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.SAND)
+                    || stack.is(net.minecraft.world.item.Items.RED_SAND));
+        return false;
     }
 
     /** GT6 {@code OM.anydata}: GT material items plus every unified vanilla item. */

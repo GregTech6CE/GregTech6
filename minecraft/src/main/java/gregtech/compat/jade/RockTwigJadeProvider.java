@@ -24,11 +24,10 @@ public enum RockTwigJadeProvider implements IBlockComponentProvider {
             for (var item : RockBlock.yields(rock))
                 content(tooltip, item, "jade.gt6ce.omni.rock_contents");
         } else if (accessor.getBlock() instanceof TwigBlock) {
-            var items = TwigBlock.possibleSticks(accessor.getLevel(), accessor.getPosition());
-            boolean random = items.size() > 1;
-            if (random) tooltip.add(Component.translatable("gt6ce.jade.twig_possible_contents"));
-            for (var item : items)
-                content(tooltip, item, random ? "jade.gt6ce.omni.item_count" : "jade.gt6ce.omni.rock_contents");
+            // Source MultiTileEntityStick#getDefaultStick deliberately presents a normal stick
+            // to WAILA. The biome-dependent roll occurs only on the server when picked up.
+            content(tooltip, new ItemStack(net.minecraft.world.item.Items.STICK),
+                    "jade.gt6ce.omni.rock_contents");
         }
     }
 

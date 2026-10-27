@@ -65,7 +65,9 @@ public final class CraftingMaterialForms {
             if (Set.of("iron_block", "gold_block", "copper_block", "netherite_block").contains(path)) prefix = "blockIngot";
             else if (Set.of("diamond_block", "emerald_block", "lapis_block", "coal_block").contains(path)) prefix = "blockGem";
             else if (path.equals("redstone_block")) prefix = "blockDust";
-            else if (Set.of("raw_iron_block", "raw_gold_block", "raw_copper_block").contains(path)) prefix = "blockRaw";
+            // Modern raw metals are not GT6 native ore chunks or their storage blocks.
+            else if (Set.of("raw_iron", "raw_gold", "raw_copper").contains(path)) prefix = "rawVanilla";
+            else if (Set.of("raw_iron_block", "raw_gold_block", "raw_copper_block").contains(path)) prefix = "blockRawVanilla";
             else if (definition.prefix() == null && (path.endsWith("_ore") || path.equals("ancient_debris"))) prefix = "oreVanillastone";
             if (prefix == null) continue;
             var item = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(path));

@@ -306,11 +306,18 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
      * GT6 behavior: empty mold + adjacent crucible/crossing → right-click triggers fillMoldAtSide.
      */
     public InteractionResult tryPour(Player player) {
+        return tryPour(player, Direction.UP);
+    }
+
+    /** A central top click searches horizontal neighbors; an edge selects that neighbor. */
+    public InteractionResult tryPour(Player player, Direction selectedSide) {
         if (level == null || level.isClientSide) return InteractionResult.PASS;
         if (contentMaterial != null || !solidOutput.isEmpty()) return InteractionResult.PASS;
 
-        // Search adjacent blocks for crucible or crossing
-        for (Direction side : Direction.values()) {
+        // GT6 MultiTileEntityMold.onBlockActivated3 only requests horizontal inputs.
+        for (Direction side : Direction.Plane.HORIZONTAL) {
+            if (selectedSide.getAxis().isHorizontal() && side != selectedSide) continue;
+            if (!level.hasChunkAt(worldPosition.relative(side))) continue;
             BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
             if (be instanceof ITileEntityCrucible crucible) {
                 if (crucible.fillMoldAtSide(this, side.getOpposite().ordinal(), getInputSideFor(side))) {
