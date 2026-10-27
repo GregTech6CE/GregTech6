@@ -833,6 +833,8 @@ public final class GregTechClient {
             }
             MenuScreens.register(GTMenuTypes.ADVANCED_CRAFTING.get(),gregtech.client.gui.AdvancedCraftingScreen::new);
             MenuScreens.register(GTMenuTypes.METAL_CHEST.get(), HopperScreen::new);
+            MenuScreens.register(GTMenuTypes.STORAGE_15.get(), HopperScreen::new);
+            MenuScreens.register(GTMenuTypes.STORAGE_36.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.GARBAGE_DUMP.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
             MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(),

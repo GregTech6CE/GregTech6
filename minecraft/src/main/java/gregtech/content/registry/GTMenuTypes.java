@@ -34,6 +34,8 @@ public final class GTMenuTypes {
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.DataSwitchMenu>> HDD_SWITCH=MENU_TYPES.register("hdd_switch",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.DataSwitchMenu(id,inventory,gregtech.content.block.inventory.UsbSwitchBlock.Kind.HDD)));
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.FilterMenu>> FILTER=MENU_TYPES.register("filter",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.FilterMenu(id,inventory,buffer.readBoolean())));
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.HopperContainerMenu>> METAL_CHEST=MENU_TYPES.register("metal_chest",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.MetalChestMenu(id,inventory)));
+ public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.HopperContainerMenu>> STORAGE_15=MENU_TYPES.register("storage_15",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.StorageContainerMenu(id,inventory,15)));
+ public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.HopperContainerMenu>> STORAGE_36=MENU_TYPES.register("storage_36",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.StorageContainerMenu(id,inventory,36)));
  private static final int[] HOPPER_SIZES=gregtech.engine.inventory.InventorySlotLayout.supportedSizes();
  private static final java.util.Map<Integer,net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.HopperContainerMenu>>> BY_SIZE=new java.util.HashMap<>();
  static{for(int n:HOPPER_SIZES)BY_SIZE.put(n,MENU_TYPES.register("hopper_"+n,()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.HopperContainerMenu(id,inventory,n))));}
@@ -49,6 +51,13 @@ public final class GTMenuTypes {
     public static final RegistryObject<MenuType<HopperContainerMenu>> METAL_CHEST =
             MENU_TYPES.register("metal_chest", () -> IForgeMenuType.create(
                     (id, inventory, buffer) -> new gregtech.client.gui.MetalChestMenu(id, inventory)));
+
+    public static final RegistryObject<MenuType<HopperContainerMenu>> STORAGE_15 =
+            MENU_TYPES.register("storage_15", () -> IForgeMenuType.create(
+                    (id, inventory, buffer) -> new gregtech.client.gui.StorageContainerMenu(id, inventory, 15)));
+    public static final RegistryObject<MenuType<HopperContainerMenu>> STORAGE_36 =
+            MENU_TYPES.register("storage_36", () -> IForgeMenuType.create(
+                    (id, inventory, buffer) -> new gregtech.client.gui.StorageContainerMenu(id, inventory, 36)));
 
     // All distinct hopper slot counts used by GT6 materials
     private static final int[] HOPPER_SIZES = gregtech.engine.inventory.InventorySlotLayout.supportedSizes();
@@ -115,5 +124,13 @@ public final class GTMenuTypes {
             MENU_TYPES.register("advanced_bumbliary", () -> IForgeMenuType.create(
                     (id, inventory, buffer) -> new gregtech.client.gui.BumbliaryContainerMenu(id, inventory, true)));
 //?}
+
+    public static net.minecraft.world.inventory.MenuType<gregtech.client.gui.HopperContainerMenu> storageForSlotCount(int size) {
+        return switch (size) {
+            case 15 -> STORAGE_15.get();
+            case 36 -> STORAGE_36.get();
+            default -> throw new IllegalArgumentException("Unsupported storage size " + size);
+        };
+    }
 
 }

@@ -106,13 +106,7 @@ public class SafeBlockEntity extends BlockEntity {
         }
         setChanged();
         generateDungeonLoot();
-        return new gregtech.client.gui.HopperContainerMenu(gregtech.content.registry.GTMenuTypes.forSlotCount(15),
-//? if >=1.21.1 {
-                /*id, playerInventory, new net.neoforged.neoforge.items.wrapper.InvWrapper(inventory)) {
-*///?} else {
-                id, playerInventory, new net.minecraftforge.items.wrapper.InvWrapper(inventory)) {
-//?}
-            @Override protected void inventorySlotChanged(int index) { SafeBlockEntity.this.inventory.setChanged(); }
+        return new gregtech.client.gui.StorageContainerMenu(id, playerInventory, inventory) {
             @Override public boolean stillValid(Player player) {
                 return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == SafeBlockEntity.this
                         && canOpen(player) && player.distanceToSqr(worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;

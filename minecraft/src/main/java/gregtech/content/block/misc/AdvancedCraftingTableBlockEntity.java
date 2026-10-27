@@ -2,7 +2,6 @@ package gregtech.content.block.misc;
 
 import gregtech.engine.inventory.BlockContents;
 import gregtech.client.gui.HopperContainerMenu;
-import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.*;
@@ -346,7 +345,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     }
 
     public HopperContainerMenu storageMenu(int id, Inventory player) {
-        return new HopperContainerMenu(GTMenuTypes.forSlotCount(36), id, player, view(IntStream.range(35, 71).toArray(), false)) {
+        return new gregtech.client.gui.StorageContainerMenu(id, player, view(IntStream.range(35, 71).toArray(), false), this::inventoryChanged) {
 
             @Override
             public boolean stillValid(Player p) {

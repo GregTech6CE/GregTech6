@@ -62,9 +62,14 @@ public class HopperContainerMenu extends AbstractContainerMenu {
         var layout = gregtech.engine.inventory.InventorySlotLayout.layout(slotCount);
         int index = 0;
         for (var position : layout.positions())
-            addSlot(new Slot(container, index++, position.x(), position.y()));
+            addSlot(createStorageSlot(container, index++, position.x(), position.y()));
         this.playerInvY = layout.playerInventoryY();
         addPlayerInventory(playerInv, playerInvY);
+    }
+
+    /** Called during construction; use only the supplied backing container. */
+    protected Slot createStorageSlot(Container container, int index, int x, int y) {
+        return new Slot(container, index, x, y);
     }
 
     public int slotCount() {
