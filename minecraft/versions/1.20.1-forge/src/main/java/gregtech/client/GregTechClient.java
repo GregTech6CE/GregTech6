@@ -787,6 +787,9 @@ public final class GregTechClient {
         }
         ItemBlockRenderTypes.setRenderLayer(gregtech.content.registry.GTDecorBlocks.GLASS_CLEAR.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(gregtech.content.registry.GTDecorBlocks.GLASS_GLOW.get(), RenderType.translucent());
+        for (var flower : gregtech.content.plant.BedrockFlowers.ALL) {
+            ItemBlockRenderTypes.setRenderLayer(gregtech.content.registry.GTDungeonBlocks.pottedFlower(flower.id()), RenderType.cutout());
+        }
         // GT6 world fluids must be built into the translucent chunk layer.
         // ChunkRenderDispatcher picks a fluid's layer with ItemBlockRenderTypes.getRenderLayer
         // (ChunkRenderDispatcher.java:620) and vanilla's ItemBlockRenderTypes.FLUID_RENDER_TYPES only
