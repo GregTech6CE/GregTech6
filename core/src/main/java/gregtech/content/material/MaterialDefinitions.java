@@ -32,6 +32,7 @@ public final class MaterialDefinitions {
         MaterialFormCorrections.apply();
         SourceMaterialToolStats.apply();
         MaterialGroups.init();
+        SourceLatheMaterialProfiles.captureDefaults();
 
     }
 }

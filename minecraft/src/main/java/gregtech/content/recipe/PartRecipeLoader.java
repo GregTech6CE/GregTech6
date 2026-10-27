@@ -22,8 +22,8 @@ import java.util.List;
  * <p>Port of the per-prefix machine handlers from GT6
  * {@code gregtech.loaders.c.Loader_Recipes_Handlers} (RollingMill / Wiremill /
  * RollBender / ClusterMill / RollFormer / Lathe / Cutter / Extruder tables) plus the
- * dust/crushed furnace smelting from {@code Loader_Recipes_Furnace}. The GT6
- * easy/hard-workable duration split is collapsed to the standard duration.
+ * dust/crushed furnace smelting from {@code Loader_Recipes_Furnace}. Lathe uses a bounded
+ * source-profile adapter; other machine families still need their easy/hard duration audit.
  * Extrusion uses registered shape molds, with a mold-free fallback if lookup fails.
  * Material eligibility, forging targets and the input-prefix matrix still require
  * alignment with the original; see ALIGN-011 in the integration audit.</p>
@@ -44,7 +44,7 @@ public class PartRecipeLoader implements InitializationStep {
             wiremill(m);
             rollBender(m);
             clusterMillAndRollFormer(m);
-            lathe(m);
+            lathe(entry);
             cutter(m);
             extruder(m);
             smelting(m);
@@ -96,23 +96,15 @@ public class PartRecipeLoader implements InitializationStep {
 
     // ── Lathe: ingots/gems → rods, bolts → screws, gem plates → lenses ──────
 
-    private void lathe(GTMaterial m) {
-        lathePart(m, MaterialPrefix.bolt, 1, MaterialPrefix.screw, 1, 2);
-        lathePart(m, MaterialPrefix.nugget, 1, MaterialPrefix.round, 1, 2);
-        lathePart(m, MaterialPrefix.plateGem, 1, MaterialPrefix.lens, 1, 16);
-        lathePart(m, MaterialPrefix.lens, 1, MaterialPrefix.ring, 1, 16);
-        lathePart(m, MaterialPrefix.bouleGt, 1, MaterialPrefix.stickLong, 3, 64);
-        lathePart(m, MaterialPrefix.gemChipped, 1, MaterialPrefix.bolt, 1, 4);
-        lathePart(m, MaterialPrefix.gemFlawed, 1, MaterialPrefix.bolt, 3, 8);
-        lathePart(m, MaterialPrefix.billet, 1, MaterialPrefix.stick, 1, 16);
-
-        // ingot/gem → stick returns half the material through its pulverization target.
-        latheToStick(m, MaterialPrefix.ingot);
-        latheToStick(m, MaterialPrefix.gem);
-    }
-
-    private void latheToStick(GTMaterial m, MaterialPrefix input) {
-        lathePart(m, input, 1, MaterialPrefix.stick, 1, 16);
+    private void lathe(GTMaterial entry) {
+        GTMaterial m = entry.resolve();
+        for (var rule : SourceLatheRules.rules()) {
+            var decision = SourceLatheRules.evaluate(entry, rule);
+            if (!decision.allowed()) continue;
+            // The source lens-generation predicate applies only to the plate-to-ring alternative.
+            // Existing native holders still decide whether the other processing rows can be emitted.
+            lathePart(m, rule.input(), 1, rule.output(), rule.outputCount(), decision.ticks());
+        }
     }
 
     /** Original Loader_Recipes_Handlers:371–393 enables pulverized remains for these lathe rows. */
