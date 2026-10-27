@@ -22,6 +22,8 @@ public final class CentrifugeContracts {
         OreSiftingGeneratedContracts.run();
         gregtech.content.recipe.SourceRecyclingFactsContracts.run();
         gregtech.content.recipe.SourceThermalRecyclingContracts.run();
+        gregtech.content.recipe.SourceThermalInputContracts.run();
+        ThermalIceSnowGeneratedContracts.run();
         gregtech.content.recipe.FurnaceSourcePolicyContracts.run();
         gregtech.content.recipe.SourceOreShreddingContracts.run();
         gregtech.content.recipe.SourceOreCrushingContracts.run();

@@ -26,7 +26,7 @@ import java.util.function.BiFunction;
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.recipe.SourceRecyclingFacts.*;
 
-/** Producer-local source thermal correction for the existing OM-selected one-unit input.
+/** Shared source thermal proof for the existing OM-selected1U input and thirteen exact form inputs.
  * No registrations, material mutations, map sweeps or new global unit conventions.
  * Runtime physical stats are retained; imported-stat precision is not claimed source-exact.
  */
@@ -44,7 +44,8 @@ final class SourceThermalNativeAdapter {
  enum Reason { SOURCE_NOT_MELTING, SOURCE_BLACKLISTED, SOURCE_ZERO_TARGET, SOURCE_NO_DEFAULT_PHASE,
   SOURCE_ZERO_VOLUME, INPUT_ABSENT, REQUIRED_NATIVE_FLUID_ABSENT, UNKNOWN_SOURCE_IDENTITY,
   UNKNOWN_SOURCE_FACT, ITEM_COMPOSITION_OVERRIDE, MATERIAL_TARGET_OVERRIDE,
-  MATERIAL_ELIGIBILITY_OVERRIDE, FLUID_BINDING_OVERRIDE, INVALID_RUNTIME_STATS, VERIFIED }
+  MATERIAL_ELIGIBILITY_OVERRIDE, FLUID_BINDING_OVERRIDE, INVALID_RUNTIME_STATS, VERIFIED,
+  SOURCE_PREFIX_EXCLUDED, UNSUPPORTED_INPUT_PREFIX }
  record Outcome(Action action,Reason reason,List<NativeRow> rows) {
   Outcome { rows=List.copyOf(rows); }
  }
@@ -60,6 +61,18 @@ final class SourceThermalNativeAdapter {
  private static Outcome deferred(Reason reason){return result(Action.DEFERRED_NO_ROW,reason);}
 
  static Outcome inspect(GTMaterial raw,ItemStack selected,Snapshot snapshot){
+  return inspect(raw,selected,snapshot,null);
+ }
+ /** Thirteen independently verified one-item forms share the existing source/phase/override proof.
+  * Unsupported contexts have no legacy producer here; callers must not manufacture a fallback.
+  */
+ static Outcome inspectForm(MaterialPrefix prefix,GTMaterial raw,ItemStack selected,Snapshot snapshot){
+  var permission=SourceThermalInputRules.prefixDecision(prefix);
+  if(permission==SourceThermalRecyclingRules.Truth.NO)return no(Reason.SOURCE_PREFIX_EXCLUDED);
+  if(permission!=SourceThermalRecyclingRules.Truth.YES)return unsupported(Reason.UNSUPPORTED_INPUT_PREFIX);
+  return inspect(raw,selected,snapshot,prefix);
+ }
+ private static Outcome inspect(GTMaterial raw,ItemStack selected,Snapshot snapshot,MaterialPrefix prefix){
   if(raw==null)return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
   if(selected==null||selected.isEmpty())return deferred(Reason.INPUT_ABSENT);
   GTMaterial material=raw.resolve();Facts source=find(material.getId(),material.getName());
@@ -67,7 +80,13 @@ final class SourceThermalNativeAdapter {
   if(source.portDefaults()==null)return unsupported(Reason.UNKNOWN_SOURCE_FACT); // Output-only Water/Lava.
   Reason changed=snapshot.materialOverride(material,source);
   if(changed!=null)return unsupported(changed);
-  if(!snapshot.input(material,selected))return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
+  long inputUnits=U;
+  if(prefix==null){
+   if(!snapshot.input(material,selected))return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
+  }else{
+   inputUnits=snapshot.inputUnits(material,prefix,selected);
+   if(inputUnits!=SourceThermalInputRules.form(prefix).sourceUnits())return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
+  }
   if(source.melting()==Decision.NO)return no(Reason.SOURCE_NOT_MELTING);
   if(source.blacklistedSmelter()==Decision.YES)return no(Reason.SOURCE_BLACKLISTED);
   if(source.targetUnitsPerU()==0)return no(Reason.SOURCE_ZERO_TARGET);
@@ -103,7 +122,9 @@ final class SourceThermalNativeAdapter {
   var stats=snapshot.stats(material,target);
   var proof=new SourceThermalRecyclingRules.Phase(SourceThermalRecyclingRules.PhaseProof.VERIFIED_SINGLE_BINDING,
       sourceBinding.referenceMaterialUnits(),sourceBinding.millibuckets(),snapshot.temperature(fluid),fluid.getFluid()==Fluids.LAVA);
-  var plan=SourceThermalRecyclingRules.plan(SourceThermalRecyclingRules.InputProof.VERIFIED_SELF_ONE_UNIT,facts,stats,proof);
+  var plan=prefix==null
+      ?SourceThermalRecyclingRules.plan(SourceThermalRecyclingRules.InputProof.VERIFIED_SELF_ONE_UNIT,facts,stats,proof)
+      :SourceThermalInputRules.plan(prefix,SourceThermalInputRules.InputProof.VERIFIED_SINGLE_COMPONENT,inputUnits,facts,stats,proof);
   if(plan.decision()==SourceThermalRecyclingRules.Decision.UNSUPPORTED)return deferred(Reason.INVALID_RUNTIME_STATS);
   if(plan.decision()==SourceThermalRecyclingRules.Decision.SUPPORTED_NO_ROW)return no(Reason.SOURCE_ZERO_VOLUME);
   var output=fluid.copy();output.setAmount(plan.row().millibuckets());
@@ -189,22 +210,33 @@ final class SourceThermalNativeAdapter {
        ?null:Reason.MATERIAL_TARGET_OVERRIDE;
   }
   boolean input(GTMaterial material,ItemStack stack){
+   return validatedUnits(material,stack,Set.of(MaterialPrefix.dust,MaterialPrefix.dustSmall,MaterialPrefix.dustTiny,
+       MaterialPrefix.dustDiv72,MaterialPrefix.ingot,MaterialPrefix.chunkGt,MaterialPrefix.nugget))==U;
+  }
+  /** Do not rescale the stack to a synthetic1U. Prefix and explicit original composition must
+   * describe this actual single selected item, including clean-ore fractions greater than1U. */
+  long inputUnits(GTMaterial material,MaterialPrefix prefix,ItemStack stack){
+   var source=SourceThermalInputRules.form(prefix);
+   if(source==null||stack==null||stack.isEmpty()||stack.getCount()!=1)return -1;
+   long amount=validatedUnits(material,stack,Set.of(prefix));
+   return amount==source.sourceUnits()?amount:-1;
+  }
+  private long validatedUnits(GTMaterial material,ItemStack stack,Set<MaterialPrefix> allowed){
    if(stack.isEmpty()||stack.isDamaged()||ItemMaterialRegistry.hasStoredContents(stack)
-       ||!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))return false;
+       ||!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))return -1;
 //? if >=1.21.1 {
-   /*if(!stack.getComponentsPatch().isEmpty())return false;
+   /*if(!stack.getComponentsPatch().isEmpty())return -1;
 *///?} else {
-   if(stack.hasTag())return false;
+   if(stack.hasTag())return -1;
 //?}
-   if(!(stack.getItem() instanceof MaterialFormItem form)||form.getMaterial().resolve()!=material)return false;
-   if(!Set.of(MaterialPrefix.dust,MaterialPrefix.dustSmall,MaterialPrefix.dustTiny,MaterialPrefix.dustDiv72,
-       MaterialPrefix.ingot,MaterialPrefix.chunkGt,MaterialPrefix.nugget).contains(form.getPrefix())
-       ||GTItems.getStack(form.getPrefix(),material,stack.getCount()).getItem()!=stack.getItem())return false;
+   if(!(stack.getItem() instanceof MaterialFormItem form)||form.getMaterial().resolve()!=material)return -1;
+   if(!allowed.contains(form.getPrefix())
+       ||GTItems.getStack(form.getPrefix(),material,stack.getCount()).getItem()!=stack.getItem())return -1;
    var data=ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
    if(data==null||!data.recoverable()||data.prefix()!=form.getPrefix()||data.components().size()!=1
-       ||data.material().resolve()!=material||data.amount()!=form.getPrefix().getMaterialWeight())return false;
-   try{return Math.multiplyExact((long)stack.getCount(),data.amount())==U;}
-   catch(ArithmeticException invalid){return false;}
+       ||data.material().resolve()!=material||data.amount()!=form.getPrefix().getMaterialWeight())return -1;
+   try{return Math.multiplyExact((long)stack.getCount(),data.amount());}
+   catch(ArithmeticException invalid){return -1;}
   }
   boolean owned(GTMaterial material,NativeBinding binding,FluidCatalog.FluidEntry entry){
    String field=binding.field();

@@ -100,6 +100,7 @@ public final class MachineRecipeOverlay {
         SharedOilSandRows.rebuild();
         // New purified-acid calls do not displace the earlier imported/static Bath producers.
         SharedPurifiedAcidRows.rebuild();
+        SharedThermalInputRows.rebuild();
         MaterialDisplayBinding.invalidate();
         logged = 0;
         var tally = new Tally();
@@ -176,6 +177,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(SharedOreCrushingRows.baselineExcluded());
         exclude.addAll(SharedOilSandRows.baselineExcluded());
         exclude.addAll(SharedPurifiedAcidRows.owned());
+        exclude.addAll(SharedThermalInputRows.owned());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }

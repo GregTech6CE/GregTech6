@@ -4,7 +4,8 @@ import gregtech.engine.recipe.SourceRecyclingMath;
 import java.util.Objects;
 
 /**
- * Bounded pure decision for the existing one dust-or-ingot1U producer, not a recycling listener.
+ * Bounded pure decision for the existing one dust-or-ingot1U producer. The amount-aware core is
+ * also shared by the separately proven single-component input extension, not a full listener.
  * Source facts, native runtime stats, actual item composition and phase identity are caller evidence.
  * No native METAL/ALLOY/generation flag establishes source MELTING, FURNACE or a fluid phase.
  */
@@ -60,6 +61,15 @@ public final class SourceThermalRecyclingRules {
     public static Plan plan(InputProof input, Facts facts, Stats stats, Phase phase) {
         if (input == InputProof.ABSENT) return noRow();
         if (input != InputProof.VERIFIED_SELF_ONE_UNIT || facts == null) return unsupported();
+        return planVerifiedAmount(U, facts, stats, phase);
+    }
+
+    /** Caller has already established the original single component and its actual source units.
+     * This is not a simulated 1U input: conversion and mass both consume the real quantity.
+     * Keeping the old public entry point above preserves its input proof and exact 1U behavior.
+     */
+    static Plan planVerifiedAmount(long inputUnits, Facts facts, Stats stats, Phase phase) {
+        if (inputUnits <= 0 || facts == null) return unsupported();
         if (facts.targetPerUnit() < 0) return unsupported();
         if (facts.targetPerUnit() == 0 || facts.melting() == Truth.NO || facts.blacklisted() == Truth.YES)
             return noRow();
@@ -68,7 +78,7 @@ public final class SourceThermalRecyclingRules {
                 || phase == null || phase.proof() != PhaseProof.VERIFIED_SINGLE_BINDING || stats == null)
             return unsupported();
         try {
-            var result = SourceRecyclingMath.singleFluid(U, U, facts.targetPerUnit(),
+            var result = SourceRecyclingMath.singleFluid(inputUnits, U, facts.targetPerUnit(),
                     phase.referenceUnits(), phase.referenceMillibuckets(), stats.inputDensity(),
                     stats.targetMelting(), phase.actualFluidTemperature(), ENVIRONMENT_TEMPERATURE, phase.lava());
             if (result.millibuckets() == 0) return noRow();
