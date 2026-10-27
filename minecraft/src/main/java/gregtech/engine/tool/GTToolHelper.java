@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 /** Reads/writes GT6-style {@code GT.ToolStats} NBT on tool stacks (type is fixed per item). */
 public final class GTToolHelper {
     public static final String ROOT = "GT.ToolStats";
+    public static final String SOURCE_TOOL_STATS_VERSION = "gt6ce:source_tool_stats_version";
     private static final String KEY_HEAD = "head";
     private static final String KEY_HANDLE = "handle";
 
@@ -40,6 +41,9 @@ public final class GTToolHelper {
 //?}
 
         CompoundTag stats = new CompoundTag();
+        // This writer creates new tools; loaded unversioned stacks are never stamped or rewritten.
+        if (defaultManualItem(stack) && canonicalBuiltinMaterial(head))
+            stats.putInt(SOURCE_TOOL_STATS_VERSION, 1);
 
 //? if >=1.21.1 {
 /*        stats.putString(KEY_HEAD, head.getName());stats.putString(KEY_HANDLE, handle.getName());
@@ -247,7 +251,43 @@ public final class GTToolHelper {
         if (!isTool(stack)) {
             return 1;
         }
-        return computeMaxDurability(((GTToolItem)stack.getItem()).toolType(), getStatMaterial(stack));
+        GTToolType type = ((GTToolItem) stack.getItem()).toolType();
+        GTMaterial material = getStatMaterial(stack);
+        CompoundTag stats = stats(stack);
+        // Only absent means legacy. Present invalid/future versions retain ordinary behavior.
+        if (stats != null && !stats.contains(SOURCE_TOOL_STATS_VERSION) && defaultManualItem(stack)
+                && stats.getString(KEY_HEAD).equals(material.getName())
+                && gregtech.content.material.SourceMaterialToolStats.matchesCorrectedSource(material)) {
+//? if >=1.21.1 {
+            /*Integer storedMaximum = stack.get(net.minecraft.core.component.DataComponents.MAX_DAMAGE);
+            if (storedMaximum != null && storedMaximum > 0) return storedMaximum;
+*///?}
+            // Forge never saved the original maximum. Preserve only this known default cohort's
+            // old base64, using its actual tool multiplier; historical addon stats are unknowable.
+            long maximum = Math.round(64L * 100L * type.durabilityMultiplier());
+            return (int) Math.max(1L, Math.min(Integer.MAX_VALUE, maximum));
+        }
+        return computeMaxDurability(type, material);
+    }
+
+    private static boolean canonicalBuiltinMaterial(GTMaterial material) {
+        return material != null && material.isValid() && material.resolve() == material
+                && GTMaterialRegistry.get(material.getId()) == material
+                && GTMaterialRegistry.get(material.getName()) == material
+                && GTMaterialRegistry.isCoreMaterial(material)
+                && !gregtech.engine.addon.AddonMaterials.owns(material);
+    }
+
+    /** Registered built-in manual item identity, not an addon subclass or merely matching tag. */
+    private static boolean defaultManualItem(ItemStack stack) {
+        if (stack.isEmpty() || !(stack.getItem() instanceof GTToolItem tool)
+                || stack.getItem() instanceof gregtech.engine.energy.item.IItemEnergy) return false;
+//? if >=1.21.1 {
+        /*if (stack.getItem() instanceof gregtech.engine.tool.PoweredToolItem) return false;
+*///?}
+        var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(tool);
+        return id != null && id.getNamespace().equals("gt6ce") && id.getPath().equals("tool_" + tool.toolType().id())
+                && gregtech.content.registry.GTToolItems.get(tool.toolType()) == tool;
     }
 
     /**

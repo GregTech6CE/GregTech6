@@ -30,6 +30,7 @@ public final class MaterialDefinitions {
         gregtech.content.data.generated.MaterialDecompositionData.apply();
         gregtech.content.data.generated.MaterialDataFacts.apply();
         MaterialFormCorrections.apply();
+        SourceMaterialToolStats.apply();
         MaterialGroups.init();
 
     }
