@@ -142,7 +142,7 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         CraftingHelper.register(GregTech.id("creosote_container_1000"), ContainerIngredient.SERIALIZER);
     }
 
-    /** A real, drainable 1000 mB creosote vessel; JEI receives a filled tin cell as its example. */
+    /** A real, drainable 1000 mB creosote vessel; viewers show cells and wooden buckets. */
     public static final class ContainerIngredient extends AbstractIngredient {
         private static final IIngredientSerializer<ContainerIngredient> SERIALIZER = new IIngredientSerializer<>() {
             @Override public ContainerIngredient parse(FriendlyByteBuf buffer) { return creosote(); }
@@ -151,7 +151,7 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         };
 
         private ContainerIngredient() {
-            super(Stream.of(new Ingredient.ItemValue(example())));
+            super(examples().map(Ingredient.ItemValue::new));
 //?}
         }
 //? if >=1.21.1 {
@@ -166,27 +166,9 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
 //?}
         }
 
-        private static ItemStack example() {
-//? if >=1.21.1 {
-            /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_cell_tin"));
-            if (item == Items.AIR) throw new IllegalStateException("Creosote axle requires the finite tin cell");
-            var handler = FluidUtil.getFluidHandler(new ItemStack(item)).orElse(null);
-            var fluid = required();
-*///?} else {
-            Item item = ForgeRegistries.ITEMS.getValue(GregTech.id("fluid_cell_tin"));
-            if (item == null || item == Items.AIR)
-                throw new IllegalStateException("GT6 creosote axle requires the finite tin cell item");
-            ItemStack cell = new ItemStack(item);
-            var handler = FluidUtil.getFluidHandler(cell).resolve().orElse(null);
-            FluidStack fluid = required();
-//?}
-            if (handler != null && !fluid.isEmpty() && handler.fill(fluid, IFluidHandler.FluidAction.EXECUTE) == 1000)
-                return handler.getContainer();
-//? if >=1.21.1 {
-            /*throw new IllegalStateException("Could not fill finite creosote cell");
-*///?} else {
-            throw new IllegalStateException("Could not fill a finite 1000 mB creosote cell for the axle recipe");
-//?}
+        /** Display every compatible native finite vessel, not just one representative cell. */
+        private static java.util.stream.Stream<ItemStack> examples() {
+            return FiniteCraftingVessels.examples(required().getFluid()).stream();
         }
 //? if >=1.21.1 {
         /*@Override public boolean test(ItemStack input) {
@@ -245,7 +227,7 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         }
 
 //? if >=1.21.1 {
-        /*@Override public java.util.stream.Stream<ItemStack> getItems() { return java.util.stream.Stream.of(example()); }
+        /*@Override public java.util.stream.Stream<ItemStack> getItems() { return examples(); }
 *///?} else {
 //?}
         @Override public boolean isSimple() { return false; }
