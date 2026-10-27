@@ -145,9 +145,14 @@ public final class SmelteryInteractionHandler {
 //?}
     private static InteractionResult handleMoldInteraction(MoldBlockEntity mold, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
-        // Pincers or empty hand: pickup when mold has content, pour when empty
-        if (held.isEmpty() || GTToolHelper.matchesTool(held, GTToolType.PINCERS)) {
-            boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
+        // GT6 MultiTileEntityMold.onBlockActivated3: pickup when the mold has content, pour when
+        // empty, whatever the player is holding. Only the tool branches below take precedence;
+        // pincers merely decide whether the hot casting burns the hand.
+        boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
+        boolean moldTool = GTToolHelper.matchesTool(held, GTToolType.CHISEL)
+                || GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
+                || GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH);
+        if (!moldTool) {
             boolean pickedUp = mold.tryPickupWithPincers(player, usingPincers);
             if (pickedUp) {
                 if (usingPincers) {
@@ -207,8 +212,9 @@ public final class SmelteryInteractionHandler {
 
     private static InteractionResult handleBasinInteraction(MoldBasinBlockEntity basin, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
-        // Pincers or empty hand: pickup when basin has content, pour when empty
-        if (hit.getDirection() == Direction.UP && (held.isEmpty() || GTToolHelper.matchesTool(held, GTToolType.PINCERS))) {
+        // GT6 MultiTileEntityBasin.onBlockActivated3: pickup on the top face whatever is held.
+        // The monkey wrench below still wins so its toggle keeps working.
+        if (hit.getDirection() == Direction.UP && !GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
             boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
             boolean pickedUp = basin.tryPickupWithPincers(player, usingPincers);
             if (pickedUp) {
