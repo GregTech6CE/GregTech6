@@ -123,6 +123,7 @@ public final class GregTechConfig {
         EU_AS_RF("general.Emit_EU_as_RF_from_Blocks", false),
         AFK_HUNGER("general.AFK_Hunger", true),
         TOOL_BREAK_FATIGUE("general.ToolBreakFatique", true),
+        SMALLER_VANILLA_TOOL_DURABILITY("general.SmallerVanillaToolDurability", true),
         NUTRITION("general.NutritionSystem", true),
         OVERDOSE_DEATH("general.DeathByOverdosingCertainFoods", true),
         ALWAYS_DRINK("general.drinks_always_drinkable", false),
@@ -213,6 +214,7 @@ public final class GregTechConfig {
             var builder = rule.client ? CLIENT : COMMON;
             if (rule.client || rule.key.startsWith("worldgen.") || rule.key.startsWith("recipes.")) builder.worldRestart();
             String description = switch (rule) {
+                case SMALLER_VANILLA_TOOL_DURABILITY -> "Original GT6: wood/stone/gold/iron/diamond swords, pickaxes, shovels, axes and hoes use 8/16/32/128/512 durability. Netherite and custom stack durability are unchanged. Does not rewrite existing damage.";
                 case DISABLE_VANILLA_ORES -> "Disable vanilla ore generation. Nether gold ore and ancient debris have independent settings.";
                 case GENERATE_NETHER_GOLD_ORE -> "Generate vanilla Nether gold ore, independently of DisableVanillaOres.";
                 case GENERATE_ANCIENT_DEBRIS -> "Generate vanilla ancient debris, independently of DisableVanillaOres.";

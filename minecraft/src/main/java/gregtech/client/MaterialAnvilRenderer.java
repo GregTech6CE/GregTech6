@@ -35,11 +35,12 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
         for (int slot = 0; slot < 2; slot++) {
             var stack = anvil.workpiece(slot);
             if (stack.isEmpty()) continue;
-            int shape = stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item
-                    ? AnvilWorkpieceGeometry.shape(item.getPrefix().getName()) : stack.getItem() instanceof BlockItem ? 7 : 0;
+            var form = gregtech.content.tool.AnvilWorkpieceDisplay.materialForm(stack);
+            int shape = form != null ? AnvilWorkpieceGeometry.shape(form.prefix().getName())
+                    : stack.getItem() instanceof BlockItem ? 7 : 0;
             var bounds = AnvilWorkpieceGeometry.bounds(shape, slot, facing);
-            if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item) {
-                var material = item.getMaterial();
+            if (form != null) {
+                var material = form.material();
                 String icon = shape == 6 ? "blockgem" : shape == 7 ? "blockraw" : "blocksolid";
                 var texture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/" + MaterialIcons.resolveTextureSet(material).folder() + "/" + icon);
                 int rgb = material.getColor();
