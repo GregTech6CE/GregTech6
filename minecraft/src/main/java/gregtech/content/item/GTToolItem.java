@@ -87,6 +87,10 @@ public class GTToolItem extends Item {
         // §108: GT6's TOOL_plunger and TOOL_igniter clicks are onItemUseFirst behaviours as well, so
         // they run before Block#use (Behavior_Plunger_Fluid:49-62, Behavior_FlintAndTinder:45-61).
         if (!context.getLevel().isClientSide()) {
+            if (toolType == GTToolType.HARD_HAMMER) {
+                var prospect = gregtech.content.tool.HammerProspecting.use(context);
+                if (prospect.consumesAction()) return prospect;
+            }
             BlockPos clicked = context.getClickedPos();
             float hx = (float) (context.getClickLocation().x - clicked.getX());
             float hy = (float) (context.getClickLocation().y - clicked.getY());
