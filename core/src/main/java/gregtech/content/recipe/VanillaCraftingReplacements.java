@@ -22,6 +22,8 @@ public final class VanillaCraftingReplacements {
         rows.add(new Row("minecraft:arrow","minecraft:arrow",4,null,keys("F=item:minecraft:flint",
                 "A=item:gt6ce:arrow_gt_wood_empty","B=item:gt6ce:arrow_gt_wood_empty",
                 "C=item:gt6ce:arrow_gt_wood_empty","D=item:gt6ce:arrow_gt_wood_empty")));
+        // Keep vanilla fuels, but accept the same wooden rod family as other GT hand recipes.
+        shaped(rows,"torch",4,"C/S","C=tag:minecraft:coals","S=tag:gt6ce:ammunition/sticks_wood");
         shaped(rows,"furnace",1,"XXX/XFX/XXX","X=tag:minecraft:stone_crafting_materials","F=firestarter");
         shaped(rows,"paper",1,"XXX","X=item:minecraft:sugar_cane");
         rows.add(new Row("minecraft:book","minecraft:book",1,null,keys("L=item:minecraft:leather","A=item:minecraft:paper","B=item:minecraft:paper","C=item:minecraft:paper")));
@@ -70,6 +72,8 @@ public final class VanillaCraftingReplacements {
             rows.add(new Row("gt6ce:vanilla/"+wood+"_planks_saw","minecraft:"+wood+"_planks",4,"s/L",keys("s=tool:saw","L="+tag)));
             shaped(rows,wood+"_pressure_plate",1,"PP","P=item:minecraft:"+wood+"_planks");
         }
+        rows.add(new Row("gt6ce:vanilla/stick_from_wooden_rod","minecraft:stick",1,null,
+                keys("S=tag:gt6ce:convertible_wooden_rods")));
         shaped(rows,"stick",2,"P/P","P=tag:minecraft:planks");
         rows.add(new Row("gt6ce:vanilla/stick_saw","minecraft:stick",2,"s/P",keys("s=tool:saw","P=tag:minecraft:planks")));
         shaped(rows,"bowl",1,"k/X","k=tool:knife","X=tag:minecraft:planks");

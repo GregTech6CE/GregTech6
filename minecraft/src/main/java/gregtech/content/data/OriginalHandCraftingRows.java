@@ -34,6 +34,7 @@ public final class OriginalHandCraftingRows {
         legacyEnergyDevices(data);
         crystalChargersAndItemBarrels(data);
         rods(data);
+        finishRawToolHeads(data);
         machineCasings(data);
         woodenBuckets(data);
         addAxles(data);
@@ -43,6 +44,27 @@ public final class OriginalHandCraftingRows {
         int circuit = circuits(data), cell = cells(data), store = storage(data);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={}",
                 gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store);
+    }
+
+    /** Loader_Recipes_Handlers:422-434; file finishing is also available without a sharpening machine. */
+    private static void finishRawToolHeads(Map<ResourceLocation, byte[]> recipes) {
+        var file = requiredTool(GTToolType.FILE);
+        for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
+            if (!material.isValid() || material.resolve() != material
+                    || material.has(gregtech.api.material.MaterialProperty.ANTIMATTER)) continue;
+            for (String head : List.of("Arrow", "Saw", "Chisel", "Sword", "Pickaxe", "Shovel", "Spade",
+                    "UniversalSpade", "Axe", "AxeDouble", "Hoe", "Sense", "Plow")) {
+                var raw = gregtech.engine.prefix.PrefixRegistry.byName("toolHeadRaw" + head);
+                var finished = gregtech.engine.prefix.PrefixRegistry.byName("toolHead" + head);
+                if (raw == null || finished == null) continue;
+                var input = GTItems.getStack(raw, material, 1);
+                var output = GTItems.getStack(finished, material, 1);
+                if (input.isEmpty() || output.isEmpty()) continue;
+                register(recipes, "raw_tool_heads/" + raw.getRegistryName() + "/"
+                                + MaterialEquivalence.materialName(material),
+                        new String[]{"X ", " f"}, Map.of('X', gregtech.content.recipe.CraftingMaterialForms.ingredient(input), 'f', file), output);
+            }
+        }
     }
 
     /** Original crystal chargers and the wooden variants of MultiTileEntityMassStorage. */
