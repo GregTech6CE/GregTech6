@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
 
     private static final int MIN_GEN_Y = GTWorldgenScale.WORLD_FLOOR + 1;
-    private static final int MAX_GEN_Y = 112;
+    private static final int MAX_GEN_Y = GTWorldgenScale.BAND_TOP;
 
     private static final Set<Block> REPLACEABLE_STONE = Set.of(
             Blocks.STONE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE,
