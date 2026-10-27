@@ -24,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -92,6 +93,17 @@ public class OreBlock extends Block implements MaterialBlockLike {
         this.prefix = prefix;
         this.material = material;
         registerDefaultState(defaultBlockState().setValue(STONE, OreHostStone.STONE).setValue(BROKEN, false));
+    }
+
+    /** Ore presentation follows the host state, not the shared registered ore block. */
+    @Override
+    public net.minecraft.world.level.block.SoundType getSoundType(BlockState state, LevelReader level,
+            BlockPos pos, @Nullable net.minecraft.world.entity.Entity entity) {
+        return switch (stoneOf(state)) {
+            case SAND, RED_SAND -> net.minecraft.world.level.block.SoundType.SAND;
+            case GRAVEL -> net.minecraft.world.level.block.SoundType.GRAVEL;
+            default -> super.getSoundType(state, level, pos, entity);
+        };
     }
 
     @Override
