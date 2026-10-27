@@ -34,24 +34,5 @@ sourceSets.matching { it.name != 'addonSample' }.configureEach { sources ->
             layout.projectDirectory.dir("src/${sources.name}/resources")).builtBy(generate))
 }
 
-// CI builds each loader node directly; those checks must execute the shared core contracts.
+// CI builds each loader node directly; retain the API and core verification lifecycle.
 tasks.named('check').configure { dependsOn ':api:check', ':core:check' }
-
-// NeoGradle supplies the game dependency to main; presentation contracts need it too.
-if (project.name.endsWith('neoforge')) {
-    sourceSets.test {
-        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
-        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
-    }
-}
-
-def energyTextContracts = tasks.register('energyTextContracts', JavaExec) {
-    group = 'verification'
-    dependsOn tasks.named('testClasses')
-    classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'gregtech.client.EnergyTextContracts'
-    javaLauncher = javaToolchains.launcherFor {
-        languageVersion = JavaLanguageVersion.of(project.name.endsWith('neoforge') ? 21 : 17)
-    }
-}
-tasks.named('check').configure { dependsOn energyTextContracts }

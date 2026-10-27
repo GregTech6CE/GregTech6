@@ -52,6 +52,8 @@ replay_pid*
 /docs/supersymmetry-*.md
 
 # Transient subsystem tests: written, run against the matching subsystem, then deleted.
+/core/src/test/
+/minecraft/src/test/
 minecraft/versions/*/src/test/
 
 # Avoid blanket *.jar, *.json, *.log or generated/ rules: the Wrapper,
