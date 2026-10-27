@@ -1,6 +1,7 @@
 package gregtech.engine.multiblock.tracking;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 
 //? if >=1.21.1 {
@@ -32,6 +33,8 @@ import java.util.List;
 public final class StructureScheduler {
     public static final int CELLS_PER_TICK = 20_000;
     public static final int SAFETY_PERIOD = 600;
+    private static int testBudget = -1;
+    private static int safetyVisited;
 
     private StructureScheduler() {}
 
@@ -61,6 +64,15 @@ public final class StructureScheduler {
             StructureWatchIndex.enqueue(tracker);
         }
         end(level);
+    }
+
+    /** {@code cells < 0} restores {@link #CELLS_PER_TICK}. */
+    public static void setCellBudgetForTests(int cells) {
+        testBudget = cells;
+    }
+
+    public static int safetyVisitedForTests() {
+        return safetyVisited;
     }
 
     public static void enqueueAll() {
@@ -98,6 +110,22 @@ public final class StructureScheduler {
         if (definition.usesTags()) return true;
         String name = definition.overlayMachine();
         return name != null && machines.contains(name);
+    }
+
+    public static void chunkLoadedForTests(ServerLevel level, ChunkPos pos) {
+        StructureWatchIndex.chunkLoaded(level, pos);
+    }
+
+    public static void chunkUnloadedForTests(ServerLevel level, ChunkPos pos) {
+        StructureWatchIndex.chunkUnloaded(level, pos);
+    }
+
+    public static boolean pendingForTests(ServerLevel level, long chunk) {
+        return StructureWatchIndex.pending(level, chunk);
+    }
+
+    public static void deferChunkForTests(ServerLevel level, long chunk) {
+        StructureWatchIndex.defer(level, chunk);
     }
 
     //? if >=1.21.1 {
@@ -156,6 +184,7 @@ public final class StructureScheduler {
         if (!(level instanceof ServerLevel server) || level.isClientSide) return;
         WorldStructureClaims.checkOrphans(server, false);
         StructureWatchIndex.promotePending(server);
+        safetyVisited = 0;
         enqueueSafety(server, level.getGameTime());
         List<StructureTracker> batch = StructureWatchIndex.drainDirty(server);
         if (batch.isEmpty()) return;
@@ -166,7 +195,7 @@ public final class StructureScheduler {
             else normal.add(tracker);
         }
         for (StructureTracker tracker : expedited) StructureTracking.evaluate(tracker);
-        int budget = CELLS_PER_TICK;
+        int budget = testBudget >= 0 ? testBudget : CELLS_PER_TICK;
         boolean evaluated = false;
         for (int index = 0; index < normal.size(); index++) {
             StructureTracker tracker = normal.get(index);
@@ -185,6 +214,7 @@ public final class StructureScheduler {
     private static void enqueueSafety(ServerLevel level, long gameTime) {
         int phase = (int) Math.floorMod(gameTime, SAFETY_PERIOD);
         for (StructureTracker tracker : StructureWatchIndex.safetyBucket(level, phase)) {
+            safetyVisited++;
             if (tracker.unloading() || tracker.dirty() || tracker.entity().isRemoved()) continue;
             if (WorldStructureClaims.waiting(tracker)) continue;
             tracker.requestFullEval();
