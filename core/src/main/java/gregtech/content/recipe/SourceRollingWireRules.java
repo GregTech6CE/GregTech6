@@ -36,24 +36,28 @@ public final class SourceRollingWireRules {
     public static List<Rule> rules() { return Rows.ALL; }
 
     public static Decision evaluate(GTMaterial material, Rule rule) {
-        if (material == null || !material.resolve().isValid() || material.resolve().has(MaterialProperty.ANTIMATTER)
-                || !material.resolve().has(MaterialProperty.SMITHABLE)) return new Decision(false, 0, false);
+        if (material == null || !material.resolve().isValid() || material.resolve().has(MaterialProperty.ANTIMATTER)) return new Decision(false, 0, false);
         var profile = SourceLatheMaterialProfiles.findForRollingWire(material);
-        if (profile == null) return new Decision(rule.blockInput() == null, rule.legacyTicks(), false);
+        if (profile == null) return material.resolve().has(MaterialProperty.SMITHABLE)
+                ? new Decision(rule.blockInput() == null, rule.legacyTicks(), false) : new Decision(false, 0, false);
+        if (!profile.smithable()) return new Decision(false, 0, true);
         return new Decision(!profile.coated(), profile.easy() ? rule.easyTicks()
                 : hardTicks(rule.inputUnits(), rule.output().getMaterialWeight() * rule.outputCount(),
                         rule.multiplier(), material.getToolQuality()), true);
     }
 
     /** Physical wire remains owned by its native producer, including its exact legacy fallback policy. */
-    public static Decision physicalWire(GTMaterial material, boolean legacyAllowed, long legacyTicks, boolean netheriteFamily) {
+    public static Decision physicalWire(GTMaterial material, boolean legacyAllowed, long legacyTicks, boolean sourceAdditionalFamily) {
         if (material == null || !material.resolve().isValid()) return new Decision(false, 0, false);
         var profile = SourceLatheMaterialProfiles.findForRollingWire(material);
         if (profile == null) return new Decision(legacyAllowed, legacyTicks, false);
-        // Only Netherite has independently proven source admission beyond the legacy family policy.
-        boolean provenAddition = netheriteFamily && material == gregtech.content.material.Materials.Netherite
-                && material.getId() == 8745 && material.getName().equals("Netherite");
-        return new Decision((legacyAllowed || provenAddition) && material.has(MaterialProperty.SMITHABLE)
+        // Only these two actual native families have proven admission beyond the legacy policy.
+        boolean provenAddition = sourceAdditionalFamily
+                && (material == gregtech.content.material.Materials.Netherite
+                    && material.getId() == 8745 && material.getName().equals("Netherite")
+                || material == gregtech.content.material.Materials.Naquadah
+                    && material.getId() == 1740 && material.getName().equals("Naquadah"));
+        return new Decision((legacyAllowed || provenAddition) && profile.smithable()
                 && !material.has(MaterialProperty.ANTIMATTER) && !profile.coated(), profile.easy() ? 16 : hardTicks(GTValues.U, GTValues.U, 128, material.getToolQuality()), true);
     }
 

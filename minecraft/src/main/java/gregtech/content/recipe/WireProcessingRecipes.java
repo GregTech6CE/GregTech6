@@ -29,7 +29,10 @@ public final class WireProcessingRecipes {
             boolean legacyAllowed = material.has(MaterialProperty.SMITHABLE)
                     && !Set.of("graphene", "netherite", "superconductor").contains(family.getKey());
             long legacyTicks = EASY.contains(family.getKey()) ? 16 : 128L * (material.getToolQuality() + 1);
-            var decision = SourceRollingWireRules.physicalWire(material, legacyAllowed, legacyTicks, family.getKey().equals("netherite"));
+            boolean sourceAdditionalFamily = family.getKey().equals("netherite")
+                    && material == gregtech.content.material.Materials.Netherite
+                    || family.getKey().equals("naquadah") && material == gregtech.content.material.Materials.Naquadah;
+            var decision = SourceRollingWireRules.physicalWire(material, legacyAllowed, legacyTicks, sourceAdditionalFamily);
             if (decision.allowed()) {
                 var input = GTItems.getStack(MaterialPrefix.ingot, material.resolve(), 1);
                 if (!input.isEmpty()) addPhysicalWire(decision.ticks(), new ItemStack(one, 2), input);

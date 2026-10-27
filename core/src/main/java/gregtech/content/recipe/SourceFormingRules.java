@@ -30,10 +30,11 @@ public final class SourceFormingRules {
 
     public static Decision evaluate(GTMaterial material, Rule rule) {
         if (material == null || !material.resolve().isValid()
-                || material.resolve().has(MaterialProperty.ANTIMATTER)
-                || !material.resolve().has(MaterialProperty.SMITHABLE)) return new Decision(false, 0, false);
+                || material.resolve().has(MaterialProperty.ANTIMATTER)) return new Decision(false, 0, false);
         var profile = SourceLatheMaterialProfiles.findForForming(material);
-        if (profile == null) return new Decision(true, rule.easyTicks(), false);
+        if (profile == null) return material.resolve().has(MaterialProperty.SMITHABLE)
+                ? new Decision(true, rule.easyTicks(), false) : new Decision(false, 0, false);
+        if (!profile.smithable()) return new Decision(false, 0, true);
         boolean allowed = rule.machine() != Machine.ROLL_FORMER || !profile.coated();
         return new Decision(allowed, profile.easy() ? rule.easyTicks() : hardTicks(rule, material.getToolQuality()), true);
     }

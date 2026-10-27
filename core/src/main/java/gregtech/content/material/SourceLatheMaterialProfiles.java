@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public final class SourceLatheMaterialProfiles {
     private SourceLatheMaterialProfiles() {}
-    public record Profile(boolean coated, boolean layered, boolean easy, boolean lens) {}
+    public record Profile(boolean coated, boolean layered, boolean easy, boolean lens, boolean smithable) {}
     private record Captured(int id, String name, Set<MaterialProperty> eligibility,
                             Set<MaterialProperty> cutterEligibility, Set<MaterialProperty> formingEligibility, Set<MaterialProperty> rollingWireEligibility, Profile profile) {}
     private static final Map<GTMaterial, Captured> DEFAULTS = new IdentityHashMap<>();
@@ -95,7 +95,7 @@ public final class SourceLatheMaterialProfiles {
                     || id > 0 && GTMaterialRegistry.get(id) != material) continue;
             String f = fields[2];
             DEFAULTS.put(material, new Captured(id, fields[1], eligibility(material), cutterEligibility(material), formingEligibility(material), rollingWireEligibility(material),
-                    new Profile(f.charAt(0) == '1', f.charAt(1) == '1', f.charAt(2) == '1', f.charAt(3) == '1')));
+                    new Profile(f.charAt(0) == '1', f.charAt(1) == '1', f.charAt(2) == '1', f.charAt(3) == '1', SOURCE_SMITHABLE.contains(id))));
         }
         captured = true;
     }
@@ -122,7 +122,7 @@ public final class SourceLatheMaterialProfiles {
         return value.profile();
     }
 
-    /** Source easy/coated facts only; live native SMITHABLE remains the forming admission gate. */
+    /** Source forming facts for unchanged defaults; observable native flag overrides opt out. */
     public static Profile findForForming(GTMaterial material) {
         Captured value = DEFAULTS.get(material);
         if (value == null || material.resolve() != material || AddonMaterials.owns(material)
@@ -182,6 +182,37 @@ public final class SourceLatheMaterialProfiles {
                 || !transition.cutterEligibility().equals(cutterEligibility(material))) return null;
         return value.profile();
     }
+
+    // Complete SMITHABLE closure of the same 1,070 MT identities at 3703e403:
+    // 309 positives; absence means false ONLY inside the captured source table, never for addons.
+    // Direct/factory puts count; qual, steal and re-registration do not inherit tags.
+    private static final Set<Integer> SOURCE_SMITHABLE = Set.of(
+            30, 31, 40, 41, 42, 50, 51, 110, 120, 130, 140, 190,
+            200, 210, 220, 230, 240, 250, 260, 270, 278, 280, 290, 300,
+            310, 320, 330, 370, 380, 390, 400, 410, 420, 430, 440, 450,
+            460, 470, 480, 490, 500, 510, 520, 550, 560, 570, 580, 590,
+            600, 610, 620, 630, 640, 650, 660, 670, 680, 690, 700, 710,
+            720, 730, 740, 750, 760, 770, 780, 790, 791, 800, 810, 820,
+            830, 840, 850, 870, 880, 890, 900, 910, 920, 921, 922, 930,
+            940, 942, 943, 945, 946, 947, 950, 951, 952, 960, 970, 980,
+            990, 1000, 1010, 1020, 1030, 1040, 1050, 1060, 1070, 1080, 1120, 1140,
+            1148, 1250, 1260, 1450, 1740, 1741, 1742, 1850, 1860, 1870, 1880, 2210,
+            2220, 8003, 8005, 8643, 8640, 8760, 8761, 8762, 8763, 8764, 8701, 8765,
+            8767, 8768, 8770, 8771, 8772, 8773, 8775, 8641, 8670, 8784, 8774, 8776,
+            8769, 8676, 8677, 8678, 8779, 8671, 8777, 8778, 8781, 8782, 8783, 8600,
+            8601, 8602, 8603, 8604, 8605, 8606, 8620, 8621, 8622, 8610, 8611, 8612,
+            8613, 8614, 8615, 8630, 8631, 8632, 8633, 8634, 8653, 8635, 8638, 8637,
+            8639, 8766, 8642, 8644, 8803, 8645, 8646, 8647, 8648, 8651, 8652, 8654,
+            8802, 8649, 8650, 8690, 8691, 8692, 8660, 8659, 8657, 8804, 8733, 8737,
+            8658, 8711, 8727, 8808, 8661, 8662, 8663, 8664, 8665, 8636, 8666, 8667,
+            8668, 8669, 8672, 8673, 8674, 8675, 8698, 8693, 8694, 8695, 8696, 8697,
+            8679, 8680, 8681, 8682, 8683, 8685, 8686, 8687, 8688, 8689, 8700, 8707,
+            8702, 8703, 8704, 8705, 8706, 8708, 8709, 8729, 8710, 8713, 8714, 8715,
+            8716, 8717, 8723, 8718, 8731, 8725, 8728, 8726, 8730, 8732, 8806, 8807,
+            8809, 8810, 8811, 8812, 8813, 8734, 8720, 8721, 8722, 8735, 8736, 8739,
+            8740, 8741, 8742, 8744, 8745, 8746, 8747, 8750, 8780, 8751, 8752, 8754,
+            8755, 8756, 8757, 8758, 8759, 8785, 8786, 8796, 8797, 8798, 8795, 8791,
+            8792, 8799, 8800, 8801, 8805, 8684, 8790, 8793, 8794);
 
     // id | canonical native name | COATED,LAYERED,FURNACE-or-SOFT,lens-generation
     private static final String SOURCE = """
