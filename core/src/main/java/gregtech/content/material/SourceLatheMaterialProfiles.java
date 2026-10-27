@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Shared bounded default classifications for Lathe and Cutter, from GT6 MT/TD/OP at 3703e403.
+ * Shared bounded default classifications for Lathe, Cutter and forming, from GT6 MT/TD/OP at 3703e403.
  * Factory and direct tag closure includes 1,070 matched identities, not unknown native additions.
  * COATED/LAYERED do not propagate through qual/steal or material re-registration.
  * Lens means OP.lens.canGenerateItem (forced OR LENSES), not holder existence; pinned defaults
@@ -20,7 +20,7 @@ public final class SourceLatheMaterialProfiles {
     private SourceLatheMaterialProfiles() {}
     public record Profile(boolean coated, boolean layered, boolean easy, boolean lens) {}
     private record Captured(int id, String name, Set<MaterialProperty> eligibility,
-                            Set<MaterialProperty> cutterEligibility, Profile profile) {}
+                            Set<MaterialProperty> cutterEligibility, Set<MaterialProperty> formingEligibility, Profile profile) {}
     private static final Map<GTMaterial, Captured> DEFAULTS = new IdentityHashMap<>();
     private static boolean captured;
     // Native flags consumed by the eleven prefixes and admission. Quality is intentionally live.
@@ -39,6 +39,20 @@ public final class SourceLatheMaterialProfiles {
             MaterialProperty.GENERATE_INGOT, MaterialProperty.GENERATE_PLATE,
             MaterialProperty.GENERATE_STICKS, MaterialProperty.GENERATE_MULTIINGOT,
             MaterialProperty.GENERATE_MULTIPLATE, MaterialProperty.ANTIMATTER, MaterialProperty.HIDDEN);
+
+    // Independent six-rule forming context; changing it must not change Lathe/Cutter opt-outs.
+    private static final Set<MaterialProperty> FORMING_ELIGIBILITY = EnumSet.of(
+            MaterialProperty.INGOT, MaterialProperty.METAL, MaterialProperty.GENERATE_INGOT,
+            MaterialProperty.ALLOY, MaterialProperty.GEM, MaterialProperty.WOOD, MaterialProperty.STONE,
+            MaterialProperty.GENERATE_STICKS, MaterialProperty.GENERATE_PARTS, MaterialProperty.GENERATE_FOIL,
+            MaterialProperty.GENERATE_WIRE, MaterialProperty.GENERATE_RAIL, MaterialProperty.SMITHABLE,
+            MaterialProperty.ANTIMATTER, MaterialProperty.HIDDEN);
+
+    private static Set<MaterialProperty> formingEligibility(GTMaterial material) {
+        var flags = EnumSet.noneOf(MaterialProperty.class);
+        for (var flag : FORMING_ELIGIBILITY) if (material.has(flag)) flags.add(flag);
+        return Set.copyOf(flags);
+    }
 
     private static Set<MaterialProperty> cutterEligibility(GTMaterial material) {
         var flags = EnumSet.noneOf(MaterialProperty.class);
@@ -63,7 +77,7 @@ public final class SourceLatheMaterialProfiles {
                     || material.resolve() != material || AddonMaterials.owns(material)
                     || id > 0 && GTMaterialRegistry.get(id) != material) continue;
             String f = fields[2];
-            DEFAULTS.put(material, new Captured(id, fields[1], eligibility(material), cutterEligibility(material),
+            DEFAULTS.put(material, new Captured(id, fields[1], eligibility(material), cutterEligibility(material), formingEligibility(material),
                     new Profile(f.charAt(0) == '1', f.charAt(1) == '1', f.charAt(2) == '1', f.charAt(3) == '1')));
         }
         captured = true;
@@ -88,6 +102,17 @@ public final class SourceLatheMaterialProfiles {
                 || GTMaterialRegistry.get(value.name()) != material
                 || value.id() > 0 && GTMaterialRegistry.get(value.id()) != material
                 || !value.cutterEligibility().equals(cutterEligibility(material))) return null;
+        return value.profile();
+    }
+
+    /** Source easy/coated facts only; live native SMITHABLE remains the forming admission gate. */
+    public static Profile findForForming(GTMaterial material) {
+        Captured value = DEFAULTS.get(material);
+        if (value == null || material.resolve() != material || AddonMaterials.owns(material)
+                || material.getId() != value.id() || !material.getName().equals(value.name())
+                || GTMaterialRegistry.get(value.name()) != material
+                || value.id() > 0 && GTMaterialRegistry.get(value.id()) != material
+                || !value.formingEligibility().equals(formingEligibility(material))) return null;
         return value.profile();
     }
 

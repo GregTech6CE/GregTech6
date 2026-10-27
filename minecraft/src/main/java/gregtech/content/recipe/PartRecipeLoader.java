@@ -42,8 +42,7 @@ public class PartRecipeLoader implements InitializationStep {
 
             rollingMill(m);
             wiremill(m);
-            rollBender(m);
-            clusterMillAndRollFormer(m);
+            forming(entry);
             lathe(entry);
             cutter(entry);
             extruder(m);
@@ -76,22 +75,21 @@ public class PartRecipeLoader implements InitializationStep {
 
     }
 
-    // ── RollBender: plates/rods → curved plates, rings, springs ─────────────
+    // ── Six generic RollBender / ClusterMill / RollFormer pairs ────────────
 
-    private void rollBender(GTMaterial m) {
-        if (!m.has(MaterialProperty.SMITHABLE)) return;
-        roll(MachineRecipeMaps.RollBender, m, MaterialPrefix.plate, 1, MaterialPrefix.plateCurved, 1, 16);
-        roll(MachineRecipeMaps.RollBender, m, MaterialPrefix.stick, 1, MaterialPrefix.ring, 2, 4);
-        roll(MachineRecipeMaps.RollBender, m, MaterialPrefix.stickLong, 1, MaterialPrefix.spring, 1, 16);
-        roll(MachineRecipeMaps.RollBender, m, MaterialPrefix.wireFine, 2, MaterialPrefix.springSmall, 1, 4);
-    }
-
-    // ── ClusterMill: plate → foils ── RollFormer: plate → rails ─────────────
-
-    private void clusterMillAndRollFormer(GTMaterial m) {
-        if (!m.has(MaterialProperty.SMITHABLE)) return;
-        roll(MachineRecipeMaps.ClusterMill, m, MaterialPrefix.plate, 1, MaterialPrefix.foil, 4, 16);
-        roll(MachineRecipeMaps.RollFormer, m, MaterialPrefix.plate, 1, MaterialPrefix.railGt, 4, 16);
+    private void forming(GTMaterial entry) {
+        GTMaterial material = entry.resolve();
+        for (var rule : SourceFormingRules.rules()) {
+            var decision = SourceFormingRules.evaluate(entry, rule);
+            if (!decision.allowed()) continue;
+            var map = switch (rule.machine()) {
+                case ROLL_BENDER -> MachineRecipeMaps.RollBender;
+                case CLUSTER_MILL -> MachineRecipeMaps.ClusterMill;
+                case ROLL_FORMER -> MachineRecipeMaps.RollFormer;
+            };
+            roll(map, material, rule.input(), rule.inputCount(), rule.output(), rule.outputCount(),
+                    decision.ticks(), SourceFormingRules.EU_PER_TICK);
+        }
     }
 
     // ── Lathe: ingots/gems → rods, bolts → screws, gem plates → lenses ──────
