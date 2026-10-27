@@ -6,7 +6,7 @@ import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import gregtech.content.plant.WoodSlabCatalog;
 import net.minecraft.world.item.ItemStack;
-/** GT6 default log/beam sawing applied to the currently registered GT tree families.
+/** GT6 default log/stripped-log sawing applied to the currently registered GT tree families.
  * No invented charcoal conversion for fireproof species or nether stems.
  */
 public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
@@ -25,7 +25,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
    ItemMaterialRegistry.register(GTWoods.log(species).asItem(),new ItemComposition(null,
            java.util.List.of(MaterialComponent.of(material,8*GTValues.U),MaterialComponent.of(bark,GTValues.U)),
            "GT6 WoodEntry",true));
-   ItemMaterialRegistry.register(GTWoods.beam(species).asItem(),null,material,8*GTValues.U);
+   ItemMaterialRegistry.register(GTWoods.strippedLog(species).asItem(),null,material,8*GTValues.U);
   }
   for(var wood:NaturalWoodCraftingRows.SPECIES){
    var material=gregtech.engine.material.GTMaterialRegistry.get(wood.material());
@@ -93,17 +93,17 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
     fluids(fluid(coolant.field(),4*coolant.multiplier())),null);
  }
  private void wood(WoodSpecies s){
-  var log=new ItemStack(GTWoods.log(s));var beam=new ItemStack(GTWoods.beam(s));
+  var log=new ItemStack(GTWoods.log(s));var stripped=new ItemStack(GTWoods.strippedLog(s));
   String name=WoodSlabCatalog.material(s.id());
   var bark=mat(MaterialPrefix.dust,s==WoodSpecies.CINNAMON?"Cinnamon":"Bark",1);
   saw("gt_log/"+s.id(),log,new ItemStack(GTWoods.planks(s),6),bark);
-  saw("gt_beam/"+s.id(),beam,new ItemStack(GTWoods.planks(s),7),mat(MaterialPrefix.dust,name,1));
+  saw("gt_stripped/"+s.id(),stripped,new ItemStack(GTWoods.planks(s),7),mat(MaterialPrefix.dust,name,1));
   MachineRecipeMaps.pulverizing(log,pulp(s.id(),6*GTValues.U),bark,50);
-  pulverize(beam,s.id(),7*GTValues.U);
+  pulverize(stripped,s.id(),7*GTValues.U);
   for(String water:new String[]{"Water","DistW","SpDew","MnWtr"})
-   add("debark/"+s.id()+"/"+water,MachineRecipeMaps.PressureWasher,64,16,items(log),items(beam,bark),fluids(fluid(water,200)),null);
+   add("debark/"+s.id()+"/"+water,MachineRecipeMaps.PressureWasher,64,16,items(log),items(stripped,bark),fluids(fluid(water,200)),null);
   add("lathe/log/"+s.id(),MachineRecipeMaps.Lathe,80,16,items(log),items(mat(MaterialPrefix.stickLong,name,4),mat(MaterialPrefix.dust,name,1)),null,null);
-  add("lathe/beam/"+s.id(),MachineRecipeMaps.Lathe,80,16,items(beam),items(mat(MaterialPrefix.stickLong,name,5),mat(MaterialPrefix.dust,name,1)),null,null);
+  add("lathe/stripped/"+s.id(),MachineRecipeMaps.Lathe,80,16,items(stripped),items(mat(MaterialPrefix.stickLong,name,5),mat(MaterialPrefix.dust,name,1)),null,null);
   add("lathe/planks/"+s.id(),MachineRecipeMaps.Lathe,16,16,items(new ItemStack(GTWoods.planks(s))),items(mat(MaterialPrefix.stick,name,2)),null,null);
  }
  private void naturalWood(NaturalWoodCraftingRows.Spec wood){

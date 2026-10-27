@@ -371,6 +371,7 @@ public final class MaterialTagPack extends AbstractPackResources {
         });
         // Wood form tags for the wooden-pipe recipes (GT6's OD.plankAnyWood / OD.beamWood): vanilla
         // planks and slabs join through nested tag references, the port's own species are listed.
+        // The beam identity is the modern stripped log, so vanilla stripped logs join it as well.
 //? if >=1.21.1 {
         /*tags.computeIfAbsent("gt6ce:tags/item/wooden_planks.json", k -> new TreeSet<>())
 *///?} else {
@@ -396,20 +397,49 @@ public final class MaterialTagPack extends AbstractPackResources {
                     && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodPlanksBlock)
                 tags.computeIfAbsent("gt6ce:tags/item/wooden_planks.json",key->new TreeSet<>()).add(id.toString());
             if(item instanceof net.minecraft.world.item.BlockItem blockItem
-                    && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodBeamBlock)
-                tags.computeIfAbsent("gt6ce:tags/item/wooden_beams.json",key->new TreeSet<>()).add(id.toString());
+                    && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodStrippedLogBlock)
+                tags.computeIfAbsent("gt6ce:tags/item/stripped_logs.json",key->new TreeSet<>()).add(id.toString());
 *///?} else {
             if (item instanceof BlockItem blockItem
                     && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodPlanksBlock) {
                 tags.computeIfAbsent("gt6ce:tags/items/wooden_planks.json", k -> new TreeSet<>())
                         .add(id.toString());
             }
-            if (item instanceof BlockItem beamItem
-                    && beamItem.getBlock() instanceof gregtech.content.block.wood.WoodBeamBlock) {
-                tags.computeIfAbsent("gt6ce:tags/items/wooden_beams.json", k -> new TreeSet<>())
+            if (item instanceof BlockItem strippedItem
+                    && strippedItem.getBlock() instanceof gregtech.content.block.wood.WoodStrippedLogBlock) {
+                tags.computeIfAbsent("gt6ce:tags/items/stripped_logs.json", k -> new TreeSet<>())
                         .add(id.toString());
             }
 //?}
+        }
+        // GT6 mapped modern stripped logs to beamWood (LoaderItemList:1457-1468); include the vanilla
+        // log/wood pairs the port's wood list covers.
+//? if >=1.21.1 {
+        /*var strippedLogs = tags.computeIfAbsent("gt6ce:tags/item/stripped_logs.json", k -> new TreeSet<>());
+*///?} else {
+        var strippedLogs = tags.computeIfAbsent("gt6ce:tags/items/stripped_logs.json", k -> new TreeSet<>());
+//?}
+        for (String wood : new String[]{"oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"}) {
+            strippedLogs.add("minecraft:stripped_" + wood + "_log");
+            strippedLogs.add("minecraft:stripped_" + wood + "_wood");
+        }
+        for (String wood : new String[]{"crimson", "warped"}) {
+            strippedLogs.add("minecraft:stripped_" + wood + "_stem");
+            strippedLogs.add("minecraft:stripped_" + wood + "_hyphae");
+        }
+        // GT logs and stripped logs are logs for axe chaining, worldgen tag checks and cross-mod use.
+//? if >=1.21.1 {
+        /*var logBlocks = tags.computeIfAbsent("minecraft:tags/block/logs.json", k -> new TreeSet<>());
+        var logItems = tags.computeIfAbsent("minecraft:tags/item/logs.json", k -> new TreeSet<>());
+*///?} else {
+        var logBlocks = tags.computeIfAbsent("minecraft:tags/blocks/logs.json", k -> new TreeSet<>());
+        var logItems = tags.computeIfAbsent("minecraft:tags/items/logs.json", k -> new TreeSet<>());
+//?}
+        for (gregtech.content.block.wood.WoodSpecies sp : gregtech.content.block.wood.WoodSpecies.values()) {
+            logBlocks.add("gt6ce:log_" + sp.id());
+            logBlocks.add("gt6ce:stripped_log_" + sp.id());
+            logItems.add("gt6ce:log_" + sp.id());
+            logItems.add("gt6ce:stripped_log_" + sp.id());
         }
         // GT6 LIST_SLABS / slabAnyWood: native slabs participate in normal slab crafting.
         for(String wood:gregtech.content.plant.WoodSlabCatalog.WOODS){

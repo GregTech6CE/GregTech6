@@ -25,12 +25,12 @@ private static void add(String id,java.util.function.Supplier<Block> factory){va
         // GTLongDistance owns the whole catalog. The old single wire id is not in that catalog.
         skip.add("long_dist_wire");
         for (var spec : gregtech.content.logistics.LongDistanceCatalog.ALL) skip.add(spec.id());
-        // GTWoods species — skip log/planks/leaves/beam/sapling for each
+        // GTWoods species — skip log/planks/leaves/sapling for each
         for (String species : Set.of("rubber", "maple", "rainbowood", "willow",
                 "pine", "blue_mahoe", "ebony", "white_mahoe",
                 // GT6's remaining trees (hazel/cinnamon/coconut/blue spruce) became real species too
                 "hazel", "cinnamon", "coconut", "bluespruce")) {
-            for (String prefix : Set.of("log_", "planks_", "leaves_", "beam_", "sapling_")) {
+            for (String prefix : Set.of("log_", "planks_", "leaves_", "sapling_")) {
                 skip.add(prefix + species);
             }
         }

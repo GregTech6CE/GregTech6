@@ -805,7 +805,7 @@ public final class OriginalHandCraftingRows {
             String[] pattern;
             if (creosote) {
                 pattern = new String[]{"rS", "Bf"};
-                keys.put("S", Map.of("tag", "gt6ce:wooden_beams"));
+                keys.put("S", Map.of("tag", "gt6ce:stripped_logs"));
                 keys.put("B", Map.of("type", "gt6ce:creosote_container_1000"));
             } else {
                 var form = switch (spec.size()) {

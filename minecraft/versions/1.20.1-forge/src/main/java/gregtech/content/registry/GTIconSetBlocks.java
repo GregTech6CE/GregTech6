@@ -47,7 +47,7 @@ public final class GTIconSetBlocks {
                 "pine", "blue_mahoe", "ebony", "white_mahoe",
                 // GT6's remaining trees (hazel/cinnamon/coconut/blue spruce) became real species too
                 "hazel", "cinnamon", "coconut", "bluespruce")) {
-            for (String prefix : Set.of("log_", "planks_", "leaves_", "beam_", "sapling_")) {
+            for (String prefix : Set.of("log_", "planks_", "leaves_", "sapling_")) {
                 skip.add(prefix + species);
             }
         }

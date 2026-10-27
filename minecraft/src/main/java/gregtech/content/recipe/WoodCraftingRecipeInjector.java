@@ -102,7 +102,7 @@ public final class WoodCraftingRecipeInjector {
         return switch (kind) {
             case "log" -> new ItemStack(GTWoods.log(resolved));
             case "planks" -> new ItemStack(GTWoods.planks(resolved));
-            case "beam" -> new ItemStack(GTWoods.beam(resolved));
+            case "stripped" -> new ItemStack(GTWoods.strippedLog(resolved));
             default -> ItemStack.EMPTY;
         };
     }
@@ -124,6 +124,7 @@ public final class WoodCraftingRecipeInjector {
         int added = 0;
         for (String row : GTWoodRecipes.CRAFT_ROWS) added += row(recipes, row);
         for (String row : gregtech.content.recipe.NaturalWoodCraftingRows.ROWS) added += row(recipes, row);
+        for (String row : gregtech.content.recipe.VanillaWoodCraftingRows.ROWS) added += row(recipes, row);
         added += treatedWoodRows(recipes);
         if (added > 0) gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} GT6 wood dictionary crafting rows for {} species ({} skipped)",
@@ -189,7 +190,7 @@ public final class WoodCraftingRecipeInjector {
      * The key map of one generated row, or {@code null} when a key is malformed or does not resolve.
      *
      * <p>A key is one character plus {@code =} plus a spec - GT6's own keys are single letters
-     * ({@code 's'} saw, {@code 'f'} file, {@code 'L'} log, {@code 'B'} beam, {@code 'P'} plank), so the
+     * ({@code 's'} saw, {@code 'f'} file, {@code 'L'} log, {@code 'B'} stripped log, {@code 'P'} plank), so the
      * {@code =} sits at index 1; anything else is a malformed row. Public so
      * {@code gametest/WoodRecipeTests.java} can run the loader's real parser over every generated row -
      * an earlier revision of this guarded on a longer symbol and silently skipped all 68 rows.</p>
@@ -281,7 +282,7 @@ public final class WoodCraftingRecipeInjector {
     }
 
     /**
-     * Resolves one generated spec: {@code log|planks|beam:<species>} (the port's own wood blocks),
+     * Resolves one generated spec: {@code log|planks|stripped:<species>} (the port's own wood blocks),
      * {@code rod:<material>}/{@code rodlong:<material>} (GT6's {@code OP.stick}/{@code OP.stickLong} of
      * a wood material) and {@code tool:<id>} (a {@link GTToolType}).
      */
@@ -296,7 +297,7 @@ public final class WoodCraftingRecipeInjector {
 //?} else {
             case "item": return new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(argument)));
 //?}
-            case "log", "planks", "beam":
+            case "log", "planks", "stripped":
                 return block(kind, argument);
             case "rod":
             case "rodlong": {
