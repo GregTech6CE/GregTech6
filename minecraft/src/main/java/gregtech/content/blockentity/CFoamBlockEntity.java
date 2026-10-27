@@ -43,8 +43,8 @@ public class CFoamBlockEntity extends BlockEntity {
     }
 
     /**
-     * GT6's {@code dryFoam}: the wet foam becomes the hardened block. Public so the GameTest (and a
-     * future spray can or drying tool) can trigger it without waiting for the roll.
+     * GT6's {@code dryFoam}: the wet foam becomes the hardened block. Public so a future spray can or
+     * drying tool can trigger it without waiting for the roll.
      *
      * @return true when this call dried the foam
      */

@@ -140,7 +140,7 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's crystal pass for one column, public so a GameTest can drive a prepared ceiling.
+     * GT6's crystal pass for one column, split out so a prepared ceiling can be driven directly.
      *
      * @return true when a crystal cluster was seeded
      */

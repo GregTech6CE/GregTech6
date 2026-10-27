@@ -101,8 +101,8 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's per-column loop of {@code WorldgenPit.generate}. Public so the GameTest can carve a
-     * prepared column instead of hunting for a generated pit.
+     * GT6's per-column loop of {@code WorldgenPit.generate}. Split out so a prepared column can be
+     * carved directly instead of hunting for a generated pit.
      *
      * @return true when at least one block was replaced
      */

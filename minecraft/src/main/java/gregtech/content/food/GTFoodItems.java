@@ -159,7 +159,7 @@ public final class GTFoodItems {
 //?}
     }
 
-    /** Ids {@link #item(String)} could not resolve (a real gap, asserted by the GameTest). */
+    /** Ids {@link #item(String)} could not resolve (a real gap, reported instead of silently dropped). */
     public static List<String> unresolved() {
         return List.copyOf(MISSING_ITEMS);
     }
@@ -240,11 +240,11 @@ public final class GTFoodItems {
      * The delivery half of {@code FoodStat.java:146-151}: the empty container goes into the player's
      * inventory, and when there is no room it is dropped in front of them instead of being lost.
      *
-     * <p>Public so a GameTest can assert the branch directly. The dropped {@code ItemEntity} cannot be
-     * the test's evidence: an entity added to a chunk a test merely {@code setBlock}ed into stays in
-     * the level's <em>pending</em> set - its section is not tracked yet - so neither
+     * <p>Public so the drop branch can be driven directly. A dropped {@code ItemEntity} is not
+     * visible to a caller that merely {@code setBlock}ed into the chunk: the entity stays in the
+     * level's <em>pending</em> set - its section is not tracked yet - so neither
      * {@code Level.getEntitiesOfClass} nor even {@code ServerLevel.getAllEntities} lists it in the same
-     * tick ({@code PersistentEntitySectionManager}, the trap {@code PileBlockTests:643-651} documents).</p>
+     * tick ({@code PersistentEntitySectionManager}).</p>
      *
      * @return {@code true} when the stack went into the inventory, {@code false} when it was dropped
      */

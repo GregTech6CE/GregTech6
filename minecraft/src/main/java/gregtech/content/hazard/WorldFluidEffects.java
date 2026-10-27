@@ -74,8 +74,8 @@ import java.util.List;
  * is ported: {@code setWeb()} is 1.7.10's {@code Entity#setInWeb}, i.e. vanilla cobweb's
  * {@code makeStuckInBlock(state, 0.25, 0.05, 0.25)}.</p>
  *
- * <p>Everything here is a pure function of a fluid (plus an entity to apply to), so a GameTest can
- * drive the whole table without a world.</p>
+ * <p>Everything here is a pure function of a fluid (plus an entity to apply to), so the whole table
+ * can be driven without a world.</p>
  */
 public final class WorldFluidEffects {
 

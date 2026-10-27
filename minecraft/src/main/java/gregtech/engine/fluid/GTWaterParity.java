@@ -20,8 +20,8 @@ import java.util.Set;
  * water's tint, and they were not in {@code #minecraft:water}, so vanilla's own water fog, camera
  * overlay, swimming, boat and waterlogged-block checks all skipped them.
  *
- * <p>The constants here are the vanilla 1.20.1 values, so the registry, the loader, the client
- * visual policy and the GameTest all read the same numbers:
+ * <p>The constants here are the vanilla 1.20.1 values, so the registry, the loader and the client
+ * visual policy all read the same numbers:
  * <ul>
  *   <li>{@code net.minecraft.world.level.block.Blocks.WATER} - the properties of the world water
  *       blocks,</li>

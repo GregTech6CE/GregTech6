@@ -68,6 +68,7 @@ public final class FallenLogBlock extends RotatedPillarBlock {
                                  InteractionHand hand, BlockHitResult hit) {
         ItemStack tool = player.getItemInHand(hand);
         if (!GTToolHelper.matchesTool(tool, GTToolType.AXE)
+                && !GTToolHelper.matchesTool(tool, GTToolType.DOUBLE_AXE)
                 && !GTToolHelper.matchesTool(tool, GTToolType.SAW)
                 && !GTToolHelper.matchesTool(tool, GTToolType.KNIFE)) return InteractionResult.PASS;
         ItemStack output = toolProduct();

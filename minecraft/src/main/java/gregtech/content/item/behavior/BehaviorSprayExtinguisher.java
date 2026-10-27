@@ -159,10 +159,10 @@ public final class BehaviorSprayExtinguisher {
      * {@link #EXTINGUISH_COST} uses. {@link #extinguish} hands its query result through here, so there
      * is one implementation of the rule.
      *
-     * <p>It is public so a GameTest can drive it for an explicit entity:
-     * {@code Level.getEntitiesOfClass} does not see entities in a chunk a test merely {@code setBlock}
-     * ed into ({@code PersistentEntitySectionManager:47}, {@code EntitySectionStorage:55} - the trap
-     * {@code PileBlockTests:643-651} documents), so the area query cannot be the test's channel.</p>
+     * <p>It is public so it can be driven for an explicit entity: {@code Level.getEntitiesOfClass}
+     * does not see entities in a chunk that was merely {@code setBlock}ed into
+     * ({@code PersistentEntitySectionManager:47}, {@code EntitySectionStorage:55}), so the area query
+     * cannot reach them either.</p>
      *
      * @return the uses this entity costs, {@code 0} when it costs nothing
      */

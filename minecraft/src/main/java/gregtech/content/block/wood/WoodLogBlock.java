@@ -9,8 +9,12 @@ import gregtech.content.registry.GTWoods;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +50,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
 
     public WoodSpecies species() { return species; }
 
-    /** GT6 BlockTreeLogA/B/C: strip a living log into its corresponding beam. */
+    /** GT6 BlockTreeLogA/B/C: strip a living log into its corresponding stripped log. */
     public ItemStack toolProduct() {
         if (species == WoodSpecies.CINNAMON) {
             // GT6 BlockTreeLogB:99 prefers its own IL.Food_Cinnamon before cinnamon dust.
@@ -67,8 +71,9 @@ public class WoodLogBlock extends RotatedPillarBlock {
     }
 
     /**
-     * Axe/saw/knife produce a beam and bark. GT6's hand drill still makes maple/rainbowood sap
-     * holes from a horizontal side, and other clicks leave the log untouched.
+     * Axe/saw/knife produce a stripped log; GT tools also drop bark. A plain axe follows vanilla
+     * stripping without the extra bark. GT6's hand drill still makes maple/rainbowood sap holes from
+     * a horizontal side, and other clicks leave the log untouched.
      */
 //? if >=1.21.1 {
     /*private InteractionResult originalUse(BlockState state, Level level, BlockPos pos, Player player,
@@ -78,17 +83,29 @@ public class WoodLogBlock extends RotatedPillarBlock {
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
-        boolean axe = GTToolHelper.matchesTool(stack, GTToolType.AXE);
-        if (axe || GTToolHelper.matchesTool(stack, GTToolType.SAW)
-                || GTToolHelper.matchesTool(stack, GTToolType.KNIFE)) {
-            ItemStack output = toolProduct();
-            if (output.isEmpty()) return InteractionResult.PASS;
+        boolean gtAxe = GTToolHelper.matchesTool(stack, GTToolType.AXE)
+                || GTToolHelper.matchesTool(stack, GTToolType.DOUBLE_AXE);
+        boolean gtSawOrKnife = GTToolHelper.matchesTool(stack, GTToolType.SAW)
+                || GTToolHelper.matchesTool(stack, GTToolType.KNIFE);
+        boolean plainAxe = !GTToolHelper.isTool(stack) && stack.is(ItemTags.AXES);
+        if (gtAxe || gtSawOrKnife || plainAxe) {
             if (level.isClientSide) return InteractionResult.SUCCESS;
-            BlockState beam = GTWoods.beam(species).defaultBlockState()
-                    .setValue(WoodBeamBlock.AXIS, state.getValue(AXIS));
-            if (!level.setBlock(pos, beam, 3)) return InteractionResult.FAIL;
-            gregtech.engine.fluid.HandContainerTransfer.give(player, output);
-            GTToolHelper.damageForToolClickReturn(stack, axe ? 500L : 1000L, player);
+            BlockState stripped = GTWoods.strippedLog(species).defaultBlockState()
+                    .setValue(WoodStrippedLogBlock.AXIS, state.getValue(AXIS));
+            if (!level.setBlock(pos, stripped, 3)) return InteractionResult.FAIL;
+            level.playSound(null, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+            EquipmentSlot slot = hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+            if (plainAxe) {
+//? if >=1.21.1 {
+                /*stack.hurtAndBreak(1, player, slot);
+*///?} else {
+                stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+//?}
+            } else {
+                ItemStack output = toolProduct();
+                if (!output.isEmpty()) gregtech.engine.fluid.HandContainerTransfer.give(player, output);
+                GTToolHelper.damageForToolClickReturn(stack, gtAxe ? 500L : 1000L, player, slot);
+            }
             return InteractionResult.CONSUME;
         }
         TreeHoleBlock hole = drilledHole();

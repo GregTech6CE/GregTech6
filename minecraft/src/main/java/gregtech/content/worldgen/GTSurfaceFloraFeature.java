@@ -115,7 +115,7 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
 
     /**
      * GT6's three fallen-log shapes: 0 = vertical pile, 1 = X-axis run, 2 = Z-axis run.
-     * Public so the GameTest can drive the real shape code instead of re-implementing it.
+     * Split out so the real shape code can be driven directly instead of re-implemented.
      */
     public static boolean placeShape(WorldGenLevel level, BlockPos ground, Block block, int shape,
                                      boolean mushrooms, RandomSource random) {

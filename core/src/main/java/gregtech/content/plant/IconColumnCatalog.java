@@ -1,6 +1,6 @@
 package gregtech.content.plant;
 import java.util.*;
-/** Original composite log/beam and eight bale identities. Both factories consume this table. */
+/** Original composite log and eight bale identities. Beams are no longer blocks: the port's beam identity is the stripped log. */
 public final class IconColumnCatalog {private IconColumnCatalog(){}
     public static String[][] all() {
         List<String[]> list = new ArrayList<>();
@@ -15,11 +15,6 @@ public final class IconColumnCatalog {private IconColumnCatalog(){}
         list.add(new String[]{"log_sap_maple", "log_sap_maple", "log_top_maple"});
         list.add(new String[]{"log_sap_rainbowood", "log_sap_rainbowood", "log_top_rainbowood"});
         list.add(new String[]{"log_resin_rubber", "log_resin_rubber", "log_top_rubber"});
-        for (String wood : new String[]{"acacia", "birch", "bluemahoe", "bluespruce", "cinnamon", "coconut",
-                "darkoak", "darkwood", "greatwood", "hazel", "jungle", "maple", "oak", "rainbowood", "rubber",
-                "rubberwood", "silverwood", "skyroot", "spruce", "willow", "wood"}) {
-            list.add(new String[]{"beam_" + wood, "beam_side_" + wood, "beam_top_" + wood});
-        }
         for (String crop : new String[]{"barley", "oat", "rice", "rye"}) {
             list.add(new String[]{"bale_" + crop, crop + "_side", crop + "_top"});
         }
