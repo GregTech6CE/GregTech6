@@ -51,7 +51,7 @@ public final class ComponentCoverStorage {
 
     public boolean attach(Direction side, ItemStack stack) {
         if (stack.isEmpty() || !get(side).isEmpty() || !panels.canAttach(side,stack)
-                || !CoverItems.isCover(stack)) return false;
+                || !CoverItems.isCover(stack) || !CoverAdmission.allowCover(host.coverOwner(), side, stack)) return false;
         if (covers == null) {
             covers = new ItemStack[6];
             java.util.Arrays.fill(covers, ItemStack.EMPTY);

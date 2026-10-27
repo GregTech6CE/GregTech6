@@ -488,7 +488,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Attaches a cover (one item from the stack); false if the face is occupied. */
     public boolean attachCover(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !covers[side.ordinal()].isEmpty() || !panels.canAttach(side,stack)) return false;
+        if (stack.isEmpty() || !covers[side.ordinal()].isEmpty() || !panels.canAttach(side,stack)
+                || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
         covers[side.ordinal()] = stack.copyWithCount(1);
         panels.attached(side);
         mInventoryChanged=true;

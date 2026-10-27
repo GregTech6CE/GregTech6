@@ -34,7 +34,7 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
     @Override
     public boolean attachCover(Direction side, net.minecraft.world.item.ItemStack stack) {
         if (stack.isEmpty() || !getCover(side).isEmpty() || !gregtech.content.cover.CoverItems.isCover(stack) || !panels.canAttach(side,
-                stack)) return false;
+                stack) || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
         covers[side.ordinal()] = stack.copyWithCount(1);
         panels.attached(side);
         panels.afterTick();
