@@ -76,6 +76,10 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.BLUE));
         }
 
+        if (mat == gregtech.content.material.generated.OreMaterials.Pyrite) {
+            tooltip.add(Component.translatable("tooltip.gt6ce.pyrite.fools_gold").withStyle(ChatFormatting.YELLOW));
+        }
+
         appendFuelValue(FurnaceFuelValue.getBurnValue(stack), tooltip);
         appendFlammableTooltip(mat, tooltip);
 

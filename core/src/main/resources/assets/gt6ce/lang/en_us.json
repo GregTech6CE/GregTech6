@@ -1,4 +1,7 @@
 {
+  "jade.gt6ce.pyrite.ore": "Gold Ore",
+  "jade.gt6ce.pyrite.small_ore": "Small Gold Ore",
+  "tooltip.gt6ce.pyrite.fools_gold": "Ooh, something shiny and golden! Huh? Why isn't it gold?",
   "gt.material.Sculk": "Sculk",
   "material.gt6ce.sculk": "Sculk",
   "gt6ce.jei.category.mold_chisel": "Mold Chiseling",

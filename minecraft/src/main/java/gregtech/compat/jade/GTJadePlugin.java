@@ -63,6 +63,7 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.registerBlockComponent(PyriteOreJadeProvider.INSTANCE, gregtech.content.block.OreBlock.class);
         registration.registerBlockComponent(BatteryBoxJadeProvider.INSTANCE, gregtech.content.block.energy.EnergyNodeBlock.class);
         registration.registerBlockComponent(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
         registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.TankBlock.class);
