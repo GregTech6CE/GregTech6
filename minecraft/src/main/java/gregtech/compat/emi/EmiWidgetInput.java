@@ -14,13 +14,35 @@ public final class EmiWidgetInput {
     private static Surface captured;
     private static int capturedButton;
     private EmiWidgetInput() {}
-    public static void beginFrame(Screen screen) { frameScreen = screen; surfaces.clear(); if (captureScreen != screen) captured = null; }
+    public static void beginFrame(Screen screen) {
+        frameScreen = screen;
+        surfaces.clear();
+        if (captureScreen != screen) clearCapture();
+    }
+    private static void clearCapture() {
+        captured = null;
+        captureScreen = null;
+        capturedButton = 0;
+    }
+    /** Closing a different screen layer must not discard this screen's input state. */
+    public static void closed(Screen screen) {
+        if (frameScreen == screen) {
+            frameScreen = null;
+            surfaces.clear();
+        }
+        if (captureScreen == screen) clearCapture();
+    }
+    public static void clear() {
+        frameScreen = null;
+        surfaces.clear();
+        clearCapture();
+    }
     public static void rendered(EmiInteractiveWidget widget, GuiGraphics graphics) {
         var b = widget.getBounds();
         surfaces.add(new Surface(widget, PreviewViewport.screenBounds(graphics.pose().last().pose(), b.x(), b.y(), b.x()+b.width(), b.y()+b.height()), new org.joml.Matrix4f(graphics.pose().last().pose()).invert()));
     }
     public static boolean pressed(Screen screen, double x, double y, int button) {
-        captured = null;
+        clearCapture();
         if (screen != frameScreen) return false;
         for (int i = surfaces.size()-1; i >= 0; i--) {
             var surface = surfaces.get(i);
@@ -33,7 +55,7 @@ public final class EmiWidgetInput {
     }
     public static boolean released(Screen screen, int button) {
         boolean handled = captured != null && screen == captureScreen && button == capturedButton;
-        if (handled) captured = null;
+        if (handled) clearCapture();
         return handled;
     }
     public static boolean dragged(Screen screen, int button, double dx, double dy) {

@@ -14,6 +14,16 @@ public final class EmiWidgetInputEvents {
 *///?} else {
     private static boolean loaded() { return net.minecraftforge.fml.ModList.get().isLoaded("emi"); }
 //?}
+    @SubscribeEvent public static void closed(ScreenEvent.Closing e) { if(loaded()) gregtech.compat.emi.EmiWidgetInput.closed(e.getScreen()); }
+//? if >=1.21.1 {
+    /*@SubscribeEvent public static void unload(net.neoforged.neoforge.event.level.LevelEvent.Unload e) {
+        if(e.getLevel().isClientSide()&&loaded()) gregtech.compat.emi.EmiWidgetInput.clear();
+    }
+*///?} else {
+    @SubscribeEvent public static void unload(net.minecraftforge.event.level.LevelEvent.Unload e) {
+        if(e.getLevel().isClientSide()&&loaded()) gregtech.compat.emi.EmiWidgetInput.clear();
+    }
+//?}
     @SubscribeEvent public static void render(ScreenEvent.Render.Pre e) { if(loaded()) gregtech.compat.emi.EmiWidgetInput.beginFrame(e.getScreen()); }
     @SubscribeEvent public static void pressed(ScreenEvent.MouseButtonPressed.Pre e) { if(loaded()&&gregtech.compat.emi.EmiWidgetInput.pressed(e.getScreen(),e.getMouseX(),e.getMouseY(),e.getButton()))e.setCanceled(true); }
     @SubscribeEvent public static void released(ScreenEvent.MouseButtonReleased.Pre e) { if(loaded()&&gregtech.compat.emi.EmiWidgetInput.released(e.getScreen(),e.getButton()))e.setCanceled(true); }
