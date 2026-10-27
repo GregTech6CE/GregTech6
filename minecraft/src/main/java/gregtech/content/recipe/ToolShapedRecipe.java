@@ -242,7 +242,8 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
 
     /^* Return finite vessels only from the matched slots, including offsets and permitted mirrors. ^/
     private void drainFiniteIngredients(CraftingInput input, NonNullList<ItemStack> remains) {
-        if (getIngredients().stream().noneMatch(i -> i.getCustomIngredient() instanceof FiniteBottleFillingRecipe.ContainerIngredient)) return;
+        if (getIngredients().stream().noneMatch(i -> i.getCustomIngredient() instanceof FiniteBottleFillingRecipe.ContainerIngredient
+                || i.getCustomIngredient() instanceof QuarterFluidCraftingIngredient)) return;
         for (int left = 0; left <= input.width() - base.getWidth(); left++)
             for (int top = 0; top <= input.height() - base.getHeight(); top++)
                 for (int mirror = 0; mirror <= (allowMirror ? 1 : 0); mirror++) {
@@ -265,6 +266,8 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                     for (int slot = 0; slot < mapped.length; slot++)
                         if (mapped[slot].getCustomIngredient() instanceof FiniteBottleFillingRecipe.ContainerIngredient)
                             remains.set(slot, FiniteBottleFillingRecipe.ContainerIngredient.drainOne(input.getItem(slot)));
+                        else if (mapped[slot].getCustomIngredient() instanceof QuarterFluidCraftingIngredient quarter)
+                            remains.set(slot, quarter.drainOne(input.getItem(slot)));
                     return;
                 }
 *///?} else {
@@ -394,7 +397,8 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
 
     /** Return vessels only at the matched fluid slots, respecting offsets and mirror policy. */
     private void drainFiniteIngredients(CraftingContainer inventory, NonNullList<ItemStack> remains) {
-        if (getIngredients().stream().noneMatch(i -> i instanceof FiniteBottleFillingRecipe.ContainerIngredient)) return;
+        if (getIngredients().stream().noneMatch(i -> i instanceof FiniteBottleFillingRecipe.ContainerIngredient
+                || i instanceof QuarterFluidCraftingIngredient)) return;
         for (int left = 0; left <= inventory.getWidth() - getWidth(); left++)
             for (int top = 0; top <= inventory.getHeight() - getHeight(); top++)
                 for (int mirror = 0; mirror <= (allowMirror ? 1 : 0); mirror++) {
@@ -417,6 +421,8 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                     for (int slot = 0; slot < mapped.length; slot++)
                         if (mapped[slot] instanceof FiniteBottleFillingRecipe.ContainerIngredient)
                             remains.set(slot, FiniteBottleFillingRecipe.ContainerIngredient.drainOne(inventory.getItem(slot)));
+                        else if (mapped[slot] instanceof QuarterFluidCraftingIngredient quarter)
+                            remains.set(slot, quarter.drainOne(inventory.getItem(slot)));
                     return;
                 }
     }

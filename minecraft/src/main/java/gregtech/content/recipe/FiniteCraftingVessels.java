@@ -24,6 +24,10 @@ final class FiniteCraftingVessels {
     private FiniteCraftingVessels() {}
 
     static List<ItemStack> examples(Fluid... fluids) {
+        return examples(1000, fluids);
+    }
+
+    static List<ItemStack> examples(int amount, Fluid... fluids) {
         var empty = new ArrayList<ItemStack>();
         // Keep the familiar tin cell first, then include every native vessel that really fits.
         add(empty, "fluid_cell_tin");
@@ -35,22 +39,22 @@ final class FiniteCraftingVessels {
         var result = new ArrayList<ItemStack>();
         for (var fluid : fluids) {
             if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) continue;
-            var required = new FluidStack(fluid, 1000);
+            var required = new FluidStack(fluid, amount);
             for (var vessel : empty) {
 //? if >=1.21.1 {
                 /*var handler = FluidUtil.getFluidHandler(vessel.copy()).orElse(null);
 *///?} else {
                 var handler = FluidUtil.getFluidHandler(vessel.copy()).resolve().orElse(null);
 //?}
-                if (handler == null || handler.fill(required, IFluidHandler.FluidAction.EXECUTE) != 1000) continue;
+                if (handler == null || handler.fill(required, IFluidHandler.FluidAction.EXECUTE) != amount) continue;
                 var filled = handler.getContainer().copy();
                 var before = FluidUtil.getFluidContained(filled).orElse(FluidStack.EMPTY);
                 // Wooden buckets canonicalize some families; never advertise a different fluid.
-                if (!sameFluid(before, required) || before.getAmount() != 1000) continue;
+                if (!sameFluid(before, required) || before.getAmount() != amount) continue;
                 var drained = handler.drain(required, IFluidHandler.FluidAction.EXECUTE);
                 var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
-                if (!sameFluid(drained, required) || drained.getAmount() != 1000
-                        || before.getAmount() - after.getAmount() != 1000) continue;
+                if (!sameFluid(drained, required) || drained.getAmount() != amount
+                        || before.getAmount() - after.getAmount() != amount) continue;
 //? if >=1.21.1 {
                 /*if (result.stream().noneMatch(existing -> ItemStack.isSameItemSameComponents(existing, filled)))
 *///?} else {
@@ -59,7 +63,7 @@ final class FiniteCraftingVessels {
                     result.add(filled);
             }
         }
-        if (result.isEmpty()) throw new IllegalStateException("No finite 1000 mB crafting vessel for requested fluids");
+        if (result.isEmpty()) throw new IllegalStateException("No finite crafting vessel for requested fluids");
         return List.copyOf(result);
     }
 

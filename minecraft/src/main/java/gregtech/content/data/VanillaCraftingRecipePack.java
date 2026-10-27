@@ -98,6 +98,15 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
             generated.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(),"recipes/"+id.getPath()+".json"),new Gson().toJson(json).getBytes(StandardCharsets.UTF_8));
 //?}
         }
+        gregtech.content.recipe.TorchCraftingRecipes.recipes().forEach((id, json) -> {
+//? if >=1.21.1 {
+            /*String directory = "recipe/";
+*///?} else {
+            String directory = "recipes/";
+//?}
+            generated.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), directory + id.getPath() + ".json"),
+                    new Gson().toJson(json).getBytes(StandardCharsets.UTF_8));
+        });
         for(var recipeId:REPLACED_PLANK_RECIPES) disablePlanks(generated,recipeId);
         resources=Map.copyOf(generated);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original vanilla overrides: {} rows",resources.size());
