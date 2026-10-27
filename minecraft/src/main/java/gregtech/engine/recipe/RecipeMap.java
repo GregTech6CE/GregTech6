@@ -897,11 +897,11 @@ public class RecipeMap {
 
     private static boolean containsInput(Recipe recipe, ItemStack stack, boolean indexed) {
         if (!recipe.mEnabled || recipe.mFakeRecipe) return false;
-        if (indexed && !recipe.hasSameItemInputPredicates()) return true;
+        if (indexed && !recipe.hasSameItemInputPredicates() && !recipe.hasItemInputGuards()) return true;
         for (int input = 0; input < recipe.mInputs.length; input++) {
             ItemStack required = recipe.mInputs[input];
             if (empty(required)) continue;
-            if (recipe.hasSameItemInputPredicate(input) || !indexed) {
+            if (recipe.hasSameItemInputPredicate(input) || recipe.hasItemInputGuard(input) || !indexed) {
                 if (recipe.matchesItemInput(input, stack)) return true;
             } else {
                 // Preserve the old index-only admission for unmarked inputs, including palette aliases.

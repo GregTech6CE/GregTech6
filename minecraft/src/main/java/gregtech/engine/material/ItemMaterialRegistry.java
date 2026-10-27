@@ -12,6 +12,8 @@ import java.util.*;
 /** Immutable per-item compositions; stack damage is evaluated without caching ItemStacks. */
 public final class ItemMaterialRegistry {
     private static final Map<Item, ItemComposition> BY_ITEM = new IdentityHashMap<>();
+    private static final java.util.concurrent.atomic.AtomicLong COMPOSITION_REVISION =
+            new java.util.concurrent.atomic.AtomicLong();
     private ItemMaterialRegistry() {}
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material) {
         if (item != null && prefix != null && prefix.hasEmptyAmmunitionForm()) {
@@ -27,8 +29,16 @@ public final class ItemMaterialRegistry {
             register(item, new ItemComposition(prefix, material, amount));
     }
     public static void register(Item item, ItemComposition data) {
-        if (item != null && data != null) BY_ITEM.put(item, data);
+        if (item != null && data != null) {
+            var previous = BY_ITEM.put(item, data);
+            if (!Objects.equals(previous, data)) COMPOSITION_REVISION.incrementAndGet();
+        }
     }
+    /** Candidate caches depend on explicit and tag-derived composition, not just stack identity. */
+    public static long compositionRevision() { return COMPOSITION_REVISION.get(); }
+
+    /** Called after the external tag adapter publishes changed immutable composition data. */
+    public static void notifyExternalCompositionChanged() { COMPOSITION_REVISION.incrementAndGet(); }
     /** Data registered for this item. Tag-derived compositions are not included. */
     public static Optional<ItemComposition> explicit(Item item) {
         var data = BY_ITEM.get(item);

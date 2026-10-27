@@ -61,6 +61,26 @@ public class Recipe {
     private final java.util.BitSet catalystInputs = new java.util.BitSet();
 
     private java.util.Map<Integer, java.util.function.Predicate<ItemStack>> sameItemInputPredicates = java.util.Map.of();
+    private java.util.Map<Integer, java.util.function.Predicate<ItemStack>> itemInputGuards = java.util.Map.of();
+
+    /**
+     * Adds a restriction after ordinary ingredient matching, retaining material/tag aliases and any
+     * same-item predicate. Configure the normalized recipe before publishing it. Guards must not
+     * mutate stacks and are evaluated live for admission, lookup and consumption, never cached.
+     * Repeated calls for a slot compose restrictions rather than replacing an earlier guard.
+     */
+    public Recipe withItemInputGuard(int index, java.util.function.Predicate<ItemStack> guard) {
+        if (index < 0 || index >= mInputs.length || mInputs[index] == null || mInputs[index].isEmpty()
+                || guard == null) throw new IllegalArgumentException("Item input guard " + index);
+        var guards = new java.util.HashMap<>(itemInputGuards);
+        guards.merge(index, guard, (previous, added) -> previous.and(added));
+        itemInputGuards = java.util.Map.copyOf(guards);
+        return this;
+    }
+
+    public boolean hasItemInputGuard(int index) { return itemInputGuards.containsKey(index); }
+
+    boolean hasItemInputGuards() { return !itemInputGuards.isEmpty(); }
 
     /**
      * Replace only this input's stack-data comparison, never its Item identity or consumption gates.
@@ -90,9 +110,11 @@ public class Recipe {
         ItemStack required = mInputs[index];
         if (required == null || required.isEmpty()) return false;
         var predicate = sameItemInputPredicates.get(index);
-        if (predicate == null) return RecipeInputs.matches(required, available);
-        return required.is(available.getItem()) && RecipeInputs.emptyContainerMatches(required, available)
+        boolean matches = predicate == null ? RecipeInputs.matches(required, available)
+                : required.is(available.getItem()) && RecipeInputs.emptyContainerMatches(required, available)
                 && predicate.test(available);
+        var guard = itemInputGuards.get(index);
+        return matches && (guard == null || guard.test(available));
     }
 
     private final java.util.Map<Integer, java.util.List<ItemStack>> viewerInputAlternatives = new java.util.HashMap<>();

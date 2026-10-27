@@ -38,6 +38,16 @@ public final class ExternalOreProcessing {
 
     public static Optional<ItemComposition> composition(Item item) { return Optional.ofNullable(compositions.get(item)); }
 
+    private static void publishCompositions(Map<Item, ItemComposition> replacement) {
+        var previous = compositions;
+        boolean changed = previous.size() != replacement.size();
+        if (!changed) for (var entry : replacement.entrySet()) {
+            if (!Objects.equals(previous.get(entry.getKey()), entry.getValue())) { changed = true; break; }
+        }
+        compositions = replacement;
+        if (changed) ItemMaterialRegistry.notifyExternalCompositionChanged();
+    }
+
     /** Remove only this adapter's exact rows; other mods' processing rows remain registered. */
     public static synchronized void clear() {
         // Restore displaced source rows before removing them; otherwise an old mirror can resurrect this reload's predecessors.
@@ -48,7 +58,7 @@ public final class ExternalOreProcessing {
             map.mRecipeFluidMap.values().forEach(values -> values.removeAll(rows));
         });
         OWNED.clear();
-        compositions = Map.of();
+        publishCompositions(Map.of());
         cooking = Map.of();
         taggedCompositions = 0;
         ambiguousTaggedItems = 0;
@@ -70,7 +80,7 @@ public final class ExternalOreProcessing {
         }
         int oreCompositions = materialData.size();
         taggedCompositions = bindCommonForms(materialData);
-        compositions = Collections.unmodifiableMap(materialData);
+        publishCompositions(Collections.unmodifiableMap(materialData));
         int added = 0;
         for (var route : ExternalOreProcessingRules.ROUTES) {
             var map = map(route.map());

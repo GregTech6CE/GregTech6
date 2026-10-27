@@ -16,6 +16,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
     private final Map<Item, List<Integer>> byFirstItem = new IdentityHashMap<>();
     private BitSet noItems;
     private final Deque<Candidates> recent = new ArrayDeque<>();
+    private long compositionRevision = -1;
 
     record Candidates(List<ItemStack> items, List<FluidStack> fluids,
                       List<Recipe> exact, List<Recipe> alternatives) {}
@@ -40,6 +41,13 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
 
     /** Cache candidate identities, never the match result: counts, enabled flags and outputs stay live. */
     Candidates candidates(List<ItemStack> items, List<FluidStack> fluids) {
+        long currentCompositionRevision = gregtech.engine.material.ItemMaterialRegistry.compositionRevision();
+        if (compositionRevision != currentCompositionRevision) {
+            // Metadata can turn a cached alias miss into a match (or the reverse). Recipe identities
+            // and first-item indexes did not change, so only discard the bounded candidate cache.
+            recent.clear();
+            compositionRevision = currentCompositionRevision;
+        }
         if (snapshot == null || snapshot.length != rows.size()) rebuild();
         for (var cached : recent) if (sameInputs(cached, items, fluids)) return cached;
         var exact = new ArrayList<Recipe>();

@@ -52,10 +52,12 @@ final class SourceThermalNativeAdapter {
  record Outcome(Action action,Reason reason,List<NativeRow> rows) {
   Outcome { rows=List.copyOf(rows); }
  }
- record NativeRow(RecipeMap map,ItemStack input,FluidStack output,long ticks,long power) {
+ record NativeRow(RecipeMap map,ItemStack input,FluidStack output,long ticks,long power,ThermalInputProof inputProof) {
   Recipe admit(){
    if(input.isEmpty()||output.isEmpty())return null;
-   return map.addRecipe1(true,power,ticks,input,(FluidStack)null,output,new ItemStack[0]);
+   var recipe=RecipeMap.make(true,new ItemStack[]{input.copy()},new ItemStack[0],null,null,
+       new FluidStack[0],new FluidStack[]{output.copy()},ticks,power,0);
+   return recipe==null?null:map.addRecipe(recipe.withItemInputGuard(0,inputProof::matches));
   }
  }
  private static Outcome result(Action action,Reason reason){return new Outcome(action,reason,List.of());}
@@ -133,9 +135,12 @@ final class SourceThermalNativeAdapter {
   if(plan.decision()==SourceThermalRecyclingRules.Decision.UNSUPPORTED)return deferred(Reason.INVALID_RUNTIME_STATS);
   if(plan.decision()==SourceThermalRecyclingRules.Decision.SUPPORTED_NO_ROW)return no(Reason.SOURCE_ZERO_VOLUME);
   var output=fluid.copy();output.setAmount(plan.row().millibuckets());
+  var composition=ItemMaterialRegistry.explicit(selected.getItem()).orElse(null);
+  var inputProof=composition==null?null:ThermalInputProof.capture(selected,material,composition.prefix(),inputUnits);
+  if(inputProof==null)return deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
   var rows=new ArrayList<NativeRow>();
-  if(plan.row().melter())rows.add(new NativeRow(MachineRecipeMaps.Melter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power()));
-  rows.add(new NativeRow(MachineRecipeMaps.Smelter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power()));
+  if(plan.row().melter())rows.add(new NativeRow(MachineRecipeMaps.Melter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power(),inputProof));
+  rows.add(new NativeRow(MachineRecipeMaps.Smelter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power(),inputProof));
   return new Outcome(Action.ROWS,Reason.VERIFIED,rows);
  }
  private static SourceThermalRecyclingRules.Truth truth(Decision decision){

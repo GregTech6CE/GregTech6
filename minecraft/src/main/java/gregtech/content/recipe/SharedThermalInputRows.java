@@ -74,7 +74,7 @@ public final class SharedThermalInputRows {
                     new FluidStack[0], new FluidStack[]{row.output().copy()}, row.ticks(), row.power(), 0);
             // Retain the registration proof at lookup and consumption: no damaged or filled input.
             // This existing guard preserves equivalent material aliases, unlike exact-item matching.
-            return recipe == null ? null : row.map().addRecipe(recipe.withMaterialRecovery());
+            return recipe == null ? null : row.map().addRecipe(recipe.withMaterialRecovery().withItemInputGuard(0, row.inputProof()::matches));
         }
     }
     static List<Definition> definitions(Collection<GTMaterial> selected, Snapshot snapshot) {
