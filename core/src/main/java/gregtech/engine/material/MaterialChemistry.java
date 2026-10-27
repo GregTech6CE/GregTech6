@@ -94,6 +94,13 @@ public final class MaterialChemistry {
             out.add(new WeightedMaterial(Materials.Glass, GTValues.U3));
             return List.copyOf(out);
         }
+        if (prefix == MaterialPrefix.plantGtTwig) {
+            // OP357/730: U/9 of the named material plus a generic ANY.Wood stick (U/2).
+            GTMaterial primary = material.resolve();
+            GTMaterial wood = gregtech.content.material.generated.WoodMaterials.Wood.resolve();
+            if (primary == wood) return List.of(new WeightedMaterial(wood, GTValues.U9 + GTValues.U2));
+            return List.of(new WeightedMaterial(primary, GTValues.U9), new WeightedMaterial(wood, GTValues.U2));
+        }
         if (prefix == MaterialPrefix.arrowGtWood) {
             List<WeightedMaterial> out = new ArrayList<>(2);
             if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9));

@@ -653,9 +653,8 @@ private final String name;
             case "gem_legendary" -> GTValues.U * 8;
             // OP183: one boule contains four material units, not the generic one-unit fallback.
             case "boule_gt" -> GTValues.U * 4;
-            // OP356/358/360 and359: botanical drops retain their fractional material content.
-            // plantGtTwig also has a secondary material; it is deliberately a separate correction.
-            case "plant_gt_berry", "plant_gt_blossom", "plant_gt_fiber" -> GTValues.U9;
+            // OP356-360: botanical primary content; Twig also has a separate Wood secondary.
+            case "plant_gt_berry", "plant_gt_blossom", "plant_gt_fiber", "plant_gt_twig" -> GTValues.U9;
             case "plant_gt_wart" -> GTValues.U4;
             // misc
             case "scrap_gt" -> GTValues.U9;

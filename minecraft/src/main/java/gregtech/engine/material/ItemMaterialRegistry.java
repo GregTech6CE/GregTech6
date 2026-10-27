@@ -16,10 +16,10 @@ public final class ItemMaterialRegistry {
             new java.util.concurrent.atomic.AtomicLong();
     private ItemMaterialRegistry() {}
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material) {
-        if (item != null && prefix != null && prefix.hasEmptyAmmunitionForm()) {
+        if (item != null && material != null && prefix != null && (prefix.hasEmptyAmmunitionForm() || prefix == MaterialPrefix.plantGtTwig)) {
             var parts = MaterialChemistry.prefixMaterialWeights(material, prefix).stream()
                     .map(c -> MaterialComponent.of(c.material(), c.amount())).toList();
-            if (!parts.isEmpty()) register(item, new ItemComposition(prefix, parts, "GT6 OP ammunition components", true));
+            if (!parts.isEmpty()) register(item, new ItemComposition(prefix, parts, prefix == MaterialPrefix.plantGtTwig ? "GT6 OP twig components" : "GT6 OP ammunition components", true));
             return;
         }
         register(item, prefix, material, prefix == null ? GTValues.U : prefix.getMaterialWeight());
