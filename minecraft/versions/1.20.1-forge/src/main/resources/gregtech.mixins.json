@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "gregtech.refmap.json",
   "mixins": [
+    "PolymorphToolResultMixin",
     "DungeonRedstoneInitializationMixin",
     "OreHostHardnessMixin",
     "OreHostToolSpeedMixin",
