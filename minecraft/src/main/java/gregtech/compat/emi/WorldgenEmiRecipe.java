@@ -57,7 +57,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
         for (var vein : WorldgenInfoData.buildVeins()) {
             if (vein.layer() != null) {
                 registry.addRecipe(new WorldgenEmiRecipe(veins, index++,
-                        WorldgenInfoData.veinMaterials(vein).stream().map(WorldgenInfoData::oreStack).toList(),
+                        WorldgenInfoData.veinMaterials(vein).stream().map(material -> WorldgenInfoData.stratumStack(vein, material)).toList(),
                         List.of(), WorldgenInfoData.stratumCaptions(vein))
                         .withAliases(WorldgenInfoData.veinAliases(vein))
                         .withOutputTooltips(WorldgenInfoData.veinMaterials(vein).stream()
@@ -83,9 +83,9 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
         var layers = category(registry, "stone_layers_info", "stone_layers", gregtech.compat.common.RecipeViewerIcons.item("block_ore_salt"));
         index = 0;
         for (var layer : WorldgenInfoData.buildLayers()) {
-            registry.addRecipe(new WorldgenEmiRecipe(layers, index++, layer.ores().stream().map(WorldgenInfoData::oreStack).toList(),
+            registry.addRecipe(new WorldgenEmiRecipe(layers, index++, layer.ores().stream().map(material -> WorldgenInfoData.layerOreStack(layer, material)).toList(),
                     List.of(layer.stone()), List.of(line("layer_stone", layer.stone().getHoverName()), line(layer.ores().isEmpty() ? "layer_no_ores" : "layer_ores")))
-                    .withAliases(layer.ores().stream().flatMap(material -> WorldgenInfoData.oreAliases(material, false).stream()).toList()));
+                    .withAliases(WorldgenInfoData.layerAliases(layer)));
         }
         var bedrock = category(registry, "bedrock_ores", "bedrock_ores", gregtech.compat.common.RecipeViewerIcons.bedrockOre());
         index = 0;

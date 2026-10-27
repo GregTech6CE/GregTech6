@@ -58,7 +58,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
     /** Below this, noDeep layers (coal seams etc.) keep the host — GT6 used y<24. */
     private static final int NO_DEEP_Y = GTWorldgenScale.remapY(24);
 
-    private record Ore(GTMaterial material, int chanceDiv, int minY, int maxY) {}
+    private record Ore(GTMaterial material, int chanceDiv, int minY, int maxY, StoneLayerOreRules.Rule rule) {}
 
     private record ContactKey(String above, String below) {}
 
@@ -123,12 +123,14 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                             boolean core = scan[6] == scan[0];
                             for (Ore ore : layer.ores()) {
                                 if (y < ore.minY() || y > ore.maxY()) continue;
+                                if (!StoneLayerOrePlacement.enabled(ore.rule())) continue;
+                                if (!ore.rule().biomes().isEmpty() && !StoneLayerOrePlacement.matches(ore.rule(), level.getBiome(cursor))) continue;
                                 if (random.nextInt(ore.chanceDiv()) != 0) continue;
-                                if (GTOreBlockResolver.placeOre(level, cursor, background, ore.material(), !core)) {
+                                if (placeOre(level, cursor, background, ore, !core)) {
                                     orePlaced = true;
                                     placedAny = true;
+                                    break;
                                 }
-                                break;
                             }
                         } else {
                             // Layer boundary: contact ores (GT6 doublelayers).
@@ -136,12 +138,14 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                             if (contactOres != null) {
                                 for (Ore ore : contactOres) {
                                     if (y < ore.minY() || y > ore.maxY()) continue;
+                                    if (!StoneLayerOrePlacement.enabled(ore.rule())) continue;
+                                    if (!ore.rule().biomes().isEmpty() && !StoneLayerOrePlacement.matches(ore.rule(), level.getBiome(cursor))) continue;
                                     if (random.nextInt(ore.chanceDiv()) != 0) continue;
-                                    if (GTOreBlockResolver.placeOre(level, cursor, background, ore.material(), random.nextBoolean())) {
+                                    if (placeOre(level, cursor, background, ore, random.nextBoolean())) {
                                         orePlaced = true;
                                         placedAny = true;
+                                        break;
                                     }
-                                    break;
                                 }
                             }
                         }
@@ -184,6 +188,12 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
         return placedAny;
+    }
+
+    private static boolean placeOre(WorldGenLevel level, BlockPos pos, BlockState background, Ore ore, boolean small) {
+        BlockState explicit = StoneLayerOrePlacement.explicitState(ore.rule());
+        return explicit != null ? level.setBlock(pos, explicit, 2)
+                : GTOreBlockResolver.placeOre(level, pos, background, ore.material(), small);
     }
 
     /** Only called for the two vanilla cobble slab hosts, during stone-layer generation. */
@@ -272,7 +282,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
             GTMaterial material = GTMaterialRegistry.get(def.material());
             if (material == null || !material.resolve().isValid()) continue;
             out.add(new Ore(material.resolve(), Math.max(1, def.chanceDiv()),
-                    GTWorldgenScale.remapY(def.minY()), GTWorldgenScale.remapY(def.maxY())));
+                    GTWorldgenScale.remapY(def.minY()), GTWorldgenScale.remapY(def.maxY()), StoneLayerOreRules.rule(def)));
         }
         return List.copyOf(out);
     }

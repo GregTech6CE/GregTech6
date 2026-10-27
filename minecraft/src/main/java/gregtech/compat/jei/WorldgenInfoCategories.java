@@ -80,7 +80,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
                     var captions = new ArrayList<>(stratumOreCaptions(vein, material));
                     captions.addAll(stratumCaptions(vein));
                     builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
-                            .setBackground(slot, -1, -1).addItemStack(oreStack(material))
+                            .setBackground(slot, -1, -1).addItemStack(stratumStack(vein, material))
                             .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
                 }
                 return;
@@ -168,8 +168,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, LayerInfo layer, IFocusGroup focuses) {
-            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(layer.ores().stream()
-                    .flatMap(material -> oreAliases(material, false).stream()).toList());
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(layerAliases(layer));
             builder.addSlot(RecipeIngredientRole.CATALYST, 1, 1)
                     .setBackground(slot, -1, -1)
                     .addItemStack(layer.stone());
@@ -178,7 +177,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
                 if (i >= 16) break;
                 builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 20 + (i / 8) * 18)
                         .setBackground(slot, -1, -1)
-                        .addItemStack(oreStack(ore));
+                        .addItemStack(layerOreStack(layer, ore));
                 i++;
             }
         }

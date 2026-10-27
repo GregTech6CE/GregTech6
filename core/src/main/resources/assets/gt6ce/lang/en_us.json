@@ -16913,5 +16913,19 @@
   "gt6ce.jei.info.stratum_conditional": "Per eligible position, after earlier ore rolls fail; not world abundance.",
   "gt6ce.jei.info.stratum_contact": "At layer contacts; normal/small ore each 50% after a successful roll.",
   "gt6ce.jei.info.stratum_interior": "Inside the host layer; normal ore in the core, small ore near its fringe.",
-  "gt6ce.jei.info.stratum_hover": "Hover each mineral for its height and ore roll."
+  "gt6ce.jei.info.stratum_hover": "Hover each mineral for its height and ore roll.",
+  "gt6ce.jei.info.required_biomes": "Required biomes: %s",
+  "gt6ce.jei.info.explicit_ore": "Explicit block output; does not turn into GT small ore.",
+  "gt6ce.jei.info.biome_group.mountains": "Mountains / hills",
+  "gt6ce.jei.info.biome_group.frozen": "Frozen / snowy",
+  "gt6ce.jei.info.biome_group.desert": "Desert",
+  "gt6ce.jei.info.biome_group.savanna": "Savanna",
+  "gt6ce.jei.info.biome_group.jungle": "Jungle",
+  "gt6ce.jei.info.biome_group.ocean_beach": "Ocean / beach",
+  "gt6ce.jei.info.biome_group.taiga": "Taiga",
+  "gt6ce.jei.info.biome_group.swamp": "Swamp",
+  "gt6ce.jei.info.biome_group.plains": "Plains",
+  "gt6ce.jei.info.biome_group.river_lake": "River / lake",
+  "gt6ce.jei.info.biome_group.mesa": "Badlands",
+  "gt6ce.jei.info.biome_group.shroom": "Mushroom fields"
 }

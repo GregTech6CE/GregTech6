@@ -16,14 +16,7 @@ public abstract class VanillaOreConfigMixin {
     private void gt6ce$vanillaOres(FeaturePlaceContext<OreConfiguration> context, CallbackInfoReturnable<Boolean> result) {
         for (var target : context.config().targetStates) {
             var id = BuiltInRegistries.BLOCK.getKey(target.state.getBlock());
-            if (!id.getNamespace().equals("minecraft")) continue;
-            // These two resources have independent switches, even when other vanilla ores are disabled.
-            boolean disabled = switch (id.getPath()) {
-                case "nether_gold_ore" -> !gregtech.GregTechConfig.Rule.GENERATE_NETHER_GOLD_ORE.enabled();
-                case "ancient_debris" -> !gregtech.GregTechConfig.Rule.GENERATE_ANCIENT_DEBRIS.enabled();
-                default -> id.getPath().endsWith("_ore") && gregtech.GregTechConfig.Rule.DISABLE_VANILLA_ORES.enabled();
-            };
-            if (disabled) {
+            if (gregtech.content.worldgen.VanillaOreGeneration.disabled(id)) {
                 result.setReturnValue(false);
                 return;
             }

@@ -39,7 +39,7 @@ public class WorldgenInfoData {
     public record SmallOreInfo(String name, String dimension, int minY, int maxY, int amount,
                                GTMaterial material, boolean remapped) {}
 
-    public record LayerInfo(String stoneDisplay, ItemStack stone, List<GTMaterial> ores) {}
+    public record LayerInfo(String stoneDisplay, ItemStack stone, List<GTMaterial> ores, List<GTStoneLayersGen.OreDef> definitions) {}
 
     public static ItemStack oreStack(GTMaterial material) {
         if (material == null || !material.resolve().isValid()) return new ItemStack(Items.STONE);
@@ -94,7 +94,7 @@ public class WorldgenInfoData {
         return out;
     }
 
-    public record StratumOre(GTMaterial material, int minY, int maxY, int chanceDiv) {}
+    public record StratumOre(GTMaterial material, int minY, int maxY, int chanceDiv, gregtech.content.worldgen.StoneLayerOreRules.Rule rule) {}
     public record StratumInfo(Component host, boolean contact, List<StratumOre> ores) {}
 
     private static Component materialName(String name) {
@@ -111,6 +111,8 @@ public class WorldgenInfoData {
                         materialName(above), materialName(below));
         List<StratumOre> ores = new ArrayList<>();
         for (GTStoneLayersGen.OreDef def : definitions) {
+            var rule = gregtech.content.worldgen.StoneLayerOreRules.rule(def);
+            if (!gregtech.content.worldgen.StoneLayerOrePlacement.enabled(rule)) continue;
             GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(def.material());
             if (material == null || !material.resolve().isValid()) continue;
             material = material.resolve();
@@ -119,7 +121,7 @@ public class WorldgenInfoData {
             int max = Math.min(GTWorldgenScale.BAND_TOP - 1, GTWorldgenScale.remapY(def.maxY()));
             if (min > max) continue;
             int chance = Math.max(1, def.chanceDiv());
-            ores.add(new StratumOre(material, min, max, chance));
+            ores.add(new StratumOre(material, min, max, chance, rule));
         }
         if (ores.isEmpty()) return;
         // Preserve the entire ordered combination, including separate height bands for one mineral.
@@ -147,6 +149,12 @@ public class WorldgenInfoData {
     public static List<ItemStack> veinAliases(VeinInfo vein) {
         List<ItemStack> aliases = new ArrayList<>();
         for (GTMaterial material : veinMaterials(vein)) {
+            var rule = vein.layer() == null ? null : vein.layer().ores().stream()
+                    .filter(ore -> ore.material() == material).findFirst().orElseThrow().rule();
+            if (rule != null && !rule.blockId().isEmpty()) {
+                aliases.addAll(explicitAliases(rule));
+                continue;
+            }
             aliases.addAll(oreAliases(material, false));
             if (vein.layer() != null) {
                 aliases.add(smallOreStack(material));
@@ -156,11 +164,59 @@ public class WorldgenInfoData {
         return aliases;
     }
 
+    private static List<ItemStack> explicitAliases(gregtech.content.worldgen.StoneLayerOreRules.Rule rule) {
+        Item item = switch (rule.blockId()) {
+            case "minecraft:iron_ore" -> Items.RAW_IRON;
+            case "minecraft:gold_ore" -> Items.RAW_GOLD;
+            case "minecraft:copper_ore" -> Items.RAW_COPPER;
+            default -> Items.AIR;
+        };
+        return item == Items.AIR ? List.of() : List.of(new ItemStack(item));
+    }
+
+    private static ItemStack ruleStack(GTMaterial material, gregtech.content.worldgen.StoneLayerOreRules.Rule rule) {
+        var state = gregtech.content.worldgen.StoneLayerOrePlacement.explicitState(rule);
+        return state == null ? oreStack(material) : new ItemStack(state.getBlock());
+    }
+
+    public static ItemStack stratumStack(VeinInfo vein, GTMaterial material) {
+        return ruleStack(material, vein.layer().ores().stream().filter(ore -> ore.material() == material)
+                .findFirst().orElseThrow().rule());
+    }
+
+    private static gregtech.content.worldgen.StoneLayerOreRules.Rule layerRule(LayerInfo layer, GTMaterial material) {
+        return layer.definitions().stream().filter(def -> {
+                    GTMaterial candidate = gregtech.engine.material.GTMaterialRegistry.get(def.material());
+                    return candidate != null && candidate.resolve() == material;
+                })
+                .map(gregtech.content.worldgen.StoneLayerOreRules::rule).findFirst().orElseThrow();
+    }
+
+    public static ItemStack layerOreStack(LayerInfo layer, GTMaterial material) {
+        return ruleStack(material, layerRule(layer, material));
+    }
+
+    public static List<ItemStack> layerAliases(LayerInfo layer) {
+        return layer.ores().stream().flatMap(material -> {
+            var rule = layerRule(layer, material);
+            return (rule.blockId().isEmpty() ? oreAliases(material, false) : explicitAliases(rule)).stream();
+        }).toList();
+    }
+
     public static List<Component> stratumOreCaptions(VeinInfo vein, GTMaterial material) {
         List<Component> lines = new ArrayList<>();
         for (StratumOre ore : vein.layer().ores()) {
             if (ore.material() != material) continue;
             lines.add(Component.translatable("gt6ce.jei.info.height", ore.minY(), ore.maxY()));
+            if (!ore.rule().biomes().isEmpty()) {
+                Component biomes = Component.empty();
+                for (var group : ore.rule().biomes()) {
+                    if (!biomes.getString().isEmpty()) biomes = biomes.copy().append(", ");
+                    biomes = biomes.copy().append(Component.translatable("gt6ce.jei.info.biome_group." + group.name().toLowerCase(java.util.Locale.ROOT)));
+                }
+                lines.add(Component.translatable("gt6ce.jei.info.required_biomes", biomes));
+            }
+            if (!ore.rule().blockId().isEmpty()) lines.add(Component.translatable("gt6ce.jei.info.explicit_ore"));
             lines.add(Component.translatable("gt6ce.jei.info.stratum_roll", ore.chanceDiv(),
                     String.format(java.util.Locale.ROOT, "%.2f", 100d / ore.chanceDiv())));
         }
@@ -223,12 +279,13 @@ public class WorldgenInfoData {
             }
             List<GTMaterial> ores = new ArrayList<>();
             for (GTStoneLayersGen.OreDef ore : def.ores()) {
+                if (!gregtech.content.worldgen.StoneLayerOrePlacement.enabled(gregtech.content.worldgen.StoneLayerOreRules.rule(ore))) continue;
                 GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(ore.material());
                 if (material != null && material.resolve().isValid()) ores.add(material.resolve());
             }
             String key = display + "/" + ores.stream().map(GTMaterial::getName).sorted().toList();
             if (!seen.add(key)) continue; // collapse duplicate layer entries
-            out.add(new LayerInfo(display, stone, ores));
+            out.add(new LayerInfo(display, stone, ores, def.ores()));
         }
         return out;
     }
