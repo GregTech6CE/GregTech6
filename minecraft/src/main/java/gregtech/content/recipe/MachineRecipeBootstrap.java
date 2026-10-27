@@ -32,6 +32,7 @@ public final class MachineRecipeBootstrap {
         register("VanillaProcessingRecipes", VanillaProcessingRecipes::register);
         register("DiggableRecipes", DiggableRecipes::register);
         register("VanillaBlockProcessingRecipes", VanillaBlockProcessingRecipes::register);
+        register("VanillaStoneMachineRecipes", VanillaStoneMachineRecipes::register);
         register("VanillaWoodProcessingRecipes", VanillaWoodProcessingRecipes::register);
         register("RegisteredWoodSurvivalRecipes", RegisteredWoodSurvivalRecipes::register);
         register("CropProcessingRecipes", CropProcessingRecipes::register);

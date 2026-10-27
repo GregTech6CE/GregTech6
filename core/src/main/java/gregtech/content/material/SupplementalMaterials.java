@@ -15,6 +15,12 @@ public final class SupplementalMaterials {
     private static final Set<String> SCULK_FORMS = Set.of("DUSTS", "PLANTS", "PROJECTILES", "STICKS");
     private SupplementalMaterials() {}
     public static void declare() {
+        modernStone(9900, "Tuff", "Tuff", 0x696D6E, MaterialTextureSet.STONE);
+        var clayBrick = CompoundMaterials.ClayBrick;
+        modernStone(9901, "MudBrick", "Mud Brick", 0x93704F, MaterialTextureSet.BRICK)
+                .setStats(clayBrick.getMeltingPoint(), clayBrick.getBoilingPoint(), clayBrick.getDensity());
+        modernStone(9902, "RedNetherBrick", "Red Nether Brick", 0x6A1317, MaterialTextureSet.BRICK);
+        modernStone(9903, "Purpur", "Purpur", 0xAA7AAA, MaterialTextureSet.BRICK);
         GTMaterialRegistry.registerDefinition(MaterialDefinition.builder(9223, "Blackstone").color(0x1E1414)
                 .texture(MaterialTextureSet.FINE).dust().build());
         // Modern Minecraft material: use the same physical defaults as Blaze, not its identity.
@@ -47,5 +53,12 @@ public final class SupplementalMaterials {
     }
 
     public static GTMaterial sculk() { GTMaterialRegistry.init(); return sculk; }
+    private static GTMaterial modernStone(int id, String name, String displayName, int color, MaterialTextureSet texture) {
+        return GTMaterialRegistry.registerDefinition(MaterialDefinition.builder(id, name).displayName(displayName)
+                .color(color).texture(texture).meltingPointKelvin(1000).boilingPointKelvin(3000)
+                .dust().properties(MaterialProperty.STONE, MaterialProperty.GENERATE_PLATE,
+                        MaterialProperty.GENERATE_STICKS, MaterialProperty.GENERATE_PLANT,
+                        MaterialProperty.GENERATE_PROJECTILE).build());
+    }
     public static GTMaterial porcelain() { GTMaterialRegistry.init(); return porcelain; }
 }

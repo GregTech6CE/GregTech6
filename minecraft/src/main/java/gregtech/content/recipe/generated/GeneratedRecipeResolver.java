@@ -129,6 +129,15 @@ public final class GeneratedRecipeResolver {
 
     static void registerSource(boolean optimize, String mapName, long eut, long dur, long[] chances,
             String[] itemIn, String[] fluidIn, String[] fluidOut, String[] itemOut) {
+        // GT6 1.7 treated these metadata variants as ordinary stone. Modern Minecraft assigns
+        // them distinct materials; explicit native rows are registered before the import.
+        if ((mapName.equals("Lathe") || mapName.equals("Extruder")) && itemIn.length > 0
+                && itemIn[0].matches("v:(polished_)?(granite|diorite|andesite):[0-9]+")
+                && java.util.Arrays.stream(itemOut).anyMatch(spec -> spec.contains(":Stone:")
+                        || spec.equals("v:stone:1") || spec.equals("v:stone_bricks:1"))) {
+            skipped++;
+            return;
+        }
         RecipeMap map = map(mapName);
         if (map == null) { skipped++; LOGGER.debug("[gregtech] chem skip (no map): {}", mapName); return; }
 

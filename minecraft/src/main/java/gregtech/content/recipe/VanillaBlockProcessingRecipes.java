@@ -60,11 +60,20 @@ public final class VanillaBlockProcessingRecipes extends OriginalRecipeBatch {
             saw(c+"_wool",2,32,50,false,mc(c+"_carpet",3));
             saw(c+"_bed",1,48,100,false,mc("oak_planks",3),mc(c+"_wool",3));
         }
-        for(String[] pair : new String[][]{{"stone","smooth_stone_slab"},{"sandstone","sandstone_slab"},
+        for(String[] pair : new String[][]{{"stone","stone_slab"},{"sandstone","sandstone_slab"},
                 {"cobblestone","cobblestone_slab"},{"bricks","brick_slab"},{"stone_bricks","stone_brick_slab"},
                 {"nether_bricks","nether_brick_slab"},{"quartz_block","quartz_slab"},
                 {"chiseled_quartz_block","quartz_slab"},{"quartz_pillar","quartz_slab"}})
             saw(pair[0],1,16,100,false,mc(pair[1],2));
+        for (String[] pair : new String[][]{{"granite", "granite_slab"}, {"polished_granite", "polished_granite_slab"},
+                {"diorite", "diorite_slab"}, {"polished_diorite", "polished_diorite_slab"},
+                {"andesite", "andesite_slab"}, {"polished_andesite", "polished_andesite_slab"},
+                {"deepslate", "cobbled_deepslate_slab"}, {"cobbled_deepslate", "cobbled_deepslate_slab"},
+                {"polished_deepslate", "polished_deepslate_slab"},
+                {"tuff", "tuff_slab"}, {"polished_tuff", "polished_tuff_slab"}}) {
+            if (net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.withDefaultNamespace(pair[1]))
+                    != net.minecraft.world.item.Items.AIR) saw(pair[0],1,16,100,false,mc(pair[1],2));
+        }
         saw("smooth_stone",1,16,100,false,mat(MaterialPrefix.plate,"Stone",8),mat(MaterialPrefix.dust,"Stone",1));
         saw("smooth_stone_slab",1,16,50,false,mat(MaterialPrefix.plate,"Stone",4),mat(MaterialPrefix.dustSmall,"Stone",2));
         saw("melon",1,16,50,true,mc("melon_slice",8),mc("melon_seeds",1));
