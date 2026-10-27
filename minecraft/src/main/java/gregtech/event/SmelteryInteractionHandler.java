@@ -145,8 +145,11 @@ public final class SmelteryInteractionHandler {
 //?}
     private static InteractionResult handleMoldInteraction(MoldBlockEntity mold, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
-        // Pincers or empty hand: pickup when mold has content, pour when empty
-        if (held.isEmpty() || GTToolHelper.matchesTool(held, GTToolType.PINCERS)) {
+        // Original ordinary activation works while holding an ingot/rod too. The held
+        // item is never melted: a top click asks the adjacent crucible to pour.
+        if (held.isEmpty() || !GTToolHelper.isInteractionTool(held)
+                || GTToolHelper.matchesTool(held, GTToolType.PINCERS)) {
+            if (hit.getDirection() == Direction.DOWN) return InteractionResult.PASS;
             boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
             boolean pickedUp = mold.tryPickupWithPincers(player, usingPincers);
             if (pickedUp) {
@@ -156,12 +159,15 @@ public final class SmelteryInteractionHandler {
                 player.swing(hand);
                 return InteractionResult.CONSUME;
             }
-            InteractionResult pourResult = mold.tryPour(player);
+            InteractionResult pourResult = hit.getDirection() == Direction.UP
+                    ? mold.tryPour(player, gregtech.engine.tool.ToolInteractions.selectedFace(hit))
+                    : InteractionResult.PASS;
             if (pourResult != InteractionResult.PASS) {
                 player.swing(hand);
                 return pourResult;
             }
-            return InteractionResult.PASS;
+            // GT6 consumes top/side activation even when there is nothing to pick up or pour.
+            return InteractionResult.CONSUME;
         }
         // Chisel shape selection on top face
         if (GTToolHelper.matchesTool(held, GTToolType.CHISEL)) {
