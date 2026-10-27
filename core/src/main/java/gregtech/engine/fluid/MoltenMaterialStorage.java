@@ -11,4 +11,15 @@ public interface MoltenMaterialStorage {
     long getMoltenCapacityUnits();
     int fillMoltenMaterial(GTMaterial material, int millibuckets, long temperatureK, boolean execute);
     int drainMoltenMaterial(GTMaterial material, int millibuckets, boolean execute);
+    /** Explicit phase ratio; legacy implementations must opt in before accepting special-unit fluids. */
+    default int fillMoltenMaterial(GTMaterial material, int millibuckets, long temperatureK,
+                                   boolean execute, MoltenMaterialUnits.Ratio ratio) {
+        return ratio.equals(MoltenMaterialUnits.STANDARD)
+                ? fillMoltenMaterial(material, millibuckets, temperatureK, execute) : 0;
+    }
+    default int drainMoltenMaterial(GTMaterial material, int millibuckets, boolean execute,
+                                    MoltenMaterialUnits.Ratio ratio) {
+        return ratio.equals(MoltenMaterialUnits.STANDARD)
+                ? drainMoltenMaterial(material, millibuckets, execute) : 0;
+    }
 }

@@ -48,7 +48,6 @@ import java.util.Map;
 public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBlockEntity implements MultiblockPortOwner, gregtech.engine.multiblock.tracking.TrackedMultiblock {
 //?}
     public static final long MAX_AMOUNT = gregtech.content.multiblock.OriginalLargeCrucibleParameters.CAPACITY_UNITS;
-    private static final long MB_UNIT = GTValues.U / 144L;
     private final LargeCrucibleSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
@@ -303,7 +302,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     }
 //?}
 
-    /** GT6 top ring's fluid bridge; 144 mB = one material unit, sharing the crucible material list. */
+    /** GT6 top ring's phase-aware fluid bridge, sharing absolute crucible material units. */
     private final class MoltenPort implements IFluidHandler {
         private CrucibleMaterialStack lightestMolten() {
             return getContentView().stream().filter(stack -> stack.amount > 0
@@ -314,14 +313,20 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         }
         private FluidStack liquidOf(GTMaterial material) {
             FluidStack generated = GTFluids.stack("GenMolten_" + material.getName(), 1);
-            if (generated != null) return generated;
+            if (validLiquid(material, generated)) return generated;
             for (var entry : RegisteredFluids.all().entrySet()) {
                 if (entry.getValue().gas()) continue;
                 if (gregtech.engine.fluid.FluidVisualPolicy.material(entry.getValue()).resolve() != material.resolve()) continue;
                 FluidStack found = GTFluids.stack(entry.getKey(), 1);
-                if (found != null) return found;
+                if (validLiquid(material, found)) return found;
             }
             return null;
+        }
+        private boolean validLiquid(GTMaterial material, FluidStack fluid) {
+            if (fluid == null || fluid.isEmpty()) return false;
+            var entry = GTFluids.entryForFluid(fluid.getFluid());
+            return entry != null && !entry.gas()
+                    && gregtech.engine.fluid.FluidVisualPolicy.material(entry).resolve() == material.resolve();
         }
         @Override public int getTanks() { return 1; }
         @Override public FluidStack getFluidInTank(int tank) {
@@ -330,11 +335,16 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             if (top == null) return FluidStack.EMPTY;
             FluidStack fluid = liquidOf(top.material);
             if (fluid == null) return FluidStack.EMPTY;
-            fluid.setAmount((int) Math.min(Integer.MAX_VALUE, top.amount / MB_UNIT));
+            fluid.setAmount(gregtech.engine.fluid.MoltenFluidPlans.millibuckets(top.amount,
+                    gregtech.engine.fluid.MoltenFluidHandler.ratio(top.material, fluid)));
             return fluid;
         }
         @Override public int getTankCapacity(int tank) {
-            return tank == 0 ? (int) (MAX_AMOUNT / MB_UNIT) : 0;
+            if (tank != 0) return 0;
+            FluidStack displayed = getFluidInTank(0);
+            GTMaterial material = displayed.isEmpty() ? null : gregtech.engine.fluid.FluidVisualPolicy.material(
+                    GTFluids.entryForFluid(displayed.getFluid()));
+            return gregtech.engine.fluid.MoltenFluidHandler.reportedCapacity(MAX_AMOUNT, material, displayed);
         }
         @Override public boolean isFluidValid(int tank, FluidStack stack) {
             if (tank != 0 || stack.isEmpty()) return false;
@@ -347,7 +357,8 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             if (!isStructureOk() || !isFluidValid(0, resource)) return 0;
             GTMaterial material = gregtech.engine.fluid.FluidVisualPolicy.material(
                     GTFluids.entryForFluid(resource.getFluid()));
-            long units = (long) resource.getAmount() * MB_UNIT;
+            long units = gregtech.engine.fluid.MoltenFluidPlans.toUnits(resource.getAmount(),
+                    gregtech.engine.fluid.MoltenFluidHandler.ratio(material, resource));
             if (units > MAX_AMOUNT - getCrucibleContentAmount()) return 0;
             if (action.execute()) {
                 long fluidTemperature = resource.getFluid().getFluidType().getTemperature(resource);
@@ -371,10 +382,11 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             if (top == null) return FluidStack.EMPTY;
             FluidStack fluid = liquidOf(top.material);
             if (fluid == null) return FluidStack.EMPTY;
-            int drained = (int) Math.min(amount, top.amount / MB_UNIT);
+            var ratio = gregtech.engine.fluid.MoltenFluidHandler.ratio(top.material, fluid);
+            int drained = Math.min(amount, gregtech.engine.fluid.MoltenFluidPlans.millibuckets(top.amount, ratio));
             if (drained <= 0) return FluidStack.EMPTY;
             fluid.setAmount(drained);
-            if (action.execute()) takeMaterial(top.material, (long) drained * MB_UNIT);
+            if (action.execute()) takeMaterial(top.material, gregtech.engine.fluid.MoltenFluidPlans.toUnits(drained, ratio));
             return fluid;
         }
     }

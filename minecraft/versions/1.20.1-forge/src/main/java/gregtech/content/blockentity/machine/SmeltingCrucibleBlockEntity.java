@@ -148,19 +148,27 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
 
     @Override public long getMoltenCapacityUnits() { return maxMaterialAmount(); }
     @Override public int fillMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, long incomingTemperature, boolean execute) {
+        return fillMoltenMaterial(material, requested, incomingTemperature, execute, gregtech.engine.fluid.MoltenMaterialUnits.ratio(material));
+    }
+    @Override public int fillMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, long incomingTemperature, boolean execute,
+                                          gregtech.engine.fluid.MoltenMaterialUnits.Ratio ratio) {
         if (level == null || level.isClientSide) return 0;
-        int accepted = gregtech.engine.fluid.MoltenFluidPlans.fillAmount(content, maxMaterialAmount(), material, requested, incomingTemperature);
+        int accepted = gregtech.engine.fluid.MoltenFluidPlans.fillAmount(content, maxMaterialAmount(), material, requested, incomingTemperature, ratio);
         if (accepted <= 0) return 0;
         var destination = execute ? content : new ArrayList<>(content.stream().map(CrucibleMaterialStack::copy).toList());
-        Long mixed = CrucibleProcess.admit(destination, List.of(CrucibleMaterialStack.of(material, gregtech.engine.fluid.MoltenFluidPlans.toUnits(accepted))), maxMaterialAmount(), thermalMassKg(), getTemperature(), incomingTemperature);
+        Long mixed = CrucibleProcess.admit(destination, List.of(CrucibleMaterialStack.of(material, gregtech.engine.fluid.MoltenFluidPlans.toUnits(accepted, ratio))), maxMaterialAmount(), thermalMassKg(), getTemperature(), incomingTemperature);
         if (mixed == null) return 0;
         if (execute) { temperature = mixed; updateDisplayState(); syncCrucibleState(); setChanged(); }
         return accepted;
     }
     @Override public int drainMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, boolean execute) {
+        return drainMoltenMaterial(material, requested, execute, gregtech.engine.fluid.MoltenMaterialUnits.ratio(material));
+    }
+    @Override public int drainMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, boolean execute,
+                                           gregtech.engine.fluid.MoltenMaterialUnits.Ratio ratio) {
         if (level == null || level.isClientSide) return 0;
-        int amount = gregtech.engine.fluid.MoltenFluidPlans.drainAmount(content, material, requested, getTemperature());
-        if (execute && amount > 0) { gregtech.engine.fluid.MoltenFluidPlans.remove(content, material, amount); updateDisplayState(); syncCrucibleState(); setChanged(); }
+        int amount = gregtech.engine.fluid.MoltenFluidPlans.drainAmount(content, material, requested, getTemperature(), ratio);
+        if (execute && amount > 0) { gregtech.engine.fluid.MoltenFluidPlans.remove(content, material, amount, ratio); updateDisplayState(); syncCrucibleState(); setChanged(); }
         return amount;
     }
     private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.fluids.capability.IFluidHandler> moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new gregtech.engine.fluid.MoltenFluidHandler(this));
