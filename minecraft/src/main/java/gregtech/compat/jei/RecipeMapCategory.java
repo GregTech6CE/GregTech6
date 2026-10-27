@@ -69,6 +69,16 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             var point=MachineGuiLayout.item(input,i,count,input ? map.mInputFluidCount : map.mOutputFluidCount);
             var itemSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_item_"+i);
             var choices=input?recipe.viewerInputAlternatives(i):java.util.List.<ItemStack>of();
+            if (input && !recipe.mExactItemInputs && !recipe.hasItemInputGuard(i)) {
+                var displayed = choices.isEmpty() ? java.util.List.of(items[i]) : choices;
+                var expanded = new java.util.ArrayList<ItemStack>();
+                for (var candidate : displayed) {
+                    var preferred = gregtech.engine.material.MaterialUnification.canonical(candidate);
+                    if (preferred.getItem() != candidate.getItem()) expanded.add(preferred);
+                    expanded.add(candidate);
+                }
+                choices = expanded;
+            }
             if(choices.isEmpty())itemSlot.addItemStack(items[i]);else itemSlot.addItemStacks(choices);
             var inputNote=input?recipe.viewerInputNote(i):"";
             if(!inputNote.isEmpty()) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(

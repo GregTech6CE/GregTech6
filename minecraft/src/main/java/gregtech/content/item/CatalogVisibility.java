@@ -16,6 +16,7 @@ public final class CatalogVisibility {
         if (stack.isEmpty()) return true;
         var item = stack.getItem();
         var id = BuiltInRegistries.ITEM.getKey(item);
+        if (gregtech.engine.material.MaterialUnification.hiddenDuplicate(stack)) return false;
         // Original MicroBlocks controls third-party microblocks/facades, not GT slabs.
         if (!Rule.MICROBLOCKS.enabled() && java.util.Set.of(
                 "forgemultipart:microblock", "extrautils:microblocks", "extrautils2:microblocks",

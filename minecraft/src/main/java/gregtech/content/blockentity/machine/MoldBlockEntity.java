@@ -195,6 +195,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
 
     /** Store solidified output in container instead of auto-popping. */
     private void storeOutputItem(ItemStack stack) {
+        stack = gregtech.engine.material.MaterialUnification.canonical(stack);
         if (solidOutput.isEmpty()) {
             solidOutput = stack;
         } else {
@@ -404,6 +405,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
                 } else {
                     output = ItemStack.EMPTY;
                 }
+                output = gregtech.engine.material.MaterialUnification.canonical(output);
                 if (!output.isEmpty()) {
                     // Heat damage: if solid is above skin-burn temperature and no pincers, damage player
                     if (!usingPincers) {
@@ -457,6 +459,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
             return false;
         }
 
+        output = gregtech.engine.material.MaterialUnification.canonical(output);
         if (output.isEmpty()) return false;
 
         if (!usingPincers) {
@@ -492,6 +495,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
         } else {
             return;
         }
+        output = gregtech.engine.material.MaterialUnification.canonical(output);
         if (!output.isEmpty()) {
             spawnOutputItem(output);
         }

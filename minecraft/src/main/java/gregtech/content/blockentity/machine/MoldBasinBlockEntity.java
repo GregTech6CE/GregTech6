@@ -143,7 +143,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
 
         // Basin always produces OP.blockSolid (full block) — cools gradually
         GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
-        ItemStack output = GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial);
+        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial));
         // An unavailable output must never erase the stored material.
         if (output.isEmpty()) return;
         consumeContent(getMoldRequiredMaterialUnits());
@@ -234,7 +234,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
         if (temperature >= contentMaterial.getMeltingPoint()) return false;
 
         GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
-        ItemStack output = GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial);
+        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial));
         if (output.isEmpty()) return false;
 
         if (!usingPincers) {
@@ -258,7 +258,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
         }
         if (level == null || contentMaterial == null || contentAmount <= 0) return;
         GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
-        ItemStack output = GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial);
+        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial));
         if (!output.isEmpty() && contentAmount >= getMoldRequiredMaterialUnits()) {
             spawnOutputItem(output);
             contentAmount -= getMoldRequiredMaterialUnits();

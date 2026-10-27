@@ -138,6 +138,7 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
         var stack=gregtech.content.registry.GTItems.getStack(gregtech.engine.prefix.PrefixRegistry.byName(parts[1]),
                 gregtech.engine.material.GTMaterialRegistry.get(parts[2]),1);
         if(stack.isEmpty()) throw new IllegalStateException("Unbound original vanilla ingredient "+spec);
+        stack = gregtech.engine.material.MaterialUnification.canonical(stack);
         return Map.of("item",net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
     }
     @Override

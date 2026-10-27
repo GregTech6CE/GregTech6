@@ -131,6 +131,7 @@ public final class GregTechConfig {
         GENERATE_ANCIENT_DEBRIS("worldgen.GenerateAncientDebris", true),
         INCREASE_DUNGEON_LOOT("general.IncreaseDungeonLoot", true),
         REPLACE_VANILLA_RECIPES("recipes.recipereplacements.minecraft", true),
+        VANILLA_STORAGE_BLOCK_RECIPES("recipes.enable_vanilla_storage_block_crafting", false),
         REPLACE_MOD_RECIPES("recipes.recipereplacements.other_mods", true),
         DISABLE_CHARCOAL("recipes.disabledrecipes.wood2charcoalsmelting", true),
         DISABLE_COAL_TORCHES("recipes.disabledrecipes.torchesFromCoal", false),
@@ -215,6 +216,7 @@ public final class GregTechConfig {
                 case DISABLE_VANILLA_ORES -> "Disable vanilla ore generation. Nether gold ore and ancient debris have independent settings.";
                 case GENERATE_NETHER_GOLD_ORE -> "Generate vanilla Nether gold ore, independently of DisableVanillaOres.";
                 case GENERATE_ANCIENT_DEBRIS -> "Generate vanilla ancient debris, independently of DisableVanillaOres.";
+                case VANILLA_STORAGE_BLOCK_RECIPES -> "Enable vanilla crafting recipes for compressing materials into storage blocks.";
                 default -> rule.key.substring(rule.key.lastIndexOf('.') + 1);
             };
             settings.put(rule, option(builder, rule.key, rule.initial, description));

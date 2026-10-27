@@ -72,6 +72,7 @@ public final class FormConversionCraftingRecipeInjector {
         CraftingMaterialForms.rebuild(true);
         int before = recipes.size();
         recipes.removeIf(recipe -> recipe instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
+                && !ConfiguredRecipeRules.keepVanillaStorageBlockRecipe(recipe.getId())
                 && disallowsPlainRecipe(crafting, access));
         GregTech.LOGGER.info("Replaced {} plain source-equivalent crafting rows", before - recipes.size());
 //?}
@@ -113,6 +114,7 @@ public final class FormConversionCraftingRecipeInjector {
         var recipes = new ArrayList<>(manager.getRecipes());
         int before = recipes.size();
         recipes.removeIf(holder -> holder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
+                && !ConfiguredRecipeRules.keepVanillaStorageBlockRecipe(holder.id())
                 && disallowsPlainRecipe(crafting, access));
         int removed = before - recipes.size();
         // Rebind existing generated rows too: their JSON ingredient aliases were indexed before

@@ -66,6 +66,10 @@ public final class MaterialEquivalence {
 *///?} else {
         if(required.hasTag()||available.hasTag()||required.isDamaged()||available.isDamaged()) return false;
 //?}
+        var canonicalRequired = MaterialUnification.canonical(required);
+        var canonicalAvailable = MaterialUnification.canonical(available);
+        if (canonicalRequired.getItem() == canonicalAvailable.getItem()
+                && (canonicalRequired.getItem() != required.getItem() || canonicalAvailable.getItem() != available.getItem())) return true;
         var expected=form(required); if(expected==null) return false;
         var actual=form(available);
         if(actual!=null) return expected.prefix()==actual.prefix()&&expected.material()==actual.material();

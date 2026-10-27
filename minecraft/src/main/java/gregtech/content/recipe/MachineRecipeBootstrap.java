@@ -27,6 +27,7 @@ public final class MachineRecipeBootstrap {
     }
 
     private static void loadRecipes() {
+        register("VanillaMaterialUnificationRecipes", VanillaMaterialUnificationRecipes::register);
         runStep("OreProcessingRecipeLoader", new OreProcessingRecipeLoader());
         runStep("PartRecipeLoader", new PartRecipeLoader());
         register("VanillaProcessingRecipes", VanillaProcessingRecipes::register);

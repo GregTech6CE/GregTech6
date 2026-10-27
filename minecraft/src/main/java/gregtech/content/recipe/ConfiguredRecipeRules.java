@@ -12,9 +12,56 @@ public final class ConfiguredRecipeRules {
     private ConfiguredRecipeRules() {}
 
     public static void apply(Map<ResourceLocation, JsonElement> recipes, ResourceManager resources) {
-        recipes.replaceAll((id, json) -> restore(id, json, resources));
+        recipes.replaceAll((id, json) -> unifyOutput(id, restore(id, json, resources)));
         recipes.entrySet().removeIf(entry -> !GregTechConfig.recipeEnabled(entry.getKey().toString())
+                || (!GregTechConfig.Rule.VANILLA_STORAGE_BLOCK_RECIPES.enabled() && isVanillaStorageBlockRecipe(entry.getKey()))
                 || disabled(entry.getValue()));
+    }
+
+    public static boolean isVanillaStorageBlockRecipe(ResourceLocation id) {
+        return id.getNamespace().equals("minecraft") && switch (id.getPath()) {
+            case "iron_block", "gold_block", "copper_block", "netherite_block", "diamond_block",
+                    "coal_block", "lapis_block", "redstone_block" -> true;
+            default -> false;
+        };
+    }
+
+    public static boolean keepVanillaStorageBlockRecipe(ResourceLocation id) {
+        return GregTechConfig.Rule.VANILLA_STORAGE_BLOCK_RECIPES.enabled() && isVanillaStorageBlockRecipe(id);
+    }
+
+    private static JsonElement unifyOutput(ResourceLocation id, JsonElement json) {
+        if (!id.getNamespace().equals("gt6ce") || !json.isJsonObject()) return json;
+        var object = json.getAsJsonObject();
+        if (!object.has("result")) return json;
+        var result = object.get("result");
+        if (result.isJsonPrimitive() && result.getAsJsonPrimitive().isString()) {
+            String target = vanillaItem(result.getAsString());
+            if (target == null) return json;
+            var copy = object.deepCopy();
+            copy.addProperty("result", target);
+            return copy;
+        }
+        if (!result.isJsonObject()) return json;
+        var resultObject = result.getAsJsonObject();
+        if (resultObject.has("nbt") || resultObject.has("components")) return json;
+        String key = resultObject.has("item") ? "item" : resultObject.has("id") ? "id" : null;
+        if (key == null || !resultObject.get(key).isJsonPrimitive()) return json;
+        String target = vanillaItem(resultObject.get(key).getAsString());
+        if (target == null) return json;
+        var copy = object.deepCopy();
+        copy.getAsJsonObject("result").addProperty(key, target);
+        return copy;
+    }
+
+    private static String vanillaItem(String name) {
+        var id = ResourceLocation.tryParse(name);
+        if (id == null || !id.getNamespace().equals("gt6ce")) return null;
+        var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id);
+        var stack = new net.minecraft.world.item.ItemStack(item);
+        if (!gregtech.engine.material.MaterialUnification.hiddenDuplicate(stack)) return null;
+        var target = gregtech.engine.material.MaterialUnification.canonical(stack);
+        return net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(target.getItem()).toString();
     }
 
     private static JsonElement restore(ResourceLocation id, JsonElement current, ResourceManager resources) {
