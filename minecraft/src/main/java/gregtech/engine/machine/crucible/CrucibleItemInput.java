@@ -55,7 +55,7 @@ public final class CrucibleItemInput {
 //? if >=1.21.1 {
         /*if (stack.isEmpty() || ItemMaterialRegistry.hasStoredContents(stack)) return result;
         if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item) {
-            result.add(CrucibleInputRules.materialItem(item.getMaterial(), item.getPrefix()));
+            addMaterialForm(result, stack, item);
 *///?} else {
         if (stack.isEmpty() || ItemMaterialRegistry.hasStoredContents(stack)) {
 //?}
@@ -69,9 +69,7 @@ public final class CrucibleItemInput {
 *///?} else {
 
         if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem materialItem) {
-            GTMaterial material = materialItem.getMaterial().resolve();
-            MaterialPrefix prefix = materialItem.getPrefix();
-            result.add(CrucibleInputRules.materialItem(material, prefix));
+            addMaterialForm(result, stack, materialItem);
             return result;
         }
 
@@ -202,6 +200,24 @@ public final class CrucibleItemInput {
             }
         }
 //?}
+    }
+
+    /** Source MultiTileEntitySmeltery159-182 keeps raw-ore crushing separate, then admits every
+     * positive component of ordinary item data. Use the actual composition (including overrides),
+     * not the nominal prefix amount: Empty ammunition still has a valid shaft or casing.
+     */
+    private static void addMaterialForm(List<CrucibleMaterialStack> result, ItemStack stack,
+                                        gregtech.engine.material.MaterialFormItem form) {
+        if (form.getPrefix() == MaterialPrefix.oreRaw) {
+            result.add(CrucibleInputRules.materialItem(form.getMaterial(), form.getPrefix()));
+            return;
+        }
+        // Missing or unrecoverable data must not fall back to a fabricated primary component.
+        if (!ItemMaterialRegistry.canRecover(stack)) return;
+        ItemMaterialRegistry.get(stack).ifPresent(data -> {
+            for (var component : data.components())
+                CrucibleMaterialStack.of(component.material(), component.amount()).addToList(result);
+        });
     }
 
     public static boolean isValid(ItemStack stack) {
