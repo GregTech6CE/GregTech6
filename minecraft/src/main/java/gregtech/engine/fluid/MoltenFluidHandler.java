@@ -38,7 +38,7 @@ public final class MoltenFluidHandler implements IFluidHandler {
         GTMaterial material = GTMaterialRegistry.get(key).resolve();
         return material.isValid() ? material : null;
     }
-    /** The special source dimension belongs to this actual phase, not every addon fluid of Alumina. */
+    /** The special source dimension belongs to this actual phase, not every addon fluid of the same material. */
     public static MoltenMaterialUnits.Ratio ratio(GTMaterial material, FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return MoltenMaterialUnits.STANDARD;
         var entry = GTFluids.entryForFluid(fluid.getFluid());
@@ -52,7 +52,10 @@ public final class MoltenFluidHandler implements IFluidHandler {
                 && entry.registryName().equals("molten.al2o3") && actualId.equals("gt6ce:molten_al2o3")
                 && material != null && entry.equals(RegisteredFluids.Molten_Al2O3
                         .withTemperature(material.getMeltingPoint()).withLuminosity(10));
-        return MoltenMaterialUnits.ratio(material, primary || legacyAlias);
+        boolean plastic = entry == RegisteredFluids.Plastic && entry == RegisteredFluids.get("Plastic")
+                && entry.registryName().equals("molten.plastic") && entry.temperature() == 423
+                && actualId.equals("gt6ce:molten_plastic");
+        return MoltenMaterialUnits.ratio(material, primary || legacyAlias || plastic);
     }
 
     private static FluidStack fluid(GTMaterial material, int amount) {
@@ -60,6 +63,10 @@ public final class MoltenFluidHandler implements IFluidHandler {
         if (MoltenMaterialUnits.ratio(material).equals(MoltenMaterialUnits.ALUMINA)) {
             var primary = GTFluids.stack("GenMolten_Alumina", amount);
             if (ratio(material, primary).equals(MoltenMaterialUnits.ALUMINA)) return primary;
+        }
+        if (MoltenMaterialUnits.ratio(material).equals(MoltenMaterialUnits.PLASTIC)) {
+            var primary = GTFluids.stack("Plastic", amount);
+            if (ratio(material, primary).equals(MoltenMaterialUnits.PLASTIC)) return primary;
         }
         for (var entry : RegisteredFluids.all().entrySet()) {
             var definition = entry.getValue();
