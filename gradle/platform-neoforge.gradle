@@ -7,7 +7,8 @@ evaluationDependsOn(':api')
 evaluationDependsOn(":api-platform:${project.name}")
 def platformApi = project(":api-platform:${project.name}")
 
-group = rootProject.property('mod_group_id')
+// Match Forge's distinct host identity; API nodes retain their own group/version.
+group = "${rootProject.property('mod_group_id')}.mod"
 version = rootProject.property('mod_version')
 
 base {

@@ -13,7 +13,9 @@ def platformApi = project(":api-platform:${project.name}")
 
 
 version = mod_version
-group = mod_group_id
+// Stonecutter gives the host and API nodes the same project name. Keep their
+// internal module identities distinct when the host version exceeds the API's.
+group = "${mod_group_id}.mod"
 
 base {
     archivesName = "${mod_id}-${minecraft_version}-forge"
@@ -322,6 +324,8 @@ tasks.named('assemble').configure { dependsOn distributionJar }
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
+            // Preserve the public coordinate; only the internal project group differs.
+            groupId = mod_group_id
             artifact distributionJar
         }
     }
