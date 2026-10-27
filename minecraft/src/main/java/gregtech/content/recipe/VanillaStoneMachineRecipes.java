@@ -29,7 +29,6 @@ public final class VanillaStoneMachineRecipes {
 
     public static int register() {
         added = 0;
-        engrave();
         meltStone();
         for (String[] row : new String[][]{
                 {"granite", "Granite", "stone_granite_cobble"},
@@ -42,19 +41,6 @@ public final class VanillaStoneMachineRecipes {
                 rock("polished_" + row[0], row[1], row[2]);
         }
         return added;
-    }
-
-    private static void engrave() {
-        for (String name : new String[]{"Glass", "Zirconium", "Dilithium", "HexoriumWhite"}) {
-            var material = GTMaterialRegistry.get(name);
-            if (!material.isValid()) continue;
-            var lens = GTItems.getStack(MaterialPrefix.lens, material, 1);
-            if (lens.isEmpty()) continue;
-            var recipe = new Recipe(new ItemStack[]{vanilla("stone"), lens},
-                    new ItemStack[]{vanilla("chiseled_stone_bricks")}, null, null, null, null, 64, 16, 0)
-                    .withCatalystInputs(1);
-            add(MachineRecipeMaps.LaserEngraver, recipe);
-        }
     }
 
     private static void meltStone() {

@@ -58,6 +58,7 @@ public final class MachineRecipeBootstrap {
         register("AnvilRecipeDefinitions", AnvilRecipeDefinitions::register);
         register("StoneAndToolSurvivalRecipes", StoneAndToolSurvivalRecipes::register);
         register("StoneVariantRecipes", StoneVariantRecipes::register);
+        register("LaserStoneRecipes", LaserStoneRecipes::register);
         register("ElectronicsRecipes", ElectronicsRecipes::register);
         register("WireProcessingRecipes", WireProcessingRecipes::register);
         register("PolymerFormingRecipes", PolymerFormingRecipes::register);

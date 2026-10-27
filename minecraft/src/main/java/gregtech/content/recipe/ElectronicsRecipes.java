@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.*;
 
 /** GT6 MultiItemTechnological circuit progression and Loader_Recipes_Other crystal growth.
- * Canonical copper/rubber materials are used; optional-mod substitutions remain separate work.
+ * Native source material groups and lens roles are used; external integrations remain separate work.
  */
 public final class ElectronicsRecipes {
     public static final String[] TIERS = {"basic", "good", "advanced", "elite", "master", "ultimate"};
@@ -31,8 +31,13 @@ public final class ElectronicsRecipes {
         String[] conductors = {"Copper", "Gold", "Platinum"};
         String[] wiring = {"circuit_wiring_copper", "circuit_wire_gold", "circuit_wire_platinum"};
         for (int i=0;i<3;i++) {
-            add(MachineRecipeMaps.LaserEngraver, new Recipe(new ItemStack[]{mat(MaterialPrefix.foil,conductors[i],4),mat(MaterialPrefix.lens,"Ruby",1)},
-                    new ItemStack[]{tech(wiring[i],1)},null,null,null,null,64,16,0).withCatalystInputs(1));
+            if (i == 0) {
+                var copper = new LinkedHashSet<GTMaterial>();
+                copper.add(Materials.Copper);
+                copper.addAll(MaterialGroups.Cu.getReRegistrations());
+                for (var material : copper) if (material != null && material.isValid())
+                    engrave(wiring[i], material.getName());
+            } else engrave(wiring[i], conductors[i]);
             press(64,tech("circuit_plate_"+conductors[i].toLowerCase(Locale.ROOT),1),tech("circuit_plate",1),tech(wiring[i],1));
         }
         for (String semiconductor : new String[]{"Silicon","Germanium","RedstoneAlloy"}) {
@@ -104,9 +109,15 @@ public final class ElectronicsRecipes {
         // a gem plate is engraved into a crystal circuit, the socket is crafted from a platinum circuit
         // plate, two ultimate circuits and two helium-neon laser emitters, and the Press turns
         // socket + circuit into a processor.
-        crystal("crystal_circuit_diamond", new String[]{"Diamond"}, gregtech.content.data.MaterialGroups.Diamond);
-        crystal("crystal_circuit_emerald", new String[]{"Emerald"}, gregtech.content.data.MaterialGroups.Emerald);
-        crystal("crystal_circuit_sapphire", new String[]{"Sapphire", "GreenSapphire"}, gregtech.content.data.MaterialGroups.Sapphire);
+        // MT diamond/emerald/sapphire factories (208-210, 1358-1386) and ANY.init (97-99).
+        // Keep explicit native factory members: not all port ANY groups carry their original registrations.
+        crystal("crystal_circuit_diamond", new String[]{"Diamond", "BlueDiamond", "GreenDiamond", "PurpleDiamond",
+                "RedDiamond", "YellowDiamond", "PinkDiamond", "DiamondIndustrial", "ManaDiamond",
+                "ElvenDragonstone", "Gravitite", "Diamantine"}, gregtech.content.data.MaterialGroups.Diamond);
+        crystal("crystal_circuit_emerald", new String[]{"Emerald", "Aquamarine", "Morganite", "Heliodor",
+                "Goshenite", "Bixbite", "Maxixe", "Emeradic"}, gregtech.content.data.MaterialGroups.Emerald);
+        crystal("crystal_circuit_sapphire", new String[]{"Sapphire", "BlueSapphire", "GreenSapphire",
+                "PurpleSapphire", "YellowSapphire", "OrangeSapphire"}, gregtech.content.data.MaterialGroups.Sapphire);
         crystal("crystal_circuit_ruby", new String[]{"Ruby"}, null);   // GT6: plateGem(MT.Ruby) only
         for (String gem : new String[]{"Diamond", "Ruby", "Emerald", "Sapphire"}) {
             press(16, tech("crystal_processor_" + gem.toLowerCase(Locale.ROOT), 1),
@@ -171,21 +182,25 @@ public final class ElectronicsRecipes {
             gems.addAll(group.getReRegistrations());
         }
         for (var gem : gems) {
-            if (gem == null || !gem.isValid()) continue;
-            ItemStack plate = mat(MaterialPrefix.plateGem, gem.getName(), 1);
+            if (gem == null || !gem.isValid() || (group == MaterialGroups.Sapphire && gem.resolve() == Materials.Ruby.resolve())) continue;
+            ItemStack plate = GTItems.getStack(MaterialPrefix.plateGem, gem, 1);
             if (plate.isEmpty()) continue;
-            add(MachineRecipeMaps.LaserEngraver, new Recipe(
-                    new ItemStack[]{plate, mat(MaterialPrefix.lens, "Ruby", 1)},
-                    new ItemStack[]{tech(circuit, 1)}, null, null, null, null, 64, 256, 0)
-                    .withCatalystInputs(1));
+            for (var lens : SourceLensRoles.lenses(SourceLensRoles.Color.GREEN))
+                add(MachineRecipeMaps.LaserEngraver, new Recipe(
+                        new ItemStack[]{plate.copy(), lens},
+                        new ItemStack[]{tech(circuit, 1)}, null, null, null, null, 64, 256, 0)
+                        .withCatalystInputs(1));
         }
     }
 
     /** GT6 {@code Loader_Recipes_Other:158-166}: four foils and a lens engrave a circuit wire. */
     private static void engrave(String wire,String foilMaterial) {
-        add(MachineRecipeMaps.LaserEngraver,new Recipe(
-                new ItemStack[]{mat(MaterialPrefix.foil,foilMaterial,4),mat(MaterialPrefix.lens,"Ruby",1)},
-                new ItemStack[]{tech(wire,1)},null,null,null,null,64,16,0).withCatalystInputs(1));
+        var foil = GTItems.getStack(MaterialPrefix.foil, GTMaterialRegistry.get(foilMaterial), 4);
+        if (foil.isEmpty()) return;
+        for (var lens : SourceLensRoles.lenses(SourceLensRoles.Color.RED))
+            add(MachineRecipeMaps.LaserEngraver,new Recipe(
+                    new ItemStack[]{foil.copy(),lens},
+                    new ItemStack[]{tech(wire,1)},null,null,null,null,64,16,0).withCatalystInputs(1));
     }
 
     /** GT6 {@code MultiItemTechnological:720-743}: soldering a circuit board into a finished circuit. */
