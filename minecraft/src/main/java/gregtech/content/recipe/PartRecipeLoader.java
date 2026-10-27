@@ -45,7 +45,7 @@ public class PartRecipeLoader implements InitializationStep {
             rollBender(m);
             clusterMillAndRollFormer(m);
             lathe(entry);
-            cutter(m);
+            cutter(entry);
             extruder(m);
             smelting(m);
         }
@@ -120,7 +120,12 @@ public class PartRecipeLoader implements InitializationStep {
     /** RecipeMapHandlerPrefix:213–218 → OM.pulverize:370–371, including target identity and ratio. */
     private static ItemStack[] machiningOutputs(GTMaterial material, MaterialPrefix in, int inCount,
                                                 MaterialPrefix out, int outCount, ItemStack output) {
-        long remains = in.getMaterialWeight() * inCount - out.getMaterialWeight() * outCount;
+        return machiningOutputs(material, in.getMaterialWeight() * inCount, out, outCount, output);
+    }
+
+    private static ItemStack[] machiningOutputs(GTMaterial material, long inputUnits,
+                                                MaterialPrefix out, int outCount, ItemStack output) {
+        long remains = inputUnits - out.getMaterialWeight() * outCount;
         ItemStack dust = pulverizedRemains(material, remains);
         return dust.isEmpty() ? new ItemStack[]{output} : new ItemStack[]{output, dust};
     }
@@ -130,55 +135,84 @@ public class PartRecipeLoader implements InitializationStep {
                 PulverizationRules.amount(remains, material.getTargetPulverAmount()));
     }
 
-    // ── Cutter: long rods / multi-ingots / gems → halves and plates ─────────
-    // The Cutter map requires a coolant fluid; GT6 used water scaled with cut time.
+    // ── Cutter: bounded source part matrix and four independent coolant variants ──
 
-    private void cutter(GTMaterial m) {
-        cut(m, MaterialPrefix.stickLong, 1, MaterialPrefix.stick, 2, 16, 32);
-        cut(m, MaterialPrefix.stick, 1, MaterialPrefix.bolt, 4, 48, 32);
-        cut(m, MaterialPrefix.plate, 1, MaterialPrefix.plateTiny, 8, 64, 32);
-        cut(m, MaterialPrefix.plateGem, 1, MaterialPrefix.plateGemTiny, 8, 64, 32);
-        cut(m, MaterialPrefix.gemChipped, 1, MaterialPrefix.plateGemTiny, 2, 16, 32);
-        cut(m, MaterialPrefix.gemFlawed, 1, MaterialPrefix.plateGemTiny, 4, 32, 32);
-        cut(m, MaterialPrefix.gem, 1, MaterialPrefix.plateGem, 1, 16, 96);
-        cut(m, MaterialPrefix.gemFlawless, 1, MaterialPrefix.plateGem, 2, 16, 96);
-        cut(m, MaterialPrefix.gemExquisite, 1, MaterialPrefix.plateGem, 4, 48, 96);
-        cut(m, MaterialPrefix.gemLegendary, 1, MaterialPrefix.plateGem, 8, 112, 96);
-        cut(m, MaterialPrefix.bouleGt, 1, MaterialPrefix.plateGem, 4, 48, 32);
-        cut(m, MaterialPrefix.ingotDouble, 1, MaterialPrefix.ingot, 2, 16, 32);
-        cut(m, MaterialPrefix.ingotTriple, 1, MaterialPrefix.ingot, 3, 32, 32);
-        cut(m, MaterialPrefix.ingotQuadruple, 1, MaterialPrefix.ingot, 4, 48, 32);
-        cut(m, MaterialPrefix.ingotQuintuple, 1, MaterialPrefix.ingot, 5, 64, 32);
-        cut(m, MaterialPrefix.plateDouble, 1, MaterialPrefix.plate, 2, 16, 32);
-        cut(m, MaterialPrefix.plateTriple, 1, MaterialPrefix.plate, 3, 32, 32);
-        cut(m, MaterialPrefix.plateQuadruple, 1, MaterialPrefix.plate, 4, 48, 32);
-        cut(m, MaterialPrefix.plateQuintuple, 1, MaterialPrefix.plate, 5, 64, 32);
+    private void cutter(GTMaterial entry) {
+        GTMaterial material = entry.resolve();
+        for (var rule : SourceCutterRules.rules()) {
+            for (var coolant : SourceCutterRules.sourceCoolants()) {
+                var decision = SourceCutterRules.evaluate(entry, rule, coolant);
+                if (!decision.allowed()) continue;
+                cut(material, rule, coolant, decision);
+            }
+        }
     }
 
-    // Every existing row above enables pulverized remains in source Handlers:634–652.
-    private void cut(GTMaterial m, MaterialPrefix in, int inCount, MaterialPrefix out, int outCount,
-                     long duration, long eut) {
-        ItemStack input = mat(in, m, inCount);
-        if (input.isEmpty()) return;
-        ItemStack output = mat(out, m, outCount);
-        if (output.isEmpty()) return;
+    /** Source Handlers:632–652; holders and ordinary collisions remain native admission decisions. */
+    private void cut(GTMaterial material, SourceCutterRules.Rule rule, SourceCutterRules.Coolant coolant,
+                     SourceCutterRules.Decision decision) {
+        ItemStack input = rule.blockInput() == null ? mat(rule.input(), material, 1)
+                : gregtech.content.registry.GTBlocks.getStack(rule.blockInput(), material);
+        ItemStack output = mat(rule.output(), material, rule.outputCount());
+        if (input.isEmpty() || output.isEmpty()) return;
+        var fluid = gregtech.content.registry.GTFluids.stack(coolant.field(), decision.fluidAmount());
+        // Forge uses null for an absent binding; Neo uses EMPTY. Never substitute another coolant.
+        if (fluid == null || fluid.isEmpty()) return;
+        long inputUnits = rule.inputUnits();
+        if (rule.blockInput() != null) {
+            if (!verifiedCutterBlock(input, material)) return;
 //? if >=1.21.1 {
-
-        /*net.neoforged.neoforge.fluids.FluidStack water = new net.neoforged.neoforge.fluids.FluidStack(
-
+            /*var recipe = gregtech.engine.recipe.RecipeMap.make(true, new ItemStack[]{input},
+                    machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output), null, null,
+                    new net.neoforged.neoforge.fluids.FluidStack[]{fluid},
+                    new net.neoforged.neoforge.fluids.FluidStack[0], decision.ticks(), rule.eut(), 0);
 *///?} else {
-        net.minecraftforge.fluids.FluidStack water = new net.minecraftforge.fluids.FluidStack(
+            var recipe = gregtech.engine.recipe.RecipeMap.make(true, new ItemStack[]{input},
+                    machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output), null, null,
+                    new net.minecraftforge.fluids.FluidStack[]{fluid},
+                    new net.minecraftforge.fluids.FluidStack[0], decision.ticks(), rule.eut(), 0);
 //?}
-                net.minecraft.world.level.material.Fluids.WATER, (int) Math.max(16, duration));
+            if (recipe != null) MachineRecipeMaps.Cutter.addRecipe(
+                    recipe.withItemInputGuard(0, offered -> verifiedCutterBlock(offered, material)));
+            return;
+        }
 //? if >=1.21.1 {
-
-        /*MachineRecipeMaps.Cutter.addRecipe1(true, eut, duration, input, water, (net.neoforged.neoforge.fluids.FluidStack) null,
-                machiningOutputs(m, in, inCount, out, outCount, output));
-
+        /*MachineRecipeMaps.Cutter.addRecipe1(true, rule.eut(), decision.ticks(), input, fluid,
+                (net.neoforged.neoforge.fluids.FluidStack) null,
+                machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output));
 *///?} else {
-        MachineRecipeMaps.Cutter.addRecipe1(true, eut, duration, input, water, (net.minecraftforge.fluids.FluidStack) null,
-                machiningOutputs(m, in, inCount, out, outCount, output));
+        MachineRecipeMaps.Cutter.addRecipe1(true, rule.eut(), decision.ticks(), input, fluid,
+                (net.minecraftforge.fluids.FluidStack) null,
+                machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output));
 //?}
+    }
+
+    /** Only the new solid-block route needs this physical 9U proof; explicit metadata always wins. */
+    private static boolean verifiedCutterBlock(ItemStack stack, GTMaterial material) {
+        try {
+            if (stack == null || stack.isEmpty() || stack.isDamaged() || material == null
+                    || !material.isValid() || material.resolve() != material
+                    || GTMaterialRegistry.get(material.getId()) != material
+                    || GTMaterialRegistry.get(material.getName()) != material
+                    || gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
+            var prefix = gregtech.engine.prefix.BlockMaterialPrefix.blockSolid;
+            ItemStack canonical = gregtech.content.registry.GTBlocks.getStack(prefix, material);
+            if (canonical.isEmpty() || canonical.getItem() != stack.getItem()
+                    || !(stack.getItem() instanceof net.minecraft.world.item.BlockItem item)
+                    || !(item.getBlock() instanceof gregtech.content.block.MaterialBlockLike block)
+                    || block.prefix() != prefix || block.material().resolve() != material) return false;
+            long units = 9 * GTValues.U;
+            var data = gregtech.engine.material.ItemMaterialRegistry.base(stack.getItem()).orElse(null);
+            if (data != null) return data.recoverable() && data.prefix() == null
+                    && data.components().size() == 1 && data.material().resolve() == material
+                    && data.amount() == units;
+            // Forge has no general block composition registration; inspect the actual known block.
+            var weights = gregtech.content.block.BlockMaterialWeights.contained(block.material(), block.prefix());
+            return weights.size() == 1 && weights.get(0).material().resolve() == material
+                    && weights.get(0).amount() == units;
+        } catch (RuntimeException | LinkageError invalidBinding) {
+            return false;
+        }
     }
 
     // ── Extruder: any extruder-capable input + shape mold → any part ────────
