@@ -181,8 +181,8 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
                     && !material.has(gregtech.api.material.MaterialProperty.ANTIMATTER);
         var gate = pattern.gate();
         if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) return false;
-        // GT6's ANY.Stone (Loader_Tools:272) is the set of materials carrying the STONE property.
-        if (gate.onlyStone() && !material.has(gregtech.api.material.MaterialProperty.STONE)) {
+        // Preserve the source rock-tool family; a placed-block STONE role alone can be broader.
+        if (gate.onlyStone() && !OriginalToolMaterials.earlyStone(material)) {
             return false;
         }
         // The early rows take any rock (a stone never has a tool-head form), and a fixed tool material
@@ -286,8 +286,8 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
         var gate = pattern.gate();
         if (gate.toolMaterial() != null) return true;
         if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) return false;
-        // GT6's ANY.Stone (Loader_Tools:272) is the set of materials carrying the STONE property.
-        if (gate.onlyStone() && !material.has(gregtech.api.material.MaterialProperty.STONE)) {
+        // Preserve the source rock-tool family; a placed-block STONE role alone can be broader.
+        if (gate.onlyStone() && !OriginalToolMaterials.earlyStone(material)) {
             return false;
         }
         if (!gate.skipHeadGate() && (!type.canUseHead(material) || !OriginalToolMaterials.acceptsHead(type.definition(), material))) return false;
