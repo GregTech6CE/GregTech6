@@ -236,7 +236,7 @@ public final class BehaviorScanner {
      * {@link GTToolHelper#requiredHarvestLevel}.</p>
      */
     public static String harvestLine(BlockState state) {
-        BlockHarvestPolicy.Tool tool = BlockHarvestPolicy.tool(state.getBlock());
+        BlockHarvestPolicy.Tool tool = BlockHarvestPolicy.tool(state);
         String name = toolName(tool);
         int level = GTToolHelper.requiredHarvestLevel(state);
         if (!state.requiresCorrectToolForDrops()) {

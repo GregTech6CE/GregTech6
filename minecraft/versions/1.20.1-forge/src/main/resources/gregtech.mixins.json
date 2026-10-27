@@ -52,6 +52,7 @@
     "defaultRequire": 0
   },
   "client": [
+    "JadeOreHarvestToolMixin",
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
     "ColoredBookOpenPacketMixin",

@@ -91,6 +91,8 @@ public final class BlockHarvestPolicy {
   return OreHostPhysics.params(state).map(SourceOreHostPhysics.Params::harvest).orElseGet(()->level(state.getBlock()));
  }
  public static Tool tool(net.minecraft.world.level.block.state.BlockState state) {
+  if(state.getBlock() instanceof gregtech.content.block.OreBlock
+      && gregtech.content.block.OreBlock.stoneOf(state).isSediment())return Tool.SHOVEL;
   return OreHostPhysics.params(state).map(p->Tool.valueOf(p.tool())).orElseGet(()->tool(state.getBlock()));
  }
  public static String tag(Tool tool) { return BlockHarvestNames.tag(tool.name()); }

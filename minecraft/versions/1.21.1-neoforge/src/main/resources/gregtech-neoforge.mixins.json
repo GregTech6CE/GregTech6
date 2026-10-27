@@ -49,6 +49,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "JadeOreHarvestToolMixin",
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
     "GasFluidRenderMixin",

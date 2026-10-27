@@ -14,12 +14,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/** Preserve broken-ore host and Spike material/mode when vanilla falling entities drop items. */
+/** Preserve falling-ore host and Spike material/mode when vanilla falling entities drop items. */
 @Mixin(Entity.class)
 public abstract class EntityFallingOreDropMixin {
     @Inject(method = "spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;",
             at = @At("HEAD"), cancellable = true, require = 1)
-    private void gregtech$preserveFallingBrokenOre(ItemLike item,
+    private void gregtech$preserveFallingOre(ItemLike item,
             CallbackInfoReturnable<ItemEntity> result) {
         if (!((Object) this instanceof FallingBlockEntity falling)) return;
         BlockState state = falling.getBlockState();
@@ -30,7 +30,7 @@ public abstract class EntityFallingOreDropMixin {
                     state.getValue(SpikeBlock.MODE), state.getValue(SpikeBlock.SECONDARY))));
             return;
         }
-        if (!(state.getBlock() instanceof OreBlock) || state.getBlock() != item || !OreBlock.isBroken(state)) return;
+        if (!(state.getBlock() instanceof OreBlock) || state.getBlock() != item || !OreBlock.falls(state)) return;
         result.setReturnValue(falling.spawnAtLocation(OreBlock.withStone(new ItemStack(item), state)));
     }
 }

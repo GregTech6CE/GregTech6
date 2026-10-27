@@ -258,23 +258,28 @@ public class OreBlock extends Block implements MaterialBlockLike {
         return stateFor(stoneOfStack(stack)).setValue(BROKEN, isBrokenStack(stack));
     }
 
-    /** GT6 broken ores use a rubble host and fall, while intact worldgen ores remain anchored. */
+    /** Loose sediment and broken rubble fall without changing the ore's material or host state. */
+    public static boolean falls(BlockState state) {
+        return state.getBlock() instanceof OreBlock && (isBroken(state) || stoneOf(state).isSediment());
+    }
+
+    /** Use vanilla scheduled falling ticks; solid intact rock hosts remain anchored. */
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean moving) {
         super.onPlace(state, level, pos, old, moving);
-        if (isBroken(state)) level.scheduleTick(pos, this, 2);
+        if (falls(state)) level.scheduleTick(pos, this, 2);
     }
 
     @Override
     public BlockState updateShape(BlockState state, Direction side, BlockState adjacent,
                                   net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos adjacentPos) {
-        if (isBroken(state)) level.scheduleTick(pos, this, 2);
+        if (falls(state)) level.scheduleTick(pos, this, 2);
         return super.updateShape(state, side, adjacent, level, pos, adjacentPos);
     }
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (isBroken(state) && pos.getY() >= level.getMinBuildHeight()
+        if (falls(state) && pos.getY() >= level.getMinBuildHeight()
                 && FallingBlock.isFree(level.getBlockState(pos.below()))) {
             FallingBlockEntity.fall(level, pos, state);
         }

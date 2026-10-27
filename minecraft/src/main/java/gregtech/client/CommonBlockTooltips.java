@@ -79,7 +79,12 @@ public final class CommonBlockTooltips {
                 ? Component.translatable("tooltip.gt6ce.ore.hand_harvest_preferred",
                     Component.translatable(OriginalBlockTooltipRules.harvestToolKey(ore.get().tool())).withStyle(ChatFormatting.WHITE))
                     .withStyle(ChatFormatting.DARK_GRAY)
-                : harvestLine(BlockHarvestPolicy.Tool.valueOf(ore.get().tool()), false, ore.get().harvest())) : harvestLine(block));
+                : harvestLine(BlockHarvestPolicy.Tool.valueOf(ore.get().tool()), false, ore.get().harvest()))
+                : block instanceof gregtech.content.block.OreBlock
+                        && gregtech.content.block.OreBlock.stoneOfStack(stack).isSediment()
+                    ? harvestLine(BlockHarvestPolicy.Tool.SHOVEL, BlockHarvestPolicy.handHarvestable(block),
+                            BlockHarvestPolicy.level(block))
+                    : harvestLine(block));
         int insertion = lines.size();
         for (int i = 0; i < lines.size(); i++) if (containsAnyKey(lines.get(i),
                 Set.of("tooltip.gt6ce.contained_materials", "tooltip.gt6ce.f3h_hint"))) {
