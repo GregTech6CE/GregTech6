@@ -68,6 +68,12 @@ public final class GTConstructionVariants {
         return family == null ? null : VARIANTS.get(family).get(color).get();
     }
 
+    /** The colour-bound block of one family, or {@code null} when the family is unknown. */
+    public static Block coloredBlock(String family, DyeColor color) {
+        Map<DyeColor, RegisteredBlock<? extends Block>> colors = VARIANTS.get(family);
+        return colors == null ? null : colors.get(color).get();
+    }
+
     public static List<RegisteredBlock<? extends Block>> all() { return List.copyOf(ALL); }
 
     public static Block[] wetFoams() {
