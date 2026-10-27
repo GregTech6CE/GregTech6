@@ -1,6 +1,8 @@
 package gregtech.engine.energy;
 
 import gregtech.GregTechConfig.Rule;
+import gregtech.content.blockentity.machine.BurningBoxBlockEntity;
+import gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.BaseFireBlock;
@@ -19,6 +21,8 @@ public final class MachineEnvironmentalChecks {
         if (machine.isRemoved()) return false;
         // Transport has its own insulation/temperature rules, not the machine structural check.
         if (!(machine instanceof gregtech.content.blockentity.GTEnergyBlockEntity)) return true;
+        // GT6 burning boxes emit HU without running the converter's structural checks.
+        if (machine instanceof SolidBurningBoxBlockEntity || machine instanceof BurningBoxBlockEntity) return true;
         long now = level.getGameTime();
         Long last = LAST_CHECK.get(machine);
         if (last != null && now - last < 600) return true;
