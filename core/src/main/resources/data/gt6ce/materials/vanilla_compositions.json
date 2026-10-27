@@ -8,10 +8,10 @@
   },
   "acacia_button": {
     "components": {
-      "Wood": 648648000
+      "Acacia": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_chest_boat": {
     "components": {
@@ -22,24 +22,26 @@
   },
   "acacia_door": {
     "components": {
-      "Wood": 1297296000
+      "Acacia": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_fence": {
     "components": {
-      "Wood": 972972000
+      "Acacia": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "acacia_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Acacia": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "acacia_hanging_sign": {
     "components": {
@@ -66,10 +68,10 @@
   },
   "acacia_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Acacia": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_sign": {
     "components": {
@@ -94,10 +96,10 @@
   },
   "acacia_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Acacia": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_wood": {
     "components": {
@@ -244,19 +246,26 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
+  "bamboo": {
+    "components": {
+      "Bamboo": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE bamboo material content"
+  },
   "bamboo_block": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 5837832000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_button": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_chest_raft": {
     "components": {
@@ -267,24 +276,26 @@
   },
   "bamboo_door": {
     "components": {
-      "Wood": 1297296000
+      "Bamboo": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_fence": {
     "components": {
-      "Wood": 972972000
+      "Bamboo": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "bamboo_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Bamboo": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "bamboo_hanging_sign": {
     "components": {
@@ -296,38 +307,38 @@
   },
   "bamboo_mosaic": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 648648000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bamboo_mosaic.json"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_mosaic_slab": {
     "components": {
-      "Wood": 324324000
+      "Bamboo": 324324000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bamboo_mosaic_slab.json"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_mosaic_stairs": {
     "components": {
-      "Wood": 972972000
+      "Bamboo": 486486000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bamboo_mosaic_stairs.json"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_planks": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Bamboo": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_raft": {
     "components": {
@@ -345,24 +356,24 @@
   },
   "bamboo_slab": {
     "components": {
-      "Wood": 324324000
+      "Bamboo": 324324000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_stairs": {
     "components": {
-      "Wood": 486486000
+      "Bamboo": 486486000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Bamboo": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "barrel": {
     "components": {
@@ -446,10 +457,10 @@
   },
   "birch_button": {
     "components": {
-      "Wood": 648648000
+      "Birch": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_chest_boat": {
     "components": {
@@ -460,24 +471,26 @@
   },
   "birch_door": {
     "components": {
-      "Wood": 1297296000
+      "Birch": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_fence": {
     "components": {
-      "Wood": 972972000
+      "Birch": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "birch_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Birch": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "birch_hanging_sign": {
     "components": {
@@ -504,10 +517,10 @@
   },
   "birch_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Birch": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_sign": {
     "components": {
@@ -532,10 +545,10 @@
   },
   "birch_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Birch": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_wood": {
     "components": {
@@ -1046,10 +1059,10 @@
   },
   "cherry_button": {
     "components": {
-      "Wood": 648648000
+      "Cherrywood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_chest_boat": {
     "components": {
@@ -1060,24 +1073,26 @@
   },
   "cherry_door": {
     "components": {
-      "Wood": 1297296000
+      "Cherrywood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_fence": {
     "components": {
-      "Wood": 972972000
+      "Cherrywood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "cherry_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Cherrywood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "cherry_hanging_sign": {
     "components": {
@@ -1104,10 +1119,10 @@
   },
   "cherry_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Cherrywood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_sign": {
     "components": {
@@ -1132,10 +1147,10 @@
   },
   "cherry_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Cherrywood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_wood": {
     "components": {
@@ -1563,31 +1578,33 @@
   },
   "crimson_button": {
     "components": {
-      "Wood": 648648000
+      "Crimsonwood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_door": {
     "components": {
-      "Wood": 1297296000
+      "Crimsonwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_fence": {
     "components": {
-      "Wood": 972972000
+      "Crimsonwood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "crimson_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Crimsonwood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "crimson_hanging_sign": {
     "components": {
@@ -1613,10 +1630,10 @@
   },
   "crimson_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Crimsonwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_sign": {
     "components": {
@@ -1648,10 +1665,10 @@
   },
   "crimson_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Crimsonwood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crying_obsidian": {
     "components": {
@@ -1774,10 +1791,10 @@
   },
   "dark_oak_button": {
     "components": {
-      "Wood": 648648000
+      "DarkOak": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_chest_boat": {
     "components": {
@@ -1788,24 +1805,26 @@
   },
   "dark_oak_door": {
     "components": {
-      "Wood": 1297296000
+      "DarkOak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_fence": {
     "components": {
-      "Wood": 972972000
+      "DarkOak": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "dark_oak_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "DarkOak": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "dark_oak_hanging_sign": {
     "components": {
@@ -1832,10 +1851,10 @@
   },
   "dark_oak_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "DarkOak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_sign": {
     "components": {
@@ -1860,10 +1879,10 @@
   },
   "dark_oak_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "DarkOak": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_wood": {
     "components": {
@@ -3388,10 +3407,10 @@
   },
   "jungle_button": {
     "components": {
-      "Wood": 648648000
+      "Junglewood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_chest_boat": {
     "components": {
@@ -3402,24 +3421,26 @@
   },
   "jungle_door": {
     "components": {
-      "Wood": 1297296000
+      "Junglewood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_fence": {
     "components": {
-      "Wood": 972972000
+      "Junglewood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "jungle_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Junglewood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "jungle_hanging_sign": {
     "components": {
@@ -3446,10 +3467,10 @@
   },
   "jungle_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Junglewood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_sign": {
     "components": {
@@ -3474,10 +3495,10 @@
   },
   "jungle_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Junglewood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_wood": {
     "components": {
@@ -3874,10 +3895,10 @@
   },
   "mangrove_button": {
     "components": {
-      "Wood": 648648000
+      "Mangrove": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_chest_boat": {
     "components": {
@@ -3888,24 +3909,26 @@
   },
   "mangrove_door": {
     "components": {
-      "Wood": 1297296000
+      "Mangrove": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_fence": {
     "components": {
-      "Wood": 972972000
+      "Mangrove": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "mangrove_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Mangrove": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "mangrove_hanging_sign": {
     "components": {
@@ -3932,10 +3955,10 @@
   },
   "mangrove_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Mangrove": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_roots": {
     "components": {
@@ -3967,10 +3990,10 @@
   },
   "mangrove_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Mangrove": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_wood": {
     "components": {
@@ -4448,10 +4471,10 @@
   },
   "oak_button": {
     "components": {
-      "Wood": 648648000
+      "Oak": 648648000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2567"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_chest_boat": {
     "components": {
@@ -4462,24 +4485,26 @@
   },
   "oak_door": {
     "components": {
-      "Wood": 1297296000
+      "Oak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2577"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_fence": {
     "components": {
-      "Wood": 972972000
+      "Oak": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2569"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "oak_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Oak": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2570"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "oak_hanging_sign": {
     "components": {
@@ -4506,10 +4531,10 @@
   },
   "oak_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Oak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2568"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_sign": {
     "components": {
@@ -4534,10 +4559,10 @@
   },
   "oak_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Oak": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2571"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_wood": {
     "components": {
@@ -5832,10 +5857,10 @@
   },
   "spruce_button": {
     "components": {
-      "Wood": 648648000
+      "Spruce": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_chest_boat": {
     "components": {
@@ -5846,24 +5871,26 @@
   },
   "spruce_door": {
     "components": {
-      "Wood": 1297296000
+      "Spruce": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_fence": {
     "components": {
-      "Wood": 972972000
+      "Spruce": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "spruce_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Spruce": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "spruce_hanging_sign": {
     "components": {
@@ -5890,10 +5917,10 @@
   },
   "spruce_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Spruce": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_sign": {
     "components": {
@@ -5918,10 +5945,10 @@
   },
   "spruce_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Spruce": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_wood": {
     "components": {
@@ -6096,10 +6123,10 @@
   },
   "stripped_bamboo_block": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 5189184000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "GT6CE bamboo material content"
   },
   "stripped_birch_log": {
     "components": {
@@ -6454,31 +6481,33 @@
   },
   "warped_button": {
     "components": {
-      "Wood": 648648000
+      "Warpedwood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_door": {
     "components": {
-      "Wood": 1297296000
+      "Warpedwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_fence": {
     "components": {
-      "Wood": 972972000
+      "Warpedwood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "warped_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Warpedwood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "warped_hanging_sign": {
     "components": {
@@ -6504,10 +6533,10 @@
   },
   "warped_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Warpedwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_sign": {
     "components": {
@@ -6539,10 +6568,10 @@
   },
   "warped_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Warpedwood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "water_bucket": {
     "components": {
