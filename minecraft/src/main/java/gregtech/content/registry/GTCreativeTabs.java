@@ -130,9 +130,6 @@ private GTCreativeTabs() {}
         registered = true;
         PrefixRegistry.ensurePrefixesLoaded();
         for (MaterialPrefix prefix : PrefixRegistry.all()) {
-            if (prefix.isHiddenFromCreative()) {
-                continue;
-            }
             if (!GTItems.hasBoundItems(prefix)) {
                 continue;
             }

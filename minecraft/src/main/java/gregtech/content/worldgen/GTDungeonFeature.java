@@ -86,6 +86,18 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
             new GTDungeonChunkRoomPortalNether(),
             new GTDungeonChunkRoomPortalEnd());
 
+    public static boolean roomEnabled(GTDungeonChunk room) {
+        if (room instanceof GTDungeonChunkRoomWorkshop) return gregtech.GregTechConfig.Rule.WORKSHOP.enabled();
+        if (room instanceof GTDungeonChunkRoomMiningBedrock) return gregtech.GregTechConfig.Rule.MINING_BEDROCK.enabled();
+        if (room instanceof GTDungeonChunkRoomLibraryNormal) return gregtech.GregTechConfig.Rule.LIBRARY.enabled();
+        if (room instanceof GTDungeonChunkRoomFarmMobs) return gregtech.GregTechConfig.Rule.FARM_MOBS.enabled();
+        if (room instanceof GTDungeonChunkRoomFarmCrop) return gregtech.GregTechConfig.Rule.FARM_CROP.enabled();
+        if (room instanceof GTDungeonChunkRoomFarmFish) return gregtech.GregTechConfig.Rule.FARM_FISH.enabled();
+        if (room instanceof GTDungeonChunkRoomPortalNether) return gregtech.GregTechConfig.Rule.PORTAL_NETHER.enabled();
+        if (room instanceof GTDungeonChunkRoomPortalEnd) return gregtech.GregTechConfig.Rule.PORTAL_END.enabled();
+        return true;
+    }
+
     /** GT6's five dungeon keys ({@code WorldgenDungeonGT:161}), one per dungeon. */
     public static final int KEY_COUNT = 5;
 
@@ -144,6 +156,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
             List<GTDungeonChunk> candidates = new ArrayList<>(connections == 1 ? DEAD_END : ROOMS);
             Collections.shuffle(candidates, new java.util.Random(cellRandom.nextLong()));
             for (GTDungeonChunk candidate : candidates) {
+                if (!roomEnabled(candidate)) continue;
                 // A tagged room belongs to exactly one cell in the immutable dungeon plan. This is
                 // independent of which chunk the world generator happens to visit first.
                 if (GTDungeonSharedState.tagFor(candidate) != null && candidate != shared.chosenRoom()) continue;

@@ -64,8 +64,8 @@ public final class AddonOreVeins {
                 else overworldSmallOres.add(resolved);
             }
         }
-        fit(GTOreVeins.OVERWORLD_VEINS, overworld);
-        fit(GTOreVeins.END_VEINS, end);
+        fit(GTOreVeins.OVERWORLD_VEINS, overworld, 0);
+        fit(GTOreVeins.END_VEINS, end, GTOreVeins.END_EMPTY_VEIN_WEIGHT);
         overworldVeins = List.copyOf(overworld);
         endVeins = List.copyOf(end);
         overworldSmall = List.copyOf(overworldSmallOres);
@@ -94,8 +94,8 @@ public final class AddonOreVeins {
                 + "' for " + dimension + " is already " + previous);
     }
 
-    private static void fit(List<OreVein> base, List<OreVein> added) {
-        long sum = 0;
+    private static void fit(List<OreVein> base, List<OreVein> added, int emptyWeight) {
+        long sum = emptyWeight;
         for (OreVein vein : base) sum = Math.addExact(sum, vein.weight());
         for (OreVein vein : added) sum = Math.addExact(sum, vein.weight());
         if (sum > Integer.MAX_VALUE) throw new IllegalStateException("Ore vein weights do not fit in an int");

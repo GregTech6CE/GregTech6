@@ -103,6 +103,7 @@ public final class LootTableInjection {
 
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
+        if (!gregtech.GregTechConfig.Rule.INCREASE_DUNGEON_LOOT.enabled()) return;
         String category = categoryOf(event.getName());
         if (category == null) return;
         GTLootTables.load();

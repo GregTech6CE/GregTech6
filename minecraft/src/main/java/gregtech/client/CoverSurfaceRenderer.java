@@ -9,8 +9,36 @@ import net.minecraft.core.Direction;
 /** Full host faces stay flush; non-full hosts have the original two-pixel attachment and holder. */
 final class CoverSurfaceRenderer {
     private CoverSurfaceRenderer() {}
+    static int light(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side, int fallback) {
+        var level = owner.getLevel();
+        if (level == null) return fallback;
+        var adjacent = owner.getBlockPos().relative(side);
+        // Vanilla ModelBlockRenderer samples a full boundary face at its outward neighbour,
+        // using the host state for light emission. Other faces must not brighten this face.
+        if (!needsAttachment(owner, side))
+            return net.minecraft.client.renderer.LevelRenderer.getLightColor(level, owner.getBlockState(), adjacent);
+        int face = net.minecraft.client.renderer.LevelRenderer.getLightColor(level, adjacent);
+        if (!level.getBlockState(adjacent).isSolidRender(level, adjacent)) return face;
+        int host = net.minecraft.client.renderer.LevelRenderer.getLightColor(level, owner.getBlockPos());
+        for (Direction exposed : Direction.values()) {
+            var sample = owner.getBlockPos().relative(exposed);
+            if (level.getBlockState(sample).isSolidRender(level, sample)) continue;
+            int value = net.minecraft.client.renderer.LevelRenderer.getLightColor(level, sample);
+            host = net.minecraft.client.renderer.LightTexture.pack(
+                    Math.max(net.minecraft.client.renderer.LightTexture.block(host), net.minecraft.client.renderer.LightTexture.block(value)),
+                    Math.max(net.minecraft.client.renderer.LightTexture.sky(host), net.minecraft.client.renderer.LightTexture.sky(value)));
+        }
+        // Preserve sky and block channels independently, without making the cover emissive.
+        return net.minecraft.client.renderer.LightTexture.pack(
+                Math.max(net.minecraft.client.renderer.LightTexture.block(face), net.minecraft.client.renderer.LightTexture.block(host)),
+                Math.max(net.minecraft.client.renderer.LightTexture.sky(face), net.minecraft.client.renderer.LightTexture.sky(host)));
+    }
     static boolean needsAttachment(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side) {
         return owner.getLevel()!=null && !gregtech.content.cover.CoverWorldInteraction.isCoverSurface(owner,side);
+    }
+    private static float shade(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side) {
+        return owner == null || owner.getLevel() == null || needsAttachment(owner, side)
+                ? 1 : owner.getLevel().getShade(side, true);
     }
     static void attachment(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side,
                            PoseStack pose, VertexConsumer vertices, TextureAtlasSprite sprite, int light, int color) {
@@ -117,10 +145,17 @@ final class CoverSurfaceRenderer {
     }
     // Stay outside the host's layered texture planes while keeping the cover flush to the face.
     static double distance(int layer) { return .002 + Math.max(0, layer) * .0005; }
-    static void draw(PoseStack pose, VertexConsumer vertices, Direction side,
-                     TextureAtlasSprite sprite, int light, int layer) {draw(pose,vertices,side,sprite,light,layer,-1);}
-    static void draw(PoseStack pose, VertexConsumer vertices, Direction side,TextureAtlasSprite sprite,int light,int layer,int color) {
-        drawAt(pose, vertices, side, sprite, light, distance(layer), color);
+    static void draw(net.minecraft.world.level.block.entity.BlockEntity owner, PoseStack pose, VertexConsumer vertices,
+                     Direction side, TextureAtlasSprite sprite, int light, int layer) {
+        draw(owner, pose, vertices, side, sprite, light, layer, -1);
+    }
+    static void draw(net.minecraft.world.level.block.entity.BlockEntity owner, PoseStack pose, VertexConsumer vertices,
+                     Direction side, TextureAtlasSprite sprite, int light, int layer, int color) {
+        drawAt(owner, pose, vertices, side, sprite, light, distance(layer), color);
+    }
+    static void drawAt(net.minecraft.world.level.block.entity.BlockEntity owner, PoseStack pose, VertexConsumer vertices,
+                       Direction side, TextureAtlasSprite sprite, int light, double depth, int color) {
+        drawAt(pose, vertices, side, sprite, light, depth, color, 0, 1, shade(owner, side));
     }
     private static void drawAt(PoseStack pose, VertexConsumer vertices, Direction side,
                                TextureAtlasSprite sprite, int light, double depth, int color) {
@@ -128,17 +163,24 @@ final class CoverSurfaceRenderer {
     }
     private static void drawAt(PoseStack pose, VertexConsumer vertices, Direction side,
                                TextureAtlasSprite sprite, int light, double depth, int color, double min, double max) {
+        drawAt(pose, vertices, side, sprite, light, depth, color, min, max, 1);
+    }
+    private static void drawAt(PoseStack pose, VertexConsumer vertices, Direction side,
+                               TextureAtlasSprite sprite, int light, double depth, int color, double min, double max, float shade) {
+        float red = ((color >> 16) & 255) / 255f * shade;
+        float green = ((color >> 8) & 255) / 255f * shade;
+        float blue = (color & 255) / 255f * shade;
         for (int corner = 0; corner < 4; corner++) {
             double u = corner >= 2 ? max : min, v = corner == 1 || corner == 2 ? max : min;
             var point = CoverFaceCoordinates.to(side, u, v, depth);
 //? if >=1.21.1 {
             /*vertices.addVertex(pose.last().pose(), (float)point.x, (float)point.y, (float)point.z)
-                    .setColor(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f,1f).setUv(sprite.getU((float)u), sprite.getV((float)v))
+                    .setColor(red, green, blue, 1f).setUv(sprite.getU((float)u), sprite.getV((float)v))
                     .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
                     .setNormal(pose.last(), side.getStepX(), side.getStepY(), side.getStepZ());
 *///?} else {
             vertices.vertex(pose.last().pose(), (float)point.x, (float)point.y, (float)point.z)
-                    .color(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f,1f).uv(sprite.getU(u*16), sprite.getV(v*16))
+                    .color(red, green, blue, 1f).uv(sprite.getU(u*16), sprite.getV(v*16))
                     .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light)
                     .normal(pose.last().normal(), side.getStepX(), side.getStepY(), side.getStepZ()).endVertex();
 //?}

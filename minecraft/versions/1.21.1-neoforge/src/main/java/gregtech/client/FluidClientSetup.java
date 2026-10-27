@@ -34,8 +34,9 @@ public final class FluidClientSetup {
             for (var binding : GTFluids.entries().entrySet()) {
                 ItemBlockRenderTypes.setRenderLayer(BuiltInRegistries.FLUID.get(binding.getKey()), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath(binding.getKey().getNamespace(), binding.getKey().getPath()+"_flowing")), RenderType.translucent());
-                // Gas world blocks use block models; register the block too (non-world fluids have none).
-                var block = BuiltInRegistries.BLOCK.get(binding.getKey());
+                // Use the fluid's actual world block. Registry names can overlap with unrelated
+                // solid blocks, notably cfoam_gray/cfoam_black and their foam fluids.
+                var block = BuiltInRegistries.FLUID.get(binding.getKey()).defaultFluidState().createLegacyBlock().getBlock();
                 if (block != net.minecraft.world.level.block.Blocks.AIR) {
                     ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent());
                 }

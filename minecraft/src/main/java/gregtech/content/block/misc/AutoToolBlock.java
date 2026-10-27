@@ -23,6 +23,15 @@ public abstract class AutoToolBlock extends DirectionalBlock implements EntityBl
     }
     public long input() { return input; }
     public int quality() { return quality; }
+    @Override
+//? if >=1.21.1 {
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
+*///?} else {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.level.BlockGetter level,
+//?}
+                                java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+        gregtech.client.AutomaticToolTooltips.append(this, lines);
+    }
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}

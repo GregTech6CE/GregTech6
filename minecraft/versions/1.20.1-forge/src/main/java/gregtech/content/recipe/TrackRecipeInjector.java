@@ -78,6 +78,8 @@ public final class TrackRecipeInjector {
 
     /** GT6's {@code DEL_OTHER_SHAPED_RECIPES} applies to shaped crafting rows only. */
     public static boolean replacesVanillaRailRecipe(Recipe<?> recipe, net.minecraft.core.RegistryAccess access) {
+        if (!(recipe.getId().getNamespace().equals("minecraft") ? gregtech.GregTechConfig.Rule.REPLACE_VANILLA_RECIPES
+                : gregtech.GregTechConfig.Rule.REPLACE_MOD_RECIPES).enabled()) return false;
         if (recipe.getType() != RecipeType.CRAFTING || !(recipe instanceof ShapedRecipe)) return false;
         // GT6 does not remove its own protected crafting rows.
         if (recipe.getId().getNamespace().equals(GregTech.NAMESPACE)) return false;

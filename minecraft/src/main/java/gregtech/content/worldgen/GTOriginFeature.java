@@ -12,8 +12,10 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import java.util.HashSet;
 import java.util.Random;
+import static gregtech.GregTechConfig.Rule.*;
+import static gregtech.GregTechConfig.Number.*;
 
-/** Original GT6 Nexus and axis roads; controlled as one optional spawn complex by the Nexus setting. */
+/** Original GT6 Nexus and axis roads; independently configurable origin facilities. */
 public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
 
     public GTOriginFeature() {
@@ -22,7 +24,8 @@ public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.NEXUS.enabled()) return false;
+        boolean nexusEnabled = gregtech.GregTechConfig.Worldgen.NEXUS.enabled();
+        if (!nexusEnabled && !STREETS.enabled() && !CENTER_BIOMES.enabled() && !BEACON.enabled() && !TESTING.enabled()) return false;
         var level = context.level();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
         ChunkPos chunk = new ChunkPos(context.origin());
@@ -32,10 +35,10 @@ public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
         boolean road = minX == -16 || minX == 0 || minZ == -16 || minZ == 0;
         boolean center = minX >= -96 && minX <= 80 && minZ >= -96 && minZ <= 80;
         // Legacy development worlds reserved this quadrant for test platforms and item caches.
-        if ((minX == 32 || minX == 48) && (minZ == -32 || minZ == -48)) return false;
+        boolean testing = (minX == 32 || minX == 48) && (minZ == -32 || minZ == -48);
         if (!center && !plaza && !nexus && !road) return false;
         // WD.waterLevel() is 62 in GT6, while the modern sea-level parameter is 63.
-        int height = level.getSeaLevel() + 3;
+        int height = CENTER_HEIGHT.value();
         NativeOriginWorld world = new NativeOriginWorld(level, chunk, height);
         var biomes = new HashSet<String>();
         if (road && !plaza) {
@@ -47,15 +50,27 @@ public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
                         northSouth ? minZ + along : across).biomeName());
         }
         var planChunk = new OriginWorld.Chunk(world, minX, minZ);
-        boolean placed = center && new SourceCenterBiomes(height).generate(world, planChunk, minX, minZ,
+        boolean placed = CENTER_BIOMES.enabled() && center && new SourceCenterBiomes(height).generate(world, planChunk, minX, minZ,
                 new Random(level.getSeed() ^ chunk.toLong()));
-        SourceStreets streets = new SourceStreets(height, true, true, true);
+        SourceStreets streets = new SourceStreets(height, BEACON.enabled(), CENTER_BIOMES.enabled(), nexusEnabled);
         // The old generator writes a 64x64 plaza from its four centre chunks. Replaying that plan
         // per intersecting chunk with clipped writes preserves all 16 chunks in any generation order.
-        placed |= plaza ? streets.generate(world, -16, -16, -1, -1, biomes)
-                : road && streets.generate(world, minX, minZ, minX + 15, minZ + 15, biomes);
-        if (nexus) placed |= new SourceNexus(height, true).generate(world, new OriginWorld.Chunk(world, minX, minZ),
+        placed |= STREETS.enabled() && (plaza ? streets.generate(world, -16, -16, -1, -1, biomes)
+                : road && streets.generate(world, minX, minZ, minX + 15, minZ + 15, biomes));
+        if (nexus && nexusEnabled) placed |= new SourceNexus(height, STREETS.enabled()).generate(world, new OriginWorld.Chunk(world, minX, minZ),
                 minX, minZ, new Random(level.getSeed() ^ chunk.toLong()));
+        if (BEACON.enabled() && !STREETS.enabled() && plaza) {
+            for (int layer = 1; layer <= 4; layer++)
+                for (int x = layer - 6; x < 6 - layer; x++) for (int z = layer - 6; z < 6 - layer; z++)
+                    world.setBlock(x, height + layer, z, new OriginWorld.Block("minecraft:iron_block"), 0, 2);
+            world.beacon(-1, height + 5, -1, "speed", "speed");
+            world.beacon(-1, height + 5, 0, "haste", "haste");
+            world.beacon(0, height + 5, -1, "strength", "strength");
+            world.beacon(0, height + 5, 0, "resistance", "regeneration");
+            placed = true;
+        }
+        if (testing && TESTING.enabled()) placed |= new gregtech.content.worldgen.center.SourceTesting(height)
+                .generate(world, planChunk, minX, minZ);
         return placed;
     }
 }

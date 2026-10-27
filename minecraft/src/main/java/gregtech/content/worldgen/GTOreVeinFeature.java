@@ -48,7 +48,7 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim = level.getLevel().dimension();
         if (dim == net.minecraft.world.level.Level.END) {
             veins = GTOreVeins.activeEndVeins();
-            totalWeight = veins.stream().mapToInt(OreVein::weight).sum();
+            totalWeight = GTOreVeins.endSelectionWeight(veins);
         } else if (dim == net.minecraft.world.level.Level.NETHER) {
             return false;
         } else {
@@ -80,14 +80,9 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         return placedAny;
     }
 
-    /** GT6 weighted selection: {@code w = rand(total); for each vein: w -= weight; if (w <= 0) pick}. */
+    /** Empty End rolls deliberately produce no vein. */
     private static OreVein selectVein(Random originRandom, java.util.List<OreVein> veins, int totalWeight) {
-        int w = originRandom.nextInt(totalWeight);
-        for (OreVein vein : veins) {
-            w -= vein.weight();
-            if (w <= 0) return vein;
-        }
-        return null;
+        return MineralWorldgenRules.selectVein(veins, originRandom.nextInt(totalWeight));
     }
 
     private boolean generateVein(WorldGenLevel level, RandomSource chunkRandom, ChunkPos chunkPos,

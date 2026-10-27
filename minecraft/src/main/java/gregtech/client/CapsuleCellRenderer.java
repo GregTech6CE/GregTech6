@@ -19,7 +19,9 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
     public CapsuleCellRenderer(BlockEntityRendererProvider.Context context) {}
     @Override public void render(PortableContainerBlockEntity be,float partial,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
         var stack=be.contents();
-        if(!(stack.getItem() instanceof PortableFluidContainerItem item)||!item.spec().shapeId().equals("cell"))return;
+        if(!(stack.getItem() instanceof PortableFluidContainerItem item))return;
+        String shape = item.spec().shapeId();
+        if (!java.util.Set.of("cell", "cup", "measuring_pot", "jug").contains(shape)) return;
 //? if >=1.21.1 {
         /*var fluid=FluidUtil.getFluidContained(stack).orElse(net.neoforged.neoforge.fluids.FluidStack.EMPTY);
 *///?} else {
@@ -29,7 +31,32 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
         var visual=IClientFluidTypeExtensions.of(fluid.getFluid());var texture=visual.getStillTexture(fluid);
         if(texture==null)return;
         var sprite=CrucibleRenderSprites.resolve(texture);int tint=visual.getTintColor(fluid);
-        var consumer=buffers.getBuffer(RenderType.translucent());
+        var consumer=buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent());
+        if (!shape.equals("cell")) {
+            float min = shape.equals("measuring_pot") ? 5/16f : 6/16f;
+            float max = 1-min;
+            int capacity = FluidUtil.getFluidHandler(stack).map(handler -> handler.getTankCapacity(0)).orElse(1);
+            float bottom = shape.equals("jug") ? 10/16f : 1/16f;
+            float top = shape.equals("jug") ? 14/16f : shape.equals("cup") ? 5/16f : 8/16f;
+            float y = bottom + (top-bottom-.001f)*Math.min(1f,fluid.getAmount()/(float)Math.max(1,capacity));
+            // Upward winding; the surface stays inside the open vessel rim.
+            float[][] points={{min,y,min},{min,y,max},{max,y,max},{max,y,min}};
+            for (int v=0;v<4;v++) {
+                var point=points[v];
+//? if >=1.21.1 {
+                /*consumer.addVertex(pose.last().pose(),point[0],point[1],point[2])
+                        .setColor((tint>>16)&255,(tint>>8)&255,tint&255,(tint>>>24)==0?255:tint>>>24)
+                        .setUv(v<2?sprite.getU0():sprite.getU1(),v==0||v==3?sprite.getV0():sprite.getV1())
+                        .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose.last(),0,1,0);
+*///?} else {
+                consumer.vertex(pose.last().pose(),point[0],point[1],point[2])
+                        .color((tint>>16)&255,(tint>>8)&255,tint&255,(tint>>>24)==0?255:tint>>>24)
+                        .uv(v<2?sprite.getU0():sprite.getU1(),v==0||v==3?sprite.getV0():sprite.getV1())
+                        .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(pose.last().normal(),0,1,0).endVertex();
+//?}
+            }
+            return;
+        }
         for(int[] bounds:gregtech.content.tool.PortableContainerShapes.bounds("cell")) {
             float x0=bounds[0]/16f+.0005f,y0=bounds[1]/16f,z0=bounds[2]/16f+.0005f;
             float x1=bounds[3]/16f-.0005f,y1=bounds[4]/16f,z1=bounds[5]/16f-.0005f;

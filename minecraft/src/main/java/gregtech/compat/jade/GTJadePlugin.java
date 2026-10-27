@@ -7,6 +7,8 @@ import gregtech.content.block.machine.MoldBasinBlock;
 import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
+import gregtech.content.block.misc.DungeonPortalBlock;
+import gregtech.content.block.misc.DungeonPortalBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.blockentity.machine.EngineBaseBlockEntity;
@@ -29,6 +31,7 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void register(IWailaCommonRegistration registration) {
+        registration.registerBlockDataProvider(BatteryBoxJadeProvider.INSTANCE, gregtech.content.blockentity.energy.EnergyNodeBlockEntity.class);
         registration.registerBlockDataProvider(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.entity.BlockEntity.class);
         registration.registerBlockDataProvider(FluidVesselJadeProvider.INSTANCE, gregtech.content.blockentity.machine.TankBlockEntity.class);
         registration.registerBlockDataProvider(FluidVesselJadeProvider.INSTANCE, gregtech.content.blockentity.machine.FluidPipeBlockEntity.class);
@@ -40,6 +43,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(EnergyBufferJadeProvider.INSTANCE,gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity.class);
         registration.registerBlockDataProvider(ExtenderJadeProvider.INSTANCE,gregtech.content.block.misc.ExtenderBlockEntity.class);
         registration.registerBlockDataProvider(ReactorJadeProvider.INSTANCE,gregtech.content.blockentity.energy.ReactorCoreBlockEntity.class);
+        registration.registerBlockDataProvider(PortalJadeProvider.INSTANCE, DungeonPortalBlockEntity.class);
         registration.registerBlockDataProvider(MultiblockJadeProvider.INSTANCE, net.minecraft.world.level.block.entity.BlockEntity.class);
         registration.registerBlockDataProvider(BurningBoxJadeProvider.INSTANCE, SolidBurningBoxBlockEntity.class);
 //? if >=1.21.1 {
@@ -51,6 +55,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(MoldJadeProvider.INSTANCE, MoldBlockEntity.class);
         registration.registerBlockDataProvider(MoldJadeProvider.INSTANCE, MoldBasinBlockEntity.class);
         registration.registerBlockDataProvider(BasicMachineJadeProvider.INSTANCE, BasicMachineBlockEntity.class);
+        registration.registerBlockDataProvider(BasicMachineJadeProvider.INSTANCE, gregtech.content.blockentity.machine.MultiblockPortBlockEntity.class);
         registration.registerBlockDataProvider(EngineJadeProvider.INSTANCE, EngineBaseBlockEntity.class);
         registration.registerBlockDataProvider(BoilerJadeProvider.INSTANCE, BoilerTankBlockEntity.class);
         registration.registerBlockDataProvider(BoilerJadeProvider.INSTANCE, gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity.class);
@@ -58,6 +63,7 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.registerBlockComponent(BatteryBoxJadeProvider.INSTANCE, gregtech.content.block.energy.EnergyNodeBlock.class);
         registration.registerBlockComponent(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
         registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.TankBlock.class);
         registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.FluidPipeBlock.class);
@@ -70,10 +76,13 @@ public class GTJadePlugin implements IWailaPlugin {
                 gregtech.content.block.misc.ColoredConstructionBlock.class);
         registration.registerBlockComponent(ConstructionNameJadeProvider.INSTANCE,
                 gregtech.content.block.misc.ConcreteBlock.class);
+        registration.registerBlockComponent(WorldFluidNameJadeProvider.INSTANCE,
+                gregtech.content.block.GTWorldFluidBlock.class);
         registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE,gregtech.content.block.energy.ChemicalBatteryBlock.class);
         registration.registerBlockComponent(ExtenderJadeProvider.INSTANCE,gregtech.content.block.misc.SourceExtenderBlock.class);
         registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.content.block.energy.ReactorCoreBlock.class);
         registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,gregtech.content.block.energy.ReactorCore2x2Block.class);
+        registration.registerBlockComponent(PortalJadeProvider.INSTANCE, DungeonPortalBlock.class);
         registration.registerBlockComponent(MultiblockJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
         registration.registerBlockComponent(BurningBoxJadeProvider.INSTANCE, SolidBurningBoxBlock.class);
         registration.registerBlockComponent(CrucibleJadeProvider.INSTANCE, SmeltingCrucibleBlock.class);
@@ -82,6 +91,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(MoldJadeProvider.INSTANCE, MoldBlock.class);
         registration.registerBlockComponent(MoldJadeProvider.INSTANCE, MoldBasinBlock.class);
         registration.registerBlockComponent(BasicMachineJadeProvider.INSTANCE, BasicMachineBlock.class);
+        registration.registerBlockComponent(BasicMachineJadeProvider.INSTANCE, gregtech.content.block.machine.MultiblockPortBlock.class);
         registration.registerBlockComponent(EngineJadeProvider.INSTANCE, EngineBlock.class);
         registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, BoilerTankBlock.class);
         registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, gregtech.content.block.machine.OriginalLargeBoilerControllerBlock.class);

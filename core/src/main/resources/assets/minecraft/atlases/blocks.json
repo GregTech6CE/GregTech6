@@ -78,11 +78,6 @@
     },
     {
       "type": "minecraft:directory",
-      "source": "items",
-      "prefix": "items/"
-    },
-    {
-      "type": "minecraft:directory",
       "source": "block/machines/covers/blank",
       "prefix": "block/machines/covers/blank/"
     },

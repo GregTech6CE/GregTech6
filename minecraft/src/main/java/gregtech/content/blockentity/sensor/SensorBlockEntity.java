@@ -174,6 +174,15 @@ public class SensorBlockEntity extends BlockEntity {
     public long value() { return value; }
     public int signal() { return signal; }
 
+    /** Snapshot of the last server sample; inspecting never resamples or changes averaging history. */
+    public record Inspection(gregtech.engine.sensor.SensorControl.Mode mode, int threshold, int samples,
+                             boolean measured, long value, long maximum, boolean hexadecimal, String addonUnit) {}
+
+    public Inspection inspection() {
+        return new Inspection(mode, threshold, average.size(), hasMeasurement, measuredValue, measuredMaximum,
+                hexadecimal, addon == null ? null : addon.unit());
+    }
+
     public static void serverTick(Level level, BlockPos pos, BlockState state, SensorBlockEntity be) {
         if (be.kind == Kind.TPS && level.getGameTime() % TPS_TICK_RATE != 0) return;
         gregtech.engine.sensor.SensorSampling.enqueue(be);

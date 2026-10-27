@@ -100,29 +100,31 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         if (!data.contains(NBT_TEMPERATURE, CompoundTag.TAG_LONG)) {
             return;
         }
-        tooltip.add(Component.translatable("jade.gt6ce.crucible.temperature", data.getLong(NBT_TEMPERATURE)));
-        tooltip.add(Component.translatable("jade.gt6ce.omni.material_species", data.getInt("gt_crucible_species")));
+        long temperature = data.getLong(NBT_TEMPERATURE);
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.temperature", temperature)
+                .append(" (" + (temperature - 273) + "°C)"));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.omni.material_species", data.getInt("gt_crucible_species")));
         if (data.getFloat("gt_crucible_contact") > 0)
-            tooltip.add(Component.translatable("jade.gt6ce.omni.hot_surface", data.getFloat("gt_crucible_contact"))
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.omni.hot_surface", data.getFloat("gt_crucible_contact"))
                     .withStyle(net.minecraft.ChatFormatting.RED));
-        tooltip.add(Component.translatable("jade.gt6ce.crucible.buffer", format(data.getLong(NBT_BUFFER))));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.buffer", format(data.getLong(NBT_BUFFER))));
         if (data.contains(NBT_MELT_LIMIT)) {
-            tooltip.add(Component.translatable("jade.gt6ce.crucible.melt_limit", data.getLong(NBT_MELT_LIMIT)));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.melt_limit", data.getLong(NBT_MELT_LIMIT)));
         }
         if (data.contains(NBT_FILL)) {
-            tooltip.add(Component.translatable("jade.gt6ce.crucible.fill", data.getInt(NBT_FILL)));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.fill", data.getInt(NBT_FILL)));
         }
         if (data.getBoolean(NBT_WARNING)) {
-            tooltip.add(Component.translatable("jade.gt6ce.crucible.warning"));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.warning"));
         }
         for (var entry : data.getList(NBT_CONTENT, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             var row = (CompoundTag) entry;
             var material = gregtech.engine.material.GTMaterialRegistry.get(row.getString("material"));
+            String phase = temperature >= material.getBoilingPoint() ? "gas" : row.getBoolean("molten") ? "molten" : "solid";
             var line = Component.literal(gregtech.client.MaterialTooltips.displayUnits(row.getLong("amount")) + " ")
                     .append(gregtech.engine.material.MaterialPresentation.name(material))
-                    .append(" (").append(Component.translatable("jade.gt6ce.crucible.state."
-                            + (row.getBoolean("molten") ? "molten" : "solid"))).append(")");
-            tooltip.add(Component.translatable("jade.gt6ce.crucible.content", line));
+                    .append(" (").append(JadeText.phase(phase)).append(")");
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.content", line));
         }
         if (data.contains(NBT_CACHE, CompoundTag.TAG_COMPOUND)) {
 //? if >=1.21.1 {
@@ -130,7 +132,7 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
 *///?} else {
             ItemStack cache = ItemStack.of(data.getCompound(NBT_CACHE));
 //?}
-            tooltip.add(Component.translatable("jade.gt6ce.crucible.cache",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.cache",
                     cache.getHoverName(), cache.getCount()));
         }
     }

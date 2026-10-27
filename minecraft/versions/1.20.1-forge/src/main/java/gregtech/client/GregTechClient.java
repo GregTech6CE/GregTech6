@@ -813,9 +813,8 @@ public final class GregTechClient {
                     ? RenderType.translucent() : RenderType.solid());
             // Lighter-than-air world fluids render through their top-anchored block models rather
             // than the liquid renderer, so the block itself also has to be translucent.
-            net.minecraft.world.level.block.Block block =
-                    ForgeRegistries.BLOCKS.getValue(GregTech.id(registration.getKey()));
-            if (block != null) {
+            net.minecraft.world.level.block.Block block = fluid.defaultFluidState().createLegacyBlock().getBlock();
+            if (block != net.minecraft.world.level.block.Blocks.AIR) {
                 ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent());
             }
             if (ItemBlockRenderTypes.getRenderLayer(fluid.defaultFluidState()) != RenderType.translucent()) {

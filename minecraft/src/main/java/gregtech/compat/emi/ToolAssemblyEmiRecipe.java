@@ -46,7 +46,7 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
         var rows = ToolAssemblyCatalog.build();
         if (rows.isEmpty()) return;
         var category = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce", "tool_assembly"),
-                EmiStack.of(rows.get(0).output())) {
+                EmiStack.of(gregtech.compat.common.RecipeViewerIcons.toolAssembly())) {
             @Override public Component getName() { return Component.translatable("gt6ce.jei.category.tool_assembly"); }
         };
         registry.addCategory(category);

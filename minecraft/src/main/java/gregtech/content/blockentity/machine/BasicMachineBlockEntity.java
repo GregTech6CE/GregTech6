@@ -746,7 +746,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected long inputMaximum() { return spec.energyInMax(); }
     protected boolean parallelScalesDuration() { return spec == null || spec.parallelScalesDuration(); }
     protected boolean cheapOverclocking() { return spec != null && spec.cheapOverclocking(); }
-    protected boolean requiresConstantEnergy() { return !usesTimeEnergy() && (spec == null || spec.constantEnergy()); }
+    protected boolean requiresConstantEnergy() { return gregtech.GregTechConfig.Rule.CONSTANT_ENERGY.enabled() && !usesTimeEnergy() && (spec == null || spec.constantEnergy()); }
     protected int efficiency() { return spec==null?10000:spec.processingEfficiency(); }
 
     protected boolean structureComplete() {

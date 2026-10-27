@@ -51,11 +51,12 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
         int minX = context.origin().getX() & ~15;
         int minZ = context.origin().getZ() & ~15;
 
-        boolean placed = placeTwigs(level, minX, minZ, random);
+        boolean placed = gregtech.GregTechConfig.Rule.STICKS.enabled() && placeTwigs(level, minX, minZ, random);
         for (GTSurfaceFlora.Log log : GTSurfaceFlora.LOGS) {
-            placed |= placeLog(level, minX, minZ, log, random);
+            for (int attempt = 0; attempt < gregtech.GregTechConfig.Number.LOG_AMOUNT.value(); attempt++)
+                placed |= placeLog(level, minX, minZ, log, random);
         }
-        placed |= placeGlowtus(level, minX, minZ, random);
+        if (gregtech.GregTechConfig.Rule.GLOWTUS.enabled()) placed |= placeGlowtus(level, minX, minZ, random);
         return placed;
     }
 
@@ -64,14 +65,14 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code WorldgenSticks}: 2 target columns, ×1-3 by biome, half of them get twigs. */
     public static boolean placeTwigs(WorldGenLevel level, int minX, int minZ, RandomSource random) {
         boolean placed = false;
-        for (int i = 0; i < GTSurfaceFlora.TWIG_AMOUNT; i++) {
-            if (random.nextInt(GTSurfaceFlora.TWIG_PROBABILITY) != 0) continue;
+        for (int i = 0; i < gregtech.GregTechConfig.Number.STICK_AMOUNT.value(); i++) {
+            if (random.nextInt(gregtech.GregTechConfig.Number.STICK_PROBABILITY.value()) != 0) continue;
             int x = minX + random.nextInt(16);
             int z = minZ + random.nextInt(16);
             int multiplier = GTSurfaceFlora.twigMultiplier(biomeId(level, x, z));
             // GT6 scales the column count by the biome multiplier before rolling per column.
             for (int j = 0; j < multiplier - 1; j++) {
-                if (random.nextInt(GTSurfaceFlora.TWIG_PROBABILITY) == 0) {
+                if (random.nextInt(gregtech.GregTechConfig.Number.STICK_PROBABILITY.value()) == 0) {
                     placed |= placeTwig(level, minX + random.nextInt(16), minZ + random.nextInt(16));
                 }
             }
@@ -94,7 +95,8 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
 
     /** One log per entry per chunk with GT6's {@code 1/probability} roll. */
     public static boolean placeLog(WorldGenLevel level, int minX, int minZ, GTSurfaceFlora.Log log, RandomSource random) {
-        if (random.nextInt(log.probability()) != 0) return false;
+        if (!gregtech.GregTechConfig.fallenLogEnabled(log.blockId())) return false;
+        if (random.nextInt(Math.max(1, log.probability() * gregtech.GregTechConfig.Number.LOG_PROBABILITY.value() / 8)) != 0) return false;
         int x = minX + random.nextInt(16);
         int z = minZ + random.nextInt(16);
         if (!log.biomes().contains(String.valueOf(biomeId(level, x, z)))) return false;
@@ -168,8 +170,8 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code WorldgenGlowtus}: 16 target columns on jungle/swamp water, half of them glowtus. */
     public static boolean placeGlowtus(WorldGenLevel level, int minX, int minZ, RandomSource random) {
         boolean placed = false;
-        for (int i = 0; i < GTSurfaceFlora.GLOWTUS_AMOUNT; i++) {
-            if (random.nextInt(GTSurfaceFlora.GLOWTUS_PROBABILITY) != 0) continue;
+        for (int i = 0; i < gregtech.GregTechConfig.Number.GLOWTUS_AMOUNT.value(); i++) {
+            if (random.nextInt(gregtech.GregTechConfig.Number.GLOWTUS_PROBABILITY.value()) != 0) continue;
             int x = minX + random.nextInt(16);
             int z = minZ + random.nextInt(16);
             if (!GTSurfaceFlora.glowtusBiome(biomeId(level, x, z))) continue;

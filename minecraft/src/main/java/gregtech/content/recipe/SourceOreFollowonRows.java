@@ -79,36 +79,21 @@ public final class SourceOreFollowonRows {
  }
  /** Source Handlers145-150/139-144; repeated Div72 outputs must not be coalesced. */
  public static List<Recipe> shredder(GTMaterial m,Facts f) {
+  return shredder(m,f,Set.of());
+ }
+ /** OPL retains legacy behavior only for shapes not claimed by its bounded native producer. */
+ public static List<Recipe> shredder(GTMaterial m,Facts f,Set<MaterialPrefix> claimed) {
   if(!admitted(m,f)||f.mortar(m)==Evidence.UNKNOWN)return List.of();
-  MaterialPrefix[] inputs={MaterialPrefix.crushed,MaterialPrefix.crushedPurified,MaterialPrefix.crushedCentrifuged,
-   MaterialPrefix.crushedTiny,MaterialPrefix.crushedPurifiedTiny,MaterialPrefix.crushedCentrifugedTiny};
-  MaterialPrefix d=MaterialPrefix.dust,t=MaterialPrefix.dustTiny,s=MaterialPrefix.dustSmall,v=MaterialPrefix.dustDiv72;
-  MaterialPrefix[][] outputs={{d,t,v},{d,s},{d,s,t,v},{t,v},{t,v,v},{t,v,v,v}};
-  var accepted=new ArrayList<Recipe>();long multiplier=f.mortar(m)==Evidence.YES?16:256;
-  for(int i=0;i<inputs.length;i++) {
-   var out=new ItemStack[outputs[i].length];long units=0;
-   for(int j=0;j<out.length;j++) {out[j]=f.direct(outputs[i][j],m.getTargetPulverMaterial().resolve(),1);units+=outputs[i][j].getMaterialWeight();}
-   long processed=Math.max(inputs[i].getMaterialWeight(),units);
-   long numerator=Math.multiplyExact(processed,Math.multiplyExact(multiplier,m.getToolQuality()+1L));
-   long ticks=Math.max(1,Math.floorDiv(Math.addExact(numerator,U-1),U));
-   var r=emit(MachineRecipeMaps.Shredder,f.direct(inputs[i],m,1),out,new long[0],new FluidStack[0],new FluidStack[0],ticks,16);
+  var accepted=new ArrayList<Recipe>();boolean mortar=f.mortar(m)==Evidence.YES;
+  for(var shape:SourceOreShreddingRules.shapes()) {
+   if(claimed.contains(shape.input()))continue;
+   var out=new ItemStack[shape.outputs().size()];
+   for(int j=0;j<out.length;j++)out[j]=f.direct(shape.outputs().get(j),m.getTargetPulverMaterial().resolve(),1);
+   long ticks=SourceOreShreddingRules.duration(shape,mortar,m.getToolQuality());
+   var r=emit(MachineRecipeMaps.Shredder,f.direct(shape.input(),m,1),out,new long[0],new FluidStack[0],new FluidStack[0],ticks,SourceOreShreddingRules.POWER);
    if(r!=null)accepted.add(r);
   }
   return List.copyOf(accepted);
- }
- /** Source Handlers672-673: fixed durations, flat Petrotheum fluid cost. */
- public static List<Recipe> petrotheum(GTMaterial m,Facts f) {
-  if(!admitted(m,f))return List.of();var accepted=new ArrayList<Recipe>();
-  var sand=GTMaterialRegistry.get("SluiceSand");
-  if(sand==null||!sand.isValid())return List.of();
-  for(int scale:new int[]{9,1}) {
-   var fluid=OreFluidBindingAdapter.sourceLiquid(8245,"Petrotheum",scale*(U/50),true);if(fluid.isEmpty())continue;
-   var in=f.direct(scale==9?MaterialPrefix.crushed:MaterialPrefix.crushedTiny,m,1);
-   var out=new ItemStack[]{f.direct(scale==9?MaterialPrefix.crushedPurified:MaterialPrefix.crushedPurifiedTiny,m,2),
-    f.direct(MaterialPrefix.crushedPurifiedTiny,m,scale),f.direct(scale==9?MaterialPrefix.dust:MaterialPrefix.dustTiny,sand,1)};
-   var r=emit(MachineRecipeMaps.Sluice,in,out,new long[]{10000,5000,10000},new FluidStack[]{fluid},new FluidStack[0],scale*16L,16);
-   if(r!=null)accepted.add(r);
-  }return List.copyOf(accepted);
  }
  /** Source Ores464-470. Handles solid and fluid byproducts without changing slot probabilities. */
  public static List<Recipe> centrifuge(GTMaterial m,Facts f) {
@@ -144,17 +129,6 @@ public final class SourceOreFollowonRows {
    }
    var r=emit(MachineRecipeMaps.SteamCracking,f.direct(scale==9?MaterialPrefix.crushedCentrifuged:MaterialPrefix.crushedCentrifugedTiny,m,1),out.toArray(ItemStack[]::new),
     chances.stream().mapToLong(Long::longValue).toArray(),new FluidStack[]{steam,liquid},fluids.toArray(FluidStack[]::new),scale*16L,16);
-   if(r!=null)accepted.add(r);
-  }return List.copyOf(accepted);
- }
- /** Source Ores184-187; explicit source list/ANY.Glowstone supplied by reviewed caller, not all gems. */
- public static List<Recipe> cryotheumBath(GTMaterial m,Facts f) {
-  if(!admitted(m,f))return List.of();var cryo=GTMaterialRegistry.get("Cryotheum");if(cryo==null)return List.of();
-  var accepted=new ArrayList<Recipe>();MaterialPrefix[] inputs={null,MaterialPrefix.crushed,MaterialPrefix.crushedTiny};
-  for(int i=0;i<3;i++) {
-   var fluid=OreFluidBindingAdapter.liquid(cryo,i==0?U/10:U/20,true);if(fluid.isEmpty())continue;
-   var out=f.direct(i==0?MaterialPrefix.gemExquisite:MaterialPrefix.gemFlawless,m,1);
-   var r=emit(MachineRecipeMaps.Bath,(i==0?f.blockDust(m,1):f.direct(inputs[i],m,i==2?9:1)),new ItemStack[]{out},new long[0],new FluidStack[]{fluid},new FluidStack[0],256,0);
    if(r!=null)accepted.add(r);
   }return List.copyOf(accepted);
  }

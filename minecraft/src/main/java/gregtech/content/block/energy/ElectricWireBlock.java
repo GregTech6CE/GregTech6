@@ -123,7 +123,6 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
         return GTWaterloggable.getStateForPlacement(defaultBlockState(), context);
     }
 
-    /** Dynamic shape based on wire thickness, matching cross-boundary arm rendering. */
     /** Lighting must not load neighbouring chunks through the dynamic connection shape. */
     @Override
     public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
@@ -151,8 +150,7 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
         return shapeFor(state, level, pos);
     }
 
-    /** Core + GT6 connection arms (thin side extends into a strictly thicker neighbor),
-     *  matching the dynamic model geometry exactly so the selection box fits the visual. */
+    /** Core plus the local portion of each wire connection; no shape crosses into another cell. */
     private VoxelShape shapeFor(BlockState state, BlockGetter level, BlockPos pos) {
         double half = spec.halfThickness();
         double min = (8.0 - half) / 16.0;
@@ -162,7 +160,7 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
             if (!state.getValue(propFor(dir))) continue;
             double n = gregtech.engine.machine.PipeGeometry.wireHalfOf(
                     level.getBlockState(pos.relative(dir)));
-            double[] box = gregtech.engine.machine.PipeGeometry.armBox(dir, half, n);
+            double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(dir, half, n);
             if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
         }
         return shape;

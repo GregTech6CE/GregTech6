@@ -21,33 +21,54 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
     /** GT6's layout markers. */
     public static final byte EMPTY = 0, CORRIDOR = -128, BARRACKS = -1, ENTRANCE = -2;
 
-    public static int nearestAnchor(int chunk) {
+    public record Settings(int minSize, int maxSize, int minY, int maxY, int roomChance) {
+        public Settings {
+            minSize = Math.max(3, Math.min(16, minSize));
+            maxSize = Math.max(minSize, Math.min(16, maxSize));
+            maxY = Math.max(minY, maxY);
+            roomChance = Math.max(1, roomChance);
+        }
+        public int period() { return maxSize + 4; }
+        public int offset() { return period() / 2; }
+        public int half() { return (2 + maxSize) / 2; }
+        public int clearance() { return 256 + maxSize * 16; }
+    }
+    public static final Settings DEFAULTS = new Settings(MIN_SIZE, MAX_SIZE, MIN_Y, MAX_Y, ROOM_CHANCE);
+
+    public static int nearestAnchor(int chunk) { return nearestAnchor(chunk, DEFAULTS); }
+    public static int nearestAnchor(int chunk, Settings settings) {
         int sign = chunk < 0 ? -1 : 1;
         int magnitude = Math.abs(chunk);
-        int lattice = ANCHOR_OFFSET + GRID_PERIOD
-                * Math.round((magnitude - ANCHOR_OFFSET) / (float) GRID_PERIOD);
-        // The widest layout is (2 + MAX_SIZE) cells, so its anchor sits up to that many halves away.
-        if (Math.abs(magnitude - lattice) > MAX_LAYOUT_HALF) return Integer.MIN_VALUE;
+        int lattice = settings.offset() + settings.period()
+                * Math.round((magnitude - settings.offset()) / (float) settings.period());
+        // The widest layout is (2 + settings.maxSize()) cells, so its anchor sits up to that many halves away.
+        if (Math.abs(magnitude - lattice) > settings.half()) return Integer.MIN_VALUE;
         return sign * lattice;
     }
-    public static boolean isAnchor(int chunk) {
-        return Math.abs((long) chunk) % GRID_PERIOD == ANCHOR_OFFSET;
+    public static boolean isAnchor(int chunk) { return isAnchor(chunk, DEFAULTS); }
+    public static boolean isAnchor(int chunk, Settings settings) {
+        return Math.abs((long) chunk) % settings.period() == settings.offset();
     }
-    public static int regionOf(int chunk) {
-        return Math.floorDiv(chunk, GRID_PERIOD);
+    public static int regionOf(int chunk) { return regionOf(chunk, DEFAULTS); }
+    public static int regionOf(int chunk, Settings settings) {
+        return Math.floorDiv(chunk, settings.period());
     }
-    public static int anchorOfRegion(int region) {
-        return region * GRID_PERIOD + (region >= 0 ? ANCHOR_OFFSET : GRID_PERIOD - ANCHOR_OFFSET);
+    public static int anchorOfRegion(int region) { return anchorOfRegion(region, DEFAULTS); }
+    public static int anchorOfRegion(int region, Settings settings) {
+        return region * settings.period() + (region >= 0 ? settings.offset() : settings.period() - settings.offset());
     }
-    public static int offsetY(java.util.function.IntUnaryOperator random) {
-        return MIN_Y + random.applyAsInt(Math.max(1, MAX_Y - MIN_Y));
+    public static int offsetY(java.util.function.IntUnaryOperator random) { return offsetY(random, DEFAULTS); }
+    public static int offsetY(java.util.function.IntUnaryOperator random, Settings settings) {
+        return settings.minY() + random.applyAsInt(Math.max(1, settings.maxY() - settings.minY()));
     }
-    public static int size(java.util.function.IntUnaryOperator random) {
-        return 2 + MIN_SIZE + random.applyAsInt(1 + MAX_SIZE - MIN_SIZE);
+    public static int size(java.util.function.IntUnaryOperator random) { return size(random, DEFAULTS); }
+    public static int size(java.util.function.IntUnaryOperator random, Settings settings) {
+        return 2 + settings.minSize() + random.applyAsInt(1 + settings.maxSize() - settings.minSize());
     }
-    public static byte[][] layout(java.util.function.IntUnaryOperator random) {
+    public static byte[][] layout(java.util.function.IntUnaryOperator random) { return layout(random, DEFAULTS); }
+    public static byte[][] layout(java.util.function.IntUnaryOperator random, Settings settings) {
         // GT6 rolls the two dimensions separately but allocates one rectangular array.
-        int rows = size(random), columns = size(random);
+        int rows = size(random, settings), columns = size(random, settings);
         byte[][] cells = new byte[rows][columns];
 
         // GT6: two important rooms, placed at random inner cells (the countdown runs from -1 down).
@@ -62,7 +83,7 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
         while (roomCount < 2) {
             for (int i = 1; i < cells.length - 1; i++) {
                 for (int j = 1; j < cells[i].length - 1; j++) {
-                    if (cells[i][j] == 0 && random.applyAsInt(ROOM_CHANCE) == 0) {
+                    if (cells[i][j] == 0 && random.applyAsInt(settings.roomChance()) == 0) {
                         cells[i][j] = (byte) (1 + random.applyAsInt(ROOM_ID_COUNT));
                         roomCount++;
                     }
@@ -178,5 +199,6 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
         return out;
     }
  public static long seed(long world,int x,int z){return world ^ (long)x*341873128712L ^ (long)z*132897987541L;}
- public static boolean clearance(int minX,int minZ){return Math.abs((long)minX)>=SPAWN_CLEARANCE&&Math.abs((long)minZ)>=SPAWN_CLEARANCE;}
+ public static boolean clearance(int minX,int minZ) { return clearance(minX, minZ, DEFAULTS); }
+    public static boolean clearance(int minX,int minZ, Settings settings) {return Math.abs((long)minX)>=settings.clearance()&&Math.abs((long)minZ)>=settings.clearance();}
 }

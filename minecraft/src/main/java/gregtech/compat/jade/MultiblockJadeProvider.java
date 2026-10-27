@@ -35,10 +35,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
             data.putInt("axialInput", axial.grade().input());
             data.putInt("axialOutput", axial.grade().output());
         }
-        if (entity instanceof BasicMachineBlockEntity machine) {
-            data.putInt("progress", machine.getProgressPercent());
-            data.putBoolean("running", machine.isRunning());
-        } else {
+        if (!(entity instanceof BasicMachineBlockEntity)) {
             var energies = new ListTag();
             if (entity instanceof IEnergyBlock machine) {
                 // Include fuel heat and rear-port RU buffers even when the controller itself has no energy port.
@@ -100,21 +97,20 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         if (!accessor.getServerData().contains("gt_structure")) return;
         var data = accessor.getServerData().getCompound("gt_structure");
-        tooltip.add(Component.translatable("jade.gt6ce.multiblock." + (data.getBoolean("formed") ? "formed" : "incomplete"))
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock." + (data.getBoolean("formed") ? "formed" : "incomplete"))
                 .withStyle(data.getBoolean("formed") ? net.minecraft.ChatFormatting.GREEN : net.minecraft.ChatFormatting.RED));
-        if (data.contains("progress")) tooltip.add(Component.translatable("jade.gt6ce.multiblock.progress", data.getInt("progress")));
         if (data.contains("fusionCharge")) {
-            tooltip.add(Component.translatable("gt6ce.fusion.startup", data.getLong("fusionCharge")));
-            tooltip.add(Component.translatable("gt6ce.fusion.output", data.getLong("fusionOutput")));
+            JadeText.add(tooltip, Component.translatable("gt6ce.fusion.startup", data.getLong("fusionCharge")));
+            JadeText.add(tooltip, Component.translatable("gt6ce.fusion.output", data.getLong("fusionOutput")));
         }
         if (data.contains("axialState")) {
-            tooltip.add(Component.translatable("gt.axial.state." + data.getString("axialState")));
-            tooltip.add(Component.translatable(data.getBoolean("axialSteam") ? "gt.tooltip.axial.steam" : "gt.tooltip.axial.dynamo",
+            JadeText.add(tooltip, Component.translatable("gt.axial.state." + data.getString("axialState")));
+            JadeText.add(tooltip, Component.translatable(data.getBoolean("axialSteam") ? "gt.tooltip.axial.steam" : "gt.tooltip.axial.dynamo",
                     data.getInt("axialInput"), data.getInt("axialOutput")));
         }
         for (var value : data.getList("energy", 10)) {
             var row = (CompoundTag) value;
-            tooltip.add(Component.translatable("jade.gt6ce.multiblock.energy", row.getLong("stored"), row.getLong("capacity"),
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.energy", row.getLong("stored"), row.getLong("capacity"),
                     row.getString("unit")));
         }
         for (var value : data.getList("fluids", 10)) {
@@ -124,10 +120,10 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
 *///?} else {
             var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(row.getCompound("fluid"));
 //?}
-            tooltip.add(Component.translatable("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(),
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(),
                     row.contains("amount") ? row.getLong("amount") : fluid.getAmount(), row.getLong("capacity")));
         }
-        tooltip.add(Component.translatable("jade.gt6ce.multiblock.jei"));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.jei"));
     }
 
     @Override

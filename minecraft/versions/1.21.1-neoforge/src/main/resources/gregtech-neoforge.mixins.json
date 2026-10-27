@@ -4,10 +4,12 @@
   "package": "gregtech.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DungeonRedstoneInitializationMixin",
     "OreHostHardnessMixin",
     "OreHostToolSpeedMixin",
     "GasImmersionMixin",
     "ConstructionRecipeMixin",
+    "VanillaOreConfigMixin",
     "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "CraftingFormPositionMixin",
@@ -15,6 +17,10 @@
     "BlockEntityPaintMixin",
     "WolfCollarAccessor",
     "WaterFluidMixin",
+    "SurfaceWaterAnimalSpawnMixin",
+    "TropicalFishSpawnMixin",
+    "GlowSquidSpawnMixin",
+    "WorldWaterBucketPickupMixin",
     "EntityFallingOreDropMixin",
     "WaterPlacementMixin",
     "WaterSurfaceMixin",
@@ -45,6 +51,8 @@
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
     "GasFluidRenderMixin",
+    "FluidAlphaConfigMixin",
+    "EmiStructureFocusMixin",
     "ReliableEmiNamespaceMixin"
   ]
 }

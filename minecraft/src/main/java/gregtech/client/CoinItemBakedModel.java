@@ -41,7 +41,7 @@ public final class CoinItemBakedModel implements BakedModel {
             @Override
             public BakedModel resolve(@NotNull BakedModel original, @NotNull ItemStack stack,
                     @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-                return stack.getItem() instanceof CoinItem && CoinGeometry.hasCustomPattern(stack)
+                return stack.getItem() instanceof CoinItem && (CoinGeometry.hasCustomPattern(stack) || !gregtech.GregTechConfig.Rule.COINS_ITEM_3D.enabled())
                         ? custom : original;
             }
         };

@@ -146,6 +146,8 @@ public final class MachineEmiRecipe implements EmiRecipe {
             int chance = input ? 0 : recipe.getOutputChance(i);
             var slot = widgets.add(new FittedSlot(input ? ingredients.ingredient(recipe,i) : EmiStack.of(items[i]).setChance(chance / 10000f),p.x()-1,p.y()-1,scale,offset));
             if (input && recipe.isCatalystInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
+            if (input && !recipe.viewerInputNote(i).isEmpty())
+                slot.appendTooltip(Component.translatable(recipe.viewerInputNote(i)));
             if (!input) {
                 slot.recipeContext(this);
                 if (gregtech.engine.addon.ExclusiveOutputMaps.enabled(map))

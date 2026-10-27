@@ -58,6 +58,8 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
             String state;
             if (solidified) {
                 state = "solidified";
+            } else if (getTemperature(accessor) >= material.getBoilingPoint()) {
+                state = "gas";
             } else if (getTemperature(accessor) >= material.getMeltingPoint()) {
                 state = "molten";
             } else {
@@ -108,15 +110,15 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
         if (!data.contains(NBT_TEMPERATURE, CompoundTag.TAG_LONG)) {
             return;
         }
-        tooltip.add(Component.translatable("jade.gt6ce.mold.temperature",
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.mold.temperature",
                 data.getLong(NBT_TEMPERATURE), data.getLong(NBT_MAX_TEMP)));
 
         if (data.contains(NBT_MATERIAL)) {
             String state = data.getString(NBT_STATE);
-            tooltip.add(Component.translatable("jade.gt6ce.mold.content",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.mold.content",
                     JadeText.translated(data, NBT_MATERIAL + "_key", NBT_MATERIAL),
                     format(data.getLong(NBT_AMOUNT)),
-                    Component.translatable("jade.gt6ce.mold.state." + state)));
+                    JadeText.phase(state)));
         }
 
         if (data.contains(NBT_SOLID_OUTPUT, CompoundTag.TAG_COMPOUND)) {
@@ -126,13 +128,13 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
             ItemStack output = ItemStack.of(data.getCompound(NBT_SOLID_OUTPUT));
 //?}
             if (!output.isEmpty()) {
-                tooltip.add(Component.translatable("jade.gt6ce.mold.solid_output",
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.mold.solid_output",
                         output.getHoverName(), output.getCount()));
             }
         }
 
         if (data.contains(NBT_MOLD_OUTPUT, CompoundTag.TAG_STRING)) {
-            tooltip.add(Component.translatable("jade.gt6ce.mold.output",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.mold.output",
                     JadeText.translated(data, NBT_MOLD_OUTPUT + "_key", NBT_MOLD_OUTPUT)));
         }
     }

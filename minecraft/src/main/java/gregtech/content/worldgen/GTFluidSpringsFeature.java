@@ -70,7 +70,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
         Spring spring = SPRINGS.get(random.nextInt(SPRINGS.size()));
         // GT6: `aRandom.nextInt(mProbability) != 0` → return.
-        if (random.nextInt(spring.probability()) != 0) return false;
+        if (random.nextInt(Math.max(1, gregtech.GregTechConfig.Number.SPRING_PROBABILITY.value() * (spring.probability() / 100))) != 0) return false;
         int minX = context.origin().getX() & ~15;
         int minZ = context.origin().getZ() & ~15;
         if (!hasBedrock(level, minX + 8, minZ + 8)) return false;

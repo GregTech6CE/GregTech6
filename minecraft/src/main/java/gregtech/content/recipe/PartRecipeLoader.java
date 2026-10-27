@@ -317,10 +317,6 @@ public class PartRecipeLoader implements InitializationStep {
         GTMaterial target = m.getTargetSmeltingMaterial();
         long amount = m.getTargetSmeltingAmount();
         if (target == null || !target.isValid() || amount <= 0) return;
-        if (!OreSourcePolicy.furnaceInput(m)) return;
-        // The later source listener owns exact forms, amount and cooking metadata.
-        if (OreSourcePolicy.usesReviewedFurnaceListener(m)) return;
-
         ItemStack output = OM.dustOrIngot(target, amount);
         if (output.isEmpty()) output = OM.gem(target, amount);
         if (output.isEmpty()) return;
@@ -334,6 +330,8 @@ public class PartRecipeLoader implements InitializationStep {
     private void smeltInput(MaterialPrefix prefix, GTMaterial m, ItemStack output) {
         ItemStack input = mat(prefix, m, 1);
         if (input.isEmpty()) return;
+        // Native forms use the reviewed source listener; a replaced canonical holder keeps its old policy.
+        if (!SourceFurnaceNativeAdapter.earlyFormAllowed(prefix, m, input)) return;
         MachineRecipeMaps.add_smelting(input, output.copy(), 0.0f, true, false, false);
     }
 

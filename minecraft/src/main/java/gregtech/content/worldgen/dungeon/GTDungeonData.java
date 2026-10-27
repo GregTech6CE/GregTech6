@@ -1050,6 +1050,7 @@ public final class GTDungeonData {
 
     /** GT6's two-in-three charged dungeon artifact; persist charge in the existing module. */
     public boolean zpm(int ax, int ay, int az, boolean active) {
+        if (!gregtech.GregTechConfig.Rule.ZPMS.enabled()) return false;
 //? if >=1.21.1 {
         /*if (!set(ax, ay, az, GTZpmArtifacts.ZPM.get().defaultBlockState())) return false;
 *///?} else {

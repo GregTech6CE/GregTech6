@@ -19,7 +19,7 @@ final class OmniEnergyInfo {
         } else if (entity instanceof AxleBlockEntity axle) {
             info.line("transferred", axle.transferredLast(), "RU");
             info.line("axle_rating", axle.maxSpeed(), axle.maxPower());
-        } else if (entity instanceof EnergyNodeBlockEntity node && node.spec() != null) {
+        } else if (entity instanceof EnergyNodeBlockEntity node && node.spec() != null && !node.isBatteryBox()) {
             var spec = node.spec();
             var control = node.machineControl(null);
             if (!node.isSteamConverter()) {
@@ -33,7 +33,7 @@ final class OmniEnergyInfo {
                 info.line("rated_output", node.getEnergySizeOutputRecommended(spec.outType(), null), spec.outType().getShortName());
                 info.line("packet_range", JadeInspection.label("output"), node.getEnergySizeOutputMin(spec.outType(), null),
                         node.getEnergySizeOutputMax(spec.outType(), null), spec.outType().getShortName());
-                long capacity = node.isBatteryBox() ? node.batteryEnergy().bufferCapacity() : node.getEnergyCapacity(spec.inType(), null);
+                long capacity = node.getEnergyCapacity(spec.inType(), null);
                 if (capacity > 0) info.line("buffer", node.stored(), capacity, spec.inType().getShortName());
             }
             if (control.supportsMode()) info.line("mode", control.mode());
@@ -42,16 +42,6 @@ final class OmniEnergyInfo {
                 info.line("solar_remaining", node.stored());
             }
             if (node.isElectricTransformer() || node.isRotationTransformer()) info.flag("reversed", node.transformerInverted());
-            if (node.isBatteryBox()) {
-                var battery = node.batteryEnergy();
-                info.line("battery_total", battery.stored(), battery.capacity(), spec.outType().getShortName());
-                info.line("battery_output", battery.providers(), battery.offered());
-                var inventory = node.batteryInventory();
-                int installed = 0;
-                for (int i = 0; i < inventory.getSlots(); i++) if (!inventory.getStackInSlot(i).isEmpty()) installed++;
-                info.line("battery_unavailable", Math.max(0, installed - battery.providers()));
-                info.inventory("battery", inventory, 0, inventory.getSlots());
-            }
             if (node.isOriginalMotor()) {
                 info.line("rotation", JadeInspection.label(node.motorCounterClockwise() ? "counterclockwise" : "clockwise"));
                 // GT6's entity rotation is 5/10 degrees per tick, not the shaft's energy packet size.
@@ -68,6 +58,20 @@ final class OmniEnergyInfo {
                 else if (node.getBlockState().getValue(gregtech.content.block.energy.RotaryConverterBlock.ACTIVITY) > 0)
                     info.line("contact_damage", OriginalThermalConverter.contactDamage(spec));
             }
+        } else if (entity instanceof LaserConverterBlockEntity converter) {
+            var spec = converter.spec();
+            var control = converter.machineControl(null);
+            info.state(control.enabled(), control.running());
+            info.flag("delivering", control.active());
+            info.line("rated_input", spec.input(), spec.inputType().getShortName());
+            info.line("packet_range", JadeInspection.label("input"), converter.getEnergySizeInputMin(spec.inputType(), null),
+                    converter.getEnergySizeInputMax(spec.inputType(), null), spec.inputType().getShortName());
+            info.line("rated_output", spec.output(), spec.outputType().getShortName());
+            info.line("converter_input", converter.lastInput(), spec.inputType().getShortName());
+            info.line("transferred", converter.lastOutput(), spec.outputType().getShortName());
+            info.line("converter_input_face", spec.backInputOnly() ? OmniTransportInfo.side(converter.front().getOpposite())
+                    : JadeInspection.label("except_output"));
+            info.line("converter_output_face", OmniTransportInfo.side(converter.front()));
         } else if (entity instanceof PumpBlockEntity pump) {
             info.line("stored", pump.storedPumpEnergy(), "RU");
             var tank = pump.tankForInspection();

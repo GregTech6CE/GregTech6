@@ -54,15 +54,15 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled()) return false;
+        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled() || !gregtech.GregTechConfig.Rule.BUSHES.enabled()) return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
         int minX = context.origin().getX() & ~15;
         int minZ = context.origin().getZ() & ~15;
         boolean placed = false;
-        for (int i = 0; i < AMOUNT; i++) {
-            if (random.nextInt(PROBABILITY) != 0) continue;
+        for (int i = 0; i < gregtech.GregTechConfig.Number.BUSH_AMOUNT.value(); i++) {
+            if (random.nextInt(gregtech.GregTechConfig.Number.BUSH_PROBABILITY.value()) != 0) continue;
             int x = minX + random.nextInt(16);
             int z = minZ + random.nextInt(16);
             placed |= placeBush(level, x, z, random);

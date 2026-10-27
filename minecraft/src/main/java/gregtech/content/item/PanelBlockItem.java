@@ -15,7 +15,7 @@ import java.util.List;
 public final class PanelBlockItem extends BlockItem implements PanelItemView {
     public PanelBlockItem(PanelBlock block, Properties properties) { super(block, properties.stacksTo(16)); }
     @Override public gregtech.content.transport.PanelCatalog.Spec panelSpec(){return ((PanelBlock)getBlock()).spec();}
-    @Override public Component getName(ItemStack stack) { return panelSpec().color().isEmpty() ? super.getName(stack) : coloredPanelName(); }
+    @Override public Component getName(ItemStack stack) { return panelName(super.getName(stack)); }
     @Override public InteractionResult useOn(UseOnContext context) {
         var player=context.getPlayer();var level=context.getLevel();var pos=context.getClickedPos();
         if(player==null||!player.mayBuild()||!level.mayInteract(player,pos))return InteractionResult.FAIL;
@@ -26,17 +26,5 @@ public final class PanelBlockItem extends BlockItem implements PanelItemView {
             if(!player.getAbilities().instabuild)stack.shrink(1);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level level, List<Component> tooltip, TooltipFlag flag) {
-//?}
-        super.appendHoverText(stack,level,tooltip,flag);
-        var spec=((PanelBlock)getBlock()).spec();
-        if(spec.kind().equals("wood")) {
-            var plank=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(spec.input()));
-            if(plank!=Items.AIR)tooltip.add(new ItemStack(plank).getHoverName().copy().withStyle(ChatFormatting.AQUA));
-        }
     }
 }

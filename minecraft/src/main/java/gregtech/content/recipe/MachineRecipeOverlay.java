@@ -91,7 +91,16 @@ public final class MachineRecipeOverlay {
         gregtech.content.recipe.NonOreMacerationRows.rebuild();
         gregtech.content.recipe.SourceOreOutputRows.rebuild();
         SharedPurifiedCentrifugeRows.rebuild();
+        SharedOreWashingRows.rebuild();
+        SharedOreMagneticRows.rebuild();
+        SharedOreSiftingRows.rebuild();
         CompatRecipes.rebuild();
+        // OPL capture waits until static/addon and tag-owned producers can retain their independent rows.
+        SharedOreCrushingRows.rebuild();
+        SharedOilSandRows.rebuild();
+        // New purified-acid calls do not displace the earlier imported/static Bath producers.
+        SharedPurifiedAcidRows.rebuild();
+        SharedThermalInputRows.rebuild();
         MaterialDisplayBinding.invalidate();
         logged = 0;
         var tally = new Tally();
@@ -162,6 +171,13 @@ public final class MachineRecipeOverlay {
         exclude.addAll(gregtech.content.recipe.NonOreMacerationRows.owned());
         exclude.addAll(gregtech.content.recipe.SourceOreOutputRows.owned());
         exclude.addAll(SharedPurifiedCentrifugeRows.owned());
+        exclude.addAll(SharedOreWashingRows.owned());
+        exclude.addAll(SharedOreMagneticRows.owned());
+        exclude.addAll(SharedOreSiftingRows.owned());
+        exclude.addAll(SharedOreCrushingRows.baselineExcluded());
+        exclude.addAll(SharedOilSandRows.baselineExcluded());
+        exclude.addAll(SharedPurifiedAcidRows.owned());
+        exclude.addAll(SharedThermalInputRows.owned());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }

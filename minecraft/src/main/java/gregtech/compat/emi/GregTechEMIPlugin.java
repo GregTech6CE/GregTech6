@@ -50,10 +50,12 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             if(table instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock)
                 registry.addWorkstation(dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING,EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
+        registry.removeEmiStacks(stack -> !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
         for(var item:gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())
             registry.setDefaultComparison(item,dev.emi.emi.api.stack.Comparison.compareData(
                     stack->gregtech.engine.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));
         ToolAssemblyEmiRecipe.register(registry);
+        MoldChiselEmiRecipe.register(registry);
         LootEmiRecipe.register(registry);
         StructureEmiRecipe.register(registry);
         WorldgenEmiRecipe.register(registry);
@@ -67,6 +69,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             if (!map.mViewerAllowed || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)) continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
             ItemStack icon = workstations.isEmpty() ? new ItemStack(Items.ANVIL) : workstations.get(0);
+            var preferred = gregtech.compat.common.RecipeViewerIcons.map(map);
+            if (!preferred.isEmpty()) icon = preferred;
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var category = new EmiRecipeCategory(id, EmiStack.of(icon)) {
                 @Override public Component getName() { return Component.translatableWithFallback(map.mNameInternal, map.mNameLocal); }

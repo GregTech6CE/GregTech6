@@ -50,6 +50,7 @@ public final class ManualToolBehaviorAccess {
      */
 
     public static boolean obstructed(Level level, BlockPos pos, Direction side) {
+        if (!gregtech.GregTechConfig.Rule.OBSTRUCTION_CHECKS.enabled()) return false;
         BlockPos neighbour = pos.relative(side);
         if (!level.hasChunkAt(neighbour)) return false;
         BlockState state = level.getBlockState(neighbour);

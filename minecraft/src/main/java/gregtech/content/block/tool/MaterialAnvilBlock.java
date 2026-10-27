@@ -86,7 +86,7 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
         if (stack.hasTag() && stack.getTag().getCompound("BlockEntityTag").contains("gt.durability"))
             remaining = Math.max(0, stack.getTag().getCompound("BlockEntityTag").getLong("gt.durability"));
 //?}
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.anvil.durability", (remaining + 9999) / 10000));
+        tooltip.add(gregtech.client.TooltipHelper.stat("gt.tooltip.anvil.durability", net.minecraft.ChatFormatting.AQUA, (remaining + 9999) / 10000));
     }
     @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide

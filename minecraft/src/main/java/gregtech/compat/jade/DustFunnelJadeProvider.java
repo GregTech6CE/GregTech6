@@ -39,14 +39,14 @@ public enum DustFunnelJadeProvider implements IBlockComponentProvider, IServerDa
         CompoundTag data = accessor.getServerData();
         if (!data.contains(MODE, CompoundTag.TAG_INT)) return;
         int mode = Math.floorMod(data.getInt(MODE), 5);
-        tooltip.add(Component.translatable("jade.gt6ce.dust_funnel.mode",
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.dust_funnel.mode",
                 Component.translatable("jade.gt6ce.dust_funnel.size." + mode)));
         if (data.getLong(AMOUNT) > 0 && data.contains(MATERIAL, CompoundTag.TAG_STRING)) {
             var material = GTMaterialRegistry.get(data.getString(MATERIAL));
-            tooltip.add(Component.translatable("jade.gt6ce.dust_funnel.fraction",
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.dust_funnel.fraction",
                     data.getLong(AMOUNT) / GTValues.U72, MaterialPresentation.name(material)));
             if (data.getBoolean(NEEDS_MORE))
-                tooltip.add(Component.translatable("jade.gt6ce.dust_funnel.fraction_hint"));
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.dust_funnel.fraction_hint"));
         }
     }
 

@@ -8,7 +8,9 @@ import gregtech.content.data.generated.MaterialWorkability;
 import java.math.BigInteger;
 import java.util.List;
 
-/** Loader_Recipes_Furnace:151-160,190-201; all source FURNACE targets solidify with an identity U ratio. */
+/** Loader_Recipes_Furnace:151-160,190-201; source FURNACE is input permission.
+ * All reviewed FURNACE-positive smelting targets solidify with an identity U ratio.
+ * The source's Water/Lava solidification exceptions are not targets of those positive inputs. */
 public final class FurnaceSmeltingRules {
     private FurnaceSmeltingRules() {}
     public record ExternalRow(MaterialPrefix input, long fixedAmount, boolean experience) {
@@ -30,7 +32,20 @@ public final class FurnaceSmeltingRules {
             new ExternalRow(MaterialPrefix.dustRefined, -1, false),
             new ExternalRow(MaterialPrefix.dustImpure, -1, false));
     public static boolean allows(GTMaterial material) {
-        return material.isValid() && !material.has(MaterialProperty.HIDDEN) && MaterialWorkability.isFurnace(material);
+        if (material == null || !material.isValid()) return false;
+        var decision = OreSourcePolicy.furnaceDecision(material);
+        return decision == SourceRecyclingFacts.Decision.UNKNOWN
+                ? legacyAllows(material) : reviewedAllows(decision, material.resolve().has(MaterialProperty.HIDDEN));
+    }
+    /** Exact prior listener policy for callers whose item provenance is outside this native correction. */
+    public static boolean legacyAllows(GTMaterial material) {
+        return material != null && material.isValid() && !material.has(MaterialProperty.HIDDEN)
+                && MaterialWorkability.isFurnace(material);
+    }
+    /** Shared routing guard for known source decisions. UNKNOWN callers choose their own old fallback;
+     * the source FURNACE fact itself is not rewritten to pretend HIDDEN means source UNUSED. */
+    public static boolean reviewedAllows(SourceRecyclingFacts.Decision decision, boolean hidden) {
+        return decision == SourceRecyclingFacts.Decision.YES && !hidden;
     }
     /** Target solidifying amount is U, not the source material's smelting amount again. */
     public static long amount(long formAmount, long smeltingPerUnit) {

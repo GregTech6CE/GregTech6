@@ -152,6 +152,10 @@ public final class MaterialTagPack extends AbstractPackResources {
                 add(tags,"gt6ce","items",form.prefix().getRegistryName()+"/"
 //?}
                         +MaterialEquivalence.materialName(form.material()),id.toString());
+                String sourcePrefix = gregtech.engine.prefix.PrefixRegistry.sourceName(form.prefix().getName());
+                if (!sourcePrefix.equals(form.prefix().getName()))
+                    add(tags,"gt6ce","items",MaterialPrefix.camelToSnake(sourcePrefix)+"/"
+                            +MaterialEquivalence.materialName(form.material()),id.toString());
             } else {
                 // Vanilla-unified items (minecraft:iron_block, ...) carry a material without a prefix.
                 var data=gregtech.engine.material.ItemMaterialRegistry.explicit(item).orElse(null);

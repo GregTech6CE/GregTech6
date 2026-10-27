@@ -130,9 +130,9 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
 *///?} else {
     @Override public void appendHoverText(ItemStack stack,@Nullable BlockGetter level,List<Component> tooltip,TooltipFlag flag) {
 //?}
-        tooltip.add(Component.translatable("tooltip.gt6ce.dynamite.resistance",maxResistance));
-        tooltip.add(Component.translatable("tooltip.gt6ce.dynamite.range"));
-        tooltip.add(Component.translatable("tooltip.gt6ce.dynamite.fortune",fortune));
+        tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.dynamite.resistance",net.minecraft.ChatFormatting.AQUA,maxResistance));
+        tooltip.add(Component.translatable("tooltip.gt6ce.dynamite.range").withStyle(net.minecraft.ChatFormatting.AQUA));
+        tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.dynamite.fortune",net.minecraft.ChatFormatting.AQUA,fortune));
         tooltip.add(Component.translatable("gt.tooltip.dynamite.1").withStyle(net.minecraft.ChatFormatting.RED));
     }
 }

@@ -15,7 +15,7 @@ import java.util.*;
 public final class StructureEmiRecipe implements EmiRecipe {
     private static final EmiRecipeCategory CATEGORY = new EmiRecipeCategory(
             ResourceLocation.fromNamespaceAndPath("gt6ce", "multiblock_assembly"),
-            EmiStack.of(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BRICKS))) {
+            EmiStack.of(gregtech.compat.common.RecipeViewerIcons.item("distillation_tower_main"))) {
         @Override public Component getName() { return Component.translatable("gt6ce.jei.assembly"); }
     };
     private final MultiblockInfoData.Info info;
@@ -32,6 +32,20 @@ public final class StructureEmiRecipe implements EmiRecipe {
         for (var info : MultiblockInfoData.recipes()) {
             registry.addRecipe(new StructureEmiRecipe(info));
             registry.addWorkstation(CATEGORY, EmiStack.of(info.controller()));
+        }
+    }
+
+    /** Keep the complete category, but open it at the structure belonging to the inspected controller. */
+    public static void focusControllerUses(EmiIngredient ingredient) {
+        var stacks = ingredient.getEmiStacks();
+        if (stacks.size() != 1 || stacks.get(0).isEmpty()) return;
+        var stack = stacks.get(0);
+        for (var recipe : dev.emi.emi.api.EmiApi.getRecipeManager().getRecipesByOutput(stack)) {
+            if (recipe instanceof StructureEmiRecipe structure
+                    && stack.getItemStack().is(structure.info.controller().getItem())) {
+                dev.emi.emi.api.EmiApi.focusRecipe(structure);
+                return;
+            }
         }
     }
     @Override public EmiRecipeCategory getCategory() { return CATEGORY; }

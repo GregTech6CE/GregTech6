@@ -192,12 +192,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
         }
     }
 
-    /**
-     * {@code LiquidBlock.pickupBlock} with the fluid read through the supplier. GT6 fluids have no
-     * vanilla bucket of their own (GT6 uses its own cells, the port uses the creative-only
-     * {@code gt6ce:fluid_item_*} items), so this still yields {@code Items.AIR} - the same result
-     * vanilla water gives for a fluid without a bucket - instead of crashing.
-     */
+    /** Resolve a usable bucket before removing the source; unsupported fluids must stay in place. */
     @Override
 //? if >=1.21.1 {
     /*public ItemStack pickupBlock(net.minecraft.world.entity.player.Player player,LevelAccessor level, BlockPos pos, BlockState state) {
@@ -205,12 +200,12 @@ public class GTWorldFluidBlock extends LiquidBlock {
     public ItemStack pickupBlock(LevelAccessor level, BlockPos pos, BlockState state) {
 //?}
         if (state.getValue(LEVEL) == 0) {
-            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 //? if >=1.21.1 {
-            /*return new ItemStack(fluid.getBucket());
+            /*ItemStack bucket = new ItemStack(fluid.getBucket());
 *///?} else {
-            return new ItemStack(getFluid().getBucket());
+            ItemStack bucket = new ItemStack(getFluid().getBucket());
 //?}
+            if (!bucket.isEmpty() && level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11)) return bucket;
         }
         return ItemStack.EMPTY;
     }
@@ -218,9 +213,14 @@ public class GTWorldFluidBlock extends LiquidBlock {
     /** {@code LiquidBlock.getPickupSound} with the fluid read through the supplier. */
     @Override
     public Optional<SoundEvent> getPickupSound() {
+        // BucketItem and FluidUtil play this through the normal vanilla/loader filling flow.
 //? if >=1.21.1 {
-        /*return fluid.getPickupSound();
+        /*if (fluid instanceof gregtech.content.registry.GTWorldWaterFluid.Source)
+            return Optional.of(net.minecraft.sounds.SoundEvents.BUCKET_FILL);
+        return fluid.getPickupSound();
 *///?} else {
+        if (getFluid() instanceof gregtech.content.registry.GTWorldWaterFluid.Source)
+            return Optional.of(net.minecraft.sounds.SoundEvents.BUCKET_FILL);
         return getFluid().getPickupSound();
 //?}
     }

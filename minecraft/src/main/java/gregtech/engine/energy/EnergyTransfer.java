@@ -22,6 +22,7 @@ public final class EnergyTransfer {
             return 0;
         }
         long used = 0;
+        if (!MachineEnvironmentalChecks.check(blockEntity, emitter)) return 0;
         for (Direction side : GTEnergySides.ALL) {
             if (emitter.isEnergyEmittingTo(energyType, side, false)) {
                 used += emitEnergyToSide(energyType, side, size, amount - used, blockEntity);
@@ -38,6 +39,7 @@ public final class EnergyTransfer {
         if (amount <= 0 || emitter.getLevel() == null) {
             return 0;
         }
+        if (!MachineEnvironmentalChecks.check(emitter, EnergyBlockViews.view(emitter))) return 0;
         BlockEntity receiver = GTEnergySides.getNeighbor(emitter.getLevel(), emitter.getBlockPos(), sideOutOf);
         if (receiver == null) {
             return 0;
@@ -47,8 +49,11 @@ public final class EnergyTransfer {
 
     public static long insertEnergyInto(GregTechTags.Tag energyType, @Nullable Direction sideInto, long size, long amount,
                                         @Nullable Object emitter, BlockEntity receiver) {
+        if (amount <= 0 || size == 0) return 0;
         IEnergyBlock energyBlock = EnergyBlockViews.view(receiver);
         if (energyBlock != null) {
+            if (energyBlock.isEnergyAcceptingFrom(energyType, sideInto, false)
+                    && !MachineEnvironmentalChecks.check(receiver, energyBlock)) return 0;
             return energyBlock.doEnergyInjection(energyType, sideInto, size, amount, true);
         }
         return EnergyCompat.insertEnergyInto(energyType, sideInto, size, amount, emitter, receiver);

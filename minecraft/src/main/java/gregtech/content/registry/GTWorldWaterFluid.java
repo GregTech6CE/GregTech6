@@ -200,7 +200,7 @@ public final class GTWorldWaterFluid {
     public static class Source extends ForgeFlowingFluid.Source {
         public Source(ForgeFlowingFluid.Properties properties) {
 //?}
-            super(properties);
+            super(properties.bucket(() -> net.minecraft.world.item.Items.WATER_BUCKET));
         }
 
         /** See the class javadoc: vanilla water's {@code FluidType}, not the GT6 one. */
@@ -241,7 +241,7 @@ public final class GTWorldWaterFluid {
     public static class Flowing extends ForgeFlowingFluid.Flowing {
         public Flowing(ForgeFlowingFluid.Properties properties) {
 //?}
-            super(properties);
+            super(properties.bucket(() -> net.minecraft.world.item.Items.WATER_BUCKET));
         }
 
         /** See the class javadoc: vanilla water's {@code FluidType}, not the GT6 one. */

@@ -37,13 +37,7 @@ public final class UtilityControllerTooltips {
     private static Component heatUnit(gregtech.engine.multiblock.HeatExchangerRules.Settings settings) {
         var type=settings.energyType();
         if(type==null)return Component.literal(settings.energyId()).withStyle(ChatFormatting.WHITE);
-        var color=switch(type.getShortName()) {
-            case "HU","Ignis"->ChatFormatting.RED;case "RU","Terra"->ChatFormatting.GREEN;case "KU"->ChatFormatting.DARK_GREEN;
-            case "CU","Aqua"->ChatFormatting.AQUA;case "LU","Aer"->ChatFormatting.YELLOW;case "MU"->ChatFormatting.DARK_GRAY;
-            case "NU","Perditio"->ChatFormatting.BLACK;case "QU"->ChatFormatting.DARK_PURPLE;case "TU"->ChatFormatting.DARK_BLUE;
-            case "RF","MJ"->ChatFormatting.DARK_RED;case "Steam"->ChatFormatting.GRAY;case "AU","Ordo"->ChatFormatting.WHITE;
-            default->ChatFormatting.BLUE;
-        };
+        var color=EnergyText.color(type.getShortName());
         return Component.translatable("gt.td.short."+type.getId().toLowerCase(java.util.Locale.ROOT)).withStyle(color);
     }
     public static void lightning(List<Component> lines) {

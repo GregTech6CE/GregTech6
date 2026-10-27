@@ -11,11 +11,12 @@ public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIc
  for(var stack:OriginCreativeContents.contents(event.getTabKey().location().getPath()))event.accept(stack.copyWithCount(1));
 }
     private static void populatePrefix(BuildCreativeModeTabContentsEvent event, MaterialPrefix prefix) {
+        if (prefix.isHiddenFromCreative() && !gregtech.GregTechConfig.Rule.HIDDEN_PREFIXES.enabled()) return;
         for (var binding : GTItems.creativeEntries(prefix)) {
             GTMaterial material=binding.material();
-            if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material
+            if ((material.has(MaterialProperty.HIDDEN) && !gregtech.GregTechConfig.Rule.HIDDEN_MATERIALS.enabled()) || material.resolve()!=material
                     || (!prefix.isValidFor(material) && !gregtech.engine.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
-            if(binding.item().isBound()) event.accept(new ItemStack(binding.item().get(),1));
+            if(binding.item().isBound()) { var stack = new ItemStack(binding.item().get(),1); if (gregtech.content.item.CatalogVisibility.visible(stack)) event.accept(stack); }
 *///?} else {
 
 import gregtech.content.material.Materials;
@@ -379,11 +380,11 @@ public class CreativeTabBootstrap implements InitializationStep {
 //?}
     private static void populateBlockPrefix(BuildCreativeModeTabContentsEvent event, BlockMaterialPrefix prefix) {
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
-            if (material.has(MaterialProperty.HIDDEN)) continue;
+            if ((material.has(MaterialProperty.HIDDEN) && !gregtech.GregTechConfig.Rule.HIDDEN_MATERIALS.enabled())) continue;
             if (material.resolve() != material) continue;
             if (!prefix.isValidFor(material)) continue;
             ItemStack stack = GTBlocks.getCreativeStack(prefix, material);
-            if (!stack.isEmpty()) event.accept(stack);
+            if (!stack.isEmpty() && gregtech.content.item.CatalogVisibility.visible(stack)) event.accept(stack);
         }
     }
 //? if >=1.21.1 {
@@ -508,11 +509,12 @@ public class CreativeTabBootstrap implements InitializationStep {
     }
 
     private static void populatePrefix(BuildCreativeModeTabContentsEvent event, MaterialPrefix prefix) {
+        if (prefix.isHiddenFromCreative() && !gregtech.GregTechConfig.Rule.HIDDEN_PREFIXES.enabled()) return;
         for (var binding : GTItems.creativeEntries(prefix)) {
             GTMaterial material=binding.material();
-            if (material.has(MaterialProperty.HIDDEN) || material.resolve()!=material
+            if ((material.has(MaterialProperty.HIDDEN) && !gregtech.GregTechConfig.Rule.HIDDEN_MATERIALS.enabled()) || material.resolve()!=material
                     || (!prefix.isValidFor(material) && !gregtech.engine.addon.AddonMaterials.explicitPlateOrFoil(prefix, material))) continue;
-            if(binding.item().isPresent()) event.accept(new ItemStack(binding.item().get(),1));
+            if(binding.item().isPresent()) { var stack = new ItemStack(binding.item().get(),1); if (gregtech.content.item.CatalogVisibility.visible(stack)) event.accept(stack); }
         }
     }
 

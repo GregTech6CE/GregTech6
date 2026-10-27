@@ -40,14 +40,14 @@ public enum ExtenderJadeProvider implements IBlockComponentProvider, IServerData
         if (!accessor.getServerData().contains("gt.extender.control")) return;
         var controlData = accessor.getServerData().getCompound("gt.extender.control");
         if (!controlData.getBoolean("available")) {
-            tooltip.add(Component.translatable("message.gt6ce.extender.unavailable"));
+            JadeText.add(tooltip, Component.translatable("message.gt6ce.extender.unavailable"));
             return;
         }
-        tooltip.add(Component.translatable("message.gt6ce.extender." + (controlData.getBoolean("enabled") ? "enabled" : "disabled")));
-        tooltip.add(Component.translatable("jade.gt6ce.extender." + (controlData.getBoolean("active") ? "active"
+        JadeText.add(tooltip, Component.translatable("message.gt6ce.extender." + (controlData.getBoolean("enabled") ? "enabled" : "disabled")));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.extender." + (controlData.getBoolean("active") ? "active"
                 : controlData.getBoolean("running") ? "running" : "idle")));
-        if (controlData.contains("mode")) tooltip.add(Component.translatable("message.gt6ce.extender.mode", controlData.getInt("mode")));
+        if (controlData.contains("mode")) JadeText.add(tooltip, Component.translatable("message.gt6ce.extender.mode", controlData.getInt("mode")));
         if (controlData.contains("maximum") && controlData.getLong("maximum") > 0)
-            tooltip.add(Component.translatable("jade.gt6ce.extender.progress", controlData.getLong("progress"), controlData.getLong("maximum")));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.extender.progress", controlData.getLong("progress"), controlData.getLong("maximum")));
     }
 }

@@ -67,7 +67,13 @@ public final class GTDungeonLayout {
      * that one call. The port lets each cell rebuild the same dungeon, so this looks up the lattice
      * point whose grid may cover the given chunk.
      */
-    @Nullable
+    public static DungeonLayoutRules.Settings settings() {
+        return new DungeonLayoutRules.Settings(
+                gregtech.GregTechConfig.Number.DUNGEON_MIN_SIZE.value(), gregtech.GregTechConfig.Number.DUNGEON_MAX_SIZE.value(),
+                gregtech.GregTechConfig.Number.DUNGEON_MIN_Y.value(), gregtech.GregTechConfig.Number.DUNGEON_MAX_Y.value(),
+                gregtech.GregTechConfig.Number.DUNGEON_ROOM_CHANCE.value());
+    }
+
     public static ChunkPos anchorFor(int chunkX, int chunkZ) {
         int ax = nearestAnchor(chunkX), az = nearestAnchor(chunkZ);
         if (ax == Integer.MIN_VALUE || az == Integer.MIN_VALUE) return null;
@@ -79,7 +85,7 @@ public final class GTDungeonLayout {
      * half a layout away from it. The anchors are the coordinates whose absolute value is
      * {@code ANCHOR_OFFSET} modulo {@link #GRID_PERIOD}.
      */
-    private static int nearestAnchor(int chunk) {return DungeonLayoutRules.nearestAnchor(chunk);}
+    private static int nearestAnchor(int chunk) {return DungeonLayoutRules.nearestAnchor(chunk, settings());}
 
     /**
      * GT6's anchor test on one axis ({@code WorldgenDungeonGT:151-152}):
@@ -89,10 +95,10 @@ public final class GTDungeonLayout {
      * as its structure chunks, so {@code /locate structure gt6ce:gt_dungeon} answers with the same
      * anchors the feature builds a dungeon from. Public because it is that shared rule.
      */
-    public static boolean isAnchor(int chunk) {return DungeonLayoutRules.isAnchor(chunk);}
+    public static boolean isAnchor(int chunk) {return DungeonLayoutRules.isAnchor(chunk, settings());}
 
     /** The grid region of one axis, in vanilla's own {@code floorDiv} sense (region {@code 0} starts at 0). */
-    public static int regionOf(int chunk) {return DungeonLayoutRules.regionOf(chunk);}
+    public static int regionOf(int chunk) {return DungeonLayoutRules.regionOf(chunk, settings());}
 
     /**
      * The anchor {@link #isAnchor} accepts inside the given grid region. Chunk 0 lies on the border of
@@ -101,7 +107,7 @@ public final class GTDungeonLayout {
      * ({@code GRID_PERIOD - ANCHOR_OFFSET}, so region {@code -1} holds -5), which is what
      * {@code abs(chunk) % GRID_PERIOD} means.
      */
-    public static int anchorOfRegion(int region) {return DungeonLayoutRules.anchorOfRegion(region);}
+    public static int anchorOfRegion(int region) {return DungeonLayoutRules.anchorOfRegion(region, settings());}
 
     /** The grid cell of a chunk inside a layout, as {@code [i, j]}, or null when it is outside. */
     @Nullable
@@ -129,13 +135,13 @@ public final class GTDungeonLayout {
 
     /** GT6's {@code aRandom.nextInt(mProbability) != 0} gate, evaluated once per anchor. */
     public static boolean passesProbability(long dungeonSeed) {
-        return RandomSource.create(dungeonSeed).nextInt(PROBABILITY) == 0;
+        return RandomSource.create(dungeonSeed).nextInt(gregtech.GregTechConfig.Number.DUNGEON_PROBABILITY.value()) == 0;
     }
 
     /** GT6's anchor-based spawn clearance ({@code WorldgenDungeonGT:142-144}). */
     public static boolean passesAnchorClearance(ChunkPos anchor) {
         int minX = anchor.getMinBlockX(), minZ = anchor.getMinBlockZ();
-        return DungeonLayoutRules.clearance(minX,minZ);
+        return DungeonLayoutRules.clearance(minX,minZ, settings());
     }
 
     /**
@@ -153,11 +159,12 @@ public final class GTDungeonLayout {
     }
 
     /** GT6's {@code mMinY + aRandom.nextInt(Math.max(1, mMaxY - mMinY))}. */
-    public static int offsetY(RandomSource random) {return DungeonLayoutRules.offsetY(random::nextInt);}
+    public static int offsetY(RandomSource random) {return DungeonLayoutRules.offsetY(random::nextInt, settings());}
 
     /** The dungeon's Y level in the 1.18+ world (see {@code GTWorldgenScale}). */
     public static int y(WorldGenLevel level, int offsetY) {
-        return gregtech.content.worldgen.GTWorldgenScale.remapY(level, offsetY);
+        return Math.max(level.getMinBuildHeight() + 5, Math.min(level.getMaxBuildHeight() - 32,
+                gregtech.content.worldgen.GTWorldgenScale.remapY(level, offsetY)));
     }
 
     /** The two rock types GT6 rolls for the dungeon ({@code BlocksGT.stones[rnd]}). */
@@ -167,7 +174,7 @@ public final class GTDungeonLayout {
     }
 
     /** The size of the layout in cells, exactly GT6's {@code 2 + mMinSize + rnd(1 + mMaxSize - mMinSize)}. */
-    public static int size(RandomSource random) {return DungeonLayoutRules.size(random::nextInt);}
+    public static int size(RandomSource random) {return DungeonLayoutRules.size(random::nextInt, settings());}
 
     /**
      * GT6's layout algorithm ({@code WorldgenDungeonGT:159-248}): pick two "important" cells
@@ -179,7 +186,7 @@ public final class GTDungeonLayout {
      * {@link #BARRACKS} / {@link #ENTRANCE} = the important rooms. The returned array is indexed
      * {@code [i][j]} with {@code i} along X and {@code j} along Z.</p>
      */
-    public static byte[][] layout(RandomSource random) {return DungeonLayoutRules.layout(random::nextInt);}
+    public static byte[][] layout(RandomSource random) {return DungeonLayoutRules.layout(random::nextInt, settings());}
 
     /** One of GT6's two cleanup passes over the corridor cells. */
 

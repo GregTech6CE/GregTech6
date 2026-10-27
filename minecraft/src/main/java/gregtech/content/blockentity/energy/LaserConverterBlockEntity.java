@@ -26,6 +26,9 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     private long energy;
     private boolean stopped;
     private boolean emitted;
+    private long lastInput, lastOutput;
+    public long lastInput() { return lastInput; }
+    public long lastOutput() { return lastOutput; }
     private final gregtech.api.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
             ()->!this.stopped,value->{this.stopped=!value;setChanged();},()->getBlockState().getValue(LaserConverterBlock.ACTIVE),()->emitted);
     @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
@@ -59,8 +62,10 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     public void tick(){
         if(level==null||level.isClientSide)return;
         long output=LaserWorkRules.converted(spec(),energy);
+        lastInput=energy;
         boolean active=LaserWorkRules.active(spec(),output,stopped);
         emitted=active&&EnergyTransfer.emitEnergyToSide(spec().outputType(),front(),output,1,this)>0;
+        lastOutput=emitted?output:0;
         // These four GT6 converters waste their per-tick supply even if their output is disconnected.
         if(energy!=0){energy=0;setChanged();}
         if(getBlockState().getValue(LaserConverterBlock.ACTIVE)!=active)

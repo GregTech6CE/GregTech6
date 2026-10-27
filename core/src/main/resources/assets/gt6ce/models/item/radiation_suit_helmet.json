@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "gt6ce:items/armor/hazard_radiation/0"
+    "layer0": "gt6ce:item/armor/hazard_radiation/0"
   }
 }

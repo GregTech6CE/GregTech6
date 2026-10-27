@@ -11,7 +11,16 @@ final class OmniWorldInfo {
     private OmniWorldInfo() {}
 
     static void append(JadeInspection info, BlockEntity entity) {
-        if (entity instanceof BushBlockEntity bush) {
+        if (entity instanceof gregtech.content.blockentity.inventory.MassStorageBlockEntity storage) {
+            info.groupedInventory();
+            if (!storage.template().isEmpty()) info.line("stored_count", storage.template().copyWithCount(1), storage.stored());
+        } else if (entity instanceof gregtech.content.blockentity.misc.PileBlockEntity pile) {
+            info.groupedInventory();
+            if (!pile.isEmpty()) info.line("stored_count", pile.stored().copyWithCount(1), pile.count());
+        } else if (entity instanceof gregtech.content.blockentity.misc.CoinPileBlockEntity coins) {
+            info.groupedInventory();
+            if (!coins.isEmpty()) info.line("stored_count", coins.coinItem().copyWithCount(1), coins.total());
+        } else if (entity instanceof BushBlockEntity bush) {
             double progress = bush.stage() >= 3 ? 100 : (bush.stage() * 256 + bush.growth()) * 100.0 / 768;
             info.line("bush_growth", String.format(java.util.Locale.ROOT, "%.1f", progress));
             if (bush.stage() >= 3) info.line("ripe");

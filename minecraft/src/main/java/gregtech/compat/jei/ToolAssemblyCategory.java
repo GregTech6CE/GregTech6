@@ -51,8 +51,7 @@ public final class ToolAssemblyCategory {
         public Category(IGuiHelper gui) {
             this.background = gui.createBlankDrawable(150, 82);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(GTToolItem.create(GTToolType.WRENCH,
-                    GTMaterialRegistry.get("Iron"), GTMaterialRegistry.get("Iron")));
+            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.toolAssembly());
         }
 
         @Override public RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> getRecipeType() { return TYPE; }

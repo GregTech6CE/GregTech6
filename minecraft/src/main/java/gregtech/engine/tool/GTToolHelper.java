@@ -534,11 +534,13 @@ public final class GTToolHelper {
                                         EquipmentSlot slot, int maxDamage) {
         int newDamage = stack.getDamageValue() + amount;
         if (newDamage >= maxDamage) {
+            if (user instanceof Player player) ToolBreakFatigue.apply(player, stack);
+            var brokenItem = stack.getItem();
             stack.shrink(1);
             if (user != null) {
 
 //? if >=1.21.1 {
-/*                user.onEquippedItemBroken(stack.getItem(),slot);
+/*                user.onEquippedItemBroken(brokenItem,slot);
 *///?} else {
                 user.broadcastBreakEvent(slot);
 //?}

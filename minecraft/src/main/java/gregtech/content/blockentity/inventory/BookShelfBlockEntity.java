@@ -35,6 +35,7 @@ public class BookShelfBlockEntity extends BlockEntity {
     private net.minecraft.resources.ResourceLocation frontLoot;
     private net.minecraft.resources.ResourceLocation backLoot;
     private long lootSeed;
+    private boolean firstServerTick = true;
     /** GT6: -1 for a latching lever, 1..120 for a button, 0 for off. */
     private byte redstoneDelay;
 
@@ -60,6 +61,10 @@ public class BookShelfBlockEntity extends BlockEntity {
     /** GT6 displays delayed dungeon books once a player comes within 32 blocks, every 300 ticks. */
     public void serverTick() {
         tickRedstone();
+        if (firstServerTick && level != null && !level.isClientSide) {
+            firstServerTick = false;
+            generateDungeonLoot();
+        }
         if (level != null && !level.isClientSide && level.getGameTime() % 300 == 0
                 && (frontLoot != null || backLoot != null)
                 && !level.getEntitiesOfClass(Player.class, new AABB(worldPosition).inflate(32)).isEmpty()) {

@@ -139,14 +139,7 @@ public final class OriginCreativeContents {
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
 
-//? if >=1.21.1 {
-/*            if(item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem fluid && fluid.fluidEntry().isHidden())continue;
-*///?} else {
-            if(item instanceof gregtech.content.item.FluidItem fluid && fluid.fluidEntry().isHidden())continue;
-//?}
-
-            if (item instanceof CannedFoodItem can && can.spec().hidden()) continue;
-            if (item instanceof ColoredBookItem book && book.variant().hidden()) continue;
+            if (!gregtech.content.item.CatalogVisibility.visible(new ItemStack(item))) continue;
             items.add(item);
         }
         // Source registration order within a category; newly ported entries follow by stable ID.

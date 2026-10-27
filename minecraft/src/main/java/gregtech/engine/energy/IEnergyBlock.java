@@ -14,6 +14,11 @@ import java.util.Collections;
  */
 public interface IEnergyBlock {
 
+    default boolean isFireProof(net.minecraft.core.Direction side) { return false; }
+    default boolean isWaterProof(net.minecraft.core.Direction side) { return false; }
+    default boolean isRainProof(net.minecraft.core.Direction side) { return false; }
+    default boolean isThunderProof(net.minecraft.core.Direction side) { return false; }
+
     boolean isEnergyType(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, boolean emitting);
 
     Collection<GregTechTags.Tag> getEnergyTypes(@Nullable net.minecraft.core.Direction side);

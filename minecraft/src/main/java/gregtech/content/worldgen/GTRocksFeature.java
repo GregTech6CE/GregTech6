@@ -74,7 +74,7 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
 
         // GT6 marks its target cells first and rolls per marked cell afterwards.
         boolean[][] targets = new boolean[16][16];
-        for (int i = 0; i < AMOUNT; i++) {
+        for (int i = 0; i < gregtech.GregTechConfig.Number.ROCK_AMOUNT.value(); i++) {
             targets[random.nextInt(16)][random.nextInt(16)] = true;
         }
         int minHeight = Math.min(level.getMaxBuildHeight() - 2, level.getSeaLevel() - 1);
@@ -84,7 +84,7 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
                 if (!targets[i][j]) continue;
-                if (random.nextInt(PROBABILITY) != 0) continue;
+                if (random.nextInt(gregtech.GregTechConfig.Number.ROCK_PROBABILITY.value()) != 0) continue;
                 placed |= castRay(level, minX + i, minZ + j, maxHeight, minHeight, random);
             }
         }

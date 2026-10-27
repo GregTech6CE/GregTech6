@@ -169,7 +169,7 @@ public final class GTDrinks {
      */
     public static boolean drink(Player player, FluidStack stack) {
         Row row = rowFor(stack);
-        if (row == null || player.level().isClientSide) {
+        if (row == null || player.level().isClientSide || !player.canEat(gregtech.GregTechConfig.Rule.ALWAYS_DRINK.enabled())) {
             return false;
         }
         player.getFoodData().eat(row.foodLevel(), row.saturation());

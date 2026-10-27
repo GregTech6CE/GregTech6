@@ -60,7 +60,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
 //?}
 
     public SignalWireBlock(GTMaterial material, int range, boolean insulated, boolean luminous, Properties properties) {
-        super(properties.lightLevel(state -> luminous ? state.getValue(POWER) : 0));
+        super(properties.dynamicShape().lightLevel(state -> luminous ? state.getValue(POWER) : 0));
         this.material = material;
         this.range = range;
         this.insulated = insulated;
@@ -272,6 +272,12 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         text.add(Component.translatable("tooltip.gt6ce.signal_wire.controls"));
     }
 
+    /** Lighting does not need the neighbor-dependent connection shape. */
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+        return true;
+    }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 
@@ -282,20 +288,21 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player playerHoldingTool
                 && GTToolHelper.isWireCutter(playerHoldingTool.getMainHandItem())) return Shapes.block();
 //?}
-        int mask = 0;
-        for (var side : Direction.values()) if (state.getValue(ElectricWireBlock.propFor(side))) mask |= 1 << side.ordinal();
-        var shape = shapes[mask];
-        if (shape == null) shapes[mask] = shape = connectionShape(halfThickness(), mask);
-        return shape;
+        return connectionShape(state, level, pos);
     }
-    private final VoxelShape[] shapes = new VoxelShape[64];
 
-    private static VoxelShape connectionShape(int half, int mask) {
+    private VoxelShape connectionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        int half = halfThickness();
         int minimum = 8 - half, maximum = 8 + half;
         var shape = Block.box(minimum, minimum, minimum, maximum, maximum, maximum);
-        for (var side : Direction.values()) if ((mask & 1 << side.ordinal()) != 0) shape = Shapes.or(shape,
-                Block.box(side == Direction.WEST ? 0 : minimum, side == Direction.DOWN ? 0 : minimum, side == Direction.NORTH ? 0 : minimum,
-                        side == Direction.EAST ? 16 : maximum, side == Direction.UP ? 16 : maximum, side == Direction.SOUTH ? 16 : maximum));
+        for (var side : Direction.values()) {
+            if (!state.getValue(ElectricWireBlock.propFor(side))) continue;
+            var neighbor = level.getBlockState(pos.relative(side));
+            double neighborHalf = neighbor.getBlock() instanceof SignalWireBlock wire ? wire.halfThickness()
+                    : gregtech.engine.machine.PipeGeometry.NONE;
+            double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(side, half, neighborHalf);
+            if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
+        }
         return shape;
     }
 

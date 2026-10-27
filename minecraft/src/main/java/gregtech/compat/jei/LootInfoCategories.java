@@ -22,7 +22,7 @@ public final class LootInfoCategories {
         public Category(IGuiHelper gui, boolean mobs) {
             type = mobs ? MOBS : LOOT;
             background = gui.createBlankDrawable(LootPageCaptions.WIDTH, LootPageCaptions.HEIGHT);
-            icon = gui.createDrawableItemStack(new ItemStack(mobs ? Items.ZOMBIE_SPAWN_EGG : Items.CHEST));
+            icon = gui.createDrawableItemStack(mobs ? new ItemStack(Items.ZOMBIE_SPAWN_EGG) : gregtech.compat.common.RecipeViewerIcons.item("loot_chest_dungeon"));
             slot = gui.getSlotDrawable();
         }
         @Override public RecipeType<LootViewerData.Group> getRecipeType() { return type; }

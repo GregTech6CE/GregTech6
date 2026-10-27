@@ -24,12 +24,12 @@ public final class PipeCoverRenderer implements BlockEntityRenderer<FluidPipeBlo
 *///?} else {
             var sprite = model.getParticleIcon();
 //?}
-            int light = level == null ? packedLight : LevelRenderer.getLightColor(level, be.getBlockPos().relative(side));
+            int light = CoverSurfaceRenderer.light(be, side, packedLight);
             var vertices = buffers.getBuffer(RenderType.cutout());
             boolean layered = gregtech.content.cover.MachineCoverSpec.of(cover) != null;
-            if (layered) CoverSurfaceRenderer.draw(pose, vertices, side, ArmRenderHelper.getSprite(
+            if (layered) CoverSurfaceRenderer.draw(be,pose, vertices, side, ArmRenderHelper.getSprite(
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/covers/base")), light, 0);
-            CoverSurfaceRenderer.draw(pose, vertices, side, sprite, light, layered ? 1 : 0);
+            CoverSurfaceRenderer.draw(be,pose, vertices, side, sprite, light, layered ? 1 : 0);
         }
     }
 }

@@ -31,7 +31,7 @@ public final class OriginConstructionClient {
 //?}
         event.enqueueWork(() -> {
             for (var block : blocks()) if (block instanceof ColoredGlassBlock || block instanceof ColoredGlassSlabBlock)
-                net.minecraft.client.renderer.ItemBlockRenderTypes.setRenderLayer(block, net.minecraft.client.renderer.RenderType.translucent());
+                net.minecraft.client.renderer.ItemBlockRenderTypes.setRenderLayer(block, ConfiguredAlphaModels.gtTranslucent());
         });
     }
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {

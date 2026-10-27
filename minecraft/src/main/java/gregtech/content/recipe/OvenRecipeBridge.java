@@ -195,6 +195,7 @@ public final class OvenRecipeBridge {
             if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
             if (!covered.add(input.getItem())) continue;   // the vanilla list already covers this input
             var cooking = gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem());
+            if (cooking.isEmpty()) cooking = SourceFurnaceNativeAdapter.cooking(gt);
             float experience = cooking.map(data -> data.experience()).orElse(0.0F);
             var category = cooking.map(data -> data.food()).orElse(false) ? CookingBookCategory.FOOD : CookingBookCategory.MISC;
 //? if >=1.21.1 {
@@ -349,6 +350,7 @@ public final class OvenRecipeBridge {
             var input = firstStack(row.mInputs); var output = firstStack(row.mOutputs);
             if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
             var metadata = gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem());
+            if (metadata.isEmpty()) metadata = SourceFurnaceNativeAdapter.cooking(row);
             if (metadata.isEmpty()) continue;
             var data = metadata.get(); var covered = data.food() ? smoked : blasted;
             if (!covered.add(input.getItem())) continue;

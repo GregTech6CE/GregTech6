@@ -1,187 +1,206 @@
 package gregtech.compat.jade;
 
-import gregtech.engine.fluid.FluidTankGT;
-import gregtech.engine.machine.BasicMachineSpec;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity;
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.engine.fluid.FluidTankGT;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec2;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandler;
 //?}
-import snownee.jade.api.BlockAccessor;
-import snownee.jade.api.IBlockComponentProvider;
-import snownee.jade.api.IServerDataProvider;
-import snownee.jade.api.ITooltip;
+import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.fluid.JadeFluidObject;
+import snownee.jade.api.ui.IElementHelper;
 
 import java.util.Locale;
 
-/** Energy, inventory, and fluid tank info for basic machines. */
+/** One snapshot and renderer for all recipe machines, including their bound multiblock parts. */
 public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
     static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "basic_machine");
-    private static final String NBT_NAME = "gt_bm_name";
-    private static final String NBT_TIER = "gt_bm_tier";
-    private static final String NBT_UNIT = "gt_bm_unit";
-    private static final String NBT_STORED = "gt_bm_stored";
-    private static final String NBT_ENERGY_IN = "gt_bm_energy_in";
-    private static final String NBT_ENERGY_MIN = "gt_bm_energy_min";
-    private static final String NBT_ENERGY_MAX = "gt_bm_energy_max";
-    private static final String NBT_ENERGY_AVERAGE = "gt_bm_energy_average";
-    private static final String NBT_RUNNING = "gt_bm_running";
-    private static final String NBT_ITEMS_IN = "gt_bm_items_in";
-    private static final String NBT_ITEMS_TOTAL = "gt_bm_items_total";
-    private static final String NBT_FLUID_COUNT = "gt_bm_fluid_count";
-    private static final String NBT_FLUID_PREFIX_IN = "gt_bm_fi_";
-    private static final String NBT_FLUID_PREFIX_OUT = "gt_bm_fo_";
+    static final String DATA_KEY = "gt_machine";
 
-    @Override
-    public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
-        if (!(accessor.getBlockEntity() instanceof BasicMachineBlockEntity be)) return;
+    static BasicMachineBlockEntity machine(BlockEntity entity) {
+        // Only use an existing binding. Inspection must not scan or form a multiblock.
+        if (entity instanceof MultiblockPortBlockEntity port) entity = port.sensorTarget();
+        return entity instanceof BasicMachineBlockEntity machine ? machine : null;
+    }
 
-        BasicMachineSpec spec = be.spec();
-        if (spec == null) return;
+    @Override public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
+        var machine = machine(accessor.getBlockEntity());
+        if (machine == null || machine.spec() == null) return;
+        var spec = machine.spec();
+        var control = machine.machineControl(null);
+        var data = new CompoundTag();
+        data.putString("unit", spec.energyType());
+        data.putLongArray("energy", new long[]{spec.energyIn(), spec.energyInMin(), spec.energyInMax()});
+        data.putDouble("average", machine.averageEnergyInput());
+        data.putBoolean("enabled", control.enabled());
+        data.putBoolean("active", control.active());
+        data.putLong("progress", control.progress());
+        data.putLong("work", control.progressMax());
+        data.putLong("recipe", machine.minimumEnergy());
+        data.putInt("parallel", machine.parallelCount());
+        data.putInt("slots", machine.inputSlots());
+        int occupied = 0;
+        for (int i = 0; i < machine.inputSlots(); i++)
+            if (!machine.inventory().getStackInSlot(i).isEmpty()) occupied++;
+        data.putInt("occupied", occupied);
 
-        tag.putString(NBT_NAME, spec.id());
-        tag.putString(NBT_NAME + "_key", accessor.getBlock().getDescriptionId());
-        tag.putInt(NBT_TIER, spec.tier());
-        tag.putString(NBT_UNIT, spec.energyType());
-        tag.putLong(NBT_STORED, be.getEnergyTick());
-        tag.putLong(NBT_ENERGY_IN, spec.energyIn());
-        tag.putLong(NBT_ENERGY_MIN, spec.energyInMin());
-        tag.putLong(NBT_ENERGY_MAX, spec.energyInMax());
-        tag.putDouble(NBT_ENERGY_AVERAGE, be.averageEnergyInput());
-        tag.putBoolean(NBT_RUNNING, be.isRunning());
-
-        if (be.inventory() != null) {
-            int occupied = 0;
-            int inputSlots = be.inputSlots();
-            for (int i = 0; i < inputSlots; i++) {
-                if (!be.inventory().getStackInSlot(i).isEmpty()) occupied++;
-            }
-            tag.putInt(NBT_ITEMS_IN, occupied);
-            tag.putInt(NBT_ITEMS_TOTAL, inputSlots);
+        var pending = new ListTag();
+        for (var item : machine.inspectionPendingItems()) pending.add(saveItem(item, accessor));
+        data.put("pendingItems", pending);
+        data.putInt("more", Math.max(0, machine.inspectionPendingItemCount() - pending.size()));
+        var pendingFluids = new ListTag();
+        for (var fluid : machine.inspectionPendingFluids())
+            pendingFluids.add(saveFluid(fluid, fluid.getAmount(), fluid.getAmount(), accessor));
+        data.put("pendingFluids", pendingFluids);
+        data.put("inputItems", items(machine.inventory(), 0, machine.inputSlots(), accessor));
+        data.put("outputItems", items(machine.inventory(), machine.inputSlots(), machine.outputSlots(), accessor));
+        data.put("programItems", items(machine.autocraftingProgram(), 0, 1, accessor));
+        data.put("inputFluids", fluids(machine.getTanksInput(), accessor));
+        data.put("outputFluids", fluids(machine.getTanksOutput(), accessor));
+        if (machine instanceof CokeOvenControllerBlockEntity coke && !control.active() && control.progressMax() == 0) {
+            data.putBoolean("cokeHint", true);
+            data.putBoolean("ignition", !coke.ignitionReady());
         }
+        // No translated row wrappers or duplicate legacy fluid payload: the client owns layout and language.
+        tag.put(DATA_KEY, data);
+    }
 
-        FluidTankGT[] tanksIn = be.getTanksInput();
-        FluidTankGT[] tanksOut = be.getTanksOutput();
-        int fluidCount = (tanksIn != null ? tanksIn.length : 0) + (tanksOut != null ? tanksOut.length : 0);
-        tag.putInt(NBT_FLUID_COUNT, fluidCount);
+    private static ListTag items(IItemHandler inventory, int first, int count, BlockAccessor accessor) {
+        var result = new ListTag();
+        for (int i = first; i < Math.min(inventory.getSlots(), first + count); i++) {
+            var stack = inventory.getStackInSlot(i);
+            if (!stack.isEmpty()) result.add(saveItem(stack, accessor));
+        }
+        return result;
+    }
 
-        if (tanksIn != null) {
-            for (int i = 0; i < tanksIn.length; i++) {
-                FluidStack fs = tanksIn[i].getFluid();
-                if (!fs.isEmpty()) {
-                    CompoundTag ft = new CompoundTag();
-                    // Retain the legacy fallback for older clients; new clients resolve the stack locally.
-                    ft.putString("name", fs.getDisplayName().getString());
+    private static CompoundTag saveItem(ItemStack stack, BlockAccessor accessor) {
 //? if >=1.21.1 {
-                    /*ft.put("stack", fs.save(accessor.getLevel().registryAccess()));
+        /*return (CompoundTag) stack.save(accessor.getLevel().registryAccess());
 *///?} else {
-                    ft.put("stack", fs.writeToNBT(new CompoundTag()));
+        return stack.save(new CompoundTag());
 //?}
-                    ft.putLong("amount", tanksIn[i].getAmount());
-                    ft.putLong("cap", tanksIn[i].getCapacity());
-                    tag.put(NBT_FLUID_PREFIX_IN + i, ft);
-                }
-            }
-        }
-        if (tanksOut != null) {
-            for (int i = 0; i < tanksOut.length; i++) {
-                FluidStack fs = tanksOut[i].getFluid();
-                if (!fs.isEmpty()) {
-                    CompoundTag ft = new CompoundTag();
-                    // Retain the legacy fallback for older clients; new clients resolve the stack locally.
-                    ft.putString("name", fs.getDisplayName().getString());
+    }
+
+    private static ListTag fluids(FluidTankGT[] tanks, BlockAccessor accessor) {
+        var result = new ListTag();
+        if (tanks != null) for (var tank : tanks)
+            if (!tank.isEmpty()) result.add(saveFluid(tank.getFluid(), tank.getAmount(), tank.getCapacity(), accessor));
+        return result;
+    }
+
+    private static CompoundTag saveFluid(FluidStack fluid, long amount, long capacity, BlockAccessor accessor) {
+        var result = new CompoundTag();
 //? if >=1.21.1 {
-                    /*ft.put("stack", fs.save(accessor.getLevel().registryAccess()));
+        /*result.put("stack", fluid.save(accessor.getLevel().registryAccess()));
 *///?} else {
-                    ft.put("stack", fs.writeToNBT(new CompoundTag()));
+        result.put("stack", fluid.writeToNBT(new CompoundTag()));
 //?}
-                    ft.putLong("amount", tanksOut[i].getAmount());
-                    ft.putLong("cap", tanksOut[i].getCapacity());
-                    tag.put(NBT_FLUID_PREFIX_OUT + i, ft);
-                }
-            }
-        }
+        result.putLong("amount", amount);
+        result.putLong("capacity", capacity);
+        return result;
     }
 
-    @Override
-    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-        CompoundTag data = accessor.getServerData();
-        if (!data.contains(NBT_NAME, CompoundTag.TAG_STRING)) return;
-
-        Component name = JadeText.translated(data, NBT_NAME + "_key", NBT_NAME);
-        int tier = data.getInt(NBT_TIER);
-        tooltip.add(Component.translatable("jade.gt6ce.basic_machine.label", name, tier));
-
-        if (data.contains(NBT_ENERGY_IN, CompoundTag.TAG_LONG)) {
-            long energyIn = data.getLong(NBT_ENERGY_IN);
-            long energyMin = data.getLong(NBT_ENERGY_MIN);
-            long energyMax = data.getLong(NBT_ENERGY_MAX);
-            double average = data.getDouble(NBT_ENERGY_AVERAGE);
-            boolean running = data.getBoolean(NBT_RUNNING);
-            String unit = data.getString(NBT_UNIT);
-            tooltip.add(Component.translatable("jade.gt6ce.energy.in",
-                    format(energyIn), unit));
-            tooltip.add(Component.translatable("jade.gt6ce.energy.range",
-                    format(energyMin), format(energyMax), unit));
-            tooltip.add(Component.translatable("jade.gt6ce.energy.actual",
-                    String.format(Locale.US, "%.2f", average), unit));
-            if (energyIn > 0) tooltip.add(Component.translatable("jade.gt6ce.energy.multiplier",
-                    String.format(Locale.US, "%.2f", average / energyIn), format(energyIn), unit));
-            if (running) {
-                tooltip.add(Component.translatable("jade.gt6ce.energy.active",
-                        String.format(Locale.US, "%.2f", average), unit));
-            } else {
-                tooltip.add(Component.translatable("jade.gt6ce.energy.idle"));
-            }
-        }
-
-        if (data.contains(NBT_ITEMS_TOTAL, CompoundTag.TAG_INT)) {
-            int occupied = data.getInt(NBT_ITEMS_IN);
-            int total = data.getInt(NBT_ITEMS_TOTAL);
-            tooltip.add(Component.translatable("jade.gt6ce.basic_machine.items", occupied, total));
-        }
-
-        // Omni displays the same tanks with icons and explicit input/output sections.
-        if (data.getBoolean("gt_omni_inventory") && config.get(OmniJadeProvider.INSTANCE.getUid())) return;
-        int fluidCount = data.getInt(NBT_FLUID_COUNT);
-        for (int i = 0; i < fluidCount; i++) {
-            for (boolean isInput : new boolean[]{true, false}) {
-            CompoundTag ft = data.getCompound((isInput ? NBT_FLUID_PREFIX_IN : NBT_FLUID_PREFIX_OUT) + i);
-            if (!ft.isEmpty()) {
-                Component fName = Component.literal(ft.getString("name"));
-                if (ft.contains("stack", CompoundTag.TAG_COMPOUND)) {
+    @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (!accessor.getServerData().contains(DATA_KEY)) return;
 //? if >=1.21.1 {
-                    /*FluidStack fluid = FluidStack.parseOptional(accessor.getLevel().registryAccess(), ft.getCompound("stack"));
+        /*tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_ITEM_STORAGE);
+        tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE);
 *///?} else {
-                    FluidStack fluid = FluidStack.loadFluidStackFromNBT(ft.getCompound("stack"));
+        tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_ITEM_STORAGE);
+        tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE);
 //?}
-                    if (!fluid.isEmpty()) fName = fluid.getDisplayName();
-                }
-                long amount = ft.getLong("amount");
-                long cap = ft.getLong("cap");
-                int pct = gregtech.content.energy.BoilerGauge.percent(amount, cap);
-                Component type = Component.translatable(isInput ? "jade.gt6ce.basic_machine.fluid_in"
-                        : "jade.gt6ce.basic_machine.fluid_out");
-                tooltip.add(Component.translatable("jade.gt6ce.basic_machine.fluid",
-                        type, fName, format(amount), format(cap), Integer.toString(pct)));
-            }
-            }
+        var data = accessor.getServerData().getCompound(DATA_KEY);
+        var rates = data.getLongArray("energy");
+        String unit = data.getString("unit");
+        double average = data.getDouble("average");
+        if (rates.length == 3) {
+            JadeText.detail(tooltip, "jade.gt6ce.energy.in", format(rates[0]), unit);
+            JadeText.detail(tooltip, "jade.gt6ce.energy.range", format(rates[1]), format(rates[2]), unit);
+            JadeText.detail(tooltip, "jade.gt6ce.energy.actual", JadeText.decimal(average, 2), unit);
+            if (rates[0] > 0) JadeText.detail(tooltip, "jade.gt6ce.energy.multiplier",
+                    JadeText.decimal(average / rates[0], 2), format(rates[0]), unit);
+        }
+        JadeText.detail(tooltip, "jade.gt6ce.basic_machine.items", data.getInt("occupied"), data.getInt("slots"));
+        line(tooltip, "state", JadeText.status("jade.gt6ce.omni." +
+                (!data.getBoolean("enabled") ? "disabled" : data.getBoolean("active") ? "working" : "waiting")));
+        long progress = data.getLong("progress"), work = data.getLong("work");
+        if (work > 0) line(tooltip, "progress", progress, work, gregtech.content.energy.BoilerGauge.percent(progress, work));
+        if (data.getLong("recipe") > 0) line(tooltip, "recipe_energy", data.getLong("recipe"), unit, data.getInt("parallel"));
+        for (String role : new String[]{"pending", "input", "output", "program"}) {
+            renderItems(tooltip, accessor, role, data.getList(role + "Items", 10));
+            if (role.equals("pending") && data.getInt("more") > 0) line(tooltip, "more_pending", data.getInt("more"));
+            renderFluids(tooltip, accessor, role, data.getList(role + "Fluids", 10));
+        }
+        if (data.getBoolean("ignition")) line(tooltip, "needs_ignition");
+        if (data.getBoolean("cokeHint")) line(tooltip, "coke_recipe_hint");
+    }
+
+    private static void heading(ITooltip tooltip, String kind, String role) {
+        var color = switch (role) {
+            case "pending" -> net.minecraft.ChatFormatting.GOLD;
+            case "input" -> net.minecraft.ChatFormatting.AQUA;
+            case "output" -> net.minecraft.ChatFormatting.GREEN;
+            default -> net.minecraft.ChatFormatting.WHITE;
+        };
+        tooltip.add(Component.translatable("jade.gt6ce.omni.group_" + kind,
+                Component.translatable("jade.gt6ce.omni." + role)).withStyle(color));
+    }
+
+    private static void renderItems(ITooltip tooltip, BlockAccessor accessor, String role, ListTag items) {
+        if (items.isEmpty()) return;
+        heading(tooltip, "items", role);
+        for (int i = 0; i < items.size(); i++) {
+//? if >=1.21.1 {
+            /*var stack = ItemStack.parseOptional(accessor.getLevel().registryAccess(), items.getCompound(i));
+*///?} else {
+            var stack = ItemStack.of(items.getCompound(i));
+//?}
+            var icon = IElementHelper.get().item(stack);
+            icon.message(Component.translatable("jade.gt6ce.omni.item_count", stack.getHoverName(), stack.getCount()).getString());
+            if (i % 8 == 0) tooltip.add(icon); else tooltip.append(icon);
         }
     }
 
-    @Override
-    public ResourceLocation getUid() {
-        return UID;
+    private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, String role, ListTag fluids) {
+        if (fluids.isEmpty()) return;
+        heading(tooltip, "fluids", role);
+        for (int i = 0; i < fluids.size(); i++) {
+            var row = fluids.getCompound(i);
+//? if >=1.21.1 {
+            /*var fluid = FluidStack.parseOptional(accessor.getLevel().registryAccess(), row.getCompound("stack"));
+*///?} else {
+            var fluid = FluidStack.loadFluidStackFromNBT(row.getCompound("stack"));
+//?}
+            if (fluid.isEmpty()) continue;
+            var text = role.equals("pending")
+                    ? Component.translatable("jade.gt6ce.omni.pending_fluid", i + 1, fluid.getDisplayName(), row.getLong("amount"))
+                    : Component.translatable("jade.gt6ce.omni.fluid", Component.translatable("jade.gt6ce.omni." + role),
+                            i + 1, fluid.getDisplayName(), row.getLong("amount"), row.getLong("capacity"));
+            var icon = IElementHelper.get().fluid(JadeFluidObject.of(fluid.getFluid(), fluid.getAmount())).size(new Vec2(16, 16));
+            JadeText.add(tooltip, icon, text);
+        }
     }
 
-    private static String format(long value) {
-        return String.format(Locale.US, "%,d", value);
+    private static void line(ITooltip tooltip, String key, Object... args) {
+        JadeText.detail(tooltip, "jade.gt6ce.omni." + key, args);
     }
+    private static String format(long value) { return String.format(Locale.US, "%,d", value); }
+    @Override public ResourceLocation getUid() { return UID; }
+    @Override public int getDefaultPriority() { return 1002; }
 }

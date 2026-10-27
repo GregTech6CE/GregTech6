@@ -15,11 +15,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 import static gregtech.api.material.GTValues.U;
-/** Bounded source thermal adapter: Cinnabar forms -> Mercury plus ordinary Ti/Fe dust; not a universal recycling listener. */
+/** Bounded source thermal adapter: Cinnabar forms -> Mercury plus Ti/Fe dust fractions; not a universal recycling listener. */
 public final class ReviewedCinnabarThermalRecipes {
  private ReviewedCinnabarThermalRecipes(){}
  private record Form(MaterialPrefix prefix,long amount){}
  private record Input(ItemStack stack,long amount){}
+ private record MetalFraction(MaterialPrefix prefix,long amount,int millibuckets,long titaniumTicks,long ironTicks){}
+ private static final MetalFraction[] METAL_FRACTIONS={
+  new MetalFraction(MaterialPrefix.dustSmall,U/4,36,129,207),
+  new MetalFraction(MaterialPrefix.dustTiny,U/9,16,57,92),
+  new MetalFraction(MaterialPrefix.dustDiv72,U/72,2,16,16)};
  private static final Form[] FORMS={new Form(MaterialPrefix.dust,U),new Form(MaterialPrefix.dustSmall,U/4),
   new Form(MaterialPrefix.dustTiny,U/9),new Form(MaterialPrefix.dustDiv72,U/72),
   new Form(MaterialPrefix.crushedPurified,10*(U/8)),new Form(MaterialPrefix.crushedPurifiedTiny,10*(U/72)),
@@ -70,13 +75,11 @@ public final class ReviewedCinnabarThermalRecipes {
   MachineRecipeMaps.Smelter.addRecipe1(true,16,ticks,input,(FluidStack)null,fluid,new ItemStack[0]);
   // Finite extension of this reviewed Ti/Fe single-material source branch, not generic recycling.
   // Missing forms stay missing; explicit changed compositions defer independently, never deleted.
-  for(var prefix:new MaterialPrefix[]{MaterialPrefix.dustSmall,MaterialPrefix.dustTiny}){
-   var fraction=GTItems.getStack(prefix,material,1);
-   long amount=prefix==MaterialPrefix.dustSmall?U/4:U/9;
-   if(fraction.isEmpty()||!unchangedInput(fraction,prefix,material,amount))continue;
-   boolean tiny=prefix==MaterialPrefix.dustTiny;
-   long fractionTicks=material.getId()==220?(tiny?57:129):(tiny?92:207);
-   var fractionFluid=fluid.copy();fractionFluid.setAmount(tiny?16:36);
+  for(var form:METAL_FRACTIONS){
+   var fraction=GTItems.getStack(form.prefix,material,1);
+   if(fraction.isEmpty()||!unchangedInput(fraction,form.prefix,material,form.amount))continue;
+   long fractionTicks=material.getId()==220?form.titaniumTicks:form.ironTicks;
+   var fractionFluid=fluid.copy();fractionFluid.setAmount(form.millibuckets);
    MachineRecipeMaps.Smelter.addRecipe1(true,16,fractionTicks,fraction,(FluidStack)null,fractionFluid,new ItemStack[0]);
   }
   return true;

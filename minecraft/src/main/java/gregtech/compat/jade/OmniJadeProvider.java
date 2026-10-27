@@ -21,10 +21,13 @@ public enum OmniJadeProvider implements IServerDataProvider<BlockAccessor>, IBlo
     @Override public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         var entity = accessor.getBlockEntity();
         if (entity == null) return;
+        var info = new JadeInspection(accessor);
+        OmniTransportInfo.append(info, entity, accessor);
+        OmniSensorInfo.append(info, entity);
         // Reading an already-bound controller never scans or rebuilds the structure.
         if (entity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port)
             entity = port.sensorTarget();
-        var info = new JadeInspection(accessor);
+        // Recipe machines and their bound ports are exclusively handled by BasicMachineJadeProvider.
         OmniMachineInfo.append(info, entity, accessor);
         OmniWorldInfo.append(info, entity);
         OmniEnergyInfo.append(info, entity);
