@@ -97,10 +97,9 @@ public class BottleItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Fluid fluid = fluid();
-        if (fluid == null || GTDrinks.rowFor(fluid) == null) {
+        if (fluid == null || !GTDrinks.canDrink(player, new FluidStack(fluid, BOTTLE_AMOUNT))) {
             return InteractionResultHolder.pass(stack);
         }
-        if (!player.canEat(gregtech.GregTechConfig.Rule.ALWAYS_DRINK.enabled())) return InteractionResultHolder.fail(stack);
         if (!level.isClientSide) {
             if (!GTDrinks.drink(player, new FluidStack(fluid, BOTTLE_AMOUNT))) return InteractionResultHolder.fail(stack);
             if (!player.getAbilities().instabuild) {
@@ -108,7 +107,7 @@ public class BottleItem extends Item {
 //? if >=1.21.1 {
                 /*gregtech.content.food.GTFoodItems.deliverContainer(player,emptyBottle());
 *///?} else {
-                player.getInventory().add(emptyBottle());
+                gregtech.content.food.GTFoodItems.deliverContainer(player, emptyBottle());
 //?}
             }
         }

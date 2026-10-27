@@ -187,6 +187,11 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     }
     public void serverTick() {
         int before = content.hashCode();
+        if (getBlockState().getBlock() instanceof gregtech.content.block.machine.SmeltingCrucibleBlock) {
+            long rain = gregtech.content.blockentity.machine.SmallCrucibleRain.amount(level, worldPosition);
+            if (rain > 0) addMaterialStacks(List.of(CrucibleMaterialStack.of(Materials.Water, rain)), environmentTemperature());
+        }
+
         if (getCacheStack().isEmpty()) {
             AABB area = itemSuctionArea();
             for (ItemEntity entity : level.getEntitiesOfClass(ItemEntity.class, area)) {

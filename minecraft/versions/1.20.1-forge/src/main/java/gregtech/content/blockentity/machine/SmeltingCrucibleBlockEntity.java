@@ -303,6 +303,11 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
     protected void tickServer() {
         long environmentTemperature = environmentTemperature();
         int contentHash = content.hashCode();
+        if (getBlockState().getBlock() instanceof gregtech.content.block.machine.SmeltingCrucibleBlock) {
+            long rain = gregtech.content.blockentity.machine.SmallCrucibleRain.amount(level, worldPosition);
+            if (rain > 0) addMaterialStacks(List.of(CrucibleMaterialStack.of(Materials.Water, rain)), environmentTemperature());
+        }
+
 
         suckItemIntoCache();
         processCacheSlot(environmentTemperature);

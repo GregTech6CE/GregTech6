@@ -54,7 +54,7 @@ public final class PortableContainerBlock extends Block implements EntityBlock {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             if (level.isClientSide) return InteractionResult.SUCCESS;
-            if (vessel.interact(player, hand)) return InteractionResult.CONSUME;
+            if (vessel.interact(player, hand, hit.getDirection())) return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
     }

@@ -98,5 +98,6 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(BoilerJadeProvider.INSTANCE, gregtech.content.block.machine.OriginalLargeBoilerControllerBlock.class);
         registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.content.block.RockBlock.class);
         registration.registerBlockComponent(RockTwigJadeProvider.INSTANCE, gregtech.content.block.TwigBlock.class);
+        registration.registerBlockComponent(BaleJadeProvider.INSTANCE, gregtech.content.block.plant.BaleBlock.class);
     }
 }

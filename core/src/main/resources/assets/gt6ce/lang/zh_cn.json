@@ -1,4 +1,10 @@
 {
+  "tooltip.gt6ce.no_mob_spawning": "生物不会在此方块上生成",
+  "jade.gt6ce.bale.mold": "此处潮湿：鲜草会发霉",
+  "jade.gt6ce.bale.dry": "此处可风干",
+  "jade.gt6ce.bale.rot": "发霉草垛有腐烂风险",
+  "jade.gt6ce.bale.stable": "已干燥，不再老化",
+  "jade.gt6ce.bale.slow": "低温、遮蔽或阴雨会减慢老化",
   "jade.gt6ce.pyrite.ore": "金矿石",
   "jade.gt6ce.pyrite.small_ore": "小型金矿石",
   "tooltip.gt6ce.pyrite.fools_gold": "哦，金闪闪的东西！诶？怎么不是金",

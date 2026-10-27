@@ -74,7 +74,15 @@ public final class PortableContainerBlockEntity extends BlockEntity {
             FluidStack moved = tank().drain(amount, action); if (action.execute() && !moved.isEmpty()) setChanged(); return moved;
         }
     };
-    public boolean interact(Player player, InteractionHand hand) { return FluidUtil.interactWithFluidHandler(player, hand, handler); }
+    public boolean interact(Player player, InteractionHand hand, Direction side) {
+        if (FluidUtil.interactWithFluidHandler(player, hand, handler)) return true;
+        if (!(contents().getItem() instanceof gregtech.content.item.PortableFluidContainerItem item) || !item.drinkVessel()) return false;
+        if (item.shapeId().equals("jug") && side != Direction.UP) return false;
+        var portion = handler.drain(250, IFluidHandler.FluidAction.SIMULATE);
+        if (!gregtech.content.food.GTDrinks.drink(player, portion)) return false;
+        handler.drain(250, IFluidHandler.FluidAction.EXECUTE);
+        return true;
+    }
 //? if >=1.21.1 {
     /*public IFluidHandler fluidHandler(){return isRemoved()?null:handler;}
 *///?} else {
