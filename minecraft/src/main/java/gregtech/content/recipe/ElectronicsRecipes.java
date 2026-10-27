@@ -7,6 +7,7 @@ import gregtech.engine.recipe.*;
 import gregtech.engine.recipe.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
+import gregtech.content.material.Materials;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -59,6 +60,7 @@ public final class ElectronicsRecipes {
                     add(MachineRecipeMaps.CrystallisationCrucible,new Recipe(new ItemStack[]{mat(batch==1?MaterialPrefix.dustTiny:MaterialPrefix.dust,crystal,1)},
                             new ItemStack[]{mat(MaterialPrefix.bouleGt,crystal,batch)},null,null,
                             new FluidStack[]{fluid("GenGas_",gas,1000*batch),fluid("GenMolten_",crystal,560*batch)},null,72000L*batch,16,0));
+        sapphireBoules();
         // RecipeMapHandlerMaterial: 144 ticks per material unit, preserving each form.
         MaterialPrefix[] forms={MaterialPrefix.ingot,MaterialPrefix.stick,MaterialPrefix.stickLong,MaterialPrefix.bolt};
         int[] ticks={144,72,144,18};
@@ -111,6 +113,44 @@ public final class ElectronicsRecipes {
                     tech("crystal_processor_socket", 1), tech("crystal_circuit_" + gem.toLowerCase(Locale.ROOT), 1));
         }
         return REGISTERED.size();
+    }
+
+    /** GT6 Loader_Recipes_Other:692-706: seven sapphire-family boules, six inert gases. */
+    private static void sapphireBoules() {
+        GTMaterial[] dopants = {Materials.Magnesium, Materials.Titanium, Materials.Copper, Materials.Iron, Materials.Vanadium, Materials.Chromium};
+        GTMaterial[] crystals = {Materials.GreenSapphire, Materials.YellowSapphire, Materials.OrangeSapphire, Materials.BlueSapphire, Materials.PurpleSapphire, Materials.Ruby};
+        for (String gas : new String[]{"Helium", "Neon", "Argon", "Krypton", "Xenon", "Radon"}) {
+            sapphireBoule(gas, Materials.Alumina, MaterialPrefix.dustTiny, 1, Materials.Sapphire, 1, 1000, 1624, 18000);
+            sapphireBoule(gas, Materials.Alumina, MaterialPrefix.dust, 1, Materials.Sapphire, 9, 9000, 14616, 156000);
+            for (int i = 0; i < dopants.length; i++) {
+                sapphireBoule(gas, dopants[i], MaterialPrefix.dustTiny, 6, crystals[i], 1, 1000, 1680, 18000);
+                sapphireBoule(gas, dopants[i], MaterialPrefix.dust, 2, crystals[i], 3, 3000, 5040, 52000);
+            }
+        }
+    }
+
+    private static void sapphireBoule(String gas, GTMaterial seed, MaterialPrefix prefix, int seedCount,
+                                      GTMaterial crystal, int outputCount, int gasAmount, int aluminaAmount, long ticks) {
+        GTMaterial seedMaterial = sapphireMaterial(seed), crystalMaterial = sapphireMaterial(crystal);
+        if (seedMaterial == null || crystalMaterial == null) return;
+        ItemStack input = GTItems.getStack(prefix, seedMaterial, seedCount);
+        ItemStack output = GTItems.getStack(MaterialPrefix.bouleGt, crystalMaterial, outputCount);
+        FluidStack atmosphere = GTFluids.stack("GenGas_" + gas, gasAmount);
+        FluidStack alumina = GTFluids.stack("GenMolten_Alumina", aluminaAmount);
+        // An unavailable holder must remove the whole row, never an ingredient from it.
+        if (input.isEmpty() || output.isEmpty() || atmosphere == null || atmosphere.isEmpty()
+                || alumina == null || alumina.isEmpty()
+                || !gregtech.engine.fluid.MoltenFluidHandler.ratio(Materials.Alumina, alumina)
+                        .equals(gregtech.engine.fluid.MoltenMaterialUnits.ALUMINA)) return;
+        Recipe recipe = new Recipe(new ItemStack[]{input}, new ItemStack[]{output}, null, null,
+                new FluidStack[]{atmosphere, alumina}, null, ticks, 256, 0);
+        if (MachineRecipeMaps.CrystallisationCrucible.addRecipe(recipe) == recipe) REGISTERED.add(recipe);
+    }
+
+    private static GTMaterial sapphireMaterial(GTMaterial expected) {
+        return expected != null && expected.isValid() && expected.resolve() == expected
+                && GTMaterialRegistry.get(expected.getName()) == expected && GTMaterialRegistry.get(expected.getId()) == expected
+                && !gregtech.engine.addon.AddonMaterials.owns(expected) ? expected : null;
     }
 
     /**

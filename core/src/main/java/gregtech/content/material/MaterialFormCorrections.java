@@ -76,6 +76,16 @@ final class MaterialFormCorrections {
             if (!material.isValid()) throw new IllegalStateException("Missing semiconductor: " + name);
             material.put(MaterialProperty.BOULE, MaterialProperty.GENERATE_PLATE, MaterialProperty.DUST, MaterialProperty.GENERATE_DUST);
         }
+        // OP:624 force-generates boules for the seven MT sapphire-family declarations.
+        // Keep this before source eligibility snapshots and before addon linking callbacks.
+        for (var material : new gregtech.api.material.GTMaterial[]{CompoundMaterials.Sapphire,
+                CompoundMaterials.GreenSapphire, CompoundMaterials.YellowSapphire, CompoundMaterials.OrangeSapphire,
+                CompoundMaterials.BlueSapphire, CompoundMaterials.PurpleSapphire, CompoundMaterials.Ruby}) {
+            if (material.resolve() == material
+                    && gregtech.engine.material.GTMaterialRegistry.get(material.getId()) == material
+                    && gregtech.engine.material.GTMaterialRegistry.get(material.getName()) == material
+                    && !gregtech.engine.addon.AddonMaterials.owns(material)) material.put(MaterialProperty.BOULE);
+        }
         // MT.java:3833 Blackstone is a *knappable* stone — `brick(9223, "Blackstone", …).qual(1, 5.0, 64, 1)`
         // — so like Stone (MT.java:1631) and Basalt it carries tool stats; the port declared it as a
         // dust-only supplemental material, which left its tool heads (and the recipes knapping them) out.
