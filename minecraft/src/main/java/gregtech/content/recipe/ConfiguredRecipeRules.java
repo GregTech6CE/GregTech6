@@ -12,10 +12,40 @@ public final class ConfiguredRecipeRules {
     private ConfiguredRecipeRules() {}
 
     public static void apply(Map<ResourceLocation, JsonElement> recipes, ResourceManager resources) {
-        recipes.replaceAll((id, json) -> unifyOutput(id, restore(id, json, resources)));
+        recipes.replaceAll((id, json) -> positionBoneDye(id, unifyOutput(id, restore(id, json, resources))));
         recipes.entrySet().removeIf(entry -> !GregTechConfig.recipeEnabled(entry.getKey().toString())
                 || (!GregTechConfig.Rule.VANILLA_STORAGE_BLOCK_RECIPES.enabled() && isVanillaStorageBlockRecipe(entry.getKey()))
                 || disabled(entry.getValue()));
+    }
+
+
+    /** Keep the modern dye route outside the two fixed dust slots, without changing its input or yield. */
+    private static JsonElement positionBoneDye(ResourceLocation id, JsonElement json) {
+        if (!id.toString().equals("minecraft:white_dye") || !json.isJsonObject()) return json;
+        var recipe = json.getAsJsonObject();
+        if (!recipe.has("type") || !recipe.get("type").isJsonPrimitive()
+                || !recipe.get("type").getAsString().equals("minecraft:crafting_shapeless")
+                || !recipe.has("ingredients") || !recipe.get("ingredients").isJsonArray()
+                || recipe.getAsJsonArray("ingredients").size() != 1
+                || !recipe.has("result") || !recipe.get("result").isJsonObject()) return json;
+        var input = recipe.getAsJsonArray("ingredients").get(0);
+        // A datapack's alternative ingredients, components, or output remain authoritative.
+        if (!input.isJsonObject() || input.getAsJsonObject().size() != 1
+                || !input.getAsJsonObject().has("item")
+                || !input.getAsJsonObject().get("item").isJsonPrimitive()
+                || !input.getAsJsonObject().get("item").getAsString().equals("minecraft:bone_meal")) return json;
+        var result = recipe.getAsJsonObject("result");
+        String key = result.has("id") ? "id" : "item";
+        if (!result.has(key) || !result.get(key).isJsonPrimitive()
+                || !result.get(key).getAsString().equals("minecraft:white_dye")
+                || result.keySet().stream().anyMatch(k -> !k.equals(key) && !k.equals("count"))
+                || (result.has("count") && (!result.get("count").isJsonPrimitive() || result.get("count").getAsInt() != 1))) return json;
+        var positioned = recipe.deepCopy();
+        positioned.addProperty("type", "gt6ce:tool_shapeless");
+        positioned.addProperty("gregtech_form_variants", 3);
+        positioned.addProperty("gregtech_form_offset", 2);
+        positioned.addProperty("gregtech_form_placement", "remaining");
+        return positioned;
     }
 
     public static boolean isVanillaStorageBlockRecipe(ResourceLocation id) {

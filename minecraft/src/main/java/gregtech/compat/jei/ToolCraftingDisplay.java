@@ -1,5 +1,7 @@
 package gregtech.compat.jei;
 import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.recipe.ToolShapelessRecipe;
+import gregtech.content.recipe.FormConversionDisplay;
 import gregtech.engine.fluid.FluidContainerDisplayBinding;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
@@ -17,12 +19,32 @@ final class ToolCraftingDisplay {
             @Override public void setRecipe(net.minecraft.world.item.crafting.RecipeHolder<ToolShapedRecipe> holder,
                     IRecipeLayoutBuilder builder, ICraftingGridHelper grid, IFocusGroup focuses) { layout(holder.value(), builder, grid); }
         });
+        registration.getCraftingCategory().addExtension(ToolShapelessRecipe.class, new ICraftingCategoryExtension<ToolShapelessRecipe>() {
+            @Override public void setRecipe(net.minecraft.world.item.crafting.RecipeHolder<ToolShapelessRecipe> holder,
+                    IRecipeLayoutBuilder builder, ICraftingGridHelper grid, IFocusGroup focuses) { layout(holder.value(), builder, grid); }
+            @Override public int getWidth(net.minecraft.world.item.crafting.RecipeHolder<ToolShapelessRecipe> holder) { return dimension(holder.value()); }
+            @Override public int getHeight(net.minecraft.world.item.crafting.RecipeHolder<ToolShapelessRecipe> holder) { return dimension(holder.value()); }
+        });
 *///?} else {
         registration.getCraftingCategory().addCategoryExtension(ToolShapedRecipe.class, recipe -> new ICraftingCategoryExtension() {
             @Override public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper grid, IFocusGroup focuses) { layout(recipe, builder, grid); }
             @Override public net.minecraft.resources.ResourceLocation getRegistryName() { return recipe.getId(); }
         });
+        registration.getCraftingCategory().addCategoryExtension(ToolShapelessRecipe.class, recipe -> new ICraftingCategoryExtension() {
+            @Override public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper grid, IFocusGroup focuses) { layout(recipe, builder, grid); }
+            @Override public net.minecraft.resources.ResourceLocation getRegistryName() { return recipe.getId(); }
+            @Override public int getWidth() { return dimension(recipe); }
+            @Override public int getHeight() { return dimension(recipe); }
+        });
 //?}
+    }
+    private static int dimension(ToolShapelessRecipe recipe) { return FormConversionDisplay.layout(recipe).isPresent() ? 3 : 0; }
+    private static void layout(ToolShapelessRecipe recipe, IRecipeLayoutBuilder builder, ICraftingGridHelper grid) {
+        var positioned = FormConversionDisplay.layout(recipe);
+        var inputs = positioned.orElseGet(() -> List.copyOf(recipe.getIngredients()));
+        int size = positioned.isPresent() ? 3 : 0;
+        grid.createAndSetInputs(builder, inputs.stream().map(i -> List.of(i.getItems())).toList(), size, size);
+        grid.createAndSetOutputs(builder, List.of(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())));
     }
     private static void layout(ToolShapedRecipe recipe, IRecipeLayoutBuilder builder, ICraftingGridHelper grid) {
         int width = 1, height = 1;

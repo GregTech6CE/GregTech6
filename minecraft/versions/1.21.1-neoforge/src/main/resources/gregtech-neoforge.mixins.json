@@ -4,11 +4,12 @@
   "package": "gregtech.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "VanillaToolDurabilityMixin",
+    "FormConversionServerPlaceMixin",
     "PolymorphToolResultMixin",
     "DungeonRedstoneInitializationMixin",
     "OreHostHardnessMixin",
     "OreHostToolSpeedMixin",
+    "VanillaToolDurabilityMixin",
     "GasImmersionMixin",
     "ConstructionRecipeMixin",
     "VanillaOreConfigMixin",
@@ -50,6 +51,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "FormConversionGhostPlaceMixin",
     "JadeOreHarvestToolMixin",
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
