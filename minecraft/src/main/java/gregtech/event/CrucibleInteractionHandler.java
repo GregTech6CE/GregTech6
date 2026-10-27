@@ -59,6 +59,17 @@ public final class CrucibleInteractionHandler {
         if (crucible == null) return;
         if (crucible instanceof gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity large
                 && !large.isStructureOk()) return;
+//? if >=1.21.1 {
+        /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(event.getEntity(), event.getHand(),
+                new gregtech.engine.fluid.MoltenFluidHandler(crucible))) {
+*///?} else {
+        if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(event.getEntity(), event.getHand(),
+                new gregtech.engine.fluid.MoltenFluidHandler(crucible))) {
+//?}
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.CONSUME);
+            return;
+        }
         InteractionResult result = crucible.tryUse(event.getEntity(), event.getHand(), event.getHitVec());
         if (result != InteractionResult.PASS) {
             event.setCanceled(true);

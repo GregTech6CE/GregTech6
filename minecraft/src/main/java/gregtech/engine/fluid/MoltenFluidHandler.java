@@ -31,6 +31,9 @@ public final class MoltenFluidHandler implements IFluidHandler {
     }
     private static GTMaterial material(FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return null;
+        if (fluid.getFluid() == net.minecraft.world.level.material.Fluids.WATER
+                || fluid.getFluid() == net.minecraft.world.level.material.Fluids.FLOWING_WATER)
+            return GTMaterialRegistry.get("Water");
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         if (entry == null || entry.textureMode() != RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN) return null;
         String key = entry.materialKey() != null ? entry.materialKey() : RegisteredFluids.boundMaterial(entry.registryName());
@@ -41,6 +44,10 @@ public final class MoltenFluidHandler implements IFluidHandler {
     /** The special source dimension belongs to this actual phase, not every addon fluid of the same material. */
     public static MoltenMaterialUnits.Ratio ratio(GTMaterial material, FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return MoltenMaterialUnits.STANDARD;
+        if (material != null && material.resolve() == GTMaterialRegistry.get("Water")
+                && (fluid.getFluid() == net.minecraft.world.level.material.Fluids.WATER
+                || fluid.getFluid() == net.minecraft.world.level.material.Fluids.FLOWING_WATER))
+            return MoltenMaterialUnits.PLASTIC; // Water uses the same 1000 mB per material unit.
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         if (entry == null || material(fluid) != material
                 || entry.textureMode() != RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN)
@@ -59,6 +66,8 @@ public final class MoltenFluidHandler implements IFluidHandler {
     }
 
     private static FluidStack fluid(GTMaterial material, int amount) {
+        if (material.resolve() == GTMaterialRegistry.get("Water"))
+            return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, amount);
         // Prefer the source primary phase to the older Al2O3 compatibility alias.
         if (MoltenMaterialUnits.ratio(material).equals(MoltenMaterialUnits.ALUMINA)) {
             var primary = GTFluids.stack("GenMolten_Alumina", amount);
