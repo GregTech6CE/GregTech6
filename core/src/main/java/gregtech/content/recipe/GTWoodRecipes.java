@@ -46,7 +46,7 @@ package gregtech.content.recipe;
  * {@code stripped:<species>}, {@code rod:<material>} ({@code OP.stick}), {@code rodlong:<material>}
  * ({@code OP.stickLong}) and
  * {@code tool:<id>} (a {@code GTToolType} id). {@code Loader_WoodCraftingRecipes} resolves them and
- * registers the recipes; {@code gametest/WoodRecipeTests.java} pins the row count.</p>
+ * registers the recipes.</p>
  */
 public final class GTWoodRecipes {
     private GTWoodRecipes() {}
@@ -315,7 +315,7 @@ public final class GTWoodRecipes {
             "white_mahoe (Mahoe)|LoaderWoodDictionary.java (no row)|mapped 1:0 - GT6 never registered a dictionary row for Mahoe|the port's own white_mahoe log/planks/beam have no GT6 source row",
     };
 
-    /** Number of crafting rows this table carries; the gametest pins this number. */
+    /** Number of crafting rows this table carries. */
     public static int craftRowCount() { return CRAFT_ROWS.length; }
 
     /** Number of GT6 recipe statements the source file holds, for reports. */

@@ -65,8 +65,7 @@ import java.util.Map;
  * </ul>
  *
  * <p>A spec that does not resolve (a missing material form, a missing tool type) skips that single row
- * and is reported through {@link #skipped()}; {@code gametest/WoodRecipeTests.java} asserts the list is
- * empty, so a gap shows up as a failing test instead of a silently missing recipe.</p>
+ * and is reported through {@link #skipped()}, so a gap is visible instead of silently missing.</p>
  */
 //?}
 public final class WoodCraftingRecipeInjector {
@@ -191,9 +190,9 @@ public final class WoodCraftingRecipeInjector {
      *
      * <p>A key is one character plus {@code =} plus a spec - GT6's own keys are single letters
      * ({@code 's'} saw, {@code 'f'} file, {@code 'L'} log, {@code 'B'} stripped log, {@code 'P'} plank), so the
-     * {@code =} sits at index 1; anything else is a malformed row. Public so
-     * {@code gametest/WoodRecipeTests.java} can run the loader's real parser over every generated row -
-     * an earlier revision of this guarded on a longer symbol and silently skipped all 68 rows.</p>
+     * {@code =} sits at index 1; anything else is a malformed row. Public so every generated row can
+     * be run through the loader's real parser - an earlier revision of this guarded on a longer
+     * symbol and silently skipped all 68 rows.</p>
      */
     @Nullable
     public static Map<Character, Ingredient> keys(String path, String encoded) {

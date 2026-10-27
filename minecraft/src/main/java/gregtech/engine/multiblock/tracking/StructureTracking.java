@@ -348,14 +348,6 @@ public final class StructureTracking {
         return chunk != null && chunk.getBlockEntities().get(pos) == entity;
     }
 
-    /** One direct evaluation of this controller. The world queue is left alone. */
-    public static void evaluateForTests(BlockEntity entity) {
-        StructureTracker tracker = tracker(entity);
-        if (tracker == null || entity.isRemoved()) return;
-        tracker.enqueue(false);
-        evaluate(tracker);
-    }
-
     /** Section index helper shared with tests that do not want to construct a chunk. */
     public static boolean maskWatched(LevelChunk chunk, int sectionIndex) {
         return ((StructureChunkWatch) (Object) chunk).gt$structureWatched(sectionIndex);

@@ -95,8 +95,9 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's per-column loop of {@code WorldgenBlackSand.generate}, public so a GameTest can drive a
-     * prepared column instead of hunting for a generated deposit (the feature itself is 1 in 64).
+     * GT6's per-column loop of {@code WorldgenBlackSand.generate}, split out so a prepared column
+     * can be driven directly instead of hunting for a generated deposit (the feature itself is 1 in
+     * 64).
      *
      * @return true when at least one block was replaced
      */

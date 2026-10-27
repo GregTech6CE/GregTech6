@@ -383,26 +383,11 @@ public final class OvenRecipeBridge {
         return java.util.Collections.unmodifiableList(ADDED_TO_VANILLA);
     }
 
-    /**
-     * Runs one mirroring pass over {@code recipes} and returns how many rows it added.
-     *
-     * <p>Production runs this once per server start from {@link #apply}; it is public as a
-     * deterministic seam for the row-mirroring regression test, which drives two passes to check that
-     * {@link #addedToVanillaFurnace()} describes one pass rather than accumulating across world
-     * loads.</p>
-     */
 //? if >=1.21.1 {
-    /*public static int mirrorIntoFurnaceForTests(List<RecipeHolder<?>> recipes, RegistryAccess access) {
-        return mirrorIntoFurnace(recipes, access);
-    }
-
-    private static String sortKey(ItemStack stack, RegistryAccess access) {
+    /*private static String sortKey(ItemStack stack, RegistryAccess access) {
         return stack.isEmpty() ? "" : stack.save(access).toString();
-*///?} else {
-    public static int mirrorIntoFurnaceForTests(List<Recipe<?>> recipes) {
-        return mirrorIntoFurnace(recipes);
-//?}
     }
+*///?}
 
     private static ItemStack firstStack(ItemStack[] stacks) {
         for (ItemStack stack : stacks) {

@@ -94,8 +94,8 @@ public class RecipeMap {
 
     /**
      * Rows {@link #make} dropped because optimizing cancelled them down to nothing (GT6 keeps such a
-     * row; see the note in {@code make}). Reported by {@code StoneExtrusionTests} as evidence that no
-     * degenerate row reaches a recipe map.
+     * row; see the note in {@code make}). Counted so a degenerate row reaching a recipe map can be
+     * detected.
      */
     private static int collapsedRecipesDropped;
 

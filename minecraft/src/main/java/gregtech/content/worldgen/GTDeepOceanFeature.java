@@ -94,7 +94,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's pylon loop, public so a GameTest can build one on a prepared water column.
+     * GT6's pylon loop, split out so one pylon can be built on a prepared water column.
      *
      * @param oreMaterial GT6's ore for this prismarine kind ({@code ores_normal[14]} garnierite for
      *                    dark, {@code ores_normal[13]} pyrolusite for light)

@@ -42,9 +42,8 @@ public class TreeHoleBlockEntity extends BlockEntity {
     }
 
     /**
-     * One GT6 refill check. Public so the GameTest can drive it without ticking 600 times, and so a
-     * worldgen/automation hook could call it. Sets the block state's {@code resin} property when the
-     * roll succeeds.
+     * One GT6 refill check. Public so a worldgen/automation hook can call it without ticking 600
+     * times. Sets the block state's {@code resin} property when the roll succeeds.
      */
 
     public boolean refresh(WoodSpecies species) {

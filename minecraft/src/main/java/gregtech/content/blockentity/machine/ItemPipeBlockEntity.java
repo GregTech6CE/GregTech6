@@ -101,10 +101,8 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     /**
      * The cover tick counter, standing in for GT6's {@code SERVER_TIME} / {@code aTimer} exactly as
-     * {@code BasicMachineBlockEntity.coverTicks:76} does for the machine — the full argument is on
-     * {@link gregtech.content.cover.CoverAttachmentBehaviors}'s class javadoc:
-     * {@code level.getGameTime()} never advances inside a one-tick GameTest body, this counter
-     * advances once per covered server tick.
+     * {@code BasicMachineBlockEntity.coverTicks} does for the machine: this counter advances once per
+     * covered server tick, independent of {@code level.getGameTime()}.
      */
     private long coverTicks;
 

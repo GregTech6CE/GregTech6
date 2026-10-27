@@ -2144,7 +2144,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      *
      * <p>{@link #coverTicks} is handed to both behaviours in place of GT6's {@code SERVER_TIME} /
      * {@code aTimer}, for the reason spelled out on {@link #tickDrainCover}: the counter advances
-     * once per server tick in a running game and is still observable from a GameTest body.</p>
+     * once per server tick in a running game.</p>
      */
     public void tickUtilityCovers(Level level, BlockPos pos) {
         if (level == null) return;
@@ -2194,8 +2194,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      * interceptItemExtract} hooks, one call per slot and side, with the face test
      * {@code aCoverSide != aSide} in front of it ({@code CoverFilterItem:116}). The port's
      * {@code MachineItemHandler} has no per-side insert hook to hang that on, so the predicate is
-     * exposed here for whatever wiring does own the face — and it is what the GameTest asserts, so
-     * the rule is reachable from a real attached cover either way.</p>
+     * exposed here for whatever wiring does own the face, so the rule stays reachable from a real
+     * attached cover.</p>
      *
      * <p>{@code panels.stopped()} stands in for GT6's {@code aData.mStopped}, which the port tracks
      * once per machine rather than once per cover.</p>

@@ -26,8 +26,7 @@ import java.util.Set;
  *
  * <p>The layer is named here as a string instead of a {@code RenderType} because
  * {@code net.minecraft.client.renderer.RenderType} is {@code @OnlyIn(Dist.CLIENT)} while this class
- * is common and is read by the server-side GameTest that asserts the parity. The client maps the
- * name back through {@link #isTranslucent} and calls
+ * is common. The client maps the name back through {@link #isTranslucent} and calls
  * {@code ItemBlockRenderTypes.setRenderLayer(fluid, RenderType.translucent())} for all eighteen
  * source/flowing world-fluid entries from {@code GregTechClient.clientSetup}.
  */

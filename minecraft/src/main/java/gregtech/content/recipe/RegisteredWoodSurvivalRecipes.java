@@ -55,7 +55,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
  /**
   * Row count the current species list produces: per species 2 sawing routes x coolants + 4 pressure
   * washer waters + 3 lathes, plus 2 nether woods x 2 block types x 2 routes x coolants.
-  * Adding a species must only change this number, so the gametest asserts this formula.
+  * Adding a species must only change this number; keep this formula in step with the species lists.
   */
  public static int expectedRows(){
   int coolants=SawingCoolants.variants(false).size();
