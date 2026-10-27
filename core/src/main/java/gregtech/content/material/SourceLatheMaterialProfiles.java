@@ -20,7 +20,7 @@ public final class SourceLatheMaterialProfiles {
     private SourceLatheMaterialProfiles() {}
     public record Profile(boolean coated, boolean layered, boolean easy, boolean lens) {}
     private record Captured(int id, String name, Set<MaterialProperty> eligibility,
-                            Set<MaterialProperty> cutterEligibility, Set<MaterialProperty> formingEligibility, Profile profile) {}
+                            Set<MaterialProperty> cutterEligibility, Set<MaterialProperty> formingEligibility, Set<MaterialProperty> rollingWireEligibility, Profile profile) {}
     private static final Map<GTMaterial, Captured> DEFAULTS = new IdentityHashMap<>();
     private record StoneTransition(Set<MaterialProperty> cutterEligibility) {}
     private static final Map<GTMaterial, StoneTransition> OFFICIAL_STONE_TRANSITIONS = new IdentityHashMap<>();
@@ -49,6 +49,21 @@ public final class SourceLatheMaterialProfiles {
             MaterialProperty.GENERATE_STICKS, MaterialProperty.GENERATE_PARTS, MaterialProperty.GENERATE_FOIL,
             MaterialProperty.GENERATE_WIRE, MaterialProperty.GENERATE_RAIL, MaterialProperty.SMITHABLE,
             MaterialProperty.ANTIMATTER, MaterialProperty.HIDDEN);
+
+    // Rolling/fine/physical wire have an independent admission and holder context.
+    private static final Set<MaterialProperty> ROLLING_WIRE_ELIGIBILITY = EnumSet.of(
+            MaterialProperty.INGOT, MaterialProperty.METAL, MaterialProperty.GENERATE_INGOT,
+            MaterialProperty.ALLOY, MaterialProperty.GEM, MaterialProperty.WOOD, MaterialProperty.STONE,
+            MaterialProperty.GENERATE_NUGGET, MaterialProperty.GENERATE_STICKS, MaterialProperty.GENERATE_WIRE,
+            MaterialProperty.GENERATE_MULTIINGOT, MaterialProperty.GENERATE_MULTIPLATE,
+            MaterialProperty.GENERATE_DENSEPLATE, MaterialProperty.SMITHABLE,
+            MaterialProperty.ANTIMATTER, MaterialProperty.HIDDEN);
+
+    private static Set<MaterialProperty> rollingWireEligibility(GTMaterial material) {
+        var flags = EnumSet.noneOf(MaterialProperty.class);
+        for (var flag : ROLLING_WIRE_ELIGIBILITY) if (material.has(flag)) flags.add(flag);
+        return Set.copyOf(flags);
+    }
 
     private static Set<MaterialProperty> formingEligibility(GTMaterial material) {
         var flags = EnumSet.noneOf(MaterialProperty.class);
@@ -79,7 +94,7 @@ public final class SourceLatheMaterialProfiles {
                     || material.resolve() != material || AddonMaterials.owns(material)
                     || id > 0 && GTMaterialRegistry.get(id) != material) continue;
             String f = fields[2];
-            DEFAULTS.put(material, new Captured(id, fields[1], eligibility(material), cutterEligibility(material), formingEligibility(material),
+            DEFAULTS.put(material, new Captured(id, fields[1], eligibility(material), cutterEligibility(material), formingEligibility(material), rollingWireEligibility(material),
                     new Profile(f.charAt(0) == '1', f.charAt(1) == '1', f.charAt(2) == '1', f.charAt(3) == '1')));
         }
         captured = true;
@@ -115,6 +130,17 @@ public final class SourceLatheMaterialProfiles {
                 || GTMaterialRegistry.get(value.name()) != material
                 || value.id() > 0 && GTMaterialRegistry.get(value.id()) != material
                 || !value.formingEligibility().equals(formingEligibility(material))) return null;
+        return value.profile();
+    }
+
+    /** Independent rolling/wire context; does not adopt later official granite role transitions. */
+    public static Profile findForRollingWire(GTMaterial material) {
+        Captured value = DEFAULTS.get(material);
+        if (value == null || material.resolve() != material || AddonMaterials.owns(material)
+                || material.getId() != value.id() || !material.getName().equals(value.name())
+                || GTMaterialRegistry.get(value.name()) != material
+                || value.id() > 0 && GTMaterialRegistry.get(value.id()) != material
+                || !value.rollingWireEligibility().equals(rollingWireEligibility(material))) return null;
         return value.profile();
     }
 

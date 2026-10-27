@@ -26,10 +26,13 @@ public final class WireProcessingRecipes {
         }
         for(var family:families.entrySet()) {
             var sizes=family.getValue();var one=sizes.get(1);var material=one.spec().material();
-            if(material.has(MaterialProperty.SMITHABLE)&&!Set.of("graphene","netherite","superconductor").contains(family.getKey())) {
-                var input=GTItems.getStack(MaterialPrefix.ingot,material,1);
-                if(input.isEmpty())throw new IllegalStateException("Wire ingot missing: "+family.getKey());
-                add(MachineRecipeMaps.Wiremill,EASY.contains(family.getKey())?16:128L*(material.getToolQuality()+1),new ItemStack(one,2),input);
+            boolean legacyAllowed = material.has(MaterialProperty.SMITHABLE)
+                    && !Set.of("graphene", "netherite", "superconductor").contains(family.getKey());
+            long legacyTicks = EASY.contains(family.getKey()) ? 16 : 128L * (material.getToolQuality() + 1);
+            var decision = SourceRollingWireRules.physicalWire(material, legacyAllowed, legacyTicks, family.getKey().equals("netherite"));
+            if (decision.allowed()) {
+                var input = GTItems.getStack(MaterialPrefix.ingot, material.resolve(), 1);
+                if (!input.isEmpty()) addPhysicalWire(decision.ticks(), new ItemStack(one, 2), input);
             }
             for(int big=2;big<=16;big++) {
                 // GT6 registers small=1 first. Keep one deterministic unpacking result instead of competing recipes.
@@ -53,8 +56,9 @@ public final class WireProcessingRecipes {
         for (var entry : GTSignalWires.all()) {
             var wire = entry.get();
             if (!wire.insulated()) {
-                add(MachineRecipeMaps.Wiremill, 16, new ItemStack(wire, 2),
-                        GTItems.getStack(MaterialPrefix.ingot, wire.material(), 1));
+                var decision = SourceRollingWireRules.physicalWire(wire.material(), true, 16, false);
+                var input = GTItems.getStack(MaterialPrefix.ingot, wire.material().resolve(), 1);
+                if (decision.allowed() && !input.isEmpty()) addPhysicalWire(decision.ticks(), new ItemStack(wire, 2), input);
             } else {
                 var bare = GTSignalWires.all().stream().map(r -> r.get())
                         .filter(b -> !b.insulated() && b.material() == wire.material()).findFirst().orElseThrow();
@@ -66,6 +70,12 @@ public final class WireProcessingRecipes {
             }
         }
         return ENTRIES.size();
+    }
+    /** Generic physical rows honor ordinary collisions without changing insulation/packing ownership. */
+    private static void addPhysicalWire(long ticks, ItemStack result, ItemStack input) {
+        var recipe = new Recipe(new ItemStack[]{input}, new ItemStack[]{result}, null, null, null, null, ticks, 16, 0);
+        if (MachineRecipeMaps.Wiremill.addRecipe(recipe) == recipe)
+            ENTRIES.add(new Entry(MachineRecipeMaps.Wiremill, recipe));
     }
     private static void add(RecipeMap map,long ticks,ItemStack result,ItemStack... input) {
         var recipe=new Recipe(input,new ItemStack[]{result},null,null,null,null,ticks,16,0);

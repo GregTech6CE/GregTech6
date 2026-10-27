@@ -40,8 +40,8 @@ public class PartRecipeLoader implements InitializationStep {
             GTMaterial m = entry.resolve();
             if (!m.isValid() || m.has(MaterialProperty.ANTIMATTER)) continue;
 
-            rollingMill(m);
-            wiremill(m);
+            rollingMill(entry);
+            wiremill(entry);
             forming(entry);
             lathe(entry);
             cutter(entry);
@@ -55,24 +55,32 @@ public class PartRecipeLoader implements InitializationStep {
 
     // ── RollingMill: ingots → plates ────────────────────────────────────────
 
-    private void rollingMill(GTMaterial m) {
-        if (!m.has(MaterialProperty.SMITHABLE)) return;
-        roll(MachineRecipeMaps.RollingMill, m, MaterialPrefix.nugget, 1, MaterialPrefix.plateTiny, 1, 2);
-        roll(MachineRecipeMaps.RollingMill, m, MaterialPrefix.ingot, 1, MaterialPrefix.plate, 1, 16);
-        roll(MachineRecipeMaps.RollingMill, m, MaterialPrefix.ingotDouble, 1, MaterialPrefix.plateDouble, 1, 32);
-        roll(MachineRecipeMaps.RollingMill, m, MaterialPrefix.ingotTriple, 1, MaterialPrefix.plateTriple, 1, 48);
-        roll(MachineRecipeMaps.RollingMill, m, MaterialPrefix.ingotQuadruple, 1, MaterialPrefix.plateQuadruple, 1, 64);
-        roll(MachineRecipeMaps.RollingMill, m, MaterialPrefix.ingotQuintuple, 1, MaterialPrefix.plateQuintuple, 1, 80);
-        roll(MachineRecipeMaps.RollingMill, m, MaterialPrefix.plateCurved, 1, MaterialPrefix.plate, 1, 16);
+    private void rollingMill(GTMaterial entry) {
+        rollingWire(entry, SourceRollingWireRules.Machine.ROLLING_MILL);
     }
 
-    // ── Wiremill: ingots/rods → wires ───────────────────────────────────────
+    private void wiremill(GTMaterial entry) {
+        rollingWire(entry, SourceRollingWireRules.Machine.WIREMILL);
+    }
 
-    private void wiremill(GTMaterial m) {
-        if (!m.has(MaterialProperty.SMITHABLE)) return;
-        roll(MachineRecipeMaps.Wiremill, m, MaterialPrefix.stick, 1, MaterialPrefix.wireFine, 4, 8);
-        roll(MachineRecipeMaps.Wiremill, m, MaterialPrefix.stickLong, 1, MaterialPrefix.wireFine, 8, 16);
-
+    private void rollingWire(GTMaterial entry, SourceRollingWireRules.Machine machine) {
+        GTMaterial material = entry.resolve();
+        var map = machine == SourceRollingWireRules.Machine.ROLLING_MILL ? MachineRecipeMaps.RollingMill : MachineRecipeMaps.Wiremill;
+        for (var rule : SourceRollingWireRules.rules()) {
+            if (rule.machine() != machine) continue;
+            var decision = SourceRollingWireRules.evaluate(entry, rule);
+            if (!decision.allowed()) continue;
+            if (rule.blockInput() == null) {
+                roll(map, material, rule.input(), 1, rule.output(), rule.outputCount(), decision.ticks());
+                continue;
+            }
+            ItemStack input = gregtech.content.registry.GTBlocks.getStack(rule.blockInput(), material);
+            ItemStack output = mat(rule.output(), material, rule.outputCount());
+            if (output.isEmpty() || !verifiedSolidBlock(input, material)) continue;
+            var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[]{input}, new ItemStack[]{output},
+                    null, null, null, null, decision.ticks(), SourceRollingWireRules.EU_PER_TICK, 0);
+            map.addRecipe(recipe.withItemInputGuard(0, offered -> verifiedSolidBlock(offered, material)));
+        }
     }
 
     // ── Six generic RollBender / ClusterMill / RollFormer pairs ────────────
@@ -158,7 +166,7 @@ public class PartRecipeLoader implements InitializationStep {
         if (fluid == null || fluid.isEmpty()) return;
         long inputUnits = rule.inputUnits();
         if (rule.blockInput() != null) {
-            if (!verifiedCutterBlock(input, material)) return;
+            if (!verifiedSolidBlock(input, material)) return;
 //? if >=1.21.1 {
             /*var recipe = gregtech.engine.recipe.RecipeMap.make(true, new ItemStack[]{input},
                     machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output), null, null,
@@ -171,7 +179,7 @@ public class PartRecipeLoader implements InitializationStep {
                     new net.minecraftforge.fluids.FluidStack[0], decision.ticks(), rule.eut(), 0);
 //?}
             if (recipe != null) MachineRecipeMaps.Cutter.addRecipe(
-                    recipe.withItemInputGuard(0, offered -> verifiedCutterBlock(offered, material)));
+                    recipe.withItemInputGuard(0, offered -> verifiedSolidBlock(offered, material)));
             return;
         }
 //? if >=1.21.1 {
@@ -185,8 +193,8 @@ public class PartRecipeLoader implements InitializationStep {
 //?}
     }
 
-    /** Only the new solid-block route needs this physical 9U proof; explicit metadata always wins. */
-    private static boolean verifiedCutterBlock(ItemStack stack, GTMaterial material) {
+    /** The reviewed solid-block routes require physical 9U proof; explicit metadata always wins. */
+    private static boolean verifiedSolidBlock(ItemStack stack, GTMaterial material) {
         try {
             if (stack == null || stack.isEmpty() || stack.isDamaged() || material == null
                     || !material.isValid() || material.resolve() != material
