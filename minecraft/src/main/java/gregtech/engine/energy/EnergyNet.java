@@ -72,9 +72,9 @@ public final class EnergyNet {
      * Number of wire positions this class currently retains for {@code level} - the size of the map
      * that {@link #onPlace} grows.
      *
-     * <p>Exposed so {@code MemoryGrowthTests} can measure that a removed block entity hands its
-     * position back instead of keeping it for the lifetime of the level. This is the accessor for the
-     * unbounded-growth invariant of this class, not a gameplay API.</p>
+     * <p>Exposed so the retained-position count can be inspected: a removed block entity must hand
+     * its position back instead of keeping it for the lifetime of the level. This is the accessor for
+     * the unbounded-growth invariant of this class, not a gameplay API.</p>
      */
     public static int trackedPositions(Level level) {
         Map<BlockPos, Set<BlockPos>> graph = GRAPHS.get(level);

@@ -39,10 +39,9 @@ import net.minecraft.world.level.material.Fluids;
  * gates lives inside {@code getSpread} and uses {@code FlowingFluid}'s private helpers, which a
  * subclass cannot reach. An override that substituted the fluid only at {@code canSpreadTo} never
  * ran for a waterlogged neighbour: {@code getSpread} had already dropped that direction, because the
- * private {@code canHoldFluid} asked the block with the GT6 fluid and got {@code false}. The
- * GameTest showed exactly that - vanilla water in a two-source lane left the stairs
- * {@code waterlogged=true} while GT6 sea water in the same lane left it {@code waterlogged=false}
- * (build/gametest.log).
+ * private {@code canHoldFluid} asked the block with the GT6 fluid and got {@code false}. Vanilla
+ * water in a two-source lane leaves the stairs {@code waterlogged=true}, while GT6 sea water in the
+ * same lane leaves it {@code waterlogged=false}.
  *
  * <p><b>The fix.</b> Substitute at {@code getNewLiquid}, the one point where the fluid about to be
  * placed is computed, and only for a {@code SimpleWaterloggedBlock} target whose computed liquid is

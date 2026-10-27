@@ -107,7 +107,7 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
      * layer is clay. The port's {@link GTPitFeature#carveColumn} does the same to a pit column,
      * while GT6's {@code WorldgenPit} keeps the grass cap (see the class comment).
      *
-     * <p>Public so a GameTest can lay a flat surface and drive the seam directly, since the feature
+     * <p>Split out so a flat surface can be laid and the seam driven directly, since the feature
      * itself only rolls one seam in six chunks.
      *
      * @return true when at least one block was replaced

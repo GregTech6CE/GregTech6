@@ -54,6 +54,7 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
         Map<ResourceLocation,byte[]> generated=new HashMap<>();
         for(String row:gregtech.content.recipe.GTWoodRecipes.CRAFT_ROWS)addRow(generated,row);
         for(String row:gregtech.content.recipe.NaturalWoodCraftingRows.ROWS)addRow(generated,row);
+        for(String row:gregtech.content.recipe.VanillaWoodCraftingRows.ROWS)addRow(generated,row);
         for(String row:gregtech.content.recipe.TreatedWoodCraftingRows.ROWS)addRow(generated,row);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original wood crafting datapack: {} rows; source-explicit skipped tree rod rows={}",generated.size(),gregtech.content.recipe.GTWoodRecipes.SKIPPED_CRAFT_ROWS.length);
         resources=Map.copyOf(generated);return resources;

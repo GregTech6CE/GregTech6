@@ -36,7 +36,7 @@ public final class SourceThermalInputContracts {
     }
 
     private static void prefixEvidence() {
-        var forms = SourceThermalInputRules.forms();
+        var forms = SourceThermalInputRules.initialForms();
         eq(13, forms.size(), "one coherent scope including all five graded gems");
         var prefixes = List.of(MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72,
                 MaterialPrefix.gem, MaterialPrefix.crushedPurified, MaterialPrefix.crushedPurifiedTiny,
@@ -60,12 +60,12 @@ public final class SourceThermalInputContracts {
             eq(form, SourceThermalInputRules.form(form.prefix()), "canonical prefix descriptor");
         }
         for (var prefix : List.of(MaterialPrefix.oreRaw, MaterialPrefix.crushed,
-                MaterialPrefix.crushedTiny, MaterialPrefix.dustImpure)) {
+                MaterialPrefix.crushedTiny, MaterialPrefix.dustImpure, MaterialPrefix.ingotHot)) {
             eq(Truth.NO, SourceThermalInputRules.prefixDecision(prefix), "source ORE/DIRTY/nonrecyclable exclusion");
             eq(Decision.SUPPORTED_NO_ROW, plan(prefix, InputProof.UNKNOWN, U, null, null, null).decision(),
                     "known excluded prefix cannot acquire thermal rows");
         }
-        for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.ingot, MaterialPrefix.nugget, MaterialPrefix.plate)) {
+        for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.bouleGt, MaterialPrefix.coin, MaterialPrefix.glasstube)) {
             eq(Truth.UNKNOWN, SourceThermalInputRules.prefixDecision(prefix), "unreviewed scope is not a global ban");
             eq(Decision.UNSUPPORTED, plan(prefix, VERIFIED, U, positive(U, true), NEUTRAL_STATS, phase(U, 144)).decision(),
                     "old/other prefix owner is outside this extension");
@@ -103,8 +103,8 @@ public final class SourceThermalInputContracts {
         var runtimeStats = new Stats(16, 1893);
         var runtimePhase = new Phase(PhaseProof.VERIFIED_SINGLE_BINDING, U, 144, 1893, false);
         long[] ticks = {444, 197, 24, 1777, 2222, 246, 2444, 271, 444, 888, 3555, 7111, 14222};
-        for (int i = 0; i < SourceThermalInputRules.forms().size(); i++) {
-            var form = SourceThermalInputRules.forms().get(i);
+        for (int i = 0; i < SourceThermalInputRules.initialForms().size(); i++) {
+            var form = SourceThermalInputRules.initialForms().get(i);
             var row = plan(form.prefix(), VERIFIED, form.sourceUnits(), positive(U, false), runtimeStats, runtimePhase);
             eq(ticks[i], row.row().ticks(), "actual input amount drives complete original mass");
         }

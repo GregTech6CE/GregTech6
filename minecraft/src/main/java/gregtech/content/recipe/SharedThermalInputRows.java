@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import static gregtech.content.recipe.SourceThermalNativeAdapter.*;
 
-/** Thirteen source recyclable single-component input forms, not a complete recycling listener.
+/** Audited source recyclable single-component input forms, not a complete recycling listener.
  * The earlier one-unit producer and reviewed/imported rows remain independent. There is no
  * alias scan, generation gate, multi-component inference, or legacy fallback for new inputs.
  */
@@ -102,7 +102,11 @@ public final class SharedThermalInputRows {
             // later becomes unsupported. This is ownership, not a source processing prohibition.
             if (material != GTMaterialRegistry.get(material.getName()).resolve()
                     || !GTMaterialRegistry.isCoreMaterial(material)) return false;
-            if (material.getId() == 9114 && material.getName().equals("Cinnabar")) return true;
+            if (material.getId() == 9114 && material.getName().equals("Cinnabar"))
+                return prefix == MaterialPrefix.dust || prefix == MaterialPrefix.dustSmall
+                        || prefix == MaterialPrefix.dustTiny || prefix == MaterialPrefix.dustDiv72
+                        || prefix == MaterialPrefix.crushedPurified || prefix == MaterialPrefix.crushedPurifiedTiny
+                        || prefix == MaterialPrefix.crushedCentrifuged || prefix == MaterialPrefix.crushedCentrifugedTiny;
             boolean metal = material.getId() == 220 && material.getName().equals("Titanium")
                     || material.getId() == 260 && material.getName().equals("Iron");
             return metal && (prefix == MaterialPrefix.dustSmall || prefix == MaterialPrefix.dustTiny || prefix == MaterialPrefix.dustDiv72);

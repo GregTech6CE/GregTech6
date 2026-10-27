@@ -20,9 +20,8 @@ import java.util.List;
  * and what comes out.
  *
  * <p>The recipes themselves are {@link GTToolAssemblyRecipe} — a data recipe without a fixed grid —
- * so this catalogue is the single description of their contract. The JEI tool-assembly category
- * renders it, and {@code ToolAssemblyTests} checks that every entry really matches an input set the
- * recipe accepts.</p>
+ * so this catalogue is the single description of their contract, and the JEI tool-assembly category
+ * renders it.</p>
  *
  * <p>GT6 source: {@code Loader_Tools:332-350} registers one {@code AdvancedCraftingTool} per tool
  * type out of {@code OP} prefix forms plus an "any material" match; the head/handle split is GT6's

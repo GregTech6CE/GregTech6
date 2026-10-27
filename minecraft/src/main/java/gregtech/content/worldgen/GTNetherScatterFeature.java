@@ -80,7 +80,7 @@ public class GTNetherScatterFeature extends Feature<NoneFeatureConfiguration> {
 
     /**
      * One GT6 attempt: cast down from {@code start} to the first solid Nether ground and place the
-     * table's item above it. Public so the GameTest can drive a prepared column.
+     * table's item above it. Split out so one attempt can be driven on a prepared column.
      */
     public static boolean scatter(WorldGenLevel level, int x, int z, int start, RandomSource random) {
         int floor = Math.max(level.getMinBuildHeight(), start - RAY_LENGTH);

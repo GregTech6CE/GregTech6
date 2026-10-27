@@ -83,8 +83,8 @@ public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's per-column loop of {@code WorldgenTurf.generate}, public so a GameTest can drive a
-     * prepared column instead of hunting for a generated bog (the feature itself is 1 in 32).
+     * GT6's per-column loop of {@code WorldgenTurf.generate}, split out so a prepared column can be
+     * driven directly instead of hunting for a generated bog (the feature itself is 1 in 32).
      *
      * <p>GT6's window ends strictly at {@code waterLevel - 12} ({@code tY > tLowerBound}).
      *

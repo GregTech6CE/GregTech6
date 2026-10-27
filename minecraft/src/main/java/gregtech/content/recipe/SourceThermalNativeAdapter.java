@@ -5,6 +5,7 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTFluids;
 import gregtech.engine.addon.AddonMaterials;
@@ -18,15 +19,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 //?}
 import java.util.*;
 import java.util.function.BiFunction;
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.recipe.SourceRecyclingFacts.*;
 
-/** Shared source thermal proof for the existing OM-selected1U input and thirteen exact form inputs.
+/** Shared source thermal proof for the existing OM-selected1U input and audited exact form inputs.
  * No registrations, material mutations, map sweeps or new global unit conventions.
  * Runtime physical stats are retained; imported-stat precision is not claimed source-exact.
  */
@@ -45,7 +48,7 @@ final class SourceThermalNativeAdapter {
   SOURCE_ZERO_VOLUME, INPUT_ABSENT, REQUIRED_NATIVE_FLUID_ABSENT, UNKNOWN_SOURCE_IDENTITY,
   UNKNOWN_SOURCE_FACT, ITEM_COMPOSITION_OVERRIDE, MATERIAL_TARGET_OVERRIDE,
   MATERIAL_ELIGIBILITY_OVERRIDE, FLUID_BINDING_OVERRIDE, INVALID_RUNTIME_STATS, VERIFIED,
-  SOURCE_PREFIX_EXCLUDED, UNSUPPORTED_INPUT_PREFIX }
+  SOURCE_PREFIX_EXCLUDED, UNSUPPORTED_INPUT_PREFIX, UNVERIFIED_INPUT_BEHAVIOR }
  record Outcome(Action action,Reason reason,List<NativeRow> rows) {
   Outcome { rows=List.copyOf(rows); }
  }
@@ -63,7 +66,7 @@ final class SourceThermalNativeAdapter {
  static Outcome inspect(GTMaterial raw,ItemStack selected,Snapshot snapshot){
   return inspect(raw,selected,snapshot,null);
  }
- /** Thirteen independently verified one-item forms share the existing source/phase/override proof.
+ /** Audited one-item forms share the existing source/phase/override proof.
   * Unsupported contexts have no legacy producer here; callers must not manufacture a fallback.
   */
  static Outcome inspectForm(MaterialPrefix prefix,GTMaterial raw,ItemStack selected,Snapshot snapshot){
@@ -84,6 +87,8 @@ final class SourceThermalNativeAdapter {
   if(prefix==null){
    if(!snapshot.input(material,selected))return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
   }else{
+   if(SourceThermalInputRules.isAdditional(prefix)&&!snapshot.ingredable(selected))
+    return deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
    inputUnits=snapshot.inputUnits(material,prefix,selected);
    if(inputUnits!=SourceThermalInputRules.form(prefix).sourceUnits())return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
   }
@@ -212,6 +217,31 @@ final class SourceThermalNativeAdapter {
   boolean input(GTMaterial material,ItemStack stack){
    return validatedUnits(material,stack,Set.of(MaterialPrefix.dust,MaterialPrefix.dustSmall,MaterialPrefix.dustTiny,
        MaterialPrefix.dustDiv72,MaterialPrefix.ingot,MaterialPrefix.chunkGt,MaterialPrefix.nugget))==U;
+  }
+  /** Apply the known ST838-846 predicate to a proved ordinary port item, not to an assumed
+   * source PrefixItem implementation. The ordinary branch of both native registrars constructs
+   * MaterialItem with plain stacksTo(64) properties; substitutions/subclasses need other proof.
+   * Only a local copy is queried; an unavailable or invalid capability/remainder defers.
+   */
+  boolean ingredable(ItemStack stack){
+   if(stack==null||stack.isEmpty()||stack.getItem().getClass()!=MaterialItem.class
+       ||stack.isDamageableItem()||stack.getMaxDamage()!=0
+       ||stack.getItem() instanceof gregtech.engine.recipe.RecipeCatalystLike
+       ||stack.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike)return false;
+   try{
+    ItemStack copy=stack.copyWithCount(1);
+    if(copy.hasCraftingRemainingItem()||!copy.getCraftingRemainingItem().isEmpty())return false;
+//? if >=1.21.1 {
+    /*var handler=FluidUtil.getFluidHandler(copy).orElse(null);
+*///?} else {
+    var handler=FluidUtil.getFluidHandler(copy).resolve().orElse(null);
+//?}
+    if(handler!=null){
+     int tanks=handler.getTanks();if(tanks<0)return false;
+     for(int tank=0;tank<tanks;tank++)if(handler.getTankCapacity(tank)!=0)return false;
+    }
+    return true;
+   }catch(RuntimeException|LinkageError unavailableBehavior){return false;}
   }
   /** Do not rescale the stack to a synthetic1U. Prefix and explicit original composition must
    * describe this actual single selected item, including clean-ore fractions greater than1U. */

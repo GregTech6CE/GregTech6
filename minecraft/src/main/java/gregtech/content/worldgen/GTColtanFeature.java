@@ -81,8 +81,8 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's per-chunk scatter, split out of {@link #place} so tests can drive it with an explicit
-     * centre (GT6 derives the centre from the world seed, which a GameTest cannot choose).
+     * GT6's per-chunk scatter, split out of {@link #place} so it can be driven with an explicit
+     * centre (GT6 derives the centre from the world seed).
      *
      * <p>GT6 runs <b>two</b> loops: the small-ore scatter covers the whole 480-block field, and a
      * second full-ore scatter is added — not substituted — inside 64 blocks of the centre.

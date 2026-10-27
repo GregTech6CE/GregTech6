@@ -131,7 +131,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's per-column loop, public so a GameTest can drive a prepared column.
+     * GT6's per-column loop, split out so a prepared column can be driven directly.
      *
      * @param waterlike true for the swamp pass, which also converts GT6's own water blocks
      * @return true when at least one block was replaced

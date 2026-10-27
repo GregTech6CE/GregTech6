@@ -237,10 +237,9 @@ public final class CoverAttachmentBehaviors {
      * and the amount is {@code (long)Math.max(1, rainfall * 10000) * (thundering ? 2 : 1)}.
      *
      * <p>Split out from {@link #collectRain} because it is the only part of the rain path that can be
-     * asserted: the live path needs {@code Level.isRaining()}, which is the interpolated
+     * checked in isolation: the live path needs {@code Level.isRaining()}, which is the interpolated
      * {@code rainLevel} that the server only ramps by 0.01 per tick ({@code ServerLevel:624-628})
-     * before comparing it against 0.2 ({@code Level:786-788}) — a one-shot GameTest body cannot wait
-     * out the 21 ticks that takes.</p>
+     * before comparing it against 0.2 ({@code Level:786-788}), so a single call cannot drive it.</p>
      *
      * @return the millibuckets one operation delivers, or {@code 0} when the biome cannot rain
      */

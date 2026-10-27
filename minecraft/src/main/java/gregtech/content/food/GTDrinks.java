@@ -65,7 +65,7 @@ public final class GTDrinks {
                 BY_FLUID.put(fluid, row);
             } else {
                 // Never dropped silently: the port has no fluid for this GT6 drink (another mod's fluid or
-                // a row the extractor could not key), and the count is asserted in DrinkTests.
+                // a row the extractor could not key); it is reported through unresolved() instead.
                 UNRESOLVED.add(row.field());
             }
         }

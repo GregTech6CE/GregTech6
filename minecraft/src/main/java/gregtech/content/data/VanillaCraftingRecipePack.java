@@ -37,6 +37,13 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 //?}
 public final class VanillaCraftingRecipePack extends AbstractPackResources {
+    /** Replaced by {@code VanillaWoodCraftingRows}: GT6 NERFED_WOOD log/stripped-log counts. */
+    private static final String[] REPLACED_PLANK_RECIPES = {
+            "minecraft:oak_planks", "minecraft:spruce_planks", "minecraft:birch_planks",
+            "minecraft:jungle_planks", "minecraft:acacia_planks", "minecraft:dark_oak_planks",
+            "minecraft:mangrove_planks", "minecraft:cherry_planks", "minecraft:crimson_planks",
+            "minecraft:warped_planks",
+    };
     private Map<ResourceLocation,byte[]> resources;
 
 //? if >=1.21.1 {
@@ -91,9 +98,32 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
             generated.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(),"recipes/"+id.getPath()+".json"),new Gson().toJson(json).getBytes(StandardCharsets.UTF_8));
 //?}
         }
+        for(var recipeId:REPLACED_PLANK_RECIPES) disablePlanks(generated,recipeId);
         resources=Map.copyOf(generated);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original vanilla overrides: {} rows",resources.size());
         return resources;
+    }
+
+    /** A failing condition disables the vanilla recipe; the TOP pack makes this file win by id. */
+    private static void disablePlanks(Map<ResourceLocation,byte[]> generated,String recipeId) {
+        var id=ResourceLocation.parse(recipeId);
+        var json=new LinkedHashMap<String,Object>();
+        json.put("type","minecraft:crafting_shapeless");
+//? if >=1.21.1 {
+        /*json.put("neoforge:conditions",List.of(Map.of("type","neoforge:false")));
+*///?} else {
+        json.put("conditions",List.of(Map.of("type","forge:false")));
+//?}
+        json.put("ingredients",List.of(Map.of("item","minecraft:barrier")));
+//? if >=1.21.1 {
+        /*json.put("result",Map.of("id","minecraft:barrier","count",1));
+        generated.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(),"recipe/"+id.getPath()+".json"),
+                new Gson().toJson(json).getBytes(StandardCharsets.UTF_8));
+*///?} else {
+        json.put("result",Map.of("item","minecraft:barrier"));
+        generated.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(),"recipes/"+id.getPath()+".json"),
+                new Gson().toJson(json).getBytes(StandardCharsets.UTF_8));
+//?}
     }
     private static Object ingredient(String spec) {
         if(spec.startsWith("tag:")) {
