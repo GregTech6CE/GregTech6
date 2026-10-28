@@ -55,6 +55,7 @@
     "defaultRequire": 0
   },
   "client": [
+    "OreTerrainParticleMixin",
     "FormConversionGhostPlaceMixin",
     "JadeOreHarvestToolMixin",
     "BlockPaintColorMixin",
