@@ -77,6 +77,10 @@ public final class FoodItemRecipes {
         smelting();
         slicing();
         mixing();
+        // Loader_Recipes_Food.java:430: cooked ribs absorb 250 L of barbecue sauce in the bath.
+        var barbecueSauce = fluid("Sauce_BBQ", 250);
+        if (!barbecueSauce.isEmpty() && MachineRecipeMaps.Bath.addRecipe1(false, 0, 16,
+                food("grilled_ribs", 1), barbecueSauce, FluidStack.EMPTY, food("barbecue_ribs", 1)) != null) registered++;
         packaging();
         registered += CannedFoodRecipes.register();
         registered += BottleMachineRecipes.register();
@@ -121,6 +125,8 @@ public final class FoodItemRecipes {
             var output = meatDust(amount);
             if (!output.isEmpty() && MachineRecipeMaps.Mortar.addRecipe1(false, 16, 16,
                     new ItemStack(entry.getKey()), output) != null) registered++;
+            if (MachineRecipeMaps.Fermenter.addRecipe1(false, 16, 288,
+                    new ItemStack(entry.getKey()), new ItemStack(Items.ROTTEN_FLESH)) != null) registered++;
         }
     }
 
@@ -155,6 +161,7 @@ public final class FoodItemRecipes {
             {"mutton", "grilled_mutton", "565"},
             {"horse_meat", "grilled_horse_meat", "570"},
             {"donkey_meat", "grilled_donkey_meat", "578"},
+            {"mule_meat", "grilled_mule_meat", "574"},
             {"cookie_shaped_dough", "minecraft:cookie", "599"},
             {"cookie_shaped_raisin_dough", "raisin_cookie", "607"},
             {"cookie_shaped_chocolate_raisin_dough", "cookie", "615"},
@@ -183,12 +190,7 @@ public final class FoodItemRecipes {
                 registered++;
             }
         }
-        // GT6 MultiItemFood.java:574 calls add_smelting(Food_DogMeat_Raw, Food_DogMeat_Cooked) a second
-        // time instead of the Mule pair of, so GT6 ships *no* smelting row for Mule Meat. The
-        // port reproduces the original's behaviour and records the copy-paste bug instead of fixing it
-        // silently: a "corrected" row would make the port differ from the game it is porting.
-        SKIPPED.add("mule_meat -> grilled_mule_meat (GT6 MultiItemFood.java:574 repeats the Dogmeat pair of "
-                + ":560, so the Mule pair declared at :572-573 never gets a smelting row; reproduced as-is)");
+        // Correct the duplicate dogmeat call in GT6 MultiItemFood.java:574 so the declared mule pair cooks.
     }
 
     // ── 2. Slicer (GT6 RM.Slicer.addRecipe2 rows) ────────────────────────────────────────────────

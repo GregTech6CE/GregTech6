@@ -30,9 +30,10 @@ public final class VanillaRecoveryRecipes {
             var id = ForgeRegistries.ITEMS.getKey(item);
 //?}
             boolean auditedMachine = originalMachine(item);
+            boolean meatCut = gregtech.content.material.MeatItemMaterials.contains(item);
             if (!id.getNamespace().equals("minecraft") && !PanelMaterialRegistration.recoveryItems().contains(item)
-                    && !TransportMaterialRegistration.recoveryItems().contains(item) && !auditedMachine) continue;
-            if (id.getPath().endsWith("_ore") || id.getPath().startsWith("raw_")) continue;
+                    && !TransportMaterialRegistration.recoveryItems().contains(item) && !auditedMachine && !meatCut) continue;
+            if (!meatCut && (id.getPath().endsWith("_ore") || id.getPath().startsWith("raw_"))) continue;
             var stack = new ItemStack(item);
             if (!ItemMaterialRegistry.canRecover(stack)) continue;
             var data = ItemMaterialRegistry.get(stack).orElseThrow();

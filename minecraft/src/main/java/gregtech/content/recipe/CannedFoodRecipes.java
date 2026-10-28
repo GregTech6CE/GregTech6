@@ -41,6 +41,17 @@ public final class CannedFoodRecipes {
             var input=GTItems.getStack(PrefixRegistry.byName(prefixes[i]),GTMaterialRegistry.get(family[0]),counts[i]);
             if(!input.isEmpty()) registered+=pack(input,family[1],family[2]);
         }
+        // Loader_Recipes_Food's meat listeners use food value to select the can size.
+        String[] sizes = {"tiny", "small", "tall", "wide", "large"};
+        for (var cut : gregtech.content.food.MeatCutCatalog.CUTS) {
+            if (cut.cannedName().isEmpty()) continue;
+            for (String id : new String[] {cut.raw(), cut.cooked()}) {
+                var food = gregtech.content.food.GTFoodItems.entryFor(id);
+                int size = Math.max(0, food.food().level() / 2 - 1);
+                if (size >= sizes.length) throw new IllegalStateException("Unsupported meat can size: " + id);
+                registered += pack(can(id, 1), sizes[size] + "_food_can_meat", cut.cannedName());
+            }
+        }
         return registered;
     }
     private static int pack(ItemStack input,String id,String name) {
