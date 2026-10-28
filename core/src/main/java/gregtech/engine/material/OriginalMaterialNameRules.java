@@ -534,7 +534,7 @@ public final class OriginalMaterialNameRules {
         }
     }
 
-    private static final Map<String, Prefix> PREFIXES = Map.ofEntries(
+    private static final Map<String, Prefix> PREFIXES = Map.<String, Prefix>ofEntries(
             Map.entry("armor", new Prefix("armor", "", "", Set.of())),
             Map.entry("armorBoots", new Prefix("armorBoots", "", "", Set.of())),
             Map.entry("armorChestplate", new Prefix("armorChestplate", "", "", Set.of())),
