@@ -2,24 +2,32 @@ package gregtech.engine.machine;
 
 import gregtech.content.data.GregTechTags;
 import gregtech.content.machine.MachineInputAverage;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
 /** Per-tick energy buffers, auxiliary charge and the machine's energy contract. */
 public final class MachineEnergyPort {
     public interface Host {
-        @Nullable BasicMachineSpec spec();
-        @Nullable GregTechTags.Tag auxiliaryTag();
+        @Nullable
+        BasicMachineSpec spec();
+
+        @Nullable
+        GregTechTags.Tag auxiliaryTag();
+
         Level getLevel();
+
         long energyInputMaximum();
+
         boolean usesAuxiliaryInput(GregTechTags.Tag type, @Nullable Direction side);
+
         boolean isEnergyAcceptingFrom(GregTechTags.Tag type, @Nullable Direction side, boolean theoretical);
+
         void markEnergyDataChanged();
+
         void overloadEnergy(long size, GregTechTags.Tag type);
     }
 
@@ -28,9 +36,17 @@ public final class MachineEnergyPort {
     private long startup;
     private final MachineInputAverage inputAverage = new MachineInputAverage();
 
-    public long stored() { return stored; }
-    public void setStored(long value) { stored = value; }
-    public void clearStored() { stored = 0; }
+    public long stored() {
+        return stored;
+    }
+
+    public void setStored(long value) {
+        stored = value;
+    }
+
+    public void clearStored() {
+        stored = 0;
+    }
 
     public long addPackets(long capacity, long size, long packets) {
         stored = BasicMachineEnergy.add(stored, capacity, size, packets);
@@ -57,8 +73,13 @@ public final class MachineEnergyPort {
         return level == null ? 0 : inputAverage.average(level.getGameTime());
     }
 
-    public long auxStored() { return auxStored; }
-    public void setAuxStored(long value) { auxStored = value; }
+    public long auxStored() {
+        return auxStored;
+    }
+
+    public void setAuxStored(long value) {
+        auxStored = value;
+    }
 
     public long auxAccepted(long size, long requested, long capacity) {
         return BasicMachineEnergy.accepted(auxStored, capacity, size, requested);
@@ -76,9 +97,17 @@ public final class MachineEnergyPort {
         startup -= paid;
     }
 
-    public long startup() { return startup; }
-    public void setStartup(long value) { startup = value; }
-    public void clearStartup() { startup = 0; }
+    public long startup() {
+        return startup;
+    }
+
+    public void setStartup(long value) {
+        startup = value;
+    }
+
+    public void clearStartup() {
+        startup = 0;
+    }
 
     public boolean isEnergyType(Host host, GregTechTags.Tag energyType, @Nullable Direction side, boolean emitting) {
         BasicMachineSpec spec = host.spec();
@@ -98,14 +127,15 @@ public final class MachineEnergyPort {
         return tags;
     }
 
-    public boolean isEnergyEmittingTo(Host host, GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
+    public boolean isEnergyEmittingTo(
+            Host host, GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
         return false;
     }
 
-    public long doInject(Host host, GregTechTags.Tag energyType, @Nullable Direction side,
-                         long size, long amount, boolean execute) {
-        if (size == 0 || size == Long.MIN_VALUE || amount <= 0
-                || !host.isEnergyAcceptingFrom(energyType, side, false)) return 0;
+    public long doInject(
+            Host host, GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean execute) {
+        if (size == 0 || size == Long.MIN_VALUE || amount <= 0 || !host.isEnergyAcceptingFrom(energyType, side, false))
+            return 0;
         long sizeAbs = Math.abs(size);
         if (host.usesAuxiliaryInput(energyType, side)) {
             BasicMachineSpec spec = host.spec();
@@ -136,8 +166,8 @@ public final class MachineEnergyPort {
         return consumed;
     }
 
-    public long doExtract(Host host, GregTechTags.Tag energyType, @Nullable Direction side,
-                          long size, long amount, boolean execute) {
+    public long doExtract(
+            Host host, GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean execute) {
         return 0;
     }
 
