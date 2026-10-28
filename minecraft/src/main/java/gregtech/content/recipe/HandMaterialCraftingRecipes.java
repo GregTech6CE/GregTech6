@@ -38,6 +38,7 @@ public final class HandMaterialCraftingRecipes {
             if (!material.isValid() || material.has(MaterialProperty.ANTIMATTER)) continue;
             var profile = SourceLatheMaterialProfiles.find(material);
             if (profile != null && profile.coated()) continue;
+            gemPlates(rows, material);
             var bolt = GTItems.getStack(PrefixRegistry.byName("bolt"), material, 1);
             var screw = GTItems.getStack(PrefixRegistry.byName("screw"), material, 1);
             if (bolt.isEmpty() || screw.isEmpty()) continue;
@@ -45,6 +46,17 @@ public final class HandMaterialCraftingRecipes {
                     Map.of("f", item("gt6ce:tool_file"), "X", form("bolt", material, bolt)), screw);
         }
         return Map.copyOf(rows);
+    }
+    private static void gemPlates(Map<ResourceLocation, JsonObject> rows, GTMaterial material) {
+        for (var entry : Map.of("gemFlawless", 1, "gemExquisite", 3, "gemLegendary", 7).entrySet()) {
+            var input = GTItems.getStack(PrefixRegistry.byName(entry.getKey()), material, 1);
+            var output = GTItems.getStack(PrefixRegistry.byName("plateGem"), material, entry.getValue());
+            if (input.isEmpty() || output.isEmpty()) continue;
+            String id = entry.getKey().toLowerCase(Locale.ROOT) + "/"
+                    + material.getName().toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_]", "_");
+            put(rows, "gem_plate/" + id, List.of("s ", " X"),
+                    Map.of("s", item("gt6ce:tool_saw"), "X", item(BuiltInRegistries.ITEM.getKey(input.getItem()).toString())), output);
+        }
     }
     private static void rocks(Map<ResourceLocation, JsonObject> rows, GTMaterial material, ItemStack output) {
         if (material == null || !material.isValid() || output.isEmpty()) return;

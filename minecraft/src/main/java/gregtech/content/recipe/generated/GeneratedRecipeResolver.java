@@ -64,8 +64,9 @@ public final class GeneratedRecipeResolver {
         skipped = 0;
         MISSING.clear();
         SET_STATS.clear();
+        load("original_distillation", GeneratedRecipeResolver::originalDistillation);
         load("chem", GTChemGen::load);
-        load("other", GTOtherGen::load);
+        load("other", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerOtherSource, GTOtherGen::load));
         load("potions", GTPotionGen::load);
         load("food", GTFoodGen::load);
         load("extruder", GTExtruderGen::load);
@@ -103,6 +104,56 @@ public final class GeneratedRecipeResolver {
         int beforeSkipped = skipped;
         GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerSource,loader);
         SET_STATS.add(new SetStats(set, added - beforeAdded, skipped - beforeSkipped));
+    }
+
+    /** Loader_Recipes_Other:424-433: modern blocks replace legacy metadata variants. */
+    private static void registerOtherSource(boolean optimize, String map, long eut, long ticks, long[] chances,
+            String[] in, String[] fluidIn, String[] fluidOut, String[] out) {
+        if (map.equals("Bath") && java.util.Arrays.equals(fluidIn, new String[]{"f:Mana_TE:1"})
+                && in.length == 1 && out.length == 1) {
+            String input = in[0], output = out[0];
+            if (input.equals("v:dirt:1") && output.equals("v:dirt:1")) {
+                in = new String[]{"v:coarse_dirt:1"}; out = new String[]{"v:podzol:1"};
+            } else if (input.equals("tech:etfu_dirt:1") && output.equals("v:dirt:1")) {
+                out = new String[]{"v:podzol:1"};
+            } else if (input.equals("v:dirt:1") && output.equals("v:mycelium:1")) {
+                in = new String[]{"v:podzol:1"};
+            } else if (input.equals("v:stone_bricks:1") && output.equals("v:stone_bricks:1")) {
+                out = new String[]{"v:mossy_stone_bricks:1"};
+            } else if (input.equals("v:stone:1") && output.equals("v:stone_bricks:1")) {
+                out = new String[]{"v:chiseled_stone_bricks:1"};
+            }
+        }
+        registerSource(optimize, map, eut, ticks, chances, in, fluidIn, fluidOut, out);
+    }
+
+    /** Loader_Recipes_Chem:333-360; solid chances correspond to the three item outputs. */
+    private static void originalDistillation() {
+        String[] none = {};
+        String[] solids = {"i:dustTiny:WaxParaffin:1", "i:dustTiny:Asphalt:1", "i:dustTiny:PetCoke:1"};
+        String[] oils = {"Oil_ExtraHeavy", "Oil_Heavy", "Oil_Medium", "Oil_Normal", "Oil_Light", "Oil_Soulsand"};
+        int[][] amounts = {{35,25,25,20,5,5,50}, {30,20,20,15,10,10,40},
+                {25,15,15,15,15,15,25}, {25,15,15,15,15,15,25},
+                {15,10,10,10,25,25,15}, {10,5,5,5,5,5,40}};
+        int[] durations = {256,196,128,128,64,64};
+        long[] chances = {5000,4000,3000,3000,2000,1000};
+        String[] names = {"Fuel", "Diesel", "Kerosine", "Petrol", "Propane", "Butane", "Lubricant"};
+        for (int i = 0; i < oils.length; i++) {
+            String[] fluids = new String[names.length];
+            for (int j = 0; j < names.length; j++) fluids[j] = "f:" + names[j] + ":" + amounts[i][j];
+            registerSource(false, "DistillationTower", 64, durations[i],
+                    new long[]{chances[i], chances[i], chances[i]}, none,
+                    new String[]{"f:" + oils[i] + ":25"}, fluids, solids);
+            registerSource(true, "Distillery", 16, 16, null, new String[]{"tag:0"},
+                    new String[]{"f:" + oils[i] + ":25"}, new String[]{fluids[0], fluids[6]}, none);
+        }
+        for (String biomass : new String[]{"Biomass", "BiomassIC2"}) {
+            registerSource(false, "DistillationTower", 64, 16, new long[]{500,500,500}, none,
+                    new String[]{"f:" + biomass + ":80"},
+                    new String[]{"f:BioEthanol:20", "m:Glycerol:20", "f:Methane:4", "f:DistW:50"}, none);
+            registerSource(true, "Distillery", 16, 24, null, new String[]{"tag:0"},
+                    new String[]{"f:" + biomass + ":40"}, new String[]{"f:BioEthanol:12", "f:DistW:20"}, none);
+        }
     }
 
     /** Record the failing spec (trailing amount stripped) for the audit summary. */
