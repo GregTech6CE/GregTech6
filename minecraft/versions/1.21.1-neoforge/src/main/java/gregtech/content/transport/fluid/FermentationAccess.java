@@ -33,14 +33,15 @@ public final class FermentationAccess {
             var item = new net.minecraft.world.item.ItemStack(selector);
             for (var recipe : gregtech.content.data.MachineRecipeMaps.Fermenter.mRecipeList) {
                 if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
-                if (recipe.mInputs.length != 1 || !gregtech.engine.recipe.RecipeInputs.matches(recipe.mInputs[0], item))
-                    continue;
+                if (recipe.mInputs.length != 1) continue;
                 if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
                 // Barrel conversion cannot preserve a presence-only input while replacing its tank.
                 if (recipe.isPresenceFluidInput(0)) continue;
                 var input = recipe.mFluidInputs[0];
                 var output = recipe.mFluidOutputs[0];
                 if (input == null || output == null || input.getFluid() != fluid.getFluid()) continue;
+                // Reject unrelated fluids before material/tag matching; keep recipe order and live flags.
+                if (!gregtech.engine.recipe.RecipeInputs.matches(recipe.mInputs[0], item)) continue;
                 if (FluidHazards.isGas(input.getFluid()) || FluidHazards.isGas(output.getFluid())) continue;
                 return new Recipe(input, output, recipe.mEUt, recipe.mDuration);
             }

@@ -309,7 +309,8 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         autoOutputDistilledWater(level,be);
         // GT6 emits recoverable exhaust to adjacent tanks, then discards unrecovered condensate.
         be.distilledWaterTank.setEmpty();
-        be.setChanged();be.syncToClient();
+        // syncToClient also marks the final state dirty; do not notify neighbours twice.
+        be.syncToClient();
     }
 
     private static void autoOutputDistilledWater(Level level, KineticSteamEngineBlockEntity be) {
