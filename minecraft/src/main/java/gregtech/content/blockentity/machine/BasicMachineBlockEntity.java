@@ -6,6 +6,9 @@ import gregtech.engine.machine.BasicMachineEnergy;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.BasicMachineSpec;
+import gregtech.engine.machine.MachineEnergyPort;
+import gregtech.engine.machine.MachineInventory;
+import gregtech.engine.machine.MachineItemHandler;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -54,7 +57,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource {
+public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host {
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
@@ -70,7 +73,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** A save loaded before this machine had a spec; sanitize once the spec arrives. */
     private boolean specDirty;
     private RecipeMap recipeMap;
-    private MachineItemHandler itemHandler;
+    private MachineInventory inventory;
 //? if >=1.21.1 {
     /*private final gregtech.engine.machine.AdjacentCapabilityCache<IItemHandler> adjacentItems =
             new gregtech.engine.machine.AdjacentCapabilityCache<>(this, net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK);
@@ -103,18 +106,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
 
-    private FluidTankGT[] tanksInput;
-    private FluidTankGT[] tanksOutput;
     /** Set by the latest recipe search. Not saved: the next search decides again. */
     private boolean matchedOutputTanks;
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;
 
     // ── Processing state ─────────────────────────────────────────────────
-    private long mEnergy;           // per-tick energy buffer (capped at energyInMax)
-    private final gregtech.content.machine.MachineInputAverage inputAverage =
-            new gregtech.content.machine.MachineInputAverage();
-    private long auxEnergy;         // second input buffer, when the spec declares one
-    private long startupRequirement; // remaining startup charge for the current recipe
+    private final MachineEnergyPort energyPort = new MachineEnergyPort();
     private GregTechTags.Tag auxTag;
     private long mMinEnergy;        // per-tick energy cost for current recipe (after overclock)
     private long mMaxProgress;      // total energy needed for current recipe
@@ -168,14 +165,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if(level!=null&&level.isClientSide)return !controlStopped;
             boolean changed=controlStopped==enabled;controlStopped=!enabled;mInventoryChanged=true;
             if(changed)updateAdjacentToggleableEnergySources();
-            if(!enabled){mEnergy=0;mActive=false;mRunning=false;onControlStopped();updateBlockStates(false,false);}
+            if(!enabled){energyPort.clearStored();mActive=false;mRunning=false;onControlStopped();updateBlockStates(false,false);}
             setChanged();return !controlStopped;
         }
         public boolean running(){return available()&&controlRunning();}
         public boolean active(){return available()&&controlActive();}
         public long progress(){return available()?controlProgress():0;}
         public long progressMax(){return available()?controlProgressMax():0;}
-        public long energy(){return available()?mEnergy:0;}
+        public long energy(){return available()?energyPort.stored():0;}
         public long energyCapacity(){return available()?inputMaximum():0;}
         public long progressPerTick(){return available()?controlProgressPerTick():0;}
         public int externalSignal(Direction side){
@@ -194,7 +191,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected boolean controlActive() { return mActive; }
     protected long controlProgress() { return successful ? 1 : mProgress; }
     protected long controlProgressMax() { return successful ? 1 : mMaxProgress; }
-    protected long controlProgressPerTick() { return mActive ? Math.min(inputMaximum(), mEnergy) : 0; }
+    protected long controlProgressPerTick() { return mActive ? Math.min(inputMaximum(), energyPort.stored()) : 0; }
     protected void onControlStopped() {}
 
     @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
@@ -213,7 +210,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 /**///?} else {
 
     // Internal caps (null side / GUI)
-    private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> itemHandler);
+    private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(this::itemHandler);
     private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> this);
 
     // Sided caps — created lazily
@@ -239,50 +236,29 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         adjacentEnergySourcesChanged();
         this.recipeMap = spec.recipeMap();
         this.faceConfig = spec.faceConfig();
-        int totalSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount;
-        this.itemHandler = new MachineItemHandler(totalSlots, recipeMap.mInputItemsCount) {
-            @Override protected void onContentsChanged(int slot) {
-                inventoryChanged();
-            }
-        };
-        this.tanksInput  = new FluidTankGT[recipeMap.mInputFluidCount];
-        this.tanksOutput = new FluidTankGT[recipeMap.mOutputFluidCount];
-        for (int i = 0; i < tanksInput.length; i++) {
-            tanksInput[i] = new FluidTankGT(8000)
-                    .setAdjustableCapacity(recipeMap.mMinInputTankSizes, 1)
-                    .setOnChanged(() -> {
-                        setChanged();
-                        mInventoryChanged = true;
-                    });
-        }
-        for (int i = 0; i < tanksOutput.length; i++) {
-            tanksOutput[i] = new FluidTankGT(8000)
-                    .setOnChanged(() -> { setChanged(); mInventoryChanged = true; });
-        }
+        this.inventory = new MachineInventory(recipeMap, this::inventoryChanged);
         if (specDirty) sanitizeForSpec();
     }
 
     public BasicMachineSpec spec() { return spec; }
     public RecipeMap recipeMap() { return recipeMap; }
     public FaceConfig faceConfig() { return faceConfig; }
-    public FluidTankGT[] getTanksInput() { return tanksInput; }
-    @Override public long gibblValue(int side) { return java.util.Arrays.stream(tanksInput).mapToLong(FluidTankGT::getAmount).sum(); }
-    @Override public long gibblMaximum(int side) { return java.util.Arrays.stream(tanksInput).mapToLong(FluidTankGT::capacity).sum(); }
-    public FluidTankGT[] getTanksOutput() { return tanksOutput; }
-    public long getEnergyTick() { return mEnergy; }
+    public FluidTankGT[] getTanksInput() { return tanksInput(); }
+    @Override public long gibblValue(int side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::getAmount).sum(); }
+    @Override public long gibblMaximum(int side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::capacity).sum(); }
+    public FluidTankGT[] getTanksOutput() { return tanksOutput(); }
+    public long getEnergyTick() { return energyPort.stored(); }
     /** Sanitized per-tick cost of the current job; 0 when idle. */
     public long minimumEnergy() { return mMinEnergy; }
     /** Clamped batch size of the current job. */
     public int parallelCount() { return mParallelCount; }
 
-    public double averageEnergyInput() {
-        return level == null ? 0 : inputAverage.average(level.getGameTime());
-    }
+    private MachineItemHandler itemHandler() { return inventory == null ? null : inventory.items(); }
+    private FluidTankGT[] tanksInput() { return inventory == null ? null : inventory.tanksInput(); }
+    private FluidTankGT[] tanksOutput() { return inventory == null ? null : inventory.tanksOutput(); }
 
-    private void addReceivedEnergy(long size, long packets) {
-        long before = mEnergy;
-        mEnergy = BasicMachineEnergy.add(mEnergy, inputMaximum(), size, packets);
-        if (level != null) inputAverage.record(level.getGameTime(), Math.max(0, mEnergy - before));
+    public double averageEnergyInput() {
+        return energyPort.average(level);
     }
     public boolean isRunning() { return mRunning; }
     public int getProgressPercent() {
@@ -308,7 +284,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         refreshWorkPossible();
         boolean allowed=switchesAllowRunning();successful=false;
         if(!allowed) {
-            mEnergy=0;
+            energyPort.clearStored();
             if(mActive||mRunning){mActive=false;mRunning=false;updateBlockStates(false,false);}
             tickCovers(level,pos);
             updateCoverSignals();
@@ -319,7 +295,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         long energyInMin = inputMinimum();
         long energyInMax = inputMaximum();
 
-        if (usesTimeEnergy() && switchesAllowRunning()) mEnergy=BasicMachineEnergy.add(mEnergy,inputMaximum(),1,1);
+        if (usesTimeEnergy() && switchesAllowRunning()) energyPort.addPackets(inputMaximum(),1,1);
         boolean wasRunning = mRunning;
         boolean wasActive = mActive;
 
@@ -332,7 +308,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             doActive(level, pos, 0);
             mActive = false;
             mRunning = false;
-        } else if (mEnergy >= energyInMin && mEnergy >= mMinEnergy) {
+        } else if (energyPort.stored() >= energyInMin && energyPort.stored() >= mMinEnergy) {
             // A failed lookup must not be repeated in the same tick just because inventory changed.
             // Try to start a new recipe even if one isn't in progress
             if (mMaxProgress <= 0) {
@@ -341,7 +317,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (mMaxProgress > 0) {
                 mActive = true;
                 mRunning = true;
-                doActive(level, pos, Math.min(energyInMax, mEnergy));
+                doActive(level, pos, Math.min(energyInMax, energyPort.stored()));
             } else {
                 mActive = false;
                 mRunning = true; // energy present but no valid recipe — standby
@@ -359,7 +335,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
 
         // ── Drain buffer ─────────────────────────────────────────────────
-        mEnergy = BasicMachineEnergy.drain(mEnergy, energyInMax);
+        energyPort.drain(energyInMax);
 
         if(successful){mInventoryChanged=true;refreshWorkPossible();}
         mInventoryChanged = false;
@@ -406,10 +382,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!source.isEnergyEmittingTo(energyTag(), absDir.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(energyTag(), absDir.getOpposite(), size);
             if (offered <= 0) continue;
-            long requested = BasicMachineEnergy.accepted(mEnergy, inputMaximum(), size, offered);
+            long requested = energyPort.accepted(size, offered, inputMaximum());
             if (requested <= 0) continue;
             long extracted = source.doEnergyExtraction(energyTag(), absDir.getOpposite(), size, requested, true);
-            if (extracted > 0) addReceivedEnergy(size, extracted);
+            if (extracted > 0) energyPort.addReceived(size, extracted, inputMaximum(), level);
         }
         if (auxTag == null || spec.auxiliaryFaceMask() == 0) return;
         long auxSize = spec.auxiliaryEnergyIn();
@@ -429,27 +405,20 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (source == null || !source.isEnergyEmittingTo(auxTag, absDir.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(auxTag, absDir.getOpposite(), auxSize);
             if (offered <= 0) continue;
-            long requested = BasicMachineEnergy.accepted(auxEnergy, auxCap, auxSize, offered);
+            long requested = energyPort.auxAccepted(auxSize, offered, auxCap);
             if (requested <= 0) continue;
             long extracted = source.doEnergyExtraction(auxTag, absDir.getOpposite(), auxSize, requested, true);
             if (extracted > 0) {
-                auxEnergy = BasicMachineEnergy.add(auxEnergy, auxCap, auxSize, extracted);
-                payStartup();
+                energyPort.addAux(auxSize, extracted, auxCap);
+                energyPort.payStartup();
             }
         }
     }
 
-    private void payStartup() {
-        if (startupRequirement <= 0 || auxEnergy <= 0) return;
-        long paid = Math.min(auxEnergy, startupRequirement);
-        auxEnergy -= paid;
-        startupRequirement -= paid;
-    }
-
     private void doActive(Level level, BlockPos pos, long aEnergy) {
-        if (startupRequirement > 0) {
-            payStartup();
-            if (startupRequirement > 0) {
+        if (energyPort.startup() > 0) {
+            energyPort.payStartup();
+            if (energyPort.startup() > 0) {
                 markMachineDataChanged();
                 return;
             }
@@ -468,7 +437,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             mMaxProgress = 0;
             mMinEnergy = 0;
             mCurrentRecipe = null;
-            startupRequirement = 0;
+            energyPort.clearStartup();
             // Immediately check for next recipe
             if (aEnergy > 0 && mMaxProgress <= 0) checkRecipe();
         }
@@ -638,7 +607,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(mMaxProgress>0){workPossible=true;return;}
         if(!mInventoryChanged&&level.getGameTime()%12!=0)return;
         workPossible=false;
-        if(recipeMap==null||itemHandler==null)return;
+        if(recipeMap==null||inventory==null)return;
         var recipe=findRecipeWithUsbPort();
         if(recipe!=null && exclusivePairOrPlain(recipe)){int parallel=computeParallel(recipe, matchedFluids());workPossible=parallel>0&&gregtech.engine.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy())!=null;}
     }
@@ -787,7 +756,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (recipe == null || !exclusivePairOrPlain(recipe)) {
             mMaxProgress = 0;
             mCurrentRecipe = null;
-            startupRequirement = 0;
+            energyPort.clearStartup();
             return;
         }
 
@@ -799,32 +768,32 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         mMinEnergy=cost.minimumPower();
         mMaxProgress=cost.totalWork();
 
-        var remaining = gregtech.engine.recipe.RecipeInputs.consume(recipe, recipeInputItems(), fluids, parallel);
-        if (remaining == null || parallel < 1) { mMaxProgress=0; mCurrentRecipe=null; startupRequirement=0; return; }
+        var remaining = gregtech.engine.recipe.RecipeInputs.consume(recipe, inventory.inputItems(), fluids, parallel);
+        if (remaining == null || parallel < 1) { mMaxProgress=0; mCurrentRecipe=null; energyPort.clearStartup(); return; }
         pendingOutputs = gregtech.engine.recipe.MachineWorkOutputs.roll(recipe,parallel,level.random::nextInt,usesExclusiveOutputs());
-        for(int i=0;i<remaining.items().size();i++) itemHandler.setStackInSlot(i,remaining.items().get(i));
-        var drained = matchedOutputTanks ? tanksOutput : tanksInput;
+        for(int i=0;i<remaining.items().size();i++) inventory.items().setStackInSlot(i,remaining.items().get(i));
+        var drained = matchedOutputTanks ? inventory.tanksOutput() : inventory.tanksInput();
         for(int i=0;i<drained.length;i++) drained[i].setFluid(remaining.fluids().get(i));
         setChanged();
 
         mParallelCount = parallel;
         mCurrentRecipe = recipe;
         mProgress = 0;
-        startupRequirement = spec.startupEnergy() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0;
+        energyPort.setStartup(spec.startupEnergy() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0);
     }
 
     /** GT6's printer and replicator accept a USB cable in place of a retained stick. */
     @Nullable
     private Recipe findRecipeWithUsbPort() {
         matchedOutputTanks = false;
-        if (recipeMap == null || itemHandler == null) return null;
-        var items = itemHandler.stacks();
-        Recipe direct = recipeMap.findRecipe(items, tanksToList(tanksInput), recipeMap.mNeedsOutputs,
+        if (recipeMap == null || inventory == null) return null;
+        var items = inventory.items().stacks();
+        Recipe direct = recipeMap.findRecipe(items, MachineInventory.contents(inventory.tanksInput()), recipeMap.mNeedsOutputs,
                 recipeMap.mInputItemsCount, recipeMap.mOutputItemsCount,
                 level, this, autocraftingProgram.getStackInSlot(0));
         // Items stay on the input slots. Only the fluid list changes for the second search.
-        if (direct == null && usesOutputTankSearch() && tanksOutput != null && tanksOutput.length > 0) {
-            Recipe fromOutput = recipeMap.findRecipe(items, tanksToList(tanksOutput), recipeMap.mNeedsOutputs,
+        if (direct == null && usesOutputTankSearch() && inventory.tanksOutput().length > 0) {
+            Recipe fromOutput = recipeMap.findRecipe(items, MachineInventory.contents(inventory.tanksOutput()), recipeMap.mNeedsOutputs,
                     recipeMap.mInputItemsCount, recipeMap.mOutputItemsCount,
                     level, this, autocraftingProgram.getStackInSlot(0));
             if (fromOutput != null) {
@@ -835,17 +804,17 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (direct != null) return direct;
 
 //? if >=1.21.1 {
-/*        return gregtech.content.recipe.MachineContextRecipes.find(this,recipeMap,recipeInputItems(),recipeInputFluids());
+/*        return gregtech.content.recipe.MachineContextRecipes.find(this,recipeMap,inventory.inputItems(),inventory.inputFluids());
 *///?} else {
         if (recipeMap != MachineRecipeMaps.Printer && recipeMap != MachineRecipeMaps.Replicator) return null;
         int requiredTier = recipeMap == MachineRecipeMaps.Printer ? 1 : 3;
         for (int slot = 0; slot < recipeMap.mInputItemsCount; slot++) {
-            ItemStack cable = itemHandler.getStackInSlot(slot);
+            ItemStack cable = inventory.items().getStackInSlot(slot);
             if (gregtech.content.data.UsbDataMedia.cableTier(cable) < requiredTier) continue;
             CompoundTag data = gregtech.content.data.UsbDataCable.readAdjacent(this, cable, requiredTier);
             if (data == null) continue;
             Recipe fromPort = recipeMap == MachineRecipeMaps.Printer
-                    ? gregtech.content.recipe.GTMaterialDataRecipes.printerFromPort(recipeInputItems(), cable, data)
+                    ? gregtech.content.recipe.GTMaterialDataRecipes.printerFromPort(inventory.inputItems(), cable, data)
                     : gregtech.content.recipe.GTMaterialDataRecipes.replicatorFromPort(cable, data);
             if (fromPort != null) return fromPort;
         }
@@ -866,7 +835,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     private java.util.List<FluidStack> matchedFluids() {
-        return matchedOutputTanks ? outputTankFluids() : recipeInputFluids();
+        return matchedOutputTanks ? inventory.outputTankFluids() : inventory.inputFluids();
     }
 
     /** GT6 {@code NBT_PARALLEL} batch limits for the large machines. */
@@ -874,25 +843,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return spec == null ? 1 : spec.parallelLimit();
     }
 
-    /** Batch count limited by the configured parallel cap and available inputs. */
-    private java.util.List<ItemStack> recipeInputItems() {
-        var items=new java.util.ArrayList<ItemStack>();
-        for(int i=0;i<recipeMap.mInputItemsCount;i++) items.add(itemHandler.getStackInSlot(i));
-        return items;
-    }
-    private java.util.List<FluidStack> recipeInputFluids() {
-        return java.util.Arrays.stream(tanksInput).map(t -> t.getFluidInTank(0)).toList();
-    }
-    private java.util.List<FluidStack> outputTankFluids() {
-        return java.util.Arrays.stream(tanksOutput).map(t -> t.getFluidInTank(0)).toList();
-    }
     private int computeParallel(Recipe recipe, java.util.List<FluidStack> fluids) {
         int low=0,high=parallelLimit();
         // Original BasicMachine:730/743 caps power-scaled parallel batches at nominal input.
         if(!parallelScalesDuration() && !usesTimeEnergy() && recipe.mEUt>0)
             high=(int)Math.min(high,Math.max(1,spec.energyIn()/recipe.mEUt));
         for(var fluid:recipe.mFluidOutputs) if(fluid!=null && !fluid.isEmpty()) high=Math.min(high,Integer.MAX_VALUE/fluid.getAmount());
-        var items=recipeInputItems();
+        var items=inventory.inputItems();
         while(low<high) {
             int mid=low+(high-low+1)/2;
             if(gregtech.engine.recipe.RecipeInputs.consume(recipe,items,fluids,mid)!=null) low=mid; else high=mid-1;
@@ -911,20 +868,20 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      * </p>
      */
     private int outputLimitedParallel(Recipe recipe, int maxParallel) {
-        if (maxParallel <= 0 || recipeMap == null || itemHandler == null) return maxParallel;
+        if (maxParallel <= 0 || recipeMap == null || inventory == null) return maxParallel;
 
         // Items: simulate the output section using the same slot rules as MachineWorkOutputs#flush.
         int firstOutput = recipeMap.mInputItemsCount;
-        if (recipe.mOutputs.length > 0 && firstOutput < itemHandler.getSlots()) {
-            var present = new net.minecraft.world.item.ItemStack[itemHandler.getSlots()];
-            for (int i = firstOutput; i < itemHandler.getSlots(); i++) present[i] = itemHandler.getStackInSlot(i).copy();
+        if (recipe.mOutputs.length > 0 && firstOutput < inventory.items().getSlots()) {
+            var present = new net.minecraft.world.item.ItemStack[inventory.items().getSlots()];
+            for (int i = firstOutput; i < inventory.items().getSlots(); i++) present[i] = inventory.items().getStackInSlot(i).copy();
             int limit = maxParallel;
             while (limit > 0 && !itemsFit(recipe, limit, firstOutput, present)) limit--;
             maxParallel = Math.min(maxParallel, limit);
         }
 
         // Fluids: free capacity of the output tanks, filled the same way flush() does.
-        if (recipe.mFluidOutputs.length > 0 && tanksOutput != null && tanksOutput.length > 0) {
+        if (recipe.mFluidOutputs.length > 0 && inventory.tanksOutput().length > 0) {
             int limit = maxParallel;
             while (limit > 0 && !fluidsFit(recipe, limit)) limit--;
             maxParallel = Math.min(maxParallel, limit);
@@ -966,6 +923,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Whether {@code parallel} runs of the recipe's fluid outputs fit into the output tanks. */
     private boolean fluidsFit(Recipe recipe, int parallel) {
+        var tanksOutput = inventory.tanksOutput();
         long[] free = new long[tanksOutput.length];
         FluidStack[] reserved = new FluidStack[tanksOutput.length];
         for (int i = 0; i < tanksOutput.length; i++) {
@@ -997,26 +955,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
     private boolean produceOutputs() {
         if(pendingOutputs==null) return true;
-        boolean finished=pendingOutputs.flush(itemHandler,recipeMap.mInputItemsCount,tanksOutput);
+        boolean finished=pendingOutputs.flush(inventory.items(),recipeMap.mInputItemsCount,inventory.tanksOutput());
         if(finished) { pendingOutputs=null; mParallelCount=1; }
         setChanged(); return finished;
     }
 
-    private static Iterable<FluidStack> tanksToList(FluidTankGT[] tanks) {
-        if (tanks == null) return Collections.emptyList();
-        FluidStack[] list = new FluidStack[tanks.length];
-        for (int i = 0; i < tanks.length; i++) list[i] = tanks[i].getFluid();
-        return java.util.Arrays.asList(list);
-    }
-
     /** Deduct only deliveries confirmed by the shared transfer engine. */
     protected final void pushOutputItems(IItemHandler target, Direction side) {
-        for (int slot = itemHandler.inputCount(); slot < itemHandler.getSlots(); slot++) {
-            ItemStack offered = itemHandler.getStackInSlot(slot);
+        for (int slot = inventory.items().inputCount(); slot < inventory.items().getSlots(); slot++) {
+            ItemStack offered = inventory.items().getStackInSlot(slot);
             if (offered.isEmpty() || !allowsItemTraffic(side, offered, false)) continue;
             var result = gregtech.content.transport.ItemPipeTransferAdapter.transfer(
                     offered.copy(), () -> target);
-            if (result.accepted() > 0) itemHandler.extractItem(slot, result.accepted(), false);
+            if (result.accepted() > 0) inventory.items().extractItem(slot, result.accepted(), false);
         }
     }
 
@@ -1044,58 +995,34 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (faceConfig == null) return;
 
         int autoIn = faceConfig.itemAutoInput();
-        if (FaceConfig.autoValid(autoIn) && itemHandler != null) {
+        if (FaceConfig.autoValid(autoIn) && inventory != null) {
             autoInputItems(level, pos, autoIn);
-        } else if (itemHandler != null) {
+        } else if (inventory != null) {
             positionedItemInput();
         }
 
         int autoOut = faceConfig.itemAutoOutput();
-        if (FaceConfig.autoValid(autoOut) && itemHandler != null) {
+        if (FaceConfig.autoValid(autoOut) && inventory != null) {
             autoOutputItems(level, pos, autoOut);
-        } else if (itemHandler != null) {
+        } else if (inventory != null) {
             positionedItemOutput();
         }
 
         int fluidAutoIn = faceConfig.fluidAutoInput();
-        if (FaceConfig.autoValid(fluidAutoIn) && tanksInput != null && tanksInput.length > 0) {
+        if (FaceConfig.autoValid(fluidAutoIn) && inventory != null && inventory.tanksInput().length > 0) {
             autoInputFluids(level, pos, fluidAutoIn);
-        } else if (tanksInput != null && tanksInput.length > 0) {
+        } else if (inventory != null && inventory.tanksInput().length > 0) {
             positionedFluidInput();
         }
 
         int fluidAutoOut = faceConfig.fluidAutoOutput();
-        if (FaceConfig.autoValid(fluidAutoOut) && tanksOutput != null && tanksOutput.length > 0) {
+        if (FaceConfig.autoValid(fluidAutoOut) && inventory != null && inventory.tanksOutput().length > 0) {
             autoOutputFluids(level, pos, fluidAutoOut);
         }
     }
 
-    private boolean hasItemInputSpace() {
-        for (int i = 0; i < itemHandler.inputCount(); i++) {
-            var stack = itemHandler.getStackInSlot(i);
-            if (stack.isEmpty() || stack.getCount() < Math.min(stack.getMaxStackSize(), itemHandler.getSlotLimit(i))) return true;
-        }
-        return false;
-    }
-
-    private boolean hasItemOutput() {
-        for (int i = itemHandler.inputCount(); i < itemHandler.getSlots(); i++)
-            if (!itemHandler.getStackInSlot(i).isEmpty()) return true;
-        return false;
-    }
-
-    private boolean hasFluidInputSpace() {
-        for (var tank : tanksInput) if (tank.isEmpty() || tank.getAmount() < tank.capacity()) return true;
-        return false;
-    }
-
-    private boolean hasFluidOutput() {
-        for (var tank : tanksOutput) if (!tank.isEmpty()) return true;
-        return false;
-    }
-
     protected void autoInputItems(Level level, BlockPos pos, int relDir) {
-        if (!hasItemInputSpace()) return;
+        if (!inventory.hasItemInputSpace()) return;
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
@@ -1117,7 +1044,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
         if (source == null) return;
-        int inputCount = itemHandler.inputCount();
+        int inputCount = inventory.items().inputCount();
         if (inputCount <= 0) return;
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
@@ -1125,12 +1052,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!acceptsAutomaticInput(stack) || !allowsItemTraffic(absolute, stack, true)) continue;
             for (int i = 0; i < inputCount; i++) {
                 if (!allowsItemTraffic(absolute, stack, true)) break;
-                ItemStack remaining = itemHandler.insertItem(i, stack.copy(), true);
+                ItemStack remaining = inventory.items().insertItem(i, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
                 if (toTake <= 0) continue;
                 ItemStack extracted = source.extractItem(srcSlot, toTake, false);
                 if (!extracted.isEmpty()) {
-                    ItemStack leftover = itemHandler.insertItem(i, extracted, false);
+                    ItemStack leftover = inventory.items().insertItem(i, extracted, false);
                     returnOrDrop(leftover, source);
                     if (source.getStackInSlot(srcSlot).isEmpty()) break;
                     stack = source.getStackInSlot(srcSlot);
@@ -1140,7 +1067,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     protected void autoOutputItems(Level level, BlockPos pos, int relDir) {
-        if (!hasItemOutput()) return;
+        if (!inventory.hasItemOutput()) return;
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
@@ -1156,17 +1083,17 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
 
-        int firstOutputSlot = itemHandler.inputCount();
-        int totalSlots = itemHandler.getSlots();
+        int firstOutputSlot = inventory.items().inputCount();
+        int totalSlots = inventory.items().getSlots();
 
         if (target != null) {
             pushOutputItems(target, absolute);
         } else if (level.isEmptyBlock(adj)) {
             // Drop into air like a hopper
             for (int i = firstOutputSlot; i < totalSlots; i++) {
-                ItemStack offered = itemHandler.getStackInSlot(i);
+                ItemStack offered = inventory.items().getStackInSlot(i);
                 if (!allowsItemTraffic(absolute, offered, false)) continue;
-                ItemStack extracted = itemHandler.extractItem(i, offered.getCount(), false);
+                ItemStack extracted = inventory.items().extractItem(i, offered.getCount(), false);
                 if (extracted.isEmpty()) continue;
                 double x = adj.getX() + 0.5;
                 double y = adj.getY() + 0.5;
@@ -1183,7 +1110,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     protected void autoInputFluids(Level level, BlockPos pos, int relDir) {
-        if (!hasFluidInputSpace()) return;
+        if (!inventory.hasFluidInputSpace()) return;
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
@@ -1218,7 +1145,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     protected void autoOutputFluids(Level level, BlockPos pos, int relDir) {
-        if (!hasFluidOutput()) return;
+        if (!inventory.hasFluidOutput()) return;
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         IFluidHandler target = automaticFluidOutputTarget(level,pos,absolute);
@@ -1342,64 +1269,36 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     // ── IFluidHandler ────────────────────────────────────────────────────
 
     @Override
-    public int getTanks() { return (tanksInput != null ? tanksInput.length : 0) + (tanksOutput != null ? tanksOutput.length : 0); }
+    public int getTanks() { return inventory == null ? 0 : inventory.getTanks(); }
 
     @Override
     public @NotNull FluidStack getFluidInTank(int tank) {
-        int inLen = tanksInput != null ? tanksInput.length : 0;
-        if (tank < inLen) return tanksInput[tank].getFluid();
-        int outIdx = tank - inLen;
-        int outLen = tanksOutput != null ? tanksOutput.length : 0;
-        if (outIdx < outLen) return tanksOutput[outIdx].getFluid();
-        return FluidStack.EMPTY;
+        return inventory == null ? FluidStack.EMPTY : inventory.getFluidInTank(tank);
     }
 
     @Override
     public int getTankCapacity(int tank) {
-        int inLen = tanksInput != null ? tanksInput.length : 0;
-        if (tank < inLen) return (int) tanksInput[tank].getCapacity();
-        int outIdx = tank - inLen;
-        int outLen = tanksOutput != null ? tanksOutput.length : 0;
-        if (outIdx < outLen) return (int) tanksOutput[outIdx].getCapacity();
-        return 0;
+        return inventory == null ? 0 : inventory.getTankCapacity(tank);
     }
 
     @Override
     public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-        int inLen = tanksInput != null ? tanksInput.length : 0;
-        return tank < inLen;
+        return inventory != null && inventory.isFluidValid(tank, stack);
     }
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        if (tanksInput == null) return 0;
-        for (int i = 0; i < tanksInput.length; i++) {
-            if (tanksInput[i].isFluidValid(resource)) {
-                int filled = tanksInput[i].fill(resource, action);
-                if (filled > 0) return filled;
-            }
-        }
-        return 0;
+        return inventory == null ? 0 : inventory.fill(resource, action);
     }
 
     @Override
     public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
-        if (tanksOutput == null) return FluidStack.EMPTY;
-        for (int i = 0; i < tanksOutput.length; i++) {
-            FluidStack drained = tanksOutput[i].drain(resource, action);
-            if (!drained.isEmpty()) return drained;
-        }
-        return FluidStack.EMPTY;
+        return inventory == null ? FluidStack.EMPTY : inventory.drain(resource, action);
     }
 
     @Override
     public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
-        if (tanksOutput == null) return FluidStack.EMPTY;
-        for (int i = 0; i < tanksOutput.length; i++) {
-            FluidStack drained = tanksOutput[i].drain(maxDrain, action);
-            if (!drained.isEmpty()) return drained;
-        }
-        return FluidStack.EMPTY;
+        return inventory == null ? FluidStack.EMPTY : inventory.drain(maxDrain, action);
     }
 
     // ── IEnergyBlock ──────────────────────────────────────────────────────
@@ -1410,19 +1309,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public boolean isEnergyType(GregTechTags.Tag energyType, @Nullable Direction side, boolean emitting) {
-        if (energyType == null || spec == null) return false;
-        return spec.energyType().equalsIgnoreCase(energyType.getShortName())
-                || (auxTag != null && auxTag == energyType);
+        return energyPort.isEnergyType(this, energyType, side, emitting);
     }
 
     @Override
     public Collection<GregTechTags.Tag> getEnergyTypes(@Nullable Direction side) {
-        if (spec == null) return Collections.emptyList();
-        var tags = new java.util.ArrayList<GregTechTags.Tag>(2);
-        GregTechTags.Tag tag = energyTag();
-        if (tag != null) tags.add(tag);
-        if (auxTag != null && !tags.contains(auxTag)) tags.add(auxTag);
-        return tags;
+        return energyPort.getEnergyTypes(this, side);
     }
 
     @Override
@@ -1435,103 +1327,76 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /** Disjoint faces distinguish two inputs of the same type; unsided calls retain auxiliary priority. */
-    private boolean usesAuxiliaryInput(GregTechTags.Tag energyType, @Nullable Direction side) {
+    @Override
+    public boolean usesAuxiliaryInput(GregTechTags.Tag energyType, @Nullable Direction side) {
         return auxTag != null && auxTag == energyType
                 && (side == null || FaceConfig.has(spec.auxiliaryFaceMask(), relativeDir(side)));
     }
 
+    @Override public GregTechTags.Tag auxiliaryTag() { return auxTag; }
+    @Override public long energyInputMaximum() { return inputMaximum(); }
+    @Override public void markEnergyDataChanged() { markMachineDataChanged(); }
+
     @Override
     public boolean isEnergyEmittingTo(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
-        return false; // basic machines never emit energy
+        return energyPort.isEnergyEmittingTo(this, energyType, side, theoretical);
     }
 
     @Override
     public long doInject(GregTechTags.Tag energyType, @Nullable Direction side,
                          long size, long amount, boolean doInject) {
-        if (size==0 || size==Long.MIN_VALUE || amount<=0 || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        long sizeAbs = Math.abs(size);
-        if (usesAuxiliaryInput(energyType, side)) {
-            if (sizeAbs < spec.auxiliaryEnergyMin()) return 0;
-            if (sizeAbs > spec.auxiliaryEnergyMax()) {
-                if (doInject) explodeFromOvervoltage(sizeAbs, energyType);
-                return amount;
-            }
-            long consumed = BasicMachineEnergy.accepted(auxEnergy, spec.auxiliaryEnergyCapacity(), size, amount);
-            if (doInject && consumed > 0) {
-                auxEnergy = BasicMachineEnergy.add(auxEnergy, spec.auxiliaryEnergyCapacity(), size, consumed);
-                payStartup();
-                markMachineDataChanged();
-            }
-            return consumed;
-        }
-        if (sizeAbs > inputMaximum()) {
-            // GT6 consumes oversized packets without crediting them; damage is opt-in.
-            if (doInject) explodeFromOvervoltage(sizeAbs, energyType);
-            return amount;
-        }
-        long consumed = BasicMachineEnergy.accepted(mEnergy, inputMaximum(), size, amount);
-        if (doInject && consumed > 0) {
-            addReceivedEnergy(size, consumed);
-            markMachineDataChanged();
-        }
-        return consumed;
+        return energyPort.doInject(this, energyType, side, size, amount, doInject);
     }
 
     /** Original root overload policy, shared by EU, RU, KU and other machine inputs. */
-    private void explodeFromOvervoltage(long size, GregTechTags.Tag energyType) {
+    @Override public void overloadEnergy(long size, GregTechTags.Tag energyType) {
         gregtech.engine.energy.MachineOverload.apply(this, size, energyType);
     }
 
     @Override
     public long doExtract(GregTechTags.Tag energyType, @Nullable Direction side,
                            long size, long amount, boolean doExtract) {
-        return 0; // basic machines never emit energy
+        return energyPort.doExtract(this, energyType, side, size, amount, doExtract);
     }
 
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
-        if (size==0||size==Long.MIN_VALUE||!isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        if (usesAuxiliaryInput(energyType, side))
-            return BasicMachineEnergy.demanded(auxEnergy, spec.auxiliaryEnergyCapacity(), size);
-        return BasicMachineEnergy.demanded(mEnergy, inputMaximum(), size);
+        return energyPort.getEnergyDemanded(this, energyType, side, size);
     }
 
     @Override
     public long getEnergyOffered(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
-        return 0;
+        return energyPort.getEnergyOffered(this, energyType, side, size);
     }
 
     @Override
     public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyIn();
-        return spec != null ? spec.energyIn() : 1;
+        return energyPort.getEnergySizeInputRecommended(this, energyType, side);
     }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyMin();
-        return spec != null ? spec.energyInMin() : 1;
+        return energyPort.getEnergySizeInputMin(this, energyType, side);
     }
 
     @Override
     public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (usesAuxiliaryInput(energyType, side)) return spec.auxiliaryEnergyMax();
-        return spec != null ? inputMaximum() : 1;
+        return energyPort.getEnergySizeInputMax(this, energyType, side);
     }
 
     @Override
     public long getEnergySizeOutputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return 1;
+        return energyPort.getEnergySizeOutputRecommended(this, energyType, side);
     }
 
     @Override
     public long getEnergySizeOutputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return 1;
+        return energyPort.getEnergySizeOutputMin(this, energyType, side);
     }
 
     @Override
     public long getEnergySizeOutputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return 1;
+        return energyPort.getEnergySizeOutputMax(this, energyType, side);
     }
 
     // ── Capabilities with side filtering ─────────────────────────────────
@@ -1539,18 +1404,18 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*    public IItemHandler itemCapability(@Nullable Direction side) {
-        if(itemHandler==null)return null;
-        if(side==null)return itemHandler;
+        if(inventory==null)return null;
+        if(side==null)return inventory.items();
         int rel=relativeDir(side);
         boolean in=FaceConfig.has(faceConfig.itemInputs(),rel),out=FaceConfig.has(faceConfig.itemOutputs(),rel);
-        return in||out?new SidedItemHandler(this,rel,itemHandler,in,out):null;
+        return in||out?new SidedItemHandler(this,rel,inventory.items(),in,out):null;
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (side == null) {
-            if (cap == ForgeCapabilities.ITEM_HANDLER && itemHandler != null)
+            if (cap == ForgeCapabilities.ITEM_HANDLER && inventory != null)
                 return itemCap.cast();
-            if (cap == ForgeCapabilities.FLUID_HANDLER && tanksInput != null)
+            if (cap == ForgeCapabilities.FLUID_HANDLER && inventory != null)
                 return fluidCap.cast();
             return super.getCapability(cap, null);
         }
@@ -1560,14 +1425,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         int rel = relativeDir(side);
 
-        if (cap == ForgeCapabilities.ITEM_HANDLER && itemHandler != null) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER && inventory != null) {
             boolean canIn = FaceConfig.has(faceConfig.itemInputs(), rel);
             boolean canOut = FaceConfig.has(faceConfig.itemOutputs(), rel);
             if (!canIn && !canOut) return LazyOptional.empty();
             return getOrCreateItemCap(rel, canIn, canOut).cast();
         }
 
-        if (cap == ForgeCapabilities.FLUID_HANDLER && tanksInput != null) {
+        if (cap == ForgeCapabilities.FLUID_HANDLER && inventory != null) {
             boolean canIn = FaceConfig.has(faceConfig.fluidInputs(), rel);
             boolean canOut = FaceConfig.has(faceConfig.fluidOutputs(), rel);
             if (!canIn && !canOut) return LazyOptional.empty();
@@ -1581,7 +1446,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*    public IFluidHandler fluidCapability(@Nullable Direction side) {
-        if(tanksInput==null)return null;
+        if(inventory==null)return null;
         if(side==null)return this;
         int rel=relativeDir(side);
         boolean in=FaceConfig.has(faceConfig.fluidInputs(),rel),out=FaceConfig.has(faceConfig.fluidOutputs(),rel);
@@ -1590,7 +1455,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private LazyOptional<IItemHandler> getOrCreateItemCap(int rel, boolean canIn, boolean canOut) {
         if (itemCapsBySide[rel] == null) {
-            itemCapsBySide[rel] = LazyOptional.of(() -> new SidedItemHandler(this, rel, itemHandler, canIn, canOut));
+            itemCapsBySide[rel] = LazyOptional.of(() -> new SidedItemHandler(this, rel, inventory.items(), canIn, canOut));
         }
         return itemCapsBySide[rel];
     }
@@ -1644,12 +1509,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         tag.putBoolean("gt.control_stopped",controlStopped);
         tag.putInt("gt.external_signals",packedExternalSignals());
         tag.putLong("gt.cover_ticks",coverTicks);
-        if (itemHandler != null)
+        if (inventory != null)
 
 //? if >=1.21.1 {
-/*            tag.put(NBT_INVENTORY, itemHandler.serializeNBT(lookup));
+/*            tag.put(NBT_INVENTORY, inventory.items().serializeNBT(lookup));
 *///?} else {
-            tag.put(NBT_INVENTORY, itemHandler.serializeNBT());
+            tag.put(NBT_INVENTORY, inventory.items().serializeNBT());
 //?}
 
         if (recipeMap == MachineRecipeMaps.Autocrafter || !autocraftingProgram.getStackInSlot(0).isEmpty())
@@ -1660,14 +1525,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             tag.put("gt.autocrafting.program", autocraftingProgram.serializeNBT());
 //?}
 
-        tag.putLong(NBT_ENERGY, mEnergy);
+        tag.putLong(NBT_ENERGY, energyPort.stored());
         tag.putLong(NBT_PROGRESS, mProgress);
         tag.putLong(NBT_MAX_PROGRESS, mMaxProgress);
         tag.putInt("gt.parallel", mParallelCount);
         tag.putLong("gt.min_energy",mMinEnergy);
         if (auxTag != null) {
-            tag.putLong("gt.aux_energy", auxEnergy);
-            tag.putLong("gt.startup_energy", startupRequirement);
+            tag.putLong("gt.aux_energy", energyPort.auxStored());
+            tag.putLong("gt.startup_energy", energyPort.startup());
         }
 
 //? if >=1.21.1 {
@@ -1676,27 +1541,27 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(pendingOutputs!=null) tag.put("gt.pending_outputs",pendingOutputs.save());
 //?}
 
-        if (tanksInput != null) {
-            for (int i = 0; i < tanksInput.length; i++) {
+        if (inventory != null) {
+            for (int i = 0; i < inventory.tanksInput().length; i++) {
                 CompoundTag t = new CompoundTag();
 
 //? if >=1.21.1 {
-/*                tanksInput[i].writeToNBT(t,lookup);
+/*                inventory.tanksInput()[i].writeToNBT(t,lookup);
 *///?} else {
-                tanksInput[i].writeToNBT(t);
+                inventory.tanksInput()[i].writeToNBT(t);
 //?}
 
                 tag.put(NBT_TANKS_IN + i, t);
             }
         }
-        if (tanksOutput != null) {
-            for (int i = 0; i < tanksOutput.length; i++) {
+        if (inventory != null) {
+            for (int i = 0; i < inventory.tanksOutput().length; i++) {
                 CompoundTag t = new CompoundTag();
 
 //? if >=1.21.1 {
-/*                tanksOutput[i].writeToNBT(t,lookup);
+/*                inventory.tanksOutput()[i].writeToNBT(t,lookup);
 *///?} else {
-                tanksOutput[i].writeToNBT(t);
+                inventory.tanksOutput()[i].writeToNBT(t);
 //?}
 
                 tag.put(NBT_TANKS_OUT + i, t);
@@ -1831,15 +1696,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         unpackExternalSignals(tag.getInt("gt.external_signals"));
         adjacentEnergySourcesChanged();
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
-        if (tag.contains(NBT_ENERGY)) mEnergy = tag.getLong(NBT_ENERGY);
+        if (tag.contains(NBT_ENERGY)) energyPort.setStored(tag.getLong(NBT_ENERGY));
         if (tag.contains(NBT_PROGRESS)) mProgress = tag.getLong(NBT_PROGRESS);
         if (tag.contains(NBT_MAX_PROGRESS)) mMaxProgress = tag.getLong(NBT_MAX_PROGRESS);
         if (tag.contains("gt.parallel")) mParallelCount = Math.max(1, tag.getInt("gt.parallel"));
         mMinEnergy=tag.getLong("gt.min_energy");
-        auxEnergy = auxTag == null ? 0
-                : Math.max(0, Math.min(spec.auxiliaryEnergyCapacity(), tag.getLong("gt.aux_energy")));
-        startupRequirement = auxTag == null ? 0 : Math.max(0, tag.getLong("gt.startup_energy"));
-        if (mMaxProgress <= 0) startupRequirement = 0;
+        energyPort.setAuxStored(auxTag == null ? 0
+                : Math.max(0, Math.min(spec.auxiliaryEnergyCapacity(), tag.getLong("gt.aux_energy"))));
+        energyPort.setStartup(auxTag == null ? 0 : Math.max(0, tag.getLong("gt.startup_energy")));
+        if (mMaxProgress <= 0) energyPort.clearStartup();
 
 //? if >=1.21.1 {
 /*        pendingOutputs=tag.contains("gt.pending_outputs")?gregtech.engine.recipe.MachineWorkOutputs.load(tag.getCompound("gt.pending_outputs"),lookup):null;
@@ -1848,36 +1713,36 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
         if(mMaxProgress>0 && pendingOutputs==null) { mProgress=0; mMaxProgress=0; } // Old saves never recorded their consumed job; do not invent outputs.
-        if (itemHandler == null) {
+        if (inventory == null) {
             // Called before setSpec — defer
         } else if (tag.contains(NBT_INVENTORY)) {
 
 //? if >=1.21.1 {
-/*            itemHandler.deserializeNBT(lookup,tag.getCompound(NBT_INVENTORY));
+/*            inventory.items().deserializeNBT(lookup,tag.getCompound(NBT_INVENTORY));
 *///?} else {
-            itemHandler.deserializeNBT(tag.getCompound(NBT_INVENTORY));
+            inventory.items().deserializeNBT(tag.getCompound(NBT_INVENTORY));
 //?}
 
         }
-        if (tanksInput != null) {
-            for (int i = 0; i < tanksInput.length; i++)
+        if (inventory != null) {
+            for (int i = 0; i < inventory.tanksInput().length; i++)
                 if (tag.contains(NBT_TANKS_IN + i))
 
 //? if >=1.21.1 {
-/*                    tanksInput[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i),lookup);
+/*                    inventory.tanksInput()[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i),lookup);
 *///?} else {
-                    tanksInput[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i));
+                    inventory.tanksInput()[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i));
 //?}
 
         }
-        if (tanksOutput != null) {
-            for (int i = 0; i < tanksOutput.length; i++)
+        if (inventory != null) {
+            for (int i = 0; i < inventory.tanksOutput().length; i++)
                 if (tag.contains(NBT_TANKS_OUT + i))
 
 //? if >=1.21.1 {
-/*                    tanksOutput[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i),lookup);
+/*                    inventory.tanksOutput()[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i),lookup);
 *///?} else {
-                    tanksOutput[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i));
+                    inventory.tanksOutput()[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i));
 //?}
 
         }
@@ -1894,13 +1759,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private void sanitizeForSpec() {
         if (spec == null) { specDirty = true; return; }
         specDirty = false;
-        mEnergy = clamp(mEnergy, 0, inputMaximum());
+        energyPort.setStored(clamp(energyPort.stored(), 0, inputMaximum()));
         mParallelCount = (int) clamp(mParallelCount, 1, Math.max(1, spec.parallelLimit()));
         if (pendingOutputs == null) {
             mProgress = 0;
             mMaxProgress = 0;
             mMinEnergy = 0;
-            startupRequirement = 0;
+            energyPort.clearStartup();
             return;
         }
         var savedCost = savedJobCost();
@@ -1917,14 +1782,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         mProgress = clamp(mProgress, 0, mMaxProgress);
         if (mMaxProgress <= 0) {
             mProgress = 0;
-            startupRequirement = 0;
+            energyPort.clearStartup();
         }
     }
 
     /** Recomputes the current job cost without consuming inputs or rolling outputs. */
     @Nullable
     private gregtech.engine.recipe.MachineWorkCost.Cost savedJobCost() {
-        if (recipeMap == null || itemHandler == null || level == null) return null;
+        if (recipeMap == null || inventory == null || level == null) return null;
         Recipe recipe = findRecipeWithUsbPort();
         if (recipe == null || !exclusivePairOrPlain(recipe)) return null;
         // The saved batch is the one the job actually rolled; remaining inputs may already be
@@ -2019,21 +1884,21 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                         level, this, autocraftingProgram.getStackInSlot(0), stack));
     }
     @Override public IItemHandler componentItems(Direction side) {
-        if (itemHandler == null) return null;
+        if (inventory == null) return null;
         return new IItemHandler() {
-            public int getSlots() { return itemHandler.getSlots(); }
-            public ItemStack getStackInSlot(int slot) { return itemHandler.getStackInSlot(slot); }
-            public int getSlotLimit(int slot) { return itemHandler.getSlotLimit(slot); }
-            public boolean isItemValid(int slot, ItemStack stack) { return acceptsAutomaticInput(stack) && itemHandler.isItemValid(slot, stack); }
+            public int getSlots() { return inventory.items().getSlots(); }
+            public ItemStack getStackInSlot(int slot) { return inventory.items().getStackInSlot(slot); }
+            public int getSlotLimit(int slot) { return inventory.items().getSlotLimit(slot); }
+            public boolean isItemValid(int slot, ItemStack stack) { return acceptsAutomaticInput(stack) && inventory.items().isItemValid(slot, stack); }
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return acceptsAutomaticInput(stack) ? itemHandler.insertItem(slot, stack, simulate) : stack;
+                return acceptsAutomaticInput(stack) ? inventory.items().insertItem(slot, stack, simulate) : stack;
             }
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return slot < inputSlots() ? ItemStack.EMPTY : itemHandler.extractItem(slot, amount, simulate);
+                return slot < inputSlots() ? ItemStack.EMPTY : inventory.items().extractItem(slot, amount, simulate);
             }
         };
     }
-    public IItemHandlerModifiable inventory() { return itemHandler; }
+    public IItemHandlerModifiable inventory() { return inventory == null ? null : inventory.items(); }
 
     /** Normal handler changes and GUI live-stack merges both invalidate the inventory work state. */
     public void inventoryChanged() {
@@ -2043,69 +1908,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }
     public int outputSlots() { return recipeMap != null ? recipeMap.mOutputItemsCount : 0; }
 
-    public static class MachineItemHandler extends ItemStackHandler {
-        private final int inputCount;
-        public MachineItemHandler(int totalSlots, int inputCount) {
-            super(totalSlots);
-            this.inputCount = inputCount;
-        }
-        public int inputCount() { return inputCount; }
-
-        public Iterable<ItemStack> stacks() {
-            return () -> new java.util.Iterator<>() {
-                int idx;
-                @Override public boolean hasNext() { return idx < getSlots(); }
-                @Override public ItemStack next() { return getStackInSlot(idx++); }
-            };
-        }
-
-        /** Insert into output slots — bypasses the player-facing restriction. */
-        public void insertOutput(ItemStack stack) {
-            if (stack.isEmpty()) return;
-            int outIdx = inputCount;
-            // Merge with existing stacks first
-            for (int i = outIdx; i < getSlots(); i++) {
-                ItemStack existing = getStackInSlot(i);
-
-//? if >=1.21.1 {
-/*                if (ItemStack.isSameItemSameComponents(existing, stack)) {
-*///?} else {
-                if (ItemStack.isSameItemSameTags(existing, stack)) {
-//?}
-
-                    int space = Math.min(getSlotLimit(i), existing.getMaxStackSize()) - existing.getCount();
-                    if (space > 0) {
-                        int toAdd = Math.min(space, stack.getCount());
-                        existing.grow(toAdd);
-                        stack.shrink(toAdd);
-                        onContentsChanged(i);
-                        if (stack.isEmpty()) return;
-                    }
-                }
-            }
-            // Place in empty slot
-            for (int i = outIdx; i < getSlots(); i++) {
-                if (getStackInSlot(i).isEmpty()) {
-                    setStackInSlot(i, stack);
-                    onContentsChanged(i);
-                    return;
-                }
-            }
-        }
-
-        @Override
-        public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            if (slot >= inputCount) return stack;
-            return super.insertItem(slot, stack, simulate);
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-        }
-    }
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
-        gregtech.engine.inventory.BlockContents.drop(this, itemHandler);
+        gregtech.engine.inventory.BlockContents.drop(this, itemHandler());
         gregtech.engine.inventory.BlockContents.drop(this, autocraftingProgram);
         for (int i = 0; i < covers.length; i++) { if(!gregtech.content.cover.CoverDrops.retained(this))gregtech.engine.inventory.BlockContents.drop(this, covers[i]); covers[i] = ItemStack.EMPTY; }
         setChanged();
@@ -2162,9 +1967,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             int index = side.ordinal();
             switch (id) {
                 case gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM -> {
-                    if (itemHandler == null) continue;
+                    if (inventory == null) continue;
                     boolean acted = gregtech.content.cover.CoverUtilityBehaviors.tickRetriever(
-                            level, pos, side, itemHandler,
+                            level, pos, side, inventory.items(),
 
 //? if >=1.21.1 {
 /*                            gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack, level.registryAccess()),
@@ -2178,9 +1983,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                     else if (resumed) coverPending[index] = true;
                 }
                 case gregtech.content.cover.CoverUtilityBehaviors.PRESSURE_VALVE -> {
-                    if (tanksOutput == null || tanksOutput.length == 0) continue;
+                    if (inventory == null || inventory.tanksOutput().length == 0) continue;
                     gregtech.content.cover.CoverUtilityBehaviors.tickPressureValve(
-                            level, pos, side, tanksOutput[0], coverTicks);
+                            level, pos, side, inventory.tanksOutput()[0], coverTicks);
                 }
                 default -> { }
             }
