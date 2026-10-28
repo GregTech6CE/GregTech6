@@ -24,6 +24,24 @@ public final class RockItemPlacement {
                 || form == null
                 || form.prefix() != MaterialPrefix.rockGt && form.prefix() != MaterialPrefix.oreRaw)
             return InteractionResult.PASS;
+        return placeLooseRock(
+                use,
+                form.material().resolve().getName(),
+                net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getKey(stack.getItem())
+                        .toString());
+    }
+
+    /** GT6 {@code GT_Proxy.java:297}: flint put down by hand becomes a lying-item rock. */
+    public static InteractionResult placeFlint(UseOnContext use) {
+        if (use.getPlayer() == null
+                || !use.getPlayer().isShiftKeyDown()
+                || !use.getItemInHand().is(net.minecraft.world.item.Items.FLINT)) return InteractionResult.PASS;
+        return placeLooseRock(use, null, "minecraft:flint");
+    }
+
+    private static InteractionResult placeLooseRock(UseOnContext use, String material, String itemId) {
+        var stack = use.getItemInHand();
         var context = new BlockPlaceContext(use);
         var level = context.getLevel();
         var pos = context.getClickedPos();
@@ -48,10 +66,8 @@ public final class RockItemPlacement {
         if (!level.isClientSide) {
             if (!level.setBlock(pos, state, 3)) return InteractionResult.FAIL;
             if (level.getBlockEntity(pos) instanceof RockBlockEntity rock) {
-                rock.setMaterial(form.material().resolve().getName());
-                rock.setItemId(net.minecraft.core.registries.BuiltInRegistries.ITEM
-                        .getKey(stack.getItem())
-                        .toString());
+                if (material != null && !material.isEmpty()) rock.setMaterial(material);
+                rock.setItemId(itemId);
                 rock.setCount(1);
                 rock.setRawOre(false);
             } else {

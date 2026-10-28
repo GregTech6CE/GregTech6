@@ -18,9 +18,16 @@ import java.util.List;
 /** Source MultiTileEntityStick: biome/dimension wood, including dead, mossy and rotten wood. */
 public class TwigBlock extends Block {
     private static final VoxelShape SHAPE = box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0);
+    /** Source MultiTileEntityStickPlaced: hand-placed sticks always hand back one ordinary stick. */
+    private final boolean placed;
 
     public TwigBlock(Properties properties) {
+        this(properties, false);
+    }
+
+    public TwigBlock(Properties properties, boolean placed) {
         super(properties);
+        this.placed = placed;
     }
 
     @Override
@@ -35,6 +42,7 @@ public class TwigBlock extends Block {
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        if (placed) return Collections.singletonList(new ItemStack(Items.STICK));
         ItemStack tool = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL);
         int fortune = tool == null ? 0 : net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(
 //? if >=1.21.1 {
@@ -95,7 +103,7 @@ public class TwigBlock extends Block {
                                                      net.minecraft.world.phys.BlockHitResult hit) {
 //?}
         if (!level.isClientSide) {
-            ItemStack stack = stick(level, pos, 1);
+            ItemStack stack = placed ? new ItemStack(Items.STICK) : stick(level, pos, 1);
             level.removeBlock(pos, false);
             if (!player.addItem(stack)) {
                 player.drop(stack, false);
