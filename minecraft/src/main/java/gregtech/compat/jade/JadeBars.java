@@ -57,4 +57,11 @@ final class JadeBars {
 //?}
         return helper.progress(view.ratio, label, helper.progressStyle().overlay(view.overlay), box, true);
     }
+
+    static FluidView readFluid(net.minecraft.nbt.CompoundTag data) {
+        var view = FluidView.readDefault(data);
+        // An unbounded tank has no meaningful fullness ratio; retain its real amount label.
+        if (view != null && data.getLong("capacity") == Long.MAX_VALUE && view.ratio > 0) view.ratio = 1;
+        return view;
+    }
 }

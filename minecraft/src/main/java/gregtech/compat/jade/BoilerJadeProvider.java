@@ -138,7 +138,7 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
             label = label.copy().withStyle(ChatFormatting.RED);
         }
         if (data.contains(WATER_VIEW)) {
-            var water = FluidView.readDefault(data.getCompound(WATER_VIEW));
+            var water = JadeBars.readFluid(data.getCompound(WATER_VIEW));
             if (water != null) {
                 Component waterLabel = water.overrideText != null ? water.overrideText
                         : Component.translatable("jade.fluid", water.fluidName, water.current);

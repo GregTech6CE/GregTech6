@@ -14021,6 +14021,8 @@
   "jade.gt6ce.mold.state.solidified": "solidified",
   "jade.gt6ce.mold.temperature": "Temp: %1$s K / %2$s K",
   "jade.gt6ce.multiblock.energy": "Stored: %s / %s %s",
+  "jade.gt6ce.unlimited": "Unlimited",
+  "jade.gt6ce.energy.max_packets": "MAX-%sA",
   "jade.gt6ce.multiblock.fluid": "%s: %s / %s mB",
   "jade.gt6ce.multiblock.formed": "Structure: formed",
   "jade.gt6ce.multiblock.incomplete": "Structure: incomplete / unavailable",

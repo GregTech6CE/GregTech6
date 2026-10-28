@@ -51,7 +51,7 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
         var data = accessor.getServerData().getCompound("gt_vessel");
         if (data.getString("kind").equals("tank")) {
             tooltip.remove(UNIVERSAL_FLUID_STORAGE);
-            var view = FluidView.readDefault(data.getCompound("fluid"));
+            var view = JadeBars.readFluid(data.getCompound("fluid"));
             if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
                     : Component.translatable("jade.fluid", view.fluidName, view.current)));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.auto", Component.translatable(
@@ -65,7 +65,7 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
             tooltip.remove(UNIVERSAL_FLUID_STORAGE);
             var contents = data.getList("contents", CompoundTag.TAG_COMPOUND);
             for (int i = 0; i < Math.min(4, contents.size()); i++) {
-                var view = FluidView.readDefault(contents.getCompound(i));
+                var view = JadeBars.readFluid(contents.getCompound(i));
                 if (view == null) continue;
                 Component label = view.overrideText != null ? view.overrideText
                         : Component.translatable("jade.fluid", view.fluidName, view.current);
