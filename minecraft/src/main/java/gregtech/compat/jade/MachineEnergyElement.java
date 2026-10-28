@@ -24,11 +24,9 @@ final class MachineEnergyElement extends Element {
         boolean overload = overloaded || average > max;
         Component label = overload
                 ? Component.translatable("jade.gt6ce.machine.overloaded")
-                : average <= 0
-                        ? (insufficient
-                                ? Component.translatable("jade.gt6ce.machine.insufficient_energy")
-                                : Component.translatable(
-                                        "jade.gt6ce.machine.no_energy_input", gregtech.client.EnergyText.unit(unit)))
+                : average <= 0 && !insufficient
+                        ? Component.translatable(
+                                "jade.gt6ce.machine.no_energy_input", gregtech.client.EnergyText.unit(unit))
                         : Component.literal(JadeText.decimal(average, 2) + " ")
                                 .append(gregtech.client.EnergyText.unit(unit))
                                 .append("/t  " + JadeText.decimal(multiplier, 2) + "×");

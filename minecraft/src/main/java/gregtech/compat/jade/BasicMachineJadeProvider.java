@@ -137,7 +137,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             boolean insufficient = !overloaded && average < rates[1] && data.getBoolean("insufficient");
             if (rates[0] > 0) {
                 tooltip.add(new MachineEnergyElement(rates[1], rates[0], rates[2], average, unit, overloaded, insufficient));
-                if (!overloaded && average > 0 && average < rates[1])
+                if (!overloaded && (insufficient || average > 0 && average < rates[1]))
                     tooltip.add(Component.translatable("jade.gt6ce.machine.insufficient_energy")
                             .withStyle(net.minecraft.ChatFormatting.AQUA));
             }
