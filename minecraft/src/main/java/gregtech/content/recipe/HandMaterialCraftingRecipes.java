@@ -41,6 +41,7 @@ public final class HandMaterialCraftingRecipes {
             if (profile != null && profile.coated()) continue;
             gemPlates(rows, material);
             smallGear(rows, material);
+            largeGear(rows, material);
             var bolt = GTItems.getStack(PrefixRegistry.byName("bolt"), material, 1);
             var screw = GTItems.getStack(PrefixRegistry.byName("screw"), material, 1);
             if (bolt.isEmpty() || screw.isEmpty()) continue;
@@ -49,6 +50,7 @@ public final class HandMaterialCraftingRecipes {
         }
         return Map.copyOf(rows);
     }
+
     /**
      * Loader_Recipes_Other:417: one plate and a file (stone materials) or a hard hammer forms
      * a small gear. Wood keeps its own plank/button rows, and coated materials are excluded.
@@ -59,9 +61,28 @@ public final class HandMaterialCraftingRecipes {
         var gear = GTItems.getStack(MaterialPrefix.gearGtSmall, material, 1);
         if (plate.isEmpty() || gear.isEmpty()) return;
         boolean stone = material.has(MaterialProperty.STONE);
+        // Tool tags also accept the single-use forms and every tool with that GT6 identity.
         put(rows, "gear_small/" + slug(material), List.of("P ", stone ? " f" : " h"),
                 Map.of("P", form("plate", material, plate),
-                        stone ? "f" : "h", item(stone ? "gt6ce:tool_file" : "gt6ce:tool_hard_hammer")),
+                        stone ? "f" : "h", tag(stone ? "forge:tools/file" : "forge:tools/hammer")),
+                gear);
+    }
+
+    /**
+     * Port addition for issue #173: GT6 only hand-crafts stone and wooden large gears and leaves
+     * metal gears to the Extruder and the casting molds. Assembling a gear from four plates and
+     * four bolts with a saw gives every gear-bearing material a crafting-table route as well.
+     */
+    private static void largeGear(Map<ResourceLocation, JsonObject> rows, GTMaterial material) {
+        if (material.has(MaterialProperty.WOOD) || material.has(MaterialProperty.STONE)) return;
+        var plate = GTItems.getStack(MaterialPrefix.plate, material, 1);
+        var bolt = GTItems.getStack(PrefixRegistry.byName("bolt"), material, 1);
+        var gear = GTItems.getStack(MaterialPrefix.gearGt, material, 1);
+        if (plate.isEmpty() || bolt.isEmpty() || gear.isEmpty()) return;
+        put(rows, "gear/" + slug(material), List.of("BPB", "PsP", "BPB"),
+                Map.of("P", form("plate", material, plate),
+                        "B", form("bolt", material, bolt),
+                        "s", tag("forge:tools/saw")),
                 gear);
     }
 
@@ -97,6 +118,9 @@ public final class HandMaterialCraftingRecipes {
     }
     private static JsonObject item(String id) {
         var json = new JsonObject(); json.addProperty("item", id); return json;
+    }
+    private static JsonObject tag(String id) {
+        var json = new JsonObject(); json.addProperty("tag", id); return json;
     }
     private static void put(Map<ResourceLocation, JsonObject> rows, String id, List<String> pattern,
                             Map<String, JsonElement> keys, ItemStack output) {

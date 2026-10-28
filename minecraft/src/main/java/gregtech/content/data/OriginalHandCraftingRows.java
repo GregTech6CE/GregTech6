@@ -72,10 +72,12 @@ public final class OriginalHandCraftingRows {
                     gregtech.engine.material.GTMaterialRegistry.get(wall.material()), 1);
             if (plate.isEmpty()) throw new IllegalStateException("Missing wall plate: " + wall.material());
             var output = new ItemStack(gregtech.content.multiblock.LargeMachineParts.block(wall.originalId()));
+            // Tool identities, not one item: any wrench (including the monkey wrench) and hammer
+            // family the source's OreDict names accept, plus the single-use forms.
             added += register(recipes, "wall/" + wall.path(), new String[] {"wPP", "hPP"},
                     Map.of('P', gregtech.content.recipe.CraftingMaterialForms.ingredient(plate),
-                            'w', requiredTool(GTToolType.WRENCH),
-                            'h', requiredTool(GTToolType.HARD_HAMMER)), output);
+                            'w', Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/wrench"))),
+                            'h', Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/hammer")))), output);
         }
         if (added != walls.size())
             throw new IllegalStateException("Original metal wall hand recipes could not be registered");
