@@ -14,6 +14,8 @@ import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.fluid.JadeFluidObject;
+import snownee.jade.api.view.FluidView;
 
 import java.util.Locale;
 
@@ -32,10 +34,6 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
     private static final String NBT_EFF       = "gt_eng_eff";
     private static final String NBT_ENABLED   = "gt_eng_enabled";
     private static final String NBT_SHUTDOWN  = "gt_eng_shutdown";
-    private static final String NBT_STEAM_AMT = "gt_eng_steam_amt";
-    private static final String NBT_STEAM_CAP = "gt_eng_steam_cap";
-    private static final String NBT_WATER_AMT = "gt_eng_water_amt";
-    private static final String NBT_WATER_CAP = "gt_eng_water_cap";
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
@@ -85,23 +83,16 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 tag.putLong(NBT_CAPACITY, ms.outputRate() * 2);
             }
             case STEAM -> {
-                tag.putLong(NBT_IN_RATE, 200);
-                tag.putString(NBT_IN_UNIT, "Steam");
                 tag.putLong(NBT_CAPACITY, be instanceof KineticSteamEngineBlockEntity se ? se.energyCapacity() : ms.outputRate() * 2000);
                 tag.putBoolean(NBT_ENABLED, be instanceof KineticSteamEngineBlockEntity se && se.isEnabled());
                 tag.putBoolean(NBT_SHUTDOWN, be instanceof KineticSteamEngineBlockEntity se && se.isShutdown());
                 if (be instanceof KineticSteamEngineBlockEntity se) {
                     var control = se.machineControl(null);
                     tag.putBoolean("gt_eng_working", control.running());
-                    tag.putBoolean("gt_eng_delivering", control.active());
-                    tag.putLong("gt_eng_stroke", se.spec() == null ? 0 : se.spec().outputRate() * (se.pressureState() + 1) / 16);
-                    tag.putInt("gt_eng_steam_batch", se.spec() == null ? 200 : se.spec().steamPerOp());
-                    var st = se.steamTank();
-                    var wt = se.distilledWaterTank();
-                    tag.putLong(NBT_STEAM_AMT, st != null ? st.getAmount() : 0);
-                    tag.putLong(NBT_STEAM_CAP, st != null ? st.getCapacity() : 0);
-                    tag.putLong(NBT_WATER_AMT, wt != null ? wt.getAmount() : 0);
-                    tag.putLong(NBT_WATER_CAP, wt != null ? wt.getCapacity() : 0);
+                    tag.putLong(NBT_OUT_RATE, control.running() && se.isEnabled() && !se.isShutdown() && se.spec() != null
+                            ? se.spec().outputRate() * (se.pressureState() + 1) / 16 : 0);
+                    writeTank(tag, "steam", se.steamTank(), "Steam");
+                    writeTank(tag, "water", se.distilledWaterTank(), "DistW");
                 }
             }
             case ROTATION -> {
@@ -134,6 +125,10 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         long capacity = data.getLong(NBT_CAPACITY);
         int eff = data.getInt(NBT_EFF);
 
+        if ("steam".equals(type)) {
+            appendSteam(tooltip, accessor, data, stored, capacity, outRate);
+            return;
+        }
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.title", name));
         if ("diesel".equals(type)) {
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel.output", format(outRate),
@@ -155,12 +150,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                     : data.getBoolean("gt_diesel_emitting") ? "jade.gt6ce.engine.diesel.running" : "jade.gt6ce.engine.diesel.waiting"));
             return;
         }
-        if ("steam".equals(type)) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam_batch", data.getInt("gt_eng_steam_batch")));
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam_stroke",
-                    format(data.getLong("gt_eng_stroke")), Component.translatable(data.getBoolean("gt_eng_delivering")
-                            ? "jade.gt6ce.engine.output_accepted" : "jade.gt6ce.engine.output_unaccepted")));
-        } else JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
 
         int pct = capacity > 0 ? (int) Math.min(100, stored * 100 / capacity) : 0;
         boolean inputBuffer = "electric".equals(type) || "flux".equals(type);
@@ -171,34 +161,45 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.eff", formatEfficiency(eff)));
         }
 
-        if ("steam".equals(type)) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam_shutdown_rule").withStyle(net.minecraft.ChatFormatting.GOLD));
-            long steamAmt = data.getLong(NBT_STEAM_AMT);
-            long steamCap = data.getLong(NBT_STEAM_CAP);
-            if (steamCap > 0) {
-                int steamPct = (int) Math.min(100, steamAmt * 100 / steamCap);
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.steam",
-                        format(steamAmt), format(steamCap), steamPct));
-            }
-            long waterAmt = data.getLong(NBT_WATER_AMT);
-            long waterCap = data.getLong(NBT_WATER_CAP);
-            if (waterCap > 0) {
-                int waterPct = (int) Math.min(100, waterAmt * 100 / waterCap);
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.water",
-                        format(waterAmt), format(waterCap), waterPct));
-            }
-
-            if (data.getBoolean(NBT_SHUTDOWN)) {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.shutdown").withStyle(net.minecraft.ChatFormatting.RED));
-            } else if (!data.getBoolean(NBT_ENABLED)) {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.off"));
-            } else if (!data.getBoolean("gt_eng_working")) {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.preheating", pct));
-            } else {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.status.running", pct));
-            }
-        }
     }
+
+    private static void writeTank(CompoundTag data, String key, gregtech.engine.fluid.FluidTankGT tank, String fluidName) {
+        if (tank == null) return;
+        var fallback = gregtech.content.registry.GTFluids.still(fluidName);
+        var fluid = tank.getFluid();
+        var type = fluid.isEmpty() && fallback != null ? fallback.get() : fluid.getFluid();
+        data.put("gt_eng_tank_" + key, FluidView.writeDefault(
+                JadeFluidObject.of(type, tank.getAmount()), tank.getCapacity()));
+    }
+
+    private static void appendSteam(ITooltip tooltip, BlockAccessor accessor, CompoundTag data,
+                                    long stored, long capacity, long output) {
+//? if >=1.21.1 {
+        /*tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE);
+*///?} else {
+        tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE);
+//?}
+        JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + format(output) + " ")
+                .append(gregtech.client.EnergyText.unit("KU")).append("/t"));
+        int percent = gregtech.content.energy.BoilerGauge.percent(stored, capacity);
+        if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.engine.ku_storage",
+                format(stored), format(capacity), percent);
+        for (String key : new String[] {"steam", "water"}) {
+            if (!data.contains("gt_eng_tank_" + key)) continue;
+            var view = FluidView.readDefault(data.getCompound("gt_eng_tank_" + key));
+            if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
+                    : Component.translatable("jade.fluid", view.fluidName, view.current)));
+        }
+        boolean venting = data.getBoolean(NBT_SHUTDOWN) && stored > 0;
+        boolean running = data.getBoolean("gt_eng_working") && !venting && data.getBoolean(NBT_ENABLED);
+        String state = venting ? "jade.gt6ce.engine.overload_protection"
+                : "jade.gt6ce.boiler.state." + (!data.getBoolean(NBT_ENABLED) || stored <= 0 ? "stopped"
+                        : running ? "running" : "preheating");
+        Component label = Component.translatable("jade.gt6ce.boiler.gauge", Component.translatable(state), percent);
+        tooltip.add(new BoilerGaugeElement(gregtech.content.energy.BoilerGauge.fill(stored, capacity), label, running));
+    }
+
+    @Override public int getDefaultPriority() { return 1001; }
 
     @Override
     public ResourceLocation getUid() {

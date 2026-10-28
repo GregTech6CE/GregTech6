@@ -142744,6 +142744,11 @@
   "jade.gt6ce.time.tick": "%s tick",
   "jade.gt6ce.machine.overloaded": "机器过载",
   "jade.gt6ce.machine.insufficient_energy": "能量输入不足",
+  "jade.gt6ce.machine.no_energy_input": "无能量输入",
+  "jade.gt6ce.omni.sensor_over_limit": "超过测量上限",
+  "jade.gt6ce.omni.sneak_attach_cover": "潜行以贴上覆盖板",
+  "jade.gt6ce.engine.overload_protection": "过载保护",
+  "jade.gt6ce.engine.ku_storage": "KU 储量：%s / %s KU（%s%%）",
   "jade.gt6ce.machine.recipe_outputs": "配方输出：",
   "jade.gt6ce.boiler.dry_heat": "干烧警告 — 热量积累：%s"
 }

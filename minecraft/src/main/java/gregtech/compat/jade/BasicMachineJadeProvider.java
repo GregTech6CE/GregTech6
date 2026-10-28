@@ -137,7 +137,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                 tooltip.add(new MachineEnergyElement(rates[1], rates[0], rates[2], average, unit, overloaded));
                 if (overloaded) tooltip.add(Component.translatable("jade.gt6ce.machine.overloaded")
                         .withStyle(net.minecraft.ChatFormatting.GOLD));
-                else if (average <= 0 || average < rates[1])
+                else if (average > 0 && average < rates[1])
                     tooltip.add(Component.translatable("jade.gt6ce.machine.insufficient_energy")
                             .withStyle(net.minecraft.ChatFormatting.AQUA));
             }
@@ -162,6 +162,9 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             renderItems(tooltip, accessor, data.getList(role + "Items", 10));
             if (role.equals("pending") && data.getInt("more") > 0) line(tooltip, "more_pending", data.getInt("more"));
             renderFluids(tooltip, accessor, data.getList(role + "Fluids", 10));
+            if (role.equals("pending") && (!data.getList("pendingItems", 10).isEmpty()
+                    || !data.getList("pendingFluids", 10).isEmpty()))
+                tooltip.add(snownee.jade.api.ui.IElementHelper.get().spacer(0, 9));
         }
         if (data.getBoolean("ignition")) line(tooltip, "needs_ignition");
         if (data.getBoolean("cokeHint")) line(tooltip, "coke_recipe_hint");
