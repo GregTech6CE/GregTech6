@@ -57,6 +57,9 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         setSpec(((BasicMachineBlock)state.getBlock()).basicSpec());
     }
     @Override public StructureDefinition structureDefinition() { return definition; }
+    @Override protected java.util.List<LargeMachineLayouts.Cell> structureCells() {
+        return FusionStructure.CELLS;
+    }
     /** CPU positions accept any processor type; the aggregates enforce the 3/12/12 split. */
     private java.util.List<CompiledPattern.FixedCell> structureCells(Direction front) {
         var cells=new java.util.ArrayList<CompiledPattern.FixedCell>(FusionStructure.CELLS.size());
@@ -84,6 +87,19 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
                 p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
                 (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),
                 this::releaseFusionPart)!=StructureClaims.Result.FAILED;
+    }
+    @Override public void applyIncompleteStructure(PatternMatch match) {
+        if (level == null || isRemoved()) return;
+        var candidates = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var fixed : match.fixedCells()) {
+            if (fixed.cell().role() != MultiblockLayout.Role.AIR
+                    && level.getBlockEntity(fixed.pos()) instanceof MultiblockPortBlockEntity part
+                    && part.canBind(worldPosition)) candidates.put(fixed.pos(), fixed.cell().role());
+        }
+        StructureClaims.update(this, fusionBindings, candidates,
+                p -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).canBind(worldPosition),
+                (p, r) -> ((MultiblockPortBlockEntity) level.getBlockEntity(p)).bind(worldPosition, r),
+                this::releaseFusionPart);
     }
     @Override public void releaseStructureClaims() {
         fusionBindings.clear(this::releaseFusionPart);
