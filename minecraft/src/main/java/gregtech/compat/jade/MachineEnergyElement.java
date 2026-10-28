@@ -20,10 +20,11 @@ final class MachineEnergyElement extends Element {
 
     MachineEnergyElement(long min, long rated, long max, double average, String unit, boolean overloaded) {
         double multiplier = average < min ? 0 : average / rated;
-        Component label = average <= 0 ? Component.translatable("jade.gt6ce.machine.no_energy_input")
+        Component label = average <= 0
+                ? Component.translatable("jade.gt6ce.machine.no_energy_input")
                 : Component.literal(JadeText.decimal(average, 2) + " ")
-                .append(gregtech.client.EnergyText.unit(unit))
-                .append("/t  " + JadeText.decimal(multiplier, 2) + "×");
+                        .append(gregtech.client.EnergyText.unit(unit))
+                        .append("/t  " + JadeText.decimal(multiplier, 2) + "×");
         double position = average < min
                 ? 0
                 : average <= rated
