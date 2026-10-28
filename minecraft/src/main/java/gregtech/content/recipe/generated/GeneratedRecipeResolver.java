@@ -180,6 +180,10 @@ public final class GeneratedRecipeResolver {
 
     static void registerSource(boolean optimize, String mapName, long eut, long dur, long[] chances,
             String[] itemIn, String[] fluidIn, String[] fluidOut, String[] itemOut) {
+        // The explicit five-form family preserves real dust blocks and all source groups.
+        // Do not import the obsolete single row through the legacy blockDust -> dust fallback.
+        if (gregtech.content.recipe.ConcreteMixerRecipes.isLegacyImport(mapName, eut, dur,
+                itemIn, fluidIn, fluidOut, itemOut)) { skipped++; return; }
         // GT6 1.7 treated these metadata variants as ordinary stone. Modern Minecraft assigns
         // them distinct materials; explicit native rows are registered before the import.
         if ((mapName.equals("Lathe") || mapName.equals("Extruder")) && itemIn.length > 0

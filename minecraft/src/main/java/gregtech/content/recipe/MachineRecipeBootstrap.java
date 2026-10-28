@@ -72,6 +72,7 @@ public final class MachineRecipeBootstrap {
 *///?}
         runStep("FuelRecipeLoader", new FuelRecipeLoader());
         runStep("ChemicalRecipeLoader", new ChemicalRecipeLoader());
+        register("ConcreteMixerRecipes", ConcreteMixerRecipes::register);
         runStep("FusionRecipeLoader", new FusionRecipeLoader());
         runStep("MatterRecipeLoader", new MatterRecipeLoader());
         register("VanillaRecoveryRecipes", VanillaRecoveryRecipes::register);
