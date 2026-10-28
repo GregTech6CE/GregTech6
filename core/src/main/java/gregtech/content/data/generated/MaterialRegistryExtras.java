@@ -540,6 +540,7 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Carmot", "Carmot");
         GTMaterialRegistry.setDisplayName("Cassiterite", "Cassiterite");
         GTMaterialRegistry.setDisplayName("CastIron", "Cast Iron");
+        GTMaterialRegistry.setDisplayName("Castlerock", "Castlerock");
         GTMaterialRegistry.setDisplayName("CatsEye", "Cat's Eye");
         GTMaterialRegistry.setDisplayName("CdInAgAlloy", "Cd-In-Ag-Alloy");
         GTMaterialRegistry.setDisplayName("Cedar", "Cedar");
@@ -947,6 +948,7 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("MartianVitriol", "Martian Vitriol");
         GTMaterialRegistry.setDisplayName("Mauftrium", "Mauftrium");
         GTMaterialRegistry.setDisplayName("Maxixe", "Maxixe");
+        GTMaterialRegistry.setDisplayName("Mazestone", "Mazestone");
         GTMaterialRegistry.setDisplayName("MeatCooked", "MeatCooked");
         GTMaterialRegistry.setDisplayName("MeatRaw", "MeatRaw");
         GTMaterialRegistry.setDisplayName("MeatRotten", "MeatRotten");

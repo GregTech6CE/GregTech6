@@ -154,6 +154,7 @@ public final class GregTechNeoForge {
         gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();
         gregtech.content.registry.GTBlackSands.registerCompositions();
         VanillaUnificationLoader.register();
+        gregtech.content.material.ModMaterialUnificationLoader.register();
         VanillaCompositionLoader.register();
         gregtech.content.recipe.PanelMaterialRegistration.register();
         gregtech.content.recipe.TransportMaterialRegistration.register();

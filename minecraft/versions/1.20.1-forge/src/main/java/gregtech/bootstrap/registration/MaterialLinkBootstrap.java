@@ -8,6 +8,7 @@ public record MaterialLinkBootstrap() implements InitializationStep {
     public void run() {
         GTMaterialRegistry.postInit();
         gregtech.content.material.VanillaUnificationLoader.register();
+        gregtech.content.material.ModMaterialUnificationLoader.register();
         gregtech.content.material.VanillaCompositionLoader.register();
     }
 }

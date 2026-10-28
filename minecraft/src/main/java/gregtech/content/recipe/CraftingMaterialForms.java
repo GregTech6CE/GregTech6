@@ -171,6 +171,11 @@ public final class CraftingMaterialForms {
         if (common != null) {
             addTag(choices, "forge:" + common + "/" + material);
             addTag(choices, "c:" + common + "/" + material);
+            String alternate = MaterialTagAliases.alternate(material);
+            if (alternate != null) {
+                addTag(choices, "forge:" + common + "/" + alternate);
+                addTag(choices, "c:" + common + "/" + alternate);
+            }
         }
 //? if >=1.21.1 {
         /*return Ingredient.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, choices).getOrThrow();

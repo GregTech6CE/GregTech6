@@ -88,6 +88,7 @@ public final class MaterialModTags {
         ImportedMaterialData.ButterSalted.mod(ModReferences.HaC);
         ImportedMaterialData.CaF2.mod(ModReferences.RoC);
         ImportedMaterialData.Carmot.mod(ModReferences.MET);
+        ImportedMaterialData.STONES.Castlerock.mod(ModReferences.TF);
         ImportedMaterialData.Cd_In_Ag_Alloy.mod(ModReferences.RoC);
         ImportedMaterialData.Celenegil.mod(ModReferences.MET);
         ImportedMaterialData.Ceramic.mod(ModReferences.GT);
@@ -278,6 +279,7 @@ public final class MaterialModTags {
         ImportedMaterialData.Manasteel.mod(ModReferences.BOTA);
         ImportedMaterialData.Manyullyn.mod(ModReferences.TiC);
         ImportedMaterialData.Mauftrium.mod(ModReferences.ALF);
+        ImportedMaterialData.STONES.Mazestone.mod(ModReferences.TF);
         ImportedMaterialData.MeatCooked.mod(ModReferences.MFR);
         ImportedMaterialData.MeatRaw.mod(ModReferences.MFR);
         ImportedMaterialData.MeatRotten.mod(ModReferences.MC);
