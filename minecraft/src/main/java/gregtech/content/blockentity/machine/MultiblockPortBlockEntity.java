@@ -94,6 +94,15 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                 &&!gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))return 0;
         var host=owner();
         if(host==null) {
+            // Atomic structures have no transport bindings until complete. Tool lookup is read-only.
+            var target = level instanceof ServerLevel server
+                    ? gregtech.engine.multiblock.tracking.StructureWatchIndex.toolTarget(server, worldPosition) : null;
+            if (target != null) {
+                if (gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.BUILDER_WAND))
+                    return MultiblockTools.buildTracked(context, target);
+                MultiblockTools.appendDiagnosis(target, messages);
+                return MultiblockToolRules.MAGNIFIER_COST;
+            }
             messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.NO_CONTROLLER));
             return MultiblockToolRules.MAGNIFIER_COST;
         }
