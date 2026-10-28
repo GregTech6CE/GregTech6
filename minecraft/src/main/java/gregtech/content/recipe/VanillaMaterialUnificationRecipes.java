@@ -34,6 +34,7 @@ public final class VanillaMaterialUnificationRecipes {
             "Gold",
             "Copper",
             "Netherite",
+            "AncientDebris",
             "Diamond",
             "Emerald",
             "Amethyst",

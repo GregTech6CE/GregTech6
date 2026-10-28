@@ -43,8 +43,45 @@ public final class OriginalHandCraftingRows {
         int engines = rotationEngines(data), pumps = rotationalPumps(data);
         int wire = wires(data), pipe = pipes(data), anvil = anvils(data), bar = bars(data);
         int circuit = circuits(data), cell = cells(data), store = storage(data);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={}",
-                gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store);
+        int wall = metalWalls(data);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={} walls={}",
+                gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store, wall);
+    }
+
+    /**
+     * Loader_MultiTileEntities:1143-1153: the eleven metal walls are four plates shaped with a
+     * wrench and a hard hammer. Dense walls have no hand row in the source.
+     */
+    private static int metalWalls(Map<ResourceLocation, byte[]> recipes) {
+        record Wall(int originalId, String path, String material) {}
+        var walls = List.of(
+                new Wall(18002, "stainless_steel_wall", "StainlessSteel"),
+                new Wall(18003, "tungstensteel_wall", "TungstenSteel"),
+                new Wall(18004, "tungsten_wall", "Tungsten"),
+                new Wall(18005, "adamantium_wall", "Adamantium"),
+                new Wall(18006, "titanium_wall", "Titanium"),
+                new Wall(18007, "invar_wall", "Invar"),
+                new Wall(18008, "galvanized_steel_wall", "SteelGalvanized"),
+                new Wall(18009, "steel_wall", "Steel"),
+                new Wall(18010, "bronze_wall", "Bronze"),
+                new Wall(18011, "lead_wall", "Lead"),
+                new Wall(18012, "tantalum_hafnium_carbide_wall", "Ta4HfC5"));
+        int added = 0;
+        for (var wall : walls) {
+            var plate = GTItems.getStack(MaterialPrefix.plate,
+                    gregtech.engine.material.GTMaterialRegistry.get(wall.material()), 1);
+            if (plate.isEmpty()) throw new IllegalStateException("Missing wall plate: " + wall.material());
+            var output = new ItemStack(gregtech.content.multiblock.LargeMachineParts.block(wall.originalId()));
+            // Tool identities, not one item: any wrench (including the monkey wrench) and hammer
+            // family the source's OreDict names accept, plus the single-use forms.
+            added += register(recipes, "wall/" + wall.path(), new String[] {"wPP", "hPP"},
+                    Map.of('P', gregtech.content.recipe.CraftingMaterialForms.ingredient(plate),
+                            'w', Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/wrench"))),
+                            'h', Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/hammer")))), output);
+        }
+        if (added != walls.size())
+            throw new IllegalStateException("Original metal wall hand recipes could not be registered");
+        return added;
     }
 
     /** Loader_Recipes_Woods:174/195: one log or beam and any wooden stick, mirrored. */
@@ -571,7 +608,9 @@ public final class OriginalHandCraftingRows {
     private static Ingredient requiredTool(GTToolType type) {
         ItemStack stack = tool(type);
         if (stack.isEmpty()) throw new IllegalStateException("Missing axle crafting tool " + type.id());
-        return Ingredient.of(stack);
+        // GT6 matches the OreDict tool name, not one item: accept the whole family (monkey wrench,
+        // pocket tools, single-use tools) through the identity tag the tool pack publishes.
+        return Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/" + type.id())));
     }
 
     private static int circuits(Map<ResourceLocation, byte[]> recipes) {

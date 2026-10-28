@@ -483,6 +483,11 @@ public final class OvenRecipeBridge {
                 : output.is(net.minecraft.world.item.Items.GOLD_INGOT) ? net.minecraft.world.item.Items.RAW_GOLD
                 : output.is(net.minecraft.world.item.Items.IRON_INGOT) ? net.minecraft.world.item.Items.RAW_IRON : null;
         if (raw != null) return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(raw));
+        // Ancient debris has no GT material furnace row (MELTING without FURNACE). Dropping the
+        // vanilla debris -> scrap rows would strand both the scrap and the netherite ingot recipe.
+        if (output.is(net.minecraft.world.item.Items.NETHERITE_SCRAP))
+            return java.util.Arrays.stream(inputs)
+                    .allMatch(stack -> stack.is(net.minecraft.world.item.Items.ANCIENT_DEBRIS));
         if (recipe.getType() != RecipeType.SMELTING) return false;
         if (output.is(net.minecraft.world.item.Items.STONE))
             return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.COBBLESTONE));

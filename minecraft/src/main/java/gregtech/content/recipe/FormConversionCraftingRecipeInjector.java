@@ -33,9 +33,11 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Loader_Recipes_Handlers:552-625 material-form conversions. Single-input variants select their
- * output in fixed grid slots in this port; dust uses small then tiny as requested. Other outputs
- * retain source prefix registration order, and missing outputs still reserve their source offset. XToY requires exactly the same material in every occupied cell.
+ * Loader_Recipes_Handlers:552-625 material-form conversions. Single-input variants follow the
+ * source's AdvancedCrafting1ToY rule: the empty slots before the item select the output by modulo;
+ * dust uses small then tiny as requested. Other outputs retain source prefix registration order,
+ * and missing outputs still reserve their source offset. XToY requires exactly the same material
+ * in every occupied cell.
  */
 public final class FormConversionCraftingRecipeInjector {
     private static final List<Conversion> ONE_TO_MANY = OriginalFormConversions.FIXED.stream().filter(Conversion::single).toList();

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import net.minecraft.world.item.crafting.Ingredient;
 
-/** A valid 3x3 example of fixed-slot or remaining-slot placement. No client dependencies. */
+/** A valid 3x3 example of the source's modulo-slot placement. No client dependencies. */
 public final class FormConversionDisplay {
     private FormConversionDisplay() {}
 
