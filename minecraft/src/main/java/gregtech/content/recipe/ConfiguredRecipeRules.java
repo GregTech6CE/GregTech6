@@ -12,7 +12,7 @@ public final class ConfiguredRecipeRules {
     private ConfiguredRecipeRules() {}
 
     public static void apply(Map<ResourceLocation, JsonElement> recipes, ResourceManager resources) {
-        recipes.replaceAll((id, json) -> positionBoneDye(id, unifyOutput(id, restore(id, json, resources))));
+        recipes.replaceAll((id, json) -> positionBoneDye(id, unifyIngredients(id, unifyOutput(id, restore(id, json, resources)))));
         recipes.entrySet().removeIf(entry -> !GregTechConfig.recipeEnabled(entry.getKey().toString())
                 || (!GregTechConfig.Rule.VANILLA_STORAGE_BLOCK_RECIPES.enabled() && isVanillaStorageBlockRecipe(entry.getKey()))
                 || disabled(entry.getValue()));
@@ -82,6 +82,28 @@ public final class ConfiguredRecipeRules {
         var copy = object.deepCopy();
         copy.getAsJsonObject("result").addProperty(key, target);
         return copy;
+    }
+
+    private static JsonElement unifyIngredients(ResourceLocation id, JsonElement json) {
+        if (!id.getNamespace().equals("gt6ce") || !json.isJsonObject()) return json;
+        var copy = json.getAsJsonObject().deepCopy();
+        for (String key : new String[] {"key", "ingredient", "ingredients", "base", "addition", "template"}) {
+            if (copy.has(key)) unifyIngredient(copy.get(key));
+        }
+        return copy;
+    }
+
+    private static void unifyIngredient(JsonElement json) {
+        if (json.isJsonArray()) {
+            for (var child : json.getAsJsonArray()) unifyIngredient(child);
+        } else if (json.isJsonObject()) {
+            var object = json.getAsJsonObject();
+            if (object.has("nbt") || object.has("components")) return;
+            if (object.has("item") && object.get("item").isJsonPrimitive()) {
+                String target = vanillaItem(object.get("item").getAsString());
+                if (target != null) object.addProperty("item", target);
+            } else for (var child : object.entrySet()) unifyIngredient(child.getValue());
+        }
     }
 
     private static String vanillaItem(String name) {

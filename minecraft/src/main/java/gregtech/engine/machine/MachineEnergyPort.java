@@ -91,10 +91,9 @@ public final class MachineEnergyPort {
     }
 
     public void payStartup() {
-        if (startup <= 0 || auxStored <= 0) return;
-        long paid = Math.min(auxStored, startup);
-        auxStored -= paid;
-        startup -= paid;
+        var paid = BasicMachineEnergy.payStartup(auxStored, startup);
+        auxStored = paid.auxStored();
+        startup = paid.startup();
     }
 
     public long startup() {

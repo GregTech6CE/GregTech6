@@ -174,7 +174,7 @@ public final class CoverAttachmentBehaviors {
     private static boolean drainsAtGtFluid(Direction side, Fluid fluid) {
         if (side.getAxis().isHorizontal()) return true;
         return gregtech.engine.fluid.FluidHazards.isLighterThanAir(fluid)
-                ? side == Direction.UP : side == Direction.DOWN;
+                ? side == Direction.DOWN : side == Direction.UP;
     }
 
     /**

@@ -47,6 +47,8 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         data.putString("unit", spec.energyType());
         data.putLongArray("energy", new long[]{spec.energyIn(), spec.energyInMin(), spec.energyInMax()});
         data.putDouble("average", machine.averageEnergyInput());
+        // Fusion's controller counts ticks; ordinary machines count energy work.
+        data.putBoolean("timed", machine instanceof gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity);
         data.putBoolean("enabled", control.enabled());
         data.putBoolean("active", control.active());
         data.putLong("progress", control.progress());
@@ -130,19 +132,25 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         String unit = data.getString("unit");
         double average = data.getDouble("average");
         if (rates.length == 3) {
-            JadeText.detail(tooltip, "jade.gt6ce.energy.in", format(rates[0]), unit);
-            JadeText.detail(tooltip, "jade.gt6ce.energy.range", format(rates[1]), format(rates[2]), unit);
-            JadeText.detail(tooltip, "jade.gt6ce.energy.actual", JadeText.decimal(average, 2), unit);
-            if (rates[0] > 0) JadeText.detail(tooltip, "jade.gt6ce.energy.multiplier",
-                    JadeText.decimal(average / rates[0], 2), format(rates[0]), unit);
+            if (rates[0] > 0) tooltip.add(new MachineEnergyElement(rates[1], rates[0], rates[2], average, unit));
+            if (accessor.showDetails()) {
+                JadeText.detail(tooltip, "jade.gt6ce.energy.in", format(rates[0]), unit);
+                JadeText.detail(tooltip, "jade.gt6ce.energy.range", format(rates[1]), format(rates[2]), unit);
+            }
         }
-        JadeText.detail(tooltip, "jade.gt6ce.basic_machine.items", data.getInt("occupied"), data.getInt("slots"));
-        line(tooltip, "state", JadeText.status("jade.gt6ce.omni." +
+        tooltip.add(JadeText.status("jade.gt6ce.omni." +
                 (!data.getBoolean("enabled") ? "disabled" : data.getBoolean("active") ? "working" : "waiting")));
         long progress = data.getLong("progress"), work = data.getLong("work");
-        if (work > 0) line(tooltip, "progress", progress, work, gregtech.content.energy.BoilerGauge.percent(progress, work));
+        if (work > 0) {
+            // Progress is energy work, not ticks. While paused use the job's minimum power.
+            double power = data.getBoolean("timed") ? 1 : Math.max(Math.max(1, data.getLong("recipe")), average);
+            tooltip.add(JadeBars.time(progress, work, power));
+        }
         if (data.getLong("recipe") > 0) line(tooltip, "recipe_energy", data.getLong("recipe"), unit, data.getInt("parallel"));
         for (String role : new String[]{"pending", "input", "output", "program"}) {
+            if (role.equals("pending") && (!data.getList("pendingItems", 10).isEmpty()
+                    || !data.getList("pendingFluids", 10).isEmpty()))
+                tooltip.add(Component.translatable("jade.gt6ce.machine.recipe_outputs").withStyle(net.minecraft.ChatFormatting.GRAY));
             renderItems(tooltip, accessor, role, data.getList(role + "Items", 10));
             if (role.equals("pending") && data.getInt("more") > 0) line(tooltip, "more_pending", data.getInt("more"));
             renderFluids(tooltip, accessor, role, data.getList(role + "Fluids", 10));
@@ -152,8 +160,8 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
     }
 
     private static void heading(ITooltip tooltip, String kind, String role) {
+        if (role.equals("pending")) return;
         var color = switch (role) {
-            case "pending" -> net.minecraft.ChatFormatting.GOLD;
             case "input" -> net.minecraft.ChatFormatting.AQUA;
             case "output" -> net.minecraft.ChatFormatting.GREEN;
             default -> net.minecraft.ChatFormatting.WHITE;
@@ -171,9 +179,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 *///?} else {
             var stack = ItemStack.of(items.getCompound(i));
 //?}
-            var icon = IElementHelper.get().item(stack);
-            icon.message(Component.translatable("jade.gt6ce.omni.item_count", stack.getHoverName(), stack.getCount()).getString());
-            if (i % 8 == 0) tooltip.add(icon); else tooltip.append(icon);
+            JadeText.item(tooltip, stack);
         }
     }
 

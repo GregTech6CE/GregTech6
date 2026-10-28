@@ -73,6 +73,7 @@ public final class FoodItemRecipes {
     public static int register() {
         SKIPPED.clear();
         registered = 0;
+        staples();
         smelting();
         slicing();
         mixing();
@@ -86,6 +87,53 @@ public final class FoodItemRecipes {
 //?}
                 registered, SKIPPED.size(), SKIPPED);
         return registered;
+    }
+
+    /** Loader_Recipes_Food's ANY.Flour and raw-meat listeners, and Loader_Recipes_Crops.cropWheat. */
+    private static void staples() {
+        var dough = food("dough", 2);
+        for (var material : gregtech.content.data.MaterialGroups.Flour.getReRegistrations()) {
+            var flour = GTItems.getStack(MaterialPrefix.dust, material.resolve());
+            if (flour.isEmpty() || dough.isEmpty()) continue;
+            for (String water : new String[] {"Water", "MnWtr", "DistW", "SpDew"}) {
+                var liquid = water.equals("Water")
+                        ? new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 250) : fluid(water, 250);
+                if (!liquid.isEmpty() && MachineRecipeMaps.Mixer.addRecipe1(false, 16, 16,
+                        flour.copy(), liquid, FluidStack.EMPTY, dough.copy()) != null) registered++;
+            }
+        }
+        var flour = GTItems.getStack(MaterialPrefix.dust, GTMaterialRegistry.get("Wheat"));
+        var grass = item("gt6ce:grass_2", 1);
+        if (!flour.isEmpty() && !grass.isEmpty()) {
+            for (var map : new gregtech.engine.recipe.RecipeMap[] {MachineRecipeMaps.Mortar, MachineRecipeMaps.Shredder})
+                if (map.addRecipe1(false, 16, 64, new ItemStack(Items.WHEAT), flour.copy(), grass.copy()) != null) registered++;
+        }
+        // Use recorded quantities (e.g. beef has 2U), not one dust for every cut of meat.
+        for (var entry : gregtech.engine.material.ItemMaterialRegistry.entries().entrySet()) {
+            var data = entry.getValue();
+            if (data.prefix() != null) continue;
+            // A prepared dish that merely contains meat is not a raw cut of meat.
+            if (data.components().stream().anyMatch(c -> !c.material().getName().equals("MeatRaw")
+                    && !c.material().getName().equals("Bone"))) continue;
+            long amount = data.components().stream().filter(c -> c.material().getName().equals("MeatRaw"))
+                    .mapToLong(gregtech.api.material.MaterialComponent::amount).sum();
+            if (amount <= 0) continue;
+            var output = meatDust(amount);
+            if (!output.isEmpty() && MachineRecipeMaps.Mortar.addRecipe1(false, 16, 16,
+                    new ItemStack(entry.getKey()), output) != null) registered++;
+        }
+    }
+
+    private static ItemStack meatDust(long amount) {
+        for (var prefix : new MaterialPrefix[] {MaterialPrefix.dust, MaterialPrefix.dustSmall,
+                MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72}) {
+            long unit = prefix.getMaterialWeight();
+            if (amount % unit == 0 && amount / unit <= 64) {
+                var result = GTItems.getStack(prefix, GTMaterialRegistry.get("MeatRaw"), (int) (amount / unit));
+                if (!result.isEmpty()) return result;
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     // ── 1. Smelting (GT6 MultiItemFood.java RM.add_smelting rows) ─────────────────────────────────

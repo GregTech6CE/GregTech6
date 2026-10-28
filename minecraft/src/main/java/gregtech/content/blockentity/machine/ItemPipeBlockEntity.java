@@ -1,10 +1,10 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.machine.ITileEntityAdjacentInventoryUpdatable;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.cover.CoverItems;
+import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.content.cover.PanelCoverHost;
@@ -22,13 +22,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
 *///?} else {
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 //?}
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +46,7 @@ import java.util.*;
  * a transferred-item counter alone does not implement GT6's progress interface.
  */
 public class ItemPipeBlockEntity extends BlockEntity
-        implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PanelCoverHost {
+        implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PanelCoverHost, CoverStore.Hooks {
     private final ItemPipeSpec spec;
     private final NonNullList<ItemStack> inventory;
     private long transferredThisSecond;
@@ -67,8 +65,6 @@ public class ItemPipeBlockEntity extends BlockEntity
     private static final String NBT_DISABLED_OUTPUTS = "gt.disabled_outputs";
     private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
     private static final String NBT_TRANSFERRED = "gt.transferred";
-    /** Cover NBT key prefix, shared with {@link BasicMachineBlockEntity} and {@link FluidPipeBlockEntity}. */
-    private static final String NBT_COVER_PREFIX = "gt_cover_";
 
 //? if >=1.21.1 {
 //?} else {
@@ -78,24 +74,15 @@ public class ItemPipeBlockEntity extends BlockEntity
     // ── Cover state: zero cost when unused ───────────────────────────────────
     //
     // An item pipe is the hottest host the port has: serverTick runs for every pipe of every loaded
-    // chunk, and the routing below only runs on every fourth tick. So a coverless pipe must not pay
-    // for the cover system at all:
-    //   * `covers` is null until the first cover is attached — no ItemStack[6] per pipe;
-    //   * `hasCovers` is the single boolean the tick pass and the capability test, so a pipe without
-    //     covers does one field read and never walks a face;
-    //   * `panels` is created on first attach rather than eagerly in the field initialiser as
-    //     {@link BasicMachineBlockEntity} does, because {@link PanelCoverRuntime} itself allocates an
-    //     int[6] and a boolean[6]; this is the one place this class deliberately does not copy the
-    //     machine's eager field;
+    // chunk, and the routing below only runs on every fourth tick. CoverStore keeps the face array
+    // null and the panel runtime uncreated until the first cover is attached, so a coverless pipe
+    // pays one boolean read on the tick path and never walks a face:
     //   * `faceHandlers` is null until a face actually carries an item filter or a retriever;
     //   * the retriever's pending flags are six bits of one byte rather than the machine's
     //     `boolean[6]` — see `retrieverPending`.
 
-    /** One cover item per {@link Direction#ordinal()}; {@code null} until a cover is attached. */
-    private @Nullable ItemStack[] covers;
-
-    /** Whether any face carries a cover. The cover tick pass and the face handler both hang off this. */
-    private boolean hasCovers;
+    /** Shared face storage, lazy panel runtime and `gt_cover_*` persistence. */
+    private final CoverStore coverStore = new CoverStore(this);
 
     /**
      * The cover tick counter, standing in for GT6's {@code SERVER_TIME} / {@code aTimer} exactly as
@@ -103,9 +90,6 @@ public class ItemPipeBlockEntity extends BlockEntity
      * covered server tick, independent of {@code level.getGameTime()}.
      */
     private long coverTicks;
-
-    /** Created by {@link #panels()} on first use, never in the constructor. */
-    private @Nullable PanelCoverRuntime panels;
 
     /** Per-face filter views, built by {@link #faceHandler} and dropped by {@link #invalidateCaps}. */
 //? if >=1.21.1 {
@@ -170,7 +154,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         //     retriever fire every 80 ticks instead of every 20).
         // Zero cost when unused: `hasCovers` is false for every coverless pipe, so this is a single
         // field read and returns — no face is walked, nothing is allocated, nothing is dispatched.
-        if (hasCovers) tickCovers();
+        if (coverStore.hasCovers()) tickCovers();
 
         // Reset throughput counter every 20 ticks
         if (--ticksUntilReset <= 0) {
@@ -201,86 +185,63 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     @Override
     public ItemStack getCover(Direction side) {
-        return covers == null ? ItemStack.EMPTY : covers[side.ordinal()];
+        return coverStore.get(side);
     }
 
-    public boolean hasCovers() { return hasCovers; }
+    public boolean hasCovers() { return coverStore.hasCovers(); }
     @Override public PanelCoverRuntime panels() {
-        if(panels==null)panels=new PanelCoverRuntime(this);
-        return panels;
+        return coverStore.panels();
     }
 
     /** Item filters reject pipe-to-pipe faces; attempted placement disconnects that face. */
     @Override
-    public boolean attachCover(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !getCover(side).isEmpty()
-                || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
-        if(CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(stack))&&level!=null
-                &&level.getBlockEntity(worldPosition.relative(side)) instanceof ItemPipeBlockEntity){
-            gregtech.content.cover.CoverConnections.update(this,side,false);return false;
+    public boolean canAttach(Direction side, ItemStack stack) {
+        if (CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(stack)) && level != null
+                && level.getBlockEntity(worldPosition.relative(side)) instanceof ItemPipeBlockEntity) {
+            gregtech.content.cover.CoverConnections.update(this, side, false);
+            return false;
         }
-        if(!panels().canAttach(side,stack))return false;
-        if (covers == null) covers = emptyCovers();
-        covers[side.ordinal()] = stack.copyWithCount(1);
-        hasCovers = true;
-        panels().attached(side);
-        invalidateFaceHandler(side);
-        syncCovers();
         return true;
     }
 
-    /**
-     * Removes the cover on a face. Mirrors {@link BasicMachineBlockEntity#removeCover(Direction)}
-     * and {@link FluidPipeBlockEntity#removeCover(Direction)}, with {@link PanelCoverRuntime#afterTick()}
-     * in the place of the machine's {@code updateCoverSignals()}: the signals a pipe face can emit are
-     * the panel ones, and {@code afterTick} is what recomputes and publishes them.
-     */
     @Override
-    public ItemStack removeCover(Direction side) {
-        if (covers == null) return ItemStack.EMPTY;
-        ItemStack cover = covers[side.ordinal()];
-        if (cover.isEmpty()) return ItemStack.EMPTY;
-        covers[side.ordinal()] = ItemStack.EMPTY;
-        hasCovers = false;
-        for (ItemStack other : covers) if (!other.isEmpty()) { hasCovers = true; break; }
+    public boolean attachCover(Direction side, ItemStack stack) {
+        return coverStore.attach(side, stack);
+    }
+
+    @Override
+    public void attached(Direction side, ItemStack stack) {
         invalidateFaceHandler(side);
-        panels().beforeTick();
+        syncCovers();
+    }
+
+    /** The signals a pipe face can emit are the panel ones; {@code afterTick} publishes them. */
+    @Override
+    public void removed(Direction side, ItemStack stack) {
+        invalidateFaceHandler(side);
         panels().afterTick();
         syncCovers();
-        return panels().removed(side,cover);
+    }
+
+    @Override
+    public ItemStack removeCover(Direction side) {
+        return coverStore.remove(side);
     }
 
     /**
-     * The pipe's drop-on-break for covers, i.e. the cover loop of
-     * {@link BasicMachineBlockEntity#dropContents()} and {@link FluidPipeBlockEntity#dropCovers()}.
-     * Called from {@link ItemPipeBlock#onRemove}, next to {@link #dropStoredItems()} — that is where
-     * this pipe's own removal logic lives, and the block entity is still resolvable there, which is
-     * the same call site shape the machine block has.
+     * The pipe's drop-on-break for covers; called from {@link ItemPipeBlock#onRemove}, next to
+     * {@link #dropStoredItems()} — that is where this pipe's own removal logic lives and the block
+     * entity is still resolvable there.
      */
     public void dropCovers() {
-        if (covers == null) return;
-        for (int i = 0; i < covers.length; i++) {
-            if(!gregtech.content.cover.CoverDrops.retained(this))BlockContents.drop(this, covers[i]);
-            covers[i] = ItemStack.EMPTY;
-        }
-        hasCovers = false;
+        if (!coverStore.hasCovers()) return;
+        coverStore.drop();
         setChanged();
-    }
-
-    private static ItemStack[] emptyCovers() {
-        ItemStack[] array = new ItemStack[6];
-        java.util.Arrays.fill(array, ItemStack.EMPTY);
-        return array;
     }
 
     /** Cover behaviour id of a face; {@code null} when no cover is attached. */
     private String coverIdOf(Direction side) {
         return CoverItems.behavior(getCover(side));
-    }
-
-    /** Whether the covers were suspended by a controller cover, without creating the runtime. */
-    private boolean panelsStopped() {
-        return panels != null && panels.stopped();
     }
 
     private void syncCovers() {
@@ -399,9 +360,9 @@ public class ItemPipeBlockEntity extends BlockEntity
      */
     public boolean coverFilterPermits(Direction side, ItemStack candidate) {
 //? if >=1.21.1 {
-        /*return (panels==null||!panels.shuttered(side)) && CoverUtilityBehaviors.itemFilterPermits(getCover(side),panelsStopped(),candidate,level.registryAccess());
+        /*return !coverStore.shuttered(side) && CoverUtilityBehaviors.itemFilterPermits(getCover(side),coverStore.stopped(),candidate,level.registryAccess());
 *///?} else {
-        return (panels==null||!panels.shuttered(side)) && CoverUtilityBehaviors.itemFilterPermits(getCover(side), panelsStopped(), candidate);
+        return !coverStore.shuttered(side) && CoverUtilityBehaviors.itemFilterPermits(getCover(side), coverStore.stopped(), candidate);
 //?}
     }
 
@@ -428,7 +389,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * one boolean read on the transfer path.</p>
      */
     public boolean coverPermitsItemTraffic(Direction side, ItemStack candidate) {
-        if (!hasCovers) return true;
+        if (!coverStore.hasCovers()) return true;
         if (coverBlocksItemTraffic(side)) return false;
         return coverFilterPermits(side, candidate);
     }
@@ -596,11 +557,11 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     private boolean canEmitTo(Direction side) {
-        return (panels==null||!panels.shuttered(side)) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) && (disabledOutputs & (1 << side.ordinal())) == 0;
+        return !coverStore.shuttered(side) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) && (disabledOutputs & (1 << side.ordinal())) == 0;
     }
 
     private boolean canAcceptFrom(Direction side) {
-        return (panels==null||!panels.shuttered(side)) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0
+        return !coverStore.shuttered(side) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0
                 && (lastReceivedFrom < 0 || lastReceivedFrom == side.ordinal());
     }
 
@@ -797,11 +758,7 @@ public class ItemPipeBlockEntity extends BlockEntity
             ItemStack existing = inventory.get(i);
             if (existing.isEmpty()) {
                 if (targetSlot < 0) targetSlot = i;
-//? if >=1.21.1 {
-            /*} else if (ItemStack.isSameItemSameComponents(existing, stack)) {
-*///?} else {
-            } else if (ItemHandlerHelper.canItemStacksStack(existing, stack)) {
-//?}
+            } else if (gregtech.engine.stack.StackCompat.mergeable(existing, stack)) {
                 targetSlot = i;
                 break;
             }
@@ -858,18 +815,18 @@ public class ItemPipeBlockEntity extends BlockEntity
 
 //? if >=1.21.1 {
     /*public IItemHandler capabilityHandler(@Nullable Direction side) {
-        if(side!=null)return hasCovers&&isItemCoverFace(side)?faceHandler(side):sideHandler(side);return this;
+        if(side!=null)return coverStore.hasCovers()&&isItemCoverFace(side)?faceHandler(side):sideHandler(side);return this;
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             if (side != null) {
                 // Zero cost when unused: `hasCovers` is false for every coverless pipe, so the ordinary
-                // path below is byte for byte the same and no face view is ever built. A face-aware
-                // handler exists only where an item filter or a retriever actually sits, because those
-                // are the two covers whose rule is an item rule (GT6 {@code CoverFilterItem:115-127},
-                // {@code CoverRetrieverItem:138-139}).
-                if (hasCovers && isItemCoverFace(side)) return faceHandler(side).cast();
+                // path below is byte for byte the pre-cover one and no face view is ever built. A
+                // face-aware handler exists only where an item filter or a retriever actually sits,
+                // because those are the two covers whose rule is an item rule (§112 / GT6
+                // CoverFilterItem:115-127, CoverRetrieverItem:138-139).
+                if (coverStore.hasCovers() && isItemCoverFace(side)) return faceHandler(side).cast();
                 return sideHandler(side).cast();
             }
             return handler.cast();
@@ -1023,12 +980,12 @@ public class ItemPipeBlockEntity extends BlockEntity
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return panels != null && panels.shuttered(side) ? stack : super.insertItem(slot, stack, simulate);
+            return coverStore.shuttered(side) ? stack : super.insertItem(slot, stack, simulate);
         }
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return panels != null && panels.shuttered(side) ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
+            return coverStore.shuttered(side) ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
         }
     }
 
@@ -1138,65 +1095,27 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * One cover per face under the machine's own keys, written only for non-empty faces — the same
-     * shape as {@link BasicMachineBlockEntity}'s and {@link FluidPipeBlockEntity}'s cover save — and
-     * skipped entirely while no cover was ever attached (the array is still null), so a coverless pipe
-     * writes nothing.
+     * The shared flat {@code gt_cover_*} keys, written only for non-empty faces; a coverless pipe
+     * (no array yet) writes nothing. Loading a tag without cover keys clears the faces, so a cover
+     * removed on the server disappears on the client through {@link #handleUpdateTag} instead of
+     * lingering; the store recomputes {@link #hasCovers()} so the tick pass and {@link #getCapability}
+     * re-arm after a load that brings covers back.
      */
 //? if >=1.21.1 {
     /*private void saveCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    private void saveCovers(CompoundTag tag) {
-//?}
-        if (covers == null) return;
-        for (int i = 0; i < covers.length; i++) {
-//? if >=1.21.1 {
-            /*if (!covers[i].isEmpty()) tag.put(NBT_COVER_PREFIX + i, covers[i].save(lookup));
-*///?} else {
-            if (!covers[i].isEmpty()) tag.put(NBT_COVER_PREFIX + i, covers[i].save(new CompoundTag()));
-//?}
-        }
+        coverStore.save(tag,lookup);
     }
 
-    /**
-     * The cover load of {@link BasicMachineBlockEntity}, with the fluid pipe's one difference: a tag
-     * that names no cover <em>clears</em> the faces, so a cover removed on the server disappears on the
-     * client through {@link #handleUpdateTag} instead of lingering. A tag without any cover key and a
-     * pipe that never had one stay allocation-free.
-     *
-     * <p>{@link #hasCovers} is recomputed here and not only in the tag-writing direction: it is the
-     * only thing the tick pass and {@link #getCapability} test, so a load that brings covers back
-     * re-arms both.</p>
-     */
-//? if >=1.21.1 {
-    /*private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+    private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+        coverStore.load(tag,lookup);
 *///?} else {
+    private void saveCovers(CompoundTag tag) {
+        coverStore.save(tag, null);
+    }
+
     private void loadCovers(CompoundTag tag) {
+        coverStore.load(tag, null);
 //?}
-        boolean present = false;
-        for (int i = 0; i < 6 && !present; i++) present = tag.contains(NBT_COVER_PREFIX + i);
-        if (!present) {
-            if (covers != null) java.util.Arrays.fill(covers, ItemStack.EMPTY);
-            hasCovers = false;
-            return;
-        }
-        if (covers == null) covers = emptyCovers();
-        boolean any = false;
-        for (int i = 0; i < 6; i++) {
-            covers[i] = tag.contains(NBT_COVER_PREFIX + i)
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                    ? ItemStack.parseOptional(lookup,tag.getCompound(NBT_COVER_PREFIX+i)) : ItemStack.EMPTY;
-*///?} else {
-// Version-specific branch.
-                    ? ItemStack.of(tag.getCompound(NBT_COVER_PREFIX + i)) : ItemStack.EMPTY;
-//?}
-            any |= !covers[i].isEmpty();
-        }
-        hasCovers = any;
-        // GT6 re-reads each cover's stored values on load; only worth doing when one is there.
-        if (any) panels().loaded();
-        for(var side:Direction.values())gregtech.content.cover.ComponentCoverRuntime.attached(this,side);
     }
 
     @Override

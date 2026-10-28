@@ -18,9 +18,16 @@ import java.util.List;
 /** Source MultiTileEntityStick: biome/dimension wood, including dead, mossy and rotten wood. */
 public class TwigBlock extends Block {
     private static final VoxelShape SHAPE = box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0);
+    /** Source MultiTileEntityStickPlaced: hand-placed sticks always hand back one ordinary stick. */
+    private final boolean placed;
 
     public TwigBlock(Properties properties) {
+        this(properties, false);
+    }
+
+    public TwigBlock(Properties properties, boolean placed) {
         super(properties);
+        this.placed = placed;
     }
 
     @Override
@@ -35,6 +42,7 @@ public class TwigBlock extends Block {
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        if (placed) return Collections.singletonList(new ItemStack(Items.STICK));
         ItemStack tool = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL);
         int fortune = tool == null ? 0 : net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(
 //? if >=1.21.1 {
@@ -43,14 +51,17 @@ public class TwigBlock extends Block {
                 net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE, tool);
 //?}
         var origin = builder.getParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN);
-        return Collections.singletonList(stick(builder.getLevel(), BlockPos.containing(origin),
+        return Collections.singletonList(contents(builder.getLevel(), BlockPos.containing(origin),
                 1 + builder.getLevel().random.nextInt(1 + fortune)));
     }
 
-    private static ItemStack stick(net.minecraft.world.level.Level level, BlockPos pos, int count) {
+    public ItemStack contents(net.minecraft.world.level.Level level, BlockPos pos, int count) {
+        if (placed) return new ItemStack(Items.STICK, count);
         String biome = level.getBiome(pos).unwrapKey().map(key -> key.location().toString()).orElse("");
+        // A position has one stable content, shared by pickup, breaking and client inspection.
+        var random = net.minecraft.util.RandomSource.create(pos.asLong() ^ level.dimension().location().hashCode());
         String name = gregtech.content.worldgen.SurfaceTwigRules.material(
-                level.dimension().location().toString(), biome, level.random::nextInt);
+                level.dimension().location().toString(), biome, random::nextInt);
         return stick(name, count);
     }
 
@@ -95,7 +106,7 @@ public class TwigBlock extends Block {
                                                      net.minecraft.world.phys.BlockHitResult hit) {
 //?}
         if (!level.isClientSide) {
-            ItemStack stack = stick(level, pos, 1);
+            ItemStack stack = contents(level, pos, 1);
             level.removeBlock(pos, false);
             if (!player.addItem(stack)) {
                 player.drop(stack, false);

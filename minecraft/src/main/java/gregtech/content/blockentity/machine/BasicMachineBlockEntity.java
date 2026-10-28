@@ -59,17 +59,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
     private static final String NBT_TANKS_OUT = "gt.tanks_output";
     private static final String NBT_ENERGY = "gt.energy";
-    private static final String NBT_PROGRESS = "gt.progress";
-    private static final String NBT_MAX_PROGRESS = "gt.max_progress";
     private static final String NBT_FACE_CONFIG = "gt.face_config";
-    /** Upper bound for a saved job size that cannot be re-derived; keeps progress arithmetic bounded. */
-    private static final long MAX_SAVED_WORK = Long.MAX_VALUE / 2;
 
     private BasicMachineSpec spec;
     /** A save loaded before this machine had a spec; sanitize once the spec arrives. */
@@ -98,17 +94,47 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
 
-    /** Set by the latest recipe search. Not saved: the next search decides again. */
-    private boolean matchedOutputTanks;
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;
 
     // ── Processing state ─────────────────────────────────────────────────
     private final MachineEnergyPort energyPort = new MachineEnergyPort();
+    private final gregtech.engine.machine.RecipeProcessor.Config recipeConfig =
+            new gregtech.engine.machine.RecipeProcessor.Config() {
+        public RecipeMap recipeMap() { return BasicMachineBlockEntity.this.recipeMap; }
+        public boolean searchOutputTanks() { return usesOutputTankSearch(); }
+        public boolean exclusiveOutputs() { return usesExclusiveOutputs(); }
+        public int parallelLimit() { return spec == null ? 1 : spec.parallelLimit(); }
+        public boolean parallelScalesDuration() { return BasicMachineBlockEntity.this.parallelScalesDuration(); }
+        public boolean cheapOverclocking() { return BasicMachineBlockEntity.this.cheapOverclocking(); }
+        public boolean usesTimeEnergy() { return BasicMachineBlockEntity.this.usesTimeEnergy(); }
+        public int efficiency() { return BasicMachineBlockEntity.this.efficiency(); }
+        public long inputMinimum() { return BasicMachineBlockEntity.this.inputMinimum(); }
+        public long inputMaximum() { return BasicMachineBlockEntity.this.inputMaximum(); }
+        public long nominalEnergyInput() { return spec == null ? 0 : spec.energyIn(); }
+        public long startupEnergyFor(Recipe recipe) {
+            return spec != null && spec.startupEnergy() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0;
+        }
+    };
+    private final gregtech.engine.machine.RecipeProcessor.IO recipeIO =
+            new gregtech.engine.machine.RecipeProcessor.IO() {
+        public MachineInventory inventory() { return BasicMachineBlockEntity.this.inventory; }
+        public Level level() { return BasicMachineBlockEntity.this.level; }
+        public ItemStack autocraftingProgram() { return autocraftingProgram.getStackInSlot(0); }
+        public void setStartupEnergy(long value) { energyPort.setStartup(value); }
+        public void clearStartupEnergy() { energyPort.clearStartup(); }
+        public void markJobStarted() { setChanged(); }
+        public BlockEntity owner() { return BasicMachineBlockEntity.this; }
+    };
+    private final gregtech.engine.machine.RecipeProcessor.Gate recipeGate =
+            new gregtech.engine.machine.RecipeProcessor.Gate() {
+        public boolean structureComplete() { return BasicMachineBlockEntity.this.structureComplete(); }
+        public boolean switchesAllowRunning() { return BasicMachineBlockEntity.this.switchesAllowRunning(); }
+        public boolean recipeStartAllowed() { return BasicMachineBlockEntity.this.recipeStartAllowed(); }
+        public boolean lightAllowsStart() { return BasicMachineBlockEntity.this.lightAllowsStart(); }
+    };
+    private final gregtech.engine.machine.RecipeProcessor processor =
+            new gregtech.engine.machine.RecipeProcessor(recipeConfig, recipeIO, recipeGate);
     private GregTechTags.Tag auxTag;
-    private long mMinEnergy;        // per-tick energy cost for current recipe (after overclock)
-    private long mMaxProgress;      // total energy needed for current recipe
-    private int mParallelCount = 1; // GT6 large machine batch size for the running op
-    private long mProgress;         // accumulated energy towards recipe completion
     private boolean mActive;        // currently processing a recipe
     private boolean mRunning;       // machine is in running state (energy present)
     private int sourceIgnitionTicks;
@@ -141,8 +167,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             updateAdjacentToggleableEnergySources();
         }
     }
-    private final gregtech.content.cover.PanelCoverRuntime panels=new gregtech.content.cover.PanelCoverRuntime(this);
-    @Override public gregtech.content.cover.PanelCoverRuntime panels(){return panels;}
+    private final gregtech.content.cover.CoverStore coverStore = new gregtech.content.cover.CoverStore(this);
+    @Override public gregtech.content.cover.PanelCoverRuntime panels(){return coverStore.panels();}
     @Override public boolean coverSupportsPossible(){return true;}
     @Override public boolean coverPossible(Direction side){return coverState().possible();}
     private boolean successful,workPossible;
@@ -181,8 +207,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Dedicated executors override read state without duplicating switch/external-signal ownership. */
     protected boolean controlRunning() { return mRunning; }
     protected boolean controlActive() { return mActive; }
-    protected long controlProgress() { return successful ? 1 : mProgress; }
-    protected long controlProgressMax() { return successful ? 1 : mMaxProgress; }
+    protected long controlProgress() { return successful ? 1 : processor.progress(); }
+    protected long controlProgressMax() { return successful ? 1 : processor.totalWork(); }
     protected long controlProgressPerTick() { return mActive ? Math.min(inputMaximum(), energyPort.stored()) : 0; }
     protected void onControlStopped() {}
 
@@ -196,7 +222,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         for(int i=0;i<6;i++)externalSignals[i]=(byte)((packed>>>(4*i))&15);
     }
     private boolean mInventoryChanged = true; // inventory changed, re-check recipe
-    private Recipe mCurrentRecipe;  // the recipe currently being processed
 
 //? if >=1.21.1 {
 /**///?} else {
@@ -228,6 +253,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                         .findFirst().orElse(null);
         adjacentEnergySourcesChanged();
         this.recipeMap = spec.recipeMap();
+        processor.invalidate();
         this.faceConfig = spec.faceConfig();
         this.inventory = new MachineInventory(recipeMap, this::inventoryChanged);
         if (specDirty) sanitizeForSpec();
@@ -242,9 +268,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public FluidTankGT[] getTanksOutput() { return tanksOutput(); }
     public long getEnergyTick() { return energyPort.stored(); }
     /** Sanitized per-tick cost of the current job; 0 when idle. */
-    public long minimumEnergy() { return mMinEnergy; }
+    public long minimumEnergy() { return processor.minimumEnergy(); }
     /** Clamped batch size of the current job. */
-    public int parallelCount() { return mParallelCount; }
+    public int parallelCount() { return processor.parallelCount(); }
 
     private MachineItemHandler itemHandler() { return inventory == null ? null : inventory.items(); }
     private FluidTankGT[] tanksInput() { return inventory == null ? null : inventory.tanksInput(); }
@@ -255,8 +281,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
     public boolean isRunning() { return mRunning; }
     public int getProgressPercent() {
-        if (mMaxProgress <= 0) return 0;
-        return (int) Math.min(100, (double)mProgress / mMaxProgress * 100);
+        if (processor.totalWork() <= 0) return 0;
+        return (int) Math.min(100, (double) processor.progress() / processor.totalWork() * 100);
     }
 
     // ── Server tick ──────────────────────────────────────────────────────
@@ -297,17 +323,17 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             pollEnergy(level, pos, energyIn);
         }
 
-        if (mMaxProgress > 0 && mProgress >= mMaxProgress) {
+        if (processor.totalWork() > 0 && processor.progress() >= processor.totalWork()) {
             doActive(level, pos, 0);
             mActive = false;
             mRunning = false;
-        } else if (energyPort.stored() >= energyInMin && energyPort.stored() >= mMinEnergy) {
+        } else if (energyPort.stored() >= energyInMin && energyPort.stored() >= processor.minimumEnergy()) {
             // A failed lookup must not be repeated in the same tick just because inventory changed.
             // Try to start a new recipe even if one isn't in progress
-            if (mMaxProgress <= 0) {
+            if (processor.totalWork() <= 0) {
                 checkRecipe();
             }
-            if (mMaxProgress > 0) {
+            if (processor.totalWork() > 0) {
                 mActive = true;
                 mRunning = true;
                 doActive(level, pos, Math.min(energyInMax, energyPort.stored()));
@@ -318,9 +344,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             }
         } else {
             // No energy — shut down
-            if (requiresConstantEnergy() && mMaxProgress > 0 && mProgress > 0) {
+            if (requiresConstantEnergy() && processor.totalWork() > 0 && processor.progress() > 0) {
                 // Constant-energy machines lose progress, not the already-rolled job outputs.
-                mProgress = 0;
+                processor.loseProgress();
                 markMachineDataChanged();
             }
             mActive = false;
@@ -416,23 +442,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 return;
             }
         }
-        mProgress = gregtech.engine.recipe.MachineWorkCost.advance(mProgress, mMaxProgress, aEnergy);
-        if (mProgress >= mMaxProgress) {
+        if (processor.advance(aEnergy)) {
             if (!produceOutputs()) {
-                mProgress = mMaxProgress;
+                processor.holdAtTotal();
                 autoIO(level, pos);
                 markMachineDataChanged();
                 return;
             }
             successful=true;
             onProcessFinished();
-            mProgress = 0;
-            mMaxProgress = 0;
-            mMinEnergy = 0;
-            mCurrentRecipe = null;
+            processor.reset();
             energyPort.clearStartup();
             // Immediately check for next recipe
-            if (aEnergy > 0 && mMaxProgress <= 0) checkRecipe();
+            if (aEnergy > 0 && processor.totalWork() <= 0) checkRecipe();
         }
         autoIO(level, pos);
         markMachineDataChanged();
@@ -440,34 +462,31 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Covers (GT6 cover system, first iteration) ──────────────────────────
 
-    /** Attached cover items per absolute Direction ordinal (EMPTY = none). */
-    private final ItemStack[] covers = new ItemStack[]{
-            ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
-
     public ItemStack getCover(Direction side) {
-        return covers[side.ordinal()];
+        return coverStore.get(side);
     }
 
     /** Attaches a cover (one item from the stack); false if the face is occupied. */
     public boolean attachCover(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !covers[side.ordinal()].isEmpty() || !panels.canAttach(side,stack)
-                || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
-        covers[side.ordinal()] = stack.copyWithCount(1);
-        panels.attached(side);
+        return coverStore.attach(side, stack);
+    }
+
+    /** Removes and returns the cover on a face (EMPTY if none). */
+    public ItemStack removeCover(Direction side) {
+        return coverStore.remove(side);
+    }
+
+    @Override
+    public void attached(Direction side, ItemStack stack) {
         mInventoryChanged=true;
         invalidateSideCaps();
         setChanged();
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         updateCoverSignals();
-        return true;
     }
 
-    /** Removes and returns the cover on a face (EMPTY if none). */
-    public ItemStack removeCover(Direction side) {
-        ItemStack cover = covers[side.ordinal()];
-        if (cover.isEmpty()) return ItemStack.EMPTY;
-        covers[side.ordinal()] = ItemStack.EMPTY;
-        panels.beforeTick();
+    @Override
+    public void removed(Direction side, ItemStack cover) {
         var removedSpec=MachineCoverSpec.of(cover);
         if(removedSpec!=null&&!removedSpec.detector()||gregtech.content.cover.PanelCover.of(cover)==gregtech.content.cover.PanelCover.STATUS){controlStopped=false;updateAdjacentToggleableEnergySources();}
         mInventoryChanged=true;
@@ -475,7 +494,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         setChanged();
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         updateCoverSignals();
-        return panels.removed(side,cover);
     }
 
 
@@ -492,7 +510,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 
     private boolean coverIs(Direction side, String id) {
-        return id.equals(gregtech.content.cover.CoverItems.behavior(covers[side.ordinal()]));
+        return id.equals(gregtech.content.cover.CoverItems.behavior(getCover(side)));
     }
 
     private boolean hasCover(String id) {
@@ -504,7 +522,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Cover behaviour id of a face; {@code null} when no cover is attached. */
     private String getCoverId(Direction side) {
-        return gregtech.content.cover.CoverItems.behavior(covers[side.ordinal()]);
+        return gregtech.content.cover.CoverItems.behavior(getCover(side));
     }
 
     // ── Cover behaviors (ticked each server tick) ───────────────────────
@@ -512,13 +530,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Cover-only lifecycle: no recipe work, energy polling or automatic machine output. */
     protected final void beginCoverTick() {
         coverTicks++;
-        panels.beforeTick();
+        panels().beforeTick();
     }
 
     protected final void tickCovers(Level level, BlockPos pos) {
-        if(panels.stopped())return;
+        if(panels().stopped())return;
         for (Direction side : Direction.values()) {
-            ItemStack stack = covers[side.ordinal()];
+            ItemStack stack = getCover(side);
             String id = getCoverId(side);
             if (id == null) continue;
             switch (id) {
@@ -579,7 +597,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public boolean hasRedstoneCover() {
         for (Direction side : Direction.values()) {
             String id = getCoverId(side);
-            var spec=MachineCoverSpec.of(covers[side.ordinal()]);
+            var spec=MachineCoverSpec.of(getCover(side));
             if(spec!=null&&spec.detector())return true;
             if (gregtech.content.cover.CoverItems.REDSTONE_TORCH.equals(id)
                     || gregtech.content.cover.CoverItems.REDSTONE_REPEATER.equals(id)) return true;
@@ -590,26 +608,25 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public int getRedstoneSignal() {
         int signal=0;for(var side:Direction.values())signal=Math.max(signal,getRedstoneSignal(side));return signal;
     }
-    public int getRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels.signal(output):coverSignals[output.ordinal()];}
-    public int getStrongRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels.strongSignal(output):coverStrong[output.ordinal()]?getRedstoneSignal(output):0;}
-    public MachineCoverSpec.State coverState(){return new MachineCoverSpec.State(workPossible||mMaxProgress>0,mRunning,mActive,successful);}
+    public int getRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels().signal(output):coverSignals[output.ordinal()];}
+    public int getStrongRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels().strongSignal(output):coverStrong[output.ordinal()]?getRedstoneSignal(output):0;}
+    public MachineCoverSpec.State coverState(){return new MachineCoverSpec.State(workPossible||processor.totalWork()>0,mRunning,mActive,successful);}
     private void refreshWorkPossible(){
         boolean needed=false;
-        for(var stack:covers){var cover=MachineCoverSpec.of(stack);if(cover==MachineCoverSpec.POSSIBLE||cover==MachineCoverSpec.AUTOMATIC||gregtech.content.cover.PanelCover.of(stack)==gregtech.content.cover.PanelCover.STATUS){needed=true;break;}}
+        for(var stack:coverStore.faces()){var cover=MachineCoverSpec.of(stack);if(cover==MachineCoverSpec.POSSIBLE||cover==MachineCoverSpec.AUTOMATIC||gregtech.content.cover.PanelCover.of(stack)==gregtech.content.cover.PanelCover.STATUS){needed=true;break;}}
         if(!needed){workPossible=false;return;}
-        if(mMaxProgress>0){workPossible=true;return;}
+        if(processor.totalWork()>0){workPossible=true;return;}
         if(!mInventoryChanged&&level.getGameTime()%12!=0)return;
         workPossible=false;
-        if(recipeMap==null||inventory==null)return;
-        var recipe=findRecipeWithUsbPort();
-        if(recipe!=null && exclusivePairOrPlain(recipe)){int parallel=computeParallel(recipe, matchedFluids());workPossible=parallel>0&&gregtech.engine.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy())!=null;}
+        var evaluation=processor.evaluation();
+        workPossible=evaluation!=null&&evaluation.parallel()>0&&evaluation.cost()!=null;
     }
     protected final void updateCoverSignals(){
         if(level==null||level.isClientSide||isRemoved())return;
-        panels.afterTick();
+        panels().afterTick();
         boolean changed=false;var state=coverState();
         for(var side:Direction.values()){
-            var stack=covers[side.ordinal()];var cover=MachineCoverSpec.of(stack);
+            var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
             int value=cover!=null?cover.signal(state,MachineCoverSpec.inverted(stack)):redstoneCoverSignal(side);
             boolean strong=cover!=null&&cover.detector()&&MachineCoverSpec.strong(stack);
             if(value!=coverSignals[side.ordinal()]||strong!=coverStrong[side.ordinal()]){
@@ -637,7 +654,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     public boolean configureControlCover(Direction side,boolean cutter){
-        var stack=covers[side.ordinal()];var cover=MachineCoverSpec.of(stack);
+        var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
         if(cover==null||(cutter?!cover.detector():!cover.invertible()))return false;
         if(level!=null&&level.isClientSide)return true;
         String key=cutter?"gt.cover.strong":"gt.cover.inverted";
@@ -663,7 +680,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public int getTagSelectorCircuit() {
         for (Direction side : Direction.values()) {
             if (!gregtech.content.cover.CoverItems.TAG_SELECTOR.equals(getCoverId(side))) continue;
-            ItemStack cover = covers[side.ordinal()];
+            ItemStack cover = getCover(side);
             int tag = gregtech.content.cover.CoverItems.selectorTag(cover);
             if (tag >= 0) return tag;
 
@@ -681,7 +698,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Shutter covers seal the face against item/fluid IO. */
     public boolean isFaceShuttered(Direction side) {
-        return panels.shuttered(side);
+        return panels().shuttered(side);
     }
 
     /** Controllers own the switch while attached. The last controller in side order owns the switch. */
@@ -690,7 +707,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         var state=coverState();
         boolean controlled=false,allowed=true;
         for(var side:Direction.values()){
-            var stack=covers[side.ordinal()];var cover=MachineCoverSpec.of(stack);
+            var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
             if(cover==null||cover.detector())continue;
             controlled=true;
             var neighbor=worldPosition.relative(side);
@@ -716,15 +733,18 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return true;
     }
 
-    private gregtech.engine.recipe.MachineWorkOutputs pendingOutputs;
-
     public java.util.List<ItemStack> inspectionPendingItems() {
-        return pendingOutputs == null ? java.util.List.of() : pendingOutputs.inspectionItems(24);
+        var pending = processor.pendingOutputs();
+        return pending == null ? java.util.List.of() : pending.inspectionItems(24);
     }
     public java.util.List<FluidStack> inspectionPendingFluids() {
-        return pendingOutputs == null ? java.util.List.of() : pendingOutputs.inspectionFluids(16);
+        var pending = processor.pendingOutputs();
+        return pending == null ? java.util.List.of() : pending.inspectionFluids(16);
     }
-    public int inspectionPendingItemCount() { return pendingOutputs == null ? 0 : pendingOutputs.pendingItemStacks(); }
+    public int inspectionPendingItemCount() {
+        var pending = processor.pendingOutputs();
+        return pending == null ? 0 : pending.pendingItemStacks();
+    }
 
     protected void beforeMachineTick() {}
     protected boolean recipeStartAllowed() { return !sourceRequiresIgnition()||sourceIgnitionTicks>0||mActive; }
@@ -740,216 +760,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     private void checkRecipe() {
-        if (!recipeStartAllowed()) return;
-        if (!lightAllowsStart()) return;
-        if (recipeMap == null) return;
-        if (!switchesAllowRunning()) return;
-        if (!structureComplete()) return;
-        Recipe recipe = findRecipeWithUsbPort();
-        if (recipe == null || !exclusivePairOrPlain(recipe)) {
-            mMaxProgress = 0;
-            mCurrentRecipe = null;
-            energyPort.clearStartup();
-            return;
-        }
-
-        var fluids = matchedFluids();
-        int parallel = computeParallel(recipe, fluids);
-        var cost=gregtech.engine.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,
-                parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy());
-        if(cost==null)return;
-        mMinEnergy=cost.minimumPower();
-        mMaxProgress=cost.totalWork();
-
-        var remaining = gregtech.engine.recipe.RecipeInputs.consume(recipe, inventory.inputItems(), fluids, parallel);
-        if (remaining == null || parallel < 1) { mMaxProgress=0; mCurrentRecipe=null; energyPort.clearStartup(); return; }
-        pendingOutputs = gregtech.engine.recipe.MachineWorkOutputs.roll(recipe,parallel,level.random::nextInt,usesExclusiveOutputs());
-        for(int i=0;i<remaining.items().size();i++) inventory.items().setStackInSlot(i,remaining.items().get(i));
-        var drained = matchedOutputTanks ? inventory.tanksOutput() : inventory.tanksInput();
-        for(int i=0;i<drained.length;i++) drained[i].setFluid(remaining.fluids().get(i));
-        setChanged();
-
-        mParallelCount = parallel;
-        mCurrentRecipe = recipe;
-        mProgress = 0;
-        energyPort.setStartup(spec.startupEnergy() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0);
-    }
-
-    /** GT6's printer and replicator accept a USB cable in place of a retained stick. */
-    @Nullable
-    private Recipe findRecipeWithUsbPort() {
-        matchedOutputTanks = false;
-        if (recipeMap == null || inventory == null) return null;
-        var items = inventory.items().stacks();
-        Recipe direct = recipeMap.findRecipe(items, MachineInventory.contents(inventory.tanksInput()), recipeMap.mNeedsOutputs,
-                recipeMap.mInputItemsCount, recipeMap.mOutputItemsCount,
-                level, this, autocraftingProgram.getStackInSlot(0));
-        // Items stay on the input slots. Only the fluid list changes for the second search.
-        if (direct == null && usesOutputTankSearch() && inventory.tanksOutput().length > 0) {
-            Recipe fromOutput = recipeMap.findRecipe(items, MachineInventory.contents(inventory.tanksOutput()), recipeMap.mNeedsOutputs,
-                    recipeMap.mInputItemsCount, recipeMap.mOutputItemsCount,
-                    level, this, autocraftingProgram.getStackInSlot(0));
-            if (fromOutput != null) {
-                matchedOutputTanks = true;
-                direct = fromOutput;
-            }
-        }
-        if (direct != null) return direct;
-
-//? if >=1.21.1 {
-/*        return gregtech.content.recipe.MachineContextRecipes.find(this,recipeMap,inventory.inputItems(),inventory.inputFluids());
-*///?} else {
-        if (recipeMap != MachineRecipeMaps.Printer && recipeMap != MachineRecipeMaps.Replicator) return null;
-        int requiredTier = recipeMap == MachineRecipeMaps.Printer ? 1 : 3;
-        for (int slot = 0; slot < recipeMap.mInputItemsCount; slot++) {
-            ItemStack cable = inventory.items().getStackInSlot(slot);
-            if (gregtech.content.data.UsbDataMedia.cableTier(cable) < requiredTier) continue;
-            CompoundTag data = gregtech.content.data.UsbDataCable.readAdjacent(this, cable, requiredTier);
-            if (data == null) continue;
-            Recipe fromPort = recipeMap == MachineRecipeMaps.Printer
-                    ? gregtech.content.recipe.GTMaterialDataRecipes.printerFromPort(inventory.inputItems(), cable, data)
-                    : gregtech.content.recipe.GTMaterialDataRecipes.replicatorFromPort(cable, data);
-            if (fromPort != null) return fromPort;
-        }
-        return null;
-//?}
-
+        if (processor.startJob() == gregtech.engine.machine.RecipeProcessor.StartResult.NO_RECIPE) energyPort.clearStartup();
     }
 
     private boolean usesOutputTankSearch() { return spec != null && spec.searchOutputTanks(); }
     private boolean usesExclusiveOutputs() { return spec != null && spec.exclusiveOutputs(); }
 
-    /** A plain machine accepts any row. An exclusive machine accepts only a pair, and skips the rest. */
-    private boolean exclusivePairOrPlain(Recipe recipe) {
-        if (!usesExclusiveOutputs()) return true;
-        int declared = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
-        return gregtech.engine.addon.ExclusiveOutputRules.isPair(declared,
-                gregtech.engine.addon.ExclusiveOutputMaps.nonEmptyItems(recipe.mOutputs));
-    }
-
-    private java.util.List<FluidStack> matchedFluids() {
-        return matchedOutputTanks ? inventory.outputTankFluids() : inventory.inputFluids();
-    }
-
-    /** GT6 {@code NBT_PARALLEL} batch limits for the large machines. */
-    private int parallelLimit() {
-        return spec == null ? 1 : spec.parallelLimit();
-    }
-
-    private int computeParallel(Recipe recipe, java.util.List<FluidStack> fluids) {
-        int low=0,high=parallelLimit();
-        // Original BasicMachine caps power-scaled parallel batches at nominal input.
-        if(!parallelScalesDuration() && !usesTimeEnergy() && recipe.mEUt>0)
-            high=(int)Math.min(high,Math.max(1,spec.energyIn()/recipe.mEUt));
-        for(var fluid:recipe.mFluidOutputs) if(fluid!=null && !fluid.isEmpty()) high=Math.min(high,Integer.MAX_VALUE/fluid.getAmount());
-        var items=inventory.inputItems();
-        while(low<high) {
-            int mid=low+(high-low+1)/2;
-            if(gregtech.engine.recipe.RecipeInputs.consume(recipe,items,fluids,mid)!=null) low=mid; else high=mid-1;
-        }
-        return Math.min(low, outputLimitedParallel(recipe, low));
-    }
-
-    /**
-     * GT6 {@code MultiTileEntityBasicMachine.canOutput}: a batch may not exceed the free space in
-     * the output slots and output tanks.
-     * <p>
-     * Without this cap a batch whose products cannot be delivered is started anyway; the machine
-     * then retries the flush every tick and stays at 100 % progress forever. That is reachable
-     * with the {@code large*} machines, whose parallel limit reaches 256 while most recipe maps
-     * declare a single item output slot.
-     * </p>
-     */
-    private int outputLimitedParallel(Recipe recipe, int maxParallel) {
-        if (maxParallel <= 0 || recipeMap == null || inventory == null) return maxParallel;
-
-        // Items: simulate the output section using the same slot rules as MachineWorkOutputs#flush.
-        int firstOutput = recipeMap.mInputItemsCount;
-        if (recipe.mOutputs.length > 0 && firstOutput < inventory.items().getSlots()) {
-            var present = new net.minecraft.world.item.ItemStack[inventory.items().getSlots()];
-            for (int i = firstOutput; i < inventory.items().getSlots(); i++) present[i] = inventory.items().getStackInSlot(i).copy();
-            int limit = maxParallel;
-            while (limit > 0 && !itemsFit(recipe, limit, firstOutput, present)) limit--;
-            maxParallel = Math.min(maxParallel, limit);
-        }
-
-        // Fluids: free capacity of the output tanks, filled the same way flush() does.
-        if (recipe.mFluidOutputs.length > 0 && inventory.tanksOutput().length > 0) {
-            int limit = maxParallel;
-            while (limit > 0 && !fluidsFit(recipe, limit)) limit--;
-            maxParallel = Math.min(maxParallel, limit);
-        }
-        return maxParallel;
-    }
-
-    /** Whether {@code parallel} runs of the recipe's item outputs fit into the output section. */
-    private static boolean itemsFit(Recipe recipe, int parallel, int firstOutput,
-                                    net.minecraft.world.item.ItemStack[] present) {
-        var slots = new net.minecraft.world.item.ItemStack[present.length];
-        for (int i = firstOutput; i < present.length; i++) slots[i] = present[i] == null ? net.minecraft.world.item.ItemStack.EMPTY : present[i].copy();
-        for (var output : recipe.mOutputs) {
-            if (output == null || output.isEmpty()) continue;
-            long remaining = (long) output.getCount() * parallel;
-            for (int pass = 0; pass < 2 && remaining > 0; pass++) {
-                for (int i = firstOutput; i < slots.length && remaining > 0; i++) {
-                    var slot = slots[i];
-                    boolean empty = slot == null || slot.isEmpty();
-
-//? if >=1.21.1 {
-/*                    if (empty ? pass == 0 : !net.minecraft.world.item.ItemStack.isSameItemSameComponents(slot, output)) continue;
-*///?} else {
-                    if (empty ? pass == 0 : !net.minecraft.world.item.ItemStack.isSameItemSameTags(slot, output)) continue;
-//?}
-
-                    int capacity = Math.min(64, output.getMaxStackSize());
-                    int space = capacity - (empty ? 0 : slot.getCount());
-                    int take = (int) Math.min(Math.max(0, space), remaining);
-                    if (take <= 0) continue;
-                    slots[i] = empty ? output.copyWithCount(take) : slot.copyWithCount(slot.getCount() + take);
-                    remaining -= take;
-                }
-            }
-            if (remaining > 0) return false;
-        }
-        return true;
-    }
-
-    /** Whether {@code parallel} runs of the recipe's fluid outputs fit into the output tanks. */
-    private boolean fluidsFit(Recipe recipe, int parallel) {
-        var tanksOutput = inventory.tanksOutput();
-        long[] free = new long[tanksOutput.length];
-        FluidStack[] reserved = new FluidStack[tanksOutput.length];
-        for (int i = 0; i < tanksOutput.length; i++) {
-            free[i] = Math.max(0, tanksOutput[i].capacity() - tanksOutput[i].getAmount());
-            reserved[i] = tanksOutput[i].isEmpty() ? FluidStack.EMPTY : tanksOutput[i].getFluid().copy();
-        }
-        for (var output : recipe.mFluidOutputs) {
-            if (output == null || output.isEmpty()) continue;
-            long remaining = (long) output.getAmount() * parallel;
-            for (int pass = 0; pass < 2 && remaining > 0; pass++) {
-                for (int i = 0; i < tanksOutput.length && remaining > 0; i++) {
-                    if (free[i] <= 0) continue;
-                    var fluid = reserved[i];
-                    boolean empty = fluid.isEmpty();
-//? if >=1.21.1 {
-/*                    if (empty ? pass == 0 : !FluidStack.isSameFluidSameComponents(fluid, output)) continue;
-*///?} else {
-                    if (empty ? pass == 0 : !fluid.isFluidEqual(output)) continue;
-//?}
-                    long take = Math.min(free[i], remaining);
-                    free[i] -= take;
-                    if (empty && take > 0) reserved[i] = output.copy();
-                    remaining -= take;
-                }
-            }
-            if (remaining > 0) return false;
-        }
-        return true;
-    }
     private boolean produceOutputs() {
-        if(pendingOutputs==null) return true;
-        boolean finished=pendingOutputs.flush(inventory.items(),recipeMap.mInputItemsCount,inventory.tanksOutput());
-        if(finished) { pendingOutputs=null; mParallelCount=1; }
+        boolean finished = processor.flushOutputs();
         setChanged(); return finished;
     }
 
@@ -1285,9 +1103,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //? if >=1.21.1 {
 /*    public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
+        Object codecLookup=lookup;
 *///?} else {
     public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        Object codecLookup=null;
 //?}
 
         if(sourceRequiresIgnition())tag.putByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
@@ -1311,30 +1131,17 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
         tag.putLong(NBT_ENERGY, energyPort.stored());
-        tag.putLong(NBT_PROGRESS, mProgress);
-        tag.putLong(NBT_MAX_PROGRESS, mMaxProgress);
-        tag.putInt("gt.parallel", mParallelCount);
-        tag.putLong("gt.min_energy",mMinEnergy);
+        processor.save(tag, codecLookup);
         if (auxTag != null) {
             tag.putLong("gt.aux_energy", energyPort.auxStored());
             tag.putLong("gt.startup_energy", energyPort.startup());
         }
 
-//? if >=1.21.1 {
-/*        if(pendingOutputs!=null) tag.put("gt.pending_outputs",pendingOutputs.save(lookup));
-*///?} else {
-        if(pendingOutputs!=null) tag.put("gt.pending_outputs",pendingOutputs.save());
-//?}
-
         if (inventory != null) {
             for (int i = 0; i < inventory.tanksInput().length; i++) {
                 CompoundTag t = new CompoundTag();
 
-//? if >=1.21.1 {
-/*                inventory.tanksInput()[i].writeToNBT(t,lookup);
-*///?} else {
-                inventory.tanksInput()[i].writeToNBT(t);
-//?}
+                gregtech.engine.stack.NbtCompat.writeTank(inventory.tanksInput()[i],t,codecLookup);
 
                 tag.put(NBT_TANKS_IN + i, t);
             }
@@ -1343,11 +1150,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             for (int i = 0; i < inventory.tanksOutput().length; i++) {
                 CompoundTag t = new CompoundTag();
 
-//? if >=1.21.1 {
-/*                inventory.tanksOutput()[i].writeToNBT(t,lookup);
-*///?} else {
-                inventory.tanksOutput()[i].writeToNBT(t);
-//?}
+                gregtech.engine.stack.NbtCompat.writeTank(inventory.tanksOutput()[i],t,codecLookup);
 
                 tag.put(NBT_TANKS_OUT + i, t);
             }
@@ -1364,44 +1167,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*    private void saveCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    private void saveCovers(CompoundTag tag) {
-//?}
-
-        for (int i = 0; i < 6; i++) {
-            if (!covers[i].isEmpty()) {
-
-//? if >=1.21.1 {
-/*                tag.put("gt_cover_" + i, covers[i].save(lookup));
-*///?} else {
-                tag.put("gt_cover_" + i, covers[i].save(new CompoundTag()));
-//?}
-
-            }
-        }
+        coverStore.save(tag,lookup);
     }
 
-
-//? if >=1.21.1 {
-/*    private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+    private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+        coverStore.load(tag,lookup);
 *///?} else {
+    private void saveCovers(CompoundTag tag) {
+        coverStore.save(tag, null);
+    }
+
     private void loadCovers(CompoundTag tag) {
+        coverStore.load(tag, null);
 //?}
-
-        panels.loaded();
-        for (int i = 0; i < 6; i++) {
-            covers[i] = tag.contains("gt_cover_" + i)
-
-// Version-specific branch.
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                    ? ItemStack.parseOptional(lookup,tag.getCompound("gt_cover_" + i)) : ItemStack.EMPTY;
-*///?} else {
-// Version-specific branch.
-                    ? ItemStack.of(tag.getCompound("gt_cover_" + i)) : ItemStack.EMPTY;
-//?}
-
-        }
     }
 
     // ── Client sync (covers only — everything else travels via menus) ───────
@@ -1460,9 +1238,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //? if >=1.21.1 {
 /*    public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
+        Object codecLookup=lookup;
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
+        Object codecLookup=null;
 //?}
 
         if (tag.contains("gt.autocrafting.program", 10)) {
@@ -1482,22 +1262,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         adjacentEnergySourcesChanged();
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
         if (tag.contains(NBT_ENERGY)) energyPort.setStored(tag.getLong(NBT_ENERGY));
-        if (tag.contains(NBT_PROGRESS)) mProgress = tag.getLong(NBT_PROGRESS);
-        if (tag.contains(NBT_MAX_PROGRESS)) mMaxProgress = tag.getLong(NBT_MAX_PROGRESS);
-        if (tag.contains("gt.parallel")) mParallelCount = Math.max(1, tag.getInt("gt.parallel"));
-        mMinEnergy=tag.getLong("gt.min_energy");
+        processor.load(tag, codecLookup);
         energyPort.setAuxStored(auxTag == null ? 0
                 : Math.max(0, Math.min(spec.auxiliaryEnergyCapacity(), tag.getLong("gt.aux_energy"))));
         energyPort.setStartup(auxTag == null ? 0 : Math.max(0, tag.getLong("gt.startup_energy")));
-        if (mMaxProgress <= 0) energyPort.clearStartup();
-
-//? if >=1.21.1 {
-/*        pendingOutputs=tag.contains("gt.pending_outputs")?gregtech.engine.recipe.MachineWorkOutputs.load(tag.getCompound("gt.pending_outputs"),lookup):null;
-*///?} else {
-        pendingOutputs=tag.contains("gt.pending_outputs")?gregtech.engine.recipe.MachineWorkOutputs.load(tag.getCompound("gt.pending_outputs")):null;
-//?}
-
-        if(mMaxProgress>0 && pendingOutputs==null) { mProgress=0; mMaxProgress=0; } // Old saves never recorded their consumed job; do not invent outputs.
+        if (processor.totalWork() <= 0) energyPort.clearStartup();
         if (inventory == null) {
             // Called before setSpec — defer
         } else if (tag.contains(NBT_INVENTORY)) {
@@ -1513,22 +1282,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             for (int i = 0; i < inventory.tanksInput().length; i++)
                 if (tag.contains(NBT_TANKS_IN + i))
 
-//? if >=1.21.1 {
-/*                    inventory.tanksInput()[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i),lookup);
-*///?} else {
-                    inventory.tanksInput()[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i));
-//?}
+                    gregtech.engine.stack.NbtCompat.readTank(inventory.tanksInput()[i],tag.getCompound(NBT_TANKS_IN + i),codecLookup);
 
         }
         if (inventory != null) {
             for (int i = 0; i < inventory.tanksOutput().length; i++)
                 if (tag.contains(NBT_TANKS_OUT + i))
 
-//? if >=1.21.1 {
-/*                    inventory.tanksOutput()[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i),lookup);
-*///?} else {
-                    inventory.tanksOutput()[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i));
-//?}
+                    gregtech.engine.stack.NbtCompat.readTank(inventory.tanksOutput()[i],tag.getCompound(NBT_TANKS_OUT + i),codecLookup);
 
         }
 
@@ -1545,44 +1306,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (spec == null) { specDirty = true; return; }
         specDirty = false;
         energyPort.setStored(clamp(energyPort.stored(), 0, inputMaximum()));
-        mParallelCount = (int) clamp(mParallelCount, 1, Math.max(1, spec.parallelLimit()));
-        if (pendingOutputs == null) {
-            mProgress = 0;
-            mMaxProgress = 0;
-            mMinEnergy = 0;
-            energyPort.clearStartup();
-            return;
-        }
-        var savedCost = savedJobCost();
-        if (savedCost != null) {
-            mMinEnergy = savedCost.minimumPower();
-            mMaxProgress = savedCost.totalWork();
-        } else {
-            // The inputs of an in-progress job are already consumed, so its recipe may not be
-            // resolvable. Keep the saved cost bounded instead of zeroing it: a zero cost would
-            // let a reloaded job finish for free.
-            mMinEnergy = clamp(mMinEnergy, 0, inputMaximum());
-            mMaxProgress = clamp(mMaxProgress, 0, MAX_SAVED_WORK);
-        }
-        mProgress = clamp(mProgress, 0, mMaxProgress);
-        if (mMaxProgress <= 0) {
-            mProgress = 0;
-            energyPort.clearStartup();
-        }
-    }
-
-    /** Recomputes the current job cost without consuming inputs or rolling outputs. */
-    @Nullable
-    private gregtech.engine.recipe.MachineWorkCost.Cost savedJobCost() {
-        if (recipeMap == null || inventory == null || level == null) return null;
-        Recipe recipe = findRecipeWithUsbPort();
-        if (recipe == null || !exclusivePairOrPlain(recipe)) return null;
-        // The saved batch is the one the job actually rolled; remaining inputs may already be
-        // partly consumed, so re-running the parallel search would understate the cost.
-        int parallel = Math.max(1, mParallelCount);
-        return gregtech.engine.recipe.MachineWorkCost.calculate(recipe.mEUt, recipe.mDuration, parallel,
-                parallelScalesDuration(), efficiency(), inputMinimum(), inputMaximum(),
-                cheapOverclocking(), usesTimeEnergy());
+        processor.sanitize();
+        if (!processor.hasPendingOutputs() || processor.totalWork() <= 0) energyPort.clearStartup();
     }
 
     private static long clamp(long value, long minimum, long maximum) {
@@ -1689,6 +1414,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public void inventoryChanged() {
         setChanged();
         mInventoryChanged = true;
+        processor.invalidate();
     }
     public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }
     public int outputSlots() { return recipeMap != null ? recipeMap.mOutputItemsCount : 0; }
@@ -1697,7 +1423,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (level == null || level.isClientSide) return;
         gregtech.engine.inventory.BlockContents.drop(this, itemHandler());
         gregtech.engine.inventory.BlockContents.drop(this, autocraftingProgram);
-        for (int i = 0; i < covers.length; i++) { if(!gregtech.content.cover.CoverDrops.retained(this))gregtech.engine.inventory.BlockContents.drop(this, covers[i]); covers[i] = ItemStack.EMPTY; }
+        coverStore.drop();
         setChanged();
     }
 
@@ -1741,14 +1467,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (level == null) return;
         // CoverControllerCovers suspends the other covers; GT6 gates the retriever on !aData.mStopped
         // (CoverRetrieverItem:61) and the valve on the same flag (CoverPressureValve:50).
-        if (panels.stopped()) { utilityWasStopped = true; return; }
+        if (panels().stopped()) { utilityWasStopped = true; return; }
         boolean resumed = utilityWasStopped;
         utilityWasStopped = false;
 
         for (Direction side : Direction.values()) {
             String id = getCoverId(side);
             if (id == null) continue;
-            ItemStack stack = covers[side.ordinal()];
+            ItemStack stack = getCover(side);
             int index = side.ordinal();
             switch (id) {
                 case gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM -> {
@@ -1795,9 +1521,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return gregtech.content.cover.CoverUtilityBehaviors.itemFilterPermits(
 
 //? if >=1.21.1 {
-/*                covers[side.ordinal()], panels.stopped(), candidate, level.registryAccess());
+/*                getCover(side), panels().stopped(), candidate, level.registryAccess());
 *///?} else {
-                covers[side.ordinal()], panels.stopped(), candidate);
+                getCover(side), panels().stopped(), candidate);
 //?}
 
     }
@@ -1807,9 +1533,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return gregtech.content.cover.CoverUtilityBehaviors.fluidFilterPermits(
 
 //? if >=1.21.1 {
-/*                covers[side.ordinal()], panels.stopped(), candidate, level.registryAccess());
+/*                getCover(side), panels().stopped(), candidate, level.registryAccess());
 *///?} else {
-                covers[side.ordinal()], panels.stopped(), candidate);
+                getCover(side), panels().stopped(), candidate);
 //?}
 
     }
@@ -1864,7 +1590,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public boolean clickFilterCover(Direction side, ItemStack held) {
         String id = getCoverId(side);
         if (id == null || held == null || held.isEmpty()) return false;
-        ItemStack stack = covers[side.ordinal()];
+        ItemStack stack = getCover(side);
         if (gregtech.content.cover.CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 || gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
 
@@ -1914,7 +1640,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 || gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
         if (!filterish || (!screwdriver && !softHammer)) return false;
         if (level != null && level.isClientSide) return true;
-        ItemStack stack = covers[side.ordinal()];
+        ItemStack stack = getCover(side);
         if (softHammer) gregtech.content.cover.CoverUtilityBehaviors.clearFilter(stack);
         else gregtech.content.cover.CoverUtilityBehaviors.toggleFilterMode(stack);
         setChanged();

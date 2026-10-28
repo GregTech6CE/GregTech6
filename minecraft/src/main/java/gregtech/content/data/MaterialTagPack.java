@@ -60,6 +60,7 @@ public final class MaterialTagPack extends AbstractPackResources {
     private synchronized Map<ResourceLocation,byte[]> data() {
         if(resources!=null) return resources;
         var tags=new TreeMap<String,Set<String>>();
+        var preferredItems = new HashMap<String, String>();
         var copperMaterials=MaterialGroups.Cu.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         var ironMaterials=MaterialGroups.Iron.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         // Per-material tag: every form of one material (gear, rod, ingot, dust, block, fluid, unit...)
@@ -98,6 +99,9 @@ public final class MaterialTagPack extends AbstractPackResources {
         for(var item:ForgeRegistries.ITEMS.getValues()) {
             var id=ForgeRegistries.ITEMS.getKey(item); if(id==null||item==Items.AIR)continue;
 //?}
+            var preferred = gregtech.engine.material.MaterialUnification.canonical(new ItemStack(item));
+            if (preferred.getItem() != item)
+                preferredItems.put(id.toString(), BuiltInRegistries.ITEM.getKey(preferred.getItem()).toString());
             if(item instanceof BlockItem stoneItem
                     && stoneItem.getBlock() instanceof gregtech.content.block.stone.GTStoneBlock stone
                     && stone.variant() == gregtech.content.block.stone.StoneVariant.COBBLE)
@@ -524,6 +528,15 @@ public final class MaterialTagPack extends AbstractPackResources {
         }
 *///?} else {
 //?}
+        // Ingredient alternatives should expose the preferred item too, not cycle hidden GT copies.
+        // Block tags stay intact so already placed legacy blocks keep their harvesting properties.
+        tags.replaceAll((path, values) -> {
+            if (!path.contains(":tags/items/") && !path.contains(":tags/item/")) return values;
+            if (values.stream().noneMatch(preferredItems::containsKey)) return values;
+            var canonical = new TreeSet<String>();
+            for (String value : values) canonical.add(preferredItems.getOrDefault(value, value));
+            return canonical;
+        });
         var gson=new com.google.gson.Gson(); var result=new HashMap<ResourceLocation,byte[]>();
 //? if >=1.21.1 {
         /*tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",compatibleValues(path,values,aliases))).getBytes(StandardCharsets.UTF_8)));
