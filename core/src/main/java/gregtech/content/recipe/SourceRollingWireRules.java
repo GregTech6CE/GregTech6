@@ -9,7 +9,7 @@ import gregtech.engine.prefix.BlockMaterialPrefix;
 import java.math.BigInteger;
 import java.util.List;
 
-/** Available RollingMill and Wiremill pairs from GT6 Handlers:261–295 at 3703e403. */
+/** RollingMill and Wiremill pairs from GT6's {@code Loader_Recipes_Handlers.java:261-295}. */
 public final class SourceRollingWireRules {
     private SourceRollingWireRules() {}
 

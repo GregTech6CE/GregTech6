@@ -1,6 +1,7 @@
 package gregtech.engine.tool;
 
-/** MultiItemRandomTools:516-518 and EnergyStat:64-75,108-124. */
+/** Energy costs of GT6's portable scanner (MultiItemRandomTools:516-518) and its energy stat
+ * block (EnergyStat:64-75,108-124). */
 public final class ScannerEnergyRules {
     private ScannerEnergyRules() {}
 

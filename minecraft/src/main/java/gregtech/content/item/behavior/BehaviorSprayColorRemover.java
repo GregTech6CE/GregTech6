@@ -26,12 +26,12 @@ public final class BehaviorSprayColorRemover {
     /** GT6 {@code Behavior_Spray_Color_Remover:54}: {@code mUses = aUses * 10}. */
     public static final int USES_MULTIPLIER = 10;
 
-    /** GT6 {@code :77}: {@code tUses -= 10} for one decolorised block. */
+    /** GT6's: {@code tUses -= 10} for one decolorised block. */
     public static final int REMOVE_COST = 10;
 
     /**
      * The sixteen coloured terracottas — GT6's {@code aBlock == Blocks.stained_hardened_clay}
-     * ({@code :101}) with the metadata split into separate 1.20.1 blocks ({@code Blocks:522-537}).
+     * with the metadata split into separate 1.20.1 blocks ({@code Blocks}).
      * Plain {@code Blocks.TERRACOTTA} is deliberately not in the set, exactly like the original,
      * where plain hardened clay was a separate block and was not decolorised.
      */
@@ -108,15 +108,12 @@ public final class BehaviorSprayColorRemover {
         var state = level.getBlockState(pos);
         var block = state.getBlock();
         if (STAINED_CLAY.contains(block)) {
-            // :101
             return level.setBlock(pos, Blocks.TERRACOTTA.defaultBlockState(), 3) ? REMOVE_COST : 0L;
         }
         if (block instanceof StainedGlassPaneBlock) {
-            // :102
             return level.setBlock(pos, Blocks.GLASS_PANE.defaultBlockState(), 3) ? REMOVE_COST : 0L;
         }
         if (block instanceof StainedGlassBlock) {
-            // :103
             return level.setBlock(pos, Blocks.GLASS.defaultBlockState(), 3) ? REMOVE_COST : 0L;
         }
         return 0L;

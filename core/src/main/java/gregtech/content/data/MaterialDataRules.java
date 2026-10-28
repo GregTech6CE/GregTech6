@@ -16,7 +16,7 @@ public final class MaterialDataRules {
     /** RecipeMapReplicator:91/110: duration per nucleon, at one QU per tick. */
     public static final long REPLICATOR_TICKS_PER_NUCLEON = 256, REPLICATOR_POWER = 1;
 
-    /** UT.NBT:2261: original data tooltip figure (distinct from raw recipe work). */
+    /** GT6's data tooltip figure in {@code UT.NBT} (distinct from raw recipe work). */
     public static final long DATA_ENERGY_PER_NUCLEON = 65536;
 
     public static final int ENVIRONMENT_KELVIN = 293;

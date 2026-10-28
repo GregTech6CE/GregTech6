@@ -14,22 +14,22 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * GT6 {@code Behavior_Chunk_Remover} ({@code Behavior_Chunk_Remover.java:39-45}) — the "Chunk Eraser"
  * debug item ({@code MultiItemRandomTools:519}; the port registers it as {@code gt6ce:chunk_eraser}
- * in {@code GTMultiItemsGen.ENTRIES:128}).
+ * in {@code GTMultiItemsGen.ENTRIES}).
  *
  * <h2>What the original does</h2>
  *
  * <p>The whole behaviour is one click and one triple loop. The click is refused while the client side
- * runs ({@code :40}); then the 16×16 column of the chunk that holds the clicked position
- * ({@code (aX & ~15) .. (aX & ~15) + 16}, {@code :41}) is swept from {@link #MIN_Y} to {@link #MAX_Y}
+ * runs; then the 16×16 column of the chunk that holds the clicked position
+ * ({@code (aX & ~15).. (aX & ~15) + 16}) is swept from {@link #MIN_Y} to {@link #MAX_Y}
  * inclusive and every position becomes GT6's null block:
- * {@code WD.set(aWorld, tX, tY, tZ, NB, 0, 2)} ({@code :42}). {@code NB} is {@code Blocks.air}
+ * {@code WD.set(aWorld, tX, tY, tZ, NB, 0, 2)}. {@code NB} is {@code Blocks.air}
  * ({@code CS.java:850}) and {@code 2} is the flag handed to {@code World.setBlock}, i.e. "tell the
- * clients, skip the neighbour updates". The behaviour then returns {@code T} ({@code :44}) — the click
+ * clients, skip the neighbour updates". The behaviour then returns {@code T} — the click
  * is always handled, even when there was nothing to delete.</p>
  *
  * <p>{@code aPlayer} is never read: the original tests only {@code aWorld.isRemote}, so this debug
  * tool has no build-permission gate. Its tooltip says what it is for — "Deletes Chunks except for the
- * very Bottom" ({@code :48}) — and {@code y = 1} is that "very Bottom": 1.7.10 bedrock sits at
+ * very Bottom" — and {@code y = 1} is that "very Bottom": 1.7.10 bedrock sits at
  * {@code y = 0}, so starting at {@code 1} leaves the world's floor alone. The click neither consumes
  * the stack nor damages it.</p>
  *
@@ -41,12 +41,12 @@ import net.minecraft.world.level.block.state.BlockState;
  * because that is the seam the tests drive. It clamps the requested range to the level's own build
  * limits — 1.20.1 worlds do not all span 0..255 (the overworld is -64..319, a modded dimension may be
  * smaller) — and {@code Level.getMaxBuildHeight()} is <em>exclusive</em> in 1.20.1
- * ({@code LevelHeightAccessor:11-13,32}), so the highest position that can be touched is one below it.
+ * ({@code LevelHeightAccessor}), so the highest position that can be touched is one below it.
  * A range that is empty after clamping returns {@code 0} without sweeping.</p>
  *
  * <h2>What {@link #erase} returns</h2>
  *
- * <p>The original has no count at all: its loop discards {@code WD.set}'s result ({@code :42}) and the
+ * <p>The original has no count at all: its loop discards {@code WD.set}'s result and the
  * behaviour answers a plain {@code T}. The count added here is the number of positions that actually
  * held a block and were replaced with air, i.e. the writes that changed something. Air positions are
  * skipped before the write, so a second call on the same chunk returns {@code 0}, and so does a range
@@ -58,13 +58,13 @@ import net.minecraft.world.level.block.state.BlockState;
  * <p>1.20.1's {@code Level.setBlock} loads the chunk it writes into ({@code Level.getChunkAt}), which a
  * debug wand must not do — erasing near the loaded area would pull chunk after chunk in. Every 16×16
  * column is therefore tested once with {@code LevelReader.hasChunkAt}
- * ({@code LevelReader.java:174-182}, the non-loading test) and skipped as a whole when its chunk is not
+ * ({@code LevelReader.java}, the non-loading test) and skipped as a whole when its chunk is not
  * loaded. All positions of a column share one chunk, so hoisting the test out of the y loop is exactly
  * as strict as testing per position; only the x/z part of the position is read by that test.</p>
  *
  * <h2>Tooltips</h2>
  *
- * <p>The {@code LH.add} registration ({@code :47-49}) is not part of this layer — tooltips belong to the
+ * <p>The {@code LH.add} registration is not part of this layer — tooltips belong to the
  * item's registration and this file adds no lang keys.</p>
  */
 public final class BehaviorChunkEraser {
@@ -117,7 +117,7 @@ public final class BehaviorChunkEraser {
                     // mean "blocks that were deleted", which is what the tooltip promises.
                     if (state.isAir()) continue;
                     // A fresh BlockPos goes into setBlock: the client update packet keeps the reference
-                    // it is handed (ClientboundBlockUpdatePacket:14-17), so the cursor must not be reused.
+                    // it is handed (ClientboundBlockUpdatePacket), so the cursor must not be reused.
                     if (level.setBlock(new BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS)) {
                         erased++;
                     }
@@ -136,7 +136,7 @@ public final class BehaviorChunkEraser {
      * {@link ItemBehaviors#mayEdit}. The stack is neither consumed nor damaged; the returned stack is the
      * one that came in.</p>
      *
-     * @return GT6's {@code T} ({@code :44}): the click is handled on the server even when the sweep found
+     * @return GT6's {@code T}: the click is handled on the server even when the sweep found
      *         nothing to delete, and refused on the client
      */
     public static Outcome useOn(
@@ -148,8 +148,8 @@ public final class BehaviorChunkEraser {
             float hitX,
             float hitY,
             float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack); // :40
+        if (level.isClientSide) return Outcome.refused(stack);
         erase(level, pos.getX() >> 4, pos.getZ() >> 4, level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - 1);
-        return Outcome.acted(stack); // :44
+        return Outcome.acted(stack);
     }
 }

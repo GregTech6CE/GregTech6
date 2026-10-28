@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Loader_MultiTileEntities 18000..18299 and MultiTileEntityMultiBlockPart.addToolTips. */
+ * GT6's 45 structural multiblock parts (Loader_MultiTileEntities 18000..18299,
+ * MultiTileEntityMultiBlockPart.addToolTips). */
 package gregtech.content.multiblock;
 
 import java.util.List;

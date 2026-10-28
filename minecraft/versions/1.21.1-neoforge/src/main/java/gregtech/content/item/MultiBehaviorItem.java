@@ -12,7 +12,7 @@ public final class MultiBehaviorItem extends TechItem {
     }
 
     /**
-     * §108: GT6's multi-item behaviour slot - duct tape, the five sprays, the lighters, the
+     * GT6's multi-item behaviour slot - duct tape, the five sprays, the lighters, the
      * portable/debug scanner and the matches all act through {@code onItemUseFirst}. The
      * dispatcher decides by registry id first, so the other ~1270 multi-items fall straight
      * through to {@code PASS} without allocating anything.
@@ -49,15 +49,15 @@ public final class MultiBehaviorItem extends TechItem {
     }
 
     /**
-     * §110: GT6's multi-item {@code onItemRightClick} slot. Of the port's ~1270 multi-items only the
+     * GT6's multi-item {@code onItemRightClick} slot. Of the port's ~1270 multi-items only the
      * remote activator has one ({@code Behavior_Remote:76-90}, "activate every bound coordinate of
      * this dimension"), so everything else falls straight through.
      *
      * <p><b>Falling through means calling {@code super}, not returning {@code PASS}.</b>
      * {@code Item.use}'s default implementation is what starts the eating animation for an edible
-     * item, and ~60 of the port's multi-items are GT6 food ({@code GTMultiItems:94-98}). Returning
+     * item, and ~60 of the port's multi-items are GT6 food ({@code GTMultiItems}). Returning
      * a bare {@code pass(held)} here would have quietly made every one of them inedible — the same
-     * "what happens when the behaviour is not mine" question §108.7.3 is about.</p>
+     * "what happens when the behaviour is not mine" question.3 is about.</p>
      */
     @Override
     public InteractionResultHolder<ItemStack> use(

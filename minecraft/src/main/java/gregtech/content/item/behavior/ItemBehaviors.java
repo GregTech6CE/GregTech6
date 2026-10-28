@@ -34,9 +34,9 @@ import java.util.Optional;
  * <p>GT6 hangs its behaviours on {@code MultiItem} meta-items: {@code MultiItemRandomTools} and the
  * {@code ToolsGT} tool classes call {@code addItemBehavior(...)}/pass a behaviour into
  * {@code addItem(...)}, and the meta-item then forwards {@code onItemUseFirst}/{@code onItemRightClick}
- * to it (e.g. {@code MultiItemRandomTools:279} for the C-Foam removal spray, {@code :517} for the
+ * to it (e.g. {@code MultiItemRandomTools:279} for the C-Foam removal spray, for the
  * portable scanner, {@code GT_Tool_Plunger:86-87} for the two plunger behaviours). The port registers
- * those items as plain {@code TechItem}s ({@code GTMultiItems:65-78}) with no per-item behaviour
+ * those items as plain {@code TechItem}s ({@code GTMultiItems}) with no per-item behaviour
  * slot, so the behaviour lives here as {@code static} methods over the objects they touch —
  * world, position, face, holder stack, player — exactly the shape
  * {@code content/cover/CoverAttachmentBehaviors} uses for the GUI-less covers.</p>
@@ -60,14 +60,14 @@ import java.util.Optional;
  *   <li>{@link Consumable} — the shared "empty / used / full + {@code gt.remaining}" shape GT6
  *       repeats in every tape, lighter and spray class;</li>
  *   <li>{@link Ignitable} plus {@link #igniteToolClick}, {@link #lightVanillaFire} and
- *       {@link #primeTnt} — GT6's {@code TOOL_igniter} click, i.e. {@code IBlockToolable.Util
- *       .onToolClick(TOOL_igniter, ...)} together with the vanilla half of that tool kind
+ *       {@link #primeTnt} — GT6's {@code TOOL_igniter} click, i.e. {@code IBlockToolable.Util.
+ *       onToolClick(TOOL_igniter,...)} together with the vanilla half of that tool kind
  *       ({@code ToolCompat.java:201-223}).</li>
  * </ul>
  *
  * <h2>Registered behaviour ids</h2>
  *
- * <p>{@link #PORTED} lists what this batch covers. The ids are the port's own item registry paths
+ * <p>{@link #PORTED} lists the behaviours this layer implements. The ids are the port's own item registry paths
  * ({@code gt6ce:duct_tape} and friends, all present in {@code GTMultiItemsGen.ENTRIES} or
  * {@code GTTechnological}); the class column names the GT6 behaviour each one ports. An item that is
  * not in the table has no behaviour yet.</p>
@@ -235,7 +235,7 @@ public final class ItemBehaviors {
             return BehaviorLighter.useOn(level, pos, side, player, stack, spec, level.getRandom(),
                     hitX, hitY, hitZ);
         }
-        // The four spray families; the "_2" ids of GTMultiItemsGen.ENTRIES:64-71 are the used cans of
+        // The four spray families; the "_2" ids of GTMultiItemsGen.ENTRIES are the used cans of
         // the same family, so a prefix test covers both halves.
         if (id.startsWith("hardening_spray")) {
             return BehaviorSprayFoamHardener.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);
@@ -266,7 +266,7 @@ public final class ItemBehaviors {
             // Both original behaviors consume the server click even when payment fails.
             return Outcome.acted(stack);
         }
-        // §110: the debug pair (MultiItemRandomTools:519-520) and the Remote Activator's bind half.
+        // the debug pair (MultiItemRandomTools:519-520) and the Remote Activator's bind half.
         // Both debug items are deliberately exempt from the build-permission gate, exactly like GT6's
         // (Behavior_Chunk_Remover:39 and Behavior_Worldgen_Debugger:43 check only `isRemote`).
         if (id.equals("chunk_eraser")) {
@@ -341,7 +341,7 @@ public final class ItemBehaviors {
     /**
      * The lighter family an item id belongs to, or {@code null} when it is not a lighter —
      * the seven factories of {@link BehaviorLighter}, keyed by the ids of
-     * {@code GTMultiItemsGen.ENTRIES:72-86}.
+     * {@code GTMultiItemsGen.ENTRIES}.
      */
     @Nullable
     public static BehaviorLighter.LighterSpec lighterSpec(String itemId) {
@@ -371,9 +371,9 @@ public final class ItemBehaviors {
     /**
      * GT6's consumable shape, which every tape, lighter and spray class repeats: a full item, a used
      * item that carries the remaining uses in {@code gt.remaining}, and an optional empty item the
-     * stack turns into when the uses run out ({@code Behavior_Duct_Tape:42-51} and {@code :80-87},
-     * {@code Behavior_Spray_Extinguisher:49-54} and {@code :84-91}, {@code Behavior_Lighter:52-58}
-     * and {@code :130-137}).
+     * stack turns into when the uses run out ({@code Behavior_Duct_Tape:42-51},
+     * {@code Behavior_Spray_Extinguisher:49-54}, {@code Behavior_Lighter:52-58}); each class's wear
+     * path repeats the same pair of stacks.
      *
      * <p>The original mutates the {@link ItemStack} in place ({@code func_150996_a} swaps the item,
      * {@code UT.NBT.setNumber} rewrites the counter). 1.20.1's {@code ItemStack} has no way to change

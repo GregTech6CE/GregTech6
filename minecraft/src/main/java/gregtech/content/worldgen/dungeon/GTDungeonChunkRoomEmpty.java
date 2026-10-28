@@ -29,10 +29,10 @@ public class GTDungeonChunkRoomEmpty extends GTDungeonChunkPillar {
         try {
             super.generate(data);
         } catch (Throwable ignored) {
-            // GT6 :35 - the pillar is not important enough to fail the entire room.
+            // - the pillar is not important enough to fail the entire room.
         }
 
-        // GT6 :37-60 - floor, ceiling and the border ring of the walls; everything inside is cleared.
+        // - floor, ceiling and the border ring of the walls; everything inside is cleared.
         for (int tX = 0; tX < 16; tX++) {
             for (int tZ = 0; tZ < 16; tZ++) {
                 for (int tY = 0; tY <= 7; tY++) {
@@ -63,7 +63,7 @@ public class GTDungeonChunkRoomEmpty extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6 :62-72 - the hall is open to the sky or under a liquid: its ceiling becomes glowing glass.
+        // - the hall is open to the sky or under a liquid: its ceiling becomes glowing glass.
         if (data.liquid(8, 9, 8) || data.seesSky(8, 9, 8)) {
             for (int tX = 5; tX <= 10; tX++) {
                 for (int tZ = 5; tZ <= 10; tZ++) {
@@ -78,7 +78,7 @@ public class GTDungeonChunkRoomEmpty extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6 :74-105 - the opening towards the neighbour at X + 1.
+        // - the opening towards the neighbour at X + 1.
         if (data.connected(1, 0)) {
             data.chiseled(15, 0, 5);
             data.smooth(15, 0, 6);
@@ -111,7 +111,7 @@ public class GTDungeonChunkRoomEmpty extends GTDungeonChunkPillar {
             data.smooth(15, 4, 9);
             data.chiseled(15, 4, 10);
         }
-        // GT6 :106-137 - the opening towards the neighbour at X - 1.
+        // - the opening towards the neighbour at X - 1.
         if (data.connected(-1, 0)) {
             data.chiseled(0, 0, 5);
             data.smooth(0, 0, 6);
@@ -144,7 +144,7 @@ public class GTDungeonChunkRoomEmpty extends GTDungeonChunkPillar {
             data.smooth(0, 4, 9);
             data.chiseled(0, 4, 10);
         }
-        // GT6 :138-169 - the opening towards the neighbour at Z + 1.
+        // - the opening towards the neighbour at Z + 1.
         if (data.connected(0, 1)) {
             data.chiseled(5, 0, 15);
             data.smooth(6, 0, 15);
@@ -177,7 +177,7 @@ public class GTDungeonChunkRoomEmpty extends GTDungeonChunkPillar {
             data.smooth(9, 4, 15);
             data.chiseled(10, 4, 15);
         }
-        // GT6 :170-201 - the opening towards the neighbour at Z - 1.
+        // - the opening towards the neighbour at Z - 1.
         if (data.connected(0, -1)) {
             data.chiseled(5, 0, 0);
             data.smooth(6, 0, 0);
@@ -211,7 +211,7 @@ public class GTDungeonChunkRoomEmpty extends GTDungeonChunkPillar {
             data.chiseled(10, 4, 0);
         }
 
-        // GT6 :202 - the empty room never declines, it is the fallback of the room dispatcher.
+        // - the empty room never declines, it is the fallback of the room dispatcher.
         return true;
     }
 }

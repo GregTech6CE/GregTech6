@@ -1,6 +1,6 @@
 package gregtech.content.bumble;
 
-/** Original20 species combinations, mutation and comb probabilities. */
+/** GT6's 20 species combinations, mutation and comb probabilities. */
 public final class BumbleSpeciesRules {
     private BumbleSpeciesRules() {}
 

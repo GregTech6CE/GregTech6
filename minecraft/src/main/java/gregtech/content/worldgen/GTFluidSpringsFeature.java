@@ -85,9 +85,8 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
 
     /**
      * GT6's floor test ({@code WorldgenFluidSpring:67}): vanilla bedrock, or a GT bedrock deposit
-     * whose ore replaced it — both are a floor. §103.B: this reads the ore's {@code stone} block-state
-     * property; the previous registry-id prefix test ({@code "bedrock_ore"}) never matched any
-     * registered block, so the check was dead.
+     * whose ore replaced it — both are a floor. This reads the ore's {@code stone} block-state
+     * property; a registry-id prefix test ({@code "bedrock_ore"}) matches no registered block.
      */
 
     private static boolean isBedrockOre(BlockState state) {

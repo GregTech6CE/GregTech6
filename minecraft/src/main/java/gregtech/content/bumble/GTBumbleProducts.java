@@ -27,10 +27,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  *   <caption>GT6's product tables</caption>
  *   <tr><td>{@code bumbleProductCount} ({@code MultiItemBumbles:492-494})</td>
  *       <td>always 1: a species has exactly one product, its comb</td></tr>
- *   <tr><td>{@code bumbleProductStack} ({@code :189-213})</td>
+ *   <tr><td>{@code bumbleProductStack}</td>
  *       <td>{@code meta / 100} picks the comb row: the honey comb for every tier 0 species, the water
  *       comb for tier 1, and so on up to the tera comb of tier 203</td></tr>
- *   <tr><td>{@code bumbleProductChance} ({@code :481-489})</td>
+ *   <tr><td>{@code bumbleProductChance}</td>
  *       <td>the species <em>level</em> ({@code (meta / 10) % 10}) sets the chance of every product:
  *       2500, 5000, 7500 and 10000 per 10000</td></tr>
  * </table>
@@ -53,7 +53,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public final class GTBumbleProducts {
 
-    /** GT6's {@code rng(10000)} bound for the product roll ({@code MultiTileEntityBumbliary:171}, {@code :168}). */
+    /** GT6's {@code rng(10000)} bound for the product roll ({@code MultiTileEntityBumbliary:171}). */
     public static final int ROLL = 10000;
 
     /** GT6's roll bound of the advanced bumbliary ({@code MultiTileEntityBumbliaryAdvanced:171}). */
@@ -88,7 +88,7 @@ public final class GTBumbleProducts {
      */
     public static ItemStack stack(int speciesId, int count) {
         String comb = GTBumbleSpecies.combOf(speciesId);
-        if (comb == null) comb = "honey_comb";                      // GT6 :211 `default: Comb_Honey`
+        if (comb == null) comb = "honey_comb";                      // `default: Comb_Honey`
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", comb));

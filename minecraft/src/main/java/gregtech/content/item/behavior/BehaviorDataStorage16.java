@@ -15,11 +15,11 @@ import java.util.List;
  * <p>The original ({@code Behavior_DataStorage16:37-58}) prints, in this order:</p>
  *
  * <ul>
- *   <li>no {@code gt.usb.drive} tag at all — {@code "Perfectly Formatted"} in cyan ({@code :54}): an
+ *   <li>no {@code gt.usb.drive} tag at all — {@code "Perfectly Formatted"} in cyan: an
  *       untouched drive;</li>
- *   <li>the tag present but empty — {@code "Uncleanly Formatted"} ({@code :42}): a drive that was
+ *   <li>the tag present but empty — {@code "Uncleanly Formatted"}: a drive that was
  *       written and then wiped;</li>
- *   <li>otherwise one line per slot, 0 to 15 ({@code :44-51}): an empty slot reads
+ *   <li>otherwise one line per slot, 0 to 15: an empty slot reads
  *       {@code "Data Slot N is Empty"} in dark grey, a filled one goes through
  *       {@code UT.NBT.getDataToolTip(data, list, <b>false</b>)} — the short form, one line per file,
  *       because a drive holds sixteen.</li>

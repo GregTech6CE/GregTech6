@@ -8,7 +8,7 @@ import gregtech.engine.material.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 
-/** Exact original GT6_Main:145-150 / W:161-166 item-generation exclusions.
+/** Exact original GT6_Main:145-150 / W item-generation exclusions.
  * Recipe-local only: existing registry IDs and logical prefix validity remain unchanged.
  * This is NOT ORES-property evidence; oreRaw, rock and dust are never excluded here.
  */

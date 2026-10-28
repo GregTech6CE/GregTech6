@@ -621,7 +621,7 @@ public final class GeneratedRecipeResolver {
                         map.putIfAbsent(entry.getValue().registryName().toLowerCase(java.util.Locale.ROOT), entry.getKey());
                     }
                     // GT6's 1.7.10 registry names that the port spells with an underscore. The tokens
-                    // are read from GT6's own rows, so the old spelling has to keep working (§32).
+                    // are read from GT6's own rows, so the old spelling has to keep working.
                     for (String[] alias : new String[][]{
                             {"chocolatemilk", "ChocolateMilk"},
                             {"darkchocolatemilk", "ChocolateMilk_Dark"},

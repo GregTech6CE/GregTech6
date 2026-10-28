@@ -175,7 +175,7 @@ public final class BehaviorScanner {
     }
 
     /**
-     * GT6 {@code Behavior_Scanner:61-67} and {@code :70-76}: an entity clicked with a scanner whose
+     * GT6 {@code Behavior_Scanner:61-67} and: an entity clicked with a scanner whose
      * level is above {@link #ENTITY_LEVEL} reports its class name.
      *
      * @return the line to chat, or empty when this scanner's level is too low

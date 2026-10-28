@@ -141,7 +141,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             LogisticsCoreControllerBlockEntity controller) {
-        // GT6 routes once per second, but charges standby power on every server tick (:504).
+        // GT6 routes once per second, but charges standby power on every server tick.
         if (level.getGameTime() % 20 == 0) {
             LogisticsCpuDisplay.Usage previous = controller.usedProcessors;
             controller.usedProcessors = LogisticsCpuDisplay.Usage.ZERO;

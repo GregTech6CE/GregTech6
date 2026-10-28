@@ -9,8 +9,7 @@ package gregtech.content.recipe;
  * <p>The crafting-table half of GT6's wood dictionary recipes
  * ({@code gregtech/loaders/c/Loader_Recipes_Woods.java}, driven by
  * {@code gregapi/load/LoaderWoodDictionary.java} and {@code gregapi/wooddict/*}). GT6's file holds
- * 128 recipe statements: <b>71 {@code RM.*} machine rows</b> (the "71 rows" of
- * {@code docs/PORTING_REMAINING_2026-09-14.md} sections 2 and 14 count the {@code RM.*} statements) and
+ * 128 recipe statements: <b>71 {@code RM.*} machine rows</b> and
  * 57 {@code CR.shaped}/{@code CR.shapeless}/{@code CR.remove} crafting rows. The machine half is
  * already registered for the port's species by {@code content/recipe/RegisteredWoodSurvivalRecipes.java}
  * and {@code content/recipe/VanillaWoodProcessingRecipes.java}; the crafting half was missing and is
@@ -29,7 +28,7 @@ package gregtech.content.recipe;
  *   <li>No fireproof wood: GT6's {@code BlocksGT.Log*FireProof}/{@code PlanksFireProof}/{@code Beam*FireProof}
  *       family (Laminator/Bath rows at {@code Loader_Recipes_Woods.java:46-119}) has no port block.</li>
  *   <li>No slabs or stairs for the port's species: GT6's {@code LIST_STAIRS}/{@code LIST_SLABS} rows
- *       ({@code :266-270}, {@code :288}, {@code :305}) are therefore skipped.</li>
+ *       are therefore skipped.</li>
  *   <li>Vanilla woods ({@code LoaderWoodDictionary.java:51-56}) keep vanilla's own recipes; the port's
  *       per-species log rows would only duplicate {@code minecraft:oak_planks} and friends.</li>
  *   <li>Other mods' wood (IC2/MFR/Atum/Fossil/BoP/TC/TF/BTL/Aether/Botania/Witchery/AbyssalCraft/
@@ -41,7 +40,7 @@ package gregtech.content.recipe;
  * </ul>
  *
  * <p>{@code CRAFT_ROWS} entries are {@code path|shape|mirror|pattern|keys|result|gt6}: pattern rows are
- * {@code /}-separated, keys are {@code symbol=spec} pairs separated by {@code ;}, and the result is
+ * {@code /}-separated, keys are {@code symbol=spec} pairs separated by {@code;}, and the result is
  * {@code spec*count}. Specs are {@code log:<species>}, {@code planks:<species>}, {@code stripped:<species>},
  * {@code stripped:<species>}, {@code rod:<material>} ({@code OP.stick}), {@code rodlong:<material>}
  * ({@code OP.stickLong}) and
@@ -140,7 +139,7 @@ public final class GTWoodRecipes {
         "bluespruce/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:bluespruce|rod:BlueSpruce*2|Loader_Recipes_Woods.java:244",
     };
 
-    /** GT6 statements of {@code Loader_Recipes_Woods} this batch does not turn into port rows. */
+    /** GT6 statements of {@code Loader_Recipes_Woods} that have no port row. */
     public static final String[] SKIPPED_ROWS = {
         "Loader_Recipes_Woods.java:48|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Log1 , 1, i), ST.make(BlocksGT.Log1FireProof , 1, i));",
         "Loader_Recipes_Woods.java:49|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.LogA , 1, i), ST.make(BlocksGT.LogAFireProof , 1, i));",

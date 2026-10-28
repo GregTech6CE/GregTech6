@@ -45,12 +45,12 @@ import java.util.List;
  * advanced variant ({@code MultiTileEntityBumbliaryAdvanced}, GT6 id 32007): one princess and one
  * drone go in, a queen works for a while, combs and a brood come out.
  *
- * <p>The machine itself is nothing but GT6's {@code onTick2} ({@code :105-279}, the advanced one
- * {@code :105-279} as well) wrapped around an inventory, which is why every step below names the
- * original line. The bee maths lives in {@link BumbleBreeding}, {@link BumbleBeeGenes},
- * {@link GTBumbleSpecies}, {@link GTBumbleMutations} and {@link GTBumbleProducts}.</p>
+ * <p>The machine itself is nothing but GT6's {@code onTick2} (the advanced variant has its own
+ * copy) wrapped around an inventory. The bee maths lives in {@link BumbleBreeding},
+ * {@link BumbleBeeGenes}, {@link GTBumbleSpecies}, {@link GTBumbleMutations} and
+ * {@link GTBumbleProducts}.</p>
  *
- * <h2>Inventory ({@code :333-343}, advanced {@code :333-344})</h2>
+ * <h2>Inventory</h2>
  * <p>36 slots with GT6's six groups: {@link #SLOT_ROYAL} holds the breeding queen or the waiting
  * princess, {@link #SLOT_DRONE} the preferred drone, {@link #SLOTS_COMBS} the combs a working queen
  * produces, {@link #SLOTS_DRONE} the spare drone slots the brood and the promoted princess come from,
@@ -58,40 +58,40 @@ import java.util.List;
  * ({@link #ADVANCED_LAYOUT}).</p>
  *
  * <p>The GUI rules are GT6's: only a living princess may be put into the royal slot
- * ({@code isItemValidForSlotGUI:357-364}) and only a drone into the main drone slot, nothing may be
+ * ({@code isItemValidForSlotGUI}) and only a drone into the main drone slot, nothing may be
  * put into the comb, spare-drone and dead slots, the spare drone slots cannot be emptied by the
  * player at all ({@code MultiTileEntityBumbliary:399-421}, {@code setCanTake(F)}), the royal slot can
- * only be emptied while it does not hold a live queen ({@code canTakeOutOfSlotGUI:367-369}) and the
- * royal slot takes exactly one item ({@code getInventoryStackLimitGUI:341}).</p>
+ * only be emptied while it does not hold a live queen ({@code canTakeOutOfSlotGUI}) and the
+ * royal slot takes exactly one item ({@code getInventoryStackLimitGUI}).</p>
  *
- * <p>Automation sees the dead slots only, on every side: {@code getAccessibleSlotsFromSide2:340}
- * returns {@link #SLOTS_DEAD}, {@code canInsertItem2:342} is false and {@code canExtractItem2:343}
+ * <p>Automation sees the dead slots only, on every side: {@code getAccessibleSlotsFromSide2}
+ * returns {@link #SLOTS_DEAD}, {@code canInsertItem2} is false and {@code canExtractItem2}
  * allows the extraction of {@code aSlot >= 27} - the dead bees. The advanced machine exposes
  * {@link #ADV_SLOTS_AUTO} instead ({@code MultiTileEntityBumbliaryAdvanced:341-344}), i.e. its combs
  * and its dead bees.</p>
  *
- * <h2>What runs per tick ({@code :105-279})</h2>
+ * <h2>What runs per tick</h2>
  * <ol>
  *   <li>Every 1200 ticks - and once on load - the environment is refreshed: the sky flag comes from
- *       GT6's {@code getRainAtSide} over the five non-bottom sides ({@code :97, :109}), the
+ *       GT6's {@code getRainAtSide} over the five non-bottom sides, the
  *       temperature from {@link SmelteryBlockEntityHelper#environmentTemperature} (GT6's
- *       {@code WD.envTemp:404-406}) and the humidity from the biome's rainfall ({@code :99, :111}).</li>
+ *       {@code WD.envTemp}) and the humidity from the biome's rainfall.</li>
  *   <li>A queen with {@code life > 0} in the royal slot breeds nothing but works: the countdown is
- *       pinned to 1200 ({@code :119}), and while {@link #checkEnvironment} accepts the place the
- *       machine counts the queen's life down one tick at a time ({@code :121}), hands out a comb every
- *       {@code life % 1200 == 600} ({@code :168-186}) and attacks everything in a 9x9x9 box every
- *       {@code life % 300 == 150} ({@code :165-167}, see the port differences). A queen whose genome
- *       does not fit the bumbliary dies immediately ({@code :188-192}).</li>
+ *       pinned to 1200, and while {@link #checkEnvironment} accepts the place the
+ *       machine counts the queen's life down one tick at a time, hands out a comb every
+ *       {@code life % 1200 == 600} and attacks everything in a 9x9x9 box every
+ *       {@code life % 300 == 150} (see the port differences). A queen whose genome
+ *       does not fit the bumbliary dies immediately.</li>
  *   <li>When the queen's life reaches zero the machine kills the queen and every bee in the spare drone
- *       slots ({@code :124-133}), moves the stored brood into the drone slots - or kills a child whose
- *       genome no longer fits the place ({@code :135-143}) - and promotes the most aggressive princess
- *       of the spare drone slots into the royal slot ({@code :147-163}).</li>
- *   <li>A princess waits for its countdown ({@code :198-199}), then picks a drone
- *       ({@code BumbleBreeding.findDroneSlot}), breeds ({@code :214-266}), stores the brood
- *       ({@code mOffSpring}, {@code :220}), sets its life to the princess's lifespan gene
- *       ({@code :254}), eats the drone ({@code :256-259}), crowns the queen ({@code :261}) and kills
- *       every non-drone bee the spare slots may still hold ({@code :263-266}).</li>
- *   <li>An empty royal slot resets life, brood and countdown ({@code :273-277}).</li>
+ *       slots, moves the stored brood into the drone slots - or kills a child whose
+ *       genome no longer fits the place - and promotes the most aggressive princess
+ *       of the spare drone slots into the royal slot.</li>
+ *   <li>A princess waits for its countdown, then picks a drone
+ *       ({@code BumbleBreeding.findDroneSlot}), breeds, stores the brood
+ *       ({@code mOffSpring}), sets its life to the princess's lifespan gene,
+ *       eats the drone, crowns the queen and kills
+ *       every non-drone bee the spare slots may still hold.</li>
+ *   <li>An empty royal slot resets life, brood and countdown.</li>
  * </ol>
  *
  * <h2>Port differences to GT6</h2>
@@ -103,22 +103,22 @@ import java.util.List;
  *       {@code bumbleCanProduce} ({@code MultiItemBumbles:216-349}) before it rolls a product. The
  *       port checks the same species categories within three blocks (one for the advanced machine),
  *       via {@link BumbleWorkplace}. GT6's optional-mod plants without a modern registered counterpart
- *       are not fabricated. {@code bumbleCanProduct} ({@code :497-499}) always answers the machine's
+ *       are not fabricated. {@code bumbleCanProduct} always answers the machine's
  *       own position, so it needs no additional product-specific check.</li>
  *   <li><b>Scoop access is a synced menu mode.</b> A scoop or creative player opens
  *       GT6's alternate take permissions; slot insertion and live-queen restrictions remain.</li>
- *   <li><b>The cover and paint system has no equivalent</b> ({@code allowCovers:344},
- *       {@code getTexture2:327}), and neither has {@code ITileEntityRunningSuccessfully}
- *       ({@code :351-354}); the port keeps GT6's four states as {@link #life()},
+ *   <li><b>The cover and paint system has no equivalent</b> ({@code allowCovers},
+ *       {@code getTexture2}), and neither has {@code ITileEntityRunningSuccessfully};
+ *       the port keeps GT6's four states as {@link #life()},
  *       {@link #countdown()} and {@link #endedQueen()} for the GUI and the tests.</li>
  *   <li><b>GT6's {@code rng(..)} is one global RNG</b> ({@code RNGSUS}); the port draws from
  *       {@link Level#random}, the closest single source a block entity can reach, and hands the same
  *       source to {@link BumbleBreeding} (GT6 mixes its tile entity RNG with {@code RNGSUS} there).</li>
  *   <li><b>The NBT keys are GT6's own</b> ({@code CS:1175,1230,1251}): {@code gt.progress} is
  *       {@code mLife}, {@code gt.cooldown} is {@code mBreedingCountDown} and {@code gt.invout} is the
- *       brood list with {@code gt.invout.<i>} entries ({@code :66-85}). The inventory is stored under
+ *       brood list with {@code gt.invout.<i>} entries. The inventory is stored under
  *       {@code inventory} like every other port container.</li>
- *   <li><b>The sky flag latches.</b> GT6 only ever sets {@code mSky} to true ({@code :97, :109}) and
+ *   <li><b>The sky flag latches.</b> GT6 only ever sets {@code mSky} to true and
  *       never clears it, so a bumbliary that has seen rain from above once keeps working as an
  *       "outside" machine; the port keeps that behaviour on purpose.</li>
  * </ul>
@@ -136,14 +136,14 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     /** The port's own key for the container (every port block entity stores its inventory here). */
     public static final String NBT_INVENTORY = "inventory";
 
-    /** GT6's countdown of a working breeder and of a machine without a royal bee ({@code :119, :270, :276}). */
+    /** GT6's countdown of a working breeder and of a machine without a royal bee. */
     public static final int COUNTDOWN = 1200;
-    /** GT6's countdown while a princess has no drone to pair with ({@code :199}). */
+    /** GT6's countdown while a princess has no drone to pair with. */
     public static final int COUNTDOWN_PAIRING = 600;
-    /** GT6's penalty for opening the machine ({@code :289, :307}): five minutes without breeding. */
+    /** GT6's penalty for opening the machine: five minutes without breeding. */
     public static final int COUNTDOWN_OPEN_PENALTY = 6000;
 
-    /** GT6's {@code onTick2:108} / {@code onTickFirst2:95}: how often the environment is re-read. */
+    /** GT6's {@code onTick2} / {@code onTickFirst2}: how often the environment is re-read. */
     public static final int ENVIRONMENT_INTERVAL = 1200;
 
     private static final ItemStack[] NO_BROOD = new ItemStack[0];
@@ -179,21 +179,21 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     private LazyOptional<IItemHandler> automation;
 //?}
 
-    /** GT6's {@code mOffSpring}: the brood the dead queen hands out ({@code :63, :220, :145}). */
+    /** GT6's {@code mOffSpring}: the brood the dead queen hands out. */
     private ItemStack[] brood = NO_BROOD;
-    /** GT6's {@code mLife}: the queen's remaining life, counted down one tick at a time ({@code :61}). */
+    /** GT6's {@code mLife}: the queen's remaining life, counted down one tick at a time. */
     private long life;
-    /** GT6's {@code mBreedingCountDown} ({@code :61}). */
+    /** GT6's {@code mBreedingCountDown}. */
     private long countdown = COUNTDOWN;
-    /** GT6's {@code mSky}: the machine has been rained on from above ({@code :60}). */
+    /** GT6's {@code mSky}: the machine has been rained on from above. */
     private boolean sky;
-    /** GT6's {@code mTemperature} ({@code :61}), seeded with GT6's default environment temperature. */
+    /** GT6's {@code mTemperature}, seeded with GT6's default environment temperature. */
     private long temperature = GregTechConstants.DEF_ENV_TEMP;
-    /** GT6's {@code mHumidity} ({@code :62}). */
+    /** GT6's {@code mHumidity}. */
     private float humidity = 1.0F;
-    /** GT6's {@code mEndedQueen}, true for the one tick a queen dies on ({@code :60, :122}). */
+    /** GT6's {@code mEndedQueen}, true for the one tick a queen dies on. */
     private boolean endedQueen;
-    /** GT6 refreshes the environment on the first tick ({@code onTickFirst2:95-101}). */
+    /** GT6 refreshes the environment on the first tick ({@code onTickFirst2}). */
     private boolean environmentKnown;
 
     public BumbliaryBlockEntity(BlockPos pos, BlockState state) {
@@ -208,7 +208,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
 
             @Override
             public int getSlotLimit(int slot) {
-                // GT6's getInventoryStackLimitGUI (:341): the royal slot holds one bee.
+                // GT6's getInventoryStackLimitGUI: the royal slot holds one bee.
                 return slot == layout.royal() ? 1 : 64;
             }
 
@@ -236,13 +236,13 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     public boolean sky() { return sky; }
     public long temperature() { return temperature; }
     public float humidity() { return humidity; }
-    /** The pending brood, a copy so a caller cannot change what the machine still owes ({@code :63}). */
+    /** The pending brood, a copy so a caller cannot change what the machine still owes. */
     public ItemStack[] brood() { return brood.clone(); }
 
-    // ── environment (GT6 onTickFirst2:95-101 and the 1200-tick refresh :108-112) ────────────────
+    // ── environment (GT6 onTickFirst2 and the 1200-tick refresh) ────────────────
 
     /**
-     * GT6's {@code onTick2} ({@code :106-279}): the whole machine, server side only.
+     * GT6's {@code onTick2}: the whole machine, server side only.
      *
      * <p>This is the entry point for the block ticker; the game tests drive {@link #tickLogic()}
      * directly so they do not have to wait for game ticks.</p>
@@ -259,9 +259,9 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * Re-reads the place the machine stands in ({@code onTickFirst2:95-101}, {@code :108-112}).
+     * Re-reads the place the machine stands in ({@code onTickFirst2}).
      *
-     * <p>Port difference: GT6 latches {@code mSky} - it only ever sets it to true ({@code :97, :109})
+     * <p>Port difference: GT6 latches {@code mSky} - it only ever sets it to true
      * and never clears it - so the flag means "this bumbliary has seen the sky rain on it", not "it is
      * raining right now". The port keeps that.</p>
      */
@@ -283,36 +283,36 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
      * when it sits at or above the height the precipitation stops at.
      */
     private boolean rainAtSide(Direction side) {
-        if (level == null) return true;                                     // GT6 :267
-        if (!level.dimensionType().hasSkyLight()) return false;             // GT6 :268 provider.hasNoSky
+        if (level == null) return true;
+        if (!level.dimensionType().hasSkyLight()) return false;             // provider.hasNoSky
         BlockPos neighbour = worldPosition.relative(side);
         return level.getHeight(Heightmap.Types.MOTION_BLOCKING, neighbour.getX(), neighbour.getZ())
                 <= neighbour.getY();
     }
 
-    // ── the machine (GT6 onTick2:105-279) ───────────────────────────────────────────────────────
+    // ── the machine (GT6 onTick2) ───────────────────────────────────────────────────────
 
-    /** GT6's {@code onTick2} body ({@code :107-277}), one tick of the bumbliary. */
+    /** GT6's {@code onTick2} body, one tick of the bumbliary. */
     public void tickLogic() {
         if (level == null || level.isClientSide) return;
         long previousLife = life;
         long previousCountdown = countdown;
         ItemStack[] previousBrood = brood;
-        endedQueen = false;                                                     // GT6 :107
+        endedQueen = false;
 
         ItemStack royal = inventory.getStackInSlot(layout.royal());
         BumbleBeeType royalType = BumbleBeeType.of(royal);
-        if (!royal.isEmpty() && royalType != null) {                            // GT6 :113
-            // GT6 :116 `Util.getBumbleTag(tRoyalStack)`: a bee without a genome gets one here.
+        if (!royal.isEmpty() && royalType != null) {
+            // `Util.getBumbleTag(tRoyalStack)`: a bee without a genome gets one here.
             CompoundTag royalGenes = BumbleBeeGenes.of(royal, level.random);
-            if (life > 0 && royalType.aliveVariant() == BumbleBeeType.QUEEN) {   // GT6 :118, `% 5 == 2`
+            if (life > 0 && royalType.aliveVariant() == BumbleBeeType.QUEEN) {   // `% 5 == 2`
                 if (layout.advanced()) {
-                    if (countdown < COUNTDOWN) countdown = COUNTDOWN;           // ADV :119
+                    if (countdown < COUNTDOWN) countdown = COUNTDOWN;
                 } else {
-                    countdown = COUNTDOWN;                                      // GT6 :119
+                    countdown = COUNTDOWN;
                 }
-                if (checkEnvironment(royalGenes)) {                             // GT6 :120
-                    if (--life <= 0) {                                          // GT6 :121
+                if (checkEnvironment(royalGenes)) {
+                    if (--life <= 0) {
                         endQueen();
                     } else {
                         if (life % 300 == 150 && level.random.nextInt(10000)
@@ -323,31 +323,31 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
                                 attackEntity(target);
                             }
                         }
-                        produceComb(royal, royalGenes);                         // GT6 :168-186
+                        produceComb(royal, royalGenes);
                     }
                 } else {
-                    // GT6 :188-192: a queen whose genome does not fit this place dies right away.
+                    // a queen whose genome does not fit this place dies right away.
                     ItemStack dead = kill(royal);
                     inventory.setStackInSlot(layout.royal(), ItemStack.EMPTY);
                     addToDeadSlots(dead);
                 }
             } else {
-                // GT6 :193-272: no working queen - a princess waits for a drone, everything else idles.
-                life = 0;                                                       // GT6 :194
-                brood = NO_BROOD;                                               // GT6 :195
-                if (royalType.aliveVariant() == BumbleBeeType.PRINCESS) {        // GT6 :197, `% 5 == 1`
-                    if (--countdown <= 0) {                                     // GT6 :198
-                        countdown = COUNTDOWN_PAIRING;                          // GT6 :199
+                // no working queen - a princess waits for a drone, everything else idles.
+                life = 0;
+                brood = NO_BROOD;
+                if (royalType.aliveVariant() == BumbleBeeType.PRINCESS) {        // `% 5 == 1`
+                    if (--countdown <= 0) {
+                        countdown = COUNTDOWN_PAIRING;
                         tryBreed(royal);
                     }
                 } else {
-                    countdown = COUNTDOWN;                                      // GT6 :270
+                    countdown = COUNTDOWN;
                 }
             }
         } else {
-            life = 0;                                                           // GT6 :274
-            brood = NO_BROOD;                                                   // GT6 :275
-            countdown = COUNTDOWN;                                              // GT6 :276
+            life = 0;
+            brood = NO_BROOD;
+            countdown = COUNTDOWN;
         }
         // The original base/proxy marks loaded machines for saving every second. Here the native
         // chunk must be dirtied even when no inventory slot changed (life and pairing waits).
@@ -357,10 +357,10 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * GT6's breeding step ({@code :200-266}) with {@link BumbleBreeding} doing the maths.
+     * GT6's breeding step with {@link BumbleBreeding} doing the maths.
      *
      * <p>The drone slots are handed over in GT6's own order: index 0 is the main drone slot
-     * ({@code :202-203}) and the rest are {@link #SLOTS_DRONE} in order ({@code :205-212}), which is
+     * and the rest are {@link #SLOTS_DRONE} in order, which is
      * exactly what {@link BumbleBreeding#findDroneSlot} expects.</p>
      */
     private void tryBreed(ItemStack royal) {
@@ -369,22 +369,22 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         droneSlots[0] = inventory.getStackInSlot(layout.drone());
         for (int i = 0; i < spare.length; i++) droneSlots[i + 1] = inventory.getStackInSlot(spare[i]);
 
-        int index = BumbleBreeding.findDroneSlot(royal, droneSlots);            // GT6 :200-213
+        int index = BumbleBreeding.findDroneSlot(royal, droneSlots);
         if (index < 0) return;
         int slot = index == 0 ? layout.drone() : spare[index - 1];
 
         BumbleBreeding.Result result = BumbleBreeding.breed(royal, droneSlots[index],
-                index == 0, level.random);                                      // GT6 :214-252
+                index == 0, level.random);
         if (result == null) return;                                             // the scan proved it is a drone
 
-        countdown = COUNTDOWN;                                                  // GT6 :215
-        brood = result.offspring();                                             // GT6 :220 mOffSpring
-        life = result.lifeSpan();                                               // GT6 :254
-        addToDeadSlots(result.droneDead());                                     // GT6 :257-258
-        shrink(slot, result.droneCost());                                       // GT6 :259 decrStackSize
-        inventory.setStackInSlot(layout.royal(), single(result.queen()));       // GT6 :261 ST.amount(1, crown)
+        countdown = COUNTDOWN;
+        brood = result.offspring();                                             // mOffSpring
+        life = result.lifeSpan();
+        addToDeadSlots(result.droneDead());
+        shrink(slot, result.droneCost());                                       // decrStackSize
+        inventory.setStackInSlot(layout.royal(), single(result.queen()));       // ST.amount(1, crown)
 
-        for (int droneSlot : spare) {                                           // GT6 :263-266
+        for (int droneSlot : spare) {
             ItemStack found = inventory.getStackInSlot(droneSlot);
             if (found.isEmpty() || BumbleBeeType.of(found) == null) continue;
             if (BumbleBeeType.of(found).aliveVariant() == BumbleBeeType.DRONE) continue;
@@ -394,7 +394,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * GT6's queen death ({@code :121-163}): the queen, every bee of the spare drone slots and the
+     * GT6's queen death: the queen, every bee of the spare drone slots and the
      * children that no longer fit the environment die, the brood moves into the drone slots and the
      * most aggressive princess becomes the new queen.
      *
@@ -402,25 +402,25 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
      * so a drone parked in {@link #SLOT_DRONE} survives a queen's death and cannot be promoted.</p>
      */
     private void endQueen() {
-        endedQueen = true;                                                      // GT6 :122
+        endedQueen = true;
 
-        for (int slot : layout.dead()) {                                        // GT6 :124
+        for (int slot : layout.dead()) {
             ItemStack found = inventory.getStackInSlot(slot);
             if (BumbleBeeType.of(found) != null) inventory.setStackInSlot(slot, ItemStack.EMPTY);
         }
 
-        ItemStack queen = inventory.getStackInSlot(layout.royal());             // GT6 :126-128
+        ItemStack queen = inventory.getStackInSlot(layout.royal());
         inventory.setStackInSlot(layout.royal(), ItemStack.EMPTY);
         addToDeadSlots(kill(queen));
 
-        for (int slot : layout.drones()) {                                      // GT6 :130-133
+        for (int slot : layout.drones()) {
             ItemStack found = inventory.getStackInSlot(slot);
             if (found.isEmpty() || BumbleBeeType.of(found) == null) continue;
             inventory.setStackInSlot(slot, ItemStack.EMPTY);
             addToDeadSlots(kill(found));
         }
 
-        for (ItemStack child : brood) {                                         // GT6 :135-143
+        for (ItemStack child : brood) {
             if (child == null || child.isEmpty() || BumbleBeeType.of(child) == null) continue;
             if (checkEnvironment(BumbleBeeGenes.of(child, level.random))) {
                 // An empty main slot is deliberately skipped: promotion only scans spare slots.
@@ -433,9 +433,9 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
             }
         }
 
-        brood = NO_BROOD;                                                       // GT6 :145
+        brood = NO_BROOD;
 
-        int princessSlot = -1;                                                  // GT6 :147-163
+        int princessSlot = -1;
         for (int slot : layout.drones()) {
             ItemStack candidate = inventory.getStackInSlot(slot);
             BumbleBeeType type = BumbleBeeType.of(candidate);
@@ -445,30 +445,30 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
             }
         }
         if (princessSlot >= 0) {
-            inventory.setStackInSlot(layout.royal(), single(inventory.getStackInSlot(princessSlot))); // :161
-            shrink(princessSlot, 1);                                            // GT6 :162
+            inventory.setStackInSlot(layout.royal(), single(inventory.getStackInSlot(princessSlot)));
+            shrink(princessSlot, 1);
         }
     }
 
-    /** GT6's comb production ({@code :168-186}). */
+    /** GT6's comb production. */
     private void produceComb(ItemStack royal, CompoundTag royalGenes) {
-        if (life % 1200 != 600) return;                                         // GT6 :168
+        if (life % 1200 != 600) return;
         if (level.random.nextInt(GTBumbleProducts.ROLL) >= (int) BumbleBeeGenes.workForce(royalGenes)) return;
         if (!checkWork(royalGenes)) return;
         GTBumbleSpecies.Species species = BumbleBeeType.speciesOf(royal);
         if (species == null) return;
         if (!BumbleWorkplace.hasWorkplace(level, worldPosition, species.id(), layout.advanced())) return;
 
-        for (int i = 0, products = GTBumbleProducts.count(); i < products; i++) {   // GT6 :170
+        for (int i = 0, products = GTBumbleProducts.count(); i < products; i++) {
             if (level.random.nextInt(layout.productRoll())
-                    >= GTBumbleProducts.chance(species.id())) continue;         // GT6 :171
-            ItemStack product = GTBumbleProducts.stack(species.id(), 1);        // GT6 :173
-            if (!product.isEmpty()) addProductToCombSlots(product);              // GT6 :174-181
+                    >= GTBumbleProducts.chance(species.id())) continue;
+            ItemStack product = GTBumbleProducts.stack(species.id(), 1);
+            if (!product.isEmpty()) addProductToCombSlots(product);
         }
     }
 
     /**
-     * GT6's comb placement ({@code :174-181}): a comb slot that already holds the same product is
+     * GT6's comb placement: a comb slot that already holds the same product is
      * filled first, otherwise the first comb slot that takes it wins; a product that fits nowhere is
      * lost, exactly like in GT6.
      */
@@ -485,10 +485,10 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         for (int slot : layout.combs()) if (addStackToSlot(slot, product)) return;
     }
 
-    // ── GT6's environment checks (:375-385) ─────────────────────────────────────────────────────
+    // ── GT6's environment checks ─────────────────────────────────────────────────────
 
     /**
-     * GT6's {@code checkEnvironment} ({@code :375-377}): the genome has to accept the temperature, the
+     * GT6's {@code checkEnvironment}: the genome has to accept the temperature, the
      * humidity and the inside/outside side of the machine.
      */
     private boolean checkEnvironment(CompoundTag genes) {
@@ -498,7 +498,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * GT6's {@code checkWork} ({@code :379-385}): a machine in the rain needs a rainproof bee, one in
+     * GT6's {@code checkWork}: a machine in the rain needs a rainproof bee, one in
      * a thunderstorm a stormproof bee, and the time of day has to match the bee's activity.
      */
     private boolean checkWork(CompoundTag genes) {
@@ -509,20 +509,20 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         return level.isDay() ? BumbleBeeGenes.dayActive(genes) : BumbleBeeGenes.nightActive(genes);
     }
 
-    // ── slot rules (GT6 :340-369) ───────────────────────────────────────────────────────────────
+    // ── slot rules ───────────────────────────────────────────────────────────────
 
-    /** GT6's {@code isItemValidForSlotGUI} ({@code :357-364}): princesses and drones, nothing else. */
+    /** GT6's {@code isItemValidForSlotGUI}: princesses and drones, nothing else. */
     private boolean isItemValidForSlot(int slot, ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
         BumbleBeeType type = BumbleBeeType.of(stack);
-        if (type == null) return false;                                         // GT6 :358 IItemBumbleBee
-        if (slot == layout.drone()) return type.aliveVariant() == BumbleBeeType.DRONE;      // :360 `% 5 == 0`
-        if (slot == layout.royal()) return type.aliveVariant() == BumbleBeeType.PRINCESS;   // :361 `% 5 == 1`
-        return false;                                                           // :362 everything else
+        if (type == null) return false;                                         // IItemBumbleBee
+        if (slot == layout.drone()) return type.aliveVariant() == BumbleBeeType.DRONE;      // `% 5 == 0`
+        if (slot == layout.royal()) return type.aliveVariant() == BumbleBeeType.PRINCESS;   // `% 5 == 1`
+        return false;                                                           // everything else
     }
 
     /**
-     * GT6's {@code canTakeOutOfSlotGUI} ({@code :367-369}) for one slot of this machine: everything may
+     * GT6's {@code canTakeOutOfSlotGUI} for one slot of this machine: everything may
      * leave except a royal bee that is still alive - the queen has to die first.
      */
     public boolean canTakeOutOfSlot(int slot) {
@@ -530,7 +530,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * The stack half of GT6's {@code canTakeOutOfSlotGUI} ({@code :367-369}): only a live queen may not
+     * The stack half of GT6's {@code canTakeOutOfSlotGUI}: only a live queen may not
      * leave the royal slot ({@code bumbleType % 5 == 2}). The client copy of the container has no
      * machine to ask, so it derives the same answer from the synced stack through this method.
      */
@@ -546,10 +546,10 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
      * one slot - an empty slot takes the whole stack, an equal one takes it while it fits.
      */
     private boolean addStackToSlot(int slot, ItemStack stack) {
-        if (stack == null || stack.isEmpty()) return true;                      // GT6 :174
-        if (slot < 0 || slot >= inventory.getSlots()) return false;             // GT6 :175
+        if (stack == null || stack.isEmpty()) return true;
+        if (slot < 0 || slot >= inventory.getSlots()) return false;
         ItemStack existing = inventory.getStackInSlot(slot);
-        if (existing.isEmpty()) {                                               // GT6 :177-180
+        if (existing.isEmpty()) {
             inventory.setStackInSlot(slot, stack.copy());
             return true;
         }
@@ -562,7 +562,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
             inventory.setStackInSlot(slot, existing.copyWithCount(existing.getCount() + stack.getCount()));
             return true;
         }
-        return false;                                                           // GT6 :187
+        return false;
     }
 
     /** GT6's dead-slot loop: the first slot that takes the stack wins, otherwise the stack is lost. */
@@ -571,7 +571,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         for (int slot : layout.dead()) if (addStackToSlot(slot, stack)) return;
     }
 
-    /** GT6's {@code decrStackSize} ({@code :259, :162}). */
+    /** GT6's {@code decrStackSize}. */
     private void shrink(int slot, int amount) {
         ItemStack stack = inventory.getStackInSlot(slot);
         if (stack.isEmpty() || amount <= 0) return;
@@ -579,12 +579,12 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         inventory.setStackInSlot(slot, left <= 0 ? ItemStack.EMPTY : stack.copyWithCount(left));
     }
 
-    /** One item of a stack, GT6's {@code ST.amount(1, stack)} ({@code :161, :261}). */
+    /** One item of a stack, GT6's {@code ST.amount(1, stack)}. */
     private static ItemStack single(ItemStack stack) {
         return stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1);
     }
 
-    /** GT6's {@code Util.getAggressiveness(Util.getBumbleTag(stack))} ({@code :154}). */
+    /** GT6's {@code Util.getAggressiveness(Util.getBumbleTag(stack))}. */
     private long aggressiveness(ItemStack stack) {
         if (stack.isEmpty()) return 0;
         return BumbleBeeGenes.aggressiveness(BumbleBeeGenes.of(stack, level.random));
@@ -602,7 +602,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         return dead.isEmpty() ? bee.copy() : dead;
     }
 
-    // ── automation (GT6 getAccessibleSlotsFromSide2:340-343) ────────────────────────────────────
+    // ── automation (GT6 getAccessibleSlotsFromSide2) ────────────────────────────────────
 
     /**
      * GT6's sided inventory: {@code getAccessibleSlotsFromSide2} lists {@link #SLOTS_DEAD} and
@@ -619,14 +619,14 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
             int index = mapped(slot);
             return index < 0 ? 0 : inventory.getSlotLimit(index);
         }
-        @Override public boolean isItemValid(int slot, ItemStack stack) { return false; }   // GT6 :342
+        @Override public boolean isItemValid(int slot, ItemStack stack) { return false; }
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return stack;                                                       // GT6 :342 canInsertItem2
+            return stack;                                                       // canInsertItem2
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
             int index = mapped(slot);
             if (index < 0) return ItemStack.EMPTY;
-            return inventory.extractItem(index, amount, simulate);              // GT6 :343 canExtractItem2
+            return inventory.extractItem(index, amount, simulate);              // canExtractItem2
         }
 
         private int mapped(int slot) {
@@ -635,7 +635,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         }
     }
 
-    // ── NBT (GT6 readFromNBT2:66-85) ────────────────────────────────────────────────────────────
+    // ── NBT (GT6 readFromNBT2) ────────────────────────────────────────────────────────────
 
     @Override
 //? if >=1.21.1 {
@@ -681,7 +681,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
 //?}
         tag.putLong(NBT_PROGRESS, life);
         tag.putLong(NBT_COOLDOWN, countdown);
-        if (brood.length > 0) {                                                 // GT6 :81-84
+        if (brood.length > 0) {
             tag.putInt(NBT_INV_OUT, brood.length);
             for (int i = 0; i < brood.length; i++) {
                 if (brood[i] != null && !brood[i].isEmpty()) {
@@ -698,12 +698,12 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     // ── contents, break and menu ────────────────────────────────────────────────────────────────
 
     /**
-     * GT6's {@code breakDrop} ({@code :346}): while the machine is running ({@code mLife > 0}) every
+     * GT6's {@code breakDrop}: while the machine is running ({@code mLife > 0}) every
      * bee it holds dies as it is handed out, otherwise the bees drop as they are.
      */
     public List<ItemStack> breakDrops() {
         List<ItemStack> drops = new ArrayList<>();
-        for (int slot = 0; slot < inventory.getSlots(); slot++) {               // GT6 canDrop:345
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {               // GT6 canDrop
             ItemStack stack = inventory.getStackInSlot(slot);
             if (stack.isEmpty()) continue;
             drops.add(life > 0 ? kill(stack) : stack.copy());
@@ -734,7 +734,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         return new gregtech.client.gui.BumbliaryContainerMenu(containerId, playerInventory, this, player.isCreative());
     }
 
-    /** GT6 :371-372: only a living, currently working queen defends the machine. */
+    /**: only a living, currently working queen defends the machine. */
     public boolean attackEntity(net.minecraft.world.entity.LivingEntity target) {
         ItemStack royal = inventory.getStackInSlot(layout.royal());
         BumbleBeeType type = BumbleBeeType.of(royal);
@@ -742,7 +742,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
                 && gregtech.content.bumble.BumbleSting.attack(royal, target);
     }
 
-    /** GT6's {@code onBlockActivated3:289} / {@code onToolClick2:307}: opening costs five minutes. */
+    /** GT6's {@code onBlockActivated3} / {@code onToolClick2}: opening costs five minutes. */
     public void onOpened() {
         countdown = COUNTDOWN_OPEN_PENALTY;
         setChanged();

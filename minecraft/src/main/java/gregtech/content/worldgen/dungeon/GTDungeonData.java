@@ -80,7 +80,7 @@ import java.util.Set;
  * tile skin at 8, see {@link GTDungeonChunkRoomEmpty}). Negative Y ({@code -1}, {@code -2}, …) is
  * foundations and pillars.</p>
  *
- * <p>Port substitutions, all documented in {@code docs/PORTING_REMAINING_2026-09-14.md}:</p>
+ * <p>Port substitutions:</p>
  * <ul>
  *   <li>GT6's own {@code BlocksGT.Concrete}/{@code Glass}/{@code GlowGlass} colour families use
  *       their 16-colour port blockstates, in GT6's dye metadata order.</li>
@@ -259,7 +259,7 @@ public final class GTDungeonData {
      * {@code SIDE_X_NEG = 4}, {@code SIDE_X_POS = 5} - the same order as vanilla's {@link Direction}
      * ({@code DOWN, UP, NORTH, SOUTH, WEST, EAST}), and the port's {@link GTStoneSlabBlock} carries
      * exactly that orientation in its {@code FACING} property. Its six collision boxes
-     * ({@code GTStoneSlabBlock:47-54}) are GT6's own block bounds
+     * ({@code GTStoneSlabBlock}) are GT6's own block bounds
      * ({@code BlockMetaType:121-128}) block for block, so a GT6 side becomes a vanilla direction
      * without any mirroring.</p>
      *
@@ -375,7 +375,7 @@ public final class GTDungeonData {
      * pile uncoloured ({@code MultiTileEntityCoin.java:430-435}); the port's coin is a real item that has
      * to name the metal it is made of, so a dungeon pile rolls GT6's own coin list - the one the older
      * {@code WorldgenDungeonGT} used for exactly this purpose. The names are the port's
-     * ({@code ElementMaterials.java:51} Copper, {@code :69} Silver and {@code :100} Platinum; Gold is the
+     * ({@code ElementMaterials.java} Copper, Silver and Platinum; Gold is the
      * element material of the same file).</p>
      */
     public static final String[] COIN_METALS =
@@ -414,7 +414,7 @@ public final class GTDungeonData {
             GT6Materials.Compounds.Breeze, GT6Materials.Compounds.Blizz, GT6Materials.Compounds.Blitz,
             GT6Materials.Compounds.Basalz};
 
-    /** GT6's {@code sWoods} ({@code :43}): the crate material list of the wood quadrant. */
+    /** GT6's {@code sWoods}: the crate material list of the wood quadrant. */
     public static final GTMaterial[] CRATE_WOODS = {
             GT6Materials.Woods.Oak, GT6Materials.Woods.Birch, GT6Materials.Woods.Spruce,
             GT6Materials.Woods.Jungle, GT6Materials.Woods.Acacia, GT6Materials.Woods.DarkOak,
@@ -425,7 +425,7 @@ public final class GTDungeonData {
             GT6Materials.Woods.Livingwood, GT6Materials.Woods.Greatwood, GT6Materials.Woods.Silverwood,
             GT6Materials.Woods.WoodTreated, GT6Materials.Woods.Weedwood, GT6Materials.Woods.Skyroot};
 
-    /** GT6's {@code sGems} ({@code :44}): 47 entries covering gems, crystals, coals and lapis. */
+    /** GT6's {@code sGems}: 47 entries covering gems, crystals, coals and lapis. */
     public static final GTMaterial[] CRATE_GEMS = {
             GT6Materials.Compounds.EnderPearl, GT6Materials.Compounds.EnderPearl,
             GT6Materials.Compounds.EnderEye, GT6Materials.Compounds.Diamond,
@@ -449,7 +449,7 @@ public final class GTDungeonData {
             GT6Materials.Compounds.Lignite, GT6Materials.Compounds.Lignite,
             GT6Materials.Compounds.Lignite, GT6Materials.Compounds.Lignite};
 
-    /** GT6's {@code sOres} ({@code :46}): 54 entries, the raw-ore crates and the raw ore blocks. */
+    /** GT6's {@code sOres}: 54 entries, the raw-ore crates and the raw ore blocks. */
     public static final GTMaterial[] CRATE_ORES = {
             GT6Materials.Ores.TiO2, GT6Materials.Ores.TiO2, GT6Materials.Ores.MnO2,
             GT6Materials.Ores.MnO2, GT6Materials.Ores.MnO2, GT6Materials.Ores.Fe2O3,
@@ -472,7 +472,7 @@ public final class GTDungeonData {
             GT6Materials.Ores.Malachite, GT6Materials.Ores.Bromargyrite,
             GT6Materials.Ores.Smithsonite, GT6Materials.Ores.Sperrylite};
 
-    /** GT6's {@code sMetals} ({@code :45}), the same list the loose piles of that room roll from. */
+    /** GT6's {@code sMetals}, the same list the loose piles of that room roll from. */
     public static final GTMaterial[] CRATE_METALS = {
             GT6Materials.Elements.Cu, GT6Materials.Elements.Cu, GT6Materials.Elements.Sn,
             GT6Materials.Compounds.Bronze, GT6Materials.Elements.Fe, GT6Materials.Elements.Fe,
@@ -508,10 +508,10 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's crate multi-tiles ({@code BlocksGT.crateGtDust} and friends, {@code :135-183}): one crate of
+     * GT6's crate multi-tiles ({@code BlocksGT.crateGtDust} and friends): one crate of
      * {@code form}, made of one material out of {@code materials}.
      *
-     * <p>GT6's {@code set(IPrefixBlock[] aBlocks, ..., OreDictMaterial... aMaterials)}
+     * <p>GT6's {@code set(IPrefixBlock[] aBlocks,..., OreDictMaterial... aMaterials)}
      * ({@code DungeonData:209-210}) draws the <em>block</em> first and the <em>material</em> second -
      * Java evaluates the array index of the receiver before the arguments - so the port draws them in
      * that same order out of {@link #random}.</p>
@@ -534,7 +534,7 @@ public final class GTDungeonData {
         return crate(ax, ay, az, form, materials);
     }
 
-    /** GT6's {@code BlocksGT.blockRaw} ({@code :179-182}): a raw ore block of one of {@code materials}. */
+    /** GT6's {@code BlocksGT.blockRaw}: a raw ore block of one of {@code materials}. */
     public boolean rawBlock(int ax, int ay, int az, GTMaterial[] materials) {
         Block block = pickBlock(BlockMaterialPrefix.blockRaw, materials, next(materials.length));
         return block != null && set(ax, ay, az, block.defaultBlockState());
@@ -592,9 +592,9 @@ public final class GTDungeonData {
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
             for (int face = 0; face < CoinPileBlockEntity.FACES; face++) {
-                pile.setFaceCount(face, next1in3() ? next(8) : 0);          // GT6 DungeonData:170
+                pile.setFaceCount(face, next1in3() ? next(8) : 0);          // GT6 DungeonData:170 rolls each face
             }
-            pile.setFaceCount(next(CoinPileBlockEntity.FACES), 1 + next(8)); // GT6 DungeonData:171
+            pile.setFaceCount(next(CoinPileBlockEntity.FACES), 1 + next(8)); // GT6 DungeonData:171 rolls the extra pile
             // GT6 hands the multi-tile its material through the placed NBT; the port has to set it on
             // the block entity. After the faces, so that GT6's draws above are not disturbed.
             pile.setCoin(rollCoin(ax, ay, az));
@@ -698,8 +698,8 @@ public final class GTDungeonData {
      * same stack, filled here.
      *
      * <p>GT6 rolls the material out of the list the room hands it and the size with
-     * {@code aStackSize <= 0 ? nextStack() : ...} ({@code :260-274}, {@code nextStack()} is
-     * {@code 1 + next(64)} at {@code :91}); this overload takes those defaults, i.e. a random metal of
+     * {@code aStackSize <= 0 ? nextStack():...} ({@code nextStack()} is
+     * {@code 1 + next(64)} at); this overload takes those defaults, i.e. a random metal of
      * {@link #PILE_METALS} (a random gem of {@link #PILE_GEMS} for a gem plate pile) with a size of
      * {@code 1..64}.</p>
      *
@@ -731,7 +731,7 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6 {@code DungeonData.ingots_or_plates:259-264}: draw an ingot material and size, then a plate
+     * GT6 {@code DungeonData.ingots_or_plates}: draw an ingot material and size, then a plate
      * material and size, and only then decide which valid candidate is placed. Both candidate draws
      * matter to every later decoration in the dungeon's random stream.
      */
@@ -946,7 +946,7 @@ public final class GTDungeonData {
      *
      * <p>GT6 writes a filled container as
      * {@code aData.set(x, y, z, SIDE_UNKNOWN, id, new FluidTankGT(FL.X.make(n)).writeToNBT(..., NBT_TANK), T, T)}
-     * ({@code DungeonChunkRoomWorkshop:51}, {@code :167}, {@code :196}), so the fluid and its amount
+     * ({@code DungeonChunkRoomWorkshop:51}), so the fluid and its amount
      * belong to the block. The port owns both halves now and this helper fills whichever the block
      * carries:</p>
      * <ul>

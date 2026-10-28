@@ -19,7 +19,7 @@ import net.minecraftforge.items.SlotItemHandler;
 //?}
 
 /**
- * GT6's bumbliary container ({@code MultiTileEntityBumbliary.MultiTileEntityGUICommonBumbliary:389-441},
+ * GT6's bumbliary container ({@code MultiTileEntityBumbliary.MultiTileEntityGUICommonBumbliary},
  * the advanced one {@code MultiTileEntityBumbliaryAdvanced:390-426}): the machine's slots in GT6's own
  * grid plus the player inventory at GT6's offset.
  *
@@ -30,22 +30,22 @@ import net.minecraftforge.items.SlotItemHandler;
  * the standard machine and 5 columns from x=44 for the advanced one, rows at y=8, 26, 44 and 62
  * ({@code MultiTileEntityBumbliary:396-434}).</p>
  *
- * <h2>Slot rules ({@code :357-369, :395-434})</h2>
+ * <h2>Slot rules</h2>
  * <p>GT6 builds its GUI from {@code Slot_Normal} with two flags, so the port does the same. The whole
  * table of the standard machine ({@code MultiTileEntityBumbliary:396-434}, the advanced one
  * {@code MultiTileEntityBumbliaryAdvanced:397-419} has the same shape with its own indices):</p>
  * <ul>
  *   <li>{@code setCanPut(F)} on the comb, spare-drone and dead slots: only the player's own two bee
- *       slots take items ({@code isItemValidForSlotGUI:357-364}).</li>
- *   <li>{@code setCanTake(F)} on the main drone slot ({@code :420}) and on the spare drone slots
- *       ({@code :399-421}), so a survival player cannot pull those out, a creative one can
- *       ({@code Slot_Base.canTakeStack:92}). The comb slots and the dead slots keep GT6's default and
+ *       slots take items ({@code isItemValidForSlotGUI}).</li>
+ *   <li>{@code setCanTake(F)} on the main drone slot and on the spare drone slots,
+ *       so a survival player cannot pull those out, a creative one can
+ *       ({@code Slot_Base.canTakeStack}). The comb slots and the dead slots keep GT6's default and
  *       stay open to a survival player.</li>
- *   <li>the royal slot is one item deep ({@code getInventoryStackLimitGUI:341}) and its contents only
- *       leave while no live queen sits there ({@code canTakeOutOfSlotGUI:367-369}). GT6 asks the
+ *   <li>the royal slot is one item deep ({@code getInventoryStackLimitGUI}) and its contents only
+ *       leave while no live queen sits there ({@code canTakeOutOfSlotGUI}). GT6 asks the
  *       machine first and then its own flag; the standard GUI marks the royal slot
- *       {@code setCanTake(F)} ({@code :410}) while GT6's scoop GUI leaves that slot unrestricted
- *       ({@code :464}) so a player can take the bees back out. The synced scoop mode
+ *       {@code setCanTake(F)} while GT6's scoop GUI leaves that slot unrestricted
+ *       so a player can take the bees back out. The synced scoop mode
  *       unlocks all take flags, while a living queen remains protected by the inventory rule.</li>
  * </ul>
  *
@@ -136,14 +136,14 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = slots.get(index);
-        if (!slot.hasItem() || !slot.mayPickup(player)) return ItemStack.EMPTY;   // GT6 canTakeStack:92
+        if (!slot.hasItem() || !slot.mayPickup(player)) return ItemStack.EMPTY;   // GT6 canTakeStack
         ItemStack stack = slot.getItem();
         ItemStack moved = stack.copy();
         if (index < machineSlots) {
-            // GT6 transferStackInSlot:498-522, machine -> player.
+            // GT6 transferStackInSlot, machine -> player.
             if (!moveItemStackTo(stack, machineSlots, slots.size(), true)) return ItemStack.EMPTY;
         } else if (!MachineMenuTransfers.moveToMachine(stack, slots, machineSlots)) {
-            // Player -> machine: only the princess and the drone slot accept anything (:360-361).
+            // Player -> machine: only the princess and the drone slot accept anything.
             return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) slot.set(ItemStack.EMPTY);
@@ -160,7 +160,7 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
                 && player.level().getBlockEntity(machine.getBlockPos()) == machine;
     }
 
-    /** GT6's {@code Slot_Normal} with its flags ({@code :395-434}). */
+    /** GT6's {@code Slot_Normal} with its flags. */
     private static final class BumbliarySlot extends SlotItemHandler {
         private final boolean canPut, canTake, royal, drone;
         private final java.util.function.BooleanSupplier scoopMode;
@@ -174,9 +174,10 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
             this.royal = index == layout.royal();
             this.drone = index == layout.drone();
             this.canPut = royal || drone;
-            // GT6 marks both bee slots and every spare drone slot with setCanTake(F) (:410, :420 and the
-            // spare ones :399-421), so a survival player empties the comb slots and the dead slots only -
-            // plus the royal slot, which the machine's canTakeOutOfSlotGUI decides (:367-369).
+            // GT6 marks both bee slots and every spare drone slot with setCanTake(F)
+            // ({@code MultiTileEntityGUICommonBumbliary:410}, and the
+            // spare ones), so a survival player empties the comb slots and the dead slots only -
+            // plus the royal slot, which the machine's canTakeOutOfSlotGUI decides.
             this.canTake = !royal && index != layout.drone() && !contains(layout.drones(), index);
             this.machine = machine;
         }
@@ -192,7 +193,7 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
             return false;
         }
 
-        /** GT6's {@code isItemValidForSlotGUI:357-364}: a princess or a drone, nothing else. */
+        /** GT6's {@code isItemValidForSlotGUI}: a princess or a drone, nothing else. */
         @Override
         public boolean mayPlace(ItemStack stack) {
             if (!canPut || stack.isEmpty()) return false;
@@ -204,8 +205,8 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
         }
 
         /**
-         * GT6's {@code canTakeStack:92}: {@code canTakeOutOfSlotGUI} decides about the royal slot (only
-         * a live queen is locked in, {@code :367-369}), a slot with {@code setCanTake(F)} otherwise only
+         * GT6's {@code canTakeStack}: {@code canTakeOutOfSlotGUI} decides about the royal slot (only
+         * a live queen is locked in), a slot with {@code setCanTake(F)} otherwise only
          * opens for a creative player.
          *
          * <p>The server asks the machine; the client copy of the menu has none, so it derives the same
@@ -219,7 +220,7 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
             return inventoryAllows && (player.isCreative() || scoopMode.getAsBoolean() || canTake);
         }
 
-        /** GT6's {@code getInventoryStackLimitGUI:341}: the royal slot holds one bee. */
+        /** GT6's {@code getInventoryStackLimitGUI}: the royal slot holds one bee. */
         @Override
         public int getMaxStackSize() {
             return royal ? 1 : 64;

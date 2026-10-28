@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Burn/Gas declarations omitted by the earlier Loader_Fuels import (original:45-189).
+ * Burn and Gas declarations of GT6's Loader_Fuels that have no Engine row
+ * ({@code Loader_Fuels.java:45-189}).
  * Registry names include only the original FL.list aliases; category rows use the original
  * RUM/WHISKEY/VINEGAR memberships. Burn and Engine intentionally have different efficiencies.
  */

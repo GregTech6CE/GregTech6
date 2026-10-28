@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * GT6's wild bumblebee hive ({@code MultiTileEntityBumbleHive}, {@code gregtech/tileentity/misc}):
  * a nine-slot container that GT6 fills with one comb, a princess and a handful of drones when the
- * world generator places it ({@code WorldgenHives.placeHive:203}).
+ * world generator places it ({@code WorldgenHives.placeHive}).
  *
  * <p>GT6 never exposes those slots: {@code getAccessibleSlotsFromSide2} returns an empty array and
  * both {@code canInsertItem2}/{@code canExtractItem2} are false, so hoppers cannot touch a hive —

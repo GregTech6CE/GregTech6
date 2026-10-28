@@ -53,7 +53,7 @@ public final class FluidHazards {
         /**
          * Fluid a pipe that is not proof against this hazard loses per tick:
          * {@code GarbageGT.trash(tTank, 8)} for gas ({@code MultiTileEntityPipeFluid.java:297}),
-         * {@code 64} for plasma ({@code :303}) and {@code 16} for acid ({@code :309}).
+         * {@code 64} for plasma and {@code 16} for acid.
          */
         public int pipeTrashPerTick() {
             return pipeTrashPerTick;
@@ -64,7 +64,8 @@ public final class FluidHazards {
     public static final float PIPE_ACID_DAMAGE = 2.0F;
     /** GT6 {@code MultiTileEntityPipeFluid.java:312}: {@code if (rng(100) == 0)} destroys the pipe. */
     public static final int PIPE_ACID_DESTROY_CHANCE = 100;
-    /** GT6 {@code MultiTileEntityPipeFluid.java:299/:305}: {@code applyTemperatureDamage(e, T, 2.0F, 10.0F)}. */
+    /** GT6 {@code MultiTileEntityPipeFluid.java:299} and {@code MultiTileEntityPipeFluid.java:305}:
+     *  {@code applyTemperatureDamage(e, T, 2.0F, 10.0F)}. */
     public static final float PIPE_TEMPERATURE_MULTIPLIER = 2.0F;
     /** The damage cap of the same call. */
     public static final float PIPE_TEMPERATURE_CAP = 10.0F;
@@ -124,7 +125,7 @@ public final class FluidHazards {
      * of the three independent predicates.
      *
      * <p>GT6 never picks one: it runs three consecutive tests over the same tank
-     * ({@code MultiTileEntityPipeFluid.java:296} gas, {@code :302} plasma, {@code :308} acid). This
+     * ({@code MultiTileEntityPipeFluid.java:296} gas, plasma, acid). This
      * method exists only for callers that cannot act on more than one class, so it reports the class
      * GT6 hits hardest - {@link Kind#PLASMA} (64 units a tick) before {@link Kind#ACID} (16 a tick,
      * and the only class that can destroy the vessel) before {@link Kind#GAS} (8 a tick). A fluid that
@@ -148,12 +149,12 @@ public final class FluidHazards {
      *
      * <p>Every GT6 vessel asks the same three questions in the same shape -
      * {@code MultiTileEntityPipeFluid.java:296-317} for the pipe,
-     * {@code TileEntityBase08Barrel.java:251-254} for the barrel's fill gate and {@code :170-186} for
+     * {@code TileEntityBase08Barrel.java:251-254} for the barrel's fill gate and for
      * its per-tick corrosion, and {@code TileEntityBase08FluidContainer.java:420} for the general
      * container:
      * <pre>
-     *   if (!mGasProof    &amp;&amp; FL.gas(aFluid))    return 0;
-     *   if (!mAcidProof   &amp;&amp; FL.acid(aFluid))   return 0;
+     *   if (!mGasProof &amp;&amp; FL.gas(aFluid)) return 0;
+     *   if (!mAcidProof &amp;&amp; FL.acid(aFluid)) return 0;
      *   if (!mPlasmaProof &amp;&amp; FL.plasma(aFluid)) return 0;
      * </pre>
      * so each flag guards exactly one class and {@link Kind#NONE} is never refused.

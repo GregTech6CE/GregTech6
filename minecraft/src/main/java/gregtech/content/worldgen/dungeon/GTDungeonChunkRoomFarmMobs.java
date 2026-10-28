@@ -44,7 +44,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * Port of GT6's {@code DungeonChunkRoomFarmMobs}
  * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomFarmMobs.java:36-205}): GT6's mob farm.
  *
- * <p>The empty room is built first (GT6's {@code :37} calls its super class and refuses the cell when that
+ * <p>The empty room is built first (GT6's calls its super class and refuses the cell when that
  * fails), then a 4x4 stone pillar grows out of the middle of the hall. Two rings of containers hang around
  * it - a mass storage or the compartment drawer on every edge, the farm's mob drops inside them - and
  * twelve lamps light the floor. Above the pillar, GT6's farm itself rises: a 16x16 brick shaft from local 6
@@ -65,24 +65,24 @@ import net.minecraftforge.registries.ForgeRegistries;
  *       the two container rings at 2 and 3, the lamps at 6 and the hoppers at 8 are inside the hall.</li>
  *   <li><b>No entities.</b> The port must not spawn entities from world generation. GT6's class does not
  *       either - it builds the dark shaft whose spawn platforms the normal mob spawning rules fill, as its
- *       comments "Platforms for Mobs to spawn on" ({@code :62} and {@code :148}) say - and it places no
+ *       comments "Platforms for Mobs to spawn on" say - and it places no
  *       monster spawner, so no vanilla {@code Blocks.SPAWNER} is added here; that would be content GT6
  *       does not have. There is also no cage or pen of fences, glass or hay in GT6's room to build.</li>
  *   <li><b>Steel spikes.</b> GT6 places four omni-spikes with one shared blue/red steel roll
- *       ({@code next1in2() ? 6 : 14}, {@code :155-159}). The port uses its two-material spike state
+ *       ({@code next1in2() ? 6: 14}). The port uses its two-material spike state
  *       and its contact damage.</li>
  *   <li><b>Steel hoppers.</b> GT6's hopper multi-tile {@code 8010} (its comment calls them "Steel
- *       Hoppers!", {@code :161-165}) becomes the port's own steel hopper
+ *       Hoppers!") becomes the port's own steel hopper
  *       ({@code GTMachines.HOPPER_STEEL}) with GT6's output face per hopper ({@code SIDE_X_POS} is east
- *       and {@code SIDE_Z_POS} south, {@code :162-165}).</li>
+ *       and {@code SIDE_Z_POS} south).</li>
  *   <li><b>Item pipes.</b> GT6's multi-tile {@code 25377} is the medium Arsenic Bronze pipe. The port
  *       places its real item pipes with GT6's connection masks at the vertical shaft and both storage
  *       rings. Dungeon paint is still missing.</li>
  *   <li><b>Mass storages and the drawer.</b> Eight mass storages of multi-tile {@code 6009} - GT6's
  *       material variants, one stack of a mob drop each: glass bottles, slime balls, string, redstone,
  *       spider eyes, glowstone dust, bones, sticks, feathers, gunpowder, rotten flesh, sugar, arrows and
- *       one of GT6's wooden arrows, each {@code 1 + next(8)} ({@code :92-121}) - plus one compartment
- *       drawer of multi-tile {@code 4009} ({@code :112}) and one smooth block ({@code :109}) form the two
+ *       one of GT6's wooden arrows, each {@code 1 + next(8)} - plus one compartment
+ *       drawer of multi-tile {@code 4009} and one smooth block form the two
  *       rings. The port uses its own mass storage ({@code GTStorage.MASS_STORAGE}) and quad drawer
  *       with GT6's facing and fills all fourteen bulk stores with their 1..8 starting items. The
  *       original material-less wood arrow is represented by a GT wood arrow.</li>
@@ -98,7 +98,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * Port of GT6's {@code DungeonChunkRoomFarmMobs}
  * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomFarmMobs.java:36-205}): GT6's mob farm.
  *
- * <p>The empty room is built first (GT6's {@code :37} calls its super class and refuses the cell when that
+ * <p>The empty room is built first (GT6's calls its super class and refuses the cell when that
  * fails), then a 4x4 stone pillar grows out of the middle of the hall. Two rings of containers hang around
  * it - a mass storage or the compartment drawer on every edge, the farm's mob drops inside them - and
  * twelve lamps light the floor. Above the pillar, GT6's farm itself rises: a 16x16 brick shaft from local 6
@@ -119,24 +119,24 @@ import net.minecraftforge.registries.ForgeRegistries;
  *       the two container rings at 2 and 3, the lamps at 6 and the hoppers at 8 are inside the hall.</li>
  *   <li><b>No entities.</b> The port must not spawn entities from world generation. GT6's class does not
  *       either - it builds the dark shaft whose spawn platforms the normal mob spawning rules fill, as its
- *       comments "Platforms for Mobs to spawn on" ({@code :62} and {@code :148}) say - and it places no
+ *       comments "Platforms for Mobs to spawn on" say - and it places no
  *       monster spawner, so no vanilla {@code Blocks.SPAWNER} is added here; that would be content GT6
  *       does not have. There is also no cage or pen of fences, glass or hay in GT6's room to build.</li>
  *   <li><b>Steel spikes.</b> GT6 places four omni-spikes with one shared blue/red steel roll
- *       ({@code next1in2() ? 6 : 14}, {@code :155-159}). The port uses its two-material spike state
+ *       ({@code next1in2() ? 6: 14}). The port uses its two-material spike state
  *       and its contact damage.</li>
  *   <li><b>Steel hoppers.</b> GT6's hopper multi-tile {@code 8010} (its comment calls them "Steel
- *       Hoppers!", {@code :161-165}) becomes the port's own steel hopper
+ *       Hoppers!") becomes the port's own steel hopper
  *       ({@code DungeonBindings.supplier("hopper_steel")}) with GT6's output face per hopper ({@code SIDE_X_POS} is east
- *       and {@code SIDE_Z_POS} south, {@code :162-165}).</li>
+ *       and {@code SIDE_Z_POS} south).</li>
  *   <li><b>Item pipes.</b> GT6's multi-tile {@code 25377} is the medium Arsenic Bronze pipe. The port
  *       places its real item pipes with GT6's connection masks at the vertical shaft and both storage
  *       rings. Dungeon paint is still missing.</li>
  *   <li><b>Mass storages and the drawer.</b> Eight mass storages of multi-tile {@code 6009} - GT6's
  *       material variants, one stack of a mob drop each: glass bottles, slime balls, string, redstone,
  *       spider eyes, glowstone dust, bones, sticks, feathers, gunpowder, rotten flesh, sugar, arrows and
- *       one of GT6's wooden arrows, each {@code 1 + next(8)} ({@code :92-121}) - plus one compartment
- *       drawer of multi-tile {@code 4009} ({@code :112}) and one smooth block ({@code :109}) form the two
+ *       one of GT6's wooden arrows, each {@code 1 + next(8)} - plus one compartment
+ *       drawer of multi-tile {@code 4009} and one smooth block form the two
  *       rings. The port uses its own mass storage ({@code GTStorage.MASS_STORAGE}) and quad drawer
  *       with GT6's facing and fills all fourteen bulk stores with their 1..8 starting items. The
  *       original material-less wood arrow is represented by a GT wood arrow.</li>
@@ -152,7 +152,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
     /** GT6's tag ({@code WorldgenDungeonGT.TAG_FARM_MOBS}, {@code WorldgenDungeonGT:80}). */
     public static final String TAG_FARM_MOBS = "gt.dungeon.farm.mobs";
 
-    /** GT6's {@code tPlatforms} ({@code :149}): the lanes that carry a spawn platform, of the 16 lanes. */
+    /** GT6's {@code tPlatforms}: the lanes that carry a spawn platform, of the 16 lanes. */
     private static final boolean[] PLATFORMS = {
             false, true, true, false, false, false, true, true,
             true, true, false, false, false, true, true, false};
@@ -258,11 +258,10 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     @Override
     public boolean generate(GTDungeonData data) {
-        // GT6's :37.
         if (data.hasTag(TAG_FARM_MOBS) || !super.generate(data)) return false;
         data.tags.add(TAG_FARM_MOBS);
 
-        // GT6's :59-60 - the solid pillar in the middle of the hall, carved away by the platforms later.
+        // - the solid pillar in the middle of the hall, carved away by the platforms later.
         for (int tY = 1; tY <= 6; tY++) {
             for (int tX = 6; tX <= 9; tX++) {
                 for (int tZ = 6; tZ <= 9; tZ++) data.bricks(tX, tY, tZ);
@@ -274,11 +273,11 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's :63-71 - this cell's centre platform. Target cells build the outer platforms from
+        // - this cell's centre platform. Target cells build the outer platforms from
         // the same footprint and never write beyond their own chunk.
         makePlatform(data, 0, 0);
 
-        // GT6's :74-85 - the twelve lamps of the floor, GT6's 3/6/9/12 grid with a redstone brick above.
+        // - the twelve lamps of the floor, GT6's 3/6/9/12 grid with a redstone brick above.
         data.lamp(3, 6, 3, +1);
         data.lamp(3, 6, 6, +1);
         data.lamp(3, 6, 9, +1);
@@ -292,12 +291,12 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         data.lamp(12, 6, 9, +1);
         data.lamp(12, 6, 12, +1);
 
-        // GT6 :87-90 - its ID 25377 is the medium Arsenic Bronze item pipe (25375 + 2).
+        // - its ID 25377 is the medium Arsenic Bronze item pipe (25375 + 2).
         pipe(data, 8, 6, 8, 3);
         pipe(data, 8, 5, 8, 3);
         pipe(data, 8, 4, 8, 3);
 
-        // GT6's :91-106 - the first ring of containers at local 3: eight mass storages (glass bottles,
+        // - the first ring of containers at local 3: eight mass storages (glass bottles,
         // slime balls, string, redstone, spider eyes, glowstone dust, bones and sticks in GT6) around the
         // pillar, the four chiselled corners and the four inner item pipes.
         data.chiseled(6, 3, 6);
@@ -317,7 +316,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         stored(data, 9, 3, 8, Direction.EAST, Items.STICK);
         data.chiseled(9, 3, 9);
 
-        // GT6's :108-123 - the second ring at local 2: the compartment drawer at (7, 2, 6), six further
+        // - the second ring at local 2: the compartment drawer at (7, 2, 6), six further
         // mass storages (feathers, gunpowder, rotten flesh, sugar, arrows and a wooden arrow in GT6), the
         // smooth block GT6 leaves in the pillar's corner and the four inner item pipes.
         data.chiseled(6, 2, 6);
@@ -343,16 +342,16 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
     }
 
     /**
-     * GT6's {@code makePlatForms} ({@code :128-204}): one 16x16 platform of the farm - the two block thick
+     * GT6's {@code makePlatForms}: one 16x16 platform of the farm - the two block thick
      * roof at local 42 and 43, the floor at 6 to 8, the brick walls of the shaft from 9 to 41, the spawn
-     * platforms every three blocks ({@code :150}), the omni-spikes ({@code :154-159}), the steel hoppers
-     * ({@code :161-165}) and the four water sources of the corners ({@code :181-201}). Called once for
+     * platforms every three blocks, the omni-spikes, the steel hoppers
+     * and the four water sources of the corners. Called once for
      * the centre and once by each qualifying neighbouring cell, always with local offsets 0,0.
      */
     private static void makePlatform(GTDungeonData data, int aX, int aZ) {
         for (int eX = aX + 15, tX = aX; tX <= eX; tX++) {
             for (int eZ = aZ + 15, tZ = aZ; tZ <= eZ; tZ++) {
-                // GT6's :131-137 - the roof, the floor and the outer wall of the shaft.
+                // - the roof, the floor and the outer wall of the shaft.
                 data.tiles(tX, 43, tZ);
                 data.smalltiles(tX, 42, tZ);
                 data.smalltiles(tX, 8, tZ);
@@ -368,7 +367,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's :148-152 - the spawn platforms on GT6's tPlatforms lanes, every three blocks.
+        // - the spawn platforms on GT6's tPlatforms lanes, every three blocks.
         for (int tY = 12; tY < 42; tY++) {
             if (tY % 3 == 0) {
                 for (int i = 1; i <= 14; i++) {
@@ -379,7 +378,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6 :154-159 - all four steel omni-spikes share the blue/red steel roll (meta 6/14).
+        // - all four steel omni-spikes share the blue/red steel roll (meta 6/14).
         boolean redSteel = data.next1in2();
         for (int tX = 7; tX <= 8; tX++) {
             for (int tZ = 7; tZ <= 8; tZ++) {
@@ -392,20 +391,20 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's :161-165 - the four steel hoppers below the spikes, with GT6's output face each.
+        // - the four steel hoppers below the spikes, with GT6's output face each.
         data.set(aX + 7, 8, aZ + 7, hopper(Direction.EAST));
         data.set(aX + 7, 8, aZ + 8, hopper(Direction.EAST));
         data.set(aX + 8, 8, aZ + 7, hopper(Direction.SOUTH));
         data.set(aX + 8, 8, aZ + 8, hopper(Direction.DOWN));
 
-        // GT6 :167-171 - three chiselled corners and the centre pipe. Cross-cell runs are clipped and
+        // - three chiselled corners and the centre pipe. Cross-cell runs are clipped and
         // written by addPipeFragments after the target platform has been constructed.
         data.chiseled(aX + 7, 7, aZ + 7);
         data.chiseled(aX + 7, 7, aZ + 8);
         data.chiseled(aX + 8, 7, aZ + 7);
         pipe(data, aX + 8, 7, aZ + 8, 63);
 
-        // GT6's :181-197 - the mossy cobblestone rims in the four corners of the platform, at local 9.
+        // - the mossy cobblestone rims in the four corners of the platform, at local 9.
         data.mossycobble(aX + 1, 9, aZ + 1);
         data.mossycobble(aX + 2, 9, aZ + 1);
         data.mossycobble(aX + 3, 9, aZ + 1);
@@ -450,7 +449,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         data.mossycobble(aX + 13, 9, aZ + 12);
         data.mossycobble(aX + 14, 9, aZ + 11);
 
-        // GT6's :198-201 - one water source per corner; set() defers flow until generation finishes.
+        // - one water source per corner; set() defers flow until generation finishes.
         data.set(aX + 1, 10, aZ + 1, Blocks.WATER.defaultBlockState());
         data.set(aX + 1, 10, aZ + 14, Blocks.WATER.defaultBlockState());
         data.set(aX + 14, 10, aZ + 1, Blocks.WATER.defaultBlockState());

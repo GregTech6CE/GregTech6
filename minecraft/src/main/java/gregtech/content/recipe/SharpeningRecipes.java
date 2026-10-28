@@ -25,9 +25,9 @@ import java.util.List;
  * Twenty rows in two groups:
  * </p>
  * <ul>
- *   <li>Thirteen "<em>raw tool head → finished tool head</em>" rows ({@code :128-140}), EU 16 with the
+ *   <li>Thirteen "<em>raw tool head → finished tool head</em>" rows, EU 16 with the
  *       quality-scaled multiplier 16.</li>
- *   <li>Seven grinding rows ({@code :113-131}): {@code nugget → round}, {@code plateGem → lens},
+ *   <li>Seven grinding rows: {@code nugget → round}, {@code plateGem → lens},
  *       {@code gem/ingot/billet → stick}, {@code gemChipped → 2 arrow heads},
  *       {@code rockGt → 8 arrow heads}, EU 16 with multiplier 256. Where the input holds more material
  *       than the output, GT6 adds the pulverized remainder as a second output
@@ -48,7 +48,7 @@ public final class SharpeningRecipes {
             "GT6's COATED.NOT condition on the grinding rows (:113-127) has no port counterpart;"
                     + " ANTIMATTER.NOT is applied");
 
-    /** Raw head → finished head (GT6 :128-140), EU 16 with multiplier 16. */
+    /** Raw head → finished head, EU 16 with multiplier 16. */
     private static final List<String[]> TOOL_HEAD_ROWS = List.of(
             new String[]{"toolHeadRawArrow", "toolHeadArrow"},
             new String[]{"toolHeadRawSaw", "toolHeadSaw"},
@@ -64,7 +64,7 @@ public final class SharpeningRecipes {
             new String[]{"toolHeadRawSense", "toolHeadSense"},
             new String[]{"toolHeadRawPlow", "toolHeadPlow"});
 
-    /** Grinding rows (GT6 :113-127), EU 16 with multiplier 256; the 4th field marks pulverized remains. */
+    /** Grinding rows, EU 16 with multiplier 256; the 4th field marks pulverized remains. */
     private static final List<String[]> GRINDING_ROWS = List.of(
             new String[]{"nugget", "round", "1", "F"},
             new String[]{"plateGem", "lens", "1", "T"},

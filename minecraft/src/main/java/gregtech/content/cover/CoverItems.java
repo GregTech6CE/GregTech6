@@ -86,8 +86,8 @@ public final class CoverItems {
         if (id.startsWith("compact_electric_pump_")) return PUMP;               // IL.PUMPS[i]
         if (id.startsWith("compact_electric_conveyor_")) return CONVEYOR;       // IL.CONVEYERS[i]
         if (id.startsWith("compact_robot_arm_")) return ROBOT_ARM;              // IL.ROBOT_ARMS[i]
-        if (id.startsWith("integrated_circuit_")) return TAG_SELECTOR;          // ItemIntegratedCircuit:87
-        if (id.equals(TAG_SELECTOR)) return TAG_SELECTOR;                       // pre-§17 saves
+        if (id.startsWith("integrated_circuit_")) return TAG_SELECTOR;          // GT6 names circuits in ItemIntegratedCircuit:87
+        if (id.equals(TAG_SELECTOR)) return TAG_SELECTOR;                       // pre- saves
         return portCoverId(id) ? id : null;
     }
 
@@ -98,7 +98,7 @@ public final class CoverItems {
         return id.endsWith("_cover") || id.equals("redstone_conductor_cover_accept")
                 || id.equals("redstone_conductor_cover_emit") || id.equals("drain") || id.equals("air_vent")
                 || id.equals("item_filter") || id.equals("fluid_filter")
-                // §108: GT6 registers these two on items whose names do not end in "_cover" - the
+                // GT6 registers these two on items whose names do not end in "_cover" - the
                 // pressure valve is a fluid-pipe cover (CoverPressureValve:44) and the asphalt cover
                 // is bound to the Asphalt Panel block (Loader_MultiTileEntities:2054). Both could be
                 // attached but never dispatched before, because this list did not name them.

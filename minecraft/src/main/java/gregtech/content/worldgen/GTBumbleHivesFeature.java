@@ -56,27 +56,27 @@ import java.util.Set;
  * <table>
  *   <caption>GT6's hive passes</caption>
  *   <tr><th>pass</th><th>search</th><th>requirement</th><th>species / colour</th></tr>
- *   <tr><td>overworld underground ({@code :127-140})</td><td>y = 8..27</td>
+ *   <tr><td>overworld underground</td><td>y = 8..27</td>
  *       <td>natural rock, opaque, 5 of the 6 neighbours opaque and none liquid</td>
  *       <td>500 Stoned / light grey</td></tr>
- *   <tr><td>overworld surface ({@code :142-190})</td><td>y = height-50 down to 3</td>
+ *   <tr><td>overworld surface</td><td>y = height-50 down to 3</td>
  *       <td>first opaque, non-leaf/wood/ice block; then its five lower sides decide the colony</td>
  *       <td>see {@link #COLONIES}</td></tr>
- *   <tr><td>nether ({@code :104-111})</td><td>y = 16..111</td><td>netherrack embedded in 5 opaque sides</td>
+ *   <tr><td>nether</td><td>y = 16..111</td><td>netherrack embedded in 5 opaque sides</td>
  *       <td>300 Nether / {@code 0xaa0000}</td></tr>
- *   <tr><td>end ({@code :112-125})</td><td>y = 16..127, 1/3 chance</td><td>end stone embedded in 5 opaque sides</td>
+ *   <tr><td>end</td><td>y = 16..127, 1/3 chance</td><td>end stone embedded in 5 opaque sides</td>
  *       <td>400 End / {@code 0x00aaaa}</td></tr>
  * </table>
  *
  * <p>Both overworld passes run: a chunk can hold an underground <em>and</em> a surface colony.</p>
  *
- * <p>{@code placeHive} ({@code :195-204}) derives the colony's genome from the environment
+ * <p>{@code placeHive} derives the colony's genome from the environment
  * ({@link BumbleBeeGenes#fromEnvironment}) and fills the hive with one comb of the species' tier, a
  * princess and {@code offspring} drones, all carrying that genome. The comb amount is GT6's
  * {@code UT.Code.units(workForce, 10000, 10, T)}, which rounds <em>up</em> — so it is
  * {@code ceil(work/1000)}, always 1..10.</p>
  *
- * <p>Port differences, all documented in {@code docs/PORTING_REMAINING_2026-09-14.md §75}:</p>
+ * <p>Port differences:</p>
  * <ul>
  *   <li>Only the overworld, nether and end passes exist — GT6's Erebus, Betweenlands, Atum, Aether,
  *       Alfheim, Twilight Forest and space passes have no dimension in this port.</li>
@@ -106,7 +106,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
      */
     public record Colony(String trigger, int speciesId, int color, DyeColor dye) {}
 
-    // GT6's surface-pass table (:155-186), in its own test order.
+    // GT6's surface-pass table, in its own test order.
     public static final Colony WATER = new Colony("water", 100, 0x8080ff, DyeColor.LIGHT_BLUE);
     public static final Colony MAGICAL = new Colony("magical", 200, 0x800080, DyeColor.PURPLE);
     public static final Colony VOLCANIC = new Colony("volcanic", 300, 0x202020, DyeColor.BLACK);
@@ -121,7 +121,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     public static final Colony GRASS = new Colony("grass", 0, 0xffdd99, DyeColor.YELLOW);
     public static final Colony DIRT = new Colony("dirt", 0, 0x604000, DyeColor.BROWN);
     public static final Colony FALLBACK = MAGICAL;
-    /** GT6's underground colony ({@code :135}): species 500, light grey. */
+    /** GT6's underground colony: species 500, light grey. */
     public static final Colony UNDERGROUND = ROCK;
 
     /** GT6's {@code BIOMES_MAGICAL} stand-ins: the enchanted/mystic woods of 1.20.1. */
@@ -133,7 +133,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
             id("snowy_plains"), id("snowy_taiga"), id("snowy_beach"), id("ice_spikes"),
             id("snowy_slopes"), id("frozen_peaks"), id("jagged_peaks"), id("grove"),
             id("frozen_river"), id("frozen_ocean"), id("deep_frozen_ocean"));
-    /** GT6's {@code BIOMES_DESERT} / {@code BIOMES_MESA}: those hives are night colonies ({@code :131}). */
+    /** GT6's {@code BIOMES_DESERT} / {@code BIOMES_MESA}: those hives are night colonies. */
     public static final Set<ResourceLocation> DESERT_BIOMES = Set.of(
             id("desert"), id("badlands"), id("eroded_badlands"), id("wooded_badlands"));
 
@@ -159,7 +159,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
 
     // ── the overworld ─────────────────────────────────────────────────────────────────────────
 
-    /** GT6's two overworld passes ({@code :126-190}); both may place a hive in the same chunk. */
+    /** GT6's two overworld passes; both may place a hive in the same chunk. */
     public static boolean placeOverworld(WorldGenLevel level, int x, int z, RandomSource random) {
         boolean placed = placeUnderground(level, x, z, random);
         placed |= placeSurface(level, x, z, random);
@@ -167,7 +167,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's rock-pocket pass ({@code :127-140}): y = 8..27 above bedrock, natural rock, five solid
+     * GT6's rock-pocket pass: y = 8..27 above bedrock, natural rock, five solid
      * sides. The band goes through {@link GTWorldgenScale#remapY} so it stays the same rock layer in
      * the 1.18+ deep world (the nether and the end keep GT6's own Y values).
      */
@@ -188,7 +188,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's surface pass ({@code :142-190}): walk down to the first opaque, non-leaf/wood/ice block,
+     * GT6's surface pass: walk down to the first opaque, non-leaf/wood/ice block,
      * then let the first of its five lower sides that is free of collision pick the colony.
      */
     public static boolean placeSurface(WorldGenLevel level, int x, int z, RandomSource random) {
@@ -212,7 +212,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
         return false;
     }
 
-    /** GT6's nether pass ({@code :104-111}): netherrack y = 16..111, five solid sides. */
+    /** GT6's nether pass: netherrack y = 16..111, five solid sides. */
     public static boolean placeNether(WorldGenLevel level, int x, int z, RandomSource random) {
         int y = GTWorldgenScale.remapY(level, 16 + random.nextInt(96));
         BlockPos pos = new BlockPos(x, y, z);
@@ -221,7 +221,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
         return placeHive(level, pos, NETHER, random, null);
     }
 
-    /** GT6's end pass ({@code :112-125}): a 1/3 roll, then the first end stone pocket. */
+    /** GT6's end pass: a 1/3 roll, then the first end stone pocket. */
     public static boolean placeEnd(WorldGenLevel level, int x, int z, RandomSource random) {
         if (random.nextInt(3) > 0) return false;
         for (int y = 16; y < 128; y++) {
@@ -235,7 +235,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     // ── the colony table ──────────────────────────────────────────────────────────────────────
 
     /**
-     * GT6's colour/species chain ({@code :155-186}). {@code side} is the hive position's free
+     * GT6's colour/species chain. {@code side} is the hive position's free
      * neighbour the chain is running for, {@code contact} the ground block above it.
      */
     public static Colony colonyFor(WorldGenLevel level, BlockPos side, BlockState contact) {
@@ -277,7 +277,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
 
     // ── placing one hive ──────────────────────────────────────────────────────────────────────
 
-    /** GT6's {@code placeHive} ({@code :195-204}). */
+    /** GT6's {@code placeHive}. */
     public static boolean placeHive(WorldGenLevel level, BlockPos pos, Colony colony, RandomSource random,
                                     @Nullable CompoundTag overrideGenes) {
         GTBumbleSpecies.Species species = GTBumbleSpecies.byId(colony.speciesId());
@@ -313,7 +313,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * The colony's fresh genome (GT6 {@code :197-202}): the overworld derives day/night from the
+     * The colony's fresh genome (GT6's): the overworld derives day/night from the
      * biome (deserts and mesas are night colonies), every other dimension from the time of day.
      */
     public static CompoundTag genesFor(WorldGenLevel level, BlockPos pos, RandomSource random) {
@@ -402,7 +402,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
         return ResourceLocation.withDefaultNamespace(path);
     }
 
-    /** GT6's y range for the overworld rock pocket ({@code :127}). */
+    /** GT6's y range for the overworld rock pocket. */
     public static final int UNDERGROUND_MIN_Y = 8;
     public static final int UNDERGROUND_MAX_Y = 28;
 

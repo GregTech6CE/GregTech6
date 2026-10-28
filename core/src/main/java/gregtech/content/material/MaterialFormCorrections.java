@@ -14,9 +14,9 @@ final class MaterialFormCorrections {
         CompoundMaterials.PetrifiedWood.put(
                 MaterialProperty.STONE, MaterialProperty.WOOD, MaterialProperty.GENERATE_STICKS);
         // GT6 field names the port spells differently, whose specs (`omd:CrO2`, `omd:Flour`) would
-        // otherwise not resolve — both are real GT6 chemistry/food rows (§25):
-        //   MT.java:8685 Chromium Dioxide ("CrO₂")      ← `Roasting: omd:Cr + Oxygen -> omd:CrO2`
-        //   MT.java:9702 Wheat, local name "Flour"      ← `Mixer: omd:Flour + water -> food_dough`
+        // otherwise not resolve — both are real GT6 chemistry/food rows:
+        //   MT.ChromiumDioxide (id 8685, "CrO₂")   ← `Roasting: omd:Cr + Oxygen -> omd:CrO2`
+        //   MT.Wheat (id 9702, local "Flour")       ← `Mixer: omd:Flour + water -> food_dough`
         gregtech.engine.material.GTMaterialRegistry.registerAlias("CrO2", "ChromiumDioxide");
         gregtech.engine.material.GTMaterialRegistry.registerAlias("Flour", "Wheat");
 
