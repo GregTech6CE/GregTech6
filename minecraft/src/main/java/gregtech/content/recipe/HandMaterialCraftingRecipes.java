@@ -200,7 +200,8 @@ public final class HandMaterialCraftingRecipes {
             for (String source : List.of("toolHeadShovel", "toolHeadSpade")) {
                 var head = mat(source, material);
                 if (head.isEmpty()) continue;
-                putShapeless(rows, "shapeless/raw_universal_spade/" + source + "/" + m,
+                putShapeless(rows, "shapeless/raw_universal_spade/"
+                                + MaterialPrefix.camelToSnake(source) + "/" + m,
                         List.of(form(source, material, head), FILE, SAW), copy(rawUniversalSpade, 1));
             }
         }
