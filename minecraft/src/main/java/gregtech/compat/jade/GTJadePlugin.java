@@ -71,6 +71,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
         registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.TankBlock.class);
         registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.FluidPipeBlock.class);
+        registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.inventory.EnderGarbageBlock.class);
         registration.registerBlockComponent(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.content.block.energy.MagicFieldAbsorberBlock.class);
         registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE, gregtech.content.block.energy.PowerCellBlock.class);
         registration.registerBlockComponent(DustFunnelJadeProvider.INSTANCE,

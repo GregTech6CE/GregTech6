@@ -47,6 +47,12 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
     }
 
     @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (accessor.getBlockEntity() instanceof gregtech.content.blockentity.inventory.EnderGarbageBlockEntity) {
+            // The int-sized fluid capability describes a transfer window, not finite storage.
+            tooltip.remove(UNIVERSAL_FLUID_STORAGE);
+            tooltip.add(JadeBars.progress(0, Component.translatable("jade.gt6ce.unlimited"), 0x808080));
+            return;
+        }
         if (!accessor.getServerData().contains("gt_vessel")) return;
         var data = accessor.getServerData().getCompound("gt_vessel");
         if (data.getString("kind").equals("tank")) {
