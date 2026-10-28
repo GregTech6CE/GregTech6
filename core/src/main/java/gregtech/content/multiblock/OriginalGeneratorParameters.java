@@ -1,13 +1,14 @@
 package gregtech.content.multiblock;
+
 import java.util.*;
 
 /** Original 17211-17234 rating tables and pure conversion/layout policy. */
 public final class OriginalGeneratorParameters {
 
-    private OriginalGeneratorParameters() {
-    }
+    private OriginalGeneratorParameters() {}
 
-    public record GasGrade(String id, String rotor, String casingMaterial, int input, int output, int wallId, float hardness) {
+    public record GasGrade(
+            String id, String rotor, String casingMaterial, int input, int output, int wallId, float hardness) {
 
         public int inputMaximum() {
             return input * 2;
@@ -19,10 +20,11 @@ public final class OriginalGeneratorParameters {
     }
 
     public static final List<GasGrade> GRADES = List.of(
-            new GasGrade("magnalium_gas_turbine_main_housing",    "Magnalium",    "StainlessSteel", 6144,   4096,   18022, 6),
-            new GasGrade("trinitanium_gas_turbine_main_housing",  "Trinitanium",  "Titanium",       12288,  8192,   18026, 9),
-            new GasGrade("graphene_gas_turbine_main_housing",     "Graphene",     "TungstenSteel",  24576,  16384,  18023, 12.5f),
-            new GasGrade("vibramantium_gas_turbine_main_housing", "Vibramantium", "Adamantium",     196608, 131072, 18025, 100));
+            new GasGrade("magnalium_gas_turbine_main_housing", "Magnalium", "StainlessSteel", 6144, 4096, 18022, 6),
+            new GasGrade("trinitanium_gas_turbine_main_housing", "Trinitanium", "Titanium", 12288, 8192, 18026, 9),
+            new GasGrade("graphene_gas_turbine_main_housing", "Graphene", "TungstenSteel", 24576, 16384, 18023, 12.5f),
+            new GasGrade(
+                    "vibramantium_gas_turbine_main_housing", "Vibramantium", "Adamantium", 196608, 131072, 18025, 100));
 
     public record AxialGrade(String id, int materialIndex, boolean steam, int input, int output) {
 
@@ -53,7 +55,10 @@ public final class OriginalGeneratorParameters {
         };
         for (int gradeIndex = 0; gradeIndex < 4; gradeIndex++) {
             var gasGrade = GRADES.get(gradeIndex);
-            gradesByMaterial.add(new AxialGrade((steam ? steamIds : dynamoIds)[gradeIndex], gradeIndex, steam,
+            gradesByMaterial.add(new AxialGrade(
+                    (steam ? steamIds : dynamoIds)[gradeIndex],
+                    gradeIndex,
+                    steam,
                     steam ? gasGrade.input() * 2 : gasGrade.output(),
                     steam ? gasGrade.output() : gasGrade.output() * 3 / 4));
         }

@@ -3,11 +3,9 @@ package gregtech.content.block;
 /** Six colored grass identities with their side/top texture names and plant-soil flags. */
 public final class GrassSoilCatalog {
 
-    private GrassSoilCatalog() {
-    }
+    private GrassSoilCatalog() {}
 
-    public record Spec(String id, String side, String top, boolean plantSoil) {
-    }
+    public record Spec(String id, String side, String top, boolean plantSoil) {}
 
     public static final java.util.List<Spec> SPECS = java.util.List.of(
             new Spec("grassblock_brown", "grassblock_side_brown", "grassblock_top_brown", true),

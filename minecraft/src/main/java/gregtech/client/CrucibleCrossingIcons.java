@@ -12,8 +12,7 @@ public final class CrucibleCrossingIcons {
     }
 
     public static String sharedModelJson(MaterialTextureSet set) {
-        return SmelteryModelHelper.compositeModelJson(set,
-                SmelteryModelHelper.CROSSING_ELEMENTS_TINTED,
-                SmelteryModelHelper.CROSSING_ELEMENTS_OVERLAY);
+        return SmelteryModelHelper.compositeModelJson(
+                set, SmelteryModelHelper.CROSSING_ELEMENTS_TINTED, SmelteryModelHelper.CROSSING_ELEMENTS_OVERLAY);
     }
 }

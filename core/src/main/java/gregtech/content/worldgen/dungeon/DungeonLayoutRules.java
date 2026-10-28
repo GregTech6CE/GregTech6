@@ -1,9 +1,14 @@
 package gregtech.content.worldgen.dungeon;
-import java.util.ArrayList;import java.util.List;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /** Complete original lattice, room scatter, corridor carving and both cleanup passes. */
-public final class DungeonLayoutRules {private DungeonLayoutRules(){}
+public final class DungeonLayoutRules {
+    private DungeonLayoutRules() {}
     /** GT6's registration values ({@code Loader_Worldgen:652}). */
     public static final int PROBABILITY = 100;
+
     public static final int MIN_SIZE = 3, MAX_SIZE = 7;
     public static final int MIN_Y = 20, MAX_Y = 20;
     public static final int ROOM_CHANCE = 6;
@@ -28,44 +33,84 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
             maxY = Math.max(minY, maxY);
             roomChance = Math.max(1, roomChance);
         }
-        public int period() { return maxSize + 4; }
-        public int offset() { return period() / 2; }
-        public int half() { return (2 + maxSize) / 2; }
-        public int clearance() { return 256 + maxSize * 16; }
+
+        public int period() {
+            return maxSize + 4;
+        }
+
+        public int offset() {
+            return period() / 2;
+        }
+
+        public int half() {
+            return (2 + maxSize) / 2;
+        }
+
+        public int clearance() {
+            return 256 + maxSize * 16;
+        }
     }
+
     public static final Settings DEFAULTS = new Settings(MIN_SIZE, MAX_SIZE, MIN_Y, MAX_Y, ROOM_CHANCE);
 
-    public static int nearestAnchor(int chunk) { return nearestAnchor(chunk, DEFAULTS); }
+    public static int nearestAnchor(int chunk) {
+        return nearestAnchor(chunk, DEFAULTS);
+    }
+
     public static int nearestAnchor(int chunk, Settings settings) {
         int sign = chunk < 0 ? -1 : 1;
         int magnitude = Math.abs(chunk);
-        int lattice = settings.offset() + settings.period()
-                * Math.round((magnitude - settings.offset()) / (float) settings.period());
+        int lattice = settings.offset()
+                + settings.period() * Math.round((magnitude - settings.offset()) / (float) settings.period());
         // The widest layout is (2 + settings.maxSize()) cells, so its anchor sits up to that many halves away.
         if (Math.abs(magnitude - lattice) > settings.half()) return Integer.MIN_VALUE;
         return sign * lattice;
     }
-    public static boolean isAnchor(int chunk) { return isAnchor(chunk, DEFAULTS); }
+
+    public static boolean isAnchor(int chunk) {
+        return isAnchor(chunk, DEFAULTS);
+    }
+
     public static boolean isAnchor(int chunk, Settings settings) {
         return Math.abs((long) chunk) % settings.period() == settings.offset();
     }
-    public static int regionOf(int chunk) { return regionOf(chunk, DEFAULTS); }
+
+    public static int regionOf(int chunk) {
+        return regionOf(chunk, DEFAULTS);
+    }
+
     public static int regionOf(int chunk, Settings settings) {
         return Math.floorDiv(chunk, settings.period());
     }
-    public static int anchorOfRegion(int region) { return anchorOfRegion(region, DEFAULTS); }
+
+    public static int anchorOfRegion(int region) {
+        return anchorOfRegion(region, DEFAULTS);
+    }
+
     public static int anchorOfRegion(int region, Settings settings) {
         return region * settings.period() + (region >= 0 ? settings.offset() : settings.period() - settings.offset());
     }
-    public static int offsetY(java.util.function.IntUnaryOperator random) { return offsetY(random, DEFAULTS); }
+
+    public static int offsetY(java.util.function.IntUnaryOperator random) {
+        return offsetY(random, DEFAULTS);
+    }
+
     public static int offsetY(java.util.function.IntUnaryOperator random, Settings settings) {
         return settings.minY() + random.applyAsInt(Math.max(1, settings.maxY() - settings.minY()));
     }
-    public static int size(java.util.function.IntUnaryOperator random) { return size(random, DEFAULTS); }
+
+    public static int size(java.util.function.IntUnaryOperator random) {
+        return size(random, DEFAULTS);
+    }
+
     public static int size(java.util.function.IntUnaryOperator random, Settings settings) {
         return 2 + settings.minSize() + random.applyAsInt(1 + settings.maxSize() - settings.minSize());
     }
-    public static byte[][] layout(java.util.function.IntUnaryOperator random) { return layout(random, DEFAULTS); }
+
+    public static byte[][] layout(java.util.function.IntUnaryOperator random) {
+        return layout(random, DEFAULTS);
+    }
+
     public static byte[][] layout(java.util.function.IntUnaryOperator random, Settings settings) {
         // GT6 rolls the two dimensions separately but allocates one rectangular array.
         int rows = size(random, settings), columns = size(random, settings);
@@ -98,11 +143,13 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
                 int a = i, b = j;
                 while (a != cells.length / 2) {
                     a += a > cells.length / 2 ? -1 : 1;
-                    if (cells[a][b] == 0) cells[a][b] = CORRIDOR; else break;
+                    if (cells[a][b] == 0) cells[a][b] = CORRIDOR;
+                    else break;
                 }
                 while (b != cells[a].length / 2) {
                     b += b > cells[a].length / 2 ? -1 : 1;
-                    if (cells[a][b] == 0) cells[a][b] = CORRIDOR; else break;
+                    if (cells[a][b] == 0) cells[a][b] = CORRIDOR;
+                    else break;
                 }
             }
         }
@@ -112,6 +159,7 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
         settle(cells, true);
         return cells;
     }
+
     private static void settle(byte[][] cells, boolean extended) {
         boolean changed = true;
         while (changed) {
@@ -120,8 +168,10 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
                 for (int j = 1; j < cells[i].length - 1; j++) {
                     if (cells[i][j] != CORRIDOR) continue;
                     // A straight-through piece is fine (GT6's two early "continue" cases).
-                    if (cells[i + 1][j] != 0 && cells[i - 1][j] != 0 && cells[i][j - 1] == 0 && cells[i][j + 1] == 0) continue;
-                    if (cells[i + 1][j] == 0 && cells[i - 1][j] == 0 && cells[i][j - 1] != 0 && cells[i][j + 1] != 0) continue;
+                    if (cells[i + 1][j] != 0 && cells[i - 1][j] != 0 && cells[i][j - 1] == 0 && cells[i][j + 1] == 0)
+                        continue;
+                    if (cells[i + 1][j] == 0 && cells[i - 1][j] == 0 && cells[i][j - 1] != 0 && cells[i][j + 1] != 0)
+                        continue;
 
                     int connections = 0;
                     if (cells[i + 1][j] != 0) connections++;
@@ -145,34 +195,60 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
                         }
                         if (connections == 5) {
                             if (cells[i + 1][j - 1] == 0 && cells[i + 1][j] == 0 && cells[i + 1][j + 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
+                                cells[i][j] = EMPTY;
+                                changed = true;
+                                continue;
                             }
                             if (cells[i - 1][j - 1] == 0 && cells[i - 1][j] == 0 && cells[i - 1][j + 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
+                                cells[i][j] = EMPTY;
+                                changed = true;
+                                continue;
                             }
                             if (cells[i - 1][j + 1] == 0 && cells[i][j + 1] == 0 && cells[i + 1][j + 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
+                                cells[i][j] = EMPTY;
+                                changed = true;
+                                continue;
                             }
                             if (cells[i - 1][j - 1] == 0 && cells[i][j - 1] == 0 && cells[i + 1][j - 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
+                                cells[i][j] = EMPTY;
+                                changed = true;
+                                continue;
                             }
                         }
                     }
                     // GT6's four corner rules.
-                    if (cells[i + 1][j] != 0 && cells[i + 1][j + 1] != 0 && cells[i][j + 1] != 0
-                            && cells[i - 1][j] == 0 && cells[i][j - 1] == 0) {
-                        cells[i][j] = EMPTY; changed = true; continue;
+                    if (cells[i + 1][j] != 0
+                            && cells[i + 1][j + 1] != 0
+                            && cells[i][j + 1] != 0
+                            && cells[i - 1][j] == 0
+                            && cells[i][j - 1] == 0) {
+                        cells[i][j] = EMPTY;
+                        changed = true;
+                        continue;
                     }
-                    if (cells[i + 1][j] != 0 && cells[i + 1][j - 1] != 0 && cells[i][j - 1] != 0
-                            && cells[i - 1][j] == 0 && cells[i][j + 1] == 0) {
-                        cells[i][j] = EMPTY; changed = true; continue;
+                    if (cells[i + 1][j] != 0
+                            && cells[i + 1][j - 1] != 0
+                            && cells[i][j - 1] != 0
+                            && cells[i - 1][j] == 0
+                            && cells[i][j + 1] == 0) {
+                        cells[i][j] = EMPTY;
+                        changed = true;
+                        continue;
                     }
-                    if (cells[i - 1][j] != 0 && cells[i - 1][j + 1] != 0 && cells[i][j + 1] != 0
-                            && cells[i + 1][j] == 0 && cells[i][j - 1] == 0) {
-                        cells[i][j] = EMPTY; changed = true; continue;
+                    if (cells[i - 1][j] != 0
+                            && cells[i - 1][j + 1] != 0
+                            && cells[i][j + 1] != 0
+                            && cells[i + 1][j] == 0
+                            && cells[i][j - 1] == 0) {
+                        cells[i][j] = EMPTY;
+                        changed = true;
+                        continue;
                     }
-                    if (cells[i - 1][j] != 0 && cells[i - 1][j - 1] != 0 && cells[i][j - 1] != 0
-                            && cells[i + 1][j] == 0 && cells[i][j + 1] == 0) {
+                    if (cells[i - 1][j] != 0
+                            && cells[i - 1][j - 1] != 0
+                            && cells[i][j - 1] != 0
+                            && cells[i + 1][j] == 0
+                            && cells[i][j + 1] == 0) {
                         cells[i][j] = EMPTY;
                         changed = true;
                     }
@@ -180,6 +256,7 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
             }
         }
     }
+
     public static int connectionCount(byte[][] cells, int i, int j) {
         int count = 0;
         if (occupied(cells, i + 1, j)) count++;
@@ -188,17 +265,28 @@ public final class DungeonLayoutRules {private DungeonLayoutRules(){}
         if (occupied(cells, i, j - 1)) count++;
         return count;
     }
+
     private static boolean occupied(byte[][] cells, int i, int j) {
         return i >= 0 && i < cells.length && j >= 0 && j < cells[i].length && cells[i][j] != EMPTY;
     }
+
     public static List<int[]> cells(byte[][] cells) {
         List<int[]> out = new ArrayList<>();
         for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) out.add(new int[]{i, j, cells[i][j]});
+            for (int j = 0; j < cells[i].length; j++) out.add(new int[] {i, j, cells[i][j]});
         }
         return out;
     }
- public static long seed(long world,int x,int z){return world ^ (long)x*341873128712L ^ (long)z*132897987541L;}
- public static boolean clearance(int minX,int minZ) { return clearance(minX, minZ, DEFAULTS); }
-    public static boolean clearance(int minX,int minZ, Settings settings) {return Math.abs((long)minX)>=settings.clearance()&&Math.abs((long)minZ)>=settings.clearance();}
+
+    public static long seed(long world, int x, int z) {
+        return world ^ (long) x * 341873128712L ^ (long) z * 132897987541L;
+    }
+
+    public static boolean clearance(int minX, int minZ) {
+        return clearance(minX, minZ, DEFAULTS);
+    }
+
+    public static boolean clearance(int minX, int minZ, Settings settings) {
+        return Math.abs((long) minX) >= settings.clearance() && Math.abs((long) minZ) >= settings.clearance();
+    }
 }

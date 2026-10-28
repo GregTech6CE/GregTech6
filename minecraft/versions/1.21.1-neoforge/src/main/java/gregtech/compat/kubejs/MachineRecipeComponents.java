@@ -9,15 +9,14 @@ import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.Wrapper;
 import dev.latvian.mods.rhino.type.TypeInfo;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.fluids.FluidStack;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 /** Recipe components whose JSON is the machine-recipe document, not a vanilla ingredient. */
 final class MachineRecipeComponents {
@@ -33,11 +32,30 @@ final class MachineRecipeComponents {
 
     /** Empty input lists are valid: a recipe may use only items or only fluids. */
     private record AllowEmpty<T>(ListRecipeComponent<T> list) implements RecipeComponent<List<T>> {
-        @Override public RecipeComponentType<?> type() { return list.type(); }
-        @Override public Codec<List<T>> codec() { return list.codec(); }
-        @Override public TypeInfo typeInfo() { return list.typeInfo(); }
-        @Override public List<T> wrap(RecipeScriptContext cx, Object from) { return list.wrap(cx, from); }
-        @Override public boolean allowEmpty() { return true; }
+        @Override
+        public RecipeComponentType<?> type() {
+            return list.type();
+        }
+
+        @Override
+        public Codec<List<T>> codec() {
+            return list.codec();
+        }
+
+        @Override
+        public TypeInfo typeInfo() {
+            return list.typeInfo();
+        }
+
+        @Override
+        public List<T> wrap(RecipeScriptContext cx, Object from) {
+            return list.wrap(cx, from);
+        }
+
+        @Override
+        public boolean allowEmpty() {
+            return true;
+        }
     }
 
     record MachineItem(String item, String tag, int count) {}
@@ -50,14 +68,25 @@ final class MachineRecipeComponents {
         static final RecipeComponentType<MachineItem> TYPE = RecipeComponentType.unit(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_item"), new MachineItemComponent());
         private static final Codec<MachineItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.STRING.optionalFieldOf("item").forGetter(value -> optional(value.item)),
-                Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag)),
-                Codec.INT.optionalFieldOf("count", 1).forGetter(MachineItem::count)
-        ).apply(instance, (item, tag, count) -> checked(item.orElse(null), tag.orElse(null), count)));
+                        Codec.STRING.optionalFieldOf("item").forGetter(value -> optional(value.item)),
+                        Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag)),
+                        Codec.INT.optionalFieldOf("count", 1).forGetter(MachineItem::count))
+                .apply(instance, (item, tag, count) -> checked(item.orElse(null), tag.orElse(null), count)));
 
-        @Override public RecipeComponentType<?> type() { return TYPE; }
-        @Override public Codec<MachineItem> codec() { return CODEC; }
-        @Override public TypeInfo typeInfo() { return TypeInfo.of(MachineItem.class); }
+        @Override
+        public RecipeComponentType<?> type() {
+            return TYPE;
+        }
+
+        @Override
+        public Codec<MachineItem> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public TypeInfo typeInfo() {
+            return TypeInfo.of(MachineItem.class);
+        }
 
         @Override
         public MachineItem wrap(RecipeScriptContext cx, Object from) {
@@ -76,14 +105,25 @@ final class MachineRecipeComponents {
         static final RecipeComponentType<MachineResult> TYPE = RecipeComponentType.unit(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_result"), new MachineResultComponent());
         private static final Codec<MachineResult> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.STRING.fieldOf("item").forGetter(MachineResult::item),
-                Codec.INT.optionalFieldOf("count", 1).forGetter(MachineResult::count),
-                Codec.INT.optionalFieldOf("chance", 10000).forGetter(MachineResult::chance)
-        ).apply(instance, MachineRecipeComponents::result));
+                        Codec.STRING.fieldOf("item").forGetter(MachineResult::item),
+                        Codec.INT.optionalFieldOf("count", 1).forGetter(MachineResult::count),
+                        Codec.INT.optionalFieldOf("chance", 10000).forGetter(MachineResult::chance))
+                .apply(instance, MachineRecipeComponents::result));
 
-        @Override public RecipeComponentType<?> type() { return TYPE; }
-        @Override public Codec<MachineResult> codec() { return CODEC; }
-        @Override public TypeInfo typeInfo() { return TypeInfo.of(MachineResult.class); }
+        @Override
+        public RecipeComponentType<?> type() {
+            return TYPE;
+        }
+
+        @Override
+        public Codec<MachineResult> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public TypeInfo typeInfo() {
+            return TypeInfo.of(MachineResult.class);
+        }
 
         @Override
         public MachineResult wrap(RecipeScriptContext cx, Object from) {
@@ -105,13 +145,24 @@ final class MachineRecipeComponents {
         static final RecipeComponentType<MachineFluid> TYPE = RecipeComponentType.unit(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_fluid"), new MachineFluidComponent());
         private static final Codec<MachineFluid> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.STRING.fieldOf("fluid").forGetter(MachineFluid::fluid),
-                Codec.LONG.fieldOf("amount").forGetter(MachineFluid::amount)
-        ).apply(instance, MachineRecipeComponents::fluid));
+                        Codec.STRING.fieldOf("fluid").forGetter(MachineFluid::fluid),
+                        Codec.LONG.fieldOf("amount").forGetter(MachineFluid::amount))
+                .apply(instance, MachineRecipeComponents::fluid));
 
-        @Override public RecipeComponentType<?> type() { return TYPE; }
-        @Override public Codec<MachineFluid> codec() { return CODEC; }
-        @Override public TypeInfo typeInfo() { return TypeInfo.of(MachineFluid.class); }
+        @Override
+        public RecipeComponentType<?> type() {
+            return TYPE;
+        }
+
+        @Override
+        public Codec<MachineFluid> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public TypeInfo typeInfo() {
+            return TypeInfo.of(MachineFluid.class);
+        }
 
         @Override
         public MachineFluid wrap(RecipeScriptContext cx, Object from) {
@@ -139,7 +190,8 @@ final class MachineRecipeComponents {
     }
 
     private static MachineItem checked(String item, String tag, int count) {
-        if ((item == null) == (tag == null)) throw new IllegalArgumentException("item input needs exactly one of item or tag");
+        if ((item == null) == (tag == null))
+            throw new IllegalArgumentException("item input needs exactly one of item or tag");
         if (count < 1) throw new IllegalArgumentException("count must be at least 1");
         return new MachineItem(item, tag, count);
     }
@@ -157,7 +209,9 @@ final class MachineRecipeComponents {
         return new MachineFluid(fluid, amount);
     }
 
-    private static Optional<String> optional(String value) { return value == null ? Optional.empty() : Optional.of(value); }
+    private static Optional<String> optional(String value) {
+        return value == null ? Optional.empty() : Optional.of(value);
+    }
 
     static Map<String, Object> map(Object value) {
         Object unwrapped = unwrap(value);
@@ -168,7 +222,10 @@ final class MachineRecipeComponents {
         }
         if (unwrapped instanceof JsonObject json) {
             var out = new LinkedHashMap<String, Object>();
-            for (var entry : json.entrySet()) out.put(entry.getKey(), entry.getValue().isJsonPrimitive() ? entry.getValue().getAsString() : entry.getValue());
+            for (var entry : json.entrySet())
+                out.put(
+                        entry.getKey(),
+                        entry.getValue().isJsonPrimitive() ? entry.getValue().getAsString() : entry.getValue());
             return out;
         }
         throw new IllegalArgumentException("expected an object");
@@ -181,14 +238,16 @@ final class MachineRecipeComponents {
     static String text(Object value) {
         Object unwrapped = unwrap(value);
         if (unwrapped instanceof CharSequence text && !text.isEmpty()) return text.toString();
-        if (unwrapped instanceof com.google.gson.JsonPrimitive primitive && primitive.isString()) return primitive.getAsString();
+        if (unwrapped instanceof com.google.gson.JsonPrimitive primitive && primitive.isString())
+            return primitive.getAsString();
         throw new IllegalArgumentException("expected text");
     }
 
     static int number(Object value) {
         Object unwrapped = unwrap(value);
         if (unwrapped instanceof Number number) return number.intValue();
-        if (unwrapped instanceof com.google.gson.JsonPrimitive primitive && primitive.isNumber()) return primitive.getAsInt();
+        if (unwrapped instanceof com.google.gson.JsonPrimitive primitive && primitive.isNumber())
+            return primitive.getAsInt();
         throw new IllegalArgumentException("expected a number");
     }
 }

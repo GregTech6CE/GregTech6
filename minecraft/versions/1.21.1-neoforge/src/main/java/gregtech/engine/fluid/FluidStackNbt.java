@@ -11,6 +11,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 /** Registry-aware Neo codec plus the original Forge FluidName/Amount identity envelope. */
 public final class FluidStackNbt {
     private FluidStackNbt() {}
+
     public static FluidStack read(HolderLookup.Provider lookup, CompoundTag tag) {
         if (!tag.contains("FluidName")) return FluidStack.parseOptional(lookup, tag);
         ResourceLocation id = ResourceLocation.tryParse(tag.getString("FluidName"));

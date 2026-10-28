@@ -19,7 +19,8 @@ public record MachineRecipeRemovalSpec(
         fluidInputs = List.copyOf(fluidInputs);
         itemOutputs = List.copyOf(itemOutputs);
         fluidOutputs = List.copyOf(fluidOutputs);
-        boolean matched = !itemInputs.isEmpty() || !fluidInputs.isEmpty() || !itemOutputs.isEmpty() || !fluidOutputs.isEmpty();
+        boolean matched =
+                !itemInputs.isEmpty() || !fluidInputs.isEmpty() || !itemOutputs.isEmpty() || !fluidOutputs.isEmpty();
         if (clear && matched) throw new IllegalArgumentException("clear cannot be combined with a match");
         if (!clear && !matched) throw new IllegalArgumentException("removal needs clear or a match");
     }

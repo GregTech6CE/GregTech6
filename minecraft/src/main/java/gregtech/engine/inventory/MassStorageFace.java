@@ -1,8 +1,7 @@
 package gregtech.engine.inventory;
 
-import net.minecraft.core.Direction;
-
 import java.util.List;
+import net.minecraft.core.Direction;
 
 /** Pixel coordinates on the original GT6 front texture: x rightwards, y downwards. */
 public final class MassStorageFace {

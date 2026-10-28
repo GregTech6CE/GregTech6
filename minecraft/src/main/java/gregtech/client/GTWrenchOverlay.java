@@ -14,16 +14,16 @@ final class GTWrenchOverlay {
 
     private GTWrenchOverlay() {}
 
-    static void drawMachineOverlay(PoseStack poseStack, VertexConsumer consumer,
-                                   Direction aimedSide, Direction frontFacing, float shade) {
+    static void drawMachineOverlay(
+            PoseStack poseStack, VertexConsumer consumer, Direction aimedSide, Direction frontFacing, float shade) {
         GTRenderHelper.drawWrenchOverlayGrid(poseStack, consumer, aimedSide, shade);
         drawWireframeCube(poseStack, consumer, shade);
         drawWrenchOverlayConnections(poseStack, consumer, aimedSide, 1 << frontFacing.ordinal(), shade);
     }
 
     /** Pipe wrench overlay: 3x3 grid on aimed face + wireframe cube + connection markers for all connected sides. */
-    static void drawPipeOverlay(PoseStack poseStack, VertexConsumer consumer,
-                                Direction aimedSide, int connections, float shade) {
+    static void drawPipeOverlay(
+            PoseStack poseStack, VertexConsumer consumer, Direction aimedSide, int connections, float shade) {
         GTRenderHelper.drawWrenchOverlayGrid(poseStack, consumer, aimedSide, shade);
         drawWireframeCube(poseStack, consumer, shade);
         drawWrenchOverlayConnections(poseStack, consumer, aimedSide, connections, shade);
@@ -39,25 +39,25 @@ final class GTWrenchOverlay {
         Matrix3f normal = poseStack.last().normal();
 
         // Bottom face
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F, -0.5F,  0.5F, -0.5F, -0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a,  0.5F, -0.5F, -0.5F,  0.5F, -0.5F,  0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a,  0.5F, -0.5F,  0.5F, -0.5F, -0.5F,  0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F,  0.5F, -0.5F, -0.5F, -0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F, -0.5F, 0.5F, -0.5F, -0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.5F, -0.5F, -0.5F, 0.5F, -0.5F, 0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.5F, -0.5F, 0.5F, -0.5F, -0.5F, 0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F, 0.5F, -0.5F, -0.5F, -0.5F);
         // Top face
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F,  0.5F, -0.5F,  0.5F,  0.5F, -0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a,  0.5F,  0.5F, -0.5F,  0.5F,  0.5F,  0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a,  0.5F,  0.5F,  0.5F, -0.5F,  0.5F,  0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F,  0.5F,  0.5F, -0.5F,  0.5F, -0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, 0.5F, -0.5F, 0.5F, 0.5F, -0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.5F, 0.5F, -0.5F, 0.5F, 0.5F, 0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.5F, 0.5F, 0.5F, -0.5F, 0.5F, 0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, 0.5F, 0.5F, -0.5F, 0.5F, -0.5F);
         // Vertical edges
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F, -0.5F, -0.5F,  0.5F, -0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a,  0.5F, -0.5F, -0.5F,  0.5F,  0.5F, -0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a,  0.5F, -0.5F,  0.5F,  0.5F,  0.5F,  0.5F);
-        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F,  0.5F, -0.5F,  0.5F,  0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F, -0.5F, -0.5F, 0.5F, -0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.5F, -0.5F, -0.5F, 0.5F, 0.5F, -0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.5F, -0.5F, 0.5F, 0.5F, 0.5F, 0.5F);
+        GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.5F, -0.5F, 0.5F, -0.5F, 0.5F, 0.5F);
     }
 
     /** GT6 {@code RenderHelper.drawWrenchOverlay} connection decorations on one face. */
-    static void drawWrenchOverlayConnections(PoseStack poseStack, VertexConsumer consumer,
-                                             Direction side, int connections, float shade) {
+    static void drawWrenchOverlayConnections(
+            PoseStack poseStack, VertexConsumer consumer, Direction side, int connections, float shade) {
         poseStack.pushPose();
         GTRenderHelper.applySideRotation(poseStack, side);
         poseStack.translate(0.0D, -0.5025D, 0.0D);
@@ -85,8 +85,15 @@ final class GTWrenchOverlay {
         return (connections & (1 << direction.ordinal())) != 0;
     }
 
-    private static void drawConnectionsDown(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                                            float r, float g, float b, float a, int connections) {
+    private static void drawConnectionsDown(
+            VertexConsumer consumer,
+            Matrix4f pose,
+            Matrix3f normal,
+            float r,
+            float g,
+            float b,
+            float a,
+            int connections) {
         if (connected(Direction.DOWN, connections)) {
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.25F, 0.0F, -0.25F, 0.25F, 0.0F, 0.25F);
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.25F, 0.0F, 0.25F, 0.25F, 0.0F, -0.25F);
@@ -112,8 +119,15 @@ final class GTWrenchOverlay {
         }
     }
 
-    private static void drawConnectionsUp(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                                          float r, float g, float b, float a, int connections) {
+    private static void drawConnectionsUp(
+            VertexConsumer consumer,
+            Matrix4f pose,
+            Matrix3f normal,
+            float r,
+            float g,
+            float b,
+            float a,
+            int connections) {
         if (connected(Direction.DOWN, connections)) {
             drawFullCornerBrackets(consumer, pose, normal, r, g, b, a);
         }
@@ -139,8 +153,15 @@ final class GTWrenchOverlay {
         }
     }
 
-    private static void drawConnectionsNorth(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                                             float r, float g, float b, float a, int connections) {
+    private static void drawConnectionsNorth(
+            VertexConsumer consumer,
+            Matrix4f pose,
+            Matrix3f normal,
+            float r,
+            float g,
+            float b,
+            float a,
+            int connections) {
         if (connected(Direction.DOWN, connections)) {
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.25F, 0.0F, 0.50F, 0.25F, 0.0F, 0.25F);
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.25F, 0.0F, 0.25F, 0.25F, 0.0F, 0.50F);
@@ -166,8 +187,15 @@ final class GTWrenchOverlay {
         }
     }
 
-    private static void drawConnectionsSouth(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                                             float r, float g, float b, float a, int connections) {
+    private static void drawConnectionsSouth(
+            VertexConsumer consumer,
+            Matrix4f pose,
+            Matrix3f normal,
+            float r,
+            float g,
+            float b,
+            float a,
+            int connections) {
         if (connected(Direction.DOWN, connections)) {
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.25F, 0.0F, -0.50F, 0.25F, 0.0F, -0.25F);
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.25F, 0.0F, -0.25F, 0.25F, 0.0F, -0.50F);
@@ -193,8 +221,15 @@ final class GTWrenchOverlay {
         }
     }
 
-    private static void drawConnectionsWest(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                                            float r, float g, float b, float a, int connections) {
+    private static void drawConnectionsWest(
+            VertexConsumer consumer,
+            Matrix4f pose,
+            Matrix3f normal,
+            float r,
+            float g,
+            float b,
+            float a,
+            int connections) {
         if (connected(Direction.DOWN, connections)) {
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.50F, 0.0F, -0.25F, 0.25F, 0.0F, 0.25F);
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, 0.50F, 0.0F, 0.25F, 0.25F, 0.0F, -0.25F);
@@ -220,8 +255,15 @@ final class GTWrenchOverlay {
         }
     }
 
-    private static void drawConnectionsEast(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                                            float r, float g, float b, float a, int connections) {
+    private static void drawConnectionsEast(
+            VertexConsumer consumer,
+            Matrix4f pose,
+            Matrix3f normal,
+            float r,
+            float g,
+            float b,
+            float a,
+            int connections) {
         if (connected(Direction.DOWN, connections)) {
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.50F, 0.0F, -0.25F, -0.25F, 0.0F, 0.25F);
             GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.50F, 0.0F, 0.25F, -0.25F, 0.0F, -0.25F);
@@ -248,8 +290,8 @@ final class GTWrenchOverlay {
     }
 
     /** GT6 eight-line corner bracket set used when the opposite face is connected. */
-    private static void drawFullCornerBrackets(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                                               float r, float g, float b, float a) {
+    private static void drawFullCornerBrackets(
+            VertexConsumer consumer, Matrix4f pose, Matrix3f normal, float r, float g, float b, float a) {
         GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.50F, 0.0F, -0.50F, -0.25F, 0.0F, -0.25F);
         GTRenderHelper.line(consumer, pose, normal, r, g, b, a, -0.50F, 0.0F, -0.25F, -0.25F, 0.0F, -0.50F);
 

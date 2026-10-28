@@ -221,10 +221,17 @@ public enum OreDictionaryNames {
 
     private final String oreName;
 
-    OreDictionaryNames() { this.oreName = name(); }
-    OreDictionaryNames(String oreName) { this.oreName = oreName; }
+    OreDictionaryNames() {
+        this.oreName = name();
+    }
 
-    public String getOreName() { return oreName; }
+    OreDictionaryNames(String oreName) {
+        this.oreName = oreName;
+    }
+
+    public String getOreName() {
+        return oreName;
+    }
 
     public static void bootstrap() {
         OreDictionaryNames.values();

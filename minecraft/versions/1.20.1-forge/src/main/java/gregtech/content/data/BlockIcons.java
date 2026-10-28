@@ -1,10 +1,9 @@
 package gregtech.content.data;
 
 import gregtech.GregTech;
-import net.minecraft.resources.ResourceLocation;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+import net.minecraft.resources.ResourceLocation;
 
 /** Block / machine icon paths from GT6 BI.java. Auto-transpiled skeleton. */
 public class BlockIcons {
@@ -20,8 +19,7 @@ public class BlockIcons {
         return ref;
     }
 
-    public static final IconRef
-            CHAR_0 = icon("CHAR_0", "textures/block/char_0"),
+    public static final IconRef CHAR_0 = icon("CHAR_0", "textures/block/char_0"),
             CHAR_1 = icon("CHAR_1", "textures/block/char_1"),
             CHAR_2 = icon("CHAR_2", "textures/block/char_2"),
             CHAR_3 = icon("CHAR_3", "textures/block/char_3"),

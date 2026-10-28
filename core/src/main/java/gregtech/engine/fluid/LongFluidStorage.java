@@ -50,7 +50,8 @@ public final class LongFluidStorage {
     public long capacity(String key) {
         if (key == null || adjustableCapacity == null) return Math.max(amount, capacity);
         Long override = adjustableCapacity.get(key);
-        return override == null ? Math.max(amount, capacity)
+        return override == null
+                ? Math.max(amount, capacity)
                 : Math.max(override * adjustableMultiplier, Math.max(amount, capacity));
     }
 

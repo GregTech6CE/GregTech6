@@ -5,11 +5,26 @@ public final class PistonEngineState {
     private long energy;
     private int mode = 15, piston;
     private boolean active, stopped;
-    public long energy() { return energy; }
-    public int mode() { return mode; }
-    public int piston() { return piston; }
-    public boolean active() { return active; }
-    public boolean stopped() { return stopped; }
+
+    public long energy() {
+        return energy;
+    }
+
+    public int mode() {
+        return mode;
+    }
+
+    public int piston() {
+        return piston;
+    }
+
+    public boolean active() {
+        return active;
+    }
+
+    public boolean stopped() {
+        return stopped;
+    }
     /** GT6 tierMax: the first 8, 32, 128, ... threshold covering the voltage. */
     public static int voltageTier(long voltage) {
         if (voltage == Long.MIN_VALUE) return 30;
@@ -23,19 +38,40 @@ public final class PistonEngineState {
         }
         return tier;
     }
+
     public int coreColor() {
         int step = mode <= 15 ? mode : mode - 16;
-        return mode <= 15 ? (step * 17 << 8) | (255 - step * 17)
-                : (step * 17 << 16) | ((255 - step * 17) << 8);
+        return mode <= 15 ? (step * 17 << 8) | (255 - step * 17) : (step * 17 << 16) | ((255 - step * 17) << 8);
     }
-    public void cycleMode() { mode = (mode + 1) & 31; }
+
+    public void cycleMode() {
+        mode = (mode + 1) & 31;
+    }
     /** Source external 4-bit controller selects internal odd power steps. */
-    public void setControlMode(int value){mode=Math.max(0,Math.min(15,value))*2+1;}
-    public int controlMode(){return mode/2;}
-    public void setStopped(boolean value){stopped=value;}
-    public void toggleStopped() { stopped = !stopped; }
-    public long input(long rated) { return scaled(rated, true); }
-    public long output(long rated) { return scaled(rated, false); }
+    public void setControlMode(int value) {
+        mode = Math.max(0, Math.min(15, value)) * 2 + 1;
+    }
+
+    public int controlMode() {
+        return mode / 2;
+    }
+
+    public void setStopped(boolean value) {
+        stopped = value;
+    }
+
+    public void toggleStopped() {
+        stopped = !stopped;
+    }
+
+    public long input(long rated) {
+        return scaled(rated, true);
+    }
+
+    public long output(long rated) {
+        return scaled(rated, false);
+    }
+
     private long scaled(long rated, boolean ceil) {
         long product = Math.multiplyExact(rated, mode + 1L);
         return product / 16 + (ceil && product % 16 != 0 ? 1 : 0);
@@ -59,6 +95,7 @@ public final class PistonEngineState {
         long output = output(ratedOutput);
         return piston > 1 ? -output : output;
     }
+
     public void restore(long stored, int mode, int piston, boolean active, boolean stopped) {
         energy = Math.max(0, stored);
         this.mode = Math.max(0, Math.min(31, mode));

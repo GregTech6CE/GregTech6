@@ -1,10 +1,19 @@
 package gregtech.content.book;
+
 import gregtech.api.material.*;
-import gregtech.engine.material.*;import java.util.*;
+import gregtech.engine.material.*;
+import java.util.*;
+
 /** Original material dictionary prose and processing/alloy/enchantment pages shared by both versions. */
-public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(){}private static final int MAX_PAGE_LENGTH=256;
+public final class GTMaterialDictionaryPages {
+    private GTMaterialDictionaryPages() {}
+
+    private static final int MAX_PAGE_LENGTH = 256;
     /** The pages of one material's dictionary, in GT6's order: identity, composition, alloys, rest. */
-    public static List<String> pages(GTMaterial material,java.util.function.Function<GTMaterial,String> formText,java.util.function.Function<GTMaterial,String> oreText) {
+    public static List<String> pages(
+            GTMaterial material,
+            java.util.function.Function<GTMaterial, String> formText,
+            java.util.function.Function<GTMaterial, String> oreText) {
         List<String> pages = new ArrayList<>();
         add(pages, identity(material));
         add(pages, composition(material));
@@ -28,10 +37,9 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
      * its own header: smelting/solidifying/burning/pulverising/crushing, then
      * bending/compressing/cutting/forging/smashing, then working.
      */
-    private static final String[] PROCESSING_PAGE_1 = {"Smelting", "Solidifying", "Burning",
-            "Pulverising", "Crushing"};
-    private static final String[] PROCESSING_PAGE_2 = {"Bending", "Compressing", "Cutting",
-            "Forging", "Smashing"};
+    private static final String[] PROCESSING_PAGE_1 = {"Smelting", "Solidifying", "Burning", "Pulverising", "Crushing"};
+
+    private static final String[] PROCESSING_PAGE_2 = {"Bending", "Compressing", "Cutting", "Forging", "Smashing"};
     private static final String[] PROCESSING_PAGE_3 = {"Working"};
 
     /**
@@ -75,27 +83,27 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
     private static void processingLine(StringBuilder out, String label, GTMaterial material) {
         out.append(label).append(":\n");
         switch (label) {
-            case "Smelting" -> processingValue(out, material.getTargetSmeltingMaterial(),
-                    material.getTargetSmeltingAmount(), material);
-            case "Burning" -> processingValue(out, material.getTargetBurningMaterial(),
-                    material.getTargetBurningAmount(), material);
-            case "Pulverising" -> processingValue(out, material.getTargetPulverMaterial(),
-                    material.getTargetPulverAmount(), material);
-            case "Crushing" -> processingValue(out, material.getTargetCrushingMaterial(),
-                    material.getTargetCrushingAmount(), material);
+            case "Smelting" ->
+                processingValue(
+                        out, material.getTargetSmeltingMaterial(), material.getTargetSmeltingAmount(), material);
+            case "Burning" ->
+                processingValue(out, material.getTargetBurningMaterial(), material.getTargetBurningAmount(), material);
+            case "Pulverising" ->
+                processingValue(out, material.getTargetPulverMaterial(), material.getTargetPulverAmount(), material);
+            case "Crushing" ->
+                processingValue(
+                        out, material.getTargetCrushingMaterial(), material.getTargetCrushingAmount(), material);
             default -> processingTableValue(out, label, material);
         }
     }
 
     /** The value line of one of the seven targets the port holds in {@link MaterialProcessingTargets}. */
     private static void processingTableValue(StringBuilder out, String label, GTMaterial material) {
-        String[] row = gregtech.content.data.generated.MaterialProcessingTargets.of(
-                material.getName(), label);
+        String[] row = gregtech.content.data.generated.MaterialProcessingTargets.of(material.getName(), label);
         if (row == null) {
             // GT6's default for those seven: the material itself, one unit.
-            processingValue(out, material,
-                    gregtech.content.data.generated.MaterialProcessingTargets.DEFAULT_AMOUNT,
-                    material);
+            processingValue(
+                    out, material, gregtech.content.data.generated.MaterialProcessingTargets.DEFAULT_AMOUNT, material);
             return;
         }
         long amount = Long.parseLong(row[1]);
@@ -108,16 +116,19 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
     }
 
     /** GT6's {@code <whole>.<thousandths> <name>}, with its "nothing" and "itself" wording. */
-    private static void processingValue(StringBuilder out, GTMaterial target, long amount,
-                                        GTMaterial self) {
+    private static void processingValue(StringBuilder out, GTMaterial target, long amount, GTMaterial self) {
         if (target == null || !target.isValid() || amount <= 0) {
             out.append("0.000 nothing\n");
             return;
         }
         long units = amount / GTValues.U;
         long thousandths = (long) (((double) (amount % GTValues.U) / (double) GTValues.U) * 1000.0D);
-        out.append(units).append('.').append(String.format(Locale.ROOT, "%03d", thousandths)).append(' ')
-                .append(target == self ? "itself" : target.getName()).append('\n');
+        out.append(units)
+                .append('.')
+                .append(String.format(Locale.ROOT, "%03d", thousandths))
+                .append(' ')
+                .append(target == self ? "itself" : target.getName())
+                .append('\n');
     }
 
     /**
@@ -125,15 +136,18 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
      * of armour made of this material can be enchanted with, from {@link GTMaterialEnchants}.
      */
     private static String enchantments(GTMaterial material) {
-        java.util.Map<String, java.util.List<String>> enchants =
-                GTMaterialEnchants.enchantmentsOf(material);
+        java.util.Map<String, java.util.List<String>> enchants = GTMaterialEnchants.enchantmentsOf(material);
         if (enchants.isEmpty()) return null;
         StringBuilder out = new StringBuilder();
         out.append("Enchantments of ").append(material.getName()).append('\n');
         for (String kind : GTMaterialEnchants.KINDS) {
             java.util.List<String> values = enchants.get(kind);
             if (values == null || values.isEmpty()) continue;
-            out.append("\n").append(kind).append(": ").append(String.join(", ", values)).append('\n');
+            out.append("\n")
+                    .append(kind)
+                    .append(": ")
+                    .append(String.join(", ", values))
+                    .append('\n');
         }
         return out.toString();
     }
@@ -169,7 +183,8 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
     private static String identity(GTMaterial material) {
         StringBuilder out = new StringBuilder();
         out.append("Material: ").append(material.getName()).append('\n');
-        if (material.getLocalName() != null && !material.getLocalName().isBlank()
+        if (material.getLocalName() != null
+                && !material.getLocalName().isBlank()
                 && !material.getLocalName().equals(material.getName())) {
             out.append("Also known as: ").append(material.getLocalName()).append('\n');
         }
@@ -193,7 +208,6 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
     }
 
     /** The forms the material actually has in this port, like GT6's "what can be made of it". */
-
 
     /** GT6's tool page: the quality and durability of the tools made of this material. */
     private static String toolStats(GTMaterial material) {
@@ -221,8 +235,6 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
     }
 
     /** GT6's ore page: whether the material generates ore and what comes out of it. */
-
-
     private static String state(GTMaterial material) {
         if (material.has(MaterialProperty.GAS)) return "gas";
         if (material.has(MaterialProperty.LIQUID)) return "liquid";

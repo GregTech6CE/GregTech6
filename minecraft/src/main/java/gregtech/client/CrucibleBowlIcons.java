@@ -12,7 +12,8 @@ public final class CrucibleBowlIcons {
     }
 
     public static String sharedModelJson(MaterialTextureSet set) {
-        return SmelteryModelHelper.compositeModelJson(set,
+        return SmelteryModelHelper.compositeModelJson(
+                set,
                 SmelteryModelHelper.BOWL_ELEMENTS_TINTED,
                 SmelteryModelHelper.overlayOnly(SmelteryModelHelper.BOWL_ELEMENTS_TINTED));
     }

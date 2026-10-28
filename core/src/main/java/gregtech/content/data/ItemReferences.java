@@ -17,8 +17,7 @@ public class ItemReferences {
         return entry;
     }
 
-    public static final ItemEntry
-            Wrench = item("Wrench"),
+    public static final ItemEntry Wrench = item("Wrench"),
             Screwdriver = item("Screwdriver"),
             HardHammer = item("HardHammer"),
             SoftHammer = item("SoftHammer"),

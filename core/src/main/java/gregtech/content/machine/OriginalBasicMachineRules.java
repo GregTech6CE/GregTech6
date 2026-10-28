@@ -12,15 +12,67 @@ public final class OriginalBasicMachineRules {
     private OriginalBasicMachineRules() {}
 
     private static final Set<String> FAMILIES = Set.of(
-            "autoclave", "autocrafter", "bath", "boxinator", "bumblelyzer", "burnmixer", "buzzsaw",
-            "canner", "catalyticcracker", "centrifuge", "clustermill", "coagulator", "compressor",
-            "crusher", "cryomixer", "crystallisationcrucible", "debarker", "distillery", "dryer",
-            "electricloom", "electricmixer", "electricsifter", "electrolyzer", "extruder", "fermenter",
-            "freezer", "generifier", "injector", "laminator", "laserengraver", "laserwelder", "lathe",
-            "lightning", "loom", "magneticseparator", "massfab", "melter", "mixer", "nanofab", "oven",
-            "plantalyzer", "polarizer", "press", "printer", "replicator", "roaster", "rollbender",
-            "rollformer", "rollingmill", "sander", "scannermolecular", "scannervisuals", "shredder",
-            "sifter", "slicer", "sluice", "smelter", "squeezer", "steamcracker", "unboxinator", "wiremill");
+            "autoclave",
+            "autocrafter",
+            "bath",
+            "boxinator",
+            "bumblelyzer",
+            "burnmixer",
+            "buzzsaw",
+            "canner",
+            "catalyticcracker",
+            "centrifuge",
+            "clustermill",
+            "coagulator",
+            "compressor",
+            "crusher",
+            "cryomixer",
+            "crystallisationcrucible",
+            "debarker",
+            "distillery",
+            "dryer",
+            "electricloom",
+            "electricmixer",
+            "electricsifter",
+            "electrolyzer",
+            "extruder",
+            "fermenter",
+            "freezer",
+            "generifier",
+            "injector",
+            "laminator",
+            "laserengraver",
+            "laserwelder",
+            "lathe",
+            "lightning",
+            "loom",
+            "magneticseparator",
+            "massfab",
+            "melter",
+            "mixer",
+            "nanofab",
+            "oven",
+            "plantalyzer",
+            "polarizer",
+            "press",
+            "printer",
+            "replicator",
+            "roaster",
+            "rollbender",
+            "rollformer",
+            "rollingmill",
+            "sander",
+            "scannermolecular",
+            "scannervisuals",
+            "shredder",
+            "sifter",
+            "slicer",
+            "sluice",
+            "smelter",
+            "squeezer",
+            "steamcracker",
+            "unboxinator",
+            "wiremill");
 
     public static boolean handles(String name, int tier) {
         return FAMILIES.contains(name) && BasicMachineOriginalParams.find(name, tier) != null;
@@ -28,7 +80,8 @@ public final class OriginalBasicMachineRules {
 
     public static boolean cheapOverclocking(String name, int tier) {
         return handles(name, tier)
-                && Set.of("roaster", "distillery", "smelter", "dryer", "massfab", "replicator", "melter").contains(name);
+                && Set.of("roaster", "distillery", "smelter", "dryer", "massfab", "replicator", "melter")
+                        .contains(name);
     }
 
     public static int efficiency(String name, int tier) {
@@ -46,7 +99,8 @@ public final class OriginalBasicMachineRules {
 
     public static boolean noConstantPower(String name, int tier) {
         return handles(name, tier)
-                && Set.of("massfab", "replicator", "autoclave", "bath", "generifier", "coagulator").contains(name);
+                && Set.of("massfab", "replicator", "autoclave", "bath", "generifier", "coagulator")
+                        .contains(name);
     }
 
     public static final int IGNITION_TICKS = 40;
@@ -65,24 +119,29 @@ public final class OriginalBasicMachineRules {
     }
 
     public static final List<Integer> FACE_ORDER = List.of(
-            MachineFaceMasks.BOTTOM, MachineFaceMasks.TOP, MachineFaceMasks.LEFT,
-            MachineFaceMasks.FRONT, MachineFaceMasks.RIGHT, MachineFaceMasks.BACK);
+            MachineFaceMasks.BOTTOM,
+            MachineFaceMasks.TOP,
+            MachineFaceMasks.LEFT,
+            MachineFaceMasks.FRONT,
+            MachineFaceMasks.RIGHT,
+            MachineFaceMasks.BACK);
 
     public static String unitKey(String type) {
-        return "gt.td.short.energy." + switch (type) {
-            case "HU" -> "heat";
-            case "RU" -> "kinetic_rotation";
-            case "KU" -> "kinetic_push";
-            case "EU" -> "electricity";
-            case "CU" -> "cryo";
-            case "LU" -> "light";
-            case "QU" -> "quantum";
-            case "MU" -> "magnetic";
-            case "TU" -> "time";
-            case "RF" -> "redstone_flux";
-            case "MJ" -> "minecraft_joules";
-            default -> throw new IllegalArgumentException("Source energy:" + type);
-        };
+        return "gt.td.short.energy."
+                + switch (type) {
+                    case "HU" -> "heat";
+                    case "RU" -> "kinetic_rotation";
+                    case "KU" -> "kinetic_push";
+                    case "EU" -> "electricity";
+                    case "CU" -> "cryo";
+                    case "LU" -> "light";
+                    case "QU" -> "quantum";
+                    case "MU" -> "magnetic";
+                    case "TU" -> "time";
+                    case "RF" -> "redstone_flux";
+                    case "MJ" -> "minecraft_joules";
+                    default -> throw new IllegalArgumentException("Source energy:" + type);
+                };
     }
 
     public record IoFace(int side, boolean automatic) {}

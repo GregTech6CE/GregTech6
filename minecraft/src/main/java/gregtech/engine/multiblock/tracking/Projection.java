@@ -1,10 +1,9 @@
 package gregtech.engine.multiblock.tracking;
 
-import gregtech.content.multiblock.PlainStructureBlocks;
 import gregtech.content.block.OreBlock;
+import gregtech.content.multiblock.PlainStructureBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -35,15 +34,15 @@ public interface Projection {
 
     static Projection plain(String name) {
         if ("anyopaque".equals(name)) return opaque();
-        if (name != null && name.startsWith("anyfluid")) return (level, pos, oldState, newState) -> {
-            boolean oldMatch = PlainStructureBlocks.matches(level, pos, name, oldState);
-            boolean newMatch = PlainStructureBlocks.matches(level, pos, name, newState);
-            if (oldMatch != newMatch) return false;
-            return !oldMatch || sameFluid(oldState.getFluidState(), newState.getFluidState());
-        };
-        return (level, pos, oldState, newState) ->
-                PlainStructureBlocks.matches(level, pos, name, oldState)
-                        == PlainStructureBlocks.matches(level, pos, name, newState);
+        if (name != null && name.startsWith("anyfluid"))
+            return (level, pos, oldState, newState) -> {
+                boolean oldMatch = PlainStructureBlocks.matches(level, pos, name, oldState);
+                boolean newMatch = PlainStructureBlocks.matches(level, pos, name, newState);
+                if (oldMatch != newMatch) return false;
+                return !oldMatch || sameFluid(oldState.getFluidState(), newState.getFluidState());
+            };
+        return (level, pos, oldState, newState) -> PlainStructureBlocks.matches(level, pos, name, oldState)
+                == PlainStructureBlocks.matches(level, pos, name, newState);
     }
 
     /** Only floor membership is structural; the drill reads ore identity at the start of each cycle. */

@@ -1,13 +1,8 @@
 package gregtech.content.block.stone;
 
-import gregtech.api.material.WeightedMaterial;
-
-import gregtech.content.material.Materials;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.MaterialChemistry;
-import gregtech.content.data.generated.GT6Materials;
-
+import gregtech.api.material.WeightedMaterial;
 import java.util.ArrayList;
 import java.util.List;
 

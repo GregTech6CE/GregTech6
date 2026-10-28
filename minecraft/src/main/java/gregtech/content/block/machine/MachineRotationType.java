@@ -1,9 +1,9 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.tool.ToolInteractions;
+import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.util.GTPlacementCode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,11 +29,17 @@ public enum MachineRotationType {
     },
     /** GT6 solar panels: bottom and horizontal output faces, never the top. */
     BOTTOM_HORIZONTAL {
-        @Override public boolean isValid(Direction facing) { return facing != Direction.UP; }
+        @Override
+        public boolean isValid(Direction facing) {
+            return facing != Direction.UP;
+        }
     },
     /** Original heat exchanger: only the bottom is a valid front. */
     BOTTOM {
-        @Override public boolean isValid(Direction facing) { return facing == Direction.DOWN; }
+        @Override
+        public boolean isValid(Direction facing) {
+            return facing == Direction.DOWN;
+        }
     },
     /** 6-way: all directions are valid. */
     ALL {
@@ -53,14 +59,25 @@ public enum MachineRotationType {
      *
      * @return {@code true} if the wrench was handled (caller should return success).
      */
-    public static boolean handleWrench(BlockState state, Level level, BlockPos pos,
-                                       Player player, InteractionHand hand, BlockHitResult hit,
-                                       DirectionProperty facingProperty, MachineRotationType rotationType) {
+    public static boolean handleWrench(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hit,
+            DirectionProperty facingProperty,
+            MachineRotationType rotationType) {
         if (!GTToolHelper.isMachineWrench(player.getItemInHand(hand))) return false;
         var declared = ToolInteractions.describe(state, player.getItemInHand(hand));
         if (state.getBlock() instanceof ToolInteractionTarget && declared == null) return false;
         return ToolInteractions.use(
                 declared != null ? declared : ToolInteractionSpec.facing(facingProperty, rotationType),
-                state, level, pos, player, hand, hit);
+                state,
+                level,
+                pos,
+                player,
+                hand,
+                hit);
     }
 }

@@ -1,9 +1,10 @@
 package gregtech.client;
 
+import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
 import gregtech.content.block.energy.GearboxBlock;
 import gregtech.content.registry.GTGearboxes;
-import com.mojang.logging.LogUtils;
+import java.util.Map;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
@@ -14,8 +15,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
-
-import java.util.Map;
 
 /** Replaces static six-sided gearbox cubes with GT6's per-face axle/gear textures. */
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -41,6 +40,7 @@ public final class GearboxClientModels {
             }
             // Inventory JSON uses the original fresh six-sided housing.
         }
-        LOGGER.info("[{}] GT6 custom gearbox face models: {} blockstate variants replaced", GregTech.NAMESPACE, replaced);
+        LOGGER.info(
+                "[{}] GT6 custom gearbox face models: {} blockstate variants replaced", GregTech.NAMESPACE, replaced);
     }
 }

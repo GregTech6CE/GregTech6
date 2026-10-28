@@ -9,6 +9,7 @@ public final class ToolAssemblyRules {
     private ToolAssemblyRules() {}
 
     public record Form(MaterialPrefix prefix, GTMaterial material) {}
+
     public record Inputs(GTMaterial head, GTMaterial handle) {}
 
     /** Each form represents one nonempty crafting slot, regardless of its stack count. */
@@ -31,9 +32,11 @@ public final class ToolAssemblyRules {
                 return null;
             }
         }
-        return head != null && handle != null
-                && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type, head)
-                && gregtech.content.tool.OriginalToolMaterials.acceptsHandle(head, handle)
-                ? new Inputs(head, handle) : null;
+        return head != null
+                        && handle != null
+                        && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type, head)
+                        && gregtech.content.tool.OriginalToolMaterials.acceptsHandle(head, handle)
+                ? new Inputs(head, handle)
+                : null;
     }
 }

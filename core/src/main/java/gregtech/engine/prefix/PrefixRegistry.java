@@ -1,7 +1,6 @@
 package gregtech.engine.prefix;
 
 import gregtech.content.data.MaterialPrefix;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,8 +16,7 @@ public final class PrefixRegistry {
      * name them by their GT6 name ({@code OP.casingSmall} is the port's {@code itemCasing}, registered
      * with the original's {@code casingsmall} texture).</p>
      */
-    private static final java.util.Map<String, String> ALIASES = java.util.Map.of(
-            "casingSmall", "itemCasing");
+    private static final java.util.Map<String, String> ALIASES = java.util.Map.of("casingSmall", "itemCasing");
 
     private PrefixRegistry() {}
 
@@ -44,7 +42,8 @@ public final class PrefixRegistry {
         if (direct != null) return direct;
         String snake = MaterialPrefix.camelToSnake(name);
         for (MaterialPrefix prefix : all()) {
-            if (prefix.getName().equalsIgnoreCase(name) || prefix.getRegistryName().equals(snake)) return prefix;
+            if (prefix.getName().equalsIgnoreCase(name)
+                    || prefix.getRegistryName().equals(snake)) return prefix;
         }
         return null;
     }

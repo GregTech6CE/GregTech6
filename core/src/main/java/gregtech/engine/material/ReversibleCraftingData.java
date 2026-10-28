@@ -3,7 +3,6 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-
 import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.generated.GT6Materials;
 import java.util.*;
@@ -23,13 +22,15 @@ public final class ReversibleCraftingData {
         var components = totals.entrySet().stream()
                 .sorted(Map.Entry.<GTMaterial, Long>comparingByValue().reversed())
                 .filter(e -> e.getValue() / outputCount > 0)
-                .map(e -> MaterialComponent.of(e.getKey(), e.getValue() / outputCount)).toList();
+                .map(e -> MaterialComponent.of(e.getKey(), e.getValue() / outputCount))
+                .toList();
         return new ItemComposition(null, components, source, true);
     }
 
     /** Original ANY reversing groups have concrete output targets; reuse the existing identities. */
     private static GTMaterial reversingOutput(GTMaterial material) {
-        if (material == MaterialGroups.Fe || material == MaterialGroups.Iron || material == MaterialGroups.MagicIron) return GT6Materials.Elements.Fe;
+        if (material == MaterialGroups.Fe || material == MaterialGroups.Iron || material == MaterialGroups.MagicIron)
+            return GT6Materials.Elements.Fe;
         if (material == MaterialGroups.Steel) return GT6Materials.Compounds.Steel;
         if (material == MaterialGroups.Cu) return GT6Materials.Elements.Cu;
         if (material == MaterialGroups.W) return GT6Materials.Elements.W;

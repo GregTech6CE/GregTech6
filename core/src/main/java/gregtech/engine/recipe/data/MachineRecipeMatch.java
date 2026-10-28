@@ -7,17 +7,29 @@ public final class MachineRecipeMatch {
     /** A recipe reduced to ids, counts and chances. Empty stacks are already omitted. */
     public interface RecipeView {
         int inputItems();
+
         String inputItem(int index);
+
         int inputItemCount(int index);
+
         int inputFluids();
+
         String inputFluid(int index);
+
         long inputFluidAmount(int index);
+
         int outputItems();
+
         String outputItem(int index);
+
         int outputItemCount(int index);
+
         int outputItemChance(int index);
+
         int outputFluids();
+
         String outputFluid(int index);
+
         long outputFluidAmount(int index);
     }
 
@@ -42,7 +54,9 @@ public final class MachineRecipeMatch {
         for (var need : spec.fluidInputs()) {
             int found = -1;
             for (int i = 0; i < recipe.inputFluids(); i++) {
-                if (usedFluids[i] || !fluidMatches(need.fluid(), need.amount(), recipe.inputFluid(i), recipe.inputFluidAmount(i))) continue;
+                if (usedFluids[i]
+                        || !fluidMatches(need.fluid(), need.amount(), recipe.inputFluid(i), recipe.inputFluidAmount(i)))
+                    continue;
                 found = i;
                 break;
             }
@@ -64,7 +78,10 @@ public final class MachineRecipeMatch {
         for (var need : spec.fluidOutputs()) {
             int found = -1;
             for (int i = 0; i < recipe.outputFluids(); i++) {
-                if (usedFluidOutputs[i] || !fluidMatches(need.fluid(), need.amount(), recipe.outputFluid(i), recipe.outputFluidAmount(i))) continue;
+                if (usedFluidOutputs[i]
+                        || !fluidMatches(
+                                need.fluid(), need.amount(), recipe.outputFluid(i), recipe.outputFluidAmount(i)))
+                    continue;
                 found = i;
                 break;
             }

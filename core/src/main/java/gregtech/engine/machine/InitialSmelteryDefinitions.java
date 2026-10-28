@@ -1,6 +1,5 @@
 package gregtech.engine.machine;
 
-import gregtech.content.material.Materials;
 import gregtech.content.material.generated.CompoundMaterials;
 
 /** The first real smeltery tiers, shared by both platform registries.
@@ -11,8 +10,15 @@ public final class InitialSmelteryDefinitions {
 
     public static MachineSpec brickBurningBox() {
         var material = CompoundMaterials.ClayBrick;
-        return new MachineSpec("burning_box_solid_brick", material.getLocalName(), material.getColor(),
-                2500, 16, "burning_solid", 6.0F, 6.0F);
+        return new MachineSpec(
+                "burning_box_solid_brick",
+                material.getLocalName(),
+                material.getColor(),
+                2500,
+                16,
+                "burning_solid",
+                6.0F,
+                6.0F);
     }
 
     public static CrucibleSpec ceramicCrucible() {

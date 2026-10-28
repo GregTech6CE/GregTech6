@@ -19,11 +19,13 @@ final class BoilerGaugeElement extends Element {
         message(label.getString());
     }
 
-    @Override public Vec2 getSize() {
+    @Override
+    public Vec2 getSize() {
         return new Vec2(Math.max(20, Minecraft.getInstance().font.width(label) + 10), 14);
     }
 
-    @Override public void render(GuiGraphics graphics, float x, float y, float right, float bottom) {
+    @Override
+    public void render(GuiGraphics graphics, float x, float y, float right, float bottom) {
         // Jade supplies the content's right/bottom coordinates, not this element's width/height.
         int left = (int) x, top = (int) y;
         int w = Math.max(3, (int) (right - x)), h = (int) getCachedSize().y;

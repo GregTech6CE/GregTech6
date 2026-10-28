@@ -2,16 +2,15 @@ package gregtech.content.registry;
 
 import gregtech.content.block.tool.*;
 import gregtech.content.blockentity.tool.ManualToolBlockEntity.Kind;
+import java.util.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import java.util.*;
 
 public final class GTManualStations {
 
-    private GTManualStations() {
-    }
+    private GTManualStations() {}
 
     public static final List<DeferredHolder<Block, MaterialAnvilBlock>> ANVILS = new ArrayList<>();
     public static final List<DeferredHolder<Block, ManualToolBlock>> MANUAL = new ArrayList<>();
@@ -36,13 +35,17 @@ public final class GTManualStations {
     public static DeferredHolder<Block, PlantPotBlock> PLANT_POT;
 
     private static void item(String id, java.util.function.Supplier<? extends Block> b, int count) {
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new net.minecraft.world.item.BlockItem(b.get(),
-                new net.minecraft.world.item.Item.Properties().stacksTo(count)));
+        GTBlocks.BLOCK_ITEMS.register(
+                id,
+                () -> new net.minecraft.world.item.BlockItem(
+                        b.get(), new net.minecraft.world.item.Item.Properties().stacksTo(count)));
     }
 
     private static void item(String id, java.util.function.Supplier<? extends Block> b) {
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new net.minecraft.world.item.BlockItem(b.get(),
-                new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+        GTBlocks.BLOCK_ITEMS.register(
+                id,
+                () -> new net.minecraft.world.item.BlockItem(
+                        b.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
     }
 
     private static void manual(String id, Kind kind, String material, BlockBehaviour.Properties p) {
@@ -52,42 +55,85 @@ public final class GTManualStations {
     }
 
     public static void initialize() {
-        COIN_MOLD = GTBlocks.BLOCKS.register("coin_mold", () -> new CoinMoldBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f,
-                6f).requiresCorrectToolForDrops().sound(SoundType.METAL)));
+        COIN_MOLD = GTBlocks.BLOCKS.register(
+                "coin_mold",
+                () -> new CoinMoldBlock(BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.METAL)
+                        .strength(6f, 6f)
+                        .requiresCorrectToolForDrops()
+                        .sound(SoundType.METAL)));
         SHAPED.add((DeferredHolder) COIN_MOLD);
         item("coin_mold", COIN_MOLD);
         for (var v : gregtech.content.tool.UtilityToolRules.ROPES) {
-            var b = GTBlocks.BLOCKS.register(v.id(), () -> new RopeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).strength(.5f,
-                    .5f).sound(SoundType.WOOL).noOcclusion().noCollission(),
-                    gregtech.engine.material.GTMaterialRegistry.get(v.material()).getColor()));
+            var b = GTBlocks.BLOCKS.register(
+                    v.id(),
+                    () -> new RopeBlock(
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.WOOL)
+                                    .strength(.5f, .5f)
+                                    .sound(SoundType.WOOL)
+                                    .noOcclusion()
+                                    .noCollission(),
+                            gregtech.engine.material.GTMaterialRegistry.get(v.material())
+                                    .getColor()));
             ROPES.add(b);
             item(v.id(), b, 64);
         }
         for (var v : GTStorageMetals.ALL) {
             String id = v.suffix().equals("steel") ? "scaffold" : "scaffold_" + v.suffix();
-            var b = GTBlocks.BLOCKS.register(id, () -> new ScaffoldBlock(v.material(),
-                    BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5f, v.resistance()).sound(SoundType.METAL).noOcclusion()));
+            var b = GTBlocks.BLOCKS.register(
+                    id,
+                    () -> new ScaffoldBlock(
+                            v.material(),
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.METAL)
+                                    .strength(5f, v.resistance())
+                                    .sound(SoundType.METAL)
+                                    .noOcclusion()));
             SCAFFOLDS.add(b);
             item(id, b, 64);
         }
-        CRANK = GTBlocks.BLOCKS.register("crank", () -> new CrankBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1f,
-                6f).sound(SoundType.METAL).noOcclusion()));
+        CRANK = GTBlocks.BLOCKS.register(
+                "crank",
+                () -> new CrankBlock(BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.METAL)
+                        .strength(1f, 6f)
+                        .sound(SoundType.METAL)
+                        .noOcclusion()));
         item("crank", CRANK);
-        DUST_FUNNEL = GTBlocks.BLOCKS.register("dust_funnel",
-                () -> new DustFunnelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1f,
-                5f).requiresCorrectToolForDrops().noOcclusion()));
+        DUST_FUNNEL = GTBlocks.BLOCKS.register(
+                "dust_funnel",
+                () -> new DustFunnelBlock(BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.STONE)
+                        .strength(1f, 5f)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion()));
         item("dust_funnel", DUST_FUNNEL);
-        PLANT_POT = GTBlocks.BLOCKS.register("plant_pot", () -> new PlantPotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.CLAY).strength(1f,
-                5f).sound(SoundType.STONE)));
+        PLANT_POT = GTBlocks.BLOCKS.register(
+                "plant_pot",
+                () -> new PlantPotBlock(BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.CLAY)
+                        .strength(1f, 5f)
+                        .sound(SoundType.STONE)));
         SHAPED.add((DeferredHolder) PLANT_POT);
         item("plant_pot", PLANT_POT);
-        SAP_BAG = GTBlocks.BLOCKS.register("sap_bag", () -> new SapBagBlock("sap_bag",
-                BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(.5f, .5f).sound(SoundType.WOOL)));
+        SAP_BAG = GTBlocks.BLOCKS.register(
+                "sap_bag",
+                () -> new SapBagBlock(
+                        "sap_bag",
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.COLOR_BROWN)
+                                .strength(.5f, .5f)
+                                .sound(SoundType.WOOL)));
         SHAPED.add((DeferredHolder) SAP_BAG);
         item("sap_bag", SAP_BAG);
-        ADVANCED_BUTTON = GTBlocks.BLOCKS.register("advanced_button",
-                () -> new AdvancedButtonBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f,
-                6f).sound(SoundType.METAL).noOcclusion()));
+        ADVANCED_BUTTON = GTBlocks.BLOCKS.register(
+                "advanced_button",
+                () -> new AdvancedButtonBlock(BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.METAL)
+                        .strength(6f, 6f)
+                        .sound(SoundType.METAL)
+                        .noOcclusion()));
         item("advanced_button", ADVANCED_BUTTON, 64);
 
         for (var v : gregtech.content.tool.OpenVesselRules.ALL) {
@@ -102,20 +148,54 @@ public final class GTManualStations {
         }
 
         for (var v : gregtech.content.tool.AnvilVariantCatalog.ALL) {
-            var b = GTBlocks.BLOCKS.register(v.id(),
-                    () -> new MaterialAnvilBlock(() -> gregtech.engine.material.GTMaterialRegistry.get(v.material()), v.durability(),
-                    BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(10f,
-                    1200f).requiresCorrectToolForDrops().sound(SoundType.ANVIL)));
+            var b = GTBlocks.BLOCKS.register(
+                    v.id(),
+                    () -> new MaterialAnvilBlock(
+                            () -> gregtech.engine.material.GTMaterialRegistry.get(v.material()),
+                            v.durability(),
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.METAL)
+                                    .strength(10f, 1200f)
+                                    .requiresCorrectToolForDrops()
+                                    .sound(SoundType.ANVIL)));
             ANVILS.add(b);
             item(v.id(), b);
         }
-        manual("mortar_block", Kind.MORTAR, "Steel", BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1f,
-                5f).requiresCorrectToolForDrops().noOcclusion());
-        for (String m : List.of("Netherite", "Sapphire", "Diamond", "Amethyst")) manual("mortar_" + m.toLowerCase(Locale.ROOT), Kind.MORTAR, m,
-                BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1f, 5f).noOcclusion());
-        manual("grindstone_block", Kind.GRINDSTONE, "Steel", BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1f,
-                6f).requiresCorrectToolForDrops().noOcclusion());
-        manual("sifting_table", Kind.SIFTING, "Steel", BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1f,
-                6f).sound(SoundType.METAL).noOcclusion());
+        manual(
+                "mortar_block",
+                Kind.MORTAR,
+                "Steel",
+                BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.STONE)
+                        .strength(1f, 5f)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion());
+        for (String m : List.of("Netherite", "Sapphire", "Diamond", "Amethyst"))
+            manual(
+                    "mortar_" + m.toLowerCase(Locale.ROOT),
+                    Kind.MORTAR,
+                    m,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .strength(1f, 5f)
+                            .noOcclusion());
+        manual(
+                "grindstone_block",
+                Kind.GRINDSTONE,
+                "Steel",
+                BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.STONE)
+                        .strength(1f, 6f)
+                        .requiresCorrectToolForDrops()
+                        .noOcclusion());
+        manual(
+                "sifting_table",
+                Kind.SIFTING,
+                "Steel",
+                BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.METAL)
+                        .strength(1f, 6f)
+                        .sound(SoundType.METAL)
+                        .noOcclusion());
     }
 }

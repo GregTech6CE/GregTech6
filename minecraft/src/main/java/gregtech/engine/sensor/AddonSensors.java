@@ -4,15 +4,14 @@ import gregtech.api.addon.AddonFailures;
 import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.platform.AddonSensor;
 import gregtech.api.addon.platform.AddonSensorContributor;
-import net.minecraft.world.level.block.Block;
-
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
+import javax.annotation.Nullable;
+import net.minecraft.world.level.block.Block;
 
 /** Sensor kinds declared by addons. Collected before block registration. */
 public final class AddonSensors {
@@ -43,7 +42,10 @@ public final class AddonSensors {
                 try {
                     addon = contributor.addonId();
                 } catch (RuntimeException | Error failure) {
-                    throw AddonFailures.of("Sensor contributor failed: " + contributor.getClass().getName(), failure);
+                    throw AddonFailures.of(
+                            "Sensor contributor failed: "
+                                    + contributor.getClass().getName(),
+                            failure);
                 }
                 if (!AddonNames.isAddonId(addon))
                     throw new IllegalStateException("Sensor contributor has no valid addon id: "
@@ -66,10 +68,11 @@ public final class AddonSensors {
                         throw new IllegalStateException("Addon '" + addon + "' sensor '" + id
                                 + "' has an unknown unit glyph: " + sensor.unit());
                     if (sensor.color() < 0 || sensor.color() > 0xFFFFFF)
-                        throw new IllegalStateException("Addon '" + addon + "' sensor '" + id + "' has an invalid color");
+                        throw new IllegalStateException(
+                                "Addon '" + addon + "' sensor '" + id + "' has an invalid color");
                     if (sensor.maximum() < 0)
-                        throw new IllegalStateException("Addon '" + addon + "' sensor '" + id
-                                + "' has a negative maximum");
+                        throw new IllegalStateException(
+                                "Addon '" + addon + "' sensor '" + id + "' has a negative maximum");
                     String key = addon + ":" + id;
                     String previous = seen.putIfAbsent(key, addon);
                     if (previous != null)
@@ -87,12 +90,20 @@ public final class AddonSensors {
         }
     }
 
-    public static List<Declared> all() { return List.copyOf(ALL); }
+    public static List<Declared> all() {
+        return List.copyOf(ALL);
+    }
 
     @Nullable
-    public static AddonSensor find(String id) { return BY_ID.get(id); }
+    public static AddonSensor find(String id) {
+        return BY_ID.get(id);
+    }
 
-    public static List<Supplier<? extends Block>> blocks() { return List.copyOf(BLOCKS); }
+    public static List<Supplier<? extends Block>> blocks() {
+        return List.copyOf(BLOCKS);
+    }
 
-    public static void addBlock(Supplier<? extends Block> block) { BLOCKS.add(block); }
+    public static void addBlock(Supplier<? extends Block> block) {
+        BLOCKS.add(block);
+    }
 }

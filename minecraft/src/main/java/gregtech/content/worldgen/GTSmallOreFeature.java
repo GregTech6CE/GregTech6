@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -33,7 +32,8 @@ public class GTSmallOreFeature extends Feature<NoneFeatureConfiguration> {
 
         // Per-dimension tables (GT6 GEN_OVERWORLD / GEN_NETHER / GEN_END).
         java.util.List<SmallOre> ores;
-        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim = level.getLevel().dimension();
+        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim =
+                level.getLevel().dimension();
         if (dim == net.minecraft.world.level.Level.NETHER) {
             ores = GTOreVeins.activeNetherSmallOres();
         } else if (dim == net.minecraft.world.level.Level.END) {
@@ -50,7 +50,8 @@ public class GTSmallOreFeature extends Feature<NoneFeatureConfiguration> {
             int maxY = Mth.clamp(GTWorldgenScale.remapY(level, ore.maxY()), minY + 1, level.getMaxBuildHeight() - 1);
             int attempts = Math.max(1, ore.amount() / 2 + random.nextInt(1 + ore.amount()) / 2);
             for (int i = 0; i < attempts; i++) {
-                cursor.set(minX + random.nextInt(16),
+                cursor.set(
+                        minX + random.nextInt(16),
                         minY + random.nextInt(Math.max(1, maxY - minY)),
                         minZ + random.nextInt(16));
                 if (level.isOutsideBuildHeight(cursor.getY())) continue;

@@ -4,6 +4,7 @@ package gregtech.engine.multiblock;
 
 public final class MultiblockToolRules {
     private MultiblockToolRules() {}
+
     public static final long BUILDER_COST = 10, MAGNIFIER_COST = 1;
     public static final String FORMED = "Structure is formed already!";
     public static final String JUST_FORMED = "Structure did form just now!";

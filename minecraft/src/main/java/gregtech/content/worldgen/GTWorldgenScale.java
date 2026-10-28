@@ -22,8 +22,7 @@ public final class GTWorldgenScale {
         if (oldY >= HEIGHT_ANCHOR_Y) return oldY;
         if (oldY <= 0) return WORLD_FLOOR + oldY;
         double fraction = oldY / (double) HEIGHT_ANCHOR_Y;
-        return (int) Math.round(WORLD_FLOOR
-                + (HEIGHT_ANCHOR_Y - WORLD_FLOOR) * Math.pow(fraction, 1.5));
+        return (int) Math.round(WORLD_FLOOR + (HEIGHT_ANCHOR_Y - WORLD_FLOOR) * Math.pow(fraction, 1.5));
     }
 
     /**
@@ -34,5 +33,4 @@ public final class GTWorldgenScale {
     public static int remapY(net.minecraft.world.level.WorldGenLevel level, int oldY) {
         return level.getLevel().dimension() == net.minecraft.world.level.Level.OVERWORLD ? remapY(oldY) : oldY;
     }
-
 }

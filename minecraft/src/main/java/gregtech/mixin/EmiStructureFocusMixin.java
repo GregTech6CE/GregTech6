@@ -12,8 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Pseudo
 @Mixin(targets = "dev.emi.emi.api.EmiApi", remap = false)
 public abstract class EmiStructureFocusMixin {
-    @Inject(method = "displayUses(Ldev/emi/emi/api/stack/EmiIngredient;)V",
-            at = @At("TAIL"), require = 1, remap = false)
+    @Inject(
+            method = "displayUses(Ldev/emi/emi/api/stack/EmiIngredient;)V",
+            at = @At("TAIL"),
+            require = 1,
+            remap = false)
     private static void gregtech$focusControllerStructure(EmiIngredient ingredient, CallbackInfo callback) {
         StructureEmiRecipe.focusControllerUses(ingredient);
     }

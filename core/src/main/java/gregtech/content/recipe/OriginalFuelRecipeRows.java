@@ -1,48 +1,63 @@
 package gregtech.content.recipe;
+
 import java.util.List;
+
 /** Original Loader_Recipes_Fuels charge rows; missing fluids retain source skip semantics. */
-public final class OriginalFuelRecipeRows {private OriginalFuelRecipeRows(){}public record Row(String kind,long eut,long duration,String input,int amount,String output,int outputAmount,String output2,int output2Amount){}
- public static final List<Row> ROWS=List.of(
-new Row("gas",16,2,"Hydrogen",2,"water",3,null,0),
-new Row("gas",64,30,"Methane",5,"water",6,"CarbonDioxide",3),
-new Row("gas",64,30,"NaturalGas",5,"water",6,"CarbonDioxide",3),
-new Row("gas",64,56,"Butane",7,"water",7,"CarbonDioxide",6),
-new Row("gas",64,40,"Propane",5,"water",5,"CarbonDioxide",4),
-new Row("gas",64,5,"Ethylene",1,"water",1,"CarbonDioxide",1),
-new Row("gas",64,4,"Propylene",1,"water",1,"CarbonDioxide",1),
-new Row("burn",16,48,"Oil_ExtraHeavy",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,36,"Oil_Heavy",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,24,"Oil_Medium",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,24,"Oil_Normal",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,18,"Oil_Light",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,18,"Oil_Soulsand",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,2,"Oil_Creosote",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,2,"Biomass",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,2,"BiomassIC2",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,4,"Oil_Nut",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,4,"Oil_Olive",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,2,"Oil_Lin",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,2,"Oil_Hemp",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,2,"Oil_Sunflower",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,2,"Oil_Seed",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,4,"Oil_Fish",1,"CarbonDioxide",1,null,0),
-new Row("burn",16,8,"Oil_Whale",1,"CarbonDioxide",1,null,0),
-// GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later:
-// Loader_Fuels:191-213 and CS:216-234. Energy constants are per litre, not per bucket.
-new Row("hot",16,6,"Blaze",1,null,0,null,0),
-new Row("hot",16,5,"Lava",1,"Lava_Pahoehoe",1,null,0),
-new Row("hot",16,80,"Lava_Volcanic",1,"Lava_Pahoehoe",1,null,0),
-new Row("hot",2,1,"Hot_Water",1,"water",1,null,0),
-new Row("hot",2,1,"Water_Hot",1,"water",1,null,0),
-new Row("hot",2,1,"Water_Boiling",1,"water",1,null,0),
-new Row("hot",16,4,"Water_Geothermal",1,"MnWtr",1,null,0),
-new Row("hot",1,20,"Coolant_IC2_Hot",1,"Coolant_IC2",1,null,0),
-new Row("hot",1,30,"Hot_Molten_Sodium",1,"GenMolten_Sodium",1,null,0),
-new Row("hot",1,40,"Hot_Molten_Tin",1,"GenMolten_Tin",1,null,0),
-new Row("hot",1,50,"Hot_Heavy_Water",1,"GenLiquid_HeavyWater",1,null,0),
-new Row("hot",1,40,"Hot_Semi_Heavy_Water",1,"GenLiquid_SemiheavyWater",1,null,0),
-new Row("hot",1,60,"Hot_Tritiated_Water",1,"GenLiquid_TritiatedWater",1,null,0),
-new Row("hot",1,20,"Hot_Carbon_Dioxide",1,"CarbonDioxide",1,null,0),
-new Row("hot",1,30,"Hot_Helium",1,"Helium",1,null,0),
-new Row("hot",1,15,"Hot_Molten_LiCl",1,"GenLiquid_LithiumChloride",1,null,0));
+public final class OriginalFuelRecipeRows {
+    private OriginalFuelRecipeRows() {}
+
+    public record Row(
+            String kind,
+            long eut,
+            long duration,
+            String input,
+            int amount,
+            String output,
+            int outputAmount,
+            String output2,
+            int output2Amount) {}
+
+    public static final List<Row> ROWS = List.of(
+            new Row("gas", 16, 2, "Hydrogen", 2, "water", 3, null, 0),
+            new Row("gas", 64, 30, "Methane", 5, "water", 6, "CarbonDioxide", 3),
+            new Row("gas", 64, 30, "NaturalGas", 5, "water", 6, "CarbonDioxide", 3),
+            new Row("gas", 64, 56, "Butane", 7, "water", 7, "CarbonDioxide", 6),
+            new Row("gas", 64, 40, "Propane", 5, "water", 5, "CarbonDioxide", 4),
+            new Row("gas", 64, 5, "Ethylene", 1, "water", 1, "CarbonDioxide", 1),
+            new Row("gas", 64, 4, "Propylene", 1, "water", 1, "CarbonDioxide", 1),
+            new Row("burn", 16, 48, "Oil_ExtraHeavy", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 36, "Oil_Heavy", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 24, "Oil_Medium", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 24, "Oil_Normal", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 18, "Oil_Light", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 18, "Oil_Soulsand", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 2, "Oil_Creosote", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 2, "Biomass", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 2, "BiomassIC2", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 4, "Oil_Nut", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 4, "Oil_Olive", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 2, "Oil_Lin", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 2, "Oil_Hemp", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 2, "Oil_Sunflower", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 2, "Oil_Seed", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 4, "Oil_Fish", 1, "CarbonDioxide", 1, null, 0),
+            new Row("burn", 16, 8, "Oil_Whale", 1, "CarbonDioxide", 1, null, 0),
+            // GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later:
+            // Loader_Fuels:191-213 and CS:216-234. Energy constants are per litre, not per bucket.
+            new Row("hot", 16, 6, "Blaze", 1, null, 0, null, 0),
+            new Row("hot", 16, 5, "Lava", 1, "Lava_Pahoehoe", 1, null, 0),
+            new Row("hot", 16, 80, "Lava_Volcanic", 1, "Lava_Pahoehoe", 1, null, 0),
+            new Row("hot", 2, 1, "Hot_Water", 1, "water", 1, null, 0),
+            new Row("hot", 2, 1, "Water_Hot", 1, "water", 1, null, 0),
+            new Row("hot", 2, 1, "Water_Boiling", 1, "water", 1, null, 0),
+            new Row("hot", 16, 4, "Water_Geothermal", 1, "MnWtr", 1, null, 0),
+            new Row("hot", 1, 20, "Coolant_IC2_Hot", 1, "Coolant_IC2", 1, null, 0),
+            new Row("hot", 1, 30, "Hot_Molten_Sodium", 1, "GenMolten_Sodium", 1, null, 0),
+            new Row("hot", 1, 40, "Hot_Molten_Tin", 1, "GenMolten_Tin", 1, null, 0),
+            new Row("hot", 1, 50, "Hot_Heavy_Water", 1, "GenLiquid_HeavyWater", 1, null, 0),
+            new Row("hot", 1, 40, "Hot_Semi_Heavy_Water", 1, "GenLiquid_SemiheavyWater", 1, null, 0),
+            new Row("hot", 1, 60, "Hot_Tritiated_Water", 1, "GenLiquid_TritiatedWater", 1, null, 0),
+            new Row("hot", 1, 20, "Hot_Carbon_Dioxide", 1, "CarbonDioxide", 1, null, 0),
+            new Row("hot", 1, 30, "Hot_Helium", 1, "Helium", 1, null, 0),
+            new Row("hot", 1, 15, "Hot_Molten_LiCl", 1, "GenLiquid_LithiumChloride", 1, null, 0));
 }

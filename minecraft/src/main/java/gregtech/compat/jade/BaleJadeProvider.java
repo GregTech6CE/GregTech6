@@ -17,28 +17,35 @@ public enum BaleJadeProvider implements IBlockComponentProvider {
 
     public static String hint(BaleBlock.Stage stage, Level level, BlockPos pos) {
         return switch (stage) {
-            case FRESH -> level.dimension() != Level.NETHER && BaleBlock.isWet(level, pos)
-                    ? "jade.gt6ce.bale.mold" : "jade.gt6ce.bale.dry";
+            case FRESH ->
+                level.dimension() != Level.NETHER && BaleBlock.isWet(level, pos)
+                        ? "jade.gt6ce.bale.mold"
+                        : "jade.gt6ce.bale.dry";
             case MOLDY -> "jade.gt6ce.bale.rot";
             case DRY -> "jade.gt6ce.bale.stable";
             default -> "";
         };
     }
 
-    @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+    @Override
+    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         if (!(accessor.getBlockState().getBlock() instanceof BaleBlock bale)) return;
         Level level = accessor.getLevel();
         BlockPos pos = accessor.getPosition();
         String key = hint(bale.stage(), level, pos);
         if (!key.isEmpty()) tooltip.add(Component.translatable(key).withStyle(ChatFormatting.GRAY));
-        if (bale.stage() == BaleBlock.Stage.FRESH && level.dimension() != Level.NETHER
+        if (bale.stage() == BaleBlock.Stage.FRESH
+                && level.dimension() != Level.NETHER
                 && (level.getBiome(pos).value().getBaseTemperature() < .65F
-                || !level.isDay() || level.isRaining() || !level.canSeeSky(pos.above(2)))) {
+                        || !level.isDay()
+                        || level.isRaining()
+                        || !level.canSeeSky(pos.above(2)))) {
             tooltip.add(Component.translatable("jade.gt6ce.bale.slow").withStyle(ChatFormatting.GRAY));
         }
     }
 
-    @Override public ResourceLocation getUid() {
+    @Override
+    public ResourceLocation getUid() {
         return ResourceLocation.fromNamespaceAndPath("gt6ce", "bale_drying");
     }
 }

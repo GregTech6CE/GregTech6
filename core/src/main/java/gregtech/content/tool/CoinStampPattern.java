@@ -21,13 +21,11 @@ public final class CoinStampPattern {
 
     public void read(java.util.function.ToIntFunction<String> value) {
         for (int face = 0; face < FACES; face++)
-            for (int row = 0; row < ROWS; row++)
-                shape[face][row] = (short) value.applyAsInt(key(face, row));
+            for (int row = 0; row < ROWS; row++) shape[face][row] = (short) value.applyAsInt(key(face, row));
     }
 
     public void write(java.util.function.BiConsumer<String, Short> value) {
         for (int face = 0; face < FACES; face++)
-            for (int row = 0; row < ROWS; row++)
-                value.accept(key(face, row), shape[face][row]);
+            for (int row = 0; row < ROWS; row++) value.accept(key(face, row), shape[face][row]);
     }
 }

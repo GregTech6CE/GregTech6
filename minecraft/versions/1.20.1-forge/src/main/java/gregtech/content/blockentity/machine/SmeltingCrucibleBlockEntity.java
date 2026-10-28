@@ -1,27 +1,34 @@
 package gregtech.content.blockentity.machine;
-import gregtech.engine.machine.crucible.CrucibleContentsNbt;
 
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.GTValues;
+import gregtech.client.CrucibleModelData;
+import gregtech.client.MaterialTooltips;
+import gregtech.content.block.machine.SmeltingCrucibleBlock;
+import gregtech.content.blockentity.GTEnergyBlockEntity;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.Materials;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTItems;
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.ITileEntityCrucible;
 import gregtech.engine.machine.ITileEntityMold;
-import gregtech.engine.machine.crucible.CrucibleItemInput;
 import gregtech.engine.machine.crucible.CrucibleAutomationInput;
+import gregtech.engine.machine.crucible.CrucibleContentsNbt;
+import gregtech.engine.machine.crucible.CrucibleItemInput;
 import gregtech.engine.machine.crucible.CrucibleMaterialStack;
 import gregtech.engine.machine.crucible.CrucibleMath;
 import gregtech.engine.machine.crucible.CrucibleProcess;
 import gregtech.engine.machine.crucible.ThermalState;
 import gregtech.engine.machine.crucible.ThermalStep;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.content.block.machine.SmeltingCrucibleBlock;
-import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.client.CrucibleModelData;
-import gregtech.client.MaterialTooltips;
-import gregtech.content.data.GregTechConstants;
-import gregtech.content.data.GregTechTags;
-import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.util.GTEntityHelper;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -30,54 +37,50 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.registry.GTItems;
-import gregtech.util.GTEntityHelper;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * Smelting crucible (GT6 {@code MultiTileEntitySmeltery}).
  * <p>
  * 16 material units of internal storage, one top cache slot, HU input on the bottom face.
  */
-public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements ITileEntityCrucible, gregtech.engine.fluid.MoltenMaterialStorage,
-        gregtech.api.machine.HeatHandler,
-        gregtech.api.sensor.WeightSensorSource, gregtech.api.sensor.CompressionSensorSource {
-    @Override public double weightKilograms(int side) { return CrucibleMaterialStack.weight(content); }
-    @Override public long gibblValue(int side) {
+public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity
+        implements ITileEntityCrucible,
+                gregtech.engine.fluid.MoltenMaterialStorage,
+                gregtech.api.machine.HeatHandler,
+                gregtech.api.sensor.WeightSensorSource,
+                gregtech.api.sensor.CompressionSensorSource {
+    @Override
+    public double weightKilograms(int side) {
+        return CrucibleMaterialStack.weight(content);
+    }
+
+    @Override
+    public long gibblValue(int side) {
         return gregtech.engine.machine.crucible.CrucibleMath.units(
                 CrucibleMaterialStack.total(content), GTValues.U9, 1000, true);
     }
-    @Override public long gibblMaximum(int side) {
-        return gregtech.engine.machine.crucible.CrucibleMath.units(
-                maxMaterialAmount(), GTValues.U9, 1000, true);
+
+    @Override
+    public long gibblMaximum(int side) {
+        return gregtech.engine.machine.crucible.CrucibleMath.units(maxMaterialAmount(), GTValues.U9, 1000, true);
     }
 
     public static final long MAX_AMOUNT = 16L * GTValues.U;
@@ -145,42 +148,109 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         return temperature;
     }
 
-
-    @Override public long getMoltenCapacityUnits() { return maxMaterialAmount(); }
-    @Override public int fillMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, long incomingTemperature, boolean execute) {
-        return fillMoltenMaterial(material, requested, incomingTemperature, execute, gregtech.engine.fluid.MoltenMaterialUnits.ratio(material));
+    @Override
+    public long getMoltenCapacityUnits() {
+        return maxMaterialAmount();
     }
-    @Override public int fillMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, long incomingTemperature, boolean execute,
-                                          gregtech.engine.fluid.MoltenMaterialUnits.Ratio ratio) {
+
+    @Override
+    public int fillMoltenMaterial(
+            gregtech.api.material.GTMaterial material, int requested, long incomingTemperature, boolean execute) {
+        return fillMoltenMaterial(
+                material,
+                requested,
+                incomingTemperature,
+                execute,
+                gregtech.engine.fluid.MoltenMaterialUnits.ratio(material));
+    }
+
+    @Override
+    public int fillMoltenMaterial(
+            gregtech.api.material.GTMaterial material,
+            int requested,
+            long incomingTemperature,
+            boolean execute,
+            gregtech.engine.fluid.MoltenMaterialUnits.Ratio ratio) {
         if (level == null || level.isClientSide) return 0;
-        int accepted = gregtech.engine.fluid.MoltenFluidPlans.fillAmount(content, maxMaterialAmount(), material, requested, incomingTemperature, ratio);
+        int accepted = gregtech.engine.fluid.MoltenFluidPlans.fillAmount(
+                content, maxMaterialAmount(), material, requested, incomingTemperature, ratio);
         if (accepted <= 0) return 0;
-        var destination = execute ? content : new ArrayList<>(content.stream().map(CrucibleMaterialStack::copy).toList());
-        Long mixed = CrucibleProcess.admit(destination, List.of(CrucibleMaterialStack.of(material, gregtech.engine.fluid.MoltenFluidPlans.toUnits(accepted, ratio))), maxMaterialAmount(), thermalMassKg(), getTemperature(), incomingTemperature);
+        var destination = execute
+                ? content
+                : new ArrayList<>(
+                        content.stream().map(CrucibleMaterialStack::copy).toList());
+        Long mixed = CrucibleProcess.admit(
+                destination,
+                List.of(CrucibleMaterialStack.of(
+                        material, gregtech.engine.fluid.MoltenFluidPlans.toUnits(accepted, ratio))),
+                maxMaterialAmount(),
+                thermalMassKg(),
+                getTemperature(),
+                incomingTemperature);
         if (mixed == null) return 0;
-        if (execute) { temperature = mixed; updateDisplayState(); syncCrucibleState(); setChanged(); }
+        if (execute) {
+            temperature = mixed;
+            updateDisplayState();
+            syncCrucibleState();
+            setChanged();
+        }
         return accepted;
     }
-    @Override public int drainMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, boolean execute) {
-        return drainMoltenMaterial(material, requested, execute, gregtech.engine.fluid.MoltenMaterialUnits.ratio(material));
+
+    @Override
+    public int drainMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, boolean execute) {
+        return drainMoltenMaterial(
+                material, requested, execute, gregtech.engine.fluid.MoltenMaterialUnits.ratio(material));
     }
-    @Override public int drainMoltenMaterial(gregtech.api.material.GTMaterial material, int requested, boolean execute,
-                                           gregtech.engine.fluid.MoltenMaterialUnits.Ratio ratio) {
+
+    @Override
+    public int drainMoltenMaterial(
+            gregtech.api.material.GTMaterial material,
+            int requested,
+            boolean execute,
+            gregtech.engine.fluid.MoltenMaterialUnits.Ratio ratio) {
         if (level == null || level.isClientSide) return 0;
-        int amount = gregtech.engine.fluid.MoltenFluidPlans.drainAmount(content, material, requested, getTemperature(), ratio);
-        if (execute && amount > 0) { gregtech.engine.fluid.MoltenFluidPlans.remove(content, material, amount, ratio); updateDisplayState(); syncCrucibleState(); setChanged(); }
+        int amount = gregtech.engine.fluid.MoltenFluidPlans.drainAmount(
+                content, material, requested, getTemperature(), ratio);
+        if (execute && amount > 0) {
+            gregtech.engine.fluid.MoltenFluidPlans.remove(content, material, amount, ratio);
+            updateDisplayState();
+            syncCrucibleState();
+            setChanged();
+        }
         return amount;
     }
-    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.fluids.capability.IFluidHandler> moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new gregtech.engine.fluid.MoltenFluidHandler(this));
+
+    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.fluids.capability.IFluidHandler>
+            moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(
+                    () -> new gregtech.engine.fluid.MoltenFluidHandler(this));
     private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandler> itemInputCapability =
             net.minecraftforge.common.util.LazyOptional.of(() -> new CrucibleAutomationInput(cache));
-    @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, Direction side) {
-        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER && side == Direction.UP) return itemInputCapability.cast();
-        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER && side != Direction.DOWN) return moltenFluidCapability.cast();
+
+    @Override
+    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> capability, Direction side) {
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER && side == Direction.UP)
+            return itemInputCapability.cast();
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER
+                && side != Direction.DOWN) return moltenFluidCapability.cast();
         return super.getCapability(capability, side);
     }
-    @Override public void invalidateCaps() { super.invalidateCaps(); moltenFluidCapability.invalidate(); itemInputCapability.invalidate(); }
-    @Override public void reviveCaps() { super.reviveCaps(); itemInputCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new CrucibleAutomationInput(cache)); moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new gregtech.engine.fluid.MoltenFluidHandler(this)); }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        moltenFluidCapability.invalidate();
+        itemInputCapability.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        itemInputCapability = net.minecraftforge.common.util.LazyOptional.of(() -> new CrucibleAutomationInput(cache));
+        moltenFluidCapability = net.minecraftforge.common.util.LazyOptional.of(
+                () -> new gregtech.engine.fluid.MoltenFluidHandler(this));
+    }
 
     public long getEnergyBuffer() {
         return energyBuffer;
@@ -188,12 +258,23 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
 
     // ── HeatHandler: direct HU access into the signed buffer; the tick still owns conversion ──
 
-    @Override public long heatStored() { return energyBuffer; }
+    @Override
+    public long heatStored() {
+        return energyBuffer;
+    }
     /** The crucible buffer is a long with no rated ceiling. */
-    @Override public long heatCapacity() { return Long.MAX_VALUE; }
-    @Override public long temperatureK() { return temperature; }
+    @Override
+    public long heatCapacity() {
+        return Long.MAX_VALUE;
+    }
 
-    @Override public long insertHeat(long signedHU, boolean simulate) {
+    @Override
+    public long temperatureK() {
+        return temperature;
+    }
+
+    @Override
+    public long insertHeat(long signedHU, boolean simulate) {
         if (signedHU == 0) return 0;
         if (signedHU > 0) {
             long accepted = energyBuffer < 0 ? signedHU : Math.min(signedHU, Long.MAX_VALUE - energyBuffer);
@@ -206,7 +287,8 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         return -removed;
     }
 
-    @Override public long extractHeat(long signedHU, boolean simulate) {
+    @Override
+    public long extractHeat(long signedHU, boolean simulate) {
         if (signedHU == 0) return 0;
         if (signedHU > 0) {
             long removed = Math.min(Math.max(0, energyBuffer), signedHU);
@@ -251,22 +333,32 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         return spec.meltDownTemperatureK();
     }
 
-    protected long maxMaterialAmount() { return MAX_AMOUNT; }
+    protected long maxMaterialAmount() {
+        return MAX_AMOUNT;
+    }
 
     protected gregtech.engine.machine.crucible.CrucibleHazards.Profile hazardProfile() {
         return gregtech.engine.machine.crucible.CrucibleHazards.SMALL;
     }
 
-    protected double thermalMassKg() { return spec.smeltingThermalMassKg(); }
+    protected double thermalMassKg() {
+        return spec.smeltingThermalMassKg();
+    }
 
     protected AABB itemSuctionArea() {
-        return new AABB(worldPosition.getX() + 2 / 16.0D, worldPosition.getY() + 2 / 16.0D,
-                worldPosition.getZ() + 2 / 16.0D, worldPosition.getX() + 14 / 16.0D,
-                worldPosition.getY() + 1.0D, worldPosition.getZ() + 14 / 16.0D);
+        return new AABB(
+                worldPosition.getX() + 2 / 16.0D,
+                worldPosition.getY() + 2 / 16.0D,
+                worldPosition.getZ() + 2 / 16.0D,
+                worldPosition.getX() + 14 / 16.0D,
+                worldPosition.getY() + 1.0D,
+                worldPosition.getZ() + 14 / 16.0D);
     }
 
     /** The large crucible's upper wall exposes insertion but never lets automation take its cache. */
-    protected ItemStackHandler cacheHandler() { return cache; }
+    protected ItemStackHandler cacheHandler() {
+        return cache;
+    }
 
     protected void addHeatEnergy(long units) {
         if (units <= 0) return;
@@ -305,23 +397,29 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         int contentHash = content.hashCode();
         if (getBlockState().getBlock() instanceof gregtech.content.block.machine.SmeltingCrucibleBlock) {
             long rain = gregtech.content.blockentity.machine.SmallCrucibleRain.amount(level, worldPosition);
-            if (rain > 0) addMaterialStacks(List.of(CrucibleMaterialStack.of(Materials.Water, rain)), environmentTemperature());
+            if (rain > 0)
+                addMaterialStacks(List.of(CrucibleMaterialStack.of(Materials.Water, rain)), environmentTemperature());
         }
-
 
         suckItemIntoCache();
         processCacheSlot(environmentTemperature);
         boolean newContent = contentHash != content.hashCode();
-        CrucibleProcess.PhaseResult phases = CrucibleProcess.process(content, temperature,
-                previousTemperature, newContent, spec.acidProof());
+        CrucibleProcess.PhaseResult phases =
+                CrucibleProcess.process(content, temperature, previousTemperature, newContent, spec.acidProof());
         for (int i = 0; i < phases.fizzCount(); i++) playFizz();
         for (var vapor : phases.vapors()) SmelteryFireHelper.vaporize(level, worldPosition, hazardProfile(), vapor);
         if (phases.explosiveAmount() > 0) {
-            int strength = gregtech.engine.machine.crucible.CrucibleHazards.explosionPower(hazardProfile(), phases.explosiveAmount());
+            int strength = gregtech.engine.machine.crucible.CrucibleHazards.explosionPower(
+                    hazardProfile(), phases.explosiveAmount());
             if (level != null) {
                 level.removeBlock(worldPosition, false);
-                level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
-                        strength, Level.ExplosionInteraction.BLOCK);
+                level.explode(
+                        null,
+                        worldPosition.getX(),
+                        worldPosition.getY(),
+                        worldPosition.getZ(),
+                        strength,
+                        Level.ExplosionInteraction.BLOCK);
             }
             return;
         }
@@ -334,7 +432,8 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
 
         ThermalState stepped = ThermalStep.advance(
                 new ThermalState(temperature, previousTemperature, energyBuffer, cooldown),
-                environmentTemperature, thermalMass);
+                environmentTemperature,
+                thermalMass);
         previousTemperature = stepped.previousTemperatureK();
         updateDisplayState();
         energyBuffer = stepped.energyHU();
@@ -423,8 +522,8 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
     }
 
     public boolean addMaterialStacks(List<CrucibleMaterialStack> incoming, long incomingTemperature) {
-        Long mixedTemperature = CrucibleProcess.admit(content, incoming, maxMaterialAmount(),
-                thermalMassKg(), temperature, incomingTemperature);
+        Long mixedTemperature = CrucibleProcess.admit(
+                content, incoming, maxMaterialAmount(), thermalMassKg(), temperature, incomingTemperature);
         if (mixedTemperature == null) return false;
         temperature = mixedTemperature;
         setChanged();
@@ -474,7 +573,8 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         if (!isHandAllowedForScrape(player.getItemInHand(hand))) {
             return false;
         }
-        InteractionHand other = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+        InteractionHand other =
+                hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         return isHandAllowedForScrape(player.getItemInHand(other));
     }
 
@@ -549,9 +649,8 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
             return InteractionResult.PASS;
         }
         long scrapUnit = MaterialPrefix.scrapGt.getMaterialWeight();
-        int maxStacks = lightest.amount < scrapUnit
-                ? 1
-                : (int) Math.max(1L, Math.min(64L, lightest.amount / scrapUnit));
+        int maxStacks =
+                lightest.amount < scrapUnit ? 1 : (int) Math.max(1L, Math.min(64L, lightest.amount / scrapUnit));
         int extracted = 0;
         for (int i = 0; i < maxStacks; i++) {
             if (!extractOneSolidScrap(player, hand, false)) {
@@ -658,8 +757,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
             player.setItemInHand(InteractionHand.MAIN_HAND, stack);
             return;
         }
-        if (ItemStack.isSameItemSameTags(main, stack)
-                && main.getCount() + stack.getCount() <= main.getMaxStackSize()) {
+        if (ItemStack.isSameItemSameTags(main, stack) && main.getCount() + stack.getCount() <= main.getMaxStackSize()) {
             main.grow(stack.getCount());
             player.setItemInHand(InteractionHand.MAIN_HAND, main);
             return;
@@ -682,7 +780,10 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         CrucibleMaterialStack lightestSolid = null;
         long totalAmount = 0;
         for (CrucibleMaterialStack stack : content) {
-            if (stack == null || stack.material == Materials.Invalid || stack.material == Materials.Air || stack.amount <= 0) {
+            if (stack == null
+                    || stack.material == Materials.Invalid
+                    || stack.material == Materials.Air
+                    || stack.amount <= 0) {
                 continue;
             }
             if (lightest == null || stack.material.getDensity() < lightest.material.getDensity()) {
@@ -718,7 +819,8 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         }
         ItemStack cached = cache.getStackInSlot(CACHE_SLOT);
         if (!cached.isEmpty()) {
-            gregtech.util.GTItemDrops.dropItemStack(level,
+            gregtech.util.GTItemDrops.dropItemStack(
+                    level,
                     worldPosition.getX() + 0.5D,
                     worldPosition.getY() + 0.5D,
                     worldPosition.getZ() + 0.5D,
@@ -728,8 +830,10 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
     }
 
     protected long materialAmount(GTMaterial material) {
-        return content.stream().filter(stack -> stack.material.resolve() == material.resolve())
-                .mapToLong(stack -> stack.amount).sum();
+        return content.stream()
+                .filter(stack -> stack.material.resolve() == material.resolve())
+                .mapToLong(stack -> stack.amount)
+                .sum();
     }
 
     protected boolean takeMaterial(GTMaterial material, long amount) {
@@ -788,14 +892,16 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
             }
         } else {
             requestModelDataUpdate();
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                    () -> () -> gregtech.client.CrucibleClientSync.refreshHull(worldPosition));
+            DistExecutor.unsafeRunWhenOn(
+                    Dist.CLIENT, () -> () -> gregtech.client.CrucibleClientSync.refreshHull(worldPosition));
         }
     }
 
     @Override
     public ModelData getModelData() {
-        return ModelData.builder().with(CrucibleModelData.MELTDOWN, meltDownWarning).build();
+        return ModelData.builder()
+                .with(CrucibleModelData.MELTDOWN, meltDownWarning)
+                .build();
     }
 
     @Override
@@ -915,7 +1021,9 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return gregtech.engine.machine.crucible.CrucibleEnergyRules.accepts(energyType) ? CrucibleSpec.MIN_HU_PER_TICK : 0;
+        return gregtech.engine.machine.crucible.CrucibleEnergyRules.accepts(energyType)
+                ? CrucibleSpec.MIN_HU_PER_TICK
+                : 0;
     }
 
     @Override
@@ -947,7 +1055,8 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
     }
 
     @Override
-    public long doInject(GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean doInject) {
+    public long doInject(
+            GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean doInject) {
         if (!gregtech.engine.machine.crucible.CrucibleEnergyRules.accepts(energyType) || amount <= 0) {
             return 0;
         }
@@ -963,8 +1072,9 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         try {
             received = ThermalStep.receive(
                     new ThermalState(temperature, previousTemperature, energyBuffer, cooldown),
-                    energyType == GregTechTags.Energy.CU ? ThermalStep.EnergyKind.COOLING
-                            : ThermalStep.EnergyKind.HEAT, size, amount);
+                    energyType == GregTechTags.Energy.CU ? ThermalStep.EnergyKind.COOLING : ThermalStep.EnergyKind.HEAT,
+                    size,
+                    amount);
         } catch (IllegalArgumentException | ArithmeticException invalidPacket) {
             // Reject the entire packet count; simulated and actual acceptance must agree.
             return 0;

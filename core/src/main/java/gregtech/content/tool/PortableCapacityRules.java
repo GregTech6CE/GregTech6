@@ -5,8 +5,7 @@ import gregtech.engine.fluid.PortableFluidContainerSpec;
 /** Source measuring-pot/barometer bands and clamp, shared by both storage adapters. */
 public final class PortableCapacityRules {
 
-    private PortableCapacityRules() {
-    }
+    private PortableCapacityRules() {}
 
     public static boolean adjustable(PortableFluidContainerSpec spec) {
         return spec.shapeId().equals("measuring_pot") || spec.shapeId().equals("barometer_gas_cylinder");
@@ -28,20 +27,18 @@ public final class PortableCapacityRules {
     }
 
     private static int measuringPotStep(double hitY) {
-        return hitY > 6 / 16.0 ? 50
-                : hitY > 4 / 16.0 ? 10
-                : hitY > 2 / 16.0 ? -10
-                : -50;
+        return hitY > 6 / 16.0 ? 50 : hitY > 4 / 16.0 ? 10 : hitY > 2 / 16.0 ? -10 : -50;
     }
 
     private static int gasCylinderStep(double hitY) {
-        return hitY > 14 / 16.0 ? 500
-                : hitY > 12 / 16.0 ? 100
-                : hitY > 10 / 16.0 ? 50
-                : hitY > 8 / 16.0 ? 10
-                : hitY > 6 / 16.0 ? -10
-                : hitY > 4 / 16.0 ? -50
-                : hitY > 2 / 16.0 ? -100
-                : -500;
+        return hitY > 14 / 16.0
+                ? 500
+                : hitY > 12 / 16.0
+                        ? 100
+                        : hitY > 10 / 16.0
+                                ? 50
+                                : hitY > 8 / 16.0
+                                        ? 10
+                                        : hitY > 6 / 16.0 ? -10 : hitY > 4 / 16.0 ? -50 : hitY > 2 / 16.0 ? -100 : -500;
     }
 }

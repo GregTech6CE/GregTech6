@@ -1,18 +1,16 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.util.OM;
-import net.minecraft.world.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's crucible smelting recipes (original {@code RecipeMapCrucible#getRecipeFor} and
@@ -47,18 +45,23 @@ public final class CrucibleSmeltingRecipes {
      * this port has no items for those, so only the forms that exist are emitted.
      */
     private static final MaterialPrefix[] FORMS = {
-            MaterialPrefix.dust, MaterialPrefix.crushed, MaterialPrefix.crushedPurified,
-            MaterialPrefix.crushedCentrifuged, MaterialPrefix.oreRaw,
+        MaterialPrefix.dust,
+        MaterialPrefix.crushed,
+        MaterialPrefix.crushedPurified,
+        MaterialPrefix.crushedCentrifuged,
+        MaterialPrefix.oreRaw,
     };
     /** Forms GT6 only lists when the input material is not its own smelting target. */
     private static final MaterialPrefix[] SOLID_FORMS = {
-            MaterialPrefix.ingot, MaterialPrefix.gem,
+        MaterialPrefix.ingot, MaterialPrefix.gem,
     };
 
     private static final TreeSet<String> MISSING = new TreeSet<>();
 
     /** Forms that could not be resolved to an item (recorded, never invented). */
-    public static TreeSet<String> missingContent() { return new TreeSet<>(MISSING); }
+    public static TreeSet<String> missingContent() {
+        return new TreeSet<>(MISSING);
+    }
 
     /** Registers the display recipes and returns how many were added. */
     public static int register() {
@@ -87,9 +90,18 @@ public final class CrucibleSmeltingRecipes {
                     MISSING.add(prefix.getName() + " of " + preview.material().getName());
                     continue;
                 }
-                if (MachineRecipeMaps.CrucibleSmelting.addFakeRecipe(false,
-                        new ItemStack[]{input}, new ItemStack[]{output}, null, null, null, null,
-                        0, 0, preview.temperatureK()) != null) {
+                if (MachineRecipeMaps.CrucibleSmelting.addFakeRecipe(
+                                false,
+                                new ItemStack[] {input},
+                                new ItemStack[] {output},
+                                null,
+                                null,
+                                null,
+                                null,
+                                0,
+                                0,
+                                preview.temperatureK())
+                        != null) {
                     count++;
                 }
             }

@@ -1,15 +1,17 @@
 package gregtech.engine.energy.item;
 
 import gregtech.content.data.GregTechTags;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.core.BlockPos;
 
 /** Item charge API (GT6 {@code IItemEnergy}). */
 public interface IItemEnergy {
 
     /** Apply a fuel-cell empty-shell replacement to the owning slot after an executed transfer. */
-    default ItemStack afterEnergyTransfer(ItemStack stack) { return stack; }
+    default ItemStack afterEnergyTransfer(ItemStack stack) {
+        return stack;
+    }
 
     boolean isEnergyType(ItemStack stack, GregTechTags.Tag energyType);
 
@@ -17,6 +19,7 @@ public interface IItemEnergy {
     default boolean canEnergyInjection(ItemStack stack, GregTechTags.Tag type, long size) {
         return stack.getCount() == 1 && size > 0 && isEnergyType(stack, type);
     }
+
     default boolean canEnergyExtraction(ItemStack stack, GregTechTags.Tag type, long size) {
         return canEnergyInjection(stack, type, size);
     }
@@ -25,9 +28,21 @@ public interface IItemEnergy {
 
     long getEnergyStored(ItemStack stack, GregTechTags.Tag energyType);
 
-    long doEnergyInjection(GregTechTags.Tag energyType, ItemStack stack, long size, long amount,
-                           Level level, BlockPos pos, boolean doInject);
+    long doEnergyInjection(
+            GregTechTags.Tag energyType,
+            ItemStack stack,
+            long size,
+            long amount,
+            Level level,
+            BlockPos pos,
+            boolean doInject);
 
-    long doEnergyExtraction(GregTechTags.Tag energyType, ItemStack stack, long size, long amount,
-                            Level level, BlockPos pos, boolean doExtract);
+    long doEnergyExtraction(
+            GregTechTags.Tag energyType,
+            ItemStack stack,
+            long size,
+            long amount,
+            Level level,
+            BlockPos pos,
+            boolean doExtract);
 }

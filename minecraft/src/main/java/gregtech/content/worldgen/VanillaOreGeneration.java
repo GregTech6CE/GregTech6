@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 /** Shared by vanilla features and explicit vanilla outputs of GT stone layers. */
 public final class VanillaOreGeneration {
     private VanillaOreGeneration() {}
+
     public static boolean disabled(ResourceLocation id) {
         if (!id.getNamespace().equals("minecraft")) return false;
         return switch (id.getPath()) {

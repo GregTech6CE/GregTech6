@@ -1,12 +1,12 @@
 package gregtech.content.item.behavior;
 
-import gregtech.engine.machine.ITileEntityCrucible;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.blockentity.machine.MoldBlockEntity;
-import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
-import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
+import gregtech.engine.machine.ITileEntityCrucible;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -16,23 +16,28 @@ import net.minecraft.world.level.Level;
 /** GT6's reusable quicksilver thermometer, reading the target's actual thermal state. */
 public final class BehaviorThermometer {
 
-    private BehaviorThermometer() {
-    }
+    private BehaviorThermometer() {}
 
     public static ItemBehaviors.Outcome useOn(Level level, BlockPos pos, Player player, ItemStack stack) {
         var blockEntity = level.getBlockEntity(pos);
         Component message;
         if (blockEntity instanceof BoilerTankBlockEntity boiler) {
-            message = Component.translatable("jade.gt6ce.boiler.heat", boiler.storedHeat(),
-                    boiler.spec().heatCapacity());
+            message = Component.translatable(
+                    "jade.gt6ce.boiler.heat", boiler.storedHeat(), boiler.spec().heatCapacity());
         } else if (blockEntity instanceof ReactorCoreBlockEntity reactor) {
             message = Component.translatable("jade.gt6ce.boiler.heat_nocap", reactor.lastHeat);
         } else {
-            Long temperature = blockEntity instanceof ITileEntityCrucible crucible ? crucible.getCrucibleTemperature()
-            : blockEntity instanceof MoldBlockEntity mold ? mold.getTemperature()
-            : blockEntity instanceof MoldBasinBlockEntity basin ? basin.getTemperature()
-            : blockEntity instanceof TankBlockEntity tank ? tank.getTemperature()
-            : blockEntity instanceof MultiblockTankControllerBlockEntity tank ? fluidTemperature(tank) : null;
+            Long temperature = blockEntity instanceof ITileEntityCrucible crucible
+                    ? crucible.getCrucibleTemperature()
+                    : blockEntity instanceof MoldBlockEntity mold
+                            ? mold.getTemperature()
+                            : blockEntity instanceof MoldBasinBlockEntity basin
+                                    ? basin.getTemperature()
+                                    : blockEntity instanceof TankBlockEntity tank
+                                            ? tank.getTemperature()
+                                            : blockEntity instanceof MultiblockTankControllerBlockEntity tank
+                                                    ? fluidTemperature(tank)
+                                                    : null;
             if (temperature == null) return ItemBehaviors.Outcome.refused(stack);
             message = Component.translatable("jade.gt6ce.crucible.temperature", temperature);
         }

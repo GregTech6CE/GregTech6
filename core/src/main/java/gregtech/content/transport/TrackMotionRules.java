@@ -3,12 +3,12 @@ package gregtech.content.transport;
 /** GT6 powered launch, momentum doubling and unpowered braking. Axis: 0 other, 1 EW, 2 NS. */
 public final class TrackMotionRules {
 
-    private TrackMotionRules() {
-    }
+    private TrackMotionRules() {}
 
     public record Motion(double x, double y, double z) {}
 
-    public static Motion apply(double x, double y, double z, boolean powered, int axis, boolean negativeWall, boolean positiveWall) {
+    public static Motion apply(
+            double x, double y, double z, boolean powered, int axis, boolean negativeWall, boolean positiveWall) {
         double horizontal = Math.sqrt(x * x + z * z);
         if (powered) {
             if (horizontal > .01D) return new Motion(x * 2, y, z * 2);

@@ -1,15 +1,14 @@
 package gregtech.engine.multiblock.tracking;
 
 import gregtech.content.multiblock.LargeMachineLayouts;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Cached per-cell verdicts for one {@link CompiledPattern}. A cell whose {@code seen} reference is
@@ -181,8 +180,8 @@ public final class PatternState {
         groupDirty[group] = NONE;
     }
 
-    private void evaluateRepeat(Level level, BlockPos origin, BlockPos.MutableBlockPos cursor,
-                                int cell, int copy, int slot) {
+    private void evaluateRepeat(
+            Level level, BlockPos origin, BlockPos.MutableBlockPos cursor, int cell, int copy, int slot) {
         cursor.setWithOffset(origin, pattern.repeatDx(cell), pattern.repeatDy(cell, copy), pattern.repeatDz(cell));
         StructureScanProbe.matcher();
         BlockState state;
@@ -206,8 +205,7 @@ public final class PatternState {
             if (copies[group] < pattern.groupMinimum(group)) return false;
         if (!pattern.aggregates().isEmpty()) {
             Cells view = new Cells();
-            for (Aggregate aggregate : pattern.aggregates())
-                if (!aggregate.satisfied(view)) return false;
+            for (Aggregate aggregate : pattern.aggregates()) if (!aggregate.satisfied(view)) return false;
         }
         return true;
     }
@@ -222,7 +220,8 @@ public final class PatternState {
         for (int index = 0; index < pattern.fixedCount(); index++) {
             int choice = fixedChoice[index];
             if (choice < 0) continue;
-            fixed.add(new PatternMatch.FixedCell(pattern.cell(index, choice),
+            fixed.add(new PatternMatch.FixedCell(
+                    pattern.cell(index, choice),
                     origin.offset(pattern.dx(index), pattern.dy(index), pattern.dz(index))));
         }
         List<LargeMachineLayouts.Placed> placed = new ArrayList<>();
@@ -235,8 +234,10 @@ public final class PatternState {
                 for (int cell = first; cell < first + count; cell++) {
                     int choice = repeatChoice[cell * capacity + copy];
                     if (choice < 0) continue;
-                    placed.add(new LargeMachineLayouts.Placed(pattern.repeatCell(cell, choice),
-                            origin.offset(pattern.repeatDx(cell), pattern.repeatDy(cell, copy), pattern.repeatDz(cell))));
+                    placed.add(new LargeMachineLayouts.Placed(
+                            pattern.repeatCell(cell, choice),
+                            origin.offset(
+                                    pattern.repeatDx(cell), pattern.repeatDy(cell, copy), pattern.repeatDz(cell))));
                 }
             }
         }
@@ -244,41 +245,45 @@ public final class PatternState {
     }
 
     private final class Cells implements Aggregate.Cells {
-        @Override public int size() {
+        @Override
+        public int size() {
             int size = pattern.fixedCount();
             for (int group = 0; group < copies.length; group++) size += copies[group] * groupCells[group];
             return size;
         }
 
-        @Override public int choice(int index) {
+        @Override
+        public int choice(int index) {
             if (index < pattern.fixedCount()) return fixedChoice[index];
             Slot slot = slot(index);
             return slot == null ? CompiledPattern.FAILED : repeatChoice[slot.cell * capacity + slot.copy];
         }
 
-        @Override public int part(int index) {
+        @Override
+        public int part(int index) {
             int choice = choice(index);
-            if (index < pattern.fixedCount())
-                return pattern.part(index, choice < 0 ? 0 : choice);
+            if (index < pattern.fixedCount()) return pattern.part(index, choice < 0 ? 0 : choice);
             Slot slot = slot(index);
             return slot == null ? 0 : pattern.repeatPart(slot.cell, choice < 0 ? 0 : choice);
         }
 
-        @Override public String plain(int index) {
+        @Override
+        public String plain(int index) {
             int choice = choice(index);
-            if (index < pattern.fixedCount())
-                return pattern.plain(index, choice < 0 ? 0 : choice);
+            if (index < pattern.fixedCount()) return pattern.plain(index, choice < 0 ? 0 : choice);
             Slot slot = slot(index);
             return slot == null ? null : pattern.repeatPlain(slot.cell, choice < 0 ? 0 : choice);
         }
 
-        @Override public gregtech.engine.multiblock.MultiblockLayout.Role role(int index) {
+        @Override
+        public gregtech.engine.multiblock.MultiblockLayout.Role role(int index) {
             if (index < pattern.fixedCount()) return pattern.role(index);
             Slot slot = slot(index);
             return slot == null ? null : pattern.repeatRole(slot.cell);
         }
 
-        @Override public Block block(int index) {
+        @Override
+        public Block block(int index) {
             BlockState state;
             if (index < pattern.fixedCount()) {
                 state = fixedState[index];

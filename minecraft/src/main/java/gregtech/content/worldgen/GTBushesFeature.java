@@ -1,9 +1,9 @@
 package gregtech.content.worldgen;
 
 import gregtech.content.block.plant.BushBlock;
-import gregtech.content.blockentity.BushBlockEntity;
 import gregtech.content.plant.GTBerryBushes;
 import gregtech.content.registry.GTBushes;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,8 +18,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Set;
-
 /**
  * Port of GT6's {@code WorldgenBushes} ({@code Loader_Worldgen:633}).
  *
@@ -33,19 +31,32 @@ import java.util.Set;
 public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code new WorldgenBushes("plant.bush", T, 1, 4, ...)}. */
     public static final int AMOUNT = 1;
+
     public static final int PROBABILITY = 4;
     /** GT6's noise Y for the bush type lookup. */
     public static final float NOISE_Y = 300.0F;
 
-    private static final Set<ResourceLocation> PLAINS = Set.of(
-            id("plains"), id("sunflower_plains"), id("meadow"), id("cherry_grove"));
+    private static final Set<ResourceLocation> PLAINS =
+            Set.of(id("plains"), id("sunflower_plains"), id("meadow"), id("cherry_grove"));
     private static final Set<ResourceLocation> WOODS = Set.of(
-            id("forest"), id("flower_forest"), id("birch_forest"), id("old_growth_birch_forest"),
-            id("dark_forest"), id("windswept_forest"), id("taiga"), id("old_growth_pine_taiga"),
+            id("forest"),
+            id("flower_forest"),
+            id("birch_forest"),
+            id("old_growth_birch_forest"),
+            id("dark_forest"),
+            id("windswept_forest"),
+            id("taiga"),
+            id("old_growth_pine_taiga"),
             id("old_growth_spruce_taiga"));
     private static final Set<ResourceLocation> FROZEN = Set.of(
-            id("snowy_plains"), id("snowy_taiga"), id("snowy_beach"), id("ice_spikes"),
-            id("snowy_slopes"), id("frozen_peaks"), id("frozen_river"), id("frozen_ocean"),
+            id("snowy_plains"),
+            id("snowy_taiga"),
+            id("snowy_beach"),
+            id("ice_spikes"),
+            id("snowy_slopes"),
+            id("frozen_peaks"),
+            id("frozen_river"),
+            id("frozen_ocean"),
             id("deep_frozen_ocean"));
 
     public GTBushesFeature() {
@@ -54,7 +65,8 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled() || !gregtech.GregTechConfig.Rule.BUSHES.enabled()) return false;
+        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled() || !gregtech.GregTechConfig.Rule.BUSHES.enabled())
+            return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
@@ -79,8 +91,8 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
     /** Current lookup uses floating-point half-coordinates and the registered worldgen list. */
     public static int berryIndex(WorldGenLevel level, int x, int z) {
         var noise = new GTCellNoise(level.getSeed());
-        return Math.floorMod(noise.get(x / 2.0F, NOISE_Y, z / 2.0F, GTBerryBushes.worldgenSize()),
-                GTBerryBushes.worldgenSize());
+        return Math.floorMod(
+                noise.get(x / 2.0F, NOISE_Y, z / 2.0F, GTBerryBushes.worldgenSize()), GTBerryBushes.worldgenSize());
     }
 
     static boolean placeBush(WorldGenLevel level, int x, int z, RandomSource random) {
@@ -115,7 +127,9 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
             if (direction == net.minecraft.core.Direction.DOWN) continue;
             BlockPos pos = core.relative(direction);
             if (!level.getBlockState(pos).canBeReplaced()) continue;
-            var state = GTBushes.byBerry(berry).defaultBlockState().setValue(BushBlock.STAGE, 3)
+            var state = GTBushes.byBerry(berry)
+                    .defaultBlockState()
+                    .setValue(BushBlock.STAGE, 3)
                     .setValue(BushBlock.SUPPORT, direction.getOpposite().get3DDataValue());
             level.setBlock(pos, state, 2);
         }
@@ -132,5 +146,6 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_bushes.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_bushes"));
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_bushes"));
 }

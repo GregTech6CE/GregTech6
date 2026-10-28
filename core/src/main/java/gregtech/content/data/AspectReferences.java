@@ -9,9 +9,19 @@ public class AspectReferences {
 
     public static final class Aspect {
         private final String name;
-        Aspect(String name) { this.name = name; }
-        public String getName() { return name; }
-        @Override public String toString() { return name; }
+
+        Aspect(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
     private static final Map<String, Aspect> REGISTRY = new LinkedHashMap<>();
@@ -22,8 +32,7 @@ public class AspectReferences {
         return a;
     }
 
-    public static final Aspect
-            ORDO = aspect("ORDO", "ORDO"),
+    public static final Aspect ORDO = aspect("ORDO", "ORDO"),
             PERDITIO = aspect("PERDITIO", "PERDITIO"),
             TERRA = aspect("TERRA", "TERRA"),
             AQUA = aspect("AQUA", "AQUA"),

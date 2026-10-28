@@ -94,9 +94,11 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
     // ── GT6 WorldgenLogDry / Rotten / Mossy / Frozen ──────────────────────────────────────────
 
     /** One log per entry per chunk with GT6's {@code 1/probability} roll. */
-    public static boolean placeLog(WorldGenLevel level, int minX, int minZ, GTSurfaceFlora.Log log, RandomSource random) {
+    public static boolean placeLog(
+            WorldGenLevel level, int minX, int minZ, GTSurfaceFlora.Log log, RandomSource random) {
         if (!gregtech.GregTechConfig.fallenLogEnabled(log.blockId())) return false;
-        if (random.nextInt(Math.max(1, log.probability() * gregtech.GregTechConfig.Number.LOG_PROBABILITY.value() / 8)) != 0) return false;
+        if (random.nextInt(Math.max(1, log.probability() * gregtech.GregTechConfig.Number.LOG_PROBABILITY.value() / 8))
+                != 0) return false;
         int x = minX + random.nextInt(16);
         int z = minZ + random.nextInt(16);
         if (!log.biomes().contains(String.valueOf(biomeId(level, x, z)))) return false;
@@ -117,8 +119,8 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
      * GT6's three fallen-log shapes: 0 = vertical pile, 1 = X-axis run, 2 = Z-axis run.
      * Split out so the real shape code can be driven directly instead of re-implemented.
      */
-    public static boolean placeShape(WorldGenLevel level, BlockPos ground, Block block, int shape,
-                                     boolean mushrooms, RandomSource random) {
+    public static boolean placeShape(
+            WorldGenLevel level, BlockPos ground, Block block, int shape, boolean mushrooms, RandomSource random) {
         return switch (shape) {
             case 0 -> verticalLog(level, ground, block, random);
             case 1 -> horizontalLog(level, ground, block, Direction.Axis.X, mushrooms, random);
@@ -138,8 +140,13 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** GT6 shapes 1/2: a 3-5 block log run lying on the ground along one axis. */
-    private static boolean horizontalLog(WorldGenLevel level, BlockPos ground, Block block,
-                                        Direction.Axis axis, boolean mushrooms, RandomSource random) {
+    private static boolean horizontalLog(
+            WorldGenLevel level,
+            BlockPos ground,
+            Block block,
+            Direction.Axis axis,
+            boolean mushrooms,
+            RandomSource random) {
         BlockState log = block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, axis);
         BlockPos base = ground.above();
         if (random.nextBoolean()) set(level, along(base, axis, -2), log);
@@ -150,8 +157,12 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
                 if (!random.nextBoolean()) continue;
                 BlockPos pos = along(base, axis, i).above();
                 if (!level.getBlockState(pos).isAir()) continue;
-                level.setBlock(pos, random.nextBoolean() ? Blocks.RED_MUSHROOM.defaultBlockState()
-                        : Blocks.BROWN_MUSHROOM.defaultBlockState(), 2);
+                level.setBlock(
+                        pos,
+                        random.nextBoolean()
+                                ? Blocks.RED_MUSHROOM.defaultBlockState()
+                                : Blocks.BROWN_MUSHROOM.defaultBlockState(),
+                        2);
             }
         }
         return true;
@@ -196,7 +207,8 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
             BlockPos pos = new BlockPos(x, y - 1, z);
             BlockState state = level.getBlockState(pos);
             if (state.liquid()) return null; // GT6 ignores liquids for the solid-surface generators
-            if (!state.isFaceSturdy(level, pos, Direction.UP) && !state.is(BlockTags.LEAVES)
+            if (!state.isFaceSturdy(level, pos, Direction.UP)
+                    && !state.is(BlockTags.LEAVES)
                     && !state.is(BlockTags.LOGS)) {
                 continue;
             }
@@ -238,5 +250,6 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_surface_flora.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_surface_flora"));
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_surface_flora"));
 }

@@ -1,13 +1,13 @@
 package gregtech.content.recipe;
 
+import static gregtech.api.material.GTValues.U;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import static gregtech.api.material.GTValues.U;
 
 /**
  * Finite facts for the existing dust-or-ingot 1U thermal recycling producer, not global material metadata.
@@ -25,24 +25,49 @@ import static gregtech.api.material.GTValues.U;
  */
 public final class SourceRecyclingFacts {
     private SourceRecyclingFacts() {}
-    public enum Decision { YES, NO, UNKNOWN }
-    public enum PhaseKind { DEFAULT_BINDING, NO_DEFAULT_PHASE, OPTIONAL_EXTERNAL, UNKNOWN }
-    public enum Accessor { LIQUID, GAS }
+
+    public enum Decision {
+        YES,
+        NO,
+        UNKNOWN
+    }
+
+    public enum PhaseKind {
+        DEFAULT_BINDING,
+        NO_DEFAULT_PHASE,
+        OPTIONAL_EXTERNAL,
+        UNKNOWN
+    }
+
+    public enum Accessor {
+        LIQUID,
+        GAS
+    }
+
     public record Identity(int id, String name) {
-        public Identity { Objects.requireNonNull(name); }
+        public Identity {
+            Objects.requireNonNull(name);
+        }
+
         public boolean matches(int materialId, String canonicalName) {
             return id == materialId && name.equals(canonicalName);
         }
     }
     /** The source path is provenance, not a promise of the same modern native registry spelling. */
-    public record Binding(String sourceRegistryPath, Accessor accessor, long millibuckets,
-                          long referenceMaterialUnits, int sourceLine) {
+    public record Binding(
+            String sourceRegistryPath,
+            Accessor accessor,
+            long millibuckets,
+            long referenceMaterialUnits,
+            int sourceLine) {
         public Binding {
-            Objects.requireNonNull(sourceRegistryPath); Objects.requireNonNull(accessor);
+            Objects.requireNonNull(sourceRegistryPath);
+            Objects.requireNonNull(accessor);
             if (sourceRegistryPath.isEmpty() || millibuckets <= 0 || referenceMaterialUnits <= 0 || sourceLine <= 0)
                 throw new IllegalArgumentException("Invalid reviewed source phase");
         }
     }
+
     public record Phase(PhaseKind kind, Binding binding, boolean hasOptionalExternalBinding) {
         public Phase {
             Objects.requireNonNull(kind);
@@ -54,22 +79,38 @@ public final class SourceRecyclingFacts {
      * Equal semantic writes are harmless;
      * callers still prove core/native ownership and explicit item composition separately. */
     public record PortDefaults(boolean melting, Identity target, long targetUnitsPerU, boolean generatedMolten) {
-        public PortDefaults { Objects.requireNonNull(target); }
+        public PortDefaults {
+            Objects.requireNonNull(target);
+        }
+
         public boolean matches(boolean observedMelting, int targetId, String targetName, long amount) {
             return melting == observedMelting && target.matches(targetId, targetName) && targetUnitsPerU == amount;
         }
     }
-    public record Facts(Identity identity, Decision melting, Decision blacklistedSmelter, Decision furnace,
-                        Identity target, long targetUnitsPerU, Phase phase, PortDefaults portDefaults,
-                        int sourceLine) {
+
+    public record Facts(
+            Identity identity,
+            Decision melting,
+            Decision blacklistedSmelter,
+            Decision furnace,
+            Identity target,
+            long targetUnitsPerU,
+            Phase phase,
+            PortDefaults portDefaults,
+            int sourceLine) {
         public Facts {
-            Objects.requireNonNull(identity); Objects.requireNonNull(melting);
-            Objects.requireNonNull(blacklistedSmelter); Objects.requireNonNull(furnace);
-            Objects.requireNonNull(target); Objects.requireNonNull(phase);
+            Objects.requireNonNull(identity);
+            Objects.requireNonNull(melting);
+            Objects.requireNonNull(blacklistedSmelter);
+            Objects.requireNonNull(furnace);
+            Objects.requireNonNull(target);
+            Objects.requireNonNull(phase);
             if (targetUnitsPerU < 0 || sourceLine <= 0) throw new IllegalArgumentException("Invalid source fact");
         }
     }
+
     private static final int M = 1, B = 2, F = 4; // source MELTING, BLACKLISTED_SMELTER, FURNACE
+
     private record Seed(Identity identity, int flags, int targetId, long amount, int sourceLine) {}
     // 74 reviewed missing port MELTING flags; do not change global flags.
     private static final Set<Integer> PORT_NO_MELTING = Set.of(
@@ -81,35 +122,33 @@ public final class SourceRecyclingFacts {
     // 17 port MELTING additions absent in source; Netherrack is NOT one (MT1882).
     // LigniteCoke/PetroleumCoke are added by ImportedMaterialData.applyPostInitFuelStats:29-30/55,
     // not their declarations. Profiles describe recipe-phase defaults after GTMaterialRegistry.postInit.
-    private static final Set<Integer> PORT_EXTRA_MELTING = Set.of(
-            150, 340, 1090, 1100, 1110, 1130, 1150, 1160, 1170, 1180, 1190, 1200, 1520, 2390, 3720, 8365, 8390);
+    private static final Set<Integer> PORT_EXTRA_MELTING =
+            Set.of(150, 340, 1090, 1100, 1110, 1130, 1150, 1160, 1170, 1180, 1190, 1200, 1520, 2390, 3720, 8365, 8390);
     // Six missed setAllToTheOutputOf imports: MT1245-1246,1280,1732,1796-1797.
-    private static final Set<Integer> PORT_SELF_TARGET = Set.of(
-            8222, 8267, 8652, 8713, 8714, 9243);
+    private static final Set<Integer> PORT_SELF_TARGET = Set.of(8222, 8267, 8652, 8713, 8714, 9243);
     // Default 0faae36d generated-factory identities, not source phase evidence; static finalized fluids excluded.
     private static final Set<Integer> PORT_GENERATED_MOLTEN = Set.of(
-            30, 31, 40, 41, 42, 50, 51, 60, 61, 110, 120, 130, 140, 160, 190, 200, 210, 220,
-            230, 240, 250, 260, 270, 278, 280, 290, 310, 320, 330, 370, 380, 390, 400, 410, 420, 430,
-            440, 450, 460, 470, 480, 490, 500, 510, 520, 550, 560, 570, 580, 590, 600, 610, 620, 630,
-            640, 650, 660, 670, 680, 690, 700, 710, 720, 730, 740, 750, 760, 770, 780, 790, 791, 800,
-            810, 820, 830, 840, 850, 870, 880, 890, 900, 910, 920, 921, 922, 930, 940, 942, 943, 945,
-            946, 947, 950, 951, 952, 960, 970, 980, 990, 1000, 1010, 1020, 1030, 1040, 1050, 1060, 1070, 1080,
-            1120, 1140, 1148, 2220, 8003, 8005, 8008, 8013, 8016, 8018, 8028, 8031, 8340, 8341, 8368, 8369, 8370, 8371,
-            8372, 8456, 8600, 8601, 8602, 8603, 8604, 8605, 8606, 8610, 8611, 8612, 8613, 8614, 8615, 8621, 8622, 8630,
-            8631, 8632, 8633, 8634, 8635, 8636, 8637, 8638, 8639, 8640, 8641, 8642, 8643, 8644, 8645, 8646, 8647, 8648,
-            8649, 8650, 8651, 8652, 8653, 8654, 8657, 8658, 8659, 8660, 8661, 8662, 8663, 8664, 8665, 8666, 8667, 8668,
-            8669, 8670, 8671, 8672, 8673, 8674, 8675, 8676, 8677, 8678, 8679, 8680, 8681, 8682, 8683, 8684, 8685, 8686,
-            8687, 8688, 8689, 8690, 8691, 8692, 8693, 8694, 8695, 8696, 8697, 8698, 8700, 8701, 8702, 8703, 8704, 8705,
-            8706, 8707, 8708, 8709, 8710, 8711, 8713, 8714, 8715, 8716, 8717, 8718, 8720, 8721, 8722, 8723, 8725, 8726,
-            8727, 8728, 8729, 8730, 8731, 8732, 8733, 8734, 8735, 8736, 8737, 8739, 8740, 8741, 8742, 8744, 8745, 8746,
-            8747, 8750, 8751, 8752, 8754, 8755, 8756, 8757, 8758, 8759, 8760, 8761, 8762, 8763, 8764, 8765, 8766, 8767,
-            8768, 8769, 8770, 8771, 8772, 8773, 8774, 8775, 8776, 8777, 8778, 8779, 8780, 8781, 8782, 8783, 8784, 8785,
-            8786, 8790, 8791, 8792, 8793, 8794, 8795, 8796, 8797, 8798, 8799, 8800, 8801, 8802, 8803, 8804, 8805, 8806,
-            8807, 8808, 8809, 8810, 8811, 8812, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
+            30, 31, 40, 41, 42, 50, 51, 60, 61, 110, 120, 130, 140, 160, 190, 200, 210, 220, 230, 240, 250, 260, 270,
+            278, 280, 290, 310, 320, 330, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480, 490, 500, 510,
+            520, 550, 560, 570, 580, 590, 600, 610, 620, 630, 640, 650, 660, 670, 680, 690, 700, 710, 720, 730, 740,
+            750, 760, 770, 780, 790, 791, 800, 810, 820, 830, 840, 850, 870, 880, 890, 900, 910, 920, 921, 922, 930,
+            940, 942, 943, 945, 946, 947, 950, 951, 952, 960, 970, 980, 990, 1000, 1010, 1020, 1030, 1040, 1050, 1060,
+            1070, 1080, 1120, 1140, 1148, 2220, 8003, 8005, 8008, 8013, 8016, 8018, 8028, 8031, 8340, 8341, 8368, 8369,
+            8370, 8371, 8372, 8456, 8600, 8601, 8602, 8603, 8604, 8605, 8606, 8610, 8611, 8612, 8613, 8614, 8615, 8621,
+            8622, 8630, 8631, 8632, 8633, 8634, 8635, 8636, 8637, 8638, 8639, 8640, 8641, 8642, 8643, 8644, 8645, 8646,
+            8647, 8648, 8649, 8650, 8651, 8652, 8653, 8654, 8657, 8658, 8659, 8660, 8661, 8662, 8663, 8664, 8665, 8666,
+            8667, 8668, 8669, 8670, 8671, 8672, 8673, 8674, 8675, 8676, 8677, 8678, 8679, 8680, 8681, 8682, 8683, 8684,
+            8685, 8686, 8687, 8688, 8689, 8690, 8691, 8692, 8693, 8694, 8695, 8696, 8697, 8698, 8700, 8701, 8702, 8703,
+            8704, 8705, 8706, 8707, 8708, 8709, 8710, 8711, 8713, 8714, 8715, 8716, 8717, 8718, 8720, 8721, 8722, 8723,
+            8725, 8726, 8727, 8728, 8729, 8730, 8731, 8732, 8733, 8734, 8735, 8736, 8737, 8739, 8740, 8741, 8742, 8744,
+            8745, 8746, 8747, 8750, 8751, 8752, 8754, 8755, 8756, 8757, 8758, 8759, 8760, 8761, 8762, 8763, 8764, 8765,
+            8766, 8767, 8768, 8769, 8770, 8771, 8772, 8773, 8774, 8775, 8776, 8777, 8778, 8779, 8780, 8781, 8782, 8783,
+            8784, 8785, 8786, 8790, 8791, 8792, 8793, 8794, 8795, 8796, 8797, 8798, 8799, 8800, 8801, 8802, 8803, 8804,
+            8805, 8806, 8807, 8808, 8809, 8810, 8811, 8812, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
     // Loader_Fluids135-189 optional external receivers. Default-positive bindings still require native proof.
     private static final Set<Integer> OPTIONAL_EXTERNAL = Set.of(
-            120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600,
-            8610, 8630, 8642, 8661, 8678, 8700, 8702, 8703, 8707, 8708, 8709, 8710, 8752);
+            120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600, 8610, 8630,
+            8642, 8661, 8678, 8700, 8702, 8703, 8707, 8708, 8709, 8710, 8752);
 
     private static final Map<Integer, Facts> BY_ID = createFacts();
     private static final List<Facts> ALL = List.copyOf(BY_ID.values());
@@ -123,6 +162,7 @@ public final class SourceRecyclingFacts {
         Facts value = BY_ID.get(id);
         return value != null && value.identity().matches(id, canonicalName) ? value : null;
     }
+
     public static PortDefaults defaults(int id, String canonicalName) {
         Facts facts = find(id, canonicalName);
         return facts == null ? null : facts.portDefaults();
@@ -130,15 +170,24 @@ public final class SourceRecyclingFacts {
     /** Includes the two reviewed target-only profiles; this does not grant input-form eligibility. */
     public static PortDefaults contextDefaults(int id, String canonicalName) {
         Facts facts = find(id, canonicalName);
-        return facts == null ? null : facts.portDefaults() != null
-                ? facts.portDefaults() : TARGET_ONLY_DEFAULTS.get(id);
+        return facts == null
+                ? null
+                : facts.portDefaults() != null ? facts.portDefaults() : TARGET_ONLY_DEFAULTS.get(id);
     }
-    public static List<Facts> all() { return ALL; }
-    private static Decision decision(int flags, int bit) { return (flags & bit) != 0 ? Decision.YES : Decision.NO; }
+
+    public static List<Facts> all() {
+        return ALL;
+    }
+
+    private static Decision decision(int flags, int bit) {
+        return (flags & bit) != 0 ? Decision.YES : Decision.NO;
+    }
+
     private static Map<Integer, Facts> createFacts() {
         Map<Integer, Seed> seeds = new LinkedHashMap<>();
         for (Seed seed : seeds()) {
-            if (seeds.put(seed.identity().id(), seed) != null) throw new IllegalStateException("Duplicate source identity");
+            if (seeds.put(seed.identity().id(), seed) != null)
+                throw new IllegalStateException("Duplicate source identity");
         }
         Map<Integer, Binding> bindings = bindings();
         Map<Integer, Facts> result = new LinkedHashMap<>();
@@ -149,25 +198,45 @@ public final class SourceRecyclingFacts {
             Identity target = targetSeed.identity();
             Binding binding = bindings.get(id);
             boolean optional = OPTIONAL_EXTERNAL.contains(id);
-            Phase phase = new Phase(binding != null ? PhaseKind.DEFAULT_BINDING
-                    : optional ? PhaseKind.OPTIONAL_EXTERNAL : PhaseKind.NO_DEFAULT_PHASE, binding, optional);
+            Phase phase = new Phase(
+                    binding != null
+                            ? PhaseKind.DEFAULT_BINDING
+                            : optional ? PhaseKind.OPTIONAL_EXTERNAL : PhaseKind.NO_DEFAULT_PHASE,
+                    binding,
+                    optional);
             boolean melting = decision(seed.flags(), M) == Decision.YES;
             PortDefaults port = null;
             if (id != 9800 && id != 9810) {
                 boolean nativeMelting = PORT_EXTRA_MELTING.contains(id) || (melting && !PORT_NO_MELTING.contains(id));
                 boolean self = PORT_SELF_TARGET.contains(id);
-                port = new PortDefaults(nativeMelting, self ? seed.identity() : target, self ? U : seed.amount(),
+                port = new PortDefaults(
+                        nativeMelting,
+                        self ? seed.identity() : target,
+                        self ? U : seed.amount(),
                         PORT_GENERATED_MOLTEN.contains(id));
             }
-            result.put(id, new Facts(seed.identity(), decision(seed.flags(), M), decision(seed.flags(), B),
-                    decision(seed.flags(), F), target, seed.amount(), phase, port, seed.sourceLine()));
+            result.put(
+                    id,
+                    new Facts(
+                            seed.identity(),
+                            decision(seed.flags(), M),
+                            decision(seed.flags(), B),
+                            decision(seed.flags(), F),
+                            target,
+                            seed.amount(),
+                            phase,
+                            port,
+                            seed.sourceLine()));
         }
-        for (int id : bindings.keySet()) if (!seeds.containsKey(id)) throw new IllegalStateException("Unreviewed phase " + id);
+        for (int id : bindings.keySet())
+            if (!seeds.containsKey(id)) throw new IllegalStateException("Unreviewed phase " + id);
         return java.util.Collections.unmodifiableMap(result);
     }
+
     private static void row(List<Seed> rows, int id, String name, int flags, int targetId, long amount, int line) {
         rows.add(new Seed(new Identity(id, name), flags, targetId, amount, line));
     }
+
     private static List<Seed> seeds() {
         List<Seed> rows = new ArrayList<>(1004);
         seeds0(rows);
@@ -183,6 +252,7 @@ public final class SourceRecyclingFacts {
         seeds10(rows);
         return rows;
     }
+
     private static void seeds0(List<Seed> rows) {
         row(rows, 10, "Hydrogen", 0, 10, U, 380);
         row(rows, 11, "Deuterium", 0, 11, U, 381);
@@ -285,6 +355,7 @@ public final class SourceRecyclingFacts {
         row(rows, 880, "Radium", M | F, 880, U, 478);
         row(rows, 890, "Actinium", M, 890, U, 479);
     }
+
     private static void seeds1(List<Seed> rows) {
         row(rows, 900, "Thorium", M, 900, U, 480);
         row(rows, 910, "Protactinium", M, 910, U, 481);
@@ -387,6 +458,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8104, "RedSand", M | F, 8001, U, 1619);
         row(rows, 8105, "WhiteEndSand", M | F, 8001, U, 1620);
     }
+
     private static void seeds2(List<Seed> rows) {
         row(rows, 8106, "BlackEndSand", M | F, 8001, U, 1621);
         row(rows, 8196, "Teflon", M | F, 8196, 2 * U / 3, 1303);
@@ -489,6 +561,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8295, "Continuum", 0, 8295, U, 1495);
         row(rows, 8296, "Greatwood", M, 8200, U / 2, 1254);
     }
+
     private static void seeds3(List<Seed> rows) {
         row(rows, 8297, "Silverwood", 0, 8200, 0, 1255);
         row(rows, 8298, "EnergiumRed", 0, 8298, U, 1581);
@@ -591,6 +664,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8405, "GreenVitriol", 0, 8405, U, 1170);
         row(rows, 8406, "RedVitriol", 0, 8406, U, 1171);
     }
+
     private static void seeds4(List<Seed> rows) {
         row(rows, 8407, "PinkVitriol", 0, 8407, U, 1172);
         row(rows, 8408, "CyanVitriol", 0, 8408, U, 1173);
@@ -657,7 +731,14 @@ public final class SourceRecyclingFacts {
         row(rows, 8471, "Breeze", 0, 8471, U, 1276);
         row(rows, 8500, "Stone", M | F, 8500, U, 1631);
         row(rows, 8501, "Concrete", M | F, 8500, U, 1632);
-        row(rows, 8502, "Netherrack", M | B | F, 8503, U, 1633); // MT1882 late setter adds MELTING and targets NetherBrick.
+        row(
+                rows,
+                8502,
+                "Netherrack",
+                M | B | F,
+                8503,
+                U,
+                1633); // MT1882 late setter adds MELTING and targets NetherBrick.
         row(rows, 8503, "NetherBrick", F, 8503, U, 1634);
         row(rows, 8504, "Endstone", F, 8504, U, 1635);
         row(rows, 8505, "Basalt", F, 8505, U, 3819);
@@ -693,6 +774,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8612, "BismuthBronze", M | F, 8612, U, 1707);
         row(rows, 8613, "Hepatizon", M, 8613, U, 1708);
     }
+
     private static void seeds5(List<Seed> rows) {
         row(rows, 8614, "ArsenicCopper", M | F, 8614, U, 1709);
         row(rows, 8615, "ArsenicBronze", M | F, 8615, U, 1710);
@@ -795,6 +877,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8728, "EnergeticAlloy", M, 8728, U, 1807);
         row(rows, 8729, "EnderiumBase", M, 8729, U, 1793);
     }
+
     private static void seeds6(List<Seed> rows) {
         row(rows, 8730, "ElectricalSteel", M, 8730, U, 1809);
         row(rows, 8731, "ObsidianSteel", M, 8731, U, 1805);
@@ -897,6 +980,7 @@ public final class SourceRecyclingFacts {
         row(rows, 9111, "Chalcopyrite", M | F, 290, 2 * U / 9, 3714);
         row(rows, 9112, "Chalk", M | F, 9107, 2 * U / 3, 1233);
     }
+
     private static void seeds7(List<Seed> rows) {
         row(rows, 9113, "Chromite", M | B, 240, 2 * U / 9, 3750);
         row(rows, 9114, "Cinnabar", M, 800, U / 3, 3709);
@@ -999,6 +1083,7 @@ public final class SourceRecyclingFacts {
         row(rows, 9215, "Fluorite", M, 9215, U, 1109);
         row(rows, 9216, "Arsenopyrite", M | B, 330, U / 4, 3715);
     }
+
     private static void seeds8(List<Seed> rows) {
         row(rows, 9217, "Wolframite", B, 9217, U, 3726);
         row(rows, 9218, "Kimberlite", F, 9218, U, 3827);
@@ -1101,6 +1186,7 @@ public final class SourceRecyclingFacts {
         row(rows, 9362, "Sequoia", M, 8200, U / 4, 3944);
         row(rows, 9363, "Teak", M, 8200, U / 4, 3945);
     }
+
     private static void seeds9(List<Seed> rows) {
         row(rows, 9364, "Walnutwood", M, 8200, U / 4, 3946);
         row(rows, 9365, "Wenge", M, 8200, U / 4, 3947);
@@ -1203,20 +1289,29 @@ public final class SourceRecyclingFacts {
         row(rows, 9833, "MethaneIce", 0, 9833, U, 1190);
         row(rows, 9844, "DisulfuricAcid", 0, 9844, U, 1048);
     }
+
     private static void seeds10(List<Seed> rows) {
         row(rows, 9851, "OilSand", 0, 9851, U, 1199);
         row(rows, 9852, "CrudeOil", 0, 9852, U, 1200);
         row(rows, 9853, "OilShale", 0, 9853, U, 1646);
         row(rows, 9883, "ConstructionFoam", M, 9883, U, 1222);
     }
+
     private static Map<Integer, Binding> bindings() {
         Map<Integer, Binding> result = new LinkedHashMap<>();
         moltenBindings(result);
         explicitBindings(result);
         return result;
     }
-    private static void bind(Map<Integer, Binding> bindings, int id, String path, Accessor accessor,
-                             long mb, long referenceUnits, int sourceLine) {
+
+    private static void bind(
+            Map<Integer, Binding> bindings,
+            int id,
+            String path,
+            Accessor accessor,
+            long mb,
+            long referenceUnits,
+            int sourceLine) {
         if (bindings.put(id, new Binding(path, accessor, mb, referenceUnits, sourceLine)) != null)
             throw new IllegalStateException("Duplicate source phase " + id);
     }

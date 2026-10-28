@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
 
-import gregtech.engine.addon.AddonMaterials;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.material.GTMaterialRegistry;
 import java.util.Set;
 
 /** Bounded per-form source generation facts, not a ban on actual external registrations.
@@ -15,17 +15,22 @@ import java.util.Set;
  */
 public final class ReviewedSiftingGemForms {
     private ReviewedSiftingGemForms() {}
-    private record Entry(int id,String name,Set<String> absentPrefixes) {}
-    private static final Entry[] ENTRIES={
-        new Entry(9802,"Ice",Set.of("gemLegendary","gemExquisite","gemFlawless"))
+
+    private record Entry(int id, String name, Set<String> absentPrefixes) {}
+
+    private static final Entry[] ENTRIES = {
+        new Entry(9802, "Ice", Set.of("gemLegendary", "gemExquisite", "gemFlawless"))
     };
-    public static ReviewedOreSourceProfile.Decision decision(GTMaterial material,MaterialPrefix prefix) {
-        if(material==null||prefix==null)return ReviewedOreSourceProfile.Decision.UNKNOWN;
-        material=material.resolve();
-        if(!material.isValid()||!GTMaterialRegistry.isCoreMaterial(material)||AddonMaterials.owns(material))
+
+    public static ReviewedOreSourceProfile.Decision decision(GTMaterial material, MaterialPrefix prefix) {
+        if (material == null || prefix == null) return ReviewedOreSourceProfile.Decision.UNKNOWN;
+        material = material.resolve();
+        if (!material.isValid() || !GTMaterialRegistry.isCoreMaterial(material) || AddonMaterials.owns(material))
             return ReviewedOreSourceProfile.Decision.UNKNOWN;
-        for(var row:ENTRIES)if(row.id==material.getId()&&row.name.equals(material.getName())
-                &&row.absentPrefixes.contains(prefix.getName()))return ReviewedOreSourceProfile.Decision.NO;
+        for (var row : ENTRIES)
+            if (row.id == material.getId()
+                    && row.name.equals(material.getName())
+                    && row.absentPrefixes.contains(prefix.getName())) return ReviewedOreSourceProfile.Decision.NO;
         return ReviewedOreSourceProfile.Decision.UNKNOWN;
     }
 }

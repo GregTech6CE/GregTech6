@@ -1,15 +1,26 @@
 package gregtech.engine.prefix;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
-
 import java.util.function.Predicate;
 
 /** Storage / casing / crate block prefix (GT6 {@code OP} block form). Instances are created from {@link gregtech.content.data.MaterialPrefixes}. */
 public final class BlockMaterialPrefix {
-    public enum MapColor { METAL, STONE, WOOD, SAND }
-    public enum SoundType { METAL, STONE, WOOD, SAND, GRAVEL }
+    public enum MapColor {
+        METAL,
+        STONE,
+        WOOD,
+        SAND
+    }
+
+    public enum SoundType {
+        METAL,
+        STONE,
+        WOOD,
+        SAND,
+        GRAVEL
+    }
+
     public static BlockMaterialPrefix blockRaw;
     public static BlockMaterialPrefix blockGem;
     public static BlockMaterialPrefix blockDust;
@@ -55,37 +66,118 @@ public final class BlockMaterialPrefix {
     private final String addonTexturePath;
     private final String oreDictionary;
 
-    public static BlockMaterialPrefix define(String name, String displayName, String namePrefix, String nameSuffix,
-                                             Predicate<GTMaterial> validator, float baseHardness, float baseResistance,
-                                             int harvestLevelOffset, MapColor mapColor, SoundType soundType,
-                                             boolean falling, long materialWeight) {
-        return define(name, displayName, namePrefix, nameSuffix, validator, baseHardness, baseResistance,
-                harvestLevelOffset, mapColor, soundType, falling, materialWeight, null);
+    public static BlockMaterialPrefix define(
+            String name,
+            String displayName,
+            String namePrefix,
+            String nameSuffix,
+            Predicate<GTMaterial> validator,
+            float baseHardness,
+            float baseResistance,
+            int harvestLevelOffset,
+            MapColor mapColor,
+            SoundType soundType,
+            boolean falling,
+            long materialWeight) {
+        return define(
+                name,
+                displayName,
+                namePrefix,
+                nameSuffix,
+                validator,
+                baseHardness,
+                baseResistance,
+                harvestLevelOffset,
+                mapColor,
+                soundType,
+                falling,
+                materialWeight,
+                null);
     }
 
-    public static BlockMaterialPrefix define(String name, String displayName, String namePrefix, String nameSuffix,
-                                             Predicate<GTMaterial> validator, float baseHardness, float baseResistance,
-                                             int harvestLevelOffset, MapColor mapColor, SoundType soundType,
-                                             boolean falling, long materialWeight, String textureFileName) {
-        return new BlockMaterialPrefix(name, displayName, namePrefix, nameSuffix, validator, baseHardness,
-                baseResistance, harvestLevelOffset, mapColor, soundType, falling, materialWeight, textureFileName,
-                false, "", "", "");
+    public static BlockMaterialPrefix define(
+            String name,
+            String displayName,
+            String namePrefix,
+            String nameSuffix,
+            Predicate<GTMaterial> validator,
+            float baseHardness,
+            float baseResistance,
+            int harvestLevelOffset,
+            MapColor mapColor,
+            SoundType soundType,
+            boolean falling,
+            long materialWeight,
+            String textureFileName) {
+        return new BlockMaterialPrefix(
+                name,
+                displayName,
+                namePrefix,
+                nameSuffix,
+                validator,
+                baseHardness,
+                baseResistance,
+                harvestLevelOffset,
+                mapColor,
+                soundType,
+                falling,
+                materialWeight,
+                textureFileName,
+                false,
+                "",
+                "",
+                "");
     }
 
     /** Addon cube. Registered after the built-in prefixes, and appended after built-in blocks. */
-    public static BlockMaterialPrefix defineAddon(String name, String displayName, String namePrefix, String nameSuffix,
-                                                  long materialWeight, String textureNamespace, String texturePath,
-                                                  String oreDictionary, Predicate<GTMaterial> validator) {
-        return new BlockMaterialPrefix(name, displayName, namePrefix, nameSuffix, validator, 1.7F, 5.0F, 0,
-                MapColor.METAL, SoundType.METAL, false, materialWeight, null, true, textureNamespace, texturePath,
+    public static BlockMaterialPrefix defineAddon(
+            String name,
+            String displayName,
+            String namePrefix,
+            String nameSuffix,
+            long materialWeight,
+            String textureNamespace,
+            String texturePath,
+            String oreDictionary,
+            Predicate<GTMaterial> validator) {
+        return new BlockMaterialPrefix(
+                name,
+                displayName,
+                namePrefix,
+                nameSuffix,
+                validator,
+                1.7F,
+                5.0F,
+                0,
+                MapColor.METAL,
+                SoundType.METAL,
+                false,
+                materialWeight,
+                null,
+                true,
+                textureNamespace,
+                texturePath,
                 oreDictionary);
     }
 
-    BlockMaterialPrefix(String name, String displayName, String namePrefix, String nameSuffix,
-                        Predicate<GTMaterial> validator, float baseHardness, float baseResistance,
-                        int harvestLevelOffset, MapColor mapColor, SoundType soundType, boolean falling,
-                        long materialWeight, String textureFileNameOverride, boolean addon,
-                        String textureNamespace, String addonTexturePath, String oreDictionary) {
+    BlockMaterialPrefix(
+            String name,
+            String displayName,
+            String namePrefix,
+            String nameSuffix,
+            Predicate<GTMaterial> validator,
+            float baseHardness,
+            float baseResistance,
+            int harvestLevelOffset,
+            MapColor mapColor,
+            SoundType soundType,
+            boolean falling,
+            long materialWeight,
+            String textureFileNameOverride,
+            boolean addon,
+            String textureNamespace,
+            String addonTexturePath,
+            String oreDictionary) {
         this.name = name;
         this.displayName = displayName;
         this.namePrefix = namePrefix;
@@ -99,7 +191,8 @@ public final class BlockMaterialPrefix {
         this.falling = falling;
         this.materialWeight = materialWeight;
         this.registryName = MaterialPrefix.camelToSnake(name);
-        this.textureFileName = textureFileNameOverride != null ? textureFileNameOverride.toLowerCase() : name.toLowerCase();
+        this.textureFileName =
+                textureFileNameOverride != null ? textureFileNameOverride.toLowerCase() : name.toLowerCase();
         this.addon = addon;
         this.textureNamespace = textureNamespace == null ? "" : textureNamespace;
         this.addonTexturePath = addonTexturePath == null ? "" : addonTexturePath;
@@ -114,28 +207,78 @@ public final class BlockMaterialPrefix {
         }
     }
 
-    public String getName() { return name; }
-    public String getDisplayName() { return displayName; }
-    public String getNamePrefix() { return namePrefix; }
-    public String getNameSuffix() { return nameSuffix; }
-    public String getRegistryName() { return registryName; }
-    public String getTextureFileName() { return textureFileName; }
-    public boolean isAddon() { return addon; }
-    public String textureNamespace() { return textureNamespace; }
-    public String addonTexturePath() { return addonTexturePath; }
+    public String getName() {
+        return name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getNamePrefix() {
+        return namePrefix;
+    }
+
+    public String getNameSuffix() {
+        return nameSuffix;
+    }
+
+    public String getRegistryName() {
+        return registryName;
+    }
+
+    public String getTextureFileName() {
+        return textureFileName;
+    }
+
+    public boolean isAddon() {
+        return addon;
+    }
+
+    public String textureNamespace() {
+        return textureNamespace;
+    }
+
+    public String addonTexturePath() {
+        return addonTexturePath;
+    }
     /** Tag path under {@code forge:}, or empty for a built-in prefix. */
-    public String oreDictionary() { return oreDictionary; }
+    public String oreDictionary() {
+        return oreDictionary;
+    }
     /** Prefix name card 04 reports for an addon block. Built-in blocks stay unnamed. */
-    public String compositionName() { return addon ? name : ""; }
-    public float baseHardness() { return baseHardness; }
-    public float baseResistance() { return baseResistance; }
-    public int harvestLevelOffset() { return harvestLevelOffset; }
-    public MapColor mapColor() { return mapColor; }
-    public SoundType soundType() { return soundType; }
-    public boolean falling() { return falling; }
+    public String compositionName() {
+        return addon ? name : "";
+    }
+
+    public float baseHardness() {
+        return baseHardness;
+    }
+
+    public float baseResistance() {
+        return baseResistance;
+    }
+
+    public int harvestLevelOffset() {
+        return harvestLevelOffset;
+    }
+
+    public MapColor mapColor() {
+        return mapColor;
+    }
+
+    public SoundType soundType() {
+        return soundType;
+    }
+
+    public boolean falling() {
+        return falling;
+    }
 
     public boolean isValidFor(GTMaterial material) {
-        return material != null && material.isValid() && !material.has(gregtech.api.material.MaterialProperty.HIDDEN)
+        return material != null
+                && material.isValid()
+                && !material.has(gregtech.api.material.MaterialProperty.HIDDEN)
                 && validator.test(material);
     }
 

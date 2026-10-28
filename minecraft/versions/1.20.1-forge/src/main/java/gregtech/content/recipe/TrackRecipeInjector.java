@@ -2,10 +2,14 @@ package gregtech.content.recipe;
 
 import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTrackBlocks;
+import gregtech.engine.material.GTMaterialRegistry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,11 +20,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.core.NonNullList;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * GT6's track recipes ({@code Loader_Rails:108-156}, the branch without Railcraft, which this port
@@ -43,20 +42,25 @@ import java.util.Locale;
 public final class TrackRecipeInjector {
 
     /** The vanilla rails GT6 replaces ({@code Blocks.rail/golden_rail/detector_rail/activator_rail}). */
-    private static final List<Item> REPLACED = List.of(Items.RAIL, Items.POWERED_RAIL,
-            Items.DETECTOR_RAIL, Items.ACTIVATOR_RAIL);
+    private static final List<Item> REPLACED =
+            List.of(Items.RAIL, Items.POWERED_RAIL, Items.DETECTOR_RAIL, Items.ACTIVATOR_RAIL);
 
     /** {@code Loader_Rails:145-156}: the activator rail's material and GT6's yield for it. */
     private static final List<String> REGISTERED = new ArrayList<>();
+
     private static final List<String> SKIPPED = new ArrayList<>();
 
     private TrackRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
-    public static List<String> registeredIds() { return List.copyOf(REGISTERED); }
+    public static List<String> registeredIds() {
+        return List.copyOf(REGISTERED);
+    }
 
     /** GT6 rows the port cannot express, with the reason. */
-    public static List<String> skipped() { return List.copyOf(SKIPPED); }
+    public static List<String> skipped() {
+        return List.copyOf(SKIPPED);
+    }
 
     public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
         List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
@@ -78,8 +82,10 @@ public final class TrackRecipeInjector {
 
     /** GT6's {@code DEL_OTHER_SHAPED_RECIPES} applies to shaped crafting rows only. */
     public static boolean replacesVanillaRailRecipe(Recipe<?> recipe, net.minecraft.core.RegistryAccess access) {
-        if (!(recipe.getId().getNamespace().equals("minecraft") ? gregtech.GregTechConfig.Rule.REPLACE_VANILLA_RECIPES
-                : gregtech.GregTechConfig.Rule.REPLACE_MOD_RECIPES).enabled()) return false;
+        if (!(recipe.getId().getNamespace().equals("minecraft")
+                        ? gregtech.GregTechConfig.Rule.REPLACE_VANILLA_RECIPES
+                        : gregtech.GregTechConfig.Rule.REPLACE_MOD_RECIPES)
+                .enabled()) return false;
         if (recipe.getType() != RecipeType.CRAFTING || !(recipe instanceof ShapedRecipe)) return false;
         // GT6 does not remove its own protected crafting rows.
         if (recipe.getId().getNamespace().equals(GregTech.NAMESPACE)) return false;
@@ -92,57 +98,108 @@ public final class TrackRecipeInjector {
         recipes.removeIf(recipe -> replacesVanillaRailRecipe(recipe, access));
         int added = 0;
         // minecraft:rail — 4 from three iron tracks and three treated sticks.
-        added += add(recipes, "tracks/vanilla/rail", new ItemStack(Items.RAIL, 4), gregtech.content.transport.TrackRecipeCatalog.PLAIN,
-                new char[]{'R', 'S'}, new ItemStack[]{rail("Iron"), stick()});
+        added += add(
+                recipes,
+                "tracks/vanilla/rail",
+                new ItemStack(Items.RAIL, 4),
+                gregtech.content.transport.TrackRecipeCatalog.PLAIN,
+                new char[] {'R', 'S'},
+                new ItemStack[] {rail("Iron"), stick()});
         // minecraft:golden_rail — 4, with gold tracks as the "G" ingredient.
-        added += add(recipes, "tracks/vanilla/golden_rail", new ItemStack(Items.POWERED_RAIL, 4),
-                gregtech.content.transport.TrackRecipeCatalog.BOOSTER, new char[]{'R', 'S', 'G', 'D'},
-                new ItemStack[]{rail("Iron"), stick(), rail("Gold"), new ItemStack(Items.REDSTONE)});
+        added += add(
+                recipes,
+                "tracks/vanilla/golden_rail",
+                new ItemStack(Items.POWERED_RAIL, 4),
+                gregtech.content.transport.TrackRecipeCatalog.BOOSTER,
+                new char[] {'R', 'S', 'G', 'D'},
+                new ItemStack[] {rail("Iron"), stick(), rail("Gold"), new ItemStack(Items.REDSTONE)});
         // minecraft:detector_rail — 4, with a stone pressure plate.
-        added += add(recipes, "tracks/vanilla/detector_rail", new ItemStack(Items.DETECTOR_RAIL, 4),
-                gregtech.content.transport.TrackRecipeCatalog.DETECTOR, new char[]{'R', 'S', 'P', 'D'},
-                new ItemStack[]{rail("Iron"), stick(),
-                        new ItemStack(Items.STONE_PRESSURE_PLATE), new ItemStack(Items.REDSTONE)});
+        added += add(
+                recipes,
+                "tracks/vanilla/detector_rail",
+                new ItemStack(Items.DETECTOR_RAIL, 4),
+                gregtech.content.transport.TrackRecipeCatalog.DETECTOR,
+                new char[] {'R', 'S', 'P', 'D'},
+                new ItemStack[] {
+                    rail("Iron"), stick(), new ItemStack(Items.STONE_PRESSURE_PLATE), new ItemStack(Items.REDSTONE)
+                });
         // minecraft:activator_rail — one row per material, the yield climbing to 64 adamantium tracks.
         for (var row : gregtech.content.transport.TrackRecipeCatalog.ACTIVATORS) {
-            added += add(recipes, "tracks/vanilla/activator_rail_" + row.material().toLowerCase(Locale.ROOT),
-                    new ItemStack(Items.ACTIVATOR_RAIL, row.count()), gregtech.content.transport.TrackRecipeCatalog.ACTIVATOR,
-                    new char[]{'R', 'S', 'T'},
-                    new ItemStack[]{rail(row.material()), stick(), new ItemStack(Items.REDSTONE_TORCH)});
+            added += add(
+                    recipes,
+                    "tracks/vanilla/activator_rail_" + row.material().toLowerCase(Locale.ROOT),
+                    new ItemStack(Items.ACTIVATOR_RAIL, row.count()),
+                    gregtech.content.transport.TrackRecipeCatalog.ACTIVATOR,
+                    new char[] {'R', 'S', 'T'},
+                    new ItemStack[] {rail(row.material()), stick(), new ItemStack(Items.REDSTONE_TORCH)});
         }
         return added;
     }
 
     /** {@code "RSR","RSR","RSR"} — four tracks from three rail items and three treated sticks. */
     private static int plain(List<Recipe<?>> recipes, GTTrackBlocks.Track track) {
-        return add(recipes, track, gregtech.content.transport.TrackRecipeCatalog.PLAIN, new char[]{'R', 'S'},
-                new ItemStack[]{rail(track.material()), stick()}, 4);
+        return add(
+                recipes,
+                track,
+                gregtech.content.transport.TrackRecipeCatalog.PLAIN,
+                new char[] {'R', 'S'},
+                new ItemStack[] {rail(track.material()), stick()},
+                4);
     }
 
     /** {@code "RSR","GDG","RSR"} — four booster tracks, with GT6's per-rail "G" material. */
     private static int booster(List<Recipe<?>> recipes, GTTrackBlocks.Track track) {
         String g = GTTrackBlocks.boosterMaterial(track.material());
-        return add(recipes, track, gregtech.content.transport.TrackRecipeCatalog.BOOSTER, new char[]{'R', 'S', 'G', 'D'},
-                new ItemStack[]{rail(track.material()), stick(), rail(g), new ItemStack(Items.REDSTONE)}, 4);
+        return add(
+                recipes,
+                track,
+                gregtech.content.transport.TrackRecipeCatalog.BOOSTER,
+                new char[] {'R', 'S', 'G', 'D'},
+                new ItemStack[] {rail(track.material()), stick(), rail(g), new ItemStack(Items.REDSTONE)},
+                4);
     }
 
     /** {@code "RSR","RPR","RDR"} — four detector tracks, with redstone and a stone pressure plate. */
     private static int detector(List<Recipe<?>> recipes, GTTrackBlocks.Track track) {
-        return add(recipes, track, gregtech.content.transport.TrackRecipeCatalog.DETECTOR, new char[]{'R', 'S', 'P', 'D'},
-                new ItemStack[]{rail(track.material()), stick(),
-                        new ItemStack(Items.STONE_PRESSURE_PLATE), new ItemStack(Items.REDSTONE)}, 4);
+        return add(
+                recipes,
+                track,
+                gregtech.content.transport.TrackRecipeCatalog.DETECTOR,
+                new char[] {'R', 'S', 'P', 'D'},
+                new ItemStack[] {
+                    rail(track.material()),
+                    stick(),
+                    new ItemStack(Items.STONE_PRESSURE_PLATE),
+                    new ItemStack(Items.REDSTONE)
+                },
+                4);
     }
 
     /** Builds GT6's 3×3 pattern for one of the port's tracks. */
-    private static int add(List<Recipe<?>> recipes, GTTrackBlocks.Track track, String pattern,
-                           char[] symbols, ItemStack[] ingredients, int count) {
-        return add(recipes, "tracks/" + track.id(), new ItemStack(track.block().get(), count),
-                pattern, symbols, ingredients);
+    private static int add(
+            List<Recipe<?>> recipes,
+            GTTrackBlocks.Track track,
+            String pattern,
+            char[] symbols,
+            ItemStack[] ingredients,
+            int count) {
+        return add(
+                recipes,
+                "tracks/" + track.id(),
+                new ItemStack(track.block().get(), count),
+                pattern,
+                symbols,
+                ingredients);
     }
 
     /** Builds a 3×3 pattern; rows are separated by {@code |} and the key order matches. */
-    private static int add(List<Recipe<?>> recipes, String path, ItemStack output, String pattern,
-                           char[] symbols, ItemStack[] ingredients) {
+    private static int add(
+            List<Recipe<?>> recipes,
+            String path,
+            ItemStack output,
+            String pattern,
+            char[] symbols,
+            ItemStack[] ingredients) {
         String id = path;
         for (ItemStack ingredient : ingredients) {
             if (ingredient.isEmpty()) {
@@ -169,8 +226,8 @@ public final class TrackRecipeInjector {
             }
         }
         ResourceLocation location = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, id);
-        recipes.add(new ShapedRecipe(location, "gt.tracks", CraftingBookCategory.MISC,
-                width, rows.length, grid, output));
+        recipes.add(
+                new ShapedRecipe(location, "gt.tracks", CraftingBookCategory.MISC, width, rows.length, grid, output));
         REGISTERED.add(location.toString());
         return 1;
     }

@@ -15,8 +15,7 @@ public record TankSpec(
         boolean simpleOnly,
         float hardness,
         float blastResistance,
-        long maxTemperature
-) {
+        long maxTemperature) {
     public enum TankType {
         WOOD_BARREL,
         PLASTIC_CANISTER,
@@ -33,21 +32,55 @@ public record TankSpec(
         }
     }
 
-    public int tintRgb() { return material.getColor(); }
-    public String materialName() { return material.getLocalName(); }
+    public int tintRgb() {
+        return material.getColor();
+    }
+
+    public String materialName() {
+        return material.getLocalName();
+    }
 
     /** GT6's explicit {@code NBT_CAPACITY_HU} overrides the barrel's melting point in kelvin. */
     public TankSpec withMaxTemperature(long kelvin) {
-        return new TankSpec(id, material, type, capacity, gasProof, acidProof, plasmaProof,
-                magicProof, simpleOnly, hardness, blastResistance, kelvin);
+        return new TankSpec(
+                id,
+                material,
+                type,
+                capacity,
+                gasProof,
+                acidProof,
+                plasmaProof,
+                magicProof,
+                simpleOnly,
+                hardness,
+                blastResistance,
+                kelvin);
     }
 
-    public static TankSpec of(String id, GTMaterial material, TankType type, long capacity,
-                              boolean gasProof, boolean acidProof, boolean plasmaProof, boolean magicProof,
-                              boolean simpleOnly, float hardness, float blastResistance) {
-        return new TankSpec(id, material, type, capacity,
-                gasProof, acidProof, plasmaProof, magicProof, simpleOnly,
-                hardness, blastResistance,
+    public static TankSpec of(
+            String id,
+            GTMaterial material,
+            TankType type,
+            long capacity,
+            boolean gasProof,
+            boolean acidProof,
+            boolean plasmaProof,
+            boolean magicProof,
+            boolean simpleOnly,
+            float hardness,
+            float blastResistance) {
+        return new TankSpec(
+                id,
+                material,
+                type,
+                capacity,
+                gasProof,
+                acidProof,
+                plasmaProof,
+                magicProof,
+                simpleOnly,
+                hardness,
+                blastResistance,
                 Math.round(material.getMeltingPoint() * 1.25D));
     }
 }

@@ -32,37 +32,42 @@ public class FilterMenu extends AbstractContainerMenu {
         this.filter = filter;
         this.prefixMode = prefixMode;
         this.templateSlots = prefixMode ? 1 : gregtech.content.logistics.FilterPolicy.TEMPLATES;
-        templates = filter == null ? new SimpleContainer(gregtech.content.logistics.FilterPolicy.TEMPLATES) : filter.templates();
-        data = filter == null ? new SimpleContainerData(1) : new ContainerData() {
+        templates = filter == null
+                ? new SimpleContainer(gregtech.content.logistics.FilterPolicy.TEMPLATES)
+                : filter.templates();
+        data = filter == null
+                ? new SimpleContainerData(1)
+                : new ContainerData() {
 
-            public int get(int key) {
-                return filter.blacklist() ? 1 : 0;
-            }
+                    public int get(int key) {
+                        return filter.blacklist() ? 1 : 0;
+                    }
 
-            public void set(int key, int value) {
-            }
+                    public void set(int key, int value) {}
 
-            public int getCount() {
-                return 1;
-            }
-        };
+                    public int getCount() {
+                        return 1;
+                    }
+                };
         addDataSlots(data);
-        for (int slot = 0; slot < templateSlots; slot++) addSlot(new Slot(templates, slot, prefixMode ? 80 : 8 + slot % 9 * 18, 18 + slot / 9 * 18) {
+        for (int slot = 0; slot < templateSlots; slot++)
+            addSlot(new Slot(templates, slot, prefixMode ? 80 : 8 + slot % 9 * 18, 18 + slot / 9 * 18) {
 
-            @Override
-            public boolean mayPickup(Player player) {
-                return false;
-            }
+                @Override
+                public boolean mayPickup(Player player) {
+                    return false;
+                }
 
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return false;
-            }
-        });
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
+            });
         for (int row = 0; row < 3; row++)
             for (int column = 0; column < 9; column++)
                 addSlot(new Slot(inventory, column + row * 9 + 9, 8 + column * 18, (prefixMode ? 50 : 140) + row * 18));
-        for (int column = 0; column < 9; column++) addSlot(new Slot(inventory, column, 8 + column * 18, prefixMode ? 108 : 198));
+        for (int column = 0; column < 9; column++)
+            addSlot(new Slot(inventory, column, 8 + column * 18, prefixMode ? 108 : 198));
     }
 
     public boolean prefixMode() {
@@ -84,7 +89,9 @@ public class FilterMenu extends AbstractContainerMenu {
     }
 
     private void setGhost(int slot, ItemStack stack) {
-        if (prefixMode && !stack.isEmpty() && gregtech.content.logistics.FilterRules.prefix(stack).isEmpty()) return;
+        if (prefixMode
+                && !stack.isEmpty()
+                && gregtech.content.logistics.FilterRules.prefix(stack).isEmpty()) return;
         if (filter != null) filter.setTemplate(slot, stack);
         else templates.setItem(slot, stack.copyWithCount(1));
     }
@@ -104,7 +111,9 @@ public class FilterMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return filter == null || !filter.isRemoved() && filter.getLevel() == player.level()
-                && player.distanceToSqr(filter.getBlockPos().getCenter()) <= 64;
+        return filter == null
+                || !filter.isRemoved()
+                        && filter.getLevel() == player.level()
+                        && player.distanceToSqr(filter.getBlockPos().getCenter()) <= 64;
     }
 }

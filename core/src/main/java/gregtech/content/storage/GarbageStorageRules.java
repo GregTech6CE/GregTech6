@@ -3,8 +3,7 @@ package gregtech.content.storage;
 /** Port retention limits, GUI window and transfer schedule. */
 public final class GarbageStorageRules {
 
-    private GarbageStorageRules() {
-    }
+    private GarbageStorageRules() {}
 
     public static final int MAX_ENTRIES = 256, VIEW_SLOTS = 54;
 

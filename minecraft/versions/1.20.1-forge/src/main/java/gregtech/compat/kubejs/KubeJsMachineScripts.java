@@ -1,9 +1,9 @@
 package gregtech.compat.kubejs;
 
-import gregtech.engine.kubejs.KubeJsLoadOrder;
-import gregtech.engine.kubejs.KubeJsMachineDeclarations;
 import dev.latvian.mods.kubejs.KubeJS;
 import dev.latvian.mods.kubejs.script.ScriptType;
+import gregtech.engine.kubejs.KubeJsLoadOrder;
+import gregtech.engine.kubejs.KubeJsMachineDeclarations;
 
 /** Posts the startup machines event once, after KubeJS has loaded its startup scripts. */
 final class KubeJsMachineScripts {

@@ -4,7 +4,6 @@ import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.StructureLayout;
 import gregtech.api.multiblock.StructureRole;
 import gregtech.engine.recipe.data.JsonMaps;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,8 +45,8 @@ public final class StructureLayoutDocuments {
             else builder.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
         }
         for (RepeatSpec repeat : repeats) {
-            var group = gregtech.api.multiblock.LayoutRepeat.builder(
-                    repeat.key(), repeat.up(), repeat.min(), repeat.max());
+            var group =
+                    gregtech.api.multiblock.LayoutRepeat.builder(repeat.key(), repeat.up(), repeat.min(), repeat.max());
             if (repeat.step() != 1) group.step(repeat.step());
             for (CellSpec cell : repeat.cells()) {
                 var match = match(cell.matches());
@@ -72,9 +71,12 @@ public final class StructureLayoutDocuments {
                 var repeat = repeats.get(i);
                 json.append("{\"key\":");
                 string(json, repeat.key());
-                json.append(",\"up\":").append(repeat.up())
-                        .append(",\"min\":").append(repeat.min())
-                        .append(",\"max\":").append(repeat.max());
+                json.append(",\"up\":")
+                        .append(repeat.up())
+                        .append(",\"min\":")
+                        .append(repeat.min())
+                        .append(",\"max\":")
+                        .append(repeat.max());
                 if (repeat.step() != 1) json.append(",\"step\":").append(repeat.step());
                 json.append(",\"cells\":[");
                 cells(json, repeat.cells());
@@ -89,9 +91,12 @@ public final class StructureLayoutDocuments {
         for (int i = 0; i < cells.size(); i++) {
             if (i > 0) json.append(',');
             var cell = cells.get(i);
-            json.append("{\"right\":").append(cell.right())
-                    .append(",\"up\":").append(cell.up())
-                    .append(",\"back\":").append(cell.back())
+            json.append("{\"right\":")
+                    .append(cell.right())
+                    .append(",\"up\":")
+                    .append(cell.up())
+                    .append(",\"back\":")
+                    .append(cell.back())
                     .append(",\"match\":");
             matchText(json, cell.match());
             json.append(",\"role\":");
@@ -122,8 +127,13 @@ public final class StructureLayoutDocuments {
                 if (!REPEAT.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
             var cellsValue = repeat.get("cells");
             if (cellsValue == null) throw new IllegalArgumentException("cells is required");
-            out.add(new RepeatSpec(required(repeat, "key"), integer(repeat, "up"), integer(repeat, "min"),
-                    integer(repeat, "max"), step(repeat), cellList(cellsValue, "repeats.cells")));
+            out.add(new RepeatSpec(
+                    required(repeat, "key"),
+                    integer(repeat, "up"),
+                    integer(repeat, "min"),
+                    integer(repeat, "max"),
+                    step(repeat),
+                    cellList(cellsValue, "repeats.cells")));
         }
         return out;
     }
@@ -135,8 +145,13 @@ public final class StructureLayoutDocuments {
             var cell = object(element, field + " entries must be objects");
             for (var key : cell.keySet())
                 if (!CELL.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
-            out.add(new CellSpec(integer(cell, "right"), integer(cell, "up"), integer(cell, "back"),
-                    matches(cell.get("match")), required(cell, "role"), design(cell)));
+            out.add(new CellSpec(
+                    integer(cell, "right"),
+                    integer(cell, "up"),
+                    integer(cell, "back"),
+                    matches(cell.get("match")),
+                    required(cell, "role"),
+                    design(cell)));
         }
         return out;
     }
@@ -168,8 +183,7 @@ public final class StructureLayoutDocuments {
     /** One match string, or an array of alternatives. */
     private static List<String> matches(Object value) {
         if (value instanceof String text && !text.isBlank()) return List.of(text);
-        if (!(value instanceof List<?> list) || list.isEmpty())
-            throw new IllegalArgumentException("match is required");
+        if (!(value instanceof List<?> list) || list.isEmpty()) throw new IllegalArgumentException("match is required");
         var out = new ArrayList<String>();
         for (Object element : list) {
             if (!(element instanceof String text) || text.isBlank())

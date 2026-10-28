@@ -7,8 +7,7 @@ import net.minecraft.world.level.Level;
 /** Native dimension boundary for this port's shared bedrock-ore tables. */
 public final class GTBedrockOreDimensions {
 
-    private GTBedrockOreDimensions() {
-    }
+    private GTBedrockOreDimensions() {}
 
     public static List<GTBedrockOres.BedrockOre> forDimension(ResourceKey<Level> dimension) {
         if (dimension == Level.NETHER) return GTBedrockOres.NETHER;

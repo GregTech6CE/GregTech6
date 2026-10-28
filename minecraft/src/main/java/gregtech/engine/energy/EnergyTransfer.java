@@ -3,13 +3,9 @@ package gregtech.engine.energy;
 import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.util.GTEnergySides;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
-
 import javax.annotation.Nullable;
-import java.util.Collection;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * Energy network helpers (GT6 {@code ITileEntityEnergy.Util}).
@@ -34,8 +30,8 @@ public final class EnergyTransfer {
         return used;
     }
 
-    public static long emitEnergyToSide(GregTechTags.Tag energyType, Direction sideOutOf, long size, long amount,
-                                        BlockEntity emitter) {
+    public static long emitEnergyToSide(
+            GregTechTags.Tag energyType, Direction sideOutOf, long size, long amount, BlockEntity emitter) {
         if (amount <= 0 || emitter.getLevel() == null) {
             return 0;
         }
@@ -47,8 +43,13 @@ public final class EnergyTransfer {
         return insertEnergyInto(energyType, GTEnergySides.receiverSide(sideOutOf), size, amount, emitter, receiver);
     }
 
-    public static long insertEnergyInto(GregTechTags.Tag energyType, @Nullable Direction sideInto, long size, long amount,
-                                        @Nullable Object emitter, BlockEntity receiver) {
+    public static long insertEnergyInto(
+            GregTechTags.Tag energyType,
+            @Nullable Direction sideInto,
+            long size,
+            long amount,
+            @Nullable Object emitter,
+            BlockEntity receiver) {
         if (amount <= 0 || size == 0) return 0;
         IEnergyBlock energyBlock = EnergyBlockViews.view(receiver);
         if (energyBlock != null) {
@@ -59,8 +60,8 @@ public final class EnergyTransfer {
         return EnergyCompat.insertEnergyInto(energyType, sideInto, size, amount, emitter, receiver);
     }
 
-    public static long extractEnergyFrom(GregTechTags.Tag energyType, @Nullable Direction sideOutOf, long size, long amount,
-                                         BlockEntity receiver) {
+    public static long extractEnergyFrom(
+            GregTechTags.Tag energyType, @Nullable Direction sideOutOf, long size, long amount, BlockEntity receiver) {
         IEnergyBlock energyBlock = EnergyBlockViews.view(receiver);
         if (energyBlock != null) {
             return energyBlock.doEnergyExtraction(energyType, sideOutOf, size, amount, true);

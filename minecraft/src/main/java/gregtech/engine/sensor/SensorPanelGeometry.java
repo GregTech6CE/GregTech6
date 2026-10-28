@@ -1,3 +1,11 @@
 package gregtech.engine.sensor;
+
 import net.minecraft.core.Direction;
-public final class SensorPanelGeometry {private SensorPanelGeometry(){}public static int[] bounds(Direction facing){return SensorPanelRules.bounds(facing.ordinal());}}
+
+public final class SensorPanelGeometry {
+    private SensorPanelGeometry() {}
+
+    public static int[] bounds(Direction facing) {
+        return SensorPanelRules.bounds(facing.ordinal());
+    }
+}

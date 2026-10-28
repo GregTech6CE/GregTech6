@@ -26,9 +26,17 @@ public enum ReactorCoolantType {
         this.heatCapacity = heatCapacity;
     }
 
-    public float neutronModeration() { return neutronModeration; }
-    public float heatTransfer() { return heatTransfer; }
-    public float heatCapacity() { return heatCapacity; }
+    public float neutronModeration() {
+        return neutronModeration;
+    }
+
+    public float heatTransfer() {
+        return heatTransfer;
+    }
+
+    public float heatCapacity() {
+        return heatCapacity;
+    }
 
     /** Consumed coolant volume per rod per second (mB). */
     public long coolantPerRodSecond() {

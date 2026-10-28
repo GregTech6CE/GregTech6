@@ -13,13 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /** Records block, entity and chunk reads while a structure scan is on the stack. */
 @Mixin(Level.class)
 public abstract class LevelStructureProbeMixin {
-    @Inject(method = "getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+    @Inject(
+            method = "getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
             at = @At("HEAD"))
     private void gt$probeBlock(BlockPos pos, CallbackInfoReturnable<BlockState> cir) {
         StructureScanProbe.noteBlock(pos);
     }
 
-    @Inject(method = "getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+    @Inject(
+            method =
+                    "getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
             at = @At("HEAD"))
     private void gt$probeEntity(BlockPos pos, CallbackInfoReturnable<BlockEntity> cir) {
         StructureScanProbe.noteEntity(pos);
@@ -27,7 +30,9 @@ public abstract class LevelStructureProbeMixin {
         StructureScanProbe.pushPause();
     }
 
-    @Inject(method = "getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+    @Inject(
+            method =
+                    "getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
             at = @At("RETURN"))
     private void gt$probeEntityEnd(BlockPos pos, CallbackInfoReturnable<BlockEntity> cir) {
         StructureScanProbe.popPause();

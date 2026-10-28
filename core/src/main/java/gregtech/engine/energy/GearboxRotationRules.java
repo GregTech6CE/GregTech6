@@ -27,8 +27,7 @@ public final class GearboxRotationRules {
             };
         }
         if (axisCode == 1 && xPair || axisCode == 2 && yPair || axisCode == 3 && zPair) return false;
-        int usedAxes = ((mask & 48) != 0 ? 1 : 0)
-                + ((mask & 3) != 0 ? 1 : 0) + ((mask & 12) != 0 ? 1 : 0);
+        int usedAxes = ((mask & 48) != 0 ? 1 : 0) + ((mask & 3) != 0 ? 1 : 0) + ((mask & 12) != 0 ? 1 : 0);
         return usedAxes < 3;
     }
 

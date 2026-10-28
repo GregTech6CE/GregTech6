@@ -10,18 +10,29 @@ import java.util.List;
 /** Generic Cutter handlers at GT6 3703e403, Loader_Recipes_Handlers:628–652. */
 public final class SourceCutterRules {
     private SourceCutterRules() {}
-    public record Rule(MaterialPrefix input, BlockMaterialPrefix blockInput, MaterialPrefix output,
-                       int outputCount, int baseTicks, long eut) {
+
+    public record Rule(
+            MaterialPrefix input,
+            BlockMaterialPrefix blockInput,
+            MaterialPrefix output,
+            int outputCount,
+            int baseTicks,
+            long eut) {
         public long inputUnits() {
             return input != null ? input.getMaterialWeight() : blockInput.getMaterialWeight();
         }
     }
+
     public record Coolant(String field, int multiplier) {}
+
     public record Decision(boolean allowed, long ticks, int fluidAmount, boolean sourceProfile) {}
     // The source array has five entries but its loop is i < 4: no LubRoCant or mineral water.
-    private static final List<Coolant> COOLANTS = List.of(new Coolant("Water", 4),
-            new Coolant("SpDew", 4), new Coolant("DistW", 3), new Coolant("Lubricant", 1));
-    public static List<Coolant> sourceCoolants() { return COOLANTS; }
+    private static final List<Coolant> COOLANTS = List.of(
+            new Coolant("Water", 4), new Coolant("SpDew", 4), new Coolant("DistW", 3), new Coolant("Lubricant", 1));
+
+    public static List<Coolant> sourceCoolants() {
+        return COOLANTS;
+    }
 
     private static final class Rows {
         // Preserve the old nineteen-row order; the recovered block route is appended.
@@ -47,20 +58,26 @@ public final class SourceCutterRules {
                 new Rule(MaterialPrefix.plateQuintuple, null, MaterialPrefix.plate, 5, 64, 32),
                 new Rule(null, BlockMaterialPrefix.blockSolid, MaterialPrefix.plate, 8, 112, 32));
     }
-    public static List<Rule> rules() { return Rows.ALL; }
+
+    public static List<Rule> rules() {
+        return Rows.ALL;
+    }
 
     /** Native adapter must still require real input/output holders and an available coolant binding. */
     public static Decision evaluate(GTMaterial material, Rule rule, Coolant coolant) {
-        if (material == null || !material.resolve().isValid()
-                || material.resolve().has(MaterialProperty.ANTIMATTER))
-            return new Decision(false, 0, 0, false);
+        if (material == null
+                || !material.resolve().isValid()
+                || material.resolve().has(MaterialProperty.ANTIMATTER)) return new Decision(false, 0, 0, false);
         var profile = SourceLatheMaterialProfiles.findForCutter(material);
         if (profile == null && sourceStonePair(material, rule))
             profile = SourceLatheMaterialProfiles.findForOfficialStoneCutter(material);
         if (profile == null) {
             // Preserve the old water-only base costs for unknown, redirected or overridden contexts.
-            return new Decision(rule.blockInput() == null && coolant.field().equals("Water"),
-                    rule.baseTicks(), Math.max(16, rule.baseTicks()), false);
+            return new Decision(
+                    rule.blockInput() == null && coolant.field().equals("Water"),
+                    rule.baseTicks(),
+                    Math.max(16, rule.baseTicks()),
+                    false);
         }
         long ticks = (long) rule.baseTicks() * coolant.multiplier();
         long amount = ticks * ((long) material.getToolQuality() + 1);
@@ -76,7 +93,6 @@ public final class SourceCutterRules {
         return rule.equals(Rows.ALL.get(2))
                 && gregtech.content.data.generated.MaterialForms.has(material, "PLATES")
                 && (gregtech.content.data.generated.MaterialForms.has(material, "INGOTS")
-                    || !gregtech.content.data.generated.MaterialForms.has(material, "GEMS"));
+                        || !gregtech.content.data.generated.MaterialForms.has(material, "GEMS"));
     }
-
 }

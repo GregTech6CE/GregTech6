@@ -25,8 +25,7 @@ public record EnergyNodeSpec(
         long outputRate,
         long capacity,
         String displayEn,
-        int batterySlots
-) {
+        int batterySlots) {
     public EnergyNodeSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+") || material == null || !material.isValid())
             throw new IllegalArgumentException("Invalid energy device identity/material: " + id);
@@ -44,11 +43,31 @@ public record EnergyNodeSpec(
     /** Compatibility for addons compiled against the old bilingual metadata constructor.
      * Translations are now exclusively supplied by language resources. */
     @Deprecated
-    public EnergyNodeSpec(String id, GTMaterial material, Kind kind, String textureFolder,
-                          GregTechTags.Tag inType, GregTechTags.Tag outType, long inputRate,
-                          long outputRate, long capacity, String displayEn, String ignoredTranslation,
-                          int batterySlots) {
-        this(id, material, kind, textureFolder, inType, outType, inputRate, outputRate, capacity, displayEn, batterySlots);
+    public EnergyNodeSpec(
+            String id,
+            GTMaterial material,
+            Kind kind,
+            String textureFolder,
+            GregTechTags.Tag inType,
+            GregTechTags.Tag outType,
+            long inputRate,
+            long outputRate,
+            long capacity,
+            String displayEn,
+            String ignoredTranslation,
+            int batterySlots) {
+        this(
+                id,
+                material,
+                kind,
+                textureFolder,
+                inType,
+                outType,
+                inputRate,
+                outputRate,
+                capacity,
+                displayEn,
+                batterySlots);
     }
 
     /** Legacy metadata accessor; a language-neutral core cannot resolve the player's locale. */
@@ -73,6 +92,7 @@ public record EnergyNodeSpec(
         private long capacity;
         private int batterySlots;
         private String english;
+
         private Builder(String id, GTMaterial casing) {
             this.id = id;
             this.casing = casing;
@@ -122,8 +142,16 @@ public record EnergyNodeSpec(
         }
 
         public EnergyNodeSpec build() {
-            return new EnergyNodeSpec(id, casing, kind, texture, inputType, outputType, input, output, capacity, english, batterySlots);
+            return new EnergyNodeSpec(
+                    id, casing, kind, texture, inputType, outputType, input, output, capacity, english, batterySlots);
         }
     }
-    public enum Kind { CONVERTER, MAGNET, TURBINE, SOLAR, STORAGE }
+
+    public enum Kind {
+        CONVERTER,
+        MAGNET,
+        TURBINE,
+        SOLAR,
+        STORAGE
+    }
 }

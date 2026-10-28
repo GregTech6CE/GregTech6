@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.fluid;
 
 import gregtech.api.material.GTValues;
@@ -36,26 +35,67 @@ public final class OriginalFluidDisplayRules {
 
     private OriginalFluidDisplayRules() {}
 
-    public enum Color { DEFAULT, BLUE, YELLOW, RED, GREEN, AQUA, GOLD, DARK_GREEN, DARK_GRAY, WHITE }
-    public enum Owner { GT6, VANILLA, OTHER }
+    public enum Color {
+        DEFAULT,
+        BLUE,
+        YELLOW,
+        RED,
+        GREEN,
+        AQUA,
+        GOLD,
+        DARK_GREEN,
+        DARK_GRAY,
+        WHITE
+    }
+
+    public enum Owner {
+        GT6,
+        VANILLA,
+        OTHER
+    }
     /** Null key denotes literal data (formula, registry identity or formatted number). */
     public record Part(String key, Color color, List<Object> arguments) {
-        public Part { arguments = List.copyOf(arguments); }
+        public Part {
+            arguments = List.copyOf(arguments);
+        }
     }
+
     public record Line(List<Part> parts) {
-        public Line { parts = List.copyOf(parts); }
+        public Line {
+            parts = List.copyOf(parts);
+        }
     }
-    public record Facts(String registry, boolean advanced, boolean nonstandard, long amount,
-                        String formula, long kelvin, boolean gas, boolean plasma, boolean nativeGas,
-                        boolean castable, int density, int luminosity, int viscosity, long flags,
-                        boolean acid, boolean magic, boolean industrialLubricant, Owner owner) {}
+
+    public record Facts(
+            String registry,
+            boolean advanced,
+            boolean nonstandard,
+            long amount,
+            String formula,
+            long kelvin,
+            boolean gas,
+            boolean plasma,
+            boolean nativeGas,
+            boolean castable,
+            int density,
+            int luminosity,
+            int viscosity,
+            long flags,
+            boolean acid,
+            boolean magic,
+            boolean industrialLubricant,
+            Owner owner) {}
+
     public record Fuel(String nameKey, BigInteger scaledPower) {}
 
     /** Original floor(abs(EUt * duration) * U / first fluid input), without long overflow. */
     public static BigInteger fuelPower(long eut, long duration, long firstInputAmount) {
         if (duration <= 0 || firstInputAmount <= 0) return BigInteger.ZERO;
-        return BigInteger.valueOf(eut).abs().multiply(BigInteger.valueOf(duration))
-                .multiply(UNIT).divide(BigInteger.valueOf(firstInputAmount));
+        return BigInteger.valueOf(eut)
+                .abs()
+                .multiply(BigInteger.valueOf(duration))
+                .multiply(UNIT)
+                .divide(BigInteger.valueOf(firstInputAmount));
     }
 
     public static List<Line> describe(Facts f, List<Fuel> fuels) {
@@ -68,7 +108,8 @@ public final class OriginalFluidDisplayRules {
 
         var state = new ArrayList<Part>();
         state.add(part("state", Color.GREEN));
-        state.add(part(f.plasma() ? "plasma" : f.gas() ? "gas" : "liquid",
+        state.add(part(
+                f.plasma() ? "plasma" : f.gas() ? "gas" : "liquid",
                 f.plasma() ? Color.YELLOW : f.gas() ? Color.AQUA : Color.BLUE));
         if (f.plasma() || f.gas()) {
             if (!f.nativeGas()) state.add(part("native_liquid", Color.RED));
@@ -77,8 +118,11 @@ public final class OriginalFluidDisplayRules {
         lines.add(new Line(state));
         if (!f.plasma() && !f.gas() && f.nativeGas()) add(lines, "native_gas_warning", Color.RED);
 
-        add(lines, f.density() > 0 ? "density_heavier" : f.density() < 0 ? "density_lighter" : "density_equal",
-                Color.GREEN, Integer.toString(f.density()));
+        add(
+                lines,
+                f.density() > 0 ? "density_heavier" : f.density() < 0 ? "density_lighter" : "density_equal",
+                Color.GREEN,
+                Integer.toString(f.density()));
         if (f.luminosity() != 0) add(lines, "luminosity", Color.YELLOW, Integer.toString(f.luminosity()));
         if (f.viscosity() != 0) add(lines, "viscosity", Color.BLUE, Integer.toString(f.viscosity()));
         if ((f.flags() & FluidFlags.COOKING_OIL) != 0) add(lines, "cooking_oil", Color.DARK_GREEN);
@@ -92,25 +136,33 @@ public final class OriginalFluidDisplayRules {
         if (f.industrialLubricant()) {
             add(lines, "industrial", Color.GOLD);
             add(lines, "not_flammable", Color.RED);
-        } else for (Fuel fuel : fuels) {
-            if (fuel.scaledPower().signum() <= 0) continue;
-            var parts = new ArrayList<Part>();
-            parts.add(new Part(fuel.nameKey(), Color.RED, List.of()));
-            parts.add(literal(": ", Color.RED));
-            parts.add(literal(number(fuel.scaledPower().divide(UNIT)), Color.WHITE));
-            parts.add(part("gu_per_liter", Color.YELLOW));
-            if (f.amount() > 1) {
-                parts.add(literal("; ", Color.YELLOW));
-                parts.add(literal(number(fuel.scaledPower().multiply(BigInteger.valueOf(f.amount())).divide(UNIT)), Color.WHITE));
-                parts.add(part("gu_total", Color.YELLOW));
+        } else
+            for (Fuel fuel : fuels) {
+                if (fuel.scaledPower().signum() <= 0) continue;
+                var parts = new ArrayList<Part>();
+                parts.add(new Part(fuel.nameKey(), Color.RED, List.of()));
+                parts.add(literal(": ", Color.RED));
+                parts.add(literal(number(fuel.scaledPower().divide(UNIT)), Color.WHITE));
+                parts.add(part("gu_per_liter", Color.YELLOW));
+                if (f.amount() > 1) {
+                    parts.add(literal("; ", Color.YELLOW));
+                    parts.add(literal(
+                            number(fuel.scaledPower()
+                                    .multiply(BigInteger.valueOf(f.amount()))
+                                    .divide(UNIT)),
+                            Color.WHITE));
+                    parts.add(part("gu_total", Color.YELLOW));
+                }
+                lines.add(new Line(parts));
             }
-            lines.add(new Line(parts));
-        }
-        add(lines, switch (f.owner()) {
-            case GT6 -> "owner_gt6";
-            case VANILLA -> "owner_vanilla";
-            case OTHER -> "owner_other";
-        }, Color.DARK_GRAY);
+        add(
+                lines,
+                switch (f.owner()) {
+                    case GT6 -> "owner_gt6";
+                    case VANILLA -> "owner_vanilla";
+                    case OTHER -> "owner_other";
+                },
+                Color.DARK_GRAY);
         return List.copyOf(lines);
     }
 
@@ -130,9 +182,11 @@ public final class OriginalFluidDisplayRules {
     private static void add(List<Line> lines, String key, Color color, Object... args) {
         lines.add(new Line(List.of(part(key, color, args))));
     }
+
     private static Part part(String key, Color color, Object... args) {
         return new Part(PREFIX + key, color, List.of(args));
     }
+
     private static Part literal(String text, Color color) {
         return new Part(null, color, List.of(text));
     }

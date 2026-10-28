@@ -1,14 +1,13 @@
 package gregtech.content.worldgen;
 
-import gregtech.engine.addon.AddonMaterials;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.worldgen.GTOreVeins.OreVein;
 import gregtech.content.worldgen.GTOreVeins.SmallOre;
-
+import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.material.GTMaterialRegistry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -30,11 +29,25 @@ public final class AddonOreVeins {
 
     private AddonOreVeins() {}
 
-    public static List<OreVein> overworldVeins() { return overworldVeins; }
-    public static List<OreVein> endVeins() { return endVeins; }
-    public static List<SmallOre> overworldSmall() { return overworldSmall; }
-    public static List<SmallOre> netherSmall() { return netherSmall; }
-    public static List<SmallOre> endSmall() { return endSmall; }
+    public static List<OreVein> overworldVeins() {
+        return overworldVeins;
+    }
+
+    public static List<OreVein> endVeins() {
+        return endVeins;
+    }
+
+    public static List<SmallOre> overworldSmall() {
+        return overworldSmall;
+    }
+
+    public static List<SmallOre> netherSmall() {
+        return netherSmall;
+    }
+
+    public static List<SmallOre> endSmall() {
+        return endSmall;
+    }
 
     public static void publish(List<Submission> submissions) {
         var taken = new java.util.HashMap<Key, String>();
@@ -47,8 +60,14 @@ public final class AddonOreVeins {
         for (Submission submission : submissions) {
             for (OreVeinDeclaration vein : submission.veins) {
                 claim(taken, submission.addonId, vein.dimension(), "large", vein.name());
-                OreVein resolved = new OreVein(vein.name(), vein.minY(), vein.maxY(), vein.weight(), vein.density(),
-                        vein.size(), ore(submission.addonId, vein.name(), vein.top()),
+                OreVein resolved = new OreVein(
+                        vein.name(),
+                        vein.minY(),
+                        vein.maxY(),
+                        vein.weight(),
+                        vein.density(),
+                        vein.size(),
+                        ore(submission.addonId, vein.name(), vein.top()),
                         ore(submission.addonId, vein.name(), vein.bottom()),
                         ore(submission.addonId, vein.name(), vein.between()),
                         ore(submission.addonId, vein.name(), vein.spread()));
@@ -57,7 +76,11 @@ public final class AddonOreVeins {
             }
             for (SmallOreDeclaration ore : submission.smallOres) {
                 claim(taken, submission.addonId, ore.dimension(), "small", ore.name());
-                SmallOre resolved = new SmallOre(ore.name(), ore.minY(), ore.maxY(), ore.amount(),
+                SmallOre resolved = new SmallOre(
+                        ore.name(),
+                        ore.minY(),
+                        ore.maxY(),
+                        ore.amount(),
                         ore(submission.addonId, ore.name(), ore.material()));
                 if (SmallOreDeclaration.NETHER.equals(ore.dimension())) netherSmallOres.add(resolved);
                 else if (SmallOreDeclaration.END.equals(ore.dimension())) endSmallOres.add(resolved);
@@ -86,12 +109,13 @@ public final class AddonOreVeins {
             taken.put(new Key(SmallOreDeclaration.END, "small", ore.name()), "a built-in vein");
     }
 
-    private static void claim(java.util.Map<Key, String> taken, String addonId, String dimension, String kind, String name) {
+    private static void claim(
+            java.util.Map<Key, String> taken, String addonId, String dimension, String kind, String name) {
         String previous = taken.putIfAbsent(new Key(dimension, kind, name), "addon '" + addonId + "'");
         if (previous == null) return;
         String label = "large".equals(kind) ? "ore vein" : "small ore";
-        throw new IllegalStateException("Addon '" + addonId + "' " + label + " '" + name
-                + "' for " + dimension + " is already " + previous);
+        throw new IllegalStateException(
+                "Addon '" + addonId + "' " + label + " '" + name + "' for " + dimension + " is already " + previous);
     }
 
     private static void fit(List<OreVein> base, List<OreVein> added, int emptyWeight) {
@@ -103,15 +127,17 @@ public final class AddonOreVeins {
 
     private static GTMaterial ore(String addonId, String vein, String name) {
         GTMaterial found = GTMaterialRegistry.get(name);
-        if (!found.isValid()) throw new IllegalStateException("Addon '" + addonId + "' ore vein '" + vein
-                + "' uses unknown material '" + name + "'");
+        if (!found.isValid())
+            throw new IllegalStateException(
+                    "Addon '" + addonId + "' ore vein '" + vein + "' uses unknown material '" + name + "'");
         GTMaterial material = found.resolve();
-        if (material.has(MaterialProperty.HIDDEN)) throw new IllegalStateException("Addon '" + addonId
-                + "' ore vein '" + vein + "' cannot use hidden material '" + material.getName() + "'");
+        if (material.has(MaterialProperty.HIDDEN))
+            throw new IllegalStateException("Addon '" + addonId + "' ore vein '" + vein
+                    + "' cannot use hidden material '" + material.getName() + "'");
         if (AddonMaterials.hasOreForm(material) || material.has(MaterialProperty.GENERATE_ORE) || builtinOre(material))
             return material;
-        throw new IllegalStateException("Addon '" + addonId + "' ore vein '" + vein
-                + "' material '" + material.getName() + "' has no ore");
+        throw new IllegalStateException(
+                "Addon '" + addonId + "' ore vein '" + vein + "' material '" + material.getName() + "' has no ore");
     }
 
     private static boolean builtinOre(GTMaterial material) {

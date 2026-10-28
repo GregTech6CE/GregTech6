@@ -3,6 +3,7 @@ package gregtech.content.item.behavior;
 import gregtech.content.block.misc.CFoamBlock;
 import gregtech.content.item.behavior.ItemBehaviors.Consumable;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -10,8 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6 {@code Behavior_Spray_Foam_Remover} ({@code Behavior_Spray_Foam_Remover.java:46-132}) — the
@@ -61,17 +60,34 @@ public final class BehaviorSprayFoamRemover {
 
     /** The port's can triple: the full id is registered first, the {@code _2} one is the used can. */
     public static Consumable cFoamRemovalSpray() {
-        return new Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+        return new Consumable(
+                ItemBehaviors.stack("gt6ce:empty_spray_can"),
                 ItemBehaviors.stack("gt6ce:c_foam_removal_spray_2"),
                 ItemBehaviors.stack("gt6ce:c_foam_removal_spray"),
                 USES * USES_MULTIPLIER);
     }
 
     /** GT6 {@code Behavior_Spray_Foam_Remover:58-93}: one click. */
-    public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack stack,
-                                float hitX, float hitY, float hitZ) {
-        return ItemBehaviors.useSpray(level, pos, side, player, stack, cFoamRemovalSpray(),
-                BehaviorSprayFoamRemover::remove, hitX, hitY, hitZ);
+    public static Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack stack,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        return ItemBehaviors.useSpray(
+                level,
+                pos,
+                side,
+                player,
+                stack,
+                cFoamRemovalSpray(),
+                BehaviorSprayFoamRemover::remove,
+                hitX,
+                hitY,
+                hitZ);
     }
 
     /**
@@ -79,11 +95,19 @@ public final class BehaviorSprayFoamRemover {
      *
      * @return {@link #REMOVE_COST} when a foam block was removed, {@code 0} otherwise
      */
-    public static long remove(Level level, BlockPos pos, Direction side, long uses, @Nullable Player player,
-                              ItemStack can, float hitX, float hitY, float hitZ) {
-        if (uses < 1L) return 0L;                                     // :96
+    public static long remove(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            long uses,
+            @Nullable Player player,
+            ItemStack can,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        if (uses < 1L) return 0L; // :96
         BlockState state = level.getBlockState(pos);
-        if (!(state.getBlock() instanceof CFoamBlock)) return 0L;      // :101, :113 replaced
+        if (!(state.getBlock() instanceof CFoamBlock)) return 0L; // :101, :113 replaced
         // GT6's removeFoam is `setBlockToAir` with WD's flag 3 on both foam blocks.
         if (!level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3)) return 0L;
         return REMOVE_COST;

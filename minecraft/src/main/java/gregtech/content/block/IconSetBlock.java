@@ -1,11 +1,11 @@
 package gregtech.content.block;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 
 /** Simple decorative block that renders its texture from {@code gt6ce:block/iconsets/<iconName>}. */
 public class IconSetBlock extends Block {
@@ -16,7 +16,9 @@ public class IconSetBlock extends Block {
         this.iconName = iconName;
     }
 
-    public String iconName() { return iconName; }
+    public String iconName() {
+        return iconName;
+    }
 
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {

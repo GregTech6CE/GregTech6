@@ -7,7 +7,9 @@ import java.util.function.Predicate;
 /** Per-route, bounded readiness polling; positions must be immutable and predicates non-mutating. */
 public final class PendingRouteFrontier<P> {
     public static final int POLL_BUDGET = 16;
+
     public record Ready<P>(P position, boolean rescan) {}
+
     private final LinkedHashMap<P, Boolean> pending = new LinkedHashMap<>();
 
     /** A missing search boundary needs a fresh search once readable. */
@@ -22,7 +24,9 @@ public final class PendingRouteFrontier<P> {
     }
 
     /** Reset/new scan/successful resolution forgets pending work and its cursor. */
-    public void clear() { pending.clear(); }
+    public void clear() {
+        pending.clear();
+    }
 
     /**
      * Return and remove at most one ready position, or null. At most 16 distinct

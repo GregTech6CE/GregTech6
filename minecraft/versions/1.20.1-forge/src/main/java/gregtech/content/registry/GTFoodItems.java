@@ -3,13 +3,12 @@ package gregtech.content.registry;
 import gregtech.GregTech;
 import gregtech.content.data.generated.GTFoodItemsGen;
 import gregtech.content.item.TechItem;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The registry for GT6 food items the port does <em>not</em> have yet - the gap registry of the food
@@ -55,11 +54,11 @@ public final class GTFoodItems {
     /** Registers the gap items; each one gets GT6's own food values through the generated table. */
     public static int registerAll() {
         for (String id : GTFoodItemsGen.GAP) {
-            ITEMS.register(id, () -> new TechItem(id, true,
-                    gregtech.content.food.GTFoodItems.itemProperties(id)));
+            ITEMS.register(id, () -> new TechItem(id, true, gregtech.content.food.GTFoodItems.itemProperties(id)));
             REGISTERED.add(id);
         }
-        GregTech.LOGGER.info("GT6 food line: {} items in MultiItemFood, {} registered by GTMultiItems, "
+        GregTech.LOGGER.info(
+                "GT6 food line: {} items in MultiItemFood, {} registered by GTMultiItems, "
                         + "{} registered here as a gap, {} recorded in SKIPPED",
                 gregtech.content.food.GTFoodItems.rows().size(),
                 gregtech.content.food.GTFoodItems.registered(),

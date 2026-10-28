@@ -1,13 +1,12 @@
 package gregtech.engine.energy;
 
+import java.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-
-import java.util.*;
 
 /**
  * Auxiliary per-dimension conductor adjacency index. Actual EU transfer traverses
@@ -31,8 +30,7 @@ public final class EnergyNet {
     public static void onPlace(Level level, BlockPos pos) {
         if (level.isClientSide) return;
         // The key outlives the call. A mutable position would move inside the map if the caller reused it.
-        GRAPHS.computeIfAbsent(level, k -> new HashMap<>())
-                .putIfAbsent(pos.immutable(), new HashSet<>());
+        GRAPHS.computeIfAbsent(level, k -> new HashMap<>()).putIfAbsent(pos.immutable(), new HashSet<>());
     }
 
     /**
@@ -101,8 +99,8 @@ public final class EnergyNet {
      * walks the edges this position still has, so a connection closed first and a block removed second
      * never saw that stale reverse edge and could not drop it.</p>
      */
-    public static void onConnectionChange(Level level, BlockPos pos, BlockState state,
-                                          BooleanProperty[] connectionProps) {
+    public static void onConnectionChange(
+            Level level, BlockPos pos, BlockState state, BooleanProperty[] connectionProps) {
         if (level.isClientSide) return;
         Map<BlockPos, Set<BlockPos>> graph = GRAPHS.get(level);
         if (graph == null) return;

@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.engine.logistics;
 
 import java.util.*;
@@ -27,8 +26,11 @@ public final class LongDistanceNetwork {
 
     public interface World<P, E> {
         String identity(P position);
+
         Iterable<P> neighbors(P position);
+
         E endpoint(P position);
+
         P front(E endpoint);
     }
 

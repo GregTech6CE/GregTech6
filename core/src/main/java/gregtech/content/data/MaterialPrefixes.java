@@ -3,13 +3,11 @@ package gregtech.content.data;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
-import gregtech.engine.prefix.BlockMaterialPrefix;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialForms;
-import gregtech.engine.prefix.PrefixRegistry;
-import gregtech.engine.prefix.BlockMaterialPrefix.SoundType;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockMaterialPrefix.MapColor;
-
+import gregtech.engine.prefix.BlockMaterialPrefix.SoundType;
+import gregtech.engine.prefix.PrefixRegistry;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -32,11 +30,25 @@ public class MaterialPrefixes {
             this.blockDelegate = blockDelegate;
         }
 
-        public String getName() { return name; }
-        public MaterialPrefix getDelegate() { return itemDelegate; }
-        public BlockMaterialPrefix getBlockDelegate() { return blockDelegate; }
-        public boolean hasDelegate() { return itemDelegate != null; }
-        public boolean isBlock() { return blockDelegate != null; }
+        public String getName() {
+            return name;
+        }
+
+        public MaterialPrefix getDelegate() {
+            return itemDelegate;
+        }
+
+        public BlockMaterialPrefix getBlockDelegate() {
+            return blockDelegate;
+        }
+
+        public boolean hasDelegate() {
+            return itemDelegate != null;
+        }
+
+        public boolean isBlock() {
+            return blockDelegate != null;
+        }
     }
 
     private static final Map<String, Entry> REGISTRY = new LinkedHashMap<>();
@@ -102,8 +114,7 @@ public class MaterialPrefixes {
             return this;
         }
 
-        BlockBuilder physics(float hardness, float resistance, int harvestOffset,
-                             MapColor mapColor, SoundType sound) {
+        BlockBuilder physics(float hardness, float resistance, int harvestOffset, MapColor mapColor, SoundType sound) {
             this.hardness = hardness;
             this.resistance = resistance;
             this.harvestOffset = harvestOffset;
@@ -118,8 +129,20 @@ public class MaterialPrefixes {
         }
 
         BlockMaterialPrefix build() {
-            return BlockMaterialPrefix.define(name, displayName, namePrefix, nameSuffix, validator,
-                    hardness, resistance, harvestOffset, mapColor, sound, falling, materialWeight, textureFileName);
+            return BlockMaterialPrefix.define(
+                    name,
+                    displayName,
+                    namePrefix,
+                    nameSuffix,
+                    validator,
+                    hardness,
+                    resistance,
+                    harvestOffset,
+                    mapColor,
+                    sound,
+                    falling,
+                    materialWeight,
+                    textureFileName);
         }
     }
 
@@ -137,8 +160,7 @@ public class MaterialPrefixes {
         return null;
     }
 
-    public static final Entry
-            ore = register("ore"),
+    public static final Entry ore = register("ore"),
             oreBlackgranite = register("oreBlackgranite"),
             oreRedgranite = register("oreRedgranite"),
             oreVanillastone = register("oreVanillastone"),
@@ -569,6 +591,7 @@ public class MaterialPrefixes {
 
     /** Block prefixes from GT6 {@code OP} (storage blocks, casings, partial crates). */
     public static Entry casingMachine;
+
     public static Entry casingMachineDouble;
     public static Entry casingMachineQuadruple;
     public static Entry casingMachineDense;
@@ -607,8 +630,7 @@ public class MaterialPrefixes {
         // GT6 OP.java:186-…: the machine casings are `PARTS` — not "smithable parts of an ingot/gem
         // material" as the port approximated, which left PARTS materials such as the element metals
         // (Trinium, Naquadah, Adamantium …) and the plastics (Teflon, PVC, Bakelite) without casings.
-        Predicate<GTMaterial> hasSmithableParts = m ->
-                m.has(MaterialProperty.GENERATE_PARTS)
+        Predicate<GTMaterial> hasSmithableParts = m -> m.has(MaterialProperty.GENERATE_PARTS)
                         && m.has(MaterialProperty.SMITHABLE)
                         && (MaterialPrefix.ingot.isValidFor(m) || MaterialPrefix.gem.isValidFor(m))
                 || MaterialForms.has(m, "PARTS");

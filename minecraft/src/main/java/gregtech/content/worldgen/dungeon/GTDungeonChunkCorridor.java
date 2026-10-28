@@ -47,8 +47,7 @@ public class GTDungeonChunkCorridor extends GTDungeonChunkPillar {
         }
 
         // GT6's centre lamp (:81-94).
-        if (skyOrLiquid(data, 7, 7) || skyOrLiquid(data, 7, 8) || skyOrLiquid(data, 8, 7)
-                || skyOrLiquid(data, 8, 8)) {
+        if (skyOrLiquid(data, 7, 7) || skyOrLiquid(data, 7, 8) || skyOrLiquid(data, 8, 7) || skyOrLiquid(data, 8, 8)) {
             data.glassglow(7, 4, 7);
             data.glassglow(7, 4, 8);
             data.glassglow(8, 4, 7);

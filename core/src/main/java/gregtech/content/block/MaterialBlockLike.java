@@ -5,5 +5,6 @@ import gregtech.engine.prefix.BlockMaterialPrefix;
 
 public interface MaterialBlockLike {
     BlockMaterialPrefix prefix();
+
     GTMaterial material();
 }

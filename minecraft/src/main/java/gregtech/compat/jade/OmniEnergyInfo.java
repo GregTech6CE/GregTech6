@@ -26,24 +26,42 @@ final class OmniEnergyInfo {
                 info.state(control.enabled(), control.running());
                 info.flag("delivering", control.active());
                 if (!node.isSolar()) {
-                    info.line("rated_input", node.getEnergySizeInputRecommended(spec.inType(), null), spec.inType().getShortName());
-                    info.line("packet_range", JadeInspection.label("input"), node.getEnergySizeInputMin(spec.inType(), null),
-                            node.getEnergySizeInputMax(spec.inType(), null), spec.inType().getShortName());
+                    info.line(
+                            "rated_input",
+                            node.getEnergySizeInputRecommended(spec.inType(), null),
+                            spec.inType().getShortName());
+                    info.line(
+                            "packet_range",
+                            JadeInspection.label("input"),
+                            node.getEnergySizeInputMin(spec.inType(), null),
+                            node.getEnergySizeInputMax(spec.inType(), null),
+                            spec.inType().getShortName());
                 }
-                info.line("rated_output", node.getEnergySizeOutputRecommended(spec.outType(), null), spec.outType().getShortName());
-                info.line("packet_range", JadeInspection.label("output"), node.getEnergySizeOutputMin(spec.outType(), null),
-                        node.getEnergySizeOutputMax(spec.outType(), null), spec.outType().getShortName());
+                info.line(
+                        "rated_output",
+                        node.getEnergySizeOutputRecommended(spec.outType(), null),
+                        spec.outType().getShortName());
+                info.line(
+                        "packet_range",
+                        JadeInspection.label("output"),
+                        node.getEnergySizeOutputMin(spec.outType(), null),
+                        node.getEnergySizeOutputMax(spec.outType(), null),
+                        spec.outType().getShortName());
                 long capacity = node.getEnergyCapacity(spec.inType(), null);
-                if (capacity > 0) info.line("buffer", node.stored(), capacity, spec.inType().getShortName());
+                if (capacity > 0)
+                    info.line("buffer", node.stored(), capacity, spec.inType().getShortName());
             }
             if (control.supportsMode()) info.line("mode", control.mode());
             if (node.isSolar()) {
                 info.flag("sky", node.solarSkyVisible());
                 info.line("solar_remaining", node.stored());
             }
-            if (node.isElectricTransformer() || node.isRotationTransformer()) info.flag("reversed", node.transformerInverted());
+            if (node.isElectricTransformer() || node.isRotationTransformer())
+                info.flag("reversed", node.transformerInverted());
             if (node.isOriginalMotor()) {
-                info.line("rotation", JadeInspection.label(node.motorCounterClockwise() ? "counterclockwise" : "clockwise"));
+                info.line(
+                        "rotation",
+                        JadeInspection.label(node.motorCounterClockwise() ? "counterclockwise" : "clockwise"));
                 // GT6's entity rotation is 5/10 degrees per tick, not the shaft's energy packet size.
                 var state = node.getBlockState();
                 if (state.hasProperty(gregtech.content.block.energy.RotaryConverterBlock.ACTIVITY)
@@ -64,20 +82,33 @@ final class OmniEnergyInfo {
             info.state(control.enabled(), control.running());
             info.flag("delivering", control.active());
             info.line("rated_input", spec.input(), spec.inputType().getShortName());
-            info.line("packet_range", JadeInspection.label("input"), converter.getEnergySizeInputMin(spec.inputType(), null),
-                    converter.getEnergySizeInputMax(spec.inputType(), null), spec.inputType().getShortName());
+            info.line(
+                    "packet_range",
+                    JadeInspection.label("input"),
+                    converter.getEnergySizeInputMin(spec.inputType(), null),
+                    converter.getEnergySizeInputMax(spec.inputType(), null),
+                    spec.inputType().getShortName());
             info.line("rated_output", spec.output(), spec.outputType().getShortName());
             info.line("converter_input", converter.lastInput(), spec.inputType().getShortName());
             info.line("transferred", converter.lastOutput(), spec.outputType().getShortName());
-            info.line("converter_input_face", spec.backInputOnly() ? OmniTransportInfo.side(converter.front().getOpposite())
-                    : JadeInspection.label("except_output"));
+            info.line(
+                    "converter_input_face",
+                    spec.backInputOnly()
+                            ? OmniTransportInfo.side(converter.front().getOpposite())
+                            : JadeInspection.label("except_output"));
             info.line("converter_output_face", OmniTransportInfo.side(converter.front()));
         } else if (entity instanceof PumpBlockEntity pump) {
             info.line("stored", pump.storedPumpEnergy(), "RU");
             var tank = pump.tankForInspection();
             info.fluid("output", 0, tank.getFluid(), tank.getAmount(), tank.getCapacity());
-            info.line("state", JadeInspection.label(!tank.isEmpty() ? "draining" : pump.storedPumpEnergy()
-                    >= gregtech.engine.energy.PumpWorkRules.START_ENERGY ? "searching" : "waiting"));
+            info.line(
+                    "state",
+                    JadeInspection.label(
+                            !tank.isEmpty()
+                                    ? "draining"
+                                    : pump.storedPumpEnergy() >= gregtech.engine.energy.PumpWorkRules.START_ENERGY
+                                            ? "searching"
+                                            : "waiting"));
         } else if (entity instanceof AxialGeneratorBlockEntity axial) {
             var control = axial.machineControl(null);
             info.state(control.enabled(), control.running());

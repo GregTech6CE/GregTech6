@@ -32,7 +32,11 @@ public final class ThermalStep {
     public static final int PASSIVE_DRIFT_TICKS = 10;
     private static final double LONG_UPPER_BOUND = 0x1.0p63;
 
-    public enum EnergyKind { HEAT, COOLING }
+    public enum EnergyKind {
+        HEAT,
+        COOLING
+    }
+
     private ThermalStep() {}
 
     /** Original mass is shell plus contents; each whole 100 kg adds one HU per Kelvin. */
@@ -107,13 +111,18 @@ public final class ThermalStep {
     /** Mixing changes current temperature only; energy, prior-temperature and cooldown are untouched. */
     public static ThermalState mix(ThermalState state, long incomingK, double existingMassKg, double incomingMassKg) {
         Objects.requireNonNull(state, "state");
-        return new ThermalState(mixTemperature(state.temperatureK(), incomingK, existingMassKg, incomingMassKg),
-                state.previousTemperatureK(), state.energyHU(), state.cooldownTicks());
+        return new ThermalState(
+                mixTemperature(state.temperatureK(), incomingK, existingMassKg, incomingMassKg),
+                state.previousTemperatureK(),
+                state.energyHU(),
+                state.cooldownTicks());
     }
 
     private static void requireMass(double massKg, String label) {
-        if (!Double.isFinite(massKg) || massKg < 0) throw new IllegalArgumentException(label + " must be finite and nonnegative");
+        if (!Double.isFinite(massKg) || massKg < 0)
+            throw new IllegalArgumentException(label + " must be finite and nonnegative");
     }
+
     private static void requireKelvin(long temperatureK, String label) {
         if (temperatureK < 0) throw new IllegalArgumentException(label + " must be nonnegative absolute Kelvin");
     }

@@ -1,3 +1,41 @@
 package gregtech.content.registry;
-import gregtech.content.block.BarsRules;import gregtech.content.block.misc.*;import net.minecraft.world.level.block.Block;import net.minecraft.world.level.block.SoundType;import net.minecraft.world.level.block.state.BlockBehaviour;import net.minecraft.world.level.material.MapColor;import net.minecraft.world.item.Item;
-public final class GTBars {private GTBars(){}private static final java.util.Map<String,RegisteredBlock<BarsBlock>> ALL=new java.util.LinkedHashMap<>();public static java.util.Collection<RegisteredBlock<BarsBlock>> all(){return java.util.List.copyOf(ALL.values());}public static BarsBlock get(String id){return ALL.get(id).get();}public static void initialize(){for(var spec:BarsRules.SPECS){var b=RegisteredBlock.registerBlock(spec.id(),()->new BarsBlock(spec.material(),spec.tint(),spec.harvest(),BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(5,spec.resistance()).requiresCorrectToolForDrops().sound(SoundType.METAL).noOcclusion()));ALL.put(spec.id(),b);GTBlocks.BLOCK_ITEMS.register(spec.id(),()->new BarsBlockItem(b.get(),new Item.Properties()));}}}
+
+import gregtech.content.block.BarsRules;
+import gregtech.content.block.misc.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+
+public final class GTBars {
+    private GTBars() {}
+
+    private static final java.util.Map<String, RegisteredBlock<BarsBlock>> ALL = new java.util.LinkedHashMap<>();
+
+    public static java.util.Collection<RegisteredBlock<BarsBlock>> all() {
+        return java.util.List.copyOf(ALL.values());
+    }
+
+    public static BarsBlock get(String id) {
+        return ALL.get(id).get();
+    }
+
+    public static void initialize() {
+        for (var spec : BarsRules.SPECS) {
+            var b = RegisteredBlock.registerBlock(
+                    spec.id(),
+                    () -> new BarsBlock(
+                            spec.material(),
+                            spec.tint(),
+                            spec.harvest(),
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.METAL)
+                                    .strength(5, spec.resistance())
+                                    .requiresCorrectToolForDrops()
+                                    .sound(SoundType.METAL)
+                                    .noOcclusion()));
+            ALL.put(spec.id(), b);
+            GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BarsBlockItem(b.get(), new Item.Properties()));
+        }
+    }
+}

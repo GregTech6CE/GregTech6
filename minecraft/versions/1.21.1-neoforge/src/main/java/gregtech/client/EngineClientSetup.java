@@ -1,15 +1,17 @@
 package gregtech.client;
 
+import gregtech.content.blockentity.machine.*;
 import gregtech.content.registry.*;
 import gregtech.engine.machine.EngineType;
-import gregtech.content.blockentity.machine.*;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.*;
 
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
-        bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(
+        modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
+        bus = EventBusSubscriber.Bus.MOD,
+        value = Dist.CLIENT)
 public final class EngineClientSetup {
     private EngineClientSetup() {}
 
@@ -26,21 +28,25 @@ public final class EngineClientSetup {
     public static void blocks(RegisterColorHandlersEvent.Block e) {
         for (var h : GTEngines.all()) {
             var b = h.get();
-            e.register((state, level, pos, t) -> {
-                if (t == 0) return b.tintRgb();
-                if (t != 1) return 0xFFFFFF;
-                if (level != null && pos != null) {
-                    var be = level.getBlockEntity(pos);
-                    if (be instanceof PistonEngineBlockEntity piston) return piston.coreColor();
-                    if (be instanceof KineticSteamEngineBlockEntity steam)
-                        return steamColor(steam.pressureState());
-                }
-                return core(b.engineType(), b.tintRgb());
-            }, b);
+            e.register(
+                    (state, level, pos, t) -> {
+                        if (t == 0) return b.tintRgb();
+                        if (t != 1) return 0xFFFFFF;
+                        if (level != null && pos != null) {
+                            var be = level.getBlockEntity(pos);
+                            if (be instanceof PistonEngineBlockEntity piston) return piston.coreColor();
+                            if (be instanceof KineticSteamEngineBlockEntity steam)
+                                return steamColor(steam.pressureState());
+                        }
+                        return core(b.engineType(), b.tintRgb());
+                    },
+                    b);
         }
         for (var h : GTPumps.all())
             e.register((s, l, p, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF, h.get());
-        e.register((s, l, p, t) -> t == 0 ? GTLogisticsTank.BLOCK.get().spec().material().getColor() : 0xFFFFFF,
+        e.register(
+                (s, l, p, t) ->
+                        t == 0 ? GTLogisticsTank.BLOCK.get().spec().material().getColor() : 0xFFFFFF,
                 GTLogisticsTank.BLOCK.get());
         for (var h : GTBoilers.all())
             e.register((s, l, p, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF, h.get());
@@ -50,24 +56,30 @@ public final class EngineClientSetup {
     public static void items(RegisterColorHandlersEvent.Item e) {
         for (var h : GTEngines.all()) {
             var b = h.get();
-            e.register(ItemColorARGB.opaque((s, t) ->
-                    t == 0 ? b.tintRgb() : t == 1 ? core(b.engineType(), b.tintRgb()) : 0xFFFFFF), b.asItem());
+            e.register(
+                    ItemColorARGB.opaque(
+                            (s, t) -> t == 0 ? b.tintRgb() : t == 1 ? core(b.engineType(), b.tintRgb()) : 0xFFFFFF),
+                    b.asItem());
         }
         for (var h : GTPumps.all())
-            e.register(ItemColorARGB.opaque((s, t) ->
-                    t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF), h.get().asItem());
-        e.register(ItemColorARGB.opaque((s, t) ->
+            e.register(
+                    ItemColorARGB.opaque(
+                            (s, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF),
+                    h.get().asItem());
+        e.register(
+                ItemColorARGB.opaque((s, t) ->
                         t == 0 ? GTLogisticsTank.BLOCK.get().spec().material().getColor() : 0xFFFFFF),
                 GTLogisticsTank.BLOCK.get().asItem());
         for (var h : GTBoilers.all())
-            e.register(ItemColorARGB.opaque((s, t) ->
-                    t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF), h.get().asItem());
+            e.register(
+                    ItemColorARGB.opaque(
+                            (s, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF),
+                    h.get().asItem());
     }
 
     private static int steamColor(int state) {
         int p = Math.max(0, Math.min(31, state));
-        return p < 16 ? ((p * 17) << 8) | (255 - p * 17)
-                : ((p - 16) * 17 << 16) | ((255 - (p - 16) * 17) << 8);
+        return p < 16 ? ((p * 17) << 8) | (255 - p * 17) : ((p - 16) * 17 << 16) | ((255 - (p - 16) * 17) << 8);
     }
 
     @SubscribeEvent
@@ -76,10 +88,10 @@ public final class EngineClientSetup {
         e.registerBlockEntityRenderer(GTBlockEntities.STEAM_BOILER.get(), BoilerBarometerRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.SANDWICH_BLOCK.get(), SandwichRenderer::new);
         gregtech.client.LayoutPartClients.collect();
-        e.registerBlockEntityRenderer(GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),
-                gregtech.client.FunctionalPartRenderer::new);
-        e.registerBlockEntityRenderer(GTBlockEntities.ADDON_ENERGY_PART.get(),
-                gregtech.client.FunctionalPartRenderer::new);
+        e.registerBlockEntityRenderer(
+                GTBlockEntities.ADDON_FUNCTIONAL_PART.get(), gregtech.client.FunctionalPartRenderer::new);
+        e.registerBlockEntityRenderer(
+                GTBlockEntities.ADDON_ENERGY_PART.get(), gregtech.client.FunctionalPartRenderer::new);
         gregtech.client.BehaviorMachineClients.collect();
         var behaviorTypes = new java.util.LinkedHashSet<net.minecraft.world.level.block.entity.BlockEntityType<?>>();
         for (var holder : gregtech.platform.neoforge.machine.BehaviorMachineRegistration.all()) {
@@ -87,13 +99,16 @@ public final class EngineClientSetup {
             if (type != null) behaviorTypes.add(type);
         }
         for (var type : behaviorTypes)
-            e.registerBlockEntityRenderer((net.minecraft.world.level.block.entity.BlockEntityType<
-                    net.minecraft.world.level.block.entity.BlockEntity>) (Object) type,
+            e.registerBlockEntityRenderer(
+                    (net.minecraft.world.level.block.entity.BlockEntityType<
+                                    net.minecraft.world.level.block.entity.BlockEntity>)
+                            (Object) type,
                     gregtech.client.BehaviorMachineRenderer::new);
         for (var h : GTEngines.all())
             if (h.get().engineType() == EngineType.STEAM)
                 e.registerBlockEntityRenderer(
                         (net.minecraft.world.level.block.entity.BlockEntityType<KineticSteamEngineBlockEntity>)
-                                h.get().getBeType(), SteamEngineRenderer::new);
+                                h.get().getBeType(),
+                        SteamEngineRenderer::new);
     }
 }

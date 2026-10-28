@@ -1,7 +1,7 @@
 package gregtech.content.energy;
 
-import gregtech.engine.energy.TransformerControlState;
 import gregtech.api.machine.MachineControl;
+import gregtech.engine.energy.TransformerControlState;
 import net.minecraft.nbt.CompoundTag;
 
 /** Native NBT/control interface over the single original activity/mode state machine. */
@@ -19,11 +19,12 @@ public final class ElectricTransformerControl extends TransformerControlState im
     }
 
     public void load(CompoundTag tag) {
-        restore(new Snapshot(
-                !tag.getBoolean("gt.transformer_stopped"),
-                tag.getInt("gt.transformer_mode"),
-                tag.getBoolean("gt.transformer_possible"),
-                tag.getBoolean("gt.transformer_emitted")),
+        restore(
+                new Snapshot(
+                        !tag.getBoolean("gt.transformer_stopped"),
+                        tag.getInt("gt.transformer_mode"),
+                        tag.getBoolean("gt.transformer_possible"),
+                        tag.getBoolean("gt.transformer_emitted")),
                 tag.getBoolean("gt.inverted"));
     }
 }

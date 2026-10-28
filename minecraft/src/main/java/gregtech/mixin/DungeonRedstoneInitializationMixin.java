@@ -14,7 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /** Shape postprocessing alone does not initialize the power of generated dungeon wires. */
 @Mixin(LevelChunk.class)
 public abstract class DungeonRedstoneInitializationMixin {
-    @Unique private final java.util.List<BlockPos> gregtech$dungeonWires = new java.util.ArrayList<>();
+    @Unique
+    private final java.util.List<BlockPos> gregtech$dungeonWires = new java.util.ArrayList<>();
 
     @Inject(method = "postProcessGeneration", at = @At("HEAD"), require = 1)
     private void gregtech$rememberWires(CallbackInfo callback) {
@@ -24,10 +25,13 @@ public abstract class DungeonRedstoneInitializationMixin {
         for (int section = 0; section < sections.length; section++) {
             if (sections[section] == null) continue;
             for (short offset : sections[section]) {
-                var pos = ProtoChunk.unpackOffsetCoordinates(offset, chunk.getSectionYFromSectionIndex(section), chunk.getPos());
+                var pos = ProtoChunk.unpackOffsetCoordinates(
+                        offset, chunk.getSectionYFromSectionIndex(section), chunk.getPos());
                 if (chunk.getBlockState(pos).is(Blocks.REDSTONE_WIRE)
-                        && BuiltInRegistries.BLOCK.getKey(chunk.getBlockState(pos.below()).getBlock()).getNamespace().equals("gt6ce"))
-                    gregtech$dungeonWires.add(pos);
+                        && BuiltInRegistries.BLOCK
+                                .getKey(chunk.getBlockState(pos.below()).getBlock())
+                                .getNamespace()
+                                .equals("gt6ce")) gregtech$dungeonWires.add(pos);
             }
         }
     }
@@ -38,8 +42,7 @@ public abstract class DungeonRedstoneInitializationMixin {
         var level = chunk.getLevel();
         for (var pos : gregtech$dungeonWires) {
             var state = level.getBlockState(pos);
-            if (state.is(Blocks.REDSTONE_WIRE))
-                level.neighborChanged(pos, Blocks.REDSTONE_WIRE, pos);
+            if (state.is(Blocks.REDSTONE_WIRE)) level.neighborChanged(pos, Blocks.REDSTONE_WIRE, pos);
         }
         gregtech$dungeonWires.clear();
     }

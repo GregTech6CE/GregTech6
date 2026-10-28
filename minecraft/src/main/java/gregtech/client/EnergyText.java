@@ -1,14 +1,13 @@
 package gregtech.client;
 
+import java.util.Locale;
+import java.util.Optional;
+import java.util.regex.Pattern;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
-
-import java.util.Locale;
-import java.util.Optional;
-import java.util.regex.Pattern;
 
 /** Shared presentation colours for energy names and units, independent of the tooltip provider. */
 public final class EnergyText {
@@ -45,18 +44,24 @@ public final class EnergyText {
         Component named = names(source);
         MutableComponent result = Component.empty();
         boolean[] changed = {false};
-        named.visit((style, text) -> {
-            var matcher = UNIT.matcher(text);
-            int start = 0;
-            while (matcher.find()) {
-                changed[0] = true;
-                if (start < matcher.start()) result.append(Component.literal(text.substring(start, matcher.start())).setStyle(style));
-                result.append(Component.literal(matcher.group()).setStyle(style.withColor(color(matcher.group()))));
-                start = matcher.end();
-            }
-            if (start < text.length()) result.append(Component.literal(text.substring(start)).setStyle(style));
-            return Optional.empty();
-        }, Style.EMPTY);
+        named.visit(
+                (style, text) -> {
+                    var matcher = UNIT.matcher(text);
+                    int start = 0;
+                    while (matcher.find()) {
+                        changed[0] = true;
+                        if (start < matcher.start())
+                            result.append(Component.literal(text.substring(start, matcher.start()))
+                                    .setStyle(style));
+                        result.append(
+                                Component.literal(matcher.group()).setStyle(style.withColor(color(matcher.group()))));
+                        start = matcher.end();
+                    }
+                    if (start < text.length())
+                        result.append(Component.literal(text.substring(start)).setStyle(style));
+                    return Optional.empty();
+                },
+                Style.EMPTY);
         return changed[0] ? result : named;
     }
 
@@ -65,7 +70,8 @@ public final class EnergyText {
         if (source.getContents() instanceof TranslatableContents translated) {
             Object[] args = translated.getArgs().clone();
             for (int i = 0; i < args.length; i++) if (args[i] instanceof Component text) args[i] = names(text);
-            result = Component.translatableWithFallback(translated.getKey(), translated.getFallback(), args).setStyle(source.getStyle());
+            result = Component.translatableWithFallback(translated.getKey(), translated.getFallback(), args)
+                    .setStyle(source.getStyle());
             String key = translated.getKey();
             if (key.startsWith("gt.td.short.energy.") || key.startsWith("gt.td.long.energy.")) {
                 result.withStyle(color(key.substring(key.lastIndexOf('.') + 1)));

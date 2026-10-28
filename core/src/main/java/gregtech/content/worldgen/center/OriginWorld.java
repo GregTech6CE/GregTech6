@@ -28,12 +28,19 @@ public interface OriginWorld {
     }
 
     Block getBlock(int x, int y, int z);
+
     boolean setBlock(int x, int y, int z, Block block, int metadata, int flags);
+
     Biome getBiomeGenForCoords(int x, int z);
+
     boolean isInfiniteWaterBiome(String name);
+
     void setSpawnLocation(int x, int y, int z);
+
     void sign(int x, int y, int z, int side, int rotation, String... lines);
+
     void beacon(int x, int y, int z, String primary, String secondary);
+
     void clearNonPlayerEntities(int minX, int minY, int minZ, int maxX, int maxY, int maxZ);
 
     default void biome(Chunk chunk, String name) {

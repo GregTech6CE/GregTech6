@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin({OreFeature.class, ScatteredOreFeature.class})
 public abstract class VanillaOreConfigMixin {
     @Inject(method = "place", at = @At("HEAD"), cancellable = true, require = 1)
-    private void gt6ce$vanillaOres(FeaturePlaceContext<OreConfiguration> context, CallbackInfoReturnable<Boolean> result) {
+    private void gt6ce$vanillaOres(
+            FeaturePlaceContext<OreConfiguration> context, CallbackInfoReturnable<Boolean> result) {
         for (var target : context.config().targetStates) {
             var id = BuiltInRegistries.BLOCK.getKey(target.state.getBlock());
             if (gregtech.content.worldgen.VanillaOreGeneration.disabled(id)) {

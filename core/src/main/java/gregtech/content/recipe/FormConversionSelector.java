@@ -13,9 +13,14 @@ public record FormConversionSelector(int variants, int offset) {
     public boolean matches(int gridSize, int firstOccupiedSlot, int occupiedCells) {
         if (variants == 0) return true;
         // Requested port behavior: preserve unrestricted single-route conversion, anchor multiple routes.
-        return occupiedCells == 1 && gridSize >= offset + 1 && firstOccupiedSlot >= 0
-                && firstOccupiedSlot < gridSize && (variants == 1 || firstOccupiedSlot == offset);
+        return occupiedCells == 1
+                && gridSize >= offset + 1
+                && firstOccupiedSlot >= 0
+                && firstOccupiedSlot < gridSize
+                && (variants == 1 || firstOccupiedSlot == offset);
     }
 
-    public int minimumGridSize() { return offset + 1; }
+    public int minimumGridSize() {
+        return offset + 1;
+    }
 }

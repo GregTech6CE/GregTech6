@@ -12,7 +12,6 @@ public enum ExtenderSpec {
     COMBINED_BRIDGE("inventory_tank_bridge", "bridge_inv_tank", true, true, true, 30502),
     UNIVERSAL("universal_extender", "universal", true, true, false, 30255),
     UNIVERSAL_BRIDGE("universal_bridge", "bridge_universal", true, true, true, 30755);
-
     public final String id, texture;
     public final boolean items, fluids, bridge;
     public final int originalId;

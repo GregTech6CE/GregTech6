@@ -36,5 +36,7 @@ public final class PartGuiLayout {
         for (int i = 0; i < tankCount; i++) tankX[i] = 8 + i * 20;
     }
 
-    public static PartGuiLayout of(LayoutPart part) { return new PartGuiLayout(part); }
+    public static PartGuiLayout of(LayoutPart part) {
+        return new PartGuiLayout(part);
+    }
 }

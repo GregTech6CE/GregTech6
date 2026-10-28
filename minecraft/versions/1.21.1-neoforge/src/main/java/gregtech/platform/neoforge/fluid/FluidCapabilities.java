@@ -10,33 +10,42 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 /** Neo fluid capabilities for display items, portable vessels and the smelting crucible. */
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class FluidCapabilities {
-    private FluidCapabilities() {
-    }
+    private FluidCapabilities() {}
 
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
-        event.registerItem(Capabilities.FluidHandler.ITEM,
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
                 (stack, context) -> new gregtech.engine.fluid.PotionBottleHandler(stack),
                 net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
                         .filter(gregtech.engine.fluid.PotionBottleHandler::acceptsItem)
                         .toArray(net.minecraft.world.item.Item[]::new));
-        event.registerItem(Capabilities.FluidHandler.ITEM,
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((gregtech.content.item.WoodenBucketItem) stack.getItem()).handler(stack),
-                gregtech.content.registry.GTMultiItems.all().stream().map(holder -> holder.get())
+                gregtech.content.registry.GTMultiItems.all().stream()
+                        .map(holder -> holder.get())
                         .filter(item -> item instanceof gregtech.content.item.WoodenBucketItem)
                         .toArray(net.minecraft.world.item.Item[]::new));
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
                 gregtech.content.registry.GTBlockEntities.PORTABLE_CONTAINER.get(),
                 (vessel, side) -> vessel.fluidHandler());
-        event.registerItem(Capabilities.FluidHandler.ITEM,
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((FluidDisplayItem) stack.getItem()).handler(stack),
-                FluidRegistries.ITEMS.getEntries().stream().map(holder -> holder.get())
+                FluidRegistries.ITEMS.getEntries().stream()
+                        .map(holder -> holder.get())
                         .toArray(net.minecraft.world.item.Item[]::new));
-        event.registerItem(Capabilities.FluidHandler.ITEM,
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((gregtech.content.item.PortableFluidContainerItem) stack.getItem()).handler(stack),
-                gregtech.content.registry.GTToolBlocks.PORTABLE.stream().map(block -> block.get().asItem())
+                gregtech.content.registry.GTToolBlocks.PORTABLE.stream()
+                        .map(block -> block.get().asItem())
                         .toArray(net.minecraft.world.item.Item[]::new));
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SmelteryRegistries.SMELTING_CRUCIBLE.get(),
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                SmelteryRegistries.SMELTING_CRUCIBLE.get(),
                 (crucible, side) -> side == Direction.DOWN ? null : crucible.moltenFluidHandler());
     }
 }

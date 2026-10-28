@@ -16,19 +16,40 @@ public final class VanillaMaterialUnificationRecipes {
 
     public static int register() {
         int count = 0;
-        for (String name : new String[]{"Iron", "Gold", "Copper", "Netherite", "Diamond", "Coal", "Lapis", "Redstone"}) {
+        for (String name :
+                new String[] {"Iron", "Gold", "Copper", "Netherite", "Diamond", "Coal", "Lapis", "Redstone"}) {
             var material = GTMaterialRegistry.get(name);
             if (material == null) continue;
-            for (var prefix : new BlockMaterialPrefix[]{BlockMaterialPrefix.blockIngot, BlockMaterialPrefix.blockSolid,
-                    BlockMaterialPrefix.blockGem, BlockMaterialPrefix.blockDust}) {
+            for (var prefix : new BlockMaterialPrefix[] {
+                BlockMaterialPrefix.blockIngot,
+                BlockMaterialPrefix.blockSolid,
+                BlockMaterialPrefix.blockGem,
+                BlockMaterialPrefix.blockDust
+            }) {
                 count += add(GTBlocks.getStack(prefix, material));
             }
         }
-        for (String name : new String[]{"Iron", "Gold", "Copper", "Netherite", "Diamond", "Emerald", "Amethyst", "Coal",
-                "Charcoal", "Lapis", "Redstone", "Sugar", "Gunpowder", "Glowstone"}) {
+        for (String name : new String[] {
+            "Iron",
+            "Gold",
+            "Copper",
+            "Netherite",
+            "Diamond",
+            "Emerald",
+            "Amethyst",
+            "Coal",
+            "Charcoal",
+            "Lapis",
+            "Redstone",
+            "Sugar",
+            "Gunpowder",
+            "Glowstone"
+        }) {
             var material = GTMaterialRegistry.get(name);
             if (material == null) continue;
-            for (var prefix : new MaterialPrefix[]{MaterialPrefix.ingot, MaterialPrefix.nugget, MaterialPrefix.gem, MaterialPrefix.dust}) {
+            for (var prefix : new MaterialPrefix[] {
+                MaterialPrefix.ingot, MaterialPrefix.nugget, MaterialPrefix.gem, MaterialPrefix.dust
+            }) {
                 count += add(GTItems.getStack(prefix, material));
             }
         }
@@ -39,7 +60,7 @@ public final class VanillaMaterialUnificationRecipes {
         if (!MaterialUnification.hiddenDuplicate(input)) return 0;
         ItemStack output = MaterialUnification.canonical(input);
         if (output.isEmpty() || output.getItem() == input.getItem()) return 0;
-        var recipe = new Recipe(new ItemStack[]{input}, new ItemStack[]{output}, null, null, null, null, 1, 0, 0)
+        var recipe = new Recipe(new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, 1, 0, 0)
                 .withItemInputGuard(0, candidate -> candidate.getItem() == input.getItem());
         return MachineRecipeMaps.Generifier.addRecipe(recipe, false, false, false, false) == null ? 0 : 1;
     }

@@ -1,14 +1,13 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.tool.GTToolType;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.tool.GTToolType;
+import javax.annotation.Nullable;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6's flint and tinder rows ({@code Loader_Tools:225-247}): {@code "T "/" F"} — a striking material
@@ -18,7 +17,10 @@ import javax.annotation.Nullable;
 public final class GTFlintAndTinderRecipe extends GTToolPatternRecipe {
 
     public GTFlintAndTinderRecipe(ResourceLocation id) {
-        super(id, GTToolType.FLINT_AND_TINDER, GTToolRecipes.shaped(GTToolType.FLINT_AND_TINDER).get(0));
+        super(
+                id,
+                GTToolType.FLINT_AND_TINDER,
+                GTToolRecipes.shaped(GTToolType.FLINT_AND_TINDER).get(0));
     }
 
     @Override
@@ -36,8 +38,10 @@ public final class GTFlintAndTinderRecipe extends GTToolPatternRecipe {
         var form = gregtech.engine.material.MaterialEquivalence.form(stack);
         if (form == null) return null;
         MaterialPrefix prefix = form.prefix();
-        if (prefix != MaterialPrefix.gem && prefix != MaterialPrefix.gemChipped
-                && prefix != MaterialPrefix.rockGt && prefix != MaterialPrefix.nugget) {
+        if (prefix != MaterialPrefix.gem
+                && prefix != MaterialPrefix.gemChipped
+                && prefix != MaterialPrefix.rockGt
+                && prefix != MaterialPrefix.nugget) {
             return null;
         }
         GTMaterial found = form.material().resolve();

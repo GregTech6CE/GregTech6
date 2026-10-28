@@ -11,8 +11,7 @@ public record MachineSpec(
         long outputRate,
         String textureSet,
         float hardness,
-        float blastResistance
-) {
+        float blastResistance) {
     public MachineSpec {
         if (efficiency < 0 || efficiency > 10000) {
             throw new IllegalArgumentException("efficiency must be 0..10000");
@@ -23,7 +22,8 @@ public record MachineSpec(
     }
 
     /** Backward-compatible ctor without block stats. */
-    public MachineSpec(String id, String materialName, int tintRgb, int efficiency, long outputRate, String textureSet) {
+    public MachineSpec(
+            String id, String materialName, int tintRgb, int efficiency, long outputRate, String textureSet) {
         this(id, materialName, tintRgb, efficiency, outputRate, textureSet, 4.0F, 4.0F);
     }
 

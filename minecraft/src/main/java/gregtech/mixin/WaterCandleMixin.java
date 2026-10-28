@@ -11,8 +11,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 /** The common vanilla container API accepts source water from the tagged water family. */
 @Mixin(CandleBlock.class)
 public abstract class WaterCandleMixin {
-    @Redirect(method = "placeLiquid", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/world/level/material/FluidState;getType()Lnet/minecraft/world/level/material/Fluid;"), require = 1)
+    @Redirect(
+            method = "placeLiquid",
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/world/level/material/FluidState;getType()Lnet/minecraft/world/level/material/Fluid;"),
+            require = 1)
     private Fluid gregtech$waterFamilyForFilling(FluidState state) {
         return WaterFamilyIdentity.forVanillaCheck(state);
     }

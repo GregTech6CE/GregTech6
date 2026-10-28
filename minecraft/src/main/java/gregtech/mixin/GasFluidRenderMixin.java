@@ -21,8 +21,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LiquidBlockRenderer.class)
 public abstract class GasFluidRenderMixin {
     @Inject(method = "tesselate", at = @At("HEAD"), cancellable = true, require = 1)
-    private void gregtech$renderTopAnchoredGas(BlockAndTintGetter level, BlockPos pos, VertexConsumer consumer,
-                                               BlockState blockState, FluidState fluidState, CallbackInfo info) {
+    private void gregtech$renderTopAnchoredGas(
+            BlockAndTintGetter level,
+            BlockPos pos,
+            VertexConsumer consumer,
+            BlockState blockState,
+            FluidState fluidState,
+            CallbackInfo info) {
         if (FluidHazards.isLighterThanAir(fluidState.getType())) {
             GasFluidRenderer.render(level, pos, consumer, fluidState);
             info.cancel();

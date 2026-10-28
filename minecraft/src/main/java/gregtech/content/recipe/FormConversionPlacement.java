@@ -5,12 +5,22 @@ import net.minecraft.util.StringRepresentable;
 
 /** Fixed port placement policy with a remaining-slot exception for the modern bone-meal dye route. */
 public enum FormConversionPlacement implements StringRepresentable {
-    FIXED("fixed"), REMAINING("remaining");
+    FIXED("fixed"),
+    REMAINING("remaining");
 
-    public static final Codec<FormConversionPlacement> CODEC = StringRepresentable.fromEnum(FormConversionPlacement::values);
+    public static final Codec<FormConversionPlacement> CODEC =
+            StringRepresentable.fromEnum(FormConversionPlacement::values);
     private final String name;
-    FormConversionPlacement(String name) { this.name = name; }
-    @Override public String getSerializedName() { return name; }
+
+    FormConversionPlacement(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getSerializedName() {
+        return name;
+    }
+
     public static FormConversionPlacement fromName(String name) {
         for (var placement : values()) if (placement.name.equals(name)) return placement;
         throw new IllegalArgumentException("Unknown form conversion placement: " + name);
@@ -18,7 +28,10 @@ public enum FormConversionPlacement implements StringRepresentable {
 
     public boolean matches(FormConversionSelector selector, int gridSize, int first, int occupied) {
         if (this == FIXED || selector.variants() <= 1) return selector.matches(gridSize, first, occupied);
-        return occupied == 1 && first >= 0 && first < gridSize && gridSize >= selector.minimumGridSize()
+        return occupied == 1
+                && first >= 0
+                && first < gridSize
+                && gridSize >= selector.minimumGridSize()
                 && first >= selector.offset();
     }
 

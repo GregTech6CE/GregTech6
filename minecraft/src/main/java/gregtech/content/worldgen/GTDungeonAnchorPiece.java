@@ -94,8 +94,14 @@ public final class GTDungeonAnchorPiece extends StructurePiece {
 
     /** GT6's dungeon is built by {@link GTDungeonFeature}; this piece deliberately places no blocks. */
     @Override
-    public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator,
-                            RandomSource random, BoundingBox box, ChunkPos chunkPos, BlockPos pivot) {
+    public void postProcess(
+            WorldGenLevel level,
+            StructureManager structureManager,
+            ChunkGenerator generator,
+            RandomSource random,
+            BoundingBox box,
+            ChunkPos chunkPos,
+            BlockPos pivot) {
         // Deliberately empty: the anchor only marks where the dungeon is, see the class javadoc.
     }
 }

@@ -15,5 +15,7 @@ public interface GTDungeonChunk {
     boolean generate(GTDungeonData data);
 
     /** The port's id for logs and tests. */
-    default String id() { return getClass().getSimpleName(); }
+    default String id() {
+        return getClass().getSimpleName();
+    }
 }

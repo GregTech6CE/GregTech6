@@ -2,11 +2,11 @@
  * Original 17110/17198/17199 registrations and their inherited BasicMachine defaults. */
 package gregtech.content.multiblock;
 
-import gregtech.api.machine.MachineFaceMasks;
 import gregtech.api.machine.BasicMachineParameters;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.content.machine.OriginalMachineMaterialData;
+import gregtech.api.machine.MachineFaceMasks;
 import gregtech.content.data.BasicMachineOriginalParams;
+import gregtech.content.machine.OriginalMachineMaterialData;
+import gregtech.engine.material.GTMaterialRegistry;
 import java.util.List;
 
 public final class OriginalAdvancedControllerData {
@@ -35,7 +35,9 @@ public final class OriginalAdvancedControllerData {
             default -> throw new IllegalArgumentException("Original advanced controller:" + name);
         }
         final String prefix = "gt.tooltip.multiblock." + family + ".";
-        return java.util.stream.IntStream.rangeClosed(1, count).mapToObj(i -> prefix + i).toList();
+        return java.util.stream.IntStream.rangeClosed(1, count)
+                .mapToObj(i -> prefix + i)
+                .toList();
     }
 
     public static boolean cheapOverclocking(String name) {
@@ -60,8 +62,20 @@ public final class OriginalAdvancedControllerData {
             case "fusionreactor" -> "SteelGalvanized";
             default -> "Pb";
         };
-        return new BasicMachineParameters(id, GTMaterialRegistry.get(hull), name, source.energyType(), 1,
-                source.energyInput(), 0, source.hardness(), source.resistance(), faces(name),
-                OriginalMachineMaterialData.weights(name, 1), source.parallel(), source.energyInputMin(), source.energyInputMax());
+        return new BasicMachineParameters(
+                id,
+                GTMaterialRegistry.get(hull),
+                name,
+                source.energyType(),
+                1,
+                source.energyInput(),
+                0,
+                source.hardness(),
+                source.resistance(),
+                faces(name),
+                OriginalMachineMaterialData.weights(name, 1),
+                source.parallel(),
+                source.energyInputMin(),
+                source.energyInputMax());
     }
 }

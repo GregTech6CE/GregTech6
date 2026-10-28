@@ -1,14 +1,13 @@
 package gregtech.content.worldgen;
 
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * GT6's biome name sets and the "which biomes does this chunk cover" lookup the GT6 worldgen
@@ -20,54 +19,78 @@ import java.util.Set;
  */
 public final class GTWorldgenBiomes {
     /** GT6 {@code BIOMES_RIVER}, mapped to modern river IDs. */
-    public static final Set<ResourceLocation> RIVER = Set.of(
-            id("river"), id("frozen_river"));
+    public static final Set<ResourceLocation> RIVER = Set.of(id("river"), id("frozen_river"));
 
     /** GT6 {@code BIOMES_OCEAN_BEACH}. */
     public static final Set<ResourceLocation> OCEAN_BEACH = Set.of(
-            id("ocean"), id("deep_ocean"), id("warm_ocean"), id("lukewarm_ocean"),
-            id("deep_lukewarm_ocean"), id("cold_ocean"), id("deep_cold_ocean"),
-            id("frozen_ocean"), id("deep_frozen_ocean"),
-            id("beach"), id("snowy_beach"), id("stony_shore"), id("mushroom_field_shore"));
+            id("ocean"),
+            id("deep_ocean"),
+            id("warm_ocean"),
+            id("lukewarm_ocean"),
+            id("deep_lukewarm_ocean"),
+            id("cold_ocean"),
+            id("deep_cold_ocean"),
+            id("frozen_ocean"),
+            id("deep_frozen_ocean"),
+            id("beach"),
+            id("snowy_beach"),
+            id("stony_shore"),
+            id("mushroom_field_shore"));
 
     /** GT6 {@code BIOMES_OCEAN} — the same without the beaches and shores. */
     public static final Set<ResourceLocation> OCEAN = Set.of(
-            id("ocean"), id("deep_ocean"), id("warm_ocean"), id("lukewarm_ocean"),
-            id("deep_lukewarm_ocean"), id("cold_ocean"), id("deep_cold_ocean"),
-            id("frozen_ocean"), id("deep_frozen_ocean"));
+            id("ocean"),
+            id("deep_ocean"),
+            id("warm_ocean"),
+            id("lukewarm_ocean"),
+            id("deep_lukewarm_ocean"),
+            id("cold_ocean"),
+            id("deep_cold_ocean"),
+            id("frozen_ocean"),
+            id("deep_frozen_ocean"));
 
     /** GT6 {@code BIOMES_SWAMP}. */
-    public static final Set<ResourceLocation> SWAMP = Set.of(
-            id("swamp"), id("mangrove_swamp"));
+    public static final Set<ResourceLocation> SWAMP = Set.of(id("swamp"), id("mangrove_swamp"));
 
     /** GT6 {@code BIOMES_DESERT}. */
     public static final Set<ResourceLocation> DESERT = Set.of(id("desert"));
 
     /** GT6 {@code BIOMES_MESA}. */
-    public static final Set<ResourceLocation> MESA = Set.of(
-            id("badlands"), id("eroded_badlands"), id("wooded_badlands"));
+    public static final Set<ResourceLocation> MESA =
+            Set.of(id("badlands"), id("eroded_badlands"), id("wooded_badlands"));
 
     /** GT6 {@code BIOMES_TAIGA}. */
-    public static final Set<ResourceLocation> TAIGA = Set.of(
-            id("taiga"), id("snowy_taiga"), id("old_growth_pine_taiga"), id("old_growth_spruce_taiga"));
+    public static final Set<ResourceLocation> TAIGA =
+            Set.of(id("taiga"), id("snowy_taiga"), id("old_growth_pine_taiga"), id("old_growth_spruce_taiga"));
 
     /** GT6 {@code BIOMES_WOODS}. */
     public static final Set<ResourceLocation> WOODS = Set.of(
-            id("forest"), id("flower_forest"), id("birch_forest"), id("old_growth_birch_forest"),
-            id("dark_forest"), id("windswept_forest"), id("grove"));
+            id("forest"),
+            id("flower_forest"),
+            id("birch_forest"),
+            id("old_growth_birch_forest"),
+            id("dark_forest"),
+            id("windswept_forest"),
+            id("grove"));
 
     /** GT6 {@code BIOMES_MOUNTAINS}. */
     public static final Set<ResourceLocation> MOUNTAINS = Set.of(
-            id("windswept_hills"), id("windswept_gravelly_hills"), id("stony_shore"),
-            id("jagged_peaks"), id("frozen_peaks"), id("stony_peaks"), id("meadow"), id("snowy_slopes"));
+            id("windswept_hills"),
+            id("windswept_gravelly_hills"),
+            id("stony_shore"),
+            id("jagged_peaks"),
+            id("frozen_peaks"),
+            id("stony_peaks"),
+            id("meadow"),
+            id("snowy_slopes"));
 
     /** GT6 {@code BIOMES_PLAINS}. */
-    public static final Set<ResourceLocation> PLAINS = Set.of(
-            id("plains"), id("sunflower_plains"), id("snowy_plains"), id("meadow"), id("cherry_grove"));
+    public static final Set<ResourceLocation> PLAINS =
+            Set.of(id("plains"), id("sunflower_plains"), id("snowy_plains"), id("meadow"), id("cherry_grove"));
 
     /** GT6 {@code BIOMES_SAVANNA}. */
-    public static final Set<ResourceLocation> SAVANNA = Set.of(
-            id("savanna"), id("savanna_plateau"), id("windswept_savanna"));
+    public static final Set<ResourceLocation> SAVANNA =
+            Set.of(id("savanna"), id("savanna_plateau"), id("windswept_savanna"));
 
     /** GT6 {@code BIOMES_WASTELANDS} — no 1.20.1 vanilla equivalent (other-mod biomes). */
     public static final Set<ResourceLocation> WASTELANDS = Set.of();
@@ -76,8 +99,8 @@ public final class GTWorldgenBiomes {
      * GT6 {@code WorldgenRocks}' biome gate ({@code WorldgenRocks.canGenerate}): desert, mesa,
      * taiga, swamp, savanna, plains, woods, mountains and wastelands.
      */
-    public static final Set<ResourceLocation> ROCK_BIOMES = union(
-            DESERT, MESA, TAIGA, SWAMP, SAVANNA, PLAINS, WOODS, MOUNTAINS, WASTELANDS);
+    public static final Set<ResourceLocation> ROCK_BIOMES =
+            union(DESERT, MESA, TAIGA, SWAMP, SAVANNA, PLAINS, WOODS, MOUNTAINS, WASTELANDS);
 
     /** Set union, for the combined GT6 biome gates. */
     @SafeVarargs

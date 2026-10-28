@@ -17,14 +17,15 @@ public record CrucibleSpec(
         float hardness,
         float blastResistance,
         boolean acidProof,
-        long hullMaterialUnits
-) {
+        long hullMaterialUnits) {
     /** Default crucible hull weight in U. Stone crucible uses 63. */
     public static final long DEFAULT_CRUCIBLE_HULL_UNITS = 7L * GTValues.U;
+
     public static final long STONE_CRUCIBLE_HULL_UNITS = 63L * GTValues.U;
 
     /** Companion block hull weights in U. */
     public static final long MOLD_HULL_UNITS = 5L * GTValues.U;
+
     public static final long BASIN_HULL_UNITS = 5L * GTValues.U;
     public static final long CROSSING_HULL_UNITS = 5L * GTValues.U;
     public static final long FAUCET_HULL_UNITS = 3L * GTValues.U;
@@ -57,36 +58,81 @@ public record CrucibleSpec(
     /** MultiTileEntitySmeltery always heats7U of its hull material, regardless of its REV inputs.
      * Large crucibles retain their separately defined100U thermal hull. */
     public double smeltingThermalMassKg() {
-        return MaterialMass.kilograms(hullDensity,
-                id.startsWith("smelting_crucible_") ? DEFAULT_CRUCIBLE_HULL_UNITS : hullMaterialUnits);
+        return MaterialMass.kilograms(
+                hullDensity, id.startsWith("smelting_crucible_") ? DEFAULT_CRUCIBLE_HULL_UNITS : hullMaterialUnits);
     }
 
     /** GT6 {@code RM.CrucibleAlloying} — registered for future recipe logic. */
-    public static CrucibleSpec of(String id, GTMaterial material, int gt6MetaId,
-                                   float hardness, float blastResistance, boolean acidProof) {
+    public static CrucibleSpec of(
+            String id, GTMaterial material, int gt6MetaId, float hardness, float blastResistance, boolean acidProof) {
         return of(id, material, gt6MetaId, hardness, blastResistance, acidProof, DEFAULT_CRUCIBLE_HULL_UNITS);
     }
 
-    public static CrucibleSpec of(String id, GTMaterial material, int gt6MetaId,
-                                   float hardness, float blastResistance, boolean acidProof,
-                                   int meltingPointK, int boilingPointK, double hullDensity) {
-        return of(id, material, gt6MetaId, hardness, blastResistance, acidProof,
-                meltingPointK, boilingPointK, hullDensity, DEFAULT_CRUCIBLE_HULL_UNITS);
+    public static CrucibleSpec of(
+            String id,
+            GTMaterial material,
+            int gt6MetaId,
+            float hardness,
+            float blastResistance,
+            boolean acidProof,
+            int meltingPointK,
+            int boilingPointK,
+            double hullDensity) {
+        return of(
+                id,
+                material,
+                gt6MetaId,
+                hardness,
+                blastResistance,
+                acidProof,
+                meltingPointK,
+                boilingPointK,
+                hullDensity,
+                DEFAULT_CRUCIBLE_HULL_UNITS);
     }
 
-    public static CrucibleSpec of(String id, GTMaterial material, int gt6MetaId,
-                                   float hardness, float blastResistance, boolean acidProof,
-                                   long hullMaterialUnits) {
-        return new CrucibleSpec(id, material, gt6MetaId,
-                material.getMeltingPoint(), material.getBoilingPoint(), material.getDensity(),
-                hardness, blastResistance, acidProof, hullMaterialUnits);
+    public static CrucibleSpec of(
+            String id,
+            GTMaterial material,
+            int gt6MetaId,
+            float hardness,
+            float blastResistance,
+            boolean acidProof,
+            long hullMaterialUnits) {
+        return new CrucibleSpec(
+                id,
+                material,
+                gt6MetaId,
+                material.getMeltingPoint(),
+                material.getBoilingPoint(),
+                material.getDensity(),
+                hardness,
+                blastResistance,
+                acidProof,
+                hullMaterialUnits);
     }
 
-    public static CrucibleSpec of(String id, GTMaterial material, int gt6MetaId,
-                                   float hardness, float blastResistance, boolean acidProof,
-                                   int meltingPointK, int boilingPointK, double hullDensity,
-                                   long hullMaterialUnits) {
-        return new CrucibleSpec(id, material, gt6MetaId, meltingPointK, boilingPointK, hullDensity,
-                hardness, blastResistance, acidProof, hullMaterialUnits);
+    public static CrucibleSpec of(
+            String id,
+            GTMaterial material,
+            int gt6MetaId,
+            float hardness,
+            float blastResistance,
+            boolean acidProof,
+            int meltingPointK,
+            int boilingPointK,
+            double hullDensity,
+            long hullMaterialUnits) {
+        return new CrucibleSpec(
+                id,
+                material,
+                gt6MetaId,
+                meltingPointK,
+                boilingPointK,
+                hullDensity,
+                hardness,
+                blastResistance,
+                acidProof,
+                hullMaterialUnits);
     }
 }

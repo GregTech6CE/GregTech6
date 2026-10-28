@@ -5,8 +5,6 @@ public final class RelayRoutingRules {
     private RelayRoutingRules() {}
 
     public static int exit(boolean bridge, int query, int front, int secondary) {
-        return bridge
-                ? (query < 0 ? -1 : query ^ 1)
-                : query == front ? secondary : front;
+        return bridge ? (query < 0 ? -1 : query ^ 1) : query == front ? secondary : front;
     }
 }

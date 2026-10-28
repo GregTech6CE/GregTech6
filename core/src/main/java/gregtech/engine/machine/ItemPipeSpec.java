@@ -11,10 +11,14 @@ public record ItemPipeSpec(
         int invSize,
         float diameter,
         boolean restrictive,
-        boolean blocking
-) {
+        boolean blocking) {
     public enum ItemPipeSize {
-        MEDIUM, LARGE, HUGE, RESTRICTIVE_MEDIUM, RESTRICTIVE_LARGE, RESTRICTIVE_HUGE;
+        MEDIUM,
+        LARGE,
+        HUGE,
+        RESTRICTIVE_MEDIUM,
+        RESTRICTIVE_LARGE,
+        RESTRICTIVE_HUGE;
 
         public boolean restrictive() {
             return this == RESTRICTIVE_MEDIUM || this == RESTRICTIVE_LARGE || this == RESTRICTIVE_HUGE;
@@ -56,8 +60,13 @@ public record ItemPipeSpec(
         }
     }
 
-    public int tintRgb() { return material.getColor(); }
-    public String materialName() { return material.getLocalName(); }
+    public int tintRgb() {
+        return material.getColor();
+    }
+
+    public String materialName() {
+        return material.getLocalName();
+    }
 
     public float blastResistance() {
         if (material.hasToolStats()) {
@@ -66,10 +75,16 @@ public record ItemPipeSpec(
         return 6.0F;
     }
 
-    public static ItemPipeSpec of(String id, GTMaterial material, ItemPipeSize size,
-                                   long baseStepSize, int baseInvSize, boolean blocking) {
-        return new ItemPipeSpec(id, material, size,
-                size.stepSize(baseStepSize), baseInvSize * size.invSizeMultiplier(),
-                size.diameter(), size.restrictive(), blocking);
+    public static ItemPipeSpec of(
+            String id, GTMaterial material, ItemPipeSize size, long baseStepSize, int baseInvSize, boolean blocking) {
+        return new ItemPipeSpec(
+                id,
+                material,
+                size,
+                size.stepSize(baseStepSize),
+                baseInvSize * size.invSizeMultiplier(),
+                size.diameter(),
+                size.restrictive(),
+                blocking);
     }
 }

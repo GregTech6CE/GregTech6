@@ -35,4 +35,5 @@ sourceSets.matching { it.name != 'addonSample' }.configureEach { sources ->
 }
 
 // CI builds each loader node directly; retain the API and core verification lifecycle.
-tasks.named('check').configure { dependsOn ':api:check', ':core:check' }
+// Shared sources are formatted once in :minecraft, so every node checks them too.
+tasks.named('check').configure { dependsOn ':api:check', ':core:check', ':minecraft:spotlessCheck' }

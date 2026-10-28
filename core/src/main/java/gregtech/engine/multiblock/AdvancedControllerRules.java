@@ -13,9 +13,9 @@ public final class AdvancedControllerRules {
     public static final int DRILL_LUBRICANT = 100;
 
     public static StructureGrid.Role drillRole(int x, int y, int z) {
-        return y == -4 ? StructureGrid.Role.CASING
-                : y == -1 && ((x == 0) != (z == 0)) ? StructureGrid.Role.ENERGY_INPUT
-                : StructureGrid.Role.FLUID_INPUT;
+        return y == -4
+                ? StructureGrid.Role.CASING
+                : y == -1 && ((x == 0) != (z == 0)) ? StructureGrid.Role.ENERGY_INPUT : StructureGrid.Role.FLUID_INPUT;
     }
 
     public static long lightningDrain(long energy, long sentPackets) {

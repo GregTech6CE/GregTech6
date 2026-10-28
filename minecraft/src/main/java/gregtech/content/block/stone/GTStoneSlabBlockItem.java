@@ -39,12 +39,20 @@ public final class GTStoneSlabBlockItem extends MaterialBlockItem {
             GTStoneSlabBlock existingSlab = (GTStoneSlabBlock) existing.getBlock();
             Block full = GTBlocks.getStone(existingSlab.stoneType(), existingSlab.variant());
             Player player = context.getPlayer();
-            if (full != null && (player == null || player.mayUseItemAt(clickedPos, context.getClickedFace(), context.getItemInHand()))) {
+            if (full != null
+                    && (player == null
+                            || player.mayUseItemAt(clickedPos, context.getClickedFace(), context.getItemInHand()))) {
                 if (!level.isClientSide) {
                     level.setBlockAndUpdate(clickedPos, full.defaultBlockState());
-                    level.playSound(null, clickedPos,
-                            full.defaultBlockState().getSoundType(level, clickedPos, player).getPlaceSound(),
-                            net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.playSound(
+                            null,
+                            clickedPos,
+                            full.defaultBlockState()
+                                    .getSoundType(level, clickedPos, player)
+                                    .getPlaceSound(),
+                            net.minecraft.sounds.SoundSource.BLOCKS,
+                            1.0F,
+                            1.0F);
                     if (player != null && !player.getAbilities().instabuild) {
                         context.getItemInHand().shrink(1);
                     }

@@ -1,4 +1,5 @@
 package gregtech.content.recipe;
+
 import static gregtech.content.recipe.SourceDecompositionRules.*;
 
 /** Pinned original 3703e403/W607771f source phase DECLARATIONS, not native texture guesses.
@@ -9,6 +10,7 @@ import static gregtech.content.recipe.SourceDecompositionRules.*;
  * Generated REVIEW DRAFT only; source-policy/current-native oracle coverage is not a native pass. */
 public final class SourceDecompositionData {
     private SourceDecompositionData() {}
+
     private static final Profile[] INPUTS = {
         new Profile(8001, "Glass", new Binding("glass", SOURCE_U, 144), null, false),
         new Profile(8002, "Flint", null, null, false),
@@ -31,7 +33,12 @@ public final class SourceDecompositionData {
         new Profile(8333, "Redstone", new Binding("molten.redstone", SOURCE_U, 144), null, false),
         new Profile(8335, "HydratedCoal", null, null, false),
         new Profile(8340, "Nikolite", new Binding("molten.nikolite", SOURCE_U, 144), null, false),
-        new Profile(8341, "Glowstone", new Binding("molten.glowstone", SOURCE_U, 144), new Binding("glowstone", SOURCE_U, 250), true),
+        new Profile(
+                8341,
+                "Glowstone",
+                new Binding("molten.glowstone", SOURCE_U, 144),
+                new Binding("glowstone", SOURCE_U, 250),
+                true),
         new Profile(8368, "GlowstoneCeres", new Binding("molten.glowstoneceres", SOURCE_U, 144), null, true),
         new Profile(8369, "GlowstoneIo", new Binding("molten.glowstoneio", SOURCE_U, 144), null, true),
         new Profile(8370, "GlowstoneEnceladus", new Binding("molten.glowstoneenceladus", SOURCE_U, 144), null, true),
@@ -107,7 +114,8 @@ public final class SourceDecompositionData {
         new Profile(8691, "MeteoricBlueSteel", new Binding("molten.meteoricbluesteel", SOURCE_U, 144), null, false),
         new Profile(8692, "MeteoricRedSteel", new Binding("molten.meteoricredsteel", SOURCE_U, 144), null, false),
         new Profile(8693, "MeteoflameSteel", new Binding("molten.meteoflamesteel", SOURCE_U, 144), null, false),
-        new Profile(8694, "MeteoflameBlackSteel", new Binding("molten.meteoflameblacksteel", SOURCE_U, 144), null, false),
+        new Profile(
+                8694, "MeteoflameBlackSteel", new Binding("molten.meteoflameblacksteel", SOURCE_U, 144), null, false),
         new Profile(8695, "MeteoflameBlueSteel", new Binding("molten.meteoflamebluesteel", SOURCE_U, 144), null, false),
         new Profile(8696, "MeteoflameRedSteel", new Binding("molten.meteoflameredsteel", SOURCE_U, 144), null, false),
         new Profile(8697, "FlamascusSteel", new Binding("molten.flamascussteel", SOURCE_U, 144), null, false),
@@ -184,23 +192,58 @@ public final class SourceDecompositionData {
     };
     private static final Thermal[] AMBIENT = {
         new Thermal(180, "Argon", 83, 87, 8700, null, new Binding("argon", SOURCE_U, 1000), null),
-        new Thermal(20, "Helium", 1, 4, 400, null, new Binding("helium", SOURCE_U, 1000), new Binding("heliumplasma", SOURCE_U, 1000)),
-        new Thermal(9826, "HydrochloricAcid", 100, 200, 20000, null, new Binding("hydrochloricacid", SOURCE_U, 1000), null),
-        new Thermal(9802, "Ice", 273, 373, 37300, new Binding("ice", SOURCE_U, 1000), new Binding("steam", SOURCE_U, 160000), null),
+        new Thermal(
+                20,
+                "Helium",
+                1,
+                4,
+                400,
+                null,
+                new Binding("helium", SOURCE_U, 1000),
+                new Binding("heliumplasma", SOURCE_U, 1000)),
+        new Thermal(
+                9826, "HydrochloricAcid", 100, 200, 20000, null, new Binding("hydrochloricacid", SOURCE_U, 1000), null),
+        new Thermal(
+                9802,
+                "Ice",
+                273,
+                373,
+                37300,
+                new Binding("ice", SOURCE_U, 1000),
+                new Binding("steam", SOURCE_U, 160000),
+                null),
         new Thermal(4000, "Magic", 0, 0, 0, new Binding("mana", SOURCE_U, 250), null, null),
         new Thermal(800, "Mercury", 234, 629, 62900, new Binding("mercury", SOURCE_U, 144), null, null),
         new Thermal(9832, "Methane", 100, 200, 20000, null, new Binding("methane", SOURCE_U, 1000), null),
         new Thermal(100, "Neon", 24, 27, 2700, null, new Binding("neon", SOURCE_U, 1000), null),
         new Thermal(9825, "NitricAcid", 231, 356, 35600, new Binding("nitricacid", SOURCE_U, 1000), null, null),
-        new Thermal(80, "Oxygen", 54, 90, 9000, new Binding("liquidoxygen", SOURCE_U, 1000), new Binding("oxygen", SOURCE_U, 1000), null),
-        new Thermal(9800, "Water", 273, 373, 37300, new Binding("water", SOURCE_U, 1000), new Binding("steam", SOURCE_U, 160000), null)
+        new Thermal(
+                80,
+                "Oxygen",
+                54,
+                90,
+                9000,
+                new Binding("liquidoxygen", SOURCE_U, 1000),
+                new Binding("oxygen", SOURCE_U, 1000),
+                null),
+        new Thermal(
+                9800,
+                "Water",
+                273,
+                373,
+                37300,
+                new Binding("water", SOURCE_U, 1000),
+                new Binding("steam", SOURCE_U, 160000),
+                null)
     };
+
     public static Profile input(int id, String name) {
-        for (Profile p : INPUTS) if (p.id()==id && p.name().equals(name)) return p;
+        for (Profile p : INPUTS) if (p.id() == id && p.name().equals(name)) return p;
         return null;
     }
+
     public static Thermal thermal(int id, String name) {
-        for (Thermal p : AMBIENT) if (p.id()==id && p.name().equals(name)) return p;
+        for (Thermal p : AMBIENT) if (p.id() == id && p.name().equals(name)) return p;
         return null;
     }
 }

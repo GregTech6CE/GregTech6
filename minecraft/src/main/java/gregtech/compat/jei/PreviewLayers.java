@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 /** Physical floors, numbered from one at the structure bottom; coordinates stay internal. */
 public final class PreviewLayers {
     private PreviewLayers() {}
+
     public static List<Integer> levels(Collection<BlockPos> cells) {
         if (cells.isEmpty()) return List.of();
         var bounds = cells.stream().mapToInt(BlockPos::getY).summaryStatistics();

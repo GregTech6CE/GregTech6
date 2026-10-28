@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
-import gregtech.engine.tool.GTToolType;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;

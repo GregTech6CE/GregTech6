@@ -1,8 +1,8 @@
 package gregtech.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import gregtech.content.blockentity.misc.SandwichBlockEntity;
 import gregtech.content.food.SandwichIngredients;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -13,13 +13,19 @@ import net.minecraft.world.phys.AABB;
 public final class SandwichRenderer implements BlockEntityRenderer<SandwichBlockEntity> {
     public SandwichRenderer(BlockEntityRendererProvider.Context context) {}
 
-    @Override public void render(SandwichBlockEntity sandwich, float partialTick, PoseStack pose,
-                                 MultiBufferSource buffers, int light, int overlay) {
+    @Override
+    public void render(
+            SandwichBlockEntity sandwich,
+            float partialTick,
+            PoseStack pose,
+            MultiBufferSource buffers,
+            int light,
+            int overlay) {
         renderLayers(sandwich::layerId, pose, buffers, light);
     }
 
-    public static void renderLayers(java.util.function.IntUnaryOperator layers, PoseStack pose,
-            MultiBufferSource buffers, int light) {
+    public static void renderLayers(
+            java.util.function.IntUnaryOperator layers, PoseStack pose, MultiBufferSource buffers, int light) {
         for (int slot = 0; slot < SandwichBlockEntity.SLOTS; slot++) {
             var layer = SandwichIngredients.of(layers.applyAsInt(slot));
             if (layer == null) continue;
@@ -41,8 +47,9 @@ public final class SandwichRenderer implements BlockEntityRenderer<SandwichBlock
     private static AABB[] boxes(java.util.function.IntUnaryOperator layers, int slot, SandwichIngredients.Layer layer) {
         var previous = slot == 0 ? null : SandwichIngredients.of(layers.applyAsInt(slot - 1));
         var shared = gregtech.content.food.SandwichLayerCatalog.of(layer.id());
-        return gregtech.content.food.SandwichGeometry.boxes(slot, shared,
-                previous == null ? 1 : previous.footprint()).stream()
-                .map(b -> new AABB(b.x0(), b.y0(), b.z0(), b.x1(), b.y1(), b.z1())).toArray(AABB[]::new);
+        return gregtech.content.food.SandwichGeometry.boxes(slot, shared, previous == null ? 1 : previous.footprint())
+                .stream()
+                .map(b -> new AABB(b.x0(), b.y0(), b.z0(), b.x1(), b.y1(), b.z1()))
+                .toArray(AABB[]::new);
     }
 }

@@ -1,9 +1,8 @@
 package gregtech.content.logistics;
 
-import net.minecraft.world.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /** A logistics dump reservation from template items or one inferred prefix. */
 public final class LogisticsItemFilter {
@@ -18,8 +17,7 @@ public final class LogisticsItemFilter {
     /** The ordinary Filter exposes its ghost slots as an ItemStackSet, even when empty. */
     public static LogisticsItemFilter items(List<ItemStack> templates) {
         List<ItemStack> copies = new ArrayList<>();
-        for (ItemStack template : templates)
-            if (!template.isEmpty()) copies.add(template.copyWithCount(1));
+        for (ItemStack template : templates) if (!template.isEmpty()) copies.add(template.copyWithCount(1));
         return new LogisticsItemFilter(List.copyOf(copies), null);
     }
 
@@ -29,13 +27,9 @@ public final class LogisticsItemFilter {
     }
 
     public boolean matches(ItemStack candidate) {
-        if (candidate.isEmpty())
-            return false;
-        if (prefix != null)
-            return prefix.equals(FilterRules.prefix(candidate));
-        for (ItemStack template : items)
-            if (LogisticsCoverInteraction.matches(template, candidate))
-                return true;
+        if (candidate.isEmpty()) return false;
+        if (prefix != null) return prefix.equals(FilterRules.prefix(candidate));
+        for (ItemStack template : items) if (LogisticsCoverInteraction.matches(template, candidate)) return true;
         return false;
     }
 }

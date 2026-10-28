@@ -8,6 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public final class MachineFluidClientSync {
     private MachineFluidClientSync() {}
+
     public static void accept(PacketSyncFluids packet) {
         var player = Minecraft.getInstance().player;
         if (player != null) packet.apply(player.containerMenu);

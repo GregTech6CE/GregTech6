@@ -1,14 +1,13 @@
 package gregtech.engine.addon;
 
+import gregtech.api.recipe.RecipeMapSpec;
+import gregtech.content.data.FuelRecipeMaps;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.machine.BasicMachineCatalog;
+import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.machine.BasicMachineSpec;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.api.recipe.RecipeMapSpec;
-import gregtech.content.machine.BasicMachineCatalog;
-import gregtech.content.multiblock.SharedLargeMachineLayouts;
-import gregtech.content.data.FuelRecipeMaps;
-import gregtech.content.data.MachineRecipeMaps;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,8 +28,7 @@ public final class AddonMachineRuntime {
         reserved.addAll(SharedLargeMachineLayouts.machines());
         AddonMachines.install(reserved, AddonMachines.builtInRecipeMapNames());
         MachineRecipeMaps.bootstrap();
-        for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.recipeMaps())
-            create(accepted.spec());
+        for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.recipeMaps()) create(accepted.spec());
         for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.fuelMaps())
             FuelRecipeMaps.registerFuelMap(create(accepted.spec()));
         for (AddonMachines.AcceptedMachine accepted : AddonMachines.machines()) {
@@ -40,14 +38,27 @@ public final class AddonMachineRuntime {
         }
     }
 
-    public static List<BasicMachineSpec> specs() { return List.copyOf(SPECS); }
+    public static List<BasicMachineSpec> specs() {
+        return List.copyOf(SPECS);
+    }
 
     public static RecipeMap create(RecipeMapSpec spec) {
-        var map = new RecipeMap(null, spec.mNameInternal, spec.mNameLocal, spec.mGUIPath,
-                spec.mInputItemsCount, spec.mOutputItemsCount, spec.mMinimalInputItems,
-                spec.mInputFluidCount, spec.mOutputFluidCount, spec.mMinimalInputFluids,
-                spec.mMinimalInputs, spec.mNeedsOutputs, spec.mCombinePower,
-                spec.mUseBucketSizeIn, spec.mUseBucketSizeOut);
+        var map = new RecipeMap(
+                null,
+                spec.mNameInternal,
+                spec.mNameLocal,
+                spec.mGUIPath,
+                spec.mInputItemsCount,
+                spec.mOutputItemsCount,
+                spec.mMinimalInputItems,
+                spec.mInputFluidCount,
+                spec.mOutputFluidCount,
+                spec.mMinimalInputFluids,
+                spec.mMinimalInputs,
+                spec.mNeedsOutputs,
+                spec.mCombinePower,
+                spec.mUseBucketSizeIn,
+                spec.mUseBucketSizeOut);
         map.specialValueLabel(spec.mSpecialValuePre, spec.mSpecialValueMultiplier, spec.mSpecialValuePost);
         map.viewer(spec.mViewerAllowed, spec.mShowVoltageAmperage);
         if (spec.mInstantRecipes) map.instantRecipes();
@@ -59,8 +70,8 @@ public final class AddonMachineRuntime {
         var parameters = definition.parameters();
         RecipeMap recipes = RecipeMap.RECIPE_MAPS.get(definition.recipeMapName());
         if (recipes == null)
-            throw new IllegalStateException("Addon '" + accepted.addonId() + "' machine '"
-                    + parameters.machineName() + "' uses unknown recipe map '" + definition.recipeMapName() + "'");
+            throw new IllegalStateException("Addon '" + accepted.addonId() + "' machine '" + parameters.machineName()
+                    + "' uses unknown recipe map '" + definition.recipeMapName() + "'");
         var spec = BasicMachineSpec.builder(parameters.id(), parameters.material())
                 .machineType(parameters.machineName())
                 .recipes(recipes)
@@ -83,15 +94,13 @@ public final class AddonMachineRuntime {
                 .fluidOutputTarget(parameters.fluidOutputTarget())
                 .itemInputSource(parameters.itemInputSource())
                 .fluidInputSource(parameters.fluidInputSource());
-        if (parameters.energyRangeSpecified())
-            spec.energyRange(parameters.energyInMin(), parameters.energyInMax());
+        if (parameters.energyRangeSpecified()) spec.energyRange(parameters.energyInMin(), parameters.energyInMax());
         else if (definition.kind() == gregtech.api.machine.MachineControllerKind.LARGE_RECIPE)
             spec.implicitEnergyRange(parameters.acceptedEnergyInMin(true), parameters.acceptedEnergyInMax(true));
         else if (parameters.energyInMin() > 0)
             spec.implicitEnergyRange(parameters.energyInMin(), parameters.energyInMax());
         if (definition.kind() == gregtech.api.machine.MachineControllerKind.BASIC
-                || parameters.cheapOverclockingSpecified())
-            spec.cheapOverclocking(parameters.cheapOverclocking());
+                || parameters.cheapOverclockingSpecified()) spec.cheapOverclocking(parameters.cheapOverclocking());
         if (definition.auxiliaryEnergyType() != null) {
             var tag = gregtech.content.data.GregTechTags.Energy.ALL.stream()
                     .filter(candidate -> candidate.getShortName().equalsIgnoreCase(definition.auxiliaryEnergyType()))
@@ -99,8 +108,12 @@ public final class AddonMachineRuntime {
                     .orElseThrow(() -> new IllegalStateException("Addon '" + accepted.addonId()
                             + "' machine '" + parameters.machineName() + "' uses unknown auxiliary energy type '"
                             + definition.auxiliaryEnergyType() + "'"));
-            spec.auxiliaryEnergy(tag, definition.auxiliaryEnergyIn(), definition.auxiliaryEnergyMin(),
-                    definition.auxiliaryEnergyMax(), definition.auxiliaryEnergyCapacity(),
+            spec.auxiliaryEnergy(
+                    tag,
+                    definition.auxiliaryEnergyIn(),
+                    definition.auxiliaryEnergyMin(),
+                    definition.auxiliaryEnergyMax(),
+                    definition.auxiliaryEnergyCapacity(),
                     definition.auxiliaryFaceMask());
             if (definition.startupEnergy()) spec.startupEnergy(true);
         }

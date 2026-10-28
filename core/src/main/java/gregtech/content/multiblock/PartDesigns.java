@@ -29,7 +29,9 @@ public final class PartDesigns {
         return spec == null ? null : spec.folder();
     }
 
-    public static Set<String> paths() { return Collections.unmodifiableSet(BY_PATH.keySet()); }
+    public static Set<String> paths() {
+        return Collections.unmodifiableSet(BY_PATH.keySet());
+    }
 
     /** Texture folder to the highest index that folder uses. */
     public static Map<String, Integer> folders() {
@@ -40,17 +42,44 @@ public final class PartDesigns {
 
     private static Map<String, Spec> specs() {
         var map = new LinkedHashMap<String, Spec>();
-        metal(map, "metalwall",
-                "lead_wall", "bronze_wall", "steel_wall", "galvanized_steel_wall", "tank_wall",
-                "invar_wall", "titanium_wall", "tungstensteel_wall", "tungsten_wall",
-                "tantalum_hafnium_carbide_wall", "adamantium_wall");
-        metal(map, "metalwalldense",
-                "dense_lead_wall", "dense_bronze_wall", "dense_steel_wall", "dense_galvanized_steel_wall",
-                "tank_wall_dense", "dense_invar_wall", "dense_titanium_wall", "implosion_compressor_wall",
-                "dense_tungsten_wall", "dense_tantalum_hafnium_carbide_wall", "dense_adamantium_wall");
-        put(map, "coil", 1,
-                "large_copper_coil", "large_niobium_titanium_coil", "large_nichrome_coil",
-                "large_carborundum_coil", "large_osmium_coil", "large_iridium_coil");
+        metal(
+                map,
+                "metalwall",
+                "lead_wall",
+                "bronze_wall",
+                "steel_wall",
+                "galvanized_steel_wall",
+                "tank_wall",
+                "invar_wall",
+                "titanium_wall",
+                "tungstensteel_wall",
+                "tungsten_wall",
+                "tantalum_hafnium_carbide_wall",
+                "adamantium_wall");
+        metal(
+                map,
+                "metalwalldense",
+                "dense_lead_wall",
+                "dense_bronze_wall",
+                "dense_steel_wall",
+                "dense_galvanized_steel_wall",
+                "tank_wall_dense",
+                "dense_invar_wall",
+                "dense_titanium_wall",
+                "implosion_compressor_wall",
+                "dense_tungsten_wall",
+                "dense_tantalum_hafnium_carbide_wall",
+                "dense_adamantium_wall");
+        put(
+                map,
+                "coil",
+                1,
+                "large_copper_coil",
+                "large_niobium_titanium_coil",
+                "large_nichrome_coil",
+                "large_carborundum_coil",
+                "large_osmium_coil",
+                "large_iridium_coil");
         map.put("centrifuge_part", new Spec(8, "centrifugeparts"));
         map.put("electrolyzer_part", new Spec(7, "electrolyzerparts"));
         map.put("distillation_tower_part", new Spec(1, "distillationtowerparts"));

@@ -2,6 +2,7 @@ package gregtech.content.item.behavior;
 
 import gregtech.content.block.OreBlock;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -10,8 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6 {@code Behavior_Worldgen_Debugger} ({@code Behavior_Worldgen_Debugger.java:43-55}) — the
@@ -155,11 +154,18 @@ public final class BehaviorWorldgenDebugger {
      * @return GT6's {@code T} ({@code :54}): handled on the server even when the sweep deleted nothing,
      *         refused on the client
      */
-    public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player,
-                                ItemStack stack, float hitX, float hitY, float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack);                            // :44
-        eraseExceptOres(level, pos.getX() >> 4, pos.getZ() >> 4,
-                level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - 1);
-        return Outcome.acted(stack);                                                      // :54
+    public static Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack stack,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        if (level.isClientSide) return Outcome.refused(stack); // :44
+        eraseExceptOres(
+                level, pos.getX() >> 4, pos.getZ() >> 4, level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - 1);
+        return Outcome.acted(stack); // :54
     }
 }

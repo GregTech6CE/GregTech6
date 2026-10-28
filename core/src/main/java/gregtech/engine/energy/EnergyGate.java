@@ -16,12 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.engine.energy;
 
-import java.util.function.LongSupplier;
-
 import gregtech.content.data.GregTechTags;
+import java.util.function.LongSupplier;
 
 /**
  * The pure part of the upstream TileEntityBase01Root energy gate (TileEntityBase01Root.java:716-717),
@@ -40,19 +38,33 @@ import gregtech.content.data.GregTechTags;
  * synchronized doEnergyInjection/doEnergyExtraction entry points.
  */
 public final class EnergyGate {
-	private EnergyGate() {}
+    private EnergyGate() {}
 
-	/** Upstream TileEntityBase01Root.java:717 (doEnergyInjection gate). */
-	public static long gateInjection(GregTechTags.Tag aEnergyType, boolean aAccepting, long aSize, long aInputMin, long aAmount, LongSupplier aDoInject) {
-		if (aSize == 0 || !aAccepting) return 0;
-		if (GregTechTags.Energy.ALL_SIZE_IRRELEVANT.contains(aEnergyType) || Math.abs(aSize) >= aInputMin) return aDoInject.getAsLong();
-		return aAmount; // packet too small: upstream swallows the offered amount without storing it
-	}
+    /** Upstream TileEntityBase01Root.java:717 (doEnergyInjection gate). */
+    public static long gateInjection(
+            GregTechTags.Tag aEnergyType,
+            boolean aAccepting,
+            long aSize,
+            long aInputMin,
+            long aAmount,
+            LongSupplier aDoInject) {
+        if (aSize == 0 || !aAccepting) return 0;
+        if (GregTechTags.Energy.ALL_SIZE_IRRELEVANT.contains(aEnergyType) || Math.abs(aSize) >= aInputMin)
+            return aDoInject.getAsLong();
+        return aAmount; // packet too small: upstream swallows the offered amount without storing it
+    }
 
-	/** Upstream TileEntityBase01Root.java:716 (doEnergyExtraction gate). */
-	public static long gateExtraction(GregTechTags.Tag aEnergyType, boolean aEmitting, long aSize, long aOutputMin, long aAmount, LongSupplier aDoExtract) {
-		if (aSize == 0 || !aEmitting) return 0;
-		if (GregTechTags.Energy.ALL_SIZE_IRRELEVANT.contains(aEnergyType) || Math.abs(aSize) >= aOutputMin) return aDoExtract.getAsLong();
-		return 0; // packet too small: upstream refuses the extraction
-	}
+    /** Upstream TileEntityBase01Root.java:716 (doEnergyExtraction gate). */
+    public static long gateExtraction(
+            GregTechTags.Tag aEnergyType,
+            boolean aEmitting,
+            long aSize,
+            long aOutputMin,
+            long aAmount,
+            LongSupplier aDoExtract) {
+        if (aSize == 0 || !aEmitting) return 0;
+        if (GregTechTags.Energy.ALL_SIZE_IRRELEVANT.contains(aEnergyType) || Math.abs(aSize) >= aOutputMin)
+            return aDoExtract.getAsLong();
+        return 0; // packet too small: upstream refuses the extraction
+    }
 }

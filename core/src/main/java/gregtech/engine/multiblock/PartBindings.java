@@ -8,21 +8,34 @@ import java.util.function.*;
  * cells whose role is new, changed, or whose derived binding no longer holds. A repeated evaluation
  * with the same cells therefore claims and releases nothing.
  */
-public final class PartBindings<P,R> {
-    public enum Outcome { APPLIED, UNCHANGED, FAILED }
+public final class PartBindings<P, R> {
+    public enum Outcome {
+        APPLIED,
+        UNCHANGED,
+        FAILED
+    }
 
-    private final Map<P,R> bound = new HashMap<>();
+    private final Map<P, R> bound = new HashMap<>();
 
-    public boolean contains(P position) { return bound.containsKey(position); }
+    public boolean contains(P position) {
+        return bound.containsKey(position);
+    }
 
-    public Outcome update(Map<P,R> candidates, Predicate<P> canClaim, BiPredicate<P,R> retained,
-                          BiConsumer<P,R> claim, Consumer<P> release) {
+    public Outcome update(
+            Map<P, R> candidates,
+            Predicate<P> canClaim,
+            BiPredicate<P, R> retained,
+            BiConsumer<P, R> claim,
+            Consumer<P> release) {
         Objects.requireNonNull(candidates);
         Objects.requireNonNull(canClaim);
         Objects.requireNonNull(retained);
         Objects.requireNonNull(claim);
         Objects.requireNonNull(release);
-        if (!candidates.keySet().stream().allMatch(canClaim)) { clear(release); return Outcome.FAILED; }
+        if (!candidates.keySet().stream().allMatch(canClaim)) {
+            clear(release);
+            return Outcome.FAILED;
+        }
         boolean changed = false;
         for (P old : new ArrayList<>(bound.keySet())) {
             if (!candidates.containsKey(old)) {
@@ -48,5 +61,7 @@ public final class PartBindings<P,R> {
         bound.clear();
     }
 
-    public Set<P> positions() { return Set.copyOf(bound.keySet()); }
+    public Set<P> positions() {
+        return Set.copyOf(bound.keySet());
+    }
 }

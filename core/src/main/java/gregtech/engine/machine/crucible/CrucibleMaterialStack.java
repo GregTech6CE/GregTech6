@@ -1,9 +1,8 @@
 package gregtech.engine.machine.crucible;
 
-import gregtech.content.material.Materials;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.material.Materials;
 import gregtech.engine.material.MaterialMass;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,5 +85,4 @@ public final class CrucibleMaterialStack {
         }
         return total;
     }
-
 }

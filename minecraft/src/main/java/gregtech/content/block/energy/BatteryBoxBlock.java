@@ -1,7 +1,7 @@
 package gregtech.content.block.energy;
 
-import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.engine.energy.EnergyNodeSpec;
 import net.minecraft.core.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -30,11 +30,15 @@ public final class BatteryBoxBlock extends EnergyNodeBlock {
 
     @Override
     public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
-        return level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node ? node.panels().signal(side.getOpposite()) : 0;
+        return level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node
+                ? node.panels().signal(side.getOpposite())
+                : 0;
     }
 
     @Override
     public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
-        return level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node ? node.panels().strongSignal(side.getOpposite()) : 0;
+        return level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node
+                ? node.panels().strongSignal(side.getOpposite())
+                : 0;
     }
 }

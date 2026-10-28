@@ -3,13 +3,12 @@ package gregtech.content.multiblock;
 /** Original GT6 tower geometry, horizontal range and per-tick energy drain. */
 public final class VonDaGraaggRules {
 
-    private VonDaGraaggRules() {
-    }
+    private VonDaGraaggRules() {}
+
     public static final long CAPACITY = 4096, INPUT_MIN = 256, INPUT_RECOMMENDED = 2048;
     public static final int SENSOR_MAXIMUM = 256;
 
-    public record Cell(int x, int y, int z, int partId, boolean energyInput) {
-    }
+    public record Cell(int x, int y, int z, int partId, boolean energyInput) {}
 
     public static java.util.List<Cell> layout() {
         var cells = new java.util.ArrayList<Cell>();
@@ -22,8 +21,7 @@ public final class VonDaGraaggRules {
                     cells.add(new Cell(x, y, z, 18028, true));
                 }
             }
-        for (int y = 2; y <= 6; y++)
-            cells.add(new Cell(0, y, 0, 18040, false));
+        for (int y = 2; y <= 6; y++) cells.add(new Cell(0, y, 0, 18040, false));
         cells.add(new Cell(0, 7, 0, 18029, false));
         for (int x = -1; x <= 1; x++)
             for (int z = -1; z <= 1; z++) {

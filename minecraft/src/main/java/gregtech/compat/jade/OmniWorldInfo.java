@@ -1,8 +1,8 @@
 package gregtech.compat.jade;
 
-import gregtech.content.blockentity.*;
 import gregtech.content.block.plant.BushBlock;
 import gregtech.content.block.wood.TreeHoleBlock;
+import gregtech.content.blockentity.*;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -13,7 +13,8 @@ final class OmniWorldInfo {
     static void append(JadeInspection info, BlockEntity entity) {
         if (entity instanceof gregtech.content.blockentity.inventory.MassStorageBlockEntity storage) {
             info.groupedInventory();
-            if (!storage.template().isEmpty()) info.line("stored_count", storage.template().copyWithCount(1), storage.stored());
+            if (!storage.template().isEmpty())
+                info.line("stored_count", storage.template().copyWithCount(1), storage.stored());
         } else if (entity instanceof gregtech.content.blockentity.misc.PileBlockEntity pile) {
             info.groupedInventory();
             if (!pile.isEmpty()) info.line("stored_count", pile.stored().copyWithCount(1), pile.count());
@@ -29,17 +30,24 @@ final class OmniWorldInfo {
             var level = bush.getLevel();
             var state = bush.getBlockState();
             var pos = bush.getBlockPos();
-            Direction support = BushBlock.isCore(state) ? null : Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT));
-            var sample = pos.offset(support == null ? 0 : support.getStepX(),
-                    support == Direction.UP ? 1 : 2, support == null ? 0 : support.getStepZ());
+            Direction support =
+                    BushBlock.isCore(state) ? null : Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT));
+            var sample = pos.offset(
+                    support == null ? 0 : support.getStepX(),
+                    support == Direction.UP ? 1 : 2,
+                    support == null ? 0 : support.getStepZ());
             // A tooltip must not load a neighbouring chunk or call grow/refreshSupport.
             if (level != null && level.hasChunkAt(sample)) {
                 boolean sky = level.canSeeSky(pos.above());
                 info.flag("growth_light", sky || level.getMaxLocalRawBrightness(sample) > BushBlockEntity.LIGHT_GATE);
                 info.flag("growth_rain", sky && level.isRainingAt(sample));
             }
-        } else if (entity instanceof TreeHoleBlockEntity tree && tree.getBlockState().hasProperty(TreeHoleBlock.RESIN)) {
-            info.line("state", JadeInspection.label(tree.getBlockState().getValue(TreeHoleBlock.RESIN) ? "sap_ready" : "sap_waiting"));
+        } else if (entity instanceof TreeHoleBlockEntity tree
+                && tree.getBlockState().hasProperty(TreeHoleBlock.RESIN)) {
+            info.line(
+                    "state",
+                    JadeInspection.label(
+                            tree.getBlockState().getValue(TreeHoleBlock.RESIN) ? "sap_ready" : "sap_waiting"));
         } else if (entity instanceof SapBagBlockEntity bag) {
             info.item("collected", 0, bag.stored());
             var tank = bag.tank();

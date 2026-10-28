@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.plant;
 
-import gregtech.engine.material.MaterialItemDefinitions;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.material.MaterialItemDefinitions;
 import java.util.List;
 
 /** Original MultiTileEntityBush plantGtBerry branch, with independent modern block identities.
@@ -32,13 +31,19 @@ public final class MaterialBerryBushCatalog {
 
     public record Variant(String blockPath, String berryItemId, int materialId, int colour) {}
 
-    public static List<Variant> variants() { return Ready.VARIANTS; }
+    public static List<Variant> variants() {
+        return Ready.VARIANTS;
+    }
 
     private static final class Ready {
         private static final List<Variant> VARIANTS = MaterialItemDefinitions.all().stream()
                 .filter(d -> d.prefix() == MaterialPrefix.plantGtBerry)
-                .map(d -> new Variant("bush_" + d.itemId(), d.namespace() + ":" + d.itemId(),
-                        d.material().getId(), d.material().getColor() & 0xffffff)).toList();
+                .map(d -> new Variant(
+                        "bush_" + d.itemId(),
+                        d.namespace() + ":" + d.itemId(),
+                        d.material().getId(),
+                        d.material().getColor() & 0xffffff))
+                .toList();
     }
 
     /** Material berries use fixed foliage/bloom/immature colors and the material's solid RGB. */
@@ -49,13 +54,18 @@ public final class MaterialBerryBushCatalog {
     /** Same 28 source geometries as food bushes, supplied by the overrideable built-in pack. */
     public static String blockstateJson() {
         var json = new StringBuilder("{\"variants\":{");
-        for (int stage = 0; stage < 4; stage++) for (int support = 0; support < 7; support++) {
-            if (stage != 0 || support != 0) json.append(',');
-            json.append("\"stage=").append(stage).append(",support=").append(support)
-                    .append("\":{\"model\":\"gt6ce:block/plants/bush_stage").append(stage);
-            if (support != 6) json.append("_support").append(support);
-            json.append("\"}");
-        }
+        for (int stage = 0; stage < 4; stage++)
+            for (int support = 0; support < 7; support++) {
+                if (stage != 0 || support != 0) json.append(',');
+                json.append("\"stage=")
+                        .append(stage)
+                        .append(",support=")
+                        .append(support)
+                        .append("\":{\"model\":\"gt6ce:block/plants/bush_stage")
+                        .append(stage);
+                if (support != 6) json.append("_support").append(support);
+                json.append("\"}");
+            }
         return json.append("}}").toString();
     }
 }

@@ -11,8 +11,8 @@ final class MaterialFormCorrections {
     static void apply() {
         // MT.java:1259 G_STONE, STONE, WOOD. Needed for the source's petrified-wood
         // rock knapping rows and wood/plastic handle equivalence.
-        CompoundMaterials.PetrifiedWood.put(MaterialProperty.STONE, MaterialProperty.WOOD,
-                MaterialProperty.GENERATE_STICKS);
+        CompoundMaterials.PetrifiedWood.put(
+                MaterialProperty.STONE, MaterialProperty.WOOD, MaterialProperty.GENERATE_STICKS);
         // GT6 field names the port spells differently, whose specs (`omd:CrO2`, `omd:Flour`) would
         // otherwise not resolve — both are real GT6 chemistry/food rows (§25):
         //   MT.java:8685 Chromium Dioxide ("CrO₂")      ← `Roasting: omd:Cr + Oxygen -> omd:CrO2`
@@ -23,36 +23,71 @@ final class MaterialFormCorrections {
         // Every source capsule material has INGOTS and DUSTS (MT.wax or G_INGOT).
         // OP.nugget follows OP.ingot. Restore forms before Forge registration so
         // high-temperature forming and empty-shell recycling use real material items.
-        for(var spec:gregtech.engine.fluid.PortableFluidContainerSpec.values())if(spec.shapeId().equals("cell")) {
-            spec.material().put(MaterialProperty.DUST,MaterialProperty.GENERATE_DUST,
-                    MaterialProperty.INGOT,MaterialProperty.GENERATE_INGOT,MaterialProperty.GENERATE_NUGGET);
-        }
+        for (var spec : gregtech.engine.fluid.PortableFluidContainerSpec.values())
+            if (spec.shapeId().equals("cell")) {
+                spec.material()
+                        .put(
+                                MaterialProperty.DUST,
+                                MaterialProperty.GENERATE_DUST,
+                                MaterialProperty.INGOT,
+                                MaterialProperty.GENERATE_INGOT,
+                                MaterialProperty.GENERATE_NUGGET);
+            }
         // MT.Ke is Trinium (1260), an element with G_INGOT_MACHINE_ORES and SMITHABLE.
         // It is not the unrelated Kreknorite alloy (8759).
-        Materials.Trinium.put(MaterialProperty.INGOT,MaterialProperty.GENERATE_INGOT,MaterialProperty.GENERATE_NUGGET,
-                MaterialProperty.GENERATE_DUST,MaterialProperty.GENERATE_PLATE,MaterialProperty.GENERATE_STICKS,
-                MaterialProperty.GENERATE_PARTS,MaterialProperty.SMITHABLE);
+        Materials.Trinium.put(
+                MaterialProperty.INGOT,
+                MaterialProperty.GENERATE_INGOT,
+                MaterialProperty.GENERATE_NUGGET,
+                MaterialProperty.GENERATE_DUST,
+                MaterialProperty.GENERATE_PLATE,
+                MaterialProperty.GENERATE_STICKS,
+                MaterialProperty.GENERATE_PARTS,
+                MaterialProperty.SMITHABLE);
         // GT6 iodine() uses G_CRYSTAL_ORES; the original import retained only its gas form.
         // Restore the solid dust needed for MultiItemFood's iodine radiation medicine.
         Materials.Iodine.put(MaterialProperty.GENERATE_DUST);
         // Original canner registrations explicitly consume rods/bolts of these materials.
-        for(var rod:gregtech.content.nuclear.ReactorRodCatalog.ALL) {
-            if(switch(rod.kind()){case NUCLEAR,BREEDER,ABSORBER,REFLECTOR,MODERATOR->true;default->false;}) {
-                var material=gregtech.engine.material.GTMaterialRegistry.get(rod.material());
-                if(!material.isValid())throw new IllegalStateException("Missing reactor material: "+rod.material());
+        for (var rod : gregtech.content.nuclear.ReactorRodCatalog.ALL) {
+            if (switch (rod.kind()) {
+                case NUCLEAR, BREEDER, ABSORBER, REFLECTOR, MODERATOR -> true;
+                default -> false;
+            }) {
+                var material = gregtech.engine.material.GTMaterialRegistry.get(rod.material());
+                if (!material.isValid()) throw new IllegalStateException("Missing reactor material: " + rod.material());
                 material.put(MaterialProperty.GENERATE_STICKS);
             }
         }
 
         // MT's gas/lquid acid factories set ACID even for bases such as ammonia.
         // Preserve original classifications rather than guessing from an English suffix.
-        for(String name:new String[]{"Hydrochloric Acid","Hydrogen Fluoride","Ammonia","Nitric Acid",
-                "Hydrosulfuric Acid","Sulfuric Acid","Disulfuric Acid","Hexafluorosilicic Acid",
-                "Titanium Tetrachloride","Chloroauric Acid","Chloroplatinic Acid","Stannic Chloride",
-                "Black Vitriol","Blue Vitriol","Green Vitriol","Red Vitriol","Pink Vitriol","Cyan Vitriol",
-                "White Vitriol","Gray Vitriol","Martian Vitriol","Vitriol Of Clay","Aqua Regia"}){
-            var material=gregtech.engine.material.GTMaterialRegistry.get(name.replace(" ",""));
-            if(material.isValid())material.put(MaterialProperty.ACID);
+        for (String name : new String[] {
+            "Hydrochloric Acid",
+            "Hydrogen Fluoride",
+            "Ammonia",
+            "Nitric Acid",
+            "Hydrosulfuric Acid",
+            "Sulfuric Acid",
+            "Disulfuric Acid",
+            "Hexafluorosilicic Acid",
+            "Titanium Tetrachloride",
+            "Chloroauric Acid",
+            "Chloroplatinic Acid",
+            "Stannic Chloride",
+            "Black Vitriol",
+            "Blue Vitriol",
+            "Green Vitriol",
+            "Red Vitriol",
+            "Pink Vitriol",
+            "Cyan Vitriol",
+            "White Vitriol",
+            "Gray Vitriol",
+            "Martian Vitriol",
+            "Vitriol Of Clay",
+            "Aqua Regia"
+        }) {
+            var material = gregtech.engine.material.GTMaterialRegistry.get(name.replace(" ", ""));
+            if (material.isValid()) material.put(MaterialProperty.ACID);
         }
 
         // MT.Graphite explicitly has STICKS; its rod is used in reactor moderators.
@@ -61,26 +96,49 @@ final class MaterialFormCorrections {
         // MT.Ad is element(... G_INGOT_MACHINE_ORES, SMITHABLE ...), not a dust-only element.
         // Restore the sheet-metal chain needed by its original dense structural wall.
         gregtech.content.material.generated.ElementMaterials.Adamantium.put(
-                MaterialProperty.INGOT, MaterialProperty.GENERATE_INGOT, MaterialProperty.GENERATE_PLATE,
-                MaterialProperty.GENERATE_MULTIINGOT, MaterialProperty.GENERATE_MULTIPLATE,
-                MaterialProperty.GENERATE_DENSEPLATE, MaterialProperty.GENERATE_STICKS, MaterialProperty.GENERATE_PARTS, MaterialProperty.SMITHABLE);
+                MaterialProperty.INGOT,
+                MaterialProperty.GENERATE_INGOT,
+                MaterialProperty.GENERATE_PLATE,
+                MaterialProperty.GENERATE_MULTIINGOT,
+                MaterialProperty.GENERATE_MULTIPLATE,
+                MaterialProperty.GENERATE_DENSEPLATE,
+                MaterialProperty.GENERATE_STICKS,
+                MaterialProperty.GENERATE_PARTS,
+                MaterialProperty.SMITHABLE);
         // MT.Rubber / Plastic: G_INGOT_MACHINE; these are formable, not smithable metals.
-        for (var material : new gregtech.api.material.GTMaterial[]{CompoundMaterials.Rubber, CompoundMaterials.Plastic}) {
-            material.put(MaterialProperty.INGOT, MaterialProperty.GENERATE_INGOT, MaterialProperty.GENERATE_NUGGET,
-                    MaterialProperty.GENERATE_PLATE, MaterialProperty.GENERATE_PARTS, MaterialProperty.GENERATE_STICKS,
-                    MaterialProperty.GENERATE_FOIL, MaterialProperty.GENERATE_WIRE);
+        for (var material :
+                new gregtech.api.material.GTMaterial[] {CompoundMaterials.Rubber, CompoundMaterials.Plastic}) {
+            material.put(
+                    MaterialProperty.INGOT,
+                    MaterialProperty.GENERATE_INGOT,
+                    MaterialProperty.GENERATE_NUGGET,
+                    MaterialProperty.GENERATE_PLATE,
+                    MaterialProperty.GENERATE_PARTS,
+                    MaterialProperty.GENERATE_STICKS,
+                    MaterialProperty.GENERATE_FOIL,
+                    MaterialProperty.GENERATE_WIRE);
         }
         // OP.bouleGt.forceItemGeneration; crystal plates do not imply ordinary gems.
-        for (String name : new String[]{"Silicon", "Germanium", "RedstoneAlloy", "NikolineAlloy"}) {
+        for (String name : new String[] {"Silicon", "Germanium", "RedstoneAlloy", "NikolineAlloy"}) {
             var material = gregtech.engine.material.GTMaterialRegistry.get(name);
             if (!material.isValid()) throw new IllegalStateException("Missing semiconductor: " + name);
-            material.put(MaterialProperty.BOULE, MaterialProperty.GENERATE_PLATE, MaterialProperty.DUST, MaterialProperty.GENERATE_DUST);
+            material.put(
+                    MaterialProperty.BOULE,
+                    MaterialProperty.GENERATE_PLATE,
+                    MaterialProperty.DUST,
+                    MaterialProperty.GENERATE_DUST);
         }
         // OP:624 force-generates boules for the seven MT sapphire-family declarations.
         // Keep this before source eligibility snapshots and before addon linking callbacks.
-        for (var material : new gregtech.api.material.GTMaterial[]{CompoundMaterials.Sapphire,
-                CompoundMaterials.GreenSapphire, CompoundMaterials.YellowSapphire, CompoundMaterials.OrangeSapphire,
-                CompoundMaterials.BlueSapphire, CompoundMaterials.PurpleSapphire, CompoundMaterials.Ruby}) {
+        for (var material : new gregtech.api.material.GTMaterial[] {
+            CompoundMaterials.Sapphire,
+            CompoundMaterials.GreenSapphire,
+            CompoundMaterials.YellowSapphire,
+            CompoundMaterials.OrangeSapphire,
+            CompoundMaterials.BlueSapphire,
+            CompoundMaterials.PurpleSapphire,
+            CompoundMaterials.Ruby
+        }) {
             if (material.resolve() == material
                     && gregtech.engine.material.GTMaterialRegistry.get(material.getId()) == material
                     && gregtech.engine.material.GTMaterialRegistry.get(material.getName()) == material
@@ -93,21 +151,31 @@ final class MaterialFormCorrections {
         if (blackstone != null && blackstone.isValid()) blackstone.setToolStats(1, 5.0F, 64, 1);
 
         // MT.Ice uses G_GEM_TRANSPARENT and SET_CUBE_SHINY, not a dust-only group.
-        CompoundMaterials.Ice.put(MaterialProperty.GEM, MaterialProperty.DUST, MaterialProperty.GENERATE_DUST,
-                MaterialProperty.GENERATE_PLATE, MaterialProperty.GENERATE_STICKS,
-                MaterialProperty.GENERATE_PLANT, MaterialProperty.GENERATE_PROJECTILE,
-                MaterialProperty.GENERATE_LENS).setTextureSet(MaterialTextureSet.CUBE_SHINY);
+        CompoundMaterials.Ice.put(
+                        MaterialProperty.GEM,
+                        MaterialProperty.DUST,
+                        MaterialProperty.GENERATE_DUST,
+                        MaterialProperty.GENERATE_PLATE,
+                        MaterialProperty.GENERATE_STICKS,
+                        MaterialProperty.GENERATE_PLANT,
+                        MaterialProperty.GENERATE_PROJECTILE,
+                        MaterialProperty.GENERATE_LENS)
+                .setTextureSet(MaterialTextureSet.CUBE_SHINY);
 
         // GT6's quartz() helper uses TD.G_QUARTZ (TD.java:604 =
         // PROJECTILES, DUSTS, PLANTS, PLATES, STICKS, GEMS), so Nether Quartz, Certus Quartz,
         // Charged Certus Quartz and Fluix all have a GEM form in the original; the import kept the
         // dust only, which is why gem-shaped recipes (e.g. the charged-certus chain) had no item.
-        for (String name : new String[]{"NetherQuartz", "CertusQuartz", "ChargedCertusQuartz", "Fluix"}) {
+        for (String name : new String[] {"NetherQuartz", "CertusQuartz", "ChargedCertusQuartz", "Fluix"}) {
             var material = gregtech.engine.material.GTMaterialRegistry.get(name);
             if (material == null || !material.resolve().isValid()) continue;
-            material.resolve().put(MaterialProperty.GEM, MaterialProperty.GENERATE_PLATE,
-                    MaterialProperty.GENERATE_STICKS, MaterialProperty.GENERATE_PLANT,
-                    MaterialProperty.GENERATE_PROJECTILE);
+            material.resolve()
+                    .put(
+                            MaterialProperty.GEM,
+                            MaterialProperty.GENERATE_PLATE,
+                            MaterialProperty.GENERATE_STICKS,
+                            MaterialProperty.GENERATE_PLANT,
+                            MaterialProperty.GENERATE_PROJECTILE);
         }
 
         // GT6 TD.G_INGOT_MACHINE / G_INGOT_MACHINE_ORES both include DUSTS (TD.java:609-610), so
@@ -131,6 +199,6 @@ final class MaterialFormCorrections {
      * GT6 materials whose factory is one of the {@code *nd} helpers, i.e. intentionally without a
      * dust form ({@code MT.java}: metalmachnd 8655/8656, alloymachnd 8644/8803).
      */
-    private static final java.util.Set<String> NO_DUST_MATERIALS = java.util.Set.of(
-            "WroughtIron", "AnnealedCopper", "IronCompressed", "CastIron");
+    private static final java.util.Set<String> NO_DUST_MATERIALS =
+            java.util.Set.of("WroughtIron", "AnnealedCopper", "IronCompressed", "CastIron");
 }

@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.block.misc;
 
 import gregtech.content.logistics.LongDistanceCatalog;
@@ -25,8 +24,11 @@ import net.minecraft.world.level.block.Block;
 /** Native block boundary for flattened GT6 long-distance wire/pipe metadata. */
 public class LongDistPipeBlock extends Block {
     public enum Kind {
-        ITEM_PIPE, FLUID_PIPE, WIRE
+        ITEM_PIPE,
+        FLUID_PIPE,
+        WIRE
     }
+
     private final Kind kind;
     private final long maximumVoltage;
     private final long maximumTemperature;
@@ -66,27 +68,41 @@ public class LongDistPipeBlock extends Block {
     }
 
     @Override
-    public int getFlammability(net.minecraft.world.level.block.state.BlockState state,
-            net.minecraft.world.level.BlockGetter level, net.minecraft.core.BlockPos pos, net.minecraft.core.Direction side) {
+    public int getFlammability(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.BlockGetter level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.core.Direction side) {
         return isWire() ? 150 : 0;
     }
 
     @Override
-    public int getFireSpreadSpeed(net.minecraft.world.level.block.state.BlockState state,
-            net.minecraft.world.level.BlockGetter level, net.minecraft.core.BlockPos pos, net.minecraft.core.Direction side) {
+    public int getFireSpreadSpeed(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.BlockGetter level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.core.Direction side) {
         return isWire() ? 150 : 0;
     }
 
     @Override
-    public void onPlace(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level level,
-            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState previous, boolean moving) {
+    public void onPlace(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.world.level.block.state.BlockState previous,
+            boolean moving) {
         if (!state.is(previous.getBlock())) LongDistanceTopology.changed(level);
         super.onPlace(state, level, pos, previous, moving);
     }
 
     @Override
-    public void onRemove(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level level,
-            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState next, boolean moving) {
+    public void onRemove(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.world.level.block.state.BlockState next,
+            boolean moving) {
         if (!state.is(next.getBlock())) LongDistanceTopology.changed(level);
         super.onRemove(state, level, pos, next, moving);
     }

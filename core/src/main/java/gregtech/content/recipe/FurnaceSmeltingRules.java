@@ -2,9 +2,9 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
-import gregtech.engine.material.*;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
+import gregtech.engine.material.*;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -13,10 +13,17 @@ import java.util.List;
  * The source's Water/Lava solidification exceptions are not targets of those positive inputs. */
 public final class FurnaceSmeltingRules {
     private FurnaceSmeltingRules() {}
+
     public record ExternalRow(MaterialPrefix input, long fixedAmount, boolean experience) {
-        public ExternalRow(MaterialPrefix input, long fixedAmount) { this(input, fixedAmount, true); }
-        public long amount() { return fixedAmount < 0 ? input.getMaterialWeight() : fixedAmount; }
+        public ExternalRow(MaterialPrefix input, long fixedAmount) {
+            this(input, fixedAmount, true);
+        }
+
+        public long amount() {
+            return fixedAmount < 0 ? input.getMaterialWeight() : fixedAmount;
+        }
     }
+
     public static final List<ExternalRow> EXTERNAL = List.of(
             new ExternalRow(MaterialPrefix.rawOreChunk, -1),
             new ExternalRow(MaterialPrefix.chunk, GTValues.U * 2),
@@ -31,15 +38,19 @@ public final class FurnaceSmeltingRules {
             new ExternalRow(MaterialPrefix.dustPure, -1, false),
             new ExternalRow(MaterialPrefix.dustRefined, -1, false),
             new ExternalRow(MaterialPrefix.dustImpure, -1, false));
+
     public static boolean allows(GTMaterial material) {
         if (material == null || !material.isValid()) return false;
         var decision = OreSourcePolicy.furnaceDecision(material);
         return decision == SourceRecyclingFacts.Decision.UNKNOWN
-                ? legacyAllows(material) : reviewedAllows(decision, material.resolve().has(MaterialProperty.HIDDEN));
+                ? legacyAllows(material)
+                : reviewedAllows(decision, material.resolve().has(MaterialProperty.HIDDEN));
     }
     /** Exact prior listener policy for callers whose item provenance is outside this native correction. */
     public static boolean legacyAllows(GTMaterial material) {
-        return material != null && material.isValid() && !material.has(MaterialProperty.HIDDEN)
+        return material != null
+                && material.isValid()
+                && !material.has(MaterialProperty.HIDDEN)
                 && MaterialWorkability.isFurnace(material);
     }
     /** Shared routing guard for known source decisions. UNKNOWN callers choose their own old fallback;
@@ -51,10 +62,14 @@ public final class FurnaceSmeltingRules {
     public static long amount(long formAmount, long smeltingPerUnit) {
         return PulverizationRules.amount(formAmount, smeltingPerUnit);
     }
+
     public static long experience(long targetAmount, int toolQuality) {
         if (targetAmount <= 0 || toolQuality < 0) return 0;
-        return BigInteger.valueOf(targetAmount).multiply(BigInteger.valueOf(toolQuality + 1L))
-                .add(BigInteger.valueOf(GTValues.U - 1)).divide(BigInteger.valueOf(GTValues.U))
-                .min(BigInteger.valueOf(Long.MAX_VALUE)).longValue();
+        return BigInteger.valueOf(targetAmount)
+                .multiply(BigInteger.valueOf(toolQuality + 1L))
+                .add(BigInteger.valueOf(GTValues.U - 1))
+                .divide(BigInteger.valueOf(GTValues.U))
+                .min(BigInteger.valueOf(Long.MAX_VALUE))
+                .longValue();
     }
 }

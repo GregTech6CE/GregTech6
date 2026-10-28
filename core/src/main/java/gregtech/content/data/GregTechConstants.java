@@ -10,6 +10,7 @@ public class GregTechConstants {
 
     /** Material amount unit  - delegates to {@link GTValues#U}. */
     public static final long U = GTValues.U;
+
     public static final long U2 = U / 2, U3 = U / 3, U4 = U / 4, U9 = U / 9;
     public static final long U16 = U / 16, U32 = U / 32, U64 = U / 64, U72 = U / 72;
 
@@ -25,6 +26,7 @@ public class GregTechConstants {
 
     /** NBT keys for energy block entities (from GT6 CS). */
     public static final String NBT_ENERGY = "gt.energy";
+
     public static final String NBT_ENERGY_ACCEPTED = "gt.energy.accepted";
     public static final String NBT_ENERGY_EMITTED = "gt.energy.emitted";
     public static final String NBT_INPUT = "gt.input";
@@ -41,6 +43,7 @@ public class GregTechConstants {
 
     /** GT6 {@code EU_PER_FURNACE_TICK} — furnace fuel power scale. */
     public static final int EU_PER_FURNACE_TICK = 25;
+
     public static final int EU_PER_LAVA = 80;
 
     public static final String[] VN = gregtech.api.energy.GTVoltageTiers.NAMES.clone();
@@ -49,8 +52,8 @@ public class GregTechConstants {
     public static final long[] V = gregtech.api.energy.GTVoltageTiers.VOLTAGES.clone();
 
     public static final String[] DYE_NAMES = {
-            "Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "Light Gray",
-            "Gray", "Pink", "Lime", "Yellow", "Light Blue", "Magenta", "Orange", "White"
+        "Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "Light Gray",
+        "Gray", "Pink", "Lime", "Yellow", "Light Blue", "Magenta", "Orange", "White"
     };
 
     /** Legacy registry namespace; loader identity is GregTechIdentity.MOD_ID. */

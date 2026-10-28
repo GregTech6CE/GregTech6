@@ -3,31 +3,45 @@
  * TileEntityBase11Motor/Bipolar, TE_Behavior_Energy_Stats/Converter/Active_Trinary. */
 package gregtech.content.energy;
 
-import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.energy.EnergyNodeSpec;
 import java.math.BigInteger;
 import java.util.function.LongBinaryOperator;
 
 /** Source base conversion shared by rotary, thermal, bipolar and steam devices. Native faces/storage stay at the boundary. */
 public final class OriginalRotaryConverter {
     private OriginalRotaryConverter() {}
+
     public static boolean handles(EnergyNodeSpec spec) {
-        return spec.id().startsWith("electric_motor_") || spec.id().startsWith("flux_motor_")
-                || spec.id().startsWith("electric_dynamo_") || spec.id().startsWith("flux_dynamo_");
+        return spec.id().startsWith("electric_motor_")
+                || spec.id().startsWith("flux_motor_")
+                || spec.id().startsWith("electric_dynamo_")
+                || spec.id().startsWith("flux_dynamo_");
     }
+
     public static boolean motor(EnergyNodeSpec spec) {
         return spec.id().startsWith("electric_motor_") || spec.id().startsWith("flux_motor_");
     }
     /** Steam turbines inherit the same source motor controls and visual behavior. */
-    public static boolean motorBehavior(EnergyNodeSpec spec) { return motor(spec) || OriginalSteamTurbines.handles(spec); }
-    public static long capacity(EnergyNodeSpec spec) { return spec.inputRate() * 2; }
-    public static long inputMinimum(EnergyNodeSpec spec) { return spec.inputRate() <= 16 ? 1 : spec.inputRate() / 2; }
+    public static boolean motorBehavior(EnergyNodeSpec spec) {
+        return motor(spec) || OriginalSteamTurbines.handles(spec);
+    }
+
+    public static long capacity(EnergyNodeSpec spec) {
+        return spec.inputRate() * 2;
+    }
+
+    public static long inputMinimum(EnergyNodeSpec spec) {
+        return spec.inputRate() <= 16 ? 1 : spec.inputRate() / 2;
+    }
+
     public static int efficiency(EnergyNodeSpec spec) {
         long input = spec.inputRate(), output = spec.outputRate();
         if (spec.inType() == GregTechTags.Energy.RF) output *= 4;
         if (spec.outType() == GregTechTags.Energy.RF) input *= 4;
         return (int) units(10000, input, output, false);
     }
+
     public static float overloadPower(long packet, GregTechTags.Tag type) {
         if (!GregTechTags.Energy.ALL_EXPLODING.contains(type)) return 0.1F;
         long magnitude = packet == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(packet), voltage = 8;
@@ -41,37 +55,74 @@ public final class OriginalRotaryConverter {
             long product = Math.multiplyExact(amount, to);
             return product / from + (roundUp && product % from != 0 ? 1 : 0);
         } catch (ArithmeticException overflow) {
-            var parts = BigInteger.valueOf(amount).multiply(BigInteger.valueOf(to)).divideAndRemainder(BigInteger.valueOf(from));
+            var parts = BigInteger.valueOf(amount)
+                    .multiply(BigInteger.valueOf(to))
+                    .divideAndRemainder(BigInteger.valueOf(from));
             var value = parts[0].add(roundUp && parts[1].signum() > 0 ? BigInteger.ONE : BigInteger.ZERO);
             return value.min(BigInteger.valueOf(Long.MAX_VALUE)).longValueExact();
         }
     }
 
     public record Injection(long energy, long consumed, boolean overloaded) {}
+
     public record Tick(long energy, boolean overloaded, boolean possible, boolean emitted, boolean fast, int visual) {}
-    public record Snapshot(int mode, boolean counterClockwise, boolean negativeInput,
-                           boolean possible, boolean emitted, boolean fast) {}
+
+    public record Snapshot(
+            int mode,
+            boolean counterClockwise,
+            boolean negativeInput,
+            boolean possible,
+            boolean emitted,
+            boolean fast) {}
 
     public static final class State {
         private final EnergyNodeSpec spec;
         private long timer, history;
         private int mode;
         private boolean counterClockwise, negativeInput, possible, emitted, fast;
+
         public State(EnergyNodeSpec spec) {
             // The same source base conversion also drives thermal and bipolar devices. Twin outputs use one
             // native emission callback for both channels, so fixed input waste is applied once.
-            if (!handles(spec) && !OriginalThermalConverter.handles(spec) && !MagnetMachineDefinitions.handles(spec) && !OriginalSteamTurbines.handles(spec))
+            if (!handles(spec)
+                    && !OriginalThermalConverter.handles(spec)
+                    && !MagnetMachineDefinitions.handles(spec)
+                    && !OriginalSteamTurbines.handles(spec))
                 throw new IllegalArgumentException("Not an original registered converter: " + spec.id());
             this.spec = spec;
         }
-        public int mode() { return mode; }
-        public int mode(int value) { return mode = value & 15; }
-        public boolean counterClockwise() { return counterClockwise; }
-        public boolean reverse() { return counterClockwise = !counterClockwise; }
-        public boolean possible() { return possible; }
-        public boolean emitted() { return emitted; }
-        public boolean fast() { return fast; }
-        public int visual(boolean stopped) { return stopped || history == 0 ? 0 : history == -1L ? 1 : 2; }
+
+        public int mode() {
+            return mode;
+        }
+
+        public int mode(int value) {
+            return mode = value & 15;
+        }
+
+        public boolean counterClockwise() {
+            return counterClockwise;
+        }
+
+        public boolean reverse() {
+            return counterClockwise = !counterClockwise;
+        }
+
+        public boolean possible() {
+            return possible;
+        }
+
+        public boolean emitted() {
+            return emitted;
+        }
+
+        public boolean fast() {
+            return fast;
+        }
+
+        public int visual(boolean stopped) {
+            return stopped || history == 0 ? 0 : history == -1L ? 1 : 2;
+        }
 
         /** Caller applies the shared root minimum/type/face gate before injection. */
         public Injection inject(long energy, long size, long amount, boolean execute) {
@@ -96,7 +147,8 @@ public final class OriginalRotaryConverter {
             boolean overloaded = false;
             if (possible) {
                 if (output > spec.outputRate() * 2) {
-                    if (GregTechTags.Energy.ALL_COMSUMPTION_LIMITED.contains(spec.inType())) output = spec.outputRate() * 2;
+                    if (GregTechTags.Energy.ALL_COMSUMPTION_LIMITED.contains(spec.inType()))
+                        output = spec.outputRate() * 2;
                     else {
                         // Original first two chunk-load ticks clear saved excess without an overload event.
                         overloaded = timer > 2;
@@ -104,27 +156,41 @@ public final class OriginalRotaryConverter {
                     }
                 }
                 // Source doBipolar always fixes positive front / negative back, regardless of input sign.
-                boolean negative = !MagnetMachineDefinitions.handles(spec) && negativeInput && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.inType())
+                boolean negative = !MagnetMachineDefinitions.handles(spec)
+                        && negativeInput
+                        && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.inType())
                         && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.outType());
                 long size = motorBehavior(spec) && counterClockwise ? -output : output;
                 if (negative) size = -size;
                 emitted = (GregTechTags.Energy.isSizeIrrelevant(spec.outType())
-                        ? emit.applyAsLong(negative ? -1 : 1, output) : emit.applyAsLong(size, 1)) > 0;
+                                ? emit.applyAsLong(negative ? -1 : 1, output)
+                                : emit.applyAsLong(size, 1))
+                        > 0;
             }
             // These original motors, dynamos, magnets, thermal devices and steam turbines are WASTE_ENERGY=T.
             // Stopped blocks still convert their remaining buffer; only acceptance/visuals stop.
             energy = Math.max(0, energy - units(spec.inputRate() * 2, 16, 16 - mode, true));
             return finish(energy, stopped, overloaded);
         }
+
         private Tick finish(long energy, boolean stopped, boolean overloaded) {
             history = (history << 1) | (possible ? 1 : 0);
             return new Tick(energy, overloaded, possible, emitted, fast, visual(stopped));
         }
-        public Snapshot snapshot() { return new Snapshot(mode, counterClockwise, negativeInput, possible, emitted, fast); }
+
+        public Snapshot snapshot() {
+            return new Snapshot(mode, counterClockwise, negativeInput, possible, emitted, fast);
+        }
+
         public void restore(Snapshot saved) {
-            mode(saved.mode()); counterClockwise = saved.counterClockwise(); negativeInput = saved.negativeInput();
-            possible = saved.possible(); emitted = saved.emitted(); fast = saved.fast();
-            timer = 0; history = 0;
+            mode(saved.mode());
+            counterClockwise = saved.counterClockwise();
+            negativeInput = saved.negativeInput();
+            possible = saved.possible();
+            emitted = saved.emitted();
+            fast = saved.fast();
+            timer = 0;
+            history = 0;
         }
     }
 }

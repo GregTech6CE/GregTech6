@@ -26,8 +26,8 @@ public final class SourceAlloyRecipes {
         public Row {
             inputs = List.copyOf(inputs);
             Objects.requireNonNull(output, "output");
-            if (ticks <= 0 || (selector == 0 ? inputs.size() != 1
-                    : selector < 2 || selector > 4 || inputs.size() != selector))
+            if (ticks <= 0
+                    || (selector == 0 ? inputs.size() != 1 : selector < 2 || selector > 4 || inputs.size() != selector))
                 throw new IllegalArgumentException("Invalid alloy row");
         }
     }
@@ -37,8 +37,13 @@ public final class SourceAlloyRecipes {
             new Row(List.of(amount("molten.iron", 1)), amount("molten.wroughtiron", 1), 16, 0));
     private static final List<Row> MIXER = mixerRows();
 
-    public static List<Row> smelter() { return SMELTER; }
-    public static List<Row> mixer() { return MIXER; }
+    public static List<Row> smelter() {
+        return SMELTER;
+    }
+
+    public static List<Row> mixer() {
+        return MIXER;
+    }
 
     private static List<Row> mixerRows() {
         List<Row> rows = new ArrayList<>();
@@ -50,33 +55,103 @@ public final class SourceAlloyRecipes {
             mix(rows, amount("molten.aluminiumbrass", 4), amount(copper, 1), amount("molten.aluminium", 3));
             mix(rows, amount("molten.redalloy", 1), amount(copper, 1), amount("molten.redstone", 4));
             mix(rows, amount("molten.sterlingsilver", 5), amount(copper, 1), amount("molten.silver", 4));
-            mix(rows, amount("molten.purplealloy", 2), amount(copper, 1), amount("molten.silver", 1), amount("molten.redstone", 4), amount("molten.nikolite", 4));
-            mix(rows, amount("molten.signalum", 4), amount(copper, 3), amount("molten.silver", 1), amount("molten.redstone", 10));
-            mix(rows, amount("molten.signalum", 8), amount(copper, 1), amount("molten.silver", 2), amount("molten.redalloy", 5));
-            mix(rows, amount("molten.blackbronze", 5), amount(copper, 3), amount("molten.silver", 1), amount("molten.gold", 1));
-            mix(rows, amount("molten.hepatizon", 8), amount(copper, 3), amount("molten.tin", 1), amount("molten.gold", 4));
+            mix(
+                    rows,
+                    amount("molten.purplealloy", 2),
+                    amount(copper, 1),
+                    amount("molten.silver", 1),
+                    amount("molten.redstone", 4),
+                    amount("molten.nikolite", 4));
+            mix(
+                    rows,
+                    amount("molten.signalum", 4),
+                    amount(copper, 3),
+                    amount("molten.silver", 1),
+                    amount("molten.redstone", 10));
+            mix(
+                    rows,
+                    amount("molten.signalum", 8),
+                    amount(copper, 1),
+                    amount("molten.silver", 2),
+                    amount("molten.redalloy", 5));
+            mix(
+                    rows,
+                    amount("molten.blackbronze", 5),
+                    amount(copper, 3),
+                    amount("molten.silver", 1),
+                    amount("molten.gold", 1));
+            mix(
+                    rows,
+                    amount("molten.hepatizon", 8),
+                    amount(copper, 3),
+                    amount("molten.tin", 1),
+                    amount("molten.gold", 4));
             mix(rows, amount("molten.blackbronze", 5), amount(copper, 3), amount("molten.electrum", 2));
             mix(rows, amount("molten.rosegold", 5), amount(copper, 1), amount("molten.gold", 4));
-            mix(rows, amount("molten.arsenicbronze", 5), amount(copper, 3), amount("molten.tin", 1), amount("molten.arsenic", 1));
-            mix(rows, amount("molten.bismuthbronze", 5), amount(copper, 3), amount("molten.zinc", 1), amount("molten.bismuth", 1));
+            mix(
+                    rows,
+                    amount("molten.arsenicbronze", 5),
+                    amount(copper, 3),
+                    amount("molten.tin", 1),
+                    amount("molten.arsenic", 1));
+            mix(
+                    rows,
+                    amount("molten.bismuthbronze", 5),
+                    amount(copper, 3),
+                    amount("molten.zinc", 1),
+                    amount("molten.bismuth", 1));
         }
         for (String iron : List.of("molten.iron", "molten.wroughtiron", "molten.pigiron", "molten.meteoriciron")) {
             mix(rows, amount("molten.invar", 3), amount(iron, 2), amount("molten.nickel", 1));
-            mix(rows, amount("molten.kanthal", 3), amount(iron, 1), amount("molten.aluminium", 1), amount("molten.chromium", 1));
+            mix(
+                    rows,
+                    amount("molten.kanthal", 3),
+                    amount(iron, 1),
+                    amount("molten.aluminium", 1),
+                    amount("molten.chromium", 1));
             mix(rows, amount("molten.tinalloy", 2), amount(iron, 1), amount("molten.tin", 1));
             mix(rows, amount("molten.angmallen", 2), amount(iron, 1), amount("molten.gold", 1));
-            mix(rows, amount("molten.stainlesssteel", 9), amount(iron, 6), amount("molten.nickel", 1), amount("molten.chromium", 1), amount("molten.manganese", 1));
-            mix(rows, amount("molten.stainlesssteel", 9), amount(iron, 4), amount("molten.invar", 3), amount("molten.chromium", 1), amount("molten.manganese", 1));
-            mix(rows, amount("molten.stainlesssteel", 36), amount(iron, 24), amount("molten.nichrome", 5), amount("molten.chromium", 3), amount("molten.manganese", 4));
+            mix(
+                    rows,
+                    amount("molten.stainlesssteel", 9),
+                    amount(iron, 6),
+                    amount("molten.nickel", 1),
+                    amount("molten.chromium", 1),
+                    amount("molten.manganese", 1));
+            mix(
+                    rows,
+                    amount("molten.stainlesssteel", 9),
+                    amount(iron, 4),
+                    amount("molten.invar", 3),
+                    amount("molten.chromium", 1),
+                    amount("molten.manganese", 1));
+            mix(
+                    rows,
+                    amount("molten.stainlesssteel", 36),
+                    amount(iron, 24),
+                    amount("molten.nichrome", 5),
+                    amount("molten.chromium", 3),
+                    amount("molten.manganese", 4));
             mix(rows, amount("molten.electrotinealloy", 1), amount(iron, 1), amount("molten.nikolite", 8));
         }
         for (String steel : List.of("molten.steel", "molten.meteoricsteel", "molten hsla", "molten.knightmetal")) {
             mix(rows, amount("molten.tungstensteel", 2), amount(steel, 1), amount("molten.tungsten", 1));
         }
         // Pinned ANY.Glowstone.mToThis membership, including the six non-base variants.
-        for (String glowstone : List.of("molten.glowstone", "molten.glowstoneceres", "molten.glowstoneio",
-                "molten.glowstoneenceladus", "molten.glowstoneproteus", "molten.glowstonepluto", "molten.gloomstone")) {
-            mix(rows, amount("molten.lumium", 4), amount("molten.tin", 3), amount("molten.silver", 1), amount(glowstone, 4));
+        for (String glowstone : List.of(
+                "molten.glowstone",
+                "molten.glowstoneceres",
+                "molten.glowstoneio",
+                "molten.glowstoneenceladus",
+                "molten.glowstoneproteus",
+                "molten.glowstonepluto",
+                "molten.gloomstone")) {
+            mix(
+                    rows,
+                    amount("molten.lumium", 4),
+                    amount("molten.tin", 3),
+                    amount("molten.silver", 1),
+                    amount(glowstone, 4));
         }
         mix(rows, amount("molten.bluealloy", 1), amount("molten.nikolite", 4), amount("molten.silver", 1));
         mix(rows, amount("molten.purplealloy", 1), amount("molten.redalloy", 1), amount("molten.bluealloy", 1));
@@ -93,17 +168,56 @@ public final class SourceAlloyRecipes {
         mix(rows, amount("molten.celenegil", 2), amount("molten.orichalcum", 1), amount("molten.platinum", 1));
         mix(rows, amount("molten.manyullyn", 2), amount("molten.ardite", 1), amount("molten.cobalt", 1));
         mix(rows, amount("molten.magnalium", 3), amount("molten.magnesium", 1), amount("molten.aluminium", 2));
-        mix(rows, amount("molten.cobaltbrass", 9), amount("molten.brass", 7), amount("molten.aluminium", 1), amount("molten.cobalt", 1));
+        mix(
+                rows,
+                amount("molten.cobaltbrass", 9),
+                amount("molten.brass", 7),
+                amount("molten.aluminium", 1),
+                amount("molten.cobalt", 1));
         mix(rows, amount("molten.bismuthbronze", 5), amount("molten.brass", 4), amount("molten.bismuth", 1));
         mix(rows, amount("molten.arsenicbronze", 5), amount("molten.bronze", 4), amount("molten.arsenic", 1));
         mix(rows, amount("molten.arsenicbronze", 5), amount("molten.arseniccopper", 4), amount("molten.tin", 1));
-        mix(rows, amount("molten.ultimet", 9), amount("molten.cobalt", 5), amount("molten.chromium", 2), amount("molten.nickel", 1), amount("molten.molybdenum", 1));
-        mix(rows, amount("molten.ultimet", 36), amount("molten.cobalt", 20), amount("molten.chromium", 7), amount("molten.nichrome", 5), amount("molten.molybdenum", 4));
+        mix(
+                rows,
+                amount("molten.ultimet", 9),
+                amount("molten.cobalt", 5),
+                amount("molten.chromium", 2),
+                amount("molten.nickel", 1),
+                amount("molten.molybdenum", 1));
+        mix(
+                rows,
+                amount("molten.ultimet", 36),
+                amount("molten.cobalt", 20),
+                amount("molten.chromium", 7),
+                amount("molten.nichrome", 5),
+                amount("molten.molybdenum", 4));
         mix(rows, amount("molten.osmiridium", 2), amount("molten.osmiumelemental", 1), amount("molten.iridium", 1));
-        mix(rows, amount("molten.hssg", 9), amount("molten.tungstensteel", 5), amount("molten.chromium", 1), amount("molten.molybdenum", 2), amount("molten.vanadium", 1));
-        mix(rows, amount("molten.hsse", 9), amount("molten.hssg", 6), amount("molten.cobalt", 1), amount("molten.manganese", 1), amount("molten.silicon", 1));
-        mix(rows, amount("molten.hsss", 9), amount("molten.hssg", 6), amount("molten.osmiridium", 2), amount("molten.iridium", 1));
-        mix(rows, amount("molten.hsss", 9), amount("molten.hssg", 6), amount("molten.osmiumelemental", 1), amount("molten.iridium", 2));
+        mix(
+                rows,
+                amount("molten.hssg", 9),
+                amount("molten.tungstensteel", 5),
+                amount("molten.chromium", 1),
+                amount("molten.molybdenum", 2),
+                amount("molten.vanadium", 1));
+        mix(
+                rows,
+                amount("molten.hsse", 9),
+                amount("molten.hssg", 6),
+                amount("molten.cobalt", 1),
+                amount("molten.manganese", 1),
+                amount("molten.silicon", 1));
+        mix(
+                rows,
+                amount("molten.hsss", 9),
+                amount("molten.hssg", 6),
+                amount("molten.osmiridium", 2),
+                amount("molten.iridium", 1));
+        mix(
+                rows,
+                amount("molten.hsss", 9),
+                amount("molten.hssg", 6),
+                amount("molten.osmiumelemental", 1),
+                amount("molten.iridium", 2));
         return List.copyOf(rows);
     }
 

@@ -2,7 +2,6 @@ package gregtech.platform.neoforge.logistics;
 
 import gregtech.content.block.machine.LogisticsWireBlock;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
-import gregtech.content.logistics.LogisticsCoverDefinition;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -17,12 +16,17 @@ public final class LogisticsRegistries {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
     private static final DeferredRegister<BlockEntityType<?>> TYPES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, "gt6ce");
-    public static final java.util.function.Supplier<LogisticsWireBlock> WIRE = BLOCKS.register("logistics_wire",
+    public static final java.util.function.Supplier<LogisticsWireBlock> WIRE = BLOCKS.register(
+            "logistics_wire",
             () -> new LogisticsWireBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
-                    .strength(1, 2).requiresCorrectToolForDrops().sound(net.minecraft.world.level.block.SoundType.METAL)));
+                    .strength(1, 2)
+                    .requiresCorrectToolForDrops()
+                    .sound(net.minecraft.world.level.block.SoundType.METAL)));
     public static final java.util.function.Supplier<BlockEntityType<LogisticsWireBlockEntity>> LOGISTICS_WIRE =
-            TYPES.register("logistics_wire",
-                    () -> BlockEntityType.Builder.of(LogisticsWireBlockEntity::new, WIRE.get()).build(null));
+            TYPES.register(
+                    "logistics_wire",
+                    () -> BlockEntityType.Builder.of(LogisticsWireBlockEntity::new, WIRE.get())
+                            .build(null));
 
     public static java.util.Set<String> queuedBlockIds() {
         return BLOCKS.getEntries().stream()
@@ -30,8 +34,7 @@ public final class LogisticsRegistries {
                 .collect(java.util.stream.Collectors.toUnmodifiableSet());
     }
 
-    private LogisticsRegistries() {
-    }
+    private LogisticsRegistries() {}
 
     public static void register(IEventBus bus) {
         ITEMS.register("logistics_wire", () -> new BlockItem(WIRE.get(), new Item.Properties()));

@@ -1,20 +1,19 @@
 package gregtech.engine.multiblock.tracking;
 
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.engine.multiblock.StructureClaimTable;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
-import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.Map;
-import java.util.Set;
 
 /** Platform boundary for the transient claim table owned by the existing ServerLevel field. */
 public final class WorldStructureClaims {
@@ -32,9 +31,13 @@ public final class WorldStructureClaims {
         return data(level).claims;
     }
 
-    static WorldStructureClaims data(ServerLevel level) { return StructureWatchIndex.data(level).claims; }
+    static WorldStructureClaims data(ServerLevel level) {
+        return StructureWatchIndex.data(level).claims;
+    }
 
-    static WorldStructureClaims createWorldData() { return new WorldStructureClaims(); }
+    static WorldStructureClaims createWorldData() {
+        return new WorldStructureClaims();
+    }
 
     static StructureClaimTable create() {
         return new StructureClaimTable(part -> ChunkPos.asLong(BlockPos.of(part)), Long2LongOpenHashMap::new);
@@ -83,7 +86,8 @@ public final class WorldStructureClaims {
         WorldStructureClaims data = data(level);
         Set<Long> old = new HashSet<>(data.claims.loadedParts(owner.asLong()));
         old.addAll(data.claims.reservedParts(owner.asLong()));
-        for (long part : old) if (!candidates.contains(BlockPos.of(part))) data.releasePart(level, part, owner.asLong());
+        for (long part : old)
+            if (!candidates.contains(BlockPos.of(part))) data.releasePart(level, part, owner.asLong());
     }
 
     static void releaseController(ServerLevel level, BlockPos owner) {
@@ -92,7 +96,8 @@ public final class WorldStructureClaims {
 
     private void releasePart(ServerLevel level, long part, long owner) {
         BlockEntity entity = loadedEntity(level, BlockPos.of(part));
-        if (claims.owner(part) != null && entity instanceof MultiblockPortBlockEntity port) port.release(BlockPos.of(owner));
+        if (claims.owner(part) != null && entity instanceof MultiblockPortBlockEntity port)
+            port.release(BlockPos.of(owner));
         // There may be no part BE (replacement, missing chunk, or orphan cleanup).
         release(level, BlockPos.of(part), BlockPos.of(owner));
     }
@@ -166,11 +171,13 @@ public final class WorldStructureClaims {
     }
 
     static boolean waiting(StructureTracker tracker) {
-        return tracker.entity().getLevel() instanceof ServerLevel level && data(level).waiting.containsKey(tracker);
+        return tracker.entity().getLevel() instanceof ServerLevel level
+                && data(level).waiting.containsKey(tracker);
     }
 
     static void removed(StructureTracker tracker) {
-        if (tracker.entity().getLevel() instanceof ServerLevel level) data(level).forgetWaiter(tracker);
+        if (tracker.entity().getLevel() instanceof ServerLevel level)
+            data(level).forgetWaiter(tracker);
     }
 
     private void forgetWaiter(StructureTracker tracker) {
@@ -203,8 +210,10 @@ public final class WorldStructureClaims {
     static void checkOrphans(ServerLevel level, boolean all) {
         WorldStructureClaims data = data(level);
         long now = level.getGameTime();
-        Set<Long> owners = all ? Set.copyOf(data.controllers.keySet())
-                : Set.copyOf(data.safety.getOrDefault((int) Math.floorMod(now, StructureScheduler.SAFETY_PERIOD), Set.of()));
+        Set<Long> owners = all
+                ? Set.copyOf(data.controllers.keySet())
+                : Set.copyOf(
+                        data.safety.getOrDefault((int) Math.floorMod(now, StructureScheduler.SAFETY_PERIOD), Set.of()));
         for (long owner : owners) {
             ControllerKind kind = data.controllers.get(owner);
             BlockPos pos = BlockPos.of(owner);
@@ -226,9 +235,10 @@ public final class WorldStructureClaims {
             data.orphanChecks.remove(owner);
             if (kind == null) continue;
             BlockEntity occupant = loadedEntity(level, pos);
-            if (occupant == null || occupant.isRemoved() || occupant.getType() != kind.type
-                    || occupant.getBlockState().getBlock() != kind.block)
-                releaseController(level, pos);
+            if (occupant == null
+                    || occupant.isRemoved()
+                    || occupant.getType() != kind.type
+                    || occupant.getBlockState().getBlock() != kind.block) releaseController(level, pos);
         }
     }
 
@@ -236,7 +246,9 @@ public final class WorldStructureClaims {
         long owner = entity.getBlockPos().asLong();
         if (controllers.containsKey(owner)) return;
         controllers.put(owner, new ControllerKind(entity, level.getGameTime()));
-        controllerChunks.computeIfAbsent(ChunkPos.asLong(entity.getBlockPos()), key -> new HashSet<>()).add(owner);
+        controllerChunks
+                .computeIfAbsent(ChunkPos.asLong(entity.getBlockPos()), key -> new HashSet<>())
+                .add(owner);
         safety.computeIfAbsent(bucket(owner), key -> new HashSet<>()).add(owner);
     }
 
@@ -255,7 +267,9 @@ public final class WorldStructureClaims {
         if (owners.isEmpty()) index.remove(key);
     }
 
-    private static int bucket(long owner) { return Math.floorMod(Long.hashCode(owner), StructureScheduler.SAFETY_PERIOD); }
+    private static int bucket(long owner) {
+        return Math.floorMod(Long.hashCode(owner), StructureScheduler.SAFETY_PERIOD);
+    }
 
     private static BlockEntity loadedEntity(ServerLevel level, BlockPos pos) {
         var chunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
@@ -276,6 +290,7 @@ public final class WorldStructureClaims {
         final BlockEntityType<?> type;
         final Block block;
         long loadedAt;
+
         ControllerKind(BlockEntity entity, long now) {
             type = entity.getType();
             block = entity.getBlockState().getBlock();

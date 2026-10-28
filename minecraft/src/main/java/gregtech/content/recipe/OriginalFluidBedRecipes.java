@@ -2,17 +2,17 @@
 /* Copyright (c) 2026 GregTech-6 Team */
 package gregtech.content.recipe;
 
+import com.mojang.logging.LogUtils;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.MaterialStackItemHelper;
-import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTFluids;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialStackItemHelper;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.util.OM;
-import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.ItemStack;
 
 /** Native item/fluid boundary for the original fluidized-bed fuel charges. */
@@ -33,22 +33,26 @@ final class OriginalFluidBedRecipes {
                     continue;
                 }
                 long ashUnits = OriginalFluidBedFuelRows.ashUnits(fuel, form);
-                ItemStack ash = ashUnits < GTValues.U72 ? ItemStack.EMPTY
+                ItemStack ash = ashUnits < GTValues.U72
+                        ? ItemStack.EMPTY
                         : OM.dust(GTMaterialRegistry.get(fuel.ashMaterialId()), ashUnits);
                 // A representable declared ash output must not disappear if its form is unavailable.
                 if (ashUnits >= GTValues.U72 && ash.isEmpty()) {
                     skipped++;
                     continue;
                 }
-                var recipe = FuelRecipeMaps.FluidBed.addRecipe1(true, -1,
-                        OriginalFluidBedFuelRows.heatUnits(fuel, form), input, calcite,
-                        null, ash);
+                var recipe = FuelRecipeMaps.FluidBed.addRecipe1(
+                        true, -1, OriginalFluidBedFuelRows.heatUnits(fuel, form), input, calcite, null, ash);
                 if (recipe == null) rejected++;
                 else added++;
             }
         }
-        LogUtils.getLogger().info("[gregtech] Fluidized-bed fuels: {} added, {} skipped (unavailable forms), {} rejected",
-                added, skipped, rejected);
+        LogUtils.getLogger()
+                .info(
+                        "[gregtech] Fluidized-bed fuels: {} added, {} skipped (unavailable forms), {} rejected",
+                        added,
+                        skipped,
+                        rejected);
     }
 
     private static ItemStack input(GTMaterial material, String prefix) {

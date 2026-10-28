@@ -3,8 +3,8 @@ package gregtech.engine.machine;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.MaterialPrefix;
 
 /** Material fuel values extracted from saltnya FurnaceFuelValue; item/tag fallback is platform code. */
 public final class MaterialFuelRules {
@@ -15,7 +15,9 @@ public final class MaterialFuelRules {
     }
 
     public static int ashTinyCount(GTMaterial material, long itemAmount) {
-        long scaled = scaleUnits(material.getTargetBurningAmount(), GTValues.U,
+        long scaled = scaleUnits(
+                material.getTargetBurningAmount(),
+                GTValues.U,
                 itemAmount > 0 ? itemAmount : MaterialPrefix.dust.getMaterialWeight());
         return scaled <= 0 ? 0 : (int) Math.min(64L, Math.max(1L, scaled / GregTechConstants.U9));
     }
@@ -80,7 +82,8 @@ public final class MaterialFuelRules {
     }
 
     private static boolean isWoodFamily(GTMaterial material) {
-        return material.has(MaterialProperty.WOOD) || material.resolve() == gregtech.content.material.generated.WoodMaterials.Wood.resolve();
+        return material.has(MaterialProperty.WOOD)
+                || material.resolve() == gregtech.content.material.generated.WoodMaterials.Wood.resolve();
     }
 
     private static boolean isBurnablePrefix(MaterialPrefix prefix) {

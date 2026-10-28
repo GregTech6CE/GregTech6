@@ -8,8 +8,23 @@ public final class SensorPanelRules {
 
     /** Unit glyph names that have a texture under {@code gt6ce:textures/block/overlays/characters/}. */
     public static final Set<String> UNIT_GLYPHS = Set.of(
-            "liter", "eu", "scale", "kelvin", "ru", "ton", "gramm", "kilogramm", "kiloton",
-            "clock", "cubicmeter", "cubicdecameter", "gibbl", "lumin", "greg", "neutron", "lu");
+            "liter",
+            "eu",
+            "scale",
+            "kelvin",
+            "ru",
+            "ton",
+            "gramm",
+            "kilogramm",
+            "kiloton",
+            "clock",
+            "cubicmeter",
+            "cubicdecameter",
+            "gibbl",
+            "lumin",
+            "greg",
+            "neutron",
+            "lu");
 
     public static boolean hasUnitGlyph(String unit) {
         return unit != null && UNIT_GLYPHS.contains(unit);
@@ -20,8 +35,11 @@ public final class SensorPanelRules {
     }
 
     public static long transferMaximum(long speed, long power) {
-        return java.math.BigInteger.valueOf(speed).multiply(java.math.BigInteger.valueOf(power))
-                .min(java.math.BigInteger.valueOf(Long.MAX_VALUE)).max(java.math.BigInteger.ZERO).longValue();
+        return java.math.BigInteger.valueOf(speed)
+                .multiply(java.math.BigInteger.valueOf(power))
+                .min(java.math.BigInteger.valueOf(Long.MAX_VALUE))
+                .max(java.math.BigInteger.ZERO)
+                .longValue();
     }
 
     public static int[] bounds(int facing) {
@@ -65,7 +83,8 @@ public final class SensorPanelRules {
             case "GIBBLOMETER", "KILOGIBBLOMETER", "LASEROMETER" -> 0xFFFF00;
             case "PLAYERCOUNTER", "PROGRESS" -> 0x80C0FF;
             case "LUMINOMETER" -> 0xFFFF80;
-            case "WEIGHTOMETRIC", "WEIGHTOMETRIC_LIGHT", "WEIGHTOMETRIC_MEDIUM", "WEIGHTOMETRIC_SUPER_HEAVY" -> 0xC0C0C0;
+            case "WEIGHTOMETRIC", "WEIGHTOMETRIC_LIGHT", "WEIGHTOMETRIC_MEDIUM", "WEIGHTOMETRIC_SUPER_HEAVY" ->
+                0xC0C0C0;
             default -> 0xFFFFFF;
         };
     }

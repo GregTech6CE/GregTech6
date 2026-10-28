@@ -1,19 +1,15 @@
 package gregtech.content.registry;
 
 import gregtech.GregTech;
-import gregtech.engine.machine.CrucibleSpec;
-import gregtech.engine.machine.MachineSpec;
-import gregtech.engine.machine.MachineRegistry;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.*;
+import gregtech.engine.machine.CrucibleSpec;
+import gregtech.engine.material.ItemMaterialRegistry;
+import java.util.List;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.List;
 
 /** Registers GT block items in {@link ItemMaterialRegistry} so F3+H advanced tooltips show material composition. */
 public final class GTMaterialRegistration {
@@ -34,13 +30,17 @@ public final class GTMaterialRegistration {
         }
         // The original GT6 ore unifier treats this placeable block as one
         // plate of WoodTreated. Keep recipes, material tags and recycling aligned.
-        ItemMaterialRegistry.register(GTItems.getStack(gregtech.content.data.MaterialPrefix.plate,
-                        gregtech.content.material.generated.WoodMaterials.WoodTreated).getItem(),
+        ItemMaterialRegistry.register(
+                GTItems.getStack(
+                                gregtech.content.data.MaterialPrefix.plate,
+                                gregtech.content.material.generated.WoodMaterials.WoodTreated)
+                        .getItem(),
                 gregtech.content.data.MaterialPrefix.plate,
                 gregtech.content.material.generated.WoodMaterials.WoodTreated);
         count++;
         for (var entry : GTSignalWires.all()) {
-            ItemMaterialRegistry.register(entry.get().asItem(), null, entry.get().material(), GTValues.U / 2);
+            ItemMaterialRegistry.register(
+                    entry.get().asItem(), null, entry.get().material(), GTValues.U / 2);
             count++;
         }
 
@@ -50,8 +50,8 @@ public final class GTMaterialRegistration {
             ElectricWireBlock block = entry.get();
             if (block.spec() == null || block.spec().material() == null) continue;
             count++;
-            ItemMaterialRegistry.register(block.asItem(), null,
-                    block.spec().material(), block.spec().materialAmount());
+            ItemMaterialRegistry.register(
+                    block.asItem(), null, block.spec().material(), block.spec().materialAmount());
         }
 
         // Source pipe associations and ordinary barrel REV data, shared with NeoForge.
@@ -86,8 +86,7 @@ public final class GTMaterialRegistration {
         // GT6 BlockSands metas 0..2 are OP.blockDust forms: one placed sand is nine dust units.
         // Keep the original sand texture block distinct from the generic MaterialBlock model.
         for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.BlackSandBlock sand))
-                continue;
+            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.BlackSandBlock sand)) continue;
             ItemMaterialRegistry.register(sand.asItem(), null, sand.material(), GTValues.U * 9);
             count++;
         }
@@ -95,35 +94,32 @@ public final class GTMaterialRegistration {
         // GT6 BlockCrystalOres / BlockRockOres register their block items as OP.oreDense.
         // This is a 4U ore form; no separate material item or replacement model is generated.
         for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre))
-                continue;
+            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre)) continue;
             Block block = entry.get();
             GTMaterial oreMaterial = denseOre.material();
             if (oreMaterial == null || !oreMaterial.isValid()) continue;
-            ItemMaterialRegistry.register(block.asItem(),
-                    gregtech.content.data.MaterialPrefixes.oreDense.getDelegate(), oreMaterial);
+            ItemMaterialRegistry.register(
+                    block.asItem(), gregtech.content.data.MaterialPrefixes.oreDense.getDelegate(), oreMaterial);
             count++;
         }
 
         // GT6 BlockVanillaOresA metas 0..15 carry OP.oreVanillastone, an ordinary 2U ore.
         for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore))
-                continue;
+            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore)) continue;
             GTMaterial oreMaterial = ore.material();
             if (oreMaterial == null || !oreMaterial.isValid()) continue;
-            ItemMaterialRegistry.register(ore.asItem(),
-                    gregtech.content.data.MaterialPrefixes.oreVanillastone.getDelegate(), oreMaterial);
+            ItemMaterialRegistry.register(
+                    ore.asItem(), gregtech.content.data.MaterialPrefixes.oreVanillastone.getDelegate(), oreMaterial);
             count++;
         }
 
         // GT6's ordinary and broken host-stone ores are both OP.oreVanillastone (2U).
         // The port shares one block ID per material and marks the broken form in BlockStateTag.
         for (RegistryObject<Block> entry : GTBlocks.allEntries()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.OreBlock ore)
-                    || ore.isSmall()) continue;
-            ItemMaterialRegistry.register(ore.asItem(),
-                    gregtech.content.data.MaterialPrefixes.oreVanillastone.getDelegate(),
-                    ore.material());
+            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.OreBlock ore) || ore.isSmall())
+                continue;
+            ItemMaterialRegistry.register(
+                    ore.asItem(), gregtech.content.data.MaterialPrefixes.oreVanillastone.getDelegate(), ore.material());
             count++;
         }
 
@@ -132,8 +128,8 @@ public final class GTMaterialRegistration {
         for (String colour : gregtech.content.worldgen.GTSurfaceFlora.GLOWTUS_COLOURS) {
             Block glowtus = gregtech.content.worldgen.GTSurfaceFlora.glowtus(colour);
             if (glowtus == null) throw new IllegalStateException("Missing glowtus_" + colour);
-            ItemMaterialRegistry.register(glowtus.asItem(), null,
-                    gregtech.content.material.Materials.Glowstone, GTValues.U4);
+            ItemMaterialRegistry.register(
+                    glowtus.asItem(), null, gregtech.content.material.Materials.Glowstone, GTValues.U4);
             count++;
         }
 

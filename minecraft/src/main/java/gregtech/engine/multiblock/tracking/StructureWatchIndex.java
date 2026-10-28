@@ -1,15 +1,5 @@
 package gregtech.engine.multiblock.tracking;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.SectionPos;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.LevelChunk;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -21,6 +11,15 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 
 /** Section and chunk indexes for one server world. The data lives on the {@code ServerLevel}. */
 public final class StructureWatchIndex {
@@ -157,7 +156,8 @@ public final class StructureWatchIndex {
                 BlockPos controller = tracker.pos();
                 BlockEntity entity = tracker.entity();
                 if (ChunkPos.asLong(controller) != key && !entity.isRemoved() && level.hasChunkAt(controller)) {
-                    LevelChunk loaded = level.getChunkSource().getChunkNow(controller.getX() >> 4, controller.getZ() >> 4);
+                    LevelChunk loaded =
+                            level.getChunkSource().getChunkNow(controller.getX() >> 4, controller.getZ() >> 4);
                     if (loaded != null && loaded.getBlockEntities().get(controller) == entity)
                         ClientFormedSync.send(entity);
                 }
@@ -203,7 +203,9 @@ public final class StructureWatchIndex {
         StructureTracker tracker = new StructureTracker(machine);
         data.entities.put(entity, tracker);
         data.all.add(tracker);
-        data.safety.computeIfAbsent(tracker.safetyBucket(), key -> new LinkedHashSet<>()).add(tracker);
+        data.safety
+                .computeIfAbsent(tracker.safetyBucket(), key -> new LinkedHashSet<>())
+                .add(tracker);
         return tracker;
     }
 
@@ -337,7 +339,9 @@ public final class StructureWatchIndex {
         for (long section : sections) {
             SectionPos sectionPos = SectionPos.of(section);
             int index = chunk.getSectionIndex(sectionPos.minBlockY());
-            boolean any = data.sections.getOrDefault(section, List.of()).stream().findAny().isPresent();
+            boolean any = data.sections.getOrDefault(section, List.of()).stream()
+                    .findAny()
+                    .isPresent();
             ((StructureChunkWatch) (Object) chunk).gt$structureWatch(index, any && watched);
         }
     }
@@ -354,8 +358,10 @@ public final class StructureWatchIndex {
     }
 
     private static long sectionKey(BlockPos pos) {
-        return SectionPos.asLong(SectionPos.blockToSectionCoord(pos.getX()),
-                SectionPos.blockToSectionCoord(pos.getY()), SectionPos.blockToSectionCoord(pos.getZ()));
+        return SectionPos.asLong(
+                SectionPos.blockToSectionCoord(pos.getX()),
+                SectionPos.blockToSectionCoord(pos.getY()),
+                SectionPos.blockToSectionCoord(pos.getZ()));
     }
 
     public static final class WorldData {

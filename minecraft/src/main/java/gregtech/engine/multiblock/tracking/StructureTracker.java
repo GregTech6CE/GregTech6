@@ -1,15 +1,19 @@
 package gregtech.engine.multiblock.tracking;
 
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /** One server controller. The formed bit is what queries read. */
 public final class StructureTracker {
-    public enum State { UNKNOWN, FORMED, BROKEN, SUSPENDED }
+    public enum State {
+        UNKNOWN,
+        FORMED,
+        BROKEN,
+        SUSPENDED
+    }
 
     private final TrackedMultiblock machine;
     private State state = State.UNKNOWN;
@@ -30,45 +34,95 @@ public final class StructureTracker {
     private boolean fullEval;
     private String claimError;
 
-    public String claimError() { return claimError; }
+    public String claimError() {
+        return claimError;
+    }
 
-    void clearClaimConflict() { claimError = null; }
+    void clearClaimConflict() {
+        claimError = null;
+    }
 
     void claimConflict(BlockPos part, BlockPos owner) {
         claimError = "Part " + part.toShortString() + " is occupied by controller " + owner.toShortString();
     }
+
     private final Set<Long> changedCells = new HashSet<>();
     private final Set<Long> reloadedChunks = new HashSet<>();
 
     StructureTracker(TrackedMultiblock machine) {
         this.machine = machine;
-        this.safetyBucket = Math.floorMod(Long.hashCode(machine.trackedEntity().getBlockPos().asLong()),
-                StructureScheduler.SAFETY_PERIOD);
+        this.safetyBucket = Math.floorMod(
+                Long.hashCode(machine.trackedEntity().getBlockPos().asLong()), StructureScheduler.SAFETY_PERIOD);
     }
 
-    public TrackedMultiblock machine() { return machine; }
-    public BlockEntity entity() { return machine.trackedEntity(); }
-    public BlockPos pos() { return entity().getBlockPos(); }
-    public boolean formed() { return formed; }
-    public State state() { return state; }
-    public boolean dirty() { return dirty; }
-    public boolean queued() { return queued; }
-    public boolean expedite() { return expedite; }
-    public boolean unloading() { return unloading; }
-    public int safetyBucket() { return safetyBucket; }
-    public int epoch() { return epoch; }
-    public int[] matchedLayers() { return matchedLayers; }
-    public Footprint watch() { return watch; }
-    public int cellCount() { return Math.max(1, watch.size()); }
+    public TrackedMultiblock machine() {
+        return machine;
+    }
 
-    void watch(Footprint footprint) { this.watch = footprint == null ? Footprint.EMPTY : footprint; }
+    public BlockEntity entity() {
+        return machine.trackedEntity();
+    }
+
+    public BlockPos pos() {
+        return entity().getBlockPos();
+    }
+
+    public boolean formed() {
+        return formed;
+    }
+
+    public State state() {
+        return state;
+    }
+
+    public boolean dirty() {
+        return dirty;
+    }
+
+    public boolean queued() {
+        return queued;
+    }
+
+    public boolean expedite() {
+        return expedite;
+    }
+
+    public boolean unloading() {
+        return unloading;
+    }
+
+    public int safetyBucket() {
+        return safetyBucket;
+    }
+
+    public int epoch() {
+        return epoch;
+    }
+
+    public int[] matchedLayers() {
+        return matchedLayers;
+    }
+
+    public Footprint watch() {
+        return watch;
+    }
+
+    public int cellCount() {
+        return Math.max(1, watch.size());
+    }
+
+    void watch(Footprint footprint) {
+        this.watch = footprint == null ? Footprint.EMPTY : footprint;
+    }
 
     void enqueue(boolean expediteScan) {
         dirty = true;
         if (expediteScan) expedite = true;
     }
 
-    void queued(boolean value) { queued = value; }
+    void queued(boolean value) {
+        queued = value;
+    }
 
     boolean consumeFacing() {
         boolean value = facingDirty;
@@ -86,7 +140,9 @@ public final class StructureTracker {
         matchedLayers = layers == null ? null : layers.clone();
     }
 
-    void markUnloading() { unloading = true; }
+    void markUnloading() {
+        unloading = true;
+    }
 
     /** A relevant change. Formed controllers are rescanned before the budget queue. Returns true when the formed bit fell. */
     boolean invalidate() {
@@ -143,10 +199,21 @@ public final class StructureTracker {
         fullEval = false;
     }
 
-    CompiledPattern pattern() { return pattern; }
-    PatternState patternState() { return patternState; }
-    Direction patternFront() { return patternFront; }
-    int patternEpoch() { return patternEpoch; }
+    CompiledPattern pattern() {
+        return pattern;
+    }
+
+    PatternState patternState() {
+        return patternState;
+    }
+
+    Direction patternFront() {
+        return patternFront;
+    }
+
+    int patternEpoch() {
+        return patternEpoch;
+    }
 
     void pattern(CompiledPattern value, Direction front, int epoch) {
         pattern = value;
@@ -154,7 +221,9 @@ public final class StructureTracker {
         patternEpoch = epoch;
     }
 
-    void patternState(PatternState value) { patternState = value; }
+    void patternState(PatternState value) {
+        patternState = value;
+    }
 
     /** Chunk of a watched cell unloaded. Claims stay. Returns true when the formed bit fell. */
     boolean suspend() {

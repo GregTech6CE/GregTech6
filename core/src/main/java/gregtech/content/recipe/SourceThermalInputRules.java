@@ -1,15 +1,15 @@
 package gregtech.content.recipe;
 
-import gregtech.content.data.MaterialPrefix;
-import java.util.List;
-import java.util.stream.Stream;
-
 import static gregtech.content.recipe.SourceThermalRecyclingRules.Decision;
 import static gregtech.content.recipe.SourceThermalRecyclingRules.Facts;
 import static gregtech.content.recipe.SourceThermalRecyclingRules.Phase;
 import static gregtech.content.recipe.SourceThermalRecyclingRules.Plan;
 import static gregtech.content.recipe.SourceThermalRecyclingRules.Stats;
 import static gregtech.content.recipe.SourceThermalRecyclingRules.Truth;
+
+import gregtech.content.data.MaterialPrefix;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Eighty-one single-component item-input contracts for source RecyclingProcessing, not the complete
@@ -21,18 +21,32 @@ import static gregtech.content.recipe.SourceThermalRecyclingRules.Truth;
  */
 public final class SourceThermalInputRules {
     private SourceThermalInputRules() {}
+
     private static final long U = OriginalMaterialFluidUnits.SOURCE_UNIT;
 
-    public enum InputProof { VERIFIED_SINGLE_COMPONENT, ABSENT, UNKNOWN }
+    public enum InputProof {
+        VERIFIED_SINGLE_COMPONENT,
+        ABSENT,
+        UNKNOWN
+    }
 
     /** A one-item source amount; OP sourceLine explicitly declares RECYCLABLE and neither excluded
      * tag. This is source processing evidence, not a promise of a live generated/native holder.
      */
     public record Form(MaterialPrefix prefix, long sourceUnits, int sourceLine) {
-        public boolean recyclable() { return true; }
-        public boolean ore() { return false; }
-        public boolean dirty() { return false; }
+        public boolean recyclable() {
+            return true;
+        }
+
+        public boolean ore() {
+            return false;
+        }
+
+        public boolean dirty() {
+            return false;
+        }
     }
+
     private static final List<Form> INITIAL_FORMS = List.of(
             new Form(MaterialPrefix.dustSmall, U / 4, 155),
             new Form(MaterialPrefix.dustTiny, U / 9, 156),
@@ -120,18 +134,27 @@ public final class SourceThermalInputRules {
             new Form(MaterialPrefix.toolHeadBuzzSaw, U * 4, 235),
             new Form(MaterialPrefix.toolHeadArrow, U / 9, 254),
             new Form(MaterialPrefix.toolHeadRawArrow, U / 8, 268));
-    private static final List<Form> FORMS = Stream.concat(INITIAL_FORMS.stream(), ADDITIONAL_FORMS.stream()).toList();
+    private static final List<Form> FORMS =
+            Stream.concat(INITIAL_FORMS.stream(), ADDITIONAL_FORMS.stream()).toList();
 
     /** Preserved original thirteen contracts, for their already-established input proof. */
-    public static List<Form> initialForms() { return INITIAL_FORMS; }
+    public static List<Form> initialForms() {
+        return INITIAL_FORMS;
+    }
     /** The remaining complete 68-prefix single-primary group; native ingredable proof is separate. */
-    public static List<Form> additionalForms() { return ADDITIONAL_FORMS; }
+    public static List<Form> additionalForms() {
+        return ADDITIONAL_FORMS;
+    }
+
     public static boolean isAdditional(MaterialPrefix prefix) {
         for (Form form : ADDITIONAL_FORMS) if (form.prefix() == prefix) return true;
         return false;
     }
 
-    public static List<Form> forms() { return FORMS; }
+    public static List<Form> forms() {
+        return FORMS;
+    }
+
     public static Form form(MaterialPrefix prefix) {
         for (Form form : FORMS) if (form.prefix() == prefix) return form;
         return null;
@@ -146,8 +169,10 @@ public final class SourceThermalInputRules {
      */
     public static Truth prefixDecision(MaterialPrefix prefix) {
         if (form(prefix) != null) return Truth.YES;
-        if (prefix == MaterialPrefix.oreRaw || prefix == MaterialPrefix.crushed
-                || prefix == MaterialPrefix.crushedTiny || prefix == MaterialPrefix.dustImpure
+        if (prefix == MaterialPrefix.oreRaw
+                || prefix == MaterialPrefix.crushed
+                || prefix == MaterialPrefix.crushedTiny
+                || prefix == MaterialPrefix.dustImpure
                 || prefix == MaterialPrefix.ingotHot) return Truth.NO;
         return Truth.UNKNOWN;
     }
@@ -157,14 +182,14 @@ public final class SourceThermalInputRules {
      * incorrectly normalized stack is unsupported, not silently changed into source material.
      * Source material/target/phase evidence and runtime density/temperatures reuse the 1U planner.
      */
-    public static Plan plan(MaterialPrefix prefix, InputProof input, long actualInputUnits,
-                            Facts facts, Stats stats, Phase phase) {
+    public static Plan plan(
+            MaterialPrefix prefix, InputProof input, long actualInputUnits, Facts facts, Stats stats, Phase phase) {
         Truth permission = prefixDecision(prefix);
         if (permission == Truth.NO) return new Plan(Decision.SUPPORTED_NO_ROW, null);
         if (permission != Truth.YES) return new Plan(Decision.UNSUPPORTED, null);
         if (input == InputProof.ABSENT) return new Plan(Decision.SUPPORTED_NO_ROW, null);
-        if (input != InputProof.VERIFIED_SINGLE_COMPONENT || actualInputUnits != form(prefix).sourceUnits())
-            return new Plan(Decision.UNSUPPORTED, null);
+        if (input != InputProof.VERIFIED_SINGLE_COMPONENT
+                || actualInputUnits != form(prefix).sourceUnits()) return new Plan(Decision.UNSUPPORTED, null);
         return SourceThermalRecyclingRules.planVerifiedAmount(actualInputUnits, facts, stats, phase);
     }
 }

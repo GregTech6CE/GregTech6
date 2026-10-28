@@ -10,8 +10,9 @@ public final class GTPlacementCode {
     public static Direction resolveSlabFace(net.minecraft.world.item.context.BlockPlaceContext context) {
         var pos = context.getClickedPos();
         var hit = context.getClickLocation();
-        return resolveSlabFace(context.getClickedFace(), (float) (hit.x - pos.getX()),
-                (float) (hit.y - pos.getY()), (float) (hit.z - pos.getZ()));
+        return resolveSlabFace(
+                context.getClickedFace(), (float) (hit.x - pos.getX()), (float) (hit.y - pos.getY()), (float)
+                        (hit.z - pos.getZ()));
     }
 
     /**

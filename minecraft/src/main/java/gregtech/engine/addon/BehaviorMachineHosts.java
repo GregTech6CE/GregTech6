@@ -1,12 +1,10 @@
 package gregtech.engine.addon;
 
 import gregtech.api.addon.AddonFailures;
-import gregtech.api.addon.machine.AddonMachineContributor;
 import gregtech.api.addon.AddonNames;
-
+import gregtech.api.addon.machine.AddonMachineContributor;
 import gregtech.api.addon.platform.BehaviorMachineContributor;
 import gregtech.api.addon.platform.MachineBehavior;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -31,15 +29,20 @@ public final class BehaviorMachineHosts {
             var found = new LinkedHashMap<String, BehaviorMachineContributor>();
             var types = new LinkedHashMap<String, Set<String>>();
             ClassLoader loader = AddonMachineContributor.class.getClassLoader();
-            for (BehaviorMachineContributor contributor : ServiceLoader.load(BehaviorMachineContributor.class, loader)) {
+            for (BehaviorMachineContributor contributor :
+                    ServiceLoader.load(BehaviorMachineContributor.class, loader)) {
                 String id;
                 try {
                     id = contributor.addonId();
                 } catch (RuntimeException | Error failure) {
-                    throw AddonFailures.of("Behavior machine contributor failed: " + contributor.getClass().getName(), failure);
+                    throw AddonFailures.of(
+                            "Behavior machine contributor failed: "
+                                    + contributor.getClass().getName(),
+                            failure);
                 }
                 if (!AddonNames.isAddonId(id))
-                    throw new IllegalStateException("Behavior machine contributor has no addon id: " + contributor.getClass().getName());
+                    throw new IllegalStateException("Behavior machine contributor has no addon id: "
+                            + contributor.getClass().getName());
                 if (found.putIfAbsent(id, contributor) != null)
                     throw new IllegalStateException("Addon '" + id + "' registered two behavior factories");
                 Set<String> machines;
@@ -62,15 +65,18 @@ public final class BehaviorMachineHosts {
     public static synchronized MachineBehavior create(String addonId, String machineType) {
         BehaviorMachineContributor contributor = CONTRIBUTORS.get(addonId);
         if (contributor == null)
-            throw new IllegalStateException("Addon '" + addonId + "' machine '" + machineType + "' has no behavior factory");
+            throw new IllegalStateException(
+                    "Addon '" + addonId + "' machine '" + machineType + "' has no behavior factory");
         MachineBehavior behavior;
         try {
             behavior = contributor.create(machineType);
         } catch (RuntimeException | Error failure) {
-            throw AddonFailures.of("Addon '" + addonId + "' machine '" + machineType + "' behavior factory failed", failure);
+            throw AddonFailures.of(
+                    "Addon '" + addonId + "' machine '" + machineType + "' behavior factory failed", failure);
         }
         if (behavior == null)
-            throw new IllegalStateException("Addon '" + addonId + "' machine '" + machineType + "' behavior factory returned null");
+            throw new IllegalStateException(
+                    "Addon '" + addonId + "' machine '" + machineType + "' behavior factory returned null");
         return behavior;
     }
 }

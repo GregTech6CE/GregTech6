@@ -1,8 +1,11 @@
 package gregtech.content.tool;
 
-import gregtech.engine.tool.Paintable;
 import gregtech.content.block.misc.FixedConstructionColor;
 import gregtech.content.registry.GTConstructionVariants;
+import gregtech.engine.tool.Paintable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -10,20 +13,18 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /** Spray target policy; color identities and actual block behavior remain owned by their registries. */
 public final class PaintTargets {
 
-    private PaintTargets() {
-    }
+    private PaintTargets() {}
+
     private static final Map<Block, String> FAMILY = new HashMap<>();
+
     static {
         for (var color : DyeColor.values())
-        for (String suffix : List.of("terracotta", "stained_glass", "stained_glass_pane", "wool", "carpet"))
-        FAMILY.put(vanilla(color.getName() + "_" + suffix), suffix);
+            for (String suffix : List.of("terracotta", "stained_glass", "stained_glass_pane", "wool", "carpet"))
+                FAMILY.put(vanilla(color.getName() + "_" + suffix), suffix);
         FAMILY.put(Blocks.GLASS, "stained_glass");
         FAMILY.put(Blocks.GLASS_PANE, "stained_glass_pane");
         FAMILY.put(Blocks.TERRACOTTA, "terracotta");
@@ -60,7 +61,8 @@ public final class PaintTargets {
             return FixedConstructionColor.recolor(level, pos, dye) ? PaintingRules.BLOCK_COST : 0;
         }
         if (level.getBlockEntity(pos) instanceof Paintable target) {
-            boolean changed = target.isPainted() ? target.mixPaint(PaintingRules.DYES.get(index).rgb())
+            boolean changed = target.isPainted()
+                    ? target.mixPaint(PaintingRules.DYES.get(index).rgb())
                     : target.paint(PaintingRules.DYES.get(index).rgb());
             return changed ? PaintingRules.BLOCK_COST : 0;
         }
@@ -71,7 +73,8 @@ public final class PaintTargets {
     public static boolean unpaint(Level level, BlockPos pos) {
         var state = level.getBlockState(pos);
         var family = GTConstructionVariants.family(state.getBlock());
-        if (family != null) return FixedConstructionColor.recolor(level, pos, GTConstructionVariants.defaultColor(family));
+        if (family != null)
+            return FixedConstructionColor.recolor(level, pos, GTConstructionVariants.defaultColor(family));
         if (level.getBlockEntity(pos) instanceof Paintable target && target.unpaint()) return true;
         return grass(state.getBlock()) && level.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
     }

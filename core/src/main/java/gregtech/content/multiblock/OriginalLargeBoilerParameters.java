@@ -1,11 +1,13 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. Source boiler tool and structure rules. */
 package gregtech.content.multiblock;
+
 import gregtech.api.multiblock.StructureGrid;
 import java.util.*;
 
 /** Original five boiler variants, rated capacities and geometry. */
 public final class OriginalLargeBoilerParameters {
     private OriginalLargeBoilerParameters() {}
+
     public static final int WATER_CAPACITY = 128_000, HU_PER_WATER = 80, STEAM_PER_WATER = 160;
 
     /** Source checkStructure2 uses world X/Z around the body centre, irrespective of front. */
@@ -19,14 +21,13 @@ public final class OriginalLargeBoilerParameters {
         for (int y = -1; y <= 0; y++)
             for (int z = -1; z <= 1; z++)
                 for (int x = -1; x <= 1; x++)
-                    cells.add(new CheckCell(x, y, z,
-                            y == -1 ? StructureGrid.Role.HEAT_INPUT : StructureGrid.Role.FLUID_INPUT));
+                    cells.add(new CheckCell(
+                            x, y, z, y == -1 ? StructureGrid.Role.HEAT_INPUT : StructureGrid.Role.FLUID_INPUT));
         cells.add(new CheckCell(0, 2, 0, StructureGrid.Role.FLUID_OUTPUT));
         for (int y = 1; y <= 2; y++)
             for (int z = -1; z <= 1; z++)
                 for (int x = -1; x <= 1; x++)
-                    if (x != 0 || z != 0)
-                        cells.add(new CheckCell(x, y, z, StructureGrid.Role.FLUID_OUTPUT));
+                    if (x != 0 || z != 0) cells.add(new CheckCell(x, y, z, StructureGrid.Role.FLUID_OUTPUT));
         return List.copyOf(cells);
     }
 
@@ -56,11 +57,11 @@ public final class OriginalLargeBoilerParameters {
     }
 
     private static final List<Variant> VARIANTS = List.of(
-            new Variant(17201, "stainless_steel_boiler_main_barometer", 18022, 8_192,   6),
-            new Variant(17202, "titanium_boiler_main_barometer",        18026, 16_384,  9),
-            new Variant(17203, "tungstensteel_boiler_main_barometer",   18023, 32_768,  12.5f),
-            new Variant(17204, "adamantium_boiler_main_barometer",      18025, 262_144, 100),
-            new Variant(17205, "invar_boiler_main_barometer",           18027, 8_192,   6));
+            new Variant(17201, "stainless_steel_boiler_main_barometer", 18022, 8_192, 6),
+            new Variant(17202, "titanium_boiler_main_barometer", 18026, 16_384, 9),
+            new Variant(17203, "tungstensteel_boiler_main_barometer", 18023, 32_768, 12.5f),
+            new Variant(17204, "adamantium_boiler_main_barometer", 18025, 262_144, 100),
+            new Variant(17205, "invar_boiler_main_barometer", 18027, 8_192, 6));
 
     public static final StructureGrid LAYOUT = layout();
 

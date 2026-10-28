@@ -6,8 +6,8 @@ import java.util.ArrayList;
 /** GT6 MultiTileEntityLargeTurbine: front-centered, solid 3x3x4 housing. */
 public final class SharedTurbineStructure {
 
-    private SharedTurbineStructure() {
-    }
+    private SharedTurbineStructure() {}
+
     public static final StructureGrid LAYOUT = create();
 
     public static StructureGrid.Role role(int right, int up, int back) {

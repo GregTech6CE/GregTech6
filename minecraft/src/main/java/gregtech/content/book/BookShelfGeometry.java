@@ -17,14 +17,13 @@ public final class BookShelfGeometry {
             default -> -1;
         };
         double vertical = 1 - y; // GT6 facing coordinates have their origin at the top left.
-        if (horizontal < 1.0 / 16 || horizontal > 15.0 / 16
-                || vertical < 1.0 / 16 || vertical > 15.0 / 16) return -1;
+        if (horizontal < 1.0 / 16 || horizontal > 15.0 / 16 || vertical < 1.0 / 16 || vertical > 15.0 / 16) return -1;
         return GTBookList.slotFor(side == facing, horizontal, vertical);
     }
 
     /** Model-space book bounds for a north-facing shelf, directly from the GT6 render passes. */
     public static AABB bookBounds(int slot) {
-        var b=BookShelfRules.bookBounds(slot);
-        return new AABB(b.x0(),b.y0(),b.z0(),b.x1(),b.y1(),b.z1());
+        var b = BookShelfRules.bookBounds(slot);
+        return new AABB(b.x0(), b.y0(), b.z0(), b.x1(), b.y1(), b.z1());
     }
 }

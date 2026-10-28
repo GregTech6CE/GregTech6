@@ -2,13 +2,12 @@
  * Adapted from manual station and MultiTileEntityBoilerTank.addToolTips. */
 package gregtech.client;
 
-import gregtech.engine.machine.BoilerSpec;
 import gregtech.content.machine.OriginalFunctionalTooltipData;
+import gregtech.engine.machine.BoilerSpec;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-
-import java.util.List;
 
 /** Native formatting of the shared original block tooltip data. */
 public final class FunctionalBlockTooltips {
@@ -16,12 +15,17 @@ public final class FunctionalBlockTooltips {
 
     public static void appendManual(String id, float resistance, List<Component> lines) {
         var data = OriginalFunctionalTooltipData.manual(id);
-        lines.add(Component.translatable("gt.lang.recipes").withStyle(ChatFormatting.AQUA)
-                .append(": ").append(Component.translatable(data.recipeKey()).withStyle(ChatFormatting.WHITE)));
+        lines.add(Component.translatable("gt.lang.recipes")
+                .withStyle(ChatFormatting.AQUA)
+                .append(": ")
+                .append(Component.translatable(data.recipeKey()).withStyle(ChatFormatting.WHITE)));
         if (data.preparationKey() != null) add(lines, data.preparationKey(), ChatFormatting.AQUA);
         add(lines, data.usageKey(), ChatFormatting.AQUA);
-        lines.add(Component.translatable("gt.lang.nogui.rightclick.interact").withStyle(ChatFormatting.GOLD)
-                .append(" (").append(Component.translatable(data.faceKey())).append(")"));
+        lines.add(Component.translatable("gt.lang.nogui.rightclick.interact")
+                .withStyle(ChatFormatting.GOLD)
+                .append(" (")
+                .append(Component.translatable(data.faceKey()))
+                .append(")"));
         if (data.magnifier()) add(lines, "gt.lang.use.magnifyingglass.to.detail", ChatFormatting.DARK_GRAY);
         if (data.facingWrench()) appendFacingWrench(lines);
         TooltipHelper.appendBlastResistance(resistance, lines);
@@ -29,7 +33,8 @@ public final class FunctionalBlockTooltips {
 
     public static void appendBoiler(BoilerSpec spec, int savedEfficiency, float resistance, List<Component> lines) {
         var data = OriginalFunctionalTooltipData.boiler(spec, savedEfficiency);
-        appendBoilerStats(data, Component.translatable("gt.lang.face.any"), Component.translatable("gt.lang.face.top"), lines);
+        appendBoilerStats(
+                data, Component.translatable("gt.lang.face.any"), Component.translatable("gt.lang.face.top"), lines);
         add(lines, "gt.lang.requirement.water.pure", ChatFormatting.GOLD);
         add(lines, "gt.lang.nogui.funnel.tank", ChatFormatting.GOLD);
         appendBoilerHazards(lines);
@@ -39,13 +44,20 @@ public final class FunctionalBlockTooltips {
     }
 
     public static void appendLargeBoiler(int originalId, int savedEfficiency, float resistance, List<Component> lines) {
-        lines.add(Component.translatable("gt.lang.structure").withStyle(ChatFormatting.AQUA).append(":"));
-        for (String key : List.of("gt.tooltip.multiblock.largeboiler.1", "gt.tooltip.multiblock.largeboiler.2",
-                "gt.tooltip.multiblock.largeboiler.3", "gt.tooltip.multiblock.largeboiler.4"))
-            add(lines, key, ChatFormatting.WHITE);
+        lines.add(Component.translatable("gt.lang.structure")
+                .withStyle(ChatFormatting.AQUA)
+                .append(":"));
+        for (String key : List.of(
+                "gt.tooltip.multiblock.largeboiler.1",
+                "gt.tooltip.multiblock.largeboiler.2",
+                "gt.tooltip.multiblock.largeboiler.3",
+                "gt.tooltip.multiblock.largeboiler.4")) add(lines, key, ChatFormatting.WHITE);
         // The original addToolTips uses these two literal side descriptions.
-        appendBoilerStats(OriginalFunctionalTooltipData.largeBoiler(originalId, savedEfficiency),
-                Component.translatable("tooltip.gt6ce.ui.heat_transmitters"), Component.translatable("tooltip.gt6ce.ui.pipe_holes"), lines);
+        appendBoilerStats(
+                OriginalFunctionalTooltipData.largeBoiler(originalId, savedEfficiency),
+                Component.translatable("tooltip.gt6ce.ui.heat_transmitters"),
+                Component.translatable("tooltip.gt6ce.ui.pipe_holes"),
+                lines);
         add(lines, "gt.lang.requirement.water.pure", ChatFormatting.GOLD);
         appendBoilerHazards(lines);
         add(lines, "gt.lang.use.builder.wand.to.ease.building", ChatFormatting.DARK_GRAY);
@@ -54,21 +66,38 @@ public final class FunctionalBlockTooltips {
         TooltipHelper.appendBlastResistance(resistance, lines);
     }
 
-    private static void appendBoilerStats(OriginalFunctionalTooltipData.Boiler data, Component inputFace,
-                                          Component outputFace, List<Component> lines) {
-        lines.add(Component.translatable("gt.lang.energy.convert.from").withStyle(ChatFormatting.AQUA)
-                .append(" 1 L ").append(Component.translatable("block.minecraft.water")).append(" ")
-                .append(Component.translatable("gt.lang.energy.convert.to")).append(" 160 L ")
-                .append(Component.translatable("gt.td.long.energy.steam")).append(" ")
-                .append(Component.translatable("gt.lang.energy.convert.using")).append(" 80 ")
+    private static void appendBoilerStats(
+            OriginalFunctionalTooltipData.Boiler data,
+            Component inputFace,
+            Component outputFace,
+            List<Component> lines) {
+        lines.add(Component.translatable("gt.lang.energy.convert.from")
+                .withStyle(ChatFormatting.AQUA)
+                .append(" 1 L ")
+                .append(Component.translatable("block.minecraft.water"))
+                .append(" ")
+                .append(Component.translatable("gt.lang.energy.convert.to"))
+                .append(" 160 L ")
+                .append(Component.translatable("gt.td.long.energy.steam"))
+                .append(" ")
+                .append(Component.translatable("gt.lang.energy.convert.using"))
+                .append(" 80 ")
                 .append(Component.translatable("gt.td.short.energy.heat")));
         lines.add(label("gt.lang.efficiency", ChatFormatting.YELLOW)
                 .append(Component.literal(OriginalFunctionalTooltipData.efficiencyPercent(data.efficiency()) + "%")
                         .withStyle(ChatFormatting.WHITE)));
-        lines.add(energy("gt.lang.energy.input", data.heatInput(), "gt.td.short.energy.heat", inputFace, ChatFormatting.GREEN));
-        lines.add(energy("gt.lang.energy.capacity", data.heatCapacity(), "gt.td.short.energy.heat", null, ChatFormatting.GREEN));
-        lines.add(energy("gt.lang.energy.output", data.steamOutput(), "gt.td.long.energy.steam", outputFace, ChatFormatting.RED));
-        lines.add(energy("gt.lang.energy.capacity", data.steamCapacity(), "gt.td.long.energy.steam", null, ChatFormatting.RED));
+        lines.add(energy(
+                "gt.lang.energy.input", data.heatInput(), "gt.td.short.energy.heat", inputFace, ChatFormatting.GREEN));
+        lines.add(energy(
+                "gt.lang.energy.capacity", data.heatCapacity(), "gt.td.short.energy.heat", null, ChatFormatting.GREEN));
+        lines.add(energy(
+                "gt.lang.energy.output",
+                data.steamOutput(),
+                "gt.td.long.energy.steam",
+                outputFace,
+                ChatFormatting.RED));
+        lines.add(energy(
+                "gt.lang.energy.capacity", data.steamCapacity(), "gt.td.long.energy.steam", null, ChatFormatting.RED));
     }
 
     private static void appendBoilerHazards(List<Component> lines) {
@@ -82,16 +111,20 @@ public final class FunctionalBlockTooltips {
     }
 
     private static Component energy(String key, long amount, String unitKey, Component face, ChatFormatting color) {
-        var line = label(key, color).append(Component.literal(Long.toString(amount) + " ").withStyle(ChatFormatting.WHITE))
-                .append(Component.translatable(unitKey).withStyle(unitKey.endsWith("heat") ? ChatFormatting.RED : ChatFormatting.GRAY));
-        if (face != null) line.append(Component.literal("/t (").withStyle(ChatFormatting.WHITE))
-                .append(face.copy().withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(")").withStyle(ChatFormatting.WHITE));
+        var line = label(key, color)
+                .append(Component.literal(Long.toString(amount) + " ").withStyle(ChatFormatting.WHITE))
+                .append(Component.translatable(unitKey)
+                        .withStyle(unitKey.endsWith("heat") ? ChatFormatting.RED : ChatFormatting.GRAY));
+        if (face != null)
+            line.append(Component.literal("/t (").withStyle(ChatFormatting.WHITE))
+                    .append(face.copy().withStyle(ChatFormatting.WHITE))
+                    .append(Component.literal(")").withStyle(ChatFormatting.WHITE));
         return line;
     }
 
     private static void appendFacingWrench(List<Component> lines) {
-        lines.add(Component.translatable("gt.lang.use.x.to.toggle.facing.pre").withStyle(ChatFormatting.DARK_GRAY)
+        lines.add(Component.translatable("gt.lang.use.x.to.toggle.facing.pre")
+                .withStyle(ChatFormatting.DARK_GRAY)
                 .append(Component.translatable("gt.lang.tool.name.wrench"))
                 .append(Component.translatable("gt.lang.use.x.to.toggle.facing.post")));
     }

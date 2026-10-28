@@ -36,7 +36,9 @@ public final class GTRockPlacement {
             var stack = gregtech.engine.material.MaterialStackItemHelper.mat(
                     gregtech.content.data.MaterialPrefix.oreRaw, material.resolve(), 1);
             if (stack.isEmpty()) return false;
-            itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+            itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                    .getKey(stack.getItem())
+                    .toString();
         }
         return place(level, pos, material == null ? null : material.resolve().getName(), itemId, rawOre);
     }
@@ -49,9 +51,10 @@ public final class GTRockPlacement {
     public static boolean place(WorldGenLevel level, BlockPos pos, String material, String itemId, boolean rawOre) {
         BlockState ground = level.getBlockState(pos.below());
         // Match the rock's look to the ground it sits on (sand rocks on sand etc.).
-        BlockState rockState = GTBlocks.ROCK.get().defaultBlockState()
-                .setValue(gregtech.content.block.RockBlock.GROUND,
-                        gregtech.content.block.RockBlock.Ground.of(ground));
+        BlockState rockState = GTBlocks.ROCK
+                .get()
+                .defaultBlockState()
+                .setValue(gregtech.content.block.RockBlock.GROUND, gregtech.content.block.RockBlock.Ground.of(ground));
         if (!level.setBlock(pos, rockState, 2)) return false;
         if (level.getBlockEntity(pos) instanceof RockBlockEntity rock) {
             if (material != null && !material.isEmpty()) rock.setMaterial(material);

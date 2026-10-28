@@ -6,16 +6,19 @@ public class TranslationKeys {
 
     public static final class Chat {
         private Chat() {}
+
         public static final String WHITE = "§f", BLUE = "§b", RED = "§c";
     }
 
     public static final class Item {
         private Item() {}
+
         public static final String MATERIAL = "item.gt6ce.material.";
     }
 
     public static final class Block {
         private Block() {}
+
         public static final String MACHINE = "block.gt6ce.machine.";
     }
 

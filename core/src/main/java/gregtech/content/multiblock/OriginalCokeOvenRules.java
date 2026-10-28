@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.multiblock;
 
 import gregtech.api.multiblock.StructureGrid;
@@ -26,6 +25,7 @@ import java.util.List;
 /** GT6 17000: centred side valve, 25 fire bricks, one air cell and a 40 tick ignition window. */
 public final class OriginalCokeOvenRules {
     private OriginalCokeOvenRules() {}
+
     public static final int IGNITION_TICKS = 40;
 
     public static List<SharedLargeMachineLayouts.Cell> cells() {
@@ -35,7 +35,11 @@ public final class OriginalCokeOvenRules {
                 for (int z = 0; z <= 2; z++) {
                     if (x == 0 && y == 0 && z == 0) continue;
                     boolean air = x == 0 && y == 0 && z == 1;
-                    cells.add(new SharedLargeMachineLayouts.Cell(x, y, z, air ? 0 : 18000,
+                    cells.add(new SharedLargeMachineLayouts.Cell(
+                            x,
+                            y,
+                            z,
+                            air ? 0 : 18000,
                             air ? StructureGrid.Role.AIR : StructureGrid.Role.ITEM_FLUID_ENERGY));
                 }
         return List.copyOf(cells);
@@ -43,9 +47,7 @@ public final class OriginalCokeOvenRules {
 
     public static List<StructureGrid.Position> fluidTargets() {
         var targets = new ArrayList<StructureGrid.Position>();
-        for (int x = -1; x <= 1; x++)
-            for (int z = 0; z <= 2; z++)
-                targets.add(new StructureGrid.Position(x, -2, z));
+        for (int x = -1; x <= 1; x++) for (int z = 0; z <= 2; z++) targets.add(new StructureGrid.Position(x, -2, z));
         return List.copyOf(targets);
     }
 

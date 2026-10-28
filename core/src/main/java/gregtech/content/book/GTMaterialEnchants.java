@@ -1,10 +1,9 @@
 package gregtech.content.book;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.recipe.generated.GTEnchantmentTable;
 import gregtech.content.recipe.generated.GTMaterialFields;
-
+import gregtech.engine.material.GTMaterialRegistry;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,8 +40,7 @@ public final class GTMaterialEnchants {
             Map.entry("Pt", "Platinum"));
 
     /** The GT6 kind names, in GT6's own order (tools, weapons, ammo, ranged, fishing, armors). */
-    public static final List<String> KINDS =
-            List.of("Tools", "Weapons", "Ammo", "Ranged", "Fishing", "Armors");
+    public static final List<String> KINDS = List.of("Tools", "Weapons", "Ammo", "Ranged", "Fishing", "Armors");
 
     /**
      * The port material a table row names, or null when this port has no such material.

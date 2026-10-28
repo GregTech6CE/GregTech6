@@ -1,19 +1,18 @@
 package gregtech.engine.multiblock.tracking;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.SectionPos;
-import net.minecraft.world.level.ChunkPos;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.world.level.ChunkPos;
 
 /** Watched cells of one controller. Lookup is a dense index inside the bounding box. */
 public class Footprint {
-    public static final Footprint EMPTY = new Footprint(new BlockPos[0], new Projection[0], 0, 0, 0, 0, 0, 0,
-            new int[0], new long[0], new long[0]);
+    public static final Footprint EMPTY =
+            new Footprint(new BlockPos[0], new Projection[0], 0, 0, 0, 0, 0, 0, new int[0], new long[0], new long[0]);
 
     private final BlockPos[] cells;
     private final Projection[] projections;
@@ -27,8 +26,18 @@ public class Footprint {
     private final long[] chunks;
     private final long[] sections;
 
-    private Footprint(BlockPos[] cells, Projection[] projections, int minX, int minY, int minZ,
-                      int sizeX, int sizeY, int sizeZ, int[] dense, long[] chunks, long[] sections) {
+    private Footprint(
+            BlockPos[] cells,
+            Projection[] projections,
+            int minX,
+            int minY,
+            int minZ,
+            int sizeX,
+            int sizeY,
+            int sizeZ,
+            int[] dense,
+            long[] chunks,
+            long[] sections) {
         this.cells = cells;
         this.projections = projections;
         this.minX = minX;
@@ -130,12 +139,25 @@ public class Footprint {
             Map<Long, Boolean> sectionSet = new HashMap<>();
             for (BlockPos cell : cells) {
                 chunkSet.put(ChunkPos.asLong(cell.getX() >> 4, cell.getZ() >> 4), Boolean.TRUE);
-                sectionSet.put(SectionPos.asLong(SectionPos.blockToSectionCoord(cell.getX()),
-                        SectionPos.blockToSectionCoord(cell.getY()),
-                        SectionPos.blockToSectionCoord(cell.getZ())), Boolean.TRUE);
+                sectionSet.put(
+                        SectionPos.asLong(
+                                SectionPos.blockToSectionCoord(cell.getX()),
+                                SectionPos.blockToSectionCoord(cell.getY()),
+                                SectionPos.blockToSectionCoord(cell.getZ())),
+                        Boolean.TRUE);
             }
-            Footprint footprint = new Footprint(cells.toArray(BlockPos[]::new), projections.toArray(Projection[]::new),
-                    minX, minY, minZ, sizeX, sizeY, sizeZ, dense, longs(chunkSet), longs(sectionSet));
+            Footprint footprint = new Footprint(
+                    cells.toArray(BlockPos[]::new),
+                    projections.toArray(Projection[]::new),
+                    minX,
+                    minY,
+                    minZ,
+                    sizeX,
+                    sizeY,
+                    sizeZ,
+                    dense,
+                    longs(chunkSet),
+                    longs(sectionSet));
             if (overflow != null) return new OverflowFootprint(footprint, overflow);
             return footprint;
         }
@@ -154,8 +176,18 @@ public class Footprint {
         private final Map<Long, Integer> index;
 
         private OverflowFootprint(Footprint shape, Map<Long, Integer> index) {
-            super(shape.cells, shape.projections, shape.minX, shape.minY, shape.minZ, shape.sizeX, shape.sizeY,
-                    shape.sizeZ, shape.dense, shape.chunks, shape.sections);
+            super(
+                    shape.cells,
+                    shape.projections,
+                    shape.minX,
+                    shape.minY,
+                    shape.minZ,
+                    shape.sizeX,
+                    shape.sizeY,
+                    shape.sizeZ,
+                    shape.dense,
+                    shape.chunks,
+                    shape.sections);
             this.index = index;
         }
 

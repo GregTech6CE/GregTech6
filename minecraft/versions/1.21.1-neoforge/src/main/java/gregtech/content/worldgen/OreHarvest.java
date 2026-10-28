@@ -18,12 +18,9 @@ public record OreHarvest(int fortune, boolean silkTouch) {
         if (tool == null || tool.isEmpty()) {
             return new OreHarvest(0, false);
         }
-        var enchantments =
-                level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-        int fortune = EnchantmentHelper.getItemEnchantmentLevel(
-                enchantments.getOrThrow(Enchantments.FORTUNE), tool);
-        int silk = EnchantmentHelper.getItemEnchantmentLevel(
-                enchantments.getOrThrow(Enchantments.SILK_TOUCH), tool);
+        var enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+        int fortune = EnchantmentHelper.getItemEnchantmentLevel(enchantments.getOrThrow(Enchantments.FORTUNE), tool);
+        int silk = EnchantmentHelper.getItemEnchantmentLevel(enchantments.getOrThrow(Enchantments.SILK_TOUCH), tool);
         return new OreHarvest(fortune, silk > 0);
     }
 }

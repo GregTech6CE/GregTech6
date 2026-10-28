@@ -14,8 +14,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Random;
-
 /**
  * Port of GT6's {@code WorldgenColtan} ({@code Loader_Worldgen:779}) — the "coltan contention"
  * region.
@@ -31,6 +29,7 @@ import java.util.Random;
 public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code new WorldgenColtan("ore.special.coltan", T, 20, 40, 32, 480, ...)}. */
     public static final int MIN_Y = 20;
+
     public static final int MAX_Y = 40;
     public static final int AMOUNT = 32;
     public static final int RANGE = 480;
@@ -45,7 +44,8 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's centre point: {@code new Random(seed + 5).nextGaussian() * 1500} for x and z. */
     public static BlockPos centre(long seed) {
-        var point=MineralWorldgenRules.coltanCentre(seed);return new BlockPos(point.x(),0,point.z());
+        var point = MineralWorldgenRules.coltanCentre(seed);
+        return new BlockPos(point.x(), 0, point.z());
     }
 
     /** GT6's material table for one scatter roll. */
@@ -55,7 +55,7 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's count: {@code max(1, amount/2 + rand(1 + amount)/2)}. */
     public static int count(RandomSource random, int amount) {
-        return MineralWorldgenRules.coltanCount(amount,random::nextInt);
+        return MineralWorldgenRules.coltanCount(amount, random::nextInt);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's squared distance from a chunk's origin corner to the field centre. */
     public static int distanceSquared(BlockPos centre, int minX, int minZ) {
-        return MineralWorldgenRules.distanceSquared(centre.getX(),centre.getZ(),minX,minZ);
+        return MineralWorldgenRules.distanceSquared(centre.getX(), centre.getZ(), minX, minZ);
     }
 
     /** True when GT6 would treat this chunk as part of the coltan field. */
@@ -138,6 +138,6 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_coltan.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_coltan"));
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_coltan"));
 }

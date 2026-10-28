@@ -1,10 +1,9 @@
 package gregtech.engine.multiblock.tracking;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-
 import java.util.EnumMap;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 
 /**
  * A declarative definition over fixed cells. The controller supplies one list per facing; every list is
@@ -18,8 +17,8 @@ public final class FixedStructures {
         List<CompiledPattern.FixedCell> forFacing(Direction front);
     }
 
-    public static StructureDefinition.Declarative declarative(TrackedMultiblock machine, Cells cells,
-                                                              List<Aggregate> aggregates) {
+    public static StructureDefinition.Declarative declarative(
+            TrackedMultiblock machine, Cells cells, List<Aggregate> aggregates) {
         return new Definition(machine, cells, aggregates);
     }
 
@@ -37,20 +36,29 @@ public final class FixedStructures {
             this.aggregates = aggregates == null ? List.of() : List.copyOf(aggregates);
         }
 
-        @Override public StructureDefinition.ClaimPolicy claimPolicy() { return StructureDefinition.ClaimPolicy.ATOMIC; }
+        @Override
+        public StructureDefinition.ClaimPolicy claimPolicy() {
+            return StructureDefinition.ClaimPolicy.ATOMIC;
+        }
 
-        @Override public List<Aggregate> aggregates() { return aggregates; }
+        @Override
+        public List<Aggregate> aggregates() {
+            return aggregates;
+        }
 
-        @Override public CompiledPattern compile(Direction front) {
+        @Override
+        public CompiledPattern compile(Direction front) {
             Snapshot snapshot = snapshot(front);
             return CompiledPattern.compileFixed(machine, front, snapshot.cells(), aggregates);
         }
 
-        @Override public Footprint watchFootprint(TrackedMultiblock ignored) {
+        @Override
+        public Footprint watchFootprint(TrackedMultiblock ignored) {
             return snapshot(LayoutStructures.facing(machine.trackedEntity())).footprint();
         }
 
-        @Override public Footprint declaredFootprint(TrackedMultiblock ignored) {
+        @Override
+        public Footprint declaredFootprint(TrackedMultiblock ignored) {
             return watchFootprint(ignored);
         }
 
@@ -68,7 +76,8 @@ public final class FixedStructures {
             Footprint.Builder builder = new Footprint.Builder().addController(origin);
             for (CompiledPattern.FixedCell cell : list) {
                 Projection projection = cell.cell().role() == gregtech.engine.multiblock.MultiblockLayout.Role.AIR
-                        ? Projection.AIR : Projection.BLOCK;
+                        ? Projection.AIR
+                        : Projection.BLOCK;
                 builder.add(origin.offset(cell.dx(), cell.dy(), cell.dz()), projection);
             }
             return builder.build();

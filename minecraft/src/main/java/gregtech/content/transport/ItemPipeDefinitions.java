@@ -1,10 +1,7 @@
 package gregtech.content.transport;
 
-import gregtech.content.material.Materials;
-import gregtech.engine.machine.ItemPipeSpec;
-import gregtech.api.material.GTMaterial;
-import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.registry.*;
+import gregtech.engine.machine.ItemPipeSpec;
 
 /** Built-in GT6 definitions; registration IDs and ordering are preserved. */
 public final class ItemPipeDefinitions {
@@ -31,5 +28,4 @@ public final class ItemPipeDefinitions {
             }
         }
     }
-
 }

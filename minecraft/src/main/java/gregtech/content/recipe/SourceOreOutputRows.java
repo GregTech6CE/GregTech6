@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.data.MaterialPrefix;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -12,37 +12,54 @@ import java.util.function.Supplier;
  */
 public final class SourceOreOutputRows {
     private SourceOreOutputRows() {}
+
     private record Key(GTMaterial material, String producer, RecipeMap map) {}
-    private static final Map<Key,Supplier<Recipe>> DEFINITIONS = new LinkedHashMap<>();
-    private static final IdentityHashMap<RecipeMap,Set<Recipe>> ACCEPTED = new IdentityHashMap<>();
+
+    private static final Map<Key, Supplier<Recipe>> DEFINITIONS = new LinkedHashMap<>();
+    private static final IdentityHashMap<RecipeMap, Set<Recipe>> ACCEPTED = new IdentityHashMap<>();
     private static final ThreadLocal<Boolean> RESOLVING = ThreadLocal.withInitial(() -> false);
     private static boolean sealed;
+
     public static boolean affects(List<GTMaterial> materials) {
-        return materials.stream().anyMatch(material -> ReviewedCrushedFormGeneration.sourceExcluded(
-                material,MaterialPrefix.crushedPurifiedTiny));
+        return materials.stream()
+                .anyMatch(material ->
+                        ReviewedCrushedFormGeneration.sourceExcluded(material, MaterialPrefix.crushedPurifiedTiny));
     }
-    public static void define(GTMaterial material,String producer,RecipeMap map,Supplier<Recipe> admission) {
+
+    public static void define(GTMaterial material, String producer, RecipeMap map, Supplier<Recipe> admission) {
         if (sealed) throw new IllegalStateException("Source output definitions already sealed");
-        var key = new Key(material.resolve(),producer,map);
-        if (DEFINITIONS.putIfAbsent(key,Objects.requireNonNull(admission)) != null)
+        var key = new Key(material.resolve(), producer, map);
+        if (DEFINITIONS.putIfAbsent(key, Objects.requireNonNull(admission)) != null)
             throw new IllegalStateException("Duplicate source output definition: " + producer);
     }
-    public static void seal() { sealed=true; }
-    static boolean resolving() { return RESOLVING.get(); }
+
+    public static void seal() {
+        sealed = true;
+    }
+
+    static boolean resolving() {
+        return RESOLVING.get();
+    }
     /** Scoped original OM output selection, shared with the native washing producer. */
     static <T> T resolvingOutputs(Supplier<T> resolver) {
-        boolean previous=RESOLVING.get();
+        boolean previous = RESOLVING.get();
         RESOLVING.set(true);
-        try { return resolver.get(); }
-        finally { if(previous) RESOLVING.set(true); else RESOLVING.remove(); }
+        try {
+            return resolver.get();
+        } finally {
+            if (previous) RESOLVING.set(true);
+            else RESOLVING.remove();
+        }
     }
+
     public static Set<Recipe> owned() {
-        Set<Recipe> result=Collections.newSetFromMap(new IdentityHashMap<>());
+        Set<Recipe> result = Collections.newSetFromMap(new IdentityHashMap<>());
         ACCEPTED.values().forEach(result::addAll);
         return Collections.unmodifiableSet(result);
     }
+
     public static void clear() {
-        ACCEPTED.forEach((map,rows)->rows.forEach(map::unlink));
+        ACCEPTED.forEach((map, rows) -> rows.forEach(map::unlink));
         ACCEPTED.clear();
     }
     /** MachineRecipeOverlay calls only after ExternalOreProcessing has rebuilt bound aliases. */
@@ -51,12 +68,18 @@ public final class SourceOreOutputRows {
         clear();
         RESOLVING.set(true);
         try {
-            for (var entry:DEFINITIONS.entrySet()) {
-                Recipe row=entry.getValue().get(); // normal addRecipe validates and rejects collisions
-                if (row!=null) ACCEPTED.computeIfAbsent(entry.getKey().map(),
-                        ignored->Collections.newSetFromMap(new IdentityHashMap<>())).add(row);
+            for (var entry : DEFINITIONS.entrySet()) {
+                Recipe row = entry.getValue().get(); // normal addRecipe validates and rejects collisions
+                if (row != null)
+                    ACCEPTED.computeIfAbsent(
+                                    entry.getKey().map(), ignored -> Collections.newSetFromMap(new IdentityHashMap<>()))
+                            .add(row);
             }
-        } catch (RuntimeException|Error failure) { clear(); throw failure; }
-        finally { RESOLVING.remove(); }
+        } catch (RuntimeException | Error failure) {
+            clear();
+            throw failure;
+        } finally {
+            RESOLVING.remove();
+        }
     }
 }

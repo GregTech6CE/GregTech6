@@ -1,9 +1,9 @@
 package gregtech.util;
 
 import gregtech.api.energy.GTVoltageTiers;
-import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.content.damage.GTDamageTypes;
 import gregtech.content.damage.GTHazmat;
+import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -75,7 +75,8 @@ public final class GTEntityHelper {
                 stack.getItem() instanceof gregtech.engine.material.MaterialFormItem materialItem
                         ? materialItem.getPrefix()
                         : ItemMaterialRegistry.get(stack)
-                                .map(gregtech.engine.material.ItemComposition::prefix).orElse(null);
+                                .map(gregtech.engine.material.ItemComposition::prefix)
+                                .orElse(null);
         return prefix == null ? 0.0F : prefix.heatDamage();
     }
 
@@ -93,8 +94,8 @@ public final class GTEntityHelper {
         }
         // GT6: duration = max(20, damage * 100 + the effect's remaining duration), amplifier 1 (Poison II).
         MobEffectInstance previous = living.getEffect(MobEffects.POISON);
-        int duration = Math.max(20, (int) (damage * 100.0F)
-                + (previous == null ? 0 : Math.max(0, previous.getDuration())));
+        int duration =
+                Math.max(20, (int) (damage * 100.0F) + (previous == null ? 0 : Math.max(0, previous.getDuration())));
         living.addEffect(new MobEffectInstance(MobEffects.POISON, duration, 1));
         return true;
     }
@@ -104,7 +105,8 @@ public final class GTEntityHelper {
         if (damage <= 0.0F || !(entity instanceof LivingEntity living) || !living.isAlive()) {
             return false;
         }
-        if (living instanceof Blaze || living.hasEffect(MobEffects.FIRE_RESISTANCE)
+        if (living instanceof Blaze
+                || living.hasEffect(MobEffects.FIRE_RESISTANCE)
                 || GTHazmat.isHeatProtected(living)) {
             return false;
         }
@@ -169,12 +171,11 @@ public final class GTEntityHelper {
      */
     public static boolean applyTemperatureDamage(Entity entity, long temperature, float multiplier, float cap) {
         if (temperature > HEAT_THRESHOLD) {
-            return applyHeatDamage(entity,
-                    Math.max(1.0F, Math.min(cap, (multiplier * (temperature - ENV_TEMP)) / 50.0F)));
+            return applyHeatDamage(
+                    entity, Math.max(1.0F, Math.min(cap, (multiplier * (temperature - ENV_TEMP)) / 50.0F)));
         }
         if (temperature < FROST_THRESHOLD) {
-            return applyFrostDamage(entity,
-                    Math.max(1.0F, Math.min(cap, (multiplier * (270L - temperature)) / 25.0F)));
+            return applyFrostDamage(entity, Math.max(1.0F, Math.min(cap, (multiplier * (270L - temperature)) / 25.0F)));
         }
         return false;
     }

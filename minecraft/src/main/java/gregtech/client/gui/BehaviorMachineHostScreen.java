@@ -9,7 +9,9 @@ public abstract class BehaviorMachineHostScreen extends MachineContainerScreen<B
         super(menu, inventory, title);
     }
 
-    @Override protected net.minecraft.world.item.ItemStack titleIcon() {
-        return new net.minecraft.world.item.ItemStack(menu.machine().getBlockState().getBlock());
+    @Override
+    protected net.minecraft.world.item.ItemStack titleIcon() {
+        return new net.minecraft.world.item.ItemStack(
+                menu.machine().getBlockState().getBlock());
     }
 }

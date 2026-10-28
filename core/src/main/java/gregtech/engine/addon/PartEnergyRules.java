@@ -18,10 +18,9 @@ public final class PartEnergyRules {
      * {@link Admission#packets()} and does not add them to the buffer.
      * A packet below {@code min} is refused. {@code anyPacket} skips both checks.
      */
-    public static Admission admit(long stored, long capacity, long size, long amount,
-                                  long min, long max, boolean anyPacket) {
-        if (size == 0 || size == Long.MIN_VALUE || amount <= 0 || capacity < 1)
-            return new Admission(0, false);
+    public static Admission admit(
+            long stored, long capacity, long size, long amount, long min, long max, boolean anyPacket) {
+        if (size == 0 || size == Long.MIN_VALUE || amount <= 0 || capacity < 1) return new Admission(0, false);
         long sizeAbs = Math.abs(size);
         if (!anyPacket) {
             if (sizeAbs < min) return new Admission(0, false);

@@ -1,9 +1,8 @@
 package gregtech.engine.addon;
 
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.machine.BasicMachineSpec;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.data.MachineRecipeMaps;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

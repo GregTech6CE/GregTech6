@@ -11,12 +11,28 @@ public enum PortableFluidContainerSpec {
     MEASURING_POT("measuring_pot", 1000, () -> Materials.Ceramic, false, false, 0),
     THERMOS("thermos", 4000, () -> Materials.Aluminium, false, true, 50),
     BAROMETER_GAS_CYLINDER("barometer_gas_cylinder", 8000, () -> Materials.Steel, true, false, 50),
-    MEASURING_POT_STAINLESS("measuring_pot_stainless_steel", 1000, () -> Materials.StainlessSteel, false, false, 50, true),
+    MEASURING_POT_STAINLESS(
+            "measuring_pot_stainless_steel", 1000, () -> Materials.StainlessSteel, false, false, 50, true),
     MEASURING_POT_TUNGSTEN("measuring_pot_tungsten", 1000, () -> Materials.Tungsten, false, true, 50, true),
-    MEASURING_POT_CARBIDE("measuring_pot_tantalum_hafnium_carbide", 1000, () -> Materials.TantalumHafniumCarbide, false, true, 50, false),
-    GAS_CYLINDER_STAINLESS("barometer_gas_cylinder_stainless_steel", 8000, () -> Materials.StainlessSteel, true, false, 50, true),
+    MEASURING_POT_CARBIDE(
+            "measuring_pot_tantalum_hafnium_carbide",
+            1000,
+            () -> Materials.TantalumHafniumCarbide,
+            false,
+            true,
+            50,
+            false),
+    GAS_CYLINDER_STAINLESS(
+            "barometer_gas_cylinder_stainless_steel", 8000, () -> Materials.StainlessSteel, true, false, 50, true),
     GAS_CYLINDER_TUNGSTEN("barometer_gas_cylinder_tungsten", 8000, () -> Materials.Tungsten, true, true, 50, true),
-    GAS_CYLINDER_CARBIDE("barometer_gas_cylinder_tantalum_hafnium_carbide", 8000, () -> Materials.TantalumHafniumCarbide, true, true, 50, false),
+    GAS_CYLINDER_CARBIDE(
+            "barometer_gas_cylinder_tantalum_hafnium_carbide",
+            8000,
+            () -> Materials.TantalumHafniumCarbide,
+            true,
+            true,
+            50,
+            false),
     CELL_WAX("cell_wax", "Wax", 10, 0, false, false, false),
     CELL_WAX_BEE("cell_wax_bee", "WaxBee", 10, 0, false, false, false),
     CELL_WAX_PLANT("cell_wax_plant", "WaxPlant", 10, 0, false, false, false),
@@ -65,7 +81,8 @@ public enum PortableFluidContainerSpec {
     private final boolean plasmaProof;
     private final int fixedTemperature;
 
-    PortableFluidContainerSpec(String id, String material, int margin, int temperature, boolean acid, boolean magic, boolean plasma) {
+    PortableFluidContainerSpec(
+            String id, String material, int margin, int temperature, boolean acid, boolean magic, boolean plasma) {
         this.id = id;
         this.capacity = 1000;
         this.material = () -> gregtech.engine.material.GTMaterialRegistry.get(material);
@@ -77,12 +94,23 @@ public enum PortableFluidContainerSpec {
         this.plasmaProof = plasma;
     }
 
-    PortableFluidContainerSpec(String id, int capacity, Supplier<GTMaterial> material,
-            boolean gasProof, boolean magicProof, int temperatureMargin) {
+    PortableFluidContainerSpec(
+            String id,
+            int capacity,
+            Supplier<GTMaterial> material,
+            boolean gasProof,
+            boolean magicProof,
+            int temperatureMargin) {
         this(id, capacity, material, gasProof, magicProof, temperatureMargin, false);
     }
 
-    PortableFluidContainerSpec(String id, int capacity, Supplier<GTMaterial> material, boolean gasProof, boolean magicProof, int temperatureMargin,
+    PortableFluidContainerSpec(
+            String id,
+            int capacity,
+            Supplier<GTMaterial> material,
+            boolean gasProof,
+            boolean magicProof,
+            int temperatureMargin,
             boolean acidProof) {
         this.plasmaProof = false;
         this.fixedTemperature = 0;
@@ -100,8 +128,11 @@ public enum PortableFluidContainerSpec {
     }
 
     public String shapeId() {
-        return id.startsWith("cell_") ? "cell" : id.startsWith("measuring_pot") ? "measuring_pot" : id.startsWith("barometer_gas_cylinder")
-                ? "barometer_gas_cylinder" : id;
+        return id.startsWith("cell_")
+                ? "cell"
+                : id.startsWith("measuring_pot")
+                        ? "measuring_pot"
+                        : id.startsWith("barometer_gas_cylinder") ? "barometer_gas_cylinder" : id;
     }
 
     public int capacity() {
@@ -117,7 +148,10 @@ public enum PortableFluidContainerSpec {
     }
 
     public boolean accepts(int temperature, boolean gas, boolean acid, boolean magic, boolean plasma) {
-        return temperature <= maxTemperature() && (shapeId().equals("barometer_gas_cylinder") ? gas : (!gas || gasProof)) && (!acid || acidProof)
-                && (!magic || magicProof) && (!plasma || plasmaProof);
+        return temperature <= maxTemperature()
+                && (shapeId().equals("barometer_gas_cylinder") ? gas : (!gas || gasProof))
+                && (!acid || acidProof)
+                && (!magic || magicProof)
+                && (!plasma || plasmaProof);
     }
 }

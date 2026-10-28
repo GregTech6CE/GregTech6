@@ -9,7 +9,6 @@ public final class ExtrusionWorkRules {
 
     public static long hotExtrusionTicks(GTMaterial material, long units) {
         double kilograms = material.getDensity() * 111.111111 * units / GTValues.U;
-        return Math.max(16, 1 + (long) Math.abs(
-                (material.getMeltingPoint() - 293d) * kilograms / (75 * 96)));
+        return Math.max(16, 1 + (long) Math.abs((material.getMeltingPoint() - 293d) * kilograms / (75 * 96)));
     }
 }

@@ -9,8 +9,8 @@ public final class SmallCrucibleRain {
     private SmallCrucibleRain() {}
 
     public static long amount(Level level, BlockPos pos) {
-        if (level == null || level.isClientSide || level.getGameTime() % 600 != 10
-                || !level.isRainingAt(pos.above())) return 0;
+        if (level == null || level.isClientSide || level.getGameTime() % 600 != 10 || !level.isRainingAt(pos.above()))
+            return 0;
         var biome = level.getBiome(pos).value();
         float downfall = biome.getModifiedClimateSettings().downfall();
         if (downfall <= 0 || biome.getBaseTemperature() < .2F) return 0;

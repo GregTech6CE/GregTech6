@@ -13,8 +13,10 @@ public interface LogisticsStorageHost extends LogisticsHost {
     int fluidStoragePriority();
 
     /** A strict item filter, or {@code null} for no strict filter. */
-    @Nullable ItemStack itemStorageFilter();
+    @Nullable
+    ItemStack itemStorageFilter();
 
     /** A strict fluid filter, or {@code null} for no strict filter. */
-    @Nullable Fluid fluidStorageFilter();
+    @Nullable
+    Fluid fluidStorageFilter();
 }

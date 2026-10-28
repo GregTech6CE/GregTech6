@@ -24,11 +24,25 @@ public final class MachineWorkCost {
         return progress + Math.min(limit - progress, Math.max(0, supplied));
     }
 
-    public static Cost calculate(long recipePower, long duration, int parallel, boolean scaleDuration,
-                                 int efficiency, long minimumInput, long maximumInput,
-                                 boolean cheapOverclocking) {
-        return calculate(recipePower, duration, parallel, scaleDuration, efficiency,
-                minimumInput, maximumInput, cheapOverclocking, false);
+    public static Cost calculate(
+            long recipePower,
+            long duration,
+            int parallel,
+            boolean scaleDuration,
+            int efficiency,
+            long minimumInput,
+            long maximumInput,
+            boolean cheapOverclocking) {
+        return calculate(
+                recipePower,
+                duration,
+                parallel,
+                scaleDuration,
+                efficiency,
+                minimumInput,
+                maximumInput,
+                cheapOverclocking,
+                false);
     }
 
     /**
@@ -36,9 +50,16 @@ public final class MachineWorkCost {
      * Returns null when these inputs have no representable cost. That is a refused calculation,
      * not a missing lookup: items and fluids use an empty stack, materials use {@code invalid()}.
      */
-    public static Cost calculate(long recipePower, long duration, int parallel, boolean scaleDuration,
-                                 int efficiency, long minimumInput, long maximumInput,
-                                 boolean cheapOverclocking, boolean timeEnergy) {
+    public static Cost calculate(
+            long recipePower,
+            long duration,
+            int parallel,
+            boolean scaleDuration,
+            int efficiency,
+            long minimumInput,
+            long maximumInput,
+            boolean cheapOverclocking,
+            boolean timeEnergy) {
         if (recipePower < 0 || recipePower > maximumInput || duration < 1 || parallel < 1 || efficiency < 1)
             return null;
 
@@ -48,9 +69,12 @@ public final class MachineWorkCost {
             power *= parallel;
         }
 
-        BigInteger work = BigInteger.valueOf(power).multiply(BigInteger.valueOf(duration))
-                .multiply(BigInteger.valueOf(scaleDuration ? parallel : 1)).multiply(BigInteger.valueOf(10000))
-                .add(BigInteger.valueOf(efficiency - 1)).divide(BigInteger.valueOf(efficiency));
+        BigInteger work = BigInteger.valueOf(power)
+                .multiply(BigInteger.valueOf(duration))
+                .multiply(BigInteger.valueOf(scaleDuration ? parallel : 1))
+                .multiply(BigInteger.valueOf(10000))
+                .add(BigInteger.valueOf(efficiency - 1))
+                .divide(BigInteger.valueOf(efficiency));
 
         if (!cheapOverclocking)
             while (power < minimumInput && power <= maximumInput / 4) {

@@ -12,6 +12,11 @@ public final class FluidSlotAmountOverlay {
     }
 
     /** Vanilla item-count right edge, using the active font's measured width. */
-    public static int x(int slotX, int textWidth) { return slotX + 17 - textWidth; }
-    public static int y(int slotY) { return slotY + 9; }
+    public static int x(int slotX, int textWidth) {
+        return slotX + 17 - textWidth;
+    }
+
+    public static int y(int slotY) {
+        return slotY + 9;
+    }
 }

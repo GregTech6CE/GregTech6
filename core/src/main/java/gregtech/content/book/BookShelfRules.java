@@ -18,22 +18,34 @@ public final class BookShelfRules {
             int flammability) {}
 
     private static final java.util.Set<String> NORMAL = java.util.Set.of(
-            "minecraft:book", "minecraft:writable_book", "minecraft:written_book",
-            "gt6ce:dusty_guide_book", "gt6ce:dusty_material_dictionary");
+            "minecraft:book",
+            "minecraft:writable_book",
+            "minecraft:written_book",
+            "gt6ce:dusty_guide_book",
+            "gt6ce:dusty_material_dictionary");
 
     private static final java.util.Set<String> DISPLAY = java.util.Set.of(
-            "minecraft:paper", "minecraft:map", "minecraft:filled_map", "minecraft:name_tag",
-            "minecraft:item_frame", "minecraft:painting", "minecraft:oak_button",
-            "minecraft:stone_button", "minecraft:lever", "minecraft:redstone_torch",
+            "minecraft:paper",
+            "minecraft:map",
+            "minecraft:filled_map",
+            "minecraft:name_tag",
+            "minecraft:item_frame",
+            "minecraft:painting",
+            "minecraft:oak_button",
+            "minecraft:stone_button",
+            "minecraft:lever",
+            "minecraft:redstone_torch",
             "minecraft:cobblestone");
 
     private static final java.util.Set<String> CONTROLS = java.util.Set.of(
-            "minecraft:oak_button", "minecraft:stone_button", "minecraft:lever",
-            "minecraft:redstone_torch", "minecraft:cobblestone");
+            "minecraft:oak_button",
+            "minecraft:stone_button",
+            "minecraft:lever",
+            "minecraft:redstone_torch",
+            "minecraft:cobblestone");
 
     public static int enchantPower(String id) {
-        return id.equals("minecraft:enchanted_book") ? 2
-                : (NORMAL.contains(id) || ColoredBookRules.isBook(id)) ? 1 : 0;
+        return id.equals("minecraft:enchanted_book") ? 2 : (NORMAL.contains(id) || ColoredBookRules.isBook(id)) ? 1 : 0;
     }
 
     public static boolean canPlace(String id) {
@@ -55,10 +67,7 @@ public final class BookShelfRules {
         if (slot < 0 || slot >= SLOTS) throw new IllegalArgumentException("book slot " + slot);
         int col = slot % 7;
         boolean front = slot < 14;
-        int x = front ? 1 + col * 2 : 13 - col * 2,
-                y = slot % 14 < 7 ? 9 : 1,
-                z = front ? 2 : 9;
-        return new Box(x / 16., y / 16., z / 16.,
-                (x + 2) / 16., (y + 6) / 16., (z + 5) / 16.);
+        int x = front ? 1 + col * 2 : 13 - col * 2, y = slot % 14 < 7 ? 9 : 1, z = front ? 2 : 9;
+        return new Box(x / 16., y / 16., z / 16., (x + 2) / 16., (y + 6) / 16., (z + 5) / 16.);
     }
 }

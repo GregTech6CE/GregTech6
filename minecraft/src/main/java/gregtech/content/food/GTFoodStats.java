@@ -1,12 +1,11 @@
 package gregtech.content.food;
 
 import gregtech.content.data.generated.GTFoodStatsGen;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6 {@code CS.FoodsGT}: which food feeds which of the six tracked statistics.
@@ -40,8 +39,9 @@ public final class GTFoodStats {
     static {
         for (Row row : GTFoodStatsGen.ROWS) {
             BY_ITEM.put(row.item(), new int[] {
-                    row.alcohol(), row.caffeine(), row.dehydration(),
-                    row.sugar(), row.fat(), row.radiation()});
+                row.alcohol(), row.caffeine(), row.dehydration(),
+                row.sugar(), row.fat(), row.radiation()
+            });
         }
     }
 

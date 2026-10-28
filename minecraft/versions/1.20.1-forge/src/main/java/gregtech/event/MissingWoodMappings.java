@@ -40,8 +40,18 @@ public final class MissingWoodMappings {
             case "acacia" -> vanilla("stripped_acacia_log");
             case "darkoak" -> vanilla("stripped_dark_oak_log");
             case "bluemahoe" -> id("stripped_log_blue_mahoe");
-            case "blue_mahoe", "rubber", "maple", "willow", "hazel", "cinnamon", "coconut",
-                    "rainbowood", "bluespruce", "pine", "ebony", "white_mahoe" -> id("stripped_log_" + wood);
+            case "blue_mahoe",
+                    "rubber",
+                    "maple",
+                    "willow",
+                    "hazel",
+                    "cinnamon",
+                    "coconut",
+                    "rainbowood",
+                    "bluespruce",
+                    "pine",
+                    "ebony",
+                    "white_mahoe" -> id("stripped_log_" + wood);
             default -> null;
         };
     }

@@ -17,14 +17,19 @@ public final class SourceMaterialToolStats {
 
     private record Stats(int types, float speed, long durability, int quality) {
         boolean matches(GTMaterial material) {
-            return material.getToolTypes() == types && Float.compare(material.getToolSpeed(), speed) == 0
-                    && material.getToolDurability() == durability && material.getToolQuality() == quality;
+            return material.getToolTypes() == types
+                    && Float.compare(material.getToolSpeed(), speed) == 0
+                    && material.getToolDurability() == durability
+                    && material.getToolQuality() == quality;
         }
+
         void apply(GTMaterial material) {
             material.setToolStats(types, speed, durability, quality);
         }
     }
+
     private record Row(int id, String name, Stats source) {}
+
     private static final Stats LOST_DEFAULT = new Stats(0, 1F, 0L, 0);
     private static final List<Row> ROWS = List.of(
             new Row(4000, "Magic", new Stats(3, 10F, 5120L, 5)), // MT539
@@ -98,13 +103,17 @@ public final class SourceMaterialToolStats {
             new Row(9129, "Spessartine", new Stats(3, 7F, 128L, 2)), // MT1396
             new Row(9135, "Uvarovite", new Stats(3, 7F, 128L, 2)), // MT1398
             new Row(9243, "ClayBrick", new Stats(0, 1F, 1L, 0)) // MT1280
-    );
+            );
 
     private static boolean identity(Row row, GTMaterial material) {
-        return material != null && material.isValid() && material.resolve() == material
-                && material.getId() == row.id() && material.getName().equals(row.name())
+        return material != null
+                && material.isValid()
+                && material.resolve() == material
+                && material.getId() == row.id()
+                && material.getName().equals(row.name())
                 && GTMaterialRegistry.get(row.id()) == material
-                && GTMaterialRegistry.get(row.name()) == material && !AddonMaterials.owns(material);
+                && GTMaterialRegistry.get(row.name()) == material
+                && !AddonMaterials.owns(material);
     }
 
     /**
@@ -115,7 +124,8 @@ public final class SourceMaterialToolStats {
     public static boolean matchesCorrectedSource(GTMaterial material) {
         if (material == null) return false;
         for (Row row : ROWS) {
-            if (row.id() == material.getId()) return identity(row, material) && row.source().matches(material);
+            if (row.id() == material.getId())
+                return identity(row, material) && row.source().matches(material);
         }
         return false;
     }

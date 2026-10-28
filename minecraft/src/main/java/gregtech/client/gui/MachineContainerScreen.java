@@ -17,21 +17,27 @@ public abstract class MachineContainerScreen<T extends AbstractContainerMenu> ex
         titleIcon = MachineGuiChrome.iconForTitle(title);
     }
 
-    protected ItemStack titleIcon() { return titleIcon; }
+    protected ItemStack titleIcon() {
+        return titleIcon;
+    }
 
     /** Only sheets with the standard GT layout opt into the center logo. */
-    protected ResourceLocation brandingTexture() { return null; }
+    protected ResourceLocation brandingTexture() {
+        return null;
+    }
 
     public net.minecraft.client.renderer.Rect2i titleBounds() {
-        return new net.minecraft.client.renderer.Rect2i(leftPos, topPos - 10,
-                MachineGuiChrome.titleWidth(font, title, titleIcon(), imageWidth), 14);
+        return new net.minecraft.client.renderer.Rect2i(
+                leftPos, topPos - 10, MachineGuiChrome.titleWidth(font, title, titleIcon(), imageWidth), 14);
     }
 
     @Override
     protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
         var tab = titleBounds();
-        if (mouseX >= tab.getX() && mouseX < tab.getX() + tab.getWidth()
-                && mouseY >= tab.getY() && mouseY < tab.getY() + tab.getHeight()) return false;
+        if (mouseX >= tab.getX()
+                && mouseX < tab.getX() + tab.getWidth()
+                && mouseY >= tab.getY()
+                && mouseY < tab.getY() + tab.getHeight()) return false;
         return super.hasClickedOutside(mouseX, mouseY, left, top, button);
     }
 
@@ -45,8 +51,11 @@ public abstract class MachineContainerScreen<T extends AbstractContainerMenu> ex
     protected void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
         super.renderTooltip(graphics, mouseX, mouseY);
         var tab = titleBounds();
-        if (tab.getWidth() > 0 && mouseX >= tab.getX() && mouseX < tab.getX() + tab.getWidth()
-                && mouseY >= tab.getY() && mouseY < tab.getY() + tab.getHeight()
+        if (tab.getWidth() > 0
+                && mouseX >= tab.getX()
+                && mouseX < tab.getX() + tab.getWidth()
+                && mouseY >= tab.getY()
+                && mouseY < tab.getY() + tab.getHeight()
                 && font.width(title) > MachineGuiChrome.titleTextWidth(tab.getWidth(), titleIcon())) {
             graphics.renderTooltip(font, title, mouseX, mouseY);
         }

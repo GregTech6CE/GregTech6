@@ -1,10 +1,12 @@
 package gregtech.engine.machine;
 
-import gregtech.content.block.machine.GTMachineBlockItem;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.CrucibleCrossingBlock;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
 import gregtech.content.block.machine.CrucibleHullBlockItem;
 import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.block.machine.GTMachineBlockItem;
 import gregtech.content.block.machine.HopperBlock;
 import gregtech.content.block.machine.HopperBlockItem;
 import gregtech.content.block.machine.MoldBasinBlock;
@@ -12,19 +14,21 @@ import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.block.machine.QueueHopperBlock;
 import gregtech.content.block.machine.QueueHopperBlockItem;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
-import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.SmeltingCrucibleBlockItem;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
-import gregtech.content.block.machine.BurningBoxBlock;
-import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.content.blockentity.machine.EngineBaseBlockEntity;
 import gregtech.content.blockentity.machine.KineticDieselEngineBlockEntity;
 import gregtech.content.blockentity.machine.KineticElectricEngineBlockEntity;
 import gregtech.content.blockentity.machine.KineticFluxEngineBlockEntity;
 import gregtech.content.blockentity.machine.KineticRotationEngineBlockEntity;
 import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
+import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.registry.GTBlocks;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -33,12 +37,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * GT6-style machine registration helper ({@code Loader_MultiTileEntities} burning box entries).
@@ -56,6 +54,7 @@ public final class MachineRegistry {
     private static final List<RegistryObject<BasicMachineBlock>> BASIC_MACHINES = new ArrayList<>();
     /** RegistryObjects for basic machine blocks; used in lazy BE type registration pass. */
     private static final List<RegistryObject<BasicMachineBlock>> BASIC_MACHINE_BLOCKS = new ArrayList<>();
+
     private static final List<RegistryObject<EngineBlock>> ELECTRIC_ENGINES = new ArrayList<>();
     private static final List<RegistryObject<EngineBlock>> FLUX_ENGINES = new ArrayList<>();
     private static final List<RegistryObject<EngineBlock>> STEAM_ENGINES = new ArrayList<>();
@@ -82,24 +81,39 @@ public final class MachineRegistry {
      * @param outputHu     HU/t (GT6 {@code NBT_OUTPUT})
      */
     public static RegistryObject<SolidBurningBoxBlock> registerSolidBurningBox(
-            String id, String materialName, int tintRgb, int efficiency, long outputHu,
-            float hardness, float blastResistance) {
-        MachineSpec spec = new MachineSpec(id, materialName, tintRgb, efficiency, outputHu,
-                MachineTextures.BURNING_SOLID, hardness, blastResistance);
+            String id,
+            String materialName,
+            int tintRgb,
+            int efficiency,
+            long outputHu,
+            float hardness,
+            float blastResistance) {
+        MachineSpec spec = new MachineSpec(
+                id,
+                materialName,
+                tintRgb,
+                efficiency,
+                outputHu,
+                MachineTextures.BURNING_SOLID,
+                hardness,
+                blastResistance);
         return registerSolidBurningBox(spec);
     }
 
     public static RegistryObject<SolidBurningBoxBlock> registerSolidBurningBox(MachineSpec spec) {
         String id = spec.id();
-        RegistryObject<SolidBurningBoxBlock> block = GTBlocks.BLOCKS.register(id, () -> new SolidBurningBoxBlock(
-                spec,
-                BlockBehaviour.Properties.of()
-                        .mapColor(MapColor.METAL)
-                        .strength(spec.hardness(), spec.blastResistance())
-                        .requiresCorrectToolForDrops()
-                        .lightLevel(state -> state.getValue(SolidBurningBoxBlock.LIT) ? 13 : 0)));
+        RegistryObject<SolidBurningBoxBlock> block = GTBlocks.BLOCKS.register(
+                id,
+                () -> new SolidBurningBoxBlock(
+                        spec,
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.METAL)
+                                .strength(spec.hardness(), spec.blastResistance())
+                                .requiresCorrectToolForDrops()
+                                .lightLevel(state -> state.getValue(SolidBurningBoxBlock.LIT) ? 13 : 0)));
         SOLID_BURNING_BOXES.add(block);
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                id, () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
@@ -118,19 +132,30 @@ public final class MachineRegistry {
      * @param outputHu     HU/t
      */
     public static RegistryObject<BurningBoxBlock> registerBurningBox(
-            BurningBoxFuelType fuelType, String id, String materialName, int tintRgb, int efficiency, long outputHu,
-            float hardness, float blastResistance, String textureSet) {
-        MachineSpec spec = new MachineSpec(id, materialName, tintRgb, efficiency, outputHu,
-                textureSet, hardness, blastResistance);
-        RegistryObject<BurningBoxBlock> block = GTBlocks.BLOCKS.register(id, () -> new BurningBoxBlock(
-                fuelType, spec,
-                BlockBehaviour.Properties.of()
-                        .mapColor(MapColor.METAL)
-                        .strength(hardness, blastResistance)
-                        .requiresCorrectToolForDrops()
-                        .lightLevel(state -> state.getValue(BurningBoxBlock.LIT) ? 13 : 0)));
+            BurningBoxFuelType fuelType,
+            String id,
+            String materialName,
+            int tintRgb,
+            int efficiency,
+            long outputHu,
+            float hardness,
+            float blastResistance,
+            String textureSet) {
+        MachineSpec spec =
+                new MachineSpec(id, materialName, tintRgb, efficiency, outputHu, textureSet, hardness, blastResistance);
+        RegistryObject<BurningBoxBlock> block = GTBlocks.BLOCKS.register(
+                id,
+                () -> new BurningBoxBlock(
+                        fuelType,
+                        spec,
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.METAL)
+                                .strength(hardness, blastResistance)
+                                .requiresCorrectToolForDrops()
+                                .lightLevel(state -> state.getValue(BurningBoxBlock.LIT) ? 13 : 0)));
         BURNING_BOXES.add(block);
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                id, () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
@@ -142,11 +167,11 @@ public final class MachineRegistry {
      * Registers a smelting crucible tier (GT6 {@code Loader_MultiTileEntities#crucible}).
      */
     public static RegistryObject<SmeltingCrucibleBlock> registerSmeltingCrucible(CrucibleSpec spec) {
-        RegistryObject<SmeltingCrucibleBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> new SmeltingCrucibleBlock(spec, SmeltingCrucibleBlock.defaultProperties(spec)));
+        RegistryObject<SmeltingCrucibleBlock> block = GTBlocks.BLOCKS.register(
+                spec.id(), () -> new SmeltingCrucibleBlock(spec, SmeltingCrucibleBlock.defaultProperties(spec)));
         SMELTING_CRUCIBLES.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new SmeltingCrucibleBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(), () -> new SmeltingCrucibleBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         registerSmelteryCompanions(spec);
         return block;
     }
@@ -154,48 +179,51 @@ public final class MachineRegistry {
     private static void registerSmelteryCompanions(CrucibleSpec crucibleSpec) {
         String suffix = crucibleSpec.id().substring("smelting_crucible_".length());
         registerMold(companionSpec(crucibleSpec, "mold_" + suffix, MOLD_META_OFFSET, CrucibleSpec.MOLD_HULL_UNITS));
-        registerMoldBasin(companionSpec(crucibleSpec, "mold_basin_" + suffix, BASIN_META_OFFSET, CrucibleSpec.BASIN_HULL_UNITS));
-        registerCrucibleCrossing(companionSpec(crucibleSpec, "crucible_crossing_" + suffix, CROSSING_META_OFFSET, CrucibleSpec.CROSSING_HULL_UNITS));
-        registerCrucibleFaucet(companionSpec(crucibleSpec, "crucible_faucet_" + suffix, FAUCET_META_OFFSET, CrucibleSpec.FAUCET_HULL_UNITS));
+        registerMoldBasin(
+                companionSpec(crucibleSpec, "mold_basin_" + suffix, BASIN_META_OFFSET, CrucibleSpec.BASIN_HULL_UNITS));
+        registerCrucibleCrossing(companionSpec(
+                crucibleSpec, "crucible_crossing_" + suffix, CROSSING_META_OFFSET, CrucibleSpec.CROSSING_HULL_UNITS));
+        registerCrucibleFaucet(companionSpec(
+                crucibleSpec, "crucible_faucet_" + suffix, FAUCET_META_OFFSET, CrucibleSpec.FAUCET_HULL_UNITS));
     }
 
     private static CrucibleSpec companionSpec(CrucibleSpec base, String id, int metaOffset, long hullMaterialUnits) {
-        return SmelteryCompanionDefinitions.copy(base,id,metaOffset,hullMaterialUnits);
+        return SmelteryCompanionDefinitions.copy(base, id, metaOffset, hullMaterialUnits);
     }
 
     public static RegistryObject<MoldBlock> registerMold(CrucibleSpec spec) {
-        RegistryObject<MoldBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> new MoldBlock(spec, MoldBlock.defaultProperties(spec)));
+        RegistryObject<MoldBlock> block =
+                GTBlocks.BLOCKS.register(spec.id(), () -> new MoldBlock(spec, MoldBlock.defaultProperties(spec)));
         MOLDS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(), () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
     public static RegistryObject<MoldBasinBlock> registerMoldBasin(CrucibleSpec spec) {
-        RegistryObject<MoldBasinBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> new MoldBasinBlock(spec, MoldBasinBlock.defaultProperties(spec)));
+        RegistryObject<MoldBasinBlock> block = GTBlocks.BLOCKS.register(
+                spec.id(), () -> new MoldBasinBlock(spec, MoldBasinBlock.defaultProperties(spec)));
         MOLD_BASINS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(), () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
     public static RegistryObject<CrucibleCrossingBlock> registerCrucibleCrossing(CrucibleSpec spec) {
-        RegistryObject<CrucibleCrossingBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> new CrucibleCrossingBlock(spec, CrucibleCrossingBlock.defaultProperties(spec)));
+        RegistryObject<CrucibleCrossingBlock> block = GTBlocks.BLOCKS.register(
+                spec.id(), () -> new CrucibleCrossingBlock(spec, CrucibleCrossingBlock.defaultProperties(spec)));
         CRUCIBLE_CROSSINGS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(), () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
     public static RegistryObject<CrucibleFaucetBlock> registerCrucibleFaucet(CrucibleSpec spec) {
-        RegistryObject<CrucibleFaucetBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> new CrucibleFaucetBlock(spec, CrucibleFaucetBlock.defaultProperties(spec)));
+        RegistryObject<CrucibleFaucetBlock> block = GTBlocks.BLOCKS.register(
+                spec.id(), () -> new CrucibleFaucetBlock(spec, CrucibleFaucetBlock.defaultProperties(spec)));
         CRUCIBLE_FAUCETS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(), () -> new CrucibleHullBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
@@ -223,38 +251,41 @@ public final class MachineRegistry {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static List<List<? extends RegistryObject<? extends Block>>> smelteryBlocks() {
         return Arrays.asList(
-                (List) SMELTING_CRUCIBLES,
-                (List) MOLD_BASINS,
-                (List) MOLDS,
-                (List) CRUCIBLE_CROSSINGS,
-                (List) CRUCIBLE_FAUCETS);
+                (List) SMELTING_CRUCIBLES, (List) MOLD_BASINS, (List) MOLDS, (List) CRUCIBLE_CROSSINGS, (List)
+                        CRUCIBLE_FAUCETS);
     }
 
     // ── Hopper / QueueHopper registration ────────────────────────────────
 
     /** Registers a hopper variant (GT6 {@code MultiTileEntityHopper}). */
     public static RegistryObject<HopperBlock> registerHopper(HopperSpec spec) {
-        RegistryObject<HopperBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> new HopperBlock(spec, BlockBehaviour.Properties.of()
-                        .mapColor(MapColor.METAL)
-                        .strength(spec.hardness(), spec.blastResistance())
-                        .requiresCorrectToolForDrops()));
+        RegistryObject<HopperBlock> block = GTBlocks.BLOCKS.register(
+                spec.id(),
+                () -> new HopperBlock(
+                        spec,
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.METAL)
+                                .strength(spec.hardness(), spec.blastResistance())
+                                .requiresCorrectToolForDrops()));
         HOPPERS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new HopperBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(), () -> new HopperBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
     /** Registers a queuehopper variant (GT6 {@code MultiTileEntityQueueHopper}). */
     public static RegistryObject<QueueHopperBlock> registerQueueHopper(HopperSpec spec) {
-        RegistryObject<QueueHopperBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> new QueueHopperBlock(spec, BlockBehaviour.Properties.of()
-                        .mapColor(MapColor.METAL)
-                        .strength(spec.hardness(), spec.blastResistance())
-                        .requiresCorrectToolForDrops()));
+        RegistryObject<QueueHopperBlock> block = GTBlocks.BLOCKS.register(
+                spec.id(),
+                () -> new QueueHopperBlock(
+                        spec,
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.METAL)
+                                .strength(spec.hardness(), spec.blastResistance())
+                                .requiresCorrectToolForDrops()));
         QUEUE_HOPPERS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new QueueHopperBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(), () -> new QueueHopperBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
         return block;
     }
 
@@ -288,17 +319,28 @@ public final class MachineRegistry {
     /** Variant taking a custom block factory (multiblock controllers etc.). */
     public static RegistryObject<BasicMachineBlock> registerBasicMachine(
             BasicMachineSpec spec, java.util.function.Function<BlockBehaviour.Properties, BasicMachineBlock> factory) {
-        RegistryObject<BasicMachineBlock> block = GTBlocks.BLOCKS.register(spec.id(), () ->
-                factory.apply(BlockBehaviour.Properties.of()
+        RegistryObject<BasicMachineBlock> block = GTBlocks.BLOCKS.register(
+                spec.id(),
+                () -> factory.apply(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
                         .strength(spec.hardness(), spec.blastResistance())
                         .requiresCorrectToolForDrops()));
         BASIC_MACHINES.add(block);
         BASIC_MACHINE_BLOCKS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(),
-                () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16),
-                        new MachineSpec(spec.id(), spec.material().getLocalName(), spec.material().getColor(),
-                                0, 0, spec.textureFolder(), spec.hardness(), spec.blastResistance()),
+        GTBlocks.BLOCK_ITEMS.register(
+                spec.id(),
+                () -> new GTMachineBlockItem(
+                        block.get(),
+                        new Item.Properties().stacksTo(16),
+                        new MachineSpec(
+                                spec.id(),
+                                spec.material().getLocalName(),
+                                spec.material().getColor(),
+                                0,
+                                0,
+                                spec.textureFolder(),
+                                spec.hardness(),
+                                spec.blastResistance()),
                         spec));
         return block;
     }
@@ -316,13 +358,13 @@ public final class MachineRegistry {
                 BasicMachineSpec spec = block.basicSpec();
                 AtomicReference<BlockEntityType<BasicMachineBlockEntity>> typeRef = new AtomicReference<>();
                 BlockEntityType<BasicMachineBlockEntity> type = BlockEntityType.Builder.of(
-                        (pos, state) -> {
-                            BasicMachineBlockEntity be = block.createBlockEntity(typeRef.get(), pos, state);
-                            be.setSpec(spec);
-                            return be;
-                        },
-                        block
-                ).build(null);
+                                (pos, state) -> {
+                                    BasicMachineBlockEntity be = block.createBlockEntity(typeRef.get(), pos, state);
+                                    be.setSpec(spec);
+                                    return be;
+                                },
+                                block)
+                        .build(null);
                 typeRef.set(type);
                 block.setBeTypeSupplier(() -> type);
                 return type;
@@ -350,63 +392,110 @@ public final class MachineRegistry {
             return new EngineBlock(type, itemSpec, engineSpec, properties);
         });
         ENGINE_BLOCKS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(itemSpec.id(),
-                () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), itemSpec));
+        GTBlocks.BLOCK_ITEMS.register(
+                itemSpec.id(), () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), itemSpec));
         return block;
     }
 
     public static RegistryObject<EngineBlock> registerElectricEngine(ElectricEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(spec.id(), spec.materialName(), spec.tintRgb(), spec.outputRate(),
-                spec.textureFolder(), spec.hardness(), spec.blastResistance());
-        RegistryObject<EngineBlock> block = registerEngineBlock(EngineType.ELECTRIC, ms, spec, spec.hardness(), spec.blastResistance());
+        MachineSpec ms = engineMachineSpec(
+                spec.id(),
+                spec.materialName(),
+                spec.tintRgb(),
+                spec.outputRate(),
+                spec.textureFolder(),
+                spec.hardness(),
+                spec.blastResistance());
+        RegistryObject<EngineBlock> block =
+                registerEngineBlock(EngineType.ELECTRIC, ms, spec, spec.hardness(), spec.blastResistance());
         ELECTRIC_ENGINES.add(block);
         return block;
     }
 
     public static RegistryObject<EngineBlock> registerFluxEngine(FluxEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(spec.id(), spec.materialName(), spec.tintRgb(), spec.outputRate(),
-                spec.textureFolder(), spec.hardness(), spec.blastResistance());
-        RegistryObject<EngineBlock> block = registerEngineBlock(EngineType.FLUX, ms, spec, spec.hardness(), spec.blastResistance());
+        MachineSpec ms = engineMachineSpec(
+                spec.id(),
+                spec.materialName(),
+                spec.tintRgb(),
+                spec.outputRate(),
+                spec.textureFolder(),
+                spec.hardness(),
+                spec.blastResistance());
+        RegistryObject<EngineBlock> block =
+                registerEngineBlock(EngineType.FLUX, ms, spec, spec.hardness(), spec.blastResistance());
         FLUX_ENGINES.add(block);
         return block;
     }
 
     public static RegistryObject<EngineBlock> registerSteamEngine(SteamEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(spec.id(), spec.materialName(), spec.tintRgb(), spec.outputRate(),
-                spec.textureFolder(), spec.hardness(), spec.blastResistance());
-        RegistryObject<EngineBlock> block = registerEngineBlock(EngineType.STEAM, ms, spec, spec.hardness(), spec.blastResistance());
+        MachineSpec ms = engineMachineSpec(
+                spec.id(),
+                spec.materialName(),
+                spec.tintRgb(),
+                spec.outputRate(),
+                spec.textureFolder(),
+                spec.hardness(),
+                spec.blastResistance());
+        RegistryObject<EngineBlock> block =
+                registerEngineBlock(EngineType.STEAM, ms, spec, spec.hardness(), spec.blastResistance());
         STEAM_ENGINES.add(block);
         return block;
     }
 
     public static RegistryObject<EngineBlock> registerStrongSteamEngine(StrongSteamEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(spec.id(), spec.materialName(), spec.tintRgb(), spec.outputRate(),
-                spec.textureFolder(), spec.hardness(), spec.blastResistance());
-        RegistryObject<EngineBlock> block = registerEngineBlock(EngineType.STEAM, ms, spec, spec.hardness(), spec.blastResistance());
+        MachineSpec ms = engineMachineSpec(
+                spec.id(),
+                spec.materialName(),
+                spec.tintRgb(),
+                spec.outputRate(),
+                spec.textureFolder(),
+                spec.hardness(),
+                spec.blastResistance());
+        RegistryObject<EngineBlock> block =
+                registerEngineBlock(EngineType.STEAM, ms, spec, spec.hardness(), spec.blastResistance());
         STRONG_STEAM_ENGINES.add(block);
         return block;
     }
 
     public static RegistryObject<EngineBlock> registerRotationEngine(RotationEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(spec.id(), spec.materialName(), spec.tintRgb(), spec.outputRate(),
-                spec.textureFolder(), spec.hardness(), spec.blastResistance());
-        RegistryObject<EngineBlock> block = registerEngineBlock(EngineType.ROTATION, ms, spec, spec.hardness(), spec.blastResistance());
+        MachineSpec ms = engineMachineSpec(
+                spec.id(),
+                spec.materialName(),
+                spec.tintRgb(),
+                spec.outputRate(),
+                spec.textureFolder(),
+                spec.hardness(),
+                spec.blastResistance());
+        RegistryObject<EngineBlock> block =
+                registerEngineBlock(EngineType.ROTATION, ms, spec, spec.hardness(), spec.blastResistance());
         ROTATION_ENGINES.add(block);
         return block;
     }
 
     public static RegistryObject<EngineBlock> registerDieselEngine(DieselEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(spec.id(), spec.materialName(), spec.tintRgb(), spec.outputRate(),
-                spec.textureFolder(), spec.hardness(), spec.blastResistance());
-        RegistryObject<EngineBlock> block = registerEngineBlock(EngineType.DIESEL, ms, spec, spec.hardness(), spec.blastResistance());
+        MachineSpec ms = engineMachineSpec(
+                spec.id(),
+                spec.materialName(),
+                spec.tintRgb(),
+                spec.outputRate(),
+                spec.textureFolder(),
+                spec.hardness(),
+                spec.blastResistance());
+        RegistryObject<EngineBlock> block =
+                registerEngineBlock(EngineType.DIESEL, ms, spec, spec.hardness(), spec.blastResistance());
         DIESEL_ENGINES.add(block);
         return block;
     }
 
-    private static MachineSpec engineMachineSpec(String id, String matName, int tint, long output,
-                                                  String textureFolder, float hardness, float blastResistance) {
-        return new MachineSpec(id, matName, tint, 10000, output,
-                "engines/" + textureFolder, hardness, blastResistance);
+    private static MachineSpec engineMachineSpec(
+            String id,
+            String matName,
+            int tint,
+            long output,
+            String textureFolder,
+            float hardness,
+            float blastResistance) {
+        return new MachineSpec(id, matName, tint, 10000, output, "engines/" + textureFolder, hardness, blastResistance);
     }
 
     /** Second pass: registers per-engine {@link BlockEntityType}s. */
@@ -431,11 +520,14 @@ public final class MachineRegistry {
         ElectricEngineSpec spec = block.engineSpec(ElectricEngineSpec.class);
         AtomicReference<BlockEntityType<KineticElectricEngineBlockEntity>> ref = new AtomicReference<>();
         BlockEntityType<KineticElectricEngineBlockEntity> type = BlockEntityType.Builder.of(
-                (pos, state) -> {
-                    KineticElectricEngineBlockEntity be = new KineticElectricEngineBlockEntity(ref.get(), pos, state);
-                    be.setSpec(spec);
-                    return be;
-                }, block).build(null);
+                        (pos, state) -> {
+                            KineticElectricEngineBlockEntity be =
+                                    new KineticElectricEngineBlockEntity(ref.get(), pos, state);
+                            be.setSpec(spec);
+                            return be;
+                        },
+                        block)
+                .build(null);
         ref.set(type);
         return type;
     }
@@ -444,11 +536,13 @@ public final class MachineRegistry {
         FluxEngineSpec spec = block.engineSpec(FluxEngineSpec.class);
         AtomicReference<BlockEntityType<KineticFluxEngineBlockEntity>> ref = new AtomicReference<>();
         BlockEntityType<KineticFluxEngineBlockEntity> type = BlockEntityType.Builder.of(
-                (pos, state) -> {
-                    KineticFluxEngineBlockEntity be = new KineticFluxEngineBlockEntity(ref.get(), pos, state);
-                    be.setSpec(spec);
-                    return be;
-                }, block).build(null);
+                        (pos, state) -> {
+                            KineticFluxEngineBlockEntity be = new KineticFluxEngineBlockEntity(ref.get(), pos, state);
+                            be.setSpec(spec);
+                            return be;
+                        },
+                        block)
+                .build(null);
         ref.set(type);
         return type;
     }
@@ -457,11 +551,13 @@ public final class MachineRegistry {
         SteamEngineData spec = block.engineSpec(SteamEngineData.class);
         AtomicReference<BlockEntityType<KineticSteamEngineBlockEntity>> ref = new AtomicReference<>();
         BlockEntityType<KineticSteamEngineBlockEntity> type = BlockEntityType.Builder.of(
-                (pos, state) -> {
-                    KineticSteamEngineBlockEntity be = new KineticSteamEngineBlockEntity(ref.get(), pos, state);
-                    be.setSpec(spec);
-                    return be;
-                }, block).build(null);
+                        (pos, state) -> {
+                            KineticSteamEngineBlockEntity be = new KineticSteamEngineBlockEntity(ref.get(), pos, state);
+                            be.setSpec(spec);
+                            return be;
+                        },
+                        block)
+                .build(null);
         ref.set(type);
         return type;
     }
@@ -470,11 +566,14 @@ public final class MachineRegistry {
         RotationEngineSpec spec = block.engineSpec(RotationEngineSpec.class);
         AtomicReference<BlockEntityType<KineticRotationEngineBlockEntity>> ref = new AtomicReference<>();
         BlockEntityType<KineticRotationEngineBlockEntity> type = BlockEntityType.Builder.of(
-                (pos, state) -> {
-                    KineticRotationEngineBlockEntity be = new KineticRotationEngineBlockEntity(ref.get(), pos, state);
-                    be.setSpec(spec);
-                    return be;
-                }, block).build(null);
+                        (pos, state) -> {
+                            KineticRotationEngineBlockEntity be =
+                                    new KineticRotationEngineBlockEntity(ref.get(), pos, state);
+                            be.setSpec(spec);
+                            return be;
+                        },
+                        block)
+                .build(null);
         ref.set(type);
         return type;
     }
@@ -483,11 +582,14 @@ public final class MachineRegistry {
         DieselEngineSpec spec = block.engineSpec(DieselEngineSpec.class);
         AtomicReference<BlockEntityType<KineticDieselEngineBlockEntity>> ref = new AtomicReference<>();
         BlockEntityType<KineticDieselEngineBlockEntity> type = BlockEntityType.Builder.of(
-                (pos, state) -> {
-                    KineticDieselEngineBlockEntity be = new KineticDieselEngineBlockEntity(ref.get(), pos, state);
-                    be.setSpec(spec);
-                    return be;
-                }, block).build(null);
+                        (pos, state) -> {
+                            KineticDieselEngineBlockEntity be =
+                                    new KineticDieselEngineBlockEntity(ref.get(), pos, state);
+                            be.setSpec(spec);
+                            return be;
+                        },
+                        block)
+                .build(null);
         ref.set(type);
         return type;
     }

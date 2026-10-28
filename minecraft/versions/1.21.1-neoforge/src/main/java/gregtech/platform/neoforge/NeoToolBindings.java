@@ -2,14 +2,13 @@ package gregtech.platform.neoforge;
 
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 public final class NeoToolBindings {
 
-    private NeoToolBindings() {
-    }
+    private NeoToolBindings() {}
 
     public static boolean matches(ItemStack stack, String kind) {
         try {
@@ -60,7 +59,11 @@ public final class NeoToolBindings {
     }
 
     public static String craftKind(ItemStack stack) {
-        return GTToolHelper.isTool(stack) ? ((gregtech.content.item.GTToolItem) stack.getItem()).toolType().id() : "";
+        return GTToolHelper.isTool(stack)
+                ? ((gregtech.content.item.GTToolItem) stack.getItem())
+                        .toolType()
+                        .id()
+                : "";
     }
 
     public static int craftDamage(ItemStack stack) {

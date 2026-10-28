@@ -7,5 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 /** Original progressmeter also exposes the vanilla spawner's raw countdown. */
 @Mixin(BaseSpawner.class)
 public interface BaseSpawnerAccessor {
-    @Accessor("spawnDelay") int gregtech$spawnDelay();
+    @Accessor("spawnDelay")
+    int gregtech$spawnDelay();
 }

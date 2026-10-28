@@ -8,8 +8,11 @@ public final class BoilerHazards {
     public static int pressure(long steam, long capacity) {
         if (steam <= 0 || capacity <= 0) return 0;
         if (steam >= capacity) return 31;
-        return 1 + java.math.BigInteger.valueOf(steam).multiply(java.math.BigInteger.valueOf(30))
-                .divide(java.math.BigInteger.valueOf(capacity)).intValue();
+        return 1
+                + java.math.BigInteger.valueOf(steam)
+                        .multiply(java.math.BigInteger.valueOf(30))
+                        .divide(java.math.BigInteger.valueOf(capacity))
+                        .intValue();
     }
 
     /** Stored HU plus steam's heat equivalent; preserve the source's integer division of steam. */

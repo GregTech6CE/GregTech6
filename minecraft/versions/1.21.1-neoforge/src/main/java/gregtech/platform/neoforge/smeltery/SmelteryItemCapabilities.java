@@ -12,7 +12,9 @@ public final class SmelteryItemCapabilities {
 
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SmelteryRegistries.SMELTING_CRUCIBLE.get(),
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                SmelteryRegistries.SMELTING_CRUCIBLE.get(),
                 (crucible, side) -> crucible.itemInputHandler(side));
     }
 }

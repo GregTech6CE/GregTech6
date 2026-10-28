@@ -11,7 +11,8 @@ public final class PartFaces {
 
     public static Direction facing(BlockState state) {
         return state.hasProperty(HorizontalDirectionalBlock.FACING)
-                ? state.getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
+                ? state.getValue(HorizontalDirectionalBlock.FACING)
+                : Direction.NORTH;
     }
 
     public static Direction world(Direction facing, MachineFace face) {

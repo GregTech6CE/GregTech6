@@ -6,7 +6,6 @@ import gregtech.api.addon.machine.LayoutPart;
 import gregtech.api.addon.recipe.RecipeTable;
 import gregtech.api.multiblock.StructureLayout;
 import gregtech.engine.kubejs.KubeJsMachineDeclarations;
-
 import java.util.List;
 
 /**
@@ -17,19 +16,29 @@ public final class KubeJsMachineContributor implements AddonMachineContributor {
     private static KubeJsMachineDeclarations declarations;
 
     @Override
-    public String addonId() { return KubeJsMachineDeclarations.ADDON_ID; }
+    public String addonId() {
+        return KubeJsMachineDeclarations.ADDON_ID;
+    }
 
     @Override
-    public List<RecipeTable> recipeTables() { return loaded().tables(); }
+    public List<RecipeTable> recipeTables() {
+        return loaded().tables();
+    }
 
     @Override
-    public List<AddonMachine> addonMachines() { return loaded().machines(); }
+    public List<AddonMachine> addonMachines() {
+        return loaded().machines();
+    }
 
     @Override
-    public List<StructureLayout> structureLayouts() { return loaded().layouts(); }
+    public List<StructureLayout> structureLayouts() {
+        return loaded().layouts();
+    }
 
     @Override
-    public List<LayoutPart> layoutParts() { return loaded().parts(); }
+    public List<LayoutPart> layoutParts() {
+        return loaded().parts();
+    }
 
     private static KubeJsMachineDeclarations loaded() {
         if (declarations == null) {

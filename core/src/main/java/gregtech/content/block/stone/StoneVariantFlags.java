@@ -3,24 +3,19 @@ package gregtech.content.block.stone;
 /** GT6 {@code BlockStones} per-variant flags (indexed by {@link StoneVariant#meta()}). */
 public final class StoneVariantFlags {
     public static final boolean[] MOSSY = {
-            false, false, true, false, false, true, false, false, false, false,
-            false, false, false, false, false, false
+        false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false
     };
     public static final boolean[] MOSSABLE = {
-            false, true, false, true, true, false, false, false, false, false,
-            false, false, false, false, false, false
+        false, true, false, true, true, false, false, false, false, false, false, false, false, false, false, false
     };
     public static final boolean[] SEALABLE = {
-            false, false, false, true, false, true, true, true, true, true,
-            true, true, true, true, true, true
+        false, false, false, true, false, true, true, true, true, true, true, true, true, true, true, true
     };
     public static final boolean[] SPAWNABLE = {
-            true, true, true, false, false, false, false, false, false, false,
-            false, false, false, false, false, false
+        true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false
     };
     public static final boolean[] PLANTABLE = {
-            true, true, true, false, true, true, false, false, false, false,
-            false, false, false, false, false, false
+        true, true, true, false, true, true, false, false, false, false, false, false, false, false, false, false
     };
 
     private StoneVariantFlags() {}

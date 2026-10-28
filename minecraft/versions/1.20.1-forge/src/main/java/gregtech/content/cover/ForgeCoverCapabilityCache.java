@@ -11,14 +11,16 @@ import net.minecraftforge.common.util.NonNullFunction;
 /** Per-owner derived capabilities, forwarding the source's native invalidation lifetime. */
 public final class ForgeCoverCapabilityCache {
     private record Key(Capability<?> capability, Direction side) {}
+
     private final Map<Key, Entry<?>> entries = new HashMap<>();
 
-    public <T> LazyOptional<T> wrap(Capability<T> capability, Direction side,
-                                    LazyOptional<T> source, NonNullFunction<T, T> decorate) {
+    public <T> LazyOptional<T> wrap(
+            Capability<T> capability, Direction side, LazyOptional<T> source, NonNullFunction<T, T> decorate) {
         Key key = new Key(capability, side);
         Entry<?> previous = entries.get(key);
         if (previous != null) {
-            if (previous.source == source && source.isPresent() && previous.mapped.isPresent()) return previous.mapped.cast();
+            if (previous.source == source && source.isPresent() && previous.mapped.isPresent())
+                return previous.mapped.cast();
             entries.remove(key);
             previous.detach();
             // A callback's lookup is newer than this request's source snapshot.

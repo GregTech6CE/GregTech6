@@ -1,8 +1,9 @@
 package gregtech.client;
 
+import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
 import gregtech.content.multiblock.PartDesigns;
-import com.mojang.logging.LogUtils;
+import java.util.Map;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -16,8 +17,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
-import java.util.Map;
-
 /** Loads one cube per design index and swaps it onto structural parts from {@code gt.design}. */
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PartDesignClientModels {
@@ -29,7 +28,8 @@ public final class PartDesignClientModels {
     public static void register(ModelEvent.RegisterAdditional event) {
         for (var folder : PartDesigns.folders().entrySet()) {
             for (int design = 1; design <= folder.getValue(); design++)
-                event.register(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, modelPath(folder.getKey(), design)));
+                event.register(
+                        ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, modelPath(folder.getKey(), design)));
         }
     }
 
@@ -58,8 +58,11 @@ public final class PartDesignClientModels {
                 wrapped++;
             }
         }
-        LOGGER.info("[{}] Part design models: {} blockstates, {} missing design models",
-                GregTech.NAMESPACE, wrapped, missing);
+        LOGGER.info(
+                "[{}] Part design models: {} blockstates, {} missing design models",
+                GregTech.NAMESPACE,
+                wrapped,
+                missing);
     }
 
     private static BakedModel lookup(Map<ResourceLocation, BakedModel> models, String folder, int design) {

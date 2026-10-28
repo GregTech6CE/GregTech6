@@ -12,10 +12,9 @@ public final class ConfigSpacing {
         String previous = "";
         for (String line : text.split("\\R", -1)) {
             String trimmed = line.stripLeading();
-            boolean startsEntry = trimmed.startsWith("#") || trimmed.startsWith("[")
-                    || trimmed.matches("[A-Za-z0-9_.-]+\\s*=.*");
-            if (startsEntry && !previous.isBlank() && !previous.stripLeading().startsWith("#"))
-                out.append(newline);
+            boolean startsEntry =
+                    trimmed.startsWith("#") || trimmed.startsWith("[") || trimmed.matches("[A-Za-z0-9_.-]+\\s*=.*");
+            if (startsEntry && !previous.isBlank() && !previous.stripLeading().startsWith("#")) out.append(newline);
             out.append(line).append(newline);
             previous = line;
         }

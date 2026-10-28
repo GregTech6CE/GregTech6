@@ -18,7 +18,10 @@ public final class FluidContainerInteraction {
         if (item == null) return false;
         boolean filled = false;
         for (int i = 0; i < item.getTanks(); i++) {
-            if (!item.getFluidInTank(i).isEmpty()) { filled = true; break; }
+            if (!item.getFluidInTank(i).isEmpty()) {
+                filled = true;
+                break;
+            }
         }
         var inventory = player.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         if (inventory == null) return false;

@@ -2,7 +2,6 @@ package gregtech.content.worldgen;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 

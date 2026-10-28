@@ -22,8 +22,9 @@ public final class FluidHazards {
     public static boolean isMagic(Fluid fluid) {
         if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) return false;
         var entry = GTFluids.entryForFluid(fluid);
-        return entry != null && (entry.hasFlag(RegisteredFluids.FluidFlags.MAGIC)
-                || FluidVisualPolicy.material(entry).has(MaterialProperty.MAGICAL));
+        return entry != null
+                && (entry.hasFlag(RegisteredFluids.FluidFlags.MAGIC)
+                        || FluidVisualPolicy.material(entry).has(MaterialProperty.MAGICAL));
     }
 
     /**
@@ -104,7 +105,8 @@ public final class FluidHazards {
     public static boolean isLighterThanAir(Fluid fluid) {
         if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) return false;
         RegisteredFluids.FluidEntry entry = GTFluids.entryForFluid(fluid);
-        return entry != null ? FluidPhysicalProperties.density(entry) < 0
+        return entry != null
+                ? FluidPhysicalProperties.density(entry) < 0
                 : fluid.getFluidType().getDensity() < 0;
     }
 

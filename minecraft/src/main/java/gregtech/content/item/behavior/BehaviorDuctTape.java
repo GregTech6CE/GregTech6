@@ -2,13 +2,12 @@ package gregtech.content.item.behavior;
 
 import gregtech.content.item.behavior.ItemBehaviors.Consumable;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6 {@code Behavior_Duct_Tape} ({@code Behavior_Duct_Tape.java:41-116}): the three tape rolls.
@@ -64,8 +63,10 @@ public final class BehaviorDuctTape {
 
     /** Port item ids of the three used rolls (the {@code _2} half of each registration pair). */
     public static final String TAPE_USED_ITEM = "gt6ce:tape_2", TAPE_FULL_ITEM = "gt6ce:tape";
+
     public static final String DUCT_TAPE_USED_ITEM = "gt6ce:duct_tape_2", DUCT_TAPE_FULL_ITEM = "gt6ce:duct_tape";
-    public static final String BRAIN_TAPE_USED_ITEM = "gt6ce:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2";
+    public static final String BRAIN_TAPE_USED_ITEM =
+            "gt6ce:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2";
     public static final String BRAIN_TAPE_FULL_ITEM = "gt6ce:braintech_aerospace_advanced_reinforced_duct_tape_fal_84";
 
     private BehaviorDuctTape() {}
@@ -88,24 +89,43 @@ public final class BehaviorDuctTape {
          * @param sneaking whether the player sneaks
          * @return the uses this target consumed, {@code 0} when it cannot be taped
          */
-        long onTape(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack tape,
-                    long uses, long quality, boolean sneaking, float hitX, float hitY, float hitZ);
+        long onTape(
+                Level level,
+                BlockPos pos,
+                Direction side,
+                @Nullable Player player,
+                ItemStack tape,
+                long uses,
+                long quality,
+                boolean sneaking,
+                float hitX,
+                float hitY,
+                float hitZ);
     }
 
     /** The consumable of a roll, chosen by GT6's quality number. */
     @Nullable
     public static Consumable consumable(long quality) {
         if (quality == TAPE_QUALITY) {
-            return new Consumable(ItemStack.EMPTY, ItemBehaviors.stack(TAPE_USED_ITEM),
-                    ItemBehaviors.stack(TAPE_FULL_ITEM), TAPE_USES);
+            return new Consumable(
+                    ItemStack.EMPTY,
+                    ItemBehaviors.stack(TAPE_USED_ITEM),
+                    ItemBehaviors.stack(TAPE_FULL_ITEM),
+                    TAPE_USES);
         }
         if (quality == DUCT_TAPE_QUALITY) {
-            return new Consumable(ItemStack.EMPTY, ItemBehaviors.stack(DUCT_TAPE_USED_ITEM),
-                    ItemBehaviors.stack(DUCT_TAPE_FULL_ITEM), DUCT_TAPE_USES);
+            return new Consumable(
+                    ItemStack.EMPTY,
+                    ItemBehaviors.stack(DUCT_TAPE_USED_ITEM),
+                    ItemBehaviors.stack(DUCT_TAPE_FULL_ITEM),
+                    DUCT_TAPE_USES);
         }
         if (quality == BRAIN_TAPE_QUALITY) {
-            return new Consumable(ItemStack.EMPTY, ItemBehaviors.stack(BRAIN_TAPE_USED_ITEM),
-                    ItemBehaviors.stack(BRAIN_TAPE_FULL_ITEM), BRAIN_TAPE_USES);
+            return new Consumable(
+                    ItemStack.EMPTY,
+                    ItemBehaviors.stack(BRAIN_TAPE_USED_ITEM),
+                    ItemBehaviors.stack(BRAIN_TAPE_FULL_ITEM),
+                    BRAIN_TAPE_USES);
         }
         return null;
     }
@@ -113,7 +133,7 @@ public final class BehaviorDuctTape {
     /** The roll a stack is, by item identity, or {@code null} when it is none of the six. */
     @Nullable
     public static Consumable consumableOf(ItemStack stack) {
-        for (long quality : new long[]{TAPE_QUALITY, DUCT_TAPE_QUALITY, BRAIN_TAPE_QUALITY}) {
+        for (long quality : new long[] {TAPE_QUALITY, DUCT_TAPE_QUALITY, BRAIN_TAPE_QUALITY}) {
             Consumable can = consumable(quality);
             if (can != null && can.matches(stack)) return can;
         }
@@ -131,8 +151,15 @@ public final class BehaviorDuctTape {
      * @param player the clicking player, or {@code null} for a direct automated call
      * @return whether the click did something, plus the stack to store back
      */
-    public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player,
-                                ItemStack stack, float hitX, float hitY, float hitZ) {
+    public static Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack stack,
+            float hitX,
+            float hitY,
+            float hitZ) {
         return useOn(level, pos, side, target(level, pos), player, stack, hitX, hitY, hitZ);
     }
 
@@ -141,20 +168,39 @@ public final class BehaviorDuctTape {
      * the coordinates and {@code IBlockToolable.Util.onToolClick} resolves the block itself. Splitting
      * it out keeps the whole chain (conversion, counter, empty step) independently testable.
      */
-    public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Tapeable target,
-                                @Nullable Player player, ItemStack stack, float hitX, float hitY, float hitZ) {
+    public static Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Tapeable target,
+            @Nullable Player player,
+            ItemStack stack,
+            float hitX,
+            float hitY,
+            float hitZ) {
         if (level.isClientSide) return Outcome.refused(stack);
-        if (stack.getCount() != 1) return Outcome.refused(stack);                       // :55
-        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);   // :55
+        if (stack.getCount() != 1) return Outcome.refused(stack); // :55
+        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack); // :55
         Consumable can = consumableOf(stack);
         if (can == null) return Outcome.refused(stack);
 
-        ItemStack prepared = can.prepared(stack);                                       // :63-67
+        ItemStack prepared = can.prepared(stack); // :63-67
         boolean sneaking = player != null && player.isShiftKeyDown();
-        long spent = tape(level, pos, side, target, player, prepared, can.remaining(prepared),
-                quality(can), sneaking, hitX, hitY, hitZ);
-        if (spent <= 0) return Outcome.refused(prepared);                               // :76-78 keeps the counter
-        return Outcome.acted(can.spent(prepared, spent));                               // :80-87
+        long spent = tape(
+                level,
+                pos,
+                side,
+                target,
+                player,
+                prepared,
+                can.remaining(prepared),
+                quality(can),
+                sneaking,
+                hitX,
+                hitY,
+                hitZ);
+        if (spent <= 0) return Outcome.refused(prepared); // :76-78 keeps the counter
+        return Outcome.acted(can.spent(prepared, spent)); // :80-87
     }
 
     /**
@@ -174,13 +220,22 @@ public final class BehaviorDuctTape {
      * @param uses   the uses the tape has left
      * @return the uses the target consumed, {@code 0} when nothing happened
      */
-    public static long tape(Level level, BlockPos pos, Direction side, @Nullable Tapeable target,
-                            @Nullable Player player, ItemStack stack, long uses, long quality, boolean sneaking,
-                            float hitX, float hitY, float hitZ) {
-        if (ItemBehaviors.obstructed(level, pos, side)) return 0L;                      // :92
+    public static long tape(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Tapeable target,
+            @Nullable Player player,
+            ItemStack stack,
+            long uses,
+            long quality,
+            boolean sneaking,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        if (ItemBehaviors.obstructed(level, pos, side)) return 0L; // :92
         if (target == null) return 0L;
-        return Math.max(0L, target.onTape(level, pos, side, player, stack, uses, quality, sneaking,
-                hitX, hitY, hitZ));
+        return Math.max(0L, target.onTape(level, pos, side, player, stack, uses, quality, sneaking, hitX, hitY, hitZ));
     }
 
     /** The tapeable block entity at a position, or the block when the entity is not one. */

@@ -7,8 +7,7 @@ import net.minecraft.world.level.material.MapColor;
 
 public final class GTMaterialPiles {
 
-    private GTMaterialPiles() {
-    }
+    private GTMaterialPiles() {}
 
     public static RegisteredBlock<PileBlock> INGOT_PILE, PLATE_PILE, PLATE_GEM_PILE;
 
@@ -23,15 +22,20 @@ public final class GTMaterialPiles {
     }
 
     private static RegisteredBlock<PileBlock> registerPile(String id, PileBlock.Kind kind, MapColor color) {
-        var registered = RegisteredBlock.registerBlock(id,
-                () -> new PileBlock(kind, BlockBehaviour.Properties.of()
-                        .mapColor(color)
-                        .strength(.25f, 0)
-                        .sound(SoundType.METAL)
-                        .noOcclusion()
-                        .isSuffocating((s, l, p) -> false)));
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new net.minecraft.world.item.BlockItem(registered.get(),
-                new net.minecraft.world.item.Item.Properties()));
+        var registered = RegisteredBlock.registerBlock(
+                id,
+                () -> new PileBlock(
+                        kind,
+                        BlockBehaviour.Properties.of()
+                                .mapColor(color)
+                                .strength(.25f, 0)
+                                .sound(SoundType.METAL)
+                                .noOcclusion()
+                                .isSuffocating((s, l, p) -> false)));
+        GTBlocks.BLOCK_ITEMS.register(
+                id,
+                () -> new net.minecraft.world.item.BlockItem(
+                        registered.get(), new net.minecraft.world.item.Item.Properties()));
         return registered;
     }
 }

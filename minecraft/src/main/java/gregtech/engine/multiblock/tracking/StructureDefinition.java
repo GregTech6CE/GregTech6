@@ -1,8 +1,7 @@
 package gregtech.engine.multiblock.tracking;
 
-import net.minecraft.core.Direction;
-
 import java.util.List;
+import net.minecraft.core.Direction;
 
 /** What a controller is made of. Phase 1 uses this for footprints and projections; the scan stays on the controller. */
 public sealed interface StructureDefinition permits StructureDefinition.Declarative, StructureDefinition.Custom {
@@ -32,7 +31,10 @@ public sealed interface StructureDefinition permits StructureDefinition.Declarat
 
     Footprint declaredFootprint(TrackedMultiblock machine);
 
-    enum ClaimPolicy { ATOMIC, PER_CELL }
+    enum ClaimPolicy {
+        ATOMIC,
+        PER_CELL
+    }
 
     non-sealed interface Declarative extends StructureDefinition {
         /** Compiled offsets and matchers for one facing. Rebuilt when the facing or the epoch changes. */
@@ -57,9 +59,24 @@ public sealed interface StructureDefinition permits StructureDefinition.Declarat
 
         private Immediate() {}
 
-        @Override public ClaimPolicy claimPolicy() { return ClaimPolicy.ATOMIC; }
-        @Override public boolean formsImmediately() { return true; }
-        @Override public Footprint watchFootprint(TrackedMultiblock machine) { return Footprint.EMPTY; }
-        @Override public Footprint declaredFootprint(TrackedMultiblock machine) { return Footprint.EMPTY; }
+        @Override
+        public ClaimPolicy claimPolicy() {
+            return ClaimPolicy.ATOMIC;
+        }
+
+        @Override
+        public boolean formsImmediately() {
+            return true;
+        }
+
+        @Override
+        public Footprint watchFootprint(TrackedMultiblock machine) {
+            return Footprint.EMPTY;
+        }
+
+        @Override
+        public Footprint declaredFootprint(TrackedMultiblock machine) {
+            return Footprint.EMPTY;
+        }
     }
 }

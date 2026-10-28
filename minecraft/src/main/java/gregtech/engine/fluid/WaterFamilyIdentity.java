@@ -15,9 +15,10 @@ public final class WaterFamilyIdentity {
 
     /** Match actual water bodies, including tagged mod waters, but not waterlogged solid blocks. */
     public static boolean matchesWaterBlock(BlockState state, Block expected) {
-        return state.is(expected) || expected == Blocks.WATER
-                && state.getBlock() instanceof LiquidBlock
-                && GTWorldWaterFluid.isWaterFamily(state.getFluidState().getType());
+        return state.is(expected)
+                || expected == Blocks.WATER
+                        && state.getBlock() instanceof LiquidBlock
+                        && GTWorldWaterFluid.isWaterFamily(state.getFluidState().getType());
     }
 
     public static Fluid forVanillaCheck(FluidState state) {
@@ -27,7 +28,9 @@ public final class WaterFamilyIdentity {
     }
 
     public static Fluid forVanillaCheck(Fluid fluid) {
-        return GTWorldWaterFluid.isWaterFamily(fluid) && fluid.defaultFluidState().isSource()
-                ? Fluids.WATER : fluid;
+        return GTWorldWaterFluid.isWaterFamily(fluid)
+                        && fluid.defaultFluidState().isSource()
+                ? Fluids.WATER
+                : fluid;
     }
 }

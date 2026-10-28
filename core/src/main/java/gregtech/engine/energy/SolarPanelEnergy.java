@@ -5,8 +5,9 @@ import java.util.function.LongUnaryOperator;
 
 /** GT6 MultiTileEntitySolarPanelElectric: one tick's output, never an accumulating battery. */
 public final class SolarPanelEnergy {
-    public record Conditions(boolean daytime, boolean raining, boolean thundering,
-                             boolean twilightForest, float rainfall) {}
+    public record Conditions(
+            boolean daytime, boolean raining, boolean thundering, boolean twilightForest, float rainfall) {}
+
     private final long output;
     private long energy, timer;
     private boolean stopped, active, emitting, sky, check = true;
@@ -37,18 +38,35 @@ public final class SolarPanelEnergy {
         return conditions.daytime() ? (wetRain ? output / 8 : output) : (wetRain ? 0 : output / 8);
     }
 
-    public void checkSky() { check = true; }
-    public boolean enabled() { return !stopped; }
+    public void checkSky() {
+        check = true;
+    }
+
+    public boolean enabled() {
+        return !stopped;
+    }
+
     public boolean enabled(boolean value) {
         if (stopped && value) check = true;
         stopped = !value;
         return value;
     }
-    public long energy() { return energy; }
-    public boolean active() { return active; }
-    public boolean emitting() { return emitting; }
+
+    public long energy() {
+        return energy;
+    }
+
+    public boolean active() {
+        return active;
+    }
+
+    public boolean emitting() {
+        return emitting;
+    }
     /** Last sky result used by generation; querying it does not trigger a world scan. */
-    public boolean skyVisible() { return sky; }
+    public boolean skyVisible() {
+        return sky;
+    }
 
     /** Exact all-or-nothing source extraction, with safe bounds for invalid external requests. */
     public long extract(long size, long amount, boolean execute) {

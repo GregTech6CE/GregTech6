@@ -62,7 +62,8 @@ public final class CoverAdmission {
         // The mixin supplies storage on every block entity; only the mod's own blocks are cover hosts.
         if (!isGregTechEntity(owner)) return false;
         // Original base classes below TileEntityBase06Covers never carry covers.
-        if (owner instanceof PileBlockEntity || owner instanceof CoinPileBlockEntity
+        if (owner instanceof PileBlockEntity
+                || owner instanceof CoinPileBlockEntity
                 || owner instanceof ProcessingToolBlockEntity) return false;
         // Hosts whose allowCovers(aSide) is a plain F.
         if (owner instanceof MaterialAnvilBlockEntity
@@ -87,7 +88,8 @@ public final class CoverAdmission {
                 || owner instanceof ManualToolBlockEntity
                 || owner instanceof AdvancedButtonBlockEntity) return false;
         // MultiTileEntityHopper/DustFunnel: top face only.
-        if (owner instanceof HopperBlockEntity || owner instanceof QueueHopperBlockEntity
+        if (owner instanceof HopperBlockEntity
+                || owner instanceof QueueHopperBlockEntity
                 || owner instanceof DustFunnelBlockEntity) return side == Direction.UP;
         // MultiTileEntityBumbliary: bottom and horizontal faces.
         if (owner instanceof BumbliaryBlockEntity) return side != Direction.UP;
@@ -111,7 +113,8 @@ public final class CoverAdmission {
             return facing == null || side != facing;
         }
         // MultiTileEntityLargeTurbine: every face except the front.
-        if (owner instanceof LargeTurbineControllerBlockEntity || owner instanceof LargeGasTurbineControllerBlockEntity) {
+        if (owner instanceof LargeTurbineControllerBlockEntity
+                || owner instanceof LargeGasTurbineControllerBlockEntity) {
             Direction facing = facing(owner, DirectionalBlock.FACING);
             return facing == null || side != facing;
         }
@@ -138,8 +141,10 @@ public final class CoverAdmission {
     /** GT6 {@code ICover.isDecorative}: texture, canvas and crafting covers. */
     public static boolean isDecorative(ItemStack stack) {
         String id = CoverItems.behavior(stack);
-        return "material_plate_cover".equals(id) || "decorative_panel".equals(id)
-                || "canvas_cover".equals(id) || CoverUtilityBehaviors.ASPHALT_PANEL.equals(id)
+        return "material_plate_cover".equals(id)
+                || "decorative_panel".equals(id)
+                || "canvas_cover".equals(id)
+                || CoverUtilityBehaviors.ASPHALT_PANEL.equals(id)
                 || CoverUtilityBehaviors.CRAFTING_TABLE.equals(id);
     }
 

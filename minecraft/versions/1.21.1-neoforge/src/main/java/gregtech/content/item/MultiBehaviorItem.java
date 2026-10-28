@@ -21,11 +21,17 @@ public final class MultiBehaviorItem extends TechItem {
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         gregtech.content.item.behavior.ItemBehaviors.Outcome outcome =
                 gregtech.content.item.behavior.ItemBehaviors.useOn(
-                        context.getLevel(), context.getClickedPos(), context.getClickedFace(),
-                        context.getPlayer(), stack,
-                        (float) (context.getClickLocation().x - context.getClickedPos().getX()),
-                        (float) (context.getClickLocation().y - context.getClickedPos().getY()),
-                        (float) (context.getClickLocation().z - context.getClickedPos().getZ()));
+                        context.getLevel(),
+                        context.getClickedPos(),
+                        context.getClickedFace(),
+                        context.getPlayer(),
+                        stack,
+                        (float) (context.getClickLocation().x
+                                - context.getClickedPos().getX()),
+                        (float) (context.getClickLocation().y
+                                - context.getClickedPos().getY()),
+                        (float) (context.getClickLocation().z
+                                - context.getClickedPos().getZ()));
         if (context.getPlayer() != null) {
             context.getPlayer().setItemInHand(context.getHand(), outcome.stack());
         }
@@ -34,8 +40,8 @@ public final class MultiBehaviorItem extends TechItem {
 
     /** Entity half of the same dispatch (the extinguisher douses burning mobs, and so on). */
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target,
-                                                  InteractionHand hand) {
+    public InteractionResult interactLivingEntity(
+            ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         gregtech.content.item.behavior.ItemBehaviors.Outcome outcome =
                 gregtech.content.item.behavior.ItemBehaviors.useOnEntity(target, player, stack);
         player.setItemInHand(hand, outcome.stack());
@@ -54,8 +60,8 @@ public final class MultiBehaviorItem extends TechItem {
      * "what happens when the behaviour is not mine" question §108.7.3 is about.</p>
      */
     @Override
-    public InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level, Player player,
-                                                  InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(
+            net.minecraft.world.level.Level level, Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
         gregtech.content.item.behavior.ItemBehaviors.Outcome outcome =
                 gregtech.content.item.behavior.ItemBehaviors.useInAir(level, player, held);

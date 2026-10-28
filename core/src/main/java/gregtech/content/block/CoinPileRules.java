@@ -3,8 +3,8 @@ package gregtech.content.block;
 /** Exact4x4/16-per-face coin grid, shared re-packing and16x16 mint relief math. */
 public final class CoinPileRules {
 
-    private CoinPileRules() {
-    }
+    private CoinPileRules() {}
+
     public static final int FACES = 16, PER_FACE = 16;
 
     public static int faceAt(double x, double z) {
@@ -26,8 +26,7 @@ public final class CoinPileRules {
         }
     }
 
-    public record Box(double x0, double y0, double z0, double x1, double y1, double z1) {
-    }
+    public record Box(double x0, double y0, double z0, double x1, double y1, double z1) {}
 
     public static Box cell(int face, int count) {
         double x = (face / 4) / 4., z = (face % 4) / 4.;

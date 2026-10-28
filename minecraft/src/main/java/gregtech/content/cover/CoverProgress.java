@@ -1,7 +1,7 @@
 package gregtech.content.cover;
 
-import net.minecraft.core.Direction;
 import gregtech.api.machine.MachineControl;
+import net.minecraft.core.Direction;
 
 /**
  * Fallback meter for native capability contents, separate from machine on/off controls.
@@ -15,17 +15,44 @@ public final class CoverProgress {
         // local to covers and does not turn a passive host into a MachineControl.Provider.
         if (gregtech.engine.sensor.ProgressSources.find(host.coverOwner(), side) != null) {
             return new MachineControl() {
-                @Override public boolean available() { return !host.coverOwner().isRemoved(); }
-                @Override public boolean supportsSwitch() { return false; }
-                @Override public boolean enabled() { return available(); }
-                @Override public boolean setEnabled(boolean value) { return enabled(); }
-                @Override public boolean running() { return false; }
-                @Override public boolean active() { return false; }
-                @Override public long progress() {
+                @Override
+                public boolean available() {
+                    return !host.coverOwner().isRemoved();
+                }
+
+                @Override
+                public boolean supportsSwitch() {
+                    return false;
+                }
+
+                @Override
+                public boolean enabled() {
+                    return available();
+                }
+
+                @Override
+                public boolean setEnabled(boolean value) {
+                    return enabled();
+                }
+
+                @Override
+                public boolean running() {
+                    return false;
+                }
+
+                @Override
+                public boolean active() {
+                    return false;
+                }
+
+                @Override
+                public long progress() {
                     var value = gregtech.engine.sensor.ProgressSources.find(host.coverOwner(), side);
                     return value == null ? 0 : value.value();
                 }
-                @Override public long progressMax() {
+
+                @Override
+                public long progressMax() {
                     var value = gregtech.engine.sensor.ProgressSources.find(host.coverOwner(), side);
                     return value == null ? 0 : value.maximum();
                 }
@@ -34,7 +61,8 @@ public final class CoverProgress {
         var items = host.componentItems(side);
         var fluids = host.componentFluids(side);
         var energy = host.coverOwner() instanceof gregtech.engine.energy.IEnergyBlock block ? block : null;
-        var types = energy == null ? java.util.List.<gregtech.content.data.GregTechTags.Tag>of()
+        var types = energy == null
+                ? java.util.List.<gregtech.content.data.GregTechTags.Tag>of()
                 : energy.getEnergyCapacitorTypes(side);
         if (items == null && fluids == null && types.isEmpty()) return null;
         return new MachineControl() {
@@ -63,22 +91,24 @@ public final class CoverProgress {
             }
 
             public long progress() {
-                if (!types.isEmpty()) return energy.getEnergyStored(types.iterator().next(), side);
+                if (!types.isEmpty())
+                    return energy.getEnergyStored(types.iterator().next(), side);
                 long amount = 0;
                 if (fluids != null)
-                    for (int i = 0; i < fluids.getTanks(); i++) amount += fluids.getFluidInTank(i).getAmount();
+                    for (int i = 0; i < fluids.getTanks(); i++)
+                        amount += fluids.getFluidInTank(i).getAmount();
                 else if (items != null)
-                    for (int i = 0; i < items.getSlots(); i++) amount += items.getStackInSlot(i).getCount();
+                    for (int i = 0; i < items.getSlots(); i++)
+                        amount += items.getStackInSlot(i).getCount();
                 return amount;
             }
 
             public long progressMax() {
-                if (!types.isEmpty()) return energy.getEnergyCapacity(types.iterator().next(), side);
+                if (!types.isEmpty())
+                    return energy.getEnergyCapacity(types.iterator().next(), side);
                 long capacity = 0;
-                if (fluids != null)
-                    for (int i = 0; i < fluids.getTanks(); i++) capacity += fluids.getTankCapacity(i);
-                else if (items != null)
-                    for (int i = 0; i < items.getSlots(); i++) capacity += items.getSlotLimit(i);
+                if (fluids != null) for (int i = 0; i < fluids.getTanks(); i++) capacity += fluids.getTankCapacity(i);
+                else if (items != null) for (int i = 0; i < items.getSlots(); i++) capacity += items.getSlotLimit(i);
                 return capacity;
             }
         };

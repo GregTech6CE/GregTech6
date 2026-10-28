@@ -13,356 +13,931 @@ public final class BurningBoxDefinitions {
 
     private static List<Entry> create() {
         var values = new ArrayList<Entry>();
-        values.add(entry("burning_box_solid_bronze",
+        values.add(entry(
+                "burning_box_solid_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.SOLID, 7500, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_solid_lead",
+                BurningBoxFuelType.SOLID,
+                7500,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_solid_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.SOLID, 5000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_bismuth",
+                BurningBoxFuelType.SOLID,
+                5000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.SOLID, 4500, 20, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_arsenic_copper",
+                BurningBoxFuelType.SOLID,
+                4500,
+                20,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.SOLID, 8000, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_solid_arsenic_bronze",
+                BurningBoxFuelType.SOLID,
+                8000,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_solid_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.SOLID, 9000, 28, 7.0F, 7.0F));
-        values.add(entry("burning_box_solid_invar",
+                BurningBoxFuelType.SOLID,
+                9000,
+                28,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_solid_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.SOLID, 10000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_steel",
+                BurningBoxFuelType.SOLID,
+                10000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.SOLID, 7000, 32, 6.0F, 6.0F));
-        values.add(entry("burning_box_solid_chromium",
+                BurningBoxFuelType.SOLID,
+                7000,
+                32,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_solid_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.SOLID, 8500, 112, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_titanium",
+                BurningBoxFuelType.SOLID,
+                8500,
+                112,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.SOLID, 8500, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_solid_netherite",
+                BurningBoxFuelType.SOLID,
+                8500,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_solid_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.SOLID, 9000, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_solid_tungsten",
+                BurningBoxFuelType.SOLID,
+                9000,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_solid_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.SOLID, 10000, 128, 10.0F, 10.0F));
-        values.add(entry("burning_box_solid_tungsten_steel",
+                BurningBoxFuelType.SOLID,
+                10000,
+                128,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_solid_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.SOLID, 9000, 128, 12.5F, 12.5F));
-        values.add(entry("burning_box_solid_ta4hfc5",
+                BurningBoxFuelType.SOLID,
+                9000,
+                128,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_solid_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.SOLID, 10000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_solid_ultimet",
+                BurningBoxFuelType.SOLID,
+                10000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_solid_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.SOLID, 9000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_solid_dense_lead",
+                BurningBoxFuelType.SOLID,
+                9000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_solid_dense_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.SOLID, 5000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_dense_bismuth",
+                BurningBoxFuelType.SOLID,
+                5000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_dense_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.SOLID, 4500, 80, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_dense_bronze",
+                BurningBoxFuelType.SOLID,
+                4500,
+                80,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_dense_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.SOLID, 7500, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_solid_dense_arsenic_copper",
+                BurningBoxFuelType.SOLID,
+                7500,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_solid_dense_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.SOLID, 8000, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_solid_dense_arsenic_bronze",
+                BurningBoxFuelType.SOLID,
+                8000,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_solid_dense_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.SOLID, 9000, 112, 7.0F, 7.0F));
-        values.add(entry("burning_box_solid_dense_invar",
+                BurningBoxFuelType.SOLID,
+                9000,
+                112,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_solid_dense_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.SOLID, 10000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_dense_steel",
+                BurningBoxFuelType.SOLID,
+                10000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_dense_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.SOLID, 7000, 128, 6.0F, 6.0F));
-        values.add(entry("burning_box_solid_dense_chromium",
+                BurningBoxFuelType.SOLID,
+                7000,
+                128,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_solid_dense_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.SOLID, 8500, 448, 4.0F, 4.0F));
-        values.add(entry("burning_box_solid_dense_titanium",
+                BurningBoxFuelType.SOLID,
+                8500,
+                448,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_solid_dense_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.SOLID, 8500, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_solid_dense_netherite",
+                BurningBoxFuelType.SOLID,
+                8500,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_solid_dense_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.SOLID, 9000, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_solid_dense_tungsten",
+                BurningBoxFuelType.SOLID,
+                9000,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_solid_dense_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.SOLID, 10000, 512, 10.0F, 10.0F));
-        values.add(entry("burning_box_solid_dense_tungsten_steel",
+                BurningBoxFuelType.SOLID,
+                10000,
+                512,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_solid_dense_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.SOLID, 9000, 512, 12.5F, 12.5F));
-        values.add(entry("burning_box_solid_dense_ta4hfc5",
+                BurningBoxFuelType.SOLID,
+                9000,
+                512,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_solid_dense_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.SOLID, 10000, 1024, 12.5F, 12.5F));
-        values.add(entry("burning_box_solid_dense_ultimet",
+                BurningBoxFuelType.SOLID,
+                10000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_solid_dense_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.SOLID, 9000, 1024, 12.5F, 12.5F));
-        values.add(entry("burning_box_liquid_lead",
+                BurningBoxFuelType.SOLID,
+                9000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_liquid_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.LIQUID, 5000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_bismuth",
+                BurningBoxFuelType.LIQUID,
+                5000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.LIQUID, 4500, 20, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_bronze",
+                BurningBoxFuelType.LIQUID,
+                4500,
+                20,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.LIQUID, 7500, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_liquid_arsenic_copper",
+                BurningBoxFuelType.LIQUID,
+                7500,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_liquid_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.LIQUID, 8000, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_liquid_arsenic_bronze",
+                BurningBoxFuelType.LIQUID,
+                8000,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_liquid_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.LIQUID, 9000, 28, 7.0F, 7.0F));
-        values.add(entry("burning_box_liquid_invar",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                28,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_liquid_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.LIQUID, 10000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_steel",
+                BurningBoxFuelType.LIQUID,
+                10000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.LIQUID, 7000, 32, 6.0F, 6.0F));
-        values.add(entry("burning_box_liquid_chromium",
+                BurningBoxFuelType.LIQUID,
+                7000,
+                32,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_liquid_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.LIQUID, 8500, 112, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_titanium",
+                BurningBoxFuelType.LIQUID,
+                8500,
+                112,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.LIQUID, 8500, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_liquid_netherite",
+                BurningBoxFuelType.LIQUID,
+                8500,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_liquid_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.LIQUID, 9000, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_liquid_tungsten",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_liquid_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.LIQUID, 10000, 128, 10.0F, 10.0F));
-        values.add(entry("burning_box_liquid_tungsten_steel",
+                BurningBoxFuelType.LIQUID,
+                10000,
+                128,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_liquid_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.LIQUID, 9000, 128, 12.5F, 12.5F));
-        values.add(entry("burning_box_liquid_ta4hfc5",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                128,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_liquid_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.LIQUID, 10000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_liquid_ultimet",
+                BurningBoxFuelType.LIQUID,
+                10000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_liquid_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.LIQUID, 9000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_gas_lead",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_gas_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.GAS, 5000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_bismuth",
+                BurningBoxFuelType.GAS,
+                5000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.GAS, 4500, 20, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_bronze",
+                BurningBoxFuelType.GAS,
+                4500,
+                20,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.GAS, 7500, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_gas_arsenic_copper",
+                BurningBoxFuelType.GAS,
+                7500,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_gas_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.GAS, 8000, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_gas_arsenic_bronze",
+                BurningBoxFuelType.GAS,
+                8000,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_gas_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.GAS, 9000, 28, 7.0F, 7.0F));
-        values.add(entry("burning_box_gas_invar",
+                BurningBoxFuelType.GAS,
+                9000,
+                28,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_gas_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.GAS, 10000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_steel",
+                BurningBoxFuelType.GAS,
+                10000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.GAS, 7000, 32, 6.0F, 6.0F));
-        values.add(entry("burning_box_gas_chromium",
+                BurningBoxFuelType.GAS,
+                7000,
+                32,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_gas_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.GAS, 8500, 112, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_titanium",
+                BurningBoxFuelType.GAS,
+                8500,
+                112,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.GAS, 8500, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_gas_netherite",
+                BurningBoxFuelType.GAS,
+                8500,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_gas_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.GAS, 9000, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_gas_tungsten",
+                BurningBoxFuelType.GAS,
+                9000,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_gas_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.GAS, 10000, 128, 10.0F, 10.0F));
-        values.add(entry("burning_box_gas_tungsten_steel",
+                BurningBoxFuelType.GAS,
+                10000,
+                128,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_gas_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.GAS, 9000, 128, 12.5F, 12.5F));
-        values.add(entry("burning_box_gas_ta4hfc5",
+                BurningBoxFuelType.GAS,
+                9000,
+                128,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_gas_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.GAS, 10000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_gas_ultimet",
+                BurningBoxFuelType.GAS,
+                10000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_gas_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.GAS, 9000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_fluidbed_lead",
+                BurningBoxFuelType.GAS,
+                9000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_fluidbed_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.FLUIDIZED_BED, 5000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_bismuth",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                5000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.FLUIDIZED_BED, 4500, 20, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_bronze",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                4500,
+                20,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.FLUIDIZED_BED, 7500, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_fluidbed_arsenic_copper",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                7500,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_fluidbed_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.FLUIDIZED_BED, 8000, 24, 7.0F, 7.0F));
-        values.add(entry("burning_box_fluidbed_arsenic_bronze",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                8000,
+                24,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_fluidbed_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 28, 7.0F, 7.0F));
-        values.add(entry("burning_box_fluidbed_invar",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                28,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_fluidbed_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.FLUIDIZED_BED, 10000, 16, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_steel",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                10000,
+                16,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.FLUIDIZED_BED, 7000, 32, 6.0F, 6.0F));
-        values.add(entry("burning_box_fluidbed_chromium",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                7000,
+                32,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_fluidbed_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.FLUIDIZED_BED, 8500, 112, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_titanium",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                8500,
+                112,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.FLUIDIZED_BED, 8500, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_fluidbed_netherite",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                8500,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_fluidbed_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 96, 9.0F, 9.0F));
-        values.add(entry("burning_box_fluidbed_tungsten",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                96,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_fluidbed_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.FLUIDIZED_BED, 10000, 128, 10.0F, 10.0F));
-        values.add(entry("burning_box_fluidbed_tungsten_steel",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                10000,
+                128,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_fluidbed_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 128, 12.5F, 12.5F));
-        values.add(entry("burning_box_fluidbed_ta4hfc5",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                128,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_fluidbed_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.FLUIDIZED_BED, 10000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_fluidbed_ultimet",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                10000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_fluidbed_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 256, 12.5F, 12.5F));
-        values.add(entry("burning_box_liquid_dense_lead",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                256,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_liquid_dense_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.LIQUID, 5000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_dense_bismuth",
+                BurningBoxFuelType.LIQUID,
+                5000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.LIQUID, 4500, 80, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_dense_bronze",
+                BurningBoxFuelType.LIQUID,
+                4500,
+                80,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.LIQUID, 7500, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_liquid_dense_arsenic_copper",
+                BurningBoxFuelType.LIQUID,
+                7500,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.LIQUID, 8000, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_liquid_dense_arsenic_bronze",
+                BurningBoxFuelType.LIQUID,
+                8000,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.LIQUID, 9000, 112, 7.0F, 7.0F));
-        values.add(entry("burning_box_liquid_dense_invar",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                112,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.LIQUID, 10000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_dense_steel",
+                BurningBoxFuelType.LIQUID,
+                10000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.LIQUID, 7000, 128, 6.0F, 6.0F));
-        values.add(entry("burning_box_liquid_dense_chromium",
+                BurningBoxFuelType.LIQUID,
+                7000,
+                128,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.LIQUID, 8500, 448, 4.0F, 4.0F));
-        values.add(entry("burning_box_liquid_dense_titanium",
+                BurningBoxFuelType.LIQUID,
+                8500,
+                448,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.LIQUID, 8500, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_liquid_dense_netherite",
+                BurningBoxFuelType.LIQUID,
+                8500,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.LIQUID, 9000, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_liquid_dense_tungsten",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.LIQUID, 10000, 512, 10.0F, 10.0F));
-        values.add(entry("burning_box_liquid_dense_tungsten_steel",
+                BurningBoxFuelType.LIQUID,
+                10000,
+                512,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_liquid_dense_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.LIQUID, 9000, 512, 12.5F, 12.5F));
-        values.add(entry("burning_box_liquid_dense_ta4hfc5",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                512,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_liquid_dense_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.LIQUID, 10000, 1024, 12.5F, 12.5F));
-        values.add(entry("burning_box_liquid_dense_ultimet",
+                BurningBoxFuelType.LIQUID,
+                10000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_liquid_dense_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.LIQUID, 9000, 1024, 12.5F, 12.5F));
-        values.add(entry("burning_box_gas_dense_lead",
+                BurningBoxFuelType.LIQUID,
+                9000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_gas_dense_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.GAS, 5000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_dense_bismuth",
+                BurningBoxFuelType.GAS,
+                5000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_dense_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.GAS, 4500, 80, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_dense_bronze",
+                BurningBoxFuelType.GAS,
+                4500,
+                80,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_dense_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.GAS, 7500, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_gas_dense_arsenic_copper",
+                BurningBoxFuelType.GAS,
+                7500,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_gas_dense_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.GAS, 8000, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_gas_dense_arsenic_bronze",
+                BurningBoxFuelType.GAS,
+                8000,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_gas_dense_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.GAS, 9000, 112, 7.0F, 7.0F));
-        values.add(entry("burning_box_gas_dense_invar",
+                BurningBoxFuelType.GAS,
+                9000,
+                112,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_gas_dense_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.GAS, 10000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_dense_steel",
+                BurningBoxFuelType.GAS,
+                10000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_dense_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.GAS, 7000, 128, 6.0F, 6.0F));
-        values.add(entry("burning_box_gas_dense_chromium",
+                BurningBoxFuelType.GAS,
+                7000,
+                128,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_gas_dense_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.GAS, 8500, 448, 4.0F, 4.0F));
-        values.add(entry("burning_box_gas_dense_titanium",
+                BurningBoxFuelType.GAS,
+                8500,
+                448,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_gas_dense_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.GAS, 8500, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_gas_dense_netherite",
+                BurningBoxFuelType.GAS,
+                8500,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_gas_dense_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.GAS, 9000, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_gas_dense_tungsten",
+                BurningBoxFuelType.GAS,
+                9000,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_gas_dense_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.GAS, 10000, 512, 10.0F, 10.0F));
-        values.add(entry("burning_box_gas_dense_tungsten_steel",
+                BurningBoxFuelType.GAS,
+                10000,
+                512,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_gas_dense_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.GAS, 9000, 512, 12.5F, 12.5F));
-        values.add(entry("burning_box_gas_dense_ta4hfc5",
+                BurningBoxFuelType.GAS,
+                9000,
+                512,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_gas_dense_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.GAS, 10000, 1024, 12.5F, 12.5F));
-        values.add(entry("burning_box_gas_dense_ultimet",
+                BurningBoxFuelType.GAS,
+                10000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_gas_dense_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.GAS, 9000, 1024, 12.5F, 12.5F));
-        values.add(entry("burning_box_fluidbed_dense_lead",
+                BurningBoxFuelType.GAS,
+                9000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_lead",
                 gregtech.content.material.generated.ElementMaterials.Lead,
-                BurningBoxFuelType.FLUIDIZED_BED, 5000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_dense_bismuth",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                5000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_bismuth",
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
-                BurningBoxFuelType.FLUIDIZED_BED, 4500, 80, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_dense_bronze",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                4500,
+                80,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_bronze",
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
-                BurningBoxFuelType.FLUIDIZED_BED, 7500, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_fluidbed_dense_arsenic_copper",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                7500,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_arsenic_copper",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
-                BurningBoxFuelType.FLUIDIZED_BED, 8000, 96, 7.0F, 7.0F));
-        values.add(entry("burning_box_fluidbed_dense_arsenic_bronze",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                8000,
+                96,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_arsenic_bronze",
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 112, 7.0F, 7.0F));
-        values.add(entry("burning_box_fluidbed_dense_invar",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                112,
+                7.0F,
+                7.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_invar",
                 gregtech.content.material.generated.CompoundMaterials.Invar,
-                BurningBoxFuelType.FLUIDIZED_BED, 10000, 64, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_dense_steel",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                10000,
+                64,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_steel",
                 gregtech.content.material.generated.CompoundMaterials.Steel,
-                BurningBoxFuelType.FLUIDIZED_BED, 7000, 128, 6.0F, 6.0F));
-        values.add(entry("burning_box_fluidbed_dense_chromium",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                7000,
+                128,
+                6.0F,
+                6.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_chromium",
                 gregtech.content.material.generated.ElementMaterials.Chromium,
-                BurningBoxFuelType.FLUIDIZED_BED, 8500, 448, 4.0F, 4.0F));
-        values.add(entry("burning_box_fluidbed_dense_titanium",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                8500,
+                448,
+                4.0F,
+                4.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_titanium",
                 gregtech.content.material.generated.ElementMaterials.Titanium,
-                BurningBoxFuelType.FLUIDIZED_BED, 8500, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_fluidbed_dense_netherite",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                8500,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 384, 9.0F, 9.0F));
-        values.add(entry("burning_box_fluidbed_dense_tungsten",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                384,
+                9.0F,
+                9.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
-                BurningBoxFuelType.FLUIDIZED_BED, 10000, 512, 10.0F, 10.0F));
-        values.add(entry("burning_box_fluidbed_dense_tungsten_steel",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                10000,
+                512,
+                10.0F,
+                10.0F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_tungsten_steel",
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 512, 12.5F, 12.5F));
-        values.add(entry("burning_box_fluidbed_dense_ta4hfc5",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                512,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_ta4hfc5",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
-                BurningBoxFuelType.FLUIDIZED_BED, 10000, 1024, 12.5F, 12.5F));
-        values.add(entry("burning_box_fluidbed_dense_ultimet",
+                BurningBoxFuelType.FLUIDIZED_BED,
+                10000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(entry(
+                "burning_box_fluidbed_dense_ultimet",
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
-                BurningBoxFuelType.FLUIDIZED_BED, 9000, 1024, 12.5F, 12.5F));
-        values.add(new Entry(BurningBoxFuelType.SOLID,InitialSmelteryDefinitions.brickBurningBox()));
+                BurningBoxFuelType.FLUIDIZED_BED,
+                9000,
+                1024,
+                12.5F,
+                12.5F));
+        values.add(new Entry(BurningBoxFuelType.SOLID, InitialSmelteryDefinitions.brickBurningBox()));
         return List.copyOf(values);
     }
 
-    private static Entry entry(String id, GTMaterial material, BurningBoxFuelType type,
-                               int efficiency, long output, float hardness, float resistance) {
+    private static Entry entry(
+            String id,
+            GTMaterial material,
+            BurningBoxFuelType type,
+            int efficiency,
+            long output,
+            float hardness,
+            float resistance) {
         String texture = switch (type) {
             case SOLID -> "burning_solid";
             case LIQUID -> "burning_liquid";
             case GAS -> "burning_gas";
             case FLUIDIZED_BED -> "burning_fluidbed";
         };
-        return new Entry(type, new MachineSpec(id, material.getLocalName(), material.getColor(),
-                efficiency, output, texture, hardness, resistance));
+        return new Entry(
+                type,
+                new MachineSpec(
+                        id,
+                        material.getLocalName(),
+                        material.getColor(),
+                        efficiency,
+                        output,
+                        texture,
+                        hardness,
+                        resistance));
     }
 
     public static List<Entry> all() {

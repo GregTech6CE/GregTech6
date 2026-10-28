@@ -2,10 +2,9 @@
 /* Copyright (c) 2026 GregTech-6 Team */
 package gregtech.content.recipe;
 
-import gregtech.engine.machine.crucible.CrucibleMath;
 import gregtech.api.material.GTValues;
 import gregtech.content.data.GregTechConstants;
-
+import gregtech.engine.machine.crucible.CrucibleMath;
 import java.util.List;
 
 /**
@@ -16,33 +15,32 @@ import java.util.List;
 public final class OriginalFluidBedFuelRows {
     private OriginalFluidBedFuelRows() {}
 
-    public record Fuel(int materialId, String sourceName, long furnaceBurnTime,
-                       int ashMaterialId, long ashAmount) {}
+    public record Fuel(int materialId, String sourceName, long furnaceBurnTime, int ashMaterialId, long ashAmount) {}
 
     public record Form(String prefix, long materialAmount, int calcite) {}
 
     private static final long U = GTValues.U;
 
     public static final List<Fuel> FUELS = List.of(
-            new Fuel(8336, "Charcoal",       1600, 8200, U / 4),
-            new Fuel(8334, "Coal",           1600, 8201, U / 4),
-            new Fuel(8349, "CoalCoke",       3200, 8201, U / 9),
-            new Fuel(8337, "Lignite",         800, 8201, U / 4),
-            new Fuel(8365, "LigniteCoke",    1600, 8201, U / 9),
-            new Fuel(8362, "Anthracite",     4800, 8201, U / 2),
-            new Fuel(8363, "Prismane",       9600, 8201, U),
-            new Fuel(8364, "Lonsdaleite",   19200, 8201, U * 2),
-            new Fuel(8390, "PetCoke",        6400, 8201, U / 9),
-            new Fuel(8360, "Peat",           2000, 8200, U / 2),
+            new Fuel(8336, "Charcoal", 1600, 8200, U / 4),
+            new Fuel(8334, "Coal", 1600, 8201, U / 4),
+            new Fuel(8349, "CoalCoke", 3200, 8201, U / 9),
+            new Fuel(8337, "Lignite", 800, 8201, U / 4),
+            new Fuel(8365, "LigniteCoke", 1600, 8201, U / 9),
+            new Fuel(8362, "Anthracite", 4800, 8201, U / 2),
+            new Fuel(8363, "Prismane", 9600, 8201, U),
+            new Fuel(8364, "Lonsdaleite", 19200, 8201, U * 2),
+            new Fuel(8390, "PetCoke", 6400, 8201, U / 9),
+            new Fuel(8360, "Peat", 2000, 8200, U / 2),
             // Original PeatBituminous has the default zero-amount burning target.
-            new Fuel(8361, "PeatBituminous", 2400,    0, 0));
+            new Fuel(8361, "PeatBituminous", 2400, 0, 0));
 
     public static final List<Form> FORMS = List.of(
             new Form("blockDust", U * 9, 648),
-            new Form("dust",      U,      72),
-            new Form("dustSmall", U / 4,  18),
-            new Form("dustTiny",  U / 9,   8),
-            new Form("dustDiv72", U / 72,  1));
+            new Form("dust", U, 72),
+            new Form("dustSmall", U / 4, 18),
+            new Form("dustTiny", U / 9, 8),
+            new Form("dustDiv72", U / 72, 1));
 
     /** Original negative-one EU/t recipes encode the whole charge in their duration. */
     public static long heatUnits(Fuel fuel, Form form) {

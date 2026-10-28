@@ -12,23 +12,25 @@ import gregtech.api.material.GTMaterial;
  * i.e. {@code tableValue * STEAM_PER_EU(=2)}.</p>
  */
 public record BoilerSpec(
-        String id,
-        GTMaterial material,
-        boolean strong,
-        long steamOutput,
-        float hardness,
-        String displayEn
-) {
+        String id, GTMaterial material, boolean strong, long steamOutput, float hardness, String displayEn) {
     /** Legacy constructor retained for addons; translations belong to language resources. */
     @Deprecated
-    public BoilerSpec(String id, GTMaterial material, boolean strong, long steamOutput,
-                      float hardness, String displayEn, String ignoredTranslation) {
+    public BoilerSpec(
+            String id,
+            GTMaterial material,
+            boolean strong,
+            long steamOutput,
+            float hardness,
+            String displayEn,
+            String ignoredTranslation) {
         this(id, material, strong, steamOutput, hardness, displayEn);
     }
 
     /** The core only supplies the English fallback, never a second translation catalog. */
     @Deprecated
-    public String displayZh() { return displayEn; }
+    public String displayZh() {
+        return displayEn;
+    }
 
     /** HU consumed per litre of water boiled (GT6 fixed value). */
     public static final long HU_PER_WATER = 80;

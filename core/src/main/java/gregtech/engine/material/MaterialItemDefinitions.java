@@ -1,11 +1,10 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-
+import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.PrefixRegistry;
-import gregtech.content.data.MaterialPrefix;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,12 +20,15 @@ import java.util.Set;
 public final class MaterialItemDefinitions {
     private MaterialItemDefinitions() {}
 
-    public record Definition(String namespace, String itemId, String baseItemId, MaterialPrefix prefix, GTMaterial material) {
+    public record Definition(
+            String namespace, String itemId, String baseItemId, MaterialPrefix prefix, GTMaterial material) {
         public Definition(String itemId, String baseItemId, MaterialPrefix prefix, GTMaterial material) {
             this(GregTechIdentity.MOD_ID, itemId, baseItemId, prefix, material);
         }
 
-        public boolean hasIdSuffix() { return !itemId.equals(baseItemId); }
+        public boolean hasIdSuffix() {
+            return !itemId.equals(baseItemId);
+        }
     }
 
     /** Original explicit prefix order, rather than every PrefixRegistry entry or an unordered set. */
@@ -139,8 +141,7 @@ public final class MaterialItemDefinitions {
                 MaterialPrefix.arrowGtPlastic,
                 MaterialPrefix.bulletGtSmall,
                 MaterialPrefix.bulletGtMedium,
-                MaterialPrefix.bulletGtLarge
-        );
+                MaterialPrefix.bulletGtLarge);
     }
 
     /**
@@ -180,8 +181,12 @@ public final class MaterialItemDefinitions {
         for (MaterialPrefix prefix : automatic) {
             for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
                 if (!generates(prefix, material)) continue;
-                definitions.add(new Definition(AddonMaterials.namespaceOf(material),
-                        claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
+                definitions.add(new Definition(
+                        AddonMaterials.namespaceOf(material),
+                        claimed.get(material).get(prefix),
+                        prefix.getItemId(material),
+                        prefix,
+                        material));
             }
         }
         for (AddonMaterials.AcceptedForm form : AddonMaterials.acceptedForms()) {
@@ -189,14 +194,22 @@ public final class MaterialItemDefinitions {
             GTMaterial material = GTMaterialRegistry.get(form.materialName()).resolve();
             if (prefix == null || !material.isValid() || generates(prefix, material)) continue;
             if (!AddonMaterials.explicitPlateOrFoil(prefix, material)) continue;
-            definitions.add(new Definition(AddonMaterials.namespaceOf(material),
-                    claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
+            definitions.add(new Definition(
+                    AddonMaterials.namespaceOf(material),
+                    claimed.get(material).get(prefix),
+                    prefix.getItemId(material),
+                    prefix,
+                    material));
         }
         for (MaterialPrefix prefix : PrefixRegistry.addonPrefixes()) {
             for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
                 if (!generates(prefix, material)) continue;
-                definitions.add(new Definition(prefix.itemNamespace(), claimed.get(material).get(prefix),
-                        prefix.getItemId(material), prefix, material));
+                definitions.add(new Definition(
+                        prefix.itemNamespace(),
+                        claimed.get(material).get(prefix),
+                        prefix.getItemId(material),
+                        prefix,
+                        material));
             }
         }
         rejectUngeneratedForms(automaticPrefixes);
@@ -213,18 +226,22 @@ public final class MaterialItemDefinitions {
             MaterialPrefix prefix = PrefixRegistry.byName(form.prefixName());
             GTMaterial material = GTMaterialRegistry.get(form.materialName()).resolve();
             if (prefix == null || !material.isValid())
-                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + form.prefixName()
-                        + " / " + form.materialName() + "' did not survive material startup");
+                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + form.prefixName() + " / "
+                        + form.materialName() + "' did not survive material startup");
             if (!automaticPrefixes.contains(prefix))
-                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName()
-                        + " / " + material.getName() + "' is not a generated form");
+                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName() + " / "
+                        + material.getName() + "' is not a generated form");
             if (!generates(prefix, material) && !AddonMaterials.explicitPlateOrFoil(prefix, material))
-                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName()
-                        + " / " + material.getName() + "' is not generated for that material");
+                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName() + " / "
+                        + material.getName() + "' is not generated for that material");
         }
     }
 
-    private static void claim(List<GTMaterial> materials, boolean core, Set<String> seenIds, Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {
+    private static void claim(
+            List<GTMaterial> materials,
+            boolean core,
+            Set<String> seenIds,
+            Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {
         for (MaterialPrefix prefix : candidatePrefixes()) {
             for (GTMaterial material : materials) {
                 if (!generates(prefix, material)) continue;
@@ -233,13 +250,22 @@ public final class MaterialItemDefinitions {
         }
     }
 
-    private static void claimPair(MaterialPrefix prefix, GTMaterial material, boolean core, Set<String> seenIds,
-                                  Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {
+    private static void claimPair(
+            MaterialPrefix prefix,
+            GTMaterial material,
+            boolean core,
+            Set<String> seenIds,
+            Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {
         claimPair(prefix, material, core, seenIds, claimed, AddonMaterials.namespaceOf(material));
     }
 
-    private static void claimPair(MaterialPrefix prefix, GTMaterial material, boolean core, Set<String> seenIds,
-                                  Map<GTMaterial, Map<MaterialPrefix, String>> claimed, String namespace) {
+    private static void claimPair(
+            MaterialPrefix prefix,
+            GTMaterial material,
+            boolean core,
+            Set<String> seenIds,
+            Map<GTMaterial, Map<MaterialPrefix, String>> claimed,
+            String namespace) {
         String base = prefix.getItemId(material);
         String itemId = base;
         if (!seenIds.add(namespace + ":" + base)) {
@@ -250,7 +276,8 @@ public final class MaterialItemDefinitions {
             }
             itemId = base + "_" + material.getId();
             if (!seenIds.add(namespace + ":" + itemId)) {
-                throw new IllegalStateException("Could not allocate unique item id for " + prefix.getName() + " / " + material.getName());
+                throw new IllegalStateException(
+                        "Could not allocate unique item id for " + prefix.getName() + " / " + material.getName());
             }
         }
         claimed.computeIfAbsent(material, ignored -> new HashMap<>()).put(prefix, itemId);

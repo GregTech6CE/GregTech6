@@ -21,8 +21,8 @@ public final class BehaviorRecipeCatalysts {
      * Adds {@code machine} to each named map.
      * A null resolved map is skipped. The same machine is not listed twice on one map.
      */
-    public static <M, T> void add(Map<M, List<T>> index, List<String> names, T machine,
-                                  Function<String, M> maps, BiPredicate<T, T> same) {
+    public static <M, T> void add(
+            Map<M, List<T>> index, List<String> names, T machine, Function<String, M> maps, BiPredicate<T, T> same) {
         if (names == null || names.isEmpty()) return;
         Objects.requireNonNull(index, "index");
         Objects.requireNonNull(machine, "machine");
