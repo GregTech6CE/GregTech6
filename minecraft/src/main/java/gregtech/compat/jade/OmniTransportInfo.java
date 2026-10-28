@@ -1,6 +1,5 @@
 package gregtech.compat.jade;
 
-import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.cover.*;
@@ -18,19 +17,7 @@ final class OmniTransportInfo {
         Direction viewed = accessor.getHitResult().getDirection();
         if (entity instanceof ItemPipeBlockEntity pipe) {
             info.groupedInventory();
-            info.line("pipe_capacity", pipe.spec().invSize());
-            info.line("pipe_routing", pipe.spec().stepSize());
-            info.line("pipe_transferred", pipe.getTransferredThisSecond());
             info.inventory("contents", pipe, 0, pipe.getSlots());
-            info.line(
-                    "pipe_face",
-                    side(viewed),
-                    JadeInspection.label(
-                            pipe.getBlockState().getValue(ItemPipeBlock.propFor(viewed))
-                                    ? "connected"
-                                    : "disconnected"));
-            info.flag("pipe_input", (pipe.getDisabledInputs() & (1 << viewed.ordinal())) == 0);
-            info.flag("pipe_output", (pipe.getDisabledOutputs() & (1 << viewed.ordinal())) == 0);
         } else if (entity instanceof LogisticsWireBlockEntity wire) {
             int connections = 0;
             for (Direction face : Direction.values()) if (wire.canLogistics(face)) connections++;

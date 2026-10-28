@@ -114,6 +114,8 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
                     row.getString("unit")));
         }
         for (var value : data.getList("fluids", 10)) {
+            if (accessor.getBlockEntity() instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity)
+                break;
             var row = (CompoundTag) value;
 //? if >=1.21.1 {
             /*var fluid = net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(), row.getCompound("fluid"));

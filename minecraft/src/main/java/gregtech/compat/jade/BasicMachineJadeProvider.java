@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.Vec2;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -21,7 +20,7 @@ import net.minecraftforge.items.IItemHandler;
 import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
 import snownee.jade.api.fluid.JadeFluidObject;
-import snownee.jade.api.ui.IElementHelper;
+import snownee.jade.api.view.FluidView;
 
 import java.util.Locale;
 
@@ -47,6 +46,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         data.putString("unit", spec.energyType());
         data.putLongArray("energy", new long[]{spec.energyIn(), spec.energyInMin(), spec.energyInMax()});
         data.putDouble("average", machine.averageEnergyInput());
+        data.putBoolean("overloaded", machine.isEnergyOverloaded());
         // Fusion's controller counts ticks; ordinary machines count energy work.
         data.putBoolean("timed", machine instanceof gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity);
         data.putBoolean("enabled", control.enabled());
@@ -131,8 +131,16 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         var rates = data.getLongArray("energy");
         String unit = data.getString("unit");
         double average = data.getDouble("average");
-        if (rates.length == 3) {
-            if (rates[0] > 0) tooltip.add(new MachineEnergyElement(rates[1], rates[0], rates[2], average, unit));
+        if (rates.length == 3 && !unit.equalsIgnoreCase("TU")) {
+            boolean overloaded = data.getBoolean("overloaded") || average > rates[2];
+            if (rates[0] > 0) {
+                tooltip.add(new MachineEnergyElement(rates[1], rates[0], rates[2], average, unit, overloaded));
+                if (overloaded) tooltip.add(Component.translatable("jade.gt6ce.machine.overloaded")
+                        .withStyle(net.minecraft.ChatFormatting.GOLD));
+                else if (average <= 0 || average < rates[1])
+                    tooltip.add(Component.translatable("jade.gt6ce.machine.insufficient_energy")
+                            .withStyle(net.minecraft.ChatFormatting.AQUA));
+            }
             if (accessor.showDetails()) {
                 JadeText.detail(tooltip, "jade.gt6ce.energy.in", format(rates[0]), unit);
                 JadeText.detail(tooltip, "jade.gt6ce.energy.range", format(rates[1]), format(rates[2]), unit);
@@ -151,28 +159,16 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             if (role.equals("pending") && (!data.getList("pendingItems", 10).isEmpty()
                     || !data.getList("pendingFluids", 10).isEmpty()))
                 tooltip.add(Component.translatable("jade.gt6ce.machine.recipe_outputs").withStyle(net.minecraft.ChatFormatting.GRAY));
-            renderItems(tooltip, accessor, role, data.getList(role + "Items", 10));
+            renderItems(tooltip, accessor, data.getList(role + "Items", 10));
             if (role.equals("pending") && data.getInt("more") > 0) line(tooltip, "more_pending", data.getInt("more"));
-            renderFluids(tooltip, accessor, role, data.getList(role + "Fluids", 10));
+            renderFluids(tooltip, accessor, data.getList(role + "Fluids", 10));
         }
         if (data.getBoolean("ignition")) line(tooltip, "needs_ignition");
         if (data.getBoolean("cokeHint")) line(tooltip, "coke_recipe_hint");
     }
 
-    private static void heading(ITooltip tooltip, String kind, String role) {
-        if (role.equals("pending")) return;
-        var color = switch (role) {
-            case "input" -> net.minecraft.ChatFormatting.AQUA;
-            case "output" -> net.minecraft.ChatFormatting.GREEN;
-            default -> net.minecraft.ChatFormatting.WHITE;
-        };
-        tooltip.add(Component.translatable("jade.gt6ce.omni.group_" + kind,
-                Component.translatable("jade.gt6ce.omni." + role)).withStyle(color));
-    }
-
-    private static void renderItems(ITooltip tooltip, BlockAccessor accessor, String role, ListTag items) {
+    private static void renderItems(ITooltip tooltip, BlockAccessor accessor, ListTag items) {
         if (items.isEmpty()) return;
-        heading(tooltip, "items", role);
         for (int i = 0; i < items.size(); i++) {
 //? if >=1.21.1 {
             /*var stack = ItemStack.parseOptional(accessor.getLevel().registryAccess(), items.getCompound(i));
@@ -183,9 +179,8 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         }
     }
 
-    private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, String role, ListTag fluids) {
+    private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, ListTag fluids) {
         if (fluids.isEmpty()) return;
-        heading(tooltip, "fluids", role);
         for (int i = 0; i < fluids.size(); i++) {
             var row = fluids.getCompound(i);
 //? if >=1.21.1 {
@@ -194,12 +189,10 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             var fluid = FluidStack.loadFluidStackFromNBT(row.getCompound("stack"));
 //?}
             if (fluid.isEmpty()) continue;
-            var text = role.equals("pending")
-                    ? Component.translatable("jade.gt6ce.omni.pending_fluid", i + 1, fluid.getDisplayName(), row.getLong("amount"))
-                    : Component.translatable("jade.gt6ce.omni.fluid", Component.translatable("jade.gt6ce.omni." + role),
-                            i + 1, fluid.getDisplayName(), row.getLong("amount"), row.getLong("capacity"));
-            var icon = IElementHelper.get().fluid(JadeFluidObject.of(fluid.getFluid(), fluid.getAmount())).size(new Vec2(16, 16));
-            JadeText.add(tooltip, icon, text);
+            var view = FluidView.readDefault(FluidView.writeDefault(
+                    JadeFluidObject.of(fluid.getFluid(), row.getLong("amount")), row.getLong("capacity")));
+            if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
+                    : Component.translatable("jade.fluid", view.fluidName, view.current)));
         }
     }
 

@@ -142737,7 +142737,13 @@
   "gt6ce.jei.info.biome_group.mesa": "恶地",
   "gt6ce.jei.info.biome_group.shroom": "蘑菇岛",
   "tooltip.gt6ce.cover.sneak_place": "潜行来放置覆盖板",
-  "jade.gt6ce.machine.time": "%s秒 / %s秒（%s%%）",
+  "jade.gt6ce.machine.time": "%s / %s（%s%%）",
+  "jade.gt6ce.time.s": "%s秒",
+  "jade.gt6ce.time.min": "%s分钟",
+  "jade.gt6ce.time.h": "%s小时",
+  "jade.gt6ce.time.tick": "%s tick",
+  "jade.gt6ce.machine.overloaded": "机器过载",
+  "jade.gt6ce.machine.insufficient_energy": "能量输入不足",
   "jade.gt6ce.machine.recipe_outputs": "配方输出：",
   "jade.gt6ce.boiler.dry_heat": "干烧警告 — 热量积累：%s"
 }
