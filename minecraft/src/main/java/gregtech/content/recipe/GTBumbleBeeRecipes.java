@@ -38,43 +38,43 @@ import java.util.List;
  * genome. GT6's whole branch, line by line:</p>
  *
  * <ul>
- *   <li>{@code :55} - only honey counts ({@code FluidsGT.HONEY}, i.e. the three fluids declared with
+ *   <li> - only honey counts ({@code FluidsGT.HONEY}, i.e. the three fluids declared with
  *       the {@code HONEY} flag in {@code FL.java:139-141}, plus {@code FL.Honeydew}).</li>
- *   <li>{@code :56-57} - every valid input stack, truncated to a single item
+ *   <li> - every valid input stack, truncated to a single item
  *       ({@code ST.amount(1, aInput)}).</li>
- *   <li>{@code :58-60} - a bee whose {@code bumbleType < 5} (a <em>living</em>, not yet scanned bee;
+ *   <li> - a bee whose {@code bumbleType < 5} (a <em>living</em>, not yet scanned bee;
  *       GT6's {@code bumbleScan} adds 5 to the type) plus one tiny paper plate becomes the scanned
  *       variant of that same bee, at the price of 10 mB of the tank's honey.</li>
- *   <li>{@code :61} - the "no paper" fallback: a bee that is <em>already</em> scanned is passed
+ *   <li> - the "no paper" fallback: a bee that is <em>already</em> scanned is passed
  *       through unchanged (input = output, 1 tick), the row GT6 also publishes as
  *       "Was already scanned, auto-skipping" ({@code MultiItemBumbles:586-587}).</li>
- *   <li>{@code :63-69} - the Forestry bee branch ({@code IL.FR_Bee_Drone/Princess/Queen} analysed
+ *   <li> - the Forestry bee branch ({@code IL.FR_Bee_Drone/Princess/Queen} analysed
  *       through {@code AlleleManager}). <b>Skipped:</b> the port has no Forestry bees, so no stack can
  *       ever satisfy it (see the note on {@link #find}).</li>
  * </ul>
  *
  * <p>Faithfulness notes, since GT6's own code is easy to misread here:</p>
  * <ul>
- *   <li>The tiny paper plate is an <b>input</b>, not an output: {@code :60} passes
+ *   <li>The tiny paper plate is an <b>input</b>, not an output: passes
  *       {@code ST.array(aInput, OP.plateTiny.mat(MT.Paper, aInput.stackSize))} as the recipe's
  *       <em>inputs</em> and the scanned bee as its only output. GT6's recipe-viewer rows show the
  *       same layout ({@code MultiItemBumbles:584-585}).</li>
- *   <li>That plate count is always <b>1</b>, whatever the input stack size: {@code :57} has already
+ *   <li>That plate count is always <b>1</b>, whatever the input stack size: has already
  *       replaced the stack with {@code ST.amount(1, aInput)} (= {@code ST.copy_} + {@code ST.size_}),
  *       so {@code aInput.stackSize} read one line later is 1 by construction. GT6 therefore has no
  *       "paper only for a single bee" rule; a stack of five bees also consumes one plate and produces
  *       one scanned bee.</li>
- *   <li>Duration and power are {@code 64, 16} in {@code :60}, and GT6's {@code Recipe} constructor
- *       takes them in that order - {@code Recipe.java:877} is
+ *   <li>Duration and power are {@code 64, 16} in, and GT6's {@code Recipe} constructor
+ *       takes them in that order - {@code gregapi/recipes/Recipe.java:877} is
  *       {@code (..., aInputs, aOutputs, aSpecialItems, aChances, aFluidInputs, aFluidOutputs,
  *       aDuration, aEUt, aSpecialValue)} - so the row is <b>64 ticks at 16 EU/t</b>, exactly like the
- *       port stores the molecular scanner's row from the analogous {@code :57} of
- *       {@code RecipeMapScannerMolecular}. The pass-through row of {@code :61} is {@code 1, 16}.</li>
+ *       port stores the molecular scanner's row from the analogous of
+ *       {@code RecipeMapScannerMolecular}. The pass-through row of is {@code 1, 16}.</li>
  *   <li>Rows are built per lookup instead of being cached (unlike {@link GTMaterialDataRecipes}):
  *       the row carries the input bee's genome NBT, so a row cached for one genome would not match a
  *       bee with another. GT6 builds a fresh {@code Recipe} per {@code findRecipe} call for the same
  *       reason.</li>
- *   <li>GT6's {@code GAPI_POST.mFinishedServerStarted <= 0} early-out ({@code :53}) has no port
+ *   <li>GT6's {@code GAPI_POST.mFinishedServerStarted <= 0} early-out has no port
  *       equivalent; these providers only ever run from a machine's recipe lookup, which cannot happen
  *       before the server started.</li>
  *   <li>GT6 additionally registers two <em>fake</em> recipe-viewer rows per bee
@@ -89,15 +89,15 @@ import java.util.List;
 //?}
 public final class GTBumbleBeeRecipes {
 
-    /** GT6 {@code :60} - the honey a single scan consumes ({@code FL.amount(aFluids[0], 10)}). */
+    /** GT6's - the honey a single scan consumes ({@code FL.amount(aFluids[0], 10)}). */
     public static final int HONEY_MB = 10;
-    /** GT6 {@code :60} - the scan's duration, the 9th argument of its {@code Recipe} constructor. */
+    /** GT6's - the scan's duration, the 9th argument of its {@code Recipe} constructor. */
     public static final long SCAN_TICKS = 64;
-    /** GT6 {@code :60} - the scan's power. */
+    /** GT6's - the scan's power. */
     public static final long SCAN_EU = 16;
-    /** GT6 {@code :61} - the already-scanned pass-through is instant. */
+    /** GT6's - the already-scanned pass-through is instant. */
     public static final long PASS_TICKS = 1;
-    /** GT6 {@code :61} - and costs the machine's minimum. */
+    /** GT6's - and costs the machine's minimum. */
     public static final long PASS_EU = 16;
 
     /**
@@ -154,7 +154,7 @@ public final class GTBumbleBeeRecipes {
      * {@code make}): {@code [bee, tiny paper plate] + 10 mB of honey -> the scanned bee}, once per honey
      * fluid, and the same row with honeydew instead. GT6 adds them with {@code addFakeRecipe}, which is
      * why the Bumblelyzer's recipe page is never empty while the machine itself ignores them
-     * ({@code RecipeMap:591}, {@code :632} skip {@code mFakeRecipe} rows).
+     * ({@code RecipeMap}, skip {@code mFakeRecipe} rows).
      *
      * <p>The rows are built from the port's own 80 species and 320 bee items, so the count is
      * {@code 80 x 3 x (honey fluids + honeydew)}; a fluid the port does not register is skipped, exactly
@@ -200,7 +200,7 @@ public final class GTBumbleBeeRecipes {
     }
 
     /**
-     * GT6 {@code :51-74}: a living bee in the input slots plus honey in the tank is scanned into its
+     * GT6's: a living bee in the input slots plus honey in the tank is scanned into its
      * own scanned variant; an already-scanned bee is passed straight through.
      *
      * <p>Returns null whenever the inputs cannot satisfy the row GT6 would build - no honey (or less
@@ -233,7 +233,7 @@ public final class GTBumbleBeeRecipes {
     }
 
     /**
-     * GT6 {@code :60}: {@code [bee, tiny paper plate] + 10 mB honey -> scanned bee}, 64 ticks at
+     * GT6's: {@code [bee, tiny paper plate] + 10 mB honey -> scanned bee}, 64 ticks at
      * 16 EU/t. The output keeps the input's whole tag, genome included ({@code bumbleScan} is
      * {@code ST.copy} plus the meta offset).
      */
@@ -261,7 +261,7 @@ public final class GTBumbleBeeRecipes {
     }
 
     /**
-     * GT6 {@code :61}: an already-scanned bee leaves the machine untouched - the same stack on both
+     * GT6's: an already-scanned bee leaves the machine untouched - the same stack on both
      * sides, no paper and no honey, 1 tick at 16 EU/t. GT6 shares one stack instance between the two
      * arrays; the port hands out two copies so the machine can never shrink the output along with the
      * input.
@@ -285,7 +285,7 @@ public final class GTBumbleBeeRecipes {
     }
 
     /**
-     * GT6 {@code :55}: a fluid declared with the {@code HONEY} flag ({@code FL.java:139-141}:
+     * GT6's: a fluid declared with the {@code HONEY} flag ({@code FL.java:139-141}:
      * {@code for.honey}, {@code grc.honey} and BoP's {@code honey}) or honeydew.
      */
     private static boolean isHoney(@Nullable FluidStack stack) {

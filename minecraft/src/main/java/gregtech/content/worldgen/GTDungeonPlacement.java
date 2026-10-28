@@ -21,17 +21,17 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
  *
  * <h2>Why a subclass of {@code RandomSpreadStructurePlacement}</h2>
  * <p>{@code /locate structure gt6ce:gt_dungeon} reaches
- * {@code ServerLevel.findNearestMapStructure} ({@code ServerLevel:1121-1134}) and then
- * {@code ChunkGenerator.findNearestMapStructure} ({@code ChunkGenerator:120-186}), which dispatches on the
- * placement's runtime type: {@code ConcentricRingsStructurePlacement} first ({@code :142}) and
- * {@code RandomSpreadStructurePlacement} second ({@code :153-156}). <b>Any other placement type is silently
+ * {@code ServerLevel.findNearestMapStructure} ({@code ServerLevel}) and then
+ * {@code ChunkGenerator.findNearestMapStructure} ({@code ChunkGenerator}), which dispatches on the
+ * placement's runtime type: {@code ConcentricRingsStructurePlacement} first and
+ * {@code RandomSpreadStructurePlacement} second. <b>Any other placement type is silently
  * ignored</b> - the candidate list stays empty and locate answers "not found" however correct the placement
  * is. A custom placement <em>type</em> is therefore fine, but it has to be a
  * {@code RandomSpreadStructurePlacement} subclass, which is what this class is.</p>
  *
  * <h2>Why the lattice cannot come from {@code minecraft:random_spread}</h2>
  * <p>Vanilla's own random spread picks a <em>random</em> chunk per region:
- * {@code RandomSpreadStructurePlacement.getPotentialStructureChunk} ({@code :51-60}) seeds a
+ * {@code RandomSpreadStructurePlacement.getPotentialStructureChunk} seeds a
  * {@code WorldgenRandom} from the level seed, the region index and the salt, then draws
  * {@code spreadType.evaluate(random, spacing - separation)} per axis. No salt can pin that draw to 5 for
  * every level seed, so with {@code minecraft:random_spread} locate would report chunks that hold no
@@ -40,12 +40,12 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
  * lattice - but answers with the lattice itself:</p>
  * <ul>
  *   <li>{@link #getPotentialStructureChunk} snaps the queried chunk to the anchor of its grid region, so
- *       locate's ring search ({@code ChunkGenerator:216-237}, which walks {@code center + spacing * ring}
+ *       locate's ring search ({@code ChunkGenerator}, which walks {@code center + spacing * ring}
  *       and asks the placement for that region's chunk) lands on real anchors,</li>
  *   <li>{@link #isPlacementChunk} accepts a chunk exactly when {@link GTDungeonLayout#isAnchor} does, which
  *       is the rule {@code GTDungeonFeature.place} uses for the cells it builds - chunk generation gates
  *       the structure starts on {@code StructurePlacement.isStructureChunk}
- *       ({@code StructurePlacement:62-70}), i.e. on this method.</li>
+ *       ({@code StructurePlacement}), i.e. on this method.</li>
  * </ul>
  *
  * <p>This placement is GT6's lattice and nothing else: it accepts exactly the anchors
@@ -68,7 +68,7 @@ public final class GTDungeonPlacement extends RandomSpreadStructurePlacement {
 
     /**
      * The placement codec, in exactly the shape of vanilla's {@code RandomSpreadStructurePlacement.CODEC}
-     * ({@code RandomSpreadStructurePlacement:15-17}): {@code placementCodec(...)} - locate offset, frequency
+     * ({@code RandomSpreadStructurePlacement}): {@code placementCodec(...)} - locate offset, frequency
      * reduction, salt and exclusion zone - plus {@code spacing} and {@code separation}, all wrapped in
      * {@code ExtraCodecs.validate}, so a datapack cannot set a period that would desync this placement from
      * the feature that builds the dungeon.
@@ -122,7 +122,7 @@ public final class GTDungeonPlacement extends RandomSpreadStructurePlacement {
 
     /**
      * The anchor of the queried chunk's grid region - GT6's lattice point instead of a random draw. Locate
-     * asks this for every region on its expanding ring ({@code ChunkGenerator:227}), and every answer has
+     * asks this for every region on its expanding ring ({@code ChunkGenerator}), and every answer has
      * to be a chunk {@link #isPlacementChunk} accepts, which is what {@link GTDungeonLayout#anchorOfRegion}
      * returns.
      */

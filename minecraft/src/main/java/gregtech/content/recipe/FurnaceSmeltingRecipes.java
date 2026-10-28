@@ -158,7 +158,7 @@ public final class FurnaceSmeltingRecipes {
         }
     }
 
-    /** Explicit glass recycling listeners, not metal-smelting fallback (GT6 OreDict:43-49; Vanilla:963). */
+    /** Explicit glass recycling listeners, not metal-smelting fallback (GT6 OreDict; Vanilla). */
     private static void glass() {
         for (String name : List.of("Glass", "Sand", "RedSand", "EndSandWhite", "EndSandBlack")) {
             var material = GTMaterialRegistry.get(name);
@@ -179,7 +179,7 @@ public final class FurnaceSmeltingRecipes {
         }
     }
 
-    /** GT6 :168-177 — the clay family fires into the same ceramic form, ingots into bricks. */
+    /** — the clay family fires into the same ceramic form, ingots into bricks. */
     private static void ceramic() {
         GTMaterial ceramic = GTMaterialRegistry.get("Ceramic");
         if (ceramic == null || !ceramic.isValid()) {

@@ -14,7 +14,7 @@ package gregtech.content.worldgen.dungeon;
  * <p>Port differences:</p>
  * <ul>
  *   <li>The hall reaches local {@code y = 6}, and the ceiling lamps put their redstone brick at
- *       {@code y = 7} ({@code :40}, {@code :84-85}). That is GT6's own cell height: GT6's rooms are nine
+ *       {@code y = 7}. That is GT6's own cell height: GT6's rooms are nine
  *       blocks tall (floor 0, interior 1..6, ceiling 7, tile skin 8, see {@code DungeonChunkBarracks:46},
  *       {@code DungeonChunkEntrance:94} and {@code DungeonChunkRoomFarmMobs:59}), so a crossing is as
  *       tall as a room while the port's {@link GTDungeonData} {@code FLOOR_Y}/{@code CEILING_Y}
@@ -23,7 +23,7 @@ package gregtech.content.worldgen.dungeon;
  *       corridor sized, exactly as in GT6.</li>
  *   <li>{@link GTDungeonData#lamp} is GT6's {@code DungeonData:163-167} lamp and keeps the
  *       {@code +1} redstone brick above the ceiling, so the lamps of the crossing behave like GT6's.</li>
- *   <li>GT6 prints the stack trace of a failed pillar ({@code :31}); the port swallows it like
+ *   <li>GT6 prints the stack trace of a failed pillar; the port swallows it like
  *       {@link GTDungeonChunkCorridor} does, because {@code WorldgenDungeonGT}'s dispatcher already
  *       reports a failing cell.</li>
  * </ul>
@@ -38,11 +38,11 @@ public class GTDungeonChunkCorridor4 extends GTDungeonChunkPillar {
             try {
                 super.generate(data);
             } catch (Throwable ignored) {
-                // GT6 :31: the pillar is not important enough to fail the entire corridor.
+                // the pillar is not important enough to fail the entire corridor.
             }
         }
 
-        // GT6's hall (:34-56): bricks everywhere except the tiled floor, the small-tiled ceiling and
+        // GT6's hall: bricks everywhere except the tiled floor, the small-tiled ceiling and
         // the chiselled pillars, which carry a lamp instead of ceiling.
         for (int x = 2; x <= 13; x++) {
             for (int z = 2; z <= 13; z++) {
@@ -72,7 +72,7 @@ public class GTDungeonChunkCorridor4 extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6's four entrance arms (:58-101), written in GT6's order: +X, -X, +Z, -Z.
+        // GT6's four entrance arms, written in GT6's order: +X, -X, +Z, -Z.
         arm(data, 13, 15, 5, 10, true);
         arm(data, 0, 2, 5, 10, true);
         arm(data, 5, 10, 13, 15, false);
@@ -80,7 +80,7 @@ public class GTDungeonChunkCorridor4 extends GTDungeonChunkPillar {
         return true;
     }
 
-    /** GT6's arm box (:58-101): tiles on the floor, small tiles on the ceiling, brick side walls. */
+    /** GT6's arm box: tiles on the floor, small tiles on the ceiling, brick side walls. */
     private static void arm(GTDungeonData data, int x0, int x1, int z0, int z1, boolean alongX) {
         for (int x = x0; x <= x1; x++) {
             for (int z = z0; z <= z1; z++) {

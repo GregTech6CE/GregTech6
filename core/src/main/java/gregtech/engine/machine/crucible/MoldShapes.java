@@ -54,7 +54,7 @@ public final class MoldShapes {
         // The original loop counts only the25 cavity bits, even when legacy NBT has high bits.
         if (recipe.itemPrefix() == MaterialPrefix.nugget)
             return (long) Integer.bitCount(rawShape & SHAPE_MASK) * GTValues.U9;
-        // MaterialPrefixes.java:780-785 defines the original storage block as9U.
+        // MaterialPrefixes.java defines the original storage block as9U.
         return recipe.blockSolid() ? 9L * GTValues.U : recipe.itemPrefix().getMaterialWeight();
     }
 

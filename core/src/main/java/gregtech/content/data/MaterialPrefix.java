@@ -133,7 +133,7 @@ public final class MaterialPrefix {
      * {@code Loader_MultiTileEntities.java:2240}) whose item stack carries the material in
      * {@code gt.material}, a flag in {@code gt.coin.unique} and the two 16x16 pixel-shape bitsets
      * {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} ({@code MultiTileEntityCoin.java:79-93}).
-     * GT6 hands those stacks out through its {@code COIN_MAP} ({@code :124-133}, one coin per metal).
+     * GT6 hands those stacks out through its {@code COIN_MAP} (one coin per metal).
      * The port has no multi-tile items, so it registers one coin item per material like every other
      * form - {@code MaterialPrefixes.coin} keeps GT6's {@code OP.coin} entry and now resolves to this
      * prefix instead of staying delegateless.</p>
@@ -189,7 +189,7 @@ public final class MaterialPrefix {
     // live (every G_WOOD/G_GEM/G_INGOT material carries it), `DIRTY_DUSTS` is **dead** — declared in
     // `TD.java:577` but used by no material in `MT.java`, so the original registers no impure dusts at
     // all. The port therefore consults only `DUSTS` here and keeps its own impure dusts (they drive the
-    // port's ore-processing chain); see §23 of docs/PORTING_REMAINING_2026-09-14.md.
+    // port's ore-processing chain).
     private static final Predicate<GTMaterial> HAS_DUST =
             m -> m.hasAny(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.ELEMENT)
                     || MaterialForms.has(m, "DUSTS");
@@ -275,8 +275,8 @@ public final class MaterialPrefix {
     /**
      * The four metals GT6 coins unconditionally ({@code MultiTileEntityCoin.java:286}):
      * {@code tMaterial != MT.Cu && tMaterial != MT.Ag && tMaterial != MT.Au && tMaterial != MT.Pt}.
-     * The port's own names for them ({@code ElementMaterials.java:51}, {@code :69}, and Platinum at
-     * {@code :100}; Gold is the element material of the same file).
+     * The port's own names for them ({@code ElementMaterials.java}, and Platinum at;
+     * Gold is the element material of the same file).
      */
     private static final java.util.Set<String> GT6_COIN_METALS =
             java.util.Set.of("Copper", "Silver", "Gold", "Platinum");

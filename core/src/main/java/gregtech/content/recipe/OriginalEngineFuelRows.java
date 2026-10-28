@@ -4,7 +4,7 @@ import gregtech.content.data.FluidCatalog.FluidFlags;
 import java.util.List;
 
 /**
- * GT6 Loader_Fuels Engine rows (original:77-147; W:82-152), LGPL-3.0-or-later.
+ * GT6 Loader_Fuels Engine rows ({@code Loader_Fuels.java:77-147}), LGPL-3.0-or-later.
  * Each charge is 1 mB fuel -> 1 mB CO2, with energy = eut * duration.
  * Names are original registry identities/FL.list aliases, NOT Java field keys.
  */

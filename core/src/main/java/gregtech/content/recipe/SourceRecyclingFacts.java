@@ -120,7 +120,7 @@ public final class SourceRecyclingFacts {
             9103, 9104, 9107, 9120, 9122, 9143, 9192, 9243, 9701, 9703, 9710, 9711, 9713, 9778, 9779, 9780, 9783, 9798,
             9799, 9883);
     // 17 port MELTING additions absent in source; Netherrack is NOT one (MT1882).
-    // LigniteCoke/PetroleumCoke are added by ImportedMaterialData.applyPostInitFuelStats:29-30/55,
+    // LigniteCoke/PetroleumCoke are added by ImportedMaterialData.applyPostInitFuelStats,
     // not their declarations. Profiles describe recipe-phase defaults after GTMaterialRegistry.postInit.
     private static final Set<Integer> PORT_EXTRA_MELTING =
             Set.of(150, 340, 1090, 1100, 1110, 1130, 1150, 1160, 1170, 1180, 1190, 1200, 1520, 2390, 3720, 8365, 8390);

@@ -34,17 +34,17 @@ import net.minecraftforge.registries.ForgeRegistries;
  *       Nether portal. Dungeon keys belong to safes, not to this frame.</li>
  *   <li><b>Supply chest.</b> GT6 fills the chest multi-tile 502 with obsidian, netherrack and glowstone
  *       (16 each), the guide {@code Manual_Hunting_Blaze}, four ghast tears, four blaze rods and a full
- *       matchbox ({@code :41-48}). The port keeps GT6's seven inventory slots, including the registered
+ *       matchbox. The port keeps GT6's seven inventory slots, including the registered
  *       full matchbox; the guide is the port's own written book ({@code GTBooks.bookStack}).</li>
  *   <li><b>Ceiling.</b> GT6's shroomlight and wart blocks come from the Netherlicious mod
  *       ({@code IL.NeLi_ShroomLight}, {@code IL.NeLi_Wart_Block_Crimson}) and are skipped entirely
  *       without it. 1.20.1 has both blocks in vanilla, so the port builds the ceiling unconditionally
  *       with {@code Blocks.SHROOMLIGHT} and {@code Blocks.NETHER_WART_BLOCK}. GT6's {@code next(3)} for
- *       the wart block's metadata ({@code :59}) is drawn before its own validity check and is kept, but
+ *       the wart block's metadata is drawn before its own validity check and is kept, but
  *       its result is dropped: the Netherlicious block has three metadatas and 1.20.1 has two blocks
  *       instead.</li>
  *   <li><b>The room tag.</b> GT6 refuses a cell when the dungeon already carries
- *       {@code TAG_PORTAL_NETHER} and adds it afterwards ({@code :38-39}), which keeps GT6's dungeon to
+ *       {@code TAG_PORTAL_NETHER} and adds it afterwards, which keeps GT6's dungeon to
  *       one Nether portal. The port keeps that check, but its tag set is per cell (GT6 shares one set
  *       across the whole dungeon), so within one cell the rule holds and across cells it cannot - see
  *       {@link GTDungeonData}.</li>
@@ -62,7 +62,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
 
         ItemStack[] supplies = supplies();
 
-        // GT6 :50-56: the netherrack floor with glowstone at its four by four lamp positions.
+        // the netherrack floor with glowstone at its four by four lamp positions.
         for (int tX = 1; tX < 15; tX++) {
             for (int tZ = 1; tZ < 15; tZ++) {
                 data.set(tX, 0, tZ, pillar(tX, tZ) ? Blocks.GLOWSTONE.defaultBlockState()
@@ -70,7 +70,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
             }
         }
 
-        // GT6 :58-71: the ceiling - shroomlight at the lamp positions, wart blocks elsewhere, tiles above.
+        // the ceiling - shroomlight at the lamp positions, wart blocks elsewhere, tiles above.
         // GT6's next(3) for the wart block metadata is drawn before its validity check and is kept.
         int wartMeta = data.next(3);
         for (int tX = 1; tX < 15; tX++) {
@@ -81,7 +81,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
             }
         }
 
-        // GT6's four blocks, in GT6's order (:73-101, :102-130, :131-159, :160-188). Only the one that
+        // GT6's four blocks, in GT6's order. Only the one that
         // faces the room's single connection can fire.
         if (data.connected(1, 0)) {
             data.chestContents(1, 2, 5, supplies);
@@ -112,7 +112,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
     }
 
     /**
-     * The supply chest's contents in GT6's exact 54-slot positions ({@code :41-48}): obsidian,
+     * The supply chest's contents in GT6's exact 54-slot positions: obsidian,
      * netherrack and glowstone (16 each), the hunting guide, four ghast tears, four blaze rods and
      * {@code IL.Tool_MatchBox_Full}. Empty entries are intentional: {@link GTDungeonData#chestContents}
      * writes only populated slots and preserves this sparse layout.
@@ -140,7 +140,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
     }
 
     /**
-     * GT6's soul sand rows of the X branches ({@code :76-85} for +X, {@code :105-114} for -X): the walls
+     * GT6's soul sand rows of the X branches (for +X, for -X): the walls
      * at {@code z = 1} and {@code z = 14} carry soul sand with nether wart and a smooth rock slab row
      * above them, the walls at {@code z = 2} and {@code z = 13} only their slab row.
      *
@@ -163,7 +163,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
     }
 
     /**
-     * GT6's soul sand rows of the Z branches ({@code :134-143} for +Z, {@code :163-172} for -Z): the
+     * GT6's soul sand rows of the Z branches (for +Z, for -Z): the
      * walls at {@code x = 1} and {@code x = 14} carry soul sand with nether wart and a smooth rock slab
      * row above them, the walls at {@code x = 2} and {@code x = 13} only their slab row - the same four
      * GT6 slab orientations as {@link #farmAlongZ}, turned by a quarter.
@@ -187,7 +187,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
     }
 
     /**
-     * GT6's obsidian portal frame ({@code :87-100} for +X and so on): four blocks wide and five tall in
+     * GT6's obsidian portal frame (for +X and so on): four blocks wide and five tall in
      * one plane, with the interior of two by three blocks left open for the portal.
      *
      * @param alongZ whether the frame's plane runs along Z (the X neighbours) or along X (the Z ones)

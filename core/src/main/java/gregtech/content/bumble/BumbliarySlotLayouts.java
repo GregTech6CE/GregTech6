@@ -1,5 +1,5 @@
 package gregtech.content.bumble;
-/** Original36-slot/20-slot groups including the original advanced slot11 overlap. */
+/** GT6's 36-slot and 20-slot groups, including the advanced layout's slot 11 overlap. */
 public final class BumbliarySlotLayouts {
     private BumbliarySlotLayouts() {}
 
@@ -33,7 +33,7 @@ public final class BumbliarySlotLayouts {
         public boolean advanced() {
             return advanced;
         }
-        /** Total inventory size ({@code getDefaultInventory:339}, advanced {@code :340}). */
+        /** Total inventory size ({@code getDefaultInventory}), advanced layout included. */
         public int slots() {
             return slots;
         }
@@ -71,7 +71,7 @@ public final class BumbliarySlotLayouts {
     public static final int SLOT_ROYAL = 13;
     /** GT6's {@code SLOT_DRONE}: the drone the princess prefers over the spare slots. */
     public static final int SLOT_DRONE = 22;
-    /** GT6's {@code SLOTS_COMBS}: what a working queen produces into ({@code :334}). */
+    /** GT6's {@code SLOTS_COMBS}: what a working queen produces into. */
     public static final int[] SLOTS_COMBS = {0, 1, 2, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 24, 25, 26};
     /** GT6's {@code SLOTS_DRONE}: the spare drone slots, which keep the brood and the princesses. */
     public static final int[] SLOTS_DRONE = {3, 4, 5, 12, 14, 21, 23};
@@ -82,7 +82,7 @@ public final class BumbliarySlotLayouts {
     public static final Layout LAYOUT =
             new Layout(false, 36, SLOT_ROYAL, SLOT_DRONE, SLOTS_COMBS, SLOTS_DRONE, SLOTS_DEAD, SLOTS_DEAD, 10000);
 
-    /** GT6's {@code MultiTileEntityBumbliaryAdvanced} slot groups ({@code :333-337}). */
+    /** GT6's {@code MultiTileEntityBumbliaryAdvanced} slot groups. */
     public static final int ADV_SLOT_ROYAL = 7, ADV_SLOT_DRONE = 12;
 
     public static final int[] ADV_SLOTS_COMBS = {0, 4, 5, 9, 10, 11, 14};

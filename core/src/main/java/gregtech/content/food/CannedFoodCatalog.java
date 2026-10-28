@@ -42,7 +42,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:46
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_unknown",
@@ -59,7 +59,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:47
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_unknown",
@@ -76,7 +76,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:48
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_unknown",
@@ -93,7 +93,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:49
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_unknown",
@@ -110,7 +110,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:50
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_unknown",
@@ -127,7 +127,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:51
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_rotten",
@@ -144,7 +144,7 @@ public final class CannedFoodCatalog {
                     29,
                     true,
                     false,
-                    false), // MultiItemCans.java:53
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_rotten",
@@ -161,7 +161,7 @@ public final class CannedFoodCatalog {
                     29,
                     true,
                     false,
-                    false), // MultiItemCans.java:54
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_rotten",
@@ -178,7 +178,7 @@ public final class CannedFoodCatalog {
                     29,
                     true,
                     false,
-                    false), // MultiItemCans.java:55
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_rotten",
@@ -195,7 +195,7 @@ public final class CannedFoodCatalog {
                     29,
                     true,
                     false,
-                    false), // MultiItemCans.java:56
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_rotten",
@@ -212,7 +212,7 @@ public final class CannedFoodCatalog {
                     29,
                     true,
                     false,
-                    false), // MultiItemCans.java:57
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_rotten",
@@ -229,7 +229,7 @@ public final class CannedFoodCatalog {
                     29,
                     true,
                     false,
-                    false), // MultiItemCans.java:58
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_vegetables",
@@ -246,7 +246,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:60
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_vegetables",
@@ -263,7 +263,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:61
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_vegetables",
@@ -280,7 +280,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:62
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_vegetables",
@@ -297,7 +297,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:63
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_vegetables",
@@ -314,7 +314,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:64
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_vegetables",
@@ -331,7 +331,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:65
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_fruits",
@@ -348,7 +348,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:67
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_fruits",
@@ -365,7 +365,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:68
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_fruits",
@@ -382,7 +382,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:69
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_fruits",
@@ -399,7 +399,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:70
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_fruits",
@@ -416,7 +416,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:71
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_fruits",
@@ -433,7 +433,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:72
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_bread",
@@ -450,7 +450,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:74
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_bread",
@@ -467,7 +467,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:75
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_bread",
@@ -484,7 +484,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:76
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_bread",
@@ -501,7 +501,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:77
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_bread",
@@ -518,7 +518,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:78
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_bread",
@@ -535,7 +535,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:79
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_meat",
@@ -552,7 +552,7 @@ public final class CannedFoodCatalog {
                     29,
                     false,
                     true,
-                    true), // MultiItemCans.java:81
+                    true),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_meat",
@@ -569,7 +569,7 @@ public final class CannedFoodCatalog {
                     29,
                     false,
                     true,
-                    true), // MultiItemCans.java:82
+                    true),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_meat",
@@ -586,7 +586,7 @@ public final class CannedFoodCatalog {
                     29,
                     false,
                     true,
-                    true), // MultiItemCans.java:83
+                    true),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_meat",
@@ -603,7 +603,7 @@ public final class CannedFoodCatalog {
                     29,
                     false,
                     true,
-                    true), // MultiItemCans.java:84
+                    true),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_meat",
@@ -620,7 +620,7 @@ public final class CannedFoodCatalog {
                     29,
                     false,
                     true,
-                    true), // MultiItemCans.java:85
+                    true),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_meat",
@@ -637,7 +637,7 @@ public final class CannedFoodCatalog {
                     29,
                     false,
                     true,
-                    true), // MultiItemCans.java:86
+                    true),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_fish",
@@ -654,7 +654,7 @@ public final class CannedFoodCatalog {
                     25,
                     false,
                     true,
-                    false), // MultiItemCans.java:88
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_fish",
@@ -671,7 +671,7 @@ public final class CannedFoodCatalog {
                     25,
                     false,
                     true,
-                    false), // MultiItemCans.java:89
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_fish",
@@ -688,7 +688,7 @@ public final class CannedFoodCatalog {
                     25,
                     false,
                     true,
-                    false), // MultiItemCans.java:90
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_fish",
@@ -705,7 +705,7 @@ public final class CannedFoodCatalog {
                     25,
                     false,
                     true,
-                    false), // MultiItemCans.java:91
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_fish",
@@ -722,7 +722,7 @@ public final class CannedFoodCatalog {
                     25,
                     false,
                     true,
-                    false), // MultiItemCans.java:92
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_fish",
@@ -739,7 +739,7 @@ public final class CannedFoodCatalog {
                     25,
                     false,
                     true,
-                    false), // MultiItemCans.java:93
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_chum",
@@ -756,7 +756,7 @@ public final class CannedFoodCatalog {
                     39,
                     true,
                     false,
-                    false), // MultiItemCans.java:95
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_chum",
@@ -773,7 +773,7 @@ public final class CannedFoodCatalog {
                     39,
                     true,
                     false,
-                    false), // MultiItemCans.java:96
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_chum",
@@ -790,7 +790,7 @@ public final class CannedFoodCatalog {
                     39,
                     true,
                     false,
-                    false), // MultiItemCans.java:97
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_chum",
@@ -807,7 +807,7 @@ public final class CannedFoodCatalog {
                     39,
                     true,
                     false,
-                    false), // MultiItemCans.java:98
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_chum",
@@ -824,7 +824,7 @@ public final class CannedFoodCatalog {
                     39,
                     true,
                     false,
-                    false), // MultiItemCans.java:99
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_chum",
@@ -841,7 +841,7 @@ public final class CannedFoodCatalog {
                     39,
                     true,
                     false,
-                    false), // MultiItemCans.java:100
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tiny_food_can_cookies",
@@ -858,7 +858,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:102
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "small_food_can_cookies",
@@ -875,7 +875,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:103
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "tall_food_can_cookies",
@@ -892,7 +892,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:104
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "wide_food_can_cookies",
@@ -909,7 +909,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:105
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "large_food_can_cookies",
@@ -926,7 +926,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:106
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "huge_food_can_cookies",
@@ -943,7 +943,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:107
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "canned_space_air",
@@ -960,7 +960,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:109
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "canned_hot_air",
@@ -977,7 +977,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false), // MultiItemCans.java:110
+                    false),
             new Can(
                     new FoodNutritionRows.Entry(
                             "canned_air",
@@ -994,7 +994,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false) // MultiItemCans.java:111
+                    false)
             );
     private static final Map<String, Can> BY_ID;
 

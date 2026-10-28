@@ -166,7 +166,7 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
         return InteractionResult.CONSUME;
     }
 
-    /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether:49-59}, {@code ...End:49-60}). */
+    /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether:49-59}, {@code MultiTileEntityMiniPortalEnd:49-60}). */
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,

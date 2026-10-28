@@ -35,7 +35,7 @@ import java.util.Locale;
  *
  * <p>The port generates the same kind of page from its own material data. This is the first slice —
  * identity, composition, the forms the material actually has, tool stats, properties and ore/byproduct
- * links; GT6's alloy/enchantment/target matrices are the documented remainder (see §31 of the porting
+ * links; GT6's alloy/enchantment/target matrices are the documented remainder (see of the porting
  * notes). The book uses its source dictionary cover with native written-book content, like {@link GTBooks}, so the
  * player opens them with the vanilla book screen.</p>
  */

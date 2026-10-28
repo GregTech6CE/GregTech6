@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.Blocks;
  *
  * <p>Port differences:</p>
  * <ul>
- *   <li>GT6's chest multi-tile ({@code (next1in2() ? 508 : 8) + next(3)}, {@code :48}) becomes
+ *   <li>GT6's chest multi-tile ({@code (next1in2() ? 508: 8) + next(3)}) becomes
  *       {@link GTDungeonData#chest}. The port has a single chest block, which always faces north (GT6
  *       turned the multi-tile towards the room), so the roll is evaluated - it consumes GT6's
  *       {@code next1in2()} and {@code next(3)} from the cell's random - and its result is dropped.</li>
@@ -27,10 +27,10 @@ import net.minecraft.world.level.block.Blocks;
  *       {@link GTDungeonData#safe} with the selected dungeon key ID. The four dead ends select key #3
  *       when generated, otherwise key #1/#2/#4/#5 respectively. The port has both mechanical and
  *       key-locked safes; these calls request the key-locked variant.</li>
- *   <li>GT6 hands its cup one of twelve drinks ({@code :37}, all of them GT fluids). The drink is
+ *   <li>GT6 hands its cup one of twelve drinks (all of them GT fluids). The drink is
  *       selected separately from the cell's random, as GT6's global {@code RNGSUS} did.</li>
- *   <li>GT6's {@code case 1} (the breakable wall) only builds something when dungeon key #3 exists
- *       ({@code :57-58}). GT6's {@code mGeneratedKeys} is one array for the whole dungeon; the port's is
+ *   <li>GT6's {@code case 1} (the breakable wall) only builds something when dungeon key #3 exists.
+ *       GT6's {@code mGeneratedKeys} is one array for the whole dungeon; the port's is
  *       per cell ({@link GTDungeonData#keyAvailable}), and a corridor cell never hands a key out itself,
  *       so the condition is false here - which is exactly what GT6 does in a dungeon whose key #3 was
  *       never generated. The condition is kept as GT6 wrote it.</li>
@@ -45,21 +45,21 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
 
     @Override
     public boolean generate(GTDungeonData data) {
-        // GT6 :35: the corridor shell (and with it the pillar of a turn) always goes first.
+        // the corridor shell (and with it the pillar of a turn) always goes first.
         super.generate(data);
 
-        // GT6's four dead ends (:39, :80, :121, :162). Only an open neighbour is decorated, and the
+        // GT6's four dead ends. Only an open neighbour is decorated, and the
         // first matching branch returns, so the write order below is GT6's.
         if (data.neighbour(1, 0) == 0) {
             switch (data.next(4)) {
                 case 0:
-                    // Loot chest with a crafting station at the unused end (GT6 :42-55).
+                    // Loot chest with a crafting station at the unused end.
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.smooth(11, y, z);
                     for (int y = 1; y <= 3; y++) for (int z = 6; z <= 9; z++) data.air(10, y, z);
 
                     data.smooth(10, 1, 6);
                     data.set(10, 1, 7, Blocks.CRAFTING_TABLE.defaultBlockState());
-                    // GT6 :48 selects metal or reinforced wood, then brass/bronze/steel.
+                    // selects metal or reinforced wood, then brass/bronze/steel.
                     data.corridorChest(10, 1, 8, LOOT);
                     data.smooth(10, 1, 9);
 
@@ -69,11 +69,11 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.coins(10, 2, 9);
                     return true;
                 case 1:
-                    // Breakable wall, more likely when dungeon key #3 exists (GT6 :57-59).
+                    // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
                     // GT6 falls through into case 2 here.
                 case 2:
-                    // Breakable wall with the safe at the unused end (GT6 :60-73).
+                    // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(13, y, z);
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(12, y, z);
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(11, y, z);
@@ -82,7 +82,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     for (int y = 1; y <= 2; y++) for (int z = 7; z <= 8; z++) data.air(12, y, z);
 
                     data.coins(12, 1, 7);
-                    // GT6 :69 is its Key Locked Safe (3010), opened with key #3 or, when absent, key #1.
+                    // is its Key Locked Safe (3010), opened with key #3 or, when absent, key #1.
                     data.safe(12, 1, 8, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 0], true);
 
                     data.coins(12, 2, 8);
@@ -91,14 +91,14 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 default:
                     break;
             }
-            // Default corridor crossing (GT6 :75-76).
+            // Default corridor crossing.
             return true;
         }
 
         if (data.neighbour(-1, 0) == 0) {
             switch (data.next(4)) {
                 case 0:
-                    // Loot chest with a crafting station at the unused end (GT6 :83-96).
+                    // Loot chest with a crafting station at the unused end.
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.smooth(4, y, z);
                     for (int y = 1; y <= 3; y++) for (int z = 6; z <= 9; z++) data.air(5, y, z);
 
@@ -113,11 +113,11 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.coins(5, 2, 9);
                     return true;
                 case 1:
-                    // Breakable wall, more likely when dungeon key #3 exists (GT6 :97-99).
+                    // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
                     // GT6 falls through into case 2 here.
                 case 2:
-                    // Breakable wall with the safe at the unused end (GT6 :100-113).
+                    // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(2, y, z);
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(3, y, z);
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(4, y, z);
@@ -125,7 +125,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     for (int y = 1; y <= 3; y++) for (int z = 6; z <= 9; z++) data.air(4, y, z);
                     for (int y = 1; y <= 2; y++) for (int z = 7; z <= 8; z++) data.air(3, y, z);
 
-                    // GT6 :109: the safe, locked with key #3 or key #2 - a chest in the port.
+                    // the safe, locked with key #3 or key #2 - a chest in the port.
                     data.safe(3, 1, 7, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 1], true);
                     data.coins(3, 1, 8);
 
@@ -135,14 +135,14 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 default:
                     break;
             }
-            // Default corridor crossing (GT6 :116-117).
+            // Default corridor crossing.
             return true;
         }
 
         if (data.neighbour(0, 1) == 0) {
             switch (data.next(4)) {
                 case 0:
-                    // Loot chest with a crafting station at the unused end (GT6 :124-137).
+                    // Loot chest with a crafting station at the unused end.
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.smooth(x, y, 11);
                     for (int y = 1; y <= 3; y++) for (int x = 6; x <= 9; x++) data.air(x, y, 10);
 
@@ -157,11 +157,11 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.coins(9, 2, 10);
                     return true;
                 case 1:
-                    // Breakable wall, more likely when dungeon key #3 exists (GT6 :138-140).
+                    // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
                     // GT6 falls through into case 2 here.
                 case 2:
-                    // Breakable wall with the safe at the unused end (GT6 :141-153).
+                    // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 13);
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 12);
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 11);
@@ -170,7 +170,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     for (int y = 1; y <= 2; y++) for (int x = 7; x <= 8; x++) data.air(x, y, 12);
 
                     data.coins(7, 1, 12);
-                    // GT6 :151: the safe, locked with key #3 or key #4 - a chest in the port.
+                    // the safe, locked with key #3 or key #4 - a chest in the port.
                     data.safe(8, 1, 12, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 3], true);
 
                     data.coins(8, 2, 12);
@@ -179,14 +179,14 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 default:
                     break;
             }
-            // Default corridor crossing (GT6 :157-158).
+            // Default corridor crossing.
             return true;
         }
 
         if (data.neighbour(0, -1) == 0) {
             switch (data.next(4)) {
                 case 0:
-                    // Loot chest with a crafting station at the unused end (GT6 :165-178).
+                    // Loot chest with a crafting station at the unused end.
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.smooth(x, y, 4);
                     for (int y = 1; y <= 3; y++) for (int x = 6; x <= 9; x++) data.air(x, y, 5);
 
@@ -201,11 +201,11 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.coins(9, 2, 5);
                     return true;
                 case 1:
-                    // Breakable wall, more likely when dungeon key #3 exists (GT6 :179-181).
+                    // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
                     // GT6 falls through into case 2 here.
                 case 2:
-                    // Breakable wall with the safe at the unused end (GT6 :182-194).
+                    // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 2);
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 3);
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 4);
@@ -213,7 +213,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     for (int y = 1; y <= 3; y++) for (int x = 6; x <= 9; x++) data.air(x, y, 4);
                     for (int y = 1; y <= 2; y++) for (int x = 7; x <= 8; x++) data.air(x, y, 3);
 
-                    // GT6 :191: the safe, locked with key #3 or key #5 - a chest in the port.
+                    // the safe, locked with key #3 or key #5 - a chest in the port.
                     data.safe(7, 1, 3, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 4], true);
                     data.coins(8, 1, 3);
 
@@ -223,11 +223,11 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 default:
                     break;
             }
-            // Default corridor crossing (GT6 :198-199).
+            // Default corridor crossing.
             return true;
         }
 
-        // Default corridor crossing (GT6 :203-204).
+        // Default corridor crossing.
         return true;
     }
 }

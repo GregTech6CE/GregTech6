@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p><b>Speed-cap adapter:</b> Forge clamps every rail to the cart's own ceiling
  * ({@code IForgeAbstractMinecart.getMaxCartSpeedOnRail()}, default 1.2 — its setter is
- * {@code Math.min(value, getMaxCartSpeedOnRail())}, {@code AbstractMinecart:844}), so GT6's three
+ * {@code Math.min(value, getMaxCartSpeedOnRail())}, {@code AbstractMinecart}), so GT6's three
  * fastest rails — Tungstensteel 1.4, Tungstencarbide 1.6, Adamantium 4.0 — used to top out at 1.2.
  * {@code mixin/AbstractMinecartSpeedCapMixin} (the port's replacement for GT6's
  * {@code Minecraft_RemoveCartSpeedCap} ASM) makes the setter a plain assignment, and every rail here
@@ -49,10 +49,10 @@ public final class TrackBlock {
      * <p>GT6 reads the speed straight off the rail it is standing on ({@code BlockBaseRail:277-289} is
      * the rail's own answer, and {@code TileEntityBase10ConnectorRendered} carts consult it directly).
      * 1.20.1 routes it through the cart instead: {@code getMaxSpeedWithRail} is
-     * {@code min(railMaxSpeed, cart.getCurrentCartSpeedCapOnRail())} ({@code AbstractMinecart:861-862}),
+     * {@code min(railMaxSpeed, cart.getCurrentCartSpeedCapOnRail())} ({@code AbstractMinecart}),
      * so the rail has to leave its number on the cart — otherwise Forge's 1.2 ceiling decides. Called
      * from {@code onMinecartPass}, which vanilla invokes once per tick for the rail under the cart
-     * ({@code AbstractMinecart:530}), so the value always belongs to the rail the cart is on right
+     * ({@code AbstractMinecart}), so the value always belongs to the rail the cart is on right
      * now.</p>
      */
     static void applySpeedToCart(float speed, BlockState state, Level level, BlockPos pos,

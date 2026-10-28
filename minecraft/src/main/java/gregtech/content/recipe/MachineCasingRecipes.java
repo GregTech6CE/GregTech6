@@ -30,7 +30,7 @@ import net.minecraft.world.item.ItemStack;
  * </p>
  */
 public final class MachineCasingRecipes {
-    /** GT6's four casing grades with their plate prefix and material units (:349-358). */
+    /** GT6's four casing grades with their plate prefix and material units. */
     private record Grade(MaterialPrefix plates, BlockMaterialPrefix casing, long units) {}
 
     private static final Grade[] GRADES = {

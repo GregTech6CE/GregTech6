@@ -151,7 +151,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
 
     /**
      * First-open filling for a chest carrying {@code gt.dungeonloot}. Nonempty results emit five
-     * experience orbs (5..13 each); original Chest:262 also awarded them for successful empty results.
+     * experience orbs (5..13 each); original Chest also awarded them for successful empty results.
      *
      * @return how many stacks were placed
      */

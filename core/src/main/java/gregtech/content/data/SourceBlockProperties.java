@@ -37,7 +37,7 @@ public final class SourceBlockProperties {
         BLOCKS.putAll(gregtech.content.machine.OriginalStorageMaterialData.harvest());
         for (var spec : gregtech.content.energy.HeatExchangerCatalog.ALL)
             BLOCKS.put(spec.id(), new Params(spec.sourceId(), "wrench", spec.material(), -1, false));
-        // Original metalset lines145..146 pass explicit metadata0, even for high-tier metals.
+        // GT6's metalset rows 145..146 pass explicit metadata 0, even for high-tier metals.
         for (var entry : HopperCatalog.ALL) {
             String suffix = entry.spec().id().substring(entry.queue() ? "queue_hopper_".length() : "hopper_".length());
             int sourceId = BLOCKS.get("chest_" + suffix).sourceId() + (entry.queue() ? 8200 : 8000);

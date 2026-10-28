@@ -19,21 +19,21 @@ import java.util.List;
  *
  * <p>GT6 keeps sixteen face counters in a {@code byte[16]} ({@code mCoinStackSizes},
  * {@code MultiTileEntityCoin.java:71}) - the 4x4 grid of coin stacks players see on top of the block
- * - and one material for the whole pile ({@code mMaterial}, {@code :72}). Each face holds at most
- * {@code COIN_STACKSIZE} coins ({@code :74}). The counters are the amount, the material is the kind;
+ * - and one material for the whole pile ({@code mMaterial}). Each face holds at most
+ * {@code COIN_STACKSIZE} coins. The counters are the amount, the material is the kind;
  * GT6's coin <em>item</em> is the pile's own placeable item, whose stack size is the coin count
- * ({@code getCoin}, {@code :107-109}).</p>
+ * ({@code getCoin}).</p>
  *
  * <h2>Storage layout</h2>
  *
  * <pre>
- * gt.coin.stacksize.&lt;0..15&gt; : byte, coins on that face, 0..16          (GT6's own keys, :81 and :93)
- * gt.coin.item               : ItemStack compound, the coin of this pile (port addition)
+ * gt.coin.stacksize.&lt;0..15&gt;: byte, coins on that face, 0..16 (GT6's own keys)
+ * gt.coin.item: ItemStack compound, the coin of this pile (port addition)
  * </pre>
  *
  * <p>GT6 writes {@code gt.coin.stacksize.<i>} for the sixteen faces and, instead of an item, the
- * keys {@code gt.material} ({@code :83}/{@code :90}), {@code gt.coin.unique} ({@code :82}) and the two
- * 16x16 shape bitsets {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} ({@code :79-80}), which
+ * keys {@code gt.material} (/), {@code gt.coin.unique} and the two
+ * 16x16 shape bitsets {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>}, which
  * only its own 3D coin renderer reads. The port's coin is a real item
  * ({@code gt6ce:coin_<i>&lt;material&gt;</i>}, see {@link CoinPileBlock}), so the coin stack replaces
  * the material string and carries the optional shape bitsets. The renderer reads that coin's die
@@ -46,8 +46,7 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * GT6's per-face cap: {@code private static final byte COIN_STACKSIZE = 16}
-     * ({@code MultiTileEntityCoin.java:74}), used by the add ({@code :167}) and the item merge
-     * ({@code :201}, {@code :217}).
+     * ({@code MultiTileEntityCoin.java:74}), used by the add and the item merge.
      */
     public static final int FACE_STACK_SIZE = gregtech.content.block.CoinPileRules.PER_FACE;
 
@@ -57,12 +56,12 @@ public class CoinPileBlockEntity extends BlockEntity {
      */
     public static final int MAX_FILL = 4;
 
-    /** GT6's per-face key prefix ({@code MultiTileEntityCoin.java:81} and {@code :93}). */
+    /** GT6's per-face key prefix ({@code MultiTileEntityCoin.java:81} and). */
     public static final String NBT_STACKSIZE = "gt.coin.stacksize.";
 
     /**
-     * The coin this pile is made of - the port's stand-in for GT6's {@code gt.material} ({@code :83},
-     * {@code :90}), which the port's coin item already carries as its registry identity.
+     * The coin this pile is made of - the port's stand-in for GT6's {@code gt.material} (
+     * ), which the port's coin item already carries as its registry identity.
      */
     public static final String NBT_COIN = "gt.coin.item";
 
@@ -76,7 +75,7 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * GT6's face index from block-relative click coordinates ({@code MultiTileEntityCoin.java:158} for
-     * the click and {@code :253} for the placement): {@code floor(hitX*4)*4 + floor(hitZ*4)}, with both
+     * the click and for the placement): {@code floor(hitX*4)*4 + floor(hitZ*4)}, with both
      * coordinates clamped into {@code [0, 0.99)}.
      */
     public static int faceAt(double hitX, double hitZ) {
@@ -162,8 +161,8 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * GT6's add branch ({@code MultiTileEntityCoin.java:166-172}): one coin per click, only onto a face
-     * that still has room ({@code :167}) and only a coin of the pile's own material - GT6 compares the
-     * held stack with {@code getCoin(1, registry, id)} ({@code ST.equal}, {@code :157}, {@code :167}),
+     * that still has room and only a coin of the pile's own material - GT6 compares the
+     * held stack with {@code getCoin(1, registry, id)} ({@code ST.equal}),
      * and the port's coin item carries that material itself ({@link CoinPileBlock#isCoin}). A pile
      * whose first coin fixed its material refuses every other metal, which is GT6's rule for a pile
      * that already has a {@code mMaterial}.
@@ -171,7 +170,7 @@ public class CoinPileBlockEntity extends BlockEntity {
      * <p>The pile's own block item is refused with them: it is no coin, and GT6's bare pile item - one
      * without a material - matches no {@code COIN_MAP} entry either.</p>
      *
-     * <p>GT6 shrinks the held stack itself ({@code :168}); the port returns the moved amount and lets
+     * <p>GT6 shrinks the held stack itself; the port returns the moved amount and lets
      * {@link CoinPileBlock#use} do that, as the port's blocks normally do.</p>
      *
      * @return how many coins moved onto the face ({@code 0} or {@code 1})
@@ -229,7 +228,7 @@ public class CoinPileBlockEntity extends BlockEntity {
      * returned to the caller. The block callback transfers it only after inventory admission,
      * while creative players destroy it without receiving a coin, as in GT6.
      * The last coin taken clears the pile's kind, which is what GT6's {@code setBlockToAir()} amounts
-     * to ({@code :174-176}).
+     * to.
      *
      * @return the taken coin, or {@link ItemStack#EMPTY} when the face is bare
      */

@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Loader_MultiTileEntities1512..1548 and MultiTileEntityTurbineSteam. */
+ * GT6's steam turbine multi-tiles and their crafting rows (Loader_MultiTileEntities
+ * 1512..1548, MultiTileEntityTurbineSteam). */
 package gregtech.content.energy;
 
 import gregtech.api.material.GTMaterial;

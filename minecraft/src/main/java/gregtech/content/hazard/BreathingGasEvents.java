@@ -63,7 +63,7 @@ public final class BreathingGasEvents {
 
     /**
      * Fluid registry path of GT6's natural-gas spring ({@code Loader_Worldgen}, {@code FL.Gas_Natural}) -
-     * the gas whose breathing row the port has had since §107. The oils' rows
+     * the gas whose breathing row the port has had since. The oils' rows
      * ({@code Loader_Blocks.java:149-152}) now use the same path.
      */
     public static final String NATURAL_GAS = WorldFluidEffects.NATURAL_GAS;
@@ -125,7 +125,7 @@ public final class BreathingGasEvents {
         // GT6 BlockBaseFluid:412 / BlockWaterlike:227: a non-empty effect list is the switch, and the
         // immunity is asked per path (gas suit for the base path, gas-or-chem suit for the swamp).
         if (!WorldFluidEffects.applyHeadInside(entity, fluid)) return false;
-        // GT6 :414 - getMaterial() != Material.water: only the oils and the natural gas drown.
+        // - getMaterial() != Material.water: only the oils and the natural gas drown.
         if (!WorldFluidEffects.headInsideDrowns(fluid)) return false;
         return entity.hurt(entity.level().damageSources().drown(), DROWN_DAMAGE);
     }

@@ -62,7 +62,7 @@ public final class GTToolRecipeSerializers {
     /** Shaped tool head row (GT6 {@code mToolHeadRecipes}). */
     public static final RecipeSerializer<GTToolHeadRecipe> HEAD = new HeadSerializer();
 
-    /** {@code gregtech:tool_assembly} — the id the port's data pack used before §29. */
+    /** {@code gregtech:tool_assembly} — the id the port's data pack used before. */
     public static final ResourceLocation ASSEMBLY_ID = GregTech.id("tool_assembly");
     /** {@code gt6ce:tool_crafting} */
     public static final ResourceLocation CRAFTING_ID = GregTech.id("tool_crafting");

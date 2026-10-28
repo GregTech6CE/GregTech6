@@ -26,11 +26,11 @@ import java.util.List;
  * Beyond the machine casings (which {@link MachineCasingRecipes} owns), GT6 welds
  * </p>
  * <ul>
- *   <li>{@code ingot 2/3/4/5/9 + ST.tag(n) -> ingotDouble/Triple/Quadruple/Quintuple/blockSolid}
- *       ({@code :320-323}),</li>
+ *   <li>{@code ingot 2/3/4/5/9 + ST.tag(n) -> ingotDouble/Triple/Quadruple/Quintuple/blockSolid},
+ *       </li>
  *   <li>{@code bolt 4 + tag4 -> stick}, {@code bolt 8 + tag8 -> stickLong},
- *       {@code stick 2 + tag2 -> stickLong} ({@code :330-332}),</li>
- *   <li>{@code plateCurved 4 + ring 1 -> rotor} ({@code :355}/{@code :359}).</li>
+ *       {@code stick 2 + tag2 -> stickLong},</li>
+ *   <li>{@code plateCurved 4 + ring 1 -> rotor} (/).</li>
  * </ul>
  * <p>
  * Every row exists twice in GT6: an easy-heatable pass with a fixed duration (16 ticks per material
@@ -95,8 +95,8 @@ public final class WelderFamilyRecipes {
         boolean easyHeatable = MaterialWorkability.isFurnace(material);   // GT6 tEasyHeatable = Or(FURNACE)
         long unitsIn = row.inUnits();
         long units = Math.max(unitsIn, row.outUnits());
-        // Easy pass: GT6 passes the duration explicitly (16 ticks per material unit, :335-348).
-        // Hard pass: RecipeMapHandlerPrefix#getCosts with multiplier 64 (:320-332).
+        // Easy pass: GT6 passes the duration explicitly (16 ticks per material unit).
+        // Hard pass: RecipeMapHandlerPrefix#getCosts with multiplier 64.
         // Original easy rotor passes explicit16*4, not16*(4+ring1/4).
         long easyTicks = row.output() == MaterialPrefix.rotor ? 64L
                 : 16L * unitsIn / gregtech.api.material.GTValues.U;

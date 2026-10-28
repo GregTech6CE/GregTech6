@@ -19,18 +19,19 @@ import java.util.List;
  * not see because they are neither a {@code Loader_Recipes_*} file nor a registration pattern:
  *
  * <ul>
- *   <li><b>Printer</b> ({@code :352}) — GT6's only real printer recipe: a plain book plus black dye
+ *   <li><b>Printer</b> — GT6's only real printer recipe: a plain book plus black dye
  *       fluid prints the "Scanner &amp; Printer Manual" ({@code ST.book("Manual_Printer", …)}), which is
  *       how the original hands that manual out. The port's printer had an <em>empty</em> recipe map, so
  *       the machine was unusable and the manual unobtainable outside loot.</li>
- *   <li><b>Boxinator</b> ({@code :351}) — 8 paper + a compass fold into a map.</li>
- *   <li><b>Scanner (Visuals)</b> ({@code :326-347}) — display-only rows ({@code addFakeRecipe}) showing
+ *   <li><b>Boxinator</b> — 8 paper + a compass fold into a map.</li>
+ *   <li><b>Scanner (Visuals)</b> — display-only rows ({@code addFakeRecipe}) showing
  *       what a scanner writes onto a USB stick; the port's map was empty.</li>
- *   <li><b>Material dictionary</b> ({@code :388}) — the printer's dictionary row needs the material a
+ *   <li><b>Material dictionary</b> — the printer's dictionary row needs the material a
  *       scanner wrote onto a USB stick, so {@link GTMaterialDataRecipes} builds it from the stick's
  *       NBT; the molecular scanner that writes that data is GT6's
- *       {@code RecipeMapScannerMolecular}.</li> *   <li><b>Unboxinator</b> ({@code :386-393}) — display-only rows showing what each GT loot bag, the
- *       guide book and the loot bottle hand out; the port has those items (§21, §25), so the chains are
+ *       {@code RecipeMapScannerMolecular}.</li>
+ *   <li><b>Unboxinator</b> — display-only rows showing what each GT loot bag, the
+ *       guide book and the loot bottle hand out; the port has those items, so the chains are
  *       now visible in JEI.</li>
  * </ul>
  *
@@ -111,7 +112,7 @@ public final class GTMainRecipes {
 
             // ---- display rows: the printer reproduces what a scanned USB stick carries ----
             // GT6 prints a map of one dye unit per colour divided by nine (16 mB per colour) and one
-            // unit of black for a scanned block (GT6_Main:361 / :355).
+            // unit of black for a scanned block (GT6_Main:361 /).
             new Row("Printer", true, 16, 64, "v:map:1;tech:usb1_stick:1", "v:filled_map:1",
                     "f:Dye_Chemical_Yellow:16;f:Dye_Chemical_Magenta:16;f:Dye_Chemical_Cyan:16;"
                             + "f:Dye_Chemical_Black:16", "", "GT6_Main:361"),

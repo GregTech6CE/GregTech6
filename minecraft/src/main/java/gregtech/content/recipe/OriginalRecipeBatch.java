@@ -51,7 +51,7 @@ public abstract class OriginalRecipeBatch {
     }
     protected static ItemStack mat(MaterialPrefix prefix, String name, int count) {
         // GT6 LoaderUnificationTargets uses vanilla items for these exact material forms.
-        // Keep this batch usable with survival drops rather than requiring duplicate GT items.
+        // Keep these rows usable with survival drops rather than requiring duplicate GT items.
         Item vanilla = switch (prefix.getName() + "/" + name) {
             case "dust/Sugar" -> Items.SUGAR;
             case "dust/Gunpowder" -> Items.GUNPOWDER;

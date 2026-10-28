@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Original17197/17996/17998/17999 registrations and LargeHeatExchanger/LightningRod.addToolTips. */
+ * GT6's utility controller registrations (17197/17996/17998/17999) and their inherited
+ * tooltips (LargeHeatExchanger / LightningRod.addToolTips). */
 package gregtech.content.multiblock;
 
 import gregtech.engine.multiblock.AdvancedControllerRules;

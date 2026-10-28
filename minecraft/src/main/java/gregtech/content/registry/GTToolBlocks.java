@@ -206,19 +206,14 @@ public final class GTToolBlocks {
         // tinted by the rope's material, so no extra art is needed.
         ROPE_SILK = rope(gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
                 v -> v.id().equals("rope_silk")).findFirst().orElseThrow());
-        // :2087
         ROPE_GRASS = rope(gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
                 v -> v.id().equals("rope_grass")).findFirst().orElseThrow());
-        // :2088
         ROPE_VINE = rope(gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
                 v -> v.id().equals("rope_vine")).findFirst().orElseThrow());
-        // :2089
         ROPE_PLASTIC = rope(gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
                 v -> v.id().equals("rope_plastic")).findFirst().orElseThrow());
-        // :2090
         ROPE_STEEL = rope(gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
                 v -> v.id().equals("rope_steel")).findFirst().orElseThrow());
-        // :2091
         DYNAMITE = GTBlocks.BLOCKS.register("dynamite", () -> new gregtech.content.block.tool.DynamiteBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED)
                         .strength(0.2f, 0.0f).sound(SoundType.GRASS).noOcclusion().instabreak(),
@@ -229,9 +224,7 @@ public final class GTToolBlocks {
         // GT6's other two explosives (Loader_MultiTileEntities:2235,2237): the boomstick's quality is
         // 10 like the dynamite's, the strong dynamite's is 40 - four times the resistance threshold, with the same 3x3x3 volume.
         BOOMSTICK = dynamite("boomstick", 10F, 3, gregtech.content.material.Materials.Orange);
-        // :2235
         DYNAMITE_STRONG = dynamite("strong_dynamite", 40F, 5, gregtech.content.material.Materials.Purple);
-        // :2237
         TAP = GTBlocks.BLOCKS.register("tap", () -> new gregtech.content.block.tool.TapBlock(false,
                 BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                         .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));
@@ -269,8 +262,8 @@ public final class GTToolBlocks {
         simple("plant_pot",
                 BlockBehaviour.Properties.of().mapColor(MapColor.CLAY).strength(1f, 5f).sound(SoundType.STONE));
         // GT6's bumbliary (Loader_MultiTileEntities:2221, hardness 5.0/resistance 5.0) and the
-        // advanced one (:2222, stainless steel, 6.0/6.0). This used to be a placeholder block; the
-        // ids stay, so the existing lang keys and the model keep working.
+        // advanced one ({@code Loader_MultiTileEntities:2222}, stainless steel, 6.0/6.0). The port
+        // keeps GT6's ids, so the existing lang keys and the model keep working.
         GTBumbleBlocks.initializeApiaries();
         BUMBLIARY = RegistryObject.create(gregtech.GregTech.id("bumbliary"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
         ADVANCED_BUMBLIARY = RegistryObject.create(gregtech.GregTech.id("advanced_bumbliary"),
@@ -325,7 +318,7 @@ public final class GTToolBlocks {
                 BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(10f, 1200f).requiresCorrectToolForDrops().sound(SoundType.ANVIL)));
         ANVILS.add(block);
         ALL_SIMPLE.add((RegistryObject) block);
-        // GT6 registers every anvil with stack size 16 (Loader_MultiTileEntities:32025 onwards)
+        // GT6 registers every anvil with stack size 16 (the anvil multi-tiles start at id 32025).
         GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
     }
 

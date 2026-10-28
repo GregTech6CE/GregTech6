@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Original Loader_MultiTileEntities 10031..10035 / 11031..11035. */
+ * Crafting rows of GT6's bipolar magnet families (Loader_MultiTileEntities 10031..10035 /
+ * 11031..11035). */
 package gregtech.content.energy;
 
 import gregtech.content.data.MaterialGroups;

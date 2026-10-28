@@ -40,7 +40,7 @@ import java.util.List;
  *   <li>{@code RecipeMapPrinter:139-149} — the stick plus paper prints the material's dictionary:
  *       3 paper, or 6 for a book past 50 pages, at 16 GU/t for 512 / 1024 ticks, with black dye
  *       ({@code FL.mul(DYE_FLUIDS_CHEMICAL[Black], 1, 2 or 1, T)} = 72 / 144 mB in GT6's 144 mB unit).</li>
- *   <li>{@code RecipeMapReplicator:81-84} + {@code getReplicatorRecipe:88-114} — the stick plus
+ *   <li>{@code RecipeMapReplicator:81-84} + {@code getReplicatorRecipe} — the stick plus
  *       {@code neutralmatter} (the material's neutrons) and {@code chargedmatter} (its protons)
  *       rebuilds the material, preferring its ambient fluid, then its priority prefix, then gem → gem
  *       plate → ingot → plate → nugget (9) → chunk (4) → dust → tiny dust (9) → small dust (4)
@@ -302,7 +302,7 @@ public final class GTMaterialDataRecipes {
 
         int fileTier = tag != null && tag.getCompound(NBT_USB_DRIVE).contains(slotTierKey(slot))
                 ? tag.getCompound(NBT_USB_DRIVE).getByte(slotTierKey(slot)) : 0;
-        if (fileTier > tier) return null;                          // GT6 :61
+        if (fileTier > tier) return null;
         return materialOf(data);
     }
 

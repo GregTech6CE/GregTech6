@@ -33,14 +33,14 @@ import java.util.Map;
 
 /**
  * GT6's Welder rows that turn curved plates into pipes: {@code Loader_Recipes_Handlers:324-328} (hard
- * materials) and {@code :339-343} (easy-heatable ones).
+ * materials) and (easy-heatable ones).
  *
  * <pre>
- * plateCurved  1 + circuit tag 1 -> pipeTiny   2
- * plateCurved  1 + circuit tag 2 -> pipeSmall  1
- * plateCurved  3 + circuit tag 3 -> pipeMedium 1
- * plateCurved  6 + circuit tag 4 -> pipeLarge  1
- * plateCurved 12 + circuit tag 5 -> pipeHuge   1
+ * plateCurved 1 + circuit tag 1 -> pipeTiny 2
+ * plateCurved 1 + circuit tag 2 -> pipeSmall 1
+ * plateCurved 3 + circuit tag 3 -> pipeMedium 1
+ * plateCurved 6 + circuit tag 4 -> pipeLarge 1
+ * plateCurved 12 + circuit tag 5 -> pipeHuge 1
  * </pre>
  *
  * <p>GT6 registers one <em>prefix</em> per pipe size and maps it onto a block item per material
@@ -133,7 +133,7 @@ public final class PipeRecipes {
     }
 
     /**
-     * GT6 {@code Loader_Recipes_Handlers:492} (Boxinator) and {@code :458-459} (Unboxinator): four
+     * GT6 {@code Loader_Recipes_Handlers:492} (Boxinator) and (Unboxinator): four
      * medium pipes pack into one quadruple pipe, nine small ones into a nonuple — and both split again.
      * The crafting-grid direction lives in {@code Loader_FormConversionCraftingRecipes}
      * ({@code MultiTileEntityPipeFluid:100-101}).
@@ -188,8 +188,8 @@ public final class PipeRecipes {
         int count = row.size() == PipeSpec.PipeSize.TINY ? 2 : 1;   // GT6 pipeTiny 2, all others 1
         output.setCount(count);
 
-        // GT6's RecipeMapHandlerPrefix#getCosts with multiplier 64 for the hard pass (:324-328), and an
-        // explicit 16 * <curved plates> for the easy-heatable pass (:339-343) - the same two-branch cost
+        // GT6's RecipeMapHandlerPrefix#getCosts with multiplier 64 for the hard pass, and an
+        // explicit 16 * <curved plates> for the easy-heatable pass - the same two-branch cost
         // WelderFamilyRecipes uses for the other prefix rows.
         long ticks = PipeWeldingRules.ticks(material,row);
 

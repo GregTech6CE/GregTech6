@@ -62,7 +62,7 @@ public final class UtilityCraftingRows {
                             "item:gt6ce:tool_knife",
                             'R',
                             "item:gt6ce:tool_rolling_pin")));
-        // MultiItemRandomTools:240,388,534,536-537.
+        // The spray can, its refills and the lighter rows (MultiItemRandomTools:240,388,534,536-537).
         rows.add(new OriginalSurvivalRecipes.Row(
                 "empty_spray_can",
                 1,
@@ -123,7 +123,7 @@ public final class UtilityCraftingRows {
                         "item:minecraft:redstone",
                         'd',
                         "item:gt6ce:tool_screwdriver")));
-        // Loader_MultiTileEntities metalset:138. One canonical locker per material.
+        // GT6's metalset in Loader_MultiTileEntities. One canonical locker per material.
         for (var spec : GTStorageMetals.ALL) {
             String id = spec.suffix().equals("stainless_steel") ? "locker" : "locker_" + spec.suffix();
             rows.add(new OriginalSurvivalRecipes.Row(

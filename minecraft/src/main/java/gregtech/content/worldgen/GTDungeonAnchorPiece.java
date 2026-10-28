@@ -24,22 +24,22 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
  * <p>Why a piece at all, instead of an empty generation point: vanilla decides whether a structure exists
  * through this chain, every step of which needs something non-empty -</p>
  * <ul>
- *   <li>{@code StructureCheck.canCreateStructure} ({@code StructureCheck:91-93}) asks
+ *   <li>{@code StructureCheck.canCreateStructure} ({@code StructureCheck}) asks
  *       {@code structure.findValidGenerationPoint(...).isPresent()}; an empty optional makes
- *       {@code StructureCheck.checkStart} ({@code :71-89}) answer {@code START_NOT_PRESENT},</li>
- *   <li>{@code ChunkGenerator.getStructureGeneratingAt} ({@code ChunkGenerator:240-257}) skips every
+ *       {@code StructureCheck.checkStart} answer {@code START_NOT_PRESENT},</li>
+ *   <li>{@code ChunkGenerator.getStructureGeneratingAt} ({@code ChunkGenerator}) skips every
  *       candidate whose check answers {@code START_NOT_PRESENT}, so {@code /locate} would never report the
  *       dungeon, however correct its placement is,</li>
  *   <li>and once the chunk is forced to {@code STRUCTURE_STARTS}, {@code StructureStart.isValid()}
- *       ({@code StructureStart:116-118}) is {@code !pieceContainer.isEmpty()}
- *       ({@code PiecesContainer:28-30}), so a start with zero pieces is discarded by
- *       {@code Structure.generate} ({@code Structure:84-96}) and never stored in the chunk.</li>
+ *       ({@code StructureStart}) is {@code !pieceContainer.isEmpty()}
+ *       ({@code PiecesContainer}), so a start with zero pieces is discarded by
+ *       {@code Structure.generate} ({@code Structure}) and never stored in the chunk.</li>
  * </ul>
  *
  * <p>So the port returns a generation point holding exactly this piece - and only where GT6's own
  * one-in-a-hundred gate passed ({@code GTDungeonStructure.findGenerationPoint}), so an anchor without a
  * dungeon holds no structure at all. Blocks can only ever be written by a piece's {@link #postProcess}
- * ({@code StructureStart.placeInChunk:81-96} calls it per piece and does nothing else), and this one writes
+ * ({@code StructureStart.placeInChunk} calls it per piece and does nothing else), and this one writes
  * nothing, which is what the game test asserts by diffing a whole chunk across that call.</p>
  */
 
@@ -56,22 +56,22 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
  * <p>Why a piece at all, instead of an empty generation point: vanilla decides whether a structure exists
  * through this chain, every step of which needs something non-empty -</p>
  * <ul>
- *   <li>{@code StructureCheck.canCreateStructure} ({@code StructureCheck:91-93}) asks
+ *   <li>{@code StructureCheck.canCreateStructure} ({@code StructureCheck}) asks
  *       {@code structure.findValidGenerationPoint(...).isBound()}; an empty optional makes
- *       {@code StructureCheck.checkStart} ({@code :71-89}) answer {@code START_NOT_PRESENT},</li>
- *   <li>{@code ChunkGenerator.getStructureGeneratingAt} ({@code ChunkGenerator:240-257}) skips every
+ *       {@code StructureCheck.checkStart} answer {@code START_NOT_PRESENT},</li>
+ *   <li>{@code ChunkGenerator.getStructureGeneratingAt} ({@code ChunkGenerator}) skips every
  *       candidate whose check answers {@code START_NOT_PRESENT}, so {@code /locate} would never report the
  *       dungeon, however correct its placement is,</li>
  *   <li>and once the chunk is forced to {@code STRUCTURE_STARTS}, {@code StructureStart.isValid()}
- *       ({@code StructureStart:116-118}) is {@code !pieceContainer.isEmpty()}
- *       ({@code PiecesContainer:28-30}), so a start with zero pieces is discarded by
- *       {@code Structure.generate} ({@code Structure:84-96}) and never stored in the chunk.</li>
+ *       ({@code StructureStart}) is {@code !pieceContainer.isEmpty()}
+ *       ({@code PiecesContainer}), so a start with zero pieces is discarded by
+ *       {@code Structure.generate} ({@code Structure}) and never stored in the chunk.</li>
  * </ul>
  *
  * <p>So the port returns a generation point holding exactly this piece - and only where GT6's own
  * one-in-a-hundred gate passed ({@code GTDungeonStructure.findGenerationPoint}), so an anchor without a
  * dungeon holds no structure at all. Blocks can only ever be written by a piece's {@link #postProcess}
- * ({@code StructureStart.placeInChunk:81-96} calls it per piece and does nothing else), and this one writes
+ * ({@code StructureStart.placeInChunk} calls it per piece and does nothing else), and this one writes
  * nothing, which is what the game test asserts by diffing a whole chunk across that call.</p>
  */
 public final class GTDungeonAnchorPiece extends StructurePiece {

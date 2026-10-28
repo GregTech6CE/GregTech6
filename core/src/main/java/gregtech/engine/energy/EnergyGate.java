@@ -26,13 +26,13 @@ import java.util.function.LongSupplier;
  * shared by the native EnergyBlockDefaults adapter. The core calculation has no
  * Minecraft or loader dependency.
  *
- * Semantics kept verbatim against upstream Root:716-717:
+ * Semantics kept verbatim against upstream's TileEntityBase01Root:
  * - aSize 0 or the wrong directionality (not accepting / not emitting) -> 0, nothing happens;
  * - GregTechTags.Energy.ALL_SIZE_IRRELEVANT types (TD.java:218, e.g. RF/Steam/Heat - NOT EU) skip the
  *   minimum packet size check entirely;
  * - injection: a packet below getEnergySizeInputMin returns aAmount (the offered energy counts
- *   as USED but doInject is never called - the energy is swallowed, Root:717);
- * - extraction: a packet below getEnergySizeOutputMin returns 0 (refused, Root:716).
+ *   as USED but doInject is never called - the energy is swallowed);
+ * - extraction: a packet below getEnergySizeOutputMin returns 0 (refused).
  *
  * Synchronization belongs to the caller: GTEnergyBlockEntity keeps upstream's
  * synchronized doEnergyInjection/doEnergyExtraction entry points.
