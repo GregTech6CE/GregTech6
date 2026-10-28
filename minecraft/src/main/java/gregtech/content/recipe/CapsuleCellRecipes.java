@@ -19,28 +19,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class CapsuleCellRecipes {
     private CapsuleCellRecipes() {}
     public static int register() {
-        int count=0;
-        for(var spec:PortableFluidContainerSpec.values()) {
-            if(!spec.shapeId().equals("cell"))continue;
-            boolean simple=simpleExtrusion(spec);
-            for(var prefix:new MaterialPrefix[]{MaterialPrefix.ingot,MaterialPrefix.dust,MaterialPrefix.nugget,MaterialPrefix.dustTiny}) {
-                var input=GTItems.getStack(prefix,spec.material(),1);
-                if(input.isEmpty())continue;
-                boolean tiny=prefix==MaterialPrefix.nugget||prefix==MaterialPrefix.dustTiny;
-//? if >=1.21.1 {
-                /*var output=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())),tiny?1:9);
-*///?} else {
-                var output=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())),tiny?1:9);
-//?}
-                for(String mold:new String[]{"extruder_shape_capsulecellcontainer","low_heat_extruder_shape_capsulecellcontainer"}) {
-                    if(!simple&&mold.startsWith("low_heat_"))continue;
-                    if(output.isEmpty()||GTTechnological.get(mold)==null)throw new IllegalStateException("Missing capsule cell or mold: "+spec.id());
-                    long ticks=simple?(tiny?8:64):hotExtrusionTicks(spec.material(),prefix.getMaterialWeight());
-                    if(MachineRecipeMaps.Extruder.addRecipe(new Recipe(new ItemStack[]{input,new ItemStack(GTTechnological.get(mold))},new ItemStack[]{output},null,null,null,null,ticks,simple?16:96,0))!=null)count++;
-                }
-            }
-        }
-        return count;
+        // SourceExtruderRecipes registers native capsule forms together with the complete prefix matrix.
+        return 0;
     }
     public static boolean simpleExtrusion(PortableFluidContainerSpec spec) {
         // Keep legacy/extension choices; the imported source profile supplies positive evidence only.

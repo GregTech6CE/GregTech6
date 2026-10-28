@@ -33,14 +33,7 @@ public final class PolymerFormingRecipes {
 //?}
         add(MachineRecipeMaps.Coagulator,new Recipe(null,new ItemStack[]{mat(MaterialPrefix.nugget,"Rubber",1)},null,null,
                 new FluidStack[]{new FluidStack(latex.get(),16)},null,256,0,0));
-        for(String material:new String[]{"Rubber","Plastic"})for(String mold:new String[]{"extruder_shape_","low_heat_extruder_shape_"})
-            for(MaterialPrefix input:new MaterialPrefix[]{MaterialPrefix.dust,MaterialPrefix.ingot})for(var form:FORMS) {
-                if(input==form.prefix())continue;
-                var shape=GTTechnological.get(mold+form.shape());
-                if(shape==null)throw new IllegalStateException("Missing mold "+mold+form.shape());
-                add(MachineRecipeMaps.Extruder,new Recipe(new ItemStack[]{mat(input,material,form.units()),new ItemStack(shape)},
-                        new ItemStack[]{mat(form.prefix(),material,form.count())},null,null,null,null,64L*form.units(),16,0));
-            }
+        // The shared source extrusion matrix now owns all polymer input forms and both mold families.
         return RECIPES.size();
     }
     private static ItemStack mat(MaterialPrefix prefix,String material,int amount) {

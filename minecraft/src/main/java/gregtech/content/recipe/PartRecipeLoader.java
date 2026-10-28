@@ -24,9 +24,8 @@ import java.util.List;
  * RollBender / ClusterMill / RollFormer / Lathe / Cutter / Extruder tables) plus the
  * dust/crushed furnace smelting from {@code Loader_Recipes_Furnace}. Lathe uses a bounded
  * source-profile adapter; other machine families still need their easy/hard duration audit.
- * Extrusion uses registered shape molds, with a mold-free fallback if lookup fails.
- * Material eligibility, forging targets and the input-prefix matrix still require
- * alignment with the original; see ALIGN-011 in the integration audit.</p>
+ * Extrusion follows the original input-prefix matrix, material eligibility and forging targets
+ * through SourceExtruderRecipes; molds are always required catalysts.</p>
  */
 public class PartRecipeLoader implements InitializationStep {
 
@@ -48,6 +47,7 @@ public class PartRecipeLoader implements InitializationStep {
             extruder(m);
             smelting(m);
         }
+        extruderPairCount = SourceExtruderRecipes.finishRegistration();
         com.mojang.logging.LogUtils.getLogger().info(
                 "[gregtech] Part processing recipes added; extruder matrix: {} recipes ({} GT6 outputs skipped: {})",
                 extruderPairCount, EXTRUDER_SKIPPED.size(), EXTRUDER_SKIPPED);
@@ -229,116 +229,11 @@ public class PartRecipeLoader implements InitializationStep {
     // the two prefixes' material weights (line 812). The port used to register only the ingot row of
     // the hot family, so tool heads, blocks, and every low-heat mold were missing.
 
-    /** One GT6 extruder output: mold name (shape item suffix) plus the port form it produces. */
-    private record ExtruderOutput(String mold, MaterialPrefix prefix,
-                                 gregtech.engine.prefix.BlockMaterialPrefix blockPrefix) {
-        static ExtruderOutput of(String mold, MaterialPrefix prefix) { return new ExtruderOutput(mold, prefix, null); }
-        static ExtruderOutput block(String mold, gregtech.engine.prefix.BlockMaterialPrefix prefix) {
-            return new ExtruderOutput(mold, null, prefix);
-        }
-        long weight() { return prefix != null ? prefix.getMaterialWeight() : blockPrefix.getMaterialWeight(); }
-        ItemStack stack(GTMaterial material) {
-            return prefix != null ? mat(prefix, material, 1)
-                    : gregtech.content.registry.GTBlocks.getStack(blockPrefix, material);
-        }
-    }
-
-    private static final List<ExtruderOutput> EXTRUDER_OUTPUTS = List.of(
-            ExtruderOutput.of("ingot", MaterialPrefix.ingot),
-            ExtruderOutput.of("plate", MaterialPrefix.plate),
-            ExtruderOutput.of("curvedplate", MaterialPrefix.plateCurved),
-            ExtruderOutput.of("rod", MaterialPrefix.stick),
-            ExtruderOutput.of("longrod", MaterialPrefix.stickLong),
-            ExtruderOutput.of("bolt", MaterialPrefix.bolt),
-            ExtruderOutput.of("ring", MaterialPrefix.ring),
-            ExtruderOutput.of("tinyplate", MaterialPrefix.plateTiny),
-            ExtruderOutput.of("foil", MaterialPrefix.foil),
-            ExtruderOutput.of("finewire", MaterialPrefix.wireFine),
-            ExtruderOutput.of("smallgear", MaterialPrefix.gearGtSmall),
-            ExtruderOutput.of("gear", MaterialPrefix.gearGt),
-            ExtruderOutput.of("shovelhead", MaterialPrefix.toolHeadRawShovel),
-            ExtruderOutput.of("swordblade", MaterialPrefix.toolHeadRawSword),
-            ExtruderOutput.of("hoehead", MaterialPrefix.toolHeadRawHoe),
-            ExtruderOutput.of("sawblade", MaterialPrefix.toolHeadRawSaw),
-            ExtruderOutput.of("pickaxehead", MaterialPrefix.toolHeadRawPickaxe),
-            ExtruderOutput.of("axehead", MaterialPrefix.toolHeadRawAxe),
-            ExtruderOutput.of("filehead", MaterialPrefix.toolHeadFile),
-            ExtruderOutput.of("hammerhead", MaterialPrefix.toolHeadHammer),
-            // GT6 Loader_Recipes_Handlers:769 — a block of cast metal (9U) needs nine ingots.
-            ExtruderOutput.block("block", gregtech.engine.prefix.BlockMaterialPrefix.blockSolid));
-
-    /** GT6 outputs whose port form does not exist yet (recorded instead of guessed). */
-    public static final List<String> EXTRUDER_SKIPPED = List.of(
-            "wireGt01 (wires are physical blocks in this port: registry/GTWires)",
-            "casingSmall (no MaterialPrefix.casingSmall)",
-            "pipeTiny/small/medium/large/huge (port pipes are blocks: MaterialPrefixes.fluidPipe*)",
-            "capcellcon / cell / bottle (capsule containers have their own loader: CapsuleCellRecipes)");
-
-    /** GT6's input side: EXTRUDER_FODDER / INGOT_BASED / GEM_BASED (dust joins only the low-heat run). */
-    private static final List<MaterialPrefix> EXTRUDER_INPUTS = List.of(
-            MaterialPrefix.ingot, MaterialPrefix.plate, MaterialPrefix.gem, MaterialPrefix.dust);
-
     private int extruderPairCount;
-
-    private void extruder(GTMaterial m) {
-        // PolymerFormingRecipes owns their original low-heat costs and both mold families.
-        if (m.getName().equals("Rubber") || m.getName().equals("Plastic")) return;
-
-        for (MaterialPrefix input : EXTRUDER_INPUTS) {
-            ItemStack in = mat(input, m, 1);
-            if (in.isEmpty()) continue;
-            for (ExtruderOutput out : EXTRUDER_OUTPUTS) {
-                if (out.prefix() == input) continue;                      // GT6: aInput == aOutput returns
-                ItemStack output = out.stack(m);
-                if (output.isEmpty()) continue;
-                long inWeight = input.getMaterialWeight(), outWeight = out.weight();
-                if (inWeight <= 0 || outWeight <= 0) continue;
-                // GT6 Loader_Recipes_Handlers:811-813
-                long inCount = 1, outCount = 1;
-                if (outWeight > inWeight) inCount = (outWeight + inWeight - 1) / inWeight;
-                else outCount = inWeight / outWeight;
-                if (inCount > 64 || outCount < 1) continue;
-
-                // Hot family: GT6's shape extruder runs at 96 GU/t with the forging cost of
-                // RecipeMapHandlerPrefixForging (same formula the capsule cells use). Low-heat family:
-                // 16 GU/t plus GT6's computed duration
-                // (units(outAmount * outCount, U, 64, roundUp), Loader_Recipes_Handlers:821).
-                long outUnits = outWeight * outCount;
-                extrude(m, in, inCount, "extruder_shape_" + out.mold(), output, outCount, 96,
-//? if >=1.21.1 {
-
-                        /*gregtech.content.recipe.ExtrusionWorkRules.hotExtrusionTicks(m, outUnits));
-
-*///?} else {
-                        gregtech.content.recipe.CapsuleCellRecipes.hotExtrusionTicks(m, outUnits));
-//?}
-                long lowHeatDuration = Math.max(16, (outUnits * 64 + GTValues.U - 1) / GTValues.U);
-                extrude(m, in, inCount, "low_heat_extruder_shape_" + out.mold(), output, outCount, EU, lowHeatDuration);
-            }
-        }
+    public static final List<String> EXTRUDER_SKIPPED = List.of();
+    private void extruder(GTMaterial material) {
+        SourceExtruderRecipes.register(material);
     }
-
-    /** Registers one extruder recipe with its mold as a catalyst, or without a mold when it is absent. */
-    private void extrude(GTMaterial m, ItemStack input, long inCount, String moldId, ItemStack output,
-                         long outCount, long eut, long duration) {
-        ItemStack in = input.copy();
-        in.setCount((int) inCount);
-        ItemStack out = output.copy();
-        out.setCount((int) outCount);
-        ItemStack mold = shape(moldId);
-        boolean added = mold.isEmpty()
-                ? MachineRecipeMaps.Extruder.addRecipe1(true, eut, duration, in, out) != null
-                : MachineRecipeMaps.Extruder.addRecipe2(true, eut, duration, in, mold, out) != null;
-        if (added) extruderPairCount++;
-    }
-
-    /** Extruder shape mold from {@link GTTechnological}, EMPTY when not registered. */
-    private static ItemStack shape(String name) {
-        net.minecraft.world.item.Item item = GTTechnological.get(name);
-        return item == null ? ItemStack.EMPTY : new ItemStack(item);
-    }
-
-    /** Extruder recipes added by the matrix above, for tests and reports. */
     public int extruderRecipes() { return extruderPairCount; }
 
     // ── Furnace: dust / crushed chain → smelting target ─────────────────────
