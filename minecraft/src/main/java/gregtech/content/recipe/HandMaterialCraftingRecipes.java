@@ -74,6 +74,15 @@ public final class HandMaterialCraftingRecipes {
     private static void handForms(Map<ResourceLocation, JsonObject> rows, GTMaterial material) {
         String m = slug(material);
         var plate = mat("plate", material);
+        var rotor = mat("rotor", material);
+        var curved = mat("plateCurved", material);
+        var rotorRing = mat("ring", material);
+        var rotorScrew = mat("screw", material);
+        if (material.has(MaterialProperty.SMITHABLE) && !rotor.isEmpty() && !curved.isEmpty() && !rotorRing.isEmpty() && !rotorScrew.isEmpty())
+            put(rows, "craft/rotor/" + m, List.of("YhY", "TXf", "YdY"),
+                    Map.of("Y", form("plateCurved", material, curved), "X", form("ring", material, rotorRing),
+                            "h", HAMMER, "f", FILE, "d", tag("forge:tools/screwdriver"),
+                            "T", form("screw", material, rotorScrew)), copy(rotor, 1));
         var stick = mat("stick", material);
         var stickLong = mat("stickLong", material);
         var gem = mat("gem", material);

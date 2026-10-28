@@ -36,7 +36,8 @@ public final class AnvilRecipeDefinitions {
             bend(MachineRecipeMaps.AnvilBendBig, plate, plateCurved, null, 0),
             bend(MachineRecipeMaps.AnvilBendBig, stick, springSmall, scrapGt, 2),
             bend(MachineRecipeMaps.AnvilBendBig, stickLong, spring, null, 0),
-            bend(MachineRecipeMaps.AnvilBendSmall, stick, ring, scrapGt, 2));
+            bend(MachineRecipeMaps.AnvilBendSmall, stick, ring, scrapGt, 2),
+            new Rule(MachineRecipeMaps.AnvilBendSmall, plate, 1, null, 0, foil, 2, scrapGt, 4, true));
 
     private AnvilRecipeDefinitions() {}
 
@@ -59,6 +60,10 @@ public final class AnvilRecipeDefinitions {
                 continue;
             for (var rule : RULES) {
                 if (rule.smithable() && !material.has(MaterialProperty.SMITHABLE)) continue;
+                if (rule.output() == foil && (!AnvilMaterialCatalog.SELF_FORGING.contains(material.getName())
+                        || material.has(MaterialProperty.FLAMMABLE)
+                        || (gregtech.content.material.SourceLatheMaterialProfiles.find(material) != null
+                            && gregtech.content.material.SourceLatheMaterialProfiles.find(material).coated()))) continue;
                 var in = GTItems.getStack(rule.input(), material, rule.amount());
                 var out = GTItems.getStack(rule.output(), material, rule.outputAmount());
                 if (in.isEmpty() || out.isEmpty()) continue;
