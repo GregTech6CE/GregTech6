@@ -91,6 +91,7 @@ public final class MachineRecipeOverlay {
         gregtech.content.recipe.NonOreMacerationRows.rebuild();
         gregtech.content.recipe.SourceOreOutputRows.rebuild();
         SharedPurifiedCentrifugeRows.rebuild();
+        SharedMineralSteamCrackingRows.rebuild();
         SharedOreWashingRows.rebuild();
         SharedOreMagneticRows.rebuild();
         SharedOreSiftingRows.rebuild();
@@ -171,6 +172,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(gregtech.content.recipe.NonOreMacerationRows.owned());
         exclude.addAll(gregtech.content.recipe.SourceOreOutputRows.owned());
         exclude.addAll(SharedPurifiedCentrifugeRows.owned());
+        exclude.addAll(SharedMineralSteamCrackingRows.owned());
         exclude.addAll(SharedOreWashingRows.owned());
         exclude.addAll(SharedOreMagneticRows.owned());
         exclude.addAll(SharedOreSiftingRows.owned());
