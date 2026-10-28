@@ -14,10 +14,14 @@ final class MachineEnergyElement extends Element {
     private final IElement[] powers;
     private final float[] positions;
     private final double marker;
+    private final IElement text;
+    private final boolean inRange;
+    private final int background;
 
     MachineEnergyElement(long min, long rated, long max, double average, String unit, boolean overloaded) {
         double multiplier = average < min ? 0 : average / rated;
-        Component label = Component.literal(JadeText.decimal(average, 2) + " ")
+        Component label = average <= 0 ? Component.translatable("jade.gt6ce.machine.no_energy_input")
+                : Component.literal(JadeText.decimal(average, 2) + " ")
                 .append(gregtech.client.EnergyText.unit(unit))
                 .append("/t  " + JadeText.decimal(multiplier, 2) + "×");
         double position = average < min
@@ -25,8 +29,11 @@ final class MachineEnergyElement extends Element {
                 : average <= rated
                         ? (rated > min ? .5 * (average - min) / (rated - min) : .5)
                         : (max > rated ? .5 + .5 * (average - rated) / (max - rated) : 1);
-        marker = overloaded ? 1 : Math.max(0, Math.min(1, position));
-        bar = JadeBars.progress(1, label, overloaded ? 0xEC8A23 : average <= 0 || average < min ? 0x66B6DA : 0x29B52A);
+        marker = Math.max(0, Math.min(1, position));
+        inRange = !overloaded && average > 0 && average >= min && average <= max;
+        background = average <= 0 ? 0 : overloaded || average > max ? 0xFFEC8A23 : 0xFF66B6DA;
+        bar = JadeBars.progress(0, Component.empty(), 0);
+        text = IElementHelper.get().text(label);
         positions = max > rated && rated > min ? new float[] {0, .5F, .75F, 1} : new float[] {0, 1};
         double[] rates = positions.length == 4
                 ? new double[] {min, rated, rated + (max - rated) / 2.0, max}
@@ -48,7 +55,7 @@ final class MachineEnergyElement extends Element {
             bottomWidth += powers[i].getCachedSize().x + 16;
         }
         return new Vec2(
-                Math.max(180, Math.max(bar.getCachedSize().x, Math.max(topWidth, bottomWidth))),
+                Math.max(180, Math.max(text.getCachedSize().x + 10, Math.max(topWidth, bottomWidth))),
                 bar.getCachedSize().y + 20);
     }
 
@@ -58,12 +65,17 @@ final class MachineEnergyElement extends Element {
         bar.render(graphics, x, barTop, right, barBottom);
         float inset = JadeBars.borderWidth();
         int left = (int) Math.ceil(x + inset), end = (int) Math.floor(right - inset);
-        int markerWidth = Math.min(5, Math.max(0, end - left));
-        int markerX = Math.max(
-                left, Math.min(end - markerWidth, (int) Math.round(left + (end - left) * marker) - markerWidth / 2));
-        int markerY = (int) Math.floor(barBottom - inset) - 2;
-        graphics.fill(markerX, markerY, markerX + markerWidth, markerY + 2, 0xFF172641);
-        graphics.fill(markerX, markerY, markerX + markerWidth, markerY + 1, 0xFFFFFF55);
+        int top = (int) Math.ceil(barTop + inset), lower = (int) Math.floor(barBottom - inset);
+        if (inRange && end > left) {
+            int markerX = left + (int) Math.round((end - left - 1) * marker);
+            graphics.fill(left, top, markerX, lower, 0xFF70D970);
+            graphics.fill(markerX + 1, top, end, lower, 0xFF269C38);
+            graphics.fill(markerX, top, markerX + 1, lower, 0xFFFFFFFF);
+        } else if (background != 0) {
+            graphics.fill(left, top, end, lower, background);
+        }
+        float textY = barTop + (bar.getCachedSize().y - text.getCachedSize().y) / 2;
+        text.render(graphics, x + inset + 1, textY, right - inset, textY + text.getCachedSize().y);
         for (int i = 0; i < positions.length; i++) {
             float anchor = x + (right - x - 1) * positions[i];
             if (i > 0 && i < positions.length - 1)

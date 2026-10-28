@@ -12,11 +12,7 @@ final class OmniEnergyInfo {
     private OmniEnergyInfo() {}
 
     static void append(JadeInspection info, BlockEntity entity) {
-        if (entity instanceof ElectricWireBlockEntity wire) {
-            info.line("transferred", wire.lastWattage(), "EU");
-            info.line("wire_rating", wire.voltage(), wire.amperage(), wire.lossPerBlock());
-            if (wire.burnCounter() > 0) info.line("wire_overloads", wire.burnCounter());
-        } else if (entity instanceof AxleBlockEntity axle) {
+        if (entity instanceof AxleBlockEntity axle) {
             info.line("transferred", axle.transferredLast(), "RU");
             info.line("axle_rating", axle.maxSpeed(), axle.maxPower());
         } else if (entity instanceof EnergyNodeBlockEntity node && node.spec() != null && !node.isBatteryBox()) {
