@@ -51,8 +51,8 @@ replay_pid*
 /docs/card-plans/
 /docs/supersymmetry-*.md
 
-# Transient game-node tests: written, run against the matching subsystem, then deleted.
-# core keeps its unit tests (JUnit, run by :core:check).
+# Transient subsystem tests: written, run against the matching subsystem, then deleted.
+/core/src/test/
 /minecraft/src/test/
 minecraft/versions/*/src/test/
 
