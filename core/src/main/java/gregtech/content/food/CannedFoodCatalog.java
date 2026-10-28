@@ -994,8 +994,7 @@ public final class CannedFoodCatalog {
                     0,
                     false,
                     false,
-                    false)
-            );
+                    false));
     private static final Map<String, Can> BY_ID;
 
     static {

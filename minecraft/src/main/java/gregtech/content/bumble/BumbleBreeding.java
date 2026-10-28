@@ -118,7 +118,7 @@ public final class BumbleBreeding {
     /**
      * GT6's breeding step ({@code MultiTileEntityBumbliary:214-266}) with the drone treated as if it
      * came from the main drone slot, so a drone stack of more than one item costs two drones.
-
+     *
      *
      * @return null when GT6 would not breed: the first stack has to be a princess
      *         ({@code bumbleType % 5 == 1}) and the second a drone
