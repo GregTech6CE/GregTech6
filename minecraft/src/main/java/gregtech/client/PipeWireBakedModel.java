@@ -129,13 +129,16 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
                     ? (halves != null ? halves[dir.ordinal()] : PipeGeometry.NONE)
                     : PipeGeometry.NONE;
 
-            // Core face: end texture where connected, side texture elsewhere.
+            // Connected arms hide the core face; a thinner neighbor leaves only a shoulder visible.
             // Full-cube faces sit on the boundary and go into the culled bucket.
             Direction cull = fullCube ? dir : null;
             if (side == cull) {
                 if (!overlayPass) {
                     if (conn) {
-                        capFace(quads, dir, new double[]{lo, lo, lo, hi, hi, hi});
+                        double opening = n == PipeGeometry.NONE ? (fullCube ? 0 : half)
+                                : Math.min(half, PipeConnectionGeometry.isVirtual(n)
+                                        ? PipeConnectionGeometry.virtualSize(n) : n);
+                        capFace(quads, dir, new double[]{lo, lo, lo, hi, hi, hi}, opening);
                     } else {
                         face(quads, dir, lo, lo, lo, hi, hi, hi, sideTex, sideTint);
                     }
@@ -200,8 +203,12 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
      * (rubber) texture.
      */
     private void capFace(List<BakedQuad> out, Direction dir, double[] box) {
+        capFace(out, dir, box, 0);
+    }
+
+    private void capFace(List<BakedQuad> out, Direction dir, double[] box, double opening) {
         if (capRing <= 0) {
-            face(out, dir, box, endTex, endTint);
+            capSurface(out, dir, box, endTex, endTint, opening);
             return;
         }
         int a1, a2; // cross-section axis indices into the box array (0=x,1=y,2=z)
@@ -213,14 +220,20 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
         double lo1 = box[a1], hi1 = box[a1 + 3], lo2 = box[a2], hi2 = box[a2 + 3];
         double r = Math.min(capRing, Math.min(hi1 - lo1, hi2 - lo2) / 2.0);
         if (r <= 0) {
-            face(out, dir, box, endTex, endTint);
+            capSurface(out, dir, box, endTex, endTint, opening);
             return;
         }
-        face(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, lo2 + r, hi2 - r), endTex, endTint);
-        face(out, dir, sub(box, a1, lo1, lo1 + r, a2, lo2, hi2), sideTex, sideTint);
-        face(out, dir, sub(box, a1, hi1 - r, hi1, a2, lo2, hi2), sideTex, sideTint);
-        face(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, lo2, lo2 + r), sideTex, sideTint);
-        face(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, hi2 - r, hi2), sideTex, sideTint);
+        capSurface(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, lo2 + r, hi2 - r), endTex, endTint, opening);
+        capSurface(out, dir, sub(box, a1, lo1, lo1 + r, a2, lo2, hi2), sideTex, sideTint, opening);
+        capSurface(out, dir, sub(box, a1, hi1 - r, hi1, a2, lo2, hi2), sideTex, sideTint, opening);
+        capSurface(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, lo2, lo2 + r), sideTex, sideTint, opening);
+        capSurface(out, dir, sub(box, a1, lo1 + r, hi1 - r, a2, hi2 - r, hi2), sideTex, sideTint, opening);
+    }
+
+    private void capSurface(List<BakedQuad> out, Direction dir, double[] box,
+                            ResourceLocation texture, int tint, double opening) {
+        for (double[] part : PipeConnectionGeometry.exposedFaceParts(box, dir.getAxis().ordinal(), opening))
+            face(out, dir, part, texture, tint);
     }
 
     private static double[] sub(double[] box, int a1, double lo1, double hi1,

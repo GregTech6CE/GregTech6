@@ -45,6 +45,32 @@ public final class PipeConnectionGeometry {
         return localArm(axis, positive, half, neighbor);
     }
 
+    /** Remove the connected tube's cross-section while preserving the exposed shoulder of a thicker pipe. */
+    public static List<double[]> exposedFaceParts(double[] face, int axis, double openingHalf) {
+        if (openingHalf <= 0) return List.<double[]>of(face);
+        int u = (axis + 1) % 3, v = (axis + 2) % 3;
+        double u0 = Math.max(face[u], 8 - openingHalf), u1 = Math.min(face[u + 3], 8 + openingHalf);
+        double v0 = Math.max(face[v], 8 - openingHalf), v1 = Math.min(face[v + 3], 8 + openingHalf);
+        if (u0 >= u1 || v0 >= v1) return List.<double[]>of(face);
+        List<double[]> parts = new ArrayList<>(4);
+        addFacePart(parts, face, u, face[u], u0, v, face[v], face[v + 3]);
+        addFacePart(parts, face, u, u1, face[u + 3], v, face[v], face[v + 3]);
+        addFacePart(parts, face, u, u0, u1, v, face[v], v0);
+        addFacePart(parts, face, u, u0, u1, v, v1, face[v + 3]);
+        return parts;
+    }
+
+    private static void addFacePart(
+            List<double[]> parts, double[] face, int u, double u0, double u1, int v, double v0, double v1) {
+        if (u0 >= u1 || v0 >= v1) return;
+        double[] part = face.clone();
+        part[u] = u0;
+        part[u + 3] = u1;
+        part[v] = v0;
+        part[v + 3] = v1;
+        parts.add(part);
+    }
+
     private static double[] box(int axis, double half, double from, double to) {
         if (from >= to || half <= 0) return null;
         double[] box = {8 - half, 8 - half, 8 - half, 8 + half, 8 + half, 8 + half};
