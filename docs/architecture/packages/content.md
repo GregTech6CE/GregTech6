@@ -59,7 +59,7 @@
 | `content.material` | 原版物品成分与材料统一的加载 |
 | `content.energy` | 能源设备的具体游戏接入；节点的 `content.fluid` 承担原生流体对象 |
 | `content.transport`、`content.transport.fluid` | 管道定义物化、物品转移适配及流体 tick 阶段 |
-| `content.cover`、`content.logistics` | 覆盖板宿主/交互/信号及物流核心结构、路由接入 |
+| `content.cover`、`content.logistics` | 覆盖板宿主/交互/信号、`CoverStore` 共享存储与生命周期，及物流核心结构、路由接入 |
 | `content.tool` | 工具和砧的游戏配方、工作输入、几何及交互适配 |
 | `content.nuclear`、`content.hazard`、`content.damage` | 核网络、辐射、冷却、危险效果与游戏伤害类型 |
 | `content.worldgen` | Feature、放置与原生生成注册；`center` 为原点设施与生成事件，`dungeon` 为具体地牢房间与内容 |
