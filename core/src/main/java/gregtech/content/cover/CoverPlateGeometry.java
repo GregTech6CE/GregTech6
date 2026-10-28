@@ -20,7 +20,7 @@ public final class CoverPlateGeometry {
     public static Box valve(int side) {
         return bounds(side, 6.0 / 16, 10.0 / 16, .5);
     }
-    /** Side-sprite coordinates for a valve vertex, measured from its host-facing end. */
+    /** Side-sprite coordinates run from the exposed cap toward the host interior. */
     public static UV valveSideUv(int side, int face, double x, double y, double z) {
         int axis = axis(side), faceAxis = axis(face);
         if (axis == faceAxis) throw new IllegalArgumentException("Valve side face must be lateral");
@@ -33,7 +33,7 @@ public final class CoverPlateGeometry {
                 : (maximum - coordinate) / (maximum - minimum);
         double width =
                 (coordinate(across, x, y, z) - minimum(across, box)) / (maximum(across, box) - minimum(across, box));
-        return new UV((6 + 4 * width) / 16, length / 2);
+        return new UV((6 + 4 * width) / 16, (1 - length) / 2);
     }
 
     public record UV(double u, double v) {}
