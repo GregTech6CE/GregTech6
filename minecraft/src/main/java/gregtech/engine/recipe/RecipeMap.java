@@ -295,12 +295,19 @@ public class RecipeMap {
 
     public Recipe addRecipe(Recipe aRecipe, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden, boolean aLogErrors) {
         if (aRecipe == null) return null;
+        canonicalInputs(aRecipe);
         for(int i=0;i<aRecipe.mOutputs.length;i++)
             aRecipe.mOutputs[i]=gregtech.engine.material.MaterialUnification.canonical(aRecipe.mOutputs[i]);
         aRecipe.mHidden = aHidden;
         aRecipe.mFakeRecipe = aFakeRecipe;
         if (!aFakeRecipe && !validate(aRecipe, aLogErrors && mLogErrors)) return null;
-        if (aCheckForCollisions && findCollision(aRecipe) != null) return null;
+        if (aCheckForCollisions) {
+            Recipe collision = findCollision(aRecipe);
+            if (collision != null) {
+                RecipeDiagnostics.rejected(this, collision, aRecipe);
+                return null;
+            }
+        }
         return add(aRecipe);
     }
 
@@ -319,6 +326,7 @@ public class RecipeMap {
         List<Recipe> accepted = new ArrayList<>();
         for (Recipe row : candidates) {
             if (row == null) continue;
+            canonicalInputs(row);
             for (int i = 0; i < row.mOutputs.length; i++)
                 row.mOutputs[i] = gregtech.engine.material.MaterialUnification.canonical(row.mOutputs[i]);
             row.mHidden = false;
@@ -331,6 +339,7 @@ public class RecipeMap {
                 if (pool == null) continue;
                 for (Recipe existing : pool) {
                     if (collisionReachable(existing, row) && inputsSatisfiedBy(existing, row)) {
+                        RecipeDiagnostics.rejected(this, existing, row);
                         collision = true;
                         break;
                     }
@@ -341,6 +350,7 @@ public class RecipeMap {
                 // A zero-amount non-presence fluid is indexed but not required by the matcher.
                 // Preserve old key reachability rather than treating such rows as unconditional.
                 if (collisionReachable(existing, row) && inputsSatisfiedBy(existing, row)) {
+                    RecipeDiagnostics.rejected(this, existing, row);
                     collision = true;
                     break;
                 }
@@ -351,6 +361,16 @@ public class RecipeMap {
             }
         }
         return accepted;
+    }
+
+    /** Unify explicit vanilla replacements before collision lookup, as viewers and live aliases do.
+     * Exact recipes and identity-sensitive predicates keep their original representatives. */
+    private static void canonicalInputs(Recipe recipe) {
+        if (recipe.mExactItemInputs) return;
+        for (int i = 0; i < recipe.mInputs.length; i++) {
+            if (!recipe.hasItemInputGuard(i) && !recipe.hasSameItemInputPredicate(i))
+                recipe.mInputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.mInputs[i]);
+        }
     }
 
     private static void indexCollisionAnchor(Recipe row, Map<Item, List<Recipe>> anchors,

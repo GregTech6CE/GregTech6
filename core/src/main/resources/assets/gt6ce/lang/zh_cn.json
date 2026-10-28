@@ -6,7 +6,7 @@
   "jade.gt6ce.bale.stable": "已干燥，不再老化",
   "jade.gt6ce.bale.slow": "低温、遮蔽或阴雨会减慢老化",
   "jade.gt6ce.pyrite.ore": "金矿石",
-  "jade.gt6ce.pyrite.small_ore": "小型金矿石",
+  "jade.gt6ce.pyrite.small_ore": "贫瘠金矿石",
   "tooltip.gt6ce.pyrite.fools_gold": "哦，金闪闪的东西！诶？怎么不是金",
   "gt.material.Sculk": "幽匿",
   "material.gt6ce.sculk": "幽匿",
@@ -31461,7 +31461,7 @@
   "jade.gt6ce.mold.state.molten": "熔融",
   "jade.gt6ce.mold.state.solid": "固态",
   "jade.gt6ce.mold.state.solidified": "已凝固",
-  "jade.gt6ce.mold.temperature": "温度：%1$s K / %2$s K",
+  "jade.gt6ce.mold.temperature": "温度：%1$sK / %2$sK",
   "jade.gt6ce.multiblock.energy": "储量：%s / %s %s",
   "jade.gt6ce.multiblock.fluid": "%s：%s / %s mB",
   "jade.gt6ce.multiblock.formed": "结构：已成型",
@@ -142735,5 +142735,9 @@
   "gt6ce.jei.info.biome_group.plains": "平原",
   "gt6ce.jei.info.biome_group.river_lake": "河流／湖泊",
   "gt6ce.jei.info.biome_group.mesa": "恶地",
-  "gt6ce.jei.info.biome_group.shroom": "蘑菇岛"
+  "gt6ce.jei.info.biome_group.shroom": "蘑菇岛",
+  "tooltip.gt6ce.cover.sneak_place": "潜行来放置覆盖板",
+  "jade.gt6ce.machine.time": "%s秒 / %s秒（%s%%）",
+  "jade.gt6ce.machine.recipe_outputs": "配方输出：",
+  "jade.gt6ce.boiler.dry_heat": "干烧警告 — 热量积累：%s"
 }

@@ -14,7 +14,7 @@ final class OmniMachineInfo {
     static void append(JadeInspection info, BlockEntity entity, snownee.jade.api.BlockAccessor accessor) {
         if (entity instanceof MaterialAnvilBlockEntity anvil) {
             info.line("anvil_hint");
-            info.line("durability", anvil.remainingDurability());
+            info.line("durability", anvil.remainingDurability() / 10000);
             var facing = entity.getBlockState().getValue(gregtech.content.block.tool.MaterialAnvilBlock.FACING);
             var hit = accessor.getHitResult();
             double half = facing.getAxis() == Direction.Axis.Z ? hit.getLocation().x - entity.getBlockPos().getX()
@@ -53,7 +53,7 @@ final class OmniMachineInfo {
             info.flag("auto_output", faucet.isAutoPull());
         } else if (entity instanceof MoldBlockEntity mold) {
             moldSides(info, mold, mold.getAutoPullDirections());
-            info.flag("redstone_required", mold.isUseRedstone());
+            if (mold.getAutoPullDirections() != 0) info.flag("redstone_required", mold.isUseRedstone());
         } else if (entity instanceof MoldBasinBlockEntity basin) {
             moldSides(info, basin, basin.getAutoPullDirections());
         } else if (entity instanceof DustFunnelBlockEntity funnel) {
@@ -92,8 +92,9 @@ final class OmniMachineInfo {
 
     private static void moldSides(JadeInspection info, ITileEntityMold mold, int autoMask) {
         // Current molds expose input faces and an auto-pull mask, not the old saved connection field.
-        for (Direction side : Direction.values()) if (mold.isMoldInputSide(side.ordinal()))
+        for (Direction side : Direction.values()) if (mold.isMoldInputSide(side.ordinal())
+                && (autoMask & (1 << side.ordinal())) != 0)
             info.line("mold_side", new JadeInspection.Label("jade.gt6ce.direction." + side.getSerializedName()),
-                    JadeInspection.label((autoMask & (1 << side.ordinal())) != 0 ? "automatic" : "manual"));
+                    JadeInspection.label("automatic"));
     }
 }

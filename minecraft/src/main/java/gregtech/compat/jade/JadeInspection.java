@@ -162,7 +162,6 @@ final class JadeInspection {
         tooltip.add(Component.translatable("jade.gt6ce.omni.group_" + first.getString("kind"),
                 Component.translatable("jade.gt6ce.omni." + role)).withStyle(color));
         if ("items".equals(first.getString("kind"))) {
-            int count = 0;
             for (var row : rows) {
                 var args = row.getList("args", 10);
                 for (int j = 0; j < args.size(); j++) {
@@ -170,10 +169,7 @@ final class JadeInspection {
                     if (!arg.contains("item")) continue;
                     var item = readItem(accessor, arg);
                     if (item.isEmpty()) continue;
-                    var icon = IElementHelper.get().item(item);
-                    icon.message(Component.translatable("jade.gt6ce.omni.item_count",
-                            item.getHoverName(), item.getCount()).getString());
-                    if (count++ % 8 == 0) tooltip.add(icon); else tooltip.append(icon);
+                    JadeText.item(tooltip, item);
                 }
             }
         } else for (var row : rows) renderLine(tooltip, accessor, row);
@@ -217,7 +213,9 @@ final class JadeInspection {
             values[j] = value;
         }
         var text = Component.translatable(row.getString("key"), values);
-        if (icon == null) JadeText.detail(tooltip, row.getString("key"), values);
+        if (row.getString("key").equals("jade.gt6ce.omni.state") && values.length == 1)
+            tooltip.add((Component) values[0]);
+        else if (icon == null) JadeText.detail(tooltip, row.getString("key"), values);
         else JadeText.add(tooltip, icon, text);
     }
 }

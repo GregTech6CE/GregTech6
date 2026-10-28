@@ -115,10 +115,10 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
 
         if (data.contains(NBT_MATERIAL)) {
             String state = data.getString(NBT_STATE);
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.mold.content",
-                    JadeText.translated(data, NBT_MATERIAL + "_key", NBT_MATERIAL),
-                    format(data.getLong(NBT_AMOUNT)),
-                    JadeText.phase(state)));
+            var content = Component.literal(gregtech.client.MaterialTooltips.displayUnits(data.getLong(NBT_AMOUNT)) + " ")
+                    .append(JadeText.translated(data, NBT_MATERIAL + "_key", NBT_MATERIAL))
+                    .append(" (").append(JadeText.phase(state.equals("solidified") ? "solid" : state)).append(")");
+            JadeText.detail(tooltip, "jade.gt6ce.crucible.content", content);
         }
 
         if (data.contains(NBT_SOLID_OUTPUT, CompoundTag.TAG_COMPOUND)) {
@@ -144,7 +144,4 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
         return UID;
     }
 
-    private static String format(long value) {
-        return Long.toString(value);
-    }
 }

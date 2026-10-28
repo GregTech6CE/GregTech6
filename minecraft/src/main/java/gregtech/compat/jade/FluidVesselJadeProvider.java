@@ -59,8 +59,7 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
                     "jade.gt6ce.vessel." + (data.getBoolean("auto") ? "enabled" : "disabled"))));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));
             if (data.getBoolean("sealed") && data.getLong("duration") > 0) {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.fermentation", data.getLong("time") / 20,
-                        data.getLong("duration") / 20, gregtech.content.energy.BoilerGauge.percent(data.getLong("time"), data.getLong("duration"))));
+                tooltip.add(JadeBars.time(data.getLong("time"), data.getLong("duration"), 1));
             }
         } else {
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.channels", data.getInt("channels"), data.getLong("capacity"), data.getLong("bandwidth")));

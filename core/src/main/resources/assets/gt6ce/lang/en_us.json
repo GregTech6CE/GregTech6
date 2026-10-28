@@ -5,8 +5,8 @@
   "jade.gt6ce.bale.rot": "Moldy grass may rot",
   "jade.gt6ce.bale.stable": "Dried: no further ageing",
   "jade.gt6ce.bale.slow": "Cold, shade or rain slows ageing",
-  "jade.gt6ce.pyrite.ore": "Gold Ore",
-  "jade.gt6ce.pyrite.small_ore": "Small Gold Ore",
+  "jade.gt6ce.pyrite.ore": "Native Gold Ore",
+  "jade.gt6ce.pyrite.small_ore": "Small Native Gold Ore",
   "tooltip.gt6ce.pyrite.fools_gold": "Ooh, something shiny and golden! Huh? Why isn't it gold?",
   "gt.material.Sculk": "Sculk",
   "material.gt6ce.sculk": "Sculk",
@@ -16946,5 +16946,9 @@
   "gt6ce.jei.info.biome_group.plains": "Plains",
   "gt6ce.jei.info.biome_group.river_lake": "River / lake",
   "gt6ce.jei.info.biome_group.mesa": "Badlands",
-  "gt6ce.jei.info.biome_group.shroom": "Mushroom fields"
+  "gt6ce.jei.info.biome_group.shroom": "Mushroom fields",
+  "tooltip.gt6ce.cover.sneak_place": "Sneak to place covers",
+  "jade.gt6ce.machine.time": "%ss / %ss (%s%%)",
+  "jade.gt6ce.machine.recipe_outputs": "Recipe outputs:",
+  "jade.gt6ce.boiler.dry_heat": "Warning: dry heating — accumulated heat: %s"
 }
