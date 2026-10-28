@@ -14,15 +14,24 @@ public final class MoltenMaterialUnits {
     public static final Ratio ALUMINA = new Ratio(504);
     // GT6 Loader_Fluids:191: Plastic retains its 1000 mB per material U binding.
     public static final Ratio PLASTIC = new Ratio(1000);
+    public static final Ratio BUCKET = new Ratio(1000);
+    /** GT6 {@code MT.Lava}: one vanilla bucket contains nine material units. */
+    public static final Ratio LAVA = new Ratio(1000, 9);
 
-    public record Ratio(int millibucketsPerUnit) {
+    public record Ratio(int millibucketsPerUnit, int materialUnits) {
+        public Ratio(int millibucketsPerUnit) {
+            this(millibucketsPerUnit, 1);
+        }
+
         public Ratio {
-            if (millibucketsPerUnit <= 0 || GTValues.U % millibucketsPerUnit != 0)
+            if (millibucketsPerUnit <= 0
+                    || materialUnits <= 0
+                    || Math.multiplyExact(GTValues.U, materialUnits) % millibucketsPerUnit != 0)
                 throw new IllegalArgumentException("Non-integral molten material ratio: " + millibucketsPerUnit);
         }
 
         public long unitsPerMillibucket() {
-            return GTValues.U / millibucketsPerUnit;
+            return Math.multiplyExact(GTValues.U, materialUnits) / millibucketsPerUnit;
         }
 
         public long toUnits(int millibuckets) {
