@@ -34,13 +34,12 @@ public final class EnergyBlockDefaults {
                 || !self.isEnergyAcceptingFrom(energyType, side, false)) {
             return 0;
         }
+        long minimum = self.getEnergySizeInputMin(energyType, side);
+        // The upstream gate consumes undersized packets without calling doInject. Keep inspection informed.
+        if (doInject && !GregTechTags.Energy.ALL_SIZE_IRRELEVANT.contains(energyType) && Math.abs(size) < minimum)
+            self.onInsufficientEnergy(energyType, side);
         return EnergyGate.gateInjection(
-                energyType,
-                true,
-                size,
-                self.getEnergySizeInputMin(energyType, side),
-                amount,
-                () -> self.doInject(energyType, side, size, amount, doInject));
+                energyType, true, size, minimum, amount, () -> self.doInject(energyType, side, size, amount, doInject));
     }
 
     public static long doEnergyExtraction(

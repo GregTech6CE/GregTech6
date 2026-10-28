@@ -98,6 +98,9 @@ public interface IEnergyBlock {
         return Collections.emptyList();
     }
 
+    /** Inspection hook for real undersized packets consumed by the gate without entering storage. */
+    default void onInsufficientEnergy(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side) {}
+
     /** Subclass hook: store injected energy. Called from {@link #doEnergyInjection} after validation. */
     default long doInject(
             GregTechTags.Tag energyType,

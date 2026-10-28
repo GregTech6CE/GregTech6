@@ -36,6 +36,7 @@ public final class MachineEnergyPort {
     private long startup;
     private final MachineInputAverage inputAverage = new MachineInputAverage();
     private long lastOverloadTick = Long.MIN_VALUE;
+    private long lastInsufficientTick = Long.MIN_VALUE;
 
     public long stored() {
         return stored;
@@ -82,6 +83,16 @@ public final class MachineEnergyPort {
     public boolean overloaded(@Nullable Level level) {
         if (level == null || lastOverloadTick == Long.MIN_VALUE) return false;
         long elapsed = level.getGameTime() - lastOverloadTick;
+        return elapsed >= 0 && elapsed < 20;
+    }
+
+    public void recordInsufficient(@Nullable Level level) {
+        if (level != null) lastInsufficientTick = level.getGameTime();
+    }
+
+    public boolean insufficient(@Nullable Level level) {
+        if (level == null || lastInsufficientTick == Long.MIN_VALUE) return false;
+        long elapsed = level.getGameTime() - lastInsufficientTick;
         return elapsed >= 0 && elapsed < 20;
     }
 

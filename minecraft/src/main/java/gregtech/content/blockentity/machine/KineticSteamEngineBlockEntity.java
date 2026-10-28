@@ -147,7 +147,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         return "RUNNING — Output " + computeOutput() + " KU/t (" + pct + "%)";
     }
 
-    long computeOutput() {return outputRate()*(engineState+1)/16;}
+    long computeOutput() {return spec == null ? outputRate()*(engineState+1)/16 : spec.outputAtPressure(engineState);}
     private static boolean isSteam(FluidStack fluid){
         var steam=gregtech.content.registry.GTFluids.still("Steam");
 //? if >=1.21.1 {

@@ -31,6 +31,7 @@ import java.util.Optional;
 
 public class BasicMachineScreen extends MachineContainerScreen<BasicMachineContainerMenu> implements FluidRecipeScreen {
     private final ResourceLocation texture;
+    private final MachineProgressRenderer progressRenderer = new MachineProgressRenderer();
 
     private boolean overRecipeArrow(double mouseX, double mouseY) {
         return mouseX >= leftPos + 78 && mouseX < leftPos + 98
@@ -135,14 +136,7 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
         graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 
         // Progress arrow overlay (UV 176,0 in the 256x256 texture, 20x18)
-        int progress = menu.progressPercent();
-        if (progress > 0) {
-            int arrowWidth = Math.max(1, 20 * Math.min(progress, 95) / 95);
-            graphics.blit(texture,
-                    leftPos + 78, topPos + 24,  // render x, y
-                    176, 0,                      // uv x, y
-                    arrowWidth, 18,              // render width, height
-                    256, 256);                   // texture size
-        }
+        progressRenderer.draw(graphics, texture, leftPos + 78, topPos + 24,
+                176, 0, 20, 18, menu.progressFraction());
     }
 }

@@ -30,7 +30,6 @@ public enum BatteryBoxJadeProvider implements IServerDataProvider<BlockAccessor>
         var control = node.machineControl(null);
         data.putBoolean("enabled", control.enabled());
         data.putBoolean("running", control.running());
-        data.putBoolean("active", control.active());
         data.putString("unit", spec.outType().getShortName());
         data.putLongArray("input", new long[]{node.getEnergySizeInputRecommended(spec.inType(), null),
                 node.getEnergySizeInputMin(spec.inType(), null), node.getEnergySizeInputMax(spec.inType(), null)});
@@ -41,22 +40,18 @@ public enum BatteryBoxJadeProvider implements IServerDataProvider<BlockAccessor>
         data.putLong("stored", battery.stored());
         data.putLong("capacity", battery.capacity());
         data.putLong("offered", battery.offered());
-        data.putInt("providers", battery.providers());
         data.putInt("mode", control.mode());
         var icons = new ListTag();
         var inventory = node.batteryInventory();
-        int installed = 0;
         for (int slot = 0; slot < Math.min(MAX_SLOTS, inventory.getSlots()); slot++) {
             var stack = inventory.getStackInSlot(slot);
             if (stack.isEmpty()) continue;
-            installed++;
             var icon = saveIcon(stack, accessor);
             // Arbitrary third-party battery data must not evict the entire status panel.
             // Only the display copy loses oversized metadata; the real stack is never modified.
             if (icon.sizeInBytes() > MAX_ICON_BYTES) icon = saveIcon(new ItemStack(stack.getItem(), stack.getCount()), accessor);
             icons.add(icon);
         }
-        data.putInt("installed", installed);
         data.put("items", icons);
         tag.put(DATA_KEY, data);
     }
@@ -79,22 +74,20 @@ public enum BatteryBoxJadeProvider implements IServerDataProvider<BlockAccessor>
 //?}
         var data = tag.getCompound(DATA_KEY);
         var unit = JadeText.unit(data.getString("unit"));
-        line(tooltip, "state", label(!data.getBoolean("enabled") ? "disabled" : data.getBoolean("running") ? "working" : "waiting"));
-        line(tooltip, "delivering", label(data.getBoolean("active") ? "yes" : "no"));
+        tooltip.add(label(!data.getBoolean("enabled") ? "disabled" : data.getBoolean("running") ? "working" : "waiting"));
         for (String direction : new String[]{"input", "output"}) {
             var rates = data.getLongArray(direction);
             if (rates.length != 3) continue;
-            line(tooltip, "rated_" + direction, rates[0], unit);
-            line(tooltip, "packet_range", label(direction), rates[1], rates[2], unit);
+            String value = direction.equals("output")
+                    ? EnergyRateText.offered(data.getLong("offered"), rates[0], rates[1], rates[2], data.getString("unit"))
+                    : EnergyRateText.rate(rates[0], rates[1], rates[2], data.getString("unit"));
+            line(tooltip, "energy_rate", label(direction), value);
         }
         line(tooltip, "buffer", data.getLong("buffer"), data.getLong("bufferMax"), unit);
         line(tooltip, "mode", data.getInt("mode"));
         line(tooltip, "battery_total", data.getLong("stored"), data.getLong("capacity"), unit);
-        line(tooltip, "battery_output", data.getInt("providers"), data.getLong("offered"));
-        line(tooltip, "battery_unavailable", Math.max(0, data.getInt("installed") - data.getInt("providers")));
         var items = data.getList("items", 10);
         if (items.isEmpty()) return;
-        tooltip.add(Component.translatable("jade.gt6ce.omni.group_items", label("battery")));
         for (int i = 0; i < Math.min(MAX_SLOTS, items.size()); i++) {
 //? if >=1.21.1 {
             /*var stack = ItemStack.parseOptional(accessor.getLevel().registryAccess(), items.getCompound(i));

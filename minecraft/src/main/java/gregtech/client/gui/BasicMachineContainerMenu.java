@@ -40,6 +40,8 @@ import net.minecraftforge.network.PacketDistributor;
 
 /** Container for basic machine GUI — creates slot layout from RecipeMap counts. */
 public class BasicMachineContainerMenu extends AbstractContainerMenu {
+    // One vanilla signed-short menu field, with enough precision for sub-pixel arrow clipping.
+    private static final int PROGRESS_SCALE = 30000;
     private final BasicMachineBlockEntity blockEntity;
     private final Player viewer;
     private final String machineName;
@@ -58,7 +60,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         this.recipeMap = blockEntity != null ? blockEntity.recipeMap() : MachineRecipeMaps.DidYouKnow;
         this.progressData = new ContainerData() {
             @Override public int get(int key) {
-                return blockEntity != null ? blockEntity.getProgressPercent() : 0;
+                return blockEntity != null ? (int) Math.round(blockEntity.getProgressFraction() * PROGRESS_SCALE) : 0;
             }
             @Override public void set(int key, int value) {}
             @Override public int getCount() { return 1; }
@@ -234,7 +236,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
     public String machineName() { return machineName; }
     public RecipeMap recipeMap() { return recipeMap; }
     public int programSlot() { return programSlot; }
-    public int progressPercent() { return progressData.get(0); }
+    public int progressPercent() { return (int) (progressFraction() * 100); }
+    public float progressFraction() { return Math.max(0, Math.min(1, progressData.get(0) / (float) PROGRESS_SCALE)); }
 
     @Override
     public boolean stillValid(Player player) {

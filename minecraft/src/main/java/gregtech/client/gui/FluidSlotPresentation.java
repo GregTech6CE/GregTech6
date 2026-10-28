@@ -20,7 +20,9 @@ final class FluidSlotPresentation {
     private FluidSlotPresentation() {}
 
     static List<Component> tooltip(FluidStack fluid, long amount, long capacity) {
-        if (fluid.isEmpty()) return List.of(Component.translatable("gui.gt6ce.fluid.capacity", capacity));
+        if (fluid.isEmpty()) return List.of(capacity == Long.MAX_VALUE
+                ? Component.translatable("gui.gt6ce.fluid.capacity_unlimited")
+                : Component.translatable("gui.gt6ce.fluid.capacity", capacity));
         var result = new ArrayList<Component>();
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         result.add(entry == null ? fluid.getDisplayName()

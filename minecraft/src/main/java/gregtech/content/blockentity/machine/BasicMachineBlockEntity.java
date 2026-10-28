@@ -280,10 +280,18 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return energyPort.average(level);
     }
     public boolean isEnergyOverloaded() { return energyPort.overloaded(level); }
+    public boolean isEnergyInsufficient() { return energyPort.insufficient(level); }
+    @Override public void onInsufficientEnergy(GregTechTags.Tag type, @Nullable Direction side) {
+        if (!usesAuxiliaryInput(type, side)) energyPort.recordInsufficient(level);
+    }
     public boolean isRunning() { return mRunning; }
     public int getProgressPercent() {
+        return (int) (getProgressFraction() * 100);
+    }
+
+    public double getProgressFraction() {
         if (processor.totalWork() <= 0) return 0;
-        return (int) Math.min(100, (double) processor.progress() / processor.totalWork() * 100);
+        return Math.max(0, Math.min(1, (double) processor.progress() / processor.totalWork()));
     }
 
     // ── Server tick ──────────────────────────────────────────────────────
