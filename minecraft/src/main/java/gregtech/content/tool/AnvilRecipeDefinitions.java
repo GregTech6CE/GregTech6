@@ -60,10 +60,12 @@ public final class AnvilRecipeDefinitions {
                 continue;
             for (var rule : RULES) {
                 if (rule.smithable() && !material.has(MaterialProperty.SMITHABLE)) continue;
-                if (rule.output() == foil && (!AnvilMaterialCatalog.SELF_FORGING.contains(material.getName())
-                        || material.has(MaterialProperty.FLAMMABLE)
-                        || (gregtech.content.material.SourceLatheMaterialProfiles.find(material) != null
-                            && gregtech.content.material.SourceLatheMaterialProfiles.find(material).coated()))) continue;
+                if (rule.output() == foil
+                        && (!AnvilMaterialCatalog.SELF_FORGING.contains(material.getName())
+                                || material.has(MaterialProperty.FLAMMABLE)
+                                || (gregtech.content.material.SourceLatheMaterialProfiles.find(material) != null
+                                        && gregtech.content.material.SourceLatheMaterialProfiles.find(material)
+                                                .coated()))) continue;
                 var in = GTItems.getStack(rule.input(), material, rule.amount());
                 var out = GTItems.getStack(rule.output(), material, rule.outputAmount());
                 if (in.isEmpty() || out.isEmpty()) continue;
