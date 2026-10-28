@@ -23,7 +23,10 @@ public enum RockTwigJadeProvider implements IBlockComponentProvider {
         if (accessor.getBlockEntity() instanceof RockBlockEntity rock) {
             for (var item : RockBlock.yields(rock)) content(tooltip, item, "jade.gt6ce.omni.rock_contents");
         } else if (accessor.getBlock() instanceof TwigBlock twig) {
-            content(tooltip, twig.contents(accessor.getLevel(), accessor.getPosition(), 1), "jade.gt6ce.omni.rock_contents");
+            content(
+                    tooltip,
+                    twig.contents(accessor.getLevel(), accessor.getPosition(), 1),
+                    "jade.gt6ce.omni.rock_contents");
         }
     }
 
