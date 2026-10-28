@@ -1,8 +1,10 @@
 package gregtech.engine.multiblock.tracking;
 
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
+import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.engine.multiblock.MultiblockLayout;
 import gregtech.engine.multiblock.PartBindings;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -50,6 +52,46 @@ public final class StructureClaims {
             case UNCHANGED -> Result.UNCHANGED;
             case FAILED -> Result.FAILED;
         };
+    }
+
+    /**
+     * Claims every matched port cell, complete or not. The original multipart shell stays bound to its
+     * controller while the structure is being built, so a tool click on a placed part still reaches it.
+     * {@code plainCells} also binds cells matched by block id, as tank and lightning-rod shells are.
+     */
+    public static Result bindMatched(
+            BlockEntity controller,
+            PartBindings<BlockPos, MultiblockLayout.Role> bindings,
+            PatternMatch match,
+            boolean plainCells,
+            Consumer<BlockPos> release) {
+        Level level = controller.getLevel();
+        if (level == null) return Result.FAILED;
+        BlockPos owner = controller.getBlockPos();
+        Map<BlockPos, MultiblockLayout.Role> parts = new LinkedHashMap<>();
+        for (PatternMatch.FixedCell fixed : match.fixedCells())
+            addPart(level, owner, parts, fixed.pos(), fixed.cell(), plainCells);
+        for (LargeMachineLayouts.Placed placed : match.repeatPlaced())
+            addPart(level, owner, parts, placed.pos(), placed.cell(), plainCells);
+        return update(
+                controller,
+                bindings,
+                parts,
+                pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(owner),
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(owner, role),
+                release);
+    }
+
+    private static void addPart(
+            Level level,
+            BlockPos owner,
+            Map<BlockPos, MultiblockLayout.Role> parts,
+            BlockPos pos,
+            LargeMachineLayouts.Cell cell,
+            boolean plainCells) {
+        if (cell.role() == MultiblockLayout.Role.AIR || (cell.plainBlock() && !plainCells)) return;
+        if (level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(owner))
+            parts.put(pos, cell.role());
     }
 
     public static void cleared(BlockEntity controller) {

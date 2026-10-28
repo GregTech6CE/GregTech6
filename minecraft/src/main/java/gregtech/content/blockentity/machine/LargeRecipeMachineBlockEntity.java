@@ -308,11 +308,12 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             var layout = structureLayout();
             if (layout == null) return 0;
             var front = LayoutStructures.facing(this);
-            for (var cell : layout.cells()) buildCell(context, cell, cell.at(worldPosition, front));
+            boolean wholeStructure = MultiblockTools.buildsWholeStructure(context, worldPosition);
+            for (var cell : layout.cells()) buildCell(context, cell, cell.at(worldPosition, front), wholeStructure);
             // Repeat layouts build their minimum valid size, as shown in the structure preview.
             for (var repeat : layout.repeats()) for (int copy = 0; copy < repeat.min(); copy++)
                 for (var cell : repeat.cells())
-                    buildCell(context, cell, cell.at(worldPosition, front, repeat.absoluteUp(cell, copy)));
+                    buildCell(context, cell, cell.at(worldPosition, front, repeat.absoluteUp(cell, copy)), wholeStructure);
             StructureTracking.invalidate(this);
             return MultiblockToolRules.BUILDER_COST;
         }
@@ -323,13 +324,11 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         }
         return 0;
     }
-    private void buildCell(UseOnContext context, LargeMachineLayouts.Cell cell, BlockPos pos) {
+    private void buildCell(
+            UseOnContext context, LargeMachineLayouts.Cell cell, BlockPos pos, boolean wholeStructure) {
         // GT6 builds registered structure parts, not required air, fluids or arbitrary terrain.
-        if (pos.equals(worldPosition) || cell.role() == MultiblockLayout.Role.AIR || cell.plainBlock()) return;
-        if (MultiblockTools.build(context, pos, cell.block())) return;
-        for (var alternative : cell.alternatives())
-            if (alternative.plain() == null && alternative.part() > 0
-                    && MultiblockTools.build(context, pos, gregtech.content.multiblock.LargeMachineParts.block(alternative.part()))) return;
+        if (pos.equals(worldPosition)) return;
+        MultiblockTools.buildCell(context, pos, cell, wholeStructure);
     }
     @Override public boolean scanStructure() {
         if(level==null||spec()==null||isRemoved()) return false;

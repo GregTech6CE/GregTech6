@@ -95,6 +95,11 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                 (pos, partRole) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, partRole), this::release)
                 != gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED;
     }
+    /** Placed shell parts stay bound while the shaft is incomplete so a wand click keeps building. */
+    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return;
+        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(this, bindings, match, false, this::release);
+    }
     @Override public void releaseStructureClaims() {
         bindings.clear(this::release);
         gregtech.engine.multiblock.tracking.StructureClaims.cleared(this);
