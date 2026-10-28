@@ -251,7 +251,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     }
 
     private void processVanillaOres() {
-        for(String[] pair:new String[][]{{"nether_quartz_ore","NetherQuartz"},{"nether_gold_ore","Gold"}}) {
+        // Vanilla ancient debris is a normal 2U ore for GT processing even though its material
+        // deliberately has no FURNACE flag; the vanilla smelting row stays authoritative.
+        for(String[] pair:new String[][]{{"nether_quartz_ore","NetherQuartz"},{"nether_gold_ore","Gold"},{"ancient_debris","AncientDebris"}}) {
             GTMaterial material=lookup(pair[1]);
 //? if >=1.21.1 {
             /*var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("minecraft:"+pair[0]));

@@ -34,6 +34,7 @@ public final class MaterialUnification {
             case "ingot/Gold" -> Items.GOLD_INGOT;
             case "ingot/Copper" -> Items.COPPER_INGOT;
             case "ingot/Netherite" -> Items.NETHERITE_INGOT;
+            case "ingot/AncientDebris" -> Items.NETHERITE_SCRAP;
             case "nugget/Iron" -> Items.IRON_NUGGET;
             case "nugget/Gold" -> Items.GOLD_NUGGET;
             case "gem/Diamond" -> Items.DIAMOND;

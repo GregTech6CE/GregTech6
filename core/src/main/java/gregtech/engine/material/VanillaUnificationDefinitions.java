@@ -86,7 +86,7 @@ public final class VanillaUnificationDefinitions {
                 new Entry(
                         "netherite_ingot", MaterialPrefix.ingot, "Netherite", MaterialPrefix.ingot.getMaterialWeight()),
                 new Entry("netherite_block", null, "Netherite", 9L * GTValues.U),
-                new Entry("netherite_scrap", null, "AncientDebris", GTValues.U),
+                new Entry("netherite_scrap", MaterialPrefix.ingot, "AncientDebris", GTValues.U),
                 new Entry("ancient_debris", null, "AncientDebris", 2L * GTValues.U),
                 new Entry("clay_ball", null, "Clay", GTValues.U),
                 new Entry("clay", null, "Clay", 9L * GTValues.U),
