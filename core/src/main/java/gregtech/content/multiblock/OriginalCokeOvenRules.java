@@ -18,7 +18,10 @@
  */
 package gregtech.content.multiblock;
 
+import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.StructureGrid;
+import gregtech.api.multiblock.StructureLayout;
+import gregtech.api.multiblock.StructureRole;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,21 +31,18 @@ public final class OriginalCokeOvenRules {
 
     public static final int IGNITION_TICKS = 40;
 
+    private static final List<SharedLargeMachineLayouts.Cell> CELLS =
+            MultiblockPatterns.cells(StructureLayout.pattern("cokeoven")
+                    .layer(-1, "BBB", "BBB", "BBB")
+                    .layer(0, "BSB", "B B", "BBB")
+                    .layer(1, "BBB", "BBB", "BBB")
+                    .where('B', CellMatch.part("fire_bricks"), StructureRole.ITEM_FLUID_ENERGY)
+                    .where(' ', CellMatch.air(), StructureRole.AIR)
+                    .count('B', 25, 25)
+                    .count(' ', 1, 1));
+
     public static List<SharedLargeMachineLayouts.Cell> cells() {
-        var cells = new ArrayList<SharedLargeMachineLayouts.Cell>();
-        for (int x = -1; x <= 1; x++)
-            for (int y = -1; y <= 1; y++)
-                for (int z = 0; z <= 2; z++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    boolean air = x == 0 && y == 0 && z == 1;
-                    cells.add(new SharedLargeMachineLayouts.Cell(
-                            x,
-                            y,
-                            z,
-                            air ? 0 : 18000,
-                            air ? StructureGrid.Role.AIR : StructureGrid.Role.ITEM_FLUID_ENERGY));
-                }
-        return List.copyOf(cells);
+        return CELLS;
     }
 
     public static List<StructureGrid.Position> fluidTargets() {

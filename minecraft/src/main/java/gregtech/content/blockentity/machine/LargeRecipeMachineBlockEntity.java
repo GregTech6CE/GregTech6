@@ -305,17 +305,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if (level == null || level.isClientSide || isRemoved() || spec() == null
                 || !containsToolPosition(context.getClickedPos())) return 0;
         if (GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.BUILDER_WAND)) {
-            var layout = structureLayout();
-            if (layout == null) return 0;
-            var front = LayoutStructures.facing(this);
-            boolean wholeStructure = MultiblockTools.buildsWholeStructure(context, worldPosition);
-            for (var cell : layout.cells()) buildCell(context, cell, cell.at(worldPosition, front), wholeStructure);
-            // Repeat layouts build their minimum valid size, as shown in the structure preview.
-            for (var repeat : layout.repeats()) for (int copy = 0; copy < repeat.min(); copy++)
-                for (var cell : repeat.cells())
-                    buildCell(context, cell, cell.at(worldPosition, front, repeat.absoluteUp(cell, copy)), wholeStructure);
-            StructureTracking.invalidate(this);
-            return MultiblockToolRules.BUILDER_COST;
+            return gregtech.engine.multiblock.MultiblockTools.buildTracked(context, this);
         }
         if (GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.MAGNIFYING_GLASS)) {
             messages.add(Component.literal(MultiblockToolRules.structureMessage(structureFormed, isStructureOk())));
@@ -323,57 +313,6 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             return MultiblockToolRules.MAGNIFIER_COST;
         }
         return 0;
-    }
-    private void buildCell(
-            UseOnContext context, LargeMachineLayouts.Cell cell, BlockPos pos, boolean wholeStructure) {
-        // GT6 builds registered structure parts, not required air, fluids or arbitrary terrain.
-        if (pos.equals(worldPosition)) return;
-        MultiblockTools.buildCell(context, pos, cell, wholeStructure);
-    }
-    @Override public boolean scanStructure() {
-        if(level==null||spec()==null||isRemoved()) return false;
-        var layout=structureLayout();if(layout==null)return false;
-        int[] matchedLayers=new int[layout.repeats().size()];
-        try {
-            boolean complete = validStructureParts();
-            var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-            var matchedCells=new java.util.ArrayList<LargeMachineLayouts.Cell>();
-            var matchedParts=new java.util.ArrayList<LargeMachineLayouts.Placed>();
-            for(var cell:layout.cells()) {
-                var pos=cell.at(worldPosition,front);
-                var matched=matchingCell(cell,pos);
-                if(matched==null) {complete=false;continue;}
-                matchedCells.add(matched);
-                matchedParts.add(new LargeMachineLayouts.Placed(matched,pos));
-            }
-            var repeatPlaced=new java.util.ArrayList<LargeMachineLayouts.Placed>();
-            for(int group=0;group<layout.repeats().size();group++) {
-                var repeat=layout.repeats().get(group);
-                var matches=new java.util.HashMap<BlockPos,LargeMachineLayouts.Cell>();
-                int[] found=new int[1];
-                var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,(cell,pos)->{
-                    var matched=matchingCell(cell,pos);
-                    if(matched==null)return false;
-                    matches.put(pos,matched);
-                    return true;
-                },found);
-                matchedLayers[group]=found[0];
-                if(placed==null){complete=false;continue;}
-                // Only complete repeat copies are committed, not the matched prefix of a failed copy.
-                for(var cell:placed) {
-                    var matched=matches.get(cell.pos());
-                    repeatPlaced.add(new LargeMachineLayouts.Placed(matched,cell.pos()));
-                }
-            }
-            // The retained full scan checks the whole coil group explicitly; matchers have no scan-local state.
-            if ("largeoven".equals(spec().machineName()) && !ovenCoilsAgree(front, matchedCells, repeatPlaced)) {
-                complete = false;
-            }
-            matchedParts.addAll(repeatPlaced);
-            return updateStructureBindings(matchedParts, complete);
-        } finally {
-            StructureTracking.noteMatchedLayers(this, matchedLayers);
-        }
     }
     /** Claims a match the incremental evaluator already built, without reading the layout again. */
     @Override public boolean applyStructure(PatternMatch match) {
@@ -417,36 +356,6 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         StructureClaims.cleared(this);
     }
 
-    private boolean ovenCoilsAgree(Direction front, List<LargeMachineLayouts.Cell> fixed, List<LargeMachineLayouts.Placed> repeated) {
-        return java.util.stream.Stream.concat(
-                fixed.stream().filter(cell -> cell.part() == 18042).map(cell -> cell.at(worldPosition, front)),
-                repeated.stream().filter(placed -> placed.cell().part() == 18042).map(LargeMachineLayouts.Placed::pos))
-                .map(pos -> level.getBlockState(pos).getBlock()).distinct().limit(2).count() <= 1;
-    }
-    private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell,BlockPos pos) {
-        StructureScanProbe.matcher();
-        if(!level.hasChunkAt(pos))return null;
-        if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos)?cell:null;
-        if(matchesChoice(cell,cell.part(),cell.plain(),pos))return cell;
-        for(var alternative:cell.alternatives()) {
-            var choice = new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),alternative.part(),
-                    cell.role(),alternative.plain(),cell.design(),java.util.List.of());
-            if(matchesChoice(choice,alternative.part(),alternative.plain(),pos))return choice;
-        }
-        return null;
-    }
-    private boolean matchesChoice(LargeMachineLayouts.Cell cell,int part,String plain,BlockPos pos) {
-        if(plain!=null)return LargeMachineLayouts.matchesPlain(level,pos,plain);
-        var expected=gregtech.content.multiblock.LargeMachineParts.block(part);
-        if(part==18042 && "largeoven".equals(spec().machineName())) {
-            var actual = level.getBlockState(pos).getBlock();
-            return (actual == expected || actual == gregtech.content.multiblock.LargeMachineParts.block(18043))
-                    && matchesPart(cell, actual, actual)
-                    && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity;
-        }
-        return matchesPart(cell,expected,level.getBlockState(pos).getBlock())
-                && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity;
-    }
     /** Bound condition parts must all be satisfied. A structure with none works as before. */
     private boolean conditionPartsMet() {
         if (level == null) return true;

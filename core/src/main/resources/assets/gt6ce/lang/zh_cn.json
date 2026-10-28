@@ -31470,7 +31470,7 @@
   "jade.gt6ce.multiblock.fluid": "%s：%s / %s mB",
   "jade.gt6ce.multiblock.formed": "结构：已成型",
   "jade.gt6ce.multiblock.incomplete": "结构：不完整／不可用",
-  "jade.gt6ce.multiblock.jei": "JEI：查看控制器配方以了解组装方式",
+  "jade.gt6ce.multiblock.jei": "JEI / EMI：查看主控用途中的多方块结构页",
   "jade.gt6ce.multiblock.progress": "进度：%s%%",
   "jade.gt6ce.omni.abrasive": "磨料剩余使用次数：%s",
   "jade.gt6ce.omni.anvil_big": "大端（弯曲）",
@@ -142755,5 +142755,7 @@
   "jade.gt6ce.engine.overload_protection": "过载保护",
   "jade.gt6ce.engine.ku_storage": "KU 储量：%s / %s KU（%s%%）",
   "jade.gt6ce.machine.recipe_outputs": "配方输出：",
-  "jade.gt6ce.boiler.dry_heat": "干烧警告 — 热量积累：%s"
+  "jade.gt6ce.boiler.dry_heat": "干烧警告 — 热量积累：%s",
+  "jade.gt6ce.multiblock.controller": "主控：%s（%s，%s，%s）",
+  "jade.gt6ce.multiblock.unbound": "结构：未成型（未关联主控）"
 }

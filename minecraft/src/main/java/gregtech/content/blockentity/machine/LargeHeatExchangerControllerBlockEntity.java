@@ -269,15 +269,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         if (level == null || level.isClientSide || isRemoved() || !containsToolPosition(context.getClickedPos())) return 0;
         if (gregtech.engine.tool.GTToolHelper.matchesTool(context.getItemInHand(),
                 gregtech.engine.tool.GTToolType.BUILDER_WAND)) {
-            boolean wholeStructure = MultiblockTools.buildsWholeStructure(context, worldPosition);
-            for (var cell : gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
-                MultiblockTools.build(
-                        context,
-                        worldPosition.offset(cell.right(), cell.up(), cell.back()),
-                        LargeMachineParts.block(cell.part()),
-                        wholeStructure);
-            gregtech.engine.multiblock.tracking.StructureTracking.invalidate(this);
-            return MultiblockToolRules.BUILDER_COST;
+            return gregtech.engine.multiblock.MultiblockTools.buildTracked(context, this);
         }
         if (gregtech.engine.tool.GTToolHelper.matchesTool(context.getItemInHand(),
                 gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS)) {

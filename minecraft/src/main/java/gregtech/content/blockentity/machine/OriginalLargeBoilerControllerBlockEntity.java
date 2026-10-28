@@ -200,17 +200,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,List<Component> messages) {
         if(level==null||level.isClientSide||isRemoved()||!containsToolPosition(context.getClickedPos()))return 0;
         if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.BUILDER_WAND)) {
-            var centre=bodyCentre();
-            boolean wholeStructure=gregtech.engine.multiblock.MultiblockTools.buildsWholeStructure(context,worldPosition);
-            for(var cell:gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
-                var position=centre.offset(cell.x(),cell.y(),cell.z());
-                if(position.equals(worldPosition)||cell.role()==gregtech.api.multiblock.StructureGrid.Role.AIR)continue;
-                var block=cell.role()==gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
-                        ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
-                gregtech.engine.multiblock.MultiblockTools.build(context,position,block,wholeStructure);
-            }
-            gregtech.engine.multiblock.tracking.StructureTracking.invalidate(this);
-            return gregtech.engine.multiblock.MultiblockToolRules.BUILDER_COST;
+            return gregtech.engine.multiblock.MultiblockTools.buildTracked(context, this);
         }
         if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.MAGNIFYING_GLASS)) {
             messages.addAll(magnifyingGlassMessages());

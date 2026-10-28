@@ -98,7 +98,7 @@ import java.util.function.Supplier;
 
 /** GT6 basic machine block with wrench rotation (3x3 grid face selection) and right-click GUI. */
 
-public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlock {
+public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.engine.multiblock.StructurePreviewSource {
 
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
 

@@ -45,14 +45,16 @@ public final class BehaviorMachineRegistration {
                 DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
         var holders = new ArrayList<RegistryObject<BehaviorMachineBlock>>();
         for (AddonMachines.AcceptedBehavior accepted : machines) {
-            RegistryObject<BehaviorMachineBlock> block = blocks.register(
+            RegistryObject<BehaviorMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
+                    namespace,
                     accepted.declaration().casing().id(),
                     () -> new BehaviorMachineBlock(
                             accepted,
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.METAL)
                                     .strength(5.0F, 5.0F)
-                                    .requiresCorrectToolForDrops()));
+                                    .requiresCorrectToolForDrops()),
+                    blocks::register);
             holders.add(block);
             BLOCKS.add(block);
             items.register(

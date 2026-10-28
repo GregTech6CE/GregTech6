@@ -23,8 +23,33 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
 
     public static CompoundTag inspect(BlockEntity entity) {
         var data = new CompoundTag();
+        var inspected = entity;
+        if (entity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port)
+            entity = port.sensorTarget();
+        if (!(entity instanceof StructureController) && entity.getLevel() instanceof net.minecraft.server.level.ServerLevel server) {
+            var owner = gregtech.engine.multiblock.tracking.WorldStructureClaims.owner(server, entity.getBlockPos());
+            if (owner != null && server.hasChunkAt(owner)) {
+                var target = server.getBlockEntity(owner);
+                if (target != null && !target.isRemoved()) entity = target;
+            }
+            if (entity == inspected && entity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity) {
+                // Incomplete atomic shells have no owner yet. Reuse the wand's unambiguous read-only lookup.
+                var target = gregtech.engine.multiblock.tracking.StructureWatchIndex.toolTarget(server, entity.getBlockPos());
+                if (target != null) entity = target.trackedEntity();
+            }
+        }
+        if (entity == inspected && entity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity) {
+            data.putBoolean("unbound", true);
+            return data;
+        }
         if (!(entity instanceof StructureController controller)) return data;
         data.putBoolean("formed", controller.isStructureOk());
+        if (entity != inspected) {
+            data.putString("controller", net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(entity.getBlockState().getBlock()).toString());
+            data.putLong("position", entity.getBlockPos().asLong());
+            // Parts show the association and status, not another copy of every controller tank.
+            return data;
+        }
         if (entity instanceof gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity fusion) {
             data.putLong("fusionCharge", fusion.chargeRemaining());
             data.putLong("fusionOutput", fusion.isRunning() ? fusion.outputEU() : 0);
@@ -36,6 +61,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
             data.putInt("axialOutput", axial.grade().output());
         }
         if (!(entity instanceof BasicMachineBlockEntity)) {
+            final var inspectedController = entity;
             var energies = new ListTag();
             if (entity instanceof IEnergyBlock machine) {
                 // Include fuel heat and rear-port RU buffers even when the controller itself has no energy port.
@@ -68,7 +94,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
 *///?} else {
                     row.put("fluid", fluid.writeToNBT(new CompoundTag()));
 //?}
-                    if (entity instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity vessel) {
+                    if (inspectedController instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity vessel) {
                         row.putLong("amount", vessel.fluidAmountForInspection());
                         row.putLong("capacity", vessel.fluidCapacityForInspection());
                     } else {
@@ -90,13 +116,29 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         var entity = accessor.getBlockEntity();
-        if (entity instanceof StructureController) tag.put("gt_structure", inspect(entity));
+        if (entity == null) return;
+        var data = inspect(entity);
+        if (!data.isEmpty()) tag.put("gt_structure", data);
     }
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         if (!accessor.getServerData().contains("gt_structure")) return;
         var data = accessor.getServerData().getCompound("gt_structure");
+        if (data.getBoolean("unbound")) {
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.unbound")
+                    .withStyle(net.minecraft.ChatFormatting.GRAY));
+            return;
+        }
+        if (data.contains("controller")) {
+            var id = ResourceLocation.tryParse(data.getString("controller"));
+            if (id != null) {
+                var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(id);
+                var pos = net.minecraft.core.BlockPos.of(data.getLong("position"));
+                JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.controller", block.getName(),
+                        pos.getX(), pos.getY(), pos.getZ()));
+            }
+        }
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock." + (data.getBoolean("formed") ? "formed" : "incomplete"))
                 .withStyle(data.getBoolean("formed") ? net.minecraft.ChatFormatting.GREEN : net.minecraft.ChatFormatting.RED));
         if (data.contains("fusionCharge")) {

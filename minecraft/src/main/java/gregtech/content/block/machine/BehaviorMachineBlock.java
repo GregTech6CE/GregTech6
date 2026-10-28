@@ -53,7 +53,7 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 /** Single-block shell for an addon behavior machine. The addon does not subclass it. */
-public class BehaviorMachineBlock extends GTFacingMachineBlock implements EntityBlock {
+public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregtech.engine.multiblock.StructurePreviewSource {
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     private final AddonMachines.AcceptedBehavior accepted;
     private Supplier<BlockEntityType<?>> beType = () -> null;

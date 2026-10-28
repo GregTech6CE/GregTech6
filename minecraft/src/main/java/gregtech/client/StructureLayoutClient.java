@@ -17,6 +17,7 @@ public final class StructureLayoutClient {
     }
 
     public static void refresh() {
+        gregtech.content.multiblock.ControllerStructureLayouts.invalidate();
         var minecraft = Minecraft.getInstance();
         if (minecraft == null) return;
         refreshJei(minecraft);

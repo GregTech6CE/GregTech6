@@ -1,10 +1,13 @@
 package gregtech.content.multiblock;
 
+import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.LayoutRepeat;
 import gregtech.api.multiblock.StructureGrid.Role;
+import gregtech.api.multiblock.StructureLayout;
+import gregtech.api.multiblock.StructureRole;
 import java.util.*;
 
-/** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
+/** Named GT6 recipe-machine patterns, compiled once to coordinates without a Minecraft registry. */
 public final class SharedLargeMachineLayouts {
     private SharedLargeMachineLayouts() {}
     /** One accepted block for a cell. {@code plain} is a block id, tag or predicate; null means a part id. */
@@ -39,7 +42,8 @@ public final class SharedLargeMachineLayouts {
         public Repeat {
             if (key == null || !key.matches("[a-z][a-z0-9_]{0,63}"))
                 throw new IllegalArgumentException("Invalid repeat key: " + key);
-            if (min < 1) throw new IllegalArgumentException("Repeat '" + key + "' needs min >= 1");
+            if (min < 0 || max == 0)
+                throw new IllegalArgumentException("Repeat '" + key + "' needs min >= 0 and max > 0 or -1");
             if (max != -1 && max < min)
                 throw new IllegalArgumentException("Repeat '" + key + "' needs max >= min or -1");
             if (max > LayoutRepeat.MAX_COPIES)
@@ -180,599 +184,107 @@ public final class SharedLargeMachineLayouts {
         var definitions = new LinkedHashMap<String, List<Cell>>();
         definitions.put(
                 "largemixer",
-                List.of(
-                        new Cell(-1, 0, 0, 18002, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 0, 18002, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 1, 18002, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 1, 18002, Role.ENERGY_INPUT),
-                        new Cell(1, 0, 1, 18002, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 2, 18002, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 2, 18002, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 2, 18002, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 1, 0, 18002, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 1, 0, 18002, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 1, 0, 18002, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 1, 1, 18002, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 1, 1, 18002, Role.ENERGY_INPUT),
-                        new Cell(1, 1, 1, 18002, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 1, 2, 18002, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 1, 2, 18002, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 1, 2, 18002, Role.ITEM_FLUID_INPUT)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largemixer")
+                        .layer(0, "ASA", "ABA", "AAA")
+                        .layer(1, "CCC", "CBC", "CCC")
+                        .where('A', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_OUTPUT)
+                        .where('B', CellMatch.part("tank_wall"), StructureRole.ENERGY_INPUT)
+                        .where('C', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_INPUT)));
         definitions.put(
                 "largebath",
-                List.of(
-                        new Cell(-2, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 4, 18002, Role.ITEM_FLUID_IO)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largebath")
+                        .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .layer(1, "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .where('A', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO)));
         definitions.put(
                 "largecentrifuge",
-                List.of(
-                        new Cell(-1, 0, 0, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 0, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 1, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 1, 18100, Role.ENERGY_INPUT),
-                        new Cell(1, 0, 1, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 2, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 2, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 2, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 0, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 0, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 0, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 1, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 1, 18100, Role.ENERGY_INPUT),
-                        new Cell(1, 1, 1, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 2, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 2, 18100, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 2, 18100, Role.ITEM_FLUID_IO)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largecentrifuge")
+                        .layer(0, "ASA", "ABA", "AAA")
+                        .layer(1, "AAA", "ABA", "AAA")
+                        .where('A', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO)
+                        .where('B', CellMatch.part("centrifuge_part"), StructureRole.ENERGY_INPUT)));
         definitions.put(
                 "largecoagulator",
-                List.of(
-                        new Cell(-2, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 4, 18002, Role.ITEM_FLUID_IO)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largecoagulator")
+                        .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .layer(1, "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .where('A', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO)));
         definitions.put(
                 "largeelectrolyzer",
-                List.of(
-                        new Cell(-1, 0, 0, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(1, 0, 0, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(-1, 0, 1, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(0, 0, 1, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(1, 0, 1, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(-1, 0, 2, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(0, 0, 2, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(1, 0, 2, 18105, Role.ITEM_FLUID_ENERGY_INPUT),
-                        new Cell(-1, 1, 0, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 1, 0, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 1, 0, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 1, 1, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 1, 1, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 1, 1, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 1, 2, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 1, 2, 18105, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 1, 2, 18105, Role.ITEM_FLUID_OUTPUT)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largeelectrolyzer")
+                        .layer(0, "ASA", "AAA", "AAA")
+                        .layer(1, "BBB", "BBB", "BBB")
+                        .where('A', CellMatch.part("electrolyzer_part"), StructureRole.ITEM_FLUID_ENERGY_INPUT)
+                        .where('B', CellMatch.part("electrolyzer_part"), StructureRole.ITEM_FLUID_OUTPUT)));
         definitions.put(
                 "largefermenter",
-                List.of(
-                        new Cell(-2, -1, 0, 18101, Role.ENERGY_INPUT),
-                        new Cell(-1, -1, 0, 18101, Role.ENERGY_INPUT),
-                        new Cell(0, -1, 0, 18101, Role.ENERGY_INPUT),
-                        new Cell(1, -1, 0, 18101, Role.ENERGY_INPUT),
-                        new Cell(2, -1, 0, 18101, Role.ENERGY_INPUT),
-                        new Cell(-2, -1, 1, 18101, Role.ENERGY_INPUT),
-                        new Cell(-1, -1, 1, 18101, Role.ENERGY_INPUT),
-                        new Cell(0, -1, 1, 18101, Role.ENERGY_INPUT),
-                        new Cell(1, -1, 1, 18101, Role.ENERGY_INPUT),
-                        new Cell(2, -1, 1, 18101, Role.ENERGY_INPUT),
-                        new Cell(-2, -1, 2, 18101, Role.ENERGY_INPUT),
-                        new Cell(-1, -1, 2, 18101, Role.ENERGY_INPUT),
-                        new Cell(0, -1, 2, 18101, Role.ENERGY_INPUT),
-                        new Cell(1, -1, 2, 18101, Role.ENERGY_INPUT),
-                        new Cell(2, -1, 2, 18101, Role.ENERGY_INPUT),
-                        new Cell(-2, -1, 3, 18101, Role.ENERGY_INPUT),
-                        new Cell(-1, -1, 3, 18101, Role.ENERGY_INPUT),
-                        new Cell(0, -1, 3, 18101, Role.ENERGY_INPUT),
-                        new Cell(1, -1, 3, 18101, Role.ENERGY_INPUT),
-                        new Cell(2, -1, 3, 18101, Role.ENERGY_INPUT),
-                        new Cell(-2, -1, 4, 18101, Role.ENERGY_INPUT),
-                        new Cell(-1, -1, 4, 18101, Role.ENERGY_INPUT),
-                        new Cell(0, -1, 4, 18101, Role.ENERGY_INPUT),
-                        new Cell(1, -1, 4, 18101, Role.ENERGY_INPUT),
-                        new Cell(2, -1, 4, 18101, Role.ENERGY_INPUT),
-                        new Cell(-2, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 0, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 0, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 1, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 2, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 3, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-2, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(-1, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(0, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(1, 1, 4, 18002, Role.ITEM_FLUID_IO),
-                        new Cell(2, 1, 4, 18002, Role.ITEM_FLUID_IO)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largefermenter")
+                        .layer(-1, "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .layer(0, "BBSBB", "BBBBB", "BBBBB", "BBBBB", "BBBBB")
+                        .layer(1, "BBBBB", "BBBBB", "BBBBB", "BBBBB", "BBBBB")
+                        .where('A', CellMatch.part("heat_transmitter"), StructureRole.ENERGY_INPUT)
+                        .where('B', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO)));
         definitions.put(
                 "largeautoclave",
-                List.of(
-                        new Cell(-1, 0, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 0, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 0, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 1, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 1, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 1, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 2, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 2, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 2, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 0, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 0, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 1, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 1, 1, 0, Role.AIR),
-                        new Cell(0, 1, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 2, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 2, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 2, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 0, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 0, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 0, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 1, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 1, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 1, 2, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 2, 0, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 2, 1, 18022, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 2, 2, 18022, Role.ITEM_FLUID_ENERGY)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largeautoclave")
+                        .layer(0, "ASA", "AAA", "AAA")
+                        .layer(1, "AAA", "A A", "AAA")
+                        .layer(2, "AAA", "AAA", "AAA")
+                        .where('A', CellMatch.part("tank_wall_dense"), StructureRole.ITEM_FLUID_ENERGY)
+                        .where(' ', CellMatch.air(), StructureRole.AIR)));
         definitions.put(
                 "largecrusher",
-                List.of(
-                        new Cell(-2, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 1, 0, 18003, Role.CASING),
-                        new Cell(-1, 1, 0, 18003, Role.CASING),
-                        new Cell(0, 1, 0, 18003, Role.CASING),
-                        new Cell(1, 1, 0, 18003, Role.CASING),
-                        new Cell(2, 1, 0, 18003, Role.CASING),
-                        new Cell(-2, 1, 1, 18003, Role.CASING),
-                        new Cell(-1, 1, 1, 18107, Role.CASING),
-                        new Cell(0, 1, 1, 18107, Role.CASING),
-                        new Cell(1, 1, 1, 18107, Role.CASING),
-                        new Cell(2, 1, 1, 18003, Role.CASING),
-                        new Cell(-2, 1, 2, 18003, Role.ENERGY_INPUT),
-                        new Cell(-1, 1, 2, 18107, Role.CASING),
-                        new Cell(0, 1, 2, 18107, Role.CASING),
-                        new Cell(1, 1, 2, 18107, Role.CASING),
-                        new Cell(2, 1, 2, 18003, Role.ENERGY_INPUT),
-                        new Cell(-2, 1, 3, 18003, Role.CASING),
-                        new Cell(-1, 1, 3, 18107, Role.CASING),
-                        new Cell(0, 1, 3, 18107, Role.CASING),
-                        new Cell(1, 1, 3, 18107, Role.CASING),
-                        new Cell(2, 1, 3, 18003, Role.CASING),
-                        new Cell(-2, 1, 4, 18003, Role.CASING),
-                        new Cell(-1, 1, 4, 18003, Role.CASING),
-                        new Cell(0, 1, 4, 18003, Role.CASING),
-                        new Cell(1, 1, 4, 18003, Role.CASING),
-                        new Cell(2, 1, 4, 18003, Role.CASING),
-                        new Cell(-2, 2, 0, 18003, Role.CASING),
-                        new Cell(-1, 2, 0, 18003, Role.CASING),
-                        new Cell(0, 2, 0, 18003, Role.CASING),
-                        new Cell(1, 2, 0, 18003, Role.CASING),
-                        new Cell(2, 2, 0, 18003, Role.CASING),
-                        new Cell(-2, 2, 1, 18003, Role.CASING),
-                        new Cell(-1, 2, 1, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 1, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 1, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 1, 18003, Role.CASING),
-                        new Cell(-2, 2, 2, 18003, Role.CASING),
-                        new Cell(-1, 2, 2, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 2, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 2, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 2, 18003, Role.CASING),
-                        new Cell(-2, 2, 3, 18003, Role.CASING),
-                        new Cell(-1, 2, 3, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 3, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 3, 18107, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 3, 18003, Role.CASING),
-                        new Cell(-2, 2, 4, 18003, Role.CASING),
-                        new Cell(-1, 2, 4, 18003, Role.CASING),
-                        new Cell(0, 2, 4, 18003, Role.CASING),
-                        new Cell(1, 2, 4, 18003, Role.CASING),
-                        new Cell(2, 2, 4, 18003, Role.CASING)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largecrusher")
+                        .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .layer(1, "BBBBB", "BCCCB", "DCCCD", "BCCCB", "BBBBB")
+                        .layer(2, "BBBBB", "BEEEB", "BEEEB", "BEEEB", "BBBBB")
+                        .where('A', CellMatch.part("tungstensteel_wall"), StructureRole.ITEM_FLUID_OUTPUT)
+                        .where('B', CellMatch.part("tungstensteel_wall"), StructureRole.CASING)
+                        .where('C', CellMatch.part("crusher_wheels"), StructureRole.CASING)
+                        .where('D', CellMatch.part("tungstensteel_wall"), StructureRole.ENERGY_INPUT)
+                        .where('E', CellMatch.part("crusher_wheels"), StructureRole.ITEM_FLUID_INPUT)));
         definitions.put(
                 "largeshredder",
-                List.of(
-                        new Cell(-2, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 0, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 1, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 2, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 3, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 4, 18003, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 1, 0, 18003, Role.CASING),
-                        new Cell(-1, 1, 0, 18003, Role.CASING),
-                        new Cell(0, 1, 0, 18003, Role.CASING),
-                        new Cell(1, 1, 0, 18003, Role.CASING),
-                        new Cell(2, 1, 0, 18003, Role.CASING),
-                        new Cell(-2, 1, 1, 18003, Role.CASING),
-                        new Cell(-1, 1, 1, 18108, Role.CASING),
-                        new Cell(0, 1, 1, 18108, Role.CASING),
-                        new Cell(1, 1, 1, 18108, Role.CASING),
-                        new Cell(2, 1, 1, 18003, Role.CASING),
-                        new Cell(-2, 1, 2, 18003, Role.ENERGY_INPUT),
-                        new Cell(-1, 1, 2, 18108, Role.CASING),
-                        new Cell(0, 1, 2, 18108, Role.CASING),
-                        new Cell(1, 1, 2, 18108, Role.CASING),
-                        new Cell(2, 1, 2, 18003, Role.ENERGY_INPUT),
-                        new Cell(-2, 1, 3, 18003, Role.CASING),
-                        new Cell(-1, 1, 3, 18108, Role.CASING),
-                        new Cell(0, 1, 3, 18108, Role.CASING),
-                        new Cell(1, 1, 3, 18108, Role.CASING),
-                        new Cell(2, 1, 3, 18003, Role.CASING),
-                        new Cell(-2, 1, 4, 18003, Role.CASING),
-                        new Cell(-1, 1, 4, 18003, Role.CASING),
-                        new Cell(0, 1, 4, 18003, Role.CASING),
-                        new Cell(1, 1, 4, 18003, Role.CASING),
-                        new Cell(2, 1, 4, 18003, Role.CASING),
-                        new Cell(-2, 2, 0, 18003, Role.CASING),
-                        new Cell(-1, 2, 0, 18003, Role.CASING),
-                        new Cell(0, 2, 0, 18003, Role.CASING),
-                        new Cell(1, 2, 0, 18003, Role.CASING),
-                        new Cell(2, 2, 0, 18003, Role.CASING),
-                        new Cell(-2, 2, 1, 18003, Role.CASING),
-                        new Cell(-1, 2, 1, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 1, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 1, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 1, 18003, Role.CASING),
-                        new Cell(-2, 2, 2, 18003, Role.CASING),
-                        new Cell(-1, 2, 2, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 2, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 2, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 2, 18003, Role.CASING),
-                        new Cell(-2, 2, 3, 18003, Role.CASING),
-                        new Cell(-1, 2, 3, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 3, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 3, 18108, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 3, 18003, Role.CASING),
-                        new Cell(-2, 2, 4, 18003, Role.CASING),
-                        new Cell(-1, 2, 4, 18003, Role.CASING),
-                        new Cell(0, 2, 4, 18003, Role.CASING),
-                        new Cell(1, 2, 4, 18003, Role.CASING),
-                        new Cell(2, 2, 4, 18003, Role.CASING)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largeshredder")
+                        .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .layer(1, "BBBBB", "BCCCB", "DCCCD", "BCCCB", "BBBBB")
+                        .layer(2, "BBBBB", "BEEEB", "BEEEB", "BEEEB", "BBBBB")
+                        .where('A', CellMatch.part("tungstensteel_wall"), StructureRole.ITEM_FLUID_OUTPUT)
+                        .where('B', CellMatch.part("tungstensteel_wall"), StructureRole.CASING)
+                        .where('C', CellMatch.part("shredder_blades"), StructureRole.CASING)
+                        .where('D', CellMatch.part("tungstensteel_wall"), StructureRole.ENERGY_INPUT)
+                        .where('E', CellMatch.part("shredder_blades"), StructureRole.ITEM_FLUID_INPUT)));
         definitions.put(
                 "largesqueezer",
-                List.of(
-                        new Cell(-2, 0, 0, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 0, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 0, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 0, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 1, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 1, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 1, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 1, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 1, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 2, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 2, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 2, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 2, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 2, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 3, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 3, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 3, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 3, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 3, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 0, 4, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 4, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(0, 0, 4, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 4, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(2, 0, 4, 18009, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-2, 1, 0, 18009, Role.CASING),
-                        new Cell(-1, 1, 0, 18009, Role.CASING),
-                        new Cell(0, 1, 0, 18009, Role.CASING),
-                        new Cell(1, 1, 0, 18009, Role.CASING),
-                        new Cell(2, 1, 0, 18009, Role.CASING),
-                        new Cell(-2, 1, 1, 18009, Role.CASING),
-                        new Cell(2, 1, 1, 18009, Role.CASING),
-                        new Cell(-2, 1, 2, 18009, Role.ENERGY_INPUT),
-                        new Cell(2, 1, 2, 18009, Role.ENERGY_INPUT),
-                        new Cell(-2, 1, 3, 18009, Role.CASING),
-                        new Cell(2, 1, 3, 18009, Role.CASING),
-                        new Cell(-2, 1, 4, 18009, Role.CASING),
-                        new Cell(-1, 1, 4, 18009, Role.CASING),
-                        new Cell(0, 1, 4, 18009, Role.CASING),
-                        new Cell(1, 1, 4, 18009, Role.CASING),
-                        new Cell(2, 1, 4, 18009, Role.CASING),
-                        new Cell(-2, 2, 0, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 2, 0, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 0, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 0, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 0, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-2, 2, 1, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 2, 1, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 1, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 1, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 1, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-2, 2, 2, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 2, 2, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 2, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 2, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 2, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-2, 2, 3, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 2, 3, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 3, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 3, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 3, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-2, 2, 4, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 2, 4, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 4, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 4, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(2, 2, 4, 18009, Role.ITEM_FLUID_INPUT),
-                        new Cell(-1, 1, 1, 0, Role.AIR),
-                        new Cell(0, 1, 1, 0, Role.AIR),
-                        new Cell(1, 1, 1, 0, Role.AIR),
-                        new Cell(-1, 1, 2, 0, Role.AIR),
-                        new Cell(0, 1, 2, 0, Role.AIR),
-                        new Cell(1, 1, 2, 0, Role.AIR),
-                        new Cell(-1, 1, 3, 0, Role.AIR),
-                        new Cell(0, 1, 3, 0, Role.AIR),
-                        new Cell(1, 1, 3, 0, Role.AIR)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largesqueezer")
+                        .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
+                        .layer(1, "BBBBB", "B   B", "C   C", "B   B", "BBBBB")
+                        .layer(2, "DDDDD", "DDDDD", "DDDDD", "DDDDD", "DDDDD")
+                        .where('A', CellMatch.part("steel_wall"), StructureRole.ITEM_FLUID_OUTPUT)
+                        .where('B', CellMatch.part("steel_wall"), StructureRole.CASING)
+                        .where('C', CellMatch.part("steel_wall"), StructureRole.ENERGY_INPUT)
+                        .where('D', CellMatch.part("steel_wall"), StructureRole.ITEM_FLUID_INPUT)
+                        .where(' ', CellMatch.air(), StructureRole.AIR)));
         definitions.put(
                 "largeoven",
-                List.of(
-                        new Cell(-1, 0, 0, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 0, 0, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 0, 1, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 0, 1, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 0, 1, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 0, 2, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 0, 2, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 0, 2, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 1, 0, 18042, Role.CASING),
-                        new Cell(0, 1, 0, 18042, Role.CASING),
-                        new Cell(1, 1, 0, 18042, Role.CASING),
-                        new Cell(-1, 1, 1, 18042, Role.CASING),
-                        new Cell(1, 1, 1, 18042, Role.CASING),
-                        new Cell(-1, 1, 2, 18042, Role.CASING),
-                        new Cell(0, 1, 2, 18042, Role.CASING),
-                        new Cell(1, 1, 2, 18042, Role.CASING),
-                        new Cell(-1, 2, 0, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 2, 0, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 2, 0, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 2, 1, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 2, 1, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 2, 1, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(-1, 2, 2, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 2, 2, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(1, 2, 2, 18007, Role.ITEM_FLUID_ENERGY),
-                        new Cell(0, 1, 1, 0, Role.AIR)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largeoven")
+                        .layer(0, "ASA", "AAA", "AAA")
+                        .layer(1, "BBB", "B B", "BBB")
+                        .layer(2, "AAA", "AAA", "AAA")
+                        .where('A', CellMatch.part("invar_wall"), StructureRole.ITEM_FLUID_ENERGY)
+                        .where('B', CellMatch.part("large_nichrome_coil"), StructureRole.CASING)
+                        .where(' ', CellMatch.air(), StructureRole.AIR)));
         definitions.put(
                 "largesluice",
-                List.of(
-                        new Cell(-1, 0, 0, 18006, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(1, 0, 0, 18006, Role.ITEM_FLUID_OUTPUT),
-                        new Cell(-1, 0, 1, 18006, Role.CASING),
-                        new Cell(0, 0, 1, 18006, Role.CASING),
-                        new Cell(1, 0, 1, 18006, Role.CASING),
-                        new Cell(-1, 0, 2, 18006, Role.CASING),
-                        new Cell(0, 0, 2, 18006, Role.CASING),
-                        new Cell(1, 0, 2, 18006, Role.CASING),
-                        new Cell(-1, 0, 3, 18006, Role.CASING),
-                        new Cell(0, 0, 3, 18006, Role.CASING),
-                        new Cell(1, 0, 3, 18006, Role.CASING),
-                        new Cell(-1, 0, 4, 18006, Role.CASING),
-                        new Cell(0, 0, 4, 18006, Role.CASING),
-                        new Cell(1, 0, 4, 18006, Role.CASING),
-                        new Cell(-1, 0, 5, 18006, Role.CASING),
-                        new Cell(0, 0, 5, 18006, Role.CASING),
-                        new Cell(1, 0, 5, 18006, Role.CASING),
-                        new Cell(-1, 0, 6, 18006, Role.CASING),
-                        new Cell(0, 0, 6, 18006, Role.CASING),
-                        new Cell(1, 0, 6, 18006, Role.CASING),
-                        new Cell(-1, 1, 0, 18006, Role.CASING),
-                        new Cell(0, 1, 0, 18006, Role.CASING),
-                        new Cell(1, 1, 0, 18006, Role.CASING),
-                        new Cell(-1, 1, 1, 18006, Role.CASING),
-                        new Cell(0, 1, 1, 18006, Role.CASING),
-                        new Cell(1, 1, 1, 18006, Role.CASING),
-                        new Cell(-1, 1, 2, 18006, Role.CASING),
-                        new Cell(0, 1, 2, 18006, Role.CASING),
-                        new Cell(1, 1, 2, 18006, Role.CASING),
-                        new Cell(-1, 1, 3, 18006, Role.CASING),
-                        new Cell(0, 1, 3, 18006, Role.CASING),
-                        new Cell(1, 1, 3, 18006, Role.CASING),
-                        new Cell(-1, 1, 4, 18006, Role.CASING),
-                        new Cell(0, 1, 4, 18006, Role.CASING),
-                        new Cell(1, 1, 4, 18006, Role.CASING),
-                        new Cell(-1, 1, 5, 18006, Role.ENERGY_INPUT),
-                        new Cell(0, 1, 5, 18006, Role.CASING),
-                        new Cell(1, 1, 5, 18006, Role.ENERGY_INPUT),
-                        new Cell(-1, 1, 6, 18006, Role.CASING),
-                        new Cell(0, 1, 6, 18006, Role.CASING),
-                        new Cell(1, 1, 6, 18006, Role.CASING),
-                        new Cell(-1, 2, 0, 18106, Role.CASING),
-                        new Cell(0, 2, 0, 18106, Role.CASING),
-                        new Cell(1, 2, 0, 18106, Role.CASING),
-                        new Cell(-1, 2, 1, 18106, Role.CASING),
-                        new Cell(0, 2, 1, 18106, Role.CASING),
-                        new Cell(1, 2, 1, 18106, Role.CASING),
-                        new Cell(-1, 2, 2, 18106, Role.CASING),
-                        new Cell(0, 2, 2, 18106, Role.CASING),
-                        new Cell(1, 2, 2, 18106, Role.CASING),
-                        new Cell(-1, 2, 3, 18106, Role.CASING),
-                        new Cell(0, 2, 3, 18106, Role.CASING),
-                        new Cell(1, 2, 3, 18106, Role.CASING),
-                        new Cell(-1, 2, 4, 18106, Role.CASING),
-                        new Cell(0, 2, 4, 18106, Role.CASING),
-                        new Cell(1, 2, 4, 18106, Role.CASING),
-                        new Cell(-1, 2, 5, 18106, Role.CASING),
-                        new Cell(0, 2, 5, 18106, Role.CASING),
-                        new Cell(1, 2, 5, 18106, Role.CASING),
-                        new Cell(-1, 2, 6, 18106, Role.ITEM_FLUID_INPUT),
-                        new Cell(0, 2, 6, 18106, Role.ITEM_FLUID_INPUT),
-                        new Cell(1, 2, 6, 18106, Role.ITEM_FLUID_INPUT)));
+                MultiblockPatterns.cells(StructureLayout.pattern("largesluice")
+                        .layer(0, "ASA", "BBB", "BBB", "BBB", "BBB", "BBB", "BBB")
+                        .layer(1, "BBB", "BBB", "BBB", "BBB", "BBB", "CBC", "BBB")
+                        .layer(2, "DDD", "DDD", "DDD", "DDD", "DDD", "DDD", "EEE")
+                        .where('A', CellMatch.part("titanium_wall"), StructureRole.ITEM_FLUID_OUTPUT)
+                        .where('B', CellMatch.part("titanium_wall"), StructureRole.CASING)
+                        .where('C', CellMatch.part("titanium_wall"), StructureRole.ENERGY_INPUT)
+                        .where('D', CellMatch.part("sluice_part"), StructureRole.CASING)
+                        .where('E', CellMatch.part("sluice_part"), StructureRole.ITEM_FLUID_INPUT)));
         definitions.put("largemassfab", SharedMatterFabricatorStructure.CELLS);
         return definitions;
     }

@@ -44,7 +44,7 @@ public final class StructureDiagnostic {
         StructureDefinition definition = machine.structureDefinition();
         if (definition.formsImmediately()) return List.of();
         if (!(definition instanceof StructureDefinition.Declarative declarative)) return List.of();
-        CompiledPattern pattern = declarative.compile(front);
+        CompiledPattern pattern = StructurePlan.compile(machine);
         if (pattern == null) return List.of();
         BlockPos origin = entity.getBlockPos();
         List<Problem> problems = new ArrayList<>();

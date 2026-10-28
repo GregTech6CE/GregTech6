@@ -13,7 +13,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,7 +21,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 /** Addon fuel generator shell. GregTech owns the block; the addon supplies the declaration. */
-public class FuelGeneratorBlock extends GTFacingMachineBlock implements EntityBlock {
+public class FuelGeneratorBlock extends GTFacingMachineBlock
+        implements gregtech.engine.multiblock.StructurePreviewSource {
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     private final AddonMachines.AcceptedFuel accepted;
     private Supplier<BlockEntityType<?>> beType = () -> null;

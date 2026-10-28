@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import javax.annotation.Nullable;
 
 /** F6.9: Bedrock Drilling Rig controller. */
-public class BedrockDrillControllerBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class BedrockDrillControllerBlock extends HorizontalDirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,

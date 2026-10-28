@@ -29,6 +29,8 @@ public final class FixedStructures {
         private final Cells cells;
         private final List<Aggregate> aggregates;
         private final EnumMap<Direction, Snapshot> snapshots = new EnumMap<>(Direction.class);
+        private final EnumMap<Direction, CompiledPattern> patterns = new EnumMap<>(Direction.class);
+        private int epoch = -1;
 
         private Definition(TrackedMultiblock machine, Cells cells, List<Aggregate> aggregates) {
             this.machine = machine;
@@ -48,8 +50,13 @@ public final class FixedStructures {
 
         @Override
         public CompiledPattern compile(Direction front) {
+            refresh();
+            var cached = patterns.get(front);
+            if (cached != null) return cached;
             Snapshot snapshot = snapshot(front);
-            return CompiledPattern.compileFixed(machine, front, snapshot.cells(), aggregates);
+            var pattern = CompiledPattern.compileFixed(machine, front, snapshot.cells(), aggregates);
+            patterns.put(front, pattern);
+            return pattern;
         }
 
         @Override
@@ -63,12 +70,21 @@ public final class FixedStructures {
         }
 
         private Snapshot snapshot(Direction front) {
+            refresh();
             Snapshot cached = snapshots.get(front);
             if (cached != null) return cached;
             List<CompiledPattern.FixedCell> list = cells.forFacing(front);
             Snapshot built = new Snapshot(list, footprint(list));
             snapshots.put(front, built);
             return built;
+        }
+
+        private void refresh() {
+            if (epoch != StructureEpoch.get()) {
+                patterns.clear();
+                snapshots.clear();
+                epoch = StructureEpoch.get();
+            }
         }
 
         private Footprint footprint(List<CompiledPattern.FixedCell> list) {

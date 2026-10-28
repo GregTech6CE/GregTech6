@@ -48,14 +48,16 @@ public final class FuelGeneratorRegistration {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
         for (AddonMachines.AcceptedFuel accepted : machines) {
-            DeferredHolder<Block, FuelGeneratorBlock> block = blocks.register(
+            DeferredHolder<Block, FuelGeneratorBlock> block = gregtech.content.registry.MultiblockRegistration.register(
+                    namespace,
                     accepted.declaration().casing().id(),
                     () -> new FuelGeneratorBlock(
                             accepted,
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.METAL)
                                     .strength(5.0F, 5.0F)
-                                    .requiresCorrectToolForDrops()));
+                                    .requiresCorrectToolForDrops()),
+                    blocks::register);
             BLOCKS.add(block);
             items.register(
                     accepted.declaration().casing().id(),

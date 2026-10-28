@@ -1,5 +1,9 @@
 package gregtech.content.multiblock;
 
+import gregtech.api.multiblock.CellMatch;
+import gregtech.api.multiblock.StructureLayout;
+import gregtech.api.multiblock.StructureRole;
+
 /** Original GT6 tower geometry, horizontal range and per-tick energy drain. */
 public final class VonDaGraaggRules {
 
@@ -10,29 +14,30 @@ public final class VonDaGraaggRules {
 
     public record Cell(int x, int y, int z, int partId, boolean energyInput) {}
 
+    private static final java.util.List<Cell> CELLS = MultiblockPatterns.cells(StructureLayout.pattern("vondagraagg")
+                    .layer(0, ".AAA.", "AAAAA", "AASAA", "AAAAA", ".AAA.")
+                    .layer(1, ".AAA.", "AAAAA", "AAAAA", "AAAAA", ".AAA.")
+                    .layer(2, ".....", ".....", "..B..", ".....", ".....")
+                    .layer(3, ".....", ".....", "..B..", ".....", ".....")
+                    .layer(4, ".....", ".....", "..B..", ".....", ".....")
+                    .layer(5, ".....", "..C..", ".CBC.", "..C..", ".....")
+                    .layer(6, ".....", ".CCC.", ".CBC.", ".CCC.", ".....")
+                    .layer(7, ".....", "..C..", ".CCC.", "..C..", ".....")
+                    .ignore('.')
+                    .where('A', CellMatch.part("dense_galvanized_steel_wall"), StructureRole.ENERGY_INPUT)
+                    .where('B', CellMatch.part("large_copper_coil"), StructureRole.CASING)
+                    .where('C', CellMatch.part("dense_steel_wall"), StructureRole.CASING))
+            .stream()
+            .map(c -> new Cell(
+                    c.right(),
+                    c.up(),
+                    c.back(),
+                    c.part(),
+                    c.role() == gregtech.api.multiblock.StructureGrid.Role.ENERGY_INPUT))
+            .toList();
+
     public static java.util.List<Cell> layout() {
-        var cells = new java.util.ArrayList<Cell>();
-        // GT6 MultiTileEntityVonDaGraagg.checkStructure2: omit only the four 5x5 corners.
-        for (int x = -2; x <= 2; x++)
-            for (int z = -2; z <= 2; z++) {
-                if (Math.abs(x * z) >= 4) continue;
-                for (int y = 0; y <= 1; y++) {
-                    if (x == 0 && y == 0 && z == 0) continue; // the controller
-                    cells.add(new Cell(x, y, z, 18028, true));
-                }
-            }
-        for (int y = 2; y <= 6; y++) cells.add(new Cell(0, y, 0, 18040, false));
-        cells.add(new Cell(0, 7, 0, 18029, false));
-        for (int x = -1; x <= 1; x++)
-            for (int z = -1; z <= 1; z++) {
-                if (x == 0 && z == 0) continue;
-                cells.add(new Cell(x, 6, z, 18029, false));
-                if (x * z == 0) {
-                    cells.add(new Cell(x, 5, z, 18029, false));
-                    cells.add(new Cell(x, 7, z, 18029, false));
-                }
-            }
-        return java.util.List.copyOf(cells);
+        return CELLS;
     }
 
     public static int range(long energy, boolean formed) {

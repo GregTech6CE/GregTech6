@@ -36,7 +36,7 @@ public final class GTMultiblocks {
         if (!NAMED.isEmpty()) throw new IllegalStateException("Multiblocks registered twice");
         GTHeatExchangers.registerAll();
         for (var part : SharedLargeMachineParts.DEFINITIONS)
-            NAMED.put(part.originalId(), RegisteredBlock.register(part.name(), () -> MultiblockBlockFactory.create(part), GTMultiblocks::blockItem));
+            NAMED.put(part.originalId(), controller(part.name(), () -> MultiblockBlockFactory.create(part)));
         for (var part : OriginalMultiblockPartData.ALL)
             if (!NAMED.containsKey(part.originalId()))
                 NAMED.put(part.originalId(), RegisteredBlock.register(part.path(), () -> MultiblockBlockFactory.structural(part)));
@@ -126,7 +126,10 @@ public final class GTMultiblocks {
         return BlockBehaviour.Properties.of().strength(hardness, hardness).requiresCorrectToolForDrops();
     }
     private static RegisteredBlock<Block> controller(String id, java.util.function.Supplier<Block> factory) {
-        var block = RegisteredBlock.register(id, factory, GTMultiblocks::blockItem); CONTROLLERS.put(id, block); return block;
+        var block = MultiblockRegistration.register("gt6ce", id, factory,
+                (path, create) -> RegisteredBlock.register(path, create, GTMultiblocks::blockItem));
+        CONTROLLERS.put(id, block);
+        return block;
     }
     /** Structural parts stack to 64; controllers use the same limit as other machines. */
     private static BlockItem blockItem(Block block) {

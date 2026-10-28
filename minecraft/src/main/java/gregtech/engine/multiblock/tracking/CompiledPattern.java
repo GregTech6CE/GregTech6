@@ -181,6 +181,15 @@ public final class CompiledPattern {
         return fixed.length;
     }
 
+    /** Original declaration, including every buildable alternative. */
+    public LargeMachineLayouts.Cell declaredCell(int index) {
+        return fixed[index].cell;
+    }
+
+    public LargeMachineLayouts.Cell declaredRepeatCell(int index) {
+        return repeatCells[index].cell;
+    }
+
     public int dx(int index) {
         return fixed[index].dx;
     }

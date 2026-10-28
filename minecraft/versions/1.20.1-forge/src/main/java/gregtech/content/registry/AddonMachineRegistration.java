@@ -44,14 +44,16 @@ public final class AddonMachineRegistration {
             created.register(bus);
             return created;
         });
-        RegistryObject<BasicMachineBlock> block = blocks.register(
+        RegistryObject<BasicMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
+                namespace,
                 spec.id(),
                 () -> new BasicMachineBlock(
                         spec,
                         BlockBehaviour.Properties.of()
                                 .mapColor(MapColor.METAL)
                                 .strength(spec.hardness(), spec.blastResistance())
-                                .requiresCorrectToolForDrops()));
+                                .requiresCorrectToolForDrops()),
+                blocks::register);
         MachineRegistry.trackBasicMachine(block);
         items.register(
                 spec.id(),

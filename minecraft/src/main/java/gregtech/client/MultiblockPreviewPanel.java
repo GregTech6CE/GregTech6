@@ -82,7 +82,10 @@ public final class MultiblockPreviewPanel {
                 && tankItem.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock tank
                 && tank.valveSpec() != null)
             return List.of(Component.translatable("gt6ce.jei.assembly_tank"));
-        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem block && gregtech.content.multiblock.ControllerStructureLayouts.cells(block.getBlock())!=null)
+        if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem block
+                && (block.getBlock() instanceof gregtech.content.block.machine.LargeCrucibleControllerBlock
+                    || block.getBlock() instanceof gregtech.content.block.machine.CokeOvenControllerBlock
+                    || block.getBlock() instanceof gregtech.content.block.machine.VonDaGraaggControllerBlock))
             return List.of(Component.translatable("gt6ce.jei.assembly_legacy"));
 //? if >=1.21.1 {
         /*if(mouseY>=height-24)return List.of(Component.translatable(gregtech.content.multiblock.GasTurbineDefinitions.isController(info.controller())?"gt6ce.jei.assembly_gas_turbine":info.controller().is(gregtech.content.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem())?"gt6ce.jei.assembly_exchanger":info.controller().is(gregtech.content.registry.GTMultiblocks.findPart(17999).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17999).asItem())?"gt6ce.jei.assembly_drill":info.controller().is(gregtech.content.registry.GTMultiblocks.findPart(17998).get().asItem())||info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17998).asItem())?"gt6ce.jei.assembly_lightning":info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine && gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName())!=null?"gt6ce.jei.assembly_large_machine":info.controller().is(RecipeMachines.machine("implosion_compressor_main").asItem())?"gt6ce.jei.assembly_implosion":info.boiler()?"gt6ce.jei.assembly_boiler":"gt6ce.jei.assembly_tank"));

@@ -16,19 +16,15 @@ public final class OriginalLargeBoilerParameters {
     public static final List<CheckCell> CHECK_ORDER = checkOrder();
 
     private static List<CheckCell> checkOrder() {
-        var cells = new ArrayList<CheckCell>();
-        cells.add(new CheckCell(0, 1, 0, StructureGrid.Role.AIR));
-        for (int y = -1; y <= 0; y++)
-            for (int z = -1; z <= 1; z++)
-                for (int x = -1; x <= 1; x++)
-                    cells.add(new CheckCell(
-                            x, y, z, y == -1 ? StructureGrid.Role.HEAT_INPUT : StructureGrid.Role.FLUID_INPUT));
-        cells.add(new CheckCell(0, 2, 0, StructureGrid.Role.FLUID_OUTPUT));
-        for (int y = 1; y <= 2; y++)
-            for (int z = -1; z <= 1; z++)
-                for (int x = -1; x <= 1; x++)
-                    if (x != 0 || z != 0) cells.add(new CheckCell(x, y, z, StructureGrid.Role.FLUID_OUTPUT));
-        return List.copyOf(cells);
+        return SharedBoilerStructure.LAYOUT.cells().stream()
+                .map(c -> new CheckCell(c.right(), c.up(), c.back() - 1, c.role()))
+                .sorted(java.util.Comparator.comparingInt((CheckCell c) -> c.role() == StructureGrid.Role.AIR
+                                ? 0
+                                : c.y() < 1 ? 1 : c.x() == 0 && c.z() == 0 ? 2 : 3)
+                        .thenComparingInt(CheckCell::y)
+                        .thenComparingInt(CheckCell::z)
+                        .thenComparingInt(CheckCell::x))
+                .toList();
     }
 
     public static boolean contains(int dx, int dy, int dz) {
@@ -77,17 +73,6 @@ public final class OriginalLargeBoilerParameters {
     }
 
     private static StructureGrid layout() {
-        var cells = new ArrayList<StructureGrid.Cell>();
-        for (int y = -1; y <= 2; y++)
-            for (int back = 0; back <= 2; back++)
-                for (int right = -1; right <= 1; right++) {
-                    StructureGrid.Role role;
-                    if (y == -1) role = StructureGrid.Role.HEAT_INPUT;
-                    else if (y == 0) role = StructureGrid.Role.FLUID_INPUT;
-                    else if (y == 1 && right == 0 && back == 1) role = StructureGrid.Role.AIR;
-                    else role = StructureGrid.Role.FLUID_OUTPUT;
-                    cells.add(new StructureGrid.Cell(right, y, back, role));
-                }
-        return new StructureGrid(cells);
+        return SharedBoilerStructure.LAYOUT;
     }
 }

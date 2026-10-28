@@ -1,6 +1,8 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid.Role;
+import gregtech.api.multiblock.CellMatch;
+import gregtech.api.multiblock.StructureLayout;
+import gregtech.api.multiblock.StructureRole;
 import java.util.*;
 
 /** Original 17101 front-bottom tower and heat-transmitter base, preserving role gates. */
@@ -10,18 +12,18 @@ public final class SharedDistillationTowerStructure {
     public static final List<SharedLargeMachineLayouts.Cell> CELLS = create();
 
     private static List<SharedLargeMachineLayouts.Cell> create() {
-        var cells = new ArrayList<SharedLargeMachineLayouts.Cell>();
-        for (int x = -1; x <= 1; x++)
-            for (int y = -1; y < 8; y++)
-                for (int z = 0; z < 3; z++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    cells.add(new SharedLargeMachineLayouts.Cell(
-                            x,
-                            y,
-                            z,
-                            y < 0 ? 18101 : 18102,
-                            y < 0 ? Role.ENERGY_INPUT : y == 0 ? Role.ITEM_FLUID_IO : Role.FLUID_OUTPUT));
-                }
-        return List.copyOf(cells);
+        return MultiblockPatterns.cells(StructureLayout.pattern("distillationtower")
+                .layer(-1, "AAA", "AAA", "AAA")
+                .layer(0, "BSB", "BBB", "BBB")
+                .layer(1, "CCC", "CCC", "CCC")
+                .layer(2, "CCC", "CCC", "CCC")
+                .layer(3, "CCC", "CCC", "CCC")
+                .layer(4, "CCC", "CCC", "CCC")
+                .layer(5, "CCC", "CCC", "CCC")
+                .layer(6, "CCC", "CCC", "CCC")
+                .layer(7, "CCC", "CCC", "CCC")
+                .where('A', CellMatch.part("heat_transmitter"), StructureRole.ENERGY_INPUT)
+                .where('B', CellMatch.part("distillation_tower_part"), StructureRole.ITEM_FLUID_IO)
+                .where('C', CellMatch.part("distillation_tower_part"), StructureRole.FLUID_OUTPUT));
     }
 }

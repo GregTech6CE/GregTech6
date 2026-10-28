@@ -50,14 +50,17 @@ public final class BehaviorMachineRegistration {
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
         var holders = new ArrayList<DeferredHolder<Block, BehaviorMachineBlock>>();
         for (AddonMachines.AcceptedBehavior accepted : machines) {
-            DeferredHolder<Block, BehaviorMachineBlock> block = blocks.register(
-                    accepted.declaration().casing().id(),
-                    () -> new BehaviorMachineBlock(
-                            accepted,
-                            BlockBehaviour.Properties.of()
-                                    .mapColor(MapColor.METAL)
-                                    .strength(5.0F, 5.0F)
-                                    .requiresCorrectToolForDrops()));
+            DeferredHolder<Block, BehaviorMachineBlock> block =
+                    gregtech.content.registry.MultiblockRegistration.register(
+                            namespace,
+                            accepted.declaration().casing().id(),
+                            () -> new BehaviorMachineBlock(
+                                    accepted,
+                                    BlockBehaviour.Properties.of()
+                                            .mapColor(MapColor.METAL)
+                                            .strength(5.0F, 5.0F)
+                                            .requiresCorrectToolForDrops()),
+                            blocks::register);
             holders.add(block);
             BLOCKS.add(block);
             items.register(

@@ -71,9 +71,9 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         return cells;
     }
     private static LargeMachineLayouts.Cell processorCell(LargeMachineLayouts.Cell cell) {
-        var alternatives=List.of(new SharedLargeMachineLayouts.Choice(18201,null),
-                new SharedLargeMachineLayouts.Choice(18202,null));
-        return new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),18200,cell.role(),cell.plain(),
+        var alternatives=java.util.stream.IntStream.rangeClosed(18200,18202)
+                .filter(id -> id != cell.part()).mapToObj(id -> new SharedLargeMachineLayouts.Choice(id,null)).toList();
+        return new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),cell.part(),cell.role(),cell.plain(),
                 cell.design(),alternatives);
     }
     @Override public boolean applyStructure(PatternMatch match) {

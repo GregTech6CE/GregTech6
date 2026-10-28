@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import javax.annotation.Nullable;
 
-public class LargeHeatExchangerControllerBlock extends DirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+public class LargeHeatExchangerControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
 
     public LargeHeatExchangerControllerBlock(Properties properties) {
         super(properties);

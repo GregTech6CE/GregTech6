@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** GT6 17997: the outward-facing main block in a 5x5x5 Logistics Core. */
-public final class LogisticsCoreControllerBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public final class LogisticsCoreControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override
     public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
