@@ -28,10 +28,17 @@ public final class StructuralPartRecipes {
         count += wall(LargeMachineParts.block(18006), "Titanium", false);
         count += wall(LargeMachineParts.block(18007), "Invar", false);
         count += wall(LargeMachineParts.block(18009), "Steel", false);
+        count += wall(LargeMachineParts.block(18010), "Bronze", false);
+        count += wall(LargeMachineParts.block(18011), "Lead", false);
+        count += wall(LargeMachineParts.block(18012), "Ta4HfC5", false);
         count += wall(LargeMachineParts.block(18026), "Titanium", true);
         count += wall(LargeMachineParts.block(18024), "Tungsten", true);
         count += wall(LargeMachineParts.block(18025), "Adamantium", true);
         count += wall(LargeMachineParts.block(18027), "Invar", true);
+        count += wall(LargeMachineParts.block(18028), "SteelGalvanized", true);
+        count += wall(LargeMachineParts.block(18029), "Steel", true);
+        count += wall(LargeMachineParts.block(18030), "Bronze", true);
+        count += wall(LargeMachineParts.block(18032), "Ta4HfC5", true);
         // MT.Ad has neither FURNACE nor SOFT. Original handler: 9 plates, 16 GU/t,
         // 256 ticks per material unit per (quality + 1), not the easy-workable 144 ticks.
         var adamantium = GTMaterialRegistry.get("Adamantium");

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.material.SourceLatheMaterialProfiles;
@@ -39,6 +40,7 @@ public final class HandMaterialCraftingRecipes {
             var profile = SourceLatheMaterialProfiles.find(material);
             if (profile != null && profile.coated()) continue;
             gemPlates(rows, material);
+            smallGear(rows, material);
             var bolt = GTItems.getStack(PrefixRegistry.byName("bolt"), material, 1);
             var screw = GTItems.getStack(PrefixRegistry.byName("screw"), material, 1);
             if (bolt.isEmpty() || screw.isEmpty()) continue;
@@ -47,6 +49,26 @@ public final class HandMaterialCraftingRecipes {
         }
         return Map.copyOf(rows);
     }
+    /**
+     * Loader_Recipes_Other:417: one plate and a file (stone materials) or a hard hammer forms
+     * a small gear. Wood keeps its own plank/button rows, and coated materials are excluded.
+     */
+    private static void smallGear(Map<ResourceLocation, JsonObject> rows, GTMaterial material) {
+        if (material.has(MaterialProperty.WOOD)) return;
+        var plate = GTItems.getStack(MaterialPrefix.plate, material, 1);
+        var gear = GTItems.getStack(MaterialPrefix.gearGtSmall, material, 1);
+        if (plate.isEmpty() || gear.isEmpty()) return;
+        boolean stone = material.has(MaterialProperty.STONE);
+        put(rows, "gear_small/" + slug(material), List.of("P ", stone ? " f" : " h"),
+                Map.of("P", form("plate", material, plate),
+                        stone ? "f" : "h", item(stone ? "gt6ce:tool_file" : "gt6ce:tool_hard_hammer")),
+                gear);
+    }
+
+    private static String slug(GTMaterial material) {
+        return material.getName().toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_]", "_");
+    }
+
     private static void gemPlates(Map<ResourceLocation, JsonObject> rows, GTMaterial material) {
         for (var entry : Map.of("gemFlawless", 1, "gemExquisite", 3, "gemLegendary", 7).entrySet()) {
             var input = GTItems.getStack(PrefixRegistry.byName(entry.getKey()), material, 1);

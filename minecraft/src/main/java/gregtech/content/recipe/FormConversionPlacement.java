@@ -35,7 +35,7 @@ public enum FormConversionPlacement implements StringRepresentable {
                 && first >= selector.offset();
     }
 
-    /** Requested port order: first slot gives four small dusts, second gives nine tiny dusts. */
+    /** Requested port order: the first modulo route gives four small dusts, the second nine tiny. */
     public static FormConversionSelector orderedSelector(OriginalFormConversions.Conversion conversion) {
         var source = OriginalFormConversions.selector(conversion);
         if (conversion.single() && conversion.input().equals("dust")) {
