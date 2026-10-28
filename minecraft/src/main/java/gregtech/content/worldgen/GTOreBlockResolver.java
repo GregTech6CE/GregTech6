@@ -34,8 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * {@code ore_small_<material>} block which carries the background stone in its
  * {@link OreBlock#STONE} block-state property, and the model renders it dynamically.
  *
- * <p>§103.B: the host stone used to be written into a per-block {@code OreBlockEntity}; it is now
- * part of the state the placement writes, so no block entity is created at all.
+ * <p>The host stone is part of the state the placement writes, so no block entity is involved.
  *
  * <p>Hosts are the {@link OreHostStone} values: the vanilla rocks ({@code stone}, {@code granite},
  * {@code diorite}, {@code andesite}, {@code deepslate}, {@code tuff}, {@code netherrack},
@@ -83,7 +82,7 @@ public final class GTOreBlockResolver {
     /**
      * Places ore with an explicit host rock, ignoring what is at {@code pos} (GT6's
      * {@code WD.setOre(aWorld, x, y, z, aMaterial, aBlock)} picks the stone variant itself — the
-     * deep-ocean pylons sprinkle GT6's normal-stone ore into prismarine, see §58).
+     * deep-ocean pylons sprinkle GT6's normal-stone ore into prismarine, see).
      */
 
     public static boolean placeOre(WorldGenLevel level, BlockPos pos, OreHostStone stone, GTMaterial material, boolean small) {

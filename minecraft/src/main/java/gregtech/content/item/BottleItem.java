@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  * <p>GT6 gives every {@code MultiItemBottles} entry a {@code FoodStatFluid}, i.e. the bottle <em>is</em>
  * the 250&nbsp;mB portion of that fluid, and the numbers come from {@code DrinksGT} (the port's
- * {@link GTDrinks} table, §93/§96). Bottles whose fluid the port does not have — and bottles of fluids
+ * {@link GTDrinks} table, /). Bottles whose fluid the port does not have — and bottles of fluids
  * that are not drinks at all (mercury, ink, glue, lubricant, tar, the cooking oils) — pass instead of
  * being consumed, the same call the per-fluid {@link FluidItem} makes.
  *

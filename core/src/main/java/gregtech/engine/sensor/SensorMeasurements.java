@@ -6,7 +6,7 @@ package gregtech.engine.sensor;
  *
  * <p>The four weight-o-meters of GT6 differ <em>only</em> in this scale - the measurement code is the
  * same in all four classes, only the last line differs
- * ({@code gregtech/tileentity/sensors/MultiTileEntityWeightometer*.java:62}):
+ * (the {@code MultiTileEntityWeightometer*} classes, line 62):
  *
  * <pre>
  *   Light      MAX_WEIGHT = (B[16]-1)/1000.0     return (long)(rWeightKG*1000);      "in Gramm"
@@ -50,22 +50,22 @@ public final class SensorMeasurements {
         return Math.max(0, compressedVolume) / 1_000_000;
     }
 
-    /** GT6 {@code WeightometerHeavy:62}: {@code (long)(rWeightKG/1000)}, "in Tons". */
+    /** GT6 {@code MultiTileEntityWeightometerHeavy:62}: {@code (long)(rWeightKG/1000)}, "in Tons". */
     public static long tonnes(double kilograms) {
         return clamp(kilograms / 1000);
     }
 
-    /** GT6 {@code WeightometerLight:62}: {@code (long)(rWeightKG*1000)}, "in Gramm". */
+    /** GT6 {@code MultiTileEntityWeightometerLight:62}: {@code (long)(rWeightKG*1000)}, "in Gramm". */
     public static long grams(double kilograms) {
         return clamp(kilograms * 1000);
     }
 
-    /** GT6 {@code WeightometerMedium:62}: {@code (long)rWeightKG}, "in Kilogramme". */
+    /** GT6 {@code MultiTileEntityWeightometerMedium:62}: {@code (long)rWeightKG}, "in Kilogramme". */
     public static long kilograms(double kilograms) {
         return clamp(kilograms);
     }
 
-    /** GT6 {@code WeightometerSuperHeavy:62}: {@code (long)(rWeightKG/1000000)}, "in Kilotons". */
+    /** GT6 {@code MultiTileEntityWeightometerSuperHeavy:62}: {@code (long)(rWeightKG/1000000)}, "in Kilotons". */
     public static long kilotonnes(double kilograms) {
         return clamp(kilograms / 1_000_000);
     }

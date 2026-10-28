@@ -111,7 +111,7 @@ public final class GTStructures {
      * The dungeon in a tag of its own ({@code data/gt6ce/tags/worldgen/structure/gt_dungeon.json}), so
      * {@code /locate structure #gt6ce:gt_dungeon} and
      * {@code ServerLevel.findNearestMapStructure(TagKey, ...)} - the only public locate entry point
-     * ({@code ServerLevel:1121-1134}) - can ask for it.
+     * ({@code ServerLevel}) - can ask for it.
      */
     public static final TagKey<Structure> DUNGEON_TAG = TagKey.create(Registries.STRUCTURE,
 //? if >=1.21.1 {

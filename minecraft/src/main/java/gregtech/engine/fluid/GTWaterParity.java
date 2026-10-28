@@ -36,7 +36,7 @@ import net.minecraft.resources.ResourceLocation;
  * {@code Entity.updateFluidHeightAndDoFluidPushing}, {@code IForgeEntity.isInFluidType}) compares the
  * {@code FluidType} instance against {@code ForgeMod.WATER_TYPE}, vanilla's waterlogged-block
  * contract compares the fluid instance against {@code Fluids.WATER}
- * ({@code SimpleWaterloggedBlock.java:17-22}), and the chunk mesher looks the fluid up in
+ * ({@code SimpleWaterloggedBlock.java}), and the chunk mesher looks the fluid up in
  * {@code ItemBlockRenderTypes.FLUID_RENDER_TYPES}. See {@code GTWorldWaterFluid},
  * {@link VanillaWaterlogging} and {@link FluidRenderLayers} for how the three world waters satisfy
  * them while staying separate fluids.

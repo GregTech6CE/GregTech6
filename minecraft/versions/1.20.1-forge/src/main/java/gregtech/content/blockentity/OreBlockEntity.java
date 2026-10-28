@@ -9,19 +9,19 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * <b>Legacy only (§103.B).</b> Ore blocks carry no block entity: the background ("host") rock an ore
+ * <b>Legacy only (.B).</b> Ore blocks carry no block entity: the background ("host") rock an ore
  * generated in is the {@link OreBlock#STONE} block-state property now, and this entity's single field
  * was that stone id. It cost one entity per ore block — ~497 per chunk, 1.8M in the 3.6k-chunk session
- * of §101/§102 (~0.3–0.5 GB once the chunk's block-entity map entry and the client's
+ * of / (~0.3–0.5 GB once the chunk's block-entity map entry and the client's
  * {@code BlockEntityInfo} are counted).
  *
  * <p>Nothing creates one any more ({@link OreBlock} deliberately does not implement
  * {@code EntityBlock}); the class and its {@code gt6ce:ore} block-entity type stay registered for
- * one reason: a world generated before §103.B has an entity per ore, and vanilla loads them from the
+ * one reason: a world generated before.B has an entity per ore, and vanilla loads them from the
  * chunk tag ({@code BlockEntity#loadStatic}).
  *
  * <p>Such an entity is short-lived. The chunk loader creates it, sets its level
- * ({@code LevelChunk:538}), and {@link #onLoad()} writes a stone it carries into the block state and
+ * ({@code LevelChunk}), and {@link #onLoad()} writes a stone it carries into the block state and
  * removes itself; {@code LevelChunk#setBlockEntity} refuses to store it in the first place because the
  * ore state no longer reports {@code hasBlockEntity()}. A chunk from an old world therefore converges
  * to the new representation — no entities, host rock in the state — the first time it is loaded, and
@@ -73,12 +73,12 @@ public class OreBlockEntity extends BlockEntity {
     }
 
     /**
-     * §103.B migration: a world generated before the host rock moved to the block state still has an
+     * .B migration: a world generated before the host rock moved to the block state still has an
      * ore entity per ore; write the stone it carries into {@link OreBlock#STONE} and release the entity.
      * An old world converges to the new representation instead of carrying inert entities forever.
      *
      * <p>The entity is never in a chunk map (see the class comment), so this only has to fix the state;
-     * {@code level} is valid because the loader sets it before calling this ({@code LevelChunk:538}).
+     * {@code level} is valid because the loader sets it before calling this ({@code LevelChunk}).
      * If the state cannot be written the entity is kept, so the next load retries.
      */
     @Override

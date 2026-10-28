@@ -59,7 +59,7 @@ public final class StoneAndToolSurvivalRecipes {
      * ({@code IL.Shape_Extruder_*} and {@code IL.Shape_SimpleEx_*}, the port's
      * {@code extruder_shape_*} / {@code low_heat_extruder_shape_*}). These rows are what makes GT6's
      * stone tools reachable: the raw heads they produce are the ones the sharpening chain finishes
-     * (the port's stone tool heads come from §24 of the porting notes).
+     * (the port's stone tool heads come from of the porting notes).
      *
      * <p>GT6 iterates {@code mEqualBlocks[STONE]} and {@code mEqualBlocks[COBBL]}, i.e. only those two
      * variant groups — not every masonry variant. The port's equivalent sets are the {@code _stone} and

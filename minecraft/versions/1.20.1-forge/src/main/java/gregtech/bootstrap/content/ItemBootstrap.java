@@ -60,7 +60,7 @@ public record ItemBootstrap() implements InitializationStep {
                 "Queued {} multi-items (tools/bottles/food/bumblebees) for registration",
                 gregtech.content.registry.GTMultiItems.all().size());
 
-        // §108: GT6's food items are all inside the multi-item table above; this registry only holds
+        // GT6's food items are all inside the multi-item table above; this registry only holds
         // the handful that were genuinely missing (today none - see GTFoodItemsGen.GAP).
         gregtech.content.registry.GTFoodItems.registerAll();
         LOGGER.info(

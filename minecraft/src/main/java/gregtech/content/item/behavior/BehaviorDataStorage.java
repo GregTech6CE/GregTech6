@@ -19,7 +19,7 @@ import java.util.List;
  * <ul>
  *   <li>the data compound rendered by {@code UT.NBT.getDataToolTip(data, list, <b>true</b>)}
  *       ({@code UT.java:2237-2269}) — the verbose form, because a stick holds exactly one file; and</li>
- *   <li>{@code "Data: USB <tier>.0"} in dark grey ({@code :42}).</li>
+ *   <li>{@code "Data: USB <tier>.0"} in dark grey.</li>
  * </ul>
  *
  * <p><b>One dead branch, kept as a note:</b> GT6's {@code else} — {@code "This Stick is Empty"} — is
@@ -48,7 +48,7 @@ public final class BehaviorDataStorage {
 
         if (tag == null) return;                              // GT6: `if (aStack.hasTagCompound())`
         CompoundTag data = GTMaterialDataRecipes.usbData(stack);
-        if (data != null) dataTooltip(data, lines, true);     // :41 — the verbose form
+        if (data != null) dataTooltip(data, lines, true);     // — the verbose form
         lines.add(Component.translatable("gt.tooltip.usb.tier",
                 String.valueOf(tag.getByte(GTMaterialDataRecipes.NBT_USB_TIER)))
                 .withStyle(ChatFormatting.DARK_GRAY));

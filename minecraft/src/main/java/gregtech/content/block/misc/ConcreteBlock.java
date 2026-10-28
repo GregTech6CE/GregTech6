@@ -41,7 +41,7 @@ public class ConcreteBlock extends Block {
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
     private static final TagKey<Item> IRON_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/iron"));
     private static final TagKey<Item> STEEL_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/steel"));
-    // GT6 ANY.Iron:119 accepts these iron/steel material aliases for its stick form.
+    // GT6 ANY.Iron accepts these iron/steel material aliases for its stick form.
     private static final Set<String> IRON_FAMILY=gregtech.content.block.ConstructionRules.IRON_FAMILY;
     private final boolean reinforced;
 

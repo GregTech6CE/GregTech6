@@ -12,13 +12,13 @@ import java.util.Set;
  *
  * <p><b>The vanilla mechanism.</b> The chunk mesher picks a fluid's layer with
  * {@code ItemBlockRenderTypes.getRenderLayer(FluidState)}
- * ({@code ChunkRenderDispatcher.java:620}:
+ * ({@code ChunkRenderDispatcher.java}:
  * {@code RenderType rendertype = ItemBlockRenderTypes.getRenderLayer(fluidstate);}), and that method
  * looks the fluid up in a map that vanilla fills with exactly two entries:
  * {@code Fluids.WATER} and {@code Fluids.FLOWING_WATER} mapped to
- * {@code RenderType.translucent()} ({@code ItemBlockRenderTypes.java:315-319}); every fluid that is
+ * {@code RenderType.translucent()} ({@code ItemBlockRenderTypes.java}); every fluid that is
  * not in the map falls back to {@code RenderType.solid()}
- * ({@code ItemBlockRenderTypes.java:377-380}, {@code FLUID_RENDER_TYPES} default at line 400).
+ * ({@code ItemBlockRenderTypes.java}, {@code FLUID_RENDER_TYPES} default at line 400).
  * {@code RenderType.translucent()} is what makes vanilla water see-through. GT6's original
  * {@code BlockBaseFluid} used render pass 1 for each of its world fluids, including oil, gas and
  * geothermal springs, so all nine placed fluid families need that layer here.

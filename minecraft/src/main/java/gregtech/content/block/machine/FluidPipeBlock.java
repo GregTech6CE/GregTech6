@@ -227,43 +227,43 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 //? if >=1.21.1 {
     /*/^*
      * GT6's right-click order on a tile that can carry covers, mirrored from
-     * {@code BasicMachineBlock.use:94-159} so a pipe and a machine answer a click the same way.
+     * {@code BasicMachineBlock.use} so a pipe and a machine answer a click the same way.
      *
      * <p>{@code FluidPipeToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
-     * rotation) is on the machine, and everything the pipe did before this batch stays where it was:
+     * rotation) is on the machine, and the pipe's own responses keep their order:
      * the magnifying glass, the fluid-container path through
      * {@link FluidPipeBlockEntity#handleUse} and the shift-empty-hand debug print. Between the two
      * sits the cover block, in {@code BasicMachineBlock}'s own order —
-     * {@code PanelCoverInteraction.use} ({@code :106-109}), then a held cover item attached to the
-     * clicked face ({@code :111-117}), then the crowbar removing the face's cover
-     * ({@code :118-126}), then the filter covers' screwdriver / soft-hammer configuration
-     * ({@code :146-154}) and the filter-setting click ({@code :155-157}).</p>
+     * {@code PanelCoverInteraction.use}, then a held cover item attached to the
+     * clicked face, then the crowbar removing the face's cover,
+     * then the filter covers' screwdriver / soft-hammer configuration
+     * and the filter-setting click.</p>
      *
      * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
      * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
      * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
-     * does whenever the clicked face has no cover ({@code PanelCoverRuntime:127}).</p>
+     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}).</p>
      ^/
     private InteractionResult useOriginal(BlockState state, Level level, BlockPos pos, Player player,
 *///?} else {
     /**
      * GT6's right-click order on a tile that can carry covers, mirrored from
-     * {@code BasicMachineBlock.use:94-159} so a pipe and a machine answer a click the same way.
+     * {@code BasicMachineBlock.use} so a pipe and a machine answer a click the same way.
      *
      * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
-     * rotation) is on the machine, and everything the pipe did before this batch stays where it was:
+     * rotation) is on the machine, and the pipe's own responses keep their order:
      * the magnifying glass, the fluid-container path through
      * {@link FluidPipeBlockEntity#handleUse} and the shift-empty-hand debug print. Between the two
      * sits the cover block, in {@code BasicMachineBlock}'s own order —
-     * {@code PanelCoverInteraction.use} ({@code :106-109}), then a held cover item attached to the
-     * clicked face ({@code :111-117}), then the crowbar removing the face's cover
-     * ({@code :118-126}), then the filter covers' screwdriver / soft-hammer configuration
-     * ({@code :146-154}) and the filter-setting click ({@code :155-157}).</p>
+     * {@code PanelCoverInteraction.use}, then a held cover item attached to the
+     * clicked face, then the crowbar removing the face's cover,
+     * then the filter covers' screwdriver / soft-hammer configuration
+     * and the filter-setting click.</p>
      *
      * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
      * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
      * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
-     * does whenever the clicked face has no cover ({@code PanelCoverRuntime:127}).</p>
+     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}).</p>
      */
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
@@ -410,7 +410,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
      * The pipe's removal path, and therefore where the covers are dropped: the same
      * {@code !state.is(newState.getBlock())} guard the fluid dump already uses, with
      * {@link FluidPipeBlockEntity#dropCovers} next to it — the pipe's copy of
-     * {@code BasicMachineBlock:254-262} calling {@code dropContents}. The block entity is still in
+     * {@code BasicMachineBlock} calling {@code dropContents}. The block entity is still in
      * the world at this point, which is what makes the drop work.
      */
     @Override

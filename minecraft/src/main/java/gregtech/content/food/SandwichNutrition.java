@@ -59,7 +59,7 @@ public final class SandwichNutrition {
         }
         for (var row : SandwichIngredientEffects.forItem(item)) {
             if (player.getRandom().nextInt(100) >= row.chance()) continue;
-            // UT.Entities.applyPotion:3057 rejects negative durations even for removal tuples.
+            // UT.Entities.applyPotion rejects negative durations even for removal tuples.
             if (row.duration() <= 0) continue;
 //? if >=1.21.1 {
             /*var id = net.minecraft.resources.ResourceLocation.parse(row.effect());

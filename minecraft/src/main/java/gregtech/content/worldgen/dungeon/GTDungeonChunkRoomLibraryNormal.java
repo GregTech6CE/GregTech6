@@ -23,7 +23,7 @@ import gregtech.content.registry.GTWoods;
  * <h2>Port differences</h2>
  * <ul>
  *   <li><b>Tags.</b> GT6 asks for {@code WorldgenDungeonGT.TAG_LIBRARY_NORMAL} first and adds it after the
- *       base class succeeded ({@code :39-40}); that tag is how GT6's config switches the room off. The
+ *       base class succeeded; that tag is how GT6's config switches the room off. The
  *       port has no dungeon config, so the tag only keeps the room from being built twice.</li>
  *   <li><b>Shelf supports.</b> GT6's shelf walls stand on Blue Spruce slabs - {@code BlocksGT.Planks2}, an
  *       extra GT6 wood, placed upside down ({@code ((BlockMetaType)BlocksGT.Planks2).mSlabs[1]}, the
@@ -36,8 +36,8 @@ import gregtech.content.registry.GTWoods;
  *       ({@code tDidntGenerateZPM}). The port's {@link GTDungeonData#zpm(int, int, int)} always places its
  *       ZPM block and reports success, so the latch behaves like GT6 with ZPMs enabled; the port's ZPM has
  *       no energised state either.</li>
- *   <li><b>Pots and cups.</b> GT6 hands {@code pot} and {@code cup} a Hexxit hexorium block
- *       ({@code :43-44}), which may replace the pot or the cup with that block; the port has no Hexxit, and
+ *   <li><b>Pots and cups.</b> GT6 hands {@code pot} and {@code cup} a Hexxit hexorium block,
+ *       which may replace the pot or the cup with that block; the port has no Hexxit, and
  *       GT6's own "block is null" fallback chooses a vanilla or GT flower for the pot and fills the cup
  *       with night vision potion. The two Hexxit argument rolls are still consumed before the pot's own
  *       flower rolls, keeping the room stream aligned. Cup paint remains absent.</li>
@@ -59,7 +59,7 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
     }
 
     /**
-     * GT6's {@code :57} to {@code :101} (twice per wall): what stands in front of a shelf wall - a pot, or,
+     * GT6's to (twice per wall): what stands in front of a shelf wall - a pot, or,
      * once per cell and with a 1 in 16 chance, a ZPM module instead (GT6's {@code tDidntGenerateZPM}
      * latch, see the class javadoc). Returns whether no ZPM has been generated yet, which is guard and
      * result at once in GT6.
@@ -75,15 +75,12 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
 
     @Override
     public boolean generate(GTDungeonData data) {
-        // GT6's :39.
         if (data.hasTag(TAG_LIBRARY_NORMAL) || !super.generate(data)) return false;
         data.tags.add(TAG_LIBRARY_NORMAL);
 
-        // GT6's :46.
         boolean didNotGenerateZPM = true;
 
         if (!data.connected(1, 0)) {
-            // GT6's :48-61.
             data.set(14, 1, 5, shelfSupport());
             data.shelf(14, 1, 6, SHELF_LOOT);
             data.set(14, 1, 7, shelfSupport());
@@ -98,7 +95,6 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
             if (data.next1in4()) data.coins(14, 2, 10);
         }
         if (!data.connected(-1, 0)) {
-            // GT6's :62-75.
             data.set(1, 1, 5, shelfSupport());
             data.shelf(1, 1, 6, SHELF_LOOT);
             data.set(1, 1, 7, shelfSupport());
@@ -113,7 +109,6 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
             if (data.next1in4()) data.coins(1, 2, 10);
         }
         if (!data.connected(0, 1)) {
-            // GT6's :76-89.
             data.set(5, 1, 14, shelfSupport());
             data.shelf(6, 1, 14, SHELF_LOOT);
             data.set(7, 1, 14, shelfSupport());
@@ -128,7 +123,6 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
             if (data.next1in4()) data.coins(10, 2, 14);
         }
         if (!data.connected(0, -1)) {
-            // GT6's :90-103.
             data.set(5, 1, 1, shelfSupport());
             data.shelf(6, 1, 1, SHELF_LOOT);
             data.set(7, 1, 1, shelfSupport());

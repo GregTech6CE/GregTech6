@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.Mod;
 public final class FoodStatEvents {
     private FoodStatEvents() {}
 
-    /** GT6 {@code GT_API_Proxy:995-1010}. */
+    /** Applies GT6's FoodStat effects when a food item finishes ({@code GT_API_Proxy:995-1010}). */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onItemUseFinish(LivingEntityUseItemEvent.Finish event) {
         if (event.getEntity().level().isClientSide || !(event.getEntity() instanceof Player player)) {

@@ -19,7 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-/** GT6 Loader_Recipes_Handlers:740–844: prefix matrix, forging targets and both mold families. */
+/** GT6 {@code Loader_Recipes_Handlers.java:740-841}: prefix matrix, forging targets and both mold families. */
 public final class SourceExtruderRecipes {
     private SourceExtruderRecipes() {}
 

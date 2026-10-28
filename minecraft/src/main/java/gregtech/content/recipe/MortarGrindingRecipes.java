@@ -26,7 +26,7 @@ import java.util.List;
  * <p>
  * Every row is a {@code RecipeMapHandlerPrefix} with a {@code null} output prefix, which is GT6's
  * "<em>pulverized remains</em>" form: the input's whole material amount comes back as dust
- * ({@link #pulverize(GTMaterial, long)} = {@code OM.pulverize}, GT6 {@code OM.java:370-372}). Except for
+ * ({@link #pulverize(GTMaterial, long)} = {@code OM.pulverize}, GT6 {@code gregapi/util/OM.java:370-372}). Except for
  * small rocks, the rows are gated on the material flag {@code MORTAR} ("can be ground in a mortar", {@code TD.java:515}),
  * plus, for gems, sticks, ingots and plates, {@code BRITTLE} or {@code FOOD}
  * ({@code Or(BRITTLE, FOOD, <finer form>.NOT)} / {@code Or(BRITTLE, FOOD, WOOD)}).
@@ -86,7 +86,7 @@ public final class MortarGrindingRecipes {
         registered = true;
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
-            // GT6 :79: small rocks only require ANTIMATTER.NOT, not MORTAR.
+            // small rocks only require ANTIMATTER.NOT, not MORTAR.
             grind(material, "rockGt");
             if (!MaterialWorkability.isMortarGrindable(material)) continue;
             for (String row : PLAIN_ROWS) grind(material, row);
@@ -121,7 +121,7 @@ public final class MortarGrindingRecipes {
         if (recipe != null) ENTRIES.add(new Entry(prefixName, MachineRecipeMaps.Mortar, recipe));
     }
 
-    /** GT6 {@code OM.pulverize(material, amount)} (OM.java:370-372): dust of the pulverization target. */
+    /** GT6 {@code OM.pulverize(material, amount)} ({@code gregapi/util/OM.java:370-372}): dust of the pulverization target. */
     public static ItemStack pulverize(GTMaterial material, long amount) {
         GTMaterial target = material.getTargetPulverMaterial();
         if (target == null || !target.isValid()) return ItemStack.EMPTY;

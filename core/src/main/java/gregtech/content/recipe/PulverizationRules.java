@@ -4,7 +4,7 @@ package gregtech.content.recipe;
 import gregtech.api.material.GTValues;
 import java.math.BigInteger;
 
-/** OM.pulverize:370-371 uses UT.Code.units(input, U, targetPerUnit, false). */
+/** OM.pulverize uses UT.Code.units(input, U, targetPerUnit, false). */
 public final class PulverizationRules {
 
     private PulverizationRules() {}

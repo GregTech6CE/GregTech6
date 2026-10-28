@@ -29,15 +29,15 @@ import java.util.List;
  * <p>GT6 declares the empty cells as ordinary shaped recipes
  * ({@code MultiItemTechnological:464,469,474,479,484}) and marks them
  * <em>"Battery Part (doesn't require Canning Machine!)"</em>, while each filled cell carries a
- * {@code FluidContainerData} ({@code :462,467,472,477,482}) which makes the Canning Machine able to
+ * {@code FluidContainerData} which makes the Canning Machine able to
  * fill it:</p>
  *
  * <pre>
- * lead-acid     H2SO4 2000 mB   ({@code MT.H2SO4.liquid(2*U, T)})
- * alkaline      distilled water 1000 mB   ({@code FL.DistW.make(1000)})
+ * lead-acid H2SO4 2000 mB ({@code MT.H2SO4.liquid(2*U, T)})
+ * alkaline distilled water 1000 mB ({@code FL.DistW.make(1000)})
  * nickel-cadmium distilled water 1000 mB
- * lithium-cobalt    HCl gas 2000 mB   ({@code MT.HCl.gas(U*2, T)})
- * lithium-manganese HF  gas 2000 mB   ({@code MT.HF.gas(U*2, T)})
+ * lithium-cobalt HCl gas 2000 mB ({@code MT.HCl.gas(U*2, T)})
+ * lithium-manganese HF gas 2000 mB ({@code MT.HF.gas(U*2, T)})
  * </pre>
  *
  * <p>GT6 produces these rows from the fluid-container registry ({@code OreDictManager:296-300} plus

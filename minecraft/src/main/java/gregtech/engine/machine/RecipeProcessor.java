@@ -366,7 +366,8 @@ public final class RecipeProcessor {
 
     private int computeParallel(Recipe recipe, java.util.List<FluidStack> fluids) {
         int low = 0;
-        // Original BasicMachine:730/743 caps power-scaled parallel batches at nominal input.
+        // GT6's {@code MultiTileEntityBasicMachine:730} and {@code MultiTileEntityBasicMachine:743} cap
+        // power-scaled parallel batches at the nominal input.
         int high = ParallelFit.powerCap(config.parallelLimit(), config.nominalEnergyInput(), recipe.mEUt,
                 config.parallelScalesDuration(), config.usesTimeEnergy());
         for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) high = ParallelFit.amountCap(high, fluid.getAmount());

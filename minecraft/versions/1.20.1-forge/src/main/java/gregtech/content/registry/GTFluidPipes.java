@@ -55,7 +55,7 @@ public final class GTFluidPipes {
     }
 
     /**
-     * GT6's stack sizes for fluid pipes ({@code MultiTileEntityPipeFluid.addFluidPipes:92-98}):
+     * GT6's stack sizes for fluid pipes ({@code MultiTileEntityPipeFluid.addFluidPipes}):
      * tiny/small 64, medium 32, large/huge/quadruple/nonuple 16.
      */
     public static int stackSize(PipeSpec.PipeSize size) {

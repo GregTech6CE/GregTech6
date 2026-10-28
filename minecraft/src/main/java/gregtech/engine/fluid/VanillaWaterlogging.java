@@ -11,28 +11,28 @@ import net.minecraft.world.level.material.Fluids;
  *
  * <p><b>The vanilla mechanism.</b> Vanilla's waterlogged-block contract is an <em>instance</em>
  * comparison, not a tag test: {@code SimpleWaterloggedBlock.canPlaceLiquid} is
- * {@code fluid == Fluids.WATER} ({@code SimpleWaterloggedBlock.java:17-19}) and {@code placeLiquid}
- * needs {@code fluidState.getType() == Fluids.WATER} ({@code SimpleWaterloggedBlock.java:21-22}) -
+ * {@code fluid == Fluids.WATER} ({@code SimpleWaterloggedBlock.java}) and {@code placeLiquid}
+ * needs {@code fluidState.getType() == Fluids.WATER} ({@code SimpleWaterloggedBlock.java}) -
  * the <em>flowing</em> fluid is rejected just like any other fluid.
  *
  * <p>{@code FlowingFluid} computes the fluid it is about to place in exactly one method,
- * {@code getNewLiquid} ({@code FlowingFluid.java:153-187}): it returns {@code this.getSource(false)}
+ * {@code getNewLiquid} ({@code FlowingFluid.java}): it returns {@code this.getSource(false)}
  * when the target position has two source neighbours and a solid block below it
- * ({@code FlowingFluid.java:170-176}), and otherwise the flowing fluid
- * ({@code getFlowing(8, true)} for a column falling in from above, {@code FlowingFluid.java:178-186},
+ * ({@code FlowingFluid.java}), and otherwise the flowing fluid
+ * ({@code getFlowing(8, true)} for a column falling in from above, {@code FlowingFluid.java},
  * or {@code getFlowing(amount - dropOff, false)} at line 185). That state is then what every later
  * decision compares:
  * <ul>
- *   <li>{@code getSpread} computes it per direction ({@code FlowingFluid.java:349}) and drops the
+ *   <li>{@code getSpread} computes it per direction ({@code FlowingFluid.java}) and drops the
  *       direction unless {@code canPassThrough(..., fluidstate1.getType(), ...)}
- *       ({@code FlowingFluid.java:350}) succeeds - and that runs {@code FlowingFluid}'s own
+ *       ({@code FlowingFluid.java}) succeeds - and that runs {@code FlowingFluid}'s own
  *       <b>private</b> {@code canPassThrough} (310-312) and <b>private</b> {@code canHoldFluid}
  *       (377-390), i.e. {@code LiquidBlockContainer.canPlaceLiquid(level, pos, state, thatFluid)}.</li>
  *   <li>{@code spreadToSides} then asks {@code canSpreadTo} with {@code fluidstate.getType()} of the
- *       surviving entries ({@code FlowingFluid.java:140-147}, 392-394), which hits the same
+ *       surviving entries ({@code FlowingFluid.java}, 392-394), which hits the same
  *       {@code canHoldFluid}.</li>
  *   <li>{@code spreadTo} finally calls {@code placeLiquid} with the same state
- *       ({@code FlowingFluid.java:245-256}).</li>
+ *       ({@code FlowingFluid.java}).</li>
  * </ul>
  *
  * <p><b>Why substituting only at canSpreadTo/spreadTo was not enough.</b> The first of those two
@@ -62,7 +62,7 @@ import net.minecraft.world.level.material.Fluids;
  * A waterlogged block filled this way carries vanilla water internally, which is what the block
  * stores in vanilla anyway and what several of them store unconditionally
  * ({@code SeagrassBlock.getFluidState} returns {@code Fluids.WATER.getSource(false)} with no
- * waterlogged property at all, {@code SeagrassBlock.java:62-64}; {@code KelpBlock.java:56-58} the
+ * waterlogged property at all, {@code SeagrassBlock.java}; {@code KelpBlock.java} the
  * same). The block's fluid state is water-tagged, so swimming, drowning, the underwater overlay and
  * the renderer treat it exactly like vanilla water, and the GT6 fluid around it is not touched.
  */

@@ -16,7 +16,7 @@ public final class MachineWorkCost {
     /**
      * Bound completed work without overflowing at the largest representable recipe costs.
      * This discards excess supplied work; it does not implement the original machine's
-     * carry-over into the next job. See BASIC_MACHINE_EXECUTION_AUDIT.md, ALIGN-040.
+     * carry-over into the next job.
      */
     public static long advance(long completed, long total, long supplied) {
         long limit = Math.max(0, total);
@@ -46,7 +46,8 @@ public final class MachineWorkCost {
     }
 
     /**
-     * GT6 BasicMachine:766-773: ordinary parallel batches scale power; TU keeps recipe time.
+     * GT6 {@code MultiTileEntityBasicMachine.java:766-773}: ordinary parallel batches scale
+     * power; TU keeps recipe time.
      * Returns null when these inputs have no representable cost. That is a refused calculation,
      * not a missing lookup: items and fluids use an empty stack, materials use {@code invalid()}.
      */

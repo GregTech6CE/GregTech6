@@ -16,11 +16,11 @@ import net.minecraft.world.level.Level;
  *
  * <h2>The original</h2>
  *
- * <p>{@code harden(...)} ({@code :95-116}) tries the same four routes as the removal spray and in the
- * same order — {@code ITileEntityFoamable} ({@code :99}), {@code IBlockFoamable} ({@code :101}), the
- * IC2 cable's {@code foamed} byte ({@code :103-111}), the two IC2 foam blocks ({@code :113-114}) —
+ * <p>{@code harden(...)} tries the same four routes as the removal spray and in the
+ * same order — {@code ITileEntityFoamable}, {@code IBlockFoamable}, the
+ * IC2 cable's {@code foamed} byte, the two IC2 foam blocks —
  * and reports {@code 10} uses for a full block, {@code 5} for a C-Foam slab
- * ({@code :101}, {@code aBlock instanceof BlockCFoamFresh && SIDES_VALID[mSide]}).</p>
+ * ({@code aBlock instanceof BlockCFoamFresh && SIDES_VALID[mSide]}).</p>
  *
  * <p>Only the wet block dries: {@code BlockCFoamFresh.dryFoam} swaps in {@code BlocksGT.CFoam} with
  * the same metadata ({@code BlockCFoamFresh:110-112}), while {@code BlockCFoam.dryFoam} answers
@@ -30,13 +30,13 @@ import net.minecraft.world.level.Level;
  *
  * <p>The port's wet foam already owns exactly that operation: {@link CFoamBlockEntity#dry()} is
  * documented as GT6's {@code dryFoam} and swaps the block for {@code gt6ce:cfoam}
- * ({@code CFoamBlockEntity:43-54}), reporting whether it did. GT6's {@code MultiTileEntityCFoam}
+ * ({@code CFoamBlockEntity}), reporting whether it did. GT6's {@code MultiTileEntityCFoam}
  * reaches it through {@code ITileEntityFoamable} ({@code MultiTileEntityCFoam:118-124}), which is the
- * first branch {@code :99} tests — so the port's hardener is that branch and nothing else, and a
- * hardened block simply has no block entity to find ({@code :101}/{@code :57-60} answering
+ * first branch tests — so the port's hardener is that branch and nothing else, and a
+ * hardened block simply has no block entity to find (/ answering
  * {@code F}).</p>
  *
- * <p>The {@code aUses < 1} gate ({@code :96}) is the original's, not {@code < 10}: see
+ * <p>The {@code aUses < 1} gate is the original's, not {@code < 10}: see
  * {@link BehaviorSprayFoamRemover} for why.</p>
  */
 public final class BehaviorSprayFoamHardener {
@@ -47,10 +47,10 @@ public final class BehaviorSprayFoamHardener {
     /** GT6 {@code Behavior_Spray_Foam_Hardener:54}: {@code mUses = aUses * 10}. */
     public static final int USES_MULTIPLIER = 10;
 
-    /** GT6 {@code :99,101}: hardening a full C-Foam block costs this many uses. */
+    /** GT6's: hardening a full C-Foam block costs this many uses. */
     public static final int HARDEN_COST = 10;
 
-    /** GT6 {@code :101}: the same block as a slab costs this many. Nothing in the port is a foam slab. */
+    /** GT6's: the same block as a slab costs this many. Nothing in the port is a foam slab. */
     public static final int SLAB_HARDEN_COST = 5;
 
     private BehaviorSprayFoamHardener() {}
@@ -79,7 +79,7 @@ public final class BehaviorSprayFoamHardener {
     }
 
     /**
-     * GT6 {@code :95-116} for the port's content: the wet foam dries.
+     * GT6's for the port's content: the wet foam dries.
      *
      * @return {@link #HARDEN_COST} when the foam dried, {@code 0} when it was already hard or not
      *         foam at all
@@ -94,8 +94,8 @@ public final class BehaviorSprayFoamHardener {
             float hitX,
             float hitY,
             float hitZ) {
-        if (uses < 1L) return 0L; // :96
-        if (!(level.getBlockEntity(pos) instanceof CFoamBlockEntity foam)) return 0L; // :99 / :101→F
-        return foam.dry() ? HARDEN_COST : 0L; // :99
+        if (uses < 1L) return 0L;
+        if (!(level.getBlockEntity(pos) instanceof CFoamBlockEntity foam)) return 0L;
+        return foam.dry() ? HARDEN_COST : 0L;
     }
 }

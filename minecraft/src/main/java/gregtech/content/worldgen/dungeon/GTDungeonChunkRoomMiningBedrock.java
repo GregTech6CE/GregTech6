@@ -45,7 +45,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * <h2>Port differences</h2>
  * <ul>
  *   <li><b>The vein.</b> GT6 calls {@code WorldgenOresBedrock.generateVein} with one of thirteen
- *       materials chosen by {@code UT.Code.select} (:39-40), i.e. from its global {@code RNGSUS} and
+ *       materials chosen by {@code UT.Code.select}, i.e. from its global {@code RNGSUS} and
  *       <em>not</em> from the cell's stream. The port calls its own port of that vein writer,
  *       {@link GTBedrockOreFeature#placeVein}, with the same thirteen materials - the port has every one
  *       of them ({@code Materials.Redstone}, {@code Materials.Sulfur}, {@code Materials.Hematite} for
@@ -58,14 +58,14 @@ import net.minecraft.world.level.block.state.BlockState;
  *       port's vein writer repeats the same test internally, so its result is not used twice: a
  *       material whose port ore block is missing must not refuse a cell GT6 would have built.</li>
  *   <li><b>The raw ore pillars.</b> GT6 places {@code BlocksGT.blockRaw} with the vein material as
- *       its meta (:130-132). The port owns that block ({@code MaterialPrefixes.blockRaw}, a block per
+ *       its meta. The port owns that block ({@code MaterialPrefixes.blockRaw}, a block per
  *       material) and places it through {@link GTDungeonData#rawBlock(int, int, int, GTMaterial)}, so
  *       the pillars are GT6's own blocks now; earlier batches of the port used a vanilla diamond-pickaxe
  *       ore of the matching material here.</li>
  *   <li><b>The scaffold and the explosives.</b> GT6's brass/steel roll selects both the bars
  *       and the matching material scaffold throughout the room. The corner explosives use the
  *       port's three dynamite variants, including their original embedded NBT_MODE state.</li>
- *   <li><b>The chamber.</b> GT6 carves its chamber at world Y 4 and 3 (:112-120), inside its 0..4
+ *   <li><b>The chamber.</b> GT6 carves its chamber at world Y 4 and 3, inside its 0..4
  *       bedrock band, because its vein had already turned that bedrock into deepslate and ore. The
  *       port's band is still bedrock, so the port carves a chamber cell only where the vein broke
  *       that column's bedrock floor ({@link GTDungeonData#aboveBedrock}) - GT6's rule of stopping
@@ -85,11 +85,11 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
     public static final String TAG_MINING_BEDROCK = "gt.dungeon.mining.bedrock";
 
     /**
-     * GT6's thirteen bedrock ore materials ({@code :39}: redstone twice, then sulfur, hematite,
+     * GT6's thirteen bedrock ore materials (: redstone twice, then sulfur, hematite,
      * pyrolusite, apatite, molybdenite, bauxite, sphalerite, tetrahedrite, cassiterite, garnierite and
-     * galena) in GT6's own order and multiplicity. The vector drives both the vein ({@code :40}) and the
-     * raw ore blocks of the pillars ({@code :130-132}), so the port keeps it as GT6 wrote it -
-     * {@code UT.Code.select(MT.Redstone, MT.Redstone, MT.S, MT.Fe2O3, MT.MnO2, MT.Apatite, ...)}.
+     * galena) in GT6's own order and multiplicity. The vector drives both the vein and the
+     * raw ore blocks of the pillars, so the port keeps it as GT6 wrote it -
+     * {@code UT.Code.select(MT.Redstone, MT.Redstone, MT.S, MT.Fe2O3, MT.MnO2, MT.Apatite,...)}.
      */
     private static final GTMaterial[] VEIN_MATERIALS = {
             Materials.Redstone, Materials.Redstone, Materials.Sulfur, Materials.Hematite,
@@ -102,18 +102,18 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
         if (data.hasTag(TAG_MINING_BEDROCK) || !super.generate(data)) return false;
         data.tags.add(TAG_MINING_BEDROCK);
 
-        // GT6: one of thirteen bedrock ore materials (:39) and its ore vein (:40). GT6 picks the
+        // GT6: one of thirteen bedrock ore materials and its ore vein. GT6 picks the
         // material with UT.Code.select, i.e. from its global RNG rather than the cell's stream, so the
         // port draws it from a stream of its own (GTDungeonData.select) - the cell's roll sequence has
         // to stay GT6's.
         GTMaterial vein = data.select(VEIN_MATERIALS, 0, 0, 0);
         // GT6's vein writer requires existing bedrock under the cell centre and makes the room
         // refuse the cell without it (WorldgenOresBedrock:183-185); aboveBedrock is that test
-        // inverted (GTDungeonData:328-331).
+        // inverted (GTDungeonData).
         if (data.aboveBedrock(8, 8)) return false;
         GTBedrockOreFeature.placeVein(data.level, data.random, data.x, data.z, vein);
 
-        // GT6: brass or steel for the whole room (:42).
+        // GT6: brass or steel for the whole room.
         boolean brass = data.next1in2();
 
         int floor = data.level.getMinBuildHeight();
@@ -121,7 +121,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
         int chamberTop = floor + 4 - data.y;    // GT6's world Y 4
         int chamberBottom = floor + 3 - data.y; // GT6's world Y 3
 
-        // GT6's shaft (:44-68): the whole cell from the layer under the room floor down to world Y 5
+        // GT6's shaft: the whole cell from the layer under the room floor down to world Y 5
         // is walled with bricks at x/z 0 and 15 and dug out inside; on the lowest layer below the
         // floor (local -1) the lines x == 2, x == 13, z == 2 and z == 13 stay brick as the frame of
         // the room floor above. GT6's four conditional scaffold pillars stand at (2,7), (13,7), (7,2)
@@ -133,13 +133,13 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
                     if (x == 0 || x == 15 || z == 0 || z == 15) {
                         data.bricks(x, y, z);
                     } else if (z == 7 && x == 2 && data.connected(-1, 0)) {
-                        scaffold(data, x, y, z, Direction.EAST, brass);        // GT6 :55 SIDE_X_POS
+                        scaffold(data, x, y, z, Direction.EAST, brass);        // SIDE_X_POS
                     } else if (z == 7 && x == 13 && data.connected(1, 0)) {
-                        scaffold(data, x, y, z, Direction.WEST, brass);        // GT6 :57 SIDE_X_NEG
+                        scaffold(data, x, y, z, Direction.WEST, brass);        // SIDE_X_NEG
                     } else if (x == 7 && z == 2 && data.connected(0, -1)) {
-                        scaffold(data, x, y, z, Direction.SOUTH, brass);       // GT6 :59 SIDE_Z_POS
+                        scaffold(data, x, y, z, Direction.SOUTH, brass);       // SIDE_Z_POS
                     } else if (x == 7 && z == 13 && data.connected(0, 1)) {
-                        scaffold(data, x, y, z, Direction.NORTH, brass);       // GT6 :61 SIDE_Z_NEG
+                        scaffold(data, x, y, z, Direction.NORTH, brass);       // SIDE_Z_NEG
                     } else if (y == -1 && (x == 2 || x == 13 || z == 2 || z == 13)) {
                         data.bricks(x, y, z);
                     } else {
@@ -149,7 +149,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's room floor (:70-94): on local y 0 the four lines x == 2, x == 13, z == 2 and z == 13
+        // GT6's room floor: on local y 0 the four lines x == 2, x == 13, z == 2 and z == 13
         // carry a scaffold each (facing out of the room) and the four corners a lit lamp whose redstone
         // brick GT6 puts one layer below the room floor; every other floor cell is opened into the
         // shaft. Local y 1 carries the bars on the same lines.
@@ -157,23 +157,23 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             for (int z = 2; z <= 13; z++) {
                 if (x == 2) {
                     if (z != 2 && z != 13) {
-                        scaffold(data, x, 0, z, Direction.EAST, brass);        // GT6 :74
+                        scaffold(data, x, 0, z, Direction.EAST, brass);
                         bars(data, x, 1, z, brass, 8);
                     } else {
                         data.lamp(x, 0, z, -1);
                     }
                 } else if (x == 13) {
                     if (z != 2 && z != 13) {
-                        scaffold(data, x, 0, z, Direction.WEST, brass);        // GT6 :81
+                        scaffold(data, x, 0, z, Direction.WEST, brass);
                         bars(data, x, 1, z, brass, 4);
                     } else {
                         data.lamp(x, 0, z, -1);
                     }
                 } else if (z == 2) {
-                    scaffold(data, x, 0, z, Direction.SOUTH, brass);           // GT6 :87
+                    scaffold(data, x, 0, z, Direction.SOUTH, brass);
                     bars(data, x, 1, z, brass, 2);
                 } else if (z == 13) {
-                    scaffold(data, x, 0, z, Direction.NORTH, brass);           // GT6 :90
+                    scaffold(data, x, 0, z, Direction.NORTH, brass);
                     bars(data, x, 1, z, brass, 1);
                 } else {
                     data.air(x, 0, z);
@@ -181,7 +181,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's crossing (:96-110): a room that connects on both X sides (or on both Z sides) gets a
+        // GT6's crossing: a room that connects on both X sides (or on both Z sides) gets a
         // walkway of scaffold across the shaft with a line of bars on it, and the two door cells lose
         // the railing. The walkway is the port's scaffold (GT6 SIDE_X_NEG resp. SIDE_Z_NEG), the bars
         // are the port's ported ones; a room with no crossing keeps the open pit.
@@ -189,19 +189,19 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             data.air(2, 1, 8);
             data.air(13, 1, 8);
             for (int x = 3; x <= 12; x++) {
-                scaffold(data, x, 0, 8, Direction.WEST, brass);                // GT6 :100
+                scaffold(data, x, 0, 8, Direction.WEST, brass);
                 bars(data, x, 1, 8, brass, 3);
             }
         } else if (data.connected(0, 1) && data.connected(0, -1)) {
             data.air(8, 1, 2);
             data.air(8, 1, 13);
             for (int z = 3; z <= 12; z++) {
-                scaffold(data, 8, 0, z, Direction.NORTH, brass);               // GT6 :107
+                scaffold(data, 8, 0, z, Direction.NORTH, brass);
                 bars(data, 8, 1, z, brass, 12);
             }
         }
 
-        // GT6's chamber at world Y 4 (:112-116): the 6x6 centre of the cell minus its four corners,
+        // GT6's chamber at world Y 4: the 6x6 centre of the cell minus its four corners,
         // carved only where the vein broke the column's bedrock floor.
         for (int x = 5; x <= 10; x++) {
             for (int z = 5; z <= 10; z++) {
@@ -211,7 +211,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's chamber at world Y 3 (:118-120): the inner 6x6, again only where the vein took the
+        // GT6's chamber at world Y 3: the inner 6x6, again only where the vein took the
         // bedrock.
         for (int x = 6; x <= 9; x++) {
             for (int z = 6; z <= 9; z++) {
@@ -219,17 +219,17 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's four explosives at the chamber corners (:122-125), facing up (SIDE_Y_POS): the boomstick
+        // GT6's four explosives at the chamber corners, facing up (SIDE_Y_POS): the boomstick
         // at (6,6), dynamite at (6,9) and (9,6) and the strong dynamite at (9,9) - the port registers all
         // three (GTToolBlocks BOOMSTICK / DYNAMITE / DYNAMITE_STRONG, GT6 ids 32104, 32713, 32712).
         // Written after both chamber carves, in GT6's own order: the carve above opens exactly these four
         // cells, so writing them first would erase them again.
-        explosive(data, 6, chamberBottom, 6, GTToolBlocks.BOOMSTICK);       // GT6 :122
-        explosive(data, 6, chamberBottom, 9, GTToolBlocks.DYNAMITE);        // GT6 :123
-        explosive(data, 9, chamberBottom, 6, GTToolBlocks.DYNAMITE);        // GT6 :124
-        explosive(data, 9, chamberBottom, 9, GTToolBlocks.DYNAMITE_STRONG); // GT6 :125
+        explosive(data, 6, chamberBottom, 6, GTToolBlocks.BOOMSTICK);
+        explosive(data, 6, chamberBottom, 9, GTToolBlocks.DYNAMITE);
+        explosive(data, 9, chamberBottom, 6, GTToolBlocks.DYNAMITE);
+        explosive(data, 9, chamberBottom, 9, GTToolBlocks.DYNAMITE_STRONG);
 
-        // GT6's loose raw ore (:127-135): in each of the four 4x4 quadrants of the cell, three times
+        // GT6's loose raw ore: in each of the four 4x4 quadrants of the cell, three times
         // out of four a raw ore block sits on the world Y 5 layer, then two out of three one layer
         // above and then one in two a third one on top, growing pillars of the vein's own material
         // out of the vein (BlocksGT.blockRaw with the vein material as its meta).
@@ -280,7 +280,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
     /**
      * GT6's scaffold multi-tile ({@code 8408} brass / {@code 8410} steel, {@code MultiTileEntityScaffold}):
      * the port's material-specific scaffold ({@link ShapedToolBlock}, GT6's four horizontal
-     * facings). GT6 draws its brass or steel form with the room's own {@code tBrass} roll ({@code :42});
+     * facings). GT6 draws its brass or steel form with the room's own {@code tBrass} roll;
      * the same room roll now selects the corresponding material for both scaffold and bars.
      */
     private static void scaffold(GTDungeonData data, int x, int y, int z, Direction facing, boolean brass) {
@@ -295,7 +295,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
     }
 
     /**
-     * GT6's explosives at the four chamber corners ({@code :122-125}), each facing up
+     * GT6's explosives at the four chamber corners, each facing up
      * ({@code NBT_FACING, SIDE_Y_POS}) - the port's three dynamite blocks. GT6's extra
      * {@code NBT_MODE} is retained as SUNK; the first server tick checks whether the backing stone
      * still supports the embedded charge.

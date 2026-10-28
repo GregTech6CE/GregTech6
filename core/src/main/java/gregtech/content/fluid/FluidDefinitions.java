@@ -89,8 +89,8 @@ public final class FluidDefinitions {
         if (sulfur != null && sulfur.resolve().isValid()) {
             sulfur.resolve().put(gregtech.api.material.MaterialProperty.MOLTEN);
         }
-        // GT6's *dcmp* compound factories (MT.java:1081 Al2O3, :1094 Fe2O3, :1104 CaCl2,
-        // :1139 Na2CO3, :1180 UF4 and their siblings) declare MELTING/MOLTEN, so their molten phases are
+        // GT6's *dcmp* compound factories (MT.java:1081 Al2O3, Fe2O3, CaCl2,
+        // Na2CO3, UF4 and their siblings) declare MELTING/MOLTEN, so their molten phases are
         // real GT6 fluids that the chemistry tables consume (`m:Al2O3:2000` …); the import kept the dust
         // only, which left 11 chemistry recipes with an unresolvable fluid.
         for (String name : new String[] {
@@ -131,7 +131,7 @@ public final class FluidDefinitions {
         bindMaterialFluids();
     }
 
-    /** Original Loader_Fluids:606-610 (W:649-653), unconditional FL.create declarations. */
+    /** GT6 {@code Loader_Fluids.java:606-610}: unconditional FL.create declarations. */
     private static void registerGoldenBottleFluids() {
         long base = FluidCatalog.FluidFlags.LIQUID
                 | FluidCatalog.FluidFlags.SIMPLE

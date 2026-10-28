@@ -960,8 +960,8 @@ public final class GregTechClient {
         // (see the note above); this BER only adds the cover plates, and it draws nothing for a pipe
         // that carries no cover.
         event.registerBlockEntityRenderer(GTBlockEntities.FLUID_PIPE.get(), PipeCoverRenderer::new);
-        // The item pipe's half (§112), for the same reason and with the same "draws nothing for a
-        // coverless pipe" rule. One BE type covers every item pipe, exactly as GTBlockEntities:145-151
+        // The item pipe's half, for the same reason and with the same "draws nothing for a
+        // coverless pipe" rule. One BE type covers every item pipe, exactly as GTBlockEntities
         // registers GTItemPipes' blocks into a single type.
         event.registerBlockEntityRenderer(GTBlockEntities.ITEM_PIPE.get(), ItemPipeCoverRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.STEAM_BOILER.get(), BoilerBarometerRenderer::new);
@@ -1036,15 +1036,15 @@ public final class GregTechClient {
         }
         // GT6 world fluids must be built into the translucent chunk layer.
         // ChunkRenderDispatcher picks a fluid's layer with ItemBlockRenderTypes.getRenderLayer
-        // (ChunkRenderDispatcher.java:620) and vanilla's ItemBlockRenderTypes.FLUID_RENDER_TYPES only
+        // (ChunkRenderDispatcher.java) and vanilla's ItemBlockRenderTypes.FLUID_RENDER_TYPES only
         // contains Fluids.WATER / Fluids.FLOWING_WATER -> RenderType.translucent()
-        // (ItemBlockRenderTypes.java:315-319, default RenderType.solid() at line 400), so a separate
+        // (ItemBlockRenderTypes.java, default RenderType.solid() at line 400), so a separate
         // fluid stayed on the opaque solid layer - "the liquid still is not transparent like vanilla
         // water". The flowing variants are fluids of their own and are what most blocks of a GT6
         // water body actually carry, so they are registered too: worldWaterLayers() is the shared
         // six water IDs plus twelve spring IDs share this registry policy. setRenderLayer may only be called
         // while the client mod loader is still loading (checkClientLoading,
-        // ItemBlockRenderTypes.java:437-448), i.e. here, directly from the event, not from
+        // ItemBlockRenderTypes.java), i.e. here, directly from the event, not from
         // enqueueWork.
         for (var registration : FluidRenderLayers.worldFluidLayers().entrySet()) {
             Fluid fluid = ForgeRegistries.FLUIDS.getValue(GregTech.id(registration.getKey()));

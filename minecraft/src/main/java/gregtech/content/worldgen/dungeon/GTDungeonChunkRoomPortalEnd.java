@@ -20,20 +20,20 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  * <h2>Port differences</h2>
  * <ul>
- *   <li><b>Vault inlined.</b> GT6's End room extends {@code DungeonChunkRoomVault} ({@code :32}) and not
+ *   <li><b>Vault inlined.</b> GT6's End room extends {@code DungeonChunkRoomVault} and not
  *       the portal room of the Nether, so it has no carpet patch. The port inlines that three line class
  *       like its storage room does: the one connection check and the door piston, before everything
  *       else.</li>
  *   <li><b>Purpur.</b> GT6 only builds the purpur shell when Et Futurum - a 1.7.10 backport of the
  *       1.9 blocks - is installed ({@code ST.valid(tPurpurBlock) && ST.valid(tPurpurPillar)},
- *       {@code :46-48}); without it the room keeps the bare end stone floor of its first loop. 1.20.1
+ *       ); without it the room keeps the bare end stone floor of its first loop. 1.20.1
  *       has purpur in vanilla, so the port builds the shell unconditionally, including GT6's own effect
  *       that this overwrites the end stone floor of the first loop.</li>
- *   <li><b>The portal itself.</b> GT6 places the vanilla {@code Blocks.end_portal} ({@code :92-95}),
+ *   <li><b>The portal itself.</b> GT6 places the vanilla {@code Blocks.end_portal},
  *       which is live at once. The port preserves its four coordinates, frame ring, and eye state;
  *       dungeon keys only open the safes.</li>
  *   <li><b>Hexorium corners.</b> GT6 puts a rainbow block of the Hexxit mod on the four corners of the
- *       end portal ({@code :71-83}) and falls back to glowstone when the mod is absent, which is what the
+ *       end portal and falls back to glowstone when the mod is absent, which is what the
  *       port does - GT6's own {@code else} branch.</li>
  *   <li><b>End portal frame metadata.</b> GT6 writes the 1.7.10 metadata 4..7, i.e. one of the four
  *       horizontal facings with the eye bit set. 1.20.1 splits that into
@@ -42,7 +42,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *       1 west, 2 north, 3 east - {@code Direction.from2DDataValue}), so the port's ring faces the
  *       portal exactly like GT6's, with every frame carrying an eye.</li>
  *   <li><b>The room tag.</b> GT6 refuses a cell when the dungeon already carries {@code TAG_PORTAL_END}
- *       and adds it afterwards ({@code :35-36}), which keeps GT6's dungeon to one End portal. The port
+ *       and adds it afterwards, which keeps GT6's dungeon to one End portal. The port
  *       keeps that check, but its tag set is per cell (GT6 shares one set across the whole dungeon), so
  *       within one cell the rule holds and across cells it cannot - see {@link GTDungeonData}.</li>
  *   <li><b>Chunk walls.</b> GT6's purpur shell is written for local {@code 1..14} only, exactly the inner
@@ -57,7 +57,7 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
 
     @Override
     public boolean generate(GTDungeonData data) {
-        // GT6 :35 + DungeonChunkRoomVault:30-32, inlined: the tag first, then a dead end with one
+        // + DungeonChunkRoomVault:30-32, inlined: the tag first, then a dead end with one
         // connection, then the room shell and the vault door.
         if (data.hasTag(TAG_PORTAL_END) || data.connectionCount != 1 || !super.generate(data)) return false;
         data.tags.add(TAG_PORTAL_END);
@@ -67,7 +67,7 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
             // GT6: the vault door is not important enough to fail the entire room.
         }
 
-        // GT6 :38-44: the end stone floor with glowstone at its four by four lamp positions. GT6's purpur
+        // the end stone floor with glowstone at its four by four lamp positions. GT6's purpur
         // branch overwrites this floor again below, exactly like it does with the mod installed.
         for (int tX = 1; tX < 15; tX++) {
             for (int tZ = 1; tZ < 15; tZ++) {
@@ -76,7 +76,7 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6 :46-69: the purpur room. The four two by two corners become pillars over the full height,
+        // the purpur room. The four two by two corners become pillars over the full height,
         // the lamp grid keeps its pillar at the floor and a glowstone at the ceiling, everything else is
         // purpur, and local 8 is the tile skin GT6 gives every room.
         for (int tX = 1; tX < 15; tX++) {
@@ -95,7 +95,7 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6 :71-83: the four corners of the end portal. GT6's rainbow hexorium block of the Hexxit mod
+        // the four corners of the end portal. GT6's rainbow hexorium block of the Hexxit mod
         // is missing in the port, so this is GT6's own else branch, a glowstone.
         for (int tX = 5; tX <= 10; tX++) {
             for (int tZ = 5; tZ <= 10; tZ++) {
@@ -107,7 +107,7 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6 :84-91: the eight end portal frames, all with their eye, facing the portal in the middle.
+        // the eight end portal frames, all with their eye, facing the portal in the middle.
         // GT6's metadata 4..7 is the horizontal index 0..3 with the eye bit, i.e. south, west, north,
         // east (Direction.from2DDataValue), which points every frame at the 2x2 portal it surrounds.
         data.set(7, 0, 6, frame(Direction.SOUTH));
@@ -119,13 +119,13 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
         data.set(6, 0, 7, frame(Direction.EAST));
         data.set(6, 0, 8, frame(Direction.EAST));
 
-        // GT6 :92-95: vanilla End portal, already active without a dungeon key.
+        // vanilla End portal, already active without a dungeon key.
         data.set(7, 0, 7, Blocks.END_PORTAL.defaultBlockState());
         data.set(7, 0, 8, Blocks.END_PORTAL.defaultBlockState());
         data.set(8, 0, 7, Blocks.END_PORTAL.defaultBlockState());
         data.set(8, 0, 8, Blocks.END_PORTAL.defaultBlockState());
 
-        // GT6 :96-99: the obsidian under the portal, one block below the cell's floor.
+        // the obsidian under the portal, one block below the cell's floor.
         data.obsidian(7, -1, 7);
         data.obsidian(7, -1, 8);
         data.obsidian(8, -1, 7);

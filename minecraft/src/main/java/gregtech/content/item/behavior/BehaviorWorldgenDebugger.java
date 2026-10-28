@@ -15,30 +15,30 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * GT6 {@code Behavior_Worldgen_Debugger} ({@code Behavior_Worldgen_Debugger.java:43-55}) — the
  * "Worldgen Debug Wand" ({@code MultiItemRandomTools:520}; the port registers it as
- * {@code gt6ce:worldgen_debug_wand} in {@code GTMultiItemsGen.ENTRIES:129}), the tool that makes an
+ * {@code gt6ce:worldgen_debug_wand} in {@code GTMultiItemsGen.ENTRIES}), the tool that makes an
  * ore vein visible by deleting everything around it.
  *
  * <h2>What the original does</h2>
  *
- * <p>The same click and the same triple loop as {@link BehaviorChunkEraser} — client side refused
- * ({@code :44}), the 16×16 column of the clicked chunk ({@code :45}), {@code tY = 1} to
- * {@code tY < 250} — with one difference inside the innermost loop ({@code :46-52}): the block at the
+ * <p>The same click and the same triple loop as {@link BehaviorChunkEraser} — client side refused,
+ * the 16×16 column of the clicked chunk, {@code tY = 1} to
+ * {@code tY < 250} — with one difference inside the innermost loop: the block at the
  * position is read first, and</p>
  *
  * <ul>
  *   <li>when it is an {@code IPrefixBlock} the position is <em>kept</em> and the original instead calls
- *       {@code ((ITileEntity) aWorld.getTileEntity(x, y, z)).onAdjacentBlockChange(x, y, z)}
- *       ({@code :47-49}), which lets the block re-examine its surroundings — a GT prefix block has a
+ *       {@code ((ITileEntity) aWorld.getTileEntity(x, y, z)).onAdjacentBlockChange(x, y, z)},
+ *       which lets the block re-examine its surroundings — a GT prefix block has a
  *       block entity in GT6 ({@code PrefixBlock} implements {@code ITileEntityProvider},
  *       {@code PrefixBlock.java:84});</li>
- *   <li>everything else becomes air, exactly the chunk remover's {@code WD.set(..., NB, 0, 2)}
- *       ({@code :51}).</li>
+ *   <li>everything else becomes air, exactly the chunk remover's {@code WD.set(..., NB, 0, 2)}.
+ *       </li>
  * </ul>
  *
  * <p>So the tool clears a chunk and leaves the GT blocks standing, which is what its tooltip says:
- * "Currently deletes a single Chunk, except for bottom most Bedrock and GT6 Ores"
- * ({@code :64}). Like the chunk remover it always returns {@code T} ({@code :54}), reads no player and
- * no permission ({@code :44} tests only {@code aWorld.isRemote}), and neither consumes nor damages the
+ * "Currently deletes a single Chunk, except for bottom most Bedrock and GT6 Ores".
+ * Like the chunk remover it always returns {@code T}, reads no player and
+ * no permission (tests only {@code aWorld.isRemote}), and neither consumes nor damages the
  * stack.</p>
  *
  * <h2>The port's "is a GT prefix block" predicate</h2>
@@ -47,7 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * one class, {@code gregapi.block.prefixblock.PrefixBlock} ({@code PrefixBlock.java:84}), and that class
  * backs the whole prefix-material family: {@code CS.BlocksGT} declares the ore blocks
  * ({@code ore}, {@code oreBedrock}, {@code oreSmall}, …, {@code CS.java:1633-1637}) and the material
- * blocks ({@code blockIngot}, {@code crateGtDust}, …, {@code :1627-1631}) as {@code IPrefixBlock}.
+ * blocks ({@code blockIngot}, {@code crateGtDust}, …) as {@code IPrefixBlock}.
  * The worldgen-relevant half of that family is what a vein is made of, and in the port that is
  * {@link gregtech.content.block.OreBlock} — one ore block per material with the host rock in its
  * {@code stone} state property, standing in for GT6's per-stone ore blocks. So the predicate here is
@@ -60,7 +60,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * predicate of this behaviour is the ore half, which is the half the wand's purpose needs.</p>
  *
  * <p><b>No port counterpart for the {@code onAdjacentBlockChange} branch.</b> GT6 notifies the ore's
- * block entity so it can re-read its neighbours; in the port §104 gave the ore blocks <em>no block
+ * block entity so it can re-read its neighbours; in the port gave the ore blocks <em>no block
  * entity at all</em> — {@code OreBlock} deliberately does not implement {@code EntityBlock}, and the
  * ore's host rock lives in a block state property instead — so there is nothing to notify and the
  * branch has no body to port. The ore is simply left standing, which is the whole visible effect the
@@ -77,7 +77,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  * <h2>Tooltips</h2>
  *
- * <p>{@code LH.add} ({@code :57-65}) is not part of this layer; the port adds no lang keys here.</p>
+ * <p>{@code LH.add} is not part of this layer; the port adds no lang keys here.</p>
  */
 public final class BehaviorWorldgenDebugger {
 
@@ -97,7 +97,7 @@ public final class BehaviorWorldgenDebugger {
      * between {@code minY} and {@code maxY} inclusive, but keep every GT ore.
      *
      * <p>The original's loop order is kept (x, then z, then y) and so is the order of its two tests — the
-     * ore test first ({@code :47}), then the deletion of everything else ({@code :51}) — and the flag
+     * ore test first, then the deletion of everything else — and the flag
      * {@code 2} it passes ({@code Block.UPDATE_CLIENTS}: inform the clients, no neighbour updates). Unlike
      * the original, the range is clamped to the level's build limits, an unloaded chunk is skipped whole,
      * and the return value counts what was really replaced; see the class javadoc.</p>
@@ -126,13 +126,13 @@ public final class BehaviorWorldgenDebugger {
                 for (int y = lowY; y <= highY; y++) {
                     cursor.setY(y);
                     BlockState state = level.getBlockState(cursor);
-                    // GT6 :47-49 - a GT prefix block stays, and its block entity is told about the change.
-                    // The port's ore blocks have no block entity (§104), so only the "stays" half is left.
+                    // - a GT prefix block stays, and its block entity is told about the change.
+                    // The port's ore blocks have no block entity, so only the "stays" half is left.
                     if (state.getBlock() instanceof OreBlock) continue;
                     // Air is skipped rather than rewritten, exactly like the chunk remover does it.
                     if (state.isAir()) continue;
                     // A fresh BlockPos goes into setBlock: the client update packet keeps the reference
-                    // it is handed (ClientboundBlockUpdatePacket:14-17), so the cursor must not be reused.
+                    // it is handed (ClientboundBlockUpdatePacket), so the cursor must not be reused.
                     if (level.setBlock(new BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS)) {
                         erased++;
                     }
@@ -151,7 +151,7 @@ public final class BehaviorWorldgenDebugger {
      * wand is exempt from it in the dispatcher for the same reason the chunk remover is. The stack is
      * neither consumed nor damaged.</p>
      *
-     * @return GT6's {@code T} ({@code :54}): handled on the server even when the sweep deleted nothing,
+     * @return GT6's {@code T}: handled on the server even when the sweep deleted nothing,
      *         refused on the client
      */
     public static Outcome useOn(
@@ -163,9 +163,9 @@ public final class BehaviorWorldgenDebugger {
             float hitX,
             float hitY,
             float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack); // :44
+        if (level.isClientSide) return Outcome.refused(stack);
         eraseExceptOres(
                 level, pos.getX() >> 4, pos.getZ() >> 4, level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - 1);
-        return Outcome.acted(stack); // :54
+        return Outcome.acted(stack);
     }
 }

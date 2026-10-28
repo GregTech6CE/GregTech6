@@ -633,7 +633,7 @@ public final class OriginalHandCraftingRows {
 
     /**
      * The five empty battery cells; the filled ones come from the Canning Machine
-     * ({@code :396-403} style rows, registered in {@code ElectronicsRecipes}). GT6's {@code 'x'} keys are
+     * (style rows, registered in {@code ElectronicsRecipes}). GT6's {@code 'x'} keys are
      * wire cutters and {@code 'h'} hard hammers; the alkaline/NiCd cells use an iron wire, which the port
      * registers as its fine wire form.
      */

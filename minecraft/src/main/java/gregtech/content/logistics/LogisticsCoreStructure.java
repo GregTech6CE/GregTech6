@@ -8,37 +8,36 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 /**
- * GT6 {@code MultiTileEntityLogisticsCore} structure ({@code :109-147}): a 5x5x5 cube whose every
+ * GT6 {@code MultiTileEntityLogisticsCore} structure: a 5x5x5 cube whose every
  * cell is classified by its <em>squared</em> distance from the centre, exactly like the original's
  * {@code i*i + j*j + k*k} thresholds.
  *
  * <pre>
- * GT6:118   i*i + j*j + k*k &lt;  4  -&gt; the inner 3x3x3 core: processor units (or a wall)
- * GT6:137   i*i + j*j + k*k &gt;  6  -&gt; the 44 corner "walls", which are also the power input
- * GT6:139   otherwise            -&gt; ventilation units (53 of them: 54 face cells minus the controller)
+ * GT6 i*i + j*j + k*k &lt; 4 -&gt; the inner 3x3x3 core: processor units (or a wall)
+ * GT6 i*i + j*j + k*k &gt; 6 -&gt; the 44 corner "walls", which are also the power input
+ * GT6 otherwise -&gt; ventilation units (53 of them: 54 face cells minus the controller)
  * </pre>
  *
  * <p>The cube is centred two blocks <em>behind</em> the controller ({@code getOffsetXN(mFacing, 2)},
- * {@code :110}), so the controller itself sits in the centre of one 5x5 face and faces outwards.
- * GT6 iterates world axes rather than rotating with the facing ({@code :117}); that is harmless
+ * ), so the controller itself sits in the centre of one 5x5 face and faces outwards.
+ * GT6 iterates world axes rather than rotating with the facing; that is harmless
  * because a cube and the squared-distance classes are both rotation invariant, so the port
  * classifies in the controller's local frame instead and gets the same cells.</p>
  *
- * <p>CPU contributions are read verbatim from {@code :119-136}:</p>
+ * <p>CPU contributions are read verbatim from:</p>
  *
  * <ul>
- *   <li>{@code 18200} "Versatile Quadcore Processor Unit" adds <b>1 to all four</b> counters
- *       ({@code :120-123});</li>
+ *   <li>{@code 18200} "Versatile Quadcore Processor Unit" adds <b>1 to all four</b> counters;
+ *       </li>
  *   <li>{@code 18201-18204} (Logic/Control/Storage/Conversion) each add <b>4</b> to their own
- *       counter ({@code :125-131});</li>
+ *       counter;</li>
  *   <li>{@code 18008} "Galvanized Steel Wall" is allowed in the core but contributes nothing -
- *       the original's "Well someone's a cheapstake. ;P" branch ({@code :132-133}) and its tooltip
+ *       the original's "Well someone's a cheapstake.;P" branch and its tooltip
  *       "{@code You can replace CPUs with Walls should you not be able to afford that many}".</li>
  * </ul>
  *
- * <p>A structure is valid when it is complete <em>and</em> all four counters are positive
- * ({@code :144}); the storage counter is capped at {@code MAX_STORAGE_CPU_COUNT = 108}
- * ({@code :64}, {@code :143}).</p>
+ * <p>A structure is valid when it is complete <em>and</em> all four counters are positive;
+ * the storage counter is capped at {@code MAX_STORAGE_CPU_COUNT = 108}.</p>
  */
 public final class LogisticsCoreStructure {
     /** GT6 part ids used by this structure. */
@@ -49,12 +48,12 @@ public final class LogisticsCoreStructure {
             CONTROL = 18202,
             STORAGE = 18203,
             CONVERSION = 18204;
-    /** GT6 {@code :64}: {@code MAX_STORAGE_CPU_COUNT}. */
+    /** GT6's: {@code MAX_STORAGE_CPU_COUNT}. */
     public static final int MAX_STORAGE_CPU_COUNT = 108;
-    /** The original scans {@code tX+i, tY+j, tZ+k} for {@code i,j,k} in {@code [-2,2]} ({@code :117}). */
+    /** The original scans {@code tX+i, tY+j, tZ+k} for {@code i,j,k} in {@code [-2,2]}. */
     public static final int RADIUS = 2;
 
-    /** The three structural classes of {@code :118/:137/:139}. */
+    /** The three structural classes of. */
     public enum Kind {
         CPU,
         VENT,
@@ -75,21 +74,21 @@ public final class LogisticsCoreStructure {
         }
     }
 
-    /** The four processor counters of GT6 {@code :68}. */
+    /** The four processor counters of GT6's. */
     public record Counts(int logic, int control, int storage, int conversion) {
-        /** GT6 {@code :144}: every counter must be positive, and the structure must be complete. */
+        /** GT6's: every counter must be positive, and the structure must be complete. */
         public boolean valid() {
             return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).valid();
         }
-        /** GT6 {@code :216}: minimum stored energy before a routing pass can start. */
+        /** GT6's: minimum stored energy before a routing pass can start. */
         public long routingThreshold() {
             return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).routingThreshold();
         }
-        /** GT6 {@code :699}: the nominal buffer ceiling (an incoming packet may exceed it). */
+        /** GT6's: the nominal buffer ceiling (an incoming packet may exceed it). */
         public long energyCapacity() {
             return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).energyCapacity();
         }
-        /** GT6 {@code :209,504}: fixed charge on every server tick. */
+        /** GT6's: fixed charge on every server tick. */
         public long fixedEnergyPerTick() {
             return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).fixedEnergyPerTick();
         }
@@ -160,14 +159,14 @@ public final class LogisticsCoreStructure {
         return new Counts(logic, control, Math.min(MAX_STORAGE_CPU_COUNT, storage), conversion);
     }
 
-    // ── CPU economics (GT6 tooltips {@code :156-159}) ────────────────────────
+    // ── CPU economics (GT6 tooltips) ────────────────────────
 
     /** "Logic Processors increase Operation Count by 1" - operations per network pass. */
     public static int operations(Counts counts) {
         return counts.logic();
     }
 
-    /** GT6 {@code :443/:668}: maximum Chebyshev radius is two plus the control CPU count. */
+    /** GT6's: maximum Chebyshev radius is two plus the control CPU count. */
     public static int range(Counts counts) {
         return counts.control() + 2;
     }

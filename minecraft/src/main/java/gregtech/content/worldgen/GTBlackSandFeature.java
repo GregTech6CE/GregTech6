@@ -136,8 +136,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
     /**
      * GT6's host list: dirt, gravel, sand, clay and the ore-sand/ore-gravel blocks. The port keeps
      * black sands and ores as their own blocks, so {@code sand_*} and any ore whose host rock is a
-     * loose sediment count too — read from the ore's {@link OreBlock#STONE} state property (§103.B;
-     * it used to be the ore block entity).
+     * loose sediment count too — read from the ore's {@link OreBlock#STONE} state property.
      */
     private static boolean isSediment(BlockState state) {
         if (state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(BlockTags.SAND)
