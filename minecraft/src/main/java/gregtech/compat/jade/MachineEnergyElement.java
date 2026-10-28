@@ -13,18 +13,20 @@ final class MachineEnergyElement extends Element {
     private final IElement[] multipliers;
     private final IElement[] powers;
     private final float[] positions;
+    private final double marker;
 
-    MachineEnergyElement(long min, long rated, long max, double average, String unit) {
+    MachineEnergyElement(long min, long rated, long max, double average, String unit, boolean overloaded) {
         double multiplier = average < min ? 0 : average / rated;
         Component label = Component.literal(JadeText.decimal(average, 2) + " ")
                 .append(gregtech.client.EnergyText.unit(unit))
                 .append("/t  " + JadeText.decimal(multiplier, 2) + "×");
-        double fill = average < min
+        double position = average < min
                 ? 0
                 : average <= rated
                         ? (rated > min ? .5 * (average - min) / (rated - min) : .5)
                         : (max > rated ? .5 + .5 * (average - rated) / (max - rated) : 1);
-        bar = JadeBars.progress(fill, label, average < min ? 0x777777 : 0x29B52A);
+        marker = overloaded ? 1 : Math.max(0, Math.min(1, position));
+        bar = JadeBars.progress(1, label, overloaded ? 0xEC8A23 : average <= 0 || average < min ? 0x66B6DA : 0x29B52A);
         positions = max > rated && rated > min ? new float[] {0, .5F, .75F, 1} : new float[] {0, 1};
         double[] rates = positions.length == 4
                 ? new double[] {min, rated, rated + (max - rated) / 2.0, max}
@@ -54,6 +56,14 @@ final class MachineEnergyElement extends Element {
     public void render(GuiGraphics graphics, float x, float y, float right, float bottom) {
         float barTop = y + 10, barBottom = barTop + bar.getCachedSize().y;
         bar.render(graphics, x, barTop, right, barBottom);
+        float inset = JadeBars.borderWidth();
+        int left = (int) Math.ceil(x + inset), end = (int) Math.floor(right - inset);
+        int markerWidth = Math.min(5, Math.max(0, end - left));
+        int markerX = Math.max(
+                left, Math.min(end - markerWidth, (int) Math.round(left + (end - left) * marker) - markerWidth / 2));
+        int markerY = (int) Math.floor(barBottom - inset) - 2;
+        graphics.fill(markerX, markerY, markerX + markerWidth, markerY + 2, 0xFF172641);
+        graphics.fill(markerX, markerY, markerX + markerWidth, markerY + 1, 0xFFFFFF55);
         for (int i = 0; i < positions.length; i++) {
             float anchor = x + (right - x - 1) * positions[i];
             if (i > 0 && i < positions.length - 1)

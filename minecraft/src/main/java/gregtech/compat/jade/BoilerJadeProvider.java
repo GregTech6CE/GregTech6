@@ -5,7 +5,6 @@ import gregtech.content.energy.BoilerGauge;
 import gregtech.content.energy.BoilerHazards;
 import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import net.minecraft.ChatFormatting;
-import gregtech.content.block.machine.BoilerTankBlock;
 import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -88,7 +87,7 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         CompoundTag data = accessor.getServerData();
         if (!data.contains(STEAM_CAP)) return;
-        // Run after Jade's fluid provider: render separate water and steam bars.
+        // Run after Jade's fluid provider: render water and the pressure scale.
         // Rebuild the water row explicitly so two empty tanks cannot be merged into one by Jade.
         tooltip.remove(UNIVERSAL_FLUID_STORAGE);
 
@@ -98,9 +97,9 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         String state = data.contains("gt_boiler_formed") && !data.getBoolean("gt_boiler_formed")
                 ? "incomplete" : BoilerGauge.state(steamAmt, steamCap, data.getLong(WATER_AMT), data.getLong(HEAT));
         Component label = Component.translatable("jade.gt6ce.boiler.gauge",
-                Component.translatable("jade.gt6ce.boiler.state." + state), steamPct);
+                Component.translatable("jade.gt6ce.boiler.state." + state), steamPct).withStyle(ChatFormatting.WHITE);
         if (BoilerGauge.highPressure(steamAmt, steamCap)) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_high_pressure").withStyle(ChatFormatting.GOLD));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_high_pressure").withStyle(ChatFormatting.RED));
         }
         if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.boiler.steam", steamAmt, steamCap, steamPct);
         if (data.contains("gt_steam_offer")) JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " L/t"));
@@ -117,20 +116,20 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
 
         int pressure = data.getInt("gt_pressure");
         float power = data.getFloat("gt_explosion_power");
-        JadeText.detail(tooltip, "jade.gt6ce.boiler.pressure", pressure);
         JadeText.add(tooltip, Component.translatable(pressure > 4 ? "jade.gt6ce.boiler.dismantle_danger" : "jade.gt6ce.boiler.dismantle_safe",
-                JadeText.decimal(power, 1), JadeText.decimal(power * 2, 1)).withStyle(pressure > 4 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
+                JadeText.decimal(power, 1), JadeText.decimal(power * 2, 1)).withStyle(pressure > 4 ? ChatFormatting.RED : ChatFormatting.GRAY));
         if (data.contains("gt_contact_damage")) JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.contact_damage",JadeText.decimal(data.getFloat("gt_contact_damage"), 1))
                 .withStyle(data.getFloat("gt_contact_damage") > 0 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
         if (eff < 10000) JadeText.add(tooltip, Component.translatable(pressure > 15 ? "jade.gt6ce.boiler.descaling_explosion"
                 : "jade.gt6ce.boiler.descaling_damage",JadeText.decimal(data.getFloat("gt_descaling_damage"), 1))
-                .withStyle(pressure > 15 || data.getFloat("gt_descaling_damage") > 0 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
+                .withStyle(pressure > 15 ? ChatFormatting.RED
+                        : data.getFloat("gt_descaling_damage") > 0 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
 
         if (steamPct >= 100) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overpressure").withStyle(ChatFormatting.GOLD));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overpressure").withStyle(ChatFormatting.RED));
         }
         if (maxHeat > 0 && heat > maxHeat) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overheat").withStyle(ChatFormatting.GOLD));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overheat").withStyle(ChatFormatting.RED));
         }
         if (waterAmt <= 0 && heat > 0) {
             tooltip.add(Component.translatable("jade.gt6ce.boiler.dry_heat",
@@ -146,11 +145,7 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
                 tooltip.add(JadeBars.fluid(water, waterLabel));
             }
         }
-        var steam = gregtech.content.registry.GTFluids.still("Steam");
-        if (steam != null) {
-            var view = FluidView.readDefault(FluidView.writeDefault(JadeFluidObject.of(steam.get(), steamAmt), steamCap));
-            if (view != null) tooltip.add(JadeBars.fluid(view, label));
-        }
+        tooltip.add(new BoilerGaugeElement(BoilerGauge.fill(steamAmt, steamCap), label, state.equals("running")));
     }
 
     @Override public int getDefaultPriority() { return 1001; }

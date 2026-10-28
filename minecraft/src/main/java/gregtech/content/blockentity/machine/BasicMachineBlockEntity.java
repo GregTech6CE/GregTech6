@@ -279,6 +279,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public double averageEnergyInput() {
         return energyPort.average(level);
     }
+    public boolean isEnergyOverloaded() { return energyPort.overloaded(level); }
     public boolean isRunning() { return mRunning; }
     public int getProgressPercent() {
         if (processor.totalWork() <= 0) return 0;
@@ -953,6 +954,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Original root overload policy, shared by EU, RU, KU and other machine inputs. */
     @Override public void overloadEnergy(long size, GregTechTags.Tag energyType) {
+        energyPort.recordOverload(level);
         gregtech.engine.energy.MachineOverload.apply(this, size, energyType);
     }
 

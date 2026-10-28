@@ -30,9 +30,6 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
             data.putBoolean("sealed", tank.getSoftHammerState());
             data.putLong("time", tank.getSealedTime());
             data.putLong("duration", tank.getMaxSealedTime());
-            data.putLong("limit", tank.spec().maxTemperature());
-            data.putLong("amount", tank.getFluidTank().getAmount());
-            data.putLong("capacity", tank.getFluidTank().capacity());
         } else if (accessor.getBlockEntity() instanceof FluidPipeBlockEntity pipe) {
             data.putString("kind", "pipe");
             var contents = new ListTag();
@@ -50,14 +47,12 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
         if (!accessor.getServerData().contains("gt_vessel")) return;
         var data = accessor.getServerData().getCompound("gt_vessel");
         if (data.getString("kind").equals("tank")) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.amount", data.getLong("amount"), data.getLong("capacity")));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.auto", Component.translatable(
                     "jade.gt6ce.vessel." + (data.getBoolean("auto") ? "enabled" : "disabled"))));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));
             if (data.getBoolean("sealed") && data.getLong("duration") > 0) {
                 tooltip.add(JadeBars.time(data.getLong("time"), data.getLong("duration"), 1));
             }
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.temperature_limit", data.getLong("limit")));
         } else {
             // Replace Jade's combined storage view so each physical tank has just one bar.
             tooltip.remove(UNIVERSAL_FLUID_STORAGE);

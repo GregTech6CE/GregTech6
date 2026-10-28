@@ -16949,7 +16949,13 @@
   "gt6ce.jei.info.biome_group.mesa": "Badlands",
   "gt6ce.jei.info.biome_group.shroom": "Mushroom fields",
   "tooltip.gt6ce.cover.sneak_place": "Sneak to place covers",
-  "jade.gt6ce.machine.time": "%ss / %ss (%s%%)",
+  "jade.gt6ce.machine.time": "%s / %s (%s%%)",
+  "jade.gt6ce.time.s": "%s s",
+  "jade.gt6ce.time.min": "%s min",
+  "jade.gt6ce.time.h": "%s h",
+  "jade.gt6ce.time.tick": "%s tick",
+  "jade.gt6ce.machine.overloaded": "Machine overloaded",
+  "jade.gt6ce.machine.insufficient_energy": "Insufficient energy input",
   "jade.gt6ce.machine.recipe_outputs": "Recipe outputs:",
   "jade.gt6ce.boiler.dry_heat": "Warning: dry heating — accumulated heat: %s"
 }
