@@ -151,7 +151,8 @@ public final class GregTechConfig {
         MC_ALPHA("general.useMCAlphaBlending", true, true),
         COINS_WORLD_3D("general.use3DCoins", true, true),
         COINS_ITEM_3D("general.use3DCoinsInv", true, true),
-        CRATE_OVERLAY("blocks.crates.UseOverlayIcon", false, true);
+        CRATE_OVERLAY("blocks.crates.UseOverlayIcon", false, true),
+        COVER_SNEAK("covers.require_sneaking", true);
 
         private final String key;
         private final boolean initial, client;
@@ -219,6 +220,7 @@ public final class GregTechConfig {
                 case GENERATE_NETHER_GOLD_ORE -> "Generate vanilla Nether gold ore, independently of DisableVanillaOres.";
                 case GENERATE_ANCIENT_DEBRIS -> "Generate vanilla ancient debris, independently of DisableVanillaOres.";
                 case VANILLA_STORAGE_BLOCK_RECIPES -> "Enable vanilla crafting recipes for compressing materials into storage blocks.";
+                case COVER_SNEAK -> "Require sneaking to place or preview covers. Disable to attach and preview covers with a plain right-click, as in original GT6.";
                 default -> rule.key.substring(rule.key.lastIndexOf('.') + 1);
             };
             settings.put(rule, option(builder, rule.key, rule.initial, description));

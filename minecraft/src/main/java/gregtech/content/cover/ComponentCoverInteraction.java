@@ -38,7 +38,7 @@ public final class ComponentCoverInteraction {
         var held = player.getItemInHand(hand);
         var stack = host.getCover(side);
         var kind = ComponentCoverRuntime.kind(stack);
-        if (player.isShiftKeyDown() && ComponentCoverRuntime.kind(held) != null) {
+        if (CoverPlacement.placing(player) && ComponentCoverRuntime.kind(held) != null) {
             if (!CoverAdmission.allowCover(owner, side, held)) return InteractionResult.PASS;
             if (!player.mayBuild() || !level.mayInteract(player, owner.getBlockPos())) return InteractionResult.FAIL;
             if (!ComponentCoverRuntime.canAttach(host, side, held) || !stack.isEmpty()) return InteractionResult.FAIL;

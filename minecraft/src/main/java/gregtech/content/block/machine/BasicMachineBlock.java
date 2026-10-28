@@ -306,7 +306,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
         if (be instanceof BasicMachineBlockEntity coverBe) {
 
-            if (player.isShiftKeyDown() && isCoverItem(held)) {
+            if (gregtech.content.cover.CoverPlacement.placing(player) && isCoverItem(held)) {
 
                 if (!level.isClientSide && coverBe.attachCover(hit.getDirection(), held)) {
 

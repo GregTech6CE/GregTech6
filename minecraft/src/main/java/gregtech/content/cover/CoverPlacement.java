@@ -15,15 +15,20 @@ public final class CoverPlacement {
         return player.getMainHandItem().isEmpty() ? player.getOffhandItem() : player.getMainHandItem();
     }
 
+    /** Whether the player is using the cover placement gesture; {@code covers.require_sneaking} decides. */
+    public static boolean placing(Player player) {
+        return !gregtech.GregTechConfig.Rule.COVER_SNEAK.enabled() || player.isShiftKeyDown();
+    }
+
     public static boolean coverGrid(BlockGetter level, BlockPos pos, Player player) {
         if (level == null) return false;
         ItemStack stack = held(player);
-        boolean placing = player.isShiftKeyDown() && CoverItems.isCover(stack);
+        boolean previewing = placing(player) && CoverItems.isCover(stack);
         boolean removing = GTToolHelper.matchesTool(stack, GTToolType.CROWBAR);
-        if (!placing && !removing) return false;
+        if (!previewing && !removing) return false;
         return level.getBlockEntity(pos) instanceof PanelCoverHost host
                 // Existing covers stay reachable for crowbar removal even on hosts which no longer admit them.
-                && (placing ? CoverAdmission.allowAnyCover(host.coverOwner()) : host.hasAttachedCovers());
+                && (previewing ? CoverAdmission.allowAnyCover(host.coverOwner()) : host.hasAttachedCovers());
     }
 
     public static boolean fullSelection(BlockGetter level, BlockPos pos, BlockState state, Player player) {

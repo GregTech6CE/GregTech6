@@ -46,7 +46,7 @@ public final class ComponentCoverEvents {
         boolean crowbar = gregtech.engine.tool.GTToolHelper.matchesTool(held,
                 gregtech.engine.tool.GTToolType.CROWBAR);
         var hit = event.getHitVec();
-        if ((event.getEntity().isShiftKeyDown() && CoverItems.isCover(held)) || crowbar)
+        if ((CoverPlacement.placing(event.getEntity()) && CoverItems.isCover(held)) || crowbar)
             hit = hit.withDirection(gregtech.engine.tool.ToolInteractions.selectedFace(hit));
         boolean recoverStoredCover = (host.coverOwner() instanceof gregtech.content.blockentity.misc.PileBlockEntity
                 || host.coverOwner() instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity)
