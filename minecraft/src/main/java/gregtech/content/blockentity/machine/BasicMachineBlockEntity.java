@@ -6,6 +6,8 @@ import gregtech.engine.machine.BasicMachineEnergy;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.BasicMachineSpec;
+import gregtech.engine.machine.MachineAutoIO;
+import gregtech.engine.machine.MachineDirections;
 import gregtech.engine.machine.MachineEnergyPort;
 import gregtech.engine.machine.MachineInventory;
 import gregtech.engine.machine.MachineItemHandler;
@@ -57,7 +59,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host {
+public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
@@ -73,18 +75,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** A save loaded before this machine had a spec; sanitize once the spec arrives. */
     private boolean specDirty;
     private RecipeMap recipeMap;
+    private final MachineAutoIO autoIO;
     private MachineInventory inventory;
-//? if >=1.21.1 {
-    /*private final gregtech.engine.machine.AdjacentCapabilityCache<IItemHandler> adjacentItems =
-            new gregtech.engine.machine.AdjacentCapabilityCache<>(this, net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK);
-    private final gregtech.engine.machine.AdjacentCapabilityCache<IFluidHandler> adjacentFluids =
-            new gregtech.engine.machine.AdjacentCapabilityCache<>(this, net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK);
-*///?} else {
-    private final gregtech.engine.machine.AdjacentCapabilityCache<IItemHandler> adjacentItems =
-            new gregtech.engine.machine.AdjacentCapabilityCache<>(this, ForgeCapabilities.ITEM_HANDLER);
-    private final gregtech.engine.machine.AdjacentCapabilityCache<IFluidHandler> adjacentFluids =
-            new gregtech.engine.machine.AdjacentCapabilityCache<>(this, ForgeCapabilities.FLUID_HANDLER);
-//?}
 
 
 //? if >=1.21.1 {
@@ -223,6 +215,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     public BasicMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        this.autoIO = new MachineAutoIO(this);
     }
 
     // ── Spec and RecipeMap ────────────────────────────────────────────────
@@ -962,22 +955,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Deduct only deliveries confirmed by the shared transfer engine. */
     protected final void pushOutputItems(IItemHandler target, Direction side) {
-        for (int slot = inventory.items().inputCount(); slot < inventory.items().getSlots(); slot++) {
-            ItemStack offered = inventory.items().getStackInSlot(slot);
-            if (offered.isEmpty() || !allowsItemTraffic(side, offered, false)) continue;
-            var result = gregtech.content.transport.ItemPipeTransferAdapter.transfer(
-                    offered.copy(), () -> target);
-            if (result.accepted() > 0) inventory.items().extractItem(slot, result.accepted(), false);
-        }
+        autoIO.pushOutputItems(target, side);
     }
 
     /** A changed source/target must not make an already extracted item disappear. */
     protected void returnOrDrop(ItemStack leftover, IItemHandler origin) {
-        if (leftover.isEmpty()) return;
-        var returned = gregtech.content.transport.ItemPipeTransferAdapter.transfer(
-                leftover.copy(), () -> origin);
-        ItemStack remainder = leftover.copyWithCount(leftover.getCount() - returned.accepted());
-        if (!remainder.isEmpty()) net.minecraft.world.level.block.Block.popResource(level, worldPosition, remainder);
+        autoIO.returnOrDrop(leftover, origin);
     }
 
     // ── Auto I/O ─────────────────────────────────────────────────────────
@@ -1021,249 +1004,51 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
     }
 
+    @Override public MachineInventory autoIOInventory() { return inventory; }
+    @Override public Direction autoIORelativeToAbsolute(int relDir) { return relativeToAbsolute(relDir); }
+    @Override public boolean autoIOShutters(Direction side) { return isFaceShuttered(side); }
+    @Override public boolean autoIOAllowsItemTraffic(Direction side, ItemStack stack, boolean inserting) { return allowsItemTraffic(side, stack, inserting); }
+    @Override public boolean autoIOAcceptsInput(ItemStack stack) { return acceptsAutomaticInput(stack); }
+    @Override public IFluidHandler autoIOFluidOutputTarget(Level level, BlockPos pos, Direction absolute) { return automaticFluidOutputTarget(level, pos, absolute); }
+    @Override public BlockEntity autoIOOwner() { return this; }
+
     protected void autoInputItems(Level level, BlockPos pos, int relDir) {
-        if (!inventory.hasItemInputSpace()) return;
-        Direction absolute = relativeToAbsolute(relDir);
-        if(isFaceShuttered(absolute))return;
-        BlockPos adj = pos.relative(absolute);
-        if (!level.hasChunkAt(adj)) return;
-        BlockEntity be = level.getBlockEntity(adj);
-
-//? if >=1.21.1 {
-/*        if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
-*///?} else {
-        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
-//?}
-
-        if (be == null) return;
-
-//? if >=1.21.1 {
-/*        IItemHandler source = adjacentItems.get(be, absolute.getOpposite());
-*///?} else {
-        IItemHandler source = adjacentItems.get(be, absolute.getOpposite());
-//?}
-
-        if (source == null) return;
-        int inputCount = inventory.items().inputCount();
-        if (inputCount <= 0) return;
-        for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
-            ItemStack stack = source.getStackInSlot(srcSlot);
-            if (stack.isEmpty()) continue;
-            if (!acceptsAutomaticInput(stack) || !allowsItemTraffic(absolute, stack, true)) continue;
-            for (int i = 0; i < inputCount; i++) {
-                if (!allowsItemTraffic(absolute, stack, true)) break;
-                ItemStack remaining = inventory.items().insertItem(i, stack.copy(), true);
-                int toTake = stack.getCount() - remaining.getCount();
-                if (toTake <= 0) continue;
-                ItemStack extracted = source.extractItem(srcSlot, toTake, false);
-                if (!extracted.isEmpty()) {
-                    ItemStack leftover = inventory.items().insertItem(i, extracted, false);
-                    returnOrDrop(leftover, source);
-                    if (source.getStackInSlot(srcSlot).isEmpty()) break;
-                    stack = source.getStackInSlot(srcSlot);
-                }
-            }
-        }
+        autoIO.inputItems(level, pos, relDir);
     }
 
     protected void autoOutputItems(Level level, BlockPos pos, int relDir) {
-        if (!inventory.hasItemOutput()) return;
-        Direction absolute = relativeToAbsolute(relDir);
-        if(isFaceShuttered(absolute))return;
-        BlockPos adj = pos.relative(absolute);
-        if (!level.hasChunkAt(adj)) return;
-        BlockEntity be = level.getBlockEntity(adj);
-
-//? if >=1.21.1 {
-/*        if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
-        IItemHandler target = be != null ? adjacentItems.get(be, absolute.getOpposite()) : null;
-*///?} else {
-        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
-        IItemHandler target = be != null ? adjacentItems.get(be, absolute.getOpposite()) : null;
-//?}
-
-
-        int firstOutputSlot = inventory.items().inputCount();
-        int totalSlots = inventory.items().getSlots();
-
-        if (target != null) {
-            pushOutputItems(target, absolute);
-        } else if (level.isEmptyBlock(adj)) {
-            // Drop into air like a hopper
-            for (int i = firstOutputSlot; i < totalSlots; i++) {
-                ItemStack offered = inventory.items().getStackInSlot(i);
-                if (!allowsItemTraffic(absolute, offered, false)) continue;
-                ItemStack extracted = inventory.items().extractItem(i, offered.getCount(), false);
-                if (extracted.isEmpty()) continue;
-                double x = adj.getX() + 0.5;
-                double y = adj.getY() + 0.5;
-                double z = adj.getZ() + 0.5;
-                double vx = absolute.getStepX() * 0.15;
-                double vy = 0.1;
-                double vz = absolute.getStepZ() * 0.15;
-                ItemEntity entity = new ItemEntity(level, x, y, z, extracted);
-                entity.setDeltaMovement(vx, vy, vz);
-                entity.setPickUpDelay(10);
-                level.addFreshEntity(entity);
-            }
-        }
+        autoIO.outputItems(level, pos, relDir);
     }
 
     protected void autoInputFluids(Level level, BlockPos pos, int relDir) {
-        if (!inventory.hasFluidInputSpace()) return;
-        Direction absolute = relativeToAbsolute(relDir);
-        if(isFaceShuttered(absolute))return;
-        BlockPos adj = pos.relative(absolute);
-        if (!level.hasChunkAt(adj)) return;
-        BlockEntity be = level.getBlockEntity(adj);
-
-//? if >=1.21.1 {
-/*        if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
-*///?} else {
-        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
-//?}
-
-        if (be == null) return;
-
-//? if >=1.21.1 {
-/*        IFluidHandler source = adjacentFluids.get(be, absolute.getOpposite());
-*///?} else {
-        IFluidHandler source = adjacentFluids.get(be, absolute.getOpposite());
-//?}
-
-        if (source == null) return;
-        FluidStack drained = source.drain(1000, IFluidHandler.FluidAction.SIMULATE);
-        if (drained.isEmpty()) return;
-        int filled = fill(drained, IFluidHandler.FluidAction.SIMULATE);
-        if (filled <= 0) return;
-        FluidStack toDrain = drained.copy();
-        toDrain.setAmount(filled);
-        FluidStack actuallyDrained = source.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
-        if (!actuallyDrained.isEmpty()) {
-            fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
-        }
+        autoIO.inputFluids(level, pos, relDir);
     }
 
     protected void autoOutputFluids(Level level, BlockPos pos, int relDir) {
-        if (!inventory.hasFluidOutput()) return;
-        Direction absolute = relativeToAbsolute(relDir);
-        if(isFaceShuttered(absolute))return;
-        IFluidHandler target = automaticFluidOutputTarget(level,pos,absolute);
-        if (target == null) return;
-        FluidStack drained = drain(1000, IFluidHandler.FluidAction.SIMULATE);
-        if (drained.isEmpty()) return;
-        int filled = target.fill(drained, IFluidHandler.FluidAction.SIMULATE);
-        if (filled <= 0) return;
-        FluidStack offered = drained.copy();
-        offered.setAmount(Math.min(filled, drained.getAmount()));
-        int accepted = target.fill(offered.copy(), IFluidHandler.FluidAction.EXECUTE);
-        if (accepted < 0 || accepted > offered.getAmount())
-            throw new IllegalStateException("Fluid handler returned an invalid accepted amount: " + accepted);
-        if (accepted > 0) {
-            offered.setAmount(accepted);
-            drain(offered, IFluidHandler.FluidAction.EXECUTE);
-        }
+        autoIO.outputFluids(level, pos, relDir);
     }
 
     /** Dedicated controllers may output beneath their structure rather than the main block. */
     protected IFluidHandler automaticFluidOutputTarget(Level level,BlockPos pos,Direction absolute) {
-        BlockPos adj = pos.relative(absolute);
-        if (!level.hasChunkAt(adj)) return null;
-        BlockEntity be = level.getBlockEntity(adj);
-
-//? if >=1.21.1 {
-/*        if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
-*///?} else {
-        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return null;
-//?}
-
-        if (be == null) return null;
-
-//? if >=1.21.1 {
-/*        IFluidHandler target = adjacentFluids.get(be, absolute.getOpposite());
-*///?} else {
-        IFluidHandler target = adjacentFluids.get(be, absolute.getOpposite());
-//?}
-
-        return target;
+        return autoIO.defaultFluidOutputTarget(level, pos, absolute);
     }
 
     // ── Direction helpers ─────────────────────────────────────────────────
 
-    private int relativeDir(Direction absolute) {
-        Direction facing = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
-                ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
-        return rotateAbsoluteToRelative(facing, absolute);
+    private Direction facing() {
+        BlockState state = getBlockState();
+        return state.hasProperty(HorizontalDirectionalBlock.FACING)
+                ? state.getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
     }
 
-    /** Convert absolute side → machine-relative direction (TOP/BOTTOM/LEFT/RIGHT/FRONT/BACK)
-     *  using the block facing. */
-    private static int rotateAbsoluteToRelative(Direction facing, Direction side) {
-        if (side == Direction.DOWN)  return FaceConfig.BOTTOM;
-        if (side == Direction.UP)    return FaceConfig.TOP;
-        return switch (facing) {
-            case NORTH -> switch (side) {
-                case NORTH -> FaceConfig.FRONT; case SOUTH -> FaceConfig.BACK;
-                case WEST  -> FaceConfig.RIGHT; case EAST  -> FaceConfig.LEFT;
-                default -> FaceConfig.LEFT;
-            };
-            case SOUTH -> switch (side) {
-                case NORTH -> FaceConfig.BACK;  case SOUTH -> FaceConfig.FRONT;
-                case WEST  -> FaceConfig.LEFT;  case EAST  -> FaceConfig.RIGHT;
-                default -> FaceConfig.LEFT;
-            };
-            case WEST -> switch (side) {
-                case NORTH -> FaceConfig.LEFT;  case SOUTH -> FaceConfig.RIGHT;
-                case WEST  -> FaceConfig.FRONT; case EAST  -> FaceConfig.BACK;
-                default -> FaceConfig.LEFT;
-            };
-            case EAST -> switch (side) {
-                case NORTH -> FaceConfig.RIGHT; case SOUTH -> FaceConfig.LEFT;
-                case WEST  -> FaceConfig.BACK;  case EAST  -> FaceConfig.FRONT;
-                default -> FaceConfig.LEFT;
-            };
-            default -> side.get3DDataValue();
-        };
+    private int relativeDir(Direction absolute) {
+        return MachineDirections.relative(facing(), absolute);
     }
 
     /** Convert machine-relative direction index (TOP/BOTTOM/LEFT/RIGHT/FRONT/BACK)
      *  to the absolute world {@link Direction} based on the block's facing. */
     protected Direction relativeToAbsolute(int relDir) {
-        if (relDir == FaceConfig.BOTTOM) return Direction.DOWN;
-        if (relDir == FaceConfig.TOP)    return Direction.UP;
-        Direction facing = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
-                ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
-        return switch (facing) {
-            case NORTH -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.EAST;
-                case FaceConfig.FRONT -> Direction.NORTH;
-                case FaceConfig.RIGHT -> Direction.WEST;
-                case FaceConfig.BACK  -> Direction.SOUTH;
-                default -> Direction.NORTH;
-            };
-            case SOUTH -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.WEST;
-                case FaceConfig.FRONT -> Direction.SOUTH;
-                case FaceConfig.RIGHT -> Direction.EAST;
-                case FaceConfig.BACK  -> Direction.NORTH;
-                default -> Direction.NORTH;
-            };
-            case WEST -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.NORTH;
-                case FaceConfig.FRONT -> Direction.WEST;
-                case FaceConfig.RIGHT -> Direction.SOUTH;
-                case FaceConfig.BACK  -> Direction.EAST;
-                default -> Direction.NORTH;
-            };
-            case EAST -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.SOUTH;
-                case FaceConfig.FRONT -> Direction.EAST;
-                case FaceConfig.RIGHT -> Direction.NORTH;
-                case FaceConfig.BACK  -> Direction.WEST;
-                default -> Direction.NORTH;
-            };
-            default -> Direction.NORTH;
-        };
+        return MachineDirections.absolute(facing(), relDir);
     }
 
     // ── IFluidHandler ────────────────────────────────────────────────────
