@@ -64,15 +64,15 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         BoilerSpec spec = boiler.spec();
         if (steam != null) {
             tag.putLong(STEAM_AMT, steam.getAmount());
-            tag.putLong(STEAM_CAP, steam.getCapacity());
+            tag.putLong(STEAM_CAP, steam.capacity());
             tag.putLong("gt_steam_offer", gregtech.engine.energy.BoilerSteamOutput.offered(
                     steam.getAmount(), steam.capacity(), spec == null ? 0 : spec.steamOutput()));
         }
         if (water != null) {
             tag.putLong(WATER_AMT, water.getAmount());
-            tag.putLong(WATER_CAP, water.getCapacity());
+            tag.putLong(WATER_CAP, water.capacity());
             tag.put(WATER_VIEW, FluidView.writeDefault(JadeFluidObject.of(water.getFluid().getFluid(), water.getAmount()),
-                    water.getCapacity()));
+                    water.capacity()));
         }
         tag.putLong(HEAT, boiler.storedHeat());
         if (spec != null) tag.putLong(MAX_HEAT, spec.heatCapacity());

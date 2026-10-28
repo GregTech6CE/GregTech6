@@ -26,6 +26,9 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
         var data = new CompoundTag();
         if (accessor.getBlockEntity() instanceof TankBlockEntity tank) {
             data.putString("kind", "tank");
+            var stored = tank.getFluidTank();
+            data.put("fluid", FluidView.writeDefault(JadeFluidObject.of(stored.getFluidLong().getFluid(),
+                    stored.getAmount()), stored.capacity()));
             data.putBoolean("auto", tank.isAutoOutput());
             data.putBoolean("sealed", tank.getSoftHammerState());
             data.putLong("time", tank.getSealedTime());
@@ -47,6 +50,10 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
         if (!accessor.getServerData().contains("gt_vessel")) return;
         var data = accessor.getServerData().getCompound("gt_vessel");
         if (data.getString("kind").equals("tank")) {
+            tooltip.remove(UNIVERSAL_FLUID_STORAGE);
+            var view = FluidView.readDefault(data.getCompound("fluid"));
+            if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
+                    : Component.translatable("jade.fluid", view.fluidName, view.current)));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.auto", Component.translatable(
                     "jade.gt6ce.vessel." + (data.getBoolean("auto") ? "enabled" : "disabled"))));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));

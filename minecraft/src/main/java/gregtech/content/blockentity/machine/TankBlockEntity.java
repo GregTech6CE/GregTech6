@@ -261,7 +261,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         FluidStack out = fermentRecipe.mFluidOutputs[0];
         long produced = gregtech.engine.fluid.BarrelFermentationRules.output(out.getAmount(),tank.getAmount(),in.getAmount());
 //?}
-        tank.setFluid(new FluidStack(out.getFluid(), (int) Math.min(Math.max(1, produced), tank.getCapacity())));
+        tank.setFluid(out, Math.min(Math.max(1, produced), tank.capacity()));
         resetSeal();
         setChanged();
     }

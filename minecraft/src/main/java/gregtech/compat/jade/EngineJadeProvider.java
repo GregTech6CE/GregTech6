@@ -53,8 +53,8 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         if (be instanceof KineticDieselEngineBlockEntity diesel) {
             tag.putBoolean(NBT_ENABLED, !diesel.isStopped());
             tag.putBoolean("gt_diesel_emitting", diesel.isEmitting());
-            tag.putLong("gt_diesel_fuel_capacity", diesel.fuelTank().getCapacity());
-            tag.putLong("gt_diesel_exhaust_capacity", diesel.exhaustTank().getCapacity());
+            tag.putLong("gt_diesel_fuel_capacity", diesel.fuelTank().capacity());
+            tag.putLong("gt_diesel_exhaust_capacity", diesel.exhaustTank().capacity());
             tag.putString("gt_diesel_front", accessor.getBlockState().getValue(EngineBlock.FACING).getName());
             tag.putString("gt_diesel_rear", accessor.getBlockState().getValue(EngineBlock.FACING).getOpposite().getName());
             var fuel = diesel.fuelTank().getFluid();
@@ -169,7 +169,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         var fluid = tank.getFluid();
         var type = fluid.isEmpty() && fallback != null ? fallback.get() : fluid.getFluid();
         data.put("gt_eng_tank_" + key, FluidView.writeDefault(
-                JadeFluidObject.of(type, tank.getAmount()), tank.getCapacity()));
+                JadeFluidObject.of(type, tank.getAmount()), tank.capacity()));
     }
 
     private static void appendSteam(ITooltip tooltip, BlockAccessor accessor, CompoundTag data,
