@@ -193,8 +193,11 @@ public final class MaterialTagPack extends AbstractPackResources {
                         if (item instanceof BlockItem && id.getNamespace().equals("minecraft")) {
                             if (java.util.Set.of("iron_block","gold_block","copper_block","netherite_block","diamond_block","emerald_block","lapis_block","coal_block","redstone_block").contains(id.getPath()))
                                 add(tags,"forge","items","storage_blocks/"+name,id.toString());
-                            else if (id.getPath().endsWith("_ore") || id.getPath().equals("ancient_debris"))
+                            else if (id.getPath().endsWith("_ore") || id.getPath().equals("ancient_debris")) {
                                 add(tags,"forge","items","ores/"+name,id.toString());
+                                // CraftingMaterialForms exposes native ores through this GT form too.
+                                add(tags,"gt6ce","items","ore_vanillastone/"+name,id.toString());
+                            }
                         }
                     }
                 }
