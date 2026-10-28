@@ -13,7 +13,7 @@ public final class MachinePayloads {
                         PacketSyncComponentCovers.STREAM_CODEC,
                         (packet, context) -> context.enqueueWork(
                                 () -> packet.apply(context.player().level())));
-        event.registrar("1")
+        event.registrar("2")
                 .playToClient(
                         PacketSyncFluids.TYPE,
                         PacketSyncFluids.STREAM_CODEC,

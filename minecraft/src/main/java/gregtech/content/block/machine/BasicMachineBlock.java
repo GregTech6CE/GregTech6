@@ -623,6 +623,11 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 *///?} else {
                         buf.writeFluidStack(fs);
 //?}
+                        var inputs = basicBe.getTanksInput();
+                        var tank = i < inputs.length ? inputs[i] : basicBe.getTanksOutput()[i - inputs.length];
+                        buf.writeVarLong(tank.getAmount());
+                        buf.writeVarLong(tank.capacity());
+
 
 
 
