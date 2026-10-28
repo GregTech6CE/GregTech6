@@ -16946,5 +16946,9 @@
   "gt6ce.jei.info.biome_group.plains": "Plains",
   "gt6ce.jei.info.biome_group.river_lake": "River / lake",
   "gt6ce.jei.info.biome_group.mesa": "Badlands",
-  "gt6ce.jei.info.biome_group.shroom": "Mushroom fields"
+  "gt6ce.jei.info.biome_group.shroom": "Mushroom fields",
+  "tooltip.gt6ce.cover.sneak_place": "Sneak to place covers",
+  "jade.gt6ce.machine.time": "%ss / %ss (%s%%)",
+  "jade.gt6ce.machine.recipe_outputs": "Recipe outputs:",
+  "jade.gt6ce.boiler.dry_heat": "Warning: dry heating — accumulated heat: %s"
 }

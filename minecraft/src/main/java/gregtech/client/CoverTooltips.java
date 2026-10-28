@@ -17,6 +17,7 @@ public final class CoverTooltips {
     private CoverTooltips() {}
 
     public static void append(ItemStack stack, Level level, List<Component> tooltip) {
+        if (CoverItems.isCover(stack)) hint(tooltip, "tooltip.gt6ce.cover.sneak_place");
         for (var line : CoverDisplayInfo.describe(stack, level)) {
             Object[] args = java.util.Arrays.stream(line.arguments()).map(CoverTooltips::display).toArray();
             tooltip.add(Component.translatable(line.key(), args).withStyle(ChatFormatting.AQUA));
