@@ -76,6 +76,15 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.BLUE));
         }
 
+        if (prefix != null && java.util.Arrays.stream(gregtech.engine.tool.GTToolType.values())
+                .anyMatch(type -> type.headPrefix() == prefix
+                        && gregtech.content.recipe.GTToolRecipes.isHeadAssembly(type))) {
+            var handle = gregtech.content.tool.OriginalToolMaterials.requiredHandleMaterial(mat);
+            if (handle != null) tooltip.add(Component.translatable("gt.lang.needs.handle")
+                    .append(MaterialPresentation.name(handle))
+                    .withStyle(ChatFormatting.YELLOW));
+        }
+
         if (mat == gregtech.content.material.generated.OreMaterials.Pyrite) {
             tooltip.add(Component.translatable("tooltip.gt6ce.pyrite.fools_gold").withStyle(ChatFormatting.YELLOW));
         }
