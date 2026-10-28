@@ -48,13 +48,8 @@ public final class OriginalHandCraftingRows {
                 gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store, wall);
     }
 
-    /**
-     * Loader_MultiTileEntities:1143-1153: the eleven metal walls are four plates shaped with a
-     * wrench and a hard hammer. Dense walls have no hand row in the source.
-     */
-    private static int metalWalls(Map<ResourceLocation, byte[]> recipes) {
-        record Wall(int originalId, String path, String material) {}
-        var walls = List.of(
+    private record Wall(int originalId, String path, String material) {}
+    private static final List<Wall> METAL_WALLS = List.of(
                 new Wall(18002, "stainless_steel_wall", "StainlessSteel"),
                 new Wall(18003, "tungstensteel_wall", "TungstenSteel"),
                 new Wall(18004, "tungsten_wall", "Tungsten"),
@@ -66,8 +61,18 @@ public final class OriginalHandCraftingRows {
                 new Wall(18010, "bronze_wall", "Bronze"),
                 new Wall(18011, "lead_wall", "Lead"),
                 new Wall(18012, "tantalum_hafnium_carbide_wall", "Ta4HfC5"));
+
+    static boolean hasMetalWallRecipe(String path) {
+        return METAL_WALLS.stream().anyMatch(wall -> wall.path().equals(path));
+    }
+
+    /**
+     * Loader_MultiTileEntities:1143-1153: the eleven metal walls are four plates shaped with a
+     * wrench and a hard hammer. Dense walls have no hand row in the source.
+     */
+    private static int metalWalls(Map<ResourceLocation, byte[]> recipes) {
         int added = 0;
-        for (var wall : walls) {
+        for (var wall : METAL_WALLS) {
             var plate = GTItems.getStack(MaterialPrefix.plate,
                     gregtech.engine.material.GTMaterialRegistry.get(wall.material()), 1);
             if (plate.isEmpty()) throw new IllegalStateException("Missing wall plate: " + wall.material());
@@ -79,7 +84,7 @@ public final class OriginalHandCraftingRows {
                             'w', Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/wrench"))),
                             'h', Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/hammer")))), output);
         }
-        if (added != walls.size())
+        if (added != METAL_WALLS.size())
             throw new IllegalStateException("Original metal wall hand recipes could not be registered");
         return added;
     }
