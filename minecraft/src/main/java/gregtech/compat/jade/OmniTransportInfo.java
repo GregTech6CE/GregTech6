@@ -16,14 +16,18 @@ final class OmniTransportInfo {
     static void append(JadeInspection info, BlockEntity entity, BlockAccessor accessor) {
         Direction viewed = accessor.getHitResult().getDirection();
         var player = accessor.getPlayer();
-        if (gregtech.GregTechConfig.Rule.COVER_SNEAK.enabled() && player != null && player.mayBuild()
-                && entity instanceof PanelCoverHost host && entity.getLevel() != null
+        if (gregtech.GregTechConfig.Rule.COVER_SNEAK.enabled()
+                && player != null
+                && player.mayBuild()
+                && entity instanceof PanelCoverHost host
+                && entity.getLevel() != null
                 && entity.getLevel().mayInteract(player, entity.getBlockPos())) {
             var held = CoverPlacement.held(player);
             var side = gregtech.engine.tool.ToolInteractions.selectedFace(accessor.getHitResult());
-            if (CoverItems.isCover(held) && CoverAdmission.allowCover(entity, side, held)
-                    && host.getCover(side).isEmpty() && host.panels().canAttach(side, held))
-                info.line("sneak_attach_cover");
+            if (CoverItems.isCover(held)
+                    && CoverAdmission.allowCover(entity, side, held)
+                    && host.getCover(side).isEmpty()
+                    && host.panels().canAttach(side, held)) info.line("sneak_attach_cover");
         }
         if (entity instanceof ItemPipeBlockEntity pipe) {
             info.groupedInventory();
