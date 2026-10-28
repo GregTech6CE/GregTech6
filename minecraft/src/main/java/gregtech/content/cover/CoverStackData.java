@@ -35,9 +35,7 @@ public final class CoverStackData {
     public static void putBoolean(ItemStack stack,String key,boolean value){var tag=readOrEmpty(stack);tag.putBoolean(key,value);write(stack,tag);}
     /^* Original cover/filter items always store one specimen; legacy custom tags remain opaque. ^/
     public static ItemStack readItem(net.minecraft.core.HolderLookup.Provider lookup,CompoundTag tag){
-        var stack=ItemStack.parseOptional(lookup,tag);
-        if(!stack.isEmpty()&&tag.contains("tag"))write(stack,tag.getCompound("tag"));
-        return stack;
+        return gregtech.engine.stack.NbtCompat.readItem(tag,lookup);
 *///?} else {
     public static CompoundTag readOrEmpty(ItemStack stack) {
         return stack.hasTag() ? stack.getTag().copy() : new CompoundTag();

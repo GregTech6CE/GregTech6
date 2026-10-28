@@ -13,7 +13,7 @@
 | `engine.definition` | 定义目录的组织与查询机制 | `DefinitionCatalog`；内容行放 content |
 | `engine.material` | 材料注册、构造、化学关系、物质成分和角色规则 | `GTMaterialRegistry`、`MaterialFactories`、`MaterialChemistry` |
 | `engine.prefix` | 材料形态/前缀的注册与解析 | `PrefixRegistry`、`BlockPrefixRegistry` |
-| `engine.recipe` | 配方成本、燃料批次、可合成性和界面坐标等共享机制 | `MachineWorkCost`、`FluidFuelChargeMath`；不能夹带游戏栈 |
+| `engine.recipe` | 配方成本、并行与输出空间拟合、燃料批次、可合成性和界面坐标等共享机制 | `MachineWorkCost`、`ParallelFit`、`FluidFuelChargeMath`；不能夹带游戏栈 |
 | `engine.recipe.data` | 配方文档模型、组件、解析及校验 | `MachineRecipeDocuments`、`ItemComponent`、`FluidComponent` |
 | `engine.machine` | 通用机器规格、供能、燃烧与执行规则 | `BasicMachineEnergy`、`BoilerSpec`、`BurningBoxFuelRules` |
 | `engine.machine.crucible` | 坩埚能量、物料、温度与加工过程 | `CrucibleProcess`、`CrucibleMath`、`CrucibleMaterialStack` |
@@ -43,7 +43,8 @@
 | `engine.energy`、`engine.energy.item` | 世界能源网络、游戏能源存储、物品能源与面配置 |
 | `engine.fluid` | 游戏流体端口、容器、显示绑定、危险与渲染层适配 |
 | `engine.inventory` | 游戏物品库存、方块内容、大容量存储面与物料形态适配 |
-| `engine.machine`、`engine.machine.crucible` | 机器基类、相邻能力缓存、控制和坩埚物品输入 |
+| `engine.machine`、`engine.machine.crucible` | 机器基类、配方状态机（`RecipeProcessor`、`RecipeLookup`）、相邻能力缓存、控制和坩埚物品输入 |
+| `engine.stack` | 两节点物品/流体栈与 NBT 的序列化、同一性助手（`StackCompat`、`NbtCompat`），供组件代码消去版本分支 |
 | `engine.material` | ItemStack 的材料归属、等价、统一和表现绑定 |
 | `engine.multiblock` | 世界结构、端口归属、工具目标和机器连接 |
 | `engine.multiblock.tracking` | 结构模式编译、足迹、世界变化跟踪、聚合及客户端成形同步 |

@@ -38,4 +38,14 @@ public final class BasicMachineEnergy {
         long current = Math.max(0, stored);
         return current - Math.min(current, Math.max(0, ratedMaximum));
     }
+
+    /** The remaining auxiliary charge and startup demand after one payment. */
+    public record Startup(long auxStored, long startup) {}
+
+    /** Startup energy is paid from auxiliary charge before the job may advance. */
+    public static Startup payStartup(long auxStored, long startup) {
+        if (startup <= 0 || auxStored <= 0) return new Startup(Math.max(0, auxStored), Math.max(0, startup));
+        long paid = Math.min(auxStored, startup);
+        return new Startup(auxStored - paid, startup - paid);
+    }
 }
