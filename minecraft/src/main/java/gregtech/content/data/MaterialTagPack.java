@@ -200,14 +200,15 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                     for(String toolKind:tool.kinds()) add(tags,"forge","items","tools/"+toolKind,id.toString());
 //?}
-            // GT tools: standard Forge convention, e.g. forge:tools/wrench.
-
+            // GT tools: standard Forge convention, e.g. forge:tools/wrench, plus the extra GT6
+            // identities of the same tool (a Knife is also a blade, a Monkey Wrench also a wrench).
 // Registry tags describe tool identities, before any stack receives material/durability data.
             if(item instanceof gregtech.content.item.GTToolItem tool)
+                for(String toolKind:gregtech.content.tool.ToolTagIdentities.all(tool.toolType().id()))
 //? if >=1.21.1 {
-                /*add(tags,"forge","item","tools/"+tool.toolType().id(),id.toString());
+                    /*add(tags,"forge","item","tools/"+toolKind,id.toString());
 *///?} else {
-                add(tags,"forge","items","tools/"+tool.toolType().id(),id.toString());
+                    add(tags,"forge","items","tools/"+toolKind,id.toString());
 //?}
             // GT6 fluid containers: one item per fluid, so a material's fluid forms belong to that
             // material's tag (RegisteredFluids knows which material a fluid was created from).
