@@ -66,12 +66,7 @@ public final class ElectronicsRecipes {
                             new ItemStack[]{mat(MaterialPrefix.bouleGt,crystal,batch)},null,null,
                             new FluidStack[]{fluid("GenGas_",gas,1000*batch),fluid("GenMolten_",crystal,560*batch)},null,72000L*batch,16,0));
         sapphireBoules();
-        // RecipeMapHandlerMaterial: 144 ticks per material unit, preserving each form.
-        MaterialPrefix[] forms={MaterialPrefix.ingot,MaterialPrefix.stick,MaterialPrefix.stickLong,MaterialPrefix.bolt};
-        int[] ticks={144,72,144,18};
-        for(String metal:new String[]{"Iron","Steel","Neodymium"}) for(int i=0;i<forms.length;i++)
-            add(MachineRecipeMaps.Polarizer,new Recipe(new ItemStack[]{mat(forms[i],metal,1)},new ItemStack[]{mat(forms[i],metal+"Magnetic",1)},
-                    null,null,null,null,ticks[i],metal.equals("Neodymium")?128:16,0));
+        REGISTERED.addAll(PolarizerMaterialRecipes.register());
 
         // GT6 MultiItemTechnological:571-698 + :739-743 — the magical/enderium/signalum branch of the
         // circuit chain. The rows above cover GT6's copper/gold/platinum ladder; these were the items the
