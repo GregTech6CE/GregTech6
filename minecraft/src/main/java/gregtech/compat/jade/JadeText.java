@@ -65,6 +65,13 @@ final class JadeText {
         add(tooltip, null, text);
     }
 
+    static void item(ITooltip tooltip, net.minecraft.world.item.ItemStack stack) {
+        if (stack.isEmpty()) return;
+        tooltip.add(IElementHelper.get().smallItem(stack));
+        tooltip.append(IElementHelper.get().spacer(3, 0));
+        tooltip.append(Component.literal(stack.getCount() + "× ").append(stack.getHoverName()));
+    }
+
     /** The same left-label/right-value layout for ordinary lines and rows with an item/fluid icon. */
     static void add(ITooltip tooltip, IElement icon, Component text) {
         Component formatted = format(text);

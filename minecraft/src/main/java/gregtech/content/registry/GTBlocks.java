@@ -69,6 +69,15 @@ public final class GTBlocks {
             new gregtech.content.block.TwigBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
                     .instabreak().noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.WOOD)));
 
+    /** Sticks put down by hand (GT6 multi-tile 32073) — picking one up returns the ordinary stick. */
+//? if >=1.21.1 {
+    /*public static final DeferredHolder<Block, Block> PLACED_TWIGS = BLOCKS.register("placed_twigs", () ->
+*///?} else {
+    public static final RegistryObject<Block> PLACED_TWIGS = BLOCKS.register("placed_twigs", () ->
+//?}
+            new gregtech.content.block.TwigBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
+                    .instabreak().noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.WOOD), true));
+
     private GTBlocks() {}
 
 //? if >=1.21.1 {

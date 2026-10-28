@@ -16,8 +16,6 @@ import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 import snownee.jade.api.fluid.JadeFluidObject;
-import snownee.jade.api.ui.BoxStyle;
-import snownee.jade.api.ui.IElementHelper;
 import snownee.jade.api.view.FluidView;
 //? if >=1.21.1 {
 /*import static snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE;
@@ -90,7 +88,7 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         CompoundTag data = accessor.getServerData();
         if (!data.contains(STEAM_CAP)) return;
-        // Run after Jade's fluid provider: replace its pair of tank rows with water + pressure.
+        // Run after Jade's fluid provider: render separate water and steam bars.
         // Rebuild the water row explicitly so two empty tanks cannot be merged into one by Jade.
         tooltip.remove(UNIVERSAL_FLUID_STORAGE);
 
@@ -102,20 +100,15 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         Component label = Component.translatable("jade.gt6ce.boiler.gauge",
                 Component.translatable("jade.gt6ce.boiler.state." + state), steamPct);
         if (BoilerGauge.highPressure(steamAmt, steamCap)) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_high_pressure").withStyle(ChatFormatting.RED));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_high_pressure").withStyle(ChatFormatting.GOLD));
         }
-        JadeText.detail(tooltip, "jade.gt6ce.boiler.steam", steamAmt, steamCap, steamPct);
+        if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.boiler.steam", steamAmt, steamCap, steamPct);
         if (data.contains("gt_steam_offer")) JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " L/t"));
 
         long waterAmt = data.getLong(WATER_AMT);
 
         long heat = data.getLong(HEAT);
         long maxHeat = data.contains(MAX_HEAT) ? data.getLong(MAX_HEAT) : 0;
-        if (maxHeat > 0) {
-            JadeText.detail(tooltip, "jade.gt6ce.boiler.heat", heat, maxHeat);
-        } else {
-            JadeText.detail(tooltip, "jade.gt6ce.boiler.heat_nocap", heat);
-        }
 
         short eff = data.getShort(EFFICIENCY);
         if (eff < 10000) {
@@ -126,37 +119,38 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         float power = data.getFloat("gt_explosion_power");
         JadeText.detail(tooltip, "jade.gt6ce.boiler.pressure", pressure);
         JadeText.add(tooltip, Component.translatable(pressure > 4 ? "jade.gt6ce.boiler.dismantle_danger" : "jade.gt6ce.boiler.dismantle_safe",
-                JadeText.decimal(power, 1), JadeText.decimal(power * 2, 1)).withStyle(pressure > 4 ? ChatFormatting.RED : ChatFormatting.GRAY));
+                JadeText.decimal(power, 1), JadeText.decimal(power * 2, 1)).withStyle(pressure > 4 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
         if (data.contains("gt_contact_damage")) JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.contact_damage",JadeText.decimal(data.getFloat("gt_contact_damage"), 1))
-                .withStyle(data.getFloat("gt_contact_damage") > 0 ? ChatFormatting.RED : ChatFormatting.GRAY));
+                .withStyle(data.getFloat("gt_contact_damage") > 0 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
         if (eff < 10000) JadeText.add(tooltip, Component.translatable(pressure > 15 ? "jade.gt6ce.boiler.descaling_explosion"
                 : "jade.gt6ce.boiler.descaling_damage",JadeText.decimal(data.getFloat("gt_descaling_damage"), 1))
-                .withStyle(pressure > 15 || data.getFloat("gt_descaling_damage") > 0 ? ChatFormatting.RED : ChatFormatting.GRAY));
+                .withStyle(pressure > 15 || data.getFloat("gt_descaling_damage") > 0 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
 
         if (steamPct >= 100) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overpressure").withStyle(ChatFormatting.RED));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overpressure").withStyle(ChatFormatting.GOLD));
         }
         if (maxHeat > 0 && heat > maxHeat) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overheat").withStyle(ChatFormatting.RED));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_overheat").withStyle(ChatFormatting.GOLD));
         }
         if (waterAmt <= 0 && heat > 0) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_dry").withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable("jade.gt6ce.boiler.dry_heat",
+                    JadeText.decimal(maxHeat > 0 ? (double) heat / maxHeat * 100 : 0, 1) + "%")
+                    .withStyle(ChatFormatting.RED));
+            label = label.copy().withStyle(ChatFormatting.RED);
         }
         if (data.contains(WATER_VIEW)) {
             var water = FluidView.readDefault(data.getCompound(WATER_VIEW));
             if (water != null) {
-                var helper = IElementHelper.get();
                 Component waterLabel = water.overrideText != null ? water.overrideText
                         : Component.translatable("jade.fluid", water.fluidName, water.current);
-//? if >=1.21.1 {
-                /*var box = BoxStyle.getNestedBox();
-*///?} else {
-                var box = BoxStyle.DEFAULT;
-//?}
-                tooltip.add(helper.progress(water.ratio, waterLabel, helper.progressStyle().overlay(water.overlay), box, true));
+                tooltip.add(JadeBars.fluid(water, waterLabel));
             }
         }
-        tooltip.add(new BoilerGaugeElement(BoilerGauge.fill(steamAmt, steamCap), label, "running".equals(state)));
+        var steam = gregtech.content.registry.GTFluids.still("Steam");
+        if (steam != null) {
+            var view = FluidView.readDefault(FluidView.writeDefault(JadeFluidObject.of(steam.get(), steamAmt), steamCap));
+            if (view != null) tooltip.add(JadeBars.fluid(view, label));
+        }
     }
 
     @Override public int getDefaultPriority() { return 1001; }

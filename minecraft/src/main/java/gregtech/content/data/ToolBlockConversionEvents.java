@@ -154,7 +154,8 @@ public final class ToolBlockConversionEvents {
         for (int i = 0; i < recipe.mOutputs.length; i++) {
             if (recipe.mOutputs[i] == null || recipe.mOutputs[i].isEmpty()) continue;
             long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
-            if (count > 0) result.add(recipe.mOutputs[i].copyWithCount((int) Math.min(count, 64)));
+            if (count > 0) result.add(gregtech.content.recipe.CraftingMaterialForms.canonical(
+                    recipe.mOutputs[i].copyWithCount((int) Math.min(count, 64))));
         }
         return result;
     }

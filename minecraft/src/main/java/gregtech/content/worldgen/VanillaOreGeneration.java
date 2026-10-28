@@ -10,6 +10,7 @@ public final class VanillaOreGeneration {
     public static boolean disabled(ResourceLocation id) {
         if (!id.getNamespace().equals("minecraft")) return false;
         return switch (id.getPath()) {
+            case "granite", "diorite", "andesite" -> GregTechConfig.Rule.DISABLE_VANILLA_DECORATIVE_STONE.enabled();
             case "nether_gold_ore" -> !GregTechConfig.Rule.GENERATE_NETHER_GOLD_ORE.enabled();
             case "ancient_debris" -> !GregTechConfig.Rule.GENERATE_ANCIENT_DEBRIS.enabled();
             default -> id.getPath().endsWith("_ore") && GregTechConfig.Rule.DISABLE_VANILLA_ORES.enabled();

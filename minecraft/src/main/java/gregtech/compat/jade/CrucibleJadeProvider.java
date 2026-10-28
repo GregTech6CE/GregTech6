@@ -17,13 +17,12 @@ import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 
-/** Temperature, buffered HU, and internal material content for smelting crucibles. */
+/** Temperature, safety limits, and internal material content for smelting crucibles. */
 public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
     static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "crucible");
     private static final String NBT_TEMPERATURE = "gt_crucible_temp";
-    private static final String NBT_BUFFER = "gt_crucible_buffer";
     private static final String NBT_CONTENT = "gt_crucible_content";
     private static final String NBT_CACHE = "gt_crucible_cache";
     private static final String NBT_FILL = "gt_crucible_fill";
@@ -58,7 +57,6 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
     public static void appendCrucibleData(CompoundTag tag, SmeltingCrucibleBlockEntity crucible) {
 //?}
         tag.putLong(NBT_TEMPERATURE, crucible.getTemperature());
-        tag.putLong(NBT_BUFFER, crucible.getEnergyBuffer());
         var contents = new net.minecraft.nbt.ListTag();
         for (var stack : crucible.getContentView()) {
             if (stack.amount <= 0 || !stack.material.isValid()) continue;
@@ -69,7 +67,6 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
             contents.add(row);
         }
         tag.put(NBT_CONTENT, contents);
-        tag.putInt("gt_crucible_species", contents.size());
         long temperature = crucible.getTemperature();
         if (temperature > gregtech.util.GTEntityHelper.HEAT_THRESHOLD) {
             float damage = (temperature - gregtech.util.GTEntityHelper.ENV_TEMP) / 50.0F;
@@ -101,16 +98,10 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
             return;
         }
         long temperature = data.getLong(NBT_TEMPERATURE);
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.temperature", temperature)
-                .append(" (" + (temperature - 273) + "°C)"));
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.omni.material_species", data.getInt("gt_crucible_species")));
+        JadeText.detail(tooltip, "jade.gt6ce.mold.temperature", temperature, data.getLong(NBT_MELT_LIMIT));
         if (data.getFloat("gt_crucible_contact") > 0)
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.omni.hot_surface", data.getFloat("gt_crucible_contact"))
                     .withStyle(net.minecraft.ChatFormatting.RED));
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.buffer", format(data.getLong(NBT_BUFFER))));
-        if (data.contains(NBT_MELT_LIMIT)) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.melt_limit", data.getLong(NBT_MELT_LIMIT)));
-        }
         if (data.contains(NBT_FILL)) {
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.fill", data.getInt(NBT_FILL)));
         }
@@ -142,7 +133,4 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         return UID;
     }
 
-    private static String format(long value) {
-        return Long.toString(value);
-    }
 }

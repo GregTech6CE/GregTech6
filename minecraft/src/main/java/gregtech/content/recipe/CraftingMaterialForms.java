@@ -77,6 +77,21 @@ public final class CraftingMaterialForms {
             forms.put(item, form);
             if (!OriginalFormConversions.STANDARD_ORES.contains(prefix)) targets.putIfAbsent(form, item);
         }
+        // Real plank blocks are registered outside VanillaUnificationDefinitions. Prefer them to
+        // generic plate forms, deterministically choosing vanilla before an equivalent mod block.
+        var planks = new ArrayList<Item>(BuiltInRegistries.ITEM.stream()
+                .filter(item -> item instanceof BlockItem).toList());
+        planks.sort(Comparator.comparing((Item item) -> !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("minecraft"))
+                .thenComparing(item -> BuiltInRegistries.ITEM.getKey(item).toString()));
+        for (var item : planks) {
+            var data = ItemMaterialRegistry.explicit(item).orElse(null);
+            if (data == null || data.prefix() != MaterialPrefix.plate || data.components().size() != 1
+                    || data.amount() != GTValues.U || !data.material().has(MaterialProperty.WOOD)) continue;
+            var form = new Form("plate", data.material().resolve().getName());
+            forms.put(item, form);
+            targets.putIfAbsent(form, item);
+        }
+        targets.putIfAbsent(new Form("plate", "Wood"), Items.OAK_PLANKS);
         vanilla = Collections.unmodifiableMap(forms);
         preferred = Map.copyOf(targets);
         var indexed = new HashMap<Form, List<Item>>();

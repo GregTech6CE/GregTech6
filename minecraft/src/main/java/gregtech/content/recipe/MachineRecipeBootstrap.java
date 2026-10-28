@@ -99,6 +99,7 @@ public final class MachineRecipeBootstrap {
 
         // Imported rows only fill gaps; never run these before the explicit recipes.
         runStep("imported recipe tables", GeneratedRecipeResolver::loadAll);
+        gregtech.engine.recipe.RecipeDiagnostics.report();
     }
 
     private static void register(String name, IntSupplier registration) {

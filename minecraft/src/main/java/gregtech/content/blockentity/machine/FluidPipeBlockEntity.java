@@ -7,11 +7,11 @@ import gregtech.content.registry.GTFluids;
 
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
-import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
+import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
@@ -102,7 +102,7 @@ import java.util.Set;
  * ({@code CoverPressureValve:51}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
-public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
+public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, CoverStore.Hooks, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
     @Override public long gibblValue(int side) {
         long total = 0;
         for (var tank : tanks) total += tank.getAmount();
@@ -124,8 +124,6 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
     private static final String NBT_LAST_RECEIVED = "gt.last_received";
     private static final String NBT_TANK_PREFIX = "gt.tank.";
-    /** Cover NBT key prefix, shared with {@link BasicMachineBlockEntity} and {@link ItemPipeBlockEntity}. */
-    private static final String NBT_COVER_PREFIX = "gt_cover_";
 
     
 //? if >=1.21.1 {
@@ -136,31 +134,19 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     // ── Cover state: zero cost when unused ───────────────────────────────────
     //
     // A world holds tens of thousands of fluid pipes and serverTick runs for every one of them, so a
-    // coverless pipe must not pay for the cover system at all:
-    //   * `covers` is null until the first cover is attached — no ItemStack[6] per pipe;
-    //   * `hasCovers` is the single boolean serverTick tests, so the whole cover pass is one field
-    //     read for a pipe that has none, and no face is walked;
-    //   * `panels` is created on first attach rather than eagerly in the field initialiser as
-    //     {@link BasicMachineBlockEntity} does, because {@link PanelCoverRuntime} itself allocates an
-    //     int[6] and a boolean[6] — this is the one place this class deliberately does not copy the
-    //     machine's eager field;
-    //   * `faceHandlers` is null until a sided capability is requested (see
-    //     {@link #faceHandler}).
+    // coverless pipe must not pay for the cover system at all: CoverStore keeps the face array null
+    // and the panel runtime uncreated until the first cover is attached, so the whole cover pass is
+    // one boolean read for a pipe that has none and no face is walked. `faceHandlers` is null until
+    // a sided capability is requested (see {@link #faceHandler}).
 
-    /** One cover item per {@link Direction#ordinal()}; {@code null} until a cover is attached. */
-    private @Nullable ItemStack[] covers;
-
-    /** Whether any face carries a cover. The cover tick pass is skipped when this is false. */
-    private boolean hasCovers;
+    /** Shared face storage, lazy panel runtime and `gt_cover_*` persistence. */
+    private final CoverStore coverStore = new CoverStore(this);
 
     /**
      * Local counter advanced by the covered tick pass. It is not the original global
      * SERVER_TIME used by CoverDrain and CoverVent and is not persisted by this pipe.
      */
     private long coverTicks;
-
-    /** Created by {@link #panels()} on first use, never in the constructor. */
-    private @Nullable PanelCoverRuntime panels;
 
     /** Per-face capability views, built by {@link #faceHandler} and dropped by {@link #invalidateCaps}. */
 //? if >=1.21.1 {
@@ -243,7 +229,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //?}
         // Zero cost when unused: `hasCovers` is false for every coverless pipe, so this is a single
         // field read and returns — no face is walked, nothing is allocated, nothing is dispatched.
-        if (hasCovers) tickCovers();
+        if (coverStore.hasCovers()) tickCovers();
         setChanged();
     }
 
@@ -251,93 +237,68 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 
     @Override
     public ItemStack getCover(Direction side) {
-        return covers == null ? ItemStack.EMPTY : covers[side.ordinal()];
+        return coverStore.get(side);
     }
 
     /** Whether this pipe carries at least one cover. The renderer uses it to skip coverless pipes. */
     public boolean hasCovers() {
-        return hasCovers;
+        return coverStore.hasCovers();
     }
 
     @Override
     public PanelCoverRuntime panels() {
-        if (panels == null) panels = new PanelCoverRuntime(this);
-        return panels;
+        return coverStore.panels();
     }
 
     /**
-     * Attaches one cover to a face — GT6's {@code CoverData} placement path, of which
-     * {@link BasicMachineBlockEntity}'s attach is the machine's copy.
-     *
-     * <p>The one rule the machine does not need is the pressure valve's host test, which GT6 keeps in
+     * The one rule the machine does not need is the pressure valve's host test, which GT6 keeps in
      * the cover itself: {@code CoverPressureValve:44} {@code interceptCoverPlacement} refuses any host
      * that is not a {@code MultiTileEntityPipeFluid} with exactly one tank, and any placement whose
      * neighbour is another fluid pipe. {@link CoverUtilityBehaviors#valveCanAttachTo} is that rule as
-     * a predicate and this method is the pipe-host caller it was written for; the tank count comes
-     * from {@link PipeSpec#tankCount()}, which is {@code 1} for every size except QUADRUPLE
-     * ({@code 4}) and NONUPLE ({@code 9}) — exactly GT6's {@code NBT_TANK_COUNT}
-     * ({@code MultiTileEntityPipeFluid:92-98}). Without the test a valve could be attached to a
-     * quadruple pipe and would then silently release {@code tanks[0]} only.</p>
+     * a predicate; the tank count comes from {@link PipeSpec#tankCount()}, which is {@code 1} for
+     * every size except QUADRUPLE ({@code 4}) and NONUPLE ({@code 9}) — exactly GT6's
+     * {@code NBT_TANK_COUNT} ({@code MultiTileEntityPipeFluid:92-98}). Without the test a valve could
+     * be attached to a quadruple pipe and would then silently release {@code tanks[0]} only.
      */
+    @Override
+    public boolean canAttach(Direction side, ItemStack stack) {
+        return !CoverUtilityBehaviors.PRESSURE_VALVE.equals(CoverItems.behavior(stack))
+                || CoverUtilityBehaviors.valveCanAttachTo(spec.tankCount(), neighbourIsFluidPipe(side));
+    }
+
     @Override
     public boolean attachCover(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !getCover(side).isEmpty() || !panels().canAttach(side, stack)
-                || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
-        if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(CoverItems.behavior(stack))
-                && !CoverUtilityBehaviors.valveCanAttachTo(spec.tankCount(), neighbourIsFluidPipe(side))) {
-            return false;
-        }
-        if (covers == null) covers = emptyCovers();
-        covers[side.ordinal()] = stack.copyWithCount(1);
-        hasCovers = true;
-        panels().attached(side);
-        invalidateFaceHandler(side);
-        syncCovers();
-        return true;
+        return coverStore.attach(side, stack);
     }
 
-    /**
-     * Removes the cover on a face. Mirrors {@link BasicMachineBlockEntity#removeCover(Direction)}
-     * and {@link ItemPipeBlockEntity#removeCover(Direction)}, with {@link PanelCoverRuntime#afterTick()}
-     * in the place of the machine's {@code updateCoverSignals()}: the signals a pipe face can emit are
-     * the panel ones, and {@code afterTick} is what recomputes and publishes them.
-     */
     @Override
-    public ItemStack removeCover(Direction side) {
-        if (covers == null) return ItemStack.EMPTY;
-        ItemStack cover = covers[side.ordinal()];
-        if (cover.isEmpty()) return ItemStack.EMPTY;
-        covers[side.ordinal()] = ItemStack.EMPTY;
-        hasCovers = false;
-        for (ItemStack other : covers) if (!other.isEmpty()) { hasCovers = true; break; }
+    public void attached(Direction side, ItemStack stack) {
         invalidateFaceHandler(side);
-        panels().beforeTick();
+        syncCovers();
+    }
+
+    /** The signals a pipe face can emit are the panel ones; {@code afterTick} publishes them. */
+    @Override
+    public void removed(Direction side, ItemStack stack) {
+        invalidateFaceHandler(side);
         panels().afterTick();
         syncCovers();
-        return panels().removed(side,cover);
+    }
+
+    @Override
+    public ItemStack removeCover(Direction side) {
+        return coverStore.remove(side);
     }
 
     /**
-     * The pipe's drop-on-break for covers, i.e. the cover loop of
-     * {@link BasicMachineBlockEntity#dropContents()} and {@link ItemPipeBlockEntity#dropCovers()}.
-     * Called from {@link FluidPipeBlock#onRemove}, next to {@link #dumpFluidsToAdjacent()} — that is
-     * where this pipe's own removal logic lives, and the block entity is still resolvable there, which
-     * is the same call site shape the machine block has.
+     * The pipe's drop-on-break for covers; called from {@link FluidPipeBlock#onRemove}, next to
+     * {@link #dumpFluidsToAdjacent()} — that is where this pipe's own removal logic lives and the
+     * block entity is still resolvable there.
      */
     public void dropCovers() {
-        if (covers == null) return;
-        for (int i = 0; i < covers.length; i++) {
-            if(!gregtech.content.cover.CoverDrops.retained(this))BlockContents.drop(this, covers[i]);
-            covers[i] = ItemStack.EMPTY;
-        }
-        hasCovers = false;
+        if (!coverStore.hasCovers()) return;
+        coverStore.drop();
         setChanged();
-    }
-
-    private static ItemStack[] emptyCovers() {
-        ItemStack[] array = new ItemStack[6];
-        java.util.Arrays.fill(array, ItemStack.EMPTY);
-        return array;
     }
 
     private boolean neighbourIsFluidPipe(Direction side) {
@@ -347,11 +308,6 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     /** Cover behaviour id of a face; {@code null} when no cover is attached. */
     private String coverIdOf(Direction side) {
         return CoverItems.behavior(getCover(side));
-    }
-
-    /** Whether the covers were suspended by a controller cover, without creating the runtime. */
-    private boolean panelsStopped() {
-        return panels != null && panels.stopped();
     }
 
     private void syncCovers() {
@@ -993,9 +949,9 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
 //? if >=1.21.1 {
-        /*return (panels==null||!panels.shuttered(side)) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), panelsStopped(), candidate,level.registryAccess());
+        /*return !coverStore.shuttered(side) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), coverStore.stopped(), candidate,level.registryAccess());
 *///?} else {
-        return (panels==null||!panels.shuttered(side)) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), panelsStopped(), candidate);
+        return !coverStore.shuttered(side) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), coverStore.stopped(), candidate);
 //?}
     }
 
@@ -1020,9 +976,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //? if >=1.21.1 {
     /*protected void loadAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
+        Object codecLookup=lookup;
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
+        Object codecLookup=null;
 //?}
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         transferredAmount = tag.contains(NBT_TRANSFERRED) ? tag.getLong(NBT_TRANSFERRED) : 0;
@@ -1033,11 +991,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 // The registered pipe owns capacity. Preserve overfull legacy contents until drained.
                 CompoundTag contents = tag.getCompound(NBT_TANK_PREFIX + i).copy();
                 contents.putLong("Capacity", spec.capacity());
-//? if >=1.21.1 {
-                /*tanks[i].readFromNBT(contents,lookup);
-*///?} else {
-                tanks[i].readFromNBT(contents);
-//?}
+                gregtech.engine.stack.NbtCompat.readTank(tanks[i],contents,codecLookup);
             }
         }
 //? if >=1.21.1 {
@@ -1048,69 +1002,36 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /**
-     * One cover per face under the machine's own keys, written only for non-empty faces — the same
-     * shape as {@link BasicMachineBlockEntity}'s cover save, and skipped entirely while no cover was
-     * ever attached (the array is still null), so a coverless pipe writes nothing.
+     * The shared flat {@code gt_cover_*} keys, written only for non-empty faces; a coverless pipe
+     * writes nothing. Loading a tag without cover keys clears the faces, so a cover removed on the
+     * server disappears on the client through {@link #handleUpdateTag} instead of lingering.
      */
 //? if >=1.21.1 {
     /*private void saveCovers(CompoundTag tag,HolderLookup.Provider lookup) {
-*///?} else {
-    private void saveCovers(CompoundTag tag) {
-//?}
-        if (covers == null) return;
-        for (int i = 0; i < covers.length; i++) {
-//? if >=1.21.1 {
-            /*if (!covers[i].isEmpty()) tag.put(NBT_COVER_PREFIX + i, covers[i].save(lookup));
-*///?} else {
-            if (!covers[i].isEmpty()) tag.put(NBT_COVER_PREFIX + i, covers[i].save(new CompoundTag()));
-//?}
-        }
+        coverStore.save(tag,lookup);
     }
 
-    /**
-     * The cover load of {@link BasicMachineBlockEntity}, with one difference the client sync needs:
-     * a tag that names no cover <em>clears</em> the faces, so a cover removed on the server disappears
-     * on the client through {@link #handleUpdateTag} instead of lingering. A tag without any cover key
-     * and a pipe that never had one stay allocation-free.
-     */
-//? if >=1.21.1 {
-    /*private void loadCovers(CompoundTag tag,HolderLookup.Provider lookup) {
+    private void loadCovers(CompoundTag tag,HolderLookup.Provider lookup) {
+        coverStore.load(tag,lookup);
 *///?} else {
+    private void saveCovers(CompoundTag tag) {
+        coverStore.save(tag, null);
+    }
+
     private void loadCovers(CompoundTag tag) {
+        coverStore.load(tag, null);
 //?}
-        boolean present = false;
-        for (int i = 0; i < 6 && !present; i++) present = tag.contains(NBT_COVER_PREFIX + i);
-        if (!present) {
-            if (covers != null) java.util.Arrays.fill(covers, ItemStack.EMPTY);
-            hasCovers = false;
-            return;
-        }
-        if (covers == null) covers = emptyCovers();
-        boolean any = false;
-        for (int i = 0; i < 6; i++) {
-            covers[i] = tag.contains(NBT_COVER_PREFIX + i)
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                    ? gregtech.content.cover.CoverStackData.readItem(lookup,tag.getCompound(NBT_COVER_PREFIX + i)) : ItemStack.EMPTY;
-*///?} else {
-// Version-specific branch.
-                    ? ItemStack.of(tag.getCompound(NBT_COVER_PREFIX + i)) : ItemStack.EMPTY;
-//?}
-            any |= !covers[i].isEmpty();
-        }
-        hasCovers = any;
-        // GT6 re-reads each cover's stored values on load; only worth doing when one is there.
-        if (any) panels().loaded();
-        for(var side:Direction.values())gregtech.content.cover.ComponentCoverRuntime.attached(this,side);
     }
 
     @Override
 //? if >=1.21.1 {
     /*protected void saveAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
+        Object codecLookup=lookup;
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        Object codecLookup=null;
 //?}
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
@@ -1118,11 +1039,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         for (int i = 0; i < tanks.length; i++) {
             tag.putByte(NBT_LAST_RECEIVED + i, lastReceivedFrom[i]);
             CompoundTag tankTag = new CompoundTag();
-//? if >=1.21.1 {
-            /*tanks[i].writeToNBT(tankTag,lookup);
-*///?} else {
-            tanks[i].writeToNBT(tankTag);
-//?}
+            gregtech.engine.stack.NbtCompat.writeTank(tanks[i],tankTag,codecLookup);
             tag.put(NBT_TANK_PREFIX + i, tankTag);
         }
 //? if >=1.21.1 {
@@ -1136,19 +1053,17 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //? if >=1.21.1 {
     /*public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {
         CompoundTag tag = super.getUpdateTag(lookup);
+        Object codecLookup=lookup;
 *///?} else {
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
+        Object codecLookup=null;
 //?}
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
         for (int i = 0; i < tanks.length; i++) {
             CompoundTag tankTag = new CompoundTag();
-//? if >=1.21.1 {
-            /*tanks[i].writeToNBT(tankTag,lookup);
-*///?} else {
-            tanks[i].writeToNBT(tankTag);
-//?}
+            gregtech.engine.stack.NbtCompat.writeTank(tanks[i],tankTag,codecLookup);
             tag.put(NBT_TANK_PREFIX + i, tankTag);
         }
 //? if >=1.21.1 {
@@ -1183,9 +1098,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //? if >=1.21.1 {
     /*public void handleUpdateTag(CompoundTag tag,HolderLookup.Provider lookup) {
         super.handleUpdateTag(tag,lookup);
+        Object codecLookup=lookup;
 *///?} else {
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
+        Object codecLookup=null;
 //?}
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_TRANSFERRED)) transferredAmount = tag.getLong(NBT_TRANSFERRED);
@@ -1194,11 +1111,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 // The registered pipe owns capacity. Preserve overfull legacy contents until drained.
                 CompoundTag contents = tag.getCompound(NBT_TANK_PREFIX + i).copy();
                 contents.putLong("Capacity", spec.capacity());
-//? if >=1.21.1 {
-                /*tanks[i].readFromNBT(contents,lookup);
-*///?} else {
-                tanks[i].readFromNBT(contents);
-//?}
+                gregtech.engine.stack.NbtCompat.readTank(tanks[i],contents,codecLookup);
             }
         }
 //? if >=1.21.1 {

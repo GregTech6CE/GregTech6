@@ -44,6 +44,7 @@ public final class NeoRecipeSerializers {
                             QuarterFluidCraftingIngredient.CODEC));
 
     static {
+        SERIALIZERS.register("tool_repair", () -> GTToolRepairRecipe.SERIALIZER);
         SERIALIZERS.register("spike_conversion", () -> SpikeConversionRecipe.SERIALIZER);
         SERIALIZERS.register("book_binding", () -> BookBindingRecipe.SERIALIZER);
         SERIALIZERS.register("tool_shapeless", () -> ToolShapelessRecipe.SERIALIZER);

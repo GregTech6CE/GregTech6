@@ -140,6 +140,17 @@ public final class OriginalToolMaterials {
                 && inFamily(handle, handleFamily(head));
     }
 
+    /** Display the accepted family, rather than implying only its first representative is usable. */
+    public static GTMaterial requiredHandleMaterial(GTMaterial head) {
+        return switch (handleFamily(head)) {
+            case "WoodPlastic" -> gregtech.content.data.MaterialGroups.WoodPlastic;
+            case "WoodMagical" -> gregtech.content.data.MaterialGroups.WoodMagical;
+            case "MagicIron" -> gregtech.content.data.MaterialGroups.MagicIron;
+            case "Iron" -> gregtech.content.data.MaterialGroups.Iron;
+            default -> GTMaterialRegistry.get(handleFamily(head));
+        };
+    }
+
     public static GTMaterial defaultHandle(GTMaterial head) {
         GTMaterial wood = GTMaterialRegistry.get("Wood");
         if (acceptsHandle(head, wood)) return wood;

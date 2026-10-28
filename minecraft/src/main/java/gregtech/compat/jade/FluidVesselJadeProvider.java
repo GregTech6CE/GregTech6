@@ -8,8 +8,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.fluid.JadeFluidObject;
+import snownee.jade.api.view.FluidView;
+//? if >=1.21.1 {
+/*import static snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE;
+*///?} else {
+import static snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE;
+//?}
 
-/** Omni-style channel inspection and barrel modes; no full save data or inventory mutation. */
+/** Separate pipe fluid bars and barrel modes; no full save data or inventory mutation. */
 public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
@@ -28,22 +35,11 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
             data.putLong("capacity", tank.getFluidTank().capacity());
         } else if (accessor.getBlockEntity() instanceof FluidPipeBlockEntity pipe) {
             data.putString("kind", "pipe");
-            data.putLong("limit", pipe.spec().maxTemperature());
-            data.putInt("channels", pipe.getTanks());
-            data.putLong("bandwidth", pipe.spec().bandwidthPerTank());
-            data.putLong("capacity", pipe.spec().capacity());
             var contents = new ListTag();
-            for (int i = 0; i < Math.min(16, pipe.getTanks()); i++) {
+            for (int i = 0; i < Math.min(4, pipe.getTanks()); i++) {
                 var fluid = pipe.getFluidInTank(i);
-                if (fluid.isEmpty()) continue;
-                var row = new CompoundTag();
-                row.putInt("channel", i + 1);
-//? if >=1.21.1 {
-                /*row.put("fluid", fluid.save(accessor.getLevel().registryAccess()));
-*///?} else {
-                row.put("fluid", fluid.writeToNBT(new CompoundTag()));
-//?}
-                contents.add(row);
+                contents.add(FluidView.writeDefault(JadeFluidObject.of(fluid.getFluid(), fluid.getAmount()),
+                        pipe.getTankCapacity(i)));
             }
             data.put("contents", contents);
         } else return;
@@ -59,23 +55,22 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
                     "jade.gt6ce.vessel." + (data.getBoolean("auto") ? "enabled" : "disabled"))));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));
             if (data.getBoolean("sealed") && data.getLong("duration") > 0) {
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.fermentation", data.getLong("time") / 20,
-                        data.getLong("duration") / 20, gregtech.content.energy.BoilerGauge.percent(data.getLong("time"), data.getLong("duration"))));
+                tooltip.add(JadeBars.time(data.getLong("time"), data.getLong("duration"), 1));
             }
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.temperature_limit", data.getLong("limit")));
         } else {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.channels", data.getInt("channels"), data.getLong("capacity"), data.getLong("bandwidth")));
+            // Replace Jade's combined storage view so each physical tank has just one bar.
+            tooltip.remove(UNIVERSAL_FLUID_STORAGE);
             var contents = data.getList("contents", CompoundTag.TAG_COMPOUND);
-            for (int i = 0; i < contents.size(); i++) {
-                var row = contents.getCompound(i);
-//? if >=1.21.1 {
-                /*var fluid = net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(), row.getCompound("fluid"));
-*///?} else {
-                var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(row.getCompound("fluid"));
-//?}
-                if (!fluid.isEmpty()) JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.channel", row.getInt("channel"),
-                        fluid.getDisplayName(), fluid.getAmount(), data.getLong("capacity")));
+            for (int i = 0; i < Math.min(4, contents.size()); i++) {
+                var view = FluidView.readDefault(contents.getCompound(i));
+                if (view == null) continue;
+                Component label = view.overrideText != null ? view.overrideText
+                        : Component.translatable("jade.fluid", view.fluidName, view.current);
+                tooltip.add(JadeBars.fluid(view, label));
             }
         }
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.temperature_limit", data.getLong("limit")));
     }
+
+    @Override public int getDefaultPriority() { return 1001; }
 }

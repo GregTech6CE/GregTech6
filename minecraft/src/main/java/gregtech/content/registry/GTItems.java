@@ -152,12 +152,14 @@ public final class GTItems {
 *///?} else {
         RegistryObject<Item> item = getObject(prefix, material);
 //?}
-        return item == null ? ItemStack.EMPTY : new ItemStack(item.get(), count);
+        return item == null ? ItemStack.EMPTY : gregtech.engine.material.MaterialUnification.canonical(new ItemStack(item.get(), count));
     }
 
     /** Creative tabs require exactly one item per entry. */
     public static ItemStack getCreativeStack(MaterialPrefix prefix, GTMaterial material) {
-        return getStack(prefix, material, 1);
+        var item = getObject(prefix, material);
+        // Visibility checks need the registered GT identity, not its preferred recipe replacement.
+        return item == null ? ItemStack.EMPTY : new ItemStack(item.get());
     }
 
 //? if >=1.21.1 {
