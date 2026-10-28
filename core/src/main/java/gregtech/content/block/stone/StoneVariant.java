@@ -48,6 +48,11 @@ public enum StoneVariant {
         return suffix;
     }
 
+    /** GT6 {@code BlockStones.JUSTSTONE}: every variant but reinforced and redstone bricks. */
+    public boolean isJustStone() {
+        return this != BRICKS_REINFORCED && this != BRICKS_REDSTONE;
+    }
+
     public static StoneVariant byMeta(int meta) {
         for (StoneVariant variant : values()) {
             if (variant.meta == meta) {

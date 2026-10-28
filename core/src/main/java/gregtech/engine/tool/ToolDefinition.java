@@ -979,6 +979,7 @@ public enum ToolDefinition {
                     MONKEY_WRENCH,
                     WIRE_CUTTER,
                     CROWBAR,
+                    CLUB,
                     PLUNGER,
                     SCOOP,
                     BRANCH_CUTTER,

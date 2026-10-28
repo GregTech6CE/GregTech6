@@ -1,5 +1,6 @@
 package gregtech.content.data;
 
+import gregtech.content.tool.ClubRockCrushing;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.tool.GTToolHelper;
@@ -25,10 +26,12 @@ import java.util.List;
  * GT6 tool-driven block conversion.
  * <p>
  * In GregTech 6 a hard hammer (or jack hammer) hitting a block converts its drops through
- * {@code RM.Hammer}, and a chisel does the same through {@code RM.Chisel}
- * ({@code GT_Tool_HardHammer#convertBlockDrops}, {@code ToolCompat}). This port registered
- * hundreds of recipes into those maps — including the 974 vanilla block processing routes —
- * but nothing ever read them, so hammering a block in the world did nothing.
+ * {@code RM.Hammer}, a chisel does the same through {@code RM.Chisel}, and a club first crushes
+ * rocky blocks into rocks before falling back to the hard-hammer rows
+ * ({@code GT_Tool_HardHammer#convertBlockDrops}, {@code GT_Tool_Club#convertBlockDrops},
+ * {@code ToolCompat}). This port registered hundreds of recipes into those maps — including the
+ * 974 vanilla block processing routes — but nothing ever read them, so hammering a block in the
+ * world did nothing.
  * </p>
  * <p>
  * 1.20.1 has no drop-modifying event, so the break is intercepted, the block is removed, and
@@ -43,35 +46,41 @@ import java.util.List;
 public final class ToolBlockConversionEvents {
     /** GT6 {@code getToolDamagePerBlockBreak} per tool. */
     private static final int HAMMER_BLOCK_BREAK = 25;
+    private static final int CLUB_BLOCK_BREAK = 50;
     private static final int CHISEL_BLOCK_BREAK = 50;
     private static final int SPADE_BLOCK_BREAK = 100;
     private static final int CROWBAR_BLOCK_BREAK = 50;
     /** GT6 {@code getToolDamagePerDropConversion} per tool. */
     private static final int HAMMER_PER_CONVERSION = 50;
+    private static final int CLUB_PER_CONVERSION = 100;
     private static final int CHISEL_PER_CONVERSION = 100;
     private static final int SPADE_PER_CONVERSION = 100;
     private static final int CROWBAR_PER_CONVERSION = 100;
 
     private ToolBlockConversionEvents() {}
 
-    private record Conversion(RecipeMap map, int blockBreakDamage, int perConversionDamage) {}
+    /** {@code club} selects GT6's own club rows before the hard-hammer map the club inherits. */
+    private record Conversion(RecipeMap map, int blockBreakDamage, int perConversionDamage, boolean club) {}
 
-    /** Converted block drops and how many conversions were charged. */
-    public record Result(List<ItemStack> drops, int conversions) {}
+    /** Converted block drops, how many conversions were charged, and whether anything changed. */
+    public record Result(List<ItemStack> drops, int conversions, boolean converted) {}
 
     private static Conversion conversionFor(ItemStack stack) {
         if (GTToolHelper.matchesTool(stack, GTToolType.HARD_HAMMER)) {
-            return new Conversion(MachineRecipeMaps.Hammer, HAMMER_BLOCK_BREAK, HAMMER_PER_CONVERSION);
+            return new Conversion(MachineRecipeMaps.Hammer, HAMMER_BLOCK_BREAK, HAMMER_PER_CONVERSION, false);
+        }
+        if (GTToolHelper.matchesTool(stack, GTToolType.CLUB)) {
+            return new Conversion(MachineRecipeMaps.Hammer, CLUB_BLOCK_BREAK, CLUB_PER_CONVERSION, true);
         }
         if (GTToolHelper.matchesTool(stack, GTToolType.CHISEL)) {
-            return new Conversion(MachineRecipeMaps.Chisel, CHISEL_BLOCK_BREAK, CHISEL_PER_CONVERSION);
+            return new Conversion(MachineRecipeMaps.Chisel, CHISEL_BLOCK_BREAK, CHISEL_PER_CONVERSION, false);
         }
         // GT6 GT_Tool_UniversalSpade / GT_Tool_Crowbar unpack the block's drops through RM.Unboxinator.
         if (GTToolHelper.matchesTool(stack, GTToolType.UNIVERSAL_SPADE)) {
-            return new Conversion(MachineRecipeMaps.Unboxinator, SPADE_BLOCK_BREAK, SPADE_PER_CONVERSION);
+            return new Conversion(MachineRecipeMaps.Unboxinator, SPADE_BLOCK_BREAK, SPADE_PER_CONVERSION, false);
         }
         if (GTToolHelper.matchesTool(stack, GTToolType.CROWBAR)) {
-            return new Conversion(MachineRecipeMaps.Unboxinator, CROWBAR_BLOCK_BREAK, CROWBAR_PER_CONVERSION);
+            return new Conversion(MachineRecipeMaps.Unboxinator, CROWBAR_BLOCK_BREAK, CROWBAR_PER_CONVERSION, false);
         }
         return null;
     }
@@ -82,7 +91,13 @@ public final class ToolBlockConversionEvents {
      */
     public static Result convert(ServerLevel level, BlockState state, List<ItemStack> drops, ItemStack tool) {
         Conversion conversion = conversionFor(tool);
-        if (conversion == null) return new Result(List.copyOf(drops), 0);
+        if (conversion == null) return new Result(List.copyOf(drops), 0, false);
+
+        if (conversion.club()) {
+            // GT_Tool_Club returns 0 conversions for its own rows: the block-break cost pays for them.
+            List<ItemStack> crushed = ClubRockCrushing.crush(state, drops, level.random);
+            if (crushed != null) return new Result(crushed, 0, true);
+        }
 
         List<ItemStack> converted = new ArrayList<>();
         int conversions = 0;
@@ -103,7 +118,7 @@ public final class ToolBlockConversionEvents {
                 conversions += drop.getCount();
             }
         }
-        return new Result(List.copyOf(converted), conversions);
+        return new Result(List.copyOf(converted), conversions, conversions > 0);
     }
 
     @SubscribeEvent
@@ -120,7 +135,7 @@ public final class ToolBlockConversionEvents {
 
         List<ItemStack> drops = Block.getDrops(state, level, pos, level.getBlockEntity(pos), player, tool);
         Result result = convert(level, state, drops, tool);
-        if (result.conversions() == 0) return;
+        if (!result.converted()) return;
 
         int damage = conversion.blockBreakDamage() + result.conversions() * conversion.perConversionDamage();
         // GT6 only converts while the tool can pay for it; otherwise the break happens normally.
