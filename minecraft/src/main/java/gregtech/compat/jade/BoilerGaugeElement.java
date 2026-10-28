@@ -13,12 +13,18 @@ import snownee.jade.api.ui.IElementHelper;
 final class BoilerGaugeElement extends Element {
     private final double fill;
     private final boolean running;
+    private final double warmupEnd;
     private final IElement frame;
     private final IElement text;
 
     BoilerGaugeElement(double fill, Component label, boolean running) {
+        this(fill, label, running, .5);
+    }
+
+    BoilerGaugeElement(double fill, Component label, boolean running, double warmupEnd) {
         this.fill = Math.max(0, Math.min(1, fill));
         this.running = running;
+        this.warmupEnd = warmupEnd;
         frame = JadeBars.progress(0, Component.empty(), 0);
         text = IElementHelper.get().text(label);
         message(label.getString());
@@ -36,11 +42,11 @@ final class BoilerGaugeElement extends Element {
         float inset = JadeBars.borderWidth();
         float width = Math.max(0, right - x - 2 * inset), innerHeight = Math.max(0, height - 2 * inset);
         var display = IDisplayHelper.get();
-        int pressureColor = BoilerGauge.colorAt(fill, running);
+        int pressureColor = BoilerGauge.colorAt(fill, running, warmupEnd);
         for (int pixel = 0; pixel < Math.ceil(width); pixel++) {
             int color = pixel < width * fill
                     ? pressureColor
-                    : shade(BoilerGauge.colorAt(pixel / Math.max(1, width - 1), running), .25);
+                    : shade(BoilerGauge.colorAt(pixel / Math.max(1, width - 1), running, warmupEnd), .25);
             int edge = 0xFF000000 | shade(color, .65);
             int center = 0xFF000000 | color;
             float columnWidth = Math.min(1, width - pixel);

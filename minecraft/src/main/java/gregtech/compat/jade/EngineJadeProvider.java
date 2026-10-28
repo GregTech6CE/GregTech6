@@ -89,6 +89,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 if (be instanceof KineticSteamEngineBlockEntity se) {
                     var control = se.machineControl(null);
                     tag.putBoolean("gt_eng_working", control.running());
+                    if (se.spec() != null) tag.putDouble("gt_eng_warmup_end", se.spec().minimumRunningFill());
                     tag.putLong(NBT_OUT_RATE, control.running() && se.isEnabled() && !se.isShutdown() && se.spec() != null
                             ? se.spec().outputRate() * (se.pressureState() + 1) / 16 : 0);
                     writeTank(tag, "steam", se.steamTank(), "Steam");
@@ -196,7 +197,8 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 : "jade.gt6ce.boiler.state." + (!data.getBoolean(NBT_ENABLED) || stored <= 0 ? "stopped"
                         : running ? "running" : "preheating");
         Component label = Component.translatable("jade.gt6ce.boiler.gauge", Component.translatable(state), percent);
-        tooltip.add(new BoilerGaugeElement(gregtech.content.energy.BoilerGauge.fill(stored, capacity), label, running));
+        tooltip.add(new BoilerGaugeElement(gregtech.content.energy.BoilerGauge.fill(stored, capacity), label, running,
+                data.contains("gt_eng_warmup_end") ? data.getDouble("gt_eng_warmup_end") : .25));
     }
 
     @Override public int getDefaultPriority() { return 1001; }

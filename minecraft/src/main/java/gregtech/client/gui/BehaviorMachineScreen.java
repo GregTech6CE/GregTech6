@@ -42,6 +42,7 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
     private final BehaviorMachine declaration;
     private final List<Hover> hovers = new ArrayList<>();
     private final List<ToggleButton> toggles = new ArrayList<>();
+    private final MachineProgressRenderer progressRenderer = new MachineProgressRenderer();
 
     public BehaviorMachineScreen(BehaviorMachineMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -169,9 +170,8 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
         int top = topPos + declaration.progress().y();
         blit(graphics, left, top, BehaviorMachine.UV_ARROW_U, BehaviorMachine.UV_ARROW_V,
                 BehaviorMachine.PROGRESS_WIDTH, BehaviorMachine.PROGRESS_HEIGHT);
-        int filled = Math.round(menu.progress() * BehaviorMachine.PROGRESS_WIDTH);
-        blit(graphics, left, top, BehaviorMachine.UV_ARROW_U, BehaviorMachine.UV_ARROW_FULL_V,
-                filled, BehaviorMachine.PROGRESS_HEIGHT);
+        progressRenderer.draw(graphics, texture, left, top, BehaviorMachine.UV_ARROW_U, BehaviorMachine.UV_ARROW_FULL_V,
+                BehaviorMachine.PROGRESS_WIDTH, BehaviorMachine.PROGRESS_HEIGHT, menu.progress());
         hovers.add(new Hover(left, top, BehaviorMachine.PROGRESS_WIDTH, BehaviorMachine.PROGRESS_HEIGHT,
                 List.of(Component.translatable("gui.gt6ce.behavior.progress", Math.round(menu.progress() * 100)))));
     }

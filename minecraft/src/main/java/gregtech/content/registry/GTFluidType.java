@@ -83,7 +83,9 @@ public final class GTFluidType {
             var rendered = Component.empty();
             for (var part : line.parts()) {
                 if (capacity >= 0 && (OriginalFluidDisplayRules.PREFIX + "amount").equals(part.key())) {
-                    rendered.append(Component.translatable("gui.gt6ce.fluid.amount_capacity", amount, capacity)
+                    rendered.append((capacity == Long.MAX_VALUE
+                            ? Component.translatable("gui.gt6ce.fluid.amount_unlimited", amount)
+                            : Component.translatable("gui.gt6ce.fluid.amount_capacity", amount, capacity))
                             .withStyle(ChatFormatting.valueOf(part.color().name())));
                     continue;
                 }

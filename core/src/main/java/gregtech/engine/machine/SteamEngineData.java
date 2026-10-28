@@ -14,6 +14,16 @@ public interface SteamEngineData {
 
     long outputRate();
 
+    default long outputAtPressure(int state) {
+        return outputRate() * (Math.max(0, Math.min(31, state)) + 1) / 16;
+    }
+
+    /** The first sampled pressure step whose output exceeds half of rated power, including rounding. */
+    default double minimumRunningFill() {
+        for (int state = 0; state < 32; state++) if (outputAtPressure(state) > outputRate() / 2) return state / 32.0;
+        return 1;
+    }
+
     float hardness();
 
     float blastResistance();

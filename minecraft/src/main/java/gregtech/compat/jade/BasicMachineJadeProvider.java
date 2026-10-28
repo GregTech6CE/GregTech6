@@ -47,6 +47,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         data.putLongArray("energy", new long[]{spec.energyIn(), spec.energyInMin(), spec.energyInMax()});
         data.putDouble("average", machine.averageEnergyInput());
         data.putBoolean("overloaded", machine.isEnergyOverloaded());
+        data.putBoolean("insufficient", machine.isEnergyInsufficient());
         // Fusion's controller counts ticks; ordinary machines count energy work.
         data.putBoolean("timed", machine instanceof gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity);
         data.putBoolean("enabled", control.enabled());
@@ -133,11 +134,10 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         double average = data.getDouble("average");
         if (rates.length == 3 && !unit.equalsIgnoreCase("TU")) {
             boolean overloaded = data.getBoolean("overloaded") || average > rates[2];
+            boolean insufficient = !overloaded && average < rates[1] && data.getBoolean("insufficient");
             if (rates[0] > 0) {
-                tooltip.add(new MachineEnergyElement(rates[1], rates[0], rates[2], average, unit, overloaded));
-                if (overloaded) tooltip.add(Component.translatable("jade.gt6ce.machine.overloaded")
-                        .withStyle(net.minecraft.ChatFormatting.GOLD));
-                else if (average > 0 && average < rates[1])
+                tooltip.add(new MachineEnergyElement(rates[1], rates[0], rates[2], average, unit, overloaded, insufficient));
+                if (!overloaded && average > 0 && average < rates[1])
                     tooltip.add(Component.translatable("jade.gt6ce.machine.insufficient_energy")
                             .withStyle(net.minecraft.ChatFormatting.AQUA));
             }
