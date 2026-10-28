@@ -93,7 +93,6 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                     tag.putLong(NBT_OUT_RATE, control.running() && se.isEnabled() && !se.isShutdown() && se.spec() != null
                             ? se.spec().outputRate() * (se.pressureState() + 1) / 16 : 0);
                     writeTank(tag, "steam", se.steamTank(), "Steam");
-                    writeTank(tag, "water", se.distilledWaterTank(), "DistW");
                 }
             }
             case ROTATION -> {
@@ -185,10 +184,11 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         int percent = gregtech.content.energy.BoilerGauge.percent(stored, capacity);
         if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.engine.ku_storage",
                 format(stored), format(capacity), percent);
-        for (String key : new String[] {"steam", "water"}) {
-            if (!data.contains("gt_eng_tank_" + key)) continue;
-            var view = FluidView.readDefault(data.getCompound("gt_eng_tank_" + key));
-            if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
+        if (data.contains("gt_eng_tank_steam")) {
+            var view = FluidView.readDefault(data.getCompound("gt_eng_tank_steam"));
+            if (view != null) tooltip.add(JadeBars.fluid(view, view.ratio <= 0
+                    ? Component.translatable("fluid.gt6ce.steam").append(" 0L")
+                    : view.overrideText != null ? view.overrideText
                     : Component.translatable("jade.fluid", view.fluidName, view.current)));
         }
         boolean venting = data.getBoolean(NBT_SHUTDOWN) && stored > 0;
