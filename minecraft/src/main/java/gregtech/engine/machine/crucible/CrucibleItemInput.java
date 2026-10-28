@@ -44,7 +44,10 @@ import java.util.List;
 import java.util.Optional;
 //?}
 
-/** Parses item stacks into crucible material payloads (GT6 {@code OM.anydata_} + ore crushing). */
+/** Parses item stacks into crucible material payloads (GT6 {@code OM.anydata_} + ore crushing).
+ * Admission is material data, not recovery authority: rows marked descriptive for recycling
+ * ({@code recoverable=false}) still melt exactly as their tooltip composition says.
+ */
 
 /** Neo stack boundary for shared material/raw-ore and vanilla composition inputs. */
 public final class CrucibleItemInput {
@@ -129,7 +132,7 @@ public final class CrucibleItemInput {
 
         // Vanilla raw items and their storage blocks use the same GT6 ore payload.
 //? if >=1.21.1 {
-        /*if (!ItemMaterialRegistry.canRecover(stack)) return result;
+        /*if (!ItemMaterialRegistry.canMelt(stack)) return result;
 *///?} else {
 //?}
         var item = stack.getItem();
@@ -153,14 +156,14 @@ public final class CrucibleItemInput {
             vanillaOre = gregtech.content.material.Materials.Gold;
         if (item == net.minecraft.world.item.Items.RAW_IRON_BLOCK || item == net.minecraft.world.item.Items.RAW_COPPER_BLOCK
                 || item == net.minecraft.world.item.Items.RAW_GOLD_BLOCK) count = 9;
-        if (vanillaOre != null && ItemMaterialRegistry.canRecover(stack)) {
+        if (vanillaOre != null && ItemMaterialRegistry.canMelt(stack)) {
             result.add(ore(vanillaOre, count)); return result;
         }
 
         Optional<gregtech.engine.material.ItemComposition> data = ItemMaterialRegistry.get(stack);
         // Both ore block forms use GT6's ore crushing target in a crucible. Vanilla-style
         // stone ores are ordinary 2U; crystal/rock ores are 4U dense ores.
-        if (ItemMaterialRegistry.canRecover(stack) && data.isPresent()
+        if (ItemMaterialRegistry.canMelt(stack) && data.isPresent()
                 && data.get().prefix() == MaterialPrefix.oreVanillastone) {
             result.add(ore(data.get().material().resolve(), 1));
 //?}
@@ -172,12 +175,12 @@ public final class CrucibleItemInput {
                 result.add(CrucibleInputRules.ore(data.material().resolve(), data.prefix() == MaterialPrefix.oreDense ? 2 : 1));
             else for (var component : data.components())
 *///?} else {
-        if (ItemMaterialRegistry.canRecover(stack) && data.isPresent()
+        if (ItemMaterialRegistry.canMelt(stack) && data.isPresent()
                 && data.get().prefix() == MaterialPrefix.oreDense) {
             result.add(ore(data.get().material().resolve(), 2));
             return result;
         }
-        if (ItemMaterialRegistry.canRecover(stack)) data.ifPresent(entry -> {
+        if (ItemMaterialRegistry.canMelt(stack)) data.ifPresent(entry -> {
             for (var component : entry.components())
 //?}
                 CrucibleMaterialStack.of(component.material(), component.amount()).addToList(result);
@@ -212,8 +215,8 @@ public final class CrucibleItemInput {
             result.add(CrucibleInputRules.materialItem(form.getMaterial(), form.getPrefix()));
             return;
         }
-        // Missing or unrecoverable data must not fall back to a fabricated primary component.
-        if (!ItemMaterialRegistry.canRecover(stack)) return;
+        // Missing data must not fall back to a fabricated primary component.
+        if (!ItemMaterialRegistry.canMelt(stack)) return;
         ItemMaterialRegistry.get(stack).ifPresent(data -> {
             for (var component : data.components())
                 CrucibleMaterialStack.of(component.material(), component.amount()).addToList(result);
