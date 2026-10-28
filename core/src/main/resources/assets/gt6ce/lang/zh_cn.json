@@ -31467,6 +31467,8 @@
   "jade.gt6ce.mold.state.solidified": "已凝固",
   "jade.gt6ce.mold.temperature": "温度：%1$sK / %2$sK",
   "jade.gt6ce.multiblock.energy": "储量：%s / %s %s",
+  "jade.gt6ce.unlimited": "无限",
+  "jade.gt6ce.energy.max_packets": "最大 %sA",
   "jade.gt6ce.multiblock.fluid": "%s：%s / %s mB",
   "jade.gt6ce.multiblock.formed": "结构：已成型",
   "jade.gt6ce.multiblock.incomplete": "结构：不完整／不可用",

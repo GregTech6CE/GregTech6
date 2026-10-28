@@ -185,7 +185,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.engine.ku_storage",
                 format(stored), format(capacity), percent);
         if (data.contains("gt_eng_tank_steam")) {
-            var view = FluidView.readDefault(data.getCompound("gt_eng_tank_steam"));
+            var view = JadeBars.readFluid(data.getCompound("gt_eng_tank_steam"));
             if (view != null) tooltip.add(JadeBars.fluid(view, view.ratio <= 0
                     ? Component.translatable("fluid.gt6ce.steam").append(" 0L")
                     : view.overrideText != null ? view.overrideText

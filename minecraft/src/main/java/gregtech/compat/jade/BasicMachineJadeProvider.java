@@ -192,7 +192,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             var fluid = FluidStack.loadFluidStackFromNBT(row.getCompound("stack"));
 //?}
             if (fluid.isEmpty()) continue;
-            var view = FluidView.readDefault(FluidView.writeDefault(
+            var view = JadeBars.readFluid(FluidView.writeDefault(
                     JadeFluidObject.of(fluid.getFluid(), row.getLong("amount")), row.getLong("capacity")));
             if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
                     : Component.translatable("jade.fluid", view.fluidName, view.current)));
