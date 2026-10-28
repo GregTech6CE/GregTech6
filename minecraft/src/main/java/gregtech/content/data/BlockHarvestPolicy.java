@@ -26,6 +26,7 @@ public final class BlockHarvestPolicy {
   return source(block).map(SourceBlockProperties.Params::handHarvestable).orElse(!block.defaultBlockState().requiresCorrectToolForDrops());
  }
  public static Tool tool(Block block) {
+  if(block instanceof MaterialBlockLike material && material.prefix().isCrate())return Tool.CROWBAR;
   var original=source(block);
   if(original.isPresent())return Tool.valueOf(original.get().tool().toUpperCase(java.util.Locale.ROOT));
   if(block instanceof gregtech.content.block.misc.LongDistPipeBlock line) return line.isWire()?Tool.CUTTER:Tool.WRENCH;

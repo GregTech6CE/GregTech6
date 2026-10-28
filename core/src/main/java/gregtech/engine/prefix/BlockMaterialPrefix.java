@@ -158,11 +158,13 @@ public final class BlockMaterialPrefix {
     }
 
     public float computeHardness(GTMaterial material) {
+        if (isCrate()) return baseHardness;
         int level = harvestLevel(material);
         return Math.max(0.1F, baseHardness * (1.0F + level));
     }
 
     public float computeResistance(GTMaterial material) {
+        if (isCrate()) return baseResistance;
         int level = harvestLevel(material);
         return baseResistance * (1.0F + level);
     }
