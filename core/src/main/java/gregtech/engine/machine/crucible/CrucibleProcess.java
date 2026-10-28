@@ -4,7 +4,10 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.generated.MaterialProcessingTargets;
 import gregtech.content.material.Materials;
+import gregtech.content.recipe.generated.GTMaterialFields;
+import gregtech.engine.material.GTMaterialRegistry;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,10 +90,13 @@ public final class CrucibleProcess {
                                         .divide(BigInteger.valueOf(GTValues.U))
                                         .longValueExact())
                         .addToList(pending);
-            } else if (temperature < material.getMeltingPoint()
-                    && (previousTemperature >= material.getMeltingPoint() || newContent)) {
-                content.remove(i--);
-                CrucibleMaterialStack.of(material, stack.amount).addToList(pending);
+            } else if (temperature < material.getMeltingPoint()) {
+                // Also normalize old saves whose contents already cooled without changing material.
+                var solid = phaseTarget(stack, false);
+                if (solid != null) {
+                    content.remove(i--);
+                    solid.addToList(pending);
+                }
             }
         }
         for (CrucibleMaterialStack stack : pending) stack.addToList(content);
@@ -123,11 +129,44 @@ public final class CrucibleProcess {
                     incomingTemperature,
                     hullMassKg + CrucibleMaterialStack.weight(content),
                     CrucibleMaterialStack.weight(incoming));
-            for (CrucibleMaterialStack stack : incoming) stack.addToList(content);
+            List<CrucibleMaterialStack> admitted = new ArrayList<>();
+            for (CrucibleMaterialStack stack : incoming) {
+                long melting = stack.material.getMeltingPoint();
+                var converted = mixed >= melting && incomingTemperature < melting
+                        ? phaseTarget(stack, true)
+                        : mixed < melting && incomingTemperature >= melting ? phaseTarget(stack, false) : null;
+                (converted == null ? stack : converted).addToList(admitted);
+            }
+            for (CrucibleMaterialStack stack : admitted) stack.addToList(content);
             CrucibleMaterialStack.consolidate(content);
             return mixed;
         } catch (IllegalArgumentException | ArithmeticException invalidInput) {
             return null;
         }
+    }
+
+    /** Resolve the original processing table without introducing platform-specific phase recipes. */
+    private static CrucibleMaterialStack phaseTarget(CrucibleMaterialStack stack, boolean molten) {
+        GTMaterial material = stack.material.resolve();
+        GTMaterial target;
+        long amount;
+        if (molten) {
+            target = material.getTargetSmeltingMaterial().resolve();
+            amount = material.getTargetSmeltingAmount();
+        } else {
+            String[] row = MaterialProcessingTargets.of(material.getName(), "Solidifying");
+            if (row == null) return null;
+            String name = row[0].isEmpty() ? material.getName() : GTMaterialFields.materialOf(row[0]);
+            if (name == null) return null;
+            target = GTMaterialRegistry.get(name).resolve();
+            amount = Long.parseLong(row[1]);
+        }
+        if (!target.isValid() || amount <= 0 || (target == material && amount == GTValues.U)) return null;
+        return CrucibleMaterialStack.of(
+                target,
+                BigInteger.valueOf(stack.amount)
+                        .multiply(BigInteger.valueOf(amount))
+                        .divide(BigInteger.valueOf(GTValues.U))
+                        .longValueExact());
     }
 }
