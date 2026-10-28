@@ -1377,6 +1377,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return true;
     }
 
+    /** Placed parts stay bound while the addon machine is incomplete so a wand click keeps building. */
+    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return;
+        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(
+                this, structureBindings, match, false, this::releaseStructure);
+    }
     @Override public void releaseStructureClaims() {
         structureBindings.clear(this::releaseStructure);
         gregtech.engine.multiblock.tracking.StructureClaims.cleared(this);

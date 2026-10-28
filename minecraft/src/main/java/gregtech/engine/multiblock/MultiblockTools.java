@@ -2,6 +2,10 @@
  * Native adaptation of Behavior_Tool and ITileEntityMultiBlockController.Util. */
 package gregtech.engine.multiblock;
 
+import gregtech.content.multiblock.LargeMachineLayouts;
+import gregtech.content.multiblock.LargeMachineParts;
+import gregtech.content.multiblock.PlainStructureBlocks;
+import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import java.util.ArrayList;
@@ -70,20 +74,63 @@ public final class MultiblockTools {
         var pattern = definition.compile(
                 gregtech.engine.multiblock.tracking.LayoutStructures.facing(machine.trackedEntity()));
         if (pattern == null) return 0;
+        boolean wholeStructure = buildsWholeStructure(context, origin);
         for (int i = 0; i < pattern.fixedCount(); i++) {
             if (pattern.air(i)) continue;
-            var cell = pattern.cell(i, 0);
             var pos = origin.offset(pattern.dx(i), pattern.dy(i), pattern.dz(i));
-            if (pos.equals(origin) || cell.plainBlock()) continue;
-            if (build(context, pos, cell.block())) continue;
-            for (var alternative : cell.alternatives())
-                if (alternative.plain() == null
-                        && alternative.part() > 0
-                        && build(context, pos, gregtech.content.multiblock.LargeMachineParts.block(alternative.part())))
-                    break;
+            if (pos.equals(origin)) continue;
+            buildCell(context, pos, pattern.cell(i, 0), wholeStructure);
+        }
+        // Repeat groups build their minimum valid size, as the structure preview shows.
+        for (int group = 0; group < pattern.groupCount(); group++) {
+            int copies = pattern.groupMinimum(group);
+            int first = pattern.groupFirstCell(group);
+            int count = pattern.groupCellCount(group);
+            for (int copy = 0; copy < copies; copy++)
+                for (int i = first; i < first + count; i++) {
+                    if (pattern.repeatAir(i)) continue;
+                    var pos = origin.offset(pattern.repeatDx(i), pattern.repeatDy(i, copy), pattern.repeatDz(i));
+                    if (pos.equals(origin)) continue;
+                    buildCell(context, pos, pattern.repeatCell(i, 0), wholeStructure);
+                }
         }
         gregtech.engine.multiblock.tracking.StructureTracking.invalidate(machine);
         return MultiblockToolRules.BUILDER_COST;
+    }
+
+    /**
+     * Sneak-right-clicking the controller builds the whole definition in one pass; an ordinary click
+     * keeps the original per-click ring around the clicked block.
+     */
+    public static boolean buildsWholeStructure(UseOnContext use, BlockPos controller) {
+        var player = use.getPlayer();
+        return player != null && player.isShiftKeyDown() && use.getClickedPos().equals(controller);
+    }
+
+    /**
+     * Builds one structure cell from the player's inventory: the primary choice first, then its
+     * alternatives. Cells that name air, terrain, a fluid or a tag have no single block and are skipped.
+     */
+    public static boolean buildCell(
+            UseOnContext use, BlockPos pos, LargeMachineLayouts.Cell cell, boolean wholeStructure) {
+        if (cell == null || cell.role() == MultiblockLayout.Role.AIR) return false;
+        Block primary = buildable(cell);
+        if (primary != null && build(use, pos, primary, wholeStructure)) return true;
+        for (var alternative : cell.alternatives()) {
+            Block block = buildable(alternative);
+            if (block != null && block != primary && build(use, pos, block, wholeStructure)) return true;
+        }
+        return false;
+    }
+
+    private static Block buildable(LargeMachineLayouts.Cell cell) {
+        if (cell.plain() != null) return PlainStructureBlocks.placeable(cell.plain());
+        return cell.part() > 0 ? LargeMachineParts.block(cell.part()) : null;
+    }
+
+    private static Block buildable(SharedLargeMachineLayouts.Choice choice) {
+        if (choice.plain() != null) return PlainStructureBlocks.placeable(choice.plain());
+        return choice.part() > 0 ? LargeMachineParts.block(choice.part()) : null;
     }
 
     /** The diagnostic scan behind the magnifier: every cell the definition rejects, not just the first. */
@@ -102,15 +149,19 @@ public final class MultiblockTools {
                 .append(gregtech.content.registry.GTFluids.isGas(fluid) ? " (Gaseous)" : " (Liquid)");
     }
 
-    /** Exact structure cell placement; never the ordinary wand's copy-on-top operation. */
-    public static boolean build(UseOnContext use, BlockPos pos, Block expected) {
+    /**
+     * Exact structure cell placement; never the ordinary wand's copy-on-top operation.
+     * {@code wholeStructure} drops the per-click reach ring for a sneak-click on the controller.
+     */
+    public static boolean build(UseOnContext use, BlockPos pos, Block expected, boolean wholeStructure) {
         var level = use.getLevel();
         var player = use.getPlayer();
         var clicked = use.getClickedPos();
         if (level.isClientSide
                 || player == null
-                || !MultiblockToolRules.inBuilderReach(
-                        pos.getX() - clicked.getX(), pos.getY() - clicked.getY(), pos.getZ() - clicked.getZ())
+                || (!wholeStructure
+                        && !MultiblockToolRules.inBuilderReach(
+                                pos.getX() - clicked.getX(), pos.getY() - clicked.getY(), pos.getZ() - clicked.getZ()))
                 || !level.isInWorldBounds(pos)
                 || !level.hasChunkAt(pos)
                 || !level.getWorldBorder().isWithinBounds(pos)

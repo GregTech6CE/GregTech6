@@ -118,6 +118,11 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release)
                 != gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED;
     }
+    /** Wall cells stay bound while the vessel is incomplete so a wand click on a wall keeps building. */
+    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return;
+        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(this, bindings, match, true, this::release);
+    }
     @Override public void releaseStructureClaims() {
         bindings.clear(this::release);
         gregtech.engine.multiblock.tracking.StructureClaims.cleared(this);
