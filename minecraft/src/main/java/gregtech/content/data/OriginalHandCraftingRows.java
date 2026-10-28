@@ -608,7 +608,9 @@ public final class OriginalHandCraftingRows {
     private static Ingredient requiredTool(GTToolType type) {
         ItemStack stack = tool(type);
         if (stack.isEmpty()) throw new IllegalStateException("Missing axle crafting tool " + type.id());
-        return Ingredient.of(stack);
+        // GT6 matches the OreDict tool name, not one item: accept the whole family (monkey wrench,
+        // pocket tools, single-use tools) through the identity tag the tool pack publishes.
+        return Ingredient.of(ItemTags.create(ResourceLocation.parse("forge:tools/" + type.id())));
     }
 
     private static int circuits(Map<ResourceLocation, byte[]> recipes) {
