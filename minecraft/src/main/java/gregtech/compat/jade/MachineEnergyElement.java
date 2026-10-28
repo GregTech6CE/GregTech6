@@ -17,14 +17,18 @@ final class MachineEnergyElement extends Element {
     MachineEnergyElement(long min, long rated, long max, double average, String unit) {
         double multiplier = average < min ? 0 : average / rated;
         Component label = Component.literal(JadeText.decimal(average, 2) + " ")
-                .append(gregtech.client.EnergyText.unit(unit)).append("/t  " + JadeText.decimal(multiplier, 2) + "×");
-        double fill = average < min ? 0 : average <= rated
-                ? (rated > min ? .5 * (average - min) / (rated - min) : .5)
-                : (max > rated ? .5 + .5 * (average - rated) / (max - rated) : 1);
+                .append(gregtech.client.EnergyText.unit(unit))
+                .append("/t  " + JadeText.decimal(multiplier, 2) + "×");
+        double fill = average < min
+                ? 0
+                : average <= rated
+                        ? (rated > min ? .5 * (average - min) / (rated - min) : .5)
+                        : (max > rated ? .5 + .5 * (average - rated) / (max - rated) : 1);
         bar = JadeBars.progress(fill, label, average < min ? 0x777777 : 0x29B52A);
-        positions = max > rated && rated > min ? new float[]{0, .5F, .75F, 1} : new float[]{0, 1};
-        double[] rates = positions.length == 4 ? new double[]{min, rated, rated + (max - rated) / 2.0, max}
-                : new double[]{min, max};
+        positions = max > rated && rated > min ? new float[] {0, .5F, .75F, 1} : new float[] {0, 1};
+        double[] rates = positions.length == 4
+                ? new double[] {min, rated, rated + (max - rated) / 2.0, max}
+                : new double[] {min, max};
         multipliers = new IElement[rates.length];
         powers = new IElement[rates.length];
         for (int i = 0; i < rates.length; i++) {
@@ -34,17 +38,20 @@ final class MachineEnergyElement extends Element {
         message(label.getString());
     }
 
-    @Override public Vec2 getSize() {
+    @Override
+    public Vec2 getSize() {
         float topWidth = 0, bottomWidth = 0;
         for (int i = 0; i < positions.length; i++) {
             topWidth += multipliers[i].getCachedSize().x + 16;
             bottomWidth += powers[i].getCachedSize().x + 16;
         }
-        return new Vec2(Math.max(180, Math.max(bar.getCachedSize().x, Math.max(topWidth, bottomWidth))),
+        return new Vec2(
+                Math.max(180, Math.max(bar.getCachedSize().x, Math.max(topWidth, bottomWidth))),
                 bar.getCachedSize().y + 20);
     }
 
-    @Override public void render(GuiGraphics graphics, float x, float y, float right, float bottom) {
+    @Override
+    public void render(GuiGraphics graphics, float x, float y, float right, float bottom) {
         float barTop = y + 10, barBottom = barTop + bar.getCachedSize().y;
         bar.render(graphics, x, barTop, right, barBottom);
         for (int i = 0; i < positions.length; i++) {
