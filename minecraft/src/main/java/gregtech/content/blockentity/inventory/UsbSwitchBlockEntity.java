@@ -229,7 +229,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
     public boolean attachCover(Direction side, ItemStack stack) {
         PanelCover panel = PanelCover.of(stack);
         if (!gregtech.content.cover.CoverItems.isCover(stack) || !covers[side.ordinal()].isEmpty() || !panels.canAttach(side,
-                stack)) return false;
+                stack) || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
         covers[side.ordinal()] = stack.copyWithCount(1);
         panels.attached(side);
         sync();

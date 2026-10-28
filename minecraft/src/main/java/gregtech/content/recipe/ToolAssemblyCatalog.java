@@ -244,7 +244,7 @@ public final class ToolAssemblyCatalog {
                 if (!material.isValid()) continue;
                 if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) continue;
                 if (gate.onlyStone()
-                        && !material.has(gregtech.api.material.MaterialProperty.STONE)) continue;
+                        && !gregtech.content.tool.OriginalToolMaterials.earlyStone(material)) continue;
                 ItemStack stack = GTItems.getStack(prefix, material, 1);
                 if (!stack.isEmpty()) out.add(stack);
             }

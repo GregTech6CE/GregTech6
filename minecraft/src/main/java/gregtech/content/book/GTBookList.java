@@ -43,6 +43,8 @@ public final class GTBookList {
 
     /** Current adopted subset of GT6 {@code BooksGT.BOOK_REGISTER}. */
     public static boolean canPlace(ItemStack stack) {
+        // Native dungeon keys are shelf display items, not books or enchantment sources.
+        if (!stack.isEmpty() && stack.getItem() instanceof gregtech.content.item.GTDungeonKeyItem) return true;
 //? if >=1.21.1 {
         /*return !stack.isEmpty()
                 && BookShelfRules.canPlace(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());

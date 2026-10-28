@@ -109,6 +109,7 @@ public final class AutocraftingRecipes {
     private static boolean permitted(Level level, Cache cache, ResourceLocation id, CraftingRecipe recipe, ItemStack[] pattern) {
         if (recipe instanceof AutocraftableCraftingRecipe gt && !gt.isAutocraftableByGT()) return false;
         if (!(recipe instanceof AutocraftableCraftingRecipe)
+                && !ConfiguredRecipeRules.keepVanillaStorageBlockRecipe(id)
                 && gregtech.content.recipe.FormConversionCraftingRecipeInjector.disallowsPlainRecipe(recipe,
                         level.registryAccess())) return false;
         return cache.permissions.computeIfAbsent(id, unused -> {

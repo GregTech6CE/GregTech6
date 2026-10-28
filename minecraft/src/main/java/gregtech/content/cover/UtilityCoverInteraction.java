@@ -52,7 +52,8 @@ public final class UtilityCoverInteraction {
         var owner=host.coverOwner();var level=owner.getLevel();if(level==null)return InteractionResult.PASS;
         var held=player.getItemInHand(hand);var side=hit.getDirection();var installed=host.getCover(side);var id=CoverItems.behavior(installed);
         if(!player.mayBuild()||!level.mayInteract(player,owner.getBlockPos()))return InteractionResult.FAIL;
-        if(installed.isEmpty()&&CoverItems.isCover(held)&&gregtech.content.logistics.LogisticsCoverType.of(held)==null){
+        if(player.isShiftKeyDown()&&installed.isEmpty()&&CoverItems.isCover(held)&&gregtech.content.logistics.LogisticsCoverType.of(held)==null){
+            if(!CoverAdmission.allowCover(owner,side,held))return InteractionResult.PASS;
             if(!level.isClientSide&&host.attachCover(side,held)&&!player.getAbilities().instabuild)held.shrink(1);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

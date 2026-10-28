@@ -93,7 +93,7 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
             Random originRandom,
             OreVein vein) {
         // Deterministic per-origin base Y (GT6: mMinY + rand(mMaxY - mMinY - 5)),
-        // stretched into the extended [-64,112] band in the Overworld only.
+        // remapped with the ore-height curve in the Overworld only.
         int minY = GTWorldgenScale.remapY(level, vein.minY());
         int maxY = GTWorldgenScale.remapY(level, vein.maxY());
         int yBase = minY + originRandom.nextInt(Math.max(1, maxY - minY - 5));

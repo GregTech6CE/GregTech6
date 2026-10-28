@@ -28,7 +28,7 @@ public final class OpenVesselRules {
     }
 
     public static int outputCapacity(boolean juicer, boolean wooden) {
-        return juicer ? 1000000 : inputCapacity(wooden);
+        return juicer ? 1000 : inputCapacity(wooden);
     }
 
     public static boolean rainDue(long time) {

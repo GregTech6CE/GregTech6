@@ -65,6 +65,16 @@ public final class CommonBlockTooltips {
                         .append(Component.literal(Float.toString(Math.min(10, speed / 0.4F)) + "x").withStyle(ChatFormatting.GREEN)));
         }
         if (flammable) rows.add(Component.translatable(FLAMMABLE).withStyle(ChatFormatting.RED));
+        if (block instanceof gregtech.content.block.CrateBlock && !containsKey(lines, "gt.lang.gravity"))
+            rows.add(Component.translatable("gt.lang.gravity").withStyle(ChatFormatting.DARK_GRAY));
+        boolean spawnProof = block instanceof gregtech.content.block.stone.GTStoneSlabBlock
+                || block instanceof gregtech.content.block.stone.GTStoneBlock stone
+                    && !gregtech.content.block.stone.StoneVariantFlags.spawnsCreatures(stone.variant())
+                || block instanceof gregtech.content.block.misc.CFoamBlock
+                || block instanceof gregtech.content.block.misc.CFoamSlabBlock
+                || block instanceof gregtech.content.block.misc.ConcreteBlock;
+        if (spawnProof && !containsKey(lines, "tooltip.gt6ce.no_mob_spawning"))
+            rows.add(Component.translatable("tooltip.gt6ce.no_mob_spawning").withStyle(ChatFormatting.DARK_GRAY));
         if (block instanceof BookShelfBlock && !containsKey(lines, ENCHANT))
             rows.add(Component.translatable(ENCHANT).withStyle(ChatFormatting.DARK_GRAY));
         if (hasAttachedCover(stack) && !containsKey(lines, UNCOVER))
@@ -79,7 +89,12 @@ public final class CommonBlockTooltips {
                 ? Component.translatable("tooltip.gt6ce.ore.hand_harvest_preferred",
                     Component.translatable(OriginalBlockTooltipRules.harvestToolKey(ore.get().tool())).withStyle(ChatFormatting.WHITE))
                     .withStyle(ChatFormatting.DARK_GRAY)
-                : harvestLine(BlockHarvestPolicy.Tool.valueOf(ore.get().tool()), false, ore.get().harvest())) : harvestLine(block));
+                : harvestLine(BlockHarvestPolicy.Tool.valueOf(ore.get().tool()), false, ore.get().harvest()))
+                : block instanceof gregtech.content.block.OreBlock
+                        && gregtech.content.block.OreBlock.stoneOfStack(stack).isSediment()
+                    ? harvestLine(BlockHarvestPolicy.Tool.SHOVEL, BlockHarvestPolicy.handHarvestable(block),
+                            BlockHarvestPolicy.level(block))
+                    : harvestLine(block));
         int insertion = lines.size();
         for (int i = 0; i < lines.size(); i++) if (containsAnyKey(lines.get(i),
                 Set.of("tooltip.gt6ce.contained_materials", "tooltip.gt6ce.f3h_hint"))) {

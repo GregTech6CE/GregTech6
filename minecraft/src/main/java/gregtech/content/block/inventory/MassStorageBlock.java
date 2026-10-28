@@ -260,14 +260,12 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
         // The six buttons take priority even if the player is holding an item.
         if (requested > 0 && store.stored() > 0) {
             if (!level.isClientSide) {
-                Direction front = state.getValue(FACING);
                 int left = requested;
                 while (left > 0) {
                     ItemStack out = store.extractAmount(left);
                     if (out.isEmpty()) break;
                     left -= out.getCount();
-                    gregtech.util.GTItemDrops.dropItemStack(level, pos.getX() + .5 + front.getStepX(),
-                            pos.getY() + .5, pos.getZ() + .5 + front.getStepZ(), out);
+                    deliverWithdrawal(player, out);
                 }
             }
             return true;
@@ -297,6 +295,25 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
             player.getInventory().setChanged();
         }
         return true;
+    }
+
+    /** Direct withdrawals enter the player's inventory; only a full-inventory remainder is dropped. */
+    private static void deliverWithdrawal(Player player, ItemStack stack) {
+//? if >=1.21.1 {
+        /*ItemStack remainder = net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(
+                new net.neoforged.neoforge.items.wrapper.PlayerMainInvWrapper(player.getInventory()), stack, false);
+*///?} else {
+        ItemStack remainder = net.minecraftforge.items.ItemHandlerHelper.insertItemStacked(
+                new net.minecraftforge.items.wrapper.PlayerMainInvWrapper(player.getInventory()), stack, false);
+//?}
+        if (remainder.getCount() != stack.getCount()) player.getInventory().setChanged();
+        if (!remainder.isEmpty()) {
+            var drop = new net.minecraft.world.entity.item.ItemEntity(player.level(), player.getX(),
+                    player.getY() + .5, player.getZ(), remainder);
+            drop.setNoPickUpDelay();
+            drop.setTarget(player.getUUID());
+            player.level().addFreshEntity(drop);
+        }
     }
 
     private static boolean isUnpackingTool(ItemStack held) {

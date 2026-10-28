@@ -35,7 +35,8 @@ public final class MachineConstructionMaterials {
         if (storage != null) return Optional.of(storage);
         var hopper = HOPPERS.get(path);
         if (hopper != null) return Optional.of(hopper);
-        return OriginalMachineMaterialData.block(path);
+        var original = OriginalMachineMaterialData.block(path);
+        return original.isPresent() ? original : OriginalDeviceMaterialData.block(path);
     }
 
     public static Map<String, ItemComposition> blocks() {

@@ -1,10 +1,20 @@
 {
   "variants": {
-    "stage=0": {
-      "model": "gt6ce:block/wood/sapling_hazel"
-    },
-    "stage=1": {
-      "model": "gt6ce:block/wood/sapling_hazel"
-    }
+    "stage=0": [
+      {
+        "model": "gt6ce:block/iconsets/sapling_small_hazel"
+      },
+      {
+        "model": "gt6ce:block/iconsets/sapling_large_hazel"
+      }
+    ],
+    "stage=1": [
+      {
+        "model": "gt6ce:block/iconsets/sapling_small_hazel"
+      },
+      {
+        "model": "gt6ce:block/iconsets/sapling_large_hazel"
+      }
+    ]
   }
 }

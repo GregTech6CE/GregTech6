@@ -114,21 +114,7 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
         }
 
         public ItemStack example() {
-            Fluid fluid = gregtech.content.food.GTDrinks.fluidForField(fluidKey);
-            if (fluid == null && fluidKey.equals("Lubricant")) {
-                var holder = gregtech.content.registry.GTFluids.still("LubRoCant");
-                if (holder != null && holder.isBound()) fluid = holder.get();
-            }
-            if (fluid == null) throw new IllegalStateException("Missing bottle fluid " + fluidKey);
-            for (String id : new String[]{"fluid_cell_tin", "fluid_cell_wax_magic", "fluid_cell_tungsten"}) {
-                var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-                if (item == Items.AIR) continue;
-                var stack = new ItemStack(item);
-                var handler = FluidUtil.getFluidHandler(stack).orElse(null);
-                if (handler != null && handler.fill(new FluidStack(fluid, 1000),
-                        IFluidHandler.FluidAction.EXECUTE) == 1000) return handler.getContainer();
-            }
-            throw new IllegalStateException("No finite physical 1000mB vessel for " + fluidKey);
+            return FiniteCraftingVessels.examples(acceptedFluids(fluidKey)).get(0);
         }
 
         @Override
@@ -162,7 +148,7 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
 
         @Override
         public java.util.stream.Stream<ItemStack> getItems() {
-            var vessels = java.util.stream.Stream.of(example());
+            var vessels = FiniteCraftingVessels.examples(acceptedFluids(fluidKey)).stream();
             return allowLubricantBottle ? java.util.stream.Stream.concat(vessels,
                     java.util.stream.Stream.of(new ItemStack(BuiltInRegistries.ITEM.get(
                             ResourceLocation.fromNamespaceAndPath("gt6ce", "lubricant_bottle"))))) : vessels;
@@ -305,7 +291,8 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
         }
 
         private static Stream<Ingredient.Value> examples(String fluidKey, boolean allowBottle) {
-            Stream<Ingredient.Value> vessels = Stream.of(new Ingredient.ItemValue(example(fluidKey)));
+            Stream<Ingredient.Value> vessels = FiniteCraftingVessels.examples(acceptedFluids(fluidKey))
+                    .stream().map(Ingredient.ItemValue::new);
             if (!allowBottle) return vessels;
             Item bottle = ForgeRegistries.ITEMS.getValue(GregTech.id("lubricant_bottle"));
             if (bottle == null || bottle == Items.AIR) throw new IllegalStateException("Missing industrial lubricant bottle");
@@ -319,25 +306,6 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
             // GT6's lubricant bottle lists both FL.Lubricant and FL.LubRoCant.
             var rotary = GTFluids.still("LubRoCant");
             return rotary != null && rotary.isPresent() && fluid == rotary.get();
-        }
-
-        private static ItemStack example(String fluidKey) {
-            Fluid fluid = GTDrinks.fluidForField(fluidKey);
-            if (fluid == null)
-                throw new IllegalStateException("GT6 bottle filling lacks fluid " + fluidKey);
-            // Rainbow sap is MAGIC in GT6. Both tin and gold reject magic; the magic-wax
-            // cell accepts it. Pick the first physical vessel whose real handler fills.
-            for (String cellId : new String[]{"fluid_cell_tin", "fluid_cell_wax_magic",
-                    "fluid_cell_tungsten"}) {
-                Item item = ForgeRegistries.ITEMS.getValue(GregTech.id(cellId));
-                if (item == null || item == Items.AIR) continue;
-                ItemStack cell = new ItemStack(item);
-                var handler = FluidUtil.getFluidHandler(cell).resolve().orElse(null);
-                if (handler != null && handler.fill(new FluidStack(fluid, 1000),
-                        IFluidHandler.FluidAction.EXECUTE) == 1000)
-                    return handler.getContainer();
-            }
-            throw new IllegalStateException("Could not fill a finite 1000 mB " + fluidKey + " cell");
         }
 
         @Override
@@ -390,4 +358,17 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
         }
     }
 //?}
+    /** The lubricant recipe explicitly accepts both source fluids; other keys remain exact. */
+    private static net.minecraft.world.level.material.Fluid[] acceptedFluids(String fluidKey) {
+        var primary = gregtech.content.food.GTDrinks.fluidForField(fluidKey);
+        if (!"Lubricant".equals(fluidKey)) return new net.minecraft.world.level.material.Fluid[]{primary};
+        var alternate = gregtech.content.registry.GTFluids.still("LubRoCant");
+//? if >=1.21.1 {
+        /*var rotary = alternate != null && alternate.isBound() ? alternate.get() : null;
+*///?} else {
+        var rotary = alternate != null && alternate.isPresent() ? alternate.get() : null;
+//?}
+        return new net.minecraft.world.level.material.Fluid[]{primary, rotary};
+    }
+
 }

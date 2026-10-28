@@ -31,8 +31,11 @@ public final class PanelBlockItem extends BlockItem implements PanelItemView {
         var level = context.getLevel();
         var pos = context.getClickedPos();
         if (player == null || !player.mayBuild() || !level.mayInteract(player, pos)) return InteractionResult.FAIL;
+        if (!player.isShiftKeyDown()) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof PanelCoverHost host)) return InteractionResult.FAIL;
         var stack = context.getItemInHand();
+        if (!gregtech.content.cover.CoverAdmission.allowCover(host.coverOwner(), context.getClickedFace(), stack))
+            return InteractionResult.PASS;
         if (!level.isClientSide) {
             if (!host.attachCover(context.getClickedFace(), stack)) return InteractionResult.FAIL;
             if (!player.getAbilities().instabuild) stack.shrink(1);

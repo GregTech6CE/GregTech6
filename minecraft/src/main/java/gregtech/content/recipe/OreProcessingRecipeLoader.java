@@ -71,7 +71,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         SharedOreSiftingRows.initialize();
         SharedPurifiedAcidRows.initialize();
         SharedThermalInputRows.initialize();
-        processReviewedFollowonRoutes();
+        SharedMineralSteamCrackingRows.initialize();
         processByproductList();
         processRecycling();
         NonOreMacerationRows.seal();
@@ -436,21 +436,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (outcome.action() == SourceOreMacerationAdapter.Action.LEGACY_UNSUPPORTED) return false;
         if (outcome.row() != null) outcome.row().admit();
         return true;
-    }
-
-    // ========================================================================
-    //  3c. Reviewed Cinnabar cracking
-    // ========================================================================
-
-    /** Bounded reviewed source profile; shared row algorithms; unknown inputs retain legacy routes. */
-    private void processReviewedFollowonRoutes() {
-        var seen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<GTMaterial,Boolean>());
-        for(var alias:GTMaterialRegistry.allMaterials()) {
-            var material=alias.resolve();
-            if(!seen.add(material)||!ReviewedCinnabarFacts.supports(material))continue;
-            var facts=ReviewedCinnabarFacts.INSTANCE;
-            SourceOreFollowonRows.cracking(material,ReviewedCinnabarFacts.sourceWaxes(),facts);
-        }
     }
 
     // ========================================================================

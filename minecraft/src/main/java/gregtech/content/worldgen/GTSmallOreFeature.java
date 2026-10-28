@@ -45,7 +45,7 @@ public class GTSmallOreFeature extends Feature<NoneFeatureConfiguration> {
         boolean placedAny = false;
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         for (SmallOre ore : ores) {
-            // Y range stretched into the extended [-64,112] band in the Overworld only.
+            // Only the Overworld uses the ore-height curve.
             int minY = GTWorldgenScale.remapY(level, ore.minY());
             int maxY = Mth.clamp(GTWorldgenScale.remapY(level, ore.maxY()), minY + 1, level.getMaxBuildHeight() - 1);
             int attempts = Math.max(1, ore.amount() / 2 + random.nextInt(1 + ore.amount()) / 2);

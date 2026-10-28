@@ -82,6 +82,8 @@ public final class PanelCoverRuntime {
     public void attached(Direction side){
         ComponentCoverRuntime.attached(host,side);
         var stack=host.getCover(side);var panel=PanelCover.of(stack);var c=control(side);
+        // The machine's live status is never a saved property of the loose display item.
+        if (panel == PanelCover.STATUS) CoverStackData.putInt(stack, VALUE, 0);
 //? if >=1.21.1 {
         /*if(panel!=null&&panel.selector()&&c!=null)CoverStackData.putInt(stack,VALUE,c.mode()&15);
 *///?} else {

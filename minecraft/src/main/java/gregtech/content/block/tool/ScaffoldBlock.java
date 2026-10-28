@@ -73,6 +73,16 @@ public final class ScaffoldBlock extends ShapedToolBlock {
         return material.getColor();
     }
 
+    /** Normal placement faces the player; sneaking uses a valid clicked side as in GT6. */
+    @Override
+    public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
+        if (context.getPlayer() == null || !context.getPlayer().isShiftKeyDown())
+            return super.getStateForPlacement(context);
+        Direction clicked = context.getClickedFace();
+        return defaultBlockState().setValue(FACING,
+                clicked.getAxis().isHorizontal() ? clicked : Direction.NORTH);
+    }
+
     private static boolean isScaffold(BlockState state) {
         return state.getBlock() instanceof ScaffoldBlock;
     }
@@ -162,11 +172,12 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     }
 
     private static VoxelShape collisionFrame(Direction facing) {
+        // FACING is the open front; the original scaffold's crossbars block the back.
         return switch (facing) {
-            case NORTH -> NORTH_FRAME;
-            case SOUTH -> SOUTH_FRAME;
-            case EAST -> EAST_FRAME;
-            case WEST -> WEST_FRAME;
+            case NORTH -> SOUTH_FRAME;
+            case SOUTH -> NORTH_FRAME;
+            case EAST -> WEST_FRAME;
+            case WEST -> EAST_FRAME;
             default -> Shapes.empty();
         };
     }

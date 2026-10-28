@@ -1030,6 +1030,10 @@ public final class GregTechClient {
                 gregtech.content.registry.GTDecorBlocks.GLASS_CLEAR.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(
                 gregtech.content.registry.GTDecorBlocks.GLASS_GLOW.get(), RenderType.translucent());
+        for (var flower : gregtech.content.plant.BedrockFlowers.ALL) {
+            ItemBlockRenderTypes.setRenderLayer(
+                    gregtech.content.registry.GTDungeonBlocks.pottedFlower(flower.id()), RenderType.cutout());
+        }
         // GT6 world fluids must be built into the translucent chunk layer.
         // ChunkRenderDispatcher picks a fluid's layer with ItemBlockRenderTypes.getRenderLayer
         // (ChunkRenderDispatcher.java:620) and vanilla's ItemBlockRenderTypes.FLUID_RENDER_TYPES only
@@ -1076,6 +1080,9 @@ public final class GregTechClient {
                 MenuScreens.register(type.get(), HopperScreen::new);
             }
             MenuScreens.register(GTMenuTypes.ADVANCED_CRAFTING.get(), gregtech.client.gui.AdvancedCraftingScreen::new);
+            MenuScreens.register(GTMenuTypes.METAL_CHEST.get(), HopperScreen::new);
+            MenuScreens.register(GTMenuTypes.STORAGE_15.get(), HopperScreen::new);
+            MenuScreens.register(GTMenuTypes.STORAGE_36.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.GARBAGE_DUMP.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
             MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(), (MenuScreens.ScreenConstructor<

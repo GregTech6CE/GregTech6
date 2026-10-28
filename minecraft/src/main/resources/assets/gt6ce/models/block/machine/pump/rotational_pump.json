@@ -7,6 +7,7 @@
   },
   "children": {
     "colored": {
+      "render_type": "minecraft:solid",
       "textures": {
         "front": "gt6ce:block/machines/pump/rotation/colored/front",
         "back": "gt6ce:block/machines/pump/rotation/colored/back",
@@ -60,6 +61,7 @@
       ]
     },
     "overlay": {
+      "render_type": "minecraft:cutout",
       "textures": {
         "front": "gt6ce:block/machines/pump/rotation/overlay/front",
         "back": "gt6ce:block/machines/pump/rotation/overlay/back",

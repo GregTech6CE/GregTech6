@@ -32,6 +32,7 @@ public final class MaterialDefinitions {
         gregtech.content.data.generated.MaterialDataFacts.apply();
         MaterialFormCorrections.apply();
         SourceMaterialToolStats.apply();
+        SupplementalMaterials.link();
         MaterialGroups.init();
         SourceLatheMaterialProfiles.captureDefaults();
     }

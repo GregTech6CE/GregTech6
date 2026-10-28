@@ -53,6 +53,10 @@ public final class FluidClientSetup {
     @SubscribeEvent
     public static void setup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            for (var flower : gregtech.content.plant.BedrockFlowers.ALL) {
+                ItemBlockRenderTypes.setRenderLayer(
+                        gregtech.content.registry.GTDungeonBlocks.pottedFlower(flower.id()), RenderType.cutout());
+            }
             for (var binding : GTFluids.entries().entrySet()) {
                 ItemBlockRenderTypes.setRenderLayer(
                         BuiltInRegistries.FLUID.get(binding.getKey()), RenderType.translucent());

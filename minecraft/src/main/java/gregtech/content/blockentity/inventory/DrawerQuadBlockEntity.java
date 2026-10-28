@@ -3,7 +3,6 @@ package gregtech.content.blockentity.inventory;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.content.block.inventory.DrawerQuadBlock;
 import gregtech.client.gui.HopperContainerMenu;
-import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -80,20 +79,8 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
     }
     public HopperContainerMenu createMenu(int page, int id, Inventory playerInventory) {
         if (page < 0 || page >= COMPARTMENTS) throw new IllegalArgumentException("Invalid drawer page " + page);
-        return new HopperContainerMenu(GTMenuTypes.forSlotCount(PAGE_SIZE), id, playerInventory,
-                view(IntStream.range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).toArray())) {
-            @Override protected net.minecraft.world.inventory.Slot createInventorySlot(IItemHandler handler, int index, int x, int y) {
-                return new InventorySlot(handler, index, x, y) {
-                    @Override public int getMaxStackSize(ItemStack stack) {
-                        // Forge's default probes by clearing/restoring this slot, which would
-                        // consume real legacy overflow during a supposedly read-only query.
-                        return Math.min(stack.getMaxStackSize(), handler.getSlotLimit(index));
-                    }
-                };
-            }
-            @Override protected void inventorySlotChanged(int index) {
-                DrawerQuadBlockEntity.this.inventoryChanged();
-            }
+        return new gregtech.client.gui.StorageContainerMenu(id, playerInventory,
+                view(IntStream.range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).toArray()), this::inventoryChanged) {
             @Override public boolean stillValid(Player player) {
                 return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == DrawerQuadBlockEntity.this
                         && player.distanceToSqr(worldPosition.getX()+.5, worldPosition.getY()+.5, worldPosition.getZ()+.5) <= 64;

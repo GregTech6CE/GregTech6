@@ -46,7 +46,7 @@ public class ConcreteBlock extends Block {
     private final boolean reinforced;
 
     public ConcreteBlock(boolean reinforced, Properties properties) {
-        super(properties);
+        super(properties.isValidSpawn((s, l, p, e) -> false));
         this.reinforced = reinforced;
         registerDefaultState(stateDefinition.any().hasProperty(COLOR)
                 ? stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY) : stateDefinition.any());

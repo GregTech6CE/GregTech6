@@ -98,13 +98,13 @@ final class CoverSurfaceRenderer {
         for (Direction face : Direction.values()) {
             if (face == side.getOpposite()) continue;
             boolean outward = face == side;
-            double texMin = outward ? 6.0 / 16 : 0.0, texMax = outward ? 10.0 / 16 : 1.0;
-            face(pose, vertices, outward ? front : body, light, face, box, texMin, texMax);
+            face(pose, vertices, outward ? front : body, light, side, face, box,
+                    6.0 / 16, 10.0 / 16, outward ? 6.0 / 16 : 0.0, outward ? 10.0 / 16 : 8.0 / 16);
         }
     }
     private static void face(PoseStack pose, VertexConsumer vertices, TextureAtlasSprite sprite, int light,
-                             Direction face, gregtech.content.cover.CoverPlateGeometry.Box b,
-                             double texMin, double texMax) {
+                             Direction side, Direction face, gregtech.content.cover.CoverPlateGeometry.Box b,
+                             double uMin, double uMax, double vMin, double vMax) {
         float x0 = (float) b.minX(), y0 = (float) b.minY(), z0 = (float) b.minZ();
         float x1 = (float) b.maxX(), y1 = (float) b.maxY(), z1 = (float) b.maxZ();
         float[][] corners = switch (face) {
@@ -116,15 +116,26 @@ final class CoverSurfaceRenderer {
             case EAST -> new float[][]{{x1,y0,z0},{x1,y1,z0},{x1,y1,z1},{x1,y0,z1}};
         };
 //? if >=1.21.1 {
-        /*float su0 = sprite.getU((float) texMin), su1 = sprite.getU((float) texMax);
-        float sv0 = sprite.getV((float) texMin), sv1 = sprite.getV((float) texMax);
+        /*float su0 = sprite.getU((float) uMin), su1 = sprite.getU((float) uMax);
+        float sv0 = sprite.getV((float) vMin), sv1 = sprite.getV((float) vMax);
 *///?} else {
-        float su0 = sprite.getU((float) (texMin * 16)), su1 = sprite.getU((float) (texMax * 16));
-        float sv0 = sprite.getV((float) (texMin * 16)), sv1 = sprite.getV((float) (texMax * 16));
+        float su0 = sprite.getU((float) (uMin * 16)), su1 = sprite.getU((float) (uMax * 16));
+        float sv0 = sprite.getV((float) (vMin * 16)), sv1 = sprite.getV((float) (vMax * 16));
 //?}
         float[][] uv = {{su0, sv0}, {su1, sv0}, {su1, sv1}, {su0, sv1}};
         var mat = pose.last().pose();
         for (int i = 0; i < 4; i++) {
+            if (face != side) {
+                var point = gregtech.content.cover.CoverPlateGeometry.valveSideUv(side.ordinal(), face.ordinal(),
+                        corners[i][0], corners[i][1], corners[i][2]);
+//? if >=1.21.1 {
+                /*uv[i][0] = sprite.getU((float) point.u());
+                uv[i][1] = sprite.getV((float) point.v());
+*///?} else {
+                uv[i][0] = sprite.getU(point.u() * 16);
+                uv[i][1] = sprite.getV(point.v() * 16);
+//?}
+            }
 //? if >=1.21.1 {
             /*vertices.addVertex(mat, corners[i][0], corners[i][1], corners[i][2])
                     .setColor(1f, 1f, 1f, 1f).setUv(uv[i][0], uv[i][1])

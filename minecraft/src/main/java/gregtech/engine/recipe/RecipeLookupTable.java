@@ -18,8 +18,31 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
     private final Deque<Candidates> recent = new ArrayDeque<>();
     private long compositionRevision = -1;
 
-    record Candidates(List<ItemStack> items, List<FluidStack> fluids,
-                      List<Recipe> exact, List<Recipe> alternatives) {}
+    static final class Candidates {
+        final List<ItemStack> items;
+        final List<FluidStack> fluids;
+        private final List<Recipe> exact;
+        private List<Recipe> alternatives;
+        private java.util.function.Supplier<List<Recipe>> alternativeBuilder;
+
+        Candidates(List<ItemStack> items, List<FluidStack> fluids, List<Recipe> exact,
+                   java.util.function.Supplier<List<Recipe>> alternativeBuilder) {
+            this.items = items;
+            this.fluids = fluids;
+            this.exact = exact;
+            this.alternativeBuilder = alternativeBuilder;
+        }
+
+        List<Recipe> exact() { return exact; }
+
+        List<Recipe> alternatives() {
+            if (alternatives == null) {
+                alternatives = alternativeBuilder.get();
+                alternativeBuilder = null;
+            }
+            return alternatives;
+        }
+    }
 
     RecipeLookupTable(Collection<Recipe> rows) { this.rows = rows; }
 
@@ -51,12 +74,8 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         if (snapshot == null || snapshot.length != rows.size()) rebuild();
         for (var cached : recent) if (sameInputs(cached, items, fluids)) return cached;
         var exact = new ArrayList<Recipe>();
-        var alternatives = new ArrayList<Recipe>();
         for (var row : exactCandidates(items)) {
             if (RecipeMap.exactItems(row, items) && possibleInputs(row, items, fluids)) exact.add(row);
-        }
-        for (var row : snapshot) {
-            if (!RecipeMap.exactItems(row, items) && possibleInputs(row, items, fluids)) alternatives.add(row);
         }
         var itemKey = items.stream().map(s -> s.isEmpty() ? ItemStack.EMPTY : s.copyWithCount(1)).toList();
         var fluidKey = fluids.stream().map(s -> {
@@ -64,7 +83,20 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             if (!copy.isEmpty()) copy.setAmount(1);
             return copy;
         }).toList();
-        var result = new Candidates(itemKey, fluidKey, List.copyOf(exact), List.copyOf(alternatives));
+        // RecipeMap exhausts the live exact-match checks before asking for alternatives. Most
+        // native inputs therefore never need the expensive full alias pass. Retain original
+        // counts and components, not the count-normalized cache keys, for the deferred predicate.
+        Recipe[] ordered = snapshot;
+        var originalItems = items.stream().map(ItemStack::copy).toList();
+        var originalFluids = fluids.stream().map(FluidStack::copy).toList();
+        var result = new Candidates(itemKey, fluidKey, List.copyOf(exact), () -> {
+            var alternatives = new ArrayList<Recipe>();
+            for (var row : ordered) {
+                if (!RecipeMap.exactItems(row, originalItems)
+                        && possibleInputs(row, originalItems, originalFluids)) alternatives.add(row);
+            }
+            return List.copyOf(alternatives);
+        });
         if (recent.size() == 16) recent.removeLast();
         recent.addFirst(result);
         return result;

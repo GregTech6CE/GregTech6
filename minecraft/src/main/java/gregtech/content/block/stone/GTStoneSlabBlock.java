@@ -71,7 +71,7 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
     private final GTMaterial stoneMaterial;
 
     public GTStoneSlabBlock(StoneType stoneType, StoneVariant variant) {
-        super(StoneBlockProperties.properties(stoneType, variant));
+        super(StoneBlockProperties.properties(stoneType, variant).isValidSpawn((s, l, p, e) -> false));
         this.stoneType = stoneType;
         this.variant = variant;
         this.stoneMaterial = stoneType.material();

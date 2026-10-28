@@ -1,7 +1,7 @@
 /* Gregorius Techneticies / GregTech-6 Team source semantics, LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
-/** AdvancedCrafting1ToY selects a prefix's output by the leading empty grid cells. */
+/** Port selector: multiple decomposition outputs use fixed cells, never cyclic positions. */
 public record FormConversionSelector(int variants, int offset) {
     public static final FormConversionSelector NONE = new FormConversionSelector(0, 0);
 
@@ -12,12 +12,12 @@ public record FormConversionSelector(int variants, int offset) {
 
     public boolean matches(int gridSize, int firstOccupiedSlot, int occupiedCells) {
         if (variants == 0) return true;
-        // The source's empty-cell early exit is equivalent to these checks for a one-cell input.
+        // Requested port behavior: preserve unrestricted single-route conversion, anchor multiple routes.
         return occupiedCells == 1
                 && gridSize >= offset + 1
                 && firstOccupiedSlot >= 0
                 && firstOccupiedSlot < gridSize
-                && firstOccupiedSlot % variants == offset;
+                && (variants == 1 || firstOccupiedSlot == offset);
     }
 
     public int minimumGridSize() {

@@ -70,6 +70,14 @@ public final class OriginalToolMaterials {
             "Rainbowood");
     private static final Set<String> MAGIC_IRONS =
             Set.of("Manasteel", "Thaumium", "DarkThaumium", "SpectreIron", "FierySteel", "MeteoflameSteel");
+    /** Oil shale gains STONE for its placed block, but MT.oredustcent never adds it to ANY.Stone. */
+    public static boolean earlyStone(GTMaterial material) {
+        if (material == null || !material.has(MaterialProperty.STONE)) return false;
+        return material != gregtech.content.material.generated.OreMaterials.OilShale
+                || gregtech.engine.addon.AddonMaterials.owns(material)
+                || gregtech.content.data.MaterialGroups.Stone.getReRegistrations()
+                        .contains(material);
+    }
 
     private static String name(GTMaterial material) {
         return material.getName().replace(" ", "");

@@ -18,6 +18,8 @@ public final class StoneBlockProperties {
                 .mapColor(MapColor.STONE)
                 .strength(hardness, resistance)
                 .requiresCorrectToolForDrops()
-                .sound(SoundType.STONE);
+                .sound(SoundType.STONE)
+                .isValidSpawn((state, level, pos, entity) -> StoneVariantFlags.spawnsCreatures(variant)
+                        && state.isFaceSturdy(level, pos, net.minecraft.core.Direction.UP));
     }
 }

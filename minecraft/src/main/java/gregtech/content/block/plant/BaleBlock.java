@@ -55,6 +55,16 @@ public final class BaleBlock extends RotatedPillarBlock {
         boolean sunny = level.isDay() && !level.isRaining() && level.canSeeSky(pos.above(2));
         if (random.nextInt(3) > 0 && !sunny) return;
 
+        boolean wet = isWet(level, pos);
+        if (stage == Stage.FRESH) {
+            replace(state, level, pos, Stage.valueOf(gregtech.content.plant.BaleAgingRules.freshResult(wet)));
+        } else if (wet || random.nextInt(42) == 0) {
+            replace(state, level, pos, Stage.ROTTEN);
+        }
+    }
+
+    /** The actual ageing moisture test, also used by the location-sensitive Jade hint. */
+    public static boolean isWet(Level level, BlockPos pos) {
         boolean wet = level.getBiome(pos).value().getModifiedClimateSettings().downfall() > 0.8F;
         var biome = level.getBiome(pos);
         wet |= biome.is(net.minecraft.tags.BiomeTags.IS_OCEAN)
@@ -70,11 +80,7 @@ public final class BaleBlock extends RotatedPillarBlock {
             }
         }
         wet |= level.isRainingAt(pos.above(2));
-        if (stage == Stage.FRESH) {
-            replace(state, level, pos, Stage.valueOf(gregtech.content.plant.BaleAgingRules.freshResult(wet)));
-        } else if (wet || random.nextInt(42) == 0) {
-            replace(state, level, pos, Stage.ROTTEN);
-        }
+        return wet;
     }
 
     private static void replace(BlockState state, ServerLevel level, BlockPos pos, Stage target) {

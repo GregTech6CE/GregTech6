@@ -99,8 +99,11 @@ public final class CraftingMaterialForms {
                 String prefix = host.isBedrock() ? "oreBedrock" : host.isSediment() ? "oreDust" : ore.prefix().getName();
                 return new Form(prefix, ore.material().resolve().getName());
             }
-            if (block instanceof MaterialBlockLike material)
-                return new Form(material.prefix().getName(), material.material().resolve().getName());
+            if (block instanceof MaterialBlockLike material) {
+                String prefix = material.prefix().getName();
+                if (prefix.equals("blockSolid") && MaterialUnification.hiddenDuplicate(stack)) prefix = "blockIngot";
+                return new Form(prefix, material.material().resolve().getName());
+            }
             if (block instanceof ElectricWireBlock wire && !wire.spec().insulated())
                 return new Form(String.format(Locale.ROOT, "wireGt%02d", wire.spec().size()), wire.spec().material().resolve().getName());
         }

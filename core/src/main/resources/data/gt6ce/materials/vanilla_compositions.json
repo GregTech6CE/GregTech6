@@ -1,45 +1,48 @@
 {
   "acacia_boat": {
     "components": {
-      "Wood": 3243240000
+      "Acacia": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "acacia_button": {
     "components": {
-      "Wood": 648648000
+      "Acacia": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "Acacia": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/acacia_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "acacia_door": {
     "components": {
-      "Wood": 1297296000
+      "Acacia": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_fence": {
     "components": {
-      "Wood": 972972000
+      "Acacia": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "acacia_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Acacia": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "acacia_hanging_sign": {
     "components": {
@@ -66,10 +69,10 @@
   },
   "acacia_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Acacia": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_sign": {
     "components": {
@@ -94,10 +97,10 @@
   },
   "acacia_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Acacia": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_wood": {
     "components": {
@@ -244,47 +247,57 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
+  "bamboo": {
+    "components": {
+      "Bamboo": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE bamboo material content"
+  },
   "bamboo_block": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 5837832000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_button": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_chest_raft": {
     "components": {
-      "Wood": 8432424000
+      "Bamboo": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bamboo_chest_raft.json"
+    "source": "GT6CE vanilla material composition"
   },
   "bamboo_door": {
     "components": {
-      "Wood": 1297296000
+      "Bamboo": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_fence": {
     "components": {
-      "Wood": 972972000
+      "Bamboo": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "bamboo_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Bamboo": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "bamboo_hanging_sign": {
     "components": {
@@ -296,45 +309,45 @@
   },
   "bamboo_mosaic": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 648648000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bamboo_mosaic.json"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_mosaic_slab": {
     "components": {
-      "Wood": 324324000
+      "Bamboo": 324324000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bamboo_mosaic_slab.json"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_mosaic_stairs": {
     "components": {
-      "Wood": 972972000
+      "Bamboo": 486486000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bamboo_mosaic_stairs.json"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_planks": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Bamboo": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_raft": {
     "components": {
-      "Wood": 3243240000
+      "Bamboo": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "bamboo_sign": {
     "components": {
@@ -345,24 +358,24 @@
   },
   "bamboo_slab": {
     "components": {
-      "Wood": 324324000
+      "Bamboo": 324324000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_stairs": {
     "components": {
-      "Wood": 486486000
+      "Bamboo": 486486000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE bamboo material content"
   },
   "bamboo_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Bamboo": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "barrel": {
     "components": {
@@ -402,13 +415,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "bee_nest": {
-    "components": {
-      "Wood": 1945944000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "bee_spawn_egg": {
     "components": {},
     "recoverable": false,
@@ -439,45 +445,48 @@
   },
   "birch_boat": {
     "components": {
-      "Wood": 3243240000
+      "Birch": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "birch_button": {
     "components": {
-      "Wood": 648648000
+      "Birch": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "Birch": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/birch_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "birch_door": {
     "components": {
-      "Wood": 1297296000
+      "Birch": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_fence": {
     "components": {
-      "Wood": 972972000
+      "Birch": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "birch_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Birch": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "birch_hanging_sign": {
     "components": {
@@ -504,10 +513,10 @@
   },
   "birch_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Birch": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_sign": {
     "components": {
@@ -532,10 +541,10 @@
   },
   "birch_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Birch": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_wood": {
     "components": {
@@ -544,6 +553,13 @@
     },
     "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
+  },
+  "black_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "black_concrete": {
     "components": {
@@ -649,6 +665,13 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
+  "blue_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "blue_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -679,10 +702,10 @@
   },
   "blue_ice": {
     "components": {
-      "Ice": 11675664000
+      "Ice": 1297296000
     },
     "recoverable": true,
-    "source": "1.20.1 material family"
+    "source": "GT6CE vanilla material composition"
   },
   "blue_stained_glass": {
     "components": {
@@ -776,6 +799,13 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
+  "breeze_rod": {
+    "components": {
+      "Breeze": 324324000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "brewer_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
@@ -825,6 +855,13 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2481"
+  },
+  "brown_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "brown_concrete": {
     "components": {
@@ -924,6 +961,14 @@
     "recoverable": true,
     "source": "1.20.1 material family"
   },
+  "calibrated_sculk_sensor": {
+    "components": {
+      "Sculk": 1297296000,
+      "Amethyst": 1945944000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "camel_spawn_egg": {
     "components": {},
     "recoverable": false,
@@ -936,6 +981,13 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
+  },
+  "candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "cartography_table": {
     "components": {
@@ -1039,45 +1091,48 @@
   },
   "cherry_boat": {
     "components": {
-      "Wood": 3243240000
+      "Cherrywood": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "cherry_button": {
     "components": {
-      "Wood": 648648000
+      "Cherrywood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "Cherrywood": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cherry_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "cherry_door": {
     "components": {
-      "Wood": 1297296000
+      "Cherrywood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_fence": {
     "components": {
-      "Wood": 972972000
+      "Cherrywood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "cherry_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Cherrywood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "cherry_hanging_sign": {
     "components": {
@@ -1104,10 +1159,10 @@
   },
   "cherry_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Cherrywood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_sign": {
     "components": {
@@ -1132,10 +1187,10 @@
   },
   "cherry_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Cherrywood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_wood": {
     "components": {
@@ -1563,31 +1618,33 @@
   },
   "crimson_button": {
     "components": {
-      "Wood": 648648000
+      "Crimsonwood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_door": {
     "components": {
-      "Wood": 1297296000
+      "Crimsonwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_fence": {
     "components": {
-      "Wood": 972972000
+      "Crimsonwood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "crimson_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Crimsonwood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "crimson_hanging_sign": {
     "components": {
@@ -1604,6 +1661,13 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
+  "crimson_nylium": {
+    "components": {
+      "Netherrack": 5837832000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "crimson_planks": {
     "components": {
       "Wood": 648648000
@@ -1613,10 +1677,10 @@
   },
   "crimson_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Crimsonwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_sign": {
     "components": {
@@ -1648,17 +1712,17 @@
   },
   "crimson_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Crimsonwood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "crying_obsidian": {
     "components": {
-      "Obsidian": 648648000
+      "Obsidian": 5837832000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "GT6CE vanilla material composition"
   },
   "cut_copper": {
     "components": {
@@ -1708,6 +1772,13 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_sandstone_slab_from_sandstone_stonecutting.json"
+  },
+  "cyan_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "cyan_concrete": {
     "components": {
@@ -1767,45 +1838,48 @@
   },
   "dark_oak_boat": {
     "components": {
-      "Wood": 3243240000
+      "DarkOak": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "dark_oak_button": {
     "components": {
-      "Wood": 648648000
+      "DarkOak": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "DarkOak": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/dark_oak_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "dark_oak_door": {
     "components": {
-      "Wood": 1297296000
+      "DarkOak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_fence": {
     "components": {
-      "Wood": 972972000
+      "DarkOak": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "dark_oak_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "DarkOak": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "dark_oak_hanging_sign": {
     "components": {
@@ -1832,10 +1906,10 @@
   },
   "dark_oak_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "DarkOak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_sign": {
     "components": {
@@ -1860,10 +1934,10 @@
   },
   "dark_oak_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "DarkOak": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_wood": {
     "components": {
@@ -2351,13 +2425,6 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "elytra": {
-    "components": {
-      "Leather": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
   "emerald": {
     "components": {
       "Emerald": 648648000
@@ -2570,13 +2637,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "firework_rocket": {
-    "components": {
-      "Gunpowder": 648648000
-    },
-    "recoverable": false,
-    "source": "GT6 LoaderItemData.java:2495"
-  },
   "firework_star": {
     "components": {
       "Gunpowder": 648648000
@@ -2717,13 +2777,6 @@
       "Glowstone": 648648000
     },
     "recoverable": true,
-    "source": "1.20.1 material family"
-  },
-  "goat_horn": {
-    "components": {
-      "Bone": 648648000
-    },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "goat_spawn_egg": {
@@ -2912,6 +2965,13 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
+  "gray_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "gray_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -2953,6 +3013,13 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
+  },
+  "green_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "green_concrete": {
     "components": {
@@ -3022,13 +3089,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/hay_block.json"
-  },
-  "heart_of_the_sea": {
-    "components": {
-      "Prismarine": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
   },
   "heart_pottery_sherd": {
     "components": {
@@ -3381,45 +3441,48 @@
   },
   "jungle_boat": {
     "components": {
-      "Wood": 3243240000
+      "Junglewood": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "jungle_button": {
     "components": {
-      "Wood": 648648000
+      "Junglewood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "Junglewood": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/jungle_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "jungle_door": {
     "components": {
-      "Wood": 1297296000
+      "Junglewood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_fence": {
     "components": {
-      "Wood": 972972000
+      "Junglewood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "jungle_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Junglewood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "jungle_hanging_sign": {
     "components": {
@@ -3446,10 +3509,10 @@
   },
   "jungle_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Junglewood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_sign": {
     "components": {
@@ -3474,10 +3537,10 @@
   },
   "jungle_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Junglewood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_wood": {
     "components": {
@@ -3501,12 +3564,10 @@
   },
   "lantern": {
     "components": {
-      "Coal": 162162000,
-      "Iron": 576576000,
-      "Wood": 81081000
+      "Iron": 575999424
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lantern.json"
+    "source": "GT6CE vanilla material composition"
   },
   "lapis_block": {
     "components": {
@@ -3634,6 +3695,13 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
+  "light_blue_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "light_blue_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -3683,6 +3751,13 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
+  },
+  "light_gray_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "light_gray_concrete": {
     "components": {
@@ -3740,6 +3815,13 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lightning_rod.json"
   },
+  "lime_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "lime_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -3794,13 +3876,19 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
-  "lodestone": {
+  "loom": {
     "components": {
-      "Netherite": 648648000,
-      "Stone": 46702656000
+      "Wood": 1297296000
     },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lodestone.json"
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
+  "magenta_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "magenta_concrete": {
     "components": {
@@ -3844,22 +3932,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "magma_block": {
-    "components": {
-      "Blaze": 288288000,
-      "Rubber": 2594592000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/magma_block.json"
-  },
-  "magma_cream": {
-    "components": {
-      "Blaze": 72072000,
-      "Rubber": 648648000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/magma_cream.json"
-  },
   "magma_cube_spawn_egg": {
     "components": {},
     "recoverable": false,
@@ -3867,45 +3939,48 @@
   },
   "mangrove_boat": {
     "components": {
-      "Wood": 3243240000
+      "Mangrove": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "mangrove_button": {
     "components": {
-      "Wood": 648648000
+      "Mangrove": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "Mangrove": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mangrove_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "mangrove_door": {
     "components": {
-      "Wood": 1297296000
+      "Mangrove": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_fence": {
     "components": {
-      "Wood": 972972000
+      "Mangrove": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "mangrove_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Mangrove": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "mangrove_hanging_sign": {
     "components": {
@@ -3932,10 +4007,10 @@
   },
   "mangrove_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Mangrove": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_roots": {
     "components": {
@@ -3967,10 +4042,10 @@
   },
   "mangrove_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Mangrove": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_wood": {
     "components": {
@@ -4098,118 +4173,6 @@
   "mushroom_stem": {
     "components": {
       "Wood": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_11": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_13": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_5": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_blocks": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_cat": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_chirp": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_far": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_mall": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_mellohi": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_otherside": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_pigstep": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_relic": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_stal": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_strad": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_wait": {
-    "components": {
-      "Plastic": 648648000
-    },
-    "recoverable": false,
-    "source": "1.20.1 material family"
-  },
-  "music_disc_ward": {
-    "components": {
-      "Plastic": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
@@ -4441,45 +4404,48 @@
   },
   "oak_boat": {
     "components": {
-      "Wood": 3243240000
+      "Oak": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2576"
+    "source": "GT6CE vanilla material composition"
   },
   "oak_button": {
     "components": {
-      "Wood": 648648000
+      "Oak": 648648000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2567"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "Oak": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/oak_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "oak_door": {
     "components": {
-      "Wood": 1297296000
+      "Oak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2577"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_fence": {
     "components": {
-      "Wood": 972972000
+      "Oak": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2569"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "oak_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Oak": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2570"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "oak_hanging_sign": {
     "components": {
@@ -4506,10 +4472,10 @@
   },
   "oak_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Oak": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2568"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_sign": {
     "components": {
@@ -4534,10 +4500,10 @@
   },
   "oak_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Oak": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 LoaderItemData.java:2571"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_wood": {
     "components": {
@@ -4567,6 +4533,13 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
+  },
+  "orange_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "orange_concrete": {
     "components": {
@@ -4721,6 +4694,13 @@
     "components": {},
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
+  },
+  "pink_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "pink_concrete": {
     "components": {
@@ -5095,6 +5075,13 @@
     "recoverable": false,
     "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
+  "purple_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "purple_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -5266,6 +5253,13 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
+  },
+  "red_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "red_concrete": {
     "components": {
@@ -5489,12 +5483,40 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/sandstone_wall.json"
   },
-  "sea_lantern": {
+  "sculk": {
     "components": {
-      "Prismarine": 5837832000
+      "Sculk": 2594592000
     },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/sea_lantern.json"
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
+  "sculk_catalyst": {
+    "components": {
+      "Sculk": 2594592000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
+  "sculk_sensor": {
+    "components": {
+      "Sculk": 1297296000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
+  "sculk_shrieker": {
+    "components": {
+      "Sculk": 1297296000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
+  "sculk_vein": {
+    "components": {
+      "Sculk": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "sentry_armor_trim_smithing_template": {
     "components": {
@@ -5598,13 +5620,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "slime_block": {
-    "components": {
-      "Rubber": 5837832000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/slime_block.json"
   },
   "slime_spawn_egg": {
     "components": {},
@@ -5773,13 +5788,10 @@
   },
   "soul_lantern": {
     "components": {
-      "Coal": 162162000,
-      "Iron": 576576000,
-      "SoulSand": 1459458000,
-      "Wood": 81081000
+      "Iron": 575999424
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/soul_lantern.json"
+    "source": "GT6CE vanilla material composition"
   },
   "soul_sand": {
     "components": {
@@ -5788,14 +5800,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "soul_torch": {
+  "soul_soil": {
     "components": {
-      "Coal": 162162000,
-      "SoulSand": 1459458000,
-      "Wood": 81081000
+      "SoulSand": 5837832000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 explicit composition convention"
+    "source": "GT6CE vanilla material composition"
   },
   "spider_eye": {
     "components": {
@@ -5825,45 +5835,48 @@
   },
   "spruce_boat": {
     "components": {
-      "Wood": 3243240000
+      "Spruce": 3243240000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE vanilla material composition"
   },
   "spruce_button": {
     "components": {
-      "Wood": 648648000
+      "Spruce": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_chest_boat": {
     "components": {
-      "Wood": 8432424000
+      "Spruce": 3243240000,
+      "Wood": 5189184000
     },
     "recoverable": false,
-    "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/spruce_chest_boat.json"
+    "source": "GT6CE vanilla material composition"
   },
   "spruce_door": {
     "components": {
-      "Wood": 1297296000
+      "Spruce": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_fence": {
     "components": {
-      "Wood": 972972000
+      "Spruce": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "spruce_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Spruce": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "spruce_hanging_sign": {
     "components": {
@@ -5890,10 +5903,10 @@
   },
   "spruce_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Spruce": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_sign": {
     "components": {
@@ -5918,10 +5931,10 @@
   },
   "spruce_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Spruce": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_wood": {
     "components": {
@@ -6096,10 +6109,10 @@
   },
   "stripped_bamboo_block": {
     "components": {
-      "Wood": 648648000
+      "Bamboo": 5189184000
     },
     "recoverable": false,
-    "source": "1.20.1 material family"
+    "source": "GT6CE bamboo material content"
   },
   "stripped_birch_log": {
     "components": {
@@ -6322,14 +6335,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/tnt_minecart.json"
   },
-  "torch": {
-    "components": {
-      "Coal": 162162000,
-      "Wood": 81081000
-    },
-    "recoverable": false,
-    "source": "Minecraft 1.20.1 explicit composition convention"
-  },
   "trader_llama_spawn_egg": {
     "components": {},
     "recoverable": false,
@@ -6454,31 +6459,33 @@
   },
   "warped_button": {
     "components": {
-      "Wood": 648648000
+      "Warpedwood": 648648000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_door": {
     "components": {
-      "Wood": 1297296000
+      "Warpedwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_fence": {
     "components": {
-      "Wood": 972972000
+      "Warpedwood": 648648000,
+      "Wood": 162162000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "warped_fence_gate": {
     "components": {
-      "Wood": 2594592000
+      "Warpedwood": 1297296000,
+      "Wood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "warped_hanging_sign": {
     "components": {
@@ -6495,6 +6502,13 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
+  "warped_nylium": {
+    "components": {
+      "Netherrack": 5837832000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "warped_planks": {
     "components": {
       "Wood": 648648000
@@ -6504,10 +6518,10 @@
   },
   "warped_pressure_plate": {
     "components": {
-      "Wood": 1297296000
+      "Warpedwood": 1297296000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_sign": {
     "components": {
@@ -6539,10 +6553,10 @@
   },
   "warped_trapdoor": {
     "components": {
-      "Wood": 1945944000
+      "Warpedwood": 1945944000
     },
     "recoverable": true,
-    "source": "GT6 wood family, modern species use generic Wood"
+    "source": "GT6CE wood composition: corresponding wood material"
   },
   "water_bucket": {
     "components": {
@@ -6705,6 +6719,13 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
+  "white_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
+  },
   "white_concrete": {
     "components": {
       "Concrete": 5837832000
@@ -6760,6 +6781,13 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
+  },
+  "wind_charge": {
+    "components": {
+      "Breeze": 81081000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "witch_spawn_egg": {
     "components": {},
@@ -6836,6 +6864,13 @@
     },
     "recoverable": false,
     "source": "GT6 LoaderItemData.java:2497"
+  },
+  "yellow_candle": {
+    "components": {
+      "WaxBee": 648648000
+    },
+    "recoverable": true,
+    "source": "GT6CE vanilla material composition"
   },
   "yellow_concrete": {
     "components": {

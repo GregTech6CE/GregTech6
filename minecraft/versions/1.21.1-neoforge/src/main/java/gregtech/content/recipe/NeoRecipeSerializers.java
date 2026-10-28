@@ -28,6 +28,20 @@ public final class NeoRecipeSerializers {
                     "creosote_container_1000",
                     () -> new net.neoforged.neoforge.common.crafting.IngredientType<>(
                             CreosoteAxleRecipe.ContainerIngredient.CODEC));
+    public static final net.neoforged.neoforge.registries.DeferredHolder<
+                    net.neoforged.neoforge.common.crafting.IngredientType<?>,
+                    net.neoforged.neoforge.common.crafting.IngredientType<BlockTagCraftingIngredient>>
+            BLOCK_TAG = INGREDIENTS.register(
+                    "block_tag",
+                    () -> new net.neoforged.neoforge.common.crafting.IngredientType<>(
+                            BlockTagCraftingIngredient.CODEC));
+    public static final net.neoforged.neoforge.registries.DeferredHolder<
+                    net.neoforged.neoforge.common.crafting.IngredientType<?>,
+                    net.neoforged.neoforge.common.crafting.IngredientType<QuarterFluidCraftingIngredient>>
+            QUARTER_CONTAINER = INGREDIENTS.register(
+                    "finite_fluid_container_250",
+                    () -> new net.neoforged.neoforge.common.crafting.IngredientType<>(
+                            QuarterFluidCraftingIngredient.CODEC));
 
     static {
         SERIALIZERS.register("spike_conversion", () -> SpikeConversionRecipe.SERIALIZER);

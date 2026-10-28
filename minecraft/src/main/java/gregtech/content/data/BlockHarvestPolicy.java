@@ -26,6 +26,7 @@ public final class BlockHarvestPolicy {
   return source(block).map(SourceBlockProperties.Params::handHarvestable).orElse(!block.defaultBlockState().requiresCorrectToolForDrops());
  }
  public static Tool tool(Block block) {
+  if(block instanceof MaterialBlockLike material && material.prefix().isCrate())return Tool.CROWBAR;
   var original=source(block);
   if(original.isPresent())return Tool.valueOf(original.get().tool().toUpperCase(java.util.Locale.ROOT));
   if(block instanceof gregtech.content.block.misc.LongDistPipeBlock line) return line.isWire()?Tool.CUTTER:Tool.WRENCH;
@@ -91,6 +92,8 @@ public final class BlockHarvestPolicy {
   return OreHostPhysics.params(state).map(SourceOreHostPhysics.Params::harvest).orElseGet(()->level(state.getBlock()));
  }
  public static Tool tool(net.minecraft.world.level.block.state.BlockState state) {
+  if(state.getBlock() instanceof gregtech.content.block.OreBlock
+      && gregtech.content.block.OreBlock.stoneOf(state).isSediment())return Tool.SHOVEL;
   return OreHostPhysics.params(state).map(p->Tool.valueOf(p.tool())).orElseGet(()->tool(state.getBlock()));
  }
  public static String tag(Tool tool) { return BlockHarvestNames.tag(tool.name()); }

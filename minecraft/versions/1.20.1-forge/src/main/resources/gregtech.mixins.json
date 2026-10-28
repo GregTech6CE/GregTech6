@@ -5,10 +5,12 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "gregtech.refmap.json",
   "mixins": [
+    "FormConversionServerPlaceMixin",
     "PolymorphToolResultMixin",
     "DungeonRedstoneInitializationMixin",
     "OreHostHardnessMixin",
     "OreHostToolSpeedMixin",
+    "VanillaToolDurabilityMixin",
     "GasImmersionMixin",
     "ConstructionRecipeMixin",
     "VanillaOreConfigMixin",
@@ -52,6 +54,8 @@
     "defaultRequire": 0
   },
   "client": [
+    "FormConversionGhostPlaceMixin",
+    "JadeOreHarvestToolMixin",
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
     "ColoredBookOpenPacketMixin",

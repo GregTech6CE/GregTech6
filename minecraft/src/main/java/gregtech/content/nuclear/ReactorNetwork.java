@@ -31,8 +31,8 @@ public final class ReactorNetwork {
      *
      * <p>The normal handler removes the entry before exchange and reaction. Weak keys alone do not
      * guarantee cleanup if a level stops ticking before that drain: each value strongly holds cores,
-     * whose level field can refer back to the key. This class currently has no unload/stop cleanup
-     * hook, so an entry can remain if the same level never receives another end-of-tick event.</p>
+     * whose level field can refer back to the key. Unload and server-stop hooks discard unfinished
+     * work without exchanging neutrons or reacting cores in a world that is shutting down.</p>
      */
     private static final Map<Level, Set<ReactorCoreBlockEntity>> PENDING = new WeakHashMap<>();
 
@@ -54,6 +54,21 @@ public final class ReactorNetwork {
         if (event.phase != TickEvent.Phase.END || event.level.isClientSide) return;
         finishTick(event.level);
     }
+//?}
+//? if >=1.21.1 {
+    /*@SubscribeEvent
+    public static void unload(net.neoforged.neoforge.event.level.LevelEvent.Unload event) {
+        if (!event.getLevel().isClientSide()) PENDING.remove(event.getLevel());
+    }
+    @SubscribeEvent
+    public static void stopped(net.neoforged.neoforge.event.server.ServerStoppedEvent event) { PENDING.clear(); }
+*///?} else {
+    @SubscribeEvent
+    public static void unload(net.minecraftforge.event.level.LevelEvent.Unload event) {
+        if (!event.getLevel().isClientSide()) PENDING.remove(event.getLevel());
+    }
+    @SubscribeEvent
+    public static void stopped(net.minecraftforge.event.server.ServerStoppedEvent event) { PENDING.clear(); }
 //?}
     private static void finishTick(Level level) {
         var pending = PENDING.remove(level);

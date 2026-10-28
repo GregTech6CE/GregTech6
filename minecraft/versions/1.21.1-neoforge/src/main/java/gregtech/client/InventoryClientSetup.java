@@ -9,6 +9,9 @@ public final class InventoryClientSetup {
 
     @net.neoforged.bus.api.SubscribeEvent
     public static void screens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
+        event.register(gregtech.content.registry.GTMenuTypes.METAL_CHEST.get(), gregtech.client.gui.HopperScreen::new);
+        event.register(gregtech.content.registry.GTMenuTypes.STORAGE_15.get(), gregtech.client.gui.HopperScreen::new);
+        event.register(gregtech.content.registry.GTMenuTypes.STORAGE_36.get(), gregtech.client.gui.HopperScreen::new);
         for (var type : gregtech.content.registry.GTMenuTypes.allHopperTypes())
             event.register(type.get(), gregtech.client.gui.HopperScreen::new);
     }

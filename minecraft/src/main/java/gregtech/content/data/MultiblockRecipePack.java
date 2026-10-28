@@ -237,7 +237,14 @@ public final class MultiblockRecipePack extends AbstractPackResources {
 
     private static Map<String, Object> buildRecipe(MultiblockCraftingRecipes.Entry entry, GTMaterial material,
                                                    Item resultItem) {
-        Map<Character, Object> ingredients = MachineRecipeIngredients.resolveAll(entry.keys(), material, 1);
+        Map<Character, String> specs = entry.keys();
+        if (entry.blockId().equals("coke_oven_main")) {
+            specs = new HashMap<>(specs);
+            specs.put('P', "tag:gt6ce:technology/any_iron_plate");
+            specs.put('R', "tag:gt6ce:technology/any_iron_rod");
+            specs.put('T', "tag:gt6ce:technology/any_iron_screw");
+        }
+        Map<Character, Object> ingredients = MachineRecipeIngredients.resolveAll(specs, material, 1);
         if (ingredients.isEmpty()) return null;
         Map<String, Object> key = new HashMap<>();
         for (var pair : ingredients.entrySet()) {

@@ -28,6 +28,7 @@ public class RockBlockEntity extends BlockEntity {
     public static final String TAG_COUNT = "count";
     public static final String DEFAULT_MATERIAL = "Stone";
     public static final ModelProperty<String> MATERIAL_PROPERTY = new ModelProperty<>();
+    public static final ModelProperty<Boolean> RAW_ORE_PROPERTY = new ModelProperty<>();
 
     private String material = DEFAULT_MATERIAL;
     /** Rocks above bedrock deposits hide a raw ore chunk of their material. */
@@ -74,8 +75,11 @@ public class RockBlockEntity extends BlockEntity {
     }
 
     public void setRawOre(boolean rawOre) {
+        if (this.rawOre == rawOre) return;
         this.rawOre = rawOre;
         setChanged();
+        if (level != null && !level.isClientSide)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
 
     public RockBlockEntity(BlockPos pos, BlockState state) {
@@ -105,7 +109,7 @@ public class RockBlockEntity extends BlockEntity {
         super.load(tag);
 //?}
         String s = tag.getString(TAG_MATERIAL);
-        boolean changed = !s.isEmpty() && !s.equals(material);
+        boolean changed = !s.isEmpty() && !s.equals(material) || rawOre != tag.getBoolean(TAG_RAW_ORE);
         if (!s.isEmpty()) material = s;
         rawOre = tag.getBoolean(TAG_RAW_ORE);
         itemId = tag.getString(TAG_ITEM);
@@ -148,6 +152,6 @@ public class RockBlockEntity extends BlockEntity {
 
     @Override
     public @NotNull ModelData getModelData() {
-        return ModelData.builder().with(MATERIAL_PROPERTY, material).build();
+        return ModelData.builder().with(MATERIAL_PROPERTY, material).with(RAW_ORE_PROPERTY, rawOre).build();
     }
 }

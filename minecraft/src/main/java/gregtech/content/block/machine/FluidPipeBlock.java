@@ -286,7 +286,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                     PanelCoverInteraction.use(coverHost, player, hand, hit, false);
             if (panelResult != InteractionResult.PASS) return panelResult;
 
-            if (CoverItems.isCover(held)) {
+            if (player.isShiftKeyDown() && CoverItems.isCover(held)) {
                 if (!level.isClientSide && coverHost.attachCover(hit.getDirection(), held)) {
                     if (!player.getAbilities().instabuild) held.shrink(1);
                 }

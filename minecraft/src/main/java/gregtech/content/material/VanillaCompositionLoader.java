@@ -43,6 +43,24 @@ public final class VanillaCompositionLoader {
             }
             if (!errors.isEmpty()) throw new IllegalStateException("Unresolved vanilla materials: " + errors);
         } catch (IOException e) { throw new UncheckedIOException(e); }
+        VanillaMaterialCorrections.register();
+        for (var holder : gregtech.content.registry.GTBars.all()) {
+            var block = holder.get();
+            String materialName = switch (block.materialName()) {
+                case "iron" -> "Iron";
+                case "steel" -> "Steel";
+                case "brass" -> "Brass";
+                case "bronze" -> "Bronze";
+                case "wrought_iron" -> "WroughtIron";
+                case "stainless" -> "StainlessSteel";
+                case "tungsten_steel" -> "Tungstensteel";
+                default -> throw new IllegalStateException("Unknown railing material: " + block.materialName());
+            };
+            var material = GTMaterialRegistry.get(materialName);
+            if (!material.isValid()) throw new IllegalStateException("Missing railing material: " + materialName);
+            ItemMaterialRegistry.register(block.asItem(), new ItemComposition(null,
+                    List.of(MaterialComponent.of(material, GTValues.U)), "GT6CE metal railing", true));
+        }
         // The old generic table describes all planks as Wood. Original WoodDictionary
         // replaces those fallbacks with the species before panel and recipe generation.
         gregtech.content.recipe.VanillaWoodProcessingRecipes.registerMaterials();

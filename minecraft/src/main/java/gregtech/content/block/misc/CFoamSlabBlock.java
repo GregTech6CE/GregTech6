@@ -30,7 +30,7 @@ public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech
         Block.box(0,0,0,8,16,16), Block.box(8,0,0,16,16,16)
     };
     public CFoamSlabBlock(Properties properties) {
-        super(properties, DyeColor.WHITE);
+        super(properties.isValidSpawn((s, l, p, e) -> false), DyeColor.WHITE);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN));
     }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

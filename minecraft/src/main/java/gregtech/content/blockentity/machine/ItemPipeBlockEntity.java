@@ -215,7 +215,8 @@ public class ItemPipeBlockEntity extends BlockEntity
     /** Item filters reject pipe-to-pipe faces; attempted placement disconnects that face. */
     @Override
     public boolean attachCover(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !getCover(side).isEmpty()) return false;
+        if (stack.isEmpty() || !getCover(side).isEmpty()
+                || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
         if(CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(stack))&&level!=null
                 &&level.getBlockEntity(worldPosition.relative(side)) instanceof ItemPipeBlockEntity){
             gregtech.content.cover.CoverConnections.update(this,side,false);return false;

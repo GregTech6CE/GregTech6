@@ -1,4 +1,5 @@
 {
+  "textures": { "particle": "gt6ce:block/machines/energystorages/battery_electric/colored/side" },
   "loader": "forge:composite",
   "display": {
     "gui": {

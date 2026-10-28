@@ -445,6 +445,13 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         tag.put("gt.tanks", list);
 //?}
     }
+    /** Preserve legacy overflow for draining, but never restore the obsolete million-litre capacity. */
+    private CompoundTag restoredTank(CompoundTag saved, int index) {
+        if (!juicer || index >= outputs.length) return saved;
+        CompoundTag migrated = saved.copy();
+        migrated.putLong("Capacity", gregtech.content.tool.OpenVesselRules.outputCapacity(true, wooden));
+        return migrated;
+    }
 //? if >=1.21.1 {
     /*@Override
     protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
@@ -452,7 +459,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         if (tag.contains("gt.items")) items.deserializeNBT(lookup, tag.getCompound("gt.items"));
         var list = tag.getList("gt.tanks", 10);
         var tanks = allTanks();
-        for (int i = 0; i < tanks.size() && i < list.size(); i++) tanks.get(i).readFromNBT(list.getCompound(i), lookup);
+        for (int i = 0; i < tanks.size() && i < list.size(); i++) tanks.get(i).readFromNBT(restoredTank(list.getCompound(i), i), lookup);
 *///?} else {
     @Override
     public void load(CompoundTag tag) {
@@ -460,7 +467,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         if (tag.contains("gt.items")) items.deserializeNBT(tag.getCompound("gt.items"));
         var list = tag.getList("gt.tanks", 10);
         var tanks = allTanks();
-        for (int i = 0; i < tanks.size() && i < list.size(); i++) tanks.get(i).readFromNBT(list.getCompound(i));
+        for (int i = 0; i < tanks.size() && i < list.size(); i++) tanks.get(i).readFromNBT(restoredTank(list.getCompound(i), i));
 //?}
     }
 //? if >=1.21.1 {

@@ -2297,6 +2297,8 @@ public final class MaterialForms {
      */
     public static Set<String> of(GTMaterial material) {
         if (material == null) return Set.of();
+        Set<String> supplemental = gregtech.content.material.SupplementalMaterials.forms(material);
+        if (!supplemental.isEmpty()) return supplemental;
         Set<String> flags = table().get(Integer.toString(material.getId()));
         if (flags == null) flags = table().get(normalize(material.getName()));
         return flags == null ? Set.of() : flags;

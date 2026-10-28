@@ -10,6 +10,22 @@ import net.minecraft.world.level.block.state.BlockState;
 /** Only known native tool contracts. Unknown addon tiers/tool components retain their previous path. */
 public final class OreHostHarvest {
  private OreHostHarvest() {}
+ private record ToolRule(String tool,int harvest,boolean requiresToolForDrops) {}
+ private static Optional<ToolRule> rule(BlockState state){
+  var source=OreHostPhysics.params(state);
+  if(source.isPresent()){
+   var p=source.get();
+   return Optional.of(new ToolRule(p.tool(),p.harvest(),p.requiresToolForDrops()));
+  }
+  // A loose host determines the tool, even when special material physics are outside
+  // the source table. Keep that state's existing drop requirement and harvest tier.
+  if(state.getBlock() instanceof gregtech.content.block.OreBlock
+      && gregtech.content.block.OreBlock.stoneOf(state).isSediment()){
+   boolean required=state.requiresCorrectToolForDrops();
+   return Optional.of(new ToolRule("SHOVEL",required?GTToolHelper.requiredHarvestLevel(state):0,required));
+  }
+  return Optional.empty();
+ }
  private static boolean category(String tool,Item item){
   return tool.equals("PICKAXE")?item instanceof PickaxeItem:tool.equals("SHOVEL")&&item instanceof ShovelItem;
  }
@@ -24,14 +40,14 @@ public final class OreHostHarvest {
  }
  private static int tier(Tiers tier){return switch(tier){case WOOD,GOLD->0;case STONE->1;case IRON->2;case DIAMOND->3;case NETHERITE->4;};}
  public static Optional<Boolean> decision(ItemStack stack,BlockState state){
-  var params=OreHostPhysics.params(state);if(params.isEmpty())return Optional.empty();
+  var params=rule(state);if(params.isEmpty())return Optional.empty();
   // Source Forge canHarvestBlock checks the block material before any held-item class/tier/power.
   // This is drop permission, NOT effective mining speed; custom tool speed remains untouched.
   if(!params.get().requiresToolForDrops())return Optional.of(true);
   return effectiveDecision(stack,state);
  }
  public static Optional<Boolean> effectiveDecision(ItemStack stack,BlockState state){
-  var params=OreHostPhysics.params(state);if(params.isEmpty())return Optional.empty();
+  var params=rule(state);if(params.isEmpty())return Optional.empty();
   var p=params.get();
   if(stack.isEmpty())return Optional.of(false);
   if(stack.getItem() instanceof ElectricToolItem electric){
@@ -52,7 +68,7 @@ public final class OreHostHarvest {
   return Optional.empty();
  }
  public static Optional<Float> vanillaSpeed(ItemStack stack,BlockState state){
-  var p=OreHostPhysics.params(state);if(p.isEmpty()||!vanilla(stack))return Optional.empty();
+  var p=rule(state);if(p.isEmpty()||!vanilla(stack))return Optional.empty();
   return Optional.of(category(p.get().tool(),stack.getItem())?((TieredItem)stack.getItem()).getTier().getSpeed():1F);
  }
 }

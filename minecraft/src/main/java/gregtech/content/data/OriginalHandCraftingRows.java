@@ -37,6 +37,7 @@ public final class OriginalHandCraftingRows {
         finishRawToolHeads(data);
         machineCasings(data);
         woodenBuckets(data);
+        woodenClubs(data);
         addAxles(data);
         int gearboxes = customGearboxes(data), transformers = transformerGearboxes(data);
         int engines = rotationEngines(data), pumps = rotationalPumps(data);
@@ -44,6 +45,44 @@ public final class OriginalHandCraftingRows {
         int circuit = circuits(data), cell = cells(data), store = storage(data);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={}",
                 gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store);
+    }
+
+    /** Loader_Recipes_Woods:174/195: one log or beam and any wooden stick, mirrored. */
+    private static void woodenClubs(Map<ResourceLocation, byte[]> recipes) {
+        var sticks = Ingredient.of(ItemTags.create(id("ammunition/sticks_wood")));
+        for (var species : gregtech.content.block.wood.WoodSpecies.values()) {
+            String material = gregtech.content.plant.WoodSlabCatalog.material(species.id());
+            woodenClub(recipes, "log/" + species.id(), new ItemStack(GTWoods.log(species)), material, sticks);
+            woodenClub(recipes, "beam/" + species.id(), new ItemStack(GTWoods.strippedLog(species)), material, sticks);
+        }
+        for (String species : List.of("oak", "spruce", "birch", "jungle", "acacia", "dark_oak",
+                "mangrove", "cherry", "crimson", "warped")) {
+            boolean nether = species.equals("crimson") || species.equals("warped");
+            for (String form : nether ? List.of("stem", "hyphae") : List.of("log", "wood")) {
+                for (String stripped : List.of("", "stripped_")) {
+                    String path = stripped + species + "_" + form;
+                    woodenClub(recipes, "vanilla/" + path,
+                            new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("minecraft:" + path))),
+                            gregtech.content.plant.WoodSlabCatalog.material(species), sticks);
+                }
+            }
+        }
+        for (var species : gregtech.content.recipe.NaturalWoodCraftingRows.SPECIES)
+            woodenClub(recipes, "natural/" + species.kind(),
+                    new ItemStack(BuiltInRegistries.ITEM.get(id("log_" + species.kind()))), species.material(), sticks);
+    }
+
+    private static void woodenClub(Map<ResourceLocation, byte[]> recipes, String path, ItemStack log,
+                                   String materialName, Ingredient sticks) {
+        var material = gregtech.engine.material.GTMaterialRegistry.get(materialName);
+        var handle = gregtech.engine.material.GTMaterialRegistry.get("Wood");
+        if (log.isEmpty() || material == null || !material.isValid())
+            throw new IllegalStateException("Missing wooden club input: " + path);
+        if (!gregtech.GregTechConfig.toolRecipeEnabled(materialName, false)) return;
+        var output = gregtech.content.item.GTToolItem.create(GTToolType.CLUB, material, handle);
+        if (register(recipes, "wood/club/" + path, new String[]{" L", "S "},
+                Map.of('L', Ingredient.of(log), 'S', sticks), output, false, true) != 1)
+            throw new IllegalStateException("Missing wooden club output: " + path);
     }
 
     /** Loader_Recipes_Handlers:422-434; file finishing is also available without a sharpening machine. */
@@ -893,7 +932,19 @@ public final class OriginalHandCraftingRows {
         var rows = new com.google.gson.JsonArray(); for (String row : pattern) rows.add(row);
         json.add("pattern", rows); json.add("key", key);
         var result = new JsonObject(); result.addProperty(resultItemKey(), BuiltInRegistries.ITEM.getKey(output.getItem()).toString());
-        result.addProperty("count", output.getCount()); json.add("result", result);
+        result.addProperty("count", output.getCount());
+        // Tool outputs carry their head and handle materials; item identity alone loses both.
+//? if >=1.21.1 {
+        /*if (output.getItem() instanceof gregtech.content.item.GTToolItem) {
+            var lookup = gregtech.engine.tool.GTToolEnchantments.currentLookup();
+            if (lookup == null) lookup = net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
+            result = ItemStack.CODEC.encodeStart(lookup.createSerializationContext(JsonOps.INSTANCE), output)
+                    .getOrThrow().getAsJsonObject();
+        }
+*///?} else {
+        if (output.hasTag()) result.addProperty("nbt", output.getTag().toString());
+//?}
+        json.add("result", result);
         var location = id("recipe/hand/" + path + ".json");
         if (recipes.putIfAbsent(location, json.toString().getBytes(StandardCharsets.UTF_8)) != null)
             throw new IllegalStateException("Duplicate original hand recipe " + location);

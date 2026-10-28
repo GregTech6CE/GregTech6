@@ -97,6 +97,63 @@ public final class PortableFluidContainerItem extends BlockItem implements gregt
         return spec.accepts(type.getTemperature(fluid), gas, acid, magic, plasma);
     }
 
+    /** Only GT6 cup, jug and thermos implement the food-vessel interfaces. */
+    public boolean drinkVessel() {
+        return shapeId().equals("cup") || shapeId().equals("jug") || shapeId().equals("thermos");
+    }
+
+    @Override public InteractionResult useOn(UseOnContext context) {
+        // Fluid transfer is handled first by onItemUseFirst; normal use must remain available to drink.
+        if (drinkVessel() && context.getPlayer() != null && !context.getPlayer().isShiftKeyDown())
+            return InteractionResult.PASS;
+        return super.useOn(context);
+    }
+
+    @Override
+    public net.minecraft.world.InteractionResultHolder<ItemStack> use(Level level,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!drinkVessel() || stack.getCount() != 1 || !gregtech.content.food.GTDrinks.canDrink(player,
+                FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY)))
+            return net.minecraft.world.InteractionResultHolder.pass(stack);
+        player.startUsingItem(hand);
+        return net.minecraft.world.InteractionResultHolder.consume(stack);
+    }
+
+    @Override public UseAnim getUseAnimation(ItemStack stack) {
+        var row = gregtech.content.food.GTDrinks.rowFor(FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY));
+        return row != null && row.useAction().equals("eat") ? UseAnim.EAT : UseAnim.DRINK;
+    }
+//? if >=1.21.1 {
+    /*@Override public int getUseDuration(ItemStack stack, net.minecraft.world.entity.LivingEntity entity) {
+*///?} else {
+    @Override public int getUseDuration(ItemStack stack) {
+//?}
+        var row = gregtech.content.food.GTDrinks.rowFor(FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY));
+        return Math.max(32, row == null ? 32 : row.foodLevel() * 8);
+    }
+
+    @Override public ItemStack finishUsingItem(ItemStack stack, Level level, net.minecraft.world.entity.LivingEntity entity) {
+        if (level.isClientSide || !drinkVessel() || stack.getCount() != 1
+                || !(entity instanceof net.minecraft.world.entity.player.Player player)) return stack;
+        var tank = FluidUtil.getFluidHandler(stack).orElse(null);
+        if (tank == null) return stack;
+//? if >=1.21.1 {
+        /*var action = net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE;
+*///?} else {
+        var action = net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE;
+//?}
+        var portion = tank.drain(250, action);
+        if (gregtech.content.food.GTDrinks.drink(player, portion)) {
+//? if >=1.21.1 {
+            /*tank.drain(250, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+*///?} else {
+            tank.drain(250, net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+//?}
+        }
+        return tank.getContainer();
+    }
+
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         var player = context.getPlayer();

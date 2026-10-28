@@ -101,6 +101,9 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             if(tools.containsToolPosition(worldPosition)) return tools.useMultiblockTool(context,messages);
             release(controllerPos()); // A stale binding must not route a click outside the owner's shell.
         }
+        if (host instanceof gregtech.engine.multiblock.tracking.TrackedMultiblock tracked
+                && tracked.structureDefinition().declaredFootprint(tracked).contains(worldPosition))
+            return gregtech.engine.multiblock.MultiblockTools.buildTracked(context, tracked);
         return 0;
     }
     public boolean isBoundTo(BlockPos owner) { return owner != null && owner.equals(controllerPos()); }

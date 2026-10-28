@@ -1,7 +1,6 @@
 package gregtech.content.blockentity.inventory;
 
-import gregtech.client.gui.HopperContainerMenu;
-import gregtech.content.registry.GTMenuTypes;
+import gregtech.client.gui.MetalChestMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -133,6 +132,11 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
 
     public ItemStackHandler inventory() { return inventory; }
 
+    public boolean canPlayerUse(Player player) {
+        return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == this
+                && player.distanceToSqr(worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;
+    }
+
     /** Whether this chest already rolled its GT6 loot table (persisted, like GT6's cleared name). */
     private boolean lootGenerated;
     private net.minecraft.resources.ResourceLocation dungeonLoot;
@@ -224,19 +228,14 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
         return new ChestMenu(containerId, playerInv, this);
     }
 
-    private static final class ChestMenu extends HopperContainerMenu {
+    private static final class ChestMenu extends MetalChestMenu {
         private final MetalChestBlockEntity chest;
         private boolean closed;
         ChestMenu(int id, Inventory playerInv, MetalChestBlockEntity chest) {
-            super(GTMenuTypes.forSlotCount(54), id, playerInv, chest.inventory);
+            super(id, playerInv, chest);
             this.chest = chest;
             if (!playerInv.player.isSpectator() && chest.level != null)
                 chest.openers.incrementOpeners(playerInv.player, chest.level, chest.worldPosition, chest.getBlockState());
-        }
-        @Override protected void inventorySlotChanged(int index) { chest.setChanged(); }
-        @Override public boolean stillValid(Player player) {
-            return !chest.isRemoved() && chest.level != null && chest.level.getBlockEntity(chest.worldPosition) == chest
-                    && player.distanceToSqr(chest.worldPosition.getX() + .5, chest.worldPosition.getY() + .5, chest.worldPosition.getZ() + .5) <= 64;
         }
         @Override public void removed(Player player) {
             super.removed(player);

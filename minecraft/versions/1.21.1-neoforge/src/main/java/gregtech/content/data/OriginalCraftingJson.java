@@ -58,7 +58,20 @@ public final class OriginalCraftingJson {
             gregtech.content.recipe.FormConversionSelector selector,
             String input,
             String material) {
-        shapeless(data, id, group, category, output, ingredients, false, true, selector, input, material);
+        shapeless(data, id, group, category, output, ingredients, false, true, selector, input, material, "fixed");
+    }
+    /** Explicit alias for own ordered conversions; all form conversions now use fixed slots. */
+    public static void orderedFormConversion(
+            Map<ResourceLocation, byte[]> data,
+            ResourceLocation id,
+            String group,
+            CraftingBookCategory category,
+            ItemStack output,
+            List<Ingredient> ingredients,
+            gregtech.content.recipe.FormConversionSelector selector,
+            String input,
+            String material) {
+        shapeless(data, id, group, category, output, ingredients, false, true, selector, input, material, "fixed");
     }
 
     private static void shapeless(
@@ -81,7 +94,8 @@ public final class OriginalCraftingJson {
                 sourcePermission,
                 gregtech.content.recipe.FormConversionSelector.NONE,
                 "",
-                "");
+                "",
+                "fixed");
     }
 
     private static void shapeless(
@@ -95,7 +109,8 @@ public final class OriginalCraftingJson {
             boolean sourcePermission,
             gregtech.content.recipe.FormConversionSelector selector,
             String input,
-            String material) {
+            String material,
+            String placement) {
         var json = recipe(
                 sourcePermission ? "gt6ce:tool_shapeless" : "minecraft:crafting_shapeless", group, category, output);
         var values = new JsonArray();
@@ -104,6 +119,7 @@ public final class OriginalCraftingJson {
             json.addProperty("gregtech_form_input", input);
             json.addProperty("gregtech_form_material", material);
         }
+        if (selector.variants() > 0) json.addProperty("gregtech_form_placement", placement);
         if (selector.variants() > 0) {
             json.addProperty("gregtech_form_variants", selector.variants());
             json.addProperty("gregtech_form_offset", selector.offset());

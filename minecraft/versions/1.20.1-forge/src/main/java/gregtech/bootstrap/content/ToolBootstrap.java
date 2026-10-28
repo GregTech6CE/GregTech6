@@ -55,6 +55,8 @@ public record ToolBootstrap(IEventBus bus) implements InitializationStep {
     public void run() {
         gregtech.content.recipe.CreosoteAxleRecipe.registerIngredient();
         gregtech.content.recipe.FiniteBottleFillingRecipe.registerIngredient();
+        gregtech.content.recipe.BlockTagCraftingIngredient.registerIngredient();
+        gregtech.content.recipe.QuarterFluidCraftingIngredient.registerIngredient();
         GTToolItems.ITEMS.register(bus);
         RECIPE_SERIALIZERS.register("book_binding", () -> gregtech.content.recipe.BookBindingRecipe.SERIALIZER);
         RECIPE_SERIALIZERS.register("machine", () -> gregtech.content.recipe.MachineDatapackRecipe.ADDITION);

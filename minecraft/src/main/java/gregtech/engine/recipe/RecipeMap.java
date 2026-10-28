@@ -304,6 +304,76 @@ public class RecipeMap {
         return add(aRecipe);
     }
 
+    /**
+     * Ordered bulk registration with the same validation and collision predicate as addRecipe.
+     * A temporary required-item anchor avoids scanning enormous shared catalyst buckets. It is
+     * intentionally not a persistent index: public collection mutations and reloads remain unchanged.
+     */
+    public synchronized List<Recipe> addRecipes(Collection<Recipe> candidates) {
+        Map<Item, List<Recipe>> anchors = new IdentityHashMap<>();
+        List<Recipe> unanchored = new ArrayList<>();
+        Set<Recipe> indexed = Collections.newSetFromMap(new IdentityHashMap<>());
+        for (var pool : mRecipeItemMap.values()) indexed.addAll(pool);
+        for (var pool : mRecipeFluidMap.values()) indexed.addAll(pool);
+        for (Recipe row : indexed) indexCollisionAnchor(row, anchors, unanchored);
+        List<Recipe> accepted = new ArrayList<>();
+        for (Recipe row : candidates) {
+            if (row == null) continue;
+            for (int i = 0; i < row.mOutputs.length; i++)
+                row.mOutputs[i] = gregtech.engine.material.MaterialUnification.canonical(row.mOutputs[i]);
+            row.mHidden = false;
+            row.mFakeRecipe = false;
+            if (!validate(row, mLogErrors)) continue;
+            boolean collision = false;
+            for (ItemStack input : row.mInputs) {
+                if (empty(input)) continue;
+                var pool = anchors.get(input.getItem());
+                if (pool == null) continue;
+                for (Recipe existing : pool) {
+                    if (collisionReachable(existing, row) && inputsSatisfiedBy(existing, row)) {
+                        collision = true;
+                        break;
+                    }
+                }
+                if (collision) break;
+            }
+            if (!collision) for (Recipe existing : unanchored) {
+                // A zero-amount non-presence fluid is indexed but not required by the matcher.
+                // Preserve old key reachability rather than treating such rows as unconditional.
+                if (collisionReachable(existing, row) && inputsSatisfiedBy(existing, row)) {
+                    collision = true;
+                    break;
+                }
+            }
+            if (!collision && add(row) == row) {
+                accepted.add(row);
+                indexCollisionAnchor(row, anchors, unanchored);
+            }
+        }
+        return accepted;
+    }
+
+    private static void indexCollisionAnchor(Recipe row, Map<Item, List<Recipe>> anchors,
+                                            List<Recipe> unanchored) {
+        for (ItemStack required : row.mInputs) if (!empty(required)) {
+            anchors.computeIfAbsent(required.getItem(), key -> new ArrayList<>()).add(row);
+            return;
+        }
+        unanchored.add(row);
+    }
+
+    private boolean collisionReachable(Recipe existing, Recipe candidate) {
+        for (ItemStack input : candidate.mInputs) if (!empty(input)) {
+            var pool = mRecipeItemMap.get(input.getItem());
+            if (pool != null && pool.contains(existing)) return true;
+        }
+        for (FluidStack input : candidate.mFluidInputs) if (input != null && input.getFluid() != Fluids.EMPTY) {
+            var pool = mRecipeFluidMap.get(fluidKey(input));
+            if (pool != null && pool.contains(existing)) return true;
+        }
+        return false;
+    }
+
     /** Raw GT6-style addRecipe taking all arrays at once. */
     public Recipe addRecipe(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecial, long[] aOutputChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, long aDuration, long aEUt, long aSpecialValue) {
         return addMade(made(aOptimize, aInputs, aOutputs, aSpecial, aOutputChances, aFluidInputs, aFluidOutputs, aDuration, aEUt, aSpecialValue));
@@ -611,6 +681,20 @@ public class RecipeMap {
             long requiredEmpty = java.util.Arrays.stream(aExisting.mInputs).filter(RecipeMap::empty).count();
             long candidateEmpty = java.util.Arrays.stream(aCandidate.mInputs).filter(RecipeMap::empty).count();
             if (requiredEmpty != candidateEmpty) return false;
+        }
+        // Common inputs such as molds put many unrelated recipes in the same index bucket.
+        // Reject an impossible item match before copying any stacks, while retaining the full
+        // count and NBT/component comparison below for every possible match.
+        for (ItemStack required : aExisting.mInputs) {
+            if (empty(required)) continue;
+            boolean present = false;
+            for (ItemStack candidate : aCandidate.mInputs) {
+                if (!empty(candidate) && candidate.getItem() == required.getItem()) {
+                    present = true;
+                    break;
+                }
+            }
+            if (!present) return false;
         }
         var items = java.util.Arrays.stream(aCandidate.mInputs)
                 .map(s -> empty(s) ? ItemStack.EMPTY : s.copy()).toArray(ItemStack[]::new);

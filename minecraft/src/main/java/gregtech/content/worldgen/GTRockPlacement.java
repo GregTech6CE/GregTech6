@@ -21,7 +21,7 @@ public final class GTRockPlacement {
         return placeRock(level, x, z, material, false);
     }
 
-    /** {@code rawOre} rocks (above bedrock deposits) additionally yield a raw ore chunk. */
+    /** {@code rawOre} rocks (above bedrock deposits) yield only a raw ore chunk. */
     public static boolean placeRock(WorldGenLevel level, int x, int z, GTMaterial material, boolean rawOre) {
         int y = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
         if (level.isOutsideBuildHeight(y) || y <= level.getMinBuildHeight()) return false;
@@ -30,7 +30,17 @@ public final class GTRockPlacement {
         BlockState ground = level.getBlockState(below);
         if (!level.getBlockState(pos).isAir()) return false;
         if (!ground.isFaceSturdy(level, below, Direction.UP)) return false;
-        return place(level, pos, material == null ? null : material.resolve().getName(), null, rawOre);
+        String itemId = null;
+        if (rawOre) {
+            if (material == null) return false;
+            var stack = gregtech.engine.material.MaterialStackItemHelper.mat(
+                    gregtech.content.data.MaterialPrefix.oreRaw, material.resolve(), 1);
+            if (stack.isEmpty()) return false;
+            itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                    .getKey(stack.getItem())
+                    .toString();
+        }
+        return place(level, pos, material == null ? null : material.resolve().getName(), itemId, rawOre);
     }
 
     /**

@@ -288,6 +288,7 @@ public final class OvenRecipeBridge {
         for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
             if (!row.mEnabled || row.mHidden) continue;
             var input = firstStack(row.mInputs);
+            if (input.is(net.minecraft.world.item.Items.COBBLESTONE) || input.is(net.minecraft.world.item.Items.STONE)) continue;
             if (!input.isEmpty() && input.getCount() == 1
                     && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isPresent()) source.add(input.getItem());
         }
@@ -483,6 +484,10 @@ public final class OvenRecipeBridge {
                 : output.is(net.minecraft.world.item.Items.IRON_INGOT) ? net.minecraft.world.item.Items.RAW_IRON : null;
         if (raw != null) return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(raw));
         if (recipe.getType() != RecipeType.SMELTING) return false;
+        if (output.is(net.minecraft.world.item.Items.STONE))
+            return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.COBBLESTONE));
+        if (output.is(net.minecraft.world.item.Items.SMOOTH_STONE))
+            return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.STONE));
         if (output.is(net.minecraft.world.item.Items.BRICK))
             return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.CLAY_BALL));
         if (output.is(net.minecraft.world.item.Items.GLASS))

@@ -36,7 +36,12 @@ import net.minecraft.world.level.Level;
 public final class ToolShapelessRecipe extends ShapelessRecipe implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable, requireEmptyFluidContainers;
     private final FormConversionSelector formSelector;
+    private final FormConversionPlacement formPlacement;
     private final String conversionInput, conversionMaterial;
+
+    /** Read-only placement metadata for accurate recipe-viewer layout and transfer. */
+    public FormConversionSelector formSelector() { return formSelector; }
+    public FormConversionPlacement formPlacement() { return formPlacement; }
 
     @Override
     public boolean isAutocraftableByGT() {
@@ -65,6 +70,11 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
 
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
             String conversionInput, String conversionMaterial, boolean requireEmptyFluidContainers) {
+        this(base, autocraftable, formSelector, conversionInput, conversionMaterial, requireEmptyFluidContainers, FormConversionPlacement.FIXED);
+    }
+
+    public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
+            String conversionInput, String conversionMaterial, boolean requireEmptyFluidContainers, FormConversionPlacement formPlacement) {
 //? if >=1.21.1 {
         /*super(base.getGroup(), base.category(), base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), base.getIngredients());
         this.base = base;
@@ -75,6 +85,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
 //?}
         this.requireEmptyFluidContainers = requireEmptyFluidContainers;
         this.formSelector = formSelector;
+        this.formPlacement = java.util.Objects.requireNonNull(formPlacement);
         if (conversionInput.isEmpty() != conversionMaterial.isEmpty()) throw new IllegalArgumentException("Incomplete source conversion form");
         this.conversionInput = conversionInput;
         this.conversionMaterial = conversionMaterial;
@@ -110,9 +121,9 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
 //? if >=1.21.1 {
         /*if (formSelector.variants() == 0) return true;
         var position = (CraftingFormPosition) grid;
-        return formSelector.matches(position.gregtech$formGridSize(), position.gregtech$formFirstSlot(), grid.ingredientCount());
+        return formPlacement.matches(formSelector, position.gregtech$formGridSize(), position.gregtech$formFirstSlot(), grid.ingredientCount());
 *///?} else {
-        return formSelector.matches(grid.getContainerSize(), first, occupied);
+        return formPlacement.matches(formSelector, grid.getContainerSize(), first, occupied);
 //?}
     }
 //? if >=1.21.1 {
@@ -192,9 +203,11 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
             com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_material",
                     "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionMaterial),
             com.mojang.serialization.Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",
-                    false).forGetter((ToolShapelessRecipe recipe) -> recipe.requireEmptyFluidContainers)
-    ).apply(instance, (base, auto, variants, offset, input, material, empty) -> new ToolShapelessRecipe(base, auto,
-            new FormConversionSelector(variants, offset), input, material, empty)));
+                    false).forGetter((ToolShapelessRecipe recipe) -> recipe.requireEmptyFluidContainers),
+            FormConversionPlacement.CODEC.optionalFieldOf("gregtech_form_placement", FormConversionPlacement.FIXED)
+                    .forGetter((ToolShapelessRecipe recipe) -> recipe.formPlacement)
+    ).apply(instance, (base, auto, variants, offset, input, material, empty, placement) -> new ToolShapelessRecipe(base, auto,
+            new FormConversionSelector(variants, offset), input, material, empty, placement)));
 *///?} else {
     @Override
     public RecipeSerializer<?> getSerializer() {
@@ -223,13 +236,14 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
                             json.has("gregtech_form_offset") ? json.get("gregtech_form_offset").getAsInt() : 0),
                     json.has("gregtech_form_input") ? json.get("gregtech_form_input").getAsString() : "",
                     json.has("gregtech_form_material") ? json.get("gregtech_form_material").getAsString() : "",
-                    json.has("require_empty_fluid_containers") && json.get("require_empty_fluid_containers").getAsBoolean());
+                    json.has("require_empty_fluid_containers") && json.get("require_empty_fluid_containers").getAsBoolean(),
+                    json.has("gregtech_form_placement") ? FormConversionPlacement.fromName(json.get("gregtech_form_placement").getAsString()) : FormConversionPlacement.FIXED);
         }
 
         @Override
         public ToolShapelessRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
             return new ToolShapelessRecipe(vanilla.fromNetwork(id, buffer), buffer.readBoolean(),
-                    new FormConversionSelector(buffer.readVarInt(), buffer.readVarInt()), buffer.readUtf(), buffer.readUtf(), buffer.readBoolean());
+                    new FormConversionSelector(buffer.readVarInt(), buffer.readVarInt()), buffer.readUtf(), buffer.readUtf(), buffer.readBoolean(), buffer.readEnum(FormConversionPlacement.class));
         }
 
         @Override
@@ -241,6 +255,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
             buffer.writeUtf(recipe.conversionInput);
             buffer.writeUtf(recipe.conversionMaterial);
             buffer.writeBoolean(recipe.requireEmptyFluidContainers);
+            buffer.writeEnum(recipe.formPlacement);
         }
 //?}
     };

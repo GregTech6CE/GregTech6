@@ -26,8 +26,8 @@ import java.util.List;
  * <p>
  * Every row is a {@code RecipeMapHandlerPrefix} with a {@code null} output prefix, which is GT6's
  * "<em>pulverized remains</em>" form: the input's whole material amount comes back as dust
- * ({@link #pulverize(GTMaterial, long)} = {@code OM.pulverize}, GT6 {@code OM.java:370-372}). The rows
- * are gated on the material flag {@code MORTAR} ("can be ground in a mortar", {@code TD.java:515}),
+ * ({@link #pulverize(GTMaterial, long)} = {@code OM.pulverize}, GT6 {@code OM.java:370-372}). Except for
+ * small rocks, the rows are gated on the material flag {@code MORTAR} ("can be ground in a mortar", {@code TD.java:515}),
  * plus, for gems, sticks, ingots and plates, {@code BRITTLE} or {@code FOOD}
  * ({@code Or(BRITTLE, FOOD, <finer form>.NOT)} / {@code Or(BRITTLE, FOOD, WOOD)}).
  * <p>
@@ -47,9 +47,9 @@ public final class MortarGrindingRecipes {
     private static final List<String> SKIPPED = List.of(
             "six external-form rows (:84-89) bind actual items through ExternalOreProcessing after tags");
 
-    /** Currently gated on MORTAR; the original rockGt row is exempt (ALIGN-013). */
+    /** Rows gated on MORTAR; the original rockGt row is handled separately. */
     private static final List<String> PLAIN_ROWS = List.of(
-            "rockGt", "crushedPurified", "crushedPurifiedTiny", "crushedCentrifuged", "crushedCentrifugedTiny",
+            "crushedPurified", "crushedPurifiedTiny", "crushedCentrifuged", "crushedCentrifugedTiny",
             "scrapGt", "billet", "chunkGt", "nugget", "plateTiny", "plateGemTiny", "round", "screw", "bolt",
             "wireFine", "toolHeadArrow", "toolHeadRawArrow", "gemChipped");
 
@@ -86,7 +86,8 @@ public final class MortarGrindingRecipes {
         registered = true;
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
-            // GT6: ANTIMATTER.NOT on every row
+            // GT6 :79: small rocks only require ANTIMATTER.NOT, not MORTAR.
+            grind(material, "rockGt");
             if (!MaterialWorkability.isMortarGrindable(material)) continue;
             for (String row : PLAIN_ROWS) grind(material, row);
             boolean brittleOrFood = MaterialWorkability.isBrittle(material) || MaterialWorkability.isFood(material);

@@ -281,7 +281,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      */
     @Override
     public boolean attachCover(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !getCover(side).isEmpty() || !panels().canAttach(side, stack)) return false;
+        if (stack.isEmpty() || !getCover(side).isEmpty() || !panels().canAttach(side, stack)
+                || !gregtech.content.cover.CoverAdmission.allowCover(this, side, stack)) return false;
         if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(CoverItems.behavior(stack))
                 && !CoverUtilityBehaviors.valveCanAttachTo(spec.tankCount(), neighbourIsFluidPipe(side))) {
             return false;

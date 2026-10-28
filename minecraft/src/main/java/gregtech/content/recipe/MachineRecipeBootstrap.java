@@ -27,11 +27,13 @@ public final class MachineRecipeBootstrap {
     }
 
     private static void loadRecipes() {
+        register("VanillaMaterialUnificationRecipes", VanillaMaterialUnificationRecipes::register);
         runStep("OreProcessingRecipeLoader", new OreProcessingRecipeLoader());
         runStep("PartRecipeLoader", new PartRecipeLoader());
         register("VanillaProcessingRecipes", VanillaProcessingRecipes::register);
         register("DiggableRecipes", DiggableRecipes::register);
         register("VanillaBlockProcessingRecipes", VanillaBlockProcessingRecipes::register);
+        register("VanillaStoneMachineRecipes", VanillaStoneMachineRecipes::register);
         register("VanillaWoodProcessingRecipes", VanillaWoodProcessingRecipes::register);
         register("RegisteredWoodSurvivalRecipes", RegisteredWoodSurvivalRecipes::register);
         register("CropProcessingRecipes", CropProcessingRecipes::register);
@@ -56,6 +58,7 @@ public final class MachineRecipeBootstrap {
         register("AnvilRecipeDefinitions", AnvilRecipeDefinitions::register);
         register("StoneAndToolSurvivalRecipes", StoneAndToolSurvivalRecipes::register);
         register("StoneVariantRecipes", StoneVariantRecipes::register);
+        register("LaserStoneRecipes", LaserStoneRecipes::register);
         register("ElectronicsRecipes", ElectronicsRecipes::register);
         register("WireProcessingRecipes", WireProcessingRecipes::register);
         register("PolymerFormingRecipes", PolymerFormingRecipes::register);
@@ -69,6 +72,7 @@ public final class MachineRecipeBootstrap {
 *///?}
         runStep("FuelRecipeLoader", new FuelRecipeLoader());
         runStep("ChemicalRecipeLoader", new ChemicalRecipeLoader());
+        register("ConcreteMixerRecipes", ConcreteMixerRecipes::register);
         runStep("FusionRecipeLoader", new FusionRecipeLoader());
         runStep("MatterRecipeLoader", new MatterRecipeLoader());
         register("VanillaRecoveryRecipes", VanillaRecoveryRecipes::register);
@@ -102,10 +106,13 @@ public final class MachineRecipeBootstrap {
     }
 
     private static void runStep(String name, InitializationStep step) {
+        long started = System.nanoTime();
         try {
             step.run();
         } catch (RuntimeException failure) {
             throw new IllegalStateException("Machine recipe initialization failed: " + name, failure);
         }
+        long elapsedMillis = (System.nanoTime() - started) / 1_000_000L;
+        if (elapsedMillis >= 100) LOGGER.info("Machine recipe initialization: {} took {} ms", name, elapsedMillis);
     }
 }

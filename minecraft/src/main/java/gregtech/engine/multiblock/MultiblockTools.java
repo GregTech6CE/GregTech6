@@ -33,10 +33,13 @@ public final class MultiblockTools {
         var player = context.getPlayer();
         if (level.isClientSide || player == null || !level.hasChunkAt(context.getClickedPos()))
             return InteractionResult.PASS;
-        if (!(level.getBlockEntity(context.getClickedPos()) instanceof MultiblockToolTarget target))
-            return InteractionResult.PASS;
+        var entity = level.getBlockEntity(context.getClickedPos());
         var messages = new ArrayList<Component>();
-        long cost = target.useMultiblockTool(context, messages);
+        long cost = entity instanceof MultiblockToolTarget target
+                ? target.useMultiblockTool(context, messages)
+                : entity instanceof gregtech.engine.multiblock.tracking.TrackedMultiblock tracked
+                        ? buildTracked(context, tracked)
+                        : 0;
         messages.forEach(message -> player.sendSystemMessage(message));
         if (cost <= 0) return InteractionResult.PASS;
         GTToolHelper.damageForToolClickReturn(
@@ -54,6 +57,33 @@ public final class MultiblockTools {
                 1,
                 1);
         return InteractionResult.SUCCESS;
+    }
+
+    /** Controllers with a fixed declarative structure can share the same builder rules. */
+    public static long buildTracked(
+            UseOnContext context, gregtech.engine.multiblock.tracking.TrackedMultiblock machine) {
+        if (!GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.BUILDER_WAND)
+                || !(machine.structureDefinition()
+                        instanceof gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition))
+            return 0;
+        var origin = machine.trackedEntity().getBlockPos();
+        var pattern = definition.compile(
+                gregtech.engine.multiblock.tracking.LayoutStructures.facing(machine.trackedEntity()));
+        if (pattern == null) return 0;
+        for (int i = 0; i < pattern.fixedCount(); i++) {
+            if (pattern.air(i)) continue;
+            var cell = pattern.cell(i, 0);
+            var pos = origin.offset(pattern.dx(i), pattern.dy(i), pattern.dz(i));
+            if (pos.equals(origin) || cell.plainBlock()) continue;
+            if (build(context, pos, cell.block())) continue;
+            for (var alternative : cell.alternatives())
+                if (alternative.plain() == null
+                        && alternative.part() > 0
+                        && build(context, pos, gregtech.content.multiblock.LargeMachineParts.block(alternative.part())))
+                    break;
+        }
+        gregtech.engine.multiblock.tracking.StructureTracking.invalidate(machine);
+        return MultiblockToolRules.BUILDER_COST;
     }
 
     /** The diagnostic scan behind the magnifier: every cell the definition rejects, not just the first. */

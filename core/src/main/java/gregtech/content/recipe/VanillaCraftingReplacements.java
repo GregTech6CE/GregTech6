@@ -63,8 +63,8 @@ public final class VanillaCraftingReplacements {
                 "bucket",
                 1,
                 "XhX/ Y ",
-                "X=material:plateCurved:Iron",
-                "Y=material:plate:Iron",
+                "X=tag:gt6ce:technology/any_fe_curved_plate",
+                "Y=tag:gt6ce:technology/any_fe_plate",
                 "h=tool:hard_hammer");
         shaped(
                 rows,
@@ -74,8 +74,8 @@ public final class VanillaCraftingReplacements {
                 "B=item:minecraft:iron_block",
                 "I=item:minecraft:iron_ingot",
                 "h=tool:hard_hammer");
-        shaped(rows, "iron_door", 1, "XX /XXh/XX ", "X=material:plate:Iron", "h=tool:hard_hammer");
-        shaped(rows, "cauldron", 1, "X X/XhX/XXX", "X=material:plate:Iron", "h=tool:hard_hammer");
+        shaped(rows, "iron_door", 1, "XX /XXh/XX ", "X=tag:gt6ce:technology/any_fe_plate", "h=tool:hard_hammer");
+        shaped(rows, "cauldron", 1, "X X/XhX/XXX", "X=tag:gt6ce:technology/any_fe_plate", "h=tool:hard_hammer");
         shaped(
                 rows,
                 "hopper",
@@ -84,18 +84,24 @@ public final class VanillaCraftingReplacements {
                 "X=material:plate:Iron",
                 "w=tool:wrench",
                 "C=tag:minecraft:wooden_chests");
-        shaped(rows, "iron_bars", 8, " w /XXX/XXX", "X=material:stick:Iron", "w=tool:wrench");
-        shaped(rows, "heavy_weighted_pressure_plate", 1, "XXh", "X=material:plate:Iron", "h=tool:hard_hammer");
+        shaped(rows, "iron_bars", 8, " w /XXX/XXX", "X=tag:gt6ce:technology/any_fe_rod", "w=tool:wrench");
+        shaped(
+                rows,
+                "heavy_weighted_pressure_plate",
+                1,
+                "XXh",
+                "X=tag:gt6ce:technology/any_fe_plate",
+                "h=tool:hard_hammer");
         shaped(rows, "light_weighted_pressure_plate", 1, "XXh", "X=material:plate:Gold", "h=tool:hard_hammer");
         shaped(
                 rows,
                 "compass",
                 1,
                 "sSR/CIC/dPh",
-                "P=material:plate:Iron",
+                "P=tag:gt6ce:technology/any_fe_plate",
                 "R=item:minecraft:redstone",
-                "C=material:plateCurved:Iron",
-                "I=material:stick:Iron",
+                "C=tag:gt6ce:technology/any_fe_curved_plate",
+                "I=tag:gt6ce:technology/any_fe_rod",
                 "S=material:stick:IronMagnetic",
                 "s=tool:saw",
                 "d=tool:screwdriver",
@@ -123,7 +129,7 @@ public final class VanillaCraftingReplacements {
         shaped(rows, "quartz_slab", 1, "XX", "X=item:minecraft:quartz");
         for (String prefix : List.of("stick", "stickLong")) {
             var ingredients = new LinkedHashMap<Character, String>();
-            ingredients.put('I', "material:" + prefix + ":Iron");
+            ingredients.put('I', "tag:gt6ce:technology/" + (prefix.equals("stick") ? "any_fe_rod" : "any_fe_long_rod"));
             for (int i = 0; i < (prefix.equals("stick") ? 4 : 8); i++)
                 ingredients.put((char) ('a' + i), "item:minecraft:redstone");
             rows.add(new Row(

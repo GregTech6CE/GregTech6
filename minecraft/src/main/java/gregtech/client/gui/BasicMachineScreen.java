@@ -84,7 +84,7 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
         renderFluidTooltip(graphics, mouseX, mouseY);
         renderTooltip(graphics, mouseX, mouseY);
         if (overRecipeArrow(mouseX, mouseY) && menu.recipeMap() != null
-                && menu.recipeMap().mViewerAllowed)
+                && menu.recipeMap().mViewerAllowed && RecipeViewerNavigation.available())
             graphics.renderTooltip(font, Component.translatable("gt.lang.recipes"), mouseX, mouseY);
         if (hoveredSlot != null && !hoveredSlot.hasItem() && menu.programSlot() >= 0
                 && hoveredSlot.index == menu.programSlot())

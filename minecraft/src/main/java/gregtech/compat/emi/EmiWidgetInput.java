@@ -27,7 +27,27 @@ public final class EmiWidgetInput {
     public static void beginFrame(Screen screen) {
         frameScreen = screen;
         surfaces.clear();
-        if (captureScreen != screen) captured = null;
+        if (captureScreen != screen) clearCapture();
+    }
+
+    private static void clearCapture() {
+        captured = null;
+        captureScreen = null;
+        capturedButton = 0;
+    }
+    /** Closing a different screen layer must not discard this screen's input state. */
+    public static void closed(Screen screen) {
+        if (frameScreen == screen) {
+            frameScreen = null;
+            surfaces.clear();
+        }
+        if (captureScreen == screen) clearCapture();
+    }
+
+    public static void clear() {
+        frameScreen = null;
+        surfaces.clear();
+        clearCapture();
     }
 
     public static void rendered(EmiInteractiveWidget widget, GuiGraphics graphics) {
@@ -40,7 +60,7 @@ public final class EmiWidgetInput {
     }
 
     public static boolean pressed(Screen screen, double x, double y, int button) {
-        captured = null;
+        clearCapture();
         if (screen != frameScreen) return false;
         for (int i = surfaces.size() - 1; i >= 0; i--) {
             var surface = surfaces.get(i);
@@ -57,7 +77,7 @@ public final class EmiWidgetInput {
 
     public static boolean released(Screen screen, int button) {
         boolean handled = captured != null && screen == captureScreen && button == capturedButton;
-        if (handled) captured = null;
+        if (handled) clearCapture();
         return handled;
     }
 

@@ -1,6 +1,7 @@
 package gregtech.client.gui;
 
 import gregtech.content.registry.GTMenuTypes;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -11,10 +12,12 @@ import net.minecraft.world.item.ItemStack;
 /*import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 *///?} else {
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 //?}
 
 /**
@@ -48,6 +51,25 @@ public class HopperContainerMenu extends AbstractContainerMenu {
         this.slotCount = slotCount;
         this.playerInvY = addHopperSlots();
         addPlayerInventory(playerInv, playerInvY);
+    }
+
+    /** Plain storage uses vanilla slots with a real, shared backing Container. */
+    protected HopperContainerMenu(MenuType<?> type, int containerId, Inventory playerInv,
+                                  Container container) {
+        super(type, containerId);
+        this.inventory = new InvWrapper(container);
+        this.slotCount = container.getContainerSize();
+        var layout = gregtech.engine.inventory.InventorySlotLayout.layout(slotCount);
+        int index = 0;
+        for (var position : layout.positions())
+            addSlot(createStorageSlot(container, index++, position.x(), position.y()));
+        this.playerInvY = layout.playerInventoryY();
+        addPlayerInventory(playerInv, playerInvY);
+    }
+
+    /** Called during construction; use only the supplied backing container. */
+    protected Slot createStorageSlot(Container container, int index, int x, int y) {
+        return new Slot(container, index, x, y);
     }
 
     public int slotCount() {

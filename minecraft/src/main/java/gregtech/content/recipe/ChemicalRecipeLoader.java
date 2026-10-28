@@ -4,11 +4,13 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTTechnological;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -41,18 +43,24 @@ public class ChemicalRecipeLoader implements InitializationStep {
         // NaCl dust + 3 H2O → 4 salt water
         mixerItemFluid(dust("NaCl", 1), water(3000), gasOrLiquid("SaltWater", 4), 16, 16);
 
-        // ── Chloralkali: salt electrolysis ───────────────────────────────────
-        // 2 NaCl + H2O-rich brine → Cl + H + O + NaOH   (GT6: dust + 3 water)
-        electrolyzeSalt("NaCl", "NaOH");
-        electrolyzeSalt("KCl", "KOH");
-        electrolyzeSalt("LiCl", "LiOH");
-
         // ── Water electrolysis: 3 H2O → 2 H + 1 O (per 3000 mB) ─────────────
         FluidStack h2 = gasOrLiquid("H", 2);
         FluidStack o = gasOrLiquid("O", 1);
-        if (h2 != null && o != null) {
-            MachineRecipeMaps.Electrolyzer.addRecipe0(true, 64, 96, water(3000), h2, o);
-            added++;
+        var waterSelector = GTTechnological.selectorTag(0);
+        if (h2 != null && o != null && waterSelector != null) {
+            Recipe waterRecipe = RecipeMap.make(true, RecipeMap.ZL_IS, RecipeMap.ZL_IS,
+                    null, RecipeMap.ZL_LONG, new FluidStack[]{water(3000)}, new FluidStack[]{h2, o}, 96, 64, 0);
+            // Loader_Recipes_Chem:312 requires selector 0. Without this gate the pure-water
+            // row accepts extra salt/vitriol inputs and blocks the later chemistry water families.
+            // Add it after normalization so this fix does not change the existing quantities/costs.
+            if (waterRecipe != null) {
+                waterRecipe = new Recipe(new ItemStack[]{new ItemStack(waterSelector)}, waterRecipe.mOutputs,
+                        waterRecipe.mSpecialItems, waterRecipe.mChances, waterRecipe.mFluidInputs,
+                        waterRecipe.mFluidOutputs, waterRecipe.mDuration, waterRecipe.mEUt,
+                        waterRecipe.mSpecialValue).withCatalystInputs(0);
+            }
+            if (waterRecipe != null && MachineRecipeMaps.Electrolyzer.addRecipe(waterRecipe) != null) added++;
+            else skipped++;
         } else skipped++;
 
         // ── Hydrochloric acid: 3 H2O + 2 Cl → 4 HCl + 1 O ───────────────────
@@ -71,18 +79,6 @@ public class ChemicalRecipeLoader implements InitializationStep {
         mixerFluids(new FluidStack[]{gasOrLiquid("N", 2), gasOrLiquid("H", 6)},
                 gasOrLiquid("NH3", 8), null, 64, 320);
 
-        // ── Oil refining (Distillation Tower) — GT6 ratios per 25 mB crude ──
-        oilDistillation("Oil_ExtraHeavy", 25, 256, 5000, new String[]{"Fuel", "Diesel", "Kerosine", "Petrol"}, new int[]{35, 25, 25, 20});
-        oilDistillation("Oil_Heavy", 25, 196, 4000, new String[]{"Fuel", "Diesel", "Kerosine", "Petrol"}, new int[]{30, 20, 20, 15});
-        oilDistillation("Oil_Medium", 25, 128, 3000, new String[]{"Fuel", "Diesel", "Kerosine", "Petrol"}, new int[]{25, 15, 15, 15});
-        oilDistillation("Oil_Normal", 25, 128, 3000, new String[]{"Fuel", "Diesel", "Kerosine", "Petrol"}, new int[]{25, 15, 15, 15});
-        oilDistillation("Oil_Light", 25, 64, 2000, new String[]{"Fuel", "Diesel", "Kerosine", "Petrol"}, new int[]{15, 10, 10, 10});
-        oilDistillation("Oil_Soulsand", 25, 64, 1000, new String[]{"Fuel", "Diesel", "Kerosine", "Petrol"}, new int[]{10, 5, 5, 5});
-
-        // ── Biomass distillation: 80 mB → bio ethanol + glycerol + methane ──
-        biomassDistillation("Biomass");
-        biomassDistillation("BiomassIC2");
-
         // The original six-product air separation rows are registered by GTGeneratedChem.
         // Do not shadow them with a same-input three-product approximation.
 
@@ -91,65 +87,6 @@ public class ChemicalRecipeLoader implements InitializationStep {
         // The bulk-transpiled GT6 tables (tools/transpile_gt6_chem.py) are no longer loaded here:
         // they run as the LAST phase-C step so that every hand-written recipe — which was reviewed
         // against the original one by one — wins the map's collision check. See GregTech#commonSetup.
-    }
-
-    /** GT6 oil refining: crude → fuel/diesel/kerosine/petrol with per-output chances. */
-    private void oilDistillation(String crude, int mb, long duration, long chance, String[] outputs, int[] amounts) {
-        FluidStack in = make(crude, mb);
-        if (in == null) { skipped++; return; }
-        java.util.List<FluidStack> outs = new java.util.ArrayList<>();
-        for (int i = 0; i < outputs.length; i++) {
-            FluidStack out = make(outputs[i], amounts[i]);
-            if (out == null) { skipped++; return; }
-            outs.add(out);
-        }
-        MachineRecipeMaps.DistillationTower.addRecipe0(false, 64, duration, new long[]{chance, chance, chance},
-                new FluidStack[]{in}, outs.toArray(new FluidStack[0]));
-        added++;
-    }
-
-    private void biomassDistillation(String biomass) {
-        FluidStack in = make(biomass, 80);
-        FluidStack ethanol = make("BioEthanol", 20);
-        if (ethanol == null) ethanol = make("Ethanol", 20);
-        FluidStack glycerol = gasOrLiquid("Glycerol", 0.13);
-        FluidStack methane = make("Methane", 4);
-        if (in == null || ethanol == null || methane == null) { skipped++; return; }
-        java.util.List<FluidStack> outs = new java.util.ArrayList<>();
-        outs.add(ethanol);
-        if (glycerol != null) outs.add(glycerol);
-        outs.add(methane);
-        MachineRecipeMaps.DistillationTower.addRecipe0(false, 64, 16, new long[]{500, 500, 500},
-                new FluidStack[]{in}, outs.toArray(new FluidStack[0]));
-        added++;
-    }
-
-    /** FluidStack from an FL registry key, or null when not registered. */
-    private static FluidStack make(String key, int mb) {
-        if (RegisteredFluids.get(key) == null) return null;
-//? if >=1.21.1 {
-        /*net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.level.material.Fluid, ? extends net.minecraft.world.level.material.Fluid> fluid = GTFluids.still(key);
-        if (fluid == null || !fluid.isBound()) return null;
-*///?} else {
-        net.minecraftforge.registries.RegistryObject<net.minecraft.world.level.material.Fluid> fluid = GTFluids.still(key);
-        if (fluid == null || !fluid.isPresent()) return null;
-//?}
-        return new FluidStack(fluid.get(), mb);
-    }
-
-    /** dust salt + 3 water → Cl/H/O gases + hydroxide dust (GT6 chloralkali). */
-    private void electrolyzeSalt(String salt, String hydroxide) {
-        ItemStack saltDust = dust(salt, 1);
-        ItemStack hydroxideDust = dust(hydroxide, 2);
-        FluidStack cl = gasOrLiquid("Cl", 0.5);
-        FluidStack h = gasOrLiquid("H", 1.5);
-        FluidStack o = gasOrLiquid("O", 0.5);
-        if (saltDust.isEmpty() || cl == null || h == null || o == null) { skipped++; return; }
-        if (hydroxideDust.isEmpty()) hydroxideDust = ItemStack.EMPTY;
-        MachineRecipeMaps.Electrolyzer.addRecipe1(true, 16, 5120, saltDust,
-                new FluidStack[]{water(3000)}, new FluidStack[]{cl, h, o},
-                hydroxideDust.isEmpty() ? RecipeMap.ZL_IS : new ItemStack[]{hydroxideDust});
-        added++;
     }
 
     private void mixerItemFluid(ItemStack input, FluidStack fluidIn, FluidStack fluidOut, long eut, long duration) {
