@@ -79,13 +79,16 @@ public final class GTRenderHelper {
     static void line(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
                      float r, float g, float b, float a,
                      float x1, float y1, float z1, float x2, float y2, float z2) {
+        // RenderType.lines uses Normal as the line tangent to expand it on screen.
+        // A face normal collapses the grid when looking straight at that face.
+        var tangent = new org.joml.Vector3f(x2 - x1, y2 - y1, z2 - z1).normalize();
 //? if >=1.21.1 {
-        /*var direction=normal.transform(new org.joml.Vector3f(0,1,0));
+        /*var direction=normal.transform(tangent);
         consumer.addVertex(pose,x1,y1,z1).setColor(r,g,b,a).setNormal(direction.x(),direction.y(),direction.z());
         consumer.addVertex(pose,x2,y2,z2).setColor(r,g,b,a).setNormal(direction.x(),direction.y(),direction.z());
 *///?} else {
-        consumer.vertex(pose, x1, y1, z1).color(r, g, b, a).normal(normal, 0.0F, 1.0F, 0.0F).endVertex();
-        consumer.vertex(pose, x2, y2, z2).color(r, g, b, a).normal(normal, 0.0F, 1.0F, 0.0F).endVertex();
+        consumer.vertex(pose, x1, y1, z1).color(r, g, b, a).normal(normal, tangent.x(), tangent.y(), tangent.z()).endVertex();
+        consumer.vertex(pose, x2, y2, z2).color(r, g, b, a).normal(normal, tangent.x(), tangent.y(), tangent.z()).endVertex();
 //?}
     }
 
