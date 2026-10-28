@@ -11,7 +11,7 @@ public final class StoneMaterials {
     private StoneMaterials() {}
 
     public static final GTMaterial Stone          = stone(8500, "Stone",          "Stone",          0xCDCDCD).setTextureSet(MaterialTextureSet.STONE).setStats(1100, 2200, 1.0F).setToolStats(1, 2F, 16, 1);
-    public static final GTMaterial Concrete       = stone(8501, "Concrete",       "Concrete",       0x646464).setTextureSet(MaterialTextureSet.BRICK).setStats(500, 1000, 1.0F).setTooltipChemical("Stone").setToolStats(1, 2.5F, 32, 0);
+    public static final GTMaterial Concrete       = stone(8501, "Concrete",       "Concrete",       0x646464).setTextureSet(MaterialTextureSet.BRICK).setStats(500, 1000, 1.0F).setToolStats(1, 2.5F, 32, 0);
     public static final GTMaterial Netherrack     = stone(8502, "Netherrack",     "Netherrack",     0xC80000).setTextureSet(MaterialTextureSet.STONE).setStats(1500, 3000, 1.0F).setToolStats(1, 2F, 8, 0);
     public static final GTMaterial NetherBrick    = stone(8503, "Nether Brick",   "BrickNether",    0x640000).setTextureSet(MaterialTextureSet.BRICK).setLocalName("BrickNether").setStats(1800, 3000, 1.0F).setToolStats(1, 2F, 24, 1);
     public static final GTMaterial Endstone       = stone(8504, "Endstone",       "Endstone",       0xD9DE9E).setTextureSet(MaterialTextureSet.STONE).setStats(1200, 2400, 1.0F).setToolStats(1, 3F, 16, 1);
