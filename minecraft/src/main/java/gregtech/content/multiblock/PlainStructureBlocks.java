@@ -69,10 +69,32 @@ public final class PlainStructureBlocks {
         return expected != null && state.getBlock() == expected;
     }
 
+    /**
+     * The one concrete block a builder may place for this id, or {@code null} for cells that name
+     * terrain, fluids or a tag rather than a single block. A {@code fixedblock#} cell resolves through
+     * the block registry; addon ids resolve through {@link #resolve()}.
+     */
+    public static Block placeable(String plain) {
+        if (plain.equals(SpecialStructures.BEDROCK_FLOOR)
+                || plain.equals("anyopaque")
+                || plain.startsWith("anyfluid")
+                || plain.startsWith("#")) return null;
+        if (plain.startsWith(SpecialStructures.FIXED_BLOCK)) {
+            var id = location(plain.substring(SpecialStructures.FIXED_BLOCK.length()));
+            return BuiltInRegistries.BLOCK.containsKey(id) ? BuiltInRegistries.BLOCK.get(id) : null;
+        }
+        return RESOLVED.get(plain);
+    }
+
     /** The block shown in a structure preview. An empty tag uses a barrier until its members arrive. */
     public static Block preview(String plain) {
         if (plain.equals("anyopaque")) return Blocks.STONE;
         if (plain.startsWith("anyfluid")) return Blocks.WATER;
+        if (plain.equals(SpecialStructures.BEDROCK_FLOOR)) return Blocks.BEDROCK;
+        if (plain.startsWith(SpecialStructures.FIXED_BLOCK)) {
+            Block fixed = placeable(plain);
+            return fixed == null ? Blocks.BARRIER : fixed;
+        }
         if (!plain.startsWith("#")) {
             Block resolved = RESOLVED.get(plain);
             return resolved == null ? Blocks.BARRIER : resolved;

@@ -69,6 +69,10 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release)
                 !=gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED;
     }
+    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        if(level==null||isRemoved())return;
+        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(this,bindings,match,false,this::release);
+    }
     @Override public void releaseStructureClaims() {
         bindings.clear(this::release);
         gregtech.engine.multiblock.tracking.StructureClaims.cleared(this);

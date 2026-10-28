@@ -142,6 +142,11 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
                 (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position)).bind(worldPosition, role),
                 this::release) != gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED;
     }
+    /** Placed housing parts stay bound while the machine is incomplete so a wand click keeps building. */
+    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return;
+        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(this, bindings, match, false, this::release);
+    }
     @Override public void releaseStructureClaims() {
         bindings.clear(this::release);
         gregtech.engine.multiblock.tracking.StructureClaims.cleared(this);

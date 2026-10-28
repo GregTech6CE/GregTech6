@@ -11,14 +11,21 @@ import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+*///?} else {
+import net.minecraftforge.fluids.capability.IFluidHandler;
+//?}
 import java.util.*;
 
 /** Original five solid layers plus rod pillar; a strike stores 18000 packets of 32768 EU. */
 public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity implements gregtech.engine.multiblock.StructureController,
-        gregtech.engine.multiblock.tracking.TrackedMultiblock {
+        gregtech.engine.multiblock.MultiblockPortOwner, gregtech.engine.multiblock.tracking.TrackedMultiblock {
     public static final long PACKET = gregtech.engine.multiblock.AdvancedControllerRules.LIGHTNING_PACKET,
             ENERGY_CAPACITY = gregtech.engine.multiblock.AdvancedControllerRules.LIGHTNING_CAPACITY;
     private static final Set<LightningRodControllerBlockEntity> LOADED = Collections.newSetFromMap(new WeakHashMap<>());
+    private final gregtech.engine.multiblock.PartBindings<BlockPos,
+            gregtech.engine.multiblock.MultiblockLayout.Role> bindings = new gregtech.engine.multiblock.PartBindings<>();
     private long energy;
     private int rodLength;
 
@@ -38,6 +45,7 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override
     public void setRemoved() {
         LOADED.remove(this);
+        if (!gregtech.engine.multiblock.tracking.StructureTracking.unloading(this)) bindings.clear(this::releasePart);
         gregtech.engine.multiblock.tracking.StructureTracking.onRemoved(this);
         super.setRemoved();
     }
@@ -54,9 +62,28 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     }
     @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
         rodLength = match.counts().getOrDefault("rod", 0);
+        claimStructure(match);
         return true;
     }
-    @Override public void releaseStructureClaims() { rodLength = 0; }
+    /** Wall and rod cells stay bound while the rod is incomplete so a wand click on a part keeps building. */
+    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        claimStructure(match);
+    }
+    @Override public void releaseStructureClaims() {
+        rodLength = 0;
+        bindings.clear(this::releasePart);
+        gregtech.engine.multiblock.tracking.StructureClaims.cleared(this);
+    }
+    private void claimStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return;
+        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(this, bindings, match, true, this::releasePart);
+    }
+    private void releasePart(BlockPos pos) {
+        if (level != null && level.hasChunkAt(pos)
+                && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition);
+    }
+    /** The shell carries no fluid; stored EU leaves through the controller's bottom face. */
+    @Override public IFluidHandler portFluids(gregtech.engine.multiblock.MultiblockLayout.Role role) { return null; }
     @Override public boolean isStructureOk() {
         return gregtech.engine.multiblock.tracking.StructureTracking.query(this);
     }

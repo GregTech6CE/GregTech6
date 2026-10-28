@@ -91,6 +91,11 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
                 Math.min(LogisticsCoreStructure.MAX_STORAGE_CPU_COUNT, storage), conversion);
         return true;
     }
+    /** Matched cells stay bound while the cube is incomplete so a wand click on a part keeps building. */
+    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
+        if (level == null || isRemoved()) return;
+        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(this, bindings, match, false, this::releasePart);
+    }
     @Override public void releaseStructureClaims() { unbind(); }
     @Override public boolean isStructureOk() {
         return gregtech.engine.multiblock.tracking.StructureTracking.query(this);
