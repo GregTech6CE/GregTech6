@@ -2,7 +2,9 @@ package gregtech.content.recipe;
 
 import gregtech.content.tool.CraftingToolDefinitions;
 import gregtech.content.item.GTToolItem;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,7 +23,8 @@ public final class CraftingTools {
     }
     public static boolean matches(ItemStack stack, gregtech.engine.tool.GTToolType kind) {
         return CraftingToolDefinitions.matches(id(stack),kind.id())
-            || gregtech.engine.tool.GTToolHelper.matchesTool(stack,kind);
+            || gregtech.engine.tool.GTToolHelper.matchesTool(stack,kind)
+            || stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","tools/"+kind.id())));
     }
     public static boolean infinite(ItemStack stack) { return CraftingToolDefinitions.infinite(id(stack)); }
     private static boolean hasToolItem(com.google.gson.JsonElement json) {
@@ -50,6 +53,15 @@ public final class CraftingTools {
             if(stack.getItem() instanceof GTToolItem tool) kinds.add(tool.toolType().id());
         if(kinds.isEmpty()) return ingredient;
         var stacks = new ArrayList<ItemStack>(Arrays.asList(ingredient.getItems()));
+        // GT6 matches the OreDict tool name: accept every item carrying that identity, including
+        // other mods' tools, not just the port's own item for one tool type.
+        for(var kind : kinds) {
+            var tag = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","tools/"+kind));
+            for(var holder : BuiltInRegistries.ITEM.getTagOrEmpty(tag)) {
+                var item = holder.value();
+                if(stacks.stream().noneMatch(s -> s.is(item))) stacks.add(new ItemStack(item));
+            }
+        }
         for(var tool : CraftingToolDefinitions.ALL) {
             if(tool.kinds().stream().noneMatch(kinds::contains)) continue;
             for(String name : List.of(tool.tip(),tool.token())) {

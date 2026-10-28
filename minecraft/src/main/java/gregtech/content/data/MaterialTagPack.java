@@ -120,6 +120,13 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                         add(tags,"gt6ce","items","technology/"+family.tag(),id.toString());
 //?}
+                // ANY.Iron pickaxe heads for the gem-tipped pickaxe shapeless rows (GT6
+                // Loader_OreProcessing:190-191). OriginalToolMaterials keeps the source family,
+                // including Enori, which the generated MaterialGroups.Iron list omits.
+                if (anyIronHead(form.prefix(), form.material()))
+                    add(tags,"gt6ce","items",form.prefix()==MaterialPrefix.toolHeadRawPickaxe
+                            ? "technology/any_iron_raw_pickaxe_head"
+                            : "technology/any_iron_pickaxe_head", id.toString());
                 if(form.prefix()==MaterialPrefix.stick || form.prefix()==MaterialPrefix.plateTiny) {
                     var material=form.material().resolve();
                     boolean wood=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Wood")
@@ -551,6 +558,14 @@ public final class MaterialTagPack extends AbstractPackResources {
         return result;
 *///?} else {
 //?}
+    }
+
+    /** GT6 {@code ANY.Iron} members for the gem-tipped pickaxe rows, Enori included. */
+    private static boolean anyIronHead(MaterialPrefix prefix, gregtech.api.material.GTMaterial material) {
+        if (prefix != MaterialPrefix.toolHeadRawPickaxe && prefix != MaterialPrefix.toolHeadPickaxe) return false;
+        var resolved = material.resolve();
+        if ("Enori".equals(resolved.getName())) return true;
+        return MaterialGroups.Iron.getReRegistrations().stream().anyMatch(m -> m.resolve() == resolved);
     }
 
     /** Owned items and explicitly registered compositions only. Tag-derived data must not re-enter this pack. */
