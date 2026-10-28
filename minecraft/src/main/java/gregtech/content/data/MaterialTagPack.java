@@ -9,6 +9,7 @@ import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.item.FluidItem;import net.minecraft.network.chat.Component;
 //?}
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.*;
 import net.minecraft.server.packs.resources.IoSupplier;
@@ -17,7 +18,6 @@ import net.minecraft.world.item.*;
 /*import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -89,6 +89,8 @@ public final class MaterialTagPack extends AbstractPackResources {
                 .collect(java.util.stream.Collectors.groupingBy(f -> f.prefix().equals("casingSmall") ? "itemCasing" : f.prefix()));
         var byMaterial=new TreeMap<String,Set<String>>();
         var blocksByMaterial=new TreeMap<String,Set<String>>();
+        // Block-form items keyed by "material|blockPrefix", for the other mods' own material tags.
+        var materialBlockItems=new java.util.HashMap<String,String>();
 //? if >=1.21.1 {
         /*for(var item:BuiltInRegistries.ITEM) {
             var id=BuiltInRegistries.ITEM.getKey(item); if(id==null||item==Items.AIR)continue;
@@ -200,14 +202,15 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                     for(String toolKind:tool.kinds()) add(tags,"forge","items","tools/"+toolKind,id.toString());
 //?}
-            // GT tools: standard Forge convention, e.g. forge:tools/wrench.
-
+            // GT tools: standard Forge convention, e.g. forge:tools/wrench, plus the extra GT6
+            // identities of the same tool (a Knife is also a blade, a Monkey Wrench also a wrench).
 // Registry tags describe tool identities, before any stack receives material/durability data.
             if(item instanceof gregtech.content.item.GTToolItem tool)
+                for(String toolKind:gregtech.content.tool.ToolTagIdentities.all(tool.toolType().id()))
 //? if >=1.21.1 {
-                /*add(tags,"forge","item","tools/"+tool.toolType().id(),id.toString());
+                    /*add(tags,"forge","item","tools/"+toolKind,id.toString());
 *///?} else {
-                add(tags,"forge","items","tools/"+tool.toolType().id(),id.toString());
+                    add(tags,"forge","items","tools/"+toolKind,id.toString());
 //?}
             // GT6 fluid containers: one item per fluid, so a material's fluid forms belong to that
             // material's tag (RegisteredFluids knows which material a fluid was created from).
@@ -271,6 +274,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gt6ce","items",m.prefix().getRegistryName()+"/any_iron_or_steel",id.toString());
 //?}
                 addMaterial(blocksByMaterial,m.material(),id.toString());
+                materialBlockItems.putIfAbsent(m.material().resolve().getName()+"|"+m.prefix().getName(),id.toString());
             }
 
 //? if >=1.21.1 {
@@ -347,6 +351,29 @@ public final class MaterialTagPack extends AbstractPackResources {
                     }
                     addMaterial(blocksByMaterial,ore.material(),id.toString());
                 }
+            }
+        }
+        // Another mod's own material tags are the 1.20.1 replacement for GT6's OreDictionary
+        // unification (LoaderUnificationTargets BOTA rows): GT's equivalent items join them so both
+        // mods' recipes accept either mod's item.
+        for (var binding : ModMaterialUnification.BINDINGS) {
+            if (!ModMaterialUnification.isModLoaded(binding.namespace())) continue;
+            var material = gregtech.engine.material.GTMaterialRegistry.get(binding.material());
+            if (!material.isValid()) continue;
+            String item = null;
+            if (binding.itemPrefix() != null) {
+                var prefix = gregtech.engine.prefix.PrefixRegistry.byName(binding.itemPrefix());
+                var stack = prefix == null ? ItemStack.EMPTY
+                        : gregtech.content.registry.GTItems.getStack(prefix, material.resolve(), 1);
+                if (!stack.isEmpty() && stack.getItem() != Items.AIR)
+                    item = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+            }
+            if (binding.blockPrefix() != null)
+                item = materialBlockItems.get(material.resolve().getName() + "|" + binding.blockPrefix());
+            if (item != null) {
+                add(tags, binding.namespace(), "items", binding.path(), item);
+                if (binding.blockPrefix() != null)
+                    add(tags, binding.namespace(), "blocks", binding.path(), item);
             }
         }
         // GT6 ANY.Iron includes ten iron/steel materials, not just vanilla iron.

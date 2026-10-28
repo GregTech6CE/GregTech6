@@ -26,11 +26,19 @@ public final class MagicFieldAbsorberRules {
                 new Output(GregTechTags.Energy.KU, 64);
             case "twilightforest:lich_trophy", "twilightforest:lich_wall_trophy" ->
                 new Output(GregTechTags.Energy.QU, 64);
+            case "twilightforest:quest_ram_trophy", "twilightforest:quest_ram_wall_trophy" ->
+                new Output(GregTechTags.Energy.QU, 64);
             case "twilightforest:hydra_trophy", "twilightforest:hydra_wall_trophy" ->
+                new Output(GregTechTags.Energy.HU, 64);
+            case "twilightforest:knight_phantom_trophy", "twilightforest:knight_phantom_wall_trophy" ->
+                new Output(GregTechTags.Energy.HU, 64);
+            case "twilightforest:minoshroom_trophy", "twilightforest:minoshroom_wall_trophy" ->
                 new Output(GregTechTags.Energy.HU, 64);
             case "twilightforest:ur_ghast_trophy", "twilightforest:ur_ghast_wall_trophy" ->
                 new Output(GregTechTags.Energy.LU, 64);
             case "twilightforest:snow_queen_trophy", "twilightforest:snow_queen_wall_trophy" ->
+                new Output(GregTechTags.Energy.CU, 64);
+            case "twilightforest:alpha_yeti_trophy", "twilightforest:alpha_yeti_wall_trophy" ->
                 new Output(GregTechTags.Energy.CU, 64);
             default -> null;
         };

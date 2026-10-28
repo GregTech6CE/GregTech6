@@ -1033,6 +1033,8 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
                 Betweenstone = GT6Materials.Stones.Betweenstone,
                 Pitstone = GT6Materials.Stones.Pitstone,
                 Cragrock = GT6Materials.Stones.Cragrock,
+                Mazestone = GT6Materials.Stones.Mazestone,
+                Castlerock = GT6Materials.Stones.Castlerock,
                 Umber = GT6Materials.Stones.Umber,
                 Shale = GT6Materials.Stones.Shale,
                 Redrock = GT6Materials.Stones.Redrock,

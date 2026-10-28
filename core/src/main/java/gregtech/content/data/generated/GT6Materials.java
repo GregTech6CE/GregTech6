@@ -935,6 +935,8 @@ public final class GT6Materials {
         public static final GTMaterial Betweenstone    = gregtech.content.material.generated.StoneMaterials.Betweenstone;
         public static final GTMaterial Pitstone        = gregtech.content.material.generated.StoneMaterials.Pitstone;
         public static final GTMaterial Cragrock        = gregtech.content.material.generated.StoneMaterials.Cragrock;
+        public static final GTMaterial Mazestone       = gregtech.content.material.generated.StoneMaterials.Mazestone;
+        public static final GTMaterial Castlerock      = gregtech.content.material.generated.StoneMaterials.Castlerock;
         public static final GTMaterial Umber           = gregtech.content.material.generated.StoneMaterials.Umber;
         public static final GTMaterial Shale           = gregtech.content.material.generated.StoneMaterials.Shale;
         public static final GTMaterial Redrock         = gregtech.content.material.generated.StoneMaterials.Redrock;

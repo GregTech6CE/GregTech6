@@ -34,18 +34,18 @@ public final class MaterialEquivalence {
         String group=COMMON.get(f.prefix().getName());
         return group==null?null:group+"/"+materialName(f.material());
     }
-    /** Check the canonical Forge form tag and the established alternate material spelling. */
+    /** Check the canonical Forge form tag and the established alternate material spellings. */
     public static boolean hasForgeTag(ItemStack candidate, String path) {
-//? if >=1.21.1 {
-        /*if(candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",path))) || candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c",path))))return true;
-*///?} else {
-        if(candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",path))))return true;
-//?}
+        if(tagged(candidate,path))return true;
         String alias=path.replace("/aluminium","/aluminum").replace("/quartz","/nether_quartz").replace("/sulfur","/sulphur");
+        String alternate=MaterialTagAliases.alternatePath(path);
+        return (!alias.equals(path)&&tagged(candidate,alias))||(alternate!=null&&tagged(candidate,alternate));
+    }
+    private static boolean tagged(ItemStack candidate, String path) {
 //? if >=1.21.1 {
-        /*return !alias.equals(path)&&(candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",alias))) || candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c",alias))));
+        /*return candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",path))) || candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c",path)));
 *///?} else {
-        return !alias.equals(path)&&candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",alias)));
+        return candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",path)));
 //?}
     }
     /** Modern vanilla raw metals have their own recipes, not GT6 oreRaw substitutions. */
