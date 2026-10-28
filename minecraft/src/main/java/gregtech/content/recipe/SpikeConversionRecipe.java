@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 //?}
 
-/** Original BlockBaseSpike meta6↔7 and meta14↔15, not arbitrary item-ID shapeless crafting.
+/** Convert between fixed and falling balls of the same material and family.
  * A dedicated serializer avoids changing the established tool_shapeless wire contract. */
 public final class SpikeConversionRecipe extends ShapelessRecipe
         implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
@@ -40,8 +40,9 @@ public final class SpikeConversionRecipe extends ShapelessRecipe
 
     private boolean accepts(ItemStack input) {
         var output = getResultItem(RegistryAccess.EMPTY);
-        if (!(input.getItem() instanceof SpikeBlockItem) || !input.is(output.getItem())
+        if (!(input.getItem() instanceof SpikeBlockItem fromItem) || !(output.getItem() instanceof SpikeBlockItem toItem)
                 || getIngredients().size() != 1 || output.getCount() != 1) return false;
+        if (((SpikeBlock) fromItem.getBlock()).family() != ((SpikeBlock) toItem.getBlock()).family()) return false;
         var from = SpikeBlock.itemMode(input);
         var to = SpikeBlock.itemMode(output);
         return SpikeBlock.itemSecondary(input) == SpikeBlock.itemSecondary(output)

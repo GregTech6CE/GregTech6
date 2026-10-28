@@ -17,13 +17,7 @@
     }
   },
   "result": {
-    "item": "gt6ce:spike_super",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "wall",
-        "secondary": "false"
-      }
-    }
+    "item": "gt6ce:spike_super_tungstensteel",
+    "count": 1
   }
 }

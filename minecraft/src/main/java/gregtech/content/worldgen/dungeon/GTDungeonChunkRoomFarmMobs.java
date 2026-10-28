@@ -69,7 +69,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *       monster spawner, so no vanilla {@code Blocks.SPAWNER} is added here; that would be content GT6
  *       does not have. There is also no cage or pen of fences, glass or hay in GT6's room to build.</li>
  *   <li><b>Steel spikes.</b> GT6 places four omni-spikes with one shared blue/red steel roll
- *       ({@code next1in2() ? 6: 14}). The port uses its two-material spike state
+ *       ({@code next1in2() ? 6: 14}). The port selects the corresponding material-specific spike block
  *       and its contact damage.</li>
  *   <li><b>Steel hoppers.</b> GT6's hopper multi-tile {@code 8010} (its comment calls them "Steel
  *       Hoppers!") becomes the port's own steel hopper
@@ -123,7 +123,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *       monster spawner, so no vanilla {@code Blocks.SPAWNER} is added here; that would be content GT6
  *       does not have. There is also no cage or pen of fences, glass or hay in GT6's room to build.</li>
  *   <li><b>Steel spikes.</b> GT6 places four omni-spikes with one shared blue/red steel roll
- *       ({@code next1in2() ? 6: 14}). The port uses its two-material spike state
+ *       ({@code next1in2() ? 6: 14}). The port selects the corresponding material-specific spike block
  *       and its contact damage.</li>
  *   <li><b>Steel hoppers.</b> GT6's hopper multi-tile {@code 8010} (its comment calls them "Steel
  *       Hoppers!") becomes the port's own steel hopper
@@ -382,12 +382,8 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         boolean redSteel = data.next1in2();
         for (int tX = 7; tX <= 8; tX++) {
             for (int tZ = 7; tZ <= 8; tZ++) {
-//? if >=1.21.1 {
-                /*data.set(aX + tX, 9, aZ + tZ, DungeonBindings.block("spike_steel").defaultBlockState()
-*///?} else {
-                data.set(aX + tX, 9, aZ + tZ, GTDecorBlocks.SPIKE_STEEL.get().defaultBlockState()
-//?}
-                        .setValue(SpikeBlock.SECONDARY, redSteel));
+                data.set(aX + tX, 9, aZ + tZ, gregtech.content.registry.GTSpikes.get(
+                        SpikeBlock.Family.STEEL, SpikeBlock.Mode.OMNI, redSteel).defaultBlockState());
             }
         }
 

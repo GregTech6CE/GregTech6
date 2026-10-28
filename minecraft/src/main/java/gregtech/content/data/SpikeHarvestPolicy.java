@@ -10,7 +10,7 @@ public final class SpikeHarvestPolicy {
 
     public static int level(BlockState state) {
         var spike = (SpikeBlock) state.getBlock();
-        boolean secondary = state.getValue(SpikeBlock.SECONDARY);
+        boolean secondary = spike.secondary();
         String material = switch (spike.family()) {
             case METAL -> secondary ? "Lead" : "Copper";
             case STEEL -> secondary ? "RedSteel" : "BlueSteel";

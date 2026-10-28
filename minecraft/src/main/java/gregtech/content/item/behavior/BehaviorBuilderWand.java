@@ -107,7 +107,7 @@ public final class BehaviorBuilderWand {
      * <p>GT6 scans {@code player.inventory.mainInventory} from the end backwards, which in 1.7.10
      * means the main grid first and the hotbar last; 1.20.1 puts the hotbar at 0-8 and the main grid at
      * 9-35, so the same order is {@code 35 → 0}. A stack qualifies when its block is the clicked block
-     * ({@code ST.block(tStack) == aBlock}). Ore host/broken and spike material/mode identity is now encoded in item state
+     * ({@code ST.block(tStack) == aBlock}). Ore host/broken identity is encoded in item state
      * rather than separate source blocks, so compare those identity properties explicitly. Placement
      * orientation remains the item's responsibility; do not compare arbitrary placement states.</p>
      */
@@ -122,11 +122,6 @@ public final class BehaviorBuilderWand {
                             != gregtech.content.block.OreBlock.stoneOf(clicked)
                     || gregtech.content.block.OreBlock.isBrokenStack(candidate)
                             != gregtech.content.block.OreBlock.isBroken(clicked))) continue;
-            if (clicked.getBlock() instanceof gregtech.content.block.misc.SpikeBlock
-                    && (gregtech.content.block.misc.SpikeBlock.itemMode(candidate)
-                            != clicked.getValue(gregtech.content.block.misc.SpikeBlock.MODE)
-                    || gregtech.content.block.misc.SpikeBlock.itemSecondary(candidate)
-                            != clicked.getValue(gregtech.content.block.misc.SpikeBlock.SECONDARY))) continue;
             return slot;
         }
         return -1;
