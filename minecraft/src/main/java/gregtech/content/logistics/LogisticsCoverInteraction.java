@@ -195,7 +195,7 @@ public final class LogisticsCoverInteraction {
         ItemStack held = player.getItemInHand(hand);
         LogisticsCovers covers = host.logisticsCovers();
         LogisticsCoverType heldType = LogisticsCoverType.of(held);
-        if (player.isShiftKeyDown() && heldType != null) {
+        if (gregtech.content.cover.CoverPlacement.placing(player) && heldType != null) {
             if (!host.canLogistics(null)) return InteractionResult.FAIL;
             if (!level.isClientSide && covers.attach(face, held) && !player.getAbilities().instabuild)
                 held.shrink(1);

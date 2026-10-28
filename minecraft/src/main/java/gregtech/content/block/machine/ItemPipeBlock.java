@@ -203,7 +203,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
                     PanelCoverInteraction.use(coverHost, player, hand, hit, false);
             if (panelResult != InteractionResult.PASS) return panelResult;
 
-            if (player.isShiftKeyDown() && CoverItems.isCover(held)) {
+            if (gregtech.content.cover.CoverPlacement.placing(player) && CoverItems.isCover(held)) {
                 if (!level.isClientSide && coverHost.attachCover(hit.getDirection(), held)) {
                     if (!player.getAbilities().instabuild) held.shrink(1);
                 }
