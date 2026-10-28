@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/** Shared stack query covers durability use, repair and display on both modern versions. */
+/** Shared stack query covers durability use, repair and numeric tooltips on both modern versions. */
 @Mixin(ItemStack.class)
 public abstract class VanillaToolDurabilityMixin {
     @Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true, require = 1)
