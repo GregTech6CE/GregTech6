@@ -40,7 +40,7 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
         // hand-crafted Wood bolt is the source of the bolt in its wooden gear recipe.
         INSTANCE.treat("plate/wood", mat(MaterialPrefix.plate, "Wood", 1), mat(MaterialPrefix.plate, "WoodTreated", 1));
         INSTANCE.treat("stick/vanilla", item("minecraft:stick", 1), mat(MaterialPrefix.stick, "WoodTreated", 1));
-        INSTANCE.treat("stick/wood", mat(MaterialPrefix.stick, "Wood", 1), mat(MaterialPrefix.stick, "WoodTreated", 1));
+        // The generic Wood stick now resolves to minecraft:stick; it shares this same recipe.
         INSTANCE.treat("bolt/wood", mat(MaterialPrefix.bolt, "Wood", 1), mat(MaterialPrefix.bolt, "WoodTreated", 1));
         return INSTANCE.entries().size();
     }
@@ -60,6 +60,6 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
     }
 
     public static int expectedRows() {
-        return (VANILLA_PLANKS.length + WoodSpecies.values().length + 4) * OILS.length;
+        return (VANILLA_PLANKS.length + WoodSpecies.values().length + 3) * OILS.length;
     }
 }
