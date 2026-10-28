@@ -48,8 +48,23 @@ public final class FluidDisplayInteraction {
                     : entity.getCapability(ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
 //?}
             // Native capability lookup retains sided cover/shutter/filter policy.
-            if (handler != null && handler.fill(offered.copy(), IFluidHandler.FluidAction.EXECUTE) > 0)
-                return InteractionResult.CONSUME;
+            if (handler != null) {
+                var target = level.getBlockEntity(pos);
+                long capacity = FluidStorageInspection.read(target, handler).capacity();
+                // A bounded series of native transfers fills large tanks without hanging on void sinks.
+                long remaining = Math.max(Integer.MAX_VALUE, capacity);
+                boolean filled = false;
+                for (int batch = 0; batch < 64 && remaining > 0; batch++) {
+                    var portion = offered.copy();
+                    portion.setAmount((int) Math.min(Integer.MAX_VALUE, remaining));
+                    int accepted = handler.fill(portion, IFluidHandler.FluidAction.EXECUTE);
+                    if (accepted <= 0) break;
+                    remaining -= Math.min(accepted, portion.getAmount());
+                    filled = true;
+                    if (accepted < portion.getAmount()) break;
+                }
+                if (filled) return InteractionResult.CONSUME;
+            }
         }
         return InteractionResult.CONSUME;
     }

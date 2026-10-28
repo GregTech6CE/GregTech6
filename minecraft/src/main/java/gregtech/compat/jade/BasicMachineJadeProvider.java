@@ -102,7 +102,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
     private static ListTag fluids(FluidTankGT[] tanks, BlockAccessor accessor) {
         var result = new ListTag();
         if (tanks != null) for (var tank : tanks)
-            if (!tank.isEmpty()) result.add(saveFluid(tank.getFluid(), tank.getAmount(), tank.getCapacity(), accessor));
+            if (!tank.isEmpty()) result.add(saveFluid(tank.getFluid(), tank.getAmount(), tank.capacity(), accessor));
         return result;
     }
 

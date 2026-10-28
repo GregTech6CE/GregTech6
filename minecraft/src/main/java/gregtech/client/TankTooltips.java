@@ -321,7 +321,7 @@ public final class TankTooltips {
                             .withStyle(ChatFormatting.AQUA)));
         } else {
             player.sendSystemMessage(Component.empty()
-                    .append(Component.translatable("tooltip.gt6ce.ui.liters_of", formatLargeNumber(fluid.getAmount()))
+                    .append(Component.translatable("tooltip.gt6ce.ui.liters_of", formatLargeNumber(tank.getFluidTank().getAmount()))
                             .withStyle(ChatFormatting.WHITE))
                     .append(fluid.getDisplayName())
                     .append(Component.translatable("tooltip.gt6ce.ui.max_fluid", formatLargeNumber(spec.capacity()))

@@ -96,7 +96,7 @@ final class OmniEnergyInfo {
         } else if (entity instanceof PumpBlockEntity pump) {
             info.line("stored", pump.storedPumpEnergy(), "RU");
             var tank = pump.tankForInspection();
-            info.fluid("output", 0, tank.getFluid(), tank.getAmount(), tank.getCapacity());
+            info.fluid("output", 0, tank.getFluid(), tank.getAmount(), tank.capacity());
             info.line(
                     "state",
                     JadeInspection.label(

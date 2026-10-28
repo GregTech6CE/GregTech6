@@ -224,11 +224,8 @@ public class SensorBlockEntity extends BlockEntity {
                             .resolve().orElse(null);
 //?}
                     if (fluids != null) {
-                        long amount = 0, capacity = 0;
-                        for (int i = 0; i < fluids.getTanks(); i++) {
-                            amount += fluids.getFluidInTank(i).getAmount();
-                            capacity += fluids.getTankCapacity(i);
-                        }
+                        var totals = gregtech.engine.fluid.FluidStorageInspection.read(target, fluids);
+                        long amount = totals.amount(), capacity = totals.capacity();
                         newValue = amount;
                         maximum = capacity;
                     }
@@ -331,11 +328,8 @@ public class SensorBlockEntity extends BlockEntity {
                             .resolve().orElse(null);
 //?}
                     if (fluids != null) {
-                        long amount = 0, capacity = 0;
-                        for (int i = 0; i < fluids.getTanks(); i++) {
-                            amount += fluids.getFluidInTank(i).getAmount();
-                            capacity += fluids.getTankCapacity(i);
-                        }
+                        var totals = gregtech.engine.fluid.FluidStorageInspection.read(target, fluids);
+                        long amount = totals.amount(), capacity = totals.capacity();
                         newValue = switch (be.kind) {
                             case BUCKETOMETER -> gregtech.engine.sensor.SensorMeasurements.cubicMetres(amount);
                             case KILOBUCKETOMETER -> gregtech.engine.sensor.SensorMeasurements.cubicDecametres(amount);
