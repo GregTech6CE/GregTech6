@@ -38,10 +38,10 @@ public class BehaviorMachineMenu extends AbstractContainerMenu implements Behavi
     public BehaviorMachineMenu(int id, Inventory inventory, BehaviorMachineBlockEntity machine) {
         super(GTMenuTypes.BEHAVIOR_MACHINE.get(), id);
         this.machine = machine;
-        int values = 3 + machine.tanks() * 2;
+        int values = 7 + machine.tanks() * 2;
         this.data = inventory.player.level().isClientSide ? new SimpleContainerData(values) : machine.menuData();
         this.access = ContainerLevelAccess.create(machine.getLevel(), machine.getBlockPos());
-        addDataSlots(data);
+        addDataSlots(new IntContainerData(data));
         BehaviorMachine declaration = machine.declaration();
         for (int slot = 0; slot < declaration.items().size(); slot++) {
             var placed = declaration.items().get(slot);
@@ -77,7 +77,13 @@ public class BehaviorMachineMenu extends AbstractContainerMenu implements Behavi
 
     public BehaviorMachineBlockEntity machine() { return machine; }
     public int machineSlotCount() { return machineSlots; }
-    @Override public int energy() { return data.get(0); }
+    @Override public int energy() { return (int) Math.min(Integer.MAX_VALUE, storedEnergy()); }
+    @Override public long storedEnergy() {
+        int start = 3 + machine.tanks() * 2;
+        long value = 0;
+        for (int i = 0; i < 4; i++) value |= (long) (data.get(start + i) & 0xFFFF) << (16 * i);
+        return value;
+    }
     @Override public float progress() { return data.get(1) / 1000.0F; }
     @Override public boolean isOn(int toggle) { return (data.get(2) & (1 << toggle)) != 0; }
     @Override public int tankAmount(int tank) { return data.get(3 + tank); }

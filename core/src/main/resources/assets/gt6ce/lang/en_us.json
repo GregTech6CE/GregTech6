@@ -9334,6 +9334,8 @@
   "gui.gt6ce.behavior.off": "Off",
   "gui.gt6ce.behavior.on": "On",
   "gui.gt6ce.behavior.progress": "Progress: %s%%",
+  "gui.gt6ce.fluid.capacity": "Maximum capacity: %sL",
+  "gui.gt6ce.fluid.amount_capacity": "Amount: %sL/%sL",
   "gui.gt6ce.behavior.tank": "%s / %s mB",
   "gui.gt6ce.data_switch.slot": "Slot %s",
   "gui.gt6ce.drawer.page": "%s — Page %s",

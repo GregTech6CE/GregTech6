@@ -7,7 +7,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 public final class GTPackets {
     private GTPackets() {}
 
-    private static final String PROTOCOL = "4";
+    private static final String PROTOCOL = "5";
     public static final SimpleChannel CHANNEL =
             NetworkRegistry.newSimpleChannel(GregTech.id("main"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
 

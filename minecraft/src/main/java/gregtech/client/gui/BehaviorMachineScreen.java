@@ -110,12 +110,12 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
         blit(graphics, left, top, BehaviorMachine.UV_ENERGY_U, BehaviorMachine.UV_ENERGY_V,
                 BehaviorMachine.ENERGY_WIDTH, BehaviorMachine.ENERGY_HEIGHT);
         long max = menu.machine().energyBarMax();
-        int filled = scaled(menu.energy(), max, BehaviorMachine.ENERGY_HEIGHT);
+        int filled = scaled(menu.storedEnergy(), max, BehaviorMachine.ENERGY_HEIGHT);
         blit(graphics, left, top + BehaviorMachine.ENERGY_HEIGHT - filled,
                 BehaviorMachine.UV_ENERGY_FULL_U, BehaviorMachine.ENERGY_HEIGHT - filled,
                 BehaviorMachine.ENERGY_WIDTH, filled);
         hovers.add(new Hover(left, top, BehaviorMachine.ENERGY_WIDTH, BehaviorMachine.ENERGY_HEIGHT,
-                List.of(Component.translatable("gui.gt6ce.behavior.energy", menu.energy(), max, declaration.energy().type()))));
+                List.of(Component.translatable("gui.gt6ce.behavior.energy", menu.storedEnergy(), max, declaration.energy().type()))));
     }
 
     private void drawTank(GuiGraphics graphics, int tank) {
@@ -158,9 +158,10 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
         }
         blit(graphics, left, top, BehaviorMachine.UV_TANK_MARKS_U, BehaviorMachine.UV_TANK_V,
                 BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT);
-        Component name = fluid.isEmpty() ? Component.translatable("gui.gt6ce.empty") : fluid.getDisplayName();
+        FluidSlotPresentation.amount(graphics, font, amount, left + 1, top + 1,
+                BehaviorMachine.TANK_WIDTH - 2, BehaviorMachine.TANK_HEIGHT - 2);
         hovers.add(new Hover(left, top, BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT,
-                List.of(name, Component.translatable("gui.gt6ce.behavior.tank", amount, slot.capacity()))));
+                FluidSlotPresentation.tooltip(fluid, amount, slot.capacity())));
     }
 
     private void drawProgress(GuiGraphics graphics) {
@@ -195,7 +196,7 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
 
     private static int scaled(long value, long max, int size) {
         if (value <= 0 || max <= 0) return 0;
-        return (int) Math.max(1, Math.min(size, value * size / max));
+        return (int) Math.max(1, Math.min(size, (double) value / max * size));
     }
 
     private record Hover(int x, int y, int width, int height, List<Component> lines) {

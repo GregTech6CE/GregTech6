@@ -119,6 +119,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         net.minecraftforge.fluids.FluidStack[] fluids = new net.minecraftforge.fluids.FluidStack[total];
 //?}
 
+        long[] amounts = new long[total], capacities = new long[total];
         for (int i = 0; i < total; i++) {
 
 //? if >=1.21.1 {
@@ -126,13 +127,15 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 *///?} else {
             fluids[i] = buf.readFluidStack();
 //?}
+            amounts[i] = buf.readVarLong();
+            capacities[i] = buf.readVarLong();
 
         }
         for (Slot slot : slots) {
             if (slot instanceof SlotFluid sf) {
                 int globalIdx = sf.tankIndex() + (sf.isInput() ? 0 : recipeMap.mInputFluidCount);
                 if (globalIdx >= 0 && globalIdx < total) {
-                    sf.setFluid(fluids[globalIdx]);
+                    sf.setFluid(fluids[globalIdx], amounts[globalIdx], capacities[globalIdx]);
                 }
             }
         }
@@ -250,16 +253,19 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         if (blockEntity == null || viewer.containerMenu != this) return;
         for (Slot slot : slots) {
             if (!(slot instanceof SlotFluid sf)) continue;
-            var current = getTankFluid(sf);
+            var tank = getTank(sf);
+            if (tank == null) continue;
+            var current = tank.getFluid();
+            boolean totalsChanged = sf.amount() != tank.getAmount() || sf.capacity() != tank.capacity();
 
 //? if >=1.21.1 {
-/*            if (current.getAmount()!=sf.fluid().getAmount() || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(current,sf.fluid())) {
+/*            if (totalsChanged || current.getAmount()!=sf.fluid().getAmount() || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(current,sf.fluid())) {
 *///?} else {
-            if (!current.isFluidStackIdentical(sf.fluid())) {
+            if (totalsChanged || !current.isFluidStackIdentical(sf.fluid())) {
 //?}
 
-                sf.setFluid(current);
-                sendFluidUpdate(new PacketSyncFluids(containerId, slot.index, current));
+                sf.setFluid(current, tank.getAmount(), tank.capacity());
+                sendFluidUpdate(new PacketSyncFluids(containerId, slot.index, current, tank.getAmount(), tank.capacity()));
             }
         }
     }
@@ -276,23 +282,10 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
     }
 
 
-//? if >=1.21.1 {
-/*    private net.neoforged.neoforge.fluids.FluidStack getTankFluid(SlotFluid sf) {
-        if (blockEntity == null) return net.neoforged.neoforge.fluids.FluidStack.EMPTY;
-*///?} else {
-    private net.minecraftforge.fluids.FluidStack getTankFluid(SlotFluid sf) {
-        if (blockEntity == null) return net.minecraftforge.fluids.FluidStack.EMPTY;
-//?}
-
-        int tank = sf.isInput() ? sf.tankIndex() : blockEntity.getTanks() - recipeMap.mOutputFluidCount + sf.tankIndex();
-
-//? if >=1.21.1 {
-/*        if (tank < 0 || tank >= blockEntity.getTanks()) return net.neoforged.neoforge.fluids.FluidStack.EMPTY;
-*///?} else {
-        if (tank < 0 || tank >= blockEntity.getTanks()) return net.minecraftforge.fluids.FluidStack.EMPTY;
-//?}
-
-        return blockEntity.getFluidInTank(tank);
+    private gregtech.engine.fluid.FluidTankGT getTank(SlotFluid sf) {
+        if (blockEntity == null) return null;
+        var tanks = sf.isInput() ? blockEntity.getTanksInput() : blockEntity.getTanksOutput();
+        return sf.tankIndex() >= 0 && sf.tankIndex() < tanks.length ? tanks[sf.tankIndex()] : null;
     }
 
     // ── Shift-click ──────────────────────────────────────────────────────
