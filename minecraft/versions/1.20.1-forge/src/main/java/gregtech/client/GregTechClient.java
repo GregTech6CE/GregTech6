@@ -194,13 +194,7 @@ public final class GregTechClient {
                 event.register(
                         (stack, tintIndex) -> {
                             if (tintIndex != 0) return 0xFFFFFF;
-                            var tag = stack.getTag();
-                            boolean secondary = tag != null
-                                    && tag.contains("BlockStateTag")
-                                    && "true"
-                                            .equals(tag.getCompound("BlockStateTag")
-                                                    .getString("secondary"));
-                            return spike.materialTint(secondary);
+                            return spike.materialTint();
                         },
                         spikeItem);
             } else if (entry.get() instanceof gregtech.content.block.misc.ConcreteBlockItem concreteItem) {
@@ -481,7 +475,7 @@ public final class GregTechClient {
             } else if (block instanceof gregtech.content.block.misc.SpikeBlock spike) {
                 event.register(
                         (state, level, pos, tintIndex) -> tintIndex == 0
-                                ? spike.materialTint(state.getValue(gregtech.content.block.misc.SpikeBlock.SECONDARY))
+                                ? spike.materialTint()
                                 : 0xFFFFFF,
                         block);
             } else if (block instanceof gregtech.content.block.misc.ConcreteBlock) {
@@ -1001,14 +995,6 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> gregtech.content.registry.GTSpikes.all()
-                .forEach(entry -> net.minecraft.client.renderer.item.ItemProperties.register(
-                        entry.get().asItem(),
-                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "spike_omni"),
-                        (stack, level, entity, seed) -> gregtech.content.block.misc.SpikeBlock.itemMode(stack)
-                                        == gregtech.content.block.misc.SpikeBlock.Mode.WALL
-                                ? 0
-                                : 1)));
         event.enqueueWork(() -> gregtech.content.registry.GTChemicalBatteries.allRegistered()
                 .forEach(entry -> net.minecraft.client.renderer.item.ItemProperties.register(
                         entry.get().asItem(),

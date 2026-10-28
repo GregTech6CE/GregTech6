@@ -163,11 +163,6 @@ public final class OriginCreativeContents {
                 page.add(electric.assembled(gregtech.content.material.Materials.Steel,electric.getEnergyCapacity(new ItemStack(item),gregtech.content.data.GregTechTags.Energy.EU)));
             } else if(item instanceof ChemicalBatteryItem battery) {
                 page.add(new ItemStack(item));var charged=new ItemStack(item);battery.setCharge(charged,battery.spec().capacity());page.add(charged);
-            } else if (item instanceof gregtech.content.item.SpikeBlockItem spikeItem) {
-                var block = (gregtech.content.block.misc.SpikeBlock) spikeItem.getBlock();
-                for (boolean secondary : new boolean[]{false, true})
-                    for (var mode : gregtech.content.block.misc.SpikeBlock.Mode.values())
-                        page.add(gregtech.content.item.SpikeBlockItem.variant(block, mode, secondary));
             } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.FixedConstructionColor) {
                 page.add(new ItemStack(item));
             } else if(item instanceof BlockItem b && (b.getBlock() instanceof gregtech.content.block.misc.ConcreteBlock||b.getBlock() instanceof gregtech.content.block.misc.ColoredConstructionBlock)) {

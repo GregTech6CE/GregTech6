@@ -2,17 +2,11 @@
   "type": "gt6ce:spike_conversion",
   "ingredients": [
     {
-      "item": "gt6ce:spike_super"
+      "item": "gt6ce:spike_ball_super_adamantium"
     }
   ],
   "result": {
-    "item": "gt6ce:spike_super",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "falling",
-        "secondary": "true"
-      }
-    }
+    "item": "gt6ce:spike_ball_falling_super_adamantium",
+    "count": 1
   }
 }

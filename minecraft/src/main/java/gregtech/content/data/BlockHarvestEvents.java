@@ -21,7 +21,7 @@ public final class BlockHarvestEvents {
  @SubscribeEvent public static void harvest(PlayerEvent.HarvestCheck event) {
   var oreDecision=OreHostHarvest.decision(event.getEntity().getMainHandItem(),event.getTargetBlock());
   if(oreDecision.isPresent()){event.setCanHarvest(oreDecision.get());return;}
-  // A Spike family has two material tiers in native state; a single vanilla block tag cannot encode them.
+  // Spike harvest levels follow their registered material quality.
   if (event.getTargetBlock().getBlock() instanceof gregtech.content.block.misc.SpikeBlock) {
    var stack = event.getEntity().getMainHandItem();
    Integer actual = null;

@@ -17,13 +17,7 @@
     }
   },
   "result": {
-    "item": "gt6ce:spike_sharp",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "omni",
-        "secondary": "true"
-      }
-    }
+    "item": "gt6ce:spike_ball_sharp_titanium",
+    "count": 1
   }
 }
