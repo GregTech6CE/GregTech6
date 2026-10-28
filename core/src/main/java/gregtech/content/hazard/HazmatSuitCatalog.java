@@ -7,9 +7,10 @@ import java.util.List;
 /** Original six four-piece suits. The existing radiation IDs stay stable. */
 public final class HazmatSuitCatalog {
 
-    private HazmatSuitCatalog() {
-    }
-    public static final List<String> FAMILIES = List.of("insect", "frost", "heat", "radiation", "biochemgas", "universal");
+    private HazmatSuitCatalog() {}
+
+    public static final List<String> FAMILIES =
+            List.of("insect", "frost", "heat", "radiation", "biochemgas", "universal");
 
     public static String texture(String family) {
         if (!FAMILIES.contains(family)) throw new IllegalArgumentException(family);

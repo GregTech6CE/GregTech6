@@ -1,4 +1,6 @@
 package gregtech.content.item.behavior;
+
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -7,13 +9,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import javax.annotation.Nullable;
 
 /** Original manual-tool permission, obstruction and ignition boundary. */
 public final class ManualToolBehaviorAccess {
 
-    private ManualToolBehaviorAccess() {
-    }
+    private ManualToolBehaviorAccess() {}
 
     public record Outcome(boolean acted, ItemStack stack) {
 
@@ -48,7 +48,6 @@ public final class ManualToolBehaviorAccess {
      * @return {@code true} when the face is blocked, which is what makes the tape and the igniters
      *         refuse to act
      */
-
     public static boolean obstructed(Level level, BlockPos pos, Direction side) {
         if (!gregtech.GregTechConfig.Rule.OBSTRUCTION_CHECKS.enabled()) return false;
         BlockPos neighbour = pos.relative(side);
@@ -89,7 +88,6 @@ public final class ManualToolBehaviorAccess {
      * <p>A {@code null} player is GT6's auto-tool case and always passes, which is why this returns
      * {@code true} rather than {@code false} for it.</p>
      */
-
     public static boolean mayEdit(Level level, @Nullable Player player, BlockPos pos) {
         if (player == null) return true;
         return player.mayBuild() && level.mayInteract(player, pos);
@@ -105,8 +103,16 @@ public final class ManualToolBehaviorAccess {
          * @return GT6's tool-click return value, i.e. the durability cost in 1/10000 units;
          *         {@code 0} when this block does not react to the igniter
          */
-        long onIgnite(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack igniter,
-                boolean sneaking, float hitX, float hitY, float hitZ);
+        long onIgnite(
+                Level level,
+                BlockPos pos,
+                Direction side,
+                @Nullable Player player,
+                ItemStack igniter,
+                boolean sneaking,
+                float hitX,
+                float hitY,
+                float hitZ);
     }
 
     /**
@@ -121,11 +127,19 @@ public final class ManualToolBehaviorAccess {
      *
      * @return the cost in GT6's 1/10000 units, or {@code 0} when nothing reacted
      */
-
-    public static long igniteToolClick(Level level, BlockPos pos, Direction side, @Nullable Player player,
-            ItemStack igniter, boolean sneaking, float hitX, float hitY, float hitZ) {
-        Ignitable target = level.getBlockEntity(pos) instanceof Ignitable be ? be
-        : level.getBlockState(pos).getBlock() instanceof Ignitable block ? block : null;
+    public static long igniteToolClick(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack igniter,
+            boolean sneaking,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        Ignitable target = level.getBlockEntity(pos) instanceof Ignitable be
+                ? be
+                : level.getBlockState(pos).getBlock() instanceof Ignitable block ? block : null;
         if (target == null) return 0L;
         return target.onIgnite(level, pos, side, player, igniter, sneaking, hitX, hitY, hitZ);
     }
@@ -150,9 +164,8 @@ public final class ManualToolBehaviorAccess {
      *
      * @return whether a fire block was placed, i.e. whether the operation cost a use
      */
-
-    public static boolean lightVanillaFire(Level level, @Nullable Player player, BlockPos pos, Direction side,
-            ItemStack igniter) {
+    public static boolean lightVanillaFire(
+            Level level, @Nullable Player player, BlockPos pos, Direction side, ItemStack igniter) {
         BlockPos target = pos.relative(side);
         if (!level.hasChunkAt(target)) return false;
         if (!level.isEmptyBlock(target)) return false;
@@ -167,7 +180,6 @@ public final class ManualToolBehaviorAccess {
      *
      * @return whether the block was TNT and got primed
      */
-
     public static boolean primeTnt(Level level, BlockPos pos, @Nullable Player player) {
         BlockState state = level.getBlockState(pos);
         if (!(state.getBlock() instanceof TntBlock tnt)) return false;

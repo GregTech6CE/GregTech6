@@ -11,8 +11,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 /** All vanilla water-surface plants use the same water family, with source/empty checks preserved. */
 @Mixin(FrogspawnBlock.class)
 public abstract class WaterFrogspawnMixin {
-    @Redirect(method = "mayPlaceOn", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/world/level/material/FluidState;getType()Lnet/minecraft/world/level/material/Fluid;"), require = 2)
+    @Redirect(
+            method = "mayPlaceOn",
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/world/level/material/FluidState;getType()Lnet/minecraft/world/level/material/Fluid;"),
+            require = 2)
     private static Fluid gregtech$waterFamilyForSurface(FluidState state) {
         return WaterFamilyIdentity.forVanillaCheck(state);
     }

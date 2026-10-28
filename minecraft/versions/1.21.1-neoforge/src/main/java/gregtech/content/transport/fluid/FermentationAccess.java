@@ -1,7 +1,7 @@
 package gregtech.content.transport.fluid;
 
-import net.neoforged.neoforge.fluids.FluidStack;
 import gregtech.engine.fluid.FluidHazards;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 /** NeoForge fermenter lookup, bound by bootstrap after recipe maps and selector items are available. */
 public final class FermentationAccess {
@@ -12,6 +12,7 @@ public final class FermentationAccess {
         /** Match enabled/nonfake Fermenter entries with exactly one selector-tag(0) input and one fluid input. */
         Recipe findForSelectorTagZero(FluidStack input);
     }
+
     private static volatile Provider provider;
 
     private FermentationAccess() {}
@@ -32,8 +33,8 @@ public final class FermentationAccess {
             var item = new net.minecraft.world.item.ItemStack(selector);
             for (var recipe : gregtech.content.data.MachineRecipeMaps.Fermenter.mRecipeList) {
                 if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
-                if (recipe.mInputs.length != 1
-                        || !gregtech.engine.recipe.RecipeInputs.matches(recipe.mInputs[0], item)) continue;
+                if (recipe.mInputs.length != 1 || !gregtech.engine.recipe.RecipeInputs.matches(recipe.mInputs[0], item))
+                    continue;
                 if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
                 // Barrel conversion cannot preserve a presence-only input while replacing its tank.
                 if (recipe.isPresenceFluidInput(0)) continue;
@@ -50,8 +51,11 @@ public final class FermentationAccess {
     public static Recipe find(FluidStack input) {
         if (input.isEmpty() || provider == null) return null;
         var recipe = provider.findForSelectorTagZero(input);
-        if (recipe == null || recipe.input() == null || recipe.output() == null
-                || recipe.input().isEmpty() || recipe.output().isEmpty()
+        if (recipe == null
+                || recipe.input() == null
+                || recipe.output() == null
+                || recipe.input().isEmpty()
+                || recipe.output().isEmpty()
                 || recipe.input().getFluid() != input.getFluid()
                 || FluidHazards.isGas(recipe.input().getFluid())
                 || FluidHazards.isGas(recipe.output().getFluid())) return null;

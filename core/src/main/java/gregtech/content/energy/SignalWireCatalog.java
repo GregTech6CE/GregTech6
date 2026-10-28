@@ -7,11 +7,9 @@ import java.util.List;
 /** Original GT6 redstone families, distinct from electric packet wires. */
 public final class SignalWireCatalog {
 
-    private SignalWireCatalog() {
-    }
+    private SignalWireCatalog() {}
 
-    public record Family(String name, GTMaterial material, int range, boolean luminous) {
-    }
+    public record Family(String name, GTMaterial material, int range, boolean luminous) {}
 
     public static List<Family> families() {
         return List.of(

@@ -41,9 +41,10 @@ public final class GTRockPlacement {
     public static boolean place(WorldGenLevel level, BlockPos pos, String material, String itemId, boolean rawOre) {
         BlockState ground = level.getBlockState(pos.below());
         // Match the rock's look to the ground it sits on (sand rocks on sand etc.).
-        BlockState rockState = GTBlocks.ROCK.get().defaultBlockState()
-                .setValue(gregtech.content.block.RockBlock.GROUND,
-                        gregtech.content.block.RockBlock.Ground.of(ground));
+        BlockState rockState = GTBlocks.ROCK
+                .get()
+                .defaultBlockState()
+                .setValue(gregtech.content.block.RockBlock.GROUND, gregtech.content.block.RockBlock.Ground.of(ground));
         if (!level.setBlock(pos, rockState, 2)) return false;
         if (level.getBlockEntity(pos) instanceof RockBlockEntity rock) {
             if (material != null && !material.isEmpty()) rock.setMaterial(material);

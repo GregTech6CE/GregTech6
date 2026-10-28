@@ -1,6 +1,8 @@
 package gregtech.engine.multiblock.tracking;
 
 import gregtech.content.multiblock.LargeMachineLayouts;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -8,9 +10,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Diagnostic scan derived from the same compiled definition the runtime uses. Unlike the runtime
@@ -44,8 +43,7 @@ public final class StructureDiagnostic {
         Direction front = LayoutStructures.facing(entity);
         StructureDefinition definition = machine.structureDefinition();
         if (definition.formsImmediately()) return List.of();
-        if (!(definition instanceof StructureDefinition.Declarative declarative))
-            return List.of();
+        if (!(definition instanceof StructureDefinition.Declarative declarative)) return List.of();
         CompiledPattern pattern = declarative.compile(front);
         if (pattern == null) return List.of();
         BlockPos origin = entity.getBlockPos();
@@ -75,8 +73,8 @@ public final class StructureDiagnostic {
         }
     }
 
-    private static void repeats(Level level, BlockPos origin, CompiledPattern pattern, int worldHeight,
-                                List<Problem> problems) {
+    private static void repeats(
+            Level level, BlockPos origin, CompiledPattern pattern, int worldHeight, List<Problem> problems) {
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         for (int group = 0; group < pattern.groupCount(); group++) {
             int limit = pattern.groupLimit(group, worldHeight);
@@ -89,8 +87,8 @@ public final class StructureDiagnostic {
                 boolean layerComplete = true;
                 var layerProblems = new ArrayList<Problem>();
                 for (int cell = first; cell < first + count; cell++) {
-                    cursor.setWithOffset(origin, pattern.repeatDx(cell), pattern.repeatDy(cell, copy),
-                            pattern.repeatDz(cell));
+                    cursor.setWithOffset(
+                            origin, pattern.repeatDx(cell), pattern.repeatDy(cell, copy), pattern.repeatDz(cell));
                     BlockPos pos = cursor.immutable();
                     if (!level.hasChunkAt(pos)) {
                         layerProblems.add(new Problem(pos, null, null, "unloaded"));
@@ -104,7 +102,8 @@ public final class StructureDiagnostic {
                             layerComplete = false;
                         }
                     } else if (pattern.repeatMatcher(cell).match(level, pos, state) == CompiledPattern.FAILED) {
-                        layerProblems.add(new Problem(pos, expected(pattern.repeatCell(cell, 0)), state.getBlock(), "block"));
+                        layerProblems.add(
+                                new Problem(pos, expected(pattern.repeatCell(cell, 0)), state.getBlock(), "block"));
                         layerComplete = false;
                     }
                 }
@@ -119,13 +118,21 @@ public final class StructureDiagnostic {
                 copies++;
             }
             if (copies < pattern.groupMinimum(group) && !reportedLayer)
-                problems.add(new Problem(origin.offset(pattern.repeatDx(first), pattern.repeatDy(first, 0),
-                        pattern.repeatDz(first)), null, null, "layers"));
+                problems.add(new Problem(
+                        origin.offset(pattern.repeatDx(first), pattern.repeatDy(first, 0), pattern.repeatDz(first)),
+                        null,
+                        null,
+                        "layers"));
         }
     }
 
-    private static void aggregates(Level level, BlockPos origin, CompiledPattern pattern, TrackedMultiblock machine,
-                                   StructureDefinition.Declarative definition, List<Problem> problems) {
+    private static void aggregates(
+            Level level,
+            BlockPos origin,
+            CompiledPattern pattern,
+            TrackedMultiblock machine,
+            StructureDefinition.Declarative definition,
+            List<Problem> problems) {
         if (problems.stream().anyMatch(problem -> !"aggregate".equals(problem.reason()))) return;
         if (definition.aggregates().isEmpty()) return;
         PatternState state = new PatternState(pattern, level.getHeight());

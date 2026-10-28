@@ -1,13 +1,12 @@
 package gregtech.engine.machine.crucible;
 
-import gregtech.content.material.Materials;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.content.material.Materials;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import java.util.ArrayList;
-import java.util.List;
 
 /** Original crucible list schema, kept at the Minecraft storage boundary. */
 public final class CrucibleContentsNbt {

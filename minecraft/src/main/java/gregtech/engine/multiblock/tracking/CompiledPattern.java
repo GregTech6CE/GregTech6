@@ -1,21 +1,20 @@
 package gregtech.engine.multiblock.tracking;
 
-import gregtech.engine.multiblock.MultiblockLayout.Role;
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.PlainStructureBlocks;
+import gregtech.engine.multiblock.MultiblockLayout.Role;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A layout resolved for one facing: offsets instead of {@link BlockPos}, one matcher per cell.
@@ -39,8 +38,12 @@ public final class CompiledPattern {
     /** One fixed cell with world offsets relative to the controller, for structures no layout describes. */
     public record FixedCell(int dx, int dy, int dz, LargeMachineLayouts.Cell cell) {}
 
-    private CompiledPattern(Direction front, List<Fixed> fixed, List<Group> groups,
-                            List<RepairCell> repeatCells, List<Aggregate> aggregates) {
+    private CompiledPattern(
+            Direction front,
+            List<Fixed> fixed,
+            List<Group> groups,
+            List<RepairCell> repeatCells,
+            List<Aggregate> aggregates) {
         this.front = front;
         this.fixed = fixed.toArray(Fixed[]::new);
         this.groups = groups.toArray(Group[]::new);
@@ -58,12 +61,14 @@ public final class CompiledPattern {
         int max = 0;
         for (int index = 0; index < this.repeatCells.length; index++) {
             RepairCell cell = this.repeatCells[index];
-            columns.computeIfAbsent(columnKey(cell.dx, cell.dz), ignored -> new ArrayList<>()).add(index);
+            columns.computeIfAbsent(columnKey(cell.dx, cell.dz), ignored -> new ArrayList<>())
+                    .add(index);
         }
         this.repeatByColumn = new HashMap<>(columns.size() * 2);
         for (var entry : columns.entrySet()) {
             int[] list = new int[entry.getValue().size()];
-            for (int index = 0; index < list.length; index++) list[index] = entry.getValue().get(index);
+            for (int index = 0; index < list.length; index++)
+                list[index] = entry.getValue().get(index);
             this.repeatByColumn.put(entry.getKey(), list);
         }
         int first = 0;
@@ -75,27 +80,42 @@ public final class CompiledPattern {
         this.maxCopies = max;
     }
 
-    public static CompiledPattern compile(TrackedMultiblock machine, LargeMachineLayouts.Layout layout,
-                                          Direction front, List<Aggregate> aggregates) {
+    public static CompiledPattern compile(
+            TrackedMultiblock machine, LargeMachineLayouts.Layout layout, Direction front, List<Aggregate> aggregates) {
         if (layout == null || front == null) return null;
         List<Fixed> fixed = new ArrayList<>();
         for (LargeMachineLayouts.Cell cell : layout.cells()) {
             int[] offset = offset(front, cell.right(), cell.up(), cell.back());
-            fixed.add(new Fixed(offset[0], offset[1], offset[2], cell.role(),
-                    cell.role() == Role.AIR ? null : matcher(machine, cell), cell));
+            fixed.add(new Fixed(
+                    offset[0],
+                    offset[1],
+                    offset[2],
+                    cell.role(),
+                    cell.role() == Role.AIR ? null : matcher(machine, cell),
+                    cell));
         }
         List<Group> groups = new ArrayList<>();
         List<RepairCell> repeat = new ArrayList<>();
         for (LargeMachineLayouts.Repeat group : layout.repeats()) {
             int groupIndex = groups.size();
-            groups.add(new Group(group.key(), group.min(), group.max(),
+            groups.add(new Group(
+                    group.key(),
+                    group.min(),
+                    group.max(),
                     group.max() < 0 ? LargeMachineLayouts.MAX_REPEATS : group.max()));
             int step = group.step() * group.height();
             for (LargeMachineLayouts.Cell cell : group.cells()) {
                 int[] offset = offset(front, cell.right(), 0, cell.back());
                 int dy = group.up() + group.step() * cell.up();
-                repeat.add(new RepairCell(groupIndex, offset[0], dy, offset[2], step, cell.role(),
-                        cell.role() == Role.AIR ? null : matcher(machine, cell), cell));
+                repeat.add(new RepairCell(
+                        groupIndex,
+                        offset[0],
+                        dy,
+                        offset[2],
+                        step,
+                        cell.role(),
+                        cell.role() == Role.AIR ? null : matcher(machine, cell),
+                        cell));
             }
         }
         return new CompiledPattern(front, fixed, groups, repeat, aggregates);
@@ -105,14 +125,19 @@ public final class CompiledPattern {
      * Compiles explicit fixed cells. Families whose geometry is not a {@link LargeMachineLayouts.Layout},
      * or whose offsets do not rotate with the facing, build the offsets themselves.
      */
-    public static CompiledPattern compileFixed(TrackedMultiblock machine, Direction front,
-                                               List<FixedCell> cells, List<Aggregate> aggregates) {
+    public static CompiledPattern compileFixed(
+            TrackedMultiblock machine, Direction front, List<FixedCell> cells, List<Aggregate> aggregates) {
         if (cells == null || front == null) return null;
         List<Fixed> fixed = new ArrayList<>(cells.size());
         for (FixedCell cell : cells) {
             LargeMachineLayouts.Cell spec = cell.cell();
-            fixed.add(new Fixed(cell.dx(), cell.dy(), cell.dz(), spec.role(),
-                    spec.role() == Role.AIR ? null : matcher(machine, spec), spec));
+            fixed.add(new Fixed(
+                    cell.dx(),
+                    cell.dy(),
+                    cell.dz(),
+                    spec.role(),
+                    spec.role() == Role.AIR ? null : matcher(machine, spec),
+                    spec));
         }
         return new CompiledPattern(front, fixed, List.of(), List.of(), aggregates);
     }
@@ -121,8 +146,15 @@ public final class CompiledPattern {
         List<Candidate> candidates = new ArrayList<>(1 + cell.alternatives().size());
         candidates.add(new Candidate(machine, cell, cell.part(), cell.plain()));
         for (var alternative : cell.alternatives()) {
-            LargeMachineLayouts.Cell choice = new LargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(),
-                    alternative.part(), cell.role(), alternative.plain(), cell.design(), List.of());
+            LargeMachineLayouts.Cell choice = new LargeMachineLayouts.Cell(
+                    cell.right(),
+                    cell.up(),
+                    cell.back(),
+                    alternative.part(),
+                    cell.role(),
+                    alternative.plain(),
+                    cell.design(),
+                    List.of());
             candidates.add(new Candidate(machine, choice, alternative.part(), alternative.plain()));
         }
         return new Matcher(candidates.toArray(Candidate[]::new));
@@ -134,7 +166,7 @@ public final class CompiledPattern {
         Direction backwards = front.getOpposite();
         int dx = sideways.getStepX() * right + backwards.getStepX() * back;
         int dz = sideways.getStepZ() * right + backwards.getStepZ() * back;
-        return new int[]{dx, up, dz};
+        return new int[] {dx, up, dz};
     }
 
     public Direction front() {
@@ -314,8 +346,8 @@ public final class CompiledPattern {
                 } else {
                     if (entity == null) entity = level.getBlockEntity(pos);
                     if (entity instanceof MultiblockPortBlockEntity
-                            && candidate.machine.acceptsTrackedPart(candidate.cell, candidate.expected(), state.getBlock()))
-                        return index;
+                            && candidate.machine.acceptsTrackedPart(
+                                    candidate.cell, candidate.expected(), state.getBlock())) return index;
                 }
             }
             return FAILED;
@@ -329,8 +361,10 @@ public final class CompiledPattern {
     }
 
     private record Fixed(int dx, int dy, int dz, Role role, Matcher matcher, LargeMachineLayouts.Cell cell) {}
-    private record RepairCell(int group, int dx, int dy, int dz, int step, Role role, Matcher matcher,
-                              LargeMachineLayouts.Cell cell) {}
+
+    private record RepairCell(
+            int group, int dx, int dy, int dz, int step, Role role, Matcher matcher, LargeMachineLayouts.Cell cell) {}
+
     private record Group(String key, int min, int max, int limit) {}
 
     private static long key(int dx, int dy, int dz) {

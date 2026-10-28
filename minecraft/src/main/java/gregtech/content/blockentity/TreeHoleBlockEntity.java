@@ -45,7 +45,6 @@ public class TreeHoleBlockEntity extends BlockEntity {
      * One GT6 refill check. Public so a worldgen/automation hook can call it without ticking 600
      * times. Sets the block state's {@code resin} property when the roll succeeds.
      */
-
     public boolean refresh(WoodSpecies species) {
         if (level == null) return false;
         int leaves = countTreeLeaves(level, worldPosition, species);
@@ -76,7 +75,6 @@ public class TreeHoleBlockEntity extends BlockEntity {
      *
      * @return the number of leaves of that tree, as GT6 counts them
      */
-
     public static int countTreeLeaves(Level level, BlockPos pos, WoodSpecies species) {
         // A periodic tree scan must not synchronously load adjacent chunks at the canopy edge.
         int radius = species == WoodSpecies.RUBBER ? 2 : 3;
@@ -94,60 +92,68 @@ public class TreeHoleBlockEntity extends BlockEntity {
         if (species == WoodSpecies.RUBBER) {
             if (isLeaves(level, pos, 0, top, 0, leaves)) count++;
             if (isLeaves(level, pos, 0, top + 1, 0, leaves)) count++;
-            for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) continue;
-                if (isLeaves(level, pos, i, top - 1, j, leaves)) count++;
-            }
-            for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {
-                if (i == 0 && j == 0) continue;
-                if (Math.abs(i * j) < 2 && isLeaves(level, pos, i, top - 2, j, leaves)) count++;
-                if (Math.abs(i * j) < 4) {
-                    if (isLeaves(level, pos, i, top - 3, j, leaves)) count++;
-                    if (isLeaves(level, pos, i, top - 4, j, leaves)) count++;
-                }
-                if (isLeaves(level, pos, i, top - 5, j, leaves)) count++;
-            }
-        } else if (species == WoodSpecies.MAPLE) {
-            for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) {
-                if (isLeaves(level, pos, i, top + 1, j, leaves)) count++;
-            }
-            for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {
-                if (isLeaves(level, pos, i, top, j, leaves)) count++;
-                if (i == 0 && j == 0) continue;
-                if (Math.abs(i * j) < 4 && isLeaves(level, pos, i, top - 7, j, leaves)) count++;
-                if (isLeaves(level, pos, i, top - 1, j, leaves)) count++;
-            }
-            for (int i = -3; i <= 3; i++) for (int j = -3; j <= 3; j++) {
-                if (i == 0 && j == 0) continue;
-                if (Math.abs(i * j) < 9) {
-                    if (isLeaves(level, pos, i, top - 2, j, leaves)) count++;
-                    if (isLeaves(level, pos, i, top - 3, j, leaves)) count++;
-                    if (isLeaves(level, pos, i, top - 6, j, leaves)) count++;
-                }
-                if (isLeaves(level, pos, i, top - 4, j, leaves)) count++;
-                if (isLeaves(level, pos, i, top - 5, j, leaves)) count++;
-            }
-        } else if (species == WoodSpecies.RAINBOWOOD) {
-            for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {
-                if (isLeaves(level, pos, i, top + 2, j, leaves)) count++;
-                if ((i != 0 || j != 0) && isLeaves(level, pos, i, top - 4, j, leaves)) count++;
-            }
-            for (int i = -3; i <= 3; i++) for (int j = -3; j <= 3; j++) {
-                if (Math.abs(i * j) >= 9) continue;
-                if (i != 0 || j != 0) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 1; j++) {
+                    if (i == 0 && j == 0) continue;
                     if (isLeaves(level, pos, i, top - 1, j, leaves)) count++;
-                    if (isLeaves(level, pos, i, top - 2, j, leaves)) count++;
-                    if (isLeaves(level, pos, i, top - 3, j, leaves)) count++;
                 }
-                if (isLeaves(level, pos, i, top, j, leaves)) count++;
-                if (isLeaves(level, pos, i, top + 1, j, leaves)) count++;
-            }
+            for (int i = -2; i <= 2; i++)
+                for (int j = -2; j <= 2; j++) {
+                    if (i == 0 && j == 0) continue;
+                    if (Math.abs(i * j) < 2 && isLeaves(level, pos, i, top - 2, j, leaves)) count++;
+                    if (Math.abs(i * j) < 4) {
+                        if (isLeaves(level, pos, i, top - 3, j, leaves)) count++;
+                        if (isLeaves(level, pos, i, top - 4, j, leaves)) count++;
+                    }
+                    if (isLeaves(level, pos, i, top - 5, j, leaves)) count++;
+                }
+        } else if (species == WoodSpecies.MAPLE) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 1; j++) {
+                    if (isLeaves(level, pos, i, top + 1, j, leaves)) count++;
+                }
+            for (int i = -2; i <= 2; i++)
+                for (int j = -2; j <= 2; j++) {
+                    if (isLeaves(level, pos, i, top, j, leaves)) count++;
+                    if (i == 0 && j == 0) continue;
+                    if (Math.abs(i * j) < 4 && isLeaves(level, pos, i, top - 7, j, leaves)) count++;
+                    if (isLeaves(level, pos, i, top - 1, j, leaves)) count++;
+                }
+            for (int i = -3; i <= 3; i++)
+                for (int j = -3; j <= 3; j++) {
+                    if (i == 0 && j == 0) continue;
+                    if (Math.abs(i * j) < 9) {
+                        if (isLeaves(level, pos, i, top - 2, j, leaves)) count++;
+                        if (isLeaves(level, pos, i, top - 3, j, leaves)) count++;
+                        if (isLeaves(level, pos, i, top - 6, j, leaves)) count++;
+                    }
+                    if (isLeaves(level, pos, i, top - 4, j, leaves)) count++;
+                    if (isLeaves(level, pos, i, top - 5, j, leaves)) count++;
+                }
+        } else if (species == WoodSpecies.RAINBOWOOD) {
+            for (int i = -2; i <= 2; i++)
+                for (int j = -2; j <= 2; j++) {
+                    if (isLeaves(level, pos, i, top + 2, j, leaves)) count++;
+                    if ((i != 0 || j != 0) && isLeaves(level, pos, i, top - 4, j, leaves)) count++;
+                }
+            for (int i = -3; i <= 3; i++)
+                for (int j = -3; j <= 3; j++) {
+                    if (Math.abs(i * j) >= 9) continue;
+                    if (i != 0 || j != 0) {
+                        if (isLeaves(level, pos, i, top - 1, j, leaves)) count++;
+                        if (isLeaves(level, pos, i, top - 2, j, leaves)) count++;
+                        if (isLeaves(level, pos, i, top - 3, j, leaves)) count++;
+                    }
+                    if (isLeaves(level, pos, i, top, j, leaves)) count++;
+                    if (isLeaves(level, pos, i, top + 1, j, leaves)) count++;
+                }
         }
         return count;
     }
 
     private static boolean isLeaves(Level level, BlockPos hole, int dx, int y, int dz, Block leaves) {
-        return level.getBlockState(new BlockPos(hole.getX() + dx, y, hole.getZ() + dz)).is(leaves);
+        return level.getBlockState(new BlockPos(hole.getX() + dx, y, hole.getZ() + dz))
+                .is(leaves);
     }
 
     /** Test/tool helper: how many leaves the tree at {@code pos} has, mapped into GT6's gates. */

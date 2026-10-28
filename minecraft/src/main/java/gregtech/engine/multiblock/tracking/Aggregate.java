@@ -1,9 +1,8 @@
 package gregtech.engine.multiblock.tracking;
 
 import gregtech.engine.multiblock.MultiblockLayout.Role;
-import net.minecraft.world.level.block.Block;
-
 import java.util.List;
+import net.minecraft.world.level.block.Block;
 
 /**
  * A constraint over the cells of one compiled pattern. Implementations only read the cached choices,
@@ -15,10 +14,15 @@ public sealed interface Aggregate permits Aggregate.Count, Aggregate.SameBlock {
     /** Committed, matched cells of a pattern in layout order. Fixed cells come first, then repeat copies. */
     interface Cells {
         int size();
+
         int choice(int index);
+
         int part(int index);
+
         String plain(int index);
+
         Role role(int index);
+
         Block block(int index);
     }
 
@@ -63,7 +67,8 @@ public sealed interface Aggregate permits Aggregate.Count, Aggregate.SameBlock {
             return new Count(selector, 0, max);
         }
 
-        @Override public boolean satisfied(Cells cells) {
+        @Override
+        public boolean satisfied(Cells cells) {
             int count = 0;
             for (int index = 0; index < cells.size(); index++) {
                 if (cells.choice(index) < 0) continue;
@@ -79,7 +84,8 @@ public sealed interface Aggregate permits Aggregate.Count, Aggregate.SameBlock {
             if (selector == null) selector = all();
         }
 
-        @Override public boolean satisfied(Cells cells) {
+        @Override
+        public boolean satisfied(Cells cells) {
             Block first = null;
             for (int index = 0; index < cells.size(); index++) {
                 if (cells.choice(index) < 0) continue;

@@ -1,13 +1,10 @@
 package gregtech.engine.material;
 
+import gregtech.api.material.*;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialDefinition;
-import gregtech.api.material.*;
-
-import gregtech.engine.addon.AddonMaterials;
-import gregtech.content.material.Materials;
 import gregtech.content.data.ImportedMaterialData;
-
+import gregtech.engine.addon.AddonMaterials;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,9 +19,9 @@ import java.util.Set;
  * Global material registry, analogous to {@code OreDictMaterial.createMaterial} + {@code MT.ALL_MATERIALS_REGISTERED_HERE}.
  */
 public final class GTMaterialRegistry {
-    private static java.util.function.BiConsumer<Boolean, String> logSink = (warning, message) ->
-            System.getLogger("gt6ce.materials").log(
-                    warning ? System.Logger.Level.WARNING : System.Logger.Level.INFO, message);
+    private static java.util.function.BiConsumer<Boolean, String> logSink =
+            (warning, message) -> System.getLogger("gt6ce.materials")
+                    .log(warning ? System.Logger.Level.WARNING : System.Logger.Level.INFO, message);
     /**
      * Exclusive ceiling of built-in numeric ids. The registry itself is not capped:
      * addon ids start at {@link #ADDON_ID_START} and grow with the materials that are loaded.
@@ -47,7 +44,14 @@ public final class GTMaterialRegistry {
      * Link-time groups stay in this set. Queued addon materials, including ones created by an addon link callback, do not.
      */
     private static Set<GTMaterial> coreMaterials = Set.of();
-    public enum RegistrationPhase { DEFINITIONS, LINKS, READY, FAILED }
+
+    public enum RegistrationPhase {
+        DEFINITIONS,
+        LINKS,
+        READY,
+        FAILED
+    }
+
     private static RegistrationPhase phase = RegistrationPhase.DEFINITIONS;
 
     static {
@@ -55,7 +59,9 @@ public final class GTMaterialRegistry {
         register(MaterialSentinels.Empty);
     }
 
-    public static RegistrationPhase registrationPhase() { return phase; }
+    public static RegistrationPhase registrationPhase() {
+        return phase;
+    }
 
     /**
      * Whether this material belongs to the built-in directory.
@@ -71,7 +77,9 @@ public final class GTMaterialRegistry {
         logSink = java.util.Objects.requireNonNull(sink, "sink");
     }
 
-    public static void warn(String message) { logSink.accept(true, message); }
+    public static void warn(String message) {
+        logSink.accept(true, message);
+    }
 
     /** Next addon id. Built-in registration does not consume this sequence. */
     public static int allocateAddonId() {
@@ -85,11 +93,13 @@ public final class GTMaterialRegistry {
             throw new IllegalStateException("Material definitions are closed (" + phase + "): " + definition.name());
         String key = GTMaterial.sanitize(definition.name());
         if (BY_NAME.containsKey(key) || BY_ID.containsKey(definition.id()))
-            throw new IllegalArgumentException("Material name or ID already registered: " + definition.name() + " / " + definition.id());
+            throw new IllegalArgumentException(
+                    "Material name or ID already registered: " + definition.name() + " / " + definition.id());
         return createMaterial(definition.id(), definition.name(), definition.displayName(), definition.color())
                 .put(definition.properties().toArray(MaterialProperty[]::new))
                 .setTextureSet(definition.texture())
-                .setAtomicProperties(definition.atomicProperties()).setAlpha(definition.alpha())
+                .setAtomicProperties(definition.atomicProperties())
+                .setAlpha(definition.alpha())
                 .setStats(definition.meltingPointKelvin(), definition.boilingPointKelvin(), definition.density())
                 .setTooltipChemical(definition.chemicalFormula());
     }
@@ -107,7 +117,10 @@ public final class GTMaterialRegistry {
             if (id < 0 || existing.getId() == id) {
                 return existing;
             }
-            logSink.accept(true, "Duplicate material name '" + sanitized + "' with different IDs " + existing.getId() + " and " + id);
+            logSink.accept(
+                    true,
+                    "Duplicate material name '" + sanitized + "' with different IDs " + existing.getId() + " and "
+                            + id);
             GTMaterial replacement = new GTMaterial(id, sanitized, localName, color);
             existing.setRegistration(replacement);
             register(replacement);
@@ -126,7 +139,8 @@ public final class GTMaterialRegistry {
         if (material.getId() > 0) {
             GTMaterial previous = BY_ID.putIfAbsent(material.getId(), material);
             if (previous != null) {
-                throw new IllegalStateException("Material ID " + material.getId() + " already used by " + previous.getName() + "; cannot register " + material.getName());
+                throw new IllegalStateException("Material ID " + material.getId() + " already used by "
+                        + previous.getName() + "; cannot register " + material.getName());
             }
         }
     }
@@ -143,7 +157,8 @@ public final class GTMaterialRegistry {
         return createMaterial(id, definition.name(), definition.displayName(), definition.color())
                 .put(definition.properties().toArray(MaterialProperty[]::new))
                 .setTextureSet(definition.texture())
-                .setAtomicProperties(definition.atomicProperties()).setAlpha(definition.alpha())
+                .setAtomicProperties(definition.atomicProperties())
+                .setAlpha(definition.alpha())
                 .setStats(definition.meltingPointKelvin(), definition.boilingPointKelvin(), definition.density())
                 .setTooltipChemical(definition.chemicalFormula());
     }
@@ -169,7 +184,9 @@ public final class GTMaterialRegistry {
         for (GTMaterial material : ALL_MATERIALS) {
             GTMaterial canonical = material.resolve();
             if (AddonMaterials.owns(canonical)) continue;
-            if (canonical.has(MaterialProperty.ELEMENT) && canonical.getId() > 0 && canonical.getId() < 8000
+            if (canonical.has(MaterialProperty.ELEMENT)
+                    && canonical.getId() > 0
+                    && canonical.getId() < 8000
                     && !canonical.has(MaterialProperty.ANTIMATTER)) {
                 PERIODIC_TABLE.add(canonical);
             }
@@ -192,7 +209,8 @@ public final class GTMaterialRegistry {
 
         GTMaterial existing = BY_NAME.get(aliasKey);
         if (existing != null) {
-            // Keep canonical registry entries (e.g. element {@code Gold}) over wood field aliases ({@code Gold}  -> {@code Goldwood}).
+            // Keep canonical registry entries (e.g. element {@code Gold}) over wood field aliases ({@code Gold}  ->
+            // {@code Goldwood}).
             if (existing.getName().equals(aliasKey) && !aliasKey.equals(targetKey)) {
                 return;
             }
@@ -205,8 +223,7 @@ public final class GTMaterialRegistry {
     }
 
     private static boolean isAntimatter(GTMaterial material) {
-        return material.has(MaterialProperty.ANTIMATTER)
-                || material.getName().startsWith("Anti");
+        return material.has(MaterialProperty.ANTIMATTER) || material.getName().startsWith("Anti");
     }
 
     public static void setDisplayName(String registryName, String displayName) {
@@ -282,7 +299,7 @@ public final class GTMaterialRegistry {
         // GT6 TD.Processing.NEVER_FURNACE (MT.java: Fe 414, Ti 410, W 463, WroughtIron 1655,
         // Steel 1713): these metals cannot be produced by furnace smelting at all — the vanilla
         // furnace recipe is rewritten to yield scrap and the metal has to be melted in a crucible.
-        for (String name : new String[]{"Iron", "WroughtIron", "Steel", "Titanium", "Tungsten"}) {
+        for (String name : new String[] {"Iron", "WroughtIron", "Steel", "Titanium", "Tungsten"}) {
             GTMaterial material = get(name);
             if (!material.isValid()) {
                 throw new IllegalStateException("Missing NEVER_FURNACE material: " + name);
@@ -290,13 +307,24 @@ public final class GTMaterialRegistry {
             material.put(MaterialProperty.NEVER_FURNACE);
         }
         // Explicit MT.setPulver rows are independent from ore crushing transformations.
-        for(String[] pair:new String[][]{{"Graphene","C"},{"ChargedCertusQuartz","CertusQuartz"},
-                {"NetherBrick","Netherrack"},{"WroughtIron","Fe"},{"AnnealedCopper","Cu"},{"PigIron","Fe"},
-                {"IronCompressed","Fe"},{"CastIron","Fe"},{"IronMagnetic","Fe"},{"SteelMagnetic","Steel"},
-                {"NeodymiumMagnetic","Nd"},{"WoodCompressed","Wood"}}) {
-            GTMaterial input=get(pair[0]),output=get(pair[1]);
-            if(!input.isValid()||!output.isValid())throw new IllegalStateException("Missing pulverization material: "+java.util.Arrays.toString(pair));
-            input.setPulver(output,GTValues.U);
+        for (String[] pair : new String[][] {
+            {"Graphene", "C"},
+            {"ChargedCertusQuartz", "CertusQuartz"},
+            {"NetherBrick", "Netherrack"},
+            {"WroughtIron", "Fe"},
+            {"AnnealedCopper", "Cu"},
+            {"PigIron", "Fe"},
+            {"IronCompressed", "Fe"},
+            {"CastIron", "Fe"},
+            {"IronMagnetic", "Fe"},
+            {"SteelMagnetic", "Steel"},
+            {"NeodymiumMagnetic", "Nd"},
+            {"WoodCompressed", "Wood"}
+        }) {
+            GTMaterial input = get(pair[0]), output = get(pair[1]);
+            if (!input.isValid() || !output.isValid())
+                throw new IllegalStateException("Missing pulverization material: " + java.util.Arrays.toString(pair));
+            input.setPulver(output, GTValues.U);
         }
     }
 }

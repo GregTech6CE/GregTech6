@@ -3,16 +3,17 @@ package gregtech.content.plant;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /** GT6 BlockFlowersA/B metadata, kept separate from bedrock ore selection and processing recipes. */
 public final class BedrockFlowers {
-    public record Flower(String id, char family, int meta, String indicator,
-                         boolean occursInRealLife, GTMaterial material) {
-        public boolean desert() { return family == 'B'; }
+    public record Flower(
+            String id, char family, int meta, String indicator, boolean occursInRealLife, GTMaterial material) {
+        public boolean desert() {
+            return family == 'B';
+        }
     }
 
     // Only five originals call OM.data; an indicator is not made of the ore it indicates.
@@ -39,7 +40,9 @@ public final class BedrockFlowers {
 
     private BedrockFlowers() {}
 
-    public static Flower byId(String id) { return BY_ID.get(id); }
+    public static Flower byId(String id) {
+        return BY_ID.get(id);
+    }
 
     private static Flower a(String id, int meta, String indicator, boolean real, GTMaterial material) {
         return new Flower(id, 'A', meta, indicator, real, material);

@@ -5,6 +5,7 @@ package gregtech.engine.block;
 /** Original tooltip thresholds; these labels do not change native explosion mechanics. */
 public final class OriginalBlockTooltipRules {
     private OriginalBlockTooltipRules() {}
+
     public enum BlastRating {
         TERRIBLE("gt.lang.blast.resist.terrible"),
         GHAST("gt.lang.blast.resist.ghast.proof"),
@@ -13,9 +14,16 @@ public final class OriginalBlockTooltipRules {
         DYNAMITE("gt.lang.blast.resist.dynamite.proof"),
         IC2_NUKE_UNPROTECTED("gt.lang.blast.resist.nuke.not");
         private final String key;
-        BlastRating(String key) { this.key = key; }
-        public String key() { return key; }
+
+        BlastRating(String key) {
+            this.key = key;
+        }
+
+        public String key() {
+            return key;
+        }
     }
+
     public static BlastRating blastRating(double resistance, boolean hasIC2ExplosionCompat, boolean whitelisted) {
         if (resistance < 4) return BlastRating.TERRIBLE;
         if (resistance < 12) return BlastRating.GHAST;
@@ -25,15 +33,22 @@ public final class OriginalBlockTooltipRules {
         return BlastRating.IC2_NUKE_UNPROTECTED;
     }
     /** The port currently has no original IC2 explosion compatibility provider. */
-    public static BlastRating blastRating(double resistance) { return blastRating(resistance, false, false); }
+    public static BlastRating blastRating(double resistance) {
+        return blastRating(resistance, false, false);
+    }
     /** MultiTileEntityItemInternal suppresses the blast row below4. */
-    public static boolean showMultitileBlast(double resistance) { return resistance >= 4; }
+    public static boolean showMultitileBlast(double resistance) {
+        return resistance >= 4;
+    }
     /** Original LH truncates to one decimal; it does not round. */
     public static String blastNumber(double resistance) {
         return ((int) resistance) + "." + (((int) (resistance * 10)) % 10);
     }
     /** Original LH prints tier details only above1 (its case1 arm is unreachable). */
-    public static boolean showHarvestLevel(int level) { return level > 1; }
+    public static boolean showHarvestLevel(int level) {
+        return level > 1;
+    }
+
     public static String harvestToolKey(String tool) {
         return switch (tool.toLowerCase(java.util.Locale.ROOT)) {
             case "pickaxe" -> "gt.lang.tool.name.pickaxe";
@@ -47,6 +62,7 @@ public final class OriginalBlockTooltipRules {
             default -> null;
         };
     }
+
     public static String harvestTierMaterial(int level) {
         return switch (level) {
             case 2 -> "iron";

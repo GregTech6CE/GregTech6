@@ -2,16 +2,14 @@ package gregtech.content.worldgen;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.worldgen.GTOreVeins.OreVein;
+import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-
-import java.util.Random;
 
 /**
  * Port of GT6 {@code WorldgenOresLarge} + the vein-grid selection from {@code GT6WorldGenerator}.
@@ -45,7 +43,8 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         // Per-dimension vein tables (GT6 ORE_OVERWORLD / ORE_END; the Nether had no large veins).
         java.util.List<OreVein> veins;
         int totalWeight;
-        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim = level.getLevel().dimension();
+        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim =
+                level.getLevel().dimension();
         if (dim == net.minecraft.world.level.Level.END) {
             veins = GTOreVeins.activeEndVeins();
             totalWeight = GTOreVeins.endSelectionWeight(veins);
@@ -85,8 +84,14 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         return MineralWorldgenRules.selectVein(veins, originRandom.nextInt(totalWeight));
     }
 
-    private boolean generateVein(WorldGenLevel level, RandomSource chunkRandom, ChunkPos chunkPos,
-                                 int originChunkX, int originChunkZ, Random originRandom, OreVein vein) {
+    private boolean generateVein(
+            WorldGenLevel level,
+            RandomSource chunkRandom,
+            ChunkPos chunkPos,
+            int originChunkX,
+            int originChunkZ,
+            Random originRandom,
+            OreVein vein) {
         // Deterministic per-origin base Y (GT6: mMinY + rand(mMaxY - mMinY - 5)),
         // stretched into the extended [-64,112] band in the Overworld only.
         int minY = GTWorldgenScale.remapY(level, vein.minY());
@@ -147,9 +152,10 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** GT6 density check: more likely to hit near the vein center, scaled by the density divisor. */
-    private static boolean densityHit(RandomSource random, int cX, int eX, int tX, int cZ, int eZ, int tZ, int density) {
+    private static boolean densityHit(
+            RandomSource random, int cX, int eX, int tX, int cZ, int eZ, int tZ, int density) {
         return random.nextInt(Math.max(1, Math.max(Math.abs(cZ - tZ), Math.abs(eZ - tZ)) / density)) == 0
-            || random.nextInt(Math.max(1, Math.max(Math.abs(cX - tX), Math.abs(eX - tX)) / density)) == 0;
+                || random.nextInt(Math.max(1, Math.max(Math.abs(cX - tX), Math.abs(eX - tX)) / density)) == 0;
     }
 
     private static boolean setOre(WorldGenLevel level, BlockPos pos, gregtech.api.material.GTMaterial material) {

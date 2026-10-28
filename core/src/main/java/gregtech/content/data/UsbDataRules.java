@@ -3,10 +3,13 @@ package gregtech.content.data;
 /** Shared file keys, built-in media ID parsing and slot/tier guards, without platform stack/NBT types. */
 public final class UsbDataRules {
 
-    private UsbDataRules() {
-    }
+    private UsbDataRules() {}
+
     public static final int FILES = 16, SCANNER_TIER = 3;
-    public static final String DATA = "gt.usb.data", TIER = "gt.usb.tier", DRIVE = "gt.usb.drive", MATERIAL = "gt.replicator.data",
+    public static final String DATA = "gt.usb.data",
+            TIER = "gt.usb.tier",
+            DRIVE = "gt.usb.drive",
+            MATERIAL = "gt.replicator.data",
             DIRECTION = "gt.usb.dir";
 
     public static int mode(int value) {
@@ -34,7 +37,9 @@ public final class UsbDataRules {
     }
 
     public static int tier(String namespace, String registryPath, String suffix) {
-        if (!"gt6ce".equals(namespace) || !registryPath.startsWith("usb") || !registryPath.endsWith(suffix)
+        if (!"gt6ce".equals(namespace)
+                || !registryPath.startsWith("usb")
+                || !registryPath.endsWith(suffix)
                 || registryPath.length() != 4 + suffix.length()) return -1;
         char tierDigit = registryPath.charAt(3);
         return tierDigit >= '1' && tierDigit <= '4' ? tierDigit - '0' : -1;

@@ -17,5 +17,7 @@ public final class FixedBumbleHiveBlock extends BumbleHiveBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {}
 
-    public DyeColor color() { return color; }
+    public DyeColor color() {
+        return color;
+    }
 }

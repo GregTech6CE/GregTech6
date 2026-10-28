@@ -1,3 +1,16 @@
 package gregtech.platform.neoforge.energy;
-@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,bus=net.neoforged.fml.common.EventBusSubscriber.Bus.MOD)
-public final class LaserCapabilities {private LaserCapabilities(){}@net.neoforged.bus.api.SubscribeEvent public static void capabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event){event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.BLOCK,gregtech.content.registry.GTBlockEntities.LASER_CONVERTER.get(),(be,side)->be.fluxHandler(side));}}
+
+@net.neoforged.fml.common.EventBusSubscriber(
+        modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
+        bus = net.neoforged.fml.common.EventBusSubscriber.Bus.MOD)
+public final class LaserCapabilities {
+    private LaserCapabilities() {}
+
+    @net.neoforged.bus.api.SubscribeEvent
+    public static void capabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.BLOCK,
+                gregtech.content.registry.GTBlockEntities.LASER_CONVERTER.get(),
+                (be, side) -> be.fluxHandler(side));
+    }
+}

@@ -1,13 +1,15 @@
 package gregtech.platform.neoforge.fluid;
 
-import gregtech.engine.fluid.FluidPhysicalProperties;
-import gregtech.engine.fluid.FluidRenderLayers;
-import gregtech.engine.fluid.GTWaterParity;
-import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.data.RegisteredFluids;
+import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.GTWorldWaterFluid;
+import gregtech.engine.fluid.FluidPhysicalProperties;
+import gregtech.engine.fluid.FluidRenderLayers;
+import gregtech.engine.fluid.GTWaterParity;
+import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -24,14 +26,13 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import java.util.HashSet;
-import java.util.concurrent.atomic.AtomicReference;
 
 /** Saltnya full fluid table and IDs with masson's Neo BaseFlowingFluid registration boundary. */
 public final class FluidRegistries {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "gt6ce");
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
     private static final java.util.Map<String, DeferredRegister<Item>> ADDON_ITEMS = new java.util.LinkedHashMap<>();
+
     private FluidRegistries() {}
 
     /** Built-in display items stay on {@link #ITEMS}; an addon fluid uses that addon's namespace. */
@@ -45,14 +46,17 @@ public final class FluidRegistries {
     }
 
     public static java.util.stream.Stream<DeferredHolder<Item, ? extends Item>> allItems() {
-        return java.util.stream.Stream.concat(ITEMS.getEntries().stream(),
+        return java.util.stream.Stream.concat(
+                ITEMS.getEntries().stream(),
                 ADDON_ITEMS.values().stream().flatMap(register -> register.getEntries().stream()));
     }
+
     public static void register(IEventBus bus) {
         FluidDefinitions.prepare();
         var paths = new HashSet<String>();
         for (var definition : RegisteredFluids.all().entrySet()) {
-            String field = definition.getKey(); var entry = definition.getValue();
+            String field = definition.getKey();
+            var entry = definition.getValue();
             if (entry.usesVanillaFluid()) continue;
             String path = RegisteredFluids.sanitizePath(entry.registryName());
             if (!paths.add(path)) continue;
@@ -64,25 +68,58 @@ public final class FluidRegistries {
             // Negative density is the original's densityDir = -1: these fluids rise instead of
             // falling. Air itself is density 0, so nothing neutrally buoyant is included.
             boolean lighterThanAir = !water && FluidPhysicalProperties.density(entry) < 0;
-            if (FluidRenderLayers.worldFluidPaths().contains(path)) blockRef.set(BLOCKS.register(path, () -> new gregtech.content.block.GTWorldFluidBlock(
-                    (FlowingFluid) stillRef.get().get(), BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY))));
-            var still = GTFluids.fluids(namespace).register(path, () -> water ? new GTWorldWaterFluid.Source(properties(field, type, blockRef, true))
-                    : lighterThanAir ? new GTGasFluid.Source(properties(field, type, blockRef, false))
-                    : new BaseFlowingFluid.Source(properties(field, type, blockRef, false)));
+            if (FluidRenderLayers.worldFluidPaths().contains(path))
+                blockRef.set(BLOCKS.register(
+                        path,
+                        () -> new gregtech.content.block.GTWorldFluidBlock(
+                                (FlowingFluid) stillRef.get().get(),
+                                BlockBehaviour.Properties.of()
+                                        .mapColor(MapColor.WATER)
+                                        .replaceable()
+                                        .noCollission()
+                                        .strength(100)
+                                        .pushReaction(PushReaction.DESTROY)
+                                        .noLootTable()
+                                        .liquid()
+                                        .sound(SoundType.EMPTY))));
+            var still = GTFluids.fluids(namespace)
+                    .register(
+                            path,
+                            () -> water
+                                    ? new GTWorldWaterFluid.Source(properties(field, type, blockRef, true))
+                                    : lighterThanAir
+                                            ? new GTGasFluid.Source(properties(field, type, blockRef, false))
+                                            : new BaseFlowingFluid.Source(properties(field, type, blockRef, false)));
             stillRef.set(still);
-            var flowing = GTFluids.fluids(namespace).register(path + "_flowing", () -> water ? new GTWorldWaterFluid.Flowing(properties(field, type, blockRef, true))
-                    : lighterThanAir ? new GTGasFluid.Flowing(properties(field, type, blockRef, false))
-                    : new BaseFlowingFluid.Flowing(properties(field, type, blockRef, false)));
+            var flowing = GTFluids.fluids(namespace)
+                    .register(
+                            path + "_flowing",
+                            () -> water
+                                    ? new GTWorldWaterFluid.Flowing(properties(field, type, blockRef, true))
+                                    : lighterThanAir
+                                            ? new GTGasFluid.Flowing(properties(field, type, blockRef, false))
+                                            : new BaseFlowingFluid.Flowing(properties(field, type, blockRef, false)));
             GTFluids.bindFluid(field, still, flowing, ResourceLocation.fromNamespaceAndPath(namespace, path), entry);
             items(namespace).register("fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties()));
         }
         RegisteredFluids.closeDefinitions();
-        GTFluids.FLUID_TYPES.register(bus); GTFluids.FLUIDS.register(bus); GTFluids.registerAddonFluids(bus);
-        BLOCKS.register(bus); ITEMS.register(bus); registerAddonItems(bus);
+        GTFluids.FLUID_TYPES.register(bus);
+        GTFluids.FLUIDS.register(bus);
+        GTFluids.registerAddonFluids(bus);
+        BLOCKS.register(bus);
+        ITEMS.register(bus);
+        registerAddonItems(bus);
     }
-    private static BaseFlowingFluid.Properties properties(String field, DeferredHolder<FluidType, FluidType> type,
-            AtomicReference<DeferredHolder<Block, LiquidBlock>> block, boolean water) {
-        var properties = new BaseFlowingFluid.Properties(type, () -> GTFluids.still(field).get(), () -> GTFluids.flowing(field).get());
+
+    private static BaseFlowingFluid.Properties properties(
+            String field,
+            DeferredHolder<FluidType, FluidType> type,
+            AtomicReference<DeferredHolder<Block, LiquidBlock>> block,
+            boolean water) {
+        var properties = new BaseFlowingFluid.Properties(
+                type,
+                () -> GTFluids.still(field).get(),
+                () -> GTFluids.flowing(field).get());
         if (block.get() != null) properties.block(() -> block.get().get());
         if (water) properties.explosionResistance(100);
         return properties;

@@ -1,12 +1,11 @@
 package gregtech.compat.kubejs;
 
+import dev.latvian.mods.rhino.Wrapper;
 import gregtech.engine.kubejs.StructureLayoutDocuments;
 import gregtech.engine.recipe.data.FluidComponent;
 import gregtech.engine.recipe.data.ItemComponent;
 import gregtech.engine.recipe.data.ItemResult;
 import gregtech.engine.recipe.data.MachineRecipeScript;
-import dev.latvian.mods.rhino.Wrapper;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,7 +19,8 @@ final class ScriptValues {
         var json = object(spec);
         String map = text(json.get("map"));
         if (Boolean.TRUE.equals(json.get("clear"))) return MachineRecipeScript.clear(map);
-        return MachineRecipeScript.removal(map,
+        return MachineRecipeScript.removal(
+                map,
                 items(json.get("itemInputs"), json.get("item_inputs"), 0),
                 fluids(json.get("fluidInputs"), json.get("fluid_inputs")),
                 results(json.get("itemOutputs"), json.get("item_outputs")),
@@ -32,8 +32,11 @@ final class ScriptValues {
         for (Object element : list(cellList(spec))) {
             var cell = object(element);
             out.add(new StructureLayoutDocuments.CellSpec(
-                    number(cell.get("right")), number(cell.get("up")), number(cell.get("back")),
-                    matches(cell.get("match")), text(cell.get("role")),
+                    number(cell.get("right")),
+                    number(cell.get("up")),
+                    number(cell.get("back")),
+                    matches(cell.get("match")),
+                    text(cell.get("role")),
                     cell.containsKey("design") ? number(cell.get("design")) : -1));
         }
         return out;
@@ -58,8 +61,10 @@ final class ScriptValues {
         for (Object element : list(json.get("repeats"))) {
             var repeat = object(element);
             out.add(new StructureLayoutDocuments.RepeatSpec(
-                    text(repeat.get("key")), number(repeat.get("up")),
-                    number(repeat.get("min")), number(repeat.get("max")),
+                    text(repeat.get("key")),
+                    number(repeat.get("up")),
+                    number(repeat.get("min")),
+                    number(repeat.get("max")),
                     repeat.containsKey("step") ? number(repeat.get("step")) : 1,
                     cells(repeat.get("cells"))));
         }
@@ -127,7 +132,9 @@ final class ScriptValues {
         return MachineRecipeScript.fluid(text(json.get("fluid")), amount);
     }
 
-    private static Object first(Object camel, Object snake) { return camel != null ? camel : snake; }
+    private static Object first(Object camel, Object snake) {
+        return camel != null ? camel : snake;
+    }
 
     private static List<Object> list(Object value) {
         Object unwrapped = unwrap(value);

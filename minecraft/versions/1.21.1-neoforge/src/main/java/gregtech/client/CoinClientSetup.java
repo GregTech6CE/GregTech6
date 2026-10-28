@@ -1,11 +1,14 @@
 package gregtech.client;
 
 import gregtech.content.registry.*;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(
+        modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
+        bus = EventBusSubscriber.Bus.MOD,
+        value = Dist.CLIENT)
 public final class CoinClientSetup {
     @SubscribeEvent
     public static void renderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
@@ -18,12 +21,14 @@ public final class CoinClientSetup {
                 .map(item -> item.get())
                 .filter(item -> item instanceof gregtech.content.item.CoinItem)
                 .toArray(net.minecraft.world.item.Item[]::new);
-        event.registerItem(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
+        event.registerItem(
+                new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
 
-            @Override
-            public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return CoinItemRenderer.instance();
-            }
-        }, coins);
+                    @Override
+                    public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                        return CoinItemRenderer.instance();
+                    }
+                },
+                coins);
     }
 }

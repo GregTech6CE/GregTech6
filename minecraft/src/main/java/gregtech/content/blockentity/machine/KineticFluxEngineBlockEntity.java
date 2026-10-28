@@ -1,8 +1,7 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.energy.FaceConfig;
-import gregtech.engine.machine.FluxEngineSpec;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.machine.FluxEngineSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,12 +20,24 @@ public class KineticFluxEngineBlockEntity extends PistonEngineBlockEntity {
         this.faceConfig = defaultFaceConfig();
     }
 
-    public FluxEngineSpec spec() { return spec; }
+    public FluxEngineSpec spec() {
+        return spec;
+    }
 
-    @Override protected long outputRate() { return spec != null ? spec.outputRate() : 0; }
+    @Override
+    protected long outputRate() {
+        return spec != null ? spec.outputRate() : 0;
+    }
     /** Rated RF consumption; native RF packets may still have size one. */
-    @Override protected long inputRate() { return spec != null ? spec.inputRate() : 0; }
-    @Override protected GregTechTags.Tag inputEnergyType() { return GregTechTags.Energy.RF; }
+    @Override
+    protected long inputRate() {
+        return spec != null ? spec.inputRate() : 0;
+    }
+
+    @Override
+    protected GregTechTags.Tag inputEnergyType() {
+        return GregTechTags.Energy.RF;
+    }
 
     public static <T extends KineticFluxEngineBlockEntity> void serverTick(
             Level level, BlockPos pos, BlockState state, T be) {

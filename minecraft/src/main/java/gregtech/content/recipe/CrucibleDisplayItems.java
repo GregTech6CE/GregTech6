@@ -5,9 +5,9 @@ import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.util.OM;
-import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /** Physical forms make crucible recipe inputs discoverable from ordinary material items. */
 public final class CrucibleDisplayItems {

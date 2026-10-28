@@ -12,7 +12,8 @@ public final class SensorEnvironment {
     private SensorEnvironment() {}
 
     public static long temperature(Level level, BlockPos pos) {
-        long value = SensorMeasurements.environmentKelvin(level.getBiome(pos).value().getBaseTemperature());
+        long value =
+                SensorMeasurements.environmentKelvin(level.getBiome(pos).value().getBaseTemperature());
         value = nearbyHeat(level, pos, value);
         for (var side : Direction.values()) value = nearbyHeat(level, pos.relative(side), value);
         return value;

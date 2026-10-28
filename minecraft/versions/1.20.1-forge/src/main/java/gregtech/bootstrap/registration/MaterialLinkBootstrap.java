@@ -1,7 +1,7 @@
 package gregtech.bootstrap.registration;
 
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.bootstrap.InitializationStep;
+import gregtech.engine.material.GTMaterialRegistry;
 
 public record MaterialLinkBootstrap() implements InitializationStep {
     @Override

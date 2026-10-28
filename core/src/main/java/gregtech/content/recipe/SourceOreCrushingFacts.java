@@ -1,14 +1,14 @@
 package gregtech.content.recipe;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.recipe.SourceOreCrushingRules.Hexorium;
 import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
 import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Finite source facts for native ore Crusher/Hammer planning, not global material metadata.
@@ -29,6 +29,7 @@ public final class SourceOreCrushingFacts {
         var fact = SourceRecyclingFacts.find(id, name);
         return fact != null && fact.portDefaults() != null; // roster membership ONLY
     }
+
     public static Decision pulverizingCinnabar(int id, String canonicalName) {
         if (specialHexorium(id, canonicalName) != null) return Decision.NO;
         if (!reviewedInput(id, canonicalName)) return Decision.UNKNOWN;
@@ -39,6 +40,7 @@ public final class SourceOreCrushingFacts {
         Hexorium special = specialHexorium(id, canonicalName);
         return special != null ? special : reviewedInput(id, canonicalName) ? Hexorium.NONE : null;
     }
+
     private static Hexorium specialHexorium(int id, String name) {
         return switch (id) {
             case 9224 -> "HexoriumBlack".equals(name) ? Hexorium.BLACK_WHITE : null;
@@ -52,24 +54,48 @@ public final class SourceOreCrushingFacts {
 
     /** Source prefix association only. A normal/broken native representation needs separate proof;
      * this table is not an item matcher or a promise that a native holder currently exists. */
-    public record HostProfile(String sourcePrefix, Identity gangueMaterial, long gangueAmount,
-                              boolean hexoriumAdjusted) {
-        public HostProfile { Objects.requireNonNull(sourcePrefix); Objects.requireNonNull(gangueMaterial); }
+    public record HostProfile(
+            String sourcePrefix, Identity gangueMaterial, long gangueAmount, boolean hexoriumAdjusted) {
+        public HostProfile {
+            Objects.requireNonNull(sourcePrefix);
+            Objects.requireNonNull(gangueMaterial);
+        }
     }
+
     private static final Map<String, HostProfile> HOSTS = createHosts();
     // Same OP prefix for normal/broken: Loader_Ores 56/58/59, Loader_Rocks 57-138.
     private static final Set<String> BROKEN_SOURCE_PAIRS = Set.of(
-            "oreVanillastone", "oreNetherrack", "oreEndstone", "oreBlackgranite", "oreRedgranite",
-            "oreBasalt", "oreMarble", "oreLimestone", "oreVanillagranite", "oreDiorite", "oreAndesite",
-            "oreKomatiite", "oreGreenschist", "oreBlueschist", "oreKimberlite", "oreQuartzite",
-            "oreLightprismarine", "oreDarkprismarine", "oreSlate", "oreShale");
+            "oreVanillastone",
+            "oreNetherrack",
+            "oreEndstone",
+            "oreBlackgranite",
+            "oreRedgranite",
+            "oreBasalt",
+            "oreMarble",
+            "oreLimestone",
+            "oreVanillagranite",
+            "oreDiorite",
+            "oreAndesite",
+            "oreKomatiite",
+            "oreGreenschist",
+            "oreBlueschist",
+            "oreKimberlite",
+            "oreQuartzite",
+            "oreLightprismarine",
+            "oreDarkprismarine",
+            "oreSlate",
+            "oreShale");
+
     public static HostProfile hostProfile(String nativeHostId) {
         return nativeHostId == null ? null : HOSTS.get(nativeHostId);
     }
+
     public static Decision hostDecision(String nativeHostId) {
         if (hostProfile(nativeHostId) != null) return Decision.YES;
-        if ("bedrock".equals(nativeHostId) || "sand".equals(nativeHostId)
-                || "red_sand".equals(nativeHostId) || "gravel".equals(nativeHostId)) return Decision.NO;
+        if ("bedrock".equals(nativeHostId)
+                || "sand".equals(nativeHostId)
+                || "red_sand".equals(nativeHostId)
+                || "gravel".equals(nativeHostId)) return Decision.NO;
         return Decision.UNKNOWN;
     }
     /** False is lack of paired source evidence, not a new material/host prohibition.
@@ -78,6 +104,7 @@ public final class SourceOreCrushingFacts {
         HostProfile profile = hostProfile(nativeHostId);
         return profile != null && BROKEN_SOURCE_PAIRS.contains(profile.sourcePrefix());
     }
+
     private static Map<String, HostProfile> createHosts() {
         var result = new LinkedHashMap<String, HostProfile>();
         host(result, "oreVanillastone", 8500, "Stone", false, "stone"); // OP659, MT1631
@@ -104,8 +131,14 @@ public final class SourceOreCrushingFacts {
         host(result, "oreQuartzite", 9180, "Quartzite", false, "stone_quartzite"); // OP706, MT3828
         return Map.copyOf(result);
     }
-    private static void host(Map<String, HostProfile> result, String prefix, int materialId,
-                             String canonicalName, boolean adjusted, String... nativeHostIds) {
+
+    private static void host(
+            Map<String, HostProfile> result,
+            String prefix,
+            int materialId,
+            String canonicalName,
+            boolean adjusted,
+            String... nativeHostIds) {
         var profile = new HostProfile(prefix, new Identity(materialId, canonicalName), 4 * U, adjusted);
         for (String host : nativeHostIds) {
             if (result.put(host, profile) != null) throw new IllegalStateException("Duplicate source host " + host);

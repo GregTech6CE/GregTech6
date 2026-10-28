@@ -19,7 +19,9 @@ public final class LayoutPartFactories {
         ready = true;
     }
 
-    static synchronized boolean ready() { return ready; }
+    static synchronized boolean ready() {
+        return ready;
+    }
 
     static synchronized Set<String> names(String addonId) {
         return names.getOrDefault(addonId, Set.of());

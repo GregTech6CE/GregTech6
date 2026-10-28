@@ -14,7 +14,8 @@ import net.minecraft.world.level.Level;
 public final class BehaviorHandheldMeter {
     private BehaviorHandheldMeter() {}
 
-    public static ItemBehaviors.Outcome useOn(Level level, BlockPos pos, Player player, ItemStack stack, boolean electric) {
+    public static ItemBehaviors.Outcome useOn(
+            Level level, BlockPos pos, Player player, ItemStack stack, boolean electric) {
         var target = level.getBlockEntity(pos);
         if (electric && target instanceof ElectricWireBlockEntity wire) {
             send(level, player, Component.translatable("message.gt6ce.meter.electric", wire.lastWattage()));
@@ -23,9 +24,14 @@ public final class BehaviorHandheldMeter {
         } else if (!electric && target instanceof GearboxBlockEntity gearbox) {
             for (var side : Direction.values()) {
                 if (!gearbox.hasGear(side) && !gearbox.hasAxis(side.getAxis())) continue;
-                send(level, player, Component.translatable(gearbox.receivedFrom(side)
-                        ? "message.gt6ce.meter.input_side" : "message.gt6ce.meter.output_side",
-                        Component.translatable("jade.gt6ce.direction." + side.getName())));
+                send(
+                        level,
+                        player,
+                        Component.translatable(
+                                gearbox.receivedFrom(side)
+                                        ? "message.gt6ce.meter.input_side"
+                                        : "message.gt6ce.meter.output_side",
+                                Component.translatable("jade.gt6ce.direction." + side.getName())));
             }
             send(level, player, Component.translatable("message.gt6ce.meter.rotary", gearbox.transferredLast()));
         } else {

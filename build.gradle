@@ -1,4 +1,7 @@
-plugins { id 'base' }
+plugins {
+    id 'base'
+    id 'com.diffplug.spotless' version '8.10.4' apply false
+}
 
 version = mod_version
 group = mod_group_id
@@ -9,10 +12,49 @@ subprojects {
     tasks.withType(org.gradle.jvm.tasks.Jar).configureEach { includeEmptyDirs = false }
 }
 
+// Formatting lives in the build, not in individual edits. The API submodule owns its
+// own lifecycle; committed generated sources stay untouched in this pass.
+def spotlessProjects = [':core', ':minecraft', ':minecraft:1.20.1-forge', ':minecraft:1.21.1-neoforge']
+configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
+    // Spotless resolves the formatter and its transitive dependencies from this project's
+    // repositories. Core and the shared Minecraft project have no repository of their own;
+    // the loader nodes already add their own, so leave their resolution untouched.
+    if (spotlessProject.path == ':core' || spotlessProject.path == ':minecraft') {
+        spotlessProject.repositories {
+            mavenCentral()
+        }
+    }
+    spotlessProject.apply plugin: 'com.diffplug.spotless'
+    def javaSources = spotlessProject.fileTree(spotlessProject.projectDir) {
+        include 'src/**/*.java'
+        exclude '**/generated/**'
+    }
+    // Stonecutter keeps one version's code inside block comments. A formatter cannot
+    // see through those comments, so marked files wait for the per-node pass.
+    def stonecutterPaths = javaSources
+            .filter { File file -> file.getText('UTF-8').contains('//?') }
+            .files.collect { spotlessProject.relativePath(it) }
+    spotlessProject.spotless {
+        java {
+            target javaSources
+            targetExclude stonecutterPaths
+            palantirJavaFormat('2.103.0')
+        }
+    }
+    spotlessProject.tasks.matching { it.name == 'check' }.configureEach { dependsOn 'spotlessCheck' }
+}
+
+tasks.register('format') {
+    group = 'build'
+    description = 'Formats core, shared Minecraft sources and both version nodes with Spotless.'
+    dependsOn spotlessProjects.collect { "${it}:spotlessApply" }
+}
+
 apply from: 'gradle/stonecutter-native.gradle'
 
 tasks.named('check').configure {
     dependsOn ':api:check', ':core:check', ':minecraft:1.20.1-forge:check', ':minecraft:1.21.1-neoforge:check'
+    dependsOn spotlessProjects.collect { "${it}:spotlessCheck" }
 }
 tasks.named('assemble').configure { dependsOn 'assembleBothPlatforms' }
 tasks.named('clean').configure {

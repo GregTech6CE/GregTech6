@@ -1,8 +1,7 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.energy.FaceConfig;
-import gregtech.engine.machine.ElectricEngineSpec;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.machine.ElectricEngineSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,11 +20,24 @@ public class KineticElectricEngineBlockEntity extends PistonEngineBlockEntity {
         this.faceConfig = defaultFaceConfig();
     }
 
-    public ElectricEngineSpec spec() { return spec; }
+    public ElectricEngineSpec spec() {
+        return spec;
+    }
 
-    @Override protected long outputRate() { return spec != null ? spec.outputRate() : 0; }
-    @Override protected long inputRate() { return spec != null ? spec.inputRate() : 0; }
-    @Override protected GregTechTags.Tag inputEnergyType() { return GregTechTags.Energy.EU; }
+    @Override
+    protected long outputRate() {
+        return spec != null ? spec.outputRate() : 0;
+    }
+
+    @Override
+    protected long inputRate() {
+        return spec != null ? spec.inputRate() : 0;
+    }
+
+    @Override
+    protected GregTechTags.Tag inputEnergyType() {
+        return GregTechTags.Energy.EU;
+    }
 
     public static <T extends KineticElectricEngineBlockEntity> void serverTick(
             Level level, BlockPos pos, BlockState state, T be) {

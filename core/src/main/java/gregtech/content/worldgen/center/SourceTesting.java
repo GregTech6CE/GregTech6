@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.worldgen.center;
 
 import static gregtech.content.worldgen.center.OriginSupport.*;
@@ -32,32 +31,37 @@ public final class SourceTesting {
     public boolean generate(OriginWorld aWorld, OriginWorld.Chunk aChunk, int aMinX, int aMinZ) {
         if ((aMinX != 32 && aMinX != 48) || (aMinZ != -32 && aMinZ != -48)) return F;
 
-        for (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {
-            for (int k = aWorld.minY() + 1; k <= mHeight; k++) set(aChunk, i, k, j, BlocksGT.Concrete, DYE_INDEX_Gray);
-            for (int k = mHeight + 2; k < aWorld.maxY(); k++) set(aChunk, i, k, j, NB, 0);
+        for (int i = 0; i < 16; i++)
+            for (int j = 0; j < 16; j++) {
+                for (int k = aWorld.minY() + 1; k <= mHeight; k++)
+                    set(aChunk, i, k, j, BlocksGT.Concrete, DYE_INDEX_Gray);
+                for (int k = mHeight + 2; k < aWorld.maxY(); k++) set(aChunk, i, k, j, NB, 0);
 
-            set(aChunk, i, mHeight + 1, j, BlocksGT.CFoam, DYE_INDEX_Gray);
-            if ((i == 0 && aMinX == 32) || (i == 15 && aMinX == 48) || (j == 0 && aMinZ == -48) || (j == 15 && aMinZ == -32)) {
-                set(aChunk, i, mHeight + 2, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 3, j, BlocksGT.CFoam, DYE_INDEX_Yellow);
-                set(aChunk, i, mHeight + 4, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 5, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 6, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 7, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 8, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 9, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 10, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 11, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 12, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 13, j, BlocksGT.CFoam, DYE_INDEX_Yellow);
-                set(aChunk, i, mHeight + 14, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
-                set(aChunk, i, mHeight + 15, j, BlocksGT.CFoam, DYE_INDEX_Gray);
-            } else if ((i != 1 && i != 5 && i != 10 && i != 14) && (j != 1 && j != 5 && j != 10 && j != 14)) {
-                set(aChunk, i, mHeight + 15, j, BlocksGT.GLOW_GLASS_SLABS[1], DYE_INDEX_LightBlue);
-            } else {
-                set(aChunk, i, mHeight + 15, j, BlocksGT.FOAM_SLABS[1], DYE_INDEX_LightGray);
+                set(aChunk, i, mHeight + 1, j, BlocksGT.CFoam, DYE_INDEX_Gray);
+                if ((i == 0 && aMinX == 32)
+                        || (i == 15 && aMinX == 48)
+                        || (j == 0 && aMinZ == -48)
+                        || (j == 15 && aMinZ == -32)) {
+                    set(aChunk, i, mHeight + 2, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 3, j, BlocksGT.CFoam, DYE_INDEX_Yellow);
+                    set(aChunk, i, mHeight + 4, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 5, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 6, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 7, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 8, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 9, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 10, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 11, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 12, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 13, j, BlocksGT.CFoam, DYE_INDEX_Yellow);
+                    set(aChunk, i, mHeight + 14, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);
+                    set(aChunk, i, mHeight + 15, j, BlocksGT.CFoam, DYE_INDEX_Gray);
+                } else if ((i != 1 && i != 5 && i != 10 && i != 14) && (j != 1 && j != 5 && j != 10 && j != 14)) {
+                    set(aChunk, i, mHeight + 15, j, BlocksGT.GLOW_GLASS_SLABS[1], DYE_INDEX_LightBlue);
+                } else {
+                    set(aChunk, i, mHeight + 15, j, BlocksGT.FOAM_SLABS[1], DYE_INDEX_LightGray);
+                }
             }
-        }
 
         if (aMinX == 32 && aMinZ == -32) {
             set(aChunk, 0, mHeight + 2, 5, BlocksGT.CFoam, DYE_INDEX_Gray);
@@ -148,7 +152,12 @@ public final class SourceTesting {
 
             // Lots of Items I want to have ready whenever I generate a new Test World.
 
-            aWorld.tile(39, mHeight + 2, -18, 4033, "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_INV_LIST, UT.NBT.makeInv(tInventory))");
+            aWorld.tile(
+                    39,
+                    mHeight + 2,
+                    -18,
+                    4033,
+                    "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_INV_LIST, UT.NBT.makeInv(tInventory))");
             aWorld.tile(39, mHeight + 3, -18, 32722, "null");
 
             aWorld.tile(40, mHeight + 2, -18, 4033, "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)");

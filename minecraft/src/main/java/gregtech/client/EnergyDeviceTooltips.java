@@ -3,13 +3,13 @@
  * and the battery box / solar / bidirectional converter tooltip chains. */
 package gregtech.client;
 
-import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.content.machine.OriginalFunctionalTooltipData;
-import gregtech.content.data.GregTechTags;
+import gregtech.engine.energy.EnergyNodeSpec;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import java.util.List;
 
 public final class EnergyDeviceTooltips {
     private EnergyDeviceTooltips() {}
@@ -17,79 +17,138 @@ public final class EnergyDeviceTooltips {
     public static void append(EnergyNodeSpec spec, boolean reversed, float resistance, List<Component> lines) {
         var source = OriginalEnergyDeviceTooltipData.profile(spec, reversed);
         if (source.input() != null) {
-            lines.add(energyLine(source.input(), spec.inType(), source.inputFaceKey(), false, source.alwaysShowRange()));
+            lines.add(
+                    energyLine(source.input(), spec.inType(), source.inputFaceKey(), false, source.alwaysShowRange()));
             if (spec.inType() == GregTechTags.Energy.RF)
-                lines.add(Component.translatable("gt.lang.accepts.redstoneflux.lossless").withStyle(ChatFormatting.GOLD));
+                lines.add(Component.translatable("gt.lang.accepts.redstoneflux.lossless")
+                        .withStyle(ChatFormatting.GOLD));
         }
         lines.add(energyLine(source.output(), spec.outType(), source.outputFaceKey(), true, source.alwaysShowRange()));
         if (spec.outType() == GregTechTags.Energy.RF)
-            lines.add(Component.translatable("gt.lang.emits.redstoneflux.lossless").withStyle(ChatFormatting.GOLD));
+            lines.add(Component.translatable("gt.lang.emits.redstoneflux.lossless")
+                    .withStyle(ChatFormatting.GOLD));
         boolean thermal = gregtech.content.energy.OriginalThermalConverter.handles(spec);
         boolean cooler = thermal && gregtech.content.energy.OriginalThermalConverter.cooler(spec);
         if (cooler) lines.add(energyLine(source.output(), GregTechTags.Energy.HU, "gt.lang.face.back", true, true));
-        for (int index = 0; index < (cooler ? 2 : 1); index++) if (source.efficiency() >= 0)
-            lines.add(Component.translatable("gt.lang.efficiency").withStyle(ChatFormatting.YELLOW)
-                    .append(Component.literal(": " + OriginalFunctionalTooltipData.efficiencyPercent(source.efficiency()) + "%")
-                            .withStyle(ChatFormatting.WHITE)));
+        for (int index = 0; index < (cooler ? 2 : 1); index++)
+            if (source.efficiency() >= 0)
+                lines.add(Component.translatable("gt.lang.efficiency")
+                        .withStyle(ChatFormatting.YELLOW)
+                        .append(Component.literal(": "
+                                        + OriginalFunctionalTooltipData.efficiencyPercent(source.efficiency()) + "%")
+                                .withStyle(ChatFormatting.WHITE)));
         if (source.batteryModes())
-            for (String key : List.of("gt.tooltip.energybattery.1", "gt.tooltip.energybattery.2", "gt.tooltip.energybattery.3"))
+            for (String key :
+                    List.of("gt.tooltip.energybattery.1", "gt.tooltip.energybattery.2", "gt.tooltip.energybattery.3"))
                 lines.add(Component.translatable(key).withStyle(ChatFormatting.DARK_GRAY));
-        lines.add(Component.translatable("gt.lang.use.x.to.toggle.facing.pre").withStyle(ChatFormatting.DARK_GRAY)
+        lines.add(Component.translatable("gt.lang.use.x.to.toggle.facing.pre")
+                .withStyle(ChatFormatting.DARK_GRAY)
                 .append(Component.translatable("gt.lang.tool.name.wrench"))
                 .append(Component.translatable("gt.lang.use.x.to.toggle.facing.post")));
         if (source.monkeyWrench())
-            lines.add(Component.translatable("gt.lang.use.monkey.wrench.to.toggle.direction").withStyle(ChatFormatting.DARK_GRAY));
+            lines.add(Component.translatable("gt.lang.use.monkey.wrench.to.toggle.direction")
+                    .withStyle(ChatFormatting.DARK_GRAY));
         TooltipHelper.appendBlastResistance(resistance, lines);
         if (gregtech.content.energy.MagnetMachineDefinitions.handles(spec))
             lines.add(Component.translatable("gt.lang.reminder.extenders").withStyle(ChatFormatting.GRAY));
         if (gregtech.content.energy.OriginalSteamTurbines.handles(spec))
-            lines.add(Component.translatable("gt.lang.emits.used.steam").withStyle(ChatFormatting.GOLD)
-                    .append(Component.literal(" (")).append(Component.translatable("gt.lang.face.sides")).append(Component.literal(", 80%)")));
+            lines.add(Component.translatable("gt.lang.emits.used.steam")
+                    .withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(" ("))
+                    .append(Component.translatable("gt.lang.face.sides"))
+                    .append(Component.literal(", 80%)")));
         if (thermal) {
-            if (cooler) lines.add(Component.translatable("gt.lang.reminder.extenders").withStyle(ChatFormatting.GRAY));
-            else lines.add(Component.translatable("gt.lang.hazard.contact").withStyle(ChatFormatting.DARK_RED)
-                    .append(Component.literal(" (")).append(Component.translatable("gt.lang.face.front")).append(Component.literal(")")));
+            if (cooler)
+                lines.add(Component.translatable("gt.lang.reminder.extenders").withStyle(ChatFormatting.GRAY));
+            else
+                lines.add(Component.translatable("gt.lang.hazard.contact")
+                        .withStyle(ChatFormatting.DARK_RED)
+                        .append(Component.literal(" ("))
+                        .append(Component.translatable("gt.lang.face.front"))
+                        .append(Component.literal(")")));
         }
     }
 
     /** Original converter statistics, face names, efficiency and facing-tool hint. */
     public static void appendLaser(gregtech.content.energy.LaserSpec spec, float resistance, List<Component> lines) {
-        lines.add(energyLine(new OriginalEnergyDeviceTooltipData.Stats(spec.input() <= 16 ? 1 : spec.input() / 2, spec.input(), spec.input() * 2),
-                spec.inputType(), spec.backInputOnly() ? "gt.lang.face.back" : "gt.lang.face.any.but.front", false, true));
-        lines.add(energyLine(new OriginalEnergyDeviceTooltipData.Stats(spec.output() / 2, spec.output(), spec.output() * 2),
-                spec.outputType(), "gt.lang.face.front", true, true));
-        long normalizedInput = spec.kind() == gregtech.content.energy.LaserSpec.Kind.FLUX ? spec.input() / 4 : spec.input();
-        lines.add(Component.translatable("gt.lang.efficiency").withStyle(ChatFormatting.YELLOW)
-                .append(Component.literal(": " + OriginalFunctionalTooltipData.efficiencyPercent((int)(10000 * spec.output() / normalizedInput)) + "%").withStyle(ChatFormatting.WHITE)));
+        lines.add(energyLine(
+                new OriginalEnergyDeviceTooltipData.Stats(
+                        spec.input() <= 16 ? 1 : spec.input() / 2, spec.input(), spec.input() * 2),
+                spec.inputType(),
+                spec.backInputOnly() ? "gt.lang.face.back" : "gt.lang.face.any.but.front",
+                false,
+                true));
+        lines.add(energyLine(
+                new OriginalEnergyDeviceTooltipData.Stats(spec.output() / 2, spec.output(), spec.output() * 2),
+                spec.outputType(),
+                "gt.lang.face.front",
+                true,
+                true));
+        long normalizedInput =
+                spec.kind() == gregtech.content.energy.LaserSpec.Kind.FLUX ? spec.input() / 4 : spec.input();
+        lines.add(Component.translatable("gt.lang.efficiency")
+                .withStyle(ChatFormatting.YELLOW)
+                .append(Component.literal(": "
+                                + OriginalFunctionalTooltipData.efficiencyPercent(
+                                        (int) (10000 * spec.output() / normalizedInput))
+                                + "%")
+                        .withStyle(ChatFormatting.WHITE)));
         StorageBlockTooltips.facing(lines);
         TooltipHelper.appendBlastResistance(resistance, lines);
     }
 
-    public static Component energyLine(OriginalEnergyDeviceTooltipData.Stats stats, GregTechTags.Tag type,
-                                        String faceKey, boolean emitting, boolean alwaysShowRange) {
+    public static Component energyLine(
+            OriginalEnergyDeviceTooltipData.Stats stats,
+            GregTechTags.Tag type,
+            String faceKey,
+            boolean emitting,
+            boolean alwaysShowRange) {
         var line = Component.translatable(emitting ? "gt.lang.energy.output" : "gt.lang.energy.input")
                 .withStyle(emitting ? ChatFormatting.RED : ChatFormatting.GREEN)
                 .append(Component.literal(": " + stats.recommended() + " ").withStyle(ChatFormatting.WHITE))
-                .append(Component.translatable(type == GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
-                        : type == GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux"
-                        : type == GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
-                        : type == GregTechTags.Energy.STEAM ? "gt.td.short.energy.steam"
-                        : type == GregTechTags.Energy.MU ? "gt.td.short.energy.magnetic"
-                        : type == GregTechTags.Energy.CU ? "gt.td.short.energy.cryo"
-                        : type == GregTechTags.Energy.LU ? "gt.td.short.energy.light"
-                        : type == GregTechTags.Energy.QU ? "gt.td.short.energy.quantum" : "gt.td.short.energy.electricity")
-                        .withStyle(type == GregTechTags.Energy.RU ? ChatFormatting.GREEN
-                                : type == GregTechTags.Energy.RF ? ChatFormatting.DARK_RED
-                                : type == GregTechTags.Energy.HU ? ChatFormatting.RED
-                                : type == GregTechTags.Energy.STEAM ? ChatFormatting.GRAY
-                                : type == GregTechTags.Energy.MU ? ChatFormatting.DARK_GRAY
-                                : type == GregTechTags.Energy.CU ? ChatFormatting.AQUA
-                                : type == GregTechTags.Energy.LU ? ChatFormatting.YELLOW
-                                : type == GregTechTags.Energy.QU ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.BLUE))
+                .append(Component.translatable(
+                                type == GregTechTags.Energy.RU
+                                        ? "gt.td.short.energy.kinetic_rotation"
+                                        : type == GregTechTags.Energy.RF
+                                                ? "gt.td.short.energy.redstone_flux"
+                                                : type == GregTechTags.Energy.HU
+                                                        ? "gt.td.short.energy.heat"
+                                                        : type == GregTechTags.Energy.STEAM
+                                                                ? "gt.td.short.energy.steam"
+                                                                : type == GregTechTags.Energy.MU
+                                                                        ? "gt.td.short.energy.magnetic"
+                                                                        : type == GregTechTags.Energy.CU
+                                                                                ? "gt.td.short.energy.cryo"
+                                                                                : type == GregTechTags.Energy.LU
+                                                                                        ? "gt.td.short.energy.light"
+                                                                                        : type == GregTechTags.Energy.QU
+                                                                                                ? "gt.td.short.energy.quantum"
+                                                                                                : "gt.td.short.energy.electricity")
+                        .withStyle(
+                                type == GregTechTags.Energy.RU
+                                        ? ChatFormatting.GREEN
+                                        : type == GregTechTags.Energy.RF
+                                                ? ChatFormatting.DARK_RED
+                                                : type == GregTechTags.Energy.HU
+                                                        ? ChatFormatting.RED
+                                                        : type == GregTechTags.Energy.STEAM
+                                                                ? ChatFormatting.GRAY
+                                                                : type == GregTechTags.Energy.MU
+                                                                        ? ChatFormatting.DARK_GRAY
+                                                                        : type == GregTechTags.Energy.CU
+                                                                                ? ChatFormatting.AQUA
+                                                                                : type == GregTechTags.Energy.LU
+                                                                                        ? ChatFormatting.YELLOW
+                                                                                        : type == GregTechTags.Energy.QU
+                                                                                                ? ChatFormatting
+                                                                                                        .LIGHT_PURPLE
+                                                                                                : ChatFormatting.BLUE))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE));
         // LH omits both the range and face on fixed packets; the converter stats always include them.
         if (alwaysShowRange || stats.minimum() != stats.recommended() || stats.maximum() != stats.recommended()) {
-            line.append(Component.literal(" (").append(TooltipHelper.range(stats.minimum(), stats.maximum())).withStyle(ChatFormatting.WHITE))
+            line.append(Component.literal(" (")
+                            .append(TooltipHelper.range(stats.minimum(), stats.maximum()))
+                            .withStyle(ChatFormatting.WHITE))
                     .append(Component.literal(", ").withStyle(ChatFormatting.WHITE))
                     .append(Component.translatable(faceKey).withStyle(ChatFormatting.WHITE))
                     .append(Component.literal(")").withStyle(ChatFormatting.WHITE));

@@ -1,11 +1,11 @@
 package gregtech.content.block.misc;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.HashMap;
-import java.util.Map;
 
 /** Transient route proof. Saved endpoint coordinates alone never authenticate a route. */
 final class LongDistanceRouteWatch {
@@ -31,10 +31,13 @@ final class LongDistanceRouteWatch {
     /** Non-loading lookup; Forge may expose its already-readable currentlyLoading chunk. */
     private static net.minecraft.world.level.chunk.LevelChunk resident(Level level, BlockPos pos) {
         return level instanceof net.minecraft.server.level.ServerLevel server && level.hasChunkAt(pos)
-                ? server.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4) : null;
+                ? server.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4)
+                : null;
     }
 
-    static boolean ready(Level level, BlockPos pos) { return resident(level, pos) != null; }
+    static boolean ready(Level level, BlockPos pos) {
+        return resident(level, pos) != null;
+    }
 
     static net.minecraft.world.level.block.entity.BlockEntity entity(Level level, BlockPos pos) {
         var chunk = resident(level, pos);
@@ -56,13 +59,17 @@ final class LongDistanceRouteWatch {
     }
 
     /** Once a route succeeds, loading an unexplored side branch is not a broken route. */
-    void resolved() { pending.clear(); }
+    void resolved() {
+        pending.clear();
+    }
 
     private static BlockPos chunkPosition(BlockPos pos) {
         return new BlockPos(pos.getX() & ~15, 0, pos.getZ() & ~15);
     }
 
-    boolean validated() { return validated; }
+    boolean validated() {
+        return validated;
+    }
 
     boolean changed(Level level) {
         if (!validated) return false;
@@ -83,8 +90,10 @@ final class LongDistanceRouteWatch {
             var previous = entry.getValue();
             var current = resident(level, entry.getKey()).getBlockState(entry.getKey());
             if (current == previous) continue;
-            if (current.getBlock() == previous.getBlock() && current.getBlock() instanceof LongDistanceTransformerBlock
-                    && current.getValue(LongDistanceTransformerBlock.FACING) == previous.getValue(LongDistanceTransformerBlock.FACING)) continue;
+            if (current.getBlock() == previous.getBlock()
+                    && current.getBlock() instanceof LongDistanceTransformerBlock
+                    && current.getValue(LongDistanceTransformerBlock.FACING)
+                            == previous.getValue(LongDistanceTransformerBlock.FACING)) continue;
             return true;
         }
         return false;

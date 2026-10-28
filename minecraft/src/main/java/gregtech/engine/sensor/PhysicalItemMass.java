@@ -1,15 +1,13 @@
 package gregtech.engine.sensor;
 
 import gregtech.api.material.WeightedMaterial;
-
-import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.engine.material.MaterialChemistry;
-import gregtech.engine.material.MaterialMass;
 import gregtech.content.block.BlockMaterialWeights;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneMaterialWeights;
+import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.MaterialMass;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 

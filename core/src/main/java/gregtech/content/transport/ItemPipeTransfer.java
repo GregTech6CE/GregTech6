@@ -10,15 +10,22 @@ public final class ItemPipeTransfer {
 
     public interface Port<S> {
         boolean begin(boolean simulate);
+
         int slots();
+
         S stack(int slot);
+
         int count(S stack);
+
         S copyWithCount(S stack, int count);
+
         boolean same(S first, S second);
+
         S insert(int slot, S offered, boolean simulate);
     }
 
     public record Result(int planned, int accepted, boolean handlerFailed) {}
+
     private record Offer(int accepted, boolean failed) {}
 
     /** Probe the exact same validated destination contract, without an actual insertion pass. */

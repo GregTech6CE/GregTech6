@@ -1,28 +1,49 @@
 package gregtech.content.multiblock;
+
+import static gregtech.api.machine.MachineFaceMasks.*;
+
 import gregtech.api.machine.BasicMachineParameters;
 import gregtech.api.machine.MachineFaceMasks;
 import gregtech.content.material.Materials;
-import gregtech.api.material.WeightedMaterial;
-import static gregtech.api.machine.MachineFaceMasks.*;
-import java.util.List;
+
 /** Original dedicated-controller parameters omitted from the general basic-machine catalog. */
 public final class OriginalMultiblockMachineParameters {
     private OriginalMultiblockMachineParameters() {}
 
     public static BasicMachineParameters distillationTower() {
-        return new BasicMachineParameters("distillation_tower_main", Materials.StainlessSteel,
-                "distillationtower", "HU", 1, 512, 0, 6, 6,
+        return new BasicMachineParameters(
+                "distillation_tower_main",
+                Materials.StainlessSteel,
+                "distillationtower",
+                "HU",
+                1,
+                512,
+                0,
+                6,
+                6,
                 new MachineFaceMasks(63, 63, 63, 63, 63, 0, -1, BACK, -1, BACK),
                 gregtech.content.machine.OriginalMachineMaterialData.weights("distillationtower", 1),
-                1, 1, 1024);
+                1,
+                1,
+                1024);
     }
 
     public static BasicMachineParameters cryoDistillationTower() {
-        return new BasicMachineParameters("cryo_distillation_main", Materials.StainlessSteel,
-                "cryodistillationtower", "CU", 1, 512, 0, 6, 6,
+        return new BasicMachineParameters(
+                "cryo_distillation_main",
+                Materials.StainlessSteel,
+                "cryodistillationtower",
+                "CU",
+                1,
+                512,
+                0,
+                6,
+                6,
                 new MachineFaceMasks(63, 63, 63, 63, 63, 0, -1, BACK, -1, BACK),
                 gregtech.content.machine.OriginalMachineMaterialData.weights("cryodistillationtower", 1),
-                1, 1, 1024);
+                1,
+                1,
+                1024);
     }
 
     public static BasicMachineParameters cokeOven() {

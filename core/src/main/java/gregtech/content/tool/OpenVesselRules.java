@@ -1,17 +1,14 @@
 package gregtech.content.tool;
 
 import gregtech.engine.tool.ManualWorkRules;
-
 import java.util.List;
 
 /** Original finite open-vessel profiles and fill/rain gates, independent of loader and storage. */
 public final class OpenVesselRules {
 
-    private OpenVesselRules() {
-    }
+    private OpenVesselRules() {}
 
-    public record Profile(String id, boolean wooden, boolean bowl, boolean juicer, float hardness, float resistance) {
-    }
+    public record Profile(String id, boolean wooden, boolean bowl, boolean juicer, float hardness, float resistance) {}
 
     public static final List<Profile> ALL = List.of(
             new Profile("mixing_bowl", false, true, false, 1, 5),
@@ -40,13 +37,23 @@ public final class OpenVesselRules {
 
     public static int rainfallAmount(float downfall, float temperature, boolean thunder) {
         if (!Float.isFinite(downfall) || !Float.isFinite(temperature) || downfall <= 0 || temperature < .2F) return 0;
-        return (int) Math.min(8000, Math.max(1, (long)(downfall * 200)) * (thunder ? 2L : 1L));
+        return (int) Math.min(8000, Math.max(1, (long) (downfall * 200)) * (thunder ? 2L : 1L));
     }
 
-    public static boolean accepts(boolean wooden, boolean bowl, long temperature, long limit, int density, boolean simple, boolean gas, boolean acid,
+    public static boolean accepts(
+            boolean wooden,
+            boolean bowl,
+            long temperature,
+            long limit,
+            int density,
+            boolean simple,
+            boolean gas,
+            boolean acid,
             boolean magic) {
-        return density > 0 && (wooden ? temperature <= limit : temperature < limit) && (!bowl || simple) && (!wooden || simple && !gas && !acid
-                && !magic);
+        return density > 0
+                && (wooden ? temperature <= limit : temperature < limit)
+                && (!bowl || simple)
+                && (!wooden || simple && !gas && !acid && !magic);
     }
 
     public static boolean recipePower(long power) {

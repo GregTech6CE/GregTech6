@@ -9,7 +9,7 @@ public final class InventorySlotLayout {
     public record Layout(java.util.List<Position> positions, int playerInventoryY) {}
 
     public static int[] supportedSizes() {
-        return new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15, 16, 18, 27, 36, 54};
+        return new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15, 16, 18, 27, 36, 54};
     }
 
     public static Layout layout(int slotCount) {
@@ -233,8 +233,7 @@ public final class InventorySlotLayout {
             case 54:
                 // Original chests/54.png: first row at 18, player inventory at 140.
                 for (int row = 0; row < 6; row++)
-                    for (int col = 0; col < 9; col++)
-                        positions.add(new Position(8 + col * 18, 18 + row * 18));
+                    for (int col = 0; col < 9; col++) positions.add(new Position(8 + col * 18, 18 + row * 18));
                 return new Layout(java.util.List.copyOf(positions), 140);
             default:
                 // Fallback: auto-layout in rows of 9
@@ -250,5 +249,4 @@ public final class InventorySlotLayout {
                 return new Layout(java.util.List.copyOf(positions), 17 + rows * 18 + 14);
         }
     }
-
 }

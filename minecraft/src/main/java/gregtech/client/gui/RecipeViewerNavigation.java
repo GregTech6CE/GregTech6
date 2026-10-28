@@ -10,9 +10,17 @@ public final class RecipeViewerNavigation {
 
     private RecipeViewerNavigation() {}
 
-    public static void registerEmi(Predicate<RecipeMap> opener) { emi = opener; }
-    public static void registerJei(Predicate<RecipeMap> opener) { jei = opener; }
-    public static void clearJei() { jei = map -> false; }
+    public static void registerEmi(Predicate<RecipeMap> opener) {
+        emi = opener;
+    }
+
+    public static void registerJei(Predicate<RecipeMap> opener) {
+        jei = opener;
+    }
+
+    public static void clearJei() {
+        jei = map -> false;
+    }
 
     public static boolean open(RecipeMap map) {
         return map != null && map.mViewerAllowed && (emi.test(map) || jei.test(map));

@@ -6,12 +6,21 @@ import java.util.Map;
 public final class VanillaPotionBottling {
     public static final int AMOUNT = 250;
     private static final Map<String, String> TYPES = Map.ofEntries(
-            Map.entry("awkward", "awkward"), Map.entry("thick", "thick"), Map.entry("mundane", "mundane"),
-            Map.entry("damage", "harming"), Map.entry("health", "healing"), Map.entry("jump", "leaping"),
-            Map.entry("speed", "swiftness"), Map.entry("strength", "strength"), Map.entry("regen", "regeneration"),
-            Map.entry("poison", "poison"), Map.entry("fireresistance", "fire_resistance"),
-            Map.entry("nightvision", "night_vision"), Map.entry("weakness", "weakness"),
-            Map.entry("slowness", "slowness"), Map.entry("waterbreathing", "water_breathing"),
+            Map.entry("awkward", "awkward"),
+            Map.entry("thick", "thick"),
+            Map.entry("mundane", "mundane"),
+            Map.entry("damage", "harming"),
+            Map.entry("health", "healing"),
+            Map.entry("jump", "leaping"),
+            Map.entry("speed", "swiftness"),
+            Map.entry("strength", "strength"),
+            Map.entry("regen", "regeneration"),
+            Map.entry("poison", "poison"),
+            Map.entry("fireresistance", "fire_resistance"),
+            Map.entry("nightvision", "night_vision"),
+            Map.entry("weakness", "weakness"),
+            Map.entry("slowness", "slowness"),
+            Map.entry("waterbreathing", "water_breathing"),
             Map.entry("invisibility", "invisibility"));
 
     private VanillaPotionBottling() {}
@@ -35,7 +44,9 @@ public final class VanillaPotionBottling {
                     if (!item.equals("potion")) return null;
                     item = parts[i] + "_potion";
                 }
-                default -> { return null; }
+                default -> {
+                    return null;
+                }
             }
         }
         return new Bottle(variant + type, item);

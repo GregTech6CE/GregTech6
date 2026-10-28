@@ -1,9 +1,12 @@
 package gregtech.content.fluid;
-import gregtech.content.transport.fluid.FluidTransportDefinitions;
+
 import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.transport.fluid.FluidTransportDefinitions;
+
 /** Platform registration over the shared original pipe catalog. */
 public final class FluidPipeDefinitions {
     private FluidPipeDefinitions() {}
+
     public static void register() {
         gregtech.engine.addon.AddonMachines.collectContributors();
         for (var spec : FluidTransportDefinitions.pipes()) {

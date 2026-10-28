@@ -6,15 +6,20 @@ import java.util.List;
 
 public final class OriginalTankTooltipData {
 
-    private OriginalTankTooltipData() {
-    }
+    private OriginalTankTooltipData() {}
 
     public static List<String> structureKeys(int size) {
         return switch (size) {
-            case 3 -> List.of("gt.tooltip.multiblock.tank3x3x3.1", "gt.tooltip.multiblock.tank3x3x3.2",
-                    "gt.tooltip.multiblock.tank3x3x3.3");
-            case 5 -> List.of("gt.tooltip.multiblock.tank5x5x5.1", "gt.tooltip.multiblock.tank5x5x5.2",
-                    "gt.tooltip.multiblock.tank5x5x5.3");
+            case 3 ->
+                List.of(
+                        "gt.tooltip.multiblock.tank3x3x3.1",
+                        "gt.tooltip.multiblock.tank3x3x3.2",
+                        "gt.tooltip.multiblock.tank3x3x3.3");
+            case 5 ->
+                List.of(
+                        "gt.tooltip.multiblock.tank5x5x5.1",
+                        "gt.tooltip.multiblock.tank5x5x5.2",
+                        "gt.tooltip.multiblock.tank5x5x5.3");
             default -> throw new IllegalArgumentException("Original tank size: " + size);
         };
     }

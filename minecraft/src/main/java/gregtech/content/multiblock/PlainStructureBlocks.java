@@ -1,7 +1,11 @@
 package gregtech.content.multiblock;
 
-import gregtech.engine.addon.AddonMachines;
 import com.mojang.logging.LogUtils;
+import gregtech.engine.addon.AddonMachines;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,11 +17,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /** Block ids and tags named by addon layouts. Ids are resolved once registries exist. */
 public final class PlainStructureBlocks {
@@ -40,8 +39,9 @@ public final class PlainStructureBlocks {
 
     public static boolean matches(Level level, BlockPos pos, String plain, BlockState state) {
         if (plain.equals(SpecialStructures.BEDROCK_FLOOR))
-            return state.is(Blocks.BEDROCK) || state.getBlock() instanceof gregtech.content.block.OreBlock
-                    && gregtech.content.block.OreBlock.isBedrockOre(state);
+            return state.is(Blocks.BEDROCK)
+                    || state.getBlock() instanceof gregtech.content.block.OreBlock
+                            && gregtech.content.block.OreBlock.isBedrockOre(state);
         if (plain.startsWith(SpecialStructures.FIXED_BLOCK)) {
             var id = location(plain.substring(SpecialStructures.FIXED_BLOCK.length()));
             return BuiltInRegistries.BLOCK.containsKey(id) && state.is(BuiltInRegistries.BLOCK.get(id));

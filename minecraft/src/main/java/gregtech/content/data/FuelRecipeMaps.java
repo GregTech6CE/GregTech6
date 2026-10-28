@@ -1,7 +1,6 @@
 package gregtech.content.data;
 
 import gregtech.engine.recipe.RecipeMap;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -38,8 +37,7 @@ public class FuelRecipeMaps {
         return euPerTick;
     }
 
-    public static final RecipeMap
-            FluidBed = fromDefinition(FuelRecipeMapDefinitions.FluidBed),
+    public static final RecipeMap FluidBed = fromDefinition(FuelRecipeMapDefinitions.FluidBed),
             Burn = fromDefinition(FuelRecipeMapDefinitions.Burn),
             Gas = fromDefinition(FuelRecipeMapDefinitions.Gas),
             Hot = fromDefinition(FuelRecipeMapDefinitions.Hot),
@@ -49,17 +47,29 @@ public class FuelRecipeMaps {
             Magic = fromDefinition(FuelRecipeMapDefinitions.Magic);
 
     /** Original fuel display order; shared by consumers of the native fuel maps. */
-    public static final java.util.List<RecipeMap> FUEL_MAP_LIST = java.util.List.of(
-            FluidBed, Burn, Gas, Hot, Plasma, Engine, Turbine, Magic);
+    public static final java.util.List<RecipeMap> FUEL_MAP_LIST =
+            java.util.List.of(FluidBed, Burn, Gas, Hot, Plasma, Engine, Turbine, Magic);
 
     private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.api.recipe.RecipeMapSpec spec) {
-        var map=new gregtech.engine.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
-                spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
-                spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
-                spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
-        map.viewer(spec.mViewerAllowed,spec.mShowVoltageAmperage);
-        map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
-        if(spec.mInstantRecipes)map.instantRecipes();
+        var map = new gregtech.engine.recipe.RecipeMap(
+                null,
+                spec.mNameInternal,
+                spec.mNameLocal,
+                spec.mGUIPath,
+                spec.mInputItemsCount,
+                spec.mOutputItemsCount,
+                spec.mMinimalInputItems,
+                spec.mInputFluidCount,
+                spec.mOutputFluidCount,
+                spec.mMinimalInputFluids,
+                spec.mMinimalInputs,
+                spec.mNeedsOutputs,
+                spec.mCombinePower,
+                spec.mUseBucketSizeIn,
+                spec.mUseBucketSizeOut);
+        map.viewer(spec.mViewerAllowed, spec.mShowVoltageAmperage);
+        map.specialValueLabel(spec.mSpecialValuePre, spec.mSpecialValueMultiplier, spec.mSpecialValuePost);
+        if (spec.mInstantRecipes) map.instantRecipes();
         registerFuelMap(map);
         return map;
     }
@@ -76,8 +86,7 @@ public class FuelRecipeMaps {
         return entry;
     }
 
-    public static final MapEntry
-            Diesel = map("Diesel", "gt.recipe.diesel", "Diesel Generator"),
+    public static final MapEntry Diesel = map("Diesel", "gt.recipe.diesel", "Diesel Generator"),
             GasEntry = map("Gas", "gt.recipe.gas", "Gas Turbine"),
             HotFluid = map("HotFluid", "gt.recipe.hotfluid", "Hot Fluid Generator");
 

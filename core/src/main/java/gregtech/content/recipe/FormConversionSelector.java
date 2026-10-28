@@ -13,9 +13,14 @@ public record FormConversionSelector(int variants, int offset) {
     public boolean matches(int gridSize, int firstOccupiedSlot, int occupiedCells) {
         if (variants == 0) return true;
         // The source's empty-cell early exit is equivalent to these checks for a one-cell input.
-        return occupiedCells == 1 && gridSize >= offset + 1 && firstOccupiedSlot >= 0
-                && firstOccupiedSlot < gridSize && firstOccupiedSlot % variants == offset;
+        return occupiedCells == 1
+                && gridSize >= offset + 1
+                && firstOccupiedSlot >= 0
+                && firstOccupiedSlot < gridSize
+                && firstOccupiedSlot % variants == offset;
     }
 
-    public int minimumGridSize() { return offset + 1; }
+    public int minimumGridSize() {
+        return offset + 1;
+    }
 }

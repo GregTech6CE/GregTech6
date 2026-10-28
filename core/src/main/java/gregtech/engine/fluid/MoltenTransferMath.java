@@ -26,10 +26,10 @@ public final class MoltenTransferMath {
      * the smallest integral quantum.
      */
     public static Optional<DrainPlan> planDrain(
-            Map<String, Integer> contents,
-            Map<String, Integer> ratio,
-            int requested) {
-        if (requested <= 0 || contents.isEmpty() || ratio.isEmpty()
+            Map<String, Integer> contents, Map<String, Integer> ratio, int requested) {
+        if (requested <= 0
+                || contents.isEmpty()
+                || ratio.isEmpty()
                 || !contents.keySet().equals(ratio.keySet())) {
             return Optional.empty();
         }

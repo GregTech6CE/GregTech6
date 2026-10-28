@@ -13,33 +13,82 @@ import java.util.Objects;
  */
 public final class SourcePurifiedCentrifugePlan {
     private SourcePurifiedCentrifugePlan() {}
+
     public static final long SOURCE_U = 648648000L;
     public static final long SOURCE_U72 = 9009000L;
     public static final int AMBIENT_K = 293;
-    public enum Form { DUST, DUST_TINY, PURIFIED, PURIFIED_TINY, REFINED_TINY }
-    public enum State { PRESENT, ABSENT, UNKNOWN }
-    public enum Status { PLANNED, SKIPPED_SOURCE_GATE, UNRESOLVED }
-    public enum EnvironmentKind { ITEM, FLUID, UNKNOWN }
+
+    public enum Form {
+        DUST,
+        DUST_TINY,
+        PURIFIED,
+        PURIFIED_TINY,
+        REFINED_TINY
+    }
+
+    public enum State {
+        PRESENT,
+        ABSENT,
+        UNKNOWN
+    }
+
+    public enum Status {
+        PLANNED,
+        SKIPPED_SOURCE_GATE,
+        UNRESOLVED
+    }
+
+    public enum EnvironmentKind {
+        ITEM,
+        FLUID,
+        UNKNOWN
+    }
 
     /** Binding key is an opaque selected registry identity; foreign registrations are valid. */
     public record FormResult(State state, String bindingKey) {
-        public FormResult { Objects.requireNonNull(state); if (state == State.PRESENT) Objects.requireNonNull(bindingKey); }
-        public static FormResult present(String key) { return new FormResult(State.PRESENT, key); }
-        public static FormResult absent() { return new FormResult(State.ABSENT, null); }
-        public static FormResult unknown() { return new FormResult(State.UNKNOWN, null); }
+        public FormResult {
+            Objects.requireNonNull(state);
+            if (state == State.PRESENT) Objects.requireNonNull(bindingKey);
+        }
+
+        public static FormResult present(String key) {
+            return new FormResult(State.PRESENT, key);
+        }
+
+        public static FormResult absent() {
+            return new FormResult(State.ABSENT, null);
+        }
+
+        public static FormResult unknown() {
+            return new FormResult(State.UNKNOWN, null);
+        }
     }
     /** The reference ratio is source evidence, not a current catalog's guessed 1000/144 convention. */
     public record FluidBinding(String bindingKey, long referenceSourceUnits, long referenceMillibuckets) {
-        public FluidBinding { Objects.requireNonNull(bindingKey); }
+        public FluidBinding {
+            Objects.requireNonNull(bindingKey);
+        }
     }
+
     public record Environment(EnvironmentKind kind, FluidBinding binding, String evidence) {
-        public Environment { Objects.requireNonNull(kind); Objects.requireNonNull(evidence); }
-        public static Environment item(String evidence) { return new Environment(EnvironmentKind.ITEM, null, evidence); }
+        public Environment {
+            Objects.requireNonNull(kind);
+            Objects.requireNonNull(evidence);
+        }
+
+        public static Environment item(String evidence) {
+            return new Environment(EnvironmentKind.ITEM, null, evidence);
+        }
+
         public static Environment fluid(String key, long units, long mb) {
             return new Environment(EnvironmentKind.FLUID, new FluidBinding(key, units, mb), "source-bound-fluid");
         }
-        public static Environment unknown(String reason) { return new Environment(EnvironmentKind.UNKNOWN, null, reason); }
+
+        public static Environment unknown(String reason) {
+            return new Environment(EnvironmentKind.UNKNOWN, null, reason);
+        }
     }
+
     public interface Resolver<M> {
         /** No generator call; PRESENT/ABSENT/UNKNOWN are distinct actual-registration facts. */
         FormResult form(M material, Form form);
@@ -49,24 +98,48 @@ public final class SourcePurifiedCentrifugePlan {
          */
         Environment environment(M material, int kelvin);
     }
-    public record Request<M>(M source, boolean valid, boolean antimatter, boolean bedrock,
-                             int toolQuality, List<M> orderedByproducts) {
-        public Request { Objects.requireNonNull(source); orderedByproducts = List.copyOf(orderedByproducts); }
+
+    public record Request<M>(
+            M source, boolean valid, boolean antimatter, boolean bedrock, int toolQuality, List<M> orderedByproducts) {
+        public Request {
+            Objects.requireNonNull(source);
+            orderedByproducts = List.copyOf(orderedByproducts);
+        }
     }
+
     public record Chosen<M>(int byproductIndex, M material, boolean selfFallback) {}
     /** A null binding is a source null output slot, not an instruction to reject the recipe. */
-    public record ItemSlot<M>(int sourceSlot, M material, Form selectedForm, String bindingKey,
-                              int count, long chance, String absenceReason) {
-        public boolean present() { return bindingKey != null; }
-        public String sourceSlotIdentity() { return "source-output-slot-" + sourceSlot; }
+    public record ItemSlot<M>(
+            int sourceSlot,
+            M material,
+            Form selectedForm,
+            String bindingKey,
+            int count,
+            long chance,
+            String absenceReason) {
+        public boolean present() {
+            return bindingKey != null;
+        }
+
+        public String sourceSlotIdentity() {
+            return "source-output-slot-" + sourceSlot;
+        }
     }
     /** Duplicate fluids retain source-slot multiplicity; no merging or chance is applied. */
     public record FluidOutput<M>(int sourceSlot, M material, String bindingKey, int millibuckets) {}
-    public record Variant<M>(Form inputForm, String inputBinding, int inputCount, long duration,
-                             long nativeRecipePower, List<ItemSlot<M>> rawItemSlots,
-                             List<Long> rawChances, List<FluidOutput<M>> fluidOutputs) {
+
+    public record Variant<M>(
+            Form inputForm,
+            String inputBinding,
+            int inputCount,
+            long duration,
+            long nativeRecipePower,
+            List<ItemSlot<M>> rawItemSlots,
+            List<Long> rawChances,
+            List<FluidOutput<M>> fluidOutputs) {
         public Variant {
-            rawItemSlots = List.copyOf(rawItemSlots); rawChances = List.copyOf(rawChances);
+            rawItemSlots = List.copyOf(rawItemSlots);
+            rawChances = List.copyOf(rawChances);
             fluidOutputs = List.copyOf(fluidOutputs);
         }
         /** Original Recipe893-894 trims trailing null items, not interior nulls; chance array stays raw. */
@@ -80,14 +153,22 @@ public final class SourcePurifiedCentrifugePlan {
             return rawItemSlots.stream().filter(ItemSlot::present).toList();
         }
     }
-    public record Outcome<M>(Status status, String reason, List<Chosen<M>> chosen,
-                             List<Variant<M>> variants) {
-        public Outcome { chosen = List.copyOf(chosen); variants = List.copyOf(variants); }
+
+    public record Outcome<M>(Status status, String reason, List<Chosen<M>> chosen, List<Variant<M>> variants) {
+        public Outcome {
+            chosen = List.copyOf(chosen);
+            variants = List.copyOf(variants);
+        }
     }
+
     private record OutputForm(Form form, FormResult result) {}
+
     private static final class Unknown extends RuntimeException {
         private static final long serialVersionUID = 1L;
-        Unknown(String message) { super(message); }
+
+        Unknown(String message) {
+            super(message);
+        }
     }
 
     public static <M> Outcome<M> plan(Request<M> request, Resolver<M> resolver) {
@@ -105,14 +186,17 @@ public final class SourcePurifiedCentrifugePlan {
             FormResult tiny = get(resolver, request.source(), Form.PURIFIED_TINY);
             if (whole.state() == State.ABSENT || tiny.state() == State.ABSENT)
                 return stopped(Status.SKIPPED_SOURCE_GATE, "both-purified-input-forms-required");
-            requireKnown(whole, "purified-whole"); requireKnown(tiny, "purified-tiny");
+            requireKnown(whole, "purified-whole");
+            requireKnown(tiny, "purified-tiny");
 
             var chosen = new ArrayList<Chosen<M>>();
             var environments = new ArrayList<Environment>();
             var roundedTinyMb = new ArrayList<Integer>();
             for (int index = 0; index < 3; index++) {
                 boolean fallback = index >= request.orderedByproducts().size();
-                M material = fallback ? request.source() : request.orderedByproducts().get(index);
+                M material = fallback
+                        ? request.source()
+                        : request.orderedByproducts().get(index);
                 chosen.add(new Chosen<>(index, material, fallback));
                 Environment environment = resolver.environment(material, AMBIENT_K);
                 if (environment == null || environment.kind() == EnvironmentKind.UNKNOWN)
@@ -121,15 +205,18 @@ public final class SourcePurifiedCentrifugePlan {
                 // Source FL.zero converts zero-volume/invalid fluids to null, selecting item fallback.
                 if (amount == 0 && environment.kind() == EnvironmentKind.FLUID)
                     environment = Environment.item("source-rounded-fluid-zero");
-                environments.add(environment); roundedTinyMb.add(amount);
+                environments.add(environment);
+                roundedTinyMb.add(amount);
             }
             OutputForm main = outputForm(resolver, request.source());
             var products = new ArrayList<OutputForm>();
             for (int index = 0; index < 3; index++)
-                products.add(environments.get(index).kind() == EnvironmentKind.ITEM
-                        ? outputForm(resolver, chosen.get(index).material()) : null);
+                products.add(
+                        environments.get(index).kind() == EnvironmentKind.ITEM
+                                ? outputForm(resolver, chosen.get(index).material())
+                                : null);
             var variants = new ArrayList<Variant<M>>();
-            for (int scale : new int[]{9, 1}) {
+            for (int scale : new int[] {9, 1}) {
                 var items = new ArrayList<ItemSlot<M>>();
                 var fluids = new ArrayList<FluidOutput<M>>();
                 items.add(item(0, request.source(), main, scale, 10000L));
@@ -138,28 +225,39 @@ public final class SourcePurifiedCentrifugePlan {
                     if (environments.get(index).kind() == EnvironmentKind.FLUID) {
                         long amount = (long) roundedTinyMb.get(index) * scale;
                         if (amount > Integer.MAX_VALUE) throw new Unknown("native-fluid-capacity-overflow");
-                        fluids.add(new FluidOutput<>(index + 1, material,
-                                environments.get(index).binding().bindingKey(), (int) amount));
+                        fluids.add(new FluidOutput<>(
+                                index + 1,
+                                material,
+                                environments.get(index).binding().bindingKey(),
+                                (int) amount));
                         items.add(new ItemSlot<>(index + 1, material, null, null, scale, 1000L, "fluid-output"));
                     } else items.add(item(index + 1, material, products.get(index), scale, 1000L));
                 }
-                variants.add(new Variant<>(scale == 9 ? Form.PURIFIED : Form.PURIFIED_TINY,
-                        scale == 9 ? whole.bindingKey() : tiny.bindingKey(), 1,
-                        scale * 16L * (request.toolQuality() + 1L), 16L, items,
-                        List.of(10000L, 1000L, 1000L, 1000L), fluids));
+                variants.add(new Variant<>(
+                        scale == 9 ? Form.PURIFIED : Form.PURIFIED_TINY,
+                        scale == 9 ? whole.bindingKey() : tiny.bindingKey(),
+                        1,
+                        scale * 16L * (request.toolQuality() + 1L),
+                        16L,
+                        items,
+                        List.of(10000L, 1000L, 1000L, 1000L),
+                        fluids));
             }
             return new Outcome<>(Status.PLANNED, "registered-purified-source-rule", chosen, variants);
         } catch (Unknown unresolved) {
             return stopped(Status.UNRESOLVED, unresolved.getMessage());
         }
     }
+
     private static <M> FormResult get(Resolver<M> resolver, M material, Form form) {
         FormResult value = resolver.form(material, form);
         return value == null ? FormResult.unknown() : value;
     }
+
     private static void requireKnown(FormResult result, String role) {
         if (result.state() == State.UNKNOWN) throw new Unknown("form-unknown-" + role);
     }
+
     private static <M> OutputForm outputForm(Resolver<M> resolver, M material) {
         FormResult refined = get(resolver, material, Form.REFINED_TINY);
         requireKnown(refined, "refined-tiny");
@@ -168,10 +266,18 @@ public final class SourcePurifiedCentrifugePlan {
         requireKnown(dust, "dust-tiny-fallback");
         return new OutputForm(Form.DUST_TINY, dust);
     }
+
     private static <M> ItemSlot<M> item(int slot, M material, OutputForm form, int count, long chance) {
-        return new ItemSlot<>(slot, material, form.form(), form.result().bindingKey(), count, chance,
+        return new ItemSlot<>(
+                slot,
+                material,
+                form.form(),
+                form.result().bindingKey(),
+                count,
+                chance,
                 form.result().state() == State.ABSENT ? "neither-refined-tiny-nor-dust-tiny-registered" : null);
     }
+
     private static int tinyFluid(FluidBinding binding) {
         if (binding == null || binding.referenceSourceUnits() <= 0 || binding.referenceMillibuckets() < 0)
             throw new Unknown("invalid-source-fluid-unit-binding");
@@ -183,6 +289,7 @@ public final class SourcePurifiedCentrifugePlan {
             throw new Unknown("native-fluid-capacity-overflow");
         return rounded.intValue();
     }
+
     private static <M> Outcome<M> stopped(Status status, String reason) {
         return new Outcome<>(status, reason, List.of(), List.of());
     }

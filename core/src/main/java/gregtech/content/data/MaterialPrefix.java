@@ -3,11 +3,10 @@ package gregtech.content.data;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
-import gregtech.engine.mod.GregTechIdentity;
-import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.content.data.generated.MaterialForms;
 import gregtech.content.material.generated.WoodMaterials;
-
+import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.prefix.PrefixRegistry;
 import java.util.function.Predicate;
 
 /**
@@ -18,8 +17,16 @@ import java.util.function.Predicate;
  */
 public final class MaterialPrefix {
     /** Source associations for registered pipe blocks; never generate standalone form items. */
-    public static final MaterialPrefix pipeTiny, pipeSmall, pipeMedium, pipeLarge, pipeHuge,
-            pipeQuadruple, pipeNonuple, pipeRestrictiveMedium, pipeRestrictiveLarge, pipeRestrictiveHuge;
+    public static final MaterialPrefix pipeTiny,
+            pipeSmall,
+            pipeMedium,
+            pipeLarge,
+            pipeHuge,
+            pipeQuadruple,
+            pipeNonuple,
+            pipeRestrictiveMedium,
+            pipeRestrictiveLarge,
+            pipeRestrictiveHuge;
     // --- dust / ore processing ---
     public static final MaterialPrefix dust;
     public static final MaterialPrefix dustSmall;
@@ -28,11 +35,13 @@ public final class MaterialPrefix {
     public static final MaterialPrefix dustImpure;
     /** Source metadata only: Loader_Items does not create these two GT-owned forms. */
     public static final MaterialPrefix dustPure, dustRefined;
+
     public static final MaterialPrefix unit;
     public static final MaterialPrefix crushed;
     public static final MaterialPrefix crushedTiny;
     /** Source ore-dictionary forms supplied by other mods; absent from GT's item definition stream. */
     public static final MaterialPrefix rawOreChunk, chunk, rubble, pebbles;
+
     public static final MaterialPrefix clump, reduced, crystalline, cleanGravel, cluster;
     public static final MaterialPrefix dirtyGravel, crystal;
     public static final MaterialPrefix crushedPurified;
@@ -81,6 +90,7 @@ public final class MaterialPrefix {
     public static final MaterialPrefix oreDense;
     /** GT6 {@code OP.oreVanillastone}: the 16 vanilla-style ore block items, each 2U. */
     public static final MaterialPrefix oreVanillastone;
+
     public static final MaterialPrefix oreRaw;
 
     // --- rods / bolts / gears ---
@@ -180,50 +190,51 @@ public final class MaterialPrefix {
     // `TD.java:577` but used by no material in `MT.java`, so the original registers no impure dusts at
     // all. The port therefore consults only `DUSTS` here and keeps its own impure dusts (they drive the
     // port's ore-processing chain); see §23 of docs/PORTING_REMAINING_2026-09-14.md.
-    private static final Predicate<GTMaterial> HAS_DUST = m ->
-            m.hasAny(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.ELEMENT)
+    private static final Predicate<GTMaterial> HAS_DUST =
+            m -> m.hasAny(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.ELEMENT)
                     || MaterialForms.has(m, "DUSTS");
-    private static final Predicate<GTMaterial> HAS_ORE_PROCESSING = m ->
-            m.hasAny(MaterialProperty.ORE, MaterialProperty.GENERATE_ORE, MaterialProperty.GENERATE_ORE_PROCESSING)
-                    || MaterialForms.has(m, "ORES");   // GT6 OP.ore = ORES
-    private static final Predicate<GTMaterial> HAS_DIRTY_DUST = m ->
-            m.has(MaterialProperty.GENERATE_DIRTY_DUST) || HAS_ORE_PROCESSING.test(m);
-    private static final Predicate<GTMaterial> HAS_INGOT = m ->
-            m.hasAny(MaterialProperty.INGOT, MaterialProperty.METAL, MaterialProperty.GENERATE_INGOT, MaterialProperty.ALLOY)
-                    || MaterialForms.has(m, "INGOTS");   // GT6 OP.ingot = INGOTS
-    private static final Predicate<GTMaterial> HAS_GEM = m ->
-            m.has(MaterialProperty.GEM) || MaterialForms.has(m, "GEMS");   // GT6 OP.gem = GEMS
+    private static final Predicate<GTMaterial> HAS_ORE_PROCESSING =
+            m -> m.hasAny(MaterialProperty.ORE, MaterialProperty.GENERATE_ORE, MaterialProperty.GENERATE_ORE_PROCESSING)
+                    || MaterialForms.has(m, "ORES"); // GT6 OP.ore = ORES
+    private static final Predicate<GTMaterial> HAS_DIRTY_DUST =
+            m -> m.has(MaterialProperty.GENERATE_DIRTY_DUST) || HAS_ORE_PROCESSING.test(m);
+    private static final Predicate<GTMaterial> HAS_INGOT = m -> m.hasAny(
+                    MaterialProperty.INGOT,
+                    MaterialProperty.METAL,
+                    MaterialProperty.GENERATE_INGOT,
+                    MaterialProperty.ALLOY)
+            || MaterialForms.has(m, "INGOTS"); // GT6 OP.ingot = INGOTS
+    private static final Predicate<GTMaterial> HAS_GEM =
+            m -> m.has(MaterialProperty.GEM) || MaterialForms.has(m, "GEMS"); // GT6 OP.gem = GEMS
     private static final Predicate<GTMaterial> HAS_BOULE = m -> m.has(MaterialProperty.BOULE);
-    private static final Predicate<GTMaterial> HAS_PLATE = m ->
-            (HAS_INGOT.test(m) && !HAS_GEM.test(m))
-                    || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE)
-                    // GT6 OP.plate = And(Or(ingot, gem.NOT), PLATES)
-                    || (MaterialForms.has(m, "PLATES")
-                            && (MaterialForms.has(m, "INGOTS") || !MaterialForms.has(m, "GEMS")));
-    private static final Predicate<GTMaterial> HAS_STICKS = m ->
-            m.has(MaterialProperty.GENERATE_STICKS)
-                    || HAS_INGOT.test(m)
-                    || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE)
-                    || MaterialForms.has(m, "STICKS");   // GT6 OP.stick = STICKS
-    private static final Predicate<GTMaterial> HAS_PARTS = m ->
-            m.has(MaterialProperty.GENERATE_PARTS) && (HAS_INGOT.test(m) || HAS_GEM.test(m))
-                    || MaterialForms.has(m, "PARTS");   // GT6 OP.gearGt/ring/spring/rotor/casingSmall = PARTS
-    private static final Predicate<GTMaterial> HAS_PLANT = m ->
-            m.hasAny(MaterialProperty.GENERATE_PLANT, MaterialProperty.WOOD)
-                    || MaterialForms.has(m, "PLANTS");   // GT6 OP.plantGt* = PLANTS
+    private static final Predicate<GTMaterial> HAS_PLATE = m -> (HAS_INGOT.test(m) && !HAS_GEM.test(m))
+            || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE)
+            // GT6 OP.plate = And(Or(ingot, gem.NOT), PLATES)
+            || (MaterialForms.has(m, "PLATES") && (MaterialForms.has(m, "INGOTS") || !MaterialForms.has(m, "GEMS")));
+    private static final Predicate<GTMaterial> HAS_STICKS = m -> m.has(MaterialProperty.GENERATE_STICKS)
+            || HAS_INGOT.test(m)
+            || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE)
+            || MaterialForms.has(m, "STICKS"); // GT6 OP.stick = STICKS
+    private static final Predicate<GTMaterial> HAS_PARTS =
+            m -> m.has(MaterialProperty.GENERATE_PARTS) && (HAS_INGOT.test(m) || HAS_GEM.test(m))
+                    || MaterialForms.has(m, "PARTS"); // GT6 OP.gearGt/ring/spring/rotor/casingSmall = PARTS
+    private static final Predicate<GTMaterial> HAS_PLANT =
+            m -> m.hasAny(MaterialProperty.GENERATE_PLANT, MaterialProperty.WOOD)
+                    || MaterialForms.has(m, "PLANTS"); // GT6 OP.plantGt* = PLANTS
     /** GT6 {@code OP.PROJECTILES}: the flag behind the arrows and bullets. */
     private static final Predicate<GTMaterial> GT6_PROJECTILES = m -> MaterialForms.has(m, "PROJECTILES");
-    private static final Predicate<GTMaterial> HAS_TOOL_HEAD = m ->
-            m.has(MaterialProperty.TOOL_HEAD) && (HAS_INGOT.test(m) || HAS_GEM.test(m));
+
+    private static final Predicate<GTMaterial> HAS_TOOL_HEAD =
+            m -> m.has(MaterialProperty.TOOL_HEAD) && (HAS_INGOT.test(m) || HAS_GEM.test(m));
     /** Source typemin tests tool types, not quality. Correct only the reviewed qual(long)
      * cohort here; preserve legacy IDs elsewhere pending separate tool-form migration proof. */
     private static final Predicate<GTMaterial> GT6_TOOL_HEAD =
             gregtech.content.material.ReviewedSingleArgumentToolTypes::allowsLegacyQualityFallback;
     /** GT6 OP:247 also accepts wood and Rubber (MT:1301: type 1, BOUNCY/STRETCHY, quality 0). */
-    private static final Predicate<GTMaterial> GT6_HAMMER = GT6_TOOL_HEAD
-            .or(m -> m.has(MaterialProperty.WOOD) || m.getName().equals("Rubber"));
-    private static final Predicate<GTMaterial> HAS_PROJECTILE = m ->
-            m.has(MaterialProperty.GENERATE_PROJECTILE);
+    private static final Predicate<GTMaterial> GT6_HAMMER =
+            GT6_TOOL_HEAD.or(m -> m.has(MaterialProperty.WOOD) || m.getName().equals("Rubber"));
+
+    private static final Predicate<GTMaterial> HAS_PROJECTILE = m -> m.has(MaterialProperty.GENERATE_PROJECTILE);
 
     // ---- GT6's own form conditions (OP.java) ------------------------------------------------
     //
@@ -255,9 +266,8 @@ public final class MaterialPrefix {
     /** GT6 {@code OP.PLANTS}: berry, blossom, fiber, twig, wart. */
     private static final Predicate<GTMaterial> GT6_PLANTS = m -> MaterialForms.has(m, "PLANTS");
     /** GT6 {@code OP.ingotHot}: {@code And(INGOTS_HOT, SMITHABLE, meltmin(800))}. */
-    private static final Predicate<GTMaterial> GT6_INGOTS_HOT = m ->
-            MaterialForms.has(m, "INGOTS_HOT") && m.has(MaterialProperty.SMITHABLE)
-                    && m.getMeltingPoint() >= 800;
+    private static final Predicate<GTMaterial> GT6_INGOTS_HOT =
+            m -> MaterialForms.has(m, "INGOTS_HOT") && m.has(MaterialProperty.SMITHABLE) && m.getMeltingPoint() >= 800;
     /** GT6 {@code OP.ingotDouble} … {@code ingotQuintuple}. */
     private static final Predicate<GTMaterial> GT6_MULTIINGOTS = m -> MaterialForms.has(m, "MULTIINGOTS");
     /** GT6 {@code OP.plateDouble} … {@code plateQuintuple}. */
@@ -301,8 +311,13 @@ public final class MaterialPrefix {
         dustDiv72 = child("dustDiv72", "1/72 Dust", dust);
         dustImpure = tex("dustImpure", "Impure Dust", "dust", HAS_DIRTY_DUST);
         dustPure = tex("dustPure", "Purified Dust", "dust", m -> MaterialForms.has(m, "DIRTY_DUSTS"));
-        dustRefined = tex("dustRefined", "Refined Dust", "dust", m -> MaterialForms.has(m, "DIRTY_DUSTS")
-                && !m.getName().equals("Obsidian") && !m.getName().equals("Glowstone"));
+        dustRefined = tex(
+                "dustRefined",
+                "Refined Dust",
+                "dust",
+                m -> MaterialForms.has(m, "DIRTY_DUSTS")
+                        && !m.getName().equals("Obsidian")
+                        && !m.getName().equals("Glowstone"));
         // Unit marker items exist for every material (recipe display / JEI bookkeeping).
         unit = def("unit", "Unit", m -> true);
         crushed = def("crushed", "Crushed Ore", HAS_ORE_PROCESSING);
@@ -325,7 +340,10 @@ public final class MaterialPrefix {
         rockGt = def("rockGt", "Rock", m -> HAS_ORE_PROCESSING.test(m) || m.has(MaterialProperty.STONE));
 
         // OP.gemChipped.forceItemGeneration(MT.Sugar): this one form does not make sugar a gem material.
-        gemChipped = def("gemChipped", "Chipped Gem", HAS_GEM.or(GT6_GEMS).or(m -> m.getName().equals("Sugar")));
+        gemChipped = def(
+                "gemChipped",
+                "Chipped Gem",
+                HAS_GEM.or(GT6_GEMS).or(m -> m.getName().equals("Sugar")));
         gemFlawed = def("gemFlawed", "Flawed Gem", HAS_GEM.or(GT6_GEMS));
         gem = def("gem", "Gem", HAS_GEM.or(GT6_GEMS));
         gemFlawless = def("gemFlawless", "Flawless Gem", HAS_GEM.or(GT6_GEMS));
@@ -337,41 +355,71 @@ public final class MaterialPrefix {
         nugget = child("nugget", "Nugget", ingot);
         chunkGt = child("chunkGt", "Chunk", ingot);
         billet = child("billet", "Billet", ingot);
-        ingotHot = def("ingotHot", "Hot Ingot",
-                m -> HAS_INGOT.test(m) && m.has(MaterialProperty.SMITHABLE) || GT6_INGOTS_HOT.test(m), true);
-        ingotDouble = def("ingotDouble", "Double Ingot",
+        ingotHot = def(
+                "ingotHot",
+                "Hot Ingot",
+                m -> HAS_INGOT.test(m) && m.has(MaterialProperty.SMITHABLE) || GT6_INGOTS_HOT.test(m),
+                true);
+        ingotDouble = def(
+                "ingotDouble",
+                "Double Ingot",
                 m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
-        ingotTriple = def("ingotTriple", "Triple Ingot",
+        ingotTriple = def(
+                "ingotTriple",
+                "Triple Ingot",
                 m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
-        ingotQuadruple = def("ingotQuadruple", "Quadruple Ingot",
+        ingotQuadruple = def(
+                "ingotQuadruple",
+                "Quadruple Ingot",
                 m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
-        ingotQuintuple = def("ingotQuintuple", "Quintuple Ingot",
+        ingotQuintuple = def(
+                "ingotQuintuple",
+                "Quintuple Ingot",
                 m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
 
         // GT6 OP.plateGem = And(Or(gem, bouleGt), PLATES)
-        plateGem = def("plateGem", "Gem Plate", m ->
-                (HAS_GEM.test(m) || HAS_BOULE.test(m)) && m.has(MaterialProperty.GENERATE_PLATE)
+        plateGem = def(
+                "plateGem",
+                "Gem Plate",
+                m -> (HAS_GEM.test(m) || HAS_BOULE.test(m)) && m.has(MaterialProperty.GENERATE_PLATE)
                         || (GT6_PLATES.test(m) && (GT6_GEMS.test(m) || HAS_BOULE.test(m))));
         plateGemTiny = child("plateGemTiny", "Tiny Gem Plate", plateGem);
         plate = def("plate", "Plate", HAS_PLATE);
         // GT6 `OP.java:198`: `plateTiny = plate`, and `OP.java:617` forces the Paper case
         // (`plateTiny.forceItemGeneration(MT.Paper)`) because Paper carries no PLATES flag
         // (`paper|DUSTS,MULTIPLATES,PLANTS`) — the port's `plate` misses it for the same reason.
-        plateTiny = tex("plateTiny", "Tiny Plate", "plateTiny",
+        plateTiny = tex(
+                "plateTiny",
+                "Tiny Plate",
+                "plateTiny",
                 m -> plate.isValidFor(m) || m.getName().equals("Paper"));
-        plateDouble = def("plateDouble", "Double Plate", m ->
-                HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
-        plateTriple = def("plateTriple", "Triple Plate", m ->
-                HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
-        plateQuadruple = def("plateQuadruple", "Quadruple Plate", m ->
-                HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
-        plateQuintuple = def("plateQuintuple", "Quintuple Plate", m ->
-                HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
-        plateDense = def("plateDense", "Dense Plate", m ->
-                HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_DENSEPLATE) || GT6_DENSEPLATES.test(m));
+        plateDouble = def(
+                "plateDouble",
+                "Double Plate",
+                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+        plateTriple = def(
+                "plateTriple",
+                "Triple Plate",
+                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+        plateQuadruple = def(
+                "plateQuadruple",
+                "Quadruple Plate",
+                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+        plateQuintuple = def(
+                "plateQuintuple",
+                "Quintuple Plate",
+                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+        plateDense = def(
+                "plateDense",
+                "Dense Plate",
+                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_DENSEPLATE) || GT6_DENSEPLATES.test(m));
         plateCurved = child("plateCurved", "Curved Plate", plate);
-        foil = def("foil", "Foil", m -> m.has(MaterialProperty.GENERATE_FOIL)
-                && (HAS_INGOT.test(m) || HAS_GEM.test(m) || m.has(MaterialProperty.WOOD)) || GT6_FOILS.test(m));
+        foil = def(
+                "foil",
+                "Foil",
+                m -> m.has(MaterialProperty.GENERATE_FOIL)
+                                && (HAS_INGOT.test(m) || HAS_GEM.test(m) || m.has(MaterialProperty.WOOD))
+                        || GT6_FOILS.test(m));
 
         scrapGt = def("scrapGt", "Scrap", m -> HAS_DUST.test(m) || HAS_INGOT.test(m) || HAS_GEM.test(m), true);
         oreDense = def("oreDense", "Dense Ore", m -> false, true);
@@ -384,8 +432,7 @@ public final class MaterialPrefix {
         screw = child("screw", "Screw", bolt);
         // GT6's wooden rotation engine uses both WoodTreated gears, although the material's
         // broad G_WOOD form flags omit PARTS. Open only gears, not rings/springs/rotors.
-        gearGt = def("gearGt", "Gear", HAS_PARTS.or(GT6_PARTS)
-                .or(m -> m == WoodMaterials.WoodTreated));
+        gearGt = def("gearGt", "Gear", HAS_PARTS.or(GT6_PARTS).or(m -> m == WoodMaterials.WoodTreated));
         gearGtSmall = child("gearGtSmall", "Small Gear", gearGt);
         ring = def("ring", "Ring", HAS_PARTS.or(GT6_PARTS));
         chain = child("chain", "Chain", ring);
@@ -393,20 +440,25 @@ public final class MaterialPrefix {
         springSmall = child("springSmall", "Small Spring", spring);
 
         rotor = def("rotor", "Rotor", HAS_PARTS.or(GT6_PARTS));
-        lens = def("lens", "Lens", m -> m.has(MaterialProperty.GENERATE_LENS) && HAS_GEM.test(m)
-                || GT6_LENSES.test(m));
+        lens = def("lens", "Lens", m -> m.has(MaterialProperty.GENERATE_LENS) && HAS_GEM.test(m) || GT6_LENSES.test(m));
         // GT6 OP.java:209: `round = Or(PARTS, And(PROJECTILES, nugget))` — rounds come from the parts
         // form, or from a nugget-bearing projectile material (the port's HAS_INGOT stands in for the
         // nugget form, which it generates for ingot materials).
-        round = def("round", "Round", m -> HAS_PARTS.test(m) || GT6_PARTS.test(m)
-                || (GT6_PROJECTILES.test(m) && HAS_INGOT.test(m)));
+        round = def(
+                "round",
+                "Round",
+                m -> HAS_PARTS.test(m) || GT6_PARTS.test(m) || (GT6_PROJECTILES.test(m) && HAS_INGOT.test(m)));
         itemCasing = tex("itemCasing", "Item Casing", "casingsmall", HAS_PARTS.or(GT6_PARTS));
-        wireFine = def("wireFine", "Fine Wire", m -> m.has(MaterialProperty.GENERATE_WIRE)
-                || (HAS_PARTS.test(m) && HAS_INGOT.test(m)) || MaterialForms.has(m, "WIRES"));
-        minecartWheels = def("minecartWheels", "Minecart Wheels",
-                m -> HAS_PARTS.test(m) && m.has(MaterialProperty.SMITHABLE));
-        railGt = def("railGt", "Rail", m -> m.has(MaterialProperty.GENERATE_RAIL) && HAS_INGOT.test(m)
-                || GT6_RAILS.test(m));
+        wireFine = def(
+                "wireFine",
+                "Fine Wire",
+                m -> m.has(MaterialProperty.GENERATE_WIRE)
+                        || (HAS_PARTS.test(m) && HAS_INGOT.test(m))
+                        || MaterialForms.has(m, "WIRES"));
+        minecartWheels =
+                def("minecartWheels", "Minecart Wheels", m -> HAS_PARTS.test(m) && m.has(MaterialProperty.SMITHABLE));
+        railGt = def(
+                "railGt", "Rail", m -> m.has(MaterialProperty.GENERATE_RAIL) && HAS_INGOT.test(m) || GT6_RAILS.test(m));
 
         plantGtBerry = def("plantGtBerry", "Berry", HAS_PLANT.or(GT6_PLANTS), true);
         plantGtBlossom = def("plantGtBlossom", "Blossom", HAS_PLANT.or(GT6_PLANTS), true);
@@ -426,7 +478,8 @@ public final class MaterialPrefix {
         toolHeadPickaxe = def("toolHeadPickaxe", "Pickaxe Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
         toolHeadRawPickaxe = child("toolHeadRawPickaxe", "Raw Pickaxe Head", toolHeadPickaxe);
         toolHeadPickaxeGem = def("toolHeadPickaxeGem", "Gem Pickaxe Head", m -> gemFlawed.isValidFor(m));
-        toolHeadConstructionPickaxe = child("toolHeadConstructionPickaxe", "Construction Pickaxe Head", toolHeadPickaxe);
+        toolHeadConstructionPickaxe =
+                child("toolHeadConstructionPickaxe", "Construction Pickaxe Head", toolHeadPickaxe);
         toolHeadBuilderwand = def("toolHeadBuilderwand", "Builder Wand Head", HAS_TOOL_HEAD);
         toolHeadShovel = def("toolHeadShovel", "Shovel Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
         toolHeadRawShovel = child("toolHeadRawShovel", "Raw Shovel Head", toolHeadShovel);
@@ -449,7 +502,8 @@ public final class MaterialPrefix {
         toolHeadWrench = def("toolHeadWrench", "Wrench Head", HAS_TOOL_HEAD);
         toolHeadScrewdriver = def("toolHeadScrewdriver", "Screwdriver Head", HAS_TOOL_HEAD);
         toolHeadUniversalSpade = def("toolHeadUniversalSpade", "Universal Spade Head", HAS_TOOL_HEAD);
-        toolHeadRawUniversalSpade = child("toolHeadRawUniversalSpade", "Raw Universal Spade Head", toolHeadUniversalSpade);
+        toolHeadRawUniversalSpade =
+                child("toolHeadRawUniversalSpade", "Raw Universal Spade Head", toolHeadUniversalSpade);
         toolHeadSense = def("toolHeadSense", "Sense Tool Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
         toolHeadRawSense = child("toolHeadRawSense", "Raw Sense Tool Head", toolHeadSense);
         toolHeadPlow = def("toolHeadPlow", "Plow Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
@@ -462,16 +516,17 @@ public final class MaterialPrefix {
         toolHeadArrow = def("toolHeadArrow", "Arrow Head", HAS_TOOL_HEAD.or(GT6_PROJECTILES));
         toolHeadRawArrow = child("toolHeadRawArrow", "Raw Arrow Head", toolHeadArrow);
 
-        arrowGtWood = def("arrowGtWood", "Wood Arrow",
-                m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));   // GT6: Or(toolHeadArrow, EMPTY)
-        arrowGtPlastic = def("arrowGtPlastic", "Plastic Arrow",
-                m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));
-        bulletGtSmall = def("bulletGtSmall", "Small Bullet",
-                m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));   // GT6: Or(PROJECTILES, EMPTY)
-        bulletGtMedium = def("bulletGtMedium", "Medium Bullet",
-                m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));
-        bulletGtLarge = def("bulletGtLarge", "Large Bullet",
-                m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));
+        arrowGtWood = def(
+                "arrowGtWood",
+                "Wood Arrow",
+                m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m)); // GT6: Or(toolHeadArrow, EMPTY)
+        arrowGtPlastic = def("arrowGtPlastic", "Plastic Arrow", m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));
+        bulletGtSmall = def(
+                "bulletGtSmall",
+                "Small Bullet",
+                m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m)); // GT6: Or(PROJECTILES, EMPTY)
+        bulletGtMedium = def("bulletGtMedium", "Medium Bullet", m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));
+        bulletGtLarge = def("bulletGtLarge", "Large Bullet", m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));
     }
 
     static {
@@ -497,7 +552,7 @@ public final class MaterialPrefix {
         ingotHot.heatDamage = 3.0F;
     }
 
-private final String name;
+    private final String name;
     private final String displayName;
     private final Predicate<GTMaterial> validator;
     private final MaterialPrefix parent;
@@ -506,6 +561,7 @@ private final String name;
     private final String registryName;
     /** Null for a built-in prefix, which keeps the weight switch. Already multiplied by {@link GTValues#U}. */
     private final Long explicitWeight;
+
     private final String displayPrefixText;
     private final String displaySuffixText;
     private final String textureNamespace;
@@ -513,15 +569,28 @@ private final String name;
     /** GT6 {@code OreDictPrefix.mHeatDamage}: damage dealt per item while carried (hot ingot = 3.0). */
     private float heatDamage;
 
-    private MaterialPrefix(String name, String displayName, Predicate<GTMaterial> validator,
-                         MaterialPrefix parent, String textureFileName, boolean hiddenFromCreative) {
+    private MaterialPrefix(
+            String name,
+            String displayName,
+            Predicate<GTMaterial> validator,
+            MaterialPrefix parent,
+            String textureFileName,
+            boolean hiddenFromCreative) {
         this(name, displayName, validator, parent, textureFileName, hiddenFromCreative, null, null, null, null, null);
     }
 
-    private MaterialPrefix(String name, String displayName, Predicate<GTMaterial> validator,
-                         MaterialPrefix parent, String textureFileName, boolean hiddenFromCreative,
-                         Long explicitWeight, String displayPrefixText, String displaySuffixText,
-                         String textureNamespace, String texturePath) {
+    private MaterialPrefix(
+            String name,
+            String displayName,
+            Predicate<GTMaterial> validator,
+            MaterialPrefix parent,
+            String textureFileName,
+            boolean hiddenFromCreative,
+            Long explicitWeight,
+            String displayPrefixText,
+            String displaySuffixText,
+            String textureNamespace,
+            String texturePath) {
         this.name = name;
         this.displayName = displayName;
         this.validator = validator;
@@ -538,22 +607,40 @@ private final String name;
     }
 
     /** Registers one addon prefix. {@code explicitWeight} is the per-item amount, already in {@link GTValues#U} units. */
-    public static MaterialPrefix defineAddon(String name, String tabLabel, String displayPrefix, String displaySuffix,
-                                            long explicitWeight, String textureNamespace, String texturePath,
-                                            Predicate<GTMaterial> validator) {
-        return new MaterialPrefix(name, tabLabel, validator, null, null, false,
-                explicitWeight, displayPrefix, displaySuffix, textureNamespace, texturePath);
+    public static MaterialPrefix defineAddon(
+            String name,
+            String tabLabel,
+            String displayPrefix,
+            String displaySuffix,
+            long explicitWeight,
+            String textureNamespace,
+            String texturePath,
+            Predicate<GTMaterial> validator) {
+        return new MaterialPrefix(
+                name,
+                tabLabel,
+                validator,
+                null,
+                null,
+                false,
+                explicitWeight,
+                displayPrefix,
+                displaySuffix,
+                textureNamespace,
+                texturePath);
     }
 
     private static MaterialPrefix def(String name, String displayName, Predicate<GTMaterial> validator) {
         return new MaterialPrefix(name, displayName, validator, null, null, false);
     }
 
-    private static MaterialPrefix def(String name, String displayName, Predicate<GTMaterial> validator, boolean hiddenFromCreative) {
+    private static MaterialPrefix def(
+            String name, String displayName, Predicate<GTMaterial> validator, boolean hiddenFromCreative) {
         return new MaterialPrefix(name, displayName, validator, null, null, hiddenFromCreative);
     }
 
-    private static MaterialPrefix tex(String name, String displayName, String textureFileName, Predicate<GTMaterial> validator) {
+    private static MaterialPrefix tex(
+            String name, String displayName, String textureFileName, Predicate<GTMaterial> validator) {
         return new MaterialPrefix(name, displayName, validator, null, textureFileName, false);
     }
 
@@ -673,7 +760,8 @@ private final String name;
             case "tool_head_chisel" -> GTValues.U2 * 3 - GTValues.U9;
             case "tool_head_wrench" -> GTValues.U * 4;
             // OP250: the construction head has the same primary amount as a finished pickaxe.
-            case "tool_head_pickaxe", "tool_head_sense", "tool_head_construction_pickaxe", "tool_head_builderwand" -> GTValues.U9 * 26;
+            case "tool_head_pickaxe", "tool_head_sense", "tool_head_construction_pickaxe", "tool_head_builderwand" ->
+                GTValues.U9 * 26;
             case "tool_head_plow" -> GTValues.U9 * 35;
             case "tool_head_arrow" -> GTValues.U9;
             case "tool_head_buzz_saw", "tool_head_drill" -> GTValues.U * 4;
@@ -758,8 +846,11 @@ private final String name;
     }
 
     public boolean hasEmptyAmmunitionForm() {
-        return this == arrowGtWood || this == arrowGtPlastic || this == bulletGtSmall
-                || this == bulletGtMedium || this == bulletGtLarge;
+        return this == arrowGtWood
+                || this == arrowGtPlastic
+                || this == bulletGtSmall
+                || this == bulletGtMedium
+                || this == bulletGtLarge;
     }
 
     public String getItemId(GTMaterial material) {

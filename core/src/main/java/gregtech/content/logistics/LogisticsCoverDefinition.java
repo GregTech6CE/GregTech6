@@ -18,11 +18,18 @@ public enum LogisticsCoverDefinition {
     ITEM_DUMP("logistics_dump_bus_item", Role.DUMP, Channel.ITEM, false, false);
 
     public enum Role {
-        IMPORT, EXPORT, STORAGE, DUMP, DISPLAY
+        IMPORT,
+        EXPORT,
+        STORAGE,
+        DUMP,
+        DISPLAY
     }
 
     public enum Channel {
-        ITEM, FLUID, BOTH, NONE
+        ITEM,
+        FLUID,
+        BOTH,
+        NONE
     }
 
     private final String id;
@@ -73,8 +80,7 @@ public enum LogisticsCoverDefinition {
 
     public static LogisticsCoverDefinition ofBehavior(String id) {
         if (id == null) return null;
-        for (var type : values())
-            if (type.id.equals(id)) return type;
+        for (var type : values()) if (type.id.equals(id)) return type;
         return null;
     }
 

@@ -18,8 +18,10 @@ public record MachineRecipeSpec(
         fluidInputs = List.copyOf(fluidInputs);
         itemOutputs = List.copyOf(itemOutputs);
         fluidOutputs = List.copyOf(fluidOutputs);
-        if (itemInputs.isEmpty() && fluidInputs.isEmpty()) throw new IllegalArgumentException("machine recipe has no inputs");
-        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) throw new IllegalArgumentException("machine recipe has no outputs");
+        if (itemInputs.isEmpty() && fluidInputs.isEmpty())
+            throw new IllegalArgumentException("machine recipe has no inputs");
+        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty())
+            throw new IllegalArgumentException("machine recipe has no outputs");
         if (euPerTick < 0) throw new IllegalArgumentException("eu_per_tick");
         if (duration < 1) throw new IllegalArgumentException("duration");
     }

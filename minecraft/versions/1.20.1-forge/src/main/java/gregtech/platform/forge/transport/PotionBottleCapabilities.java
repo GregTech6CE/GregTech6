@@ -10,8 +10,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
 
 @Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
@@ -24,7 +24,8 @@ public final class PotionBottleCapabilities {
         if (!PotionBottleHandler.acceptsItem(stack.getItem())) return;
         LazyOptional<IFluidHandlerItem> handler = LazyOptional.of(() -> new PotionBottleHandler(stack));
         event.addCapability(ResourceLocation.fromNamespaceAndPath("gt6ce", "potion_bottle"), new ICapabilityProvider() {
-            @Override public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+            @Override
+            public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
                 return cap == ForgeCapabilities.FLUID_HANDLER_ITEM ? handler.cast() : LazyOptional.empty();
             }
         });

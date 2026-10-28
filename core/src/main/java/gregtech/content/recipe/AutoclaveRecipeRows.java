@@ -1,11 +1,21 @@
 package gregtech.content.recipe;
+
 import gregtech.content.data.MaterialPrefix;
 import java.util.List;
+
 /** Original AutoclaveRecipes parameters; native stack/registry construction stays in the platforms. */
 public final class AutoclaveRecipeRows {
-    private AutoclaveRecipeRows(){}
-    public record Row(MaterialPrefix input, int inCount, int steam, int distW, long ticks, int circuit,
-                       MaterialPrefix output, int outCount) {}
+    private AutoclaveRecipeRows() {}
+
+    public record Row(
+            MaterialPrefix input,
+            int inCount,
+            int steam,
+            int distW,
+            long ticks,
+            int circuit,
+            MaterialPrefix output,
+            int outCount) {}
 
     public static final List<Row> ROWS = List.of(
             new Row(MaterialPrefix.dustSmall, 1, 25600, 120, 800, 0, MaterialPrefix.gemChipped, 1),

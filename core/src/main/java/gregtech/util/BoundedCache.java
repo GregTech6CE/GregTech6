@@ -9,10 +9,12 @@ import java.util.function.Function;
 public final class BoundedCache<K, V> {
     private final int limit;
     private final Map<K, V> values = new LinkedHashMap<>(4, 0.75f, true);
+
     public BoundedCache(int limit) {
         if (limit < 1) throw new IllegalArgumentException("Cache limit must be positive");
         this.limit = limit;
     }
+
     public synchronized V computeIfAbsent(K key, Function<? super K, ? extends V> factory) {
         V present = values.get(key);
         if (present != null) return present;
@@ -21,6 +23,12 @@ public final class BoundedCache<K, V> {
         values.put(key, created);
         return created;
     }
-    public synchronized int size() { return values.size(); }
-    public synchronized void clear() { values.clear(); }
+
+    public synchronized int size() {
+        return values.size();
+    }
+
+    public synchronized void clear() {
+        values.clear();
+    }
 }

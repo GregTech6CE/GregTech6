@@ -62,7 +62,8 @@ public final class StructureTracking {
         WorldStructureClaims.controllerUnloaded(server, entity.getBlockPos());
         StructureTracker tracker = StructureWatchIndex.tracker(entity);
         if (tracker == null) return;
-        StructureTrackingEvents.record("controller.onChunkUnloaded " + entity.getBlockPos().asLong());
+        StructureTrackingEvents.record(
+                "controller.onChunkUnloaded " + entity.getBlockPos().asLong());
         tracker.markUnloading();
         boolean fell = tracker.suspend();
         StructureWatchIndex.clearWatch(server, tracker);
@@ -80,11 +81,11 @@ public final class StructureTracking {
         BlockEntity entity = machine.trackedEntity();
         if (entity.getLevel() == null || entity.getLevel().isClientSide) return;
         StructureTracker tracker = StructureWatchIndex.tracker(entity);
-        if (entity.getLevel() instanceof ServerLevel server
-                && (tracker == null || !tracker.unloading()))
+        if (entity.getLevel() instanceof ServerLevel server && (tracker == null || !tracker.unloading()))
             WorldStructureClaims.releaseController(server, entity.getBlockPos());
         if (tracker != null) {
-            StructureTrackingEvents.record("controller.setRemoved " + entity.getBlockPos().asLong());
+            StructureTrackingEvents.record(
+                    "controller.setRemoved " + entity.getBlockPos().asLong());
             StructureWatchIndex.remove(tracker);
         }
     }
@@ -129,7 +130,8 @@ public final class StructureTracking {
             return;
         }
         BlockPos controllerPos = entity.getBlockPos();
-        LevelChunk controllerChunk = server.getChunkSource().getChunkNow(controllerPos.getX() >> 4, controllerPos.getZ() >> 4);
+        LevelChunk controllerChunk =
+                server.getChunkSource().getChunkNow(controllerPos.getX() >> 4, controllerPos.getZ() >> 4);
         if (controllerChunk == null) {
             // Losing FULL availability precedes native onChunkUnloaded/setRemoved. Keep the
             // tracker until those callbacks so they can still distinguish unload from removal.
@@ -192,9 +194,13 @@ public final class StructureTracking {
      * cells and the repeat layers above them are read; a full evaluation happens on attach, rotation,
      * epoch change, a safety scan, or when the pattern itself changed.
      */
-    private static void evaluateDeclarative(ServerLevel server, StructureTracker tracker,
-                                            StructureDefinition.Declarative definition,
-                                            boolean facingChanged, boolean epochChanged, boolean full) {
+    private static void evaluateDeclarative(
+            ServerLevel server,
+            StructureTracker tracker,
+            StructureDefinition.Declarative definition,
+            boolean facingChanged,
+            boolean epochChanged,
+            boolean full) {
         TrackedMultiblock machine = tracker.machine();
         BlockEntity entity = tracker.entity();
         Level level = entity.getLevel();
@@ -247,8 +253,7 @@ public final class StructureTracking {
             reloadedChunks = tracker.takeReloadedChunks();
             state.applyChanges(entity.getBlockPos(), changedCells, reloadedChunks);
         }
-        boolean touched = full || facingChanged || epochChanged
-                || !changedCells.isEmpty() || !reloadedChunks.isEmpty();
+        boolean touched = full || facingChanged || epochChanged || !changedCells.isEmpty() || !reloadedChunks.isEmpty();
         boolean matched;
         StructureScanProbe.openIncremental();
         try {
@@ -273,9 +278,10 @@ public final class StructureTracking {
         if (consistency) {
             boolean scanned = fullEvaluate(machine);
             if (scanned != matched) {
-                throw new IllegalStateException("incremental structure evaluation disagrees with a full scan: incremental="
-                        + matched + " full=" + scanned + " at " + entity.getBlockPos()
-                        + " (" + machine.getClass().getSimpleName() + ")");
+                throw new IllegalStateException(
+                        "incremental structure evaluation disagrees with a full scan: incremental="
+                                + matched + " full=" + scanned + " at " + entity.getBlockPos()
+                                + " (" + machine.getClass().getSimpleName() + ")");
             }
         }
     }
@@ -283,11 +289,13 @@ public final class StructureTracking {
     /** Test-only: when a projection calls a change equivalent, a full scan must agree with the cached bit. */
     static void auditEquivalent(StructureTracker tracker) {
         if (tracker.unloading() || tracker.entity().isRemoved()) return;
-        if (!(tracker.entity().getLevel() instanceof ServerLevel server) || !isCurrentEntity(server, tracker.entity())) return;
+        if (!(tracker.entity().getLevel() instanceof ServerLevel server) || !isCurrentEntity(server, tracker.entity()))
+            return;
         auditProjection(tracker.watch(), tracker.formed(), () -> fullEvaluate(tracker.machine()));
     }
 
-    public static void auditProjection(Footprint watch, boolean cachedFormed, java.util.function.BooleanSupplier fullScan) {
+    public static void auditProjection(
+            Footprint watch, boolean cachedFormed, java.util.function.BooleanSupplier fullScan) {
         boolean scanned = fullScan.getAsBoolean();
         if (scanned != cachedFormed) {
             throw new IllegalStateException("structure projection audit: cached formed=" + cachedFormed
@@ -312,9 +320,9 @@ public final class StructureTracking {
         BlockEntity entity = machine.trackedEntity();
         Level level = entity.getLevel();
         StructureDefinition definition = machine.structureDefinition();
-        if (level == null || !(definition instanceof StructureDefinition.Declarative declarative)
-                || !declarative.incremental())
-            return scan(machine);
+        if (level == null
+                || !(definition instanceof StructureDefinition.Declarative declarative)
+                || !declarative.incremental()) return scan(machine);
         CompiledPattern pattern = declarative.compile(LayoutStructures.facing(entity));
         if (pattern == null) return false;
         PatternState state = new PatternState(pattern, level.getHeight());

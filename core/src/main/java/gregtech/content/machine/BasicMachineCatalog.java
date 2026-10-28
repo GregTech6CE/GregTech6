@@ -1,16 +1,13 @@
 package gregtech.content.machine;
 
-import gregtech.content.material.Materials;
-import gregtech.api.machine.MachineFaceMasks;
-import gregtech.api.machine.BasicMachineParameters;
-import gregtech.api.material.GTMaterial;
-import gregtech.api.material.WeightedMaterial;
-import gregtech.content.data.ImportedMaterialData;
-
 import static gregtech.api.machine.MachineFaceMasks.*;
 
+import gregtech.api.machine.BasicMachineParameters;
+import gregtech.api.machine.MachineFaceMasks;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.WeightedMaterial;
+import gregtech.content.material.Materials;
 import java.util.*;
-
 
 /**
  * GT6 basic machine batch registration (GT6 {@code Loader_MultiTileEntities#machines1–4}).
@@ -22,28 +19,37 @@ public final class BasicMachineCatalog {
     // ── Tier material arrays ────────────────────────────────────────────────
 
     /** GT6 {@code Heat_T}: Steel, Invar, Ti, TungstenCarbide */
-    private static final GTMaterial[] HU_TIERS = {Materials.Steel, Materials.Invar, Materials.Titanium, Materials.TungstenCarbide};
+    private static final GTMaterial[] HU_TIERS = {
+        Materials.Steel, Materials.Invar, Materials.Titanium, Materials.TungstenCarbide
+    };
     /** GT6 {@code Kinetic_T}: Bronze, Steel, Ti, TungstenSteel */
-    private static final GTMaterial[] RU_KU_TIERS = {Materials.Bronze, Materials.Steel, Materials.Titanium, Materials.Tungstensteel};
+    private static final GTMaterial[] RU_KU_TIERS = {
+        Materials.Bronze, Materials.Steel, Materials.Titanium, Materials.Tungstensteel
+    };
     /** GT6 {@code Electric_T}: SteelGalvanized, Al, StainlessSteel, Cr, Ti */
-    private static final GTMaterial[] EU_MU_LU_CU_TIERS = {Materials.SteelGalvanized, Materials.Aluminium, Materials.StainlessSteel, Materials.Chromium, Materials.Titanium};
+    private static final GTMaterial[] EU_MU_LU_CU_TIERS = {
+        Materials.SteelGalvanized, Materials.Aluminium, Materials.StainlessSteel, Materials.Chromium, Materials.Titanium
+    };
 
     // ── Hardness / blast resistance by tier index ───────────────────────────
 
     private static final float[][] TIER_STATS = {
-        /* T1 */ {6.0F, 6.0F},   /* T2 */ {4.0F, 4.0F},   /* T3 */ {9.0F, 9.0F},
-        /* T4 */ {12.5F, 12.5F}, /* T5 */ {9.0F, 9.0F}
+        /* T1 */ {6.0F, 6.0F}, /* T2 */
+        {4.0F, 4.0F}, /* T3 */
+        {9.0F, 9.0F},
+        /* T4 */ {12.5F, 12.5F}, /* T5 */
+        {9.0F, 9.0F}
     };
 
     /** Per-machine hardness/resistance overrides from GT6 Loader_MultiTileEntities. */
     private static final Map<String, float[]> STAT_OVERRIDES = Map.of(
-            "largecentrifuge", new float[]{12.5F, 12.5F},
-            "largecrusher",    new float[]{12.5F, 12.5F},
-            "largeshredder",   new float[]{12.5F, 12.5F},
-            "largesluice",     new float[]{9.0F, 9.0F},
-            "implosioncompressor", new float[]{12.5F, 12.5F},
-            "fusionreactor",   new float[]{12.5F, 12.5F},
-            "cokeoven",        new float[]{5.0F, 5.0F});
+            "largecentrifuge", new float[] {12.5F, 12.5F},
+            "largecrusher", new float[] {12.5F, 12.5F},
+            "largeshredder", new float[] {12.5F, 12.5F},
+            "largesluice", new float[] {9.0F, 9.0F},
+            "implosioncompressor", new float[] {12.5F, 12.5F},
+            "fusionreactor", new float[] {12.5F, 12.5F},
+            "cokeoven", new float[] {5.0F, 5.0F});
 
     // ── Machine type definitions ────────────────────────────────────────────
 
@@ -54,8 +60,7 @@ public final class BasicMachineCatalog {
      *                 it so {@code BasicMachineOriginalParams.find(name, tier)} reads the very GT6
      *                 registration the machine is a port of.
      */
-    private record MachineDef(String name, String energy, GTMaterial[] tiers,
-                              int tierBase) {
+    private record MachineDef(String name, String energy, GTMaterial[] tiers, int tierBase) {
         MachineDef(String name, String energy, GTMaterial[] tiers) {
             this(name, energy, tiers, 1);
         }
@@ -70,8 +75,8 @@ public final class BasicMachineCatalog {
      * ({@code massfab_osmiridium_t2}) exactly like the ones already registered.
      */
     private static final java.util.Map<String, int[]> EXTRA_TIERS = java.util.Map.of(
-            "massfab", new int[]{2, 3, 4, 5},
-            "replicator", new int[]{2, 3, 4, 5});
+            "massfab", new int[] {2, 3, 4, 5},
+            "replicator", new int[] {2, 3, 4, 5});
 
     /**
      * Machines that exist in GT6 <em>only</em> as multiblocks and that this port registers as multiblock
@@ -84,118 +89,118 @@ public final class BasicMachineCatalog {
      * implementation and removing it would delete the machine. See docs/PORTING_REMAINING_2026-09-14.md.
      * </p>
      */
-    private static final Set<String> MULTIBLOCK_ONLY = Set.of(
-            "distillationtower", "cryodistillationtower", "cokeoven",
-            "fusionreactor", "implosioncompressor");
+    private static final Set<String> MULTIBLOCK_ONLY =
+            Set.of("distillationtower", "cryodistillationtower", "cokeoven", "fusionreactor", "implosioncompressor");
 
     static {
         // HU machines (4 tiers: Steel, Invar, Ti, TungstenCarbide)
-        MACHINE_DEFS.add(new MachineDef("oven",           "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("roaster",        "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("distillery",     "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("extruder",       "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("smelter",        "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("oven", "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("roaster", "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("distillery", "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("extruder", "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("smelter", "HU", HU_TIERS));
         MACHINE_DEFS.add(new MachineDef("crystallisationcrucible", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("dryer",          "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("laminator",      "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("dryer", "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("laminator", "HU", HU_TIERS));
         MACHINE_DEFS.add(new MachineDef("catalyticcracker", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("steamcracker",   "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("steamcracker", "HU", HU_TIERS));
 
         // RU machines (4 tiers: Bronze, Steel, Ti, TungstenSteel)
-        MACHINE_DEFS.add(new MachineDef("shredder",       "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("lathe",          "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("buzzsaw",        "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("centrifuge",     "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("rollingmill",    "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("rollbender",     "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("rollformer",     "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("clustermill",    "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("wiremill",       "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("mixer",          "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("loom",           "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("sluice",         "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("sander",         "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("burnmixer",      "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("debarker",       "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("shredder", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("lathe", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("buzzsaw", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("centrifuge", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("rollingmill", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("rollbender", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("rollformer", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("clustermill", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("wiremill", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("mixer", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("loom", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("sluice", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("sander", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("burnmixer", "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("debarker", "RU", RU_KU_TIERS));
 
         // KU machines (4 tiers: Bronze, Steel, Ti, TungstenSteel)
-        MACHINE_DEFS.add(new MachineDef("crusher",        "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("sifter",         "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("squeezer",       "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("compressor",     "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("press",          "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("crusher", "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("sifter", "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("squeezer", "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("compressor", "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("press", "KU", RU_KU_TIERS));
 
         // EU machines (5 tiers: SteelGalvanized, Al, StainlessSteel, Cr, Ti)
-        MACHINE_DEFS.add(new MachineDef("electrolyzer",   "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("canner",         "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("injector",       "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("printer",        "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("electrolyzer", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("canner", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("injector", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("printer", "EU", EU_MU_LU_CU_TIERS));
         MACHINE_DEFS.add(new MachineDef("scannervisuals", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("autocrafter",    "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("electricmixer",  "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("electricloom",   "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("autocrafter", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("electricmixer", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("electricloom", "EU", EU_MU_LU_CU_TIERS));
         MACHINE_DEFS.add(new MachineDef("electricsifter", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("slicer",         "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("nanofab",        "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("plantalyzer",    "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("bumblelyzer",    "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("boxinator",      "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("unboxinator",    "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("slicer", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("nanofab", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("plantalyzer", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("bumblelyzer", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("boxinator", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("unboxinator", "EU", EU_MU_LU_CU_TIERS));
 
         // MU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("polarizer",      "MU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("polarizer", "MU", EU_MU_LU_CU_TIERS));
         MACHINE_DEFS.add(new MachineDef("magneticseparator", "MU", EU_MU_LU_CU_TIERS));
 
         // LU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("laserengraver",  "LU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("laserwelder",    "LU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("laserengraver", "LU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("laserwelder", "LU", EU_MU_LU_CU_TIERS));
 
         // CU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("freezer",        "CU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("cryomixer",      "CU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("freezer", "CU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("cryomixer", "CU", EU_MU_LU_CU_TIERS));
 
         // QU machines — Osmium color only
-        MACHINE_DEFS.add(new MachineDef("massfab",        "QU", new GTMaterial[]{Materials.OsmiumElemental}));
+        MACHINE_DEFS.add(new MachineDef("massfab", "QU", new GTMaterial[] {Materials.OsmiumElemental}));
         // GT6 registers the Molecular Scanner as T3 only (Loader_MultiTileEntities:1549-1553; T1/T2/
         // T4/T5 are commented out) and its NBT_INPUT of 512 is exactly the scanner recipe's power
         // (RecipeMapScannerMolecular), so the single port machine is tier 3.
-        MACHINE_DEFS.add(new MachineDef("scannermolecular", "QU", new GTMaterial[]{Materials.OsmiumElemental}, 3));
-        MACHINE_DEFS.add(new MachineDef("replicator",     "QU", new GTMaterial[]{Materials.OsmiumElemental}));
+        MACHINE_DEFS.add(new MachineDef("scannermolecular", "QU", new GTMaterial[] {Materials.OsmiumElemental}, 3));
+        MACHINE_DEFS.add(new MachineDef("replicator", "QU", new GTMaterial[] {Materials.OsmiumElemental}));
 
         // Single-tier machines (StainlessSteel color)
         GTMaterial[] SS = {Materials.StainlessSteel};
-        MACHINE_DEFS.add(new MachineDef("autoclave",      "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("bath",           "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("generifier",     "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("coagulator",     "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("fermenter",      "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("melter",         "HU", new GTMaterial[]{Materials.Iron}));
-        MACHINE_DEFS.add(new MachineDef("cokeoven",       "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("lightning",      "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("autoclave", "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("bath", "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("generifier", "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("coagulator", "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("fermenter", "HU", SS));
+        MACHINE_DEFS.add(new MachineDef("melter", "HU", new GTMaterial[] {Materials.Iron}));
+        MACHINE_DEFS.add(new MachineDef("cokeoven", "HU", SS));
+        MACHINE_DEFS.add(new MachineDef("lightning", "EU", EU_MU_LU_CU_TIERS));
         MACHINE_DEFS.add(new MachineDef("implosioncompressor", "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("fusionreactor",  "QU", SS));
+        MACHINE_DEFS.add(new MachineDef("fusionreactor", "QU", SS));
         MACHINE_DEFS.add(new MachineDef("cryodistillationtower", "CU", SS));
         MACHINE_DEFS.add(new MachineDef("distillationtower", "HU", SS));
 
         // Large batch machines (GT6 single-tier, 512 GU/t; materials per original casing)
-        MACHINE_DEFS.add(new MachineDef("largecentrifuge",   "RU", new GTMaterial[]{Materials.Tungstensteel}));
+        MACHINE_DEFS.add(new MachineDef("largecentrifuge", "RU", new GTMaterial[] {Materials.Tungstensteel}));
         MACHINE_DEFS.add(new MachineDef("largeelectrolyzer", "EU", SS));
-        MACHINE_DEFS.add(new MachineDef("largecoagulator",   "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("largeautoclave",    "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("largebath",         "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("largemixer",        "RU", SS));
-        MACHINE_DEFS.add(new MachineDef("largefermenter",    "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("largeoven",         "EU", new GTMaterial[]{Materials.Invar}));
-        MACHINE_DEFS.add(new MachineDef("largesluice",       "RU", new GTMaterial[]{Materials.Titanium}));
-        MACHINE_DEFS.add(new MachineDef("largecrusher",      "RU", new GTMaterial[]{Materials.Tungstensteel}));
-        MACHINE_DEFS.add(new MachineDef("largeshredder",     "RU", new GTMaterial[]{Materials.Tungstensteel}));
-        MACHINE_DEFS.add(new MachineDef("largesqueezer",     "RU", new GTMaterial[]{Materials.Steel}));
-        MACHINE_DEFS.add(new MachineDef("largemassfab",      "QU", new GTMaterial[]{Materials.Lead}));
+        MACHINE_DEFS.add(new MachineDef("largecoagulator", "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("largeautoclave", "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("largebath", "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("largemixer", "RU", SS));
+        MACHINE_DEFS.add(new MachineDef("largefermenter", "HU", SS));
+        MACHINE_DEFS.add(new MachineDef("largeoven", "EU", new GTMaterial[] {Materials.Invar}));
+        MACHINE_DEFS.add(new MachineDef("largesluice", "RU", new GTMaterial[] {Materials.Titanium}));
+        MACHINE_DEFS.add(new MachineDef("largecrusher", "RU", new GTMaterial[] {Materials.Tungstensteel}));
+        MACHINE_DEFS.add(new MachineDef("largeshredder", "RU", new GTMaterial[] {Materials.Tungstensteel}));
+        MACHINE_DEFS.add(new MachineDef("largesqueezer", "RU", new GTMaterial[] {Materials.Steel}));
+        MACHINE_DEFS.add(new MachineDef("largemassfab", "QU", new GTMaterial[] {Materials.Lead}));
     }
 
     // ── Material short names for ID generation ──────────────────────────────
 
     private static final Map<GTMaterial, String> MAT_SHORT = new HashMap<>();
+
     static {
         MAT_SHORT.put(Materials.Steel, "steel");
         MAT_SHORT.put(Materials.Invar, "invar");
@@ -216,9 +221,18 @@ public final class BasicMachineCatalog {
     private static long energyBase(String machineName) {
         return switch (machineName) {
             // GT6 large batch machines run at 512 GU/t nominal
-            case "largecentrifuge", "largeelectrolyzer", "largecoagulator", "largeautoclave",
-                 "largebath", "largemixer", "largefermenter", "largeoven", "largesluice",
-                 "largecrusher", "largeshredder", "largesqueezer" -> 512;
+            case "largecentrifuge",
+                    "largeelectrolyzer",
+                    "largecoagulator",
+                    "largeautoclave",
+                    "largebath",
+                    "largemixer",
+                    "largefermenter",
+                    "largeoven",
+                    "largesluice",
+                    "largecrusher",
+                    "largeshredder",
+                    "largesqueezer" -> 512;
             case "largemassfab" -> 1;
             // Most machines: 32 base → 32/128/512/2048/8192
             default -> 32;
@@ -245,35 +259,45 @@ public final class BasicMachineCatalog {
                 // Preserve the shipped registry identity while correcting the original iron casing.
                 if (def.name().equals("melter")) id = "melter_stainless_steel";
                 int tierNumber = t + def.tierBase();
-                if(def.name().equals("massfab"))mat=gregtech.engine.material.GTMaterialRegistry.get("Osmiridium");
+                if (def.name().equals("massfab")) mat = gregtech.engine.material.GTMaterialRegistry.get("Osmiridium");
                 // Original GT6 per-machine/per-tier registration values; the synthetic
                 // tables below remain only as the fallback for machines GT6 has no
                 // "Basic Machines" row for (the large* batch machines).
                 var original = gregtech.content.data.BasicMachineOriginalParams.find(def.name(), tierNumber);
                 float[] stats = original != null
-                        ? new float[]{original.hardness(), original.resistance()}
+                        ? new float[] {original.hardness(), original.resistance()}
                         : STAT_OVERRIDES.getOrDefault(def.name(), TIER_STATS[Math.min(t, TIER_STATS.length - 1)]);
                 String energyName = original != null ? original.energyType() : def.energy();
-                long energyIn = original != null ? original.energyInput()
+                long energyIn = original != null
+                        ? original.energyInput()
                         : (def.energy().equals("TU") ? 1 : baseEnergy << (2 * t)); // x4 per tier
-                int parallel = original != null ? original.parallel()
-                        : BasicMachineParameters.legacyParallelLimit(def.name());
+                int parallel =
+                        original != null ? original.parallel() : BasicMachineParameters.legacyParallelLimit(def.name());
                 List<WeightedMaterial> materials = OriginalMachineMaterialData.weights(def.name(), tierNumber);
                 var energyType = gregtech.content.data.GregTechTags.Energy.ALL.stream()
-                        .filter(type -> type.getShortName().equals(energyName)).findFirst().orElseThrow();
+                        .filter(type -> type.getShortName().equals(energyName))
+                        .findFirst()
+                        .orElseThrow();
                 BasicMachineParameters spec = BasicMachineParameters.builder(id, mat)
                         .machineType(def.name())
-
-                        .energy(energyType.getShortName(), energyIn).tier(tierNumber)
+                        .energy(energyType.getShortName(), energyIn)
+                        .tier(tierNumber)
                         // GT6 NBT_INPUT_MIN/MAX; without an explicit range GT6 itself uses
                         // input/2..input*2 (MultiTileEntityBasicMachine.readFromNBT2).
-                        .energyRange(original != null ? original.energyInputMin()
+                        .energyRange(
+                                original != null
+                                        ? original.energyInputMin()
                                         : BasicMachineParameters.defaultEnergyInMin(energyName, energyIn),
-                                original != null ? original.energyInputMax()
+                                original != null
+                                        ? original.energyInputMax()
                                         : BasicMachineParameters.defaultEnergyInMax(energyName, energyIn))
                         .parallel(parallel)
-                        .strength(def.name().equals("massfab")?16:stats[0], def.name().equals("massfab")?16:stats[1]).faces(defaultMachineFaceMasks(def.name(),tierNumber))
-                        .constructionMaterials(materials).build();
+                        .strength(
+                                def.name().equals("massfab") ? 16 : stats[0],
+                                def.name().equals("massfab") ? 16 : stats[1])
+                        .faces(defaultMachineFaceMasks(def.name(), tierNumber))
+                        .constructionMaterials(materials)
+                        .build();
                 result.add(spec);
             }
         }
@@ -286,19 +310,25 @@ public final class BasicMachineCatalog {
                 String energyName = original != null ? original.energyType() : "QU";
                 long energyIn = original != null ? original.energyInput() : 32L << (2 * (tier - 1));
                 var energyType = gregtech.content.data.GregTechTags.Energy.ALL.stream()
-                        .filter(type -> type.getShortName().equals(energyName)).findFirst().orElseThrow();
-                result.add(BasicMachineParameters.builder(name + "_osmiridium_t" + tier,
-                        gregtech.engine.material.GTMaterialRegistry.get("Osmiridium"))
+                        .filter(type -> type.getShortName().equals(energyName))
+                        .findFirst()
+                        .orElseThrow();
+                result.add(BasicMachineParameters.builder(
+                                name + "_osmiridium_t" + tier,
+                                gregtech.engine.material.GTMaterialRegistry.get("Osmiridium"))
                         .machineType(name)
-
-                        .energy(energyType.getShortName(), energyIn).tier(tier)
+                        .energy(energyType.getShortName(), energyIn)
+                        .tier(tier)
                         .parallel(original != null ? original.parallel() : 1)
-                        .energyRange(original != null ? original.energyInputMin() : energyIn,
+                        .energyRange(
+                                original != null ? original.energyInputMin() : energyIn,
                                 original != null ? original.energyInputMax() : energyIn)
-                        .strength(original != null ? original.hardness() : 16,
+                        .strength(
+                                original != null ? original.hardness() : 16,
                                 original != null ? original.resistance() : 16)
-                        .faces(defaultMachineFaceMasks(name,tier))
-                        .constructionMaterials(OriginalMachineMaterialData.weights(name, tier)).build());
+                        .faces(defaultMachineFaceMasks(name, tier))
+                        .constructionMaterials(OriginalMachineMaterialData.weights(name, tier))
+                        .build());
             }
         }
         return gregtech.engine.definition.DefinitionCatalog.validated(result, BasicMachineParameters::id);
@@ -308,404 +338,690 @@ public final class BasicMachineCatalog {
      *  Uses machine-relative directions: TOP/BOTTOM/LEFT/RIGHT/FRONT/BACK.
      *  Auto I/O pulls from / pushes to the adjacent block on the specified relative face
      *  every server tick when enabled. */
-    private static MachineFaceMasks defaultMachineFaceMasks(String machineName,int tier) {
-        if(gregtech.content.multiblock.OriginalAdvancedControllerData.handles(machineName))return gregtech.content.multiblock.OriginalAdvancedControllerData.faces(machineName);
-        if(OriginalBasicMachineRules.handles(machineName,tier))return OriginalBasicMachineFaces.defaults(machineName);
-        if(gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(machineName))
+    private static MachineFaceMasks defaultMachineFaceMasks(String machineName, int tier) {
+        if (gregtech.content.multiblock.OriginalAdvancedControllerData.handles(machineName))
+            return gregtech.content.multiblock.OriginalAdvancedControllerData.faces(machineName);
+        if (OriginalBasicMachineRules.handles(machineName, tier))
+            return OriginalBasicMachineFaces.defaults(machineName);
+        if (gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(machineName))
             return gregtech.content.multiblock.OriginalLargeRecipeMachineData.faces(machineName);
         // ── HU heat machines ──────────────────────────────────────────
         return switch (machineName) {
-            case "oven" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "oven" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "roaster" -> MachineFaceMasks.builder()
-                    .itemIn(BACK, LEFT).itemOut(RIGHT)
-                    .fluidIn(BACK, LEFT).fluidOut(TOP)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(TOP).build();
+            case "roaster" ->
+                MachineFaceMasks.builder()
+                        .itemIn(BACK, LEFT)
+                        .itemOut(RIGHT)
+                        .fluidIn(BACK, LEFT)
+                        .fluidOut(TOP)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(TOP)
+                        .build();
 
-            case "distillery" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT)
-                    .fluidIn(TOP, LEFT).fluidOut(BACK)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(BACK).build();
+            case "distillery" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT)
+                        .fluidIn(TOP, LEFT)
+                        .fluidOut(BACK)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(BACK)
+                        .build();
 
-            case "extruder" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "extruder" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "smelter" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(LEFT)
-                    .fluidIn(TOP).fluidOut(RIGHT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(TOP).itemAutoOut(LEFT)
-                    .fluidAutoIn(TOP).fluidAutoOut(RIGHT).build();
+            case "smelter" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(LEFT)
+                        .fluidIn(TOP)
+                        .fluidOut(RIGHT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(LEFT)
+                        .fluidAutoIn(TOP)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "crystallisationcrucible" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, BACK, TOP).itemOut(RIGHT)
-                    .fluidIn(LEFT, BACK, TOP)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).build();
+            case "crystallisationcrucible" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, BACK, TOP)
+                        .itemOut(RIGHT)
+                        .fluidIn(LEFT, BACK, TOP)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .build();
 
-            case "dryer" -> MachineFaceMasks.builder()
-                    .itemIn(BACK, LEFT).itemOut(RIGHT)
-                    .fluidIn(BACK, LEFT).fluidOut(TOP)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(TOP).build();
+            case "dryer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(BACK, LEFT)
+                        .itemOut(RIGHT)
+                        .fluidIn(BACK, LEFT)
+                        .fluidOut(TOP)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(TOP)
+                        .build();
 
-            case "laminator" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "laminator" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "catalyticcracker", "steamcracker" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BACK)
-                    .fluidIn(TOP, LEFT).fluidOut(RIGHT, BACK)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "catalyticcracker", "steamcracker" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BACK)
+                        .fluidIn(TOP, LEFT)
+                        .fluidOut(RIGHT, BACK)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
             // ── RU rotation machines ────────────────────────────────────
-            case "shredder" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .energyIn(LEFT, RIGHT)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM).build();
+            case "shredder" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .energyIn(LEFT, RIGHT)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .build();
 
-            case "lathe" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "lathe" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "buzzsaw" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .fluidIn(TOP, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(TOP).build();
+            case "buzzsaw" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .fluidIn(TOP, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(TOP)
+                        .build();
 
-            case "centrifuge" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(RIGHT)
-                    .fluidIn(TOP).fluidOut(LEFT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(TOP).itemAutoOut(RIGHT)
-                    .fluidAutoIn(TOP).fluidAutoOut(LEFT).build();
+            case "centrifuge" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(RIGHT)
+                        .fluidIn(TOP)
+                        .fluidOut(LEFT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(TOP)
+                        .fluidAutoOut(LEFT)
+                        .build();
 
-            case "rollingmill", "rollbender", "rollformer", "clustermill", "wiremill" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "rollingmill", "rollbender", "rollformer", "clustermill", "wiremill" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "mixer", "burnmixer" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT, BACK)
-                    .fluidIn(LEFT, TOP).fluidOut(RIGHT, BACK)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "mixer", "burnmixer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT, BACK)
+                        .fluidIn(LEFT, TOP)
+                        .fluidOut(RIGHT, BACK)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "loom" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .energyIn(LEFT, RIGHT)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM).build();
+            case "loom" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .energyIn(LEFT, RIGHT)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .build();
 
-            case "sluice" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(LEFT, TOP).fluidOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "sluice" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(LEFT, TOP)
+                        .fluidOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "sander" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(TOP)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "sander" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(TOP)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "debarker" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .fluidIn(TOP, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(TOP).build();
+            case "debarker" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .fluidIn(TOP, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(TOP)
+                        .build();
 
             // ── KU kinetic machines ─────────────────────────────────────
-            case "crusher", "sifter" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM).build();
+            case "crusher", "sifter" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .build();
 
-            case "squeezer" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .fluidOut(BOTTOM)
-                    .energyIn(TOP)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoOut(BOTTOM).build();
+            case "squeezer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .fluidOut(BOTTOM)
+                        .energyIn(TOP)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
-            case "compressor" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .energyIn(LEFT)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM).build();
+            case "compressor" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .energyIn(LEFT)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .build();
 
-            case "press" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(TOP)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "press" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(TOP)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
             // ── EU electric machines ────────────────────────────────────
-            case "electrolyzer" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, FRONT, BACK).itemOut(RIGHT, LEFT)
-                    .fluidIn(TOP, FRONT, BACK).fluidOut(RIGHT, LEFT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(TOP).itemAutoOut(RIGHT)
-                    .fluidAutoIn(TOP).fluidAutoOut(RIGHT).build();
+            case "electrolyzer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, FRONT, BACK)
+                        .itemOut(RIGHT, LEFT)
+                        .fluidIn(TOP, FRONT, BACK)
+                        .fluidOut(RIGHT, LEFT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(TOP)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "canner" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(TOP, LEFT).fluidOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "canner" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(TOP, LEFT)
+                        .fluidOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "injector" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(TOP, LEFT).fluidOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "injector" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(TOP, LEFT)
+                        .fluidOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "printer" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(TOP, LEFT)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).build();
+            case "printer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(TOP, LEFT)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .build();
 
-            case "scannervisuals" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "scannervisuals" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "autocrafter" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .energyIn(TOP, BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "autocrafter" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .energyIn(TOP, BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "electricmixer" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT, BACK)
-                    .fluidIn(LEFT, TOP).fluidOut(RIGHT, BACK)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "electricmixer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT, BACK)
+                        .fluidIn(LEFT, TOP)
+                        .fluidOut(RIGHT, BACK)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "electricloom" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .energyIn(LEFT, RIGHT)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM).build();
+            case "electricloom" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .energyIn(LEFT, RIGHT)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .build();
 
-            case "electricsifter" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM).build();
+            case "electricsifter" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .build();
 
-            case "slicer" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "slicer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "nanofab" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(LEFT, TOP).fluidOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "nanofab" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(LEFT, TOP)
+                        .fluidOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "plantalyzer", "bumblelyzer" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(TOP, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(TOP).build();
+            case "plantalyzer", "bumblelyzer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(TOP, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(TOP)
+                        .build();
 
-            case "boxinator", "unboxinator" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "boxinator", "unboxinator" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
             // ── MU magnetic machines ────────────────────────────────────
-            case "polarizer" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(TOP, BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "polarizer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(TOP, BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "magneticseparator" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(LEFT).fluidOut(RIGHT, BOTTOM)
-                    .energyIn(TOP)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "magneticseparator" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(LEFT)
+                        .fluidOut(RIGHT, BOTTOM)
+                        .energyIn(TOP)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
             // ── LU laser machines ───────────────────────────────────────
-            case "laserengraver" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .energyIn(TOP)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "laserengraver" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .energyIn(TOP)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "laserwelder" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT).itemOut(RIGHT)
-                    .fluidIn(BOTTOM, LEFT)
-                    .energyIn(TOP)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).build();
+            case "laserwelder" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT)
+                        .itemOut(RIGHT)
+                        .fluidIn(BOTTOM, LEFT)
+                        .energyIn(TOP)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .build();
 
             // ── CU cryo machines ────────────────────────────────────────
-            case "freezer" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(TOP, LEFT).fluidOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "freezer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(TOP, LEFT)
+                        .fluidOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "cryomixer" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT, BACK)
-                    .fluidIn(LEFT, TOP).fluidOut(RIGHT, BACK)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "cryomixer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT, BACK)
+                        .fluidIn(LEFT, TOP)
+                        .fluidOut(RIGHT, BACK)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
             // ── QU quantum machines ─────────────────────────────────────
-            case "massfab" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(BOTTOM, RIGHT)
-                    .fluidIn(LEFT, TOP).fluidOut(BOTTOM, RIGHT)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(TOP).fluidAutoOut(BOTTOM).build();
+            case "massfab" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(BOTTOM, RIGHT)
+                        .fluidIn(LEFT, TOP)
+                        .fluidOut(BOTTOM, RIGHT)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(TOP)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
-            case "replicator" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(BOTTOM, RIGHT)
-                    .fluidIn(LEFT, TOP).fluidOut(BOTTOM, RIGHT)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "replicator" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(BOTTOM, RIGHT)
+                        .fluidIn(LEFT, TOP)
+                        .fluidOut(BOTTOM, RIGHT)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "scannermolecular" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(BOTTOM, RIGHT)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "scannermolecular" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(BOTTOM, RIGHT)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
             // ── TU single-tier machines ─────────────────────────────────
-            case "autoclave" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(BACK, RIGHT)
-                    .fluidIn(BOTTOM, LEFT).fluidOut(BACK, RIGHT)
-                    .energyIn(BOTTOM, TOP, LEFT,
-                              FRONT, RIGHT, BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(BACK)
-                    .fluidAutoIn(LEFT).fluidAutoOut(BACK).build();
+            case "autoclave" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(BACK, RIGHT)
+                        .fluidIn(BOTTOM, LEFT)
+                        .fluidOut(BACK, RIGHT)
+                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(BACK)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(BACK)
+                        .build();
 
-            case "bath", "generifier" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(BOTTOM, RIGHT)
-                    .fluidIn(TOP, LEFT).fluidOut(BOTTOM, RIGHT)
-                    .energyIn(BOTTOM, TOP, LEFT,
-                              FRONT, RIGHT, BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+            case "bath", "generifier" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(BOTTOM, RIGHT)
+                        .fluidIn(TOP, LEFT)
+                        .fluidOut(BOTTOM, RIGHT)
+                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
-            case "coagulator" -> MachineFaceMasks.builder()
-                    .itemOut(BOTTOM, RIGHT)
-                    .fluidIn(TOP, LEFT)
-                    .energyIn(BOTTOM, TOP, LEFT,
-                              FRONT, RIGHT, BACK)
-                    .itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).build();
+            case "coagulator" ->
+                MachineFaceMasks.builder()
+                        .itemOut(BOTTOM, RIGHT)
+                        .fluidIn(TOP, LEFT)
+                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .build();
 
-            case "fermenter" -> MachineFaceMasks.builder()
-                    .itemIn(BACK, LEFT).itemOut(RIGHT)
-                    .fluidIn(BACK, LEFT).fluidOut(TOP)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(TOP).build();
+            case "fermenter" ->
+                MachineFaceMasks.builder()
+                        .itemIn(BACK, LEFT)
+                        .itemOut(RIGHT)
+                        .fluidIn(BACK, LEFT)
+                        .fluidOut(TOP)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(TOP)
+                        .build();
 
-            case "melter" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(LEFT)
-                    .fluidIn(TOP).fluidOut(RIGHT)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(TOP).itemAutoOut(LEFT)
-                    .fluidAutoIn(TOP).fluidAutoOut(RIGHT).build();
+            case "melter" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(LEFT)
+                        .fluidIn(TOP)
+                        .fluidOut(RIGHT)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(LEFT)
+                        .fluidAutoIn(TOP)
+                        .fluidAutoOut(RIGHT)
+                        .build();
 
             // ── special / multiblock machines ───────────────────────────
-            case "cokeoven" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .fluidOut(BOTTOM, TOP, LEFT,
-                              FRONT, RIGHT, BACK)
-                    .energyIn(BOTTOM, TOP, LEFT,
-                              FRONT, RIGHT, BACK)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM)
-                    .fluidAutoOut(BOTTOM).build();
+            case "cokeoven" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .fluidOut(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
+                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
-            case "lightning" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(RIGHT, BOTTOM)
-                    .fluidIn(TOP, LEFT).fluidOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(TOP).fluidAutoOut(BOTTOM).build();
+            case "lightning" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(RIGHT, BOTTOM)
+                        .fluidIn(TOP, LEFT)
+                        .fluidOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .fluidAutoIn(TOP)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
-            case "implosioncompressor" -> MachineFaceMasks.builder()
-                    .itemIn(TOP).itemOut(BOTTOM)
-                    .energyIn(BOTTOM, TOP, LEFT,
-                              FRONT, RIGHT, BACK)
-                    .itemAutoIn(TOP).itemAutoOut(BOTTOM).build();
+            case "implosioncompressor" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP)
+                        .itemOut(BOTTOM)
+                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
+                        .itemAutoIn(TOP)
+                        .itemAutoOut(BOTTOM)
+                        .build();
 
-            case "fusionreactor" -> MachineFaceMasks.builder()
-                    .itemIn(LEFT, TOP).itemOut(RIGHT, BOTTOM)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(RIGHT).build();
+            case "fusionreactor" ->
+                MachineFaceMasks.builder()
+                        .itemIn(LEFT, TOP)
+                        .itemOut(RIGHT, BOTTOM)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(RIGHT)
+                        .build();
 
-            case "cryodistillationtower" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(BACK)
-                    .fluidOut(BACK)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(BACK)
-                    .fluidAutoOut(BACK).build();
+            case "cryodistillationtower" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(BACK)
+                        .fluidOut(BACK)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(BACK)
+                        .fluidAutoOut(BACK)
+                        .build();
 
-            case "distillationtower" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT).itemOut(BACK)
-                    .fluidOut(BACK)
-                    .energyIn(BOTTOM)
-                    .itemAutoIn(LEFT).itemAutoOut(BACK)
-                    .fluidAutoOut(BACK).build();
+            case "distillationtower" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT)
+                        .itemOut(BACK)
+                        .fluidOut(BACK)
+                        .energyIn(BOTTOM)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(BACK)
+                        .fluidAutoOut(BACK)
+                        .build();
 
-            case "largemassfab" -> MachineFaceMasks.builder()
-                    .itemIn(TOP,LEFT,FRONT,BACK,RIGHT).itemOut(BOTTOM)
-                    .fluidIn(TOP,LEFT,FRONT,BACK,RIGHT).fluidOut(BOTTOM)
-                    .energyIn(TOP,LEFT,FRONT,BACK,RIGHT,BOTTOM)
-                    .itemAutoOut(BOTTOM).fluidAutoOut(BOTTOM).build();
+            case "largemassfab" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT, FRONT, BACK, RIGHT)
+                        .itemOut(BOTTOM)
+                        .fluidIn(TOP, LEFT, FRONT, BACK, RIGHT)
+                        .fluidOut(BOTTOM)
+                        .energyIn(TOP, LEFT, FRONT, BACK, RIGHT, BOTTOM)
+                        .itemAutoOut(BOTTOM)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
             // ── large batch machines: GT6 auto-output bottom, inputs around ──
-            case "largecentrifuge", "largemixer", "largesluice", "largecrusher",
-                 "largeshredder", "largesqueezer" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT, FRONT).itemOut(BOTTOM, RIGHT)
-                    .fluidIn(TOP, LEFT, FRONT).fluidOut(BOTTOM, RIGHT)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(BOTTOM)
-                    .fluidAutoIn(LEFT).fluidAutoOut(BOTTOM).build();
+            case "largecentrifuge", "largemixer", "largesluice", "largecrusher", "largeshredder", "largesqueezer" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT, FRONT)
+                        .itemOut(BOTTOM, RIGHT)
+                        .fluidIn(TOP, LEFT, FRONT)
+                        .fluidOut(BOTTOM, RIGHT)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(BOTTOM)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
-            case "largeelectrolyzer", "largeoven", "largefermenter" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT, FRONT).itemOut(BOTTOM, RIGHT)
-                    .fluidIn(TOP, LEFT, FRONT).fluidOut(BOTTOM, RIGHT)
-                    .energyIn(BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(BOTTOM)
-                    .fluidAutoIn(LEFT).fluidAutoOut(BOTTOM).build();
+            case "largeelectrolyzer", "largeoven", "largefermenter" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT, FRONT)
+                        .itemOut(BOTTOM, RIGHT)
+                        .fluidIn(TOP, LEFT, FRONT)
+                        .fluidOut(BOTTOM, RIGHT)
+                        .energyIn(BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(BOTTOM)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
-            case "largecoagulator", "largeautoclave", "largebath" -> MachineFaceMasks.builder()
-                    .itemIn(TOP, LEFT, FRONT).itemOut(BOTTOM, RIGHT)
-                    .fluidIn(TOP, LEFT, FRONT).fluidOut(BOTTOM, RIGHT)
-                    .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                    .itemAutoIn(LEFT).itemAutoOut(BOTTOM)
-                    .fluidAutoIn(LEFT).fluidAutoOut(BOTTOM).build();
+            case "largecoagulator", "largeautoclave", "largebath" ->
+                MachineFaceMasks.builder()
+                        .itemIn(TOP, LEFT, FRONT)
+                        .itemOut(BOTTOM, RIGHT)
+                        .fluidIn(TOP, LEFT, FRONT)
+                        .fluidOut(BOTTOM, RIGHT)
+                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
+                        .itemAutoIn(LEFT)
+                        .itemAutoOut(BOTTOM)
+                        .fluidAutoIn(LEFT)
+                        .fluidAutoOut(BOTTOM)
+                        .build();
 
             default -> MachineFaceMasks.ALL_SIDES;
         };

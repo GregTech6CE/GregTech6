@@ -3,8 +3,8 @@ package gregtech.content.block;
 /** Original single-material pile capacity/height and ordered despawn-placement offsets. */
 public final class MaterialPileRules {
 
-    private MaterialPileRules() {
-    }
+    private MaterialPileRules() {}
+
     public static final int MAX_SIZE = 64;
     public static final int[][] EXPIRE_OFFSETS = {
         {0, 0, 0},

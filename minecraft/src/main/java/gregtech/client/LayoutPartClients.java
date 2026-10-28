@@ -2,13 +2,12 @@ package gregtech.client;
 
 import gregtech.api.addon.platform.LayoutPartClient;
 import gregtech.api.addon.platform.PartClientView;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.world.level.block.entity.BlockEntity;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 /** Client renderers, loaded once from {@link LayoutPartClient}. A part with no renderer still syncs its view. */
 public final class LayoutPartClients {
@@ -31,13 +30,13 @@ public final class LayoutPartClients {
                         "Part client failed: " + client.getClass().getName(), failure);
             }
             if (!gregtech.api.addon.AddonNames.isAddonId(id))
-                throw new IllegalStateException("Part client has no addon id: " + client.getClass().getName());
+                throw new IllegalStateException(
+                        "Part client has no addon id: " + client.getClass().getName());
             Set<String> names;
             try {
                 names = client.partNames();
             } catch (RuntimeException | Error failure) {
-                throw gregtech.api.addon.AddonFailures.of(
-                        "Addon '" + id + "' part client failed", failure);
+                throw gregtech.api.addon.AddonFailures.of("Addon '" + id + "' part client failed", failure);
             }
             if (names == null) continue;
             for (String name : names) {

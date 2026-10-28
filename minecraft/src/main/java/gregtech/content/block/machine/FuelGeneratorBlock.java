@@ -1,11 +1,13 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.addon.AddonMachines;
 import gregtech.api.addon.machine.FuelGenerator;
-import gregtech.engine.machine.MachineSpec;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
 import gregtech.content.blockentity.machine.FuelTurbineBlockEntity;
+import gregtech.engine.addon.AddonMachines;
+import gregtech.engine.machine.MachineSpec;
+import gregtech.engine.material.GTMaterialRegistry;
+import java.util.function.Supplier;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -19,9 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-import javax.annotation.Nullable;
-import java.util.function.Supplier;
-
 /** Addon fuel generator shell. GregTech owns the block; the addon supplies the declaration. */
 public class FuelGeneratorBlock extends GTFacingMachineBlock implements EntityBlock {
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
@@ -31,26 +30,43 @@ public class FuelGeneratorBlock extends GTFacingMachineBlock implements EntityBl
     public FuelGeneratorBlock(AddonMachines.AcceptedFuel accepted, Properties properties) {
         super(spec(accepted), properties);
         this.accepted = accepted;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH)
-                .setValue(LIT, false).setValue(RUNNING, false));
+        registerDefaultState(defaultBlockState()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(LIT, false)
+                .setValue(RUNNING, false));
     }
 
     private static MachineSpec spec(AddonMachines.AcceptedFuel accepted) {
         FuelGenerator declaration = accepted.declaration();
         var material = GTMaterialRegistry.get(declaration.casing().material());
-        return new MachineSpec(declaration.casing().id(), material.getLocalName(), material.getColor(),
-                0, 0, declaration.casing().machineType(), 5.0F, 5.0F);
+        return new MachineSpec(
+                declaration.casing().id(),
+                material.getLocalName(),
+                material.getColor(),
+                0,
+                0,
+                declaration.casing().machineType(),
+                5.0F,
+                5.0F);
     }
 
-    public AddonMachines.AcceptedFuel accepted() { return accepted; }
-    public FuelGenerator declaration() { return accepted.declaration(); }
+    public AddonMachines.AcceptedFuel accepted() {
+        return accepted;
+    }
+
+    public FuelGenerator declaration() {
+        return accepted.declaration();
+    }
 
     public ResourceLocation modelId(String suffix) {
-        return ResourceLocation.fromNamespaceAndPath(accepted.addonId(),
+        return ResourceLocation.fromNamespaceAndPath(
+                accepted.addonId(),
                 "block/machine/basic/" + accepted.declaration().casing().machineType() + suffix);
     }
 
-    public void setBeType(Supplier<BlockEntityType<?>> supplier) { this.beType = supplier; }
+    public void setBeType(Supplier<BlockEntityType<?>> supplier) {
+        this.beType = supplier;
+    }
 
     public BlockEntity create(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         return declaration().multi()
@@ -71,8 +87,10 @@ public class FuelGeneratorBlock extends GTFacingMachineBlock implements EntityBl
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != beType.get()) return null;
-        return (lvl, pos, blockState, be) -> FuelGeneratorBlockEntity.serverTick(lvl, pos, blockState, (FuelGeneratorBlockEntity) be);
+        return (lvl, pos, blockState, be) ->
+                FuelGeneratorBlockEntity.serverTick(lvl, pos, blockState, (FuelGeneratorBlockEntity) be);
     }
 }

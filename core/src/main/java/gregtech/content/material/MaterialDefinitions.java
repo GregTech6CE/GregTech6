@@ -1,16 +1,17 @@
 package gregtech.content.material;
 
 import gregtech.content.data.AntimatterMaterials;
-import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.ImportedMaterialData;
+import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.data.generated.MaterialCompositionData;
 import gregtech.content.data.generated.MaterialModTags;
 import gregtech.content.data.generated.MaterialRegistryExtras;
-import gregtech.content.data.generated.MaterialCompositionData;
 
 /** Ordered built-in material definitions and linking passes. Called once by GTMaterialRegistry.init(). */
 public final class MaterialDefinitions {
     private MaterialDefinitions() {}
+
     public static void declare() {
         // Force nested holders to load, mirroring MT.init() in GT6.
         ImportedMaterialData.NULL.getClass();
@@ -33,6 +34,5 @@ public final class MaterialDefinitions {
         SourceMaterialToolStats.apply();
         MaterialGroups.init();
         SourceLatheMaterialProfiles.captureDefaults();
-
     }
 }

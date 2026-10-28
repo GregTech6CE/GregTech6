@@ -4,14 +4,12 @@ import java.util.List;
 
 public final class UtilityToolRules {
 
-    private UtilityToolRules() {
-    }
+    private UtilityToolRules() {}
 
     public static final int CRANK_TICKS = 10, CRANK_SIGNAL = 15, SCAFFOLD_SEARCH = 256;
     public static final long SAP_CAPACITY = 8000;
 
-    public record Rope(String id, String material) {
-    }
+    public record Rope(String id, String material) {}
 
     public static final List<Rope> ROPES = List.of(
             new Rope("rope", "Brown"),
@@ -35,7 +33,10 @@ public final class UtilityToolRules {
     }
 
     public static boolean dust(String prefix) {
-        return prefix.equals("dust") || prefix.equals("dustSmall") || prefix.equals("dustTiny") || prefix.equals("dustDiv72");
+        return prefix.equals("dust")
+                || prefix.equals("dustSmall")
+                || prefix.equals("dustTiny")
+                || prefix.equals("dustDiv72");
     }
 
     public static int buttonStrength(int strength, int increment) {

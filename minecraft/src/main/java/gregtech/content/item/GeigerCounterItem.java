@@ -14,15 +14,20 @@ public final class GeigerCounterItem extends TechItem {
     }
 
     public static Component reading(ReactorCoreBlockEntity core) {
-        String neutronReadings = java.util.Arrays.stream(core.neutrons).mapToObj(neutronCount -> neutronCount + " n").collect(
-                java.util.stream.Collectors.joining("; "));
-        return Component.translatable("message.gt6ce.geiger.reading", neutronReadings,
-                Component.translatable(core.stopped ? "message.gt6ce.reactor.stopped" : "message.gt6ce.reactor.running"));
+        String neutronReadings = java.util.Arrays.stream(core.neutrons)
+                .mapToObj(neutronCount -> neutronCount + " n")
+                .collect(java.util.stream.Collectors.joining("; "));
+        return Component.translatable(
+                "message.gt6ce.geiger.reading",
+                neutronReadings,
+                Component.translatable(
+                        core.stopped ? "message.gt6ce.reactor.stopped" : "message.gt6ce.reactor.running"));
     }
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        if (!(context.getLevel().getBlockEntity(context.getClickedPos()) instanceof ReactorCoreBlockEntity core)) return InteractionResult.PASS;
+        if (!(context.getLevel().getBlockEntity(context.getClickedPos()) instanceof ReactorCoreBlockEntity core))
+            return InteractionResult.PASS;
         if (!context.getLevel().isClientSide && context.getPlayer() != null)
             context.getPlayer().displayClientMessage(reading(core), false);
         return InteractionResult.sidedSuccess(context.getLevel().isClientSide);

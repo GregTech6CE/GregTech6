@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.content.blockentity.sensor.SensorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import gregtech.content.blockentity.sensor.SensorBlockEntity;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -15,17 +15,22 @@ public final class SensorRenderer implements BlockEntityRenderer<SensorBlockEnti
     public SensorRenderer(BlockEntityRendererProvider.Context ctx) {}
 
     @Override
-    public void render(SensorBlockEntity be, float partialTick, PoseStack ps,
-                       MultiBufferSource buffer, int packedLight, int packedOverlay) {
+    public void render(
+            SensorBlockEntity be,
+            float partialTick,
+            PoseStack ps,
+            MultiBufferSource buffer,
+            int packedLight,
+            int packedOverlay) {
         if (be.getLevel() == null) return;
         var state = be.getBlockState();
-        Direction facing = state.hasProperty(DirectionalBlock.FACING)
-                ? state.getValue(DirectionalBlock.FACING) : Direction.NORTH;
+        Direction facing =
+                state.hasProperty(DirectionalBlock.FACING) ? state.getValue(DirectionalBlock.FACING) : Direction.NORTH;
         int light = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(facing));
 
         ps.pushPose();
-        ps.translate(0.5 + facing.getStepX() * -0.373, 0.5 + facing.getStepY() * -0.373,
-                0.5 + facing.getStepZ() * -0.373);
+        ps.translate(
+                0.5 + facing.getStepX() * -0.373, 0.5 + facing.getStepY() * -0.373, 0.5 + facing.getStepZ() * -0.373);
         ps.mulPose(gregtech.engine.block.DisplayFaceOrientation.rotation(facing));
 
         SixCellDisplayRenderer.draw(be.displayCells(), ps, buffer, light);

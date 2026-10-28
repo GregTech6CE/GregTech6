@@ -6,8 +6,7 @@ import java.util.Locale;
 /** Original material rail identities, speeds, resistance and booster ingredients. */
 public final class TrackCatalog {
 
-    private TrackCatalog() {
-    }
+    private TrackCatalog() {}
 
     public record Material(String name, float speed, float resistance, String booster) {
 

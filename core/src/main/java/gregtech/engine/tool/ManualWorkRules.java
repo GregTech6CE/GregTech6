@@ -2,8 +2,7 @@ package gregtech.engine.tool;
 
 public final class ManualWorkRules {
 
-    private ManualWorkRules() {
-    }
+    private ManualWorkRules() {}
 
     public static final int OUTPUTS = 12, GRIND_CLICKS = 10, MAX_GU = 32;
 

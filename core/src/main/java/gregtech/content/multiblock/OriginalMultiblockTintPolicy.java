@@ -3,8 +3,7 @@ package gregtech.content.multiblock;
 /** Original fallback material for the remaining standalone controllers; typed parts take precedence. */
 public final class OriginalMultiblockTintPolicy {
 
-    private OriginalMultiblockTintPolicy() {
-    }
+    private OriginalMultiblockTintPolicy() {}
 
     public static String material(String path) {
         return switch (path) {

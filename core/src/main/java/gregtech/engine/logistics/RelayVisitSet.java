@@ -1,7 +1,7 @@
 package gregtech.engine.logistics;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 /** Per-thread visits used by relay operations; the caller removes state when the outer operation returns. */
 public final class RelayVisitSet<T> {

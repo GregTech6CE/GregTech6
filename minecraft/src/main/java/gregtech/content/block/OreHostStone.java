@@ -1,10 +1,9 @@
 package gregtech.content.block;
 
 import gregtech.content.block.stone.StoneType;
-import net.minecraft.util.StringRepresentable;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * The background ("host") rock an ore block generated in - the port of GT6's one-ore-block-per-stone

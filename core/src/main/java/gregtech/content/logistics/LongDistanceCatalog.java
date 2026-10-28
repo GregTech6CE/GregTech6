@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.logistics;
 
 import java.util.List;
@@ -24,25 +23,63 @@ import java.util.List;
 /** Original metadata is flattened to stable block identities, shared by both loaders. */
 public final class LongDistanceCatalog {
     private LongDistanceCatalog() {}
-    public record Spec(String id, String kind, long voltage, float hardness, float resistance,
-                       int sourceMeta, String material, long maximumTemperature, String texture) {
-        public int stackLimit() { return kind.endsWith("ENDPOINT") || kind.equals("TRANSFORMER") ? 16 : 64; }
-        public boolean sourceLine() { return sourceMeta >= 0; }
-        public String networkIdentity() { return sourceLine() ? kind + ":" + sourceMeta : id; }
+
+    public record Spec(
+            String id,
+            String kind,
+            long voltage,
+            float hardness,
+            float resistance,
+            int sourceMeta,
+            String material,
+            long maximumTemperature,
+            String texture) {
+        public int stackLimit() {
+            return kind.endsWith("ENDPOINT") || kind.equals("TRANSFORMER") ? 16 : 64;
+        }
+
+        public boolean sourceLine() {
+            return sourceMeta >= 0;
+        }
+
+        public String networkIdentity() {
+            return sourceLine() ? kind + ":" + sourceMeta : id;
+        }
     }
+
     private static Spec wire(String id, int meta, String material, int tier) {
-        String texture = new String[]{"ev", "iv", "luv", "zpm", "uv"}[tier - 4];
-        return new Spec(id, "WIRE", 4096L << (2 * (tier - 4)), 5, 15, meta, material, 0,
-                "long_dist_wire_" + texture);
+        String texture = new String[] {"ev", "iv", "luv", "zpm", "uv"}[tier - 4];
+        return new Spec(id, "WIRE", 4096L << (2 * (tier - 4)), 5, 15, meta, material, 0, "long_dist_wire_" + texture);
     }
+
     private static Spec pipe(String id, int meta, String material, long temperature) {
-        return new Spec(id, meta == 0 ? "ITEM_PIPE" : "FLUID_PIPE", 0, 5, 20, meta, material,
-                temperature, meta == 0 ? "long_dist_pipe_item" : "long_dist_pipe_fluid");
+        return new Spec(
+                id,
+                meta == 0 ? "ITEM_PIPE" : "FLUID_PIPE",
+                0,
+                5,
+                20,
+                meta,
+                material,
+                temperature,
+                meta == 0 ? "long_dist_pipe_item" : "long_dist_pipe_fluid");
     }
+
     private static Spec endpoint(String id, String kind, long voltage) {
-        return new Spec(id, kind, voltage, kind.equals("TRANSFORMER") ? 4 : 16,
-                kind.equals("TRANSFORMER") ? 4 : 16, -1, kind.equals("TRANSFORMER") ? transformerMaterial(voltage) : kind.equals("ITEM_ENDPOINT") ? "Platinum" : "Tungsten", 0, "");
+        return new Spec(
+                id,
+                kind,
+                voltage,
+                kind.equals("TRANSFORMER") ? 4 : 16,
+                kind.equals("TRANSFORMER") ? 4 : 16,
+                -1,
+                kind.equals("TRANSFORMER")
+                        ? transformerMaterial(voltage)
+                        : kind.equals("ITEM_ENDPOINT") ? "Platinum" : "Tungsten",
+                0,
+                "");
     }
+
     public static final List<Spec> LINES = List.of(
             wire("long_dist_wire_ev", 0, "Tin", 4),
             wire("long_dist_wire_lead", 1, "Lead", 4),
@@ -66,6 +103,7 @@ public final class LongDistanceCatalog {
             pipe("long_dist_pipe_adamantium", 3, "Adamantium", 5225),
             pipe("long_dist_pipe_draconium", 4, "Draconium", 4500));
     public static final List<Spec> ALL;
+
     static {
         var entries = new java.util.ArrayList<Spec>();
         entries.add(endpoint("long_dist_endpoint_item", "ITEM_ENDPOINT", 0));
@@ -78,14 +116,29 @@ public final class LongDistanceCatalog {
         entries.addAll(LINES);
         ALL = List.copyOf(entries);
     }
+
     public static String transformerMaterial(long voltage) {
-        return switch((int)voltage) { case 2048 -> "Chromium"; case 8192 -> "Titanium"; case 32768 -> "Iridium"; case 131072 -> "Osmium"; case 524288 -> "Trinitanium"; default -> throw new IllegalArgumentException("Unknown transformer voltage: "+voltage); };
+        return switch ((int) voltage) {
+            case 2048 -> "Chromium";
+            case 8192 -> "Titanium";
+            case 32768 -> "Iridium";
+            case 131072 -> "Osmium";
+            case 524288 -> "Trinitanium";
+            default -> throw new IllegalArgumentException("Unknown transformer voltage: " + voltage);
+        };
     }
-    public static Spec find(String id) { return ALL.stream().filter(s -> s.id().equals(id)).findFirst().orElse(null); }
+
+    public static Spec find(String id) {
+        return ALL.stream().filter(s -> s.id().equals(id)).findFirst().orElse(null);
+    }
+
     public static Spec get(String id) {
         var result = find(id);
         if (result == null) throw new IllegalArgumentException("Unknown long-distance block: " + id);
         return result;
     }
-    public static long voltage(String id) { return get(id).voltage(); }
+
+    public static long voltage(String id) {
+        return get(id).voltage();
+    }
 }

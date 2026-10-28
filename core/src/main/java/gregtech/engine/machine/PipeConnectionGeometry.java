@@ -9,9 +9,17 @@ public final class PipeConnectionGeometry {
 
     private PipeConnectionGeometry() {}
 
-    public static double virtual(double half) { return -2 - half; }
-    public static boolean isVirtual(double neighbor) { return neighbor <= -2; }
-    public static double virtualSize(double neighbor) { return -2 - neighbor; }
+    public static double virtual(double half) {
+        return -2 - half;
+    }
+
+    public static boolean isVirtual(double neighbor) {
+        return neighbor <= -2;
+    }
+
+    public static double virtualSize(double neighbor) {
+        return -2 - neighbor;
+    }
 
     /** The thin pipe owns its rendered extension, preserving its material and overlays. */
     public static double[] renderArm(int axis, boolean positive, double half, double neighbor) {

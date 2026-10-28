@@ -3,29 +3,36 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
-import gregtech.engine.material.*;
-import gregtech.content.transport.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.transport.*;
+import gregtech.engine.material.*;
+import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
-import java.util.*;
 
 /** Register once after both vanilla and native material bindings, before recovery recipe creation. */
 public final class PanelMaterialRegistration {
     private PanelMaterialRegistration() {}
+
     private static final Set<Item> RECOVERY_ITEMS = Collections.newSetFromMap(new IdentityHashMap<>());
-    public static Set<Item> recoveryItems() { return Collections.unmodifiableSet(RECOVERY_ITEMS); }
+
+    public static Set<Item> recoveryItems() {
+        return Collections.unmodifiableSet(RECOVERY_ITEMS);
+    }
+
     private static Item item(String id) {
         var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
         if (item == Items.AIR) throw new IllegalStateException("Missing panel material item " + id);
         return item;
     }
+
     private static void known(Item item, ItemComposition data) {
         // OM.data/addItemData_ preserves an earlier explicit composition.
         if (ItemMaterialRegistry.base(item).isEmpty()) ItemMaterialRegistry.register(item, data);
         RECOVERY_ITEMS.add(item);
     }
+
     public static void register() {
         for (String kind : List.of("concrete", "asphalt", "cfoam", "cfoam_fresh", "cfoam_slab")) {
             var material = switch (kind) {
@@ -36,13 +43,20 @@ public final class PanelMaterialRegistration {
             long amount = kind.endsWith("_slab") ? GTValues.U / 2 : GTValues.U;
             known(item("gt6ce:" + kind), new ItemComposition(null, material, amount));
         }
-        known(item("gt6ce:concrete_reinforced"), new ItemComposition(null, List.of(
-                MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
-                MaterialComponent.of(GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
-                "GT6 BlockConcreteReinforced", true));
+        known(
+                item("gt6ce:concrete_reinforced"),
+                new ItemComposition(
+                        null,
+                        List.of(
+                                MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
+                                MaterialComponent.of(
+                                        GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
+                        "GT6 BlockConcreteReinforced",
+                        true));
         for (var variant : gregtech.content.registry.GTConstructionVariants.all()) {
             var block = (gregtech.content.block.misc.FixedConstructionColor) variant.get();
-            var composition = ItemMaterialRegistry.base(item("gt6ce:" + block.family())).orElse(null);
+            var composition =
+                    ItemMaterialRegistry.base(item("gt6ce:" + block.family())).orElse(null);
             if (composition != null) known(variant.get().asItem(), composition);
         }
         for (var spec : PanelCatalog.ALL) {

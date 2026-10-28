@@ -2,7 +2,6 @@ package gregtech.content.book;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.recipe.generated.GTAlloyTable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,9 @@ public final class GTMaterialRecipes {
 
     /** {@code "Bronze x4 <- Copper x3 + Tin x1"}. */
     public static String describe(GTAlloyTable.Alloy alloy) {
-        StringBuilder builder = new StringBuilder(alloy.output()).append(" x").append(alloy.units())
+        StringBuilder builder = new StringBuilder(alloy.output())
+                .append(" x")
+                .append(alloy.units())
                 .append(" <- ");
         for (int i = 0; i < alloy.inputs().size(); i++) {
             GTAlloyTable.Alloy.Input input = alloy.inputs().get(i);

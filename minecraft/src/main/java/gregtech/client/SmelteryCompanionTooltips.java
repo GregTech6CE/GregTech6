@@ -2,26 +2,32 @@
  * MultiTileEntityMold/Basin/Faucet/Crossing.addToolTips, with native saved item shape data. */
 package gregtech.client;
 
+import gregtech.content.block.machine.MoldItemData;
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.crucible.MoldShapes;
-import gregtech.content.block.machine.MoldItemData;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import java.util.List;
 
 public final class SmelteryCompanionTooltips {
     private SmelteryCompanionTooltips() {}
+
     public static void appendMold(ItemStack stack, CrucibleSpec spec, List<Component> tooltip) {
         int shape = MoldItemData.shape(stack);
-        if (shape == 0) tooltip.add(Component.translatable("gt.lang.recipes.mold.select").withStyle(ChatFormatting.AQUA));
+        if (shape == 0)
+            tooltip.add(Component.translatable("gt.lang.recipes.mold.select").withStyle(ChatFormatting.AQUA));
         else {
             var recipe = MoldShapes.recipe(shape);
             String prefix = MoldShapes.sourcePrefixName(recipe);
-            tooltip.add(Component.translatable("gt.lang.recipes.mold").append(" ")
+            tooltip.add(Component.translatable("gt.lang.recipes.mold")
+                    .append(" ")
                     .append(Component.translatable("oredict.prefix." + prefix))
-                    .append(Component.translatable("tooltip.gt6ce.ui.units", MaterialTooltips.displayUnits(MoldShapes.requiredMaterialUnits(shape)))
-                            .withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.AQUA));
+                    .append(Component.translatable(
+                                    "tooltip.gt6ce.ui.units",
+                                    MaterialTooltips.displayUnits(MoldShapes.requiredMaterialUnits(shape)))
+                            .withStyle(ChatFormatting.WHITE))
+                    .withStyle(ChatFormatting.AQUA));
         }
         appendInteract(tooltip, true);
         appendHeat(spec, tooltip, true);
@@ -29,13 +35,17 @@ public final class SmelteryCompanionTooltips {
         add(tooltip, "gt.lang.use.monkey.wrench.to.toggle.auto.inputs", ChatFormatting.DARK_GRAY);
         add(tooltip, "gt.lang.use.soft.hammer.to.reset", ChatFormatting.DARK_GRAY);
     }
+
     public static void appendMoldBasin(CrucibleSpec spec, List<Component> tooltip) {
-        tooltip.add(Component.translatable("gt.lang.recipes.mold").append(" ")
-                .append(Component.translatable("oredict.prefix.blockSolid")).withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("gt.lang.recipes.mold")
+                .append(" ")
+                .append(Component.translatable("oredict.prefix.blockSolid"))
+                .withStyle(ChatFormatting.AQUA));
         appendInteract(tooltip, true);
         appendHeat(spec, tooltip, true);
         add(tooltip, "gt.lang.use.pincers.to.take", ChatFormatting.DARK_GRAY);
     }
+
     public static void appendCrucibleFaucet(CrucibleSpec spec, List<Component> tooltip) {
         appendInteract(tooltip, false);
         appendHeat(spec, tooltip, false);
@@ -43,17 +53,22 @@ public final class SmelteryCompanionTooltips {
     }
     /** Crossing defines no specialized rows in the original. */
     public static void appendCrucibleCrossing(CrucibleSpec spec, List<Component> tooltip) {}
+
     private static void appendInteract(List<Component> tooltip, boolean top) {
         var line = Component.translatable("gt.lang.nogui.rightclick.interact");
-        if (top) line.append(" (").append(Component.translatable("gt.lang.face.top")).append(")");
+        if (top)
+            line.append(" (").append(Component.translatable("gt.lang.face.top")).append(")");
         tooltip.add(line.withStyle(ChatFormatting.GOLD));
     }
+
     private static void appendHeat(CrucibleSpec spec, List<Component> tooltip, boolean contact) {
         if (spec.acidProof()) add(tooltip, "gt.lang.proof.acid", ChatFormatting.GOLD);
         tooltip.add(Component.translatable("gt.lang.hazard.meltdown")
-                .append(" (" + spec.meltDownTemperatureK() + " K)").withStyle(ChatFormatting.DARK_RED));
+                .append(" (" + spec.meltDownTemperatureK() + " K)")
+                .withStyle(ChatFormatting.DARK_RED));
         if (contact) add(tooltip, "gt.lang.hazard.contact", ChatFormatting.DARK_RED);
     }
+
     private static void add(List<Component> tooltip, String key, ChatFormatting color) {
         tooltip.add(Component.translatable(key).withStyle(color));
     }

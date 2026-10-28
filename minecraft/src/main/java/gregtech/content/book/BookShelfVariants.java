@@ -3,9 +3,6 @@ package gregtech.content.book;
 import com.google.gson.JsonParser;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -14,20 +11,51 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 /** GT6's 300 plank-index shelves and 60 metalset shelves, limited to planks obtainable in this port. */
 public final class BookShelfVariants {
     public record Variant(BookShelfRules.VariantSpec spec) {
-        public String path(){return spec.path();}
-        public int originalId(){return spec.originalId();}
-        public String kind(){return spec.kind();}
-        public String materialName(){return spec.materialName();}
-        public String displayMaterialName(){return spec.displayMaterialName();}
-        public String texture(){return spec.texture();}
-        public float hardness(){return spec.hardness();}
-        public float resistance(){return spec.resistance();}
-        public int flammability(){return spec.flammability();}
-        public boolean metal() { return kind().equals("metal"); }
+        public String path() {
+            return spec.path();
+        }
+
+        public int originalId() {
+            return spec.originalId();
+        }
+
+        public String kind() {
+            return spec.kind();
+        }
+
+        public String materialName() {
+            return spec.materialName();
+        }
+
+        public String displayMaterialName() {
+            return spec.displayMaterialName();
+        }
+
+        public String texture() {
+            return spec.texture();
+        }
+
+        public float hardness() {
+            return spec.hardness();
+        }
+
+        public float resistance() {
+            return spec.resistance();
+        }
+
+        public int flammability() {
+            return spec.flammability();
+        }
+
+        public boolean metal() {
+            return kind().equals("metal");
+        }
 
         public GTMaterial material() {
             GTMaterial material = GTMaterialRegistry.get(materialName());
@@ -58,24 +86,41 @@ public final class BookShelfVariants {
 
     private BookShelfVariants() {}
 
-    public static List<Variant> all() { return ALL; }
-    public static Variant defaultVariant() { return BY_PATH.get("bookshelf"); }
-    public static Variant byPath(String path) { return BY_PATH.get(path); }
-    public static Variant byOriginalId(int id) { return BY_ORIGINAL_ID.get(id); }
+    public static List<Variant> all() {
+        return ALL;
+    }
+
+    public static Variant defaultVariant() {
+        return BY_PATH.get("bookshelf");
+    }
+
+    public static Variant byPath(String path) {
+        return BY_PATH.get(path);
+    }
+
+    public static Variant byOriginalId(int id) {
+        return BY_ORIGINAL_ID.get(id);
+    }
 
     private static List<Variant> load() {
-        try (InputStream stream = BookShelfVariants.class.getClassLoader()
-                .getResourceAsStream("data/gt6ce/bookshelf_variants.json")) {
+        try (InputStream stream =
+                BookShelfVariants.class.getClassLoader().getResourceAsStream("data/gt6ce/bookshelf_variants.json")) {
             if (stream == null) throw new IllegalStateException("Missing bookshelf_variants.json");
             var array = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8))
-                    .getAsJsonObject().getAsJsonArray("variants");
+                    .getAsJsonObject()
+                    .getAsJsonArray("variants");
             List<Variant> variants = new ArrayList<>();
             for (var entry : array) {
                 var value = entry.getAsJsonObject();
-                variants.add(new Variant(new BookShelfRules.VariantSpec(value.get("path").getAsString(), value.get("gt6_id").getAsInt(),
-                        value.get("kind").getAsString(), value.get("material").getAsString(),
-                        value.get("display").getAsString(), value.get("texture").getAsString(),
-                        value.get("hardness").getAsFloat(), value.get("resistance").getAsFloat(),
+                variants.add(new Variant(new BookShelfRules.VariantSpec(
+                        value.get("path").getAsString(),
+                        value.get("gt6_id").getAsInt(),
+                        value.get("kind").getAsString(),
+                        value.get("material").getAsString(),
+                        value.get("display").getAsString(),
+                        value.get("texture").getAsString(),
+                        value.get("hardness").getAsFloat(),
+                        value.get("resistance").getAsFloat(),
                         value.get("flammability").getAsInt())));
             }
             if (variants.isEmpty()) throw new IllegalStateException("No GT6 bookshelf variants");

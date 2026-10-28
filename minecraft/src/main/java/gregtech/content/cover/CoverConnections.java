@@ -19,22 +19,27 @@ public final class CoverConnections {
         if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(id)
                 && owner instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity
                 && level != null
-                && level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity) return true;
+                && level.getBlockEntity(owner.getBlockPos().relative(side))
+                        instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity) return true;
         return CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 && owner instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity
                 && level != null
-                && level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+                && level.getBlockEntity(owner.getBlockPos().relative(side))
+                        instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
     }
 
     public static boolean canConnect(Level level, BlockPos pos, Direction side) {
         return !(level.getBlockEntity(pos) instanceof PanelCoverHost host && blocks(host, side))
-                && !(level.getBlockEntity(pos.relative(side)) instanceof PanelCoverHost other && blocks(other, side.getOpposite()));
+                && !(level.getBlockEntity(pos.relative(side)) instanceof PanelCoverHost other
+                        && blocks(other, side.getOpposite()));
     }
 
-    private static net.minecraft.world.level.block.state.properties.BooleanProperty property(BlockState state, Direction side) {
+    private static net.minecraft.world.level.block.state.properties.BooleanProperty property(
+            BlockState state, Direction side) {
         String name = side.getName();
         for (var p : state.getProperties())
-            if (p instanceof net.minecraft.world.level.block.state.properties.BooleanProperty bit && p.getName().equals(name)) return bit;
+            if (p instanceof net.minecraft.world.level.block.state.properties.BooleanProperty bit
+                    && p.getName().equals(name)) return bit;
         return null;
     }
 
@@ -51,7 +56,9 @@ public final class CoverConnections {
         if (!level.hasChunkAt(adjacent)) return;
         var other = level.getBlockState(adjacent);
         var opposite = property(other, side.getOpposite());
-        if (opposite != null && other.getBlock().getClass() == state.getBlock().getClass() && other.getValue(opposite) != connected)
+        if (opposite != null
+                && other.getBlock().getClass() == state.getBlock().getClass()
+                && other.getValue(opposite) != connected)
             level.setBlockAndUpdate(adjacent, other.setValue(opposite, connected));
     }
 
@@ -59,7 +66,8 @@ public final class CoverConnections {
         var id = CoverItems.behavior(host.getCover(side));
         if (PanelCover.of(host.getCover(side)) == PanelCover.SHUTTER)
             update(host, side, !host.panels().shuttered(side));
-        else if (CoverItems.REDSTONE_TORCH.equals(id) || CoverItems.REDSTONE_REPEATER.equals(id)
+        else if (CoverItems.REDSTONE_TORCH.equals(id)
+                || CoverItems.REDSTONE_REPEATER.equals(id)
                 || CoverUtilityBehaviors.FILTER_ITEM.equals(id) && blocks(host, side)) update(host, side, false);
     }
 }

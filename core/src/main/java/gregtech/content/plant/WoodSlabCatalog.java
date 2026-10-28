@@ -25,5 +25,26 @@ public final class WoodSlabCatalog {
             default -> Character.toUpperCase(wood.charAt(0)) + wood.substring(1);
         };
     }
-    public static final java.util.List<String> WOODS = java.util.List.of("blue_mahoe", "bluemahoe", "bluespruce", "cinnamon", "coconut", "compressed", "dry", "ebony", "frozen", "hazel", "maple", "mossy", "pine", "rainbowood", "rotten", "rubber", "treated", "white_mahoe", "willow", "wood");
+
+    public static final java.util.List<String> WOODS = java.util.List.of(
+            "blue_mahoe",
+            "bluemahoe",
+            "bluespruce",
+            "cinnamon",
+            "coconut",
+            "compressed",
+            "dry",
+            "ebony",
+            "frozen",
+            "hazel",
+            "maple",
+            "mossy",
+            "pine",
+            "rainbowood",
+            "rotten",
+            "rubber",
+            "treated",
+            "white_mahoe",
+            "willow",
+            "wood");
 }

@@ -1,7 +1,6 @@
 package gregtech.content.registry;
 
 import gregtech.api.material.*;
-
 import gregtech.content.block.inventory.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -10,8 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class GTMetalChests {
 
-    private GTMetalChests() {
-    }
+    private GTMetalChests() {}
 
     public static final java.util.List<DeferredHolder<Block, MetalChestBlock>> METAL = new java.util.ArrayList<>(),
             WOOD = new java.util.ArrayList<>();
@@ -31,25 +29,35 @@ public final class GTMetalChests {
 
     public static void initialize() {
         for (var spec : GTStorageMetals.ALL) {
-            var registeredChest = GTBlocks.BLOCKS.register("chest_" + spec.suffix(), () -> new MetalChestBlock(spec.material(),
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.METAL)
-                            .strength(spec.hardness(), spec.resistance())
-                            .requiresCorrectToolForDrops()
-                            .noOcclusion()));
+            var registeredChest = GTBlocks.BLOCKS.register(
+                    "chest_" + spec.suffix(),
+                    () -> new MetalChestBlock(
+                            spec.material(),
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.METAL)
+                                    .strength(spec.hardness(), spec.resistance())
+                                    .requiresCorrectToolForDrops()
+                                    .noOcclusion()));
             METAL.add(registeredChest);
-            GTBlocks.BLOCK_ITEMS.register("chest_" + spec.suffix(), () -> new MetalChestBlockItem(registeredChest.get(),
-                    new net.minecraft.world.item.Item.Properties()));
-            var registeredWoodChest = GTBlocks.BLOCKS.register("reinforced_wood_chest_" + spec.suffix(), () -> new MetalChestBlock(spec.material(),
-                    MetalChestBlock.Shell.REINFORCED_WOOD,
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.WOOD)
-                            .sound(SoundType.WOOD)
-                            .strength(spec.hardness() / 2, spec.resistance() / 2)
-                            .noOcclusion()));
+            GTBlocks.BLOCK_ITEMS.register(
+                    "chest_" + spec.suffix(),
+                    () -> new MetalChestBlockItem(
+                            registeredChest.get(), new net.minecraft.world.item.Item.Properties()));
+            var registeredWoodChest = GTBlocks.BLOCKS.register(
+                    "reinforced_wood_chest_" + spec.suffix(),
+                    () -> new MetalChestBlock(
+                            spec.material(),
+                            MetalChestBlock.Shell.REINFORCED_WOOD,
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.WOOD)
+                                    .sound(SoundType.WOOD)
+                                    .strength(spec.hardness() / 2, spec.resistance() / 2)
+                                    .noOcclusion()));
             WOOD.add(registeredWoodChest);
-            GTBlocks.BLOCK_ITEMS.register("reinforced_wood_chest_" + spec.suffix(), () -> new MetalChestBlockItem(registeredWoodChest.get(),
-                    new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+            GTBlocks.BLOCK_ITEMS.register(
+                    "reinforced_wood_chest_" + spec.suffix(),
+                    () -> new MetalChestBlockItem(
+                            registeredWoodChest.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
         }
         GTLootChests.registerAll();
     }

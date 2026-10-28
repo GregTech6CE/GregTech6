@@ -1,24 +1,23 @@
 package gregtech.engine.machine;
 
 import gregtech.api.machine.IoTarget;
-import gregtech.api.machine.MachineFace;
 import gregtech.api.machine.MachineControllerKind;
-import gregtech.engine.energy.FaceConfig;
+import gregtech.api.machine.MachineFace;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.WeightedMaterial;
-import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.energy.OriginalAdjacentEnergyRules;
-import gregtech.content.machine.OriginalBasicMachineRules;
-import gregtech.engine.multiblock.LargeMachineProcessingRules;
-import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
-import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.content.data.BasicMachineOriginalParams;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMaps;
-import net.minecraft.resources.ResourceLocation;
-
+import gregtech.content.energy.OriginalAdjacentEnergyRules;
+import gregtech.content.machine.OriginalBasicMachineRules;
+import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
+import gregtech.content.multiblock.SharedLargeMachineLayouts;
+import gregtech.engine.energy.FaceConfig;
+import gregtech.engine.multiblock.LargeMachineProcessingRules;
+import gregtech.engine.recipe.RecipeMap;
 import java.util.List;
 import java.util.Objects;
+import net.minecraft.resources.ResourceLocation;
 
 /** Defines one basic machine variant (GT6 {@code MultiTileEntityBasicMachine}). */
 public record BasicMachineSpec(
@@ -80,34 +79,38 @@ public record BasicMachineSpec(
         long auxiliaryEnergyCapacity,
         int auxiliaryFaceMask,
         /** Charge a recipe's special value from the auxiliary buffer before progress starts. */
-        boolean startupEnergy
-) {
+        boolean startupEnergy) {
     /** Special built-in controllers take precedence over a layout with the same name. */
     private static MachineControllerKind builtInController(String machineName) {
         return switch (machineName) {
             case "massfab" -> MachineControllerKind.COMPACT_MATTER;
             case "largemassfab" -> MachineControllerKind.MATTER;
             case "distillationtower" -> MachineControllerKind.DISTILLATION;
-            default -> SharedLargeMachineLayouts.cells(machineName) != null
-                    ? MachineControllerKind.LARGE_RECIPE : MachineControllerKind.BASIC;
+            default ->
+                SharedLargeMachineLayouts.cells(machineName) != null
+                        ? MachineControllerKind.LARGE_RECIPE
+                        : MachineControllerKind.BASIC;
         };
     }
 
     public BasicMachineSpec {
-        if (id == null || !id.matches("[a-z0-9/._-]+"))
-            throw new IllegalArgumentException("Invalid machine ID: " + id);
+        if (id == null || !id.matches("[a-z0-9/._-]+")) throw new IllegalArgumentException("Invalid machine ID: " + id);
         if (material == null || !material.isValid())
             throw new IllegalArgumentException("Invalid casing material for " + id);
         Objects.requireNonNull(machineName, "Machine type");
         Objects.requireNonNull(faceConfig, "Machine face configuration");
         Objects.requireNonNull(recipeMap, "Machine recipe map");
         requireEnergy(energyType);
-        if (tier < 1 || parallelLimit < 1 || energyIn < 0 || energyOut < 0
-                || !Float.isFinite(hardness) || !Float.isFinite(blastResistance))
+        if (tier < 1
+                || parallelLimit < 1
+                || energyIn < 0
+                || energyOut < 0
+                || !Float.isFinite(hardness)
+                || !Float.isFinite(blastResistance))
             throw new IllegalArgumentException("Invalid machine parameters for " + id);
         if (energyInMin < 1 || energyInMax < energyInMin)
-            throw new IllegalArgumentException("Invalid energy range for " + id + ": "
-                    + energyInMin + ".." + energyInMax);
+            throw new IllegalArgumentException(
+                    "Invalid energy range for " + id + ": " + energyInMin + ".." + energyInMax);
         if (namespace == null || !namespace.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid machine namespace: " + namespace);
         Objects.requireNonNull(controllerKind, "controller kind");
@@ -117,17 +120,26 @@ public record BasicMachineSpec(
             throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
         if (auxiliaryEnergyType != null) {
             requireEnergy(auxiliaryEnergyType);
-            if (auxiliaryEnergyIn < 1 || auxiliaryEnergyMin < 1 || auxiliaryEnergyMax < auxiliaryEnergyMin
-                    || auxiliaryEnergyCapacity < 1 || auxiliaryFaceMask == 0)
-                throw new IllegalArgumentException("Invalid auxiliary energy for " + id);
-        } else if (startupEnergy || auxiliaryEnergyIn != 0 || auxiliaryEnergyMin != 0 || auxiliaryEnergyMax != 0
-                || auxiliaryEnergyCapacity != 0 || auxiliaryFaceMask != 0) {
+            if (auxiliaryEnergyIn < 1
+                    || auxiliaryEnergyMin < 1
+                    || auxiliaryEnergyMax < auxiliaryEnergyMin
+                    || auxiliaryEnergyCapacity < 1
+                    || auxiliaryFaceMask == 0) throw new IllegalArgumentException("Invalid auxiliary energy for " + id);
+        } else if (startupEnergy
+                || auxiliaryEnergyIn != 0
+                || auxiliaryEnergyMin != 0
+                || auxiliaryEnergyMax != 0
+                || auxiliaryEnergyCapacity != 0
+                || auxiliaryFaceMask != 0) {
             throw new IllegalArgumentException("Auxiliary energy fields need a type: " + id);
         }
         constructionMaterials = List.copyOf(constructionMaterials);
         structureKeys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
         energySources = List.copyOf(energySources == null ? List.of() : energySources);
-        if ((itemOutputTarget != null || fluidOutputTarget != null || itemInputSource != null || fluidInputSource != null)
+        if ((itemOutputTarget != null
+                        || fluidOutputTarget != null
+                        || itemInputSource != null
+                        || fluidInputSource != null)
                 && controllerKind != MachineControllerKind.LARGE_RECIPE
                 && controllerKind != MachineControllerKind.MATTER)
             throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
@@ -146,24 +158,64 @@ public record BasicMachineSpec(
     }
 
     /** Built-in machines stay in {@code gregtech} and keep the historical name-based rules. */
-    public BasicMachineSpec(String id, GTMaterial material, String machineName, String energyType,
-                            int tier, long energyIn, long energyOut, float hardness, float blastResistance,
-                            FaceConfig faceConfig, List<WeightedMaterial> constructionMaterials,
-                            RecipeMap recipeMap, int parallelLimit, long energyInMin, long energyInMax) {
-        this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
-                faceConfig, constructionMaterials, recipeMap, parallelLimit, energyInMin, energyInMax,
-                "gt6ce", builtInController(machineName),
+    public BasicMachineSpec(
+            String id,
+            GTMaterial material,
+            String machineName,
+            String energyType,
+            int tier,
+            long energyIn,
+            long energyOut,
+            float hardness,
+            float blastResistance,
+            FaceConfig faceConfig,
+            List<WeightedMaterial> constructionMaterials,
+            RecipeMap recipeMap,
+            int parallelLimit,
+            long energyInMin,
+            long energyInMax) {
+        this(
+                id,
+                material,
+                machineName,
+                energyType,
+                tier,
+                energyIn,
+                energyOut,
+                hardness,
+                blastResistance,
+                faceConfig,
+                constructionMaterials,
+                recipeMap,
+                parallelLimit,
+                energyInMin,
+                energyInMax,
+                "gt6ce",
+                builtInController(machineName),
                 builtInProcessingEfficiency(machineName, tier),
                 builtInConstantEnergy(machineName, tier),
                 OriginalLargeRecipeMachineData.structureKeys(machineName),
-                builtInCheapOverclocking(machineName, tier, energyType), false, 0, false, false,
-                builtInOutputTarget(machineName, true), builtInOutputTarget(machineName, false),
-                null, null, false,
+                builtInCheapOverclocking(machineName, tier, energyType),
+                false,
+                0,
+                false,
+                false,
+                builtInOutputTarget(machineName, true),
+                builtInOutputTarget(machineName, false),
+                null,
+                null,
+                false,
                 builtInParallelScalesDuration(machineName, tier, energyType),
                 builtInEnergySources(machineName),
                 builtInSuppressSideAutoInput(machineName),
                 builtInUnlimitedOutputTanks(machineName),
-                null, 0, 0, 0, 0, 0, false);
+                null,
+                0,
+                0,
+                0,
+                0,
+                0,
+                false);
     }
 
     /**
@@ -181,13 +233,34 @@ public record BasicMachineSpec(
     }
 
     /** Compatibility for imported definitions. New content supplies recipeMap and parallelLimit explicitly. */
-    public BasicMachineSpec(String id, GTMaterial material, String machineName, String energyType,
-                            int tier, long energyIn, long energyOut, float hardness, float blastResistance,
-                            FaceConfig faceConfig, List<WeightedMaterial> constructionMaterials) {
-        this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
-                faceConfig, constructionMaterials, MachineRecipeMaps.byMachineName(machineName),
+    public BasicMachineSpec(
+            String id,
+            GTMaterial material,
+            String machineName,
+            String energyType,
+            int tier,
+            long energyIn,
+            long energyOut,
+            float hardness,
+            float blastResistance,
+            FaceConfig faceConfig,
+            List<WeightedMaterial> constructionMaterials) {
+        this(
+                id,
+                material,
+                machineName,
+                energyType,
+                tier,
+                energyIn,
+                energyOut,
+                hardness,
+                blastResistance,
+                faceConfig,
+                constructionMaterials,
+                MachineRecipeMaps.byMachineName(machineName),
                 legacyParallelLimit(machineName),
-                defaultEnergyInMin(energyType, energyIn), defaultEnergyInMax(energyType, energyIn));
+                defaultEnergyInMin(energyType, energyIn),
+                defaultEnergyInMax(energyType, energyIn));
     }
 
     /**
@@ -249,8 +322,8 @@ public record BasicMachineSpec(
             default -> {
                 boolean timed = "TU".equals(energyType);
                 yield new long[] {
-                        LargeMachineProcessingRules.inputMinimum(timed, "HU".equals(energyType)),
-                        LargeMachineProcessingRules.inputMaximum(timed)
+                    LargeMachineProcessingRules.inputMinimum(timed, "HU".equals(energyType)),
+                    LargeMachineProcessingRules.inputMaximum(timed)
                 };
             }
         };
@@ -280,7 +353,11 @@ public record BasicMachineSpec(
         var sources = new java.util.ArrayList<EnergySource>();
         if (originalProcessingName(machineName)) {
             for (var source : OriginalLargeRecipeMachineData.sources(machineName))
-                sources.add(new EnergySource(source.right(), source.up(), source.back(), source.outputFace().name()));
+                sources.add(new EnergySource(
+                        source.right(),
+                        source.up(),
+                        source.back(),
+                        source.outputFace().name()));
         }
         if ("distillationtower".equals(machineName) || "cryodistillationtower".equals(machineName)) {
             for (var source : OriginalAdjacentEnergyRules.TOWER_SOURCES)
@@ -300,21 +377,33 @@ public record BasicMachineSpec(
     public static int legacyParallelLimit(String machineName) {
         return switch (machineName) {
             case "largemixer", "largefermenter" -> 256;
-            case "largecoagulator", "largebath", "largeoven", "largesluice",
-                 "largecrusher", "largeshredder", "largesqueezer", "largemassfab" -> 64;
+            case "largecoagulator",
+                    "largebath",
+                    "largeoven",
+                    "largesluice",
+                    "largecrusher",
+                    "largeshredder",
+                    "largesqueezer",
+                    "largemassfab" -> 64;
             case "largecentrifuge", "largeelectrolyzer", "largeautoclave" -> 16;
             default -> 1;
         };
     }
 
     private static GregTechTags.Tag requireEnergy(String shortName) {
-        return GregTechTags.Energy.ALL.stream().filter(t -> t.getShortName().equalsIgnoreCase(shortName))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("Unknown machine energy type: " + shortName));
+        return GregTechTags.Energy.ALL.stream()
+                .filter(t -> t.getShortName().equalsIgnoreCase(shortName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown machine energy type: " + shortName));
     }
 
-    public GregTechTags.Tag energyTag() { return requireEnergy(energyType); }
+    public GregTechTags.Tag energyTag() {
+        return requireEnergy(energyType);
+    }
 
-    public static Builder builder(String id, GTMaterial casing) { return new Builder(id, casing); }
+    public static Builder builder(String id, GTMaterial casing) {
+        return new Builder(id, casing);
+    }
 
     public static final class Builder {
         private final String id;
@@ -358,46 +447,157 @@ public record BasicMachineSpec(
         private boolean startupEnergy;
 
         private Builder(String id, GTMaterial casing) {
-            this.id = id; material = casing; machineType = id;
+            this.id = id;
+            material = casing;
+            machineType = id;
             construction = List.of(); // No guessed material amount for definitions without source data.
         }
-        public Builder machineType(String value) { machineType = value; return this; }
-        public Builder recipes(RecipeMap value) { recipes = value; return this; }
-        public Builder energy(GregTechTags.Tag type, long inputPerTick) { energy = type; energyIn = inputPerTick; return this; }
-        public Builder auxiliaryEnergy(GregTechTags.Tag type, long perTick, long min, long max, long capacity, int faceMask) {
-            auxiliaryEnergy = type; auxiliaryEnergyIn = perTick;
-            auxiliaryEnergyMin = min; auxiliaryEnergyMax = max;
-            auxiliaryEnergyCapacity = capacity; auxiliaryFaceMask = faceMask;
+
+        public Builder machineType(String value) {
+            machineType = value;
             return this;
         }
-        public Builder startupEnergy(boolean value) { startupEnergy = value; return this; }
-        public Builder energyOutput(long outputPerTick) { energyOut = outputPerTick; return this; }
+
+        public Builder recipes(RecipeMap value) {
+            recipes = value;
+            return this;
+        }
+
+        public Builder energy(GregTechTags.Tag type, long inputPerTick) {
+            energy = type;
+            energyIn = inputPerTick;
+            return this;
+        }
+
+        public Builder auxiliaryEnergy(
+                GregTechTags.Tag type, long perTick, long min, long max, long capacity, int faceMask) {
+            auxiliaryEnergy = type;
+            auxiliaryEnergyIn = perTick;
+            auxiliaryEnergyMin = min;
+            auxiliaryEnergyMax = max;
+            auxiliaryEnergyCapacity = capacity;
+            auxiliaryFaceMask = faceMask;
+            return this;
+        }
+
+        public Builder startupEnergy(boolean value) {
+            startupEnergy = value;
+            return this;
+        }
+
+        public Builder energyOutput(long outputPerTick) {
+            energyOut = outputPerTick;
+            return this;
+        }
         /** GT6 {@code NBT_INPUT_MIN} / {@code NBT_INPUT_MAX}: the accepted input range. */
         public Builder energyRange(long inputMin, long inputMax) {
-            energyInMin = inputMin; energyInMax = inputMax; energyRangeDeclared = inputMin > 0 || inputMax > 0; return this;
+            energyInMin = inputMin;
+            energyInMax = inputMax;
+            energyRangeDeclared = inputMin > 0 || inputMax > 0;
+            return this;
         }
         /** Accepted range for a machine that did not declare one. Processing reads these numbers; the declared flag stays false. */
         public Builder implicitEnergyRange(long inputMin, long inputMax) {
-            energyInMin = inputMin; energyInMax = inputMax; energyRangeDeclared = false; return this;
+            energyInMin = inputMin;
+            energyInMax = inputMax;
+            energyRangeDeclared = false;
+            return this;
         }
-        public Builder tier(int value) { tier = value; return this; }
-        public Builder parallel(int value) { parallel = value; return this; }
-        public Builder strength(float hardness, float resistance) { this.hardness = hardness; this.resistance = resistance; return this; }
-        public Builder faces(FaceConfig value) { faces = value; return this; }
-        public Builder constructionMaterials(List<WeightedMaterial> value) { construction = List.copyOf(value); return this; }
-        public Builder namespace(String value) { namespace = value; return this; }
-        public Builder controllerKind(MachineControllerKind value) { kind = value; return this; }
-        public Builder processingEfficiency(int value) { efficiency = value; efficiencySet = true; return this; }
-        public Builder constantEnergy(boolean value) { constantEnergy = value; constantEnergySet = true; return this; }
-        public Builder structureKeys(List<String> value) { structureKeys = List.copyOf(value); return this; }
-        public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingDeclared = true; return this; }
-        public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
-        public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
-        public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
-        public Builder itemOutputTarget(IoTarget value) { itemOutputTarget = value; return this; }
-        public Builder fluidOutputTarget(IoTarget value) { fluidOutputTarget = value; return this; }
-        public Builder itemInputSource(IoTarget value) { itemInputSource = value; return this; }
-        public Builder fluidInputSource(IoTarget value) { fluidInputSource = value; return this; }
+
+        public Builder tier(int value) {
+            tier = value;
+            return this;
+        }
+
+        public Builder parallel(int value) {
+            parallel = value;
+            return this;
+        }
+
+        public Builder strength(float hardness, float resistance) {
+            this.hardness = hardness;
+            this.resistance = resistance;
+            return this;
+        }
+
+        public Builder faces(FaceConfig value) {
+            faces = value;
+            return this;
+        }
+
+        public Builder constructionMaterials(List<WeightedMaterial> value) {
+            construction = List.copyOf(value);
+            return this;
+        }
+
+        public Builder namespace(String value) {
+            namespace = value;
+            return this;
+        }
+
+        public Builder controllerKind(MachineControllerKind value) {
+            kind = value;
+            return this;
+        }
+
+        public Builder processingEfficiency(int value) {
+            efficiency = value;
+            efficiencySet = true;
+            return this;
+        }
+
+        public Builder constantEnergy(boolean value) {
+            constantEnergy = value;
+            constantEnergySet = true;
+            return this;
+        }
+
+        public Builder structureKeys(List<String> value) {
+            structureKeys = List.copyOf(value);
+            return this;
+        }
+
+        public Builder cheapOverclocking(boolean value) {
+            cheapOverclocking = value;
+            cheapOverclockingDeclared = true;
+            return this;
+        }
+
+        public Builder minimumLightAbove(int value) {
+            minimumLightAbove = value;
+            return this;
+        }
+
+        public Builder searchOutputTanks(boolean value) {
+            searchOutputTanks = value;
+            return this;
+        }
+
+        public Builder exclusiveOutputs(boolean value) {
+            exclusiveOutputs = value;
+            return this;
+        }
+
+        public Builder itemOutputTarget(IoTarget value) {
+            itemOutputTarget = value;
+            return this;
+        }
+
+        public Builder fluidOutputTarget(IoTarget value) {
+            fluidOutputTarget = value;
+            return this;
+        }
+
+        public Builder itemInputSource(IoTarget value) {
+            itemInputSource = value;
+            return this;
+        }
+
+        public Builder fluidInputSource(IoTarget value) {
+            fluidInputSource = value;
+            return this;
+        }
+
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             var resolvedKind = kind != null ? kind : builtInController(machineType);
@@ -416,39 +616,71 @@ public record BasicMachineSpec(
                 resolvedMin = defaultEnergyInMin(energyName, energyIn);
                 resolvedMax = defaultEnergyInMax(energyName, energyIn);
             }
-            boolean resolvedCheap = cheapOverclockingDeclared ? cheapOverclocking
-                    : gt6ce ? builtInCheapOverclocking(machineType, tier, energyName)
-                    : resolvedKind == MachineControllerKind.LARGE_RECIPE && !"TU".equals(energyName);
-            boolean resolvedConstant = constantEnergySet ? constantEnergy
-                    : gt6ce ? builtInConstantEnergy(machineType, tier)
-                    : LargeMachineProcessingRules.constantEnergy(false, machineType);
+            boolean resolvedCheap = cheapOverclockingDeclared
+                    ? cheapOverclocking
+                    : gt6ce
+                            ? builtInCheapOverclocking(machineType, tier, energyName)
+                            : resolvedKind == MachineControllerKind.LARGE_RECIPE && !"TU".equals(energyName);
+            boolean resolvedConstant = constantEnergySet
+                    ? constantEnergy
+                    : gt6ce
+                            ? builtInConstantEnergy(machineType, tier)
+                            : LargeMachineProcessingRules.constantEnergy(false, machineType);
             boolean resolvedParallel = gt6ce
                     ? builtInParallelScalesDuration(machineType, tier, energyName)
                     : resolvedKind == MachineControllerKind.LARGE_RECIPE ? !"TU".equals(energyName) : true;
             var resolvedItemOut = itemOutputTarget;
             var resolvedFluidOut = fluidOutputTarget;
-            if (gt6ce && resolvedItemOut == null && resolvedFluidOut == null
-                    && itemInputSource == null && fluidInputSource == null) {
+            if (gt6ce
+                    && resolvedItemOut == null
+                    && resolvedFluidOut == null
+                    && itemInputSource == null
+                    && fluidInputSource == null) {
                 resolvedItemOut = builtInOutputTarget(machineType, true);
                 resolvedFluidOut = builtInOutputTarget(machineType, false);
             }
-            return new BasicMachineSpec(id, material, machineType, energyName, tier, energyIn, energyOut,
-                    hardness, resistance, faces, construction, recipes, parallel,
-                    resolvedMin, resolvedMax,
-                    namespace, resolvedKind,
+            return new BasicMachineSpec(
+                    id,
+                    material,
+                    machineType,
+                    energyName,
+                    tier,
+                    energyIn,
+                    energyOut,
+                    hardness,
+                    resistance,
+                    faces,
+                    construction,
+                    recipes,
+                    parallel,
+                    resolvedMin,
+                    resolvedMax,
+                    namespace,
+                    resolvedKind,
                     efficiencySet ? efficiency : builtInProcessingEfficiency(machineType, tier),
                     resolvedConstant,
                     structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType),
-                    resolvedCheap, cheapOverclockingDeclared, minimumLightAbove,
-                    searchOutputTanks, exclusiveOutputs,
-                    resolvedItemOut, resolvedFluidOut, itemInputSource, fluidInputSource,
-                    energyRangeDeclared, resolvedParallel,
+                    resolvedCheap,
+                    cheapOverclockingDeclared,
+                    minimumLightAbove,
+                    searchOutputTanks,
+                    exclusiveOutputs,
+                    resolvedItemOut,
+                    resolvedFluidOut,
+                    itemInputSource,
+                    fluidInputSource,
+                    energyRangeDeclared,
+                    resolvedParallel,
                     gt6ce ? builtInEnergySources(machineType) : List.of(),
                     gt6ce && builtInSuppressSideAutoInput(machineType),
                     gt6ce && builtInUnlimitedOutputTanks(machineType),
                     auxiliaryEnergy == null ? null : auxiliaryEnergy.getShortName(),
-                    auxiliaryEnergyIn, auxiliaryEnergyMin, auxiliaryEnergyMax, auxiliaryEnergyCapacity,
-                    auxiliaryFaceMask, startupEnergy);
+                    auxiliaryEnergyIn,
+                    auxiliaryEnergyMin,
+                    auxiliaryEnergyMax,
+                    auxiliaryEnergyCapacity,
+                    auxiliaryFaceMask,
+                    startupEnergy);
         }
     }
 
@@ -462,7 +694,11 @@ public record BasicMachineSpec(
             }
         }
     }
-    public String textureFolder() { return machineName; }
+
+    public String textureFolder() {
+        return machineName;
+    }
+
     public ResourceLocation modelId(String suffix) {
         return ResourceLocation.fromNamespaceAndPath(namespace, "block/machine/basic/" + machineName + suffix);
     }

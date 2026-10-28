@@ -1,7 +1,6 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-
 import gregtech.content.data.MaterialPrefix;
 
 /** Shared original material icon selection and resource paths, without client classes. */
@@ -23,8 +22,7 @@ public final class MaterialIconDefinitions {
     }
 
     public static String texturePath(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
-        return "item/material_icons/" + set.folder() + "/" + prefix.getTextureFileName()
-                + (overlay ? "_overlay" : "");
+        return "item/material_icons/" + set.folder() + "/" + prefix.getTextureFileName() + (overlay ? "_overlay" : "");
     }
 
     public static String modelPath(MaterialTextureSet set, MaterialPrefix prefix) {
@@ -54,8 +52,8 @@ public final class MaterialIconDefinitions {
 
     /** Both platform geometry loaders delegate this reference to the original baked template cache. */
     public static String sharedInventoryJson(String parent) {
-        return "{\"loader\":\"" + gregtech.engine.mod.GregTechIdentity.MOD_ID
-                + ":shared_inventory\",\"parent\":\"" + parent + "\"}";
+        return "{\"loader\":\"" + gregtech.engine.mod.GregTechIdentity.MOD_ID + ":shared_inventory\",\"parent\":\""
+                + parent + "\"}";
     }
 
     private static String generatedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
@@ -67,7 +65,6 @@ public final class MaterialIconDefinitions {
                     "layer1": "%s"
                   }
                 }
-                """.formatted("gt6ce:" + texturePath(set, prefix, false),
-                "gt6ce:" + texturePath(set, prefix, true));
+                """.formatted("gt6ce:" + texturePath(set, prefix, false), "gt6ce:" + texturePath(set, prefix, true));
     }
 }

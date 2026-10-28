@@ -1,13 +1,14 @@
 package gregtech.content.storage;
-import java.util.stream.IntStream;
+
 import java.util.function.IntPredicate;
 import java.util.function.IntUnaryOperator;
+import java.util.stream.IntStream;
 
 /** Table slot layout and local ingredient consumption order; native matching stays at the platform boundary. */
 public final class AdvancedCraftingRules {
 
-    private AdvancedCraftingRules() {
-    }
+    private AdvancedCraftingRules() {}
+
     public static final int SIZE = 71;
 
     public static int[] inputs() {

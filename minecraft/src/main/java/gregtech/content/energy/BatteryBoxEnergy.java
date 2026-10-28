@@ -1,14 +1,13 @@
 package gregtech.content.energy;
 
-import gregtech.engine.energy.BatteryBoxState;
-
-import gregtech.engine.energy.item.IItemEnergy;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.energy.BatteryBoxState;
+import gregtech.engine.energy.item.IItemEnergy;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import java.util.List;
 
 /** Native item/world/NBT boundary around the original shared battery-box state rules. */
 public final class BatteryBoxEnergy {
@@ -22,47 +21,50 @@ public final class BatteryBoxEnergy {
 
     public BatteryBoxEnergy(List<ItemStack> inventory, long voltage, GregTechTags.Tag type) {
         // Resolve each stack by its slot on every call, so replacements do not leave a stale item reference.
-        var slots = java.util.stream.IntStream.range(0, inventory.size()).mapToObj(slot -> (BatteryBoxState.Battery) new BatteryBoxState.Battery() {
-            private ItemStack stack() {
-                return inventory.get(slot);
-            }
+        var slots = java.util.stream.IntStream.range(0, inventory.size())
+                .mapToObj(slot -> (BatteryBoxState.Battery) new BatteryBoxState.Battery() {
+                    private ItemStack stack() {
+                        return inventory.get(slot);
+                    }
 
-            private IItemEnergy energy() {
-                return (IItemEnergy) stack().getItem();
-            }
+                    private IItemEnergy energy() {
+                        return (IItemEnergy) stack().getItem();
+                    }
 
-            public boolean accepts() {
-                return BatteryBoxEnergy.accepts(stack(), type);
-            }
+                    public boolean accepts() {
+                        return BatteryBoxEnergy.accepts(stack(), type);
+                    }
 
-            public boolean canInject(long v) {
-                return energy().canEnergyInjection(stack(), type, v);
-            }
+                    public boolean canInject(long v) {
+                        return energy().canEnergyInjection(stack(), type, v);
+                    }
 
-            public boolean canExtract(long v) {
-                return energy().canEnergyExtraction(stack(), type, v);
-            }
+                    public boolean canExtract(long v) {
+                        return energy().canEnergyExtraction(stack(), type, v);
+                    }
 
-            public long stored() {
-                return energy().getEnergyStored(stack(), type);
-            }
+                    public long stored() {
+                        return energy().getEnergyStored(stack(), type);
+                    }
 
-            public long capacity() {
-                return energy().getEnergyCapacity(stack(), type);
-            }
+                    public long capacity() {
+                        return energy().getEnergyCapacity(stack(), type);
+                    }
 
-            public long extract(long v, long p) {
-                IItemEnergy item = energy();
-                ItemStack original = stack();
-                long extracted = item.doEnergyExtraction(type, original, v, p, transferLevel, transferPos, true);
-                inventory.set(slot, item.afterEnergyTransfer(original));
-                return extracted;
-            }
+                    public long extract(long v, long p) {
+                        IItemEnergy item = energy();
+                        ItemStack original = stack();
+                        long extracted =
+                                item.doEnergyExtraction(type, original, v, p, transferLevel, transferPos, true);
+                        inventory.set(slot, item.afterEnergyTransfer(original));
+                        return extracted;
+                    }
 
-            public long inject(long v, long p) {
-                return energy().doEnergyInjection(type, stack(), v, p, transferLevel, transferPos, true);
-            }
-        }).toList();
+                    public long inject(long v, long p) {
+                        return energy().doEnergyInjection(type, stack(), v, p, transferLevel, transferPos, true);
+                    }
+                })
+                .toList();
         state = new BatteryBoxState(slots, voltage);
     }
 
@@ -161,8 +163,6 @@ public final class BatteryBoxEnergy {
 
     public void load(CompoundTag tag) {
         state.restore(new BatteryBoxState.Snapshot(
-                tag.getLong("gt.buffer"),
-                tag.getBoolean("gt.battery_stopped"),
-                tag.getInt("gt.battery_mode")));
+                tag.getLong("gt.buffer"), tag.getBoolean("gt.battery_stopped"), tag.getInt("gt.battery_mode")));
     }
 }

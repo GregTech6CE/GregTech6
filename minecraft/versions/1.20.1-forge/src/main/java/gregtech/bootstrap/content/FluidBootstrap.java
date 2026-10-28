@@ -1,30 +1,30 @@
 package gregtech.bootstrap.content;
 
 import gregtech.GregTech;
-import gregtech.engine.fluid.FluidPhysicalProperties;
-import gregtech.engine.fluid.FluidRenderLayers;
+import gregtech.bootstrap.InitializationStep;
 import gregtech.content.block.GTWorldFluidBlock;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.item.FluidItem;
-import gregtech.bootstrap.InitializationStep;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTFluidItems;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.GTWorldWaterFluid;
-import gregtech.content.registry.GTBlocks;
-import gregtech.content.registry.GTFluidItems;
+import gregtech.engine.fluid.FluidPhysicalProperties;
+import gregtech.engine.fluid.FluidRenderLayers;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
@@ -42,11 +42,15 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
     private static final Set<String> WORLD_FLUID_PATHS = FluidRenderLayers.worldFluidPaths();
 
     /** Both the block and the fluid reference each other, so both sides stay lazy. */
-    private static ForgeFlowingFluid.Properties properties(RegistryObject<FluidType> type, String field,
-                                                          AtomicReference<RegistryObject<LiquidBlock>> blockRef,
-                                                          boolean worldWater) {
-        ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(type,
-                () -> GTFluids.still(field).get(), () -> GTFluids.flowing(field).get());
+    private static ForgeFlowingFluid.Properties properties(
+            RegistryObject<FluidType> type,
+            String field,
+            AtomicReference<RegistryObject<LiquidBlock>> blockRef,
+            boolean worldWater) {
+        ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
+                type,
+                () -> GTFluids.still(field).get(),
+                () -> GTFluids.flowing(field).get());
         if (blockRef.get() != null) {
             properties.block(() -> blockRef.get().get());
             // Vanilla water: WaterFluid.getExplosionResistance() is 100.0F, matching its block's
@@ -81,13 +85,14 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
                 continue;
             }
             if (!seenItemPaths.add("fluid_item_" + itemPath)) {
-                GregTech.LOGGER.warn("Skipping duplicate fluid item path 'fluid_item_{}' from field '{}'", itemPath, field);
+                GregTech.LOGGER.warn(
+                        "Skipping duplicate fluid item path 'fluid_item_{}' from field '{}'", itemPath, field);
                 continue;
             }
 
             // FluidType
-            RegistryObject<FluidType> typeRO = GTFluids.fluidTypes(namespace).register(path,
-                    () -> GTFluids.createFluidType(flEntry));
+            RegistryObject<FluidType> typeRO =
+                    GTFluids.fluidTypes(namespace).register(path, () -> GTFluids.createFluidType(flEntry));
 
             // GT6's sea/river/swamp water copy minecraft:water completely, so they get vanilla
             // water's block properties, explosion resistance and WaterFluid flow behaviour.
@@ -104,32 +109,53 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
                 // randomTicks() - so the world water blocks drop nothing and never random tick.
                 // GTWorldFluidBlock is a LiquidBlock that survives Forge's supplier constructor
                 // (it is the only constructor a mod can use here), see its javadoc.
-                blockRef.set(GTBlocks.BLOCKS.register(path, () -> new GTWorldFluidBlock(
-                        () -> (FlowingFluid) stillRef.get().get(),
-                        BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable()
-                                .noCollission().strength(100.0F).pushReaction(PushReaction.DESTROY)
-                                .noLootTable().liquid().sound(SoundType.EMPTY))));
+                blockRef.set(GTBlocks.BLOCKS.register(
+                        path,
+                        () -> new GTWorldFluidBlock(
+                                () -> (FlowingFluid) stillRef.get().get(),
+                                BlockBehaviour.Properties.of()
+                                        .mapColor(MapColor.WATER)
+                                        .replaceable()
+                                        .noCollission()
+                                        .strength(100.0F)
+                                        .pushReaction(PushReaction.DESTROY)
+                                        .noLootTable()
+                                        .liquid()
+                                        .sound(SoundType.EMPTY))));
             }
 
             // Still fluid
-            RegistryObject<Fluid> stillRO = GTFluids.fluids(namespace).register(path, () -> worldWater
-                    ? new GTWorldWaterFluid.Source(properties(typeRO, field, blockRef, true))
-                    : lighterThanAir ? new GTGasFluid.Source(properties(typeRO, field, blockRef, false))
-                    : new ForgeFlowingFluid.Source(properties(typeRO, field, blockRef, false)));
+            RegistryObject<Fluid> stillRO = GTFluids.fluids(namespace)
+                    .register(
+                            path,
+                            () -> worldWater
+                                    ? new GTWorldWaterFluid.Source(properties(typeRO, field, blockRef, true))
+                                    : lighterThanAir
+                                            ? new GTGasFluid.Source(properties(typeRO, field, blockRef, false))
+                                            : new ForgeFlowingFluid.Source(properties(typeRO, field, blockRef, false)));
             stillRef.set(stillRO);
 
             // Flowing fluid
-            RegistryObject<Fluid> flowingRO = GTFluids.fluids(namespace).register(path + "_flowing", () -> worldWater
-                    ? new GTWorldWaterFluid.Flowing(properties(typeRO, field, blockRef, true))
-                    : lighterThanAir ? new GTGasFluid.Flowing(properties(typeRO, field, blockRef, false))
-                    : new ForgeFlowingFluid.Flowing(properties(typeRO, field, blockRef, false)));
+            RegistryObject<Fluid> flowingRO = GTFluids.fluids(namespace)
+                    .register(
+                            path + "_flowing",
+                            () -> worldWater
+                                    ? new GTWorldWaterFluid.Flowing(properties(typeRO, field, blockRef, true))
+                                    : lighterThanAir
+                                            ? new GTGasFluid.Flowing(properties(typeRO, field, blockRef, false))
+                                            : new ForgeFlowingFluid.Flowing(
+                                                    properties(typeRO, field, blockRef, false)));
 
-            GTFluids.bindFluid(field, stillRO, flowingRO,
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(namespace, path), flEntry);
+            GTFluids.bindFluid(
+                    field,
+                    stillRO,
+                    flowingRO,
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(namespace, path),
+                    flEntry);
 
             // Fluid item
-            RegistryObject<FluidItem> itemRO = GTFluidItems.items(namespace).register("fluid_item_" + itemPath,
-                    () -> new FluidItem(flEntry, new Item.Properties()));
+            RegistryObject<FluidItem> itemRO = GTFluidItems.items(namespace)
+                    .register("fluid_item_" + itemPath, () -> new FluidItem(flEntry, new Item.Properties()));
             GTFluidItems.bindFluidItem(field, itemRO);
 
             count++;
@@ -144,5 +170,4 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
         GTFluidItems.ITEMS.register(bus);
         GTFluidItems.registerAddonItems(bus);
     }
-
 }

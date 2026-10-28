@@ -10,6 +10,7 @@ import net.minecraft.world.item.Items;
 /** Minecraft item binding for the single shared vanilla identity/weight table. */
 public final class VanillaUnificationLoader {
     private VanillaUnificationLoader() {}
+
     public static void register() {
         for (var definition : VanillaUnificationDefinitions.entries()) {
             var item = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(definition.itemPath()));

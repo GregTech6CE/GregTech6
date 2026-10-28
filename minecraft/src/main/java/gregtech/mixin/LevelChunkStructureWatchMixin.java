@@ -3,6 +3,7 @@ package gregtech.mixin;
 import gregtech.engine.multiblock.tracking.SectionWatchMask;
 import gregtech.engine.multiblock.tracking.StructureChunkWatch;
 import gregtech.engine.multiblock.tracking.StructureWatchIndex;
+import java.util.Arrays;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,17 +14,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Arrays;
-
 /** Marks a controller dirty when a watched cell's structure projection changes. */
 @Mixin(LevelChunk.class)
 public abstract class LevelChunkStructureWatchMixin implements StructureChunkWatch {
     @Unique
     private long[] gt$watchedSections = new long[1];
 
-    @Inject(method = "setBlockState(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/level/block/state/BlockState;",
+    @Inject(
+            method =
+                    "setBlockState(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/level/block/state/BlockState;",
             at = @At("RETURN"))
-    private void gt$structureChanged(BlockPos pos, BlockState state, boolean moved, CallbackInfoReturnable<BlockState> cir) {
+    private void gt$structureChanged(
+            BlockPos pos, BlockState state, boolean moved, CallbackInfoReturnable<BlockState> cir) {
         BlockState previous = cir.getReturnValue();
         if (previous == null) return;
         LevelChunk chunk = (LevelChunk) (Object) this;

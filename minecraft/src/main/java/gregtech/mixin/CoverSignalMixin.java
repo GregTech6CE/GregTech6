@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class CoverSignalMixin {
     private static PanelCoverHost emittingHost(BlockGetter level, BlockPos pos, Direction query) {
         var owner = level.getBlockEntity(pos);
-        if (owner == null || !ComponentCoverFallback.ownClass(owner)
+        if (owner == null
+                || !ComponentCoverFallback.ownClass(owner)
                 || owner instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity
                 || owner instanceof gregtech.content.blockentity.energy.SignalWireBlockEntity
                 || !(owner instanceof PanelCoverHost host)) return null;
@@ -31,13 +32,15 @@ public abstract class CoverSignalMixin {
     }
 
     @Inject(method = "getSignal", at = @At("RETURN"), cancellable = true, require = 1)
-    private void gregtech$weakSignal(BlockGetter level, BlockPos pos, Direction query, CallbackInfoReturnable<Integer> callback) {
+    private void gregtech$weakSignal(
+            BlockGetter level, BlockPos pos, Direction query, CallbackInfoReturnable<Integer> callback) {
         var host = emittingHost(level, pos, query);
         if (host != null) callback.setReturnValue(host.panels().signal(query.getOpposite()));
     }
 
     @Inject(method = "getDirectSignal", at = @At("RETURN"), cancellable = true, require = 1)
-    private void gregtech$strongSignal(BlockGetter level, BlockPos pos, Direction query, CallbackInfoReturnable<Integer> callback) {
+    private void gregtech$strongSignal(
+            BlockGetter level, BlockPos pos, Direction query, CallbackInfoReturnable<Integer> callback) {
         var host = emittingHost(level, pos, query);
         if (host != null) callback.setReturnValue(host.panels().strongSignal(query.getOpposite()));
     }

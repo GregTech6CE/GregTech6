@@ -1,31 +1,34 @@
 package gregtech.compat.common;
 
+import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.MoldChiselPatterns;
 import gregtech.content.registry.GTItems;
-import gregtech.content.item.GTToolItem;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.tool.GTToolType;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
 
 /** Shared data and pixel coordinates for native JEI and EMI mold-chiseling pages. */
 public final class MoldChiselDisplay {
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/recipes/moldchisel.png");
+    public static final ResourceLocation TEXTURE =
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/recipes/moldchisel.png");
     public static final int WIDTH = 176, HEIGHT = 128;
     public static final int GRID_X = 16, GRID_Y = 16, CELL = 16;
     public static final int CHISEL_X = 112, CHISEL_Y = 30, OUTPUT_X = 137, OUTPUT_Y = 49;
     private static final int CARVED_V_OFFSET = 129;
 
     public record Info(MoldChiselPatterns.Pattern pattern, List<ItemStack> outputs) {
-        public String id() { return pattern.id().toLowerCase(Locale.ROOT); }
+        public String id() {
+            return pattern.id().toLowerCase(Locale.ROOT);
+        }
     }
 
     private MoldChiselDisplay() {}
@@ -37,7 +40,9 @@ public final class MoldChiselDisplay {
     public static List<ItemStack> molds() {
         return BuiltInRegistries.BLOCK.stream()
                 .filter(block -> block instanceof gregtech.content.block.machine.MoldBlock)
-                .map(ItemStack::new).filter(stack -> !stack.isEmpty()).toList();
+                .map(ItemStack::new)
+                .filter(stack -> !stack.isEmpty())
+                .toList();
     }
 
     public static List<Info> recipes() {
@@ -48,11 +53,15 @@ public final class MoldChiselDisplay {
                 outputs = GTMaterialRegistry.allMaterials().stream()
                         .map(material -> gregtech.content.registry.GTBlocks.getStack(
                                 gregtech.engine.prefix.BlockMaterialPrefix.blockSolid, material))
-                        .filter(stack -> !stack.isEmpty()).toList();
+                        .filter(stack -> !stack.isEmpty())
+                        .toList();
             } else {
                 outputs = GTItems.creativeEntries(pattern.recipe().itemPrefix()).stream()
-                        .sorted(Comparator.comparing(entry -> !entry.material().getName().equals("Iron")))
-                        .map(entry -> new ItemStack(entry.item().get())).filter(stack -> !stack.isEmpty()).toList();
+                        .sorted(Comparator.comparing(
+                                entry -> !entry.material().getName().equals("Iron")))
+                        .map(entry -> new ItemStack(entry.item().get()))
+                        .filter(stack -> !stack.isEmpty())
+                        .toList();
             }
             if (!outputs.isEmpty()) rows.add(new Info(pattern, outputs));
         }
@@ -61,23 +70,32 @@ public final class MoldChiselDisplay {
 
     public static void draw(GuiGraphics graphics, Info info) {
         graphics.blit(TEXTURE, 0, 0, 0, 0, WIDTH, HEIGHT, 256, 256);
-        for (int row = 0; row < 5; row++) for (int col = 0; col < 5; col++) {
-            if (!info.pattern().carved(col, row)) continue;
-            int x = GRID_X + col * CELL, y = GRID_Y + row * CELL;
-            graphics.blit(TEXTURE, x, y, x, y + CARVED_V_OFFSET, CELL, CELL, 256, 256);
-        }
+        for (int row = 0; row < 5; row++)
+            for (int col = 0; col < 5; col++) {
+                if (!info.pattern().carved(col, row)) continue;
+                int x = GRID_X + col * CELL, y = GRID_Y + row * CELL;
+                graphics.blit(TEXTURE, x, y, x, y + CARVED_V_OFFSET, CELL, CELL, 256, 256);
+            }
         // The supplied texture has a tool stencil; the actual item occupies this same native slot.
         graphics.fill(CHISEL_X, CHISEL_Y, CHISEL_X + 16, CHISEL_Y + 16, 0xff8b8b8b);
-        graphics.drawString(Minecraft.getInstance().font, Component.translatable("gt6ce.jei.mold_chisel.note"),
-                8, 111, 0xff404040, false);
+        graphics.drawString(
+                Minecraft.getInstance().font,
+                Component.translatable("gt6ce.jei.mold_chisel.note"),
+                8,
+                111,
+                0xff404040,
+                false);
     }
 
     public static List<Component> tooltip(Info info, double mouseX, double mouseY) {
         if (mouseX < GRID_X || mouseY < GRID_Y || mouseX >= GRID_X + CELL * 5 || mouseY >= GRID_Y + CELL * 5)
             return List.of();
         int col = (int) (mouseX - GRID_X) / CELL, row = (int) (mouseY - GRID_Y) / CELL;
-        return List.of(Component.translatable(info.pattern().carved(col, row)
-                        ? "gt6ce.jei.mold_chisel.carved" : "gt6ce.jei.mold_chisel.retained"),
+        return List.of(
+                Component.translatable(
+                        info.pattern().carved(col, row)
+                                ? "gt6ce.jei.mold_chisel.carved"
+                                : "gt6ce.jei.mold_chisel.retained"),
                 Component.translatable("gt6ce.jei.mold_chisel.instructions"));
     }
 }

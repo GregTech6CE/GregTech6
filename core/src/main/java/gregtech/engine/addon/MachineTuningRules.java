@@ -1,7 +1,6 @@
 package gregtech.engine.addon;
 
 import gregtech.api.addon.machine.MachineTuning;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -13,9 +12,15 @@ import java.util.Objects;
 public final class MachineTuningRules {
     /** Keeps a tuned batch small enough that {@code parallel * outputCount} stays far from int overflow. */
     public static final int MAX_PARALLEL = 1 << 16;
+
     private static final List<String> FIELDS = List.of(
-            "parallelLimit", "energyIn", "energyInMin", "energyInMax",
-            "processingEfficiency", "constantEnergy", "cheapOverclocking");
+            "parallelLimit",
+            "energyIn",
+            "energyInMin",
+            "energyInMax",
+            "processingEfficiency",
+            "constantEnergy",
+            "cheapOverclocking");
 
     private MachineTuningRules() {}
 
@@ -23,7 +28,11 @@ public final class MachineTuningRules {
         public Key {
             Objects.requireNonNull(machineName, "machineName");
         }
-        @Override public String toString() { return machineName + "/T" + tier; }
+
+        @Override
+        public String toString() {
+            return machineName + "/T" + tier;
+        }
     }
 
     public record Declared(String addonId, MachineTuning tuning) {}
@@ -54,7 +63,8 @@ public final class MachineTuningRules {
         // The canonical MachineTuning checks a complete energy/min/max triplet supplied by addons.
         // Built-in defaults are not available here; BasicMachineDefinitions.from checks the
         // effective nominal input against the range after filling all omitted fields.
-        for (var entry : builders.entrySet()) merged.put(entry.getKey(), entry.getValue().build(entry.getKey()));
+        for (var entry : builders.entrySet())
+            merged.put(entry.getKey(), entry.getValue().build(entry.getKey()));
         return Collections.unmodifiableMap(merged);
     }
 
@@ -75,8 +85,8 @@ public final class MachineTuningRules {
             Merged merged = entry.getValue();
             for (String field : FIELDS) {
                 if (!merged.owners().containsKey(field)) continue;
-                lines.add(key + " " + field + "=" + value(merged.tuning(), field)
-                        + " (" + merged.owners().get(field) + ")");
+                lines.add(key + " " + field + "=" + value(merged.tuning(), field) + " ("
+                        + merged.owners().get(field) + ")");
             }
         }
         return lines;
@@ -107,8 +117,8 @@ public final class MachineTuningRules {
                 if (owner.equals(addon))
                     throw new IllegalStateException("Addon '" + addon + "' declares " + key + " " + field + " twice");
                 if (!old.equals(value))
-                    throw new IllegalStateException("Machine tuning conflict at " + key + " " + field
-                            + ": " + owner + "=" + old + ", " + addon + "=" + value);
+                    throw new IllegalStateException("Machine tuning conflict at " + key + " " + field + ": " + owner
+                            + "=" + old + ", " + addon + "=" + value);
                 return;
             }
             if ("parallelLimit".equals(field) && (Integer) value > MAX_PARALLEL)
@@ -118,11 +128,16 @@ public final class MachineTuningRules {
         }
 
         private Merged build(Key key) {
-            var tuning = new MachineTuning(key.machineName(), key.tier(),
+            var tuning = new MachineTuning(
+                    key.machineName(),
+                    key.tier(),
                     (Integer) values.get("parallelLimit"),
-                    (Long) values.get("energyIn"), (Long) values.get("energyInMin"), (Long) values.get("energyInMax"),
+                    (Long) values.get("energyIn"),
+                    (Long) values.get("energyInMin"),
+                    (Long) values.get("energyInMax"),
                     (Integer) values.get("processingEfficiency"),
-                    (Boolean) values.get("constantEnergy"), (Boolean) values.get("cheapOverclocking"));
+                    (Boolean) values.get("constantEnergy"),
+                    (Boolean) values.get("cheapOverclocking"));
             return new Merged(tuning, Collections.unmodifiableMap(new LinkedHashMap<>(owners)));
         }
     }

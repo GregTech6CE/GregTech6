@@ -1,8 +1,14 @@
 package gregtech.client;
+
 import gregtech.api.material.*;
-import gregtech.engine.material.*;import net.minecraft.ChatFormatting;import net.minecraft.network.chat.Component;
+import gregtech.engine.material.*;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+
 /** Original contained-material presentation for engine items. */
-final class EngineMaterialTooltips {private EngineMaterialTooltips(){}
+final class EngineMaterialTooltips {
+    private EngineMaterialTooltips() {}
+
     public static Component containedMaterialLine(GTMaterial mat, long amount) {
         if (!mat.isValid()) {
             return Component.empty();
@@ -54,5 +60,4 @@ final class EngineMaterialTooltips {private EngineMaterialTooltips(){}
         long w = (long) whole;
         return w + "." + pad3(frac);
     }
-
 }

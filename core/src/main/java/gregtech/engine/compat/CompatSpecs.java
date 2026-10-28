@@ -9,29 +9,76 @@ import java.util.List;
 public final class CompatSpecs {
     private CompatSpecs() {}
 
-    public enum Op { SAW, ONE, TWO, THREE, GENERIFY, BATH }
+    public enum Op {
+        SAW,
+        ONE,
+        TWO,
+        THREE,
+        GENERIFY,
+        BATH
+    }
 
     public sealed interface Stack permits Stack.Item, Stack.Tag, Stack.Form {
         int count();
+
         record Item(String id, int count) implements Stack {}
         /** Forge {@code forge:} tag and NeoForge {@code c:} tag for the same ingredient. */
         record Tag(String forgeTag, String neoTag, int count) implements Stack {}
+
         record Form(String prefix, String material, int count) implements Stack {}
     }
 
-    public record MachineRow(String id, String map, Op op, List<Stack> inputs, List<Stack> outputs,
-                              String fluid, int fluidAmount, long eut, long duration, boolean food,
-                              long lubricant, boolean optimize, String source, List<Integer> catalysts) {
+    public record MachineRow(
+            String id,
+            String map,
+            Op op,
+            List<Stack> inputs,
+            List<Stack> outputs,
+            String fluid,
+            int fluidAmount,
+            long eut,
+            long duration,
+            boolean food,
+            long lubricant,
+            boolean optimize,
+            String source,
+            List<Integer> catalysts) {
         public MachineRow {
             catalysts = List.copyOf(catalysts);
-            for (int index : catalysts) if (index < 0 || index >= inputs.size())
-                throw new IllegalArgumentException("Catalyst outside inputs: " + id);
+            for (int index : catalysts)
+                if (index < 0 || index >= inputs.size())
+                    throw new IllegalArgumentException("Catalyst outside inputs: " + id);
         }
-        public MachineRow(String id, String map, Op op, List<Stack> inputs, List<Stack> outputs,
-                          String fluid, int fluidAmount, long eut, long duration, boolean food,
-                          long lubricant, boolean optimize, String source) {
-            this(id, map, op, inputs, outputs, fluid, fluidAmount, eut, duration, food,
-                    lubricant, optimize, source, List.of());
+
+        public MachineRow(
+                String id,
+                String map,
+                Op op,
+                List<Stack> inputs,
+                List<Stack> outputs,
+                String fluid,
+                int fluidAmount,
+                long eut,
+                long duration,
+                boolean food,
+                long lubricant,
+                boolean optimize,
+                String source) {
+            this(
+                    id,
+                    map,
+                    op,
+                    inputs,
+                    outputs,
+                    fluid,
+                    fluidAmount,
+                    eut,
+                    duration,
+                    food,
+                    lubricant,
+                    optimize,
+                    source,
+                    List.of());
         }
     }
 
@@ -40,7 +87,8 @@ public final class CompatSpecs {
     /** One-character pattern symbols. The platform writes a shaped crafting recipe. */
     public record ShapedKey(String symbol, Stack stack) {}
 
-    public record ShapedRow(String id, Stack output, List<String> pattern, List<ShapedKey> keys, String source, boolean toolRecipe) {
+    public record ShapedRow(
+            String id, Stack output, List<String> pattern, List<ShapedKey> keys, String source, boolean toolRecipe) {
         public ShapedRow(String id, Stack output, List<String> pattern, List<ShapedKey> keys, String source) {
             this(id, output, pattern, keys, source, false);
         }
@@ -48,13 +96,24 @@ public final class CompatSpecs {
 
     public record Removal(String recipeId, String source) {}
 
-    public record Module(String modernId, boolean forge, boolean neo, String originalClass,
-                         List<MachineRow> machines, List<CraftingRow> crafting, List<ShapedRow> shaped,
-                         List<Removal> removals, List<String> deferred) {}
+    public record Module(
+            String modernId,
+            boolean forge,
+            boolean neo,
+            String originalClass,
+            List<MachineRow> machines,
+            List<CraftingRow> crafting,
+            List<ShapedRow> shaped,
+            List<Removal> removals,
+            List<String> deferred) {}
 
     public static List<Module> modules() {
-        return List.of(ImmersiveEngineeringCompat.module(), MekanismCompat.module(),
-                AppliedEnergisticsCompat.module(), ProjectRedCompat.module(), HarvestCraftCompat.module());
+        return List.of(
+                ImmersiveEngineeringCompat.module(),
+                MekanismCompat.module(),
+                AppliedEnergisticsCompat.module(),
+                ProjectRedCompat.module(),
+                HarvestCraftCompat.module());
     }
 
     /** Structural checks only. A loaded game still has to resolve the registry names. */
@@ -66,8 +125,11 @@ public final class CompatSpecs {
                 throw new IllegalStateException("Duplicate compat module " + module.modernId());
             assertions++;
         }
-        if (byId.size() != 5 || !byId.containsKey("immersiveengineering") || !byId.containsKey("mekanism")
-                || !byId.containsKey("ae2") || !byId.containsKey("projectred_core")
+        if (byId.size() != 5
+                || !byId.containsKey("immersiveengineering")
+                || !byId.containsKey("mekanism")
+                || !byId.containsKey("ae2")
+                || !byId.containsKey("projectred_core")
                 || !byId.containsKey("pamhc2foodcore"))
             throw new IllegalStateException("compat modules " + byId.keySet());
         assertions++;
@@ -88,31 +150,34 @@ public final class CompatSpecs {
         assertions++;
         var ids = new java.util.HashSet<String>();
         for (var row : module.machines()) {
-            if (!ids.add(row.id()) || row.source().isBlank() || row.inputs().isEmpty() || row.outputs().isEmpty())
-                throw new IllegalStateException("Bad machine row " + row.id());
+            if (!ids.add(row.id())
+                    || row.source().isBlank()
+                    || row.inputs().isEmpty()
+                    || row.outputs().isEmpty()) throw new IllegalStateException("Bad machine row " + row.id());
             if (!switch (row.map()) {
                 case "Cutter", "Compressor", "Shredder", "Loom", "Generifier", "Bath" -> true;
                 default -> false;
             }) throw new IllegalStateException("Unknown map " + row.map());
             assertions++;
         }
-        if (module.crafting().size() != 2 || !module.shaped().isEmpty() || module.removals().size() != 11)
-            throw new IllegalStateException("IE crafting/removal counts");
+        if (module.crafting().size() != 2
+                || !module.shaped().isEmpty()
+                || module.removals().size() != 11) throw new IllegalStateException("IE crafting/removal counts");
         assertions++;
         for (var row : module.crafting()) {
-            if (!row.id().startsWith("compat/immersiveengineering/") || row.inputs().size() != 1)
-                throw new IllegalStateException(row.id());
+            if (!row.id().startsWith("compat/immersiveengineering/")
+                    || row.inputs().size() != 1) throw new IllegalStateException(row.id());
             assertions++;
         }
         for (var removal : module.removals()) {
             if (!removal.recipeId().startsWith("immersiveengineering:crafting/plate_")
-                    || !removal.recipeId().endsWith("_hammering"))
-                throw new IllegalStateException(removal.recipeId());
+                    || !removal.recipeId().endsWith("_hammering")) throw new IllegalStateException(removal.recipeId());
             assertions++;
         }
         if (module.deferred().size() < 4) throw new IllegalStateException("deferred IE notes");
         assertions++;
-        long baths = module.machines().stream().filter(row -> row.op() == Op.BATH).count();
+        long baths =
+                module.machines().stream().filter(row -> row.op() == Op.BATH).count();
         if (baths != 11L * 7 * 2) throw new IllegalStateException("stair/slab oil baths " + baths);
         assertions++;
         return assertions;
@@ -123,7 +188,9 @@ public final class CompatSpecs {
         if (!module.forge() || !module.neo() || !module.originalClass().equals("Compat_Recipes_Mekanism"))
             throw new IllegalStateException(module.originalClass());
         assertions++;
-        if (!module.machines().isEmpty() || !module.crafting().isEmpty() || !module.shaped().isEmpty()
+        if (!module.machines().isEmpty()
+                || !module.crafting().isEmpty()
+                || !module.shaped().isEmpty()
                 || module.removals().size() != 1)
             throw new IllegalStateException("Mekanism publishes one crafting removal");
         assertions++;
@@ -140,8 +207,9 @@ public final class CompatSpecs {
         if (!module.forge() || !module.neo() || !module.originalClass().equals("Compat_Recipes_AppliedEnergistics"))
             throw new IllegalStateException(module.originalClass());
         assertions++;
-        if (!module.crafting().isEmpty() || module.shaped().size() != 2 || module.removals().size() != 2)
-            throw new IllegalStateException("AE crafting counts");
+        if (!module.crafting().isEmpty()
+                || module.shaped().size() != 2
+                || module.removals().size() != 2) throw new IllegalStateException("AE crafting counts");
         assertions++;
         if (module.machines().stream().noneMatch(row -> row.op() == Op.THREE)
                 || module.machines().stream().noneMatch(row -> row.op() == Op.SAW))
@@ -156,8 +224,7 @@ public final class CompatSpecs {
                 throw new IllegalStateException("AE press must be reusable: " + row.id());
             if (row.op() == Op.THREE && !row.catalysts().isEmpty())
                 throw new IllegalStateException("AE printed circuits must be consumed: " + row.id());
-            if (row.op() == Op.THREE && row.inputs().size() != 3)
-                throw new IllegalStateException(row.id());
+            if (row.op() == Op.THREE && row.inputs().size() != 3) throw new IllegalStateException(row.id());
             assertions++;
         }
         if (module.deferred().size() < 4) throw new IllegalStateException("deferred AE notes");
@@ -170,12 +237,13 @@ public final class CompatSpecs {
         if (!module.forge() || !module.neo() || !module.originalClass().equals("Compat_Recipes_ProjectRed"))
             throw new IllegalStateException(module.originalClass());
         assertions++;
-        if (!module.crafting().isEmpty() || module.shaped().size() != 3 || module.removals().size() != 1)
-            throw new IllegalStateException("Project Red crafting counts");
+        if (!module.crafting().isEmpty()
+                || module.shaped().size() != 3
+                || module.removals().size() != 1) throw new IllegalStateException("Project Red crafting counts");
         assertions++;
-        if (module.machines().size() != 1 || module.machines().get(0).op() != Op.SAW
-                || !module.machines().get(0).map().equals("Cutter"))
-            throw new IllegalStateException("Project Red saw");
+        if (module.machines().size() != 1
+                || module.machines().get(0).op() != Op.SAW
+                || !module.machines().get(0).map().equals("Cutter")) throw new IllegalStateException("Project Red saw");
         assertions++;
         for (var row : module.shaped()) {
             if (row.id().endsWith("silicon") && !row.toolRecipe())
@@ -192,21 +260,27 @@ public final class CompatSpecs {
         if (!module.forge() || !module.neo() || !module.originalClass().equals("Compat_Recipes_HarvestCraft"))
             throw new IllegalStateException(module.originalClass());
         assertions++;
-        if (!module.crafting().isEmpty() || !module.shaped().isEmpty() || module.removals().size() != 4
-                || module.machines().size() != 12)
-            throw new IllegalStateException("HarvestCraft counts");
+        if (!module.crafting().isEmpty()
+                || !module.shaped().isEmpty()
+                || module.removals().size() != 4
+                || module.machines().size() != 12) throw new IllegalStateException("HarvestCraft counts");
         assertions++;
-        if (module.machines().stream().filter(row -> row.map().equals("Mixer") && row.op() == Op.BATH).count() != 4
+        if (module.machines().stream()
+                                .filter(row -> row.map().equals("Mixer") && row.op() == Op.BATH)
+                                .count()
+                        != 4
                 || module.machines().stream().noneMatch(row -> row.map().equals("Shredder"))
                 || module.machines().stream().noneMatch(row -> row.map().equals("Bath")))
             throw new IllegalStateException("HarvestCraft maps");
         assertions++;
         for (var row : module.machines()) {
             if (!switch (row.map()) {
-                case "Shredder", "Mixer", "Bath" -> true;
-                default -> false;
-            } || row.inputs().isEmpty() || row.outputs().isEmpty() || row.source().isBlank())
-                throw new IllegalStateException(row.id());
+                        case "Shredder", "Mixer", "Bath" -> true;
+                        default -> false;
+                    }
+                    || row.inputs().isEmpty()
+                    || row.outputs().isEmpty()
+                    || row.source().isBlank()) throw new IllegalStateException(row.id());
             assertions++;
         }
         if (module.deferred().size() < 8) throw new IllegalStateException("deferred HarvestCraft notes");

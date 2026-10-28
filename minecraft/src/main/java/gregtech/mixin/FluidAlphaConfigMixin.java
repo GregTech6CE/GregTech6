@@ -14,7 +14,8 @@ public abstract class FluidAlphaConfigMixin {
     @Inject(method = "getRenderLayer", at = @At("RETURN"), cancellable = true, require = 1)
     private static void gt6ce$fluidAlpha(FluidState state, CallbackInfoReturnable<RenderType> result) {
         if (result.getReturnValue() == RenderType.translucent()
-                && !gregtech.client.ConfiguredAlphaModels.enabled(BuiltInRegistries.FLUID.getKey(state.getType()).getNamespace()))
+                && !gregtech.client.ConfiguredAlphaModels.enabled(
+                        BuiltInRegistries.FLUID.getKey(state.getType()).getNamespace()))
             result.setReturnValue(RenderType.cutout());
     }
 }

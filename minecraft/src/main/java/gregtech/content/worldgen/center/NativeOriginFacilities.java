@@ -1,21 +1,18 @@
 package gregtech.content.worldgen.center;
 
+import gregtech.content.blockentity.energy.ZpmModuleBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import gregtech.content.blockentity.inventory.DrawerQuadBlockEntity;
-import gregtech.content.blockentity.energy.ZpmModuleBlockEntity;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 /** Modern native identities for the original Nexus facilities. */
 public final class NativeOriginFacilities {
 
-    private NativeOriginFacilities() {
-    }
+    private NativeOriginFacilities() {}
 
     public static String block(int legacyId) {
         return switch (legacyId) {
@@ -48,43 +45,50 @@ public final class NativeOriginFacilities {
         };
     }
 
-    public static void place(NativeOriginWorld world, WorldGenLevel level, int x, int y, int z, int legacy, String data) {
+    public static void place(
+            NativeOriginWorld world, WorldGenLevel level, int x, int y, int z, int legacy, String data) {
         if (!world.canWrite(x, y, z)) return;
 
         var key = ResourceLocation.fromNamespaceAndPath("gt6ce", block(legacy));
-        if (!BuiltInRegistries.BLOCK.containsKey(key)) throw new IllegalStateException("Missing origin facility " + key);
+        if (!BuiltInRegistries.BLOCK.containsKey(key))
+            throw new IllegalStateException("Missing origin facility " + key);
         var state = BuiltInRegistries.BLOCK.get(key).defaultBlockState();
-        var side = java.util.regex.Pattern.compile("NBT_FACING, SIDE_([XYZ])_(NEG|POS)").matcher(data);
+        var side = java.util.regex.Pattern.compile("NBT_FACING, SIDE_([XYZ])_(NEG|POS)")
+                .matcher(data);
         if (side.find()) {
             Direction direction = switch (side.group(1)) {
                 case "X" -> side.group(2).equals("POS") ? Direction.EAST : Direction.WEST;
                 case "Y" -> side.group(2).equals("POS") ? Direction.UP : Direction.DOWN;
                 default -> side.group(2).equals("POS") ? Direction.SOUTH : Direction.NORTH;
             };
-            for (var property : state.getProperties()) if (property instanceof DirectionProperty facing && property.getName().equals("facing")
-                    && facing.getPossibleValues().contains(direction))
-                state = state.setValue(facing, direction);
+            for (var property : state.getProperties())
+                if (property instanceof DirectionProperty facing
+                        && property.getName().equals("facing")
+                        && facing.getPossibleValues().contains(direction)) state = state.setValue(facing, direction);
         }
         if (legacy == 26304) {
             int mask = 0;
-            String[] sourceBits = {
-                "SBIT_D", "SBIT_U", "SBIT_N", "SBIT_S", "SBIT_W", "SBIT_E"
-            };
-            for (int sideIndex = 0; sideIndex < 6; sideIndex++) if (data.contains(sourceBits[sideIndex])) mask |= 1 << sideIndex;
-            for (var property : state.getProperties()) if (property instanceof BooleanProperty connected) {
-                for (var direction : Direction.values()) if (property.getName().equals(direction.getName()))
-                    state = state.setValue(connected, (mask & (1 << direction.get3DDataValue())) != 0);
-            }
+            String[] sourceBits = {"SBIT_D", "SBIT_U", "SBIT_N", "SBIT_S", "SBIT_W", "SBIT_E"};
+            for (int sideIndex = 0; sideIndex < 6; sideIndex++)
+                if (data.contains(sourceBits[sideIndex])) mask |= 1 << sideIndex;
+            for (var property : state.getProperties())
+                if (property instanceof BooleanProperty connected) {
+                    for (var direction : Direction.values())
+                        if (property.getName().equals(direction.getName()))
+                            state = state.setValue(connected, (mask & (1 << direction.get3DDataValue())) != 0);
+                }
         }
         if (legacy == 32703 && state.hasProperty(gregtech.content.block.tool.ManualToolBlock.STONE))
             state = state.setValue(gregtech.content.block.tool.ManualToolBlock.STONE, true);
         var pos = new BlockPos(x, y, z);
         level.setBlock(pos, state, 2);
         var entity = level.getBlockEntity(pos);
-        if (entity instanceof ZpmModuleBlockEntity zpm) zpm.initializeDungeonEnergy(data.contains("NBT_ACTIVE_ENERGY, T"));
+        if (entity instanceof ZpmModuleBlockEntity zpm)
+            zpm.initializeDungeonEnergy(data.contains("NBT_ACTIVE_ENERGY, T"));
         if (entity instanceof gregtech.content.blockentity.tool.ManualToolBlockEntity station && legacy == 32703)
             station.setDungeonGrindstoneUses(4);
-        if (entity instanceof gregtech.content.blockentity.tool.AdvancedButtonBlockEntity button && data.contains("NBT_MODE, T")) {
+        if (entity instanceof gregtech.content.blockentity.tool.AdvancedButtonBlockEntity button
+                && data.contains("NBT_MODE, T")) {
             var config = button.saveItemConfig();
             config.putBoolean("Inverted", true);
             button.loadItemConfig(config);

@@ -38,8 +38,8 @@ public final class ScannerEnergyRules {
 
     public static final Spec PORTABLE = new Spec("portable_scanner", 4096000, 512, 2, false);
     public static final Spec CROP = new Spec("portable_cropnalyzer", 1024000, 128, 0, false);
-    public static final Spec DEBUG = new Spec("debug_scanner", 8000000000000000000L,
-            4000000000000000000L, Integer.MAX_VALUE, true);
+    public static final Spec DEBUG =
+            new Spec("debug_scanner", 8000000000000000000L, 4000000000000000000L, Integer.MAX_VALUE, true);
 
     public static Spec forItem(String id) {
         return switch (id) {

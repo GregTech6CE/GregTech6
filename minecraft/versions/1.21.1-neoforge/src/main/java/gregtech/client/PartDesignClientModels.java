@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.engine.mod.GregTechIdentity;
-import gregtech.content.multiblock.PartDesigns;
 import com.mojang.logging.LogUtils;
+import gregtech.content.multiblock.PartDesigns;
+import gregtech.engine.mod.GregTechIdentity;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -54,8 +54,11 @@ public final class PartDesignClientModels {
                 wrapped++;
             }
         }
-        LOGGER.info("[{}] Part design models: {} blockstates, {} missing design models",
-                GregTechIdentity.MOD_ID, wrapped, missing);
+        LOGGER.info(
+                "[{}] Part design models: {} blockstates, {} missing design models",
+                GregTechIdentity.MOD_ID,
+                wrapped,
+                missing);
     }
 
     private static ResourceLocation id(String path) {

@@ -19,7 +19,9 @@ public final class RockItemPlacement {
     public static InteractionResult place(UseOnContext use) {
         var stack = use.getItemInHand();
         var form = gregtech.engine.material.MaterialEquivalence.form(stack);
-        if (use.getPlayer() == null || !use.getPlayer().isShiftKeyDown() || form == null
+        if (use.getPlayer() == null
+                || !use.getPlayer().isShiftKeyDown()
+                || form == null
                 || form.prefix() != MaterialPrefix.rockGt && form.prefix() != MaterialPrefix.oreRaw)
             return InteractionResult.PASS;
         var context = new BlockPlaceContext(use);
@@ -27,21 +29,29 @@ public final class RockItemPlacement {
         var pos = context.getClickedPos();
         var player = context.getPlayer();
         var below = pos.below();
-        if (!player.mayBuild() || !level.mayInteract(player, pos) || !level.isInWorldBounds(pos)
-                || !context.canPlace() || !level.getWorldBorder().isWithinBounds(pos)
+        if (!player.mayBuild()
+                || !level.mayInteract(player, pos)
+                || !level.isInWorldBounds(pos)
+                || !context.canPlace()
+                || !level.getWorldBorder().isWithinBounds(pos)
                 || !level.getBlockState(below).isFaceSturdy(level, below, Direction.UP)
                 || player != null && !player.mayUseItemAt(pos, context.getClickedFace(), stack))
             return InteractionResult.FAIL;
-        var state = GTBlocks.ROCK.get().defaultBlockState().setValue(RockBlock.GROUND,
-                RockBlock.Ground.of(level.getBlockState(below)));
-        if (!state.canSurvive(level, pos) || !level.isUnobstructed(state, pos,
-                player == null ? CollisionContext.empty() : CollisionContext.of(player)))
+        var state = GTBlocks.ROCK
+                .get()
+                .defaultBlockState()
+                .setValue(RockBlock.GROUND, RockBlock.Ground.of(level.getBlockState(below)));
+        if (!state.canSurvive(level, pos)
+                || !level.isUnobstructed(
+                        state, pos, player == null ? CollisionContext.empty() : CollisionContext.of(player)))
             return InteractionResult.FAIL;
         if (!level.isClientSide) {
             if (!level.setBlock(pos, state, 3)) return InteractionResult.FAIL;
             if (level.getBlockEntity(pos) instanceof RockBlockEntity rock) {
                 rock.setMaterial(form.material().resolve().getName());
-                rock.setItemId(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+                rock.setItemId(net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getKey(stack.getItem())
+                        .toString());
                 rock.setCount(1);
                 rock.setRawOre(false);
             } else {
@@ -53,8 +63,13 @@ public final class RockItemPlacement {
             level.gameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Context.of(player, state));
         }
         var sound = state.getSoundType();
-        level.playSound(player, pos, sound.getPlaceSound(), net.minecraft.sounds.SoundSource.BLOCKS,
-                (sound.getVolume() + 1) / 2, sound.getPitch() * 0.8F);
+        level.playSound(
+                player,
+                pos,
+                sound.getPlaceSound(),
+                net.minecraft.sounds.SoundSource.BLOCKS,
+                (sound.getVolume() + 1) / 2,
+                sound.getPitch() * 0.8F);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 }

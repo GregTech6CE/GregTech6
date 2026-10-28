@@ -9,8 +9,14 @@ import snownee.jade.api.config.IPluginConfig;
 
 public enum MagicFieldAbsorberJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
-    @Override public ResourceLocation getUid() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "magic_field_absorber"); }
-    @Override public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
+
+    @Override
+    public ResourceLocation getUid() {
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", "magic_field_absorber");
+    }
+
+    @Override
+    public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         if (accessor.getBlockEntity() instanceof MagicFieldAbsorberBlockEntity absorber) {
             tag.putBoolean("gt.magic.active", absorber.active());
             if (absorber.active()) {
@@ -20,12 +26,19 @@ public enum MagicFieldAbsorberJadeProvider implements IBlockComponentProvider, I
             }
         }
     }
-    @Override public void appendTooltip(ITooltip tip, BlockAccessor accessor, IPluginConfig config) {
+
+    @Override
+    public void appendTooltip(ITooltip tip, BlockAccessor accessor, IPluginConfig config) {
         var data = accessor.getServerData();
         if (!data.contains("gt.magic.active")) return;
-        JadeText.add(tip, data.getBoolean("gt.magic.active")
-                ? Component.translatable("jade.gt6ce.magic_field_absorber.output", data.getLong("gt.magic.output"), data.getString("gt.magic.type"),
-                        Component.translatable("jade.gt6ce.direction." + data.getString("gt.magic.face")))
-                : Component.translatable("jade.gt6ce.magic_field_absorber.idle"));
+        JadeText.add(
+                tip,
+                data.getBoolean("gt.magic.active")
+                        ? Component.translatable(
+                                "jade.gt6ce.magic_field_absorber.output",
+                                data.getLong("gt.magic.output"),
+                                data.getString("gt.magic.type"),
+                                Component.translatable("jade.gt6ce.direction." + data.getString("gt.magic.face")))
+                        : Component.translatable("jade.gt6ce.magic_field_absorber.idle"));
     }
 }

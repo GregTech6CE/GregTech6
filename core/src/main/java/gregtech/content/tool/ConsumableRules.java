@@ -14,11 +14,13 @@ public final class ConsumableRules {
 
     public static String blastResistance(double resistance) {
         String value = (int) resistance + "." + (((int) (resistance * 10)) % 10);
-        String word = resistance < 4 ? "(Terrible)"
-                : resistance < 12 ? "(Ghast Proof)"
-                : resistance < 16 ? "(Creeper Proof)"
-                : resistance <= 40 ? "(TNT Proof)"
-                : "(Strong Dynamite Proof)";
+        String word = resistance < 4
+                ? "(Terrible)"
+                : resistance < 12
+                        ? "(Ghast Proof)"
+                        : resistance < 16
+                                ? "(Creeper Proof)"
+                                : resistance <= 40 ? "(TNT Proof)" : "(Strong Dynamite Proof)";
         return "Blast Resistance: " + value + " " + word;
     }
 }

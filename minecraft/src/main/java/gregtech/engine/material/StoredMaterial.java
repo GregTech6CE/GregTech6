@@ -1,9 +1,7 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 

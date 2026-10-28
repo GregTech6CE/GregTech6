@@ -1,8 +1,8 @@
 package gregtech.bootstrap.registration;
 
-import gregtech.engine.machine.MachineRegistry;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.*;
+import gregtech.engine.machine.MachineRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /** Registers all GT6 machine blocks, wires, pipes, and tanks — following the original GT6 {@code Loader_MultiTileEntities} pattern. */

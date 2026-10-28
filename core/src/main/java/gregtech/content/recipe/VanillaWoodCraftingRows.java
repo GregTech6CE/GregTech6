@@ -22,16 +22,80 @@ public final class VanillaWoodCraftingRows {
     private static String[] build() {
         // id, material, raw log/stem, raw wood/hyphae, stripped log/stem, stripped wood/hyphae, planks
         String[][] woods = {
-                {"oak", "Oak", "oak_log", "oak_wood", "stripped_oak_log", "stripped_oak_wood", "oak_planks"},
-                {"spruce", "Spruce", "spruce_log", "spruce_wood", "stripped_spruce_log", "stripped_spruce_wood", "spruce_planks"},
-                {"birch", "Birch", "birch_log", "birch_wood", "stripped_birch_log", "stripped_birch_wood", "birch_planks"},
-                {"jungle", "Junglewood", "jungle_log", "jungle_wood", "stripped_jungle_log", "stripped_jungle_wood", "jungle_planks"},
-                {"acacia", "Acacia", "acacia_log", "acacia_wood", "stripped_acacia_log", "stripped_acacia_wood", "acacia_planks"},
-                {"dark_oak", "DarkOak", "dark_oak_log", "dark_oak_wood", "stripped_dark_oak_log", "stripped_dark_oak_wood", "dark_oak_planks"},
-                {"mangrove", "Mangrove", "mangrove_log", "mangrove_wood", "stripped_mangrove_log", "stripped_mangrove_wood", "mangrove_planks"},
-                {"cherry", "Cherrywood", "cherry_log", "cherry_wood", "stripped_cherry_log", "stripped_cherry_wood", "cherry_planks"},
-                {"crimson", "Crimsonwood", "crimson_stem", "crimson_hyphae", "stripped_crimson_stem", "stripped_crimson_hyphae", "crimson_planks"},
-                {"warped", "Warpedwood", "warped_stem", "warped_hyphae", "stripped_warped_stem", "stripped_warped_hyphae", "warped_planks"},
+            {"oak", "Oak", "oak_log", "oak_wood", "stripped_oak_log", "stripped_oak_wood", "oak_planks"},
+            {
+                "spruce",
+                "Spruce",
+                "spruce_log",
+                "spruce_wood",
+                "stripped_spruce_log",
+                "stripped_spruce_wood",
+                "spruce_planks"
+            },
+            {"birch", "Birch", "birch_log", "birch_wood", "stripped_birch_log", "stripped_birch_wood", "birch_planks"},
+            {
+                "jungle",
+                "Junglewood",
+                "jungle_log",
+                "jungle_wood",
+                "stripped_jungle_log",
+                "stripped_jungle_wood",
+                "jungle_planks"
+            },
+            {
+                "acacia",
+                "Acacia",
+                "acacia_log",
+                "acacia_wood",
+                "stripped_acacia_log",
+                "stripped_acacia_wood",
+                "acacia_planks"
+            },
+            {
+                "dark_oak",
+                "DarkOak",
+                "dark_oak_log",
+                "dark_oak_wood",
+                "stripped_dark_oak_log",
+                "stripped_dark_oak_wood",
+                "dark_oak_planks"
+            },
+            {
+                "mangrove",
+                "Mangrove",
+                "mangrove_log",
+                "mangrove_wood",
+                "stripped_mangrove_log",
+                "stripped_mangrove_wood",
+                "mangrove_planks"
+            },
+            {
+                "cherry",
+                "Cherrywood",
+                "cherry_log",
+                "cherry_wood",
+                "stripped_cherry_log",
+                "stripped_cherry_wood",
+                "cherry_planks"
+            },
+            {
+                "crimson",
+                "Crimsonwood",
+                "crimson_stem",
+                "crimson_hyphae",
+                "stripped_crimson_stem",
+                "stripped_crimson_hyphae",
+                "crimson_planks"
+            },
+            {
+                "warped",
+                "Warpedwood",
+                "warped_stem",
+                "warped_hyphae",
+                "stripped_warped_stem",
+                "stripped_warped_hyphae",
+                "warped_planks"
+            },
         };
         List<String> rows = new ArrayList<>();
         for (String[] wood : woods) {
@@ -50,10 +114,10 @@ public final class VanillaWoodCraftingRows {
                 String sourceHand = "Loader_Recipes_Woods.java:" + (stripped ? "205" : "185");
                 rows.add(id + "/" + names[form] + "_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=" + item
                         + ";f=tool:file|rodlong:" + material + "*" + sticks + "|" + source);
-                rows.add(id + "/" + names[form] + "_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=" + item
-                        + "|" + planks + "*" + saw + "|" + sourceSaw);
-                rows.add(id + "/" + names[form] + "_to_planks_hand|shapeless|nomirror||L=" + item
-                        + "|" + planks + "*" + hand + "|" + sourceHand);
+                rows.add(id + "/" + names[form] + "_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=" + item + "|"
+                        + planks + "*" + saw + "|" + sourceSaw);
+                rows.add(id + "/" + names[form] + "_to_planks_hand|shapeless|nomirror||L=" + item + "|" + planks + "*"
+                        + hand + "|" + sourceHand);
             }
         }
         return rows.toArray(String[]::new);

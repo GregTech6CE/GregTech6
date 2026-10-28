@@ -16,10 +16,9 @@ public final class FluidPipeSafety {
         return magical && !magicProof ? (gas ? 16 : 4) : 0;
     }
 
-    public static Losses losses(boolean gas, boolean plasma, boolean acid,
-                                boolean gasProof, boolean plasmaProof, boolean acidProof) {
-        return new Losses(gas && !gasProof ? 8 : 0, plasma && !plasmaProof ? 64 : 0,
-                acid && !acidProof ? 16 : 0);
+    public static Losses losses(
+            boolean gas, boolean plasma, boolean acid, boolean gasProof, boolean plasmaProof, boolean acidProof) {
+        return new Losses(gas && !gasProof ? 8 : 0, plasma && !plasmaProof ? 64 : 0, acid && !acidProof ? 16 : 0);
     }
 
     /** First occupied channel replaces the previous tick's temperature, even when colder. */

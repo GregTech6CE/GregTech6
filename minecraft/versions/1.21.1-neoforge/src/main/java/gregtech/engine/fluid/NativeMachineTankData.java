@@ -1,11 +1,12 @@
 package gregtech.engine.fluid;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+
 public final class NativeMachineTankData {
 
-    private NativeMachineTankData() {
-    }
+    private NativeMachineTankData() {}
 
     public static void restore(FluidTank tank, CompoundTag tag, HolderLookup.Provider lookup) {
         var fluid = FluidStackNbt.read(lookup, tag.contains("Fluid") ? tag.getCompound("Fluid") : tag);

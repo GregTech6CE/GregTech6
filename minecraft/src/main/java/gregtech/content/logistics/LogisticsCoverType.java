@@ -21,11 +21,18 @@ public enum LogisticsCoverType {
     ITEM_DUMP(LogisticsCoverDefinition.ITEM_DUMP);
 
     public enum Role {
-        IMPORT, EXPORT, STORAGE, DUMP, DISPLAY
+        IMPORT,
+        EXPORT,
+        STORAGE,
+        DUMP,
+        DISPLAY
     }
 
     public enum Channel {
-        ITEM, FLUID, BOTH, NONE
+        ITEM,
+        FLUID,
+        BOTH,
+        NONE
     }
 
     private final LogisticsCoverDefinition definition;

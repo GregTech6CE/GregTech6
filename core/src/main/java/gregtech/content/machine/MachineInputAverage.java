@@ -25,8 +25,8 @@ public final class MachineInputAverage {
     public double average(long tick) {
         double total = 0;
         for (int slot = 0; slot < ticks.length; slot++) {
-            if (ticks[slot] != Long.MIN_VALUE && ticks[slot] < tick
-                    && ticks[slot] >= tick - WINDOW) total += units[slot];
+            if (ticks[slot] != Long.MIN_VALUE && ticks[slot] < tick && ticks[slot] >= tick - WINDOW)
+                total += units[slot];
         }
         return total / WINDOW;
     }

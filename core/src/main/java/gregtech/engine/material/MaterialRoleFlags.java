@@ -1,7 +1,6 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.worldgen.GTWorldgenMaterials;
 

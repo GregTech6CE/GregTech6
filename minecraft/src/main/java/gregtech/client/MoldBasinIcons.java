@@ -12,7 +12,8 @@ public final class MoldBasinIcons {
     }
 
     public static String sharedModelJson(MaterialTextureSet set) {
-        return SmelteryModelHelper.compositeModelJson(set,
+        return SmelteryModelHelper.compositeModelJson(
+                set,
                 SmelteryModelHelper.BASIN_ELEMENTS_TINTED,
                 SmelteryModelHelper.overlayOnly(SmelteryModelHelper.BASIN_ELEMENTS_TINTED));
     }

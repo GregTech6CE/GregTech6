@@ -10,6 +10,7 @@ public final class LogisticsCoverSignals {
 
     public static int at(BlockGetter level, BlockPos pos, Direction face) {
         return level.getBlockEntity(pos) instanceof LogisticsCoverHost host
-                ? host.logisticsCovers().displaySignal(face) : 0;
+                ? host.logisticsCovers().displaySignal(face)
+                : 0;
     }
 }

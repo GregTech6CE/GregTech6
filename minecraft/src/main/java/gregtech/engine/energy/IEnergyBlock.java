@@ -1,10 +1,9 @@
 package gregtech.engine.energy;
 
 import gregtech.content.data.GregTechTags;
-
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
+import javax.annotation.Nullable;
 
 /**
  * GregTech energy block API (GT6 {@code ITileEntityEnergy}).
@@ -14,28 +13,49 @@ import java.util.Collections;
  */
 public interface IEnergyBlock {
 
-    default boolean isFireProof(net.minecraft.core.Direction side) { return false; }
-    default boolean isWaterProof(net.minecraft.core.Direction side) { return false; }
-    default boolean isRainProof(net.minecraft.core.Direction side) { return false; }
-    default boolean isThunderProof(net.minecraft.core.Direction side) { return false; }
+    default boolean isFireProof(net.minecraft.core.Direction side) {
+        return false;
+    }
+
+    default boolean isWaterProof(net.minecraft.core.Direction side) {
+        return false;
+    }
+
+    default boolean isRainProof(net.minecraft.core.Direction side) {
+        return false;
+    }
+
+    default boolean isThunderProof(net.minecraft.core.Direction side) {
+        return false;
+    }
 
     boolean isEnergyType(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, boolean emitting);
 
     Collection<GregTechTags.Tag> getEnergyTypes(@Nullable net.minecraft.core.Direction side);
 
-    boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, boolean theoretical);
+    boolean isEnergyAcceptingFrom(
+            GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, boolean theoretical);
 
-    boolean isEnergyEmittingTo(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, boolean theoretical);
+    boolean isEnergyEmittingTo(
+            GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, boolean theoretical);
 
     /** Push-based injection. Implementor must check {@link #isEnergyAcceptingFrom}. */
-    long doEnergyInjection(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side,
-                           long size, long amount, boolean doInject);
+    long doEnergyInjection(
+            GregTechTags.Tag energyType,
+            @Nullable net.minecraft.core.Direction side,
+            long size,
+            long amount,
+            boolean doInject);
 
     long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, long size);
 
     /** Pull-based extraction. Implementor must check {@link #isEnergyEmittingTo}. */
-    long doEnergyExtraction(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side,
-                            long size, long amount, boolean doExtract);
+    long doEnergyExtraction(
+            GregTechTags.Tag energyType,
+            @Nullable net.minecraft.core.Direction side,
+            long size,
+            long amount,
+            boolean doExtract);
 
     long getEnergyOffered(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side, long size);
 
@@ -79,14 +99,22 @@ public interface IEnergyBlock {
     }
 
     /** Subclass hook: store injected energy. Called from {@link #doEnergyInjection} after validation. */
-    default long doInject(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side,
-                          long size, long amount, boolean doInject) {
+    default long doInject(
+            GregTechTags.Tag energyType,
+            @Nullable net.minecraft.core.Direction side,
+            long size,
+            long amount,
+            boolean doInject) {
         return 0;
     }
 
     /** Subclass hook: remove extracted energy. */
-    default long doExtract(GregTechTags.Tag energyType, @Nullable net.minecraft.core.Direction side,
-                           long size, long amount, boolean doExtract) {
+    default long doExtract(
+            GregTechTags.Tag energyType,
+            @Nullable net.minecraft.core.Direction side,
+            long size,
+            long amount,
+            boolean doExtract) {
         return 0;
     }
 }

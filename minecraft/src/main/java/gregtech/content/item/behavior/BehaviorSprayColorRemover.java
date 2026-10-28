@@ -2,6 +2,7 @@ package gregtech.content.item.behavior;
 
 import gregtech.content.item.behavior.ItemBehaviors.Consumable;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -10,8 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StainedGlassBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6 color-removal can, adapted to the port's existing consumable ledger.
@@ -37,28 +36,55 @@ public final class BehaviorSprayColorRemover {
      * where plain hardened clay was a separate block and was not decolorised.
      */
     public static final java.util.Set<net.minecraft.world.level.block.Block> STAINED_CLAY = java.util.Set.of(
-            Blocks.WHITE_TERRACOTTA, Blocks.ORANGE_TERRACOTTA, Blocks.MAGENTA_TERRACOTTA,
-            Blocks.LIGHT_BLUE_TERRACOTTA, Blocks.YELLOW_TERRACOTTA, Blocks.LIME_TERRACOTTA,
-            Blocks.PINK_TERRACOTTA, Blocks.GRAY_TERRACOTTA, Blocks.LIGHT_GRAY_TERRACOTTA,
-            Blocks.CYAN_TERRACOTTA, Blocks.PURPLE_TERRACOTTA, Blocks.BLUE_TERRACOTTA,
-            Blocks.BROWN_TERRACOTTA, Blocks.GREEN_TERRACOTTA, Blocks.RED_TERRACOTTA, Blocks.BLACK_TERRACOTTA);
+            Blocks.WHITE_TERRACOTTA,
+            Blocks.ORANGE_TERRACOTTA,
+            Blocks.MAGENTA_TERRACOTTA,
+            Blocks.LIGHT_BLUE_TERRACOTTA,
+            Blocks.YELLOW_TERRACOTTA,
+            Blocks.LIME_TERRACOTTA,
+            Blocks.PINK_TERRACOTTA,
+            Blocks.GRAY_TERRACOTTA,
+            Blocks.LIGHT_GRAY_TERRACOTTA,
+            Blocks.CYAN_TERRACOTTA,
+            Blocks.PURPLE_TERRACOTTA,
+            Blocks.BLUE_TERRACOTTA,
+            Blocks.BROWN_TERRACOTTA,
+            Blocks.GREEN_TERRACOTTA,
+            Blocks.RED_TERRACOTTA,
+            Blocks.BLACK_TERRACOTTA);
 
-    private BehaviorSprayColorRemover() {
-    }
+    private BehaviorSprayColorRemover() {}
 
     /** The port's can triple: the full id is registered first, the {@code _2} one is the used can. */
     public static Consumable paintRemovalSpray() {
-        return new Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+        return new Consumable(
+                ItemBehaviors.stack("gt6ce:empty_spray_can"),
                 ItemBehaviors.stack("gt6ce:paint_removal_spray_2"),
                 ItemBehaviors.stack("gt6ce:paint_removal_spray"),
                 USES * USES_MULTIPLIER);
     }
 
     /** GT6 {@code Behavior_Spray_Color_Remover:58-94}: one click. */
-    public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack stack,
-            float hitX, float hitY, float hitZ) {
-        return ItemBehaviors.useSpray(level, pos, side, player, stack, paintRemovalSpray(),
-                BehaviorSprayColorRemover::decolorize, hitX, hitY, hitZ);
+    public static Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack stack,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        return ItemBehaviors.useSpray(
+                level,
+                pos,
+                side,
+                player,
+                stack,
+                paintRemovalSpray(),
+                BehaviorSprayColorRemover::decolorize,
+                hitX,
+                hitY,
+                hitZ);
     }
 
     /**
@@ -67,9 +93,16 @@ public final class BehaviorSprayColorRemover {
      * @return {@link #REMOVE_COST} when the block was decolorised, {@code 0} when it is not a
      *         colourable block
      */
-
-    public static long decolorize(Level level, BlockPos pos, Direction side, long uses, @Nullable Player player,
-            ItemStack can, float hitX, float hitY, float hitZ) {
+    public static long decolorize(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            long uses,
+            @Nullable Player player,
+            ItemStack can,
+            float hitX,
+            float hitY,
+            float hitZ) {
         if (uses < 1L) return 0L;
         if (gregtech.content.tool.PaintTargets.unpaint(level, pos)) return REMOVE_COST;
         var state = level.getBlockState(pos);

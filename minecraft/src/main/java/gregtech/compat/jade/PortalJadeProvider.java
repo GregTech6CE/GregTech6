@@ -22,11 +22,15 @@ public enum PortalJadeProvider implements IBlockComponentProvider, IServerDataPr
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         if (!(accessor.getBlockEntity() instanceof DungeonPortalBlockEntity portal)) return;
         tag.putBoolean("gt_portal_active", portal.isActive());
-        tag.putBoolean("gt_portal_supported", portal.getBlockState().getBlock() instanceof DungeonPortalBlock block
-                && portal.getLevel() != null && block.targetLevel(portal.getLevel()) != null);
+        tag.putBoolean(
+                "gt_portal_supported",
+                portal.getBlockState().getBlock() instanceof DungeonPortalBlock block
+                        && portal.getLevel() != null
+                        && block.targetLevel(portal.getLevel()) != null);
         var remote = portal.linkedPortal();
         if (remote == null || remote.getLevel() == null) return;
-        tag.putString("gt_portal_dimension", remote.getLevel().dimension().location().toString());
+        tag.putString(
+                "gt_portal_dimension", remote.getLevel().dimension().location().toString());
         tag.putInt("gt_portal_x", remote.getBlockPos().getX());
         tag.putInt("gt_portal_y", remote.getBlockPos().getY());
         tag.putInt("gt_portal_z", remote.getBlockPos().getZ());
@@ -37,16 +41,22 @@ public enum PortalJadeProvider implements IBlockComponentProvider, IServerDataPr
         var data = accessor.getServerData();
         if (!data.contains("gt_portal_active")) return;
         boolean active = data.getBoolean("gt_portal_active");
-        JadeText.add(tooltip, Component.translatable(active ? "jade.gt6ce.portal.active" : "jade.gt6ce.portal.inactive"));
+        JadeText.add(
+                tooltip, Component.translatable(active ? "jade.gt6ce.portal.active" : "jade.gt6ce.portal.inactive"));
         if (!data.getBoolean("gt_portal_supported")) {
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.portal.wrong_dimension"));
             return;
         }
         if (!active) return;
         if (data.contains("gt_portal_x")) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.portal.linked",
-                    DungeonPortalBlockEntity.dimensionName(data.getString("gt_portal_dimension")),
-                    data.getInt("gt_portal_x"), data.getInt("gt_portal_y"), data.getInt("gt_portal_z")));
+            JadeText.add(
+                    tooltip,
+                    Component.translatable(
+                            "jade.gt6ce.portal.linked",
+                            DungeonPortalBlockEntity.dimensionName(data.getString("gt_portal_dimension")),
+                            data.getInt("gt_portal_x"),
+                            data.getInt("gt_portal_y"),
+                            data.getInt("gt_portal_z")));
         } else {
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.portal.unlinked"));
         }

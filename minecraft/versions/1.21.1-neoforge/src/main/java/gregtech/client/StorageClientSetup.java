@@ -9,26 +9,40 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /** Original material casing tint, item display and six sprite cells for bulk storage. */
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@EventBusSubscriber(
+        modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
+        bus = EventBusSubscriber.Bus.MOD,
+        value = Dist.CLIENT)
 public final class StorageClientSetup {
     private StorageClientSetup() {}
+
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(StorageRegistries.MASS_STORAGE.get(),MassStorageRenderer::new);
-        event.registerBlockEntityRenderer(StorageRegistries.LOGISTICS_MASS_STORAGE.get(),MassStorageRenderer::new);
+        event.registerBlockEntityRenderer(StorageRegistries.MASS_STORAGE.get(), MassStorageRenderer::new);
+        event.registerBlockEntityRenderer(StorageRegistries.LOGISTICS_MASS_STORAGE.get(), MassStorageRenderer::new);
     }
+
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for(var holder:StorageRegistries.all()) {
-            MassStorageBlock block=(MassStorageBlock)holder.get();
-            event.register((state,level,pos,layer)->layer==0&&block.material()!=null?block.material().getColor():0xFFFFFF,block);
+        for (var holder : StorageRegistries.all()) {
+            MassStorageBlock block = (MassStorageBlock) holder.get();
+            event.register(
+                    (state, level, pos, layer) -> layer == 0 && block.material() != null
+                            ? block.material().getColor()
+                            : 0xFFFFFF,
+                    block);
         }
     }
+
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for(var holder:StorageRegistries.all()) {
-            MassStorageBlock block=(MassStorageBlock)holder.get();
-            event.register(ItemColorARGB.opaque((stack,layer)->layer==0&&block.material()!=null?block.material().getColor():0xFFFFFF),block.asItem());
+        for (var holder : StorageRegistries.all()) {
+            MassStorageBlock block = (MassStorageBlock) holder.get();
+            event.register(
+                    ItemColorARGB.opaque((stack, layer) -> layer == 0 && block.material() != null
+                            ? block.material().getColor()
+                            : 0xFFFFFF),
+                    block.asItem());
         }
     }
 }

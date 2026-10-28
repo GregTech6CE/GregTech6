@@ -19,7 +19,9 @@ public final class BehaviorMachineFactories {
         ready = true;
     }
 
-    static synchronized boolean ready() { return ready; }
+    static synchronized boolean ready() {
+        return ready;
+    }
 
     static synchronized Set<String> types(String addonId) {
         return types.getOrDefault(addonId, Set.of());

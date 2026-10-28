@@ -1,15 +1,14 @@
 package gregtech.content.registry;
 
-import gregtech.engine.machine.PipeSpec;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.GTMachineBlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
-
+import gregtech.engine.machine.PipeSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.RegistryObject;
 
 /** GT6 fluid pipe blocks — holder populated by {@code Loader_MultiTileEntities}. */
 public final class GTFluidPipes {
@@ -20,8 +19,13 @@ public final class GTFluidPipes {
     public static RegistryObject<FluidPipeBlock> PIPE_MEDIUM_STEEL;
 
     public static RegistryObject<FluidPipeBlock> register(
-            String id, GTMaterial material, PipeSpec.PipeSize size, long baseCapacity,
-            boolean gasProof, boolean acidProof, boolean plasmaProof) {
+            String id,
+            GTMaterial material,
+            PipeSpec.PipeSize size,
+            long baseCapacity,
+            boolean gasProof,
+            boolean acidProof,
+            boolean plasmaProof) {
         PipeSpec spec = PipeSpec.of(id, material, size, baseCapacity, gasProof, acidProof, plasmaProof, false);
         return register(spec);
     }
@@ -30,15 +34,23 @@ public final class GTFluidPipes {
         String id = spec.id();
         GTMaterial material = spec.material();
         PipeSpec.PipeSize size = spec.size();
-        RegistryObject<FluidPipeBlock> block = GTBlocks.BLOCKS.register(id,
-                () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)));
+        RegistryObject<FluidPipeBlock> block =
+                GTBlocks.BLOCKS.register(id, () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)));
         ALL.add(block);
-        GTBlocks.BLOCK_ITEMS.register(id,
-                () -> new GTMachineBlockItem(block.get(),
+        GTBlocks.BLOCK_ITEMS.register(
+                id,
+                () -> new GTMachineBlockItem(
+                        block.get(),
                         new Item.Properties().stacksTo(stackSize(size)),
                         new gregtech.engine.machine.MachineSpec(
-                        id, material.getLocalName(), material.getColor(), 0, 0,
-                        gregtech.engine.machine.MachineTextures.BURNING_SOLID, 4.0F, 3.0F)));
+                                id,
+                                material.getLocalName(),
+                                material.getColor(),
+                                0,
+                                0,
+                                gregtech.engine.machine.MachineTextures.BURNING_SOLID,
+                                4.0F,
+                                3.0F)));
         return block;
     }
 

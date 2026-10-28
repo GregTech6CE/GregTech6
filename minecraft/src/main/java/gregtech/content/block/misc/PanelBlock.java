@@ -1,5 +1,7 @@
 package gregtech.content.block.misc;
 
+import java.util.EnumMap;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -12,9 +14,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 /** Saved legacy panel block; original panel items attach to hosts and refuse new block placement. */
 public class PanelBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -22,7 +21,10 @@ public class PanelBlock extends Block {
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
 
     static {
-        for(var face:Direction.values()){var v=gregtech.content.transport.PanelCatalog.bounds(face.ordinal());SHAPES.put(face,box(v[0],v[1],v[2],v[3],v[4],v[5]));}
+        for (var face : Direction.values()) {
+            var v = gregtech.content.transport.PanelCatalog.bounds(face.ordinal());
+            SHAPES.put(face, box(v[0], v[1], v[2], v[3], v[4], v[5]));
+        }
     }
 
     private final String materialName;
@@ -35,12 +37,22 @@ public class PanelBlock extends Block {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public gregtech.content.transport.PanelCatalog.Spec spec() { return gregtech.content.transport.PanelCatalog.get(materialName); }
-    public String materialName() { return materialName; }
-    public int tintRgb() { return tintRgb; }
+    public gregtech.content.transport.PanelCatalog.Spec spec() {
+        return gregtech.content.transport.PanelCatalog.get(materialName);
+    }
+
+    public String materialName() {
+        return materialName;
+    }
+
+    public int tintRgb() {
+        return tintRgb;
+    }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(FACING); }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) {
+        b.add(FACING);
+    }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
@@ -53,5 +65,7 @@ public class PanelBlock extends Block {
     }
 
     @Override
-    public boolean useShapeForLightOcclusion(BlockState state) { return true; }
+    public boolean useShapeForLightOcclusion(BlockState state) {
+        return true;
+    }
 }

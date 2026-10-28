@@ -1,13 +1,12 @@
 package gregtech.engine.multiblock.tracking;
 
+import java.util.Map;
+import java.util.WeakHashMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /** Formed bit carried in the block-entity update packet and nowhere in the saved chunk. */
 public final class ClientFormedSync {

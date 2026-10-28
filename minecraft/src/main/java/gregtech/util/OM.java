@@ -1,11 +1,11 @@
 package gregtech.util;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.MaterialStackItemHelper;
-import gregtech.content.data.MaterialPrefix;
-import net.minecraft.world.item.ItemStack;
-
 import static gregtech.api.material.GTValues.*;
+
+import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.material.MaterialStackItemHelper;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * 1.20.1 port of {@code gregapi.util.OM} ("OredictManager") item-lookup helpers.

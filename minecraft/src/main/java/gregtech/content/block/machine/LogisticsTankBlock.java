@@ -1,9 +1,9 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.machine.TankSpec;
 import gregtech.content.blockentity.machine.LogisticsTankBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.machine.TankSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,11 +26,11 @@ public final class LogisticsTankBlock extends TankBlock {
 
     @Override
     @SuppressWarnings("unchecked")
-
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.LOGISTICS_TANK.get()) return null;
-        return (BlockEntityTicker<T>) (BlockEntityTicker<LogisticsTankBlockEntity>)
-        (tickLevel, tickPosition, tickState, blockEntity) -> TankBlockEntity.serverTick(tickLevel, tickPosition, tickState, blockEntity);
+        return (BlockEntityTicker<T>)
+                (BlockEntityTicker<LogisticsTankBlockEntity>) (tickLevel, tickPosition, tickState, blockEntity) ->
+                        TankBlockEntity.serverTick(tickLevel, tickPosition, tickState, blockEntity);
     }
 }

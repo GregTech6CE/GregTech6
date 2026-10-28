@@ -3,7 +3,8 @@ package gregtech.content.recipe;
 import gregtech.GregTech;
 import gregtech.content.food.GTDrinks;
 import gregtech.content.item.BottleItem;
-import gregtech.content.recipe.FiniteBottleFillingRecipe;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -16,9 +17,6 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * GT6's bottle filling rows ({@code MultiItemBottles}): one 1000&nbsp;mB container plus N empty bottles
@@ -45,15 +43,20 @@ public final class BottleFillingRecipeInjector {
      * One GT6 family: the port's bottle item and the GT6 fluid its 1000 mB container holds. The key is
      * resolved through {@link GTDrinks#fluidForField}, the same lookup the bottles themselves use.
      */
-    private static final List<gregtech.content.food.BottleFillingRows.Family> FAMILIES=gregtech.content.food.BottleFillingRows.FAMILIES;
+    private static final List<gregtech.content.food.BottleFillingRows.Family> FAMILIES =
+            gregtech.content.food.BottleFillingRows.FAMILIES;
 
     private BottleFillingRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
-    public static List<String> registeredIds() { return List.copyOf(REGISTERED); }
+    public static List<String> registeredIds() {
+        return List.copyOf(REGISTERED);
+    }
 
     /** Families the port cannot express, with the reason. */
-    public static List<String> skipped() { return List.copyOf(SKIPPED); }
+    public static List<String> skipped() {
+        return List.copyOf(SKIPPED);
+    }
 
     public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
         List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
@@ -63,8 +66,11 @@ public final class BottleFillingRecipeInjector {
         for (gregtech.content.food.BottleFillingRows.Family family : FAMILIES) added += fill(recipes, family);
         added += fillLubricant(recipes);
         if (added > 0) gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
-        GregTech.LOGGER.info("Registered {} GT6 bottle filling rows for {} families ({} skipped)",
-                added, FAMILIES.size(), SKIPPED.size());
+        GregTech.LOGGER.info(
+                "Registered {} GT6 bottle filling rows for {} families ({} skipped)",
+                added,
+                FAMILIES.size(),
+                SKIPPED.size());
         for (String reason : SKIPPED) GregTech.LOGGER.debug("[gregtech] bottle filling row skipped: {}", reason);
     }
 
@@ -77,8 +83,7 @@ public final class BottleFillingRecipeInjector {
         }
         Fluid fluid = GTDrinks.fluidForField(family.fluidKey());
         if (fluid == null) {
-            SKIPPED.add(family.bottleId() + " (" + family.source() + "): no registered fluid for "
-                    + family.fluidKey());
+            SKIPPED.add(family.bottleId() + " (" + family.source() + "): no registered fluid for " + family.fluidKey());
             return 0;
         }
         ItemStack empty = BottleItem.emptyBottle();
@@ -88,8 +93,8 @@ public final class BottleFillingRecipeInjector {
             ingredients.add(FiniteBottleFillingRecipe.container(family.fluidKey()));
             for (int i = 0; i < count; i++) ingredients.add(Ingredient.of(empty));
             ResourceLocation id = GregTech.id("bottles/" + family.bottleId() + "_x" + count);
-            ShapelessRecipe base = new ShapelessRecipe(id, "gt.bottles", CraftingBookCategory.MISC,
-                    new ItemStack(bottle, count), ingredients);
+            ShapelessRecipe base = new ShapelessRecipe(
+                    id, "gt.bottles", CraftingBookCategory.MISC, new ItemStack(bottle, count), ingredients);
             recipes.add(new FiniteBottleFillingRecipe(base));
             REGISTERED.add(id.toString());
             added++;
@@ -103,16 +108,15 @@ public final class BottleFillingRecipeInjector {
         if (bottle == null || bottle == Items.AIR)
             throw new IllegalStateException("GT6 lubricant bottle item is not registered");
         ItemStack empty = BottleItem.emptyBottle();
-        if (empty.isEmpty())
-            throw new IllegalStateException("GT6 empty bottle item is not registered");
+        if (empty.isEmpty()) throw new IllegalStateException("GT6 empty bottle item is not registered");
         int added = 0;
         for (int count = 4; count >= 1; count--) {
             NonNullList<Ingredient> ingredients = NonNullList.create();
             ingredients.add(FiniteBottleFillingRecipe.container("Lubricant"));
             for (int i = 0; i < count; i++) ingredients.add(Ingredient.of(empty));
             ResourceLocation id = GregTech.id("bottles/lubricant_bottle_x" + count);
-            ShapelessRecipe base = new ShapelessRecipe(id, "gt.bottles", CraftingBookCategory.MISC,
-                    new ItemStack(bottle, count), ingredients);
+            ShapelessRecipe base = new ShapelessRecipe(
+                    id, "gt.bottles", CraftingBookCategory.MISC, new ItemStack(bottle, count), ingredients);
             recipes.add(new FiniteBottleFillingRecipe(base));
             REGISTERED.add(id.toString());
             added++;

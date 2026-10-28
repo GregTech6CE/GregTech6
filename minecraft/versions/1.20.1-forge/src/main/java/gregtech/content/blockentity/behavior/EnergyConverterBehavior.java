@@ -1,9 +1,8 @@
 package gregtech.content.blockentity.behavior;
 
+import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
-import gregtech.content.data.GregTechTags;
-import gregtech.util.GTEnergySides;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -19,12 +18,13 @@ public final class EnergyConverterBehavior {
     public boolean canEmitEnergy;
     public long multiplier = 1;
 
-    public EnergyConverterBehavior(EnergyCapacitorBehavior storage,
-                                   EnergyStatsBehavior energyIn,
-                                   EnergyStatsBehavior energyOut,
-                                   long multiplier,
-                                   boolean wasteEnergy,
-                                   boolean limitConsumption) {
+    public EnergyConverterBehavior(
+            EnergyCapacitorBehavior storage,
+            EnergyStatsBehavior energyIn,
+            EnergyStatsBehavior energyOut,
+            long multiplier,
+            boolean wasteEnergy,
+            boolean limitConsumption) {
         this.storage = storage;
         this.energyIn = energyIn;
         this.energyOut = energyOut;
@@ -61,7 +61,8 @@ public final class EnergyConverterBehavior {
         }
         if (emitted > 0) {
             if (!wasteEnergy) {
-                storage.energy -= scale(emitted * output, energyOut.recommended * multiplier, energyIn.recommended, true);
+                storage.energy -=
+                        scale(emitted * output, energyOut.recommended * multiplier, energyIn.recommended, true);
             }
             emitsEnergy = true;
         }

@@ -1,12 +1,11 @@
 package gregtech.engine.addon;
 
-import gregtech.engine.machine.ItemPipeSpec;
-import gregtech.engine.machine.PipeSpec;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.transport.ItemPipeCatalog;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
-
+import gregtech.engine.machine.ItemPipeSpec;
+import gregtech.engine.machine.PipeSpec;
+import gregtech.engine.material.GTMaterialRegistry;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -26,7 +25,9 @@ public final class AddonPipes {
     private AddonPipes() {}
 
     /** Resolve the queued rows. An unknown material or a duplicate suffix fails startup. */
-    public static void validate() { refresh(); }
+    public static void validate() {
+        refresh();
+    }
 
     public static List<PipeSpec> addonFluidSpecs() {
         refresh();
@@ -63,21 +64,34 @@ public final class AddonPipes {
             for (var declaration : queued.fluidPipes()) {
                 claim(queued.addonId(), declaration.idSuffix(), fluidSuffix, builtinFluid, "fluid");
                 var material = material(queued.addonId(), declaration.idSuffix(), declaration.material(), "fluid");
-                long temperature = declaration.maxTemperature() > 0 ? declaration.maxTemperature()
+                long temperature = declaration.maxTemperature() > 0
+                        ? declaration.maxTemperature()
                         : (long) (material.getMeltingPoint() * 1.25D);
                 for (var size : PipeSpec.PipeSize.values()) {
                     String id = "pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + declaration.idSuffix();
-                    fluid.add(PipeSpec.of(id, material, size, declaration.baseCapacity(),
-                            declaration.gasProof(), declaration.acidProof(), declaration.plasmaProof(),
-                            declaration.magicProof(), temperature, declaration.flammability()));
+                    fluid.add(PipeSpec.of(
+                            id,
+                            material,
+                            size,
+                            declaration.baseCapacity(),
+                            declaration.gasProof(),
+                            declaration.acidProof(),
+                            declaration.plasmaProof(),
+                            declaration.magicProof(),
+                            temperature,
+                            declaration.flammability()));
                     owners.put(id, queued.addonId());
                 }
             }
             for (var declaration : queued.itemPipes()) {
                 claim(queued.addonId(), declaration.idSuffix(), itemSuffix, builtinItem, "item");
                 var material = material(queued.addonId(), declaration.idSuffix(), declaration.material(), "item");
-                item.add(new ItemLine(queued.addonId(), declaration.idSuffix(), material,
-                        declaration.stepSize(), declaration.invSize()));
+                item.add(new ItemLine(
+                        queued.addonId(),
+                        declaration.idSuffix(),
+                        material,
+                        declaration.stepSize(),
+                        declaration.invSize()));
                 for (var size : ItemPipeSpec.ItemPipeSize.values()) {
                     String id = "item_pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + declaration.idSuffix();
                     owners.put(id, queued.addonId());
@@ -90,13 +104,16 @@ public final class AddonPipes {
         ITEM = List.copyOf(item);
     }
 
-    private static void claim(String addonId, String suffix, Map<String, String> seen, java.util.Set<String> builtin, String kind) {
+    private static void claim(
+            String addonId, String suffix, Map<String, String> seen, java.util.Set<String> builtin, String kind) {
         if (builtin.contains(suffix))
-            throw new IllegalStateException("Addon '" + addonId + "' " + kind + " pipe '" + suffix + "' uses a built-in pipe");
+            throw new IllegalStateException(
+                    "Addon '" + addonId + "' " + kind + " pipe '" + suffix + "' uses a built-in pipe");
         String previous = seen.putIfAbsent(suffix, addonId);
         if (previous == null) return;
         if (previous.equals(addonId))
-            throw new IllegalStateException("Addon '" + addonId + "' " + kind + " pipe '" + suffix + "' is declared twice");
+            throw new IllegalStateException(
+                    "Addon '" + addonId + "' " + kind + " pipe '" + suffix + "' is declared twice");
         throw new IllegalStateException("Addon '" + addonId + "' " + kind + " pipe '" + suffix
                 + "' uses the same name as addon '" + previous + "'");
     }
@@ -104,8 +121,8 @@ public final class AddonPipes {
     private static GTMaterial material(String addonId, String suffix, String name, String kind) {
         var material = GTMaterialRegistry.get(name);
         if (material == null || !material.isValid())
-            throw new IllegalStateException("Addon '" + addonId + "' " + kind + " pipe '" + suffix
-                    + "' uses unknown material '" + name + "'");
+            throw new IllegalStateException(
+                    "Addon '" + addonId + "' " + kind + " pipe '" + suffix + "' uses unknown material '" + name + "'");
         return material;
     }
 }

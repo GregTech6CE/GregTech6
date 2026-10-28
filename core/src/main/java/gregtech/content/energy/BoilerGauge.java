@@ -4,6 +4,7 @@ package gregtech.content.energy;
 public final class BoilerGauge {
     private static final double[] COLOR_STOPS = {.5, .70, .80, .92, 1};
     private static final int[] COLORS = {0x188C16, 0x49C522, 0xE0D51A, 0xEF8A14, 0xE52323};
+
     private BoilerGauge() {}
 
     /** Green spans 50–70%, blending to yellow by 80%, then orange and red. */
@@ -34,8 +35,10 @@ public final class BoilerGauge {
     public static int percent(long steam, long capacity) {
         if (steam <= 0 || capacity <= 0) return 0;
         if (steam >= capacity) return 100;
-        return java.math.BigInteger.valueOf(steam).multiply(java.math.BigInteger.valueOf(100))
-                .divide(java.math.BigInteger.valueOf(capacity)).intValue();
+        return java.math.BigInteger.valueOf(steam)
+                .multiply(java.math.BigInteger.valueOf(100))
+                .divide(java.math.BigInteger.valueOf(capacity))
+                .intValue();
     }
 
     public static boolean highPressure(long steam, long capacity) {

@@ -3,8 +3,8 @@ package gregtech.content.worldgen.center;
 /** Original CS.BIOMES_INFINITE_WATER names. Modern native biome tags are checked separately. */
 public final class OriginBiomeNames {
 
-    private OriginBiomeNames() {
-    }
+    private OriginBiomeNames() {}
+
     private static final java.util.Set<String> WATER = java.util.Set.of(
             "beach",
             "coldbeach",

@@ -24,7 +24,8 @@ public final class RodPhysicsMath {
     }
 
     public static long loss(ReactorRodCatalog.Kind kind, int flux, long maximum, boolean moderated) {
-        long loss = kind == ReactorRodCatalog.Kind.BREEDER ? flux
+        long loss = kind == ReactorRodCatalog.Kind.BREEDER
+                ? flux
                 : flux <= maximum ? 100 : ceil(400L * flux, Math.max(1, maximum));
         return kind == ReactorRodCatalog.Kind.NUCLEAR && moderated ? loss * 4 : loss;
     }

@@ -10,13 +10,16 @@ public class ModReferences {
     protected ModReferences() {}
 
     public static final ModData UNKNOWN = new ModData("unknown", "Unknown Mod").setLoaded(false);
+
     static {
         ModData.MODS.put(null, UNKNOWN);
     }
 
-    public static final ModData
-            MC = new ModData("minecraft", "Minecraft"),
-            GT = new ModData(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, gregtech.engine.mod.GregTechIdentity.MOD_NAME),
+    public static final ModData MC = new ModData("minecraft", "Minecraft"),
+            GT =
+                    new ModData(
+                            gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                            gregtech.engine.mod.GregTechIdentity.MOD_NAME),
             GAPI = new ModData("gregapi", "Greg-API"),
             GAPI_POST = new ModData("gregapi_post", "Greg-API-Post"),
             GT5U = new ModData("gregtech", "GregTech 5 Unofficial"),

@@ -1,9 +1,9 @@
 package gregtech.content.data;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
+import gregtech.engine.material.GTMaterialRegistry;
 
 /**
  * Anti-materials (anti-matter elements and particles), analogous to GregTech {@code AM.java}.
@@ -16,8 +16,7 @@ public class AntimatterMaterials {
     private static boolean initialized = false;
 
     private static GTMaterial create(int id, String name) {
-        return GTMaterialRegistry.createMaterial(id, name, name, 0xFFFFFF)
-                .put(MaterialProperty.HIDDEN);
+        return GTMaterialRegistry.createMaterial(id, name, name, 0xFFFFFF).put(MaterialProperty.HIDDEN);
     }
 
     private static GTMaterial element(int id, String name, int color, MaterialProperty... props) {
@@ -28,19 +27,26 @@ public class AntimatterMaterials {
     }
 
     /** Subatomic anti-particles. */
-    public static GTMaterial
-            y, Photon = y = create(4001, "Anti-Photon").setTooltipChemical("y").hide(),
-            v, Neutrino = v = create(4002, "Anti-Neutrino").setTooltipChemical("v").hide(),
-            n, Neutron = n = create(4003, "Anti-Neutron").setTooltipChemical("n").hide(),
-            p, Proton = p = create(4004, "Anti-Proton").setTooltipChemical("p").hide(),
-            e, Positron = e = create(4005, "Positron").setTooltipChemical("e").hide();
+    public static GTMaterial y,
+            Photon = y = create(4001, "Anti-Photon").setTooltipChemical("y").hide(),
+            v,
+            Neutrino = v = create(4002, "Anti-Neutrino").setTooltipChemical("v").hide(),
+            n,
+            Neutron = n = create(4003, "Anti-Neutron").setTooltipChemical("n").hide(),
+            p,
+            Proton = p = create(4004, "Anti-Proton").setTooltipChemical("p").hide(),
+            e,
+            Positron = e = create(4005, "Positron").setTooltipChemical("e").hide();
 
     /** Representative anti-elements (GT6 uses 4010+). */
-    public static GTMaterial
-            H, Hydrogen = H = element(4010, "Anti-Hydrogen", 0x0000FF),
-            He, Helium = He = element(4020, "Anti-Helium", 0xFFFF78),
-            Fe, Iron = Fe = element(4260, "Anti-Iron", 0xC8C8C8),
-            Cu, Copper = Cu = element(4290, "Anti-Copper", 0xFF6400);
+    public static GTMaterial H,
+            Hydrogen = H = element(4010, "Anti-Hydrogen", 0x0000FF),
+            He,
+            Helium = He = element(4020, "Anti-Helium", 0xFFFF78),
+            Fe,
+            Iron = Fe = element(4260, "Anti-Iron", 0xC8C8C8),
+            Cu,
+            Copper = Cu = element(4290, "Anti-Copper", 0xFF6400);
 
     public static void register() {
         if (initialized) {

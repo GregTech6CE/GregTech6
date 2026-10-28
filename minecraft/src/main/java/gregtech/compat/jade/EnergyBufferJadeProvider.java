@@ -1,7 +1,8 @@
 package gregtech.compat.jade;
 
-import gregtech.engine.energy.IEnergyBlock;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.energy.IEnergyBlock;
+import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -10,8 +11,6 @@ import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
-
-import java.util.Locale;
 
 /** Shows stored / capacity for EU, HU, and Steam energy buffers. */
 public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
@@ -30,8 +29,11 @@ public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServer
             tag.putLong(NBT_CAPACITY, cell.spec().capacity());
             return;
         }
-        if(accessor.getBlockEntity() instanceof gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity battery) {
-            tag.putString(NBT_UNIT,battery.spec().energyType().getShortName());tag.putLong(NBT_STORED,battery.stored());tag.putLong(NBT_CAPACITY,battery.spec().capacity());
+        if (accessor.getBlockEntity()
+                instanceof gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity battery) {
+            tag.putString(NBT_UNIT, battery.spec().energyType().getShortName());
+            tag.putLong(NBT_STORED, battery.stored());
+            tag.putLong(NBT_CAPACITY, battery.spec().capacity());
             return;
         }
         if (!(accessor.getBlockEntity() instanceof IEnergyBlock energy)) {
@@ -62,12 +64,10 @@ public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServer
         long capacity = data.getLong(NBT_CAPACITY);
         String unit = data.getString(NBT_UNIT);
         int pct = percent(stored, capacity);
-        JadeText.add(tooltip, Component.translatable(
-                "jade.gt6ce.energy.stored",
-                format(stored),
-                format(capacity),
-                unit,
-                Integer.toString(pct)));
+        JadeText.add(
+                tooltip,
+                Component.translatable(
+                        "jade.gt6ce.energy.stored", format(stored), format(capacity), unit, Integer.toString(pct)));
     }
 
     @Override

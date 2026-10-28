@@ -8,5 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 /** Vanilla bucket fallback for cover sampling when an item exposes no fluid capability. */
 @Mixin(BucketItem.class)
 public interface BucketContentAccessor {
-    @Accessor("content") Fluid gregtech$bucketContent();
+    @Accessor("content")
+    Fluid gregtech$bucketContent();
 }

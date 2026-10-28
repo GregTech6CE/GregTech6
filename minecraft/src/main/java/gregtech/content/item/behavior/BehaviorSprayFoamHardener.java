@@ -3,13 +3,12 @@ package gregtech.content.item.behavior;
 import gregtech.content.blockentity.CFoamBlockEntity;
 import gregtech.content.item.behavior.ItemBehaviors.Consumable;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6 {@code Behavior_Spray_Foam_Hardener} ({@code Behavior_Spray_Foam_Hardener.java:46-133}) — the
@@ -58,17 +57,25 @@ public final class BehaviorSprayFoamHardener {
 
     /** The port's can triple: the full id is registered first, the {@code _2} one is the used can. */
     public static Consumable hardeningSpray() {
-        return new Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+        return new Consumable(
+                ItemBehaviors.stack("gt6ce:empty_spray_can"),
                 ItemBehaviors.stack("gt6ce:hardening_spray_2"),
                 ItemBehaviors.stack("gt6ce:hardening_spray"),
                 USES * USES_MULTIPLIER);
     }
 
     /** GT6 {@code Behavior_Spray_Foam_Hardener:58-93}: one click. */
-    public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack stack,
-                                float hitX, float hitY, float hitZ) {
-        return ItemBehaviors.useSpray(level, pos, side, player, stack, hardeningSpray(),
-                BehaviorSprayFoamHardener::harden, hitX, hitY, hitZ);
+    public static Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack stack,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        return ItemBehaviors.useSpray(
+                level, pos, side, player, stack, hardeningSpray(), BehaviorSprayFoamHardener::harden, hitX, hitY, hitZ);
     }
 
     /**
@@ -77,10 +84,18 @@ public final class BehaviorSprayFoamHardener {
      * @return {@link #HARDEN_COST} when the foam dried, {@code 0} when it was already hard or not
      *         foam at all
      */
-    public static long harden(Level level, BlockPos pos, Direction side, long uses, @Nullable Player player,
-                              ItemStack can, float hitX, float hitY, float hitZ) {
-        if (uses < 1L) return 0L;                                             // :96
+    public static long harden(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            long uses,
+            @Nullable Player player,
+            ItemStack can,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        if (uses < 1L) return 0L; // :96
         if (!(level.getBlockEntity(pos) instanceof CFoamBlockEntity foam)) return 0L; // :99 / :101→F
-        return foam.dry() ? HARDEN_COST : 0L;                                 // :99
+        return foam.dry() ? HARDEN_COST : 0L; // :99
     }
 }

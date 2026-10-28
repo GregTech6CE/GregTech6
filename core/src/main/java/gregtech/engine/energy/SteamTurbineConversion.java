@@ -9,6 +9,7 @@ package gregtech.engine.energy;
  */
 public final class SteamTurbineConversion {
     private SteamTurbineConversion() {}
+
     public static final int STEAM_PER_WATER = 200;
 
     /** Input-side energy, next-tick energy, consumed steam, recovered water and leftover steam count. */
@@ -17,11 +18,11 @@ public final class SteamTurbineConversion {
     /** Finish a pending batch before consuming any more steam, even while the inlet is stopped. */
     public static Step step(long energy, long pending, long steam, long remainder, long inputRate) {
         if (pending > 0) return new Step(energy + pending, 0, 0, 0, remainder);
-        if (steam < (inputRate <= 16 ? 1 : inputRate / 2) * 2)
-            return new Step(energy, 0, 0, 0, remainder);
+        if (steam < (inputRate <= 16 ? 1 : inputRate / 2) * 2) return new Step(energy, 0, 0, 0, remainder);
         long total = remainder + steam;
         return new Step(energy + steam / 2, steam / 2, steam, total / STEAM_PER_WATER, total % STEAM_PER_WATER);
     }
+
     public static long output(long energy, long inputRate, long outputRate) {
         return energy * outputRate / inputRate;
     }

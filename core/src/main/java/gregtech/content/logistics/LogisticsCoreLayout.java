@@ -1,11 +1,17 @@
 package gregtech.content.logistics;
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /** Original GT6 core geometry, CPU limits and energy economics. */
 public final class LogisticsCoreLayout {
-    public static final int WALL = 18008, VENT = 18299, VERSATILE = 18200,
-    LOGIC = 18201, CONTROL = 18202, STORAGE = 18203, CONVERSION = 18204;
+    public static final int WALL = 18008,
+            VENT = 18299,
+            VERSATILE = 18200,
+            LOGIC = 18201,
+            CONTROL = 18202,
+            STORAGE = 18203,
+            CONVERSION = 18204;
 
     /** GT6 {@code :64}: {@code MAX_STORAGE_CPU_COUNT}. */
     public static final int MAX_STORAGE_CPU_COUNT = 108;
@@ -15,11 +21,12 @@ public final class LogisticsCoreLayout {
 
     /** The three structural classes of {@code :118/:137/:139}. */
     public enum Kind {
-        CPU, VENT, WALL
+        CPU,
+        VENT,
+        WALL
     }
 
-    public record Cell(int right, int up, int back, Kind kind) {
-    }
+    public record Cell(int right, int up, int back, Kind kind) {}
 
     public record Counts(int logic, int control, int storage, int conversion) {
 
@@ -54,10 +61,10 @@ public final class LogisticsCoreLayout {
             default -> null;
         };
     }
+
     private static final List<Cell> CELLS = create();
 
-    private LogisticsCoreLayout() {
-    }
+    private LogisticsCoreLayout() {}
 
     public static List<Cell> cells() {
         return CELLS;
@@ -71,7 +78,11 @@ public final class LogisticsCoreLayout {
                     if (right == 0 && up == 0 && back == 0) continue; // the controller itself
                     int depthFromCenter = back - RADIUS; // squared distance from the centre
                     int distanceSquared = right * right + up * up + depthFromCenter * depthFromCenter;
-                    cells.add(new Cell(right, up, back, distanceSquared < 4 ? Kind.CPU : distanceSquared > 6 ? Kind.WALL : Kind.VENT));
+                    cells.add(new Cell(
+                            right,
+                            up,
+                            back,
+                            distanceSquared < 4 ? Kind.CPU : distanceSquared > 6 ? Kind.WALL : Kind.VENT));
                 }
             }
         }

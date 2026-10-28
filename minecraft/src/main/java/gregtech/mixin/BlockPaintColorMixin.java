@@ -12,11 +12,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /** Override only primary painted surface tint; existing material/core/overlay handlers keep ownership. */
 @Mixin(BlockColors.class)
 public abstract class BlockPaintColorMixin {
-    @Inject(method = "getColor(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;I)I",
-            at = @At("RETURN"), cancellable = true, require = 1)
-    private void gregtech$paint(BlockState state, BlockAndTintGetter level, BlockPos pos, int tint, CallbackInfoReturnable<Integer> callback) {
-        if (tint == 0 && level != null && pos != null && level.getBlockEntity(pos) instanceof Paintable paint
-                && paint.isPainted())
-            callback.setReturnValue(paint.getPaint());
+    @Inject(
+            method =
+                    "getColor(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;I)I",
+            at = @At("RETURN"),
+            cancellable = true,
+            require = 1)
+    private void gregtech$paint(
+            BlockState state,
+            BlockAndTintGetter level,
+            BlockPos pos,
+            int tint,
+            CallbackInfoReturnable<Integer> callback) {
+        if (tint == 0
+                && level != null
+                && pos != null
+                && level.getBlockEntity(pos) instanceof Paintable paint
+                && paint.isPainted()) callback.setReturnValue(paint.getPaint());
     }
 }

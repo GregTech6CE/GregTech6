@@ -1,6 +1,5 @@
 package gregtech.content.food;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,16 +9,16 @@ import java.util.Map;
  * {@code Loader_Others}; the names are the port's registry names for those same food items.
  */
 public final class SandwichLayerCatalog {
-    public record Layer(int id,String texture,int footprint,int thickness,int tint){}
+    public record Layer(int id, String texture, int footprint, int thickness, int tint) {}
 
-    private static final Layer[] LAYERS             = new Layer[256];
+    private static final Layer[] LAYERS = new Layer[256];
     private static final Map<String, Integer> ITEMS = new HashMap<>();
 
     private SandwichLayerCatalog() {}
 
     private static void layer(int id, String texture, int footprint, int thickness, String... items) {
         LAYERS[id] = new Layer(id, texture, footprint, thickness, 0xFFFFFF);
-        for (String item : items) register("gt6ce:"+item,id);
+        for (String item : items) register("gt6ce:" + item, id);
     }
 
     /** Other mods can register an equivalent food without coupling themselves to a GT6 class. */
@@ -33,14 +32,18 @@ public final class SandwichLayerCatalog {
         return id >= 0 && id < LAYERS.length ? LAYERS[id] : null;
     }
 
-    public static Layer forId(String item){Integer id=ITEMS.get(item);return id==null?null:LAYERS[id];}
+    public static Layer forId(String item) {
+        Integer id = ITEMS.get(item);
+        return id == null ? null : LAYERS[id];
+    }
 
     static {
         // GT6 CS.DYES uses black=0 through white=15. Condiments and spices are
         // one-pixel white-mask overlays tinted with those exact original RGB values.
-        int[] dyes = {0x202020, 0xFF0000, 0x00FF00, 0x604000, 0x0000FF, 0x800080,
-                0x00FFFF, 0xC0C0C0, 0x808080, 0xFFC0C0, 0x80FF80, 0xFFFF00,
-                0x8080FF, 0xFF00FF, 0xFF8000, 0xFFFFFF};
+        int[] dyes = {
+            0x202020, 0xFF0000, 0x00FF00, 0x604000, 0x0000FF, 0x800080, 0x00FFFF, 0xC0C0C0, 0x808080, 0xFFC0C0,
+            0x80FF80, 0xFFFF00, 0x8080FF, 0xFF00FF, 0xFF8000, 0xFFFFFF
+        };
         for (int i = 0; i < 16; i++) {
             LAYERS[i] = new Layer(i, "condiment", 252, 1, dyes[i]);
             LAYERS[200 + i] = new Layer(200 + i, "spice", 252, 1, dyes[i]);
@@ -71,7 +74,18 @@ public final class SandwichLayerCatalog {
         layer(39, "chum", 1, 2, "chum");
         layer(40, "rainbow", 252, 1);
         layer(41, "pickle", 14, 1, "pickle_slice");
-        layer(42, "pill", 14, 1, "empty_wax_pill", "radaway", "peppermint", "blue_pill", "red_pill", "antidote", "cure_all");
+        layer(
+                42,
+                "pill",
+                14,
+                1,
+                "empty_wax_pill",
+                "radaway",
+                "peppermint",
+                "blue_pill",
+                "red_pill",
+                "antidote",
+                "cure_all");
         layer(43, "egg_fried", 2, 1, "fried_egg");
         layer(44, "egg_sliced", 14, 1, "sliced_egg");
         layer(253, "toasted", 253, 2, "toasted_toast");
@@ -89,18 +103,18 @@ public final class SandwichLayerCatalog {
         ITEMS.put("minecraft:cooked_cod", 25);
         ITEMS.put("minecraft:salmon", 24);
         ITEMS.put("minecraft:cooked_salmon", 25);
-        register("gt6ce:mayo",           15);
-        register("gt6ce:dressing",       15);
+        register("gt6ce:mayo", 15);
+        register("gt6ce:dressing", 15);
         register("gt6ce:tomato_ketchup", 1);
-        register("gt6ce:butter",         11);
-        register("gt6ce:salted_butter",  11);
-        register("gt6ce:chili_sauce",    1);
-        register("gt6ce:hot_sauce",      1);
+        register("gt6ce:butter", 11);
+        register("gt6ce:salted_butter", 11);
+        register("gt6ce:chili_sauce", 1);
+        register("gt6ce:hot_sauce", 1);
         register("gt6ce:barbecue_sauce", 3);
-        register("gt6ce:olive_oil",      2);
-        register("gt6ce:egg_yolk",       211);
-        register("gt6ce:egg_white",      215);
-        register("gt6ce:scrambled_egg",  211);
+        register("gt6ce:olive_oil", 2);
+        register("gt6ce:egg_yolk", 211);
+        register("gt6ce:egg_white", 215);
+        register("gt6ce:scrambled_egg", 211);
         // Source rows override historical guessed aliases, including sauce and pill colors.
         for (var row : SandwichSourceIngredients.ROWS) register(row.item(), row.layer());
         for (var can : CannedFoodCatalog.ROWS) if (can.layer() > 0) register("gt6ce:" + can.id(), can.layer());

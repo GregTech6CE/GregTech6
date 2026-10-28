@@ -5,6 +5,7 @@ import java.util.List;
 /** Gregorius Techneticies' GT6 Loader_Recipes_Vanilla:475-484, shared by both data-pack formats. */
 public final class AmmunitionCraftingCatalog {
     private AmmunitionCraftingCatalog() {}
+
     public static final List<String> FILES = List.of(
             "vanilla_arrow_x1.json",
             "vanilla_arrow_x2.json",

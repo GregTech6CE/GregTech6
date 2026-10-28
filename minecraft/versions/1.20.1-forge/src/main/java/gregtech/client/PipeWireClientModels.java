@@ -1,9 +1,7 @@
 package gregtech.client;
 
+import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
-import gregtech.engine.machine.ItemPipeSpec;
-import gregtech.engine.machine.PipeSpec;
-import gregtech.engine.energy.WireSpec;
 import gregtech.content.block.energy.AxleBlock;
 import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
@@ -12,7 +10,11 @@ import gregtech.content.registry.GTAxles;
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTWires;
-import com.mojang.logging.LogUtils;
+import gregtech.engine.energy.WireSpec;
+import gregtech.engine.machine.ItemPipeSpec;
+import gregtech.engine.machine.PipeSpec;
+import java.util.Locale;
+import java.util.Map;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
@@ -24,9 +26,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Replaces every pipe/wire/cable blockstate variant with the dynamic
@@ -57,18 +56,17 @@ public final class PipeWireClientModels {
             String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
             double half = Math.max(1.0, spec.diameter() * 8.0);
             ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
-            ResourceLocation end = GregTech.id("block/material_icons/" + set + "/pipe"
-                    + spec.size().name().toLowerCase(Locale.ROOT));
-            replaced += replace(models, block,
-                    new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
+            ResourceLocation end = GregTech.id(
+                    "block/material_icons/" + set + "/pipe" + spec.size().name().toLowerCase(Locale.ROOT));
+            replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) {
             PipeSpec spec = block.spec();
             String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
             double half = Math.max(1.0, spec.diameter() * 8.0);
             ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
-            ResourceLocation end = GregTech.id("block/material_icons/" + set + "/pipe"
-                    + spec.size().name().toLowerCase(Locale.ROOT));
+            ResourceLocation end = GregTech.id(
+                    "block/material_icons/" + set + "/pipe" + spec.size().name().toLowerCase(Locale.ROOT));
             replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
         }
 
@@ -82,8 +80,7 @@ public final class PipeWireClientModels {
             ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
             ResourceLocation end = GregTech.id("block/material_icons/" + set + "/pipe" + sizeName);
             ResourceLocation overlay = spec.restrictive() ? RESTRICTOR_TEX : null;
-            replaced += replace(models, block,
-                    new PipeWireBakedModel(half, side, 0, end, 0, 0, overlay));
+            replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, overlay));
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) {
             ItemPipeSpec spec = block.spec();
@@ -112,9 +109,13 @@ public final class PipeWireClientModels {
 
         for (var entry : gregtech.content.registry.GTSignalWires.all()) {
             var block = entry.get();
-            replaced += replace(models, block, block.insulated()
-                    ? new PipeWireBakedModel(2, GregTech.id("block/iconsets/insulation_full"), 1, WIRE_TEX, 0, 1, null)
-                    : new PipeWireBakedModel(1, WIRE_TEX, 0, WIRE_TEX, 0, 0, null));
+            replaced += replace(
+                    models,
+                    block,
+                    block.insulated()
+                            ? new PipeWireBakedModel(
+                                    2, GregTech.id("block/iconsets/insulation_full"), 1, WIRE_TEX, 0, 1, null)
+                            : new PipeWireBakedModel(1, WIRE_TEX, 0, WIRE_TEX, 0, 0, null));
         }
 
         for (var entry : GTAxles.all()) {

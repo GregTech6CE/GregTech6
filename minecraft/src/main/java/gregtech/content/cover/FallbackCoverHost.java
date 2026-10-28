@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.cover;
 
 /** Lazy storage boundary for ticking GT hosts without their own cover implementation. */

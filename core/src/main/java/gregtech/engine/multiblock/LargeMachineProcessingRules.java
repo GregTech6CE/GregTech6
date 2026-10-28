@@ -15,13 +15,20 @@ public final class LargeMachineProcessingRules {
     }
 
     public static boolean constantEnergy(boolean timed, String name) {
-        return !timed && !java.util.Set.of("largecrusher", "largeshredder", "largesqueezer").contains(name);
+        return !timed
+                && !java.util.Set.of("largecrusher", "largeshredder", "largesqueezer")
+                        .contains(name);
     }
 
     public static int efficiency(String name) {
         return switch (name) {
             case "largeoven" -> 2500;
-            case "largecentrifuge", "largeelectrolyzer", "largesluice", "largecrusher", "largeshredder", "largesqueezer" -> 5000;
+            case "largecentrifuge",
+                    "largeelectrolyzer",
+                    "largesluice",
+                    "largecrusher",
+                    "largeshredder",
+                    "largesqueezer" -> 5000;
             default -> 10000;
         };
     }

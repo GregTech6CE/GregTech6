@@ -1,42 +1,49 @@
 package gregtech.engine.multiblock.tracking;
 
+import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.engine.multiblock.MultiblockLayout;
 import gregtech.engine.multiblock.PartBindings;
-import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * Applies one evaluation's cells as a per-cell delta: cells whose role is unchanged and whose part
  * still carries this controller's binding are left alone, so a rescan binds and writes nothing.
  */
 public final class StructureClaims {
-    public enum Result { APPLIED, UNCHANGED, FAILED }
+    public enum Result {
+        APPLIED,
+        UNCHANGED,
+        FAILED
+    }
 
     private StructureClaims() {}
 
-    public static Result update(BlockEntity controller,
-                                PartBindings<BlockPos, MultiblockLayout.Role> bindings,
-                                Map<BlockPos, MultiblockLayout.Role> parts,
-                                Predicate<BlockPos> canClaim, BiConsumer<BlockPos, MultiblockLayout.Role> claim,
-                                Consumer<BlockPos> release) {
+    public static Result update(
+            BlockEntity controller,
+            PartBindings<BlockPos, MultiblockLayout.Role> bindings,
+            Map<BlockPos, MultiblockLayout.Role> parts,
+            Predicate<BlockPos> canClaim,
+            BiConsumer<BlockPos, MultiblockLayout.Role> claim,
+            Consumer<BlockPos> release) {
         StructureScanProbe.pause();
         PartBindings.Outcome outcome;
         try {
-            outcome = bindings.update(parts, canClaim,
-                    (pos, role) -> stillBound(controller, pos, role), claim, release);
+            outcome =
+                    bindings.update(parts, canClaim, (pos, role) -> stillBound(controller, pos, role), claim, release);
         } finally {
             StructureScanProbe.resume();
         }
         if (controller.getLevel() instanceof ServerLevel server)
-            WorldStructureClaims.retain(server, controller.getBlockPos(),
+            WorldStructureClaims.retain(
+                    server,
+                    controller.getBlockPos(),
                     outcome == PartBindings.Outcome.FAILED ? java.util.Set.of() : parts.keySet());
         return switch (outcome) {
             case APPLIED -> Result.APPLIED;

@@ -2,13 +2,14 @@ package gregtech.content.worldgen;
 
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.OreHostStone;
+import java.util.Optional;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.Optional;
 
 /** Masson host-adaptation rule over GT6's existing state-based host identity, without paired ore IDs. */
 public final class OreHostStateAdapter {
     private OreHostStateAdapter() {}
+
     public static Optional<BlockState> adapt(BlockState selected, BlockState replaced) {
         if (!"gt6ce".equals(BuiltInRegistries.BLOCK.getKey(selected.getBlock()).getNamespace())
                 || !(selected.getBlock() instanceof OreBlock ore)) return Optional.of(selected);

@@ -1,12 +1,11 @@
 package gregtech.content.item;
 
-import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluidType;
-import net.minecraft.core.registries.BuiltInRegistries;
+import gregtech.engine.material.GTMaterialRegistry;
+import java.util.List;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -20,8 +19,6 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 /** Item proxy for each GT6 fluid that carries tooltip data and acts as a fluid container. */
 public class FluidItem extends Item {
     private final RegisteredFluids.FluidEntry fluidEntry;
@@ -32,8 +29,8 @@ public class FluidItem extends Item {
     }
 
     @Override
-    public net.minecraft.world.InteractionResult onItemUseFirst(ItemStack stack,
-            net.minecraft.world.item.context.UseOnContext context) {
+    public net.minecraft.world.InteractionResult onItemUseFirst(
+            ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
         return gregtech.engine.fluid.FluidDisplayInteraction.useFirst(stack, context);
     }
 
@@ -64,13 +61,13 @@ public class FluidItem extends Item {
      * Uses the carrier's registered drink entry; this action does not resolve display payloads.
      * For a noncreative player, consumes one carrier and attempts to add an empty bottle.
      */
-
     @Override
-    public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+    public net.minecraft.world.InteractionResultHolder<ItemStack> use(
+            net.minecraft.world.level.Level level,
+            net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        net.minecraft.world.level.material.Fluid fluid =
-        gregtech.content.food.GTDrinks.fluidOf(fluidEntry);
+        net.minecraft.world.level.material.Fluid fluid = gregtech.content.food.GTDrinks.fluidOf(fluidEntry);
         if (gregtech.content.food.GTDrinks.rowFor(fluid) == null) {
             return net.minecraft.world.InteractionResultHolder.pass(stack);
         }
@@ -102,7 +99,8 @@ public class FluidItem extends Item {
         if (entry.glint()) return true;
         if (entry.registryName().startsWith("potion.")) return true;
         GTMaterial material = resolveMaterial(entry);
-        return material.isValid() && (material.has(MaterialProperty.MAGICAL) || material.has(MaterialProperty.ANTIMATTER));
+        return material.isValid()
+                && (material.has(MaterialProperty.MAGICAL) || material.has(MaterialProperty.ANTIMATTER));
     }
 
     private GTMaterial resolveMaterial(RegisteredFluids.FluidEntry fluidEntry) {
@@ -110,7 +108,8 @@ public class FluidItem extends Item {
             return GTMaterialRegistry.get(fluidEntry.materialKey()).resolve();
         }
         if (fluidEntry.registryName().startsWith("molten.")) {
-            return GTMaterialRegistry.get(fluidEntry.registryName().substring("molten.".length())).resolve();
+            return GTMaterialRegistry.get(fluidEntry.registryName().substring("molten.".length()))
+                    .resolve();
         }
         return GTMaterialRegistry.get("NULL");
     }
@@ -179,8 +178,9 @@ public class FluidItem extends Item {
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
             Fluid resolvedFluid = resolveFluid();
-            if (resolvedFluid == null || !gregtech.engine.fluid.FluidDisplayBinding.resolve(container).isFluidEqual(
-                    resource)) return FluidStack.EMPTY;
+            if (resolvedFluid == null
+                    || !gregtech.engine.fluid.FluidDisplayBinding.resolve(container)
+                            .isFluidEqual(resource)) return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }
 
@@ -195,7 +195,8 @@ public class FluidItem extends Item {
 
         @Override
         public @NotNull <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
-                @NotNull net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable net.minecraft.core.Direction side) {
+                @NotNull net.minecraftforge.common.capabilities.Capability<T> cap,
+                @Nullable net.minecraft.core.Direction side) {
             if (cap == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER_ITEM) {
                 return holder.cast();
             }

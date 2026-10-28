@@ -1,13 +1,12 @@
 package gregtech.content.block.inventory;
 
-import gregtech.content.blockentity.inventory.LogisticsMassStorageBlockEntity;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.blockentity.inventory.LogisticsMassStorageBlockEntity;
 import gregtech.content.material.Materials;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 /** GT6's black logistics casing with ordinary Mass Storage front controls and storage semantics. */
 public final class LogisticsMassStorageBlock extends MassStorageBlock {

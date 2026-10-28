@@ -1,7 +1,6 @@
 package gregtech.content.blockentity.behavior;
 
 import gregtech.content.data.GregTechConstants;
-import gregtech.content.data.GregTechTags;
 import net.minecraft.nbt.CompoundTag;
 
 /** Internal energy storage buffer (GT6 {@code TE_Behavior_Energy_Capacitor}). */

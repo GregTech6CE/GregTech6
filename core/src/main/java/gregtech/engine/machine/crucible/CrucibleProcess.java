@@ -3,9 +3,8 @@ package gregtech.engine.machine.crucible;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
-import gregtech.content.material.Materials;
 import gregtech.content.data.GregTechConstants;
-
+import gregtech.content.material.Materials;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +17,24 @@ public final class CrucibleProcess {
     private CrucibleProcess() {}
 
     public record Vapor(GTMaterial material, long amount) {}
+
     public record PhaseResult(int fizzCount, List<Vapor> vapors, boolean acidDestroyedHull, long explosiveAmount) {
-        public PhaseResult { vapors = List.copyOf(vapors); }
-        public int vaporizedStacks() { return vapors.size(); }
+        public PhaseResult {
+            vapors = List.copyOf(vapors);
+        }
+
+        public int vaporizedStacks() {
+            return vapors.size();
+        }
     }
 
     /** Run before the thermal step, preserving the original conversion/reaction order. */
-    public static PhaseResult process(List<CrucibleMaterialStack> content, long temperature,
-                                      long previousTemperature, boolean newContent, boolean acidProof) {
+    public static PhaseResult process(
+            List<CrucibleMaterialStack> content,
+            long temperature,
+            long previousTemperature,
+            boolean newContent,
+            boolean acidProof) {
         int fizzCount = 0;
         List<Vapor> vapors = new ArrayList<>();
         // GT6 alloys before discarding gases, so injected air can react with wrought iron.
@@ -33,8 +42,10 @@ public final class CrucibleProcess {
         List<CrucibleMaterialStack> pending = new ArrayList<>();
         for (int i = 0; i < content.size(); i++) {
             CrucibleMaterialStack stack = content.get(i);
-            if (stack == null || stack.material == Materials.Invalid
-                    || stack.material == Materials.Air || stack.amount <= 0) {
+            if (stack == null
+                    || stack.material == Materials.Invalid
+                    || stack.material == Materials.Air
+                    || stack.amount <= 0) {
                 content.remove(i--);
                 continue;
             }
@@ -46,8 +57,9 @@ public final class CrucibleProcess {
                 continue;
             }
             if (temperature >= material.getBoilingPoint()
-                    || (temperature > GregTechConstants.C + 40 && material.has(MaterialProperty.FLAMMABLE)
-                    && !material.hasAny(MaterialProperty.UNBURNABLE, MaterialProperty.MELTING))) {
+                    || (temperature > GregTechConstants.C + 40
+                            && material.has(MaterialProperty.FLAMMABLE)
+                            && !material.hasAny(MaterialProperty.UNBURNABLE, MaterialProperty.MELTING))) {
                 content.remove(i--);
                 fizzCount++;
                 vapors.add(new Vapor(material, stack.amount));
@@ -62,13 +74,19 @@ public final class CrucibleProcess {
                 return new PhaseResult(fizzCount + 1, vapors, true, 0);
             }
             // A removed target suppresses conversion, not the material itself or other phase effects.
-            if (material.getTargetSmeltingAmount() > 0 && temperature >= material.getMeltingPoint()
+            if (material.getTargetSmeltingAmount() > 0
+                    && temperature >= material.getMeltingPoint()
                     && (material.getTargetSmeltingMaterial().resolve() != material
-                    || previousTemperature < material.getMeltingPoint() || newContent)) {
+                            || previousTemperature < material.getMeltingPoint()
+                            || newContent)) {
                 content.remove(i--);
-                CrucibleMaterialStack.of(material.getTargetSmeltingMaterial(),
-                        BigInteger.valueOf(stack.amount).multiply(BigInteger.valueOf(material.getTargetSmeltingAmount()))
-                                .divide(BigInteger.valueOf(GTValues.U)).longValueExact()).addToList(pending);
+                CrucibleMaterialStack.of(
+                                material.getTargetSmeltingMaterial(),
+                                BigInteger.valueOf(stack.amount)
+                                        .multiply(BigInteger.valueOf(material.getTargetSmeltingAmount()))
+                                        .divide(BigInteger.valueOf(GTValues.U))
+                                        .longValueExact())
+                        .addToList(pending);
             } else if (temperature < material.getMeltingPoint()
                     && (previousTemperature >= material.getMeltingPoint() || newContent)) {
                 content.remove(i--);
@@ -80,8 +98,13 @@ public final class CrucibleProcess {
     }
 
     /** Returns the new mixed temperature, or null on rejection without changing content. */
-    public static Long admit(List<CrucibleMaterialStack> content, List<CrucibleMaterialStack> incoming,
-                             long capacity, double hullMassKg, long temperature, long incomingTemperature) {
+    public static Long admit(
+            List<CrucibleMaterialStack> content,
+            List<CrucibleMaterialStack> incoming,
+            long capacity,
+            double hullMassKg,
+            long temperature,
+            long incomingTemperature) {
         if (incoming.isEmpty()) return null;
         long existing = 0, added = 0;
         try {
@@ -90,12 +113,16 @@ public final class CrucibleProcess {
                 existing = Math.addExact(existing, stack.amount);
             }
             for (CrucibleMaterialStack stack : incoming) {
-                if (stack == null || stack.material == null || !stack.material.isValid() || stack.amount <= 0) return null;
+                if (stack == null || stack.material == null || !stack.material.isValid() || stack.amount <= 0)
+                    return null;
                 added = Math.addExact(added, stack.amount);
             }
             if (Math.addExact(existing, added) > capacity) return null;
-            long mixed = ThermalStep.mixTemperature(temperature, incomingTemperature,
-                    hullMassKg + CrucibleMaterialStack.weight(content), CrucibleMaterialStack.weight(incoming));
+            long mixed = ThermalStep.mixTemperature(
+                    temperature,
+                    incomingTemperature,
+                    hullMassKg + CrucibleMaterialStack.weight(content),
+                    CrucibleMaterialStack.weight(incoming));
             for (CrucibleMaterialStack stack : incoming) stack.addToList(content);
             CrucibleMaterialStack.consolidate(content);
             return mixed;

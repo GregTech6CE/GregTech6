@@ -1,8 +1,8 @@
 package gregtech.client;
 
-import gregtech.content.tool.CoinGeometry;
-import gregtech.content.item.CoinItem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import gregtech.content.item.CoinItem;
+import gregtech.content.tool.CoinGeometry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -16,7 +16,9 @@ public final class CoinItemRenderer extends BlockEntityWithoutLevelRenderer {
     private static CoinItemRenderer instance;
 
     private CoinItemRenderer() {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        super(
+                Minecraft.getInstance().getBlockEntityRenderDispatcher(),
+                Minecraft.getInstance().getEntityModels());
     }
 
     public static CoinItemRenderer instance() {
@@ -25,8 +27,13 @@ public final class CoinItemRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack pose,
-            MultiBufferSource buffers, int light, int overlay) {
+    public void renderByItem(
+            ItemStack stack,
+            ItemDisplayContext context,
+            PoseStack pose,
+            MultiBufferSource buffers,
+            int light,
+            int overlay) {
         if (!(stack.getItem() instanceof CoinItem coin)) return;
         CoinGeometry.MintPattern pattern = CoinGeometry.pattern(stack);
         var boxes = pattern.inventoryPixelBoxes();
@@ -34,29 +41,39 @@ public final class CoinItemRenderer extends BlockEntityWithoutLevelRenderer {
         if (!gregtech.GregTechConfig.Rule.COINS_ITEM_3D.enabled()) {
             var box = new net.minecraft.world.phys.AABB(0, 7 / 16.0, 0, 1, 9 / 16.0, 1);
             for (Direction side : Direction.values()) {
-                var texture = side.getAxis() == Direction.Axis.Y ? CoinPileRenderer.TEXTURE : CoinPileRenderer.SIDE_TEXTURE;
-                CoinPileRenderer.quad(pose.last(), buffers.getBuffer(RenderType.entityCutout(texture)), box, color, light, side, 0, 0);
+                var texture =
+                        side.getAxis() == Direction.Axis.Y ? CoinPileRenderer.TEXTURE : CoinPileRenderer.SIDE_TEXTURE;
+                CoinPileRenderer.quad(
+                        pose.last(),
+                        buffers.getBuffer(RenderType.entityCutout(texture)),
+                        box,
+                        color,
+                        light,
+                        side,
+                        0,
+                        0);
             }
             return;
         }
         // As in coin_minted.json: base Y=7/16, top Y=(9-depth/4)/16. Render
         // the same two GT6 textures and face-culling rule as a placed coin pile.
         for (int pass = 0; pass < 2; pass++) {
-            var out = buffers.getBuffer(RenderType.entityCutout(
-                    pass == 0 ? CoinPileRenderer.TEXTURE : CoinPileRenderer.SIDE_TEXTURE));
+            var out = buffers.getBuffer(
+                    RenderType.entityCutout(pass == 0 ? CoinPileRenderer.TEXTURE : CoinPileRenderer.SIDE_TEXTURE));
             int index = 0;
-            for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) {
-                if (pattern.pixelDepth(x, z) == 3) continue;
-                var box = boxes.get(index++);
-                if (pass == 0) {
-                    CoinPileRenderer.quad(pose.last(), out, box, color, light, Direction.DOWN, 0, 0);
-                    CoinPileRenderer.quad(pose.last(), out, box, color, light, Direction.UP, 0, 0);
-                } else {
-                    for (Direction side : Direction.Plane.HORIZONTAL)
-                        if (pattern.isExposedSide(x, z, side))
-                            CoinPileRenderer.quad(pose.last(), out, box, color, light, side, 0, 0);
+            for (int x = 0; x < 16; x++)
+                for (int z = 0; z < 16; z++) {
+                    if (pattern.pixelDepth(x, z) == 3) continue;
+                    var box = boxes.get(index++);
+                    if (pass == 0) {
+                        CoinPileRenderer.quad(pose.last(), out, box, color, light, Direction.DOWN, 0, 0);
+                        CoinPileRenderer.quad(pose.last(), out, box, color, light, Direction.UP, 0, 0);
+                    } else {
+                        for (Direction side : Direction.Plane.HORIZONTAL)
+                            if (pattern.isExposedSide(x, z, side))
+                                CoinPileRenderer.quad(pose.last(), out, box, color, light, side, 0, 0);
+                    }
                 }
-            }
         }
     }
 }

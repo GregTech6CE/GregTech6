@@ -15,13 +15,17 @@ public enum ReactorCoolantRules {
     CO2("CarbonDioxide", "Hot_Carbon_Dioxide", 20, 1, 1, false),
     HELIUM("Helium", "Hot_Helium", 30, 1, 1, false),
     THORIUM_SALT("Thorium_Salt", "GenLiquid_LithiumChloride", 2560000, 1, 1, false);
-
     public final String input, output;
     public final int heat, expansion, heatDivider;
     public final boolean moderates;
 
-    ReactorCoolantRules(String inputKey, String outputKey, int heatPerUnit,
-                        int outputExpansion, int heatDivisor, boolean moderating) {
+    ReactorCoolantRules(
+            String inputKey,
+            String outputKey,
+            int heatPerUnit,
+            int outputExpansion,
+            int heatDivisor,
+            boolean moderating) {
         input = inputKey;
         output = outputKey;
         heat = heatPerUnit;
@@ -49,11 +53,13 @@ public enum ReactorCoolantRules {
     }
 
     public int divisor(ReactorRodCatalog.Rod rod) {
-        return Math.max(1, switch (this) {
-            case INDUSTRIAL -> rod.divisor() * 2;
-            case TIN, SODIUM, THORIUM_SALT -> rod.divisor() - 1;
-            default -> rod.divisor();
-        });
+        return Math.max(
+                1,
+                switch (this) {
+                    case INDUSTRIAL -> rod.divisor() * 2;
+                    case TIN, SODIUM, THORIUM_SALT -> rod.divisor() - 1;
+                    default -> rod.divisor();
+                });
     }
 
     public int maximum(ReactorRodCatalog.Rod rod) {

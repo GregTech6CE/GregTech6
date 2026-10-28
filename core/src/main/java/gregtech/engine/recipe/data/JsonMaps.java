@@ -32,7 +32,9 @@ public final class JsonMaps {
             this.text = text;
         }
 
-        private boolean done() { return cursor >= text.length(); }
+        private boolean done() {
+            return cursor >= text.length();
+        }
 
         private void skip() {
             while (!done()) {
@@ -70,7 +72,10 @@ public final class JsonMaps {
             cursor++;
             var map = new LinkedHashMap<String, Object>();
             skip();
-            if (peek() == '}') { cursor++; return map; }
+            if (peek() == '}') {
+                cursor++;
+                return map;
+            }
             while (true) {
                 skip();
                 if (peek() != '"') throw new IllegalArgumentException("Expected a JSON key");
@@ -92,7 +97,10 @@ public final class JsonMaps {
             cursor++;
             var list = new ArrayList<Object>();
             skip();
-            if (peek() == ']') { cursor++; return list; }
+            if (peek() == ']') {
+                cursor++;
+                return list;
+            }
             while (true) {
                 list.add(value());
                 skip();

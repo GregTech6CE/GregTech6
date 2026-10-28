@@ -1,7 +1,7 @@
 package gregtech.content.block.machine;
 
-import gregtech.content.multiblock.AxialGeneratorDefinitions;
 import gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity;
+import gregtech.content.multiblock.AxialGeneratorDefinitions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.*;
@@ -23,7 +23,8 @@ public class LargeDynamoControllerBlock extends AxialGeneratorBlock {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.LARGE_DYNAMO.get()) return null;
         return (tickLevel, tickPos, tickState, blockEntity) -> ((LargeDynamoControllerBlockEntity) blockEntity).tick();
     }

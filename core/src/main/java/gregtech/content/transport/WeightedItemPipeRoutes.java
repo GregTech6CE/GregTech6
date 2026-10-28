@@ -2,8 +2,8 @@ package gregtech.content.transport;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -21,10 +21,14 @@ public final class WeightedItemPipeRoutes {
     private WeightedItemPipeRoutes() {}
 
     public record Exit<N>(N firstHop, long cost) {}
+
     private record Frontier<N>(N node, long cost, N firstHop, int firstOrder, long order) {}
 
-    public static <N> long minimumExitCost(N start, ToLongFunction<N> step,
-            Function<N, ? extends Iterable<N>> neighbors, Predicate<N> accepts,
+    public static <N> long minimumExitCost(
+            N start,
+            ToLongFunction<N> step,
+            Function<N, ? extends Iterable<N>> neighbors,
+            Predicate<N> accepts,
             int visitLimit) {
         if (start == null) return -1;
         Exit<N> exit = bestExit(List.of(start), step, neighbors, accepts, visitLimit);
@@ -32,20 +36,23 @@ public final class WeightedItemPipeRoutes {
     }
 
     /** One bounded scan for all legal first hops; equal-cost routes retain first-hop ordering. */
-    public static <N> Exit<N> bestExit(Iterable<N> starts, ToLongFunction<N> step,
-            Function<N, ? extends Iterable<N>> neighbors, Predicate<N> accepts,
+    public static <N> Exit<N> bestExit(
+            Iterable<N> starts,
+            ToLongFunction<N> step,
+            Function<N, ? extends Iterable<N>> neighbors,
+            Predicate<N> accepts,
             int visitLimit) {
         if (visitLimit <= 0) return null;
-        PriorityQueue<Frontier<N>> queue = new PriorityQueue<>(
-                Comparator.<Frontier<N>>comparingLong(Frontier::cost)
-                        .thenComparingInt(Frontier::firstOrder).thenComparingLong(Frontier::order));
+        PriorityQueue<Frontier<N>> queue = new PriorityQueue<>(Comparator.<Frontier<N>>comparingLong(Frontier::cost)
+                .thenComparingInt(Frontier::firstOrder)
+                .thenComparingLong(Frontier::order));
         Map<N, Frontier<N>> best = new HashMap<>();
         long order = 0;
         int firstOrder = 0;
         for (N start : starts) {
             if (start == null || best.containsKey(start)) continue;
-            Frontier<N> initial = new Frontier<>(start, addStep(0, step.applyAsLong(start)),
-                    start, firstOrder++, order++);
+            Frontier<N> initial =
+                    new Frontier<>(start, addStep(0, step.applyAsLong(start)), start, firstOrder++, order++);
             best.put(start, initial);
             queue.add(initial);
         }
@@ -58,9 +65,11 @@ public final class WeightedItemPipeRoutes {
             for (N next : neighbors.apply(current.node())) {
                 long cost = addStep(current.cost(), step.applyAsLong(next));
                 Frontier<N> previous = best.get(next);
-                if (previous == null || cost < previous.cost()
+                if (previous == null
+                        || cost < previous.cost()
                         || (cost == previous.cost() && current.firstOrder() < previous.firstOrder())) {
-                    Frontier<N> candidate = new Frontier<>(next, cost, current.firstHop(), current.firstOrder(), order++);
+                    Frontier<N> candidate =
+                            new Frontier<>(next, cost, current.firstHop(), current.firstOrder(), order++);
                     best.put(next, candidate);
                     queue.add(candidate);
                 }

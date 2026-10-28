@@ -1,16 +1,13 @@
 package gregtech.content.data;
 
 import gregtech.api.material.*;
-
-import gregtech.content.data.MaterialPrefix;
-
 import java.util.List;
 
 /** Source1 scanner/printer/replicator work and material-form preference. Units remain at the platform boundary. */
 public final class MaterialDataRules {
 
-    private MaterialDataRules() {
-    }
+    private MaterialDataRules() {}
+
     public static final long SCANNER_POWER = 512,
             PRINTER_POWER = VisualDocumentRules.POWER,
             PRINTER_TICKS = VisualDocumentRules.bookPrint(0).ticks(),
@@ -21,6 +18,7 @@ public final class MaterialDataRules {
 
     /** UT.NBT:2261: original data tooltip figure (distinct from raw recipe work). */
     public static final long DATA_ENERGY_PER_NUCLEON = 65536;
+
     public static final int ENVIRONMENT_KELVIN = 293;
 
     /** Compatibility name from the earlier port; its value is duration, not packet power. */
@@ -28,7 +26,9 @@ public final class MaterialDataRules {
     public static final long REPLICATOR_POWER_PER_NUCLEON = REPLICATOR_TICKS_PER_NUCLEON;
 
     public enum AmbientPhase {
-        SOLID, LIQUID, GAS
+        SOLID,
+        LIQUID,
+        GAS
     }
 
     public static AmbientPhase ambientPhase(gregtech.api.material.GTMaterial material) {
@@ -38,14 +38,25 @@ public final class MaterialDataRules {
 
     /** Both book sizes use 16 GU/t; the old name remains available to integrations. */
     public static final long PRINTER_MANY_POWER = PRINTER_POWER;
+
     public static final int DYE_MB = 72, DYE_MANY_MB = 144, MANY_PAGES = 50;
-    public static final List<MaterialPrefix> FORMS = List.of(MaterialPrefix.gem, MaterialPrefix.plateGem, MaterialPrefix.ingot, MaterialPrefix.plate,
-            MaterialPrefix.nugget, MaterialPrefix.chunkGt, MaterialPrefix.dust, MaterialPrefix.dustTiny, MaterialPrefix.dustSmall,
+    public static final List<MaterialPrefix> FORMS = List.of(
+            MaterialPrefix.gem,
+            MaterialPrefix.plateGem,
+            MaterialPrefix.ingot,
+            MaterialPrefix.plate,
+            MaterialPrefix.nugget,
+            MaterialPrefix.chunkGt,
+            MaterialPrefix.dust,
+            MaterialPrefix.dustTiny,
+            MaterialPrefix.dustSmall,
             MaterialPrefix.stick);
 
     public static long units(MaterialPrefix form) {
-        return form == MaterialPrefix.nugget || form == MaterialPrefix.dustTiny ? 9
-                : form == MaterialPrefix.chunkGt || form == MaterialPrefix.dustSmall ? 4
-                : form == MaterialPrefix.stick ? 2 : 1;
+        return form == MaterialPrefix.nugget || form == MaterialPrefix.dustTiny
+                ? 9
+                : form == MaterialPrefix.chunkGt || form == MaterialPrefix.dustSmall
+                        ? 4
+                        : form == MaterialPrefix.stick ? 2 : 1;
     }
 }

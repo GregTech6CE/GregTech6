@@ -1,7 +1,6 @@
 package gregtech.content.blockentity.behavior;
 
 import gregtech.content.data.GregTechTags;
-
 import java.util.List;
 
 /** Input/output rate limits (GT6 {@code TE_Behavior_Energy_Stats}). */
@@ -14,8 +13,8 @@ public final class EnergyStatsBehavior {
 
     private final EnergyCapacitorBehavior storage;
 
-    public EnergyStatsBehavior(GregTechTags.Tag type, EnergyCapacitorBehavior storage,
-                               long sizeMin, long sizeRec, long sizeMax) {
+    public EnergyStatsBehavior(
+            GregTechTags.Tag type, EnergyCapacitorBehavior storage, long sizeMin, long sizeRec, long sizeMax) {
         this.type = type;
         this.storage = storage;
         this.min = Math.abs(sizeMin);

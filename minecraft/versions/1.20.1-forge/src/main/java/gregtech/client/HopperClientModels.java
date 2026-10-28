@@ -1,8 +1,10 @@
 package gregtech.client;
 
+import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
 import gregtech.engine.machine.MachineRegistry;
-import com.mojang.logging.LogUtils;
+import java.util.EnumMap;
+import java.util.Map;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
@@ -15,9 +17,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
-import java.util.EnumMap;
-import java.util.Map;
 
 /**
  * Hopper / queuehopper shared model registration and bake-time aliasing.
@@ -45,8 +44,8 @@ public final class HopperClientModels {
 
         int hoppers = aliasHoppers(models, MachineRegistry.hoppers(), "hopper");
         int queueHoppers = aliasHoppers(models, MachineRegistry.queueHoppers(), "queuehopper");
-        LOGGER.info("[{}] Hopper model aliasing: {} hoppers, {} queuehoppers",
-                GregTech.NAMESPACE, hoppers, queueHoppers);
+        LOGGER.info(
+                "[{}] Hopper model aliasing: {} hoppers, {} queuehoppers", GregTech.NAMESPACE, hoppers, queueHoppers);
     }
 
     private static <T extends Block> int aliasHoppers(
@@ -66,7 +65,8 @@ public final class HopperClientModels {
             return 0;
         }
         if (byFacing.size() < 6) {
-            LOGGER.warn("[{}] Only {}/6 per-facing models found for '{}'", GregTech.NAMESPACE, byFacing.size(), texPath);
+            LOGGER.warn(
+                    "[{}] Only {}/6 per-facing models found for '{}'", GregTech.NAMESPACE, byFacing.size(), texPath);
             return 0;
         }
 
@@ -101,10 +101,9 @@ public final class HopperClientModels {
 
     @Nullable
     private static BakedModel lookupFacingModel(
-            Map<ResourceLocation, BakedModel> models,
-            String type, Direction facing) {
+            Map<ResourceLocation, BakedModel> models, String type, Direction facing) {
         ResourceLocation modelId = HopperIcons.sharedModelLocation(type, facing);
-        for (String variant : new String[]{"", "inventory", "normal"}) {
+        for (String variant : new String[] {"", "inventory", "normal"}) {
             BakedModel model = models.get(new ModelResourceLocation(modelId, variant));
             if (model != null) {
                 return model;

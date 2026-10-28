@@ -1,20 +1,21 @@
 package gregtech.engine.machine;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.GregTechConstants;
+import java.util.Optional;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 /** GT6 {@code FM.Furnace} fuel power without the full recipe map. */
 public final class FurnaceFuelHelper {
     private FurnaceFuelHelper() {}
 
-    public record FuelBurnResult(long heatUnits, @Nullable ItemStack container, @Nullable ItemStack byproduct) {}
+    public record FuelBurnResult(
+            long heatUnits,
+            @Nullable ItemStack container,
+            @Nullable ItemStack byproduct) {}
 
     /**
      * Computes HU from a furnace fuel stack (GT6: {@code tFuelValue * EU_PER_FURNACE_TICK}, scaled by efficiency).
@@ -43,19 +44,21 @@ public final class FurnaceFuelHelper {
 
     @Nullable
     private static ItemStack ashByproduct(ItemStack fuel) {
-        return ItemMaterialRegistry.get(fuel).flatMap(data -> {
-            GTMaterial material = data.material().resolve();
-            GTMaterial ash = material.getTargetBurningMaterial();
-            long amount = material.getTargetBurningAmount();
-            if (ash == null || !ash.isValid() || amount <= 0) {
-                return Optional.empty();
-            }
-            int count = MaterialFuelRules.ashTinyCount(material, data.amount());
-            if (count <= 0) {
-                return Optional.empty();
-            }
-            ItemStack stack = MaterialStackItemHelper.createStack(MaterialPrefix.dustTiny, ash, count);
-            return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
-        }).orElse(null);
+        return ItemMaterialRegistry.get(fuel)
+                .flatMap(data -> {
+                    GTMaterial material = data.material().resolve();
+                    GTMaterial ash = material.getTargetBurningMaterial();
+                    long amount = material.getTargetBurningAmount();
+                    if (ash == null || !ash.isValid() || amount <= 0) {
+                        return Optional.empty();
+                    }
+                    int count = MaterialFuelRules.ashTinyCount(material, data.amount());
+                    if (count <= 0) {
+                        return Optional.empty();
+                    }
+                    ItemStack stack = MaterialStackItemHelper.createStack(MaterialPrefix.dustTiny, ash, count);
+                    return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
+                })
+                .orElse(null);
     }
 }

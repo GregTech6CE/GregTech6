@@ -2,7 +2,6 @@ package gregtech.content.block.stone;
 
 import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -23,7 +22,8 @@ public final class SlabPlacementHelper {
         if (!existingSlab.equals(item.getBlock())) {
             return false;
         }
-        if (context.getClickedFace() != existing.getValue(GTStoneSlabBlock.FACING).getOpposite()) {
+        if (context.getClickedFace()
+                != existing.getValue(GTStoneSlabBlock.FACING).getOpposite()) {
             return false;
         }
         Block full = GTBlocks.getStone(existingSlab.stoneType(), existingSlab.variant());

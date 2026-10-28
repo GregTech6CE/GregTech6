@@ -3,7 +3,6 @@
 package gregtech.content.recipe;
 
 import gregtech.content.data.FluidCatalog.FluidFlags;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,17 @@ import java.util.List;
 public final class OriginalSupplementalFuelRows {
     private OriginalSupplementalFuelRows() {}
 
-    public record Row(String kind, long eut, long duration, int amount, long category,
-                      List<String> registryNames, String output, int outputAmount,
-                      String output2, int output2Amount) {}
+    public record Row(
+            String kind,
+            long eut,
+            long duration,
+            int amount,
+            long category,
+            List<String> registryNames,
+            String output,
+            int outputAmount,
+            String output2,
+            int output2Amount) {}
 
     public static final List<Row> ROWS = rows();
 
@@ -55,8 +62,7 @@ public final class OriginalSupplementalFuelRows {
         paired(rows, 16, 1, 2, 2, "GenLiquid_HeavyWater", 3, null, 0, "deuterium");
         paired(rows, 16, 1, 2, 2, "GenLiquid_TritiatedWater", 3, null, 0, "tritium");
         paired(rows, 64, 24, 30, 5, "Water", 6, "CarbonDioxide", 3, "methane");
-        paired(rows, 64, 24, 30, 5, "Water", 6, "CarbonDioxide", 3,
-                "gas_natural_gas", "naturalgas", "gas.natural");
+        paired(rows, 64, 24, 30, 5, "Water", 6, "CarbonDioxide", 3, "gas_natural_gas", "naturalgas", "gas.natural");
         paired(rows, 64, 24, 30, 20, "Water", 6, "CarbonDioxide", 3, "ic2biogas");
         rows.add(new Row("burn", 64, 42, 7, 0, List.of("lpg"), "Water", 7, "CarbonDioxide", 6));
         paired(rows, 64, 42, 56, 7, "Water", 7, "CarbonDioxide", 6, "butane");
@@ -74,12 +80,20 @@ public final class OriginalSupplementalFuelRows {
         return new Row("burn", 16, 6, 1, category, List.of(), "CarbonDioxide", 1, null, 0);
     }
 
-    private static void paired(List<Row> rows, long eut, long burnDuration, long gasDuration,
-                               int amount, String output, int outputAmount, String output2,
-                               int output2Amount, String... names) {
-        rows.add(new Row("burn", eut, burnDuration, amount, 0, List.of(names),
-                output, outputAmount, output2, output2Amount));
-        rows.add(new Row("gas", eut, gasDuration, amount, 0, List.of(names),
-                output, outputAmount, output2, output2Amount));
+    private static void paired(
+            List<Row> rows,
+            long eut,
+            long burnDuration,
+            long gasDuration,
+            int amount,
+            String output,
+            int outputAmount,
+            String output2,
+            int output2Amount,
+            String... names) {
+        rows.add(new Row(
+                "burn", eut, burnDuration, amount, 0, List.of(names), output, outputAmount, output2, output2Amount));
+        rows.add(new Row(
+                "gas", eut, gasDuration, amount, 0, List.of(names), output, outputAmount, output2, output2Amount));
     }
 }

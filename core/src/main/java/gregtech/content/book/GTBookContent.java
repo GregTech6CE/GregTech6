@@ -1,11 +1,10 @@
 package gregtech.content.book;
 
-import gregtech.engine.machine.crucible.CrucibleReactions;
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
+import gregtech.engine.machine.crucible.CrucibleReactions;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialMass;
-import gregtech.api.material.MaterialProperty;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -60,9 +59,12 @@ public final class GTBookContent {
     /** GT6 Loader_Books:570-582: three instructions, then one page per crucible alloy recipe. */
     private static Book alloyBook() {
         List<String> pages = new ArrayList<>();
-        pages.add("This Book Contains Information about every Alloy, which can be created by using a Smelting Crucible.\n===================\nIn order to make an Alloy you need to reach the Melting Point of the Alloy itself.");
-        pages.add("And you need to reach the Melting Point of all but one of its Components. You can ofcourse also melt all of the Components, but you are free to 'not melt' one of the Components.");
-        pages.add("In case you have to supply Air for the Crucible (for Steel), you need to point an Engine into it, which will act as a Fan. For Multiblock Crucibles the Engine has to be at the Bottom Row.");
+        pages.add(
+                "This Book Contains Information about every Alloy, which can be created by using a Smelting Crucible.\n===================\nIn order to make an Alloy you need to reach the Melting Point of the Alloy itself.");
+        pages.add(
+                "And you need to reach the Melting Point of all but one of its Components. You can ofcourse also melt all of the Components, but you are free to 'not melt' one of the Components.");
+        pages.add(
+                "In case you have to supply Air for the Crucible (for Steel), you need to point an Engine into it, which will act as a Fan. For Multiblock Crucibles the Engine has to be at the Bottom Row.");
         List<CrucibleReactions.Reaction> reactions = new ArrayList<>(CrucibleReactions.allRecipes());
         reactions.sort(Comparator.comparingInt(reaction -> reaction.output().getId()));
         int recipeCount = 0;
@@ -70,19 +72,30 @@ public final class GTBookContent {
             GTMaterial alloy = reaction.output();
             if (!alloy.has(MaterialProperty.ALLOY)) continue;
             recipeCount++;
-            StringBuilder page = new StringBuilder("Alloy:\n").append(materialName(alloy))
-                    .append("\n===================\nMelting: ").append(alloy.getMeltingPoint())
-                    .append(" K\nBoiling: ").append(alloy.getBoilingPoint())
-                    .append(" K\n===================\nComponents per ").append(reaction.yield()).append('\n');
+            StringBuilder page = new StringBuilder("Alloy:\n")
+                    .append(materialName(alloy))
+                    .append("\n===================\nMelting: ")
+                    .append(alloy.getMeltingPoint())
+                    .append(" K\nBoiling: ")
+                    .append(alloy.getBoilingPoint())
+                    .append(" K\n===================\nComponents per ")
+                    .append(reaction.yield())
+                    .append('\n');
             for (CrucibleReactions.Part part : reaction.parts()) {
-                page.append(part.ratio()).append(' ').append(materialName(part.material())).append('\n');
+                page.append(part.ratio())
+                        .append(' ')
+                        .append(materialName(part.material()))
+                        .append('\n');
             }
             // GT6's UT.Books.createWrittenBook discards pages with 256+ source characters.
             if (page.length() < 256) pages.add(page.toString());
         }
         // The original title uses tBook.size()-2: three instructions make this recipeCount+1.
-        return new Book("Manual_Alloys", "Book of Alloys, Smeltery Edition (" + (recipeCount + 1) + ")",
-                "GMWI (Gregorius Metal Working Industries)", List.copyOf(pages));
+        return new Book(
+                "Manual_Alloys",
+                "Book of Alloys, Smeltery Edition (" + (recipeCount + 1) + ")",
+                "GMWI (Gregorius Metal Working Industries)",
+                List.copyOf(pages));
     }
 
     /** GT6 Loader_Books:586-596; visible non-antimatter elements in numeric material-ID order. */
@@ -92,8 +105,10 @@ public final class GTBookContent {
         List<String> pages = new ArrayList<>();
         int count = 0;
         for (GTMaterial material : materials) {
-            if (!material.isValid() || !material.has(MaterialProperty.ELEMENT)
-                    || material.has(MaterialProperty.HIDDEN) || material.has(MaterialProperty.ANTIMATTER)) continue;
+            if (!material.isValid()
+                    || !material.has(MaterialProperty.ELEMENT)
+                    || material.has(MaterialProperty.HIDDEN)
+                    || material.has(MaterialProperty.ANTIMATTER)) continue;
             count++;
             // MT.element/diatomicgas/etc call OreDictMaterial.setStats, whose heat(melt, boil)
             // sets mPlasmaPoint = mBoilingPoint * 100. The explicit three-argument exception is
@@ -108,8 +123,11 @@ public final class GTBookContent {
                     + " kg/unit\n===================\n";
             if (page.length() < 256) pages.add(page);
         }
-        return new Book("Manual_Elements", "Book of Periods (" + count + ")",
-                "GCC (Gregorius Chemical Consortium)", List.copyOf(pages));
+        return new Book(
+                "Manual_Elements",
+                "Book of Periods (" + count + ")",
+                "GCC (Gregorius Chemical Consortium)",
+                List.copyOf(pages));
     }
 
     private static String materialName(GTMaterial material) {
@@ -142,10 +160,18 @@ public final class GTBookContent {
         return book == null ? List.of() : book.pages();
     }
 
-    public static String vanillaTitleOf(String mapping){
-        load();Book book=BOOKS.get(mapping);if(book==null)return null;
-        String title=book.name().equals("Manual_Hunting_Blaze")?BLAZE_VANILLA_TITLE:book.name().equals("Manual_Alloys")?"Book of Alloys "+book.title().substring(book.title().lastIndexOf('(')):book.title();
-        if(title.length()>32)throw new IllegalStateException("Book title exceeds vanilla's 32-character limit: "+mapping);
+    public static String vanillaTitleOf(String mapping) {
+        load();
+        Book book = BOOKS.get(mapping);
+        if (book == null) return null;
+        String title = book.name().equals("Manual_Hunting_Blaze")
+                ? BLAZE_VANILLA_TITLE
+                : book.name().equals("Manual_Alloys")
+                        ? "Book of Alloys "
+                                + book.title().substring(book.title().lastIndexOf('('))
+                        : book.title();
+        if (title.length() > 32)
+            throw new IllegalStateException("Book title exceeds vanilla's 32-character limit: " + mapping);
         return title;
     }
 }

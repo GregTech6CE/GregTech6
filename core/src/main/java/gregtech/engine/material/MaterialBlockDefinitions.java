@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 /** Original Loader_Blocks material order, validators and namespace collision policy. */
 public final class MaterialBlockDefinitions {
-    private static final Set<String> ADDON_ORE_HELD_BACK = Set.of(
-            "ore", "oreSmall", "blockRaw", "crateGtRaw", "crateGt64Raw");
+    private static final Set<String> ADDON_ORE_HELD_BACK =
+            Set.of("ore", "oreSmall", "blockRaw", "crateGtRaw", "crateGt64Raw");
+
     public record Definition(String blockId, String baseBlockId, BlockMaterialPrefix prefix, GTMaterial material) {}
+
     private MaterialBlockDefinitions() {}
+
     public static List<Definition> all() {
         BlockPrefixRegistry.ensurePrefixesLoaded();
         var ids = new HashSet<String>();
@@ -55,8 +59,9 @@ public final class MaterialBlockDefinitions {
         String id = base;
         if (!ids.add(id)) {
             id = base + "_" + material.getId();
-            if (!ids.add(id)) throw new IllegalStateException("Could not allocate unique block id for "
-                    + prefix.getName() + " / " + material.getName());
+            if (!ids.add(id))
+                throw new IllegalStateException(
+                        "Could not allocate unique block id for " + prefix.getName() + " / " + material.getName());
         }
         result.add(new Definition(id, base, prefix, material));
     }

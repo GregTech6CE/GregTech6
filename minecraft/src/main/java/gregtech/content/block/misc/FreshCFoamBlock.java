@@ -11,7 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** Only wet GT6 construction foam has a drying block entity. Hardened foam is an ordinary block. */
 public class FreshCFoamBlock extends CFoamBlock implements EntityBlock {
-    public FreshCFoamBlock(Properties properties) { super(true, properties); }
+    public FreshCFoamBlock(Properties properties) {
+        super(true, properties);
+    }
 
     // Declared on the class that implements EntityBlock. Inherited copies are not remapped.
     @Override
@@ -20,7 +22,8 @@ public class FreshCFoamBlock extends CFoamBlock implements EntityBlock {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (!fresh() || level.isClientSide) return null;
         return (l, p, s, be) -> {
             if (be instanceof CFoamBlockEntity foam) foam.tick();

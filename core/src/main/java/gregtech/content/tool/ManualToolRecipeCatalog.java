@@ -1,8 +1,7 @@
 package gregtech.content.tool;
 
-import gregtech.engine.tool.ToolDefinition;
 import gregtech.content.data.MaterialPrefix;
-
+import gregtech.engine.tool.ToolDefinition;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,9 +44,12 @@ public final class ManualToolRecipeCatalog {
      * fixed vanilla item, the tool's material can be fixed by that item, or the row can be limited to
      * one material or to the stone materials.
      */
-    public record Gate(Map<Character, String> items,
-                        String toolMaterial,  String onlyMaterial,
-                       boolean onlyStone, boolean skipHeadGate) {
+    public record Gate(
+            Map<Character, String> items,
+            String toolMaterial,
+            String onlyMaterial,
+            boolean onlyStone,
+            boolean skipHeadGate) {
         public static final Gate NONE = new Gate(Map.of(), null, null, false, false);
     }
 
@@ -62,39 +64,58 @@ public final class ManualToolRecipeCatalog {
      *                     {@code mUseNormalHandle}), false when it is the material's own stick
      * @param gate         the early-row extras, {@link Gate#NONE} for GT6's ore-processing rows
      */
-    public record Pattern(String[] rows, Map<Character, MaterialPrefix> forms,
-                          Map<Character, ToolDefinition> tools, boolean mirror, boolean normalHandle,
-                          Gate gate) {
+    public record Pattern(
+            String[] rows,
+            Map<Character, MaterialPrefix> forms,
+            Map<Character, ToolDefinition> tools,
+            boolean mirror,
+            boolean normalHandle,
+            Gate gate) {
 
         public Pattern {
             // CraftingInput in 1.21 trims empty margins before recipe matching. GT6's CR.shaped
             // does the same; keep the stored pattern canonical on both platforms.
             int left = rows[0].length(), right = -1, top = rows.length, bottom = -1;
-            for (int y = 0; y < rows.length; y++) for (int x = 0; x < rows[y].length(); x++) {
-                if (rows[y].charAt(x) == ' ') continue;
-                left = Math.min(left, x); right = Math.max(right, x);
-                top = Math.min(top, y); bottom = Math.max(bottom, y);
-            }
+            for (int y = 0; y < rows.length; y++)
+                for (int x = 0; x < rows[y].length(); x++) {
+                    if (rows[y].charAt(x) == ' ') continue;
+                    left = Math.min(left, x);
+                    right = Math.max(right, x);
+                    top = Math.min(top, y);
+                    bottom = Math.max(bottom, y);
+                }
             if (right < left) throw new IllegalArgumentException("Empty tool pattern");
             String[] trimmed = new String[bottom - top + 1];
             for (int y = top; y <= bottom; y++) trimmed[y - top] = rows[y].substring(left, right + 1);
             rows = trimmed;
         }
 
-        public Pattern(String[] rows, Map<Character, MaterialPrefix> forms,
-                       Map<Character, ToolDefinition> tools, boolean mirror, boolean normalHandle) {
+        public Pattern(
+                String[] rows,
+                Map<Character, MaterialPrefix> forms,
+                Map<Character, ToolDefinition> tools,
+                boolean mirror,
+                boolean normalHandle) {
             this(rows, forms, tools, mirror, normalHandle, Gate.NONE);
         }
 
-        public int width() { return rows[0].length(); }
+        public int width() {
+            return rows[0].length();
+        }
 
-        public int height() { return rows.length; }
+        public int height() {
+            return rows.length;
+        }
 
-        public char at(int x, int y) { return rows[y].charAt(x); }
+        public char at(int x, int y) {
+            return rows[y].charAt(x);
+        }
 
         /** Every letter in the pattern, in row order. */
         public List<Character> letters() {
-            return java.util.Arrays.stream(rows).flatMapToInt(String::chars).mapToObj(c -> (char) c)
+            return java.util.Arrays.stream(rows)
+                    .flatMapToInt(String::chars)
+                    .mapToObj(c -> (char) c)
                     .filter(c -> c != ' ')
                     .distinct()
                     .toList();
@@ -102,7 +123,7 @@ public final class ManualToolRecipeCatalog {
     }
 
     private static final Map<ToolDefinition, List<Pattern>> SHAPED = new LinkedHashMap<>();
-    private static final Map<ToolDefinition, List<Pattern>> HEADS  = new LinkedHashMap<>();
+    private static final Map<ToolDefinition, List<Pattern>> HEADS = new LinkedHashMap<>();
 
     private ManualToolRecipeCatalog() {}
 
@@ -120,24 +141,27 @@ public final class ManualToolRecipeCatalog {
         return Map.copyOf(map);
     }
 
-    private static Pattern pattern(String[] rows, Map<Character, MaterialPrefix> forms,
-                                   Map<Character, ToolDefinition> tools, boolean mirror, boolean normalHandle) {
+    private static Pattern pattern(
+            String[] rows,
+            Map<Character, MaterialPrefix> forms,
+            Map<Character, ToolDefinition> tools,
+            boolean mirror,
+            boolean normalHandle) {
         return new Pattern(rows, forms, tools, mirror, normalHandle);
     }
 
-    private static Pattern tool(String[] rows, Map<Character, MaterialPrefix> forms,
-                                Map<Character, ToolDefinition> tools) {
+    private static Pattern tool(
+            String[] rows, Map<Character, MaterialPrefix> forms, Map<Character, ToolDefinition> tools) {
         return pattern(rows, forms, tools, false, false);
     }
 
-    private static Pattern head(String[] rows, Map<Character, MaterialPrefix> forms,
-                                Map<Character, ToolDefinition> tools) {
+    private static Pattern head(
+            String[] rows, Map<Character, MaterialPrefix> forms, Map<Character, ToolDefinition> tools) {
         return pattern(rows, forms, tools, false, true);
     }
 
     /** GT6's hand-written early row: mirror flag, normal handle, and the row's gate. */
-    private static Pattern early(String[] rows, Map<Character, MaterialPrefix> forms, boolean mirror,
-                                 Gate gate) {
+    private static Pattern early(String[] rows, Map<Character, MaterialPrefix> forms, boolean mirror, Gate gate) {
         return new Pattern(rows, forms, Map.of(), mirror, true, gate);
     }
 
@@ -165,245 +189,501 @@ public final class ManualToolRecipeCatalog {
 
     static {
         // Loader_Tools:317-319. Flint is the striker; H uses the normal material handle.
-        var gunForms=forms('X',MaterialPrefix.plateCurved,'T',MaterialPrefix.screw);
-        var gunTools=tools('d',ToolDefinition.SCREWDRIVER,'h',ToolDefinition.HARD_HAMMER);
-        var gunGate=new Gate(Map.of('V',"minecraft:flint"),null,null,false,false);
-        SHAPED.put(ToolDefinition.PISTOL,List.of(new Pattern(new String[]{"XXV"," TH","d h"},gunForms,gunTools,false,true,gunGate)));
-        SHAPED.put(ToolDefinition.CARBINE,List.of(new Pattern(new String[]{"XXV","THH","d h"},gunForms,gunTools,false,true,gunGate)));
-        SHAPED.put(ToolDefinition.RIFLE,List.of(new Pattern(new String[]{"XXX","HHV","dTh"},gunForms,gunTools,false,true,gunGate)));
+        var gunForms = forms('X', MaterialPrefix.plateCurved, 'T', MaterialPrefix.screw);
+        var gunTools = tools('d', ToolDefinition.SCREWDRIVER, 'h', ToolDefinition.HARD_HAMMER);
+        var gunGate = new Gate(Map.of('V', "minecraft:flint"), null, null, false, false);
+        SHAPED.put(
+                ToolDefinition.PISTOL,
+                List.of(new Pattern(new String[] {"XXV", " TH", "d h"}, gunForms, gunTools, false, true, gunGate)));
+        SHAPED.put(
+                ToolDefinition.CARBINE,
+                List.of(new Pattern(new String[] {"XXV", "THH", "d h"}, gunForms, gunTools, false, true, gunGate)));
+        SHAPED.put(
+                ToolDefinition.RIFLE,
+                List.of(new Pattern(new String[] {"XXX", "HHV", "dTh"}, gunForms, gunTools, false, true, gunGate)));
         // Loader_Tools:354; all seven blades and rings share one primary material, handle Blue.
-        SHAPED.put(ToolDefinition.POCKET_MULTITOOL,List.of(tool(new String[]{"AXO","ZPV","OWY"},
-            forms('A',MaterialPrefix.toolHeadScrewdriver,'X',MaterialPrefix.toolHeadSaw,'Y',MaterialPrefix.toolHeadChisel,
-                'Z',MaterialPrefix.toolHeadFile,'V',MaterialPrefix.toolHeadSword,'W',MaterialPrefix.toolHeadSword,'P',MaterialPrefix.plate,'O',MaterialPrefix.ring),Map.of())));
+        SHAPED.put(
+                ToolDefinition.POCKET_MULTITOOL,
+                List.of(tool(
+                        new String[] {"AXO", "ZPV", "OWY"},
+                        forms(
+                                'A',
+                                MaterialPrefix.toolHeadScrewdriver,
+                                'X',
+                                MaterialPrefix.toolHeadSaw,
+                                'Y',
+                                MaterialPrefix.toolHeadChisel,
+                                'Z',
+                                MaterialPrefix.toolHeadFile,
+                                'V',
+                                MaterialPrefix.toolHeadSword,
+                                'W',
+                                MaterialPrefix.toolHeadSword,
+                                'P',
+                                MaterialPrefix.plate,
+                                'O',
+                                MaterialPrefix.ring),
+                        Map.of())));
         // Loader_Tools:305-320 — the one-piece tools, both the metal and the gem variant.
-        SHAPED.put(ToolDefinition.WRENCH, List.of(
-                tool(new String[]{"PhP", " P ", " P "}, forms('P', MaterialPrefix.plate),
-                        tools('h', ToolDefinition.HARD_HAMMER)),
-                tool(new String[]{"CfC", " C ", " C "}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE))));
-        SHAPED.put(ToolDefinition.MONKEY_WRENCH, List.of(
-                tool(new String[]{"PPd", "hPT", " P "},
-                        forms('P', MaterialPrefix.plate, 'T', MaterialPrefix.screw),
-                        tools('d', ToolDefinition.SCREWDRIVER, 'h', ToolDefinition.HARD_HAMMER)),
-                tool(new String[]{"CCd", "fCT", " C "},
-                        forms('C', MaterialPrefix.plateGem, 'T', MaterialPrefix.screw),
-                        tools('d', ToolDefinition.SCREWDRIVER, 'f', ToolDefinition.FILE))));
-        SHAPED.put(ToolDefinition.BENDING_CYLINDER, List.of(
-                tool(new String[]{"sfh", "III", "III"}, forms('I', MaterialPrefix.ingot),
+        SHAPED.put(
+                ToolDefinition.WRENCH,
+                List.of(
+                        tool(
+                                new String[] {"PhP", " P ", " P "},
+                                forms('P', MaterialPrefix.plate),
+                                tools('h', ToolDefinition.HARD_HAMMER)),
+                        tool(
+                                new String[] {"CfC", " C ", " C "},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE))));
+        SHAPED.put(
+                ToolDefinition.MONKEY_WRENCH,
+                List.of(
+                        tool(
+                                new String[] {"PPd", "hPT", " P "},
+                                forms('P', MaterialPrefix.plate, 'T', MaterialPrefix.screw),
+                                tools('d', ToolDefinition.SCREWDRIVER, 'h', ToolDefinition.HARD_HAMMER)),
+                        tool(
+                                new String[] {"CCd", "fCT", " C "},
+                                forms('C', MaterialPrefix.plateGem, 'T', MaterialPrefix.screw),
+                                tools('d', ToolDefinition.SCREWDRIVER, 'f', ToolDefinition.FILE))));
+        SHAPED.put(
+                ToolDefinition.BENDING_CYLINDER,
+                List.of(tool(
+                        new String[] {"sfh", "III", "III"},
+                        forms('I', MaterialPrefix.ingot),
                         tools('s', ToolDefinition.SAW, 'f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER))));
-        SHAPED.put(ToolDefinition.BENDING_CYLINDER_SMALL, List.of(
-                tool(new String[]{"sfh", "III"}, forms('I', MaterialPrefix.ingot),
+        SHAPED.put(
+                ToolDefinition.BENDING_CYLINDER_SMALL,
+                List.of(tool(
+                        new String[] {"sfh", "III"},
+                        forms('I', MaterialPrefix.ingot),
                         tools('s', ToolDefinition.SAW, 'f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER))));
-        SHAPED.put(ToolDefinition.CROWBAR, List.of(
-                tool(new String[]{"hVS", "VSV", "SVf"},
+        SHAPED.put(
+                ToolDefinition.CROWBAR,
+                List.of(tool(
+                        new String[] {"hVS", "VSV", "SVf"},
                         forms('V', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
                         tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE))));
-        SHAPED.put(ToolDefinition.PLUNGER, List.of(
-                tool(new String[]{"xVV", " SV", "S f"},
+        SHAPED.put(
+                ToolDefinition.PLUNGER,
+                List.of(tool(
+                        new String[] {"xVV", " SV", "S f"},
                         forms('V', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
                         tools('x', ToolDefinition.WIRE_CUTTER, 'f', ToolDefinition.FILE))));
-        SHAPED.put(ToolDefinition.PINCERS, List.of(
-                tool(new String[]{"XhX", " T ", "SdS"},
-                        forms('X', MaterialPrefix.plateCurved, 'T', MaterialPrefix.screw,
-                                'S', MaterialPrefix.stick),
+        SHAPED.put(
+                ToolDefinition.PINCERS,
+                List.of(tool(
+                        new String[] {"XhX", " T ", "SdS"},
+                        forms('X', MaterialPrefix.plateCurved, 'T', MaterialPrefix.screw, 'S', MaterialPrefix.stick),
                         tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER))));
-        SHAPED.put(ToolDefinition.SCOOP, List.of(
-                tool(new String[]{"SVS", "SSS", "xSh"},
+        SHAPED.put(
+                ToolDefinition.SCOOP,
+                List.of(tool(
+                        new String[] {"SVS", "SSS", "xSh"},
                         forms('S', MaterialPrefix.stick, 'V', MaterialPrefix.plate),
                         tools('x', ToolDefinition.WIRE_CUTTER, 'h', ToolDefinition.HARD_HAMMER))));
-        SHAPED.put(ToolDefinition.KNIFE, List.of(
-                tool(new String[]{"fP", "hH"}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                tool(new String[]{"fC", "hH"}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER))));
-        SHAPED.put(ToolDefinition.BUTCHERY_KNIFE, List.of(
-                tool(new String[]{"fPP", "hPP", "  H"}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                tool(new String[]{"fCC", " CC", "  H"}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE))));
-        SHAPED.put(ToolDefinition.WIRE_CUTTER, List.of(
-                tool(new String[]{"PfP", "hPd", "STS"},
-                        forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick,
-                                'T', MaterialPrefix.screw),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER)),
-                tool(new String[]{"CfC", "hCd", "STS"},
-                        forms('C', MaterialPrefix.plateGem, 'S', MaterialPrefix.stick,
-                                'T', MaterialPrefix.screw),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER))));
-        SHAPED.put(ToolDefinition.BRANCH_CUTTER, List.of(
-                tool(new String[]{"PfP", "PdP", "STS"},
-                        forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick,
-                                'T', MaterialPrefix.screw),
-                        tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER)),
-                tool(new String[]{"CfC", "CdC", "STS"},
-                        forms('C', MaterialPrefix.plateGem, 'S', MaterialPrefix.stick,
-                                'T', MaterialPrefix.screw),
-                        tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER))));
-        SHAPED.put(ToolDefinition.SCISSORS, List.of(
-                tool(new String[]{"PfP", " T ", "OdO"},
-                        forms('P', MaterialPrefix.plate, 'T', MaterialPrefix.screw, 'O', MaterialPrefix.ring),
-                        tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER)),
-                tool(new String[]{"CfC", " T ", "OdO"},
-                        forms('C', MaterialPrefix.plateGem, 'T', MaterialPrefix.screw, 'O', MaterialPrefix.ring),
-                        tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER))));
-        SHAPED.put(ToolDefinition.CLUB, List.of(
-                pattern(new String[]{" II", "III", "HI "}, forms('I', MaterialPrefix.ingot),
-                        Map.of(), false, true),
-                pattern(new String[]{" GG", "GGG", "HG "}, forms('G', MaterialPrefix.gem),
-                        Map.of(), false, true),
-                pattern(new String[]{" RR", "RRR", "HR "}, forms('R', MaterialPrefix.rockGt),
-                        Map.of(), false, true)));
-        SHAPED.put(ToolDefinition.HAND_DRILL, List.of(
-                pattern(new String[]{"  X", "HYH", "YH "},
+        SHAPED.put(
+                ToolDefinition.KNIFE,
+                List.of(
+                        tool(
+                                new String[] {"fP", "hH"},
+                                forms('P', MaterialPrefix.plate),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        tool(
+                                new String[] {"fC", "hH"},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER))));
+        SHAPED.put(
+                ToolDefinition.BUTCHERY_KNIFE,
+                List.of(
+                        tool(
+                                new String[] {"fPP", "hPP", "  H"},
+                                forms('P', MaterialPrefix.plate),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        tool(
+                                new String[] {"fCC", " CC", "  H"},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE))));
+        SHAPED.put(
+                ToolDefinition.WIRE_CUTTER,
+                List.of(
+                        tool(
+                                new String[] {"PfP", "hPd", "STS"},
+                                forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick, 'T', MaterialPrefix.screw),
+                                tools(
+                                        'f',
+                                        ToolDefinition.FILE,
+                                        'h',
+                                        ToolDefinition.HARD_HAMMER,
+                                        'd',
+                                        ToolDefinition.SCREWDRIVER)),
+                        tool(
+                                new String[] {"CfC", "hCd", "STS"},
+                                forms(
+                                        'C',
+                                        MaterialPrefix.plateGem,
+                                        'S',
+                                        MaterialPrefix.stick,
+                                        'T',
+                                        MaterialPrefix.screw),
+                                tools(
+                                        'f',
+                                        ToolDefinition.FILE,
+                                        'h',
+                                        ToolDefinition.HARD_HAMMER,
+                                        'd',
+                                        ToolDefinition.SCREWDRIVER))));
+        SHAPED.put(
+                ToolDefinition.BRANCH_CUTTER,
+                List.of(
+                        tool(
+                                new String[] {"PfP", "PdP", "STS"},
+                                forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick, 'T', MaterialPrefix.screw),
+                                tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER)),
+                        tool(
+                                new String[] {"CfC", "CdC", "STS"},
+                                forms(
+                                        'C',
+                                        MaterialPrefix.plateGem,
+                                        'S',
+                                        MaterialPrefix.stick,
+                                        'T',
+                                        MaterialPrefix.screw),
+                                tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER))));
+        SHAPED.put(
+                ToolDefinition.SCISSORS,
+                List.of(
+                        tool(
+                                new String[] {"PfP", " T ", "OdO"},
+                                forms('P', MaterialPrefix.plate, 'T', MaterialPrefix.screw, 'O', MaterialPrefix.ring),
+                                tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER)),
+                        tool(
+                                new String[] {"CfC", " T ", "OdO"},
+                                forms(
+                                        'C',
+                                        MaterialPrefix.plateGem,
+                                        'T',
+                                        MaterialPrefix.screw,
+                                        'O',
+                                        MaterialPrefix.ring),
+                                tools('f', ToolDefinition.FILE, 'd', ToolDefinition.SCREWDRIVER))));
+        SHAPED.put(
+                ToolDefinition.CLUB,
+                List.of(
+                        pattern(
+                                new String[] {" II", "III", "HI "},
+                                forms('I', MaterialPrefix.ingot),
+                                Map.of(),
+                                false,
+                                true),
+                        pattern(
+                                new String[] {" GG", "GGG", "HG "},
+                                forms('G', MaterialPrefix.gem),
+                                Map.of(),
+                                false,
+                                true),
+                        pattern(
+                                new String[] {" RR", "RRR", "HR "},
+                                forms('R', MaterialPrefix.rockGt),
+                                Map.of(),
+                                false,
+                                true)));
+        SHAPED.put(
+                ToolDefinition.HAND_DRILL,
+                List.of(pattern(
+                        new String[] {"  X", "HYH", "YH "},
                         forms('X', MaterialPrefix.toolHeadArrow, 'Y', MaterialPrefix.bolt),
-                        Map.of(), false, true)));
-        SHAPED.put(ToolDefinition.UNIVERSAL_SPADE, List.of(
-                tool(new String[]{"AT", "Sd"}, forms('S', MaterialPrefix.stick, 'T', MaterialPrefix.screw),
+                        Map.of(),
+                        false,
+                        true)));
+        SHAPED.put(
+                ToolDefinition.UNIVERSAL_SPADE,
+                List.of(tool(
+                        new String[] {"AT", "Sd"},
+                        forms('S', MaterialPrefix.stick, 'T', MaterialPrefix.screw),
                         tools('d', ToolDefinition.SCREWDRIVER))));
         // Loader_Tools:245-247 — the rolling pin is one of the hand-written rows (CR.DEF_MIR).
-        SHAPED.put(ToolDefinition.ROLLING_PIN, List.of(
-                pattern(new String[]{"  S", " I ", "S f"},
-                        forms('I', MaterialPrefix.ingot, 'S', MaterialPrefix.stick),
-                        tools('f', ToolDefinition.FILE), true, false),
-                // Loader_Recipes_Woods:237-238: one species plank, two arbitrary wood
-                // sticks (their materials need not agree), and a file or a knife.
-                pattern(new String[]{"  S", " P ", "S f"},
-                        forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
-                        tools('f', ToolDefinition.FILE), true, false),
-                pattern(new String[]{"  S", " P ", "S k"},
-                        forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
-                        tools('k', ToolDefinition.KNIFE), true, false)));
+        SHAPED.put(
+                ToolDefinition.ROLLING_PIN,
+                List.of(
+                        pattern(
+                                new String[] {"  S", " I ", "S f"},
+                                forms('I', MaterialPrefix.ingot, 'S', MaterialPrefix.stick),
+                                tools('f', ToolDefinition.FILE),
+                                true,
+                                false),
+                        // Loader_Recipes_Woods:237-238: one species plank, two arbitrary wood
+                        // sticks (their materials need not agree), and a file or a knife.
+                        pattern(
+                                new String[] {"  S", " P ", "S f"},
+                                forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
+                                tools('f', ToolDefinition.FILE),
+                                true,
+                                false),
+                        pattern(
+                                new String[] {"  S", " P ", "S k"},
+                                forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
+                                tools('k', ToolDefinition.KNIFE),
+                                true,
+                                false)));
         // Loader_Tools:225-243 — "T "/" F": a striking material above a piece of flint. The T key
         // accepts the material's gem, rock or nugget form; GTFlintAndTinderRecipe lists them.
-        SHAPED.put(ToolDefinition.FLINT_AND_TINDER, List.of(
-                pattern(new String[]{"T ", " F"}, forms('T', MaterialPrefix.gem),
-                        Map.of(), true, false)));
+        SHAPED.put(
+                ToolDefinition.FLINT_AND_TINDER,
+                List.of(pattern(new String[] {"T ", " F"}, forms('T', MaterialPrefix.gem), Map.of(), true, false)));
 
         // Loader_Tools:255-290 — the hand-written early tools, one row per family, with the rock or
         // the flint itself as the material: flint (MT.Flint), bone (MT.Bone), obsidian, petrified
         // wood and every stone material (ANY.Stone.mToThis). The handle is one of GT6's handle loop
         // entries (wood stick, bamboo, bone, plastic), limited to those early handle families.
-        addEarly(ToolDefinition.KNIFE, new String[]{"HX"}, flint(), true);
-        addEarly(ToolDefinition.AXE, new String[]{"XX", "XH"}, flint(), true);
-        addEarly(ToolDefinition.SHOVEL, new String[]{"X", "H"}, flint(), false);
-        addEarly(ToolDefinition.PICKAXE, new String[]{"XXX", " H "}, flint(), false);
-        addEarly(ToolDefinition.CLUB, new String[]{"  X", " X ", "H  "}, bone(), true);
-        addEarly(ToolDefinition.KNIFE, new String[]{"HX"}, ofMaterial("Obsidian"), true);
-        addEarly(ToolDefinition.AXE, new String[]{"XX", "XH"}, ofMaterial("Obsidian"), true);
-        addEarly(ToolDefinition.SHOVEL, new String[]{"X", "H"}, ofMaterial("Obsidian"), false);
-        addEarly(ToolDefinition.PICKAXE, new String[]{"XXX", " H "}, ofMaterial("Obsidian"), false);
-        addEarly(ToolDefinition.AXE, new String[]{"XX", "XH"}, ofMaterial("PetrifiedWood"), true);
-        addEarly(ToolDefinition.HOE, new String[]{"XX", " H"}, ofMaterial("PetrifiedWood"), true);
-        addEarly(ToolDefinition.SHOVEL, new String[]{"X", "H"}, ofMaterial("PetrifiedWood"), false);
-        addEarly(ToolDefinition.PICKAXE, new String[]{"XXX", " H "}, ofMaterial("PetrifiedWood"), false);
-        addEarly(ToolDefinition.CLUB, new String[]{" XX", "XXX", "HX "}, ofMaterial("PetrifiedWood"), true);
-        addEarly(ToolDefinition.HARD_HAMMER, new String[]{"XX ", "XXH", "XX "},
-                ofMaterial("PetrifiedWood"), true);
-        addEarly(ToolDefinition.AXE, new String[]{"XX", "XH"}, ofStone(), true);
-        addEarly(ToolDefinition.HOE, new String[]{"XX", " H"}, ofStone(), true);
-        addEarly(ToolDefinition.SHOVEL, new String[]{"X", "H"}, ofStone(), false);
-        addEarly(ToolDefinition.PICKAXE, new String[]{"XXX", " H "}, ofStone(), false);
-        addEarly(ToolDefinition.CLUB, new String[]{" XX", "XXX", "HX "}, ofStone(), true);
-        addEarly(ToolDefinition.HARD_HAMMER, new String[]{"XX ", "XXH", "XX "}, ofStone(), true);
+        addEarly(ToolDefinition.KNIFE, new String[] {"HX"}, flint(), true);
+        addEarly(ToolDefinition.AXE, new String[] {"XX", "XH"}, flint(), true);
+        addEarly(ToolDefinition.SHOVEL, new String[] {"X", "H"}, flint(), false);
+        addEarly(ToolDefinition.PICKAXE, new String[] {"XXX", " H "}, flint(), false);
+        addEarly(ToolDefinition.CLUB, new String[] {"  X", " X ", "H  "}, bone(), true);
+        addEarly(ToolDefinition.KNIFE, new String[] {"HX"}, ofMaterial("Obsidian"), true);
+        addEarly(ToolDefinition.AXE, new String[] {"XX", "XH"}, ofMaterial("Obsidian"), true);
+        addEarly(ToolDefinition.SHOVEL, new String[] {"X", "H"}, ofMaterial("Obsidian"), false);
+        addEarly(ToolDefinition.PICKAXE, new String[] {"XXX", " H "}, ofMaterial("Obsidian"), false);
+        addEarly(ToolDefinition.AXE, new String[] {"XX", "XH"}, ofMaterial("PetrifiedWood"), true);
+        addEarly(ToolDefinition.HOE, new String[] {"XX", " H"}, ofMaterial("PetrifiedWood"), true);
+        addEarly(ToolDefinition.SHOVEL, new String[] {"X", "H"}, ofMaterial("PetrifiedWood"), false);
+        addEarly(ToolDefinition.PICKAXE, new String[] {"XXX", " H "}, ofMaterial("PetrifiedWood"), false);
+        addEarly(ToolDefinition.CLUB, new String[] {" XX", "XXX", "HX "}, ofMaterial("PetrifiedWood"), true);
+        addEarly(ToolDefinition.HARD_HAMMER, new String[] {"XX ", "XXH", "XX "}, ofMaterial("PetrifiedWood"), true);
+        addEarly(ToolDefinition.AXE, new String[] {"XX", "XH"}, ofStone(), true);
+        addEarly(ToolDefinition.HOE, new String[] {"XX", " H"}, ofStone(), true);
+        addEarly(ToolDefinition.SHOVEL, new String[] {"X", "H"}, ofStone(), false);
+        addEarly(ToolDefinition.PICKAXE, new String[] {"XXX", " H "}, ofStone(), false);
+        addEarly(ToolDefinition.CLUB, new String[] {" XX", "XXX", "HX "}, ofStone(), true);
+        addEarly(ToolDefinition.HARD_HAMMER, new String[] {"XX ", "XXH", "XX "}, ofStone(), true);
 
         // Loader_Tools:293-313 — the head recipes of the same registrations.
-        HEADS.put(ToolDefinition.PICKAXE, List.of(
-                head(new String[]{"PII", "f h"}, forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"CGG", "f  "}, forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.SHOVEL, List.of(
-                head(new String[]{"fPh"}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"fC "}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.SPADE, List.of(
-                head(new String[]{"fPh", " s "}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER, 's', ToolDefinition.SAW)),
-                head(new String[]{"fC ", " s "}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE, 's', ToolDefinition.SAW))));
-        HEADS.put(ToolDefinition.AXE, List.of(
-                head(new String[]{"PIh", "P  ", "f  "},
-                        forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
-                        tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE)),
-                head(new String[]{"CG ", "C  ", "f  "},
-                        forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.DOUBLE_AXE, List.of(
-                head(new String[]{"PIP", "P P", "f h"}, forms('P', MaterialPrefix.plate,
-                                'I', MaterialPrefix.ingot),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"CGC", "C C", "f  "}, forms('C', MaterialPrefix.plateGem,
-                                'G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.HOE, List.of(
-                head(new String[]{"PIh", "f  "}, forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
-                        tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE)),
-                head(new String[]{"CG ", "f  "}, forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.SWORD, List.of(
-                head(new String[]{" P ", "fPh"}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{" C ", "fC "}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.HARD_HAMMER, List.of(
-                head(new String[]{"II ", "IIh", "II "}, forms('I', MaterialPrefix.ingot),
-                        tools('h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"GG ", "GGf", "GG "}, forms('G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.SOFT_HAMMER, List.of(
-                head(new String[]{"II ", "IIr", "II "}, forms('I', MaterialPrefix.ingot),
-                        tools('r', ToolDefinition.SOFT_HAMMER)),
-                head(new String[]{"GG ", "GGr", "GG "}, forms('G', MaterialPrefix.gem),
-                        tools('r', ToolDefinition.SOFT_HAMMER))));
-        HEADS.put(ToolDefinition.FILE, List.of(
-                head(new String[]{" P ", " Pk"}, forms('P', MaterialPrefix.plate),
+        HEADS.put(
+                ToolDefinition.PICKAXE,
+                List.of(
+                        head(
+                                new String[] {"PII", "f h"},
+                                forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"CGG", "f  "},
+                                forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.SHOVEL,
+                List.of(
+                        head(
+                                new String[] {"fPh"},
+                                forms('P', MaterialPrefix.plate),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"fC "},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.SPADE,
+                List.of(
+                        head(
+                                new String[] {"fPh", " s "},
+                                forms('P', MaterialPrefix.plate),
+                                tools(
+                                        'f',
+                                        ToolDefinition.FILE,
+                                        'h',
+                                        ToolDefinition.HARD_HAMMER,
+                                        's',
+                                        ToolDefinition.SAW)),
+                        head(
+                                new String[] {"fC ", " s "},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE, 's', ToolDefinition.SAW))));
+        HEADS.put(
+                ToolDefinition.AXE,
+                List.of(
+                        head(
+                                new String[] {"PIh", "P  ", "f  "},
+                                forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
+                                tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE)),
+                        head(
+                                new String[] {"CG ", "C  ", "f  "},
+                                forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.DOUBLE_AXE,
+                List.of(
+                        head(
+                                new String[] {"PIP", "P P", "f h"},
+                                forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"CGC", "C C", "f  "},
+                                forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.HOE,
+                List.of(
+                        head(
+                                new String[] {"PIh", "f  "},
+                                forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
+                                tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE)),
+                        head(
+                                new String[] {"CG ", "f  "},
+                                forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.SWORD,
+                List.of(
+                        head(
+                                new String[] {" P ", "fPh"},
+                                forms('P', MaterialPrefix.plate),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {" C ", "fC "},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.HARD_HAMMER,
+                List.of(
+                        head(
+                                new String[] {"II ", "IIh", "II "},
+                                forms('I', MaterialPrefix.ingot),
+                                tools('h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"GG ", "GGf", "GG "},
+                                forms('G', MaterialPrefix.gem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.SOFT_HAMMER,
+                List.of(
+                        head(
+                                new String[] {"II ", "IIr", "II "},
+                                forms('I', MaterialPrefix.ingot),
+                                tools('r', ToolDefinition.SOFT_HAMMER)),
+                        head(
+                                new String[] {"GG ", "GGr", "GG "},
+                                forms('G', MaterialPrefix.gem),
+                                tools('r', ToolDefinition.SOFT_HAMMER))));
+        HEADS.put(
+                ToolDefinition.FILE,
+                List.of(head(
+                        new String[] {" P ", " Pk"},
+                        forms('P', MaterialPrefix.plate),
                         tools('k', ToolDefinition.KNIFE))));
-        HEADS.put(ToolDefinition.SAW, List.of(
-                head(new String[]{"PP", "fh"}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"CC", "f "}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.CHISEL, List.of(
-                head(new String[]{"hPf", " S "}, forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
-                        tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE)),
-                head(new String[]{"Cf", "S "}, forms('C', MaterialPrefix.plateGem, 'S', MaterialPrefix.stick),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.SCREWDRIVER, List.of(
-                head(new String[]{"hS", "Sf"}, forms('S', MaterialPrefix.stick),
+        HEADS.put(
+                ToolDefinition.SAW,
+                List.of(
+                        head(
+                                new String[] {"PP", "fh"},
+                                forms('P', MaterialPrefix.plate),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"CC", "f "},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.CHISEL,
+                List.of(
+                        head(
+                                new String[] {"hPf", " S "},
+                                forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
+                                tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE)),
+                        head(
+                                new String[] {"Cf", "S "},
+                                forms('C', MaterialPrefix.plateGem, 'S', MaterialPrefix.stick),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.SCREWDRIVER,
+                List.of(head(
+                        new String[] {"hS", "Sf"},
+                        forms('S', MaterialPrefix.stick),
                         tools('h', ToolDefinition.HARD_HAMMER, 'f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.SENSE, List.of(
-                head(new String[]{"PPI", "f h"}, forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"CCG", "f  "}, forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.PLOW, List.of(
-                head(new String[]{"PPP", "PPP", "f h"}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"CCC", "CCC", "f  "}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.CONSTRUCTION_PICK, List.of(
-                head(new String[]{"PIP", "f h"}, forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
-                head(new String[]{"CGC", "f  "}, forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE))));
-        HEADS.put(ToolDefinition.BUILDER_WAND, List.of(
-                head(new String[]{" P ", "f h", " s "}, forms('P', MaterialPrefix.plate),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER, 's', ToolDefinition.SAW)),
-                head(new String[]{" C ", "f h", " s "}, forms('C', MaterialPrefix.plateGem),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER, 's', ToolDefinition.SAW)),
-                head(new String[]{" G ", "f h", " s "}, forms('G', MaterialPrefix.gem),
-                        tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER, 's', ToolDefinition.SAW))));
+        HEADS.put(
+                ToolDefinition.SENSE,
+                List.of(
+                        head(
+                                new String[] {"PPI", "f h"},
+                                forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"CCG", "f  "},
+                                forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.PLOW,
+                List.of(
+                        head(
+                                new String[] {"PPP", "PPP", "f h"},
+                                forms('P', MaterialPrefix.plate),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"CCC", "CCC", "f  "},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.CONSTRUCTION_PICK,
+                List.of(
+                        head(
+                                new String[] {"PIP", "f h"},
+                                forms('P', MaterialPrefix.plate, 'I', MaterialPrefix.ingot),
+                                tools('f', ToolDefinition.FILE, 'h', ToolDefinition.HARD_HAMMER)),
+                        head(
+                                new String[] {"CGC", "f  "},
+                                forms('C', MaterialPrefix.plateGem, 'G', MaterialPrefix.gem),
+                                tools('f', ToolDefinition.FILE))));
+        HEADS.put(
+                ToolDefinition.BUILDER_WAND,
+                List.of(
+                        head(
+                                new String[] {" P ", "f h", " s "},
+                                forms('P', MaterialPrefix.plate),
+                                tools(
+                                        'f',
+                                        ToolDefinition.FILE,
+                                        'h',
+                                        ToolDefinition.HARD_HAMMER,
+                                        's',
+                                        ToolDefinition.SAW)),
+                        head(
+                                new String[] {" C ", "f h", " s "},
+                                forms('C', MaterialPrefix.plateGem),
+                                tools(
+                                        'f',
+                                        ToolDefinition.FILE,
+                                        'h',
+                                        ToolDefinition.HARD_HAMMER,
+                                        's',
+                                        ToolDefinition.SAW)),
+                        head(
+                                new String[] {" G ", "f h", " s "},
+                                forms('G', MaterialPrefix.gem),
+                                tools(
+                                        'f',
+                                        ToolDefinition.FILE,
+                                        'h',
+                                        ToolDefinition.HARD_HAMMER,
+                                        's',
+                                        ToolDefinition.SAW))));
         // Loader_Tools:298 — GT6 also writes a head row for the wrench; the port's wrench is headless
         // (its tool row builds it straight from plates), so the head is only reachable through this row.
-        HEADS.put(ToolDefinition.WRENCH, List.of(
-                head(new String[]{"hPW", "PVP", "WPd"},
-                        forms('P', MaterialPrefix.plate, 'W', MaterialPrefix.screw, 'V', MaterialPrefix.ring),
-                        tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER)),
-                head(new String[]{"hCW", "CVC", "WCd"},
-                        forms('C', MaterialPrefix.plateGem, 'W', MaterialPrefix.screw,
-                                'V', MaterialPrefix.ring),
-                        tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER))));
+        HEADS.put(
+                ToolDefinition.WRENCH,
+                List.of(
+                        head(
+                                new String[] {"hPW", "PVP", "WPd"},
+                                forms('P', MaterialPrefix.plate, 'W', MaterialPrefix.screw, 'V', MaterialPrefix.ring),
+                                tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER)),
+                        head(
+                                new String[] {"hCW", "CVC", "WCd"},
+                                forms(
+                                        'C',
+                                        MaterialPrefix.plateGem,
+                                        'W',
+                                        MaterialPrefix.screw,
+                                        'V',
+                                        MaterialPrefix.ring),
+                                tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER))));
     }
 
     // ── access ────────────────────────────────────────────────────────────
@@ -471,7 +751,6 @@ public final class ManualToolRecipeCatalog {
     }
 
     /** The vanilla item a pattern letter stands for, or null when it is a material form. */
-
     public static String vanilla(char letter) {
         return letter == 'F' ? "minecraft:flint" : null;
     }

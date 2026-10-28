@@ -3,21 +3,23 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.*;
-import gregtech.engine.material.*;
-import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.generated.MaterialDataFacts;
+import gregtech.engine.material.*;
+import gregtech.engine.recipe.Recipe;
+import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
-import java.util.*;
 
 /** Bounded viewer rows over real registered items; machines still use their current medium's data. */
 public final class MaterialDataViewerRecipes {
 
-    private MaterialDataViewerRecipes() {
-    }
+    private MaterialDataViewerRecipes() {}
+
     private static boolean registered;
-    private static final List<Recipe> SCANS = new ArrayList<>(), PRINTS = new ArrayList<>(), REPLICATIONS = new ArrayList<>();
+    private static final List<Recipe> SCANS = new ArrayList<>(),
+            PRINTS = new ArrayList<>(),
+            REPLICATIONS = new ArrayList<>();
 
     public static List<Recipe> scans() {
         return Collections.unmodifiableList(SCANS);
@@ -33,9 +35,11 @@ public final class MaterialDataViewerRecipes {
 
     public static synchronized int register() {
         if (registered) return 0;
-        var usb = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:usb3_stick")));
+        var usb = new ItemStack(
+                BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:usb3_stick")));
         if (usb.isEmpty()) throw new IllegalStateException("Missing molecular scanner USB medium");
-        var forms = new TreeMap<GTMaterial, List<ItemStack>>(Comparator.comparingInt(GTMaterial::getId).thenComparing(GTMaterial::getName));
+        var forms = new TreeMap<GTMaterial, List<ItemStack>>(
+                Comparator.comparingInt(GTMaterial::getId).thenComparing(GTMaterial::getName));
         for (var entry : ItemMaterialRegistry.entries().entrySet()) {
             var data = entry.getValue();
             if (!MaterialDataFacts.scannable(data.prefix())) continue;
@@ -46,14 +50,17 @@ public final class MaterialDataViewerRecipes {
         for (var entry : forms.entrySet()) {
             var material = entry.getKey();
             var choices = entry.getValue();
-            choices.sort(Comparator.comparing(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()));
+            choices.sort(Comparator.comparing(
+                    stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()));
             var scan = GTMaterialDataRecipes.scanner(List.of(choices.get(0), usb), List.of());
-            if (scan == null) throw new IllegalStateException("Registered scannable form has no scanner recipe: " + material);
+            if (scan == null)
+                throw new IllegalStateException("Registered scannable form has no scanner recipe: " + material);
             scan.withViewerInputAlternatives(0, choices);
             MachineRecipeMaps.ScannerMolecular.addFakeRecipe(false, scan);
             SCANS.add(scan);
         }
-        var materials = new TreeSet<GTMaterial>(Comparator.comparingInt(GTMaterial::getId).thenComparing(GTMaterial::getName));
+        var materials = new TreeSet<GTMaterial>(
+                Comparator.comparingInt(GTMaterial::getId).thenComparing(GTMaterial::getName));
         for (var raw : GTMaterialRegistry.allMaterials()) {
             var material = raw.resolve();
             if (material.isValid() && material.getId() > 0) materials.add(material);

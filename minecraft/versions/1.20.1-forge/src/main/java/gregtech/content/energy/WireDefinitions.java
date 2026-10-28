@@ -6,7 +6,14 @@ public final class WireDefinitions {
 
     public static void register() {
         for (var spec : WireCatalog.specifications())
-            gregtech.content.registry.GTWires.register(spec.id(), spec.material(), spec.size(),
-                    spec.voltage(), spec.amperage(), spec.lossPerBlock(), spec.insulated(), spec.contactDamage());
+            gregtech.content.registry.GTWires.register(
+                    spec.id(),
+                    spec.material(),
+                    spec.size(),
+                    spec.voltage(),
+                    spec.amperage(),
+                    spec.lossPerBlock(),
+                    spec.insulated(),
+                    spec.contactDamage());
     }
 }

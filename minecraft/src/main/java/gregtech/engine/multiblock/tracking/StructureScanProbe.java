@@ -1,10 +1,9 @@
 package gregtech.engine.multiblock.tracking;
 
+import java.util.Arrays;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import java.util.Arrays;
 
 /**
  * Counts structure reads while a scan is on the stack. The counters stay at zero unless a test enables them.
@@ -62,16 +61,45 @@ public final class StructureScanProbe {
         queries = 0;
     }
 
-    public static int scans() { return scans; }
-    public static int threadLookups() { return threadLookups; }
-    public static int blockReads() { return blockReads; }
-    public static int entityReads() { return entityReads; }
-    public static int chunkChecks() { return chunkChecks; }
-    public static int matchers() { return matchers; }
-    public static int binds() { return binds; }
-    public static int releases() { return releases; }
-    public static int designs() { return designs; }
-    public static int queries() { return queries; }
+    public static int scans() {
+        return scans;
+    }
+
+    public static int threadLookups() {
+        return threadLookups;
+    }
+
+    public static int blockReads() {
+        return blockReads;
+    }
+
+    public static int entityReads() {
+        return entityReads;
+    }
+
+    public static int chunkChecks() {
+        return chunkChecks;
+    }
+
+    public static int matchers() {
+        return matchers;
+    }
+
+    public static int binds() {
+        return binds;
+    }
+
+    public static int releases() {
+        return releases;
+    }
+
+    public static int designs() {
+        return designs;
+    }
+
+    public static int queries() {
+        return queries;
+    }
 
     public static boolean inScan() {
         if (activeScans == 0) return false;
@@ -175,9 +203,17 @@ public final class StructureScanProbe {
         if (enabled) queries++;
     }
 
-    public static void noteBlock(BlockPos pos) { note(pos, Kind.BLOCK); }
-    public static void noteEntity(BlockPos pos) { note(pos, Kind.ENTITY); }
-    public static void noteChunk(BlockPos pos) { note(pos, Kind.CHUNK); }
+    public static void noteBlock(BlockPos pos) {
+        note(pos, Kind.BLOCK);
+    }
+
+    public static void noteEntity(BlockPos pos) {
+        note(pos, Kind.ENTITY);
+    }
+
+    public static void noteChunk(BlockPos pos) {
+        note(pos, Kind.CHUNK);
+    }
 
     /**
      * A chunk-presence query. {@code hasChunkAt(BlockPos)} is an interface default, so the probe
@@ -220,8 +256,14 @@ public final class StructureScanProbe {
             BlockPos max = min;
             for (int cell = 0; cell < declared.size(); cell++) {
                 BlockPos at = declared.cell(cell);
-                min = new BlockPos(Math.min(min.getX(), at.getX()), Math.min(min.getY(), at.getY()), Math.min(min.getZ(), at.getZ()));
-                max = new BlockPos(Math.max(max.getX(), at.getX()), Math.max(max.getY(), at.getY()), Math.max(max.getZ(), at.getZ()));
+                min = new BlockPos(
+                        Math.min(min.getX(), at.getX()),
+                        Math.min(min.getY(), at.getY()),
+                        Math.min(min.getZ(), at.getZ()));
+                max = new BlockPos(
+                        Math.max(max.getX(), at.getX()),
+                        Math.max(max.getY(), at.getY()),
+                        Math.max(max.getZ(), at.getZ()));
             }
             throw new IllegalStateException("Structure scan read " + pos + " outside the declared footprint of "
                     + entity.getClass().getSimpleName() + " at " + controller
@@ -253,14 +295,22 @@ public final class StructureScanProbe {
             String name = frame.getClassName();
             if (name.contains("StructureScanProbe") || name.contains("LevelStructureProbeMixin")) continue;
             if (!name.startsWith("com.gregtech") && !name.startsWith("net.minecraft")) continue;
-            text.append(" | ").append(name.substring(name.lastIndexOf('.') + 1)).append('.').append(frame.getMethodName())
-                    .append(':').append(frame.getLineNumber());
+            text.append(" | ")
+                    .append(name.substring(name.lastIndexOf('.') + 1))
+                    .append('.')
+                    .append(frame.getMethodName())
+                    .append(':')
+                    .append(frame.getLineNumber());
             if (++shown == 6) break;
         }
         return text.toString();
     }
 
-    private enum Kind { BLOCK, ENTITY, CHUNK }
+    private enum Kind {
+        BLOCK,
+        ENTITY,
+        CHUNK
+    }
 
     private static final class Frame {
         private int depth;

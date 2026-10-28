@@ -8,16 +8,22 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(
+        modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
+        bus = EventBusSubscriber.Bus.MOD,
+        value = Dist.CLIENT)
 public final class CrankClientColors {
 
-    private CrankClientColors() {
-    }
-    @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {
+    private CrankClientColors() {}
+
+    @SubscribeEvent
+    public static void blocks(RegisterColorHandlersEvent.Block event) {
         var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "crank"));
         event.register((state, level, pos, index) -> index == 0 ? CrankBlock.tintRgb() : 0xFFFFFF, block);
     }
-    @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
+
+    @SubscribeEvent
+    public static void items(RegisterColorHandlersEvent.Item event) {
         var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "crank"));
         event.register(ItemColorARGB.opaque((stack, index) -> index == 0 ? CrankBlock.tintRgb() : 0xFFFFFF), item);
     }

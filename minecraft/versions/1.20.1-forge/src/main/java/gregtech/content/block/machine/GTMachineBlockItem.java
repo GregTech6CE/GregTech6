@@ -1,22 +1,22 @@
 package gregtech.content.block.machine;
 
+import gregtech.client.EngineTooltips;
+import gregtech.client.MachineTooltips;
+import gregtech.client.TankTooltips;
 import gregtech.engine.machine.BasicMachineSpec;
 import gregtech.engine.machine.MachineSpec;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import gregtech.client.EngineTooltips;
-import gregtech.client.MachineTooltips;
-import gregtech.client.TankTooltips;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class GTMachineBlockItem extends BlockItem {
     private final MachineSpec spec;
+
     @Nullable
     private final BasicMachineSpec basicSpec;
 
@@ -24,20 +24,28 @@ public class GTMachineBlockItem extends BlockItem {
         this(block, properties, spec, null);
     }
 
-    public GTMachineBlockItem(Block block, Properties properties, MachineSpec spec,
-                              @Nullable BasicMachineSpec basicSpec) {
+    public GTMachineBlockItem(
+            Block block, Properties properties, MachineSpec spec, @Nullable BasicMachineSpec basicSpec) {
         super(block, properties);
         this.spec = spec;
         this.basicSpec = basicSpec;
     }
 
-    public MachineSpec spec() { return spec; }
-    @Nullable
-    public BasicMachineSpec basicSpec() { return basicSpec; }
+    public MachineSpec spec() {
+        return spec;
+    }
 
-    @Override public int getMaxStackSize(ItemStack stack) {
+    @Nullable
+    public BasicMachineSpec basicSpec() {
+        return basicSpec;
+    }
+
+    @Override
+    public int getMaxStackSize(ItemStack stack) {
         var tag = stack.getTagElement("BlockEntityTag");
-        if (getBlock() instanceof TankBlock && tag != null && tag.getCompound("gt.tank").getLong("Amount") > 0) return 1;
+        if (getBlock() instanceof TankBlock
+                && tag != null
+                && tag.getCompound("gt.tank").getLong("Amount") > 0) return 1;
         return super.getMaxStackSize(stack);
     }
 

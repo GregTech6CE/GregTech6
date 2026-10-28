@@ -1,13 +1,12 @@
 package gregtech.util;
 
+import java.util.EnumSet;
+import java.util.Set;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import javax.annotation.Nullable;
-import java.util.EnumSet;
-import java.util.Set;
 
 /** GT6 byte-side conventions mapped to modern {@link Direction}. */
 public final class GTEnergySides {

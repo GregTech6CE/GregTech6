@@ -1,9 +1,9 @@
 package gregtech.compat.jade;
 
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.MaterialPresentation;
 import gregtech.content.blockentity.tool.DustFunnelBlockEntity;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialPresentation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -39,12 +39,18 @@ public enum DustFunnelJadeProvider implements IBlockComponentProvider, IServerDa
         CompoundTag data = accessor.getServerData();
         if (!data.contains(MODE, CompoundTag.TAG_INT)) return;
         int mode = Math.floorMod(data.getInt(MODE), 5);
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.dust_funnel.mode",
-                Component.translatable("jade.gt6ce.dust_funnel.size." + mode)));
+        JadeText.add(
+                tooltip,
+                Component.translatable(
+                        "jade.gt6ce.dust_funnel.mode", Component.translatable("jade.gt6ce.dust_funnel.size." + mode)));
         if (data.getLong(AMOUNT) > 0 && data.contains(MATERIAL, CompoundTag.TAG_STRING)) {
             var material = GTMaterialRegistry.get(data.getString(MATERIAL));
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.dust_funnel.fraction",
-                    data.getLong(AMOUNT) / GTValues.U72, MaterialPresentation.name(material)));
+            JadeText.add(
+                    tooltip,
+                    Component.translatable(
+                            "jade.gt6ce.dust_funnel.fraction",
+                            data.getLong(AMOUNT) / GTValues.U72,
+                            MaterialPresentation.name(material)));
             if (data.getBoolean(NEEDS_MORE))
                 JadeText.add(tooltip, Component.translatable("jade.gt6ce.dust_funnel.fraction_hint"));
         }

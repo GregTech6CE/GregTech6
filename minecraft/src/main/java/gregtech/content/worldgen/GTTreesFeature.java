@@ -1,6 +1,8 @@
 package gregtech.content.worldgen;
 
 import gregtech.content.block.wood.WoodSpecies;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,9 +18,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Port of GT6's {@code WorldgenTree*} surface generators ({@code Loader_Worldgen:608-616}).
@@ -42,8 +41,8 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
     /** One GT6 {@code WorldgenTree*} registration: species, its 1/N probability and its biome set. */
     public record Entry(WoodSpecies species, int probability, String gt6Biomes, Set<ResourceLocation> biomes) {}
 
-    private static final Set<ResourceLocation> TAIGA = Set.of(
-            id("taiga"), id("snowy_taiga"), id("old_growth_pine_taiga"), id("old_growth_spruce_taiga"));
+    private static final Set<ResourceLocation> TAIGA =
+            Set.of(id("taiga"), id("snowy_taiga"), id("old_growth_pine_taiga"), id("old_growth_spruce_taiga"));
     private static final Set<ResourceLocation> FOREST = Set.of(
             id("forest"), id("flower_forest"), id("birch_forest"), id("old_growth_birch_forest"), id("dark_forest"));
     private static final Set<ResourceLocation> SWAMP = Set.of(id("swamp"), id("mangrove_swamp"));
@@ -51,8 +50,14 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
     private static final Set<ResourceLocation> PLAINS = Set.of(id("plains"), id("sunflower_plains"), id("meadow"));
     private static final Set<ResourceLocation> BEACH = Set.of(id("beach"), id("snowy_beach"));
     private static final Set<ResourceLocation> MOUNTAINS = Set.of(
-            id("windswept_hills"), id("windswept_gravelly_hills"), id("windswept_forest"),
-            id("jagged_peaks"), id("frozen_peaks"), id("stony_peaks"), id("snowy_slopes"), id("grove"));
+            id("windswept_hills"),
+            id("windswept_gravelly_hills"),
+            id("windswept_forest"),
+            id("jagged_peaks"),
+            id("frozen_peaks"),
+            id("stony_peaks"),
+            id("snowy_slopes"),
+            id("grove"));
 
     /**
      * GT6 {@code Loader_Worldgen:608-616} in registration order — {@code (species, probability,
@@ -60,14 +65,14 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
      * only the modded "Enchanted Forest", so it has no vanilla biome here (documented above).
      */
     public static final List<Entry> ENTRIES = List.of(
-            new Entry(WoodSpecies.RUBBER,      5, "BIOMES_RUBBER (taiga family)", TAIGA),
-            new Entry(WoodSpecies.MAPLE,       5, "BIOMES_MAPLE (forest family)", FOREST),
-            new Entry(WoodSpecies.WILLOW,      4, "BIOMES_WILLOW (swampland)", SWAMP),
-            new Entry(WoodSpecies.BLUE_MAHOE,  3, "BIOMES_BLUEMAHOE (jungle)", JUNGLE),
-            new Entry(WoodSpecies.HAZEL,      32, "BIOMES_HAZEL (plains)", PLAINS),
-            new Entry(WoodSpecies.CINNAMON,    3, "BIOMES_CINNAMON (jungle)", JUNGLE),
-            new Entry(WoodSpecies.COCONUT,     1, "BIOMES_COCONUT (beach)", BEACH),
-            new Entry(WoodSpecies.BLUE_SPRUCE,32, "BIOMES_BLUESPRUCE (mountains)", MOUNTAINS));
+            new Entry(WoodSpecies.RUBBER, 5, "BIOMES_RUBBER (taiga family)", TAIGA),
+            new Entry(WoodSpecies.MAPLE, 5, "BIOMES_MAPLE (forest family)", FOREST),
+            new Entry(WoodSpecies.WILLOW, 4, "BIOMES_WILLOW (swampland)", SWAMP),
+            new Entry(WoodSpecies.BLUE_MAHOE, 3, "BIOMES_BLUEMAHOE (jungle)", JUNGLE),
+            new Entry(WoodSpecies.HAZEL, 32, "BIOMES_HAZEL (plains)", PLAINS),
+            new Entry(WoodSpecies.CINNAMON, 3, "BIOMES_CINNAMON (jungle)", JUNGLE),
+            new Entry(WoodSpecies.COCONUT, 1, "BIOMES_COCONUT (beach)", BEACH),
+            new Entry(WoodSpecies.BLUE_SPRUCE, 32, "BIOMES_BLUESPRUCE (mountains)", MOUNTAINS));
 
     public GTTreesFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -75,7 +80,8 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled() || !gregtech.GregTechConfig.Rule.TREES.enabled()) return false;
+        if (!gregtech.GregTechConfig.Worldgen.VEGETATION.enabled() || !gregtech.GregTechConfig.Rule.TREES.enabled())
+            return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
@@ -83,14 +89,16 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
         int minX = context.origin().getX() & ~15;
         int minZ = context.origin().getZ() & ~15;
         boolean placed = false;
-        for (Entry entry : ENTRIES) for (int attempt = 0; attempt < gregtech.GregTechConfig.Number.TREE_AMOUNT.value(); attempt++) {
-            // GT6: one target column per chunk, then a 1/probability roll.
-            if (random.nextInt(entry.probability() * gregtech.GregTechConfig.Number.TREE_PROBABILITY.value()) != 0) continue;
-            int x = minX + random.nextInt(16);
-            int z = minZ + random.nextInt(16);
-            if (!entry.biomes().contains(biomeId(level, x, z))) continue;
-            placed |= plant(level, x, z, entry.species(), random);
-        }
+        for (Entry entry : ENTRIES)
+            for (int attempt = 0; attempt < gregtech.GregTechConfig.Number.TREE_AMOUNT.value(); attempt++) {
+                // GT6: one target column per chunk, then a 1/probability roll.
+                if (random.nextInt(entry.probability() * gregtech.GregTechConfig.Number.TREE_PROBABILITY.value()) != 0)
+                    continue;
+                int x = minX + random.nextInt(16);
+                int z = minZ + random.nextInt(16);
+                if (!entry.biomes().contains(biomeId(level, x, z))) continue;
+                placed |= plant(level, x, z, entry.species(), random);
+            }
         return placed;
     }
 
@@ -103,7 +111,8 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
             // GT6 ignored liquids, non-opaque blocks, wood and leaves on the way down.
             if (state.liquid()) return false;
             if (!state.isFaceSturdy(level, ground, net.minecraft.core.Direction.UP)
-                    && !state.is(BlockTags.LEAVES) && !state.is(BlockTags.LOGS)) continue;
+                    && !state.is(BlockTags.LEAVES)
+                    && !state.is(BlockTags.LOGS)) continue;
             if (!state.is(BlockTags.DIRT) && !state.is(BlockTags.SAND)) return false;
             BlockPos pos = new BlockPos(x, y, z);
             if (!level.getBlockState(pos).isAir()) return false;
@@ -123,5 +132,6 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_trees.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_trees"));
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_trees"));
 }

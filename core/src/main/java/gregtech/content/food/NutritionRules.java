@@ -1,8 +1,8 @@
 package gregtech.content.food;
+
 public final class NutritionRules {
 
-    private NutritionRules() {
-    }
+    private NutritionRules() {}
 
     public static int clamp(long value) {
         return (int) Math.max(0, Math.min(127, value));
@@ -12,8 +12,7 @@ public final class NutritionRules {
         return clamp(value + Math.max(-127, Math.min(127, delta)));
     }
 
-    public record Effect(String id, int duration, int amplifier) {
-    }
+    public record Effect(String id, int duration, int amplifier) {}
 
     public static java.util.List<Effect> effects(int stat, int value) {
         int stage = value >= 100 ? 3 : value >= 75 ? 2 : value >= 50 ? 1 : value >= 25 ? 0 : -1;
@@ -38,8 +37,7 @@ public final class NutritionRules {
                 if (stage > 0) result.add(new Effect("slowness", 1200, stage - 1));
                 result.add(new Effect("resistance", 300, stage));
             }
-            default -> {
-            }
+            default -> {}
         }
         return java.util.List.copyOf(result);
     }

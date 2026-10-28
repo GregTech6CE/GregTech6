@@ -13,9 +13,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** A second GT6 bar can be added to a block without replacing the first one. */
 public final class BarsBlockItem extends BlockItem {
-    public BarsBlockItem(BarsBlock block, Properties properties) { super(block, properties); }
+    public BarsBlockItem(BarsBlock block, Properties properties) {
+        super(block, properties);
+    }
 
-    @Override public InteractionResult useOn(UseOnContext context) {
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
@@ -45,13 +48,15 @@ public final class BarsBlockItem extends BlockItem {
     }
 
     private static int chosenBit(int mask, Direction face, double x, double z) {
-        return gregtech.content.block.BarsRules.chosen(mask,face.getAxis().name().charAt(0),BarsBlock.faceBit(face),x,z);
+        return gregtech.content.block.BarsRules.chosen(
+                mask, face.getAxis().name().charAt(0), BarsBlock.faceBit(face), x, z);
     }
 
     private static InteractionResult join(UseOnContext context, BlockPos pos, BlockState state, int bit) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
-        if (player == null || !level.mayInteract(player, pos)
+        if (player == null
+                || !level.mayInteract(player, pos)
                 || !player.mayUseItemAt(pos, context.getClickedFace(), context.getItemInHand()))
             return InteractionResult.FAIL;
         if (!level.isClientSide) {

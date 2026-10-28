@@ -2,7 +2,6 @@ package gregtech.compat.kubejs;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import gregtech.engine.recipe.data.MachineRecipeScript;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.fluid.InputFluid;
 import dev.latvian.mods.kubejs.fluid.OutputFluid;
@@ -10,6 +9,7 @@ import dev.latvian.mods.kubejs.item.InputItem;
 import dev.latvian.mods.kubejs.item.OutputItem;
 import dev.latvian.mods.kubejs.recipe.RecipeExceptionJS;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
+import gregtech.engine.recipe.data.MachineRecipeScript;
 
 /** Writes ingredient JSON in the shape the machine-recipe parser accepts. */
 public final class MachineRecipeJS extends RecipeJS {
@@ -34,7 +34,11 @@ public final class MachineRecipeJS extends RecipeJS {
     @Override
     public JsonElement writeOutputItem(OutputItem value) {
         var object = new JsonObject();
-        object.addProperty("item", net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(value.item.getItem()).toString());
+        object.addProperty(
+                "item",
+                net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getKey(value.item.getItem())
+                        .toString());
         if (value.item.getCount() != 1) object.addProperty("count", value.item.getCount());
         if (value.hasChance()) object.addProperty("chance", chance(value.getChance()));
         return object;

@@ -54,7 +54,6 @@ public final class GTBumbleMutations {
      * Rocky + Sandy = Red Sand, Rocky + Frozen = Coal, Rocky + Nether = Heavy Metal, Royal + ??? =
      * Heroic, Frosty + Nether = Gloomstone); there is nothing to port for those.</p>
      */
-
     private GTBumbleMutations() {}
 
     /**
@@ -104,7 +103,8 @@ public final class GTBumbleMutations {
         BumbleBeeType type = BumbleBeeType.of(bee);
         if (species == null || type == null) return bee.copy();
 
-        GTBumbleSpecies.Species mutated=GTBumbleSpecies.byId(BumbleSpeciesRules.mutatedSpecies(species.id(),random::nextBoolean));
+        GTBumbleSpecies.Species mutated =
+                GTBumbleSpecies.byId(BumbleSpeciesRules.mutatedSpecies(species.id(), random::nextBoolean));
         if (mutated == null) return bee.copy();
 
         ItemStack result = BumbleBeeType.stack(mutated, type, BumbleBeeGenes.peek(bee), bee.getCount());
@@ -148,7 +148,7 @@ public final class GTBumbleMutations {
      */
     @Nullable
     public static GTBumbleSpecies.Species combineSpecies(GTBumbleSpecies.Species a, GTBumbleSpecies.Species b) {
-        return a==null||b==null?null:GTBumbleSpecies.byId(BumbleSpeciesRules.combine(a.id(),b.id()));
+        return a == null || b == null ? null : GTBumbleSpecies.byId(BumbleSpeciesRules.combine(a.id(), b.id()));
     }
 
     /** GT6's level digit: {@code (meta / 10) % 10}, the species' position inside its tier of four. */

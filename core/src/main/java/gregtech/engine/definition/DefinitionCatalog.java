@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 /** Validates a complete definition batch before its first Forge registration. */
 public final class DefinitionCatalog {
     private static final Pattern PATH = Pattern.compile("[a-z0-9/._-]+");
+
     private DefinitionCatalog() {}
 
     public static <T> List<T> validated(List<T> definitions, Function<T, String> idOf) {

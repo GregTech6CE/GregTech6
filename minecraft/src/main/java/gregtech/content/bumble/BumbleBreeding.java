@@ -75,8 +75,13 @@ public final class BumbleBreeding {
      * @param droneCost GT6's {@code tLoss} ({@code :256}): how many drones the machine has to remove
      * @param princessCount GT6's {@code tPrincessCount} ({@code :218}): {@code 1 + rng(5) / 2}, i.e. 1..3
      */
-    public record Result(ItemStack[] offspring, ItemStack queen, ItemStack droneDead,
-                         long lifeSpan, int droneCost, int princessCount) {}
+    public record Result(
+            ItemStack[] offspring,
+            ItemStack queen,
+            ItemStack droneDead,
+            long lifeSpan,
+            int droneCost,
+            int princessCount) {}
 
     private BumbleBreeding() {}
 
@@ -151,14 +156,14 @@ public final class BumbleBreeding {
         CompoundTag princessGenes = BumbleBeeGenes.of(princess, random);
         CompoundTag droneGenes = BumbleBeeGenes.of(drone, random);
 
-        int princessCount = 1 + random.nextInt(5) / 2;                          // GT6 :218
+        int princessCount = 1 + random.nextInt(5) / 2; // GT6 :218
         ItemStack[] offspring = new ItemStack[(int) BumbleBeeGenes.offspring(princessGenes) + princessCount];
 
         if (sameSpecies(princess, drone)) {
             // GT6 :222-231: children of the princess's species, with a mutation roll on each of them.
             for (int i = 0; i < offspring.length; i++) {
-                ItemStack child = BumbleBeeType.stack(princessSpecies,
-                        i < princessCount ? BumbleBeeType.PRINCESS : BumbleBeeType.DRONE, null, 1);
+                ItemStack child = BumbleBeeType.stack(
+                        princessSpecies, i < princessCount ? BumbleBeeType.PRINCESS : BumbleBeeType.DRONE, null, 1);
                 if (!child.isEmpty() && random.nextInt(10000) < GTBumbleMutations.mutateChance(child)) {
                     child = GTBumbleMutations.mutate(child, random);
                 }
@@ -179,8 +184,8 @@ public final class BumbleBreeding {
             }
         }
 
-        long lifeSpan = BumbleBeeGenes.lifeSpan(princessGenes);                 // GT6 :254
-        int droneCost = droneInMainSlot && drone.getCount() > 1 ? 2 : 1;        // GT6 :256
+        long lifeSpan = BumbleBeeGenes.lifeSpan(princessGenes); // GT6 :254
+        int droneCost = droneInMainSlot && drone.getCount() > 1 ? 2 : 1; // GT6 :256
         ItemStack droneDead = kill(droneSpecies, droneType, droneGenes, droneCost);
         ItemStack queen = crown(princessSpecies, princessType, princessGenes);
         return new Result(offspring, queen, droneDead, lifeSpan, droneCost, princessCount);
@@ -195,8 +200,13 @@ public final class BumbleBreeding {
      * unlisted pair GT6 falls back to the first parent, which is exactly what makes the switch a
      * 50/50 between the two parents there ({@link GTBumbleMutations#combineSpecies}).</p>
      */
-    private static ItemStack cross(ItemStack princess, ItemStack drone, GTBumbleSpecies.Species princessSpecies,
-                                   GTBumbleSpecies.Species droneSpecies, BumbleBeeType type, RandomSource random) {
+    private static ItemStack cross(
+            ItemStack princess,
+            ItemStack drone,
+            GTBumbleSpecies.Species princessSpecies,
+            GTBumbleSpecies.Species droneSpecies,
+            BumbleBeeType type,
+            RandomSource random) {
         return switch (random.nextInt(4)) {
             case 0 -> BumbleBeeType.stack(princessSpecies, type, null, 1);
             case 1 -> BumbleBeeType.stack(droneSpecies, type, null, 1);
@@ -233,8 +243,8 @@ public final class BumbleBreeding {
      * falls back to the plain {@link BumbleBeeType#DEAD} instead of leaving the machine without a dead
      * drone. All 320 scanned bee items are registered, so that fallback never fires today.</p>
      */
-    private static ItemStack kill(GTBumbleSpecies.Species species, BumbleBeeType droneType,
-                                  CompoundTag genes, int count) {
+    private static ItemStack kill(
+            GTBumbleSpecies.Species species, BumbleBeeType droneType, CompoundTag genes, int count) {
         ItemStack dead = BumbleBeeType.stack(species, droneType.deadVariant(), genes, count);
         return dead.isEmpty() ? BumbleBeeType.stack(species, BumbleBeeType.DEAD, genes, count) : dead;
     }
@@ -247,10 +257,9 @@ public final class BumbleBreeding {
      * <p>Port difference: as in {@link #kill}, an unbuildable scanned queen falls back to the plain
      * {@link BumbleBeeType#QUEEN}, which never fires while all 320 scanned bee items are registered.</p>
      */
-    private static ItemStack crown(GTBumbleSpecies.Species species, BumbleBeeType princessType,
-                                   CompoundTag genes) {
-        ItemStack queen = BumbleBeeType.stack(species,
-                princessType.scanned() ? BumbleBeeType.SCANNED_QUEEN : BumbleBeeType.QUEEN, genes, 1);
+    private static ItemStack crown(GTBumbleSpecies.Species species, BumbleBeeType princessType, CompoundTag genes) {
+        ItemStack queen = BumbleBeeType.stack(
+                species, princessType.scanned() ? BumbleBeeType.SCANNED_QUEEN : BumbleBeeType.QUEEN, genes, 1);
         return queen.isEmpty() ? BumbleBeeType.stack(species, BumbleBeeType.QUEEN, genes, 1) : queen;
     }
 }

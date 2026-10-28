@@ -1,12 +1,12 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-
 import gregtech.content.data.MaterialPrefix;
 
 /** Registry-backed material identity shared by ordinary items and native ArrowItem subclasses. */
 public interface MaterialFormItem {
     MaterialPrefix getPrefix();
+
     GTMaterial getMaterial();
 
     default int getTintColor() {

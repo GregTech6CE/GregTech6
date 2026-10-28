@@ -1,9 +1,5 @@
 package gregtech.content.plant;
 
-
-
-
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -32,14 +28,14 @@ public class BerryBushCatalog {
     public static final int NO_BERRY_COLOUR = 0xff00ff;
 
     static {
-        entry("blueberry",      0x22ff22, 0xffcccc, 0x6666dd, 0x0000ff);
-        entry("candleberry",    0x44ff44, 0xccffcc, 0xaaffaa, 0xccffcc);
-        entry("cranberry",      0x00dd00, 0xffcccc, 0x66ff66, 0xff0000);
+        entry("blueberry", 0x22ff22, 0xffcccc, 0x6666dd, 0x0000ff);
+        entry("candleberry", 0x44ff44, 0xccffcc, 0xaaffaa, 0xccffcc);
+        entry("cranberry", 0x00dd00, 0xffcccc, 0x66ff66, 0xff0000);
         entry("black_currants", 0x33ff33, 0xaaaaaa, 0x66ff66, 0x111111);
         entry("white_currants", 0x33ff33, 0xaaaaaa, 0x66ff66, 0xeeeedd);
-        entry("red_currants",   0x33ff33, 0xaaaaaa, 0x66ff66, 0xee0000);
-        entry("blackberry",     0x11ff11, 0xffcccc, 0x663333, 0x331111);
-        entry("raspberry",      0x11ff11, 0xffcccc, 0x664444, 0xffaaaa);
+        entry("red_currants", 0x33ff33, 0xaaaaaa, 0x66ff66, 0xee0000);
+        entry("blackberry", 0x11ff11, 0xffcccc, 0x663333, 0x331111);
+        entry("raspberry", 0x11ff11, 0xffcccc, 0x664444, 0xffaaaa);
     }
 
     private static void entry(String id, int bush, int bloom, int immature, int berry) {
@@ -51,7 +47,9 @@ public class BerryBushCatalog {
         return java.util.List.copyOf(TYPES.values());
     }
 
-    public static int size() { return TYPES.size(); }
+    public static int size() {
+        return TYPES.size();
+    }
 
     /** Stable block identity; cotton is the original string-producing default bush. */
     public static String blockPath(String id) {
@@ -81,7 +79,9 @@ public class BerryBushCatalog {
         return java.util.List.copyOf(entries);
     }
 
-    public static int worldgenSize() { return TYPES.size() + 1; }
+    public static int worldgenSize() {
+        return TYPES.size() + 1;
+    }
 
     public static BerryType worldgenByIndex(int index) {
         return worldgenTypes().get(Math.floorMod(index, worldgenSize()));

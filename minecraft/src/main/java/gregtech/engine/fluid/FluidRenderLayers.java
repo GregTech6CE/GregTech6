@@ -1,7 +1,6 @@
 package gregtech.engine.fluid;
 
 import gregtech.content.data.RegisteredFluids;
-
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -38,8 +37,12 @@ public final class FluidRenderLayers {
 
     /** GT6's other world-placed {@code BlockBaseFluid}s also use render pass 1. */
     private static final List<String> WORLD_SPRINGS = List.of(
-            "liquid_extra_heavy_oil", "liquid_heavy_oil", "liquid_medium_oil",
-            "liquid_light_oil", "gas_natural_gas", "watergeothermal");
+            "liquid_extra_heavy_oil",
+            "liquid_heavy_oil",
+            "liquid_medium_oil",
+            "liquid_light_oil",
+            "gas_natural_gas",
+            "watergeothermal");
 
     private FluidRenderLayers() {}
 

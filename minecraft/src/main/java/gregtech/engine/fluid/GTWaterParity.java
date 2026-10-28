@@ -1,10 +1,9 @@
 package gregtech.engine.fluid;
 
 import gregtech.content.data.RegisteredFluids;
-import net.minecraft.resources.ResourceLocation;
-
 import java.util.List;
 import java.util.Set;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Vanilla-water parity facts for the three fluids GT6 puts into the world in place of vanilla water
@@ -49,6 +48,7 @@ public final class GTWaterParity {
     /** Vanilla water's sprites, exactly as {@code ForgeMod.WATER_TYPE} registers them. */
     public static final ResourceLocation VANILLA_WATER_STILL_TEXTURE =
             ResourceLocation.withDefaultNamespace("block/water_still");
+
     public static final ResourceLocation VANILLA_WATER_FLOWING_TEXTURE =
             ResourceLocation.withDefaultNamespace("block/water_flow");
     public static final ResourceLocation VANILLA_WATER_OVERLAY_TEXTURE =
@@ -71,10 +71,10 @@ public final class GTWaterParity {
     public static final Set<String> WORLD_WATER_PATHS = Set.of(SEAWATER, RIVERWATER, SWAMPWATER);
 
     /** GT6's registration order, still before flowing, of the six world-water registry paths. */
-    public static final List<String> WORLD_WATER_REGISTRY_PATHS =
-            List.of(SEAWATER, SEAWATER + "_flowing",
-                    RIVERWATER, RIVERWATER + "_flowing",
-                    SWAMPWATER, SWAMPWATER + "_flowing");
+    public static final List<String> WORLD_WATER_REGISTRY_PATHS = List.of(
+            SEAWATER, SEAWATER + "_flowing",
+            RIVERWATER, RIVERWATER + "_flowing",
+            SWAMPWATER, SWAMPWATER + "_flowing");
 
     /**
      * The same six paths as a set, so a lookup can ask "is this one of the world waters?" for the

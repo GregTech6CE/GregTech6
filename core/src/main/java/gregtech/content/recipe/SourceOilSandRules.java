@@ -1,10 +1,5 @@
 package gregtech.content.recipe;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.recipe.SourceOreCrushingRules.Form;
 import static gregtech.content.recipe.SourceOreCrushingRules.Resolver;
@@ -13,6 +8,11 @@ import static gregtech.content.recipe.SourceOreCrushingRules.Stack;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
 import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * The OilSand ore-registration Centrifuge event, not generic material decomposition.
@@ -26,26 +26,44 @@ public final class SourceOilSandRules {
 
     public static final Identity OIL_SAND = new Identity(9851, "OilSand");
     public static final Identity SAND = new Identity(8100, "Sand");
-    public static final long WEIGHT_STANDARD = 2 * U, WEIGHT_RAW_ITEM = 2 * U,
-            WEIGHT_DENSE = 4 * U, WEIGHT_RAW_BLOCK = 18 * U;
+    public static final long WEIGHT_STANDARD = 2 * U,
+            WEIGHT_RAW_ITEM = 2 * U,
+            WEIGHT_DENSE = 4 * U,
+            WEIGHT_RAW_BLOCK = 18 * U;
     public static final int OUTPUT_SLOTS = 6;
 
-    public enum Status { ROW, UNSUPPORTED }
+    public enum Status {
+        ROW,
+        UNSUPPORTED
+    }
     /** Direct prefix byproduct: no crushing/pulverization target or quality conversion. */
     public record Byproduct(Identity material, long amount) {}
+
     public record Request(long prefixWeight, List<Byproduct> byproducts) {
-        public Request { byproducts = List.copyOf(byproducts); }
+        public Request {
+            byproducts = List.copyOf(byproducts);
+        }
     }
     /** The six source call positions, including known absent solids, are retained before native
      * trailing-null normalization. A fluid-only row remains valid when all solid forms are absent. */
     public record Result(Status status, List<Slot> slots, long ticks, long oilMb, String reason) {
-        public Result { slots = List.copyOf(slots); }
-        public int power() { return 16; }
-        public boolean optimize() { return true; }
+        public Result {
+            slots = List.copyOf(slots);
+        }
+
+        public int power() {
+            return 16;
+        }
+
+        public boolean optimize() {
+            return true;
+        }
     }
     /** Source prefix facts only; neither an item matcher nor proof of a broken native mode. */
     public record HostProfile(String sourcePrefix, long prefixWeight, List<Byproduct> byproducts) {
-        public HostProfile { byproducts = List.copyOf(byproducts); }
+        public HostProfile {
+            byproducts = List.copyOf(byproducts);
+        }
     }
 
     public static boolean isOilSand(int id, String canonicalName) {
@@ -60,6 +78,7 @@ public final class SourceOilSandRules {
             default -> true;
         };
     }
+
     public static HostProfile hostProfile(String nativeHostId) {
         if (nativeHostId == null) return null;
         String sediment = switch (nativeHostId) {
@@ -71,9 +90,14 @@ public final class SourceOilSandRules {
         // OP 115/117/118: 2U, DUST_ORE, and no byproduct assignment in the source init closure.
         if (sediment != null) return new HostProfile(sediment, WEIGHT_STANDARD, List.of());
         var host = SourceOreCrushingFacts.hostProfile(nativeHostId);
-        return host == null ? null : new HostProfile(host.sourcePrefix(), WEIGHT_STANDARD,
-                List.of(new Byproduct(host.gangueMaterial(), host.gangueAmount())));
+        return host == null
+                ? null
+                : new HostProfile(
+                        host.sourcePrefix(),
+                        WEIGHT_STANDARD,
+                        List.of(new Byproduct(host.gangueMaterial(), host.gangueAmount())));
     }
+
     public static Decision hostDecision(String nativeHostId) {
         if (hostProfile(nativeHostId) != null) return Decision.YES;
         return "bedrock".equals(nativeHostId) ? Decision.NO : Decision.UNKNOWN;
@@ -134,15 +158,24 @@ public final class SourceOilSandRules {
         }
         return new Choice(Availability.ABSENT, null);
     }
-    private static int bindStack(long count) { return (int) Math.max(1, Math.min(64, count)); }
+
+    private static int bindStack(long count) {
+        return (int) Math.max(1, Math.min(64, count));
+    }
     /** UT.Code.units 1677-1684 cancels an exact ratio before multiplication. */
     private static long unitsUp(long amount, long target) {
         long divisor = U;
-        if (divisor % target == 0) { divisor /= target; target = 1; }
-        else if (target % divisor == 0) { target /= divisor; divisor = 1; }
+        if (divisor % target == 0) {
+            divisor /= target;
+            target = 1;
+        } else if (target % divisor == 0) {
+            target /= divisor;
+            divisor = 1;
+        }
         long product = Math.multiplyExact(amount, target);
         return Math.addExact(product / divisor, product % divisor == 0 ? 0 : 1);
     }
+
     private static Result unsupported(String reason) {
         return new Result(Status.UNSUPPORTED, List.of(), 0, 0, reason);
     }

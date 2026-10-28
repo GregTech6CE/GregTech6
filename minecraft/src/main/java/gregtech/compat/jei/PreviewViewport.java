@@ -19,8 +19,8 @@ public final class PreviewViewport {
         float minX = Float.POSITIVE_INFINITY, minY = Float.POSITIVE_INFINITY;
         float maxX = Float.NEGATIVE_INFINITY, maxY = Float.NEGATIVE_INFINITY;
         var corner = new Vector3f();
-        for (int x : new int[]{left, right}) {
-            for (int y : new int[]{top, bottom}) {
+        for (int x : new int[] {left, right}) {
+            for (int y : new int[] {top, bottom}) {
                 recipePose.transformPosition(corner.set(x, y, 0));
                 minX = Math.min(minX, corner.x);
                 minY = Math.min(minY, corner.y);
@@ -29,7 +29,6 @@ public final class PreviewViewport {
             }
         }
         // GuiGraphics applies the window's GUI scale itself; do not multiply by it here.
-        return new Bounds((int)Math.floor(minX), (int)Math.floor(minY),
-                (int)Math.ceil(maxX), (int)Math.ceil(maxY));
+        return new Bounds((int) Math.floor(minX), (int) Math.floor(minY), (int) Math.ceil(maxX), (int) Math.ceil(maxY));
     }
 }

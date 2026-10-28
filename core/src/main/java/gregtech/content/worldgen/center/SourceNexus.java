@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.worldgen.center;
 
 import static gregtech.content.worldgen.center.OriginSupport.*;
@@ -33,117 +32,249 @@ public final class SourceNexus {
         GENERATE_STREETS = streets;
     }
 
-    public boolean generate(OriginWorld aWorld, OriginWorld.Chunk aChunk,
-            int aMinX, int aMinZ, java.util.Random aRandom) {
+    public boolean generate(
+            OriginWorld aWorld, OriginWorld.Chunk aChunk, int aMinX, int aMinZ, java.util.Random aRandom) {
         if (aMinX != 16 || aMinZ != -48) return F;
-        final boolean[] fWindow = {
-            F, T, T, T, T, F, T, T, T, T, F, T, T, T, T, F
-        };
+        final boolean[] fWindow = {F, T, T, T, T, F, T, T, T, T, F, T, T, T, T, F};
         if (GENERATE_STREETS) {
-            for (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {
-                for (int k = 2; k < 64; k++) set(aChunk, i, mHeight + k, j, NB, 0);
-                for (int k = aWorld.minY() + 1; k < mHeight; k++) set(aChunk, i, k, j, BlocksGT.Concrete, DYE_INDEX_Gray);
-                set(aChunk, i, mHeight + 1, j, BlocksGT.CFoam, DYE_INDEX_Gray);
-                if (i == 0 || i == 15 || j == 0 || j == 15) {
-                    set(aChunk, i, mHeight + 0, j, BlocksGT.Concrete, DYE_INDEX_Gray);
-                    set(aChunk, i, mHeight + 2, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                    set(aChunk, i, mHeight + 3, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                    set(aChunk, i, mHeight + 4, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                    set(aChunk, i, mHeight + 5, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                    set(aChunk, i, mHeight + 6, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                    set(aChunk, i, mHeight + 7, j, BlocksGT.CFoam, DYE_INDEX_Gray);
-                    set(aChunk, i, mHeight + 8, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                    if (fWindow[i] || fWindow[j]) {
-                        set(aChunk, i, mHeight + 9, j, BlocksGT.Glass, DYE_INDEX_LightBlue);
-                        set(aChunk, i, mHeight + 10, j, BlocksGT.Glass, DYE_INDEX_LightBlue);
-                        set(aChunk, i, mHeight + 11, j, BlocksGT.Glass, DYE_INDEX_LightBlue);
+            for (int i = 0; i < 16; i++)
+                for (int j = 0; j < 16; j++) {
+                    for (int k = 2; k < 64; k++) set(aChunk, i, mHeight + k, j, NB, 0);
+                    for (int k = aWorld.minY() + 1; k < mHeight; k++)
+                        set(aChunk, i, k, j, BlocksGT.Concrete, DYE_INDEX_Gray);
+                    set(aChunk, i, mHeight + 1, j, BlocksGT.CFoam, DYE_INDEX_Gray);
+                    if (i == 0 || i == 15 || j == 0 || j == 15) {
+                        set(aChunk, i, mHeight + 0, j, BlocksGT.Concrete, DYE_INDEX_Gray);
+                        set(aChunk, i, mHeight + 2, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        set(aChunk, i, mHeight + 3, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        set(aChunk, i, mHeight + 4, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        set(aChunk, i, mHeight + 5, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        set(aChunk, i, mHeight + 6, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        set(aChunk, i, mHeight + 7, j, BlocksGT.CFoam, DYE_INDEX_Gray);
+                        set(aChunk, i, mHeight + 8, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        if (fWindow[i] || fWindow[j]) {
+                            set(aChunk, i, mHeight + 9, j, BlocksGT.Glass, DYE_INDEX_LightBlue);
+                            set(aChunk, i, mHeight + 10, j, BlocksGT.Glass, DYE_INDEX_LightBlue);
+                            set(aChunk, i, mHeight + 11, j, BlocksGT.Glass, DYE_INDEX_LightBlue);
+                        } else {
+                            set(aChunk, i, mHeight + 9, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                            set(aChunk, i, mHeight + 10, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                            set(aChunk, i, mHeight + 11, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        }
+                        set(aChunk, i, mHeight + 12, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
                     } else {
-                        set(aChunk, i, mHeight + 9, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                        set(aChunk, i, mHeight + 10, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                        set(aChunk, i, mHeight + 11, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
+                        set(aChunk, i, mHeight + 0, j, Blocks.obsidian, 0);
                     }
-                    set(aChunk, i, mHeight + 12, j, BlocksGT.Concrete, DYE_INDEX_LightGray);
-                } else {
-                    set(aChunk, i, mHeight + 0, j, Blocks.obsidian, 0);
+                    set(aChunk, i, mHeight + 13, j, BlocksGT.CFoam, DYE_INDEX_Gray);
                 }
-                set(aChunk, i, mHeight + 13, j, BlocksGT.CFoam, DYE_INDEX_Gray);
-            }
         } else {
             int tRockType = aRandom.nextInt(BlocksGT.stones.length);
 
-            for (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {
-                for (int k = 2; k < 64; k++) set(aChunk, i, mHeight + k, j, NB, 0);
-                for (int k = aWorld.minY() + 1; k < mHeight; k++) set(aChunk, i, k, j, BlocksGT.stones[tRockType], 0);
-                set(aChunk, i, mHeight + 1, j, BlocksGT.stones[tRockType], BlockStones.TILES);
-                if (i == 0 || i == 15 || j == 0 || j == 15) {
-                    set(aChunk, i, mHeight + 0, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                    set(aChunk, i, mHeight + 2, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                    set(aChunk, i, mHeight + 3, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                    set(aChunk, i, mHeight + 4, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                    set(aChunk, i, mHeight + 5, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                    set(aChunk, i, mHeight + 6, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                    set(aChunk, i, mHeight + 7, j, BlocksGT.stones[tRockType], BlockStones.CHISL);
-                    set(aChunk, i, mHeight + 8, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                    if (fWindow[i] || fWindow[j]) {
-                        set(aChunk, i, mHeight + 9, j, Blocks.glass_pane, 0);
-                        set(aChunk, i, mHeight + 10, j, Blocks.glass_pane, 0);
-                        set(aChunk, i, mHeight + 11, j, Blocks.glass_pane, 0);
+            for (int i = 0; i < 16; i++)
+                for (int j = 0; j < 16; j++) {
+                    for (int k = 2; k < 64; k++) set(aChunk, i, mHeight + k, j, NB, 0);
+                    for (int k = aWorld.minY() + 1; k < mHeight; k++)
+                        set(aChunk, i, k, j, BlocksGT.stones[tRockType], 0);
+                    set(aChunk, i, mHeight + 1, j, BlocksGT.stones[tRockType], BlockStones.TILES);
+                    if (i == 0 || i == 15 || j == 0 || j == 15) {
+                        set(aChunk, i, mHeight + 0, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        set(aChunk, i, mHeight + 2, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        set(aChunk, i, mHeight + 3, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        set(aChunk, i, mHeight + 4, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        set(aChunk, i, mHeight + 5, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        set(aChunk, i, mHeight + 6, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        set(aChunk, i, mHeight + 7, j, BlocksGT.stones[tRockType], BlockStones.CHISL);
+                        set(aChunk, i, mHeight + 8, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        if (fWindow[i] || fWindow[j]) {
+                            set(aChunk, i, mHeight + 9, j, Blocks.glass_pane, 0);
+                            set(aChunk, i, mHeight + 10, j, Blocks.glass_pane, 0);
+                            set(aChunk, i, mHeight + 11, j, Blocks.glass_pane, 0);
+                        } else {
+                            set(aChunk, i, mHeight + 9, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                            set(aChunk, i, mHeight + 10, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                            set(aChunk, i, mHeight + 11, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        }
+                        set(aChunk, i, mHeight + 12, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
                     } else {
-                        set(aChunk, i, mHeight + 9, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                        set(aChunk, i, mHeight + 10, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                        set(aChunk, i, mHeight + 11, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
+                        set(aChunk, i, mHeight + 0, j, Blocks.obsidian, 0);
                     }
-                    set(aChunk, i, mHeight + 12, j, BlocksGT.stones[tRockType], 3 + aRandom.nextInt(3));
-                } else {
-                    set(aChunk, i, mHeight + 0, j, Blocks.obsidian, 0);
+                    set(aChunk, i, mHeight + 13, j, BlocksGT.stones[tRockType], BlockStones.STILE);
                 }
-                set(aChunk, i, mHeight + 13, j, BlocksGT.stones[tRockType], BlockStones.STILE);
-            }
         }
 
-        //      set(aChunk, 5, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk, 6, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk, 7, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk, 8, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk, 9, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk,10, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 5, mHeight + 2, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
+        //      set(aChunk, 5, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk, 6, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk, 7, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk, 8, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk, 9, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk,10, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        set(
+                aChunk,
+                5,
+                mHeight + 2,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
         set(aChunk, 6, mHeight + 2, 15, NB, 0);
         set(aChunk, 7, mHeight + 2, 15, NB, 0);
         set(aChunk, 8, mHeight + 2, 15, NB, 0);
         set(aChunk, 9, mHeight + 2, 15, NB, 0);
-        set(aChunk, 10, mHeight + 2, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 5, mHeight + 3, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
+        set(
+                aChunk,
+                10,
+                mHeight + 2,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                5,
+                mHeight + 3,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
         set(aChunk, 6, mHeight + 3, 15, NB, 0);
         set(aChunk, 7, mHeight + 3, 15, NB, 0);
         set(aChunk, 8, mHeight + 3, 15, NB, 0);
         set(aChunk, 9, mHeight + 3, 15, NB, 0);
-        set(aChunk, 10, mHeight + 3, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 5, mHeight + 4, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
+        set(
+                aChunk,
+                10,
+                mHeight + 3,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                5,
+                mHeight + 4,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
         set(aChunk, 6, mHeight + 4, 15, NB, 0);
         set(aChunk, 7, mHeight + 4, 15, NB, 0);
         set(aChunk, 8, mHeight + 4, 15, NB, 0);
         set(aChunk, 9, mHeight + 4, 15, NB, 0);
-        set(aChunk, 10, mHeight + 4, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 5, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 6, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 7, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 8, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 9, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 10, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
+        set(
+                aChunk,
+                10,
+                mHeight + 4,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                5,
+                mHeight + 5,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                6,
+                mHeight + 5,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                7,
+                mHeight + 5,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                8,
+                mHeight + 5,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                9,
+                mHeight + 5,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                10,
+                mHeight + 5,
+                15,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
 
-        //      set(aChunk, 6, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk, 7, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk, 8, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        //      set(aChunk, 9, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 6, mHeight + 2, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 9, mHeight + 2, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 6, mHeight + 3, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 9, mHeight + 3, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 6, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 7, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 8, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
-        set(aChunk, 9, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);
+        //      set(aChunk, 6, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk, 7, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk, 8, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        //      set(aChunk, 9, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay,
+        // DYE_INDEX_Gray);
+        set(
+                aChunk,
+                6,
+                mHeight + 2,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                9,
+                mHeight + 2,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                6,
+                mHeight + 3,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                9,
+                mHeight + 3,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                6,
+                mHeight + 4,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                7,
+                mHeight + 4,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                8,
+                mHeight + 4,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
+        set(
+                aChunk,
+                9,
+                mHeight + 4,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Gray);
 
         set(aChunk, 6, mHeight + 1, 1, Blocks.obsidian, 0);
         set(aChunk, 7, mHeight + 1, 1, Blocks.obsidian, 0);
@@ -191,25 +322,61 @@ public final class SourceNexus {
         // -----
 
         set(aChunk, 10, mHeight + 1, 1, Blocks.glowstone, 0);
-        set(aChunk, 10, mHeight + 1, 2, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 10, mHeight + 1, 3, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 10, mHeight + 1, 4, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                10,
+                mHeight + 1,
+                2,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                10,
+                mHeight + 1,
+                3,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                10,
+                mHeight + 1,
+                4,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
         set(aChunk, 10, mHeight + 1, 5, Blocks.glowstone, 0);
         set(aChunk, 11, mHeight + 1, 1, Blocks.grass, 0);
         set(aChunk, 11, mHeight + 1, 2, Blocks.grass, 0);
         set(aChunk, 11, mHeight + 1, 3, Blocks.grass, 0);
         set(aChunk, 11, mHeight + 1, 4, Blocks.grass, 0);
-        set(aChunk, 11, mHeight + 1, 5, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                11,
+                mHeight + 1,
+                5,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
         set(aChunk, 12, mHeight + 1, 1, Blocks.grass, 0);
         set(aChunk, 12, mHeight + 1, 2, Blocks.water, 0);
         set(aChunk, 12, mHeight + 1, 3, Blocks.water, 0);
         set(aChunk, 12, mHeight + 1, 4, Blocks.grass, 0);
-        set(aChunk, 12, mHeight + 1, 5, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                12,
+                mHeight + 1,
+                5,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
         set(aChunk, 13, mHeight + 1, 1, Blocks.grass, 0);
         set(aChunk, 13, mHeight + 1, 2, Blocks.water, 0);
         set(aChunk, 13, mHeight + 1, 3, Blocks.water, 0);
         set(aChunk, 13, mHeight + 1, 4, Blocks.grass, 0);
-        set(aChunk, 13, mHeight + 1, 5, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                13,
+                mHeight + 1,
+                5,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
         set(aChunk, 14, mHeight + 1, 1, Blocks.grass, 0);
         set(aChunk, 14, mHeight + 1, 2, Blocks.grass, 0);
         set(aChunk, 14, mHeight + 1, 3, Blocks.grass, 0);
@@ -300,21 +467,93 @@ public final class SourceNexus {
         // -----
 
         set(aChunk, 10, mHeight + 1, 10, Blocks.glowstone, 0);
-        set(aChunk, 10, mHeight + 1, 11, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 10, mHeight + 1, 12, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 10, mHeight + 1, 13, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                10,
+                mHeight + 1,
+                11,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                10,
+                mHeight + 1,
+                12,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                10,
+                mHeight + 1,
+                13,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
         set(aChunk, 10, mHeight + 1, 14, Blocks.glowstone, 0);
-        set(aChunk, 11, mHeight + 1, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 12, mHeight + 1, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 13, mHeight + 1, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                11,
+                mHeight + 1,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                12,
+                mHeight + 1,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                13,
+                mHeight + 1,
+                14,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
         set(aChunk, 14, mHeight + 1, 14, Blocks.glowstone, 0);
-        set(aChunk, 14, mHeight + 1, 13, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 14, mHeight + 1, 12, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 14, mHeight + 1, 11, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                14,
+                mHeight + 1,
+                13,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                14,
+                mHeight + 1,
+                12,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                14,
+                mHeight + 1,
+                11,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
         set(aChunk, 14, mHeight + 1, 10, Blocks.glowstone, 0);
-        set(aChunk, 13, mHeight + 1, 10, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 12, mHeight + 1, 10, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
-        set(aChunk, 11, mHeight + 1, 10, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);
+        set(
+                aChunk,
+                13,
+                mHeight + 1,
+                10,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                12,
+                mHeight + 1,
+                10,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
+        set(
+                aChunk,
+                11,
+                mHeight + 1,
+                10,
+                GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay,
+                DYE_INDEX_Black);
 
         aWorld.setSpawnLocation(0, mHeight + 5, 0);
         return T;

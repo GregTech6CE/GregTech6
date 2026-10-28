@@ -1,14 +1,28 @@
 package gregtech.content.recipe;
+
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.material.GTMaterialRegistry;
+
 /** Generated from reviewed-source-policy.json. Incomplete by design; absent is UNKNOWN. */
 public final class ReviewedOreSourceProfile {
-    public enum Decision { YES, NO, UNKNOWN;
-        public boolean orLegacy(boolean legacy) { return this == UNKNOWN ? legacy : this == YES; }
+    public enum Decision {
+        YES,
+        NO,
+        UNKNOWN;
+
+        public boolean orLegacy(boolean legacy) {
+            return this == UNKNOWN ? legacy : this == YES;
+        }
     }
-    public enum Rule { FURNACE, GRADED_GEM }
-    private record Entry(int id,String name,Rule rule,Decision decision) {}
+
+    public enum Rule {
+        FURNACE,
+        GRADED_GEM
+    }
+
+    private record Entry(int id, String name, Rule rule, Decision decision) {}
+
     private static final Entry[] ENTRIES = {
         new Entry(30, "Lithium", Rule.FURNACE, Decision.YES),
         new Entry(31, "Lithium-6", Rule.FURNACE, Decision.YES),
@@ -228,13 +242,16 @@ public final class ReviewedOreSourceProfile {
         new Entry(8332, "Lapis", Rule.GRADED_GEM, Decision.NO),
         new Entry(9114, "Cinnabar", Rule.GRADED_GEM, Decision.YES),
     };
+
     private ReviewedOreSourceProfile() {}
-    public static Decision decision(GTMaterial material,Rule rule) {
-        if(material==null||!material.isValid()) return Decision.UNKNOWN;
-        material=material.resolve();
-        if(AddonMaterials.owns(material)||!GTMaterialRegistry.isCoreMaterial(material)) return Decision.UNKNOWN;
-        for(Entry row:ENTRIES) if(row.id==material.getId()&&row.name.equals(material.getName())&&row.rule==rule)
-            return row.decision;
+
+    public static Decision decision(GTMaterial material, Rule rule) {
+        if (material == null || !material.isValid()) return Decision.UNKNOWN;
+        material = material.resolve();
+        if (AddonMaterials.owns(material) || !GTMaterialRegistry.isCoreMaterial(material)) return Decision.UNKNOWN;
+        for (Entry row : ENTRIES)
+            if (row.id == material.getId() && row.name.equals(material.getName()) && row.rule == rule)
+                return row.decision;
         return Decision.UNKNOWN;
     }
 }

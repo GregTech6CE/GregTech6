@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 /** Retained Forge recipe paths; both platforms consume the same resource bytes. */
 public final class EquipmentCraftingCatalog {
     private EquipmentCraftingCatalog() {}
+
     public static final java.util.List<String> FILES = java.util.List.of(
             "tool_blocks/sap_bag.json",
             "food/source/apple_slice_3_1.json",
@@ -180,7 +181,6 @@ public final class EquipmentCraftingCatalog {
             "catalog_repairs/slab_white_mahoe.json",
             "catalog_repairs/slab_willow.json",
             "catalog_repairs/slab_wood.json",
-
             "food/empty_food_can.json",
             "technology/remote_activator.json",
             "technology/portable_cropnalyzer.json",
@@ -2491,8 +2491,7 @@ public final class EquipmentCraftingCatalog {
             "decorative_panels/panel_wood_mossy.json",
             "decorative_panels/panel_wood_frozen.json",
             "decorative_panels/panel_wood_wood.json",
-            "decorative_panels/panel_wood_treated.json"
-    );
+            "decorative_panels/panel_wood_treated.json");
     public static final java.util.List<String> TAGS = java.util.List.of(
             "forge:crops/barley",
             "forge:crops/oats",

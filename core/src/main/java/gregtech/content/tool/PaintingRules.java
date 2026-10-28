@@ -3,8 +3,7 @@ package gregtech.content.tool;
 /** Brokestar GT6 dye order, paint mixing and entity/grass policy over existing identities. */
 public final class PaintingRules {
 
-    private PaintingRules() {
-    }
+    private PaintingRules() {}
 
     public static final long CAPACITY = 5120, BLOCK_COST = 10, ENTITY_COST = 50;
 
@@ -47,12 +46,15 @@ public final class PaintingRules {
                 | (((firstRgb & 255) + (secondRgb & 255)) >> 1);
     }
 
-    public record EntityFacts(boolean alive, boolean sheep, boolean sheared, boolean wolf, boolean tamed, int dyeId) {
-    }
+    public record EntityFacts(boolean alive, boolean sheep, boolean sheared, boolean wolf, boolean tamed, int dyeId) {}
 
     public static int entityDyeId(EntityFacts facts, int index) {
         int dye = vanillaDyeId(index);
-        return facts != null && facts.alive() && facts.dyeId() != dye && (facts.sheep() && !facts.sheared() || facts.wolf() && facts.tamed()) ? dye
+        return facts != null
+                        && facts.alive()
+                        && facts.dyeId() != dye
+                        && (facts.sheep() && !facts.sheared() || facts.wolf() && facts.tamed())
+                ? dye
                 : -1;
     }
 
@@ -68,6 +70,11 @@ public final class PaintingRules {
         };
     }
 
-    public static final java.util.Set<String> GRASS_IDS = java.util.Set.of("grassblock_medium", "grassblock_light", "grassblock_dark",
-            "grassblock_normal", "grassblock_yellow", "grassblock_brown");
+    public static final java.util.Set<String> GRASS_IDS = java.util.Set.of(
+            "grassblock_medium",
+            "grassblock_light",
+            "grassblock_dark",
+            "grassblock_normal",
+            "grassblock_yellow",
+            "grassblock_brown");
 }

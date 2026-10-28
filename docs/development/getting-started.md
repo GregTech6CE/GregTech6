@@ -25,7 +25,10 @@
 | NeoForge 发行 JAR | `./gradlew :minecraft:1.21.1-neoforge:jar` |
 | 两个平台组装 | `./gradlew assembleBothPlatforms` |
 | 全仓检查 | `./gradlew check` |
+| 代码格式化（core、共享与节点源码） | `./gradlew format` |
 | 单节点完整构建，与 CI 一致 | `./gradlew :minecraft:1.20.1-forge:build` 或 `./gradlew :minecraft:1.21.1-neoforge:build` |
+
+`format` 使用 Spotless + Palantir Java Format（4 空格、120 列）。`api/` 子模块、`**/generated/**` 与带 Stonecutter `//?` 标记的共享文件不在本轮范围内；后两者需要按节点处理，不要直接套用该任务。`spotlessCheck` 已接入各项目的 `check`。
 
 发行文件在 `minecraft/versions/<version-loader>/build/libs/`。Forge `jar` 输出到 `build/forge-intermediates/`，最终交付使用 `distributionJar`；两平台发行包均携带 core、公共 API 和游戏 API。独立公共库位于 `api/common/build/libs/`，平台 SDK 位于节点 `build/addon-sdk/`，使用方式见[附属 API](../ADDON_API.zh-CN.md)。不要把 API 库、SDK、sources 或 javadoc JAR 当模组安装。
 

@@ -5,8 +5,7 @@ import gregtech.api.material.GTMaterial;
 /** Exact saltnya GTToolHelper durability/click arithmetic, without stack APIs. */
 public final class ManualToolRules {
 
-    private ManualToolRules() {
-    }
+    private ManualToolRules() {}
 
     public static int maximumDurability(GTMaterial material, float multiplier) {
         long base = material.getToolDurability();

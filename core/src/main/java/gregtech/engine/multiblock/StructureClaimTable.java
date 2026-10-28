@@ -34,9 +34,13 @@ public final class StructureClaimTable {
     }
 
     /** The owner of a loaded part, including an owner whose own chunk is absent. */
-    public Long owner(long part) { return loaded.parts.get(part); }
+    public Long owner(long part) {
+        return loaded.parts.get(part);
+    }
 
-    public Long reservedOwner(long part) { return reserved.parts.get(part); }
+    public Long reservedOwner(long part) {
+        return reserved.parts.get(part);
+    }
 
     public boolean canClaim(long part, long controller) {
         Long owner = loaded.parts.get(part);
@@ -122,9 +126,13 @@ public final class StructureClaimTable {
         }
     }
 
-    public Set<Long> loadedParts(long controller) { return loaded.byOwner(controller); }
+    public Set<Long> loadedParts(long controller) {
+        return loaded.byOwner(controller);
+    }
 
-    public Set<Long> reservedParts(long controller) { return reserved.byOwner(controller); }
+    public Set<Long> reservedParts(long controller) {
+        return reserved.byOwner(controller);
+    }
 
     /** Snapshot for deferred orphan checks; never infer orphanhood from missing trackers. */
     public Set<Long> controllers() {
@@ -133,9 +141,13 @@ public final class StructureClaimTable {
         return Set.copyOf(owners);
     }
 
-    public int size() { return loaded.parts.size(); }
+    public int size() {
+        return loaded.parts.size();
+    }
 
-    public int reservationCount() { return reserved.parts.size(); }
+    public int reservationCount() {
+        return reserved.parts.size();
+    }
 
     public void clear() {
         loaded.clear();
@@ -147,7 +159,9 @@ public final class StructureClaimTable {
         private final Map<Long, Set<Long>> owners = new HashMap<>();
         private final Map<Long, Set<Long>> chunks = new HashMap<>();
 
-        Index(Map<Long, Long> parts) { this.parts = parts; }
+        Index(Map<Long, Long> parts) {
+            this.parts = parts;
+        }
 
         void put(long part, long owner) {
             Long previous = parts.putIfAbsent(part, owner);
@@ -156,7 +170,8 @@ public final class StructureClaimTable {
                 return;
             }
             owners.computeIfAbsent(owner, ignored -> new HashSet<>()).add(part);
-            chunks.computeIfAbsent(chunkOf.applyAsLong(part), ignored -> new HashSet<>()).add(part);
+            chunks.computeIfAbsent(chunkOf.applyAsLong(part), ignored -> new HashSet<>())
+                    .add(part);
         }
 
         void remove(long part) {
@@ -166,9 +181,13 @@ public final class StructureClaimTable {
             removeFrom(chunks, chunkOf.applyAsLong(part), part);
         }
 
-        Set<Long> byOwner(long owner) { return Set.copyOf(owners.getOrDefault(owner, Set.of())); }
+        Set<Long> byOwner(long owner) {
+            return Set.copyOf(owners.getOrDefault(owner, Set.of()));
+        }
 
-        Set<Long> byChunk(long chunk) { return Set.copyOf(chunks.getOrDefault(chunk, Set.of())); }
+        Set<Long> byChunk(long chunk) {
+            return Set.copyOf(chunks.getOrDefault(chunk, Set.of()));
+        }
 
         void clear() {
             parts.clear();

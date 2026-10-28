@@ -1,28 +1,45 @@
 package gregtech.content.recipe;
+
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import java.util.List;
+
 /** Original WelderFamilyRecipes parameters; native stack/registry construction stays in the platforms. */
 public final class WelderFamilyRecipeRows {
-    private WelderFamilyRecipeRows(){}
-    public record Row(MaterialPrefix input, int inCount, MaterialPrefix second, int secondCount,
-                       int circuit, MaterialPrefix output,
-                       gregtech.engine.prefix.BlockMaterialPrefix blockOutput) {
+    private WelderFamilyRecipeRows() {}
+
+    public record Row(
+            MaterialPrefix input,
+            int inCount,
+            MaterialPrefix second,
+            int secondCount,
+            int circuit,
+            MaterialPrefix output,
+            gregtech.engine.prefix.BlockMaterialPrefix blockOutput) {
         static Row of(MaterialPrefix input, int inCount, int circuit, MaterialPrefix output) {
             return new Row(input, inCount, null, 0, circuit, output, null);
         }
-        static Row of(MaterialPrefix input, int inCount, MaterialPrefix second, int secondCount, int circuit,
-                      MaterialPrefix output) {
+
+        static Row of(
+                MaterialPrefix input,
+                int inCount,
+                MaterialPrefix second,
+                int secondCount,
+                int circuit,
+                MaterialPrefix output) {
             return new Row(input, inCount, second, secondCount, circuit, output, null);
         }
-        static Row block(MaterialPrefix input, int inCount, int circuit,
-                         gregtech.engine.prefix.BlockMaterialPrefix output) {
+
+        static Row block(
+                MaterialPrefix input, int inCount, int circuit, gregtech.engine.prefix.BlockMaterialPrefix output) {
             return new Row(input, inCount, null, 0, circuit, null, output);
         }
+
         long inUnits() {
             return input.getMaterialWeight() * inCount
                     + (second == null ? 0 : second.getMaterialWeight() * secondCount);
         }
+
         long outUnits() {
             return output != null ? output.getMaterialWeight() : blockOutput.getMaterialWeight();
         }

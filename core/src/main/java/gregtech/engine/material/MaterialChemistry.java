@@ -1,11 +1,9 @@
 package gregtech.engine.material;
 
-import gregtech.api.material.GTValues;
 import gregtech.api.material.*;
-
-import gregtech.content.material.Materials;
+import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
-
+import gregtech.content.material.Materials;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,8 +58,8 @@ public final class MaterialChemistry {
 
     /** F3+H rows including prefix-specific components (e.g. steel in wrench heads). */
     public static List<WeightedMaterial> prefixMaterialWeights(GTMaterial material, MaterialPrefix prefix) {
-        if (prefix == null || (!material.isValid()
-                && !("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm()))) {
+        if (prefix == null
+                || (!material.isValid() && !("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm()))) {
             return List.of();
         }
         if (prefix == MaterialPrefix.toolHeadWrench) {
@@ -150,7 +148,10 @@ public final class MaterialChemistry {
             return;
         }
         long componentDivider = componentMaterial.getCompositionDivider();
-        if (componentMaterial.hasComposition() && divider > 0 && componentDivider > 0 && units % componentDivider == 0) {
+        if (componentMaterial.hasComposition()
+                && divider > 0
+                && componentDivider > 0
+                && units % componentDivider == 0) {
             long normalized = units / componentDivider;
             if (normalized > 1) {
                 out.append(subscript(normalized));
@@ -181,13 +182,12 @@ public final class MaterialChemistry {
     }
 
     /** Keep shared display and recoverable registration totals identical for composite heads. */
-    private static List<WeightedMaterial> headComponents(GTMaterial primary, long primaryUnits,
-                                                         GTMaterial secondary, long secondaryUnits) {
+    private static List<WeightedMaterial> headComponents(
+            GTMaterial primary, long primaryUnits, GTMaterial secondary, long secondaryUnits) {
         primary = primary.resolve();
         secondary = secondary.resolve();
         if (primary == secondary)
             return List.of(new WeightedMaterial(primary, Math.addExact(primaryUnits, secondaryUnits)));
         return List.of(new WeightedMaterial(primary, primaryUnits), new WeightedMaterial(secondary, secondaryUnits));
     }
-
 }

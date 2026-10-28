@@ -1,6 +1,5 @@
 package gregtech.engine.energy;
 
-
 /**
  * GT6 long-based energy buffer shared by the platform adapters.
  * Packet model: {@code size} (voltage) &times; {@code amount} (amperage).
@@ -60,16 +59,44 @@ public class PacketEnergyBuffer {
 
     // ── Long accessors ───────────────────────────────────────────────────
 
-    public long stored() { return energyStored; }
-    public long capacity() { return energyCapacity; }
-    public long lastSize() { return lastSize; }
-    public long lastAmount() { return lastAmount; }
-    public boolean canReceive() { return canReceive; }
-    public boolean canExtract() { return canExtract; }
+    public long stored() {
+        return energyStored;
+    }
 
-    public void setStored(long v) { this.energyStored = Math.max(0, Math.min(v, energyCapacity)); }
-    public void setCapacity(long v) { this.energyCapacity = Math.max(1, v); if (energyStored > energyCapacity) energyStored = energyCapacity; }
-    public void setCanReceive(boolean v) { this.canReceive = v; }
-    public void setCanExtract(boolean v) { this.canExtract = v; }
+    public long capacity() {
+        return energyCapacity;
+    }
 
+    public long lastSize() {
+        return lastSize;
+    }
+
+    public long lastAmount() {
+        return lastAmount;
+    }
+
+    public boolean canReceive() {
+        return canReceive;
+    }
+
+    public boolean canExtract() {
+        return canExtract;
+    }
+
+    public void setStored(long v) {
+        this.energyStored = Math.max(0, Math.min(v, energyCapacity));
+    }
+
+    public void setCapacity(long v) {
+        this.energyCapacity = Math.max(1, v);
+        if (energyStored > energyCapacity) energyStored = energyCapacity;
+    }
+
+    public void setCanReceive(boolean v) {
+        this.canReceive = v;
+    }
+
+    public void setCanExtract(boolean v) {
+        this.canExtract = v;
+    }
 }

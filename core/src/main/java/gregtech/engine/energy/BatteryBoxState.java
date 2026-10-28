@@ -18,11 +18,17 @@ public final class BatteryBoxState {
     /** Slot adapter: capability queries are theoretical, while transfers return actual packet counts. */
     public interface Battery {
         boolean accepts();
+
         boolean canInject(long voltage);
+
         boolean canExtract(long voltage);
+
         long stored();
+
         long capacity();
+
         long extract(long voltage, long packets);
+
         long inject(long voltage, long packets);
     }
 
@@ -72,11 +78,11 @@ public final class BatteryBoxState {
 
     private int count(boolean charging) {
         int count = 0;
-        for (var stack : inventory) if (stack.accepts()) {
-            var item = stack;
-            if (charging ? item.canInject(voltage)
-                    : item.canExtract(voltage)) count++;
-        }
+        for (var stack : inventory)
+            if (stack.accepts()) {
+                var item = stack;
+                if (charging ? item.canInject(voltage) : item.canExtract(voltage)) count++;
+            }
         return count;
     }
 
@@ -91,12 +97,12 @@ public final class BatteryBoxState {
 
     private long sum(boolean capacity) {
         long total = 0;
-        for (var stack : inventory) if (stack.accepts()) {
-            var item = stack;
-            long amount = Math.max(0, capacity ? item.capacity()
-                    : item.stored());
-            total += Math.min(Long.MAX_VALUE - total, amount);
-        }
+        for (var stack : inventory)
+            if (stack.accepts()) {
+                var item = stack;
+                long amount = Math.max(0, capacity ? item.capacity() : item.stored());
+                total += Math.min(Long.MAX_VALUE - total, amount);
+            }
         return total;
     }
 
@@ -107,17 +113,19 @@ public final class BatteryBoxState {
             // Low bands discharge cells; high bands recharge them. Middle bands leave cells alone.
             int band = (int) Math.min(7, buffer / (voltage * 40 * inventory.size()));
             long packets = (band == 0 || band == 7) ? 40 : (band == 1 || band == 6) ? 20 : 0;
-            if (packets > 0) for (var stack : inventory) if (stack.accepts()) {
-                var item = stack;
-                if (band < 2) {
-                    long used = item.extract(voltage, packets);
-                    buffer += voltage * Math.max(0, Math.min(packets, used));
-                } else {
-                    long offered = Math.min(packets, buffer / voltage);
-                    long used = item.inject(voltage, offered);
-                    buffer -= voltage * Math.max(0, Math.min(offered, used));
-                }
-            }
+            if (packets > 0)
+                for (var stack : inventory)
+                    if (stack.accepts()) {
+                        var item = stack;
+                        if (band < 2) {
+                            long used = item.extract(voltage, packets);
+                            buffer += voltage * Math.max(0, Math.min(packets, used));
+                        } else {
+                            long offered = Math.min(packets, buffer / voltage);
+                            long used = item.inject(voltage, offered);
+                            buffer -= voltage * Math.max(0, Math.min(offered, used));
+                        }
+                    }
         }
         receivablePower = count(true) * voltage * 2;
     }

@@ -9,10 +9,11 @@ public final class CoverRenderGeometry {
 
     /** Original isFullTexture policy, independent of physical support/collision policy. */
     public static boolean fullTexture(String behavior) {
-        return behavior != null && switch (behavior) {
-            case "cover_redstone_torch", "cover_redstone_repeater", "pressure_value" -> false;
-            default -> true;
-        };
+        return behavior != null
+                && switch (behavior) {
+                    case "cover_redstone_torch", "cover_redstone_repeater", "pressure_value" -> false;
+                    default -> true;
+                };
     }
 
     /** Inset only the holder's four lateral faces so they cannot coincide with a two-pixel wire. */
@@ -21,8 +22,8 @@ public final class CoverRenderGeometry {
         double x = side >= 4 ? 0 : HOLDER_INSET;
         double y = side < 2 ? 0 : HOLDER_INSET;
         double z = side >= 2 && side < 4 ? 0 : HOLDER_INSET;
-        return new CoverPlateGeometry.Box(box.minX() + x, box.minY() + y, box.minZ() + z,
-                box.maxX() - x, box.maxY() - y, box.maxZ() - z);
+        return new CoverPlateGeometry.Box(
+                box.minX() + x, box.minY() + y, box.minZ() + z, box.maxX() - x, box.maxY() - y, box.maxZ() - z);
     }
 
     /** Give shared edge/corner volume to the lower side ordinal, without changing physical boxes.

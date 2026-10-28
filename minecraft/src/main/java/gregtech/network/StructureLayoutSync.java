@@ -1,9 +1,8 @@
 package gregtech.network;
 
-import net.minecraft.network.FriendlyByteBuf;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+import net.minecraft.network.FriendlyByteBuf;
 
 /** Byte encoding shared by the Forge channel and the NeoForge payload. */
 final class StructureLayoutSync {

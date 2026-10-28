@@ -9,14 +9,19 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /** Original GregTechClient filter/Source extender colors on the actual Native registrations. */
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(
+        modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
+        bus = EventBusSubscriber.Bus.MOD,
+        value = Dist.CLIENT)
 public final class RelayFilterClientSetup {
     private RelayFilterClientSetup() {}
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
         for (var holder : GTRelaysFilters.FILTERS) {
-            event.register((state, level, pos, layer) -> layer == 0 ? Materials.SteelGalvanized.getColor() : 0xFFFFFF, holder.get());
+            event.register(
+                    (state, level, pos, layer) -> layer == 0 ? Materials.SteelGalvanized.getColor() : 0xFFFFFF,
+                    holder.get());
         }
         for (var holder : GTRelaysFilters.EXTENDERS) {
             if (holder.get() instanceof SourceExtenderBlock extender) {
@@ -29,12 +34,16 @@ public final class RelayFilterClientSetup {
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
         for (var holder : GTRelaysFilters.FILTERS) {
-            event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? Materials.SteelGalvanized.getColor() : 0xFFFFFF), holder.get().asItem());
+            event.register(
+                    ItemColorARGB.opaque(
+                            (stack, layer) -> layer == 0 ? Materials.SteelGalvanized.getColor() : 0xFFFFFF),
+                    holder.get().asItem());
         }
         for (var holder : GTRelaysFilters.EXTENDERS) {
             if (holder.get() instanceof SourceExtenderBlock extender) {
                 int color = extender.spec().material().getColor();
-                event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? color : 0xFFFFFF), extender.asItem());
+                event.register(
+                        ItemColorARGB.opaque((stack, layer) -> layer == 0 ? color : 0xFFFFFF), extender.asItem());
             }
         }
     }

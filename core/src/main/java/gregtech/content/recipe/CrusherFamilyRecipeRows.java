@@ -1,9 +1,12 @@
 package gregtech.content.recipe;
+
 import gregtech.content.data.MaterialPrefix;
 import java.util.List;
+
 /** Original CrusherFamilyRecipes parameters; native stack/registry construction stays in the platforms. */
 public final class CrusherFamilyRecipeRows {
-    private CrusherFamilyRecipeRows(){}
+    private CrusherFamilyRecipeRows() {}
+
     public record Row(MaterialPrefix input, MaterialPrefix output, int outCount, long multiplier) {}
 
     public static final List<Row> ROWS = List.of(

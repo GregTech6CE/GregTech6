@@ -9,18 +9,26 @@ import java.util.Set;
 /** Reads and writes the shared machine-recipe JSON objects. */
 public final class MachineRecipeDocuments {
     private static final Set<String> ROOT_ADDITION = Set.of(
-            MachineRecipeFields.TYPE_ADDITION, "type",
-            MachineRecipeFields.MAP, MachineRecipeFields.ITEM_INPUTS, MachineRecipeFields.FLUID_INPUTS,
-            MachineRecipeFields.ITEM_OUTPUTS, MachineRecipeFields.FLUID_OUTPUTS,
-            MachineRecipeFields.EU_PER_TICK, MachineRecipeFields.DURATION, MachineRecipeFields.SPECIAL);
+            MachineRecipeFields.TYPE_ADDITION,
+            "type",
+            MachineRecipeFields.MAP,
+            MachineRecipeFields.ITEM_INPUTS,
+            MachineRecipeFields.FLUID_INPUTS,
+            MachineRecipeFields.ITEM_OUTPUTS,
+            MachineRecipeFields.FLUID_OUTPUTS,
+            MachineRecipeFields.EU_PER_TICK,
+            MachineRecipeFields.DURATION,
+            MachineRecipeFields.SPECIAL);
     private static final Set<String> ROOT_REMOVAL = Set.of(
             MachineRecipeFields.TYPE_REMOVAL, "type",
             MachineRecipeFields.MAP, MachineRecipeFields.CLEAR,
             MachineRecipeFields.ITEM_INPUTS, MachineRecipeFields.FLUID_INPUTS,
             MachineRecipeFields.ITEM_OUTPUTS, MachineRecipeFields.FLUID_OUTPUTS);
-    private static final Set<String> ITEM = Set.of(MachineRecipeFields.ITEM, MachineRecipeFields.TAG, MachineRecipeFields.COUNT);
+    private static final Set<String> ITEM =
+            Set.of(MachineRecipeFields.ITEM, MachineRecipeFields.TAG, MachineRecipeFields.COUNT);
     private static final Set<String> FLUID = Set.of(MachineRecipeFields.FLUID, MachineRecipeFields.AMOUNT);
-    private static final Set<String> RESULT = Set.of(MachineRecipeFields.ITEM, MachineRecipeFields.COUNT, MachineRecipeFields.CHANCE);
+    private static final Set<String> RESULT =
+            Set.of(MachineRecipeFields.ITEM, MachineRecipeFields.COUNT, MachineRecipeFields.CHANCE);
 
     private MachineRecipeDocuments() {}
 
@@ -68,10 +76,26 @@ public final class MachineRecipeDocuments {
     public static String canonical(MachineRecipeSpec spec) {
         var json = new Out();
         json.string(MachineRecipeFields.MAP, spec.map());
-        json.raw(MachineRecipeFields.ITEM_INPUTS, array(spec.itemInputs().stream().map(value -> itemJson(value, true)).toList()));
-        json.raw(MachineRecipeFields.FLUID_INPUTS, array(spec.fluidInputs().stream().map(value -> fluidJson(value, true)).toList()));
-        json.raw(MachineRecipeFields.ITEM_OUTPUTS, array(spec.itemOutputs().stream().map(value -> resultJson(value, true)).toList()));
-        json.raw(MachineRecipeFields.FLUID_OUTPUTS, array(spec.fluidOutputs().stream().map(value -> fluidJson(value, true)).toList()));
+        json.raw(
+                MachineRecipeFields.ITEM_INPUTS,
+                array(spec.itemInputs().stream()
+                        .map(value -> itemJson(value, true))
+                        .toList()));
+        json.raw(
+                MachineRecipeFields.FLUID_INPUTS,
+                array(spec.fluidInputs().stream()
+                        .map(value -> fluidJson(value, true))
+                        .toList()));
+        json.raw(
+                MachineRecipeFields.ITEM_OUTPUTS,
+                array(spec.itemOutputs().stream()
+                        .map(value -> resultJson(value, true))
+                        .toList()));
+        json.raw(
+                MachineRecipeFields.FLUID_OUTPUTS,
+                array(spec.fluidOutputs().stream()
+                        .map(value -> fluidJson(value, true))
+                        .toList()));
         json.number(MachineRecipeFields.EU_PER_TICK, spec.euPerTick());
         json.number(MachineRecipeFields.DURATION, spec.duration());
         json.number(MachineRecipeFields.SPECIAL, spec.special());
@@ -82,10 +106,26 @@ public final class MachineRecipeDocuments {
         var json = new Out();
         json.string(MachineRecipeFields.MAP, spec.map());
         json.bool(MachineRecipeFields.CLEAR, spec.clear());
-        json.raw(MachineRecipeFields.ITEM_INPUTS, array(spec.itemInputs().stream().map(value -> itemJson(value, false)).toList()));
-        json.raw(MachineRecipeFields.FLUID_INPUTS, array(spec.fluidInputs().stream().map(value -> fluidJson(value, false)).toList()));
-        json.raw(MachineRecipeFields.ITEM_OUTPUTS, array(spec.itemOutputs().stream().map(value -> resultJson(value, false)).toList()));
-        json.raw(MachineRecipeFields.FLUID_OUTPUTS, array(spec.fluidOutputs().stream().map(value -> fluidJson(value, false)).toList()));
+        json.raw(
+                MachineRecipeFields.ITEM_INPUTS,
+                array(spec.itemInputs().stream()
+                        .map(value -> itemJson(value, false))
+                        .toList()));
+        json.raw(
+                MachineRecipeFields.FLUID_INPUTS,
+                array(spec.fluidInputs().stream()
+                        .map(value -> fluidJson(value, false))
+                        .toList()));
+        json.raw(
+                MachineRecipeFields.ITEM_OUTPUTS,
+                array(spec.itemOutputs().stream()
+                        .map(value -> resultJson(value, false))
+                        .toList()));
+        json.raw(
+                MachineRecipeFields.FLUID_OUTPUTS,
+                array(spec.fluidOutputs().stream()
+                        .map(value -> fluidJson(value, false))
+                        .toList()));
         return json.finish();
     }
 
@@ -127,15 +167,18 @@ public final class MachineRecipeDocuments {
         var out = new ArrayList<ItemResult>();
         for (var element : objects(json, MachineRecipeFields.ITEM_OUTPUTS)) {
             rejectUnknown(element, RESULT);
-            if (element.containsKey(MachineRecipeFields.TAG)) throw new IllegalArgumentException("item output does not take a tag");
+            if (element.containsKey(MachineRecipeFields.TAG))
+                throw new IllegalArgumentException("item output does not take a tag");
             var item = requiredString(element, MachineRecipeFields.ITEM);
             checkId(item, MachineRecipeFields.ITEM);
             int count = addition ? count(element, 1) : count(element, 0);
             int chance = addition
                     ? (element.containsKey(MachineRecipeFields.CHANCE)
-                        ? requiredInt(element, MachineRecipeFields.CHANCE) : MachineRecipeFields.CHANCE_CERTAIN)
+                            ? requiredInt(element, MachineRecipeFields.CHANCE)
+                            : MachineRecipeFields.CHANCE_CERTAIN)
                     : (element.containsKey(MachineRecipeFields.CHANCE)
-                        ? requiredInt(element, MachineRecipeFields.CHANCE) : 0);
+                            ? requiredInt(element, MachineRecipeFields.CHANCE)
+                            : 0);
             if (addition && chance < 1) throw new IllegalArgumentException("chance");
             out.add(new ItemResult(item, count, chance));
         }
@@ -169,7 +212,8 @@ public final class MachineRecipeDocuments {
         if (!(value instanceof List<?> list)) throw new IllegalArgumentException(key + " must be a list");
         var out = new ArrayList<Map<String, Object>>();
         for (var element : list) {
-            if (!(element instanceof Map<?, ?> raw)) throw new IllegalArgumentException(key + " entries must be objects");
+            if (!(element instanceof Map<?, ?> raw))
+                throw new IllegalArgumentException(key + " entries must be objects");
             var copy = new LinkedHashMap<String, Object>();
             for (var entry : raw.entrySet()) {
                 if (!(entry.getKey() instanceof String name)) throw new IllegalArgumentException(key + " key");
@@ -182,11 +226,14 @@ public final class MachineRecipeDocuments {
 
     /** Root keys starting with {@code _} are annotations, such as {@code _comment} or KubeJS 7's {@code _kubejs_changed_marker}. */
     private static void rejectUnknownRoot(Map<String, Object> json, Set<String> allowed) {
-        for (var key : json.keySet()) if (!key.startsWith("_") && !allowed.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
+        for (var key : json.keySet())
+            if (!key.startsWith("_") && !allowed.contains(key))
+                throw new IllegalArgumentException("Unknown field " + key);
     }
 
     private static void rejectUnknown(Map<String, Object> json, Set<String> allowed) {
-        for (var key : json.keySet()) if (!allowed.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
+        for (var key : json.keySet())
+            if (!allowed.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
     }
 
     private static String requiredString(Map<String, Object> json, String key) {
@@ -216,7 +263,8 @@ public final class MachineRecipeDocuments {
         var value = json.get(key);
         if (!(value instanceof Number number)) throw new IllegalArgumentException(key + " must be a number");
         double wide = number.doubleValue();
-        if (!Double.isFinite(wide) || wide != Math.rint(wide)) throw new IllegalArgumentException(key + " must be an integer");
+        if (!Double.isFinite(wide) || wide != Math.rint(wide))
+            throw new IllegalArgumentException(key + " must be an integer");
         return number.longValue();
     }
 
@@ -237,7 +285,8 @@ public final class MachineRecipeDocuments {
         for (int i = 0; i < id.length(); i++) {
             char c = id.charAt(i);
             if (c == ':') continue;
-            boolean ok = (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_' || c == '.' || c == '-' || c == '/';
+            boolean ok =
+                    (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_' || c == '.' || c == '-' || c == '/';
             if (!ok) throw new IllegalArgumentException(field + " has an illegal character");
         }
     }
@@ -316,6 +365,8 @@ public final class MachineRecipeDocuments {
             json.append('"').append(key).append("\":").append(value);
         }
 
-        private String finish() { return json.append('}').toString(); }
+        private String finish() {
+            return json.append('}').toString();
+        }
     }
 }

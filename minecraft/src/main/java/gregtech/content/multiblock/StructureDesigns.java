@@ -1,11 +1,10 @@
 package gregtech.content.multiblock;
 
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-
-import java.util.List;
 
 /** Writes a cell's design index onto the part when a structure claims it. */
 public final class StructureDesigns {

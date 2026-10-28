@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.logistics;
 
 import java.util.function.BooleanSupplier;
@@ -84,8 +83,10 @@ public final class LongDistanceLink<P, O> {
     public boolean claim() {
         if (target == null || target == this || !target.live.getAsBoolean()) return false;
         var previous = target.sender;
-        if (previous == null || !previous.live.getAsBoolean() || previous.target == null || !previous.target.live.getAsBoolean())
-            target.sender = this;
+        if (previous == null
+                || !previous.live.getAsBoolean()
+                || previous.target == null
+                || !previous.target.live.getAsBoolean()) target.sender = this;
         return target.sender == this;
     }
 }

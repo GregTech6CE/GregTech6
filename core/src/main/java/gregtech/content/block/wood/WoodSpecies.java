@@ -37,11 +37,24 @@ public enum WoodSpecies {
         this.enName = en;
     }
 
-    public String id() { return id; }
-    public int color() { return color; }
-    public boolean fireproof() { return fireproof; }
-    public String enName() { return enName; }
+    public String id() {
+        return id;
+    }
+
+    public int color() {
+        return color;
+    }
+
+    public boolean fireproof() {
+        return fireproof;
+    }
+
+    public String enName() {
+        return enName;
+    }
     /** Compatibility only; localized names come from language resources. */
     @Deprecated
-    public String zhName() { return enName; }
+    public String zhName() {
+        return enName;
+    }
 }

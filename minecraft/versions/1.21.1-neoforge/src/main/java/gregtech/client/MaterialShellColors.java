@@ -9,26 +9,43 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /** World shell colors for portable containers and fluid attachments. */
-@EventBusSubscriber(modid=gregtech.engine.mod.GregTechIdentity.MOD_ID, bus=EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
+@EventBusSubscriber(
+        modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
+        bus = EventBusSubscriber.Bus.MOD,
+        value = Dist.CLIENT)
 public final class MaterialShellColors {
     private MaterialShellColors() {}
+
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
         for (var block : BuiltInRegistries.BLOCK) {
             if (block instanceof PortableContainerBlock container)
-                event.register((state, level, pos, tint) -> tint == 0 ? container.spec().material().getColor() : 0xFFFFFF, block);
+                event.register(
+                        (state, level, pos, tint) ->
+                                tint == 0 ? container.spec().material().getColor() : 0xFFFFFF,
+                        block);
             else if (block instanceof FluidAttachmentBlock attachment)
-                event.register((state, level, pos, tint) -> tint == 0 ? attachment.spec().material().getColor() : 0xFFFFFF, block);
+                event.register(
+                        (state, level, pos, tint) ->
+                                tint == 0 ? attachment.spec().material().getColor() : 0xFFFFFF,
+                        block);
         }
     }
+
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
         for (var item : BuiltInRegistries.ITEM) {
             if (item instanceof gregtech.content.item.PortableFluidContainerItem container)
-                event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? container.spec().material().getColor() : 0xFFFFFF), item);
+                event.register(
+                        ItemColorARGB.opaque((stack, tint) ->
+                                tint == 0 ? container.spec().material().getColor() : 0xFFFFFF),
+                        item);
             else if (item instanceof net.minecraft.world.item.BlockItem blockItem
                     && blockItem.getBlock() instanceof FluidAttachmentBlock attachment)
-                event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? attachment.spec().material().getColor() : 0xFFFFFF), item);
+                event.register(
+                        ItemColorARGB.opaque((stack, tint) ->
+                                tint == 0 ? attachment.spec().material().getColor() : 0xFFFFFF),
+                        item);
         }
     }
 }
