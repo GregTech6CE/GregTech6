@@ -31,17 +31,40 @@ public final class RainbowLeavesColors {
         return COLORS[(int) (sum % COLORS.length)];
     }
 
+    /** GT6's opaque leaves render pass is registered as its own full-cube block in the port. */
+    @javax.annotation.Nullable
+    private static net.minecraft.world.level.block.Block opaqueLeaves() {
+//? if >=1.21.1 {
+        /*var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                gregtech.engine.mod.GregTechIdentity.MOD_ID, "leaves_opaque_rainbowood");
+        var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(id);
+        return block == net.minecraft.world.level.block.Blocks.AIR ? null : block;
+*///?} else {
+        return net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
+                new net.minecraft.resources.ResourceLocation(gregtech.engine.mod.GregTechIdentity.MOD_ID, "leaves_opaque_rainbowood"));
+//?}
+    }
+
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, pos, tint) -> tint == 0 ? color(pos) : 0xffffff,
                 GTWoods.leaves(WoodSpecies.RAINBOWOOD));
+        var opaque = opaqueLeaves();
+        if (opaque != null)
+            event.register((state, level, pos, tint) -> tint == 0 ? color(pos) : 0xffffff, opaque);
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
 //? if >=1.21.1 {
         /*event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? color(null) : 0xffffff),
                 GTWoods.leaves(WoodSpecies.RAINBOWOOD).asItem());
+        var opaque = opaqueLeaves();
+        if (opaque != null)
+            event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? color(null) : 0xffffff), opaque.asItem());
 *///?} else {
         event.register((stack, tint) -> tint == 0 ? color(null) : 0xffffff,
                 GTWoods.leaves(WoodSpecies.RAINBOWOOD).asItem());
+        var opaque = opaqueLeaves();
+        if (opaque != null)
+            event.register((stack, tint) -> tint == 0 ? color(null) : 0xffffff, opaque.asItem());
 //?}
     }
 }
