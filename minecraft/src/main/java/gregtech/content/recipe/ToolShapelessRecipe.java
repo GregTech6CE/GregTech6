@@ -76,11 +76,11 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
             String conversionInput, String conversionMaterial, boolean requireEmptyFluidContainers, FormConversionPlacement formPlacement) {
 //? if >=1.21.1 {
-        /*super(base.getGroup(), base.category(), base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), base.getIngredients());
+        /*super(base.getGroup(), base.category(), base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), expand(base).getIngredients());
         this.base = base;
         this.autocraftable = autocraftable;
 *///?} else {
-        super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
+        super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), expand(base).getIngredients());
         this.autocraftable = autocraftable;
 //?}
         this.requireEmptyFluidContainers = requireEmptyFluidContainers;
@@ -89,6 +89,11 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
         if (conversionInput.isEmpty() != conversionMaterial.isEmpty()) throw new IllegalArgumentException("Incomplete source conversion form");
         this.conversionInput = conversionInput;
         this.conversionMaterial = conversionMaterial;
+    }
+    /** Shapeless rows use the same GT6 tool identities as the shaped serializer. */
+    private static ShapelessRecipe expand(ShapelessRecipe base) {
+        base.getIngredients().replaceAll(CraftingTools::expand);
+        return base;
     }
 //? if >=1.21.1 {
     /*@Override

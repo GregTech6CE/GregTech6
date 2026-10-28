@@ -19,11 +19,13 @@ public final class ItemMaterialRegistry {
         boolean compositeHead = prefix == MaterialPrefix.toolHeadWrench || prefix == MaterialPrefix.toolHeadChainsaw
                 || prefix == MaterialPrefix.toolHeadDrill || prefix == MaterialPrefix.toolHeadPickaxeGem;
         if (item != null && material != null && prefix != null
-                && (prefix.hasEmptyAmmunitionForm() || prefix == MaterialPrefix.plantGtTwig || compositeHead)) {
+                && (prefix.hasEmptyForm() || prefix == MaterialPrefix.plantGtTwig || compositeHead)) {
             var parts = MaterialChemistry.prefixMaterialWeights(material, prefix).stream()
                     .map(c -> MaterialComponent.of(c.material(), c.amount())).toList();
             String source = compositeHead ? "GT6 OP tool-head components"
-                    : prefix == MaterialPrefix.plantGtTwig ? "GT6 OP twig components" : "GT6 OP ammunition components";
+                    : prefix == MaterialPrefix.plantGtTwig ? "GT6 OP twig components"
+                    : prefix == MaterialPrefix.glasstube ? "GT6 OP chemtube components"
+                    : "GT6 OP ammunition components";
             if (!parts.isEmpty()) register(item, new ItemComposition(prefix, parts, source, true));
             return;
         }
@@ -65,12 +67,21 @@ public final class ItemMaterialRegistry {
                 .filter(c -> c.amount() > 0).toList();
         return Optional.of(new ItemComposition(data.prefix(), scaled, data.source(), data.recoverable()));
     }
-    /** Do not consume stored inventories/entities or fluid containers as empty shells. */
-    public static boolean canRecover(ItemStack stack) {
+    /**
+     * GT6 {@code OM.anydata_} admission for the melting crucible: any registered composition is
+     * meltable, including rows marked descriptive for recovery ({@code recoverable=false}).
+     * Do not consume stored inventories/entities or fluid containers as empty shells.
+     */
+    public static boolean canMelt(ItemStack stack) {
         var data = get(stack);
-        if (data.isEmpty() || !data.get().recoverable() || data.get().components().isEmpty()) return false;
+        if (data.isEmpty() || data.get().components().isEmpty()) return false;
         if (hasStoredContents(stack)) return false;
         return !(stack.getItem() instanceof net.minecraft.world.item.BucketItem) || stack.is(net.minecraft.world.item.Items.BUCKET);
+    }
+    /** Recovery also requires an authoritative composition, not a descriptive row. */
+    public static boolean canRecover(ItemStack stack) {
+        var data = get(stack);
+        return data.isPresent() && data.get().recoverable() && canMelt(stack);
     }
     public static boolean hasStoredContents(ItemStack stack) {
 //? if >=1.21.1 {

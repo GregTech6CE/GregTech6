@@ -283,7 +283,7 @@ public final class MaterialItemDefinitions {
         claimed.computeIfAbsent(material, ignored -> new HashMap<>()).put(prefix, itemId);
     }
 
-    /** Prefix validation retains the original five EMPTY ammunition components. */
+    /** Prefix validation keeps the original EMPTY container and ammunition forms. */
     private static boolean generates(MaterialPrefix prefix, GTMaterial material) {
         if (material.resolve() != material) return false;
         if (!prefix.isValidFor(material)) return false;

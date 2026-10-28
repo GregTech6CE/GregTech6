@@ -3,9 +3,11 @@ package gregtech.compat.emi;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
 import gregtech.compat.jei.RecipeMachines;
+import gregtech.content.item.GTToolItem;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.Locale;
 import net.minecraft.network.chat.Component;
@@ -60,6 +62,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                         dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
         registry.removeEmiStacks(stack -> !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
+        // EMI builds repair entries from canBeDepleted() alone, so GT tools would still show a dead recipe.
+        registry.removeRecipes(GregTechEMIPlugin::repairedGtTool);
         for (var item : gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())
             registry.setDefaultComparison(
                     item,
@@ -133,5 +137,14 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                             net.minecraft.core.registries.BuiltInRegistries.ITEM.size(),
                             (runtime.totalMemory() - runtime.freeMemory()) / 1_048_576L);
         }
+    }
+
+    /** EMI's repair entry lives outside its API artifact, so match it by class name and GT tool output. */
+    private static boolean repairedGtTool(EmiRecipe recipe) {
+        if (!recipe.getClass().getName().equals("dev.emi.emi.recipe.special.EmiRepairItemRecipe")) return false;
+        for (EmiStack stack : recipe.getOutputs()) {
+            if (stack.getItemStack().getItem() instanceof GTToolItem) return true;
+        }
+        return false;
     }
 }

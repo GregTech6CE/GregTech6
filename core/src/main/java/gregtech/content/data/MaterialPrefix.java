@@ -838,8 +838,9 @@ public final class MaterialPrefix {
 
     public boolean isValidFor(GTMaterial material) {
         if (material == null) return false;
-        // OP uses EMPTY for arrow shafts and powder-filled bullet casings, not for press molds.
-        if (material.getName().equals("Empty")) return hasEmptyAmmunitionForm();
+        // OP uses EMPTY for arrow shafts, powder-filled bullet casings, the empty glass tube
+        // (`OP.java:621` forces the gem pickaxe head item for MT.Empty as well), not for press molds.
+        if (material.getName().equals("Empty")) return hasEmptyForm();
         if (material.has(MaterialProperty.HIDDEN)) return false;
         if (!validator.test(material)) return false;
         return parent == null || parent.isValidFor(material);
@@ -851,6 +852,11 @@ public final class MaterialPrefix {
                 || this == bulletGtSmall
                 || this == bulletGtMedium
                 || this == bulletGtLarge;
+    }
+
+    /** Empty-material containers and the forced empty gem pickaxe head ({@code OP.java:621}). */
+    public boolean hasEmptyForm() {
+        return hasEmptyAmmunitionForm() || this == glasstube || this == toolHeadPickaxeGem;
     }
 
     public String getItemId(GTMaterial material) {

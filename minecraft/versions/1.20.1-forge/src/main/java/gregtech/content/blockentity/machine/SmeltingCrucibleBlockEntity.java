@@ -829,6 +829,14 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity
         }
     }
 
+    /** GT6 {@code MultiTileEntitySmeltery.removedByPlayer}: a crucible at lava's melting point melts down. */
+    public void meltDownOnBreak() {
+        content.clear();
+        playFizz();
+        SmelteryFireHelper.crucibleMeltdown(level, worldPosition, hazardProfile(), getTemperature(), 1.0F);
+        setChanged();
+    }
+
     protected long materialAmount(GTMaterial material) {
         return content.stream()
                 .filter(stack -> stack.material.resolve() == material.resolve())

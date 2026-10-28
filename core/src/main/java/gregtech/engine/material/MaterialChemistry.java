@@ -58,8 +58,14 @@ public final class MaterialChemistry {
 
     /** F3+H rows including prefix-specific components (e.g. steel in wrench heads). */
     public static List<WeightedMaterial> prefixMaterialWeights(GTMaterial material, MaterialPrefix prefix) {
-        if (prefix == null
-                || (!material.isValid() && !("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm()))) {
+        if (prefix == null || (!material.isValid() && !("Empty".equals(material.getName()) && prefix.hasEmptyForm()))) {
+            return List.of();
+        }
+        if ("Empty".equals(material.getName()) && prefix == MaterialPrefix.glasstube) {
+            // The empty tube is the glass part of OP.chemtube's byproduct.
+            return List.of(new WeightedMaterial(Materials.Glass, GTValues.U3));
+        }
+        if ("Empty".equals(material.getName()) && prefix == MaterialPrefix.toolHeadPickaxeGem) {
             return List.of();
         }
         if (prefix == MaterialPrefix.toolHeadWrench) {
