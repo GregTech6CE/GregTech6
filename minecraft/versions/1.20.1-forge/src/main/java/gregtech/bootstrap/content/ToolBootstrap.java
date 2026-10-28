@@ -21,6 +21,9 @@ public record ToolBootstrap(IEventBus bus) implements InitializationStep {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, GregTech.NAMESPACE);
 
+    public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.GTToolRepairRecipe>> TOOL_REPAIR =
+            RECIPE_SERIALIZERS.register("tool_repair", () -> gregtech.content.recipe.GTToolRepairRecipe.SERIALIZER);
+
     /** Head + handle assembly (GT6 {@code AdvancedCraftingTool}). */
     public static final RegistryObject<RecipeSerializer<GTToolAssemblyRecipe>> TOOL_ASSEMBLY =
             RECIPE_SERIALIZERS.register("tool_assembly", () -> GTToolRecipeSerializers.ASSEMBLY);

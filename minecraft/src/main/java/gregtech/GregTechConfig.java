@@ -128,6 +128,8 @@ public final class GregTechConfig {
         OVERDOSE_DEATH("general.DeathByOverdosingCertainFoods", true),
         ALWAYS_DRINK("general.drinks_always_drinkable", false),
         DISABLE_VANILLA_ORES("general.DisableVanillaOres", true),
+        DISABLE_VANILLA_DECORATIVE_STONE("worldgen.DisableVanillaDecorativeStone", true),
+        TOOL_MERGING("recipes.allow_tool_merging", false),
         GENERATE_NETHER_GOLD_ORE("worldgen.GenerateNetherGoldOre", true),
         GENERATE_ANCIENT_DEBRIS("worldgen.GenerateAncientDebris", true),
         INCREASE_DUNGEON_LOOT("general.IncreaseDungeonLoot", true),
@@ -217,6 +219,8 @@ public final class GregTechConfig {
             String description = switch (rule) {
                 case SMALLER_VANILLA_TOOL_DURABILITY -> "Original GT6: wood/stone/gold/iron/diamond swords, pickaxes, shovels, axes and hoes use 8/16/32/128/512 durability. Netherite and custom stack durability are unchanged. Does not rewrite existing damage.";
                 case DISABLE_VANILLA_ORES -> "Disable vanilla ore generation. Nether gold ore and ancient debris have independent settings.";
+                case DISABLE_VANILLA_DECORATIVE_STONE -> "Disable vanilla granite, diorite and andesite ore features in newly generated chunks.";
+                case TOOL_MERGING -> "Allow two identical GT tools with matching head and handle materials to be crafted together to repair durability, with the vanilla 5 percent bonus.";
                 case GENERATE_NETHER_GOLD_ORE -> "Generate vanilla Nether gold ore, independently of DisableVanillaOres.";
                 case GENERATE_ANCIENT_DEBRIS -> "Generate vanilla ancient debris, independently of DisableVanillaOres.";
                 case VANILLA_STORAGE_BLOCK_RECIPES -> "Enable vanilla crafting recipes for compressing materials into storage blocks.";
