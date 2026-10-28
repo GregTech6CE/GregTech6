@@ -4,11 +4,13 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.GTTechnological;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -44,9 +46,21 @@ public class ChemicalRecipeLoader implements InitializationStep {
         // ── Water electrolysis: 3 H2O → 2 H + 1 O (per 3000 mB) ─────────────
         FluidStack h2 = gasOrLiquid("H", 2);
         FluidStack o = gasOrLiquid("O", 1);
-        if (h2 != null && o != null) {
-            MachineRecipeMaps.Electrolyzer.addRecipe0(true, 64, 96, water(3000), h2, o);
-            added++;
+        var waterSelector = GTTechnological.selectorTag(0);
+        if (h2 != null && o != null && waterSelector != null) {
+            Recipe waterRecipe = RecipeMap.make(true, RecipeMap.ZL_IS, RecipeMap.ZL_IS,
+                    null, RecipeMap.ZL_LONG, new FluidStack[]{water(3000)}, new FluidStack[]{h2, o}, 96, 64, 0);
+            // Loader_Recipes_Chem:312 requires selector 0. Without this gate the pure-water
+            // row accepts extra salt/vitriol inputs and blocks the later chemistry water families.
+            // Add it after normalization so this fix does not change the existing quantities/costs.
+            if (waterRecipe != null) {
+                waterRecipe = new Recipe(new ItemStack[]{new ItemStack(waterSelector)}, waterRecipe.mOutputs,
+                        waterRecipe.mSpecialItems, waterRecipe.mChances, waterRecipe.mFluidInputs,
+                        waterRecipe.mFluidOutputs, waterRecipe.mDuration, waterRecipe.mEUt,
+                        waterRecipe.mSpecialValue).withCatalystInputs(0);
+            }
+            if (waterRecipe != null && MachineRecipeMaps.Electrolyzer.addRecipe(waterRecipe) != null) added++;
+            else skipped++;
         } else skipped++;
 
         // ── Hydrochloric acid: 3 H2O + 2 Cl → 4 HCl + 1 O ───────────────────

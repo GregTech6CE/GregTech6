@@ -48,6 +48,7 @@ public final class GeneratedRecipeResolver {
     /** Distinct content tokens (material/fluid, amount stripped) that failed to resolve. */
     private static final java.util.Set<String> MISSING = new java.util.TreeSet<>();
     private static int added, skipped;
+    private static int waterLoopRows;
 
     private GeneratedRecipeResolver() {}
 
@@ -62,10 +63,11 @@ public final class GeneratedRecipeResolver {
     public static void loadAll() {
         added = 0;
         skipped = 0;
+        waterLoopRows = 0;
         MISSING.clear();
         SET_STATS.clear();
         load("original_distillation", GeneratedRecipeResolver::originalDistillation);
-        load("chem", GTChemGen::load);
+        load("chem", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerChemicalSource, GTChemGen::load));
         load("other", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerOtherSource, GTOtherGen::load));
         load("potions", GTPotionGen::load);
         load("food", GTFoodGen::load);
@@ -153,6 +155,24 @@ public final class GeneratedRecipeResolver {
                     new String[]{"f:BioEthanol:20", "m:Glycerol:20", "f:Methane:4", "f:DistW:50"}, none);
             registerSource(true, "Distillery", 16, 24, null, new String[]{"tag:0"},
                     new String[]{"f:" + biomass + ":40"}, new String[]{"f:BioEthanol:12", "f:DistW:20"}, none);
+        }
+    }
+
+    /** Number of distinct original water-loop rows encountered in the chemistry import. */
+    public static int waterLoopRows() { return waterLoopRows; }
+
+    private static void registerChemicalSource(boolean optimize, String mapName, long eut, long dur,
+            long[] chances, String[] itemIn, String[] fluidIn, String[] fluidOut, String[] itemOut) {
+        registerSource(optimize, mapName, eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);
+        if (!SourceChemicalWaterRows.matches(mapName, itemIn, fluidIn)) return;
+        waterLoopRows++;
+        // Original FL.waters: vanilla water, mineral water, distilled water, spectral dew.
+        // The ordinary-water row above keeps established explicit-row collision precedence.
+        for (String water : new String[]{"MnWtr", "DistW", "SpDew"}) {
+            String[] variant = fluidIn.clone();
+            for (int i = 0; i < variant.length; i++)
+                if (variant[i].startsWith("w:")) variant[i] = "f:" + water + ":" + variant[i].substring(2);
+            registerSource(optimize, mapName, eut, dur, chances, itemIn, variant, fluidOut, itemOut);
         }
     }
 
