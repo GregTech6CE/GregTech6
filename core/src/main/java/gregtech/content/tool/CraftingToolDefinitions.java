@@ -16,7 +16,8 @@ public final class CraftingToolDefinitions {
             tool("cutter", "cutter", 4, "plateTiny", "Steel", "wire_cutter", "scissors"),
             tool("chisel", "chisel", 9, "plateTiny", "Steel", "chisel"),
             tool("rubber_hammer", "rubber_hammer", 4, "nugget", "Rubber", "soft_hammer"),
-            tool("blade", "blade", 32, "plateTiny", "Steel", "sword", "blade"),
+            // GT6's Knife is both a knife and a blade; the crafting-only blade stands in for either.
+            tool("blade", "blade", 32, "plateTiny", "Steel", "sword", "blade", "knife"),
             tool("drill", "drill", 32, "plateTiny", "Steel", "hand_drill", "drill"),
             tool("file", "file", 9, "plateTiny", "Steel", "file"));
 
