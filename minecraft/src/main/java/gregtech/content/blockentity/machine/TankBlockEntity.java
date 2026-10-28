@@ -181,7 +181,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
                 autoOutputFluid(fluid);
             }
 
-            // GT6 TileEntityBase08Barrel#onTick2:188-207 — a sealed barrel ferments its content.
+            // GT6 TileEntityBase08Barrel#onTick2 — a sealed barrel ferments its content.
             if (softHammerState) tickFermentation(fluid);
         } else if (softHammerState && sealedTime > 0) {
             // Discard cached fermentation work when the contents run dry.

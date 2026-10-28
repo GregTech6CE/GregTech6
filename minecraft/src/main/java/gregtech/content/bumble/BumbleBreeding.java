@@ -6,28 +6,28 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * The breeding step of GT6's Bumbliary ({@code MultiTileEntityBumbliary.onTick2:197-268}): a princess
+ * The breeding step of GT6's Bumbliary ({@code MultiTileEntityBumbliary.onTick2}): a princess
  * and a drone turn into a brood, a queen and a dead drone.
  *
  * <p>Only the pure part of that tick lives here - no block, no GUI. Everything GT6 does around it stays
- * with the machine that calls this class: the environment check ({@code :120, :136}), the breeding
- * countdown ({@code :198-199, :215}), the brood that is moved into the drone slots or killed when its
- * genome does not fit the bumbliary ({@code :135-143}), the drones that are killed off ({@code :263-266})
- * and the consumption of the drone stack ({@code :259, decrStackSize}).</p>
+ * with the machine that calls this class: the environment check, the breeding
+ * countdown, the brood that is moved into the drone slots or killed when its
+ * genome does not fit the bumbliary, the drones that are killed off
+ * and the consumption of the drone stack ({@code, decrStackSize}).</p>
  *
- * <p>What is reproduced exactly: GT6's drone pick ({@code :200-213}, {@link #findDroneSlot}), the
- * princess count {@code 1 + rng(5) / 2} ({@code :218}), the brood size {@code offspring + princessCount}
- * ({@code :220}), the same-species branch with its {@code mutateChance}/{@code mutate} roll per child
- * ({@code :222-231}), the cross branch with its {@code switch(rng(4))} over {princess A, princess B,
- * combine(A, B), combine(B, A)} and the drone equivalents ({@code :232-250}), the per-child inherited
- * genome ({@code :252}), the lifespan taken from the princess ({@code :254}), the drone cost
- * ({@code :256}), the killed drone ({@code :257}) and the crowned queen that keeps the princess's genome
- * ({@code :261}).</p>
+ * <p>What is reproduced exactly: GT6's drone pick ({@link #findDroneSlot}), the
+ * princess count {@code 1 + rng(5) / 2}, the brood size {@code offspring + princessCount},
+ * the same-species branch with its {@code mutateChance}/{@code mutate} roll per child,
+ * the cross branch with its {@code switch(rng(4))} over {princess A, princess B,
+ * combine(A, B), combine(B, A)} and the drone equivalents, the per-child inherited
+ * genome, the lifespan taken from the princess, the drone cost,
+ * the killed drone and the crowned queen that keeps the princess's genome.
+ * </p>
  *
  * <p>Port differences to GT6, all in one place:</p>
  * <ul>
  *   <li>GT6 works on slots ({@code SLOT_ROYAL = 13}, {@code SLOT_DRONE = 22},
- *       {@code SLOTS_DRONE = {3, 4, 5, 12, 14, 21, 23}}, {@code :333-337}); the port takes the two
+ *       {@code SLOTS_DRONE = {3, 4, 5, 12, 14, 21, 23}}); the port takes the two
  *       parents as stacks and answers with the brood, the queen and the dead drone, so the machine keeps
  *       its own inventory. {@link #findDroneSlot} is the bridge for the drone side: index 0 of its array
  *       stands for GT6's main drone slot, the remaining entries for the spare slots.</li>
@@ -35,13 +35,13 @@ import org.jetbrains.annotations.Nullable;
  *       only draws from the {@link RandomSource} it is handed, so one seed reproduces one brood
  *       (including the per-child inheritance).</li>
  *   <li>GT6's {@code tLoss} is 2 only when the drone sat in the main drone slot
- *       ({@code tBreedSlot == SLOT_DRONE && stackSize > 1}, {@code :256}); a stack-only API cannot see
+ *       ({@code tBreedSlot == SLOT_DRONE && stackSize > 1}); a stack-only API cannot see
  *       the slot, so {@link #breed(ItemStack, ItemStack, RandomSource)} charges 2 whenever the drone
  *       stack holds more than one item, and {@link #breed(ItemStack, ItemStack, boolean, RandomSource)}
  *       offers GT6's slot condition for a caller that knows where the drone came from.</li>
  *   <li>GT6 lets {@code Util.getBumbleTag} generate and store a missing genome on both parents
- *       ({@code IItemBumbleBee:97-102}, reached from {@code :116} and from the inheritance at
- *       {@code :252}); the port does the same through {@link BumbleBeeGenes#of}, so a genome-less
+ *       ({@code IItemBumbleBee:97-102}, reached from and from the inheritance at
+ *       ); the port does the same through {@link BumbleBeeGenes#of}, so a genome-less
  *       princess and drone leave this call with a genome, exactly like in GT6.</li>
  *   <li>GT6's {@code bumbleEqual} ({@code MultiItemBumbles:567}) compares the item <em>and</em>
  *       {@code meta / 10}; GT6 has one item for every species and type, so that is "same species,
@@ -66,14 +66,14 @@ public final class BumbleBreeding {
      * @param offspring GT6's {@code mOffSpring}: {@code offspring + princessCount} bees, the first
      *                  {@code princessCount} of them princesses and the rest drones, each with its own
      *                  inherited genome
-     * @param queen GT6's {@code bumbleCrown(tRoyalStack)} ({@code :261}): a queen of the princess's
+     * @param queen GT6's {@code bumbleCrown(tRoyalStack)}: a queen of the princess's
      *              species that keeps the princess's genome
-     * @param droneDead GT6's {@code bumbleKill} of the consumed drone ({@code :257-258}), killed by the
+     * @param droneDead GT6's {@code bumbleKill} of the consumed drone, killed by the
      *                  same amount as {@code droneCost}
-     * @param lifeSpan GT6's {@code mLife = Util.getLifeSpan(tRoyalTag)} ({@code :254}): how long the
+     * @param lifeSpan GT6's {@code mLife = Util.getLifeSpan(tRoyalTag)}: how long the
      *                 crowned queen may work
-     * @param droneCost GT6's {@code tLoss} ({@code :256}): how many drones the machine has to remove
-     * @param princessCount GT6's {@code tPrincessCount} ({@code :218}): {@code 1 + rng(5) / 2}, i.e. 1..3
+     * @param droneCost GT6's {@code tLoss}: how many drones the machine has to remove
+     * @param princessCount GT6's {@code tPrincessCount}: {@code 1 + rng(5) / 2}, i.e. 1..3
      */
     public record Result(
             ItemStack[] offspring,
@@ -89,9 +89,9 @@ public final class BumbleBreeding {
      * GT6's drone pick ({@code MultiTileEntityBumbliary:200-213}).
      *
      * <p>GT6 first looks at its main drone slot and takes it whenever it holds a breedable drone
-     * ({@code :202-203, bumbleType % 5 == 0}); only otherwise does it scan the spare drone slots
-     * ({@code :205-212}). That scan keeps overwriting its choice - the last drone of the scan wins - but
-     * it leaves the loop as soon as it finds a drone of the princess's species ({@code :210}), so an
+     * ({@code, bumbleType % 5 == 0}); only otherwise does it scan the spare drone slots.
+     * That scan keeps overwriting its choice - the last drone of the scan wins - but
+     * it leaves the loop as soon as it finds a drone of the princess's species, so an
      * equal-species drone always beats a later one of another species.</p>
      *
      * <p>Port difference: GT6 reads its seven fixed slots; the port is handed an array whose index 0
@@ -117,12 +117,12 @@ public final class BumbleBreeding {
 
     /**
      * GT6's breeding step ({@code MultiTileEntityBumbliary:214-266}) with the drone treated as if it
-     * came from the main drone slot, so a drone stack of more than one item costs two drones
-     * ({@code :256}).
+     * came from the main drone slot, so a drone stack of more than one item costs two drones.
+
      *
      * @return null when GT6 would not breed: the first stack has to be a princess
-     *         ({@code bumbleType % 5 == 1}, {@code :197}) and the second a drone
-     *         ({@code bumbleType % 5 == 0}, {@code :207})
+     *         ({@code bumbleType % 5 == 1}) and the second a drone
+     *         ({@code bumbleType % 5 == 0})
      */
     @Nullable
     public static Result breed(ItemStack princess, ItemStack drone, RandomSource random) {
@@ -133,7 +133,7 @@ public final class BumbleBreeding {
      * GT6's breeding step with GT6's own drone-slot condition for the cost.
      *
      * <p>This overload is a port addition for the machine: GT6 charges two drones only when
-     * {@code tBreedSlot == SLOT_DRONE && tBreedStack.stackSize > 1} ({@code :256}), which the
+     * {@code tBreedSlot == SLOT_DRONE && tBreedStack.stackSize > 1}, which the
      * stack-only signature of {@link #breed(ItemStack, ItemStack, RandomSource)} cannot express. A
      * caller that got its drone index from {@link #findDroneSlot} passes {@code slot == 0} here.</p>
      *
@@ -143,7 +143,7 @@ public final class BumbleBreeding {
     public static Result breed(ItemStack princess, ItemStack drone, boolean droneInMainSlot, RandomSource random) {
         BumbleBeeType princessType = BumbleBeeType.of(princess);
         BumbleBeeType droneType = BumbleBeeType.of(drone);
-        // GT6 :197 `bumbleType(tRoyalStack) % 5 == 1` and :207 `bumbleType(tDroneStack) % 5 == 0`. The
+        // `bumbleType(tRoyalStack) % 5 == 1` and `bumbleType(tDroneStack) % 5 == 0`. The
         // port's aliveVariant() folds the scanned metas 6 and 5 into princess and drone, like GT6's % 5.
         if (princessType == null || princessType.aliveVariant() != BumbleBeeType.PRINCESS) return null;
         if (droneType == null || droneType.aliveVariant() != BumbleBeeType.DRONE) return null;
@@ -151,16 +151,16 @@ public final class BumbleBreeding {
         GTBumbleSpecies.Species droneSpecies = BumbleBeeType.speciesOf(drone);
         if (princessSpecies == null || droneSpecies == null) return null;
 
-        // GT6 :116 `Util.getBumbleTag(tRoyalStack)` and :252 `getBumbleTag(tBreedStack)`: both parents
+        // `Util.getBumbleTag(tRoyalStack)` and `getBumbleTag(tBreedStack)`: both parents
         // end up with a genome, generating and storing one when they have none.
         CompoundTag princessGenes = BumbleBeeGenes.of(princess, random);
         CompoundTag droneGenes = BumbleBeeGenes.of(drone, random);
 
-        int princessCount = 1 + random.nextInt(5) / 2; // GT6 :218
+        int princessCount = 1 + random.nextInt(5) / 2;
         ItemStack[] offspring = new ItemStack[(int) BumbleBeeGenes.offspring(princessGenes) + princessCount];
 
         if (sameSpecies(princess, drone)) {
-            // GT6 :222-231: children of the princess's species, with a mutation roll on each of them.
+            // children of the princess's species, with a mutation roll on each of them.
             for (int i = 0; i < offspring.length; i++) {
                 ItemStack child = BumbleBeeType.stack(
                         princessSpecies, i < princessCount ? BumbleBeeType.PRINCESS : BumbleBeeType.DRONE, null, 1);
@@ -170,22 +170,22 @@ public final class BumbleBreeding {
                 offspring[i] = child;
             }
         } else {
-            // GT6 :232-250: one switch(rng(4)) per child, princesses and drones alike.
+            // one switch(rng(4)) per child, princesses and drones alike.
             for (int i = 0; i < offspring.length; i++) {
                 BumbleBeeType type = i < princessCount ? BumbleBeeType.PRINCESS : BumbleBeeType.DRONE;
                 offspring[i] = cross(princess, drone, princessSpecies, droneSpecies, type, random);
             }
         }
 
-        // GT6 :252: every child gets its own genome, inherited gene by gene from both parents.
+        // every child gets its own genome, inherited gene by gene from both parents.
         for (ItemStack child : offspring) {
             if (child != null && !child.isEmpty()) {
                 BumbleBeeGenes.with(child, BumbleBeeGenes.inherit(princess, drone, random));
             }
         }
 
-        long lifeSpan = BumbleBeeGenes.lifeSpan(princessGenes); // GT6 :254
-        int droneCost = droneInMainSlot && drone.getCount() > 1 ? 2 : 1; // GT6 :256
+        long lifeSpan = BumbleBeeGenes.lifeSpan(princessGenes);
+        int droneCost = droneInMainSlot && drone.getCount() > 1 ? 2 : 1;
         ItemStack droneDead = kill(droneSpecies, droneType, droneGenes, droneCost);
         ItemStack queen = crown(princessSpecies, princessType, princessGenes);
         return new Result(offspring, queen, droneDead, lifeSpan, droneCost, princessCount);
@@ -216,7 +216,7 @@ public final class BumbleBreeding {
     }
 
     /**
-     * GT6's {@code bumbleEqual} ({@code MultiItemBumbles:567, :210, :222}): whether two bees are of the
+     * GT6's {@code bumbleEqual} ({@code MultiItemBumbles:222}, {@code MultiItemBumbles:567}): whether two bees are of the
      * same species, whatever their types are.
      *
      * <p>Port difference: GT6 compares the item <em>and</em> {@code meta / 10}, which is the same species

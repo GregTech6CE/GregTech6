@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
-/** Original MTE:352,391-420; shaped outputs survive the existing native oven recipe mirror and sync. */
+/** Original MTE; shaped outputs survive the existing native oven recipe mirror and sync. */
 public final class ClayMoldRecipes {
     private ClayMoldRecipes() {}
     public static ItemStack input(ClayMoldCatalog.Raw raw) {

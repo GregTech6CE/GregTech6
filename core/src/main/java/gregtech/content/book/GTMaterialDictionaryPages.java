@@ -29,11 +29,11 @@ public final class GTMaterialDictionaryPages {
         return List.copyOf(pages);
     }
 
-    /** GT6's "Processing Data" header ({@code UT.Books.addMaterialDictionary:900}). */
+    /** GT6's "Processing Data" header ({@code UT.Books.addMaterialDictionary}). */
     private static final String PROCESSING_HEADER = "Processing Data\n===================\n";
 
     /**
-     * GT6's three "Processing Data" pages ({@code UT.Books.addMaterialDictionary:900-905}), each with
+     * GT6's three "Processing Data" pages ({@code UT.Books.addMaterialDictionary}), each with
      * its own header: smelting/solidifying/burning/pulverising/crushing, then
      * bending/compressing/cutting/forging/smashing, then working.
      */
@@ -43,7 +43,7 @@ public final class GTMaterialDictionaryPages {
     private static final String[] PROCESSING_PAGE_3 = {"Working"};
 
     /**
-     * GT6's first "Processing Data" page ({@code UT.Books.addMaterialDictionary:900-905}): what the
+     * GT6's first "Processing Data" page ({@code UT.Books.addMaterialDictionary}): what the
      * material becomes when it is smelted, solidified, burnt, pulverised or crushed, in GT6's own
      * amount format ({@code whole.thousandths} plus the target's name).
      *
@@ -56,12 +56,12 @@ public final class GTMaterialDictionaryPages {
         return processingPage(material, PROCESSING_PAGE_1);
     }
 
-    /** GT6's second "Processing Data" page ({@code :902-904}): all five targets come from the table. */
+    /** GT6's second "Processing Data" page: all five targets come from the table. */
     private static String processingDataForming(GTMaterial material) {
         return processingPage(material, PROCESSING_PAGE_2);
     }
 
-    /** GT6's third "Processing Data" page ({@code :905}): the single working target. */
+    /** GT6's third "Processing Data" page: the single working target. */
     private static String processingDataWorking(GTMaterial material) {
         return processingPage(material, PROCESSING_PAGE_3);
     }
@@ -132,7 +132,7 @@ public final class GTMaterialDictionaryPages {
     }
 
     /**
-     * GT6's enchantment page (§55): what a tool, weapon, ammo, ranged weapon, fishing rod or piece
+     * GT6's enchantment page: what a tool, weapon, ammo, ranged weapon, fishing rod or piece
      * of armour made of this material can be enchanted with, from {@link GTMaterialEnchants}.
      */
     private static String enchantments(GTMaterial material) {
@@ -153,7 +153,7 @@ public final class GTMaterialDictionaryPages {
     }
 
     /**
-     * GT6's alloy page (§54): which alloys this material takes part in and which ones it is made
+     * GT6's alloy page: which alloys this material takes part in and which ones it is made
      * from, taken from the port's own alloying table ({@link GTMaterialRecipes}).
      */
     private static String alloys(GTMaterial material) {

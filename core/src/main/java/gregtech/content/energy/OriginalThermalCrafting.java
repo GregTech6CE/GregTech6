@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Original Loader_MultiTileEntities 10001..10005, 11001..11005, 10161..10165, 11161..11165. */
+ * Crafting rows of GT6's thermal generator families (Loader_MultiTileEntities 10001..10005,
+ * 11001..11005, 10161..10165, 11161..11165). */
 package gregtech.content.energy;
 
 import gregtech.api.material.GTMaterial;

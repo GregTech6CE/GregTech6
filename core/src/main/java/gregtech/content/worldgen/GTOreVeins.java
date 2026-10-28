@@ -40,7 +40,7 @@ public final class GTOreVeins {
      * lines 885-915), which is exactly GT6's registration order.
      *
      * <p>This is the preserved legacy table, not the default generation list. GT6WorldGenerator:125
-     * passes no ORE_OVERWORLD list when GENERATE_STONE is enabled (also :138-139 for Overworld-like
+     * passes no ORE_OVERWORLD list when GENERATE_STONE is enabled (also for Overworld-like
      * dimensions). The stone-layer system and this legacy large-vein system are alternatives.
      * Use {@link #activeOverworldVeins()} for generation and recipe-browser information.
      */
@@ -419,8 +419,8 @@ public final class GTOreVeins {
     /**
      * All GT6 small ores flagged {@code GEN_OVERWORLD} (Loader_Worldgen lines 800-847).
      * Mod-compat entries (Thaumcraft/AE2/IHL/HEX/... gated ores when the other mod is absent) are
-     * omitted; §50 added the GT6 {@code ore.small.eudialyte} entry, which was skipped before because
-     * the port had no Eudialyte material yet (§32 added it).
+     * omitted; added the GT6 {@code ore.small.eudialyte} entry, which was skipped before because
+     * the port had no Eudialyte material yet ( added it).
      */
     public static final List<SmallOre> OVERWORLD_SMALL_ORES = List.of(
             //           name            minY maxY amt  material
@@ -465,7 +465,7 @@ public final class GTOreVeins {
     //    overworld, naquadah/trinium are End-exclusive) ──
 
     /**
-     * GT6's {@code ORE_END} veins in registration order. §51 added the three shared ones
+     * GT6's {@code ORE_END} veins in registration order, plus the three shared ones
      * (platinum, molybdenum, cassiterite). End cassiterite and trinium weights are reduced
      * to 17/290 and 10/290; the removed weight is reserved for empty grid cells.
      */

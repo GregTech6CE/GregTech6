@@ -1,5 +1,5 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Loader_MultiTileEntities:14701/14601, 200 material units of gas per cell. */
+ * Multi-tile ids 14601/14701, 200 material units of gas per cell. */
 package gregtech.content.recipe;
 
 import gregtech.content.data.MachineRecipeMaps;

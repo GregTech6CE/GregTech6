@@ -15,8 +15,8 @@ package gregtech.content.worldgen.dungeon;
  *
  * <h2>Port differences</h2>
  * <ul>
- *   <li><b>Vault inlined.</b> GT6's {@code DungeonChunkRoomPortal} extends {@code DungeonChunkRoomVault}
- *       ({@code :27}), the three line class holding the one connection check and the door piston that
+ *   <li><b>Vault inlined.</b> GT6's {@code DungeonChunkRoomPortal} extends {@code DungeonChunkRoomVault},
+ *       the three line class holding the one connection check and the door piston that
  *       {@link GTDungeonChunkRoomStorage} also builds on. The port inlines it like its storage room
  *       does, so that check is the first line of {@link #generate(GTDungeonData)}.</li>
  *   <li><b>The portal itself.</b> GT6 places no portal block here: the Nether room's obsidian frame is
@@ -42,7 +42,7 @@ public class GTDungeonChunkRoomPortal extends GTDungeonChunkRoomEmpty {
             // GT6: the vault door is not important enough to fail the entire room.
         }
 
-        // GT6's four blocks, in GT6's order: +X (:32-63), -X (:64-95), +Z (:96-127), -Z (:128-159).
+        // GT6's four blocks, in GT6's order: +X, -X, +Z, -Z.
         if (data.connected(1, 0)) {
             patch(data, 1, 5);
             kerbX(data, 7, false);
@@ -84,7 +84,7 @@ public class GTDungeonChunkRoomPortal extends GTDungeonChunkRoomEmpty {
     }
 
     /**
-     * GT6's L shaped kerb of the X neighbours ({@code :43-62} for +X, {@code :75-94} for -X): a row at
+     * GT6's L shaped kerb of the X neighbours (for +X, for -X): a row at
      * {@code z = 4} reaching the far X, a column at that far X from {@code z = 5} down to
      * {@code z = 11}, and a row at {@code z = 11} back towards the room's own side.
      *
@@ -94,44 +94,44 @@ public class GTDungeonChunkRoomPortal extends GTDungeonChunkRoomEmpty {
      */
     private static void kerbX(GTDungeonData data, int far, boolean mirrored) {
         if (mirrored) {
-            // GT6 :75-81: x = 14 down to the far X at z = 4.
+            // x = 14 down to the far X at z = 4.
             data.slabKerbs(14, 1, 4, 14 - far + 1, -1, 0);
         } else {
-            // GT6 :43-49: x = 1 up to the far X at z = 4.
+            // x = 1 up to the far X at z = 4.
             data.slabKerbs(1, 1, 4, far, 1, 0);
         }
-        // GT6 :50-56 / :82-88: the column of the far X, z = 5..11.
+        // {@code DungeonChunkRoomPortal.java:82-88}: the column of the far X, z = 5..11.
         data.slabKerbs(far, 1, 5, 7, 0, 1);
         if (mirrored) {
-            // GT6 :89-94: z = 11 from the far X + 1 to 14.
+            // z = 11 from the far X + 1 to 14.
             data.slabKerbs(far + 1, 1, 11, 14 - far, 1, 0);
         } else {
-            // GT6 :57-62: z = 11 from the far X - 1 down to 1.
+            // z = 11 from the far X - 1 down to 1.
             data.slabKerbs(far - 1, 1, 11, far - 1, -1, 0);
         }
     }
 
     /**
-     * GT6's L shaped kerb of the Z neighbours ({@code :107-126} for +Z, {@code :139-158} for -Z): a
+     * GT6's L shaped kerb of the Z neighbours (for +Z, for -Z): a
      * column at {@code x = 4} reaching the far Z, a row at that far Z from {@code x = 5} to 11, and a
      * column at {@code x = 11} back towards the room's own side. Tile slabs of GT6's bottom half, like
      * {@link #kerbX}.
      */
     private static void kerbZ(GTDungeonData data, int far, boolean mirrored) {
         if (mirrored) {
-            // GT6 :139-145: z = 14 down to the far Z at x = 4.
+            // z = 14 down to the far Z at x = 4.
             data.slabKerbs(4, 1, 14, 14 - far + 1, 0, -1);
         } else {
-            // GT6 :107-113: z = 1 up to the far Z at x = 4.
+            // z = 1 up to the far Z at x = 4.
             data.slabKerbs(4, 1, 1, far, 0, 1);
         }
-        // GT6 :114-120 / :146-152: the row of the far Z, x = 5..11.
+        // {@code DungeonChunkRoomPortal.java:146-152}: the row of the far Z, x = 5..11.
         data.slabKerbs(5, 1, far, 7, 1, 0);
         if (mirrored) {
-            // GT6 :153-158: x = 11 from the far Z + 1 to 14.
+            // x = 11 from the far Z + 1 to 14.
             data.slabKerbs(11, 1, far + 1, 14 - far, 0, 1);
         } else {
-            // GT6 :121-126: x = 11 from the far Z - 1 down to 1.
+            // x = 11 from the far Z - 1 down to 1.
             data.slabKerbs(11, 1, far - 1, far - 1, 0, -1);
         }
     }

@@ -89,7 +89,7 @@ public final class GTTechnological {
      * GT6 item names the transpiled loaders spell differently from the port's registry ids.
      *
      * <p>The recipe transpiler turns {@code IL.<Field>.get(n)} into {@code tech:<field lower case>}
-     * (tools/transpile_gt6_chem.py:160-173), so a GT6 item the port registers under another spelling
+     * (tools/transpile_gt6_chem.py), so a GT6 item the port registers under another spelling
      * would silently count as missing content. Each entry here is the same item under two names —
      * verified against the item's own registration, not guessed:
      * {@code IL.Shape_Press_BulletCasing*} are the three bullet-casing press molds the Press uses as

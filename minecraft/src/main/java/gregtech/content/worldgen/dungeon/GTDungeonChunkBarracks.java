@@ -66,7 +66,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
             Blocks.BROWN_CARPET, Blocks.GREEN_CARPET, Blocks.RED_CARPET, Blocks.BLACK_CARPET};
 
     /**
-     * GT6's {@code tLoots} (:108) as 1.20.1 loot tables, in GT6's own order: stronghold library, stronghold
+     * GT6's {@code tLoots} as 1.20.1 loot tables, in GT6's own order: stronghold library, stronghold
      * corridor, stronghold crossing, desert pyramid, jungle pyramid, village blacksmith, mineshaft corridor,
      * dungeon chest and GT6's ninth entry {@code BONUS_CHEST}, which 1.20.1 has as
      * {@code chests/spawn_bonus_chest} (the port already injects GT content into it).
@@ -80,7 +80,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
     public boolean generate(GTDungeonData data) {
         if (!super.generate(data)) return false;
 
-        // GT6 :43-45 - the inverse of the dungeon's colour as carpet in the four outer corners.
+        // - the inverse of the dungeon's colour as carpet in the four outer corners.
         for (int tX = 1; tX <= 14; tX++) {
             for (int tZ = 1; tZ <= 14; tZ++) {
                 if ((tX <= 4 || tX >= 11) && (tZ <= 4 || tZ >= 11)) {
@@ -88,7 +88,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
                 }
             }
         }
-        // GT6 :46-66 - the inner room's walls at local 5 and 10, and their smooth corners. Every wall
+        // - the inner room's walls at local 5 and 10, and their smooth corners. Every wall
         // piece is a brick <em>slab</em> of the cell's rock in GT6's own orientation for that wall
         // ({@code mSlabs[SIDE_Z_NEG]} for z = 5, {@code SIDE_Z_POS} for z = 10, {@code SIDE_X_NEG} for
         // x = 5 and {@code SIDE_X_POS} for x = 10), so the walls are half blocks with their flat side
@@ -119,7 +119,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
             data.smooth(11, tY, 10);
         }
 
-        // GT6 :68-75 - the four iron doors of the inner room. The 1.7.10 metadata becomes a 1.20.1 door
+        // - the four iron doors of the inner room. The 1.7.10 metadata becomes a 1.20.1 door
         // state: closed SOUTH lies at local z=0..3/16, NORTH at z=13/16..1,
         // matching the adjacent NORTH/SOUTH half-slab walls. The upper metadata bit keeps the hinge.
         data.set(3, 1, 5, door(Direction.SOUTH, DoorHingeSide.LEFT, DoubleBlockHalf.LOWER));
@@ -130,17 +130,17 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         data.set(3, 2, 10, door(Direction.NORTH, DoorHingeSide.RIGHT, DoubleBlockHalf.UPPER));
         data.set(12, 1, 10, door(Direction.NORTH, DoorHingeSide.LEFT, DoubleBlockHalf.LOWER));
         data.set(12, 2, 10, door(Direction.NORTH, DoorHingeSide.LEFT, DoubleBlockHalf.UPPER));
-        // GT6 :76-79 - the stone buttons beside the doors: meta 3 is the wall at Z-1, meta 4 the wall at Z+1.
+        // - the stone buttons beside the doors: meta 3 is the wall at Z-1, meta 4 the wall at Z+1.
         data.set(4, 2, 6, button(Direction.SOUTH));
         data.set(11, 2, 6, button(Direction.SOUTH));
         data.set(4, 2, 9, button(Direction.NORTH));
         data.set(11, 2, 9, button(Direction.NORTH));
-        // GT6 :80-83 - the stone pressure plates in front of the doors.
+        // - the stone pressure plates in front of the doors.
         data.set(3, 1, 4, Blocks.STONE_PRESSURE_PLATE.defaultBlockState());
         data.set(12, 1, 4, Blocks.STONE_PRESSURE_PLATE.defaultBlockState());
         data.set(3, 1, 11, Blocks.STONE_PRESSURE_PLATE.defaultBlockState());
         data.set(12, 1, 11, Blocks.STONE_PRESSURE_PLATE.defaultBlockState());
-        // GT6 :84-91 - four beds, their heads against the outer walls of the corners.
+        // - four beds, their heads against the outer walls of the corners.
         data.set(1, 1, 1, bed(Direction.NORTH, BedPart.HEAD));
         data.set(1, 1, 2, bed(Direction.NORTH, BedPart.FOOT));
         data.set(1, 1, 13, bed(Direction.SOUTH, BedPart.FOOT));
@@ -149,18 +149,18 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         data.set(14, 1, 2, bed(Direction.NORTH, BedPart.FOOT));
         data.set(14, 1, 13, bed(Direction.SOUTH, BedPart.FOOT));
         data.set(14, 1, 14, bed(Direction.SOUTH, BedPart.HEAD));
-        // GT6 :92-95 - a crafting table in each corner.
+        // - a crafting table in each corner.
         data.set(1, 1, 4, Blocks.CRAFTING_TABLE.defaultBlockState());
         data.set(1, 1, 11, Blocks.CRAFTING_TABLE.defaultBlockState());
         data.set(14, 1, 4, Blocks.CRAFTING_TABLE.defaultBlockState());
         data.set(14, 1, 11, Blocks.CRAFTING_TABLE.defaultBlockState());
 
-        // GT6 :97-105 - real 250 mB cups, with its optional Hexorium choice consuming the same room roll.
+        // - real 250 mB cups, with its optional Hexorium choice consuming the same room roll.
         GTDungeonCupDrinks.barracks(data, 1, 2, 4);
         GTDungeonCupDrinks.barracks(data, 1, 2, 11);
         GTDungeonCupDrinks.barracks(data, 14, 2, 4);
 
-        // GT6 :106 - multi-tile 32074 stores one stack of 16..64 Sky Stone rocks as a small placed rock.
+        // - multi-tile 32074 stores one stack of 16..64 Sky Stone rocks as a small placed rock.
         // Preserve the original draw even if world placement fails, so later room rolls stay aligned.
         int skyStoneCount = 16 + data.next(49);
         BlockPos skyStonePos = new BlockPos(data.x + 14, data.y + 2, data.z + 11);
@@ -169,12 +169,12 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
             rock.setCount(skyStoneCount);
         }
 
-        // GT6 :111-121 - the shelf at (3,1,1) and the chest at (4,1,1) beside it, both facing Z+.
+        // - the shelf at (3,1,1) and the chest at (4,1,1) beside it, both facing Z+.
         ItemStack key = ItemStack.EMPTY;
         int keySlot = 0;
         if (data.keyAvailable(0)) {
             data.generatedKeys[0] = true;
-            // GT6 :115 - the key sits in one of the shelf's 28 slots; a back slot (>= 14) makes GT6
+            // - the key sits in one of the shelf's 28 slots; a back slot (>= 14) makes GT6
             // carve a cobble hint into the wall behind the shelf. The port's shelf has the same 28
             // slots, so GT6's index is used unchanged.
             keySlot = data.next(28);
@@ -190,7 +190,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         data.safe(4, 1, 1, LOOT[data.next(LOOT.length)], data.keyIds[0], true);
         data.shelf(3, 1, 1, LOOT[data.next(LOOT.length)], key, keySlot);
 
-        // GT6 :123-132 - the second pair, facing Z-.
+        // - the second pair, facing Z-.
         key = ItemStack.EMPTY;
         keySlot = 0;
         if (data.keyAvailable(1)) {
@@ -206,7 +206,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         data.safe(4, 1, 14, LOOT[data.next(LOOT.length)], data.keyIds[1], true);
         data.shelf(3, 1, 14, LOOT[data.next(LOOT.length)], key, keySlot);
 
-        // GT6 :134-143 - the third pair. GT6 skips key 2 here, which belongs to the corridor room's chests.
+        // - the third pair. GT6 skips key 2 here, which belongs to the corridor room's chests.
         key = ItemStack.EMPTY;
         keySlot = 0;
         if (data.keyAvailable(3)) {
@@ -222,7 +222,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         data.safe(11, 1, 1, LOOT[data.next(LOOT.length)], data.keyIds[3], true);
         data.shelf(12, 1, 1, LOOT[data.next(LOOT.length)], key, keySlot);
 
-        // GT6 :145-154 - the fourth pair.
+        // - the fourth pair.
         key = ItemStack.EMPTY;
         keySlot = 0;
         if (data.keyAvailable(4)) {
@@ -238,7 +238,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         data.safe(11, 1, 14, LOOT[data.next(LOOT.length)], data.keyIds[4], true);
         data.shelf(12, 1, 14, LOOT[data.next(LOOT.length)], key, keySlot);
 
-        // GT6 :156-159 - a 1-in-2 chance for loose coins next to every chest.
+        // - a 1-in-2 chance for loose coins next to every chest.
         if (data.next1in2()) data.coins(4, 2, 1);
         if (data.next1in2()) data.coins(4, 2, 14);
         if (data.next1in2()) data.coins(11, 2, 1);
@@ -247,7 +247,7 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         return true;
     }
 
-    /** GT6 :68-75 - one half of an iron door, from GT6's 1.7.10 metadata. */
+    /** - one half of an iron door, from GT6's 1.7.10 metadata. */
     private static BlockState door(Direction facing, DoorHingeSide hinge, DoubleBlockHalf half) {
         return Blocks.IRON_DOOR.defaultBlockState()
                 .setValue(DoorBlock.FACING, facing)
@@ -255,14 +255,14 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
                 .setValue(DoorBlock.HALF, half);
     }
 
-    /** GT6 :76-79 - a stone button on the wall it points away from. */
+    /** - a stone button on the wall it points away from. */
     private static BlockState button(Direction facing) {
         return Blocks.STONE_BUTTON.defaultBlockState()
                 .setValue(FaceAttachedHorizontalDirectionalBlock.FACE, AttachFace.WALL)
                 .setValue(FaceAttachedHorizontalDirectionalBlock.FACING, facing);
     }
 
-    /** GT6 :84-91 - one half of a bed; the facing runs from the foot towards the head. */
+    /** - one half of a bed; the facing runs from the foot towards the head. */
     private static BlockState bed(Direction facing, BedPart part) {
         return Blocks.RED_BED.defaultBlockState()
                 .setValue(BedBlock.FACING, facing)

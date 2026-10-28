@@ -24,15 +24,15 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  * <p>GT6 writes them as shapeless recipes against its own container ore dictionary entries —
  * {@code CR.shapeless(make(4, 1100), CR.DEF, new Object[] {OD.container1000milk, OP.bottle.dat(MT.Empty)
- * ×4})} and the matching 3/2/1 rows ({@code MultiItemBottles:143-146}, {@code :151-154}, {@code :164-167},
- * {@code :129-132}, {@code :211-224}, {@code :232-235}, {@code :268-271}, {@code :277-280}). The port has
+ * ×4})} and the matching 3/2/1 rows ({@code MultiItemBottles:143-146},,,
+ * ,). The port has
  * no ore dictionary, so a finite, drainable item fluid handler holding 1000&nbsp;mB of the
  * matching fluid takes its place. The creative-only {@code fluid_item_*} display items are rejected.
  *
- * <p>Not repeated here: GT6's 250&nbsp;mB variant of the juice row ({@code :236}, from
+ * <p>Not repeated here: GT6's 250&nbsp;mB variant of the juice row (from
  * {@code OD.container250juice}) — the port registers one container item per fluid, and a second recipe
  * of the very same shape would collide with the 1-bottle row above. The honey/honeydew/royal-jelly rows
- * from GT drops ({@code :169-174}) need GT6's bee-drop items and are left to the bee batch.
+ * from GT drops need GT6's bee-drop items and are left to the bee batch.
  */
 public final class BottleFillingRecipeInjector {
 

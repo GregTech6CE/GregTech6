@@ -30,7 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Set;
 
 /**
- * The species-dependent work site required by GT6 {@code MultiItemBumbles.bumbleCanProduce:216-349}.
+ * The species-dependent work site required by GT6 {@code MultiItemBumbles.bumbleCanProduce}.
  * A bumbliary searches a cube of radius three; the advanced machine searches radius one.
  * Missing chunks are never loaded just to make a bee work.
  *

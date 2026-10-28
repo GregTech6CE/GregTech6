@@ -30,7 +30,7 @@ import java.util.Map;
  * gives each group its own hammer, crusher, shredder, smelting, {@code generify} and moss rows. The
  * port's equivalent of an equal-block set is the {@code _<variant>} block of a {@link StoneType}, the
  * same approximation {@code StoneAndToolSurvivalRecipes.registerStoneExtrusions()} uses for the
- * extruder rows (see §27 of the porting notes).</p>
+ * extruder rows (see of the porting notes).</p>
  *
  * <table>
  *   <caption>GT6's group table</caption>
@@ -102,7 +102,7 @@ public final class StoneVariantRecipes {
                 continue;
             }
             switch (variant) {
-                // :276-285 — plain stone breaks to cobble, shatters into 9 dust and fires into smooth stone.
+                // — plain stone breaks to cobble, shatters into 9 dust and fires into smooth stone.
                 case STONE -> {
                     hammer(in, block(type, StoneVariant.COBBLE), 0);
                     crusher(in, block(type, StoneVariant.COBBLE), 16L + harvest * 16L, null);
@@ -110,7 +110,7 @@ public final class StoneVariantRecipes {
                     smelt("smelt", in, block(type, StoneVariant.SMOOTH));
                     generify(in, "stone");
                 }
-                // :318-330 — cobblestone exposes the rock and grows moss.
+                // — cobblestone exposes the rock and grows moss.
                 case COBBLE -> {
                     hammer(in, rock4, 8000);
                     crusher(in, rock4, 16L + harvest * 16L, null);
@@ -126,7 +126,7 @@ public final class StoneVariantRecipes {
                     generify(in, "mossy_cobblestone");
                     cleanmoss(in, block(type, StoneVariant.COBBLE));
                 }
-                // :372-385 — bricks crack under a hammer and take iron or redstone.
+                // — bricks crack under a hammer and take iron or redstone.
                 case BRICKS -> {
                     hammer(in, block(type, StoneVariant.BRICKS_CRACKED), 0);
                     crusher(in, block(type, StoneVariant.BRICKS_CRACKED), 16L + harvest * 16L, null);
@@ -149,7 +149,7 @@ public final class StoneVariantRecipes {
                     generify(in, "mossy_stone_bricks");
                     cleanmoss(in, block(type, StoneVariant.BRICKS));
                 }
-                // :405-411 — chiselled and smooth masonry is brittle again.
+                // — chiselled and smooth masonry is brittle again.
                 case BRICKS_CHISELED -> {
                     hammer(in, block(type, StoneVariant.COBBLE), 0);
                     crusher(in, block(type, StoneVariant.COBBLE), 16L + harvest * 16L, null);
@@ -164,7 +164,7 @@ public final class StoneVariantRecipes {
                     smelt("smelt", in, block(type, StoneVariant.STONE));
                     generify(in, "smooth_stone_slab");
                 }
-                // :427-438 — reinforced and redstone masonry carry their extra material through.
+                // — reinforced and redstone masonry carry their extra material through.
                 case BRICKS_REINFORCED -> {
                     ItemStack iron = GTItems.getStack(MaterialPrefix.dustSmall, gregtech.content.material.Materials.Iron, 2);
                     hammer(in, rock4, 7000);
@@ -177,7 +177,7 @@ public final class StoneVariantRecipes {
                     crusher(in, block(type, StoneVariant.BRICKS_CRACKED), 64L + harvest * 64L, redstone);
                     shred("shredder", in, dust9, 64L + harvest * 64L, redstone);
                 }
-                // :439-487 — the decorative families shatter like cracked bricks.
+                // — the decorative families shatter like cracked bricks.
                 default -> {
                     hammer(in, block(type, StoneVariant.BRICKS_CRACKED), 0);
                     crusher(in, block(type, StoneVariant.BRICKS_CRACKED), 16L + harvest * 16L, null);
@@ -202,7 +202,7 @@ public final class StoneVariantRecipes {
             ItemStack dust = GTItems.getStack(MaterialPrefix.dustSmall, type.material(), 2);
             saw(slab, plates, dust);
         }
-        // :274 — the redstone brick slab keeps its redstone.
+        // — the redstone brick slab keeps its redstone.
         ItemStack redstoneSlab = slab(type, StoneVariant.BRICKS_REDSTONE);
         if (!redstoneSlab.isEmpty()) {
             saw(redstoneSlab, GTItems.getStack(MaterialPrefix.plate, type.material(), 4),

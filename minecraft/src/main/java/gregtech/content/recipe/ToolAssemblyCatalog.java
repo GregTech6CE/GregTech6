@@ -114,7 +114,7 @@ public final class ToolAssemblyCatalog {
         // rows (rock or flint plus a stick) are the recipes JEI lists next to it.
         if (type.requiresHeadAssembly()) return headAndHandle(type);
         if (type == GTToolType.MAGNIFYING_GLASS) return magnifyingGlass(type);
-        // GT6's shaped rows (one-piece tools, §29): list every material that satisfies each slot.
+        // GT6's shaped rows for one-piece tools: list every material that satisfies each slot.
         var patterns = GTToolRecipes.shaped(type);
         if (!patterns.isEmpty()) return shaped(type, patterns.get(0));
         return null;

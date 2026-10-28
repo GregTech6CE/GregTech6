@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  * GT6's forest-floor worldgen data, ported from {@code Loader_Worldgen:603-606} (fallen logs),
- * {@code :630} (twigs) and {@code :632} (glowtus), with the biome sets and probabilities from
+ * (twigs) and (glowtus), with the biome sets and probabilities from
  * {@code gregtech/content/worldgen/tree/WorldgenLog*}, {@code WorldgenSticks} and {@code WorldgenGlowtus}.
  *
  * <p>GT6's four {@code WorldgenLog*} generators all place the very same block

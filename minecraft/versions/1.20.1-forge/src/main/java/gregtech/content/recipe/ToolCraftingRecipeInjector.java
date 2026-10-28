@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeManager;
 /**
  * Registers GT6's tool crafting rows ({@link GTToolRecipes}) as real crafting recipes.
  *
- * <p>Before §29 the port described every tool with one data-pack {@code gregtech:tool_assembly} row
+ * <p>Before the port described every tool with one data-pack {@code gregtech:tool_assembly} row
  * that matched <em>shapelessly</em> and had no ingredients, so a wrench or a knife could be thrown
  * together in any arrangement and none of it appeared in the crafting-table recipe list. GT6's rows
  * are shaped for the one-piece tools and for tool heads; only the head + handle tools are shapeless

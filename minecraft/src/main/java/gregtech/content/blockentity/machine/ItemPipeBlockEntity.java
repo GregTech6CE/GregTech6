@@ -46,8 +46,6 @@ import java.util.*;
  *
  * <p>The host does not expose MachineControl or ProgressSensorSource. In particular,
  * a transferred-item counter alone does not implement GT6's progress interface.
- * Inventory capacity, throughput and side-permission differences are tracked in
- * docs/integration/ITEM_PIPE_AUDIT.md; comments here describe the current code.
  */
 public class ItemPipeBlockEntity extends BlockEntity
         implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PanelCoverHost {
@@ -69,7 +67,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     private static final String NBT_DISABLED_OUTPUTS = "gt.disabled_outputs";
     private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
     private static final String NBT_TRANSFERRED = "gt.transferred";
-    /** One cover per face under the same key the machine and the fluid pipe use ({@code BasicMachineBlockEntity:1299}). */
+    /** Cover NBT key prefix, shared with {@link BasicMachineBlockEntity} and {@link FluidPipeBlockEntity}. */
     private static final String NBT_COVER_PREFIX = "gt_cover_";
 
 //? if >=1.21.1 {
@@ -85,13 +83,13 @@ public class ItemPipeBlockEntity extends BlockEntity
     //   * `covers` is null until the first cover is attached — no ItemStack[6] per pipe;
     //   * `hasCovers` is the single boolean the tick pass and the capability test, so a pipe without
     //     covers does one field read and never walks a face;
-    //   * `panels` is created on first attach rather than in the field initialiser the way
-    //     BasicMachineBlockEntity:71 does it, because PanelCoverRuntime itself allocates an int[6] and
-    //     a boolean[6] (PanelCoverRuntime:12-13); this is the one place this class deliberately does
-    //     not copy the machine's eager field;
+    //   * `panels` is created on first attach rather than eagerly in the field initialiser as
+    //     {@link BasicMachineBlockEntity} does, because {@link PanelCoverRuntime} itself allocates an
+    //     int[6] and a boolean[6]; this is the one place this class deliberately does not copy the
+    //     machine's eager field;
     //   * `faceHandlers` is null until a face actually carries an item filter or a retriever;
     //   * the retriever's pending flags are six bits of one byte rather than the machine's
-    //     `boolean[6]` (`BasicMachineBlockEntity:1523`) — see `retrieverPending`.
+    //     `boolean[6]` — see `retrieverPending`.
 
     /** One cover item per {@link Direction#ordinal()}; {@code null} until a cover is attached. */
     private @Nullable ItemStack[] covers;
@@ -101,7 +99,7 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     /**
      * The cover tick counter, standing in for GT6's {@code SERVER_TIME} / {@code aTimer} exactly as
-     * {@code BasicMachineBlockEntity.coverTicks} does for the machine: this counter advances once per
+     * {@link BasicMachineBlockEntity}'s own cover tick field does: this counter advances once per
      * covered server tick, independent of {@code level.getGameTime()}.
      */
     private long coverTicks;
@@ -119,8 +117,8 @@ public class ItemPipeBlockEntity extends BlockEntity
     /**
      * Whether the covers were suspended by a controller cover on the previous cover tick, i.e. the
      * {@code !aStopped} edge of GT6 {@code CoverRetrieverItem:55-57}
-     * ({@code onStoppedUpdate} sets the retriever's pending value to 1 when it resumes). The machine
-     * keeps the same field ({@code BasicMachineBlockEntity:1512}).
+     * ({@code onStoppedUpdate} sets the retriever's pending value to 1 when it resumes).
+     * {@link BasicMachineBlockEntity} keeps the same field.
      */
     private boolean utilityWasStopped;
 
@@ -232,10 +230,10 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * Removes the cover on a face. Mirrors {@code BasicMachineBlockEntity:315-328} and the fluid
-     * pipe's copy of it, with {@code panels.afterTick()} in the place of that method's
-     * {@code updateCoverSignals()}: the signals a pipe face can emit are the panel ones, and
-     * {@code afterTick} is what recomputes and publishes them ({@code PanelCoverRuntime:85-119}).
+     * Removes the cover on a face. Mirrors {@link BasicMachineBlockEntity#removeCover(Direction)}
+     * and {@link FluidPipeBlockEntity#removeCover(Direction)}, with {@link PanelCoverRuntime#afterTick()}
+     * in the place of the machine's {@code updateCoverSignals()}: the signals a pipe face can emit are
+     * the panel ones, and {@code afterTick} is what recomputes and publishes them.
      */
     @Override
     public ItemStack removeCover(Direction side) {
@@ -253,11 +251,11 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * The pipe's drop-on-break for covers, i.e. {@code BasicMachineBlockEntity:1494-1499}
-     * ({@code dropContents}'s cover loop) and {@code FluidPipeBlockEntity.dropCovers}. Called from
-     * {@link ItemPipeBlock#onRemove}, next to {@link #dropStoredItems()} — that is where this pipe's
-     * own removal logic lives, and the block entity is still resolvable there, which is the same call
-     * site shape the machine has in {@code BasicMachineBlock:254-262}.
+     * The pipe's drop-on-break for covers, i.e. the cover loop of
+     * {@link BasicMachineBlockEntity#dropContents()} and {@link FluidPipeBlockEntity#dropCovers()}.
+     * Called from {@link ItemPipeBlock#onRemove}, next to {@link #dropStoredItems()} — that is where
+     * this pipe's own removal logic lives, and the block entity is still resolvable there, which is
+     * the same call site shape the machine block has.
      */
     public void dropCovers() {
         if (covers == null) return;
@@ -275,7 +273,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         return array;
     }
 
-    /** Cover behaviour id of a face; {@code null} when no cover is attached ({@code CoverItems:52}). */
+    /** Cover behaviour id of a face; {@code null} when no cover is attached. */
     private String coverIdOf(Direction side) {
         return CoverItems.behavior(getCover(side));
     }
@@ -340,10 +338,10 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * Two of the three player-facing entry points of a filter cover, copied name for name from
-     * {@code BasicMachineBlockEntity:1631-1646} and {@code FluidPipeBlockEntity:382-396} so that every
-     * host delegates to the same statics and {@code BasicMachineBlock.use}'s call order can be
-     * mirrored in {@code ItemPipeBlock.use}.
+     * Two of the three player-facing entry points of a filter cover, shared with
+     * {@link BasicMachineBlockEntity} and {@link FluidPipeBlockEntity} so that every host delegates to
+     * the same statics and the machine block's {@code use} call order can be mirrored in
+     * {@link ItemPipeBlock}'s.
      *
      * <p>GT6's right-click on an item filter ({@code CoverFilterItem:88-112}) and on the retriever
      * ({@code CoverRetrieverItem:123-136}): the held stack becomes the filter, once. The fluid half of
@@ -366,8 +364,8 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * The screwdriver and soft-hammer halves of the same two covers, copied from
-     * {@code BasicMachineBlockEntity:1658-1672}: the screwdriver flips whitelist/blacklist
+     * The screwdriver and soft-hammer halves of the same two covers, shared with
+     * {@link BasicMachineBlockEntity}: the screwdriver flips whitelist/blacklist
      * ({@code CoverFilterItem:58-62}, {@code CoverRetrieverItem:94-98}) and the soft hammer clears the
      * filter ({@code CoverFilterItem:63-66}, {@code CoverRetrieverItem:99-102}).
      */
@@ -387,19 +385,17 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     /**
      * GT6 {@code CoverFilterItem:115-127} asked about a live face: does the item filter on {@code side}
-     * let {@code candidate} through? The pipe's copy of
-     * {@code BasicMachineBlockEntity.coverFilterPermits:1585-1588}.
+     * let {@code candidate} through? The pipe's counterpart of
+     * {@link BasicMachineBlockEntity#coverFilterPermits(Direction, ItemStack)}.
      *
-     * <p>The §108 rule holds here, verified by reading the implementation rather than assuming it:
-     * {@code CoverItems.behavior(ItemStack.EMPTY)} is {@code null} ({@code CoverItems:53}), so
-     * {@link CoverUtilityBehaviors#itemFilterPermits}'s first line,
-     * {@code FILTER_ITEM.equals(CoverItems.behavior(cover))}, is false for a face with <b>no cover at
-     * all</b> and for a face whose cover is not an item filter — both return {@code true}, i.e.
-     * permit, without looking at the candidate. An <em>empty filter stack on a real item filter
-     * cover</em> is the other case and is not permissive: it returns
-     * {@code !MachineCoverSpec.inverted(cover)}, false in the default whitelist mode and true only in
-     * the inverted one — GT6 {@code CoverFilterItem:118} {@code return aData.mVisuals[aCoverSide] == 0;}
-     * read as "intercept". A suspended cover refuses everything ({@code :117}).</p>
+     * <p>A face with <b>no cover at all</b> and a face whose cover is not an item filter both permit:
+     * {@code CoverItems.behavior(ItemStack.EMPTY)} is {@code null}, so the {@code FILTER_ITEM} test in
+     * {@link CoverUtilityBehaviors#itemFilterPermits} fails and the candidate is never looked at. An
+     * <em>empty filter stack on a real item filter cover</em> is the other case and is not permissive:
+     * it returns {@code !MachineCoverSpec.inverted(cover)}, false in the default whitelist mode and
+     * true only in the inverted one — GT6 {@code CoverFilterItem:118}
+     * {@code return aData.mVisuals[aCoverSide] == 0;} read as "intercept". A suspended cover refuses
+     * everything.</p>
      */
     public boolean coverFilterPermits(Direction side, ItemStack candidate) {
 //? if >=1.21.1 {
@@ -413,8 +409,8 @@ public class ItemPipeBlockEntity extends BlockEntity
      * GT6 {@code CoverRetrieverItem:138-139} — {@code return aCoverSide == aSide;}, on both
      * {@code interceptItemInsert} and {@code interceptItemExtract}: the retriever refuses
      * <em>every</em> item insert and extract on the face it owns, so a pipe can neither push into nor
-     * pull out of that face; only the retriever itself moves items there. The machine's
-     * {@code coverBlocksItemTraffic:1603-1606} is the same predicate.
+     * pull out of that face; only the retriever itself moves items there.
+     * {@link BasicMachineBlockEntity#coverBlocksItemTraffic(Direction)} is the same predicate.
      */
     public boolean coverBlocksItemTraffic(Direction side) {
         return CoverUtilityBehaviors.RETRIEVER_ITEM.equals(coverIdOf(side));
@@ -527,10 +523,9 @@ public class ItemPipeBlockEntity extends BlockEntity
             if (stack.isEmpty()) continue;
 
             ItemStack toSend = stack.copy();
-            // §112 (the pipe-to-pipe push site): the cover on the face the items leave through gates
-            // them exactly like the receiver's own capability does on the other side. Without this the
-            // sender's filter would only stop arrivals and never departures — the half §111 had to add
-            // to `distribute` after the fact.
+            // The cover on the face the items leave through gates them exactly like the receiver's own
+            // capability does on the other side. Without this the sender's filter would only stop
+            // arrivals and never departures.
             if (!coverPermitsItemTraffic(side, toSend)) continue;
             int accepted = gregtech.content.transport.ItemPipeTransferAdapter.transfer(toSend,
                     () -> itemHandlerAt(target.worldPosition,side.getOpposite())).accepted();
@@ -582,10 +577,9 @@ public class ItemPipeBlockEntity extends BlockEntity
 
                 // Simulate first
                 ItemStack toSend = stack.copy();
-                // §112 (the machine/destination push site): the same sending-face rule as
-                // `pushItemsToPipe` — the face's own cover decides what leaves through it. Only a
-                // filter can differ per stack, so the test sits inside the slot loop and the loop
-                // keeps trying the other slots.
+                // The same sending-face rule as `pushItemsToPipe`: the face's own cover decides what
+                // leaves through it. Only a filter can differ per stack, so the test sits inside the
+                // slot loop and the loop keeps trying the other slots.
                 if (!coverPermitsItemTraffic(side, toSend)) continue;
                 int accepted = gregtech.content.transport.ItemPipeTransferAdapter.transfer(toSend,
                         () -> itemHandlerAt(targetPos,side.getOpposite())).accepted();
@@ -871,10 +865,10 @@ public class ItemPipeBlockEntity extends BlockEntity
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             if (side != null) {
                 // Zero cost when unused: `hasCovers` is false for every coverless pipe, so the ordinary
-                // path below is byte for byte the pre-cover one and no face view is ever built. A
-                // face-aware handler exists only where an item filter or a retriever actually sits,
-                // because those are the two covers whose rule is an item rule (§112 / GT6
-                // CoverFilterItem:115-127, CoverRetrieverItem:138-139).
+                // path below is byte for byte the same and no face view is ever built. A face-aware
+                // handler exists only where an item filter or a retriever actually sits, because those
+                // are the two covers whose rule is an item rule (GT6 {@code CoverFilterItem:115-127},
+                // {@code CoverRetrieverItem:138-139}).
                 if (hasCovers && isItemCoverFace(side)) return faceHandler(side).cast();
                 return sideHandler(side).cast();
             }
@@ -888,13 +882,12 @@ public class ItemPipeBlockEntity extends BlockEntity
      * One external view per side, retaining {@link SideAwareItemHandler} backflow bookkeeping
      * and checking the current shutter even when a caller retains the view across cover changes.
      *
-     * <p><b>Deviation from the fluid-pipe template.</b> {@code FluidPipeBlockEntity:811-812} falls back
-     * to {@code handler.cast()} for an ordinary face, because on that class the no-face handler and the
+     * <p><b>Deviation from the fluid pipe.</b> {@link FluidPipeBlockEntity} falls back to
+     * {@code handler.cast()} for an ordinary face, because on that class the no-face handler and the
      * per-face one are the same object. Here they are not: {@code handler} is the unsided view, and a
-     * <em>sided</em> query has always been answered by this wrapper since §97/§99 (the capability
-     * handle-stability work). Returning {@code handler.cast()} from the new branch would silently drop
-     * the backflow bookkeeping for every covered pipe, so the "pre-existing handler" of requirement
-     * §112.3 is this method.</p>
+     * <em>sided</em> query is answered by this wrapper, whose per-face handle must stay stable across
+     * cover changes. Returning {@code handler.cast()} from the new branch would silently drop the
+     * backflow bookkeeping for every covered pipe, so the pre-existing handler is this method.</p>
      */
 //? if >=1.21.1 {
     /*private IItemHandler sideHandler(Direction side) {
@@ -1046,7 +1039,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * out a per-side view for every side, so the face has to be carried <em>by the handler</em>. This is
      * that handler — {@link SideAwareItemHandler} plus the two cover rules — and it is built only where
      * an item filter or a retriever actually sits ({@link #getCapability}), never for a coverless pipe.
-     * It is the item-side counterpart of {@code FluidPipeBlockEntity.FaceFluidHandler:1084-1128}.
+     * It is the item-side counterpart of {@link FluidPipeBlockEntity}'s face fluid handler.
      *
      * <p>Everything except the two intercepts delegates straight through, by inheritance: that is the
      * pipe's own answer for {@code getSlots}, {@code getStackInSlot}, {@code getSlotLimit} and
@@ -1063,8 +1056,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * applies to its face. GT6 draws that line the same way from the other end: its retriever inserts
      * into the inventory across the face ({@code CoverRetrieverItem:67,72}) and only extracts through
      * the pipe's sides, and the port's substitution of "the host's own slots" for that target has always
-     * bypassed the host's own intercepts — the machine's retriever does too
-     * ({@code BasicMachineBlockEntity:1553-1557}).</p>
+     * bypassed the host's own intercepts — the machine's retriever does too.</p>
      */
     private class FaceItemHandler extends ExternalSideItemHandler {
         private final Direction side;
@@ -1147,9 +1139,9 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     /**
      * One cover per face under the machine's own keys, written only for non-empty faces — the same
-     * shape as {@code BasicMachineBlockEntity.saveCovers:1296-1302} and
-     * {@code FluidPipeBlockEntity.saveCovers}, and skipped entirely while no cover was ever attached
-     * (the array is still null), so a coverless pipe writes nothing.
+     * shape as {@link BasicMachineBlockEntity}'s and {@link FluidPipeBlockEntity}'s cover save — and
+     * skipped entirely while no cover was ever attached (the array is still null), so a coverless pipe
+     * writes nothing.
      */
 //? if >=1.21.1 {
     /*private void saveCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
@@ -1167,10 +1159,10 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * {@code BasicMachineBlockEntity.loadCovers:1304-1310}, with the fluid pipe's one difference: a
-     * tag that names no cover <em>clears</em> the faces, so a cover removed on the server disappears on
-     * the client through {@link #handleUpdateTag} instead of lingering. A tag without any cover key and
-     * a pipe that never had one stay allocation-free.
+     * The cover load of {@link BasicMachineBlockEntity}, with the fluid pipe's one difference: a tag
+     * that names no cover <em>clears</em> the faces, so a cover removed on the server disappears on the
+     * client through {@link #handleUpdateTag} instead of lingering. A tag without any cover key and a
+     * pipe that never had one stay allocation-free.
      *
      * <p>{@link #hasCovers} is recomputed here and not only in the tag-writing direction: it is the
      * only thing the tick pass and {@link #getCapability} test, so a load that brings covers back
@@ -1261,10 +1253,9 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * The pipe had no update packet before this batch, so covers would never have reached the client
-     * renderer; {@code BasicMachineBlockEntity:1326-1335} is the machine's pair of the same two
-     * methods, and the payload is the update tag above. Same pair, same reason, as
-     * {@code FluidPipeBlockEntity.getUpdatePacket}.
+     * Covers have to reach the client renderer, so the pipe sends the update tag built above; this is
+     * the same packet pair as {@link BasicMachineBlockEntity#getUpdatePacket()} and
+     * {@link FluidPipeBlockEntity#getUpdatePacket()}.
      */
     @Override
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {

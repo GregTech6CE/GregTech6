@@ -123,7 +123,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
      *
      * <p>GT6 sprinkles {@code BlocksGT.ores_normal[13|14]} — the ore variant whose background is
      * <b>normal stone</b> — into the pylon, so the port places the ore with an explicit
-     * {@link OreHostStone#STONE} background instead of the prismarine it replaces (§58, §103.B).
+     * {@link OreHostStone#STONE} background instead of the prismarine it replaces.
      */
     private static boolean setPylonBlock(WorldGenLevel level, BlockPos pos, BlockState stone,
                                          GTMaterial ore, RandomSource random) {
@@ -135,7 +135,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    /** GT6's {@code WD.anywater}: vanilla water or GT's own sea water (§49). */
+    /** GT6's {@code WD.anywater}: vanilla water or GT's own sea water. */
     public static boolean isWater(BlockState state) {
         if (state.is(Blocks.WATER)) return true;
 //? if >=1.21.1 {

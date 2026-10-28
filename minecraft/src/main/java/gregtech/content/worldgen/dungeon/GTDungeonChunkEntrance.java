@@ -47,10 +47,10 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
         try {
             super.generate(data);
         } catch (Throwable ignored) {
-            // GT6 :33 - the pillar is not important enough to fail the entire entrance.
+            // - the pillar is not important enough to fail the entire entrance.
         }
 
-        // GT6 :35-62 - the room at the foot of the shaft.
+        // - the room at the foot of the shaft.
         for (int tX = 0; tX < 16; tX++) {
             for (int tZ = 0; tZ < 16; tZ++) {
                 for (int tY = 0; tY <= 7; tY++) {
@@ -85,7 +85,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6 :64-65 - how far up the shaft has to dig: from ten blocks above the cell to the first ten by
+        // - how far up the shaft has to dig: from ten blocks above the cell to the first ten by
         // ten layer that is entirely replaceable (the open sky), or to the world's height cap.
         int tHeight = 10 + data.y;
         int eY = data.level.getHeight() - 32;
@@ -99,14 +99,14 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
         }
         tHeight -= data.y;
 
-        // GT6 :74 - round the height up to the next 5k+1, so the shaft's bands line up.
+        // - round the height up to the next 5k+1, so the shaft's bands line up.
         if ((tHeight - 1) % 5 != 0) tHeight += 5 - ((tHeight - 1) % 5);
 
         // The port's ceiling for the shaft: every positive local Y below must stay inside the dimension.
         int top = data.level.getMaxBuildHeight() - data.y;
         if (tHeight > top - 3) tHeight = top - 3;
 
-        // GT6 :76-92 - the shaft: a 4x4 core ring inside a 10x10 wall, tiled where the wall ends.
+        // - the shaft: a 4x4 core ring inside a 10x10 wall, tiled where the wall ends.
         for (int tY = 7; tY <= tHeight && tY < top; tY++) {
             for (int tX = 3; tX <= 12; tX++) {
                 for (int tZ = 3; tZ <= 12; tZ++) {
@@ -129,7 +129,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6 :94-102 - the core's lining inside the room, banded like the shaft.
+        // - the core's lining inside the room, banded like the shaft.
         for (int tY = 1; tY <= 6; tY++) {
             for (int tX = 6; tX <= 9; tX++) {
                 for (int tZ = 6; tZ <= 9; tZ++) {
@@ -144,7 +144,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6 :104-111 - the doorway through the core, towards the neighbours along Z.
+        // - the doorway through the core, towards the neighbours along Z.
         data.air(7, 1, 6);
         data.air(7, 1, 9);
         data.air(7, 2, 6);
@@ -154,7 +154,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
         data.air(8, 2, 6);
         data.air(8, 2, 9);
 
-        // GT6 :113-175 - the spiral staircase in the four corners of the shaft, five blocks per turn.
+        // - the spiral staircase in the four corners of the shaft, five blocks per turn.
         // Every tread is a smooth rock slab; GT6 alternates its two slab orientations (mSlabs[0] is the
         // bottom half, SIDE_Y_NEG, mSlabs[1] the top half, SIDE_Y_POS) so the flight steps upwards.
         int tOffsetY = -5;
@@ -218,7 +218,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             data.smoothSlab(11, tOffsetY + 5, 5, Direction.UP);
         }
 
-        // GT6 :177-193 - the two tiled landings at the top of the staircase, GT6's tile slabs in its
+        // - the two tiled landings at the top of the staircase, GT6's tile slabs in its
         // mSlabs[1] orientation (the top half).
         data.tilesSlab(4, tOffsetY + 5, 9, Direction.UP);
         data.tilesSlab(5, tOffsetY + 5, 9, Direction.UP);
@@ -238,7 +238,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
         data.tilesSlab(10, tOffsetY + 5, 6, Direction.UP);
         data.tilesSlab(11, tOffsetY + 5, 6, Direction.UP);
 
-        // GT6 :195-205 - the structure around the opening: a 12x12 box, coloured coping one block above the
+        // - the structure around the opening: a 12x12 box, coloured coping one block above the
         // shaft's top, and the opening itself cleared down to the shaft.
         for (int tY = Math.max(8, tHeight - 2); tY <= tHeight + 2 && tY < top; tY++) {
             for (int tX = 2; tX <= 13; tX++) {
@@ -256,7 +256,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6 :207-238 - the opening towards the neighbour at X + 1.
+        // - the opening towards the neighbour at X + 1.
         if (data.connected(1, 0)) {
             data.colored(15, 0, 5);
             data.colored(15, 0, 6);
@@ -289,7 +289,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             data.colored(15, 4, 9);
             data.colored(15, 4, 10);
         }
-        // GT6 :239-270 - the opening towards the neighbour at X - 1.
+        // - the opening towards the neighbour at X - 1.
         if (data.connected(-1, 0)) {
             data.colored(0, 0, 5);
             data.colored(0, 0, 6);
@@ -322,7 +322,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             data.colored(0, 4, 9);
             data.colored(0, 4, 10);
         }
-        // GT6 :271-302 - the opening towards the neighbour at Z + 1.
+        // - the opening towards the neighbour at Z + 1.
         if (data.connected(0, 1)) {
             data.colored(5, 0, 15);
             data.colored(6, 0, 15);
@@ -355,7 +355,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             data.colored(9, 4, 15);
             data.colored(10, 4, 15);
         }
-        // GT6 :303-334 - the opening towards the neighbour at Z - 1.
+        // - the opening towards the neighbour at Z - 1.
         if (data.connected(0, -1)) {
             data.colored(5, 0, 0);
             data.colored(6, 0, 0);
@@ -389,13 +389,13 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
             data.colored(10, 4, 0);
         }
 
-        // GT6 :336 - the entrance always accepts its cell.
+        // - the entrance always accepts its cell.
         return true;
     }
 
     /**
      * GT6's {@code WD.easyRep} ({@code WD:687-688}: air, a bush, snow, fire or leaves) together with the
-     * {@code Block.isWood} test of :69. The fully qualified vanilla {@code BushBlock} keeps this apart from
+     * {@code Block.isWood} test of. The fully qualified vanilla {@code BushBlock} keeps this apart from
      * the port's own bush block.
      */
     private static boolean easyReplace(BlockState state) {

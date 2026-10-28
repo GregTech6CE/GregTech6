@@ -93,7 +93,7 @@ public final class MaterialFormConversionRecipes {
         return ENTRIES.size();
     }
 
-    /** GT6 {@code Loader_Recipes_Handlers:217-233}. */
+    /** GT6's compressor rows, dust to plate or gem ({@code Loader_Recipes_Handlers:217-233}). */
     private static void compressor(GTMaterial material, boolean easy, int quality) {
         // dust -> plateGem. GT6 excludes materials that already have the fancy gem forms (and Ice).
         boolean gemLike = has(MaterialPrefix.gemLegendary, material) || has(MaterialPrefix.gemExquisite, material)

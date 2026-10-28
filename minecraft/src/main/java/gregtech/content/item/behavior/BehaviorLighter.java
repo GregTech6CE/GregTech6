@@ -55,7 +55,7 @@ public final class BehaviorLighter {
             return stack.getCount() == 1 || (fuelAmount == 1 && can.empty().isEmpty());
         }
 
-        /** GT6 {@code ST.invalid(mUsedLighter)} ({@code :86}): the single-use shape. */
+        /** GT6 {@code ST.invalid(mUsedLighter)}: the single-use shape. */
         public boolean singleUse() {
             return can.used().isEmpty();
         }
@@ -117,7 +117,7 @@ public final class BehaviorLighter {
      * @param spec   the family this stack belongs to ({@link #invar()} and friends)
      * @param random the level's random source ({@code RNGSUS} in the original)
      * @return whether the click was consumed; a failed roll on the multi-use shape still returns
-     *         {@code true} because it burns a fuel unit ({@code :110-117})
+     *         {@code true} because it burns a fuel unit
      */
     public static Outcome useOn(
             Level level,
@@ -130,25 +130,25 @@ public final class BehaviorLighter {
             float hitX,
             float hitY,
             float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack); // :83
-        if (!spec.accepts(stack)) return Outcome.refused(stack); // :83
-        ItemStack prepared = spec.can().prepared(stack); // :85
-        boolean successful = random.nextInt((int) MAX_CHANCE) < spec.chance(); // :89,103
+        if (level.isClientSide) return Outcome.refused(stack);
+        if (!spec.accepts(stack)) return Outcome.refused(stack);
+        ItemStack prepared = spec.can().prepared(stack);
+        boolean successful = random.nextInt((int) MAX_CHANCE) < spec.chance(); // 103
 
-        if (spec.singleUse()) { // :86-99
+        if (spec.singleUse()) {
             if (!successful) return Outcome.acted(spec.can().usedUp(prepared));
             long cost = BehaviorFlintAndTinder.ignite(level, pos, side, player, prepared, hitX, hitY, hitZ);
-            // :96 - a roll that fired but found nothing to ignite costs nothing at all.
+            // - a roll that fired but found nothing to ignite costs nothing at all.
             if (cost == 0L) return Outcome.refused(prepared);
             return Outcome.acted(spec.can().usedUp(prepared));
         }
 
-        if (!spec.can().isUsed(prepared)) return Outcome.refused(prepared); // :100
+        if (!spec.can().isUsed(prepared)) return Outcome.refused(prepared);
         long cost = successful
                 ? BehaviorFlintAndTinder.ignite(level, pos, side, player, prepared, hitX, hitY, hitZ)
-                : FAILED_ROLL_COST; // :103-109
+                : FAILED_ROLL_COST;
         if (cost == 0L) return Outcome.refused(prepared);
-        return Outcome.acted(consumeFuel(prepared, spec, cost, player)); // :110-117
+        return Outcome.acted(consumeFuel(prepared, spec, cost, player));
     }
 
     /**
@@ -159,13 +159,13 @@ public final class BehaviorLighter {
      * @return whether the entity was a creeper and got lit
      */
     public static Outcome useOnEntity(Entity entity, @Nullable Player player, ItemStack stack, LighterSpec spec) {
-        if (!spec.accepts(stack)) return Outcome.refused(stack); // :62
-        ItemStack prepared = spec.can().prepared(stack); // :67
+        if (!spec.accepts(stack)) return Outcome.refused(stack);
+        ItemStack prepared = spec.can().prepared(stack);
         if (!(entity instanceof Creeper creeper)) return Outcome.refused(prepared);
-        if (!spec.can().isUsed(prepared)) return Outcome.refused(prepared); // :69
-        creeper.ignite(); // :71
-        if (ItemBehaviors.creative(player)) return Outcome.acted(prepared); // :72 skips the decrement
-        return Outcome.acted(spec.can().spent(prepared, 1L)); // :72-76
+        if (!spec.can().isUsed(prepared)) return Outcome.refused(prepared);
+        creeper.ignite();
+        if (ItemBehaviors.creative(player)) return Outcome.acted(prepared); // skips the decrement
+        return Outcome.acted(spec.can().spent(prepared, 1L));
     }
 
     /**
@@ -173,7 +173,7 @@ public final class BehaviorLighter {
      * up, and {@code useUp} once none are left.
      */
     public static ItemStack consumeFuel(ItemStack stack, LighterSpec spec, long cost, @Nullable Player player) {
-        if (ItemBehaviors.creative(player)) return stack; // :111
+        if (ItemBehaviors.creative(player)) return stack;
         long units = gregtech.content.tool.ConsumableRules.ignitionUnits(cost); // UT.Code.units(..., T)
         return spec.can().spent(stack, Math.max(1L, units));
     }

@@ -192,8 +192,7 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
         if (!(level.getBlockEntity(pos) instanceof ElectricWireBlockEntity wire) || !wire.isConducting()) return;
         // GT6 MultiTileEntityWireElectric:203 — a bare wire that carried current hurts whatever touches
         // it with UT.Entities.applyElectricityDamage(entity, mWattageLast), i.e. tierMax(wattage) * 4
-        // with the lightning hazard suit, creative mode and the mob immunities exempt. The port used to
-        // invent a 2/4/8/20 damage ladder off the wire's rated voltage and a vanilla generic source.
+        // with the lightning hazard suit, creative mode and the mob immunities exempt.
         GTEntityHelper.applyElectricityDamage(living, wire.lastWattage());
     }
 

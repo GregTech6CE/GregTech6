@@ -136,7 +136,7 @@ public final class FoodItemRecipes {
             }
         }
         // GT6 MultiItemFood.java:574 calls add_smelting(Food_DogMeat_Raw, Food_DogMeat_Cooked) a second
-        // time instead of the Mule pair of :572-573, so GT6 ships *no* smelting row for Mule Meat. The
+        // time instead of the Mule pair of, so GT6 ships *no* smelting row for Mule Meat. The
         // port reproduces the original's behaviour and records the copy-paste bug instead of fixing it
         // silently: a "corrected" row would make the port differ from the game it is porting.
         SKIPPED.add("mule_meat -> grilled_mule_meat (GT6 MultiItemFood.java:574 repeats the Dogmeat pair of "

@@ -68,7 +68,7 @@ public final class ElectronicsRecipes {
         sapphireBoules();
         REGISTERED.addAll(PolarizerMaterialRecipes.register());
 
-        // GT6 MultiItemTechnological:571-698 + :739-743 — the magical/enderium/signalum branch of the
+        // GT6 MultiItemTechnological:571-698 + — the magical/enderium/signalum branch of the
         // circuit chain. The rows above cover GT6's copper/gold/platinum ladder; these were the items the
         // port registered with no way to make them (see docs/items-without-recipes.json).
         String[] magicWires={"Thaumium","Manasteel","Mithril","Netherite"};

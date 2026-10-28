@@ -83,7 +83,7 @@ public final class CoverUtilityBehaviors {
     /**
      * GT6 {@code CoverCrafting:49}: {@code new S2DPacketOpenWindow(id, 1, "Crafting", 9, T)} — the
      * window type is the vanilla workbench and {@code 9} is its nine slots, i.e. the 3×3 grid of
-     * {@code ContainerWorkbench} opened on line {@code :50}.
+     * {@code ContainerWorkbench} opened over the cover's face.
      */
     public static final int CRAFTING_GRID_SLOTS = 9;
 
@@ -106,10 +106,10 @@ public final class CoverUtilityBehaviors {
      * GT6 {@code CoverCrafting:46-55}: right-clicking the cover opens a workbench.
      *
      * <p>The original guards the container on {@code aPlayer instanceof EntityPlayerMP}
-     * ({@code :47}) and then returns {@code T} unconditionally ({@code :54}), so the click is
+     * and then returns {@code T} unconditionally, so the click is
      * consumed whether or not a GUI opened; that shape is kept. The 1.20.1 counterpart of
      * {@code S2DPacketOpenWindow(..., "Crafting", 9, T)} plus the {@code ContainerWorkbench} built
-     * around the tile's coordinates ({@code :49-52}) is vanilla's own {@link CraftingMenu} over a
+     * around the tile's coordinates is vanilla's own {@link CraftingMenu} over a
      * {@link ContainerLevelAccess} on the same position, opened through
      * {@link ServerPlayer#openMenu(net.minecraft.world.MenuProvider)} — no new menu type, no new
      * packet, no client class.</p>
@@ -153,7 +153,7 @@ public final class CoverUtilityBehaviors {
      *
      * <p>That flag is GT6's {@code aData.mValues[aSide]}: {@code onStoppedUpdate} sets it to 1 when
      * the cover stops being suspended ({@code CoverRetrieverItem:55-57}) and the tick body clears it
-     * once it has run ({@code :62}), so a cover that was held back by a controller cover catches up
+     * once it has run, so a cover that was held back by a controller cover catches up
      * immediately instead of waiting out the rest of the 20-tick cycle.</p>
      */
     public static boolean retrieverDue(long tickCounter, boolean pending) {
@@ -261,9 +261,9 @@ public final class CoverUtilityBehaviors {
      */
     public static boolean filterPermits(boolean filterPresent, boolean blacklist, boolean stopped,
                                         boolean matches) {
-        if (stopped) return false;                       // :117 / :119, "suspended blocks all"
-        if (!filterPresent) return blacklist;            // :118 / :120, "empty whitelist blocks"
-        return blacklist != matches;                     // :119 / :121
+        if (stopped) return false;                       // "suspended blocks all"
+        if (!filterPresent) return blacklist;            // "empty whitelist blocks"
+        return blacklist != matches;
     }
 
     /**
@@ -339,8 +339,7 @@ public final class CoverUtilityBehaviors {
 
     /**
      * The fluid stored under {@link #FILTER_FLUID_KEY}, or empty
-     * ({@code CoverFilterFluid:51,78,95}; GT6 writes it with {@code FL.save(null, ...)} on
-     * {@code :106}).
+     * ({@code CoverFilterFluid:51,78,95}; GT6 writes it with {@code FL.save(null, ...)}).
      */
 //? if >=1.21.1 {
     /*public static FluidStack fluidFilter(ItemStack cover,net.minecraft.core.HolderLookup.Provider lookup) {
@@ -428,7 +427,7 @@ public final class CoverUtilityBehaviors {
      *
      * <p>The caller owns {@code setChanged()} and the block update, exactly as
      * {@code BasicMachineBlockEntity.configureControlCover} does for the same flag
-     * ({@code BasicMachineBlockEntity:554-562}).</p>
+     * ({@code BasicMachineBlockEntity}).</p>
      */
     public static boolean toggleFilterMode(ItemStack cover) {
 //? if >=1.21.1 {
@@ -477,7 +476,7 @@ public final class CoverUtilityBehaviors {
     /**
      * GT6 {@code CoverPressureValve:59}: {@code aData.box(-2, -2, -2, +3, +3, +3)}, the 5×5×5 cube
      * the escaping gas damages. The port reads GT6 boxes as an {@link AABB} around the block
-     * inflated by the lower offset, which is what {@code FluidPipeBlockEntity:160-171} already does
+     * inflated by the lower offset, which is what {@code FluidPipeBlockEntity} already does
      * for the very same GT6 code.
      */
     public static final double VALVE_VENT_INFLATE = 2.0D;
@@ -486,9 +485,9 @@ public final class CoverUtilityBehaviors {
     public enum ValveAction {
         /** Tank not full, or full with nowhere to go. */
         IDLE,
-        /** {@code FL.move(tTank, tDelegator)} — a tank is in front ({@code :54-56}). */
+        /** {@code FL.move(tTank, tDelegator)} — a tank is in front. */
         INTO_TANK,
-        /** The gas escapes into the air and hurts what is standing there ({@code :57-61}). */
+        /** The gas escapes into the air and hurts what is standing there. */
         VENT
     }
 
@@ -517,9 +516,9 @@ public final class CoverUtilityBehaviors {
      */
     public static ValveAction valveAction(boolean tankFull, boolean gas, boolean tankInFront,
                                           boolean collisionInFront) {
-        if (!tankFull) return ValveAction.IDLE;                 // :53
-        if (tankInFront) return ValveAction.INTO_TANK;          // :54-56
-        if (gas && !collisionInFront) return ValveAction.VENT;  // :57
+        if (!tankFull) return ValveAction.IDLE;
+        if (tankInFront) return ValveAction.INTO_TANK;
+        if (gas && !collisionInFront) return ValveAction.VENT;
         return ValveAction.IDLE;
     }
 
@@ -541,7 +540,7 @@ public final class CoverUtilityBehaviors {
     public static boolean tickPressureValve(Level level, BlockPos machinePos, Direction side,
                                             FluidTankGT tank, long tickCounter) {
         if (level == null || tank == null || tank.isEmpty()) return false;
-        if (tickCounter <= VALVE_MIN_TICKS) return false;                 // :50 `aTimer > 2`
+        if (tickCounter <= VALVE_MIN_TICKS) return false;                 // `aTimer > 2`
         FluidStack content = tank.getFluid();
         if (content.isEmpty()) return false;
         BlockPos front = machinePos.relative(side);
@@ -590,10 +589,10 @@ public final class CoverUtilityBehaviors {
      * <p>The damage is the port's existing {@code GTEntityHelper.applyTemperatureDamage} with
      * exactly the arguments the original passes — {@code 2.0F} multiplier and {@code 10.0F} cap,
      * which are {@code FluidHazards.PIPE_TEMPERATURE_MULTIPLIER} and
-     * {@code FluidHazards.PIPE_TEMPERATURE_CAP} ({@code FluidHazards:96-99}, from
+     * {@code FluidHazards.PIPE_TEMPERATURE_CAP} ({@code FluidHazards}, from
      * {@code MultiTileEntityPipeFluid:299,305}). The temperature comes from
      * {@link #fluidTemperature}. The fizz is vanilla's {@code FIRE_EXTINGUISH}, the same substitution
-     * {@code FluidPipeBlockEntity:139-140} makes for the same GT6 sound.</p>
+     * {@code FluidPipeBlockEntity} makes for the same GT6 sound.</p>
      */
     private static boolean vent(Level level, BlockPos machinePos, FluidTankGT tank, FluidStack content) {
         level.playSound(null, machinePos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);

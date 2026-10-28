@@ -47,13 +47,13 @@ import java.util.List;
  * Ore blocks (plain and small variants) that are always breakable and droppable
  * regardless of block tag membership. Mining speed still respects the tool quality.
  *
- * <p>§103.B: the background ("host") rock an ore generated in lives in the {@link #STONE} block
+ * <p>The background ("host") rock an ore generated in lives in the {@link #STONE} block
  * <em>state</em> property, so one registered ore block per material still renders with any stone
- * background (GT6 had one block per stone variant instead). It used to be the only field of an
- * {@link OreBlockEntity} — one block entity per ore block, ~497 per chunk and 1.8M in the
- * 3.6k-chunk session measured in §101/§102 (~0.3–0.5 GB). Ore blocks no longer create one.
+ * background (GT6 had one block per stone variant instead). The state replaces the per-ore block
+ * entity: that was ~497 entities per chunk and 1.8M in a 3.6k-chunk session (~0.3–0.5 GB), so the
+ * port creates none.
  *
- * <p>Drops and pick-block carry the host rock on the item ({@code BlockStateTag}, plus the pre-§103.B
+ * <p>Drops and pick-block carry the host rock on the item ({@code BlockStateTag}, plus the legacy
  * {@code BlockEntityTag}) and {@link #getStateForPlacement} puts it back on placement.
  *
  * <p><b>No block entity, on purpose — this class deliberately does not implement
@@ -61,17 +61,17 @@ import java.util.List;
  * reports:
  * <ul>
  *   <li>worldgen writes a {@code DUMMY} placeholder tag for every block whose state has a block entity
- *       (vanilla {@code WorldGenRegion:267-281}), so an {@code EntityBlock} ore would carry one per
+ *       (vanilla {@code WorldGenRegion}), so an {@code EntityBlock} ore would carry one per
  *       placed block, and promoting it through a {@code newBlockEntity} that returns {@code null} logs
  *       {@code "Tried to load a block entity … but failed"} for each of them;</li>
  *   <li>{@code Level#getBlockEntity(BlockPos)} asks for an <em>immediate</em> creation
- *       ({@code LevelChunk:313-320}), so any block with {@code hasBlockEntity()} grows a fresh entity on
- *       the first lookup — exactly what §103.B removes.</li>
+ *       ({@code LevelChunk}), so any block with {@code hasBlockEntity()} grows a fresh entity on
+ *       the first lookup — exactly what the block-state property removes.</li>
  * </ul>
  *
- * <p>Worlds generated before §103.B are still handled: the {@code gt6ce:ore} block-entity type stays
+ * <p>Worlds generated with the older block-entity format are still handled: the {@code gt6ce:ore} block-entity type stays
  * registered, so the chunk loader creates the entity from its saved tag, sets its level
- * ({@code LevelChunk:538}) and calls {@link OreBlockEntity#onLoad()}, which folds the stone into this
+ * ({@code LevelChunk}) and calls {@link OreBlockEntity#onLoad()}, which folds the stone into this
  * block's {@link #STONE} property before the entity is dropped — {@code LevelChunk#setBlockEntity}
  * refuses to store it because the ore state no longer accepts a block entity.
  */
@@ -179,7 +179,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
      * <ul>
      *   <li>{@code BlockStateTag} — the vanilla format ({@code BlockItem#updateBlockStateFromTag}) and
      *       what {@link #stoneOfStack} reads when the stack is placed again;</li>
-     *   <li>{@code BlockEntityTag} — the pre-§103.B format, kept on intact ore items silk-touched by
+     *   <li>{@code BlockEntityTag} — the legacy format, kept on intact ore items silk-touched by
      *       older builds. New broken ore carries only {@code BlockStateTag}, since it has no block
      *       entity and must remain eligible for material recovery.</li>
      * </ul>

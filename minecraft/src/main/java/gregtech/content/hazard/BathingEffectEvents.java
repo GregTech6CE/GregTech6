@@ -32,7 +32,7 @@ import java.util.Set;
  *   if (mActLikeWeb) aEntity.setInWeb();
  *   if (!aWorld.isRemote &amp;&amp; !mEffectsBathing.isEmpty() &amp;&amp; aEntity instanceof EntityLivingBase
  *       &amp;&amp; !UT.Entities.isWearingFullChemHazmat((EntityLivingBase)aEntity)) {
- *       for (int[] tEffects : mEffectsBathing) UT.Entities.applyPotion(aEntity, tEffects[0], tEffects[1], tEffects[2], F);
+ *       for (int[] tEffects: mEffectsBathing) UT.Entities.applyPotion(aEntity, tEffects[0], tEffects[1], tEffects[2], F);
  *   }
  * </pre>
  *
@@ -46,7 +46,7 @@ import java.util.Set;
  * <p>The effects are re-applied every tick, which is what GT6 effectively does: the collision callback
  * fires every tick while the entity overlaps the fluid, and a 100-tick regeneration row therefore
  * never expires while you stand in a geothermal spring. Only the drown damage beside it is throttled
- * to every 20 ticks ({@code :414}); that half lives in {@link BreathingGasEvents}.
+ * to every 20 ticks; that half lives in {@link BreathingGasEvents}.
  *
  * <p>The web flag ({@code BlockBaseFluid:405} {@code setInWeb()}) is not here: it is a property of the
  * fluid <em>block</em>, so {@code GTWorldFluidBlock#entityInside} applies it.
