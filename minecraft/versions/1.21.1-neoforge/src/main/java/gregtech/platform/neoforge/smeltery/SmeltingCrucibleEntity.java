@@ -147,6 +147,15 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
                 level, worldPosition, hazardProfile(), getTemperature());
     }
 
+    /** GT6 {@code MultiTileEntitySmeltery.removedByPlayer}: a crucible at lava's melting point melts down. */
+    public void meltDownOnBreak() {
+        content.clear();
+        level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F);
+        gregtech.content.blockentity.machine.SmelteryFireHelper.crucibleMeltdown(
+                level, worldPosition, hazardProfile(), getTemperature(), 1.0F);
+        setChanged();
+    }
+
     protected void addHeatEnergy(long units) {
         if (units > 0) {
             thermal = new ThermalState(

@@ -40,7 +40,7 @@ public final class SmelteryFireHelper {
             gregtech.engine.machine.crucible.CrucibleHazards.Profile profile,
             gregtech.engine.machine.crucible.CrucibleProcess.Vapor vapor) {
         if (level == null || level.isClientSide) return;
-        gasDamage(level, pos, profile, vapor.material().getBoilingPoint());
+        gasDamage(level, pos, profile, vapor.material().getBoilingPoint(), profile.temperatureMultiplier());
         igniteAttempts(
                 level,
                 pos,
@@ -53,7 +53,8 @@ public final class SmelteryFireHelper {
             Level level,
             BlockPos pos,
             gregtech.engine.machine.crucible.CrucibleHazards.Profile profile,
-            long temperature) {
+            long temperature,
+            float damageMultiplier) {
         if (temperature < 320) return;
         int r = profile.range();
         AABB area = new AABB(
@@ -64,7 +65,7 @@ public final class SmelteryFireHelper {
                 pos.getY() + r + 1,
                 pos.getZ() + r + 1);
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, area))
-            gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, temperature, profile.temperatureMultiplier());
+            gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, temperature, damageMultiplier);
     }
 
     public static void crucibleMeltdown(
@@ -72,8 +73,18 @@ public final class SmelteryFireHelper {
             BlockPos pos,
             gregtech.engine.machine.crucible.CrucibleHazards.Profile profile,
             long temperature) {
+        crucibleMeltdown(level, pos, profile, temperature, profile.temperatureMultiplier());
+    }
+
+    /** GT6 {@code removedByPlayer} uses multiplier 1 for the break meltdown, unlike the tick path. */
+    public static void crucibleMeltdown(
+            Level level,
+            BlockPos pos,
+            gregtech.engine.machine.crucible.CrucibleHazards.Profile profile,
+            long temperature,
+            float damageMultiplier) {
         if (level == null || level.isClientSide) return;
-        gasDamage(level, pos, profile, temperature);
+        gasDamage(level, pos, profile, temperature, damageMultiplier);
         igniteAttempts(
                 level,
                 pos,

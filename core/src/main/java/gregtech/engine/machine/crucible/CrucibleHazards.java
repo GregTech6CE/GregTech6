@@ -22,6 +22,9 @@ public final class CrucibleHazards {
     public static final Profile SMALL = new Profile(3, 2F, 16L * GTValues.U, 6, false);
     public static final Profile LARGE = new Profile(5, 4F, 432L * GTValues.U, 8, true);
 
+    /** GT6 {@code MultiTileEntitySmeltery.removedByPlayer}: a hot crucible melts down at lava's melting point. */
+    public static final long BREAK_MELTDOWN_TEMPERATURE_K = 1300L;
+
     /** GT6 only ignites from a vapor whose own boiling point is at least2000K. */
     public static int vaporFireAttempts(long boilingPoint, long amount) {
         if (boilingPoint < 2000 || amount <= 0) return 0;

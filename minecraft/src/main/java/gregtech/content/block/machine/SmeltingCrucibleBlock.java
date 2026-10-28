@@ -1,6 +1,7 @@
 package gregtech.content.block.machine;
 
 import gregtech.engine.machine.CrucibleSpec;
+import gregtech.engine.machine.crucible.CrucibleHazards;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.engine.machine.GTMachineBlock;
@@ -40,6 +41,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -264,6 +266,25 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
             }
         }
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
+    }
+
+    /** GT6 {@code MultiTileEntitySmeltery.removedByPlayer}: a crucible at lava's melting point melts down. */
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player,
+                                       boolean willHarvest, FluidState fluid) {
+        if (!level.isClientSide && !player.isCreative()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+//? if >=1.21.1 {
+            /*if (blockEntity instanceof SmeltingCrucibleEntity crucible
+*///?} else {
+            if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible
+//?}
+                    && crucible.getTemperature() >= CrucibleHazards.BREAK_MELTDOWN_TEMPERATURE_K) {
+                crucible.meltDownOnBreak();
+                return false;
+            }
+        }
+        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 
     public static Properties defaultProperties(CrucibleSpec spec) {
