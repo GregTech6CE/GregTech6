@@ -350,4 +350,10 @@ public class GTToolItem extends Item {
     public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
         return false;
     }
+
+    /** Both loaders rebuild repair results without GT.ToolStats, so GT6 tools have no vanilla repair path. */
+    @Override
+    public boolean isRepairable(ItemStack stack) {
+        return false;
+    }
 }
