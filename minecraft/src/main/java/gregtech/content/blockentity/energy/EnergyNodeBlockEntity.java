@@ -40,7 +40,7 @@ import java.util.List;
  * storage cabinets (EU buffer). Inputs on every face except the front; output
  * packets of {@code outputRate} leave through the front (FACING).
  */
-public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregtech.engine.machine.AdjacentEnergyControl.Provider, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost {
+public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregtech.engine.machine.AdjacentEnergyControl.Provider, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost {
 
     private java.util.Map<Direction,net.minecraft.world.item.ItemStack> batteryCovers=new java.util.EnumMap<>(Direction.class);
     private gregtech.content.cover.PanelCoverRuntime batteryPanels;
@@ -941,8 +941,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             return !converterStopped;
         };
     }
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side) {
-        if (hasOriginalConverter()) return new gregtech.api.machine.MachineControl() {
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
+        if (hasOriginalConverter()) return new gregtech.api.platform.machine.MachineControl() {
             @Override public boolean available(){return !isRemoved();}
             @Override public boolean supportsProgress(){return false;}
             @Override public boolean supportsMode(){return isOriginalMotor() || isMagnet() || gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec);}
@@ -955,7 +955,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             @Override public long progress(){return 0;}
             @Override public long progressMax(){return 0;}
         };
-        if (isSolar()) return new gregtech.api.machine.MachineControl() {
+        if (isSolar()) return new gregtech.api.platform.machine.MachineControl() {
             @Override public boolean supportsProgress() { return false; }
             @Override public boolean enabled() { return solarEnergy.enabled(); }
             @Override public boolean setEnabled(boolean value) { solarEnergy.enabled(value); setChanged(); return value; }
@@ -965,7 +965,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             @Override public long progressMax() { return 0; }
         };
         if(isElectricTransformer())return transformerControl;
-        if (isSteamConverter()) return new gregtech.api.machine.MachineControl() {
+        if (isSteamConverter()) return new gregtech.api.platform.machine.MachineControl() {
             @Override public boolean enabled() { return !converterStopped; }
             @Override public boolean setEnabled(boolean value) { converterStopped = !value; setChanged(); return value; }
             @Override public boolean running() { return !converterStopped && (buffer > 0 || turbinePending > 0); }
@@ -973,7 +973,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             @Override public long progress() { return buffer; }
             @Override public long progressMax() { return capacity(); }
         };
-        if(!isBatteryBox())return new gregtech.api.machine.MachineControl(){
+        if(!isBatteryBox())return new gregtech.api.platform.machine.MachineControl(){
             public boolean available(){return !isRemoved();}
             public boolean supportsMode(){return false;}
             public boolean enabled(){return !converterStopped;}
@@ -983,7 +983,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             public long progress(){return stored();}
             public long progressMax(){return capacity();}
         };
-        return new gregtech.api.machine.MachineControl() {
+        return new gregtech.api.platform.machine.MachineControl() {
             @Override public boolean supportsMode(){return true;}
             @Override public int mode(){return batteryEnergy.mode();}
             @Override public int setMode(int mode){batteryEnergy.mode(mode);setChanged();return batteryEnergy.mode();}

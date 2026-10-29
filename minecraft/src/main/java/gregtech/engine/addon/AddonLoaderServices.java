@@ -49,7 +49,7 @@ public final class AddonLoaderServices {
             return flowing(name, millibuckets);
         }
 
-        @Override public AddonRecipes.Map map(String name) {
+        @Override public AddonRecipes.RecipeMap map(String name) {
             if (name == null) return null;
             RecipeMap map = RecipeMap.RECIPE_MAPS.get(name);
             return map == null ? null : new MapView(map);
@@ -88,7 +88,7 @@ public final class AddonLoaderServices {
     }
 
     /** Live view over the registry entry found by the call that created it; not cached. */
-    private static final class MapView implements AddonRecipes.Map {
+    private static final class MapView implements AddonRecipes.RecipeMap {
         private final RecipeMap map;
 
         private MapView(RecipeMap map) { this.map = map; }

@@ -1,7 +1,7 @@
 package gregtech.content.blockentity.inventory;
 
 import gregtech.engine.data.UsbDataPort;
-import gregtech.api.machine.MachineControl;
+import gregtech.api.platform.machine.MachineControl;
 import gregtech.content.block.inventory.UsbSwitchBlock;
 import gregtech.client.gui.DataSwitchMenu;
 import gregtech.content.cover.PanelCover;

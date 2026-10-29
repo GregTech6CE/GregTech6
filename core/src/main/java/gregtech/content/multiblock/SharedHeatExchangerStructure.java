@@ -1,7 +1,7 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. */
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.api.multiblock.StructureRole;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public final class SharedHeatExchangerStructure {
                             y,
                             z,
                             y == 0 || x == 0 && z == 0 ? 18024 : 18101,
-                            y == 0 ? StructureGrid.Role.FLUID_INPUT : StructureGrid.Role.CASING));
+                            y == 0 ? StructureRole.FLUID_INPUT : StructureRole.CASING));
                 }
         return List.copyOf(cells);
     }

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.api.material.WeightedMaterial;
+import gregtech.api.material.MaterialComponent;
 import gregtech.engine.material.MaterialPresentation;
 
 
@@ -59,7 +59,7 @@ public final class MaterialTooltips {
     }
 
     private static void appendWithMaterials(ItemStack stack, GTMaterial material,
-                                            List<WeightedMaterial> materials,
+                                            List<MaterialComponent> materials,
                                             @Nullable MaterialPrefix prefix,
                                             List<Component> tooltip, TooltipFlag flag) {
         GTMaterial mat = material.resolve();
@@ -121,7 +121,7 @@ public final class MaterialTooltips {
 //?}
 
                     .withStyle(ChatFormatting.DARK_AQUA));
-            for (WeightedMaterial weighted : materials) {
+            for (MaterialComponent weighted : materials) {
                 if (weighted.material().isValid()) {
                     tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
                 }
@@ -261,7 +261,7 @@ public final class MaterialTooltips {
 //?}
 
                     .withStyle(ChatFormatting.DARK_AQUA));
-            for (var component : data.components()) for (WeightedMaterial weighted : MaterialChemistry.materialWeights(component.material(), component.amount())) {
+            for (var component : data.components()) for (MaterialComponent weighted : MaterialChemistry.materialWeights(component.material(), component.amount())) {
                 if (weighted.material().isValid()) {
                     tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
                 }

@@ -41,7 +41,7 @@ public final class GTToolModelResolver {
         }
 
         PrefixRegistry.ensurePrefixesLoaded();
-        for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             for (MaterialPrefix prefix : PrefixRegistry.all()) {
                 cacheIconset(materials, models, MaterialIcons.sharedModelLocation(set, prefix));
             }
@@ -78,7 +78,7 @@ public final class GTToolModelResolver {
         if (model != null) {
             return model;
         }
-        for (MaterialTextureSet fallback : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
             if (fallback == primary) {
                 continue;
             }

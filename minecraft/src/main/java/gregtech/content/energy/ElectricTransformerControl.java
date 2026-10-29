@@ -1,6 +1,6 @@
 package gregtech.content.energy;
 
-import gregtech.api.machine.MachineControl;
+import gregtech.api.platform.machine.MachineControl;
 import gregtech.engine.energy.TransformerControlState;
 import net.minecraft.nbt.CompoundTag;
 

@@ -73,7 +73,7 @@ public final class WireTooltips {
     }
 
     private static String voltageTierName(long voltage) {
-        return gregtech.api.energy.GTVoltageTiers.NAMES[
-                gregtech.api.energy.GTVoltageTiers.tierMin(voltage)];
+        return gregtech.api.energy.GTVoltageTiers.tierName(
+                gregtech.api.energy.GTVoltageTiers.tierMin(voltage));
     }
 }

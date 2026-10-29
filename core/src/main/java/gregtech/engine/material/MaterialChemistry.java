@@ -49,21 +49,21 @@ public final class MaterialChemistry {
     }
 
     /** F3+H rows: primary material only (matches GT6 {@code getAllMaterialWeights}). */
-    public static List<WeightedMaterial> materialWeights(GTMaterial material, long prefixWeight) {
+    public static List<MaterialComponent> materialWeights(GTMaterial material, long prefixWeight) {
         if (!material.isValid()) {
             return List.of();
         }
-        return List.of(new WeightedMaterial(material, prefixWeight));
+        return List.of(new MaterialComponent(material, prefixWeight));
     }
 
     /** F3+H rows including prefix-specific components (e.g. steel in wrench heads). */
-    public static List<WeightedMaterial> prefixMaterialWeights(GTMaterial material, MaterialPrefix prefix) {
+    public static List<MaterialComponent> prefixMaterialWeights(GTMaterial material, MaterialPrefix prefix) {
         if (prefix == null || (!material.isValid() && !("Empty".equals(material.getName()) && prefix.hasEmptyForm()))) {
             return List.of();
         }
         if ("Empty".equals(material.getName()) && prefix == MaterialPrefix.glasstube) {
             // The empty tube is the glass part of OP.chemtube's byproduct.
-            return List.of(new WeightedMaterial(Materials.Glass, GTValues.U3));
+            return List.of(new MaterialComponent(Materials.Glass, GTValues.U3));
         }
         if ("Empty".equals(material.getName()) && prefix == MaterialPrefix.toolHeadPickaxeGem) {
             return List.of();
@@ -82,49 +82,49 @@ public final class MaterialChemistry {
             return headComponents(material, GTValues.U, Materials.Iron, GTValues.U9 * 26);
         }
         if (prefix == MaterialPrefix.glasstube) {
-            List<WeightedMaterial> out = new ArrayList<>(2);
-            out.add(new WeightedMaterial(material, GTValues.U9));
-            out.add(new WeightedMaterial(Materials.Glass, GTValues.U3));
+            List<MaterialComponent> out = new ArrayList<>(2);
+            out.add(new MaterialComponent(material, GTValues.U9));
+            out.add(new MaterialComponent(Materials.Glass, GTValues.U3));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.plantGtTwig) {
             // OP357/730: U/9 of the named material plus a generic ANY.Wood stick (U/2).
             GTMaterial primary = material.resolve();
             GTMaterial wood = gregtech.content.material.generated.WoodMaterials.Wood.resolve();
-            if (primary == wood) return List.of(new WeightedMaterial(wood, GTValues.U9 + GTValues.U2));
-            return List.of(new WeightedMaterial(primary, GTValues.U9), new WeightedMaterial(wood, GTValues.U2));
+            if (primary == wood) return List.of(new MaterialComponent(wood, GTValues.U9 + GTValues.U2));
+            return List.of(new MaterialComponent(primary, GTValues.U9), new MaterialComponent(wood, GTValues.U2));
         }
         if (prefix == MaterialPrefix.arrowGtWood) {
-            List<WeightedMaterial> out = new ArrayList<>(2);
-            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9));
-            out.add(new WeightedMaterial(gregtech.content.material.generated.WoodMaterials.Wood, GTValues.U2));
+            List<MaterialComponent> out = new ArrayList<>(2);
+            if (material.isValid()) out.add(new MaterialComponent(material, GTValues.U9));
+            out.add(new MaterialComponent(gregtech.content.material.generated.WoodMaterials.Wood, GTValues.U2));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.arrowGtPlastic) {
-            List<WeightedMaterial> out = new ArrayList<>(2);
-            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9));
-            out.add(new WeightedMaterial(Materials.Plastic, GTValues.U2));
+            List<MaterialComponent> out = new ArrayList<>(2);
+            if (material.isValid()) out.add(new MaterialComponent(material, GTValues.U9));
+            out.add(new MaterialComponent(Materials.Plastic, GTValues.U2));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.bulletGtSmall) {
-            List<WeightedMaterial> out = new ArrayList<>(3);
-            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9));
-            out.add(new WeightedMaterial(Materials.Brass, GTValues.U9));
-            out.add(new WeightedMaterial(Materials.Gunpowder, GTValues.U9));
+            List<MaterialComponent> out = new ArrayList<>(3);
+            if (material.isValid()) out.add(new MaterialComponent(material, GTValues.U9));
+            out.add(new MaterialComponent(Materials.Brass, GTValues.U9));
+            out.add(new MaterialComponent(Materials.Gunpowder, GTValues.U9));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.bulletGtMedium) {
-            List<WeightedMaterial> out = new ArrayList<>(3);
-            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9 * 2));
-            out.add(new WeightedMaterial(Materials.Brass, GTValues.U9 * 2));
-            out.add(new WeightedMaterial(Materials.Gunpowder, GTValues.U9 * 2));
+            List<MaterialComponent> out = new ArrayList<>(3);
+            if (material.isValid()) out.add(new MaterialComponent(material, GTValues.U9 * 2));
+            out.add(new MaterialComponent(Materials.Brass, GTValues.U9 * 2));
+            out.add(new MaterialComponent(Materials.Gunpowder, GTValues.U9 * 2));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.bulletGtLarge) {
-            List<WeightedMaterial> out = new ArrayList<>(3);
-            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U3));
-            out.add(new WeightedMaterial(Materials.Brass, GTValues.U3));
-            out.add(new WeightedMaterial(Materials.Gunpowder, GTValues.U3));
+            List<MaterialComponent> out = new ArrayList<>(3);
+            if (material.isValid()) out.add(new MaterialComponent(material, GTValues.U3));
+            out.add(new MaterialComponent(Materials.Brass, GTValues.U3));
+            out.add(new MaterialComponent(Materials.Gunpowder, GTValues.U3));
             return List.copyOf(out);
         }
         return materialWeights(material, prefix.getMaterialWeight());
@@ -188,12 +188,12 @@ public final class MaterialChemistry {
     }
 
     /** Keep shared display and recoverable registration totals identical for composite heads. */
-    private static List<WeightedMaterial> headComponents(
+    private static List<MaterialComponent> headComponents(
             GTMaterial primary, long primaryUnits, GTMaterial secondary, long secondaryUnits) {
         primary = primary.resolve();
         secondary = secondary.resolve();
         if (primary == secondary)
-            return List.of(new WeightedMaterial(primary, Math.addExact(primaryUnits, secondaryUnits)));
-        return List.of(new WeightedMaterial(primary, primaryUnits), new WeightedMaterial(secondary, secondaryUnits));
+            return List.of(new MaterialComponent(primary, Math.addExact(primaryUnits, secondaryUnits)));
+        return List.of(new MaterialComponent(primary, primaryUnits), new MaterialComponent(secondary, secondaryUnits));
     }
 }

@@ -204,8 +204,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             boolean wholeStructure=gregtech.engine.multiblock.MultiblockTools.buildsWholeStructure(context,worldPosition);
             for(var cell:gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
                 var position=centre.offset(cell.x(),cell.y(),cell.z());
-                if(position.equals(worldPosition)||cell.role()==gregtech.api.multiblock.StructureGrid.Role.AIR)continue;
-                var block=cell.role()==gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
+                if(position.equals(worldPosition)||cell.role()==gregtech.api.multiblock.StructureRole.AIR)continue;
+                var block=cell.role()==gregtech.api.multiblock.StructureRole.HEAT_INPUT
                         ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
                 gregtech.engine.multiblock.MultiblockTools.build(context,position,block,wholeStructure);
             }

@@ -98,7 +98,7 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
     public static final GTMaterial
             Ma =
                     gregtech.engine.material.GTMaterialRegistry.registerDefinition(
-                                    gregtech.api.material.MaterialDefinition.builder(4000, "Magic")
+                                    gregtech.engine.material.MaterialDefinition.builder(4000, "Magic")
                                             .displayName("Ma")
                                             .color(0xFF00FF)
                                             .properties(

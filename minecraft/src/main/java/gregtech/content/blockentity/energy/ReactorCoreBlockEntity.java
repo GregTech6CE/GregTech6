@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.*;
 
 /** Original one/four-rod cores. Heat is converted into hot coolant, never emitted as free HU. */
-public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents, gregtech.api.machine.MachineControl.Provider {
+public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents, gregtech.api.platform.machine.MachineControl.Provider {
     public final ItemStack[] rods;
     public final int[] neutrons;
     private final List<ItemStack> legacyOverflow = new ArrayList<>();
@@ -50,12 +50,12 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     private LazyOptional<net.minecraftforge.items.IItemHandler> itemCap;
 //?}
     private int disabledSlots;
-    private final gregtech.api.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
             () -> !this.stopped, value -> setStopped(!value), () -> this.lastHeat > 0, () -> this.lastHeat > 0,
             this::disabledSlots, this::setDisabledSlots);
 
     @Override
-    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+    public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
         return control;
     }
 

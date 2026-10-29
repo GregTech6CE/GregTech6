@@ -1,7 +1,7 @@
 package gregtech.content.item.behavior;
 
 import gregtech.engine.energy.IEnergyBlock;
-import gregtech.api.machine.MachineControl;
+import gregtech.api.platform.machine.MachineControl;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.data.BlockHarvestPolicy;
 import gregtech.content.data.GregTechTags;

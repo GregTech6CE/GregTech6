@@ -70,7 +70,7 @@ public final class MaterialClientModels {
     @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         PrefixRegistry.ensurePrefixesLoaded();
-        for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             for (MaterialPrefix prefix : PrefixRegistry.all()) {
                 if (!GTItems.hasBoundItems(prefix) || prefix.isAddon()) continue;
 //? if >=1.21.1 {
@@ -166,7 +166,7 @@ public final class MaterialClientModels {
         // Preserve the original MODELED enum fallback order.
 *///?} else {
 //?}
-        for (MaterialTextureSet fallback : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
 //? if >=1.21.1 {
             /*if (fallback == primary) continue;
             model = lookupModel(models, fallback, item.getPrefix());

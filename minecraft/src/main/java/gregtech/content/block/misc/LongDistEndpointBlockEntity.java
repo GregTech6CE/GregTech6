@@ -26,7 +26,7 @@ import gregtech.engine.energy.IEnergyBlock;
 import gregtech.content.data.GregTechTags;
 import java.util.*;
 /** Resolves a cached remote item/fluid endpoint; the base class forwards its sided capabilities. */
-public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.CapabilityRelayBlockEntity implements gregtech.api.machine.MachineControl.Provider {
+public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.CapabilityRelayBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long temperature;
 
     public LongDistEndpointBlockEntity(BlockPos pos, BlockState state) {
@@ -42,11 +42,11 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
     private final LongDistanceRouteWatch routeWatch = new LongDistanceRouteWatch();
     private boolean stopped;
     private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistEndpointBlockEntity> link;
-    private final gregtech.api.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
             () -> !stopped, value -> setStopped(!value), () -> false, () -> false);
 
     @Override
-    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+    public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
         return control;
     }
 
