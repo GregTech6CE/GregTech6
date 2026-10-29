@@ -1,6 +1,6 @@
 package gregtech.engine.machine.crucible;
 
-import gregtech.api.material.WeightedMaterial;
+import gregtech.api.material.MaterialComponent;
 
 //? if >=1.21.1 {
 //?} else {
@@ -98,7 +98,7 @@ public final class CrucibleItemInput {
                     result.add(ore(materialBlock.material().resolve(), oreCount));
                     return result;
                 }
-                for (WeightedMaterial weighted
+                for (MaterialComponent weighted
                         : BlockMaterialWeights.contained(materialBlock.material(), materialBlock.prefix())) {
                     if (weighted.material().isValid()) {
                         CrucibleMaterialStack.of(weighted.material(), weighted.amount()).addToList(result);
@@ -109,7 +109,7 @@ public final class CrucibleItemInput {
             }
 
 //? if >=1.21.1 {
-            /*java.util.List<gregtech.api.material.WeightedMaterial> weights =
+            /*java.util.List<gregtech.api.material.MaterialComponent> weights =
                     block instanceof gregtech.content.block.stone.GTStoneBlock stone
                             ? gregtech.content.block.stone.StoneMaterialWeights.contained(stone.stoneMaterial(), stone.variant(), false)
                     : block instanceof gregtech.content.block.stone.GTStoneSlabBlock slab
@@ -196,7 +196,7 @@ public final class CrucibleItemInput {
 
     private static void addStoneMaterials(List<CrucibleMaterialStack> result, GTMaterial material,
                                           StoneVariant variant, boolean slab) {
-        for (WeightedMaterial weighted
+        for (MaterialComponent weighted
                 : StoneMaterialWeights.contained(material, variant, slab)) {
             if (weighted.material().isValid()) {
                 CrucibleMaterialStack.of(weighted.material(), weighted.amount()).addToList(result);

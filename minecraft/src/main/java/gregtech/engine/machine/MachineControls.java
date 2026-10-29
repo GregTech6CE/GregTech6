@@ -1,6 +1,6 @@
 package gregtech.engine.machine;
 
-import gregtech.api.machine.MachineControl;
+import gregtech.api.platform.machine.MachineControl;
 import java.util.function.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 

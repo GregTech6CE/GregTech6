@@ -1,6 +1,7 @@
 package gregtech.content.multiblock;
 
 import gregtech.api.multiblock.StructureGrid;
+import gregtech.api.multiblock.StructureRole;
 import java.util.*;
 
 /** Original 25-wall hollow structure; one air cell and controller omitted. */
@@ -16,7 +17,7 @@ public final class SharedImplosionStructure {
                 for (int z = 0; z <= 2; z++) {
                     if (x == 0 && y == 0 && z == 0) continue;
                     cells.add(new StructureGrid.Cell(
-                            x, y, z, x == 0 && y == 1 && z == 1 ? StructureGrid.Role.AIR : StructureGrid.Role.ITEM_IO));
+                            x, y, z, x == 0 && y == 1 && z == 1 ? StructureRole.AIR : StructureRole.ITEM_IO));
                 }
         return new StructureGrid(cells);
     }

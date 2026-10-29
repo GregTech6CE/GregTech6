@@ -17,13 +17,13 @@ import net.minecraftforge.items.*;
 //?}
 import java.util.*;
 /** GT6 11170/11171: one artifact, QU buffer, one front packet per tick. */
-public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implements gregtech.api.machine.MachineControl.Provider {
+public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long buffer;
     private boolean stopped;
     private boolean emitted;
-    private final gregtech.api.machine.MachineControl switchControl=gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl switchControl=gregtech.engine.machine.MachineControls.switchable(this,
             ()->!this.stopped,value->{this.stopped=!value;setChanged();},()->getBlockState().getValue(ZpmDischargerBlock.ACTIVE),()->emitted);
-    private final gregtech.api.machine.MachineControl control = new gregtech.api.machine.MachineControl() {
+    private final gregtech.api.platform.machine.MachineControl control = new gregtech.api.platform.machine.MachineControl() {
         @Override public boolean available() { return switchControl.available(); }
         @Override public boolean enabled() { return switchControl.enabled(); }
         @Override public boolean setEnabled(boolean value) { return switchControl.setEnabled(value); }
@@ -32,7 +32,7 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
         @Override public long progress() { return available() ? buffer : 0; }
         @Override public long progressMax() { return available() ? ZpmEnergy.PACKET * 320 : 0; }
     };
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
     private int tick;
     private final ItemStackHandler inventory=new ItemStackHandler(1){
         @Override public ItemStack insertItem(int slot,ItemStack stack,boolean simulate){return isRemoved()?stack:super.insertItem(slot,stack,simulate);}

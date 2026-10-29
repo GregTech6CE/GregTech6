@@ -32,7 +32,7 @@ import java.util.*;
 /** Original two-layer heat exchanger, hot-fluid recipes and eight upward heat outlets. */
 public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, MultiblockToolTarget, IFluidHandler,
         gregtech.api.machine.HeatHandler,
-        gregtech.engine.fluid.FluidToolTarget, gregtech.api.machine.MachineControl.Provider,
+        gregtech.engine.fluid.FluidToolTarget, gregtech.api.platform.machine.MachineControl.Provider,
         gregtech.engine.multiblock.tracking.TrackedMultiblock {
     public static final int RATE = gregtech.content.multiblock.OriginalGeneratorParameters.HEAT_EXCHANGER_RATE;
     private long heat, activityHistory;
@@ -153,7 +153,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     private RecipeMap recipes() {
         return RecipeMap.RECIPE_MAPS.get(settings.fuelMap());
     }
-    private final gregtech.api.machine.MachineControl control = new gregtech.api.machine.MachineControl() {
+    private final gregtech.api.platform.machine.MachineControl control = new gregtech.api.platform.machine.MachineControl() {
 
         public boolean available() {
             return !isRemoved();
@@ -193,7 +193,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     };
 
     @Override
-    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+    public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
         return control;
     }
 //? if >=1.21.1 {

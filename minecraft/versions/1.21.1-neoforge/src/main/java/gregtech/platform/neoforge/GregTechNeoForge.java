@@ -191,7 +191,7 @@ public final class GregTechNeoForge {
     private static void registerBlockCompositions() {
         for (var holder : gregtech.content.registry.GTBlocks.allEntries()) {
             var block = holder.get();
-            java.util.List<gregtech.api.material.WeightedMaterial> weights;
+            java.util.List<gregtech.api.material.MaterialComponent> weights;
             if (block instanceof gregtech.content.block.MaterialBlockLike b)
                 weights = gregtech.content.block.BlockMaterialWeights.contained(b.material(), b.prefix());
             else if (block instanceof gregtech.content.block.stone.GTStoneBlock b)

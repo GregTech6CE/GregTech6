@@ -13,14 +13,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** GT6 electric/flux piston engine: back input, front signed output, 32 power settings. */
-public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.machine.MachineControl.Provider,
+public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider,
         gregtech.engine.machine.AdjacentEnergyControl.Provider {
     protected final PistonEngineState pistonState = new PistonEngineState();
     private boolean emitted;
-    private final gregtech.api.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
             ()->!pistonState.stopped(),value->{pistonState.setStopped(!value);syncToClient();},()->pistonState.active(),()->emitted,
             ()->pistonState.controlMode(),value->{pistonState.setControlMode(value);syncToClient();});
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
     @Override public gregtech.engine.machine.AdjacentEnergyControl adjacentEnergyControl() {
         return enabled -> {
             if (!isRemoved() && (level == null || !level.isClientSide) && pistonState.stopped() == enabled) {

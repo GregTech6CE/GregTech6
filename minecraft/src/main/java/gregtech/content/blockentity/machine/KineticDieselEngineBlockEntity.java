@@ -25,12 +25,12 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import javax.annotation.Nullable;
 
 /** Liquid-fuel → RU motor. Preserves complete FM.Engine cycle credit and original one-packet waste semantics. */
-public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.machine.MachineControl.Provider,
+public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider,
         gregtech.engine.fluid.FluidToolTarget, gregtech.engine.machine.AdjacentEnergyControl.Provider {
     protected boolean emitted;
-    private final gregtech.api.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
             ()->!isStopped(),value->setStopped(!value),this::isActive,()->emitted);
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
     @Override public gregtech.engine.machine.AdjacentEnergyControl adjacentEnergyControl() {
         return enabled -> {
             if (!isRemoved() && (level == null || !level.isClientSide) && isStopped() == enabled)

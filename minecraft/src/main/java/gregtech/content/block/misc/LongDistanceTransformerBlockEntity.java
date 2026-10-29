@@ -27,7 +27,7 @@ import gregtech.engine.energy.IEnergyBlock;
 import gregtech.content.data.GregTechTags;
 import java.util.*;
 /** Resolves a remote transformer and applies packet limits, line loss and native overload effects. */
-public class LongDistanceTransformerBlockEntity extends gregtech.content.blockentity.GTEnergyBlockEntity implements gregtech.api.machine.MachineControl.Provider {
+public class LongDistanceTransformerBlockEntity extends gregtech.content.blockentity.GTEnergyBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long distance, maximumVoltage, history;
     private boolean active;
     private Set<BlockPos> wires = Set.of();
@@ -45,11 +45,11 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
     private final LongDistanceRouteWatch routeWatch = new LongDistanceRouteWatch();
     private boolean stopped;
     private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistanceTransformerBlockEntity> link;
-    private final gregtech.api.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
             () -> !stopped, value -> setStopped(!value), () -> active, () -> active);
 
     @Override
-    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+    public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
         return control;
     }
 

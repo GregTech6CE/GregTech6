@@ -2,7 +2,7 @@ package gregtech.content.block.stone;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.WeightedMaterial;
+import gregtech.api.material.MaterialComponent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +10,14 @@ import java.util.List;
 public final class StoneMaterialWeights {
     private StoneMaterialWeights() {}
 
-    public static List<WeightedMaterial> contained(GTMaterial stoneMaterial, StoneVariant variant, boolean slab) {
+    public static List<MaterialComponent> contained(GTMaterial stoneMaterial, StoneVariant variant, boolean slab) {
         long stoneAmount = slab ? GTValues.U * 9 / 2 : GTValues.U * 9;
-        List<WeightedMaterial> out = new ArrayList<>(2);
-        out.add(new WeightedMaterial(stoneMaterial, stoneAmount));
+        List<MaterialComponent> out = new ArrayList<>(2);
+        out.add(new MaterialComponent(stoneMaterial, stoneAmount));
         if (variant == StoneVariant.BRICKS_REINFORCED) {
-            out.add(new WeightedMaterial(gregtech.content.material.generated.ElementMaterials.Iron, GTValues.U / 2));
+            out.add(new MaterialComponent(gregtech.content.material.generated.ElementMaterials.Iron, GTValues.U / 2));
         } else if (variant == StoneVariant.BRICKS_REDSTONE) {
-            out.add(new WeightedMaterial(gregtech.content.material.generated.CompoundMaterials.Redstone, GTValues.U));
+            out.add(new MaterialComponent(gregtech.content.material.generated.CompoundMaterials.Redstone, GTValues.U));
         }
         return List.copyOf(out);
     }

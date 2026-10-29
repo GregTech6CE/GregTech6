@@ -59,7 +59,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
@@ -175,7 +175,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private long coverTicks;
     private final int[] coverSignals=new int[6];
     private final boolean[] coverStrong=new boolean[6];
-    private final gregtech.api.machine.MachineControl control = new gregtech.api.machine.MachineControl() {
+    private final gregtech.api.platform.machine.MachineControl control = new gregtech.api.platform.machine.MachineControl() {
         public boolean available(){return !isRemoved();}
         public boolean enabled(){return available()&&!controlStopped;}
         public boolean setEnabled(boolean enabled){
@@ -212,7 +212,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected long controlProgressPerTick() { return mActive ? Math.min(inputMaximum(), energyPort.stored()) : 0; }
     protected void onControlStopped() {}
 
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
     private int packedExternalSignals(){
         int packed=0;
         for(int i=0;i<6;i++)packed|=(externalSignals[i]&15)<<(4*i);

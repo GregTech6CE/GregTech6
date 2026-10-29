@@ -9,11 +9,8 @@ import gregtech.api.mod.ModData;
 public class ModReferences {
     protected ModReferences() {}
 
+    /** A null mod id no longer aliases this: {@link ModData#MODS} is concurrent and rejects null keys. */
     public static final ModData UNKNOWN = new ModData("unknown", "Unknown Mod").setLoaded(false);
-
-    static {
-        ModData.MODS.put(null, UNKNOWN);
-    }
 
     public static final ModData MC = new ModData("minecraft", "Minecraft"),
             GT =

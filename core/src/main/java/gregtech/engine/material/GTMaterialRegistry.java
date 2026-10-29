@@ -2,7 +2,6 @@ package gregtech.engine.material;
 
 import gregtech.api.material.*;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialDefinition;
 import gregtech.content.data.ImportedMaterialData;
 import gregtech.engine.addon.AddonMaterials;
 import java.util.ArrayList;

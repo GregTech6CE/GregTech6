@@ -1,6 +1,6 @@
 package gregtech.content.blockentity.energy;
 
-import gregtech.api.machine.MachineControl;
+import gregtech.api.platform.machine.MachineControl;
 import gregtech.api.signal.GtSignalCarrier;
 import gregtech.api.signal.GtSignalReceiver;
 import gregtech.api.signal.GtSignalSource;
