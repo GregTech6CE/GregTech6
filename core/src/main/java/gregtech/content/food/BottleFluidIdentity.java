@@ -2,7 +2,6 @@ package gregtech.content.food;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.FluidCatalog;
-import gregtech.content.data.ImportedMaterialData;
 import gregtech.engine.material.GTMaterialRegistry;
 
 /** Resolve generated bottle expressions without confusing missing fluids with water. */
@@ -16,14 +15,9 @@ public final class BottleFluidIdentity {
         String path = FluidCatalog.sanitizePath(key);
         for (var candidate : FluidCatalog.all().values())
             if (FluidCatalog.sanitizePath(candidate.registryName()).equals(path)) return candidate;
-        // MultiItemBottles also uses MT.<field>.liquid(), e.g. Hg rather than Mercury.
-        GTMaterial material = GTMaterialRegistry.get(key).resolve();
-        if (!material.isValid())
-            try {
-                Object value = ImportedMaterialData.class.getField(key).get(null);
-                if (value instanceof GTMaterial found) material = found.resolve();
-            } catch (ReflectiveOperationException ignored) {
-            }
+        // GT6 bottle rows name materials by their short field symbol (e.g. Hg); those symbols
+        // are registered as aliases next to the canonical material name.
+        GTMaterial material = GTMaterialRegistry.get(key);
         if (!material.isValid()) return null;
         // A bottle holds the ordinary liquid, not a metal's separate molten/plasma phase.
         return FluidCatalog.get("GenLiquid_" + material.getName());
