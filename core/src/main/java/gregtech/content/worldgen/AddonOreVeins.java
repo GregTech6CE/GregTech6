@@ -87,7 +87,9 @@ public final class AddonOreVeins {
                         ore(submission.addonId, vein.name(), vein.bottom()),
                         ore(submission.addonId, vein.name(), vein.between()),
                         ore(submission.addonId, vein.name(), vein.spread()));
-                veinBuckets.computeIfAbsent(vein.dimension(), key -> new ArrayList<>()).add(resolved);
+                veinBuckets
+                        .computeIfAbsent(vein.dimension(), key -> new ArrayList<>())
+                        .add(resolved);
             }
             for (SmallOreDeclaration ore : submission.smallOres) {
                 claim(taken, submission.addonId, ore.dimension(), "small", ore.name());
@@ -97,7 +99,9 @@ public final class AddonOreVeins {
                         ore.maxY(),
                         ore.amount(),
                         ore(submission.addonId, ore.name(), ore.material()));
-                smallBuckets.computeIfAbsent(ore.dimension(), key -> new ArrayList<>()).add(resolved);
+                smallBuckets
+                        .computeIfAbsent(ore.dimension(), key -> new ArrayList<>())
+                        .add(resolved);
             }
         }
         var veins = new HashMap<String, List<OreVein>>();
