@@ -215,15 +215,6 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock())) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof ElectricWireBlockEntity wire) wire.onRemoved();
-        }
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-
-    @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 *///?} else {

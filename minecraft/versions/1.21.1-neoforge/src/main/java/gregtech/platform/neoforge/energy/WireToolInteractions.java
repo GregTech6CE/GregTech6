@@ -1,7 +1,6 @@
 package gregtech.platform.neoforge.energy;
 
 import gregtech.content.block.energy.ElectricWireBlock;
-import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.platform.neoforge.NeoToolBindings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -37,9 +36,7 @@ public final class WireToolInteractions {
             level.setBlockAndUpdate(
                     neighborPos,
                     neighborState.setValue(ElectricWireBlock.propFor(connectionSide.getOpposite()), connect));
-            changed(level, neighborPos);
         }
-        changed(level, pos);
         level.playSound(
                 null,
                 pos,
@@ -49,10 +46,5 @@ public final class WireToolInteractions {
                 1F);
         NeoToolBindings.damageForUse(heldTool, 1, player);
         return true;
-    }
-
-    private static void changed(Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof ElectricWireBlockEntity electricWireEntity)
-            electricWireEntity.onConnectionChanged();
     }
 }
