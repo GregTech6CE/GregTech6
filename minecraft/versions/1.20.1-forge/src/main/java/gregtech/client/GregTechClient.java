@@ -474,10 +474,7 @@ public final class GregTechClient {
                         block);
             } else if (block instanceof gregtech.content.block.misc.SpikeBlock spike) {
                 event.register(
-                        (state, level, pos, tintIndex) -> tintIndex == 0
-                                ? spike.materialTint()
-                                : 0xFFFFFF,
-                        block);
+                        (state, level, pos, tintIndex) -> tintIndex == 0 ? spike.materialTint() : 0xFFFFFF, block);
             } else if (block instanceof gregtech.content.block.misc.ConcreteBlock) {
                 event.register(
                         (state, level, pos, tintIndex) -> tintIndex == 0
