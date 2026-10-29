@@ -22,8 +22,7 @@ public final class OriginalLargeBoilerParameters {
         for (int y = -1; y <= 0; y++)
             for (int z = -1; z <= 1; z++)
                 for (int x = -1; x <= 1; x++)
-                    cells.add(new CheckCell(
-                            x, y, z, y == -1 ? StructureRole.HEAT_INPUT : StructureRole.FLUID_INPUT));
+                    cells.add(new CheckCell(x, y, z, y == -1 ? StructureRole.HEAT_INPUT : StructureRole.FLUID_INPUT));
         cells.add(new CheckCell(0, 2, 0, StructureRole.FLUID_OUTPUT));
         for (int y = 1; y <= 2; y++)
             for (int z = -1; z <= 1; z++)

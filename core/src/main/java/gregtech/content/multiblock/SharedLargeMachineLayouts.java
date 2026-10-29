@@ -17,7 +17,14 @@ public final class SharedLargeMachineLayouts {
     /** {@code design} is {@code -1} when the cell does not write {@code gt.design}. */
     /** {@code alternatives} are the extra accepted matches after the primary {@code part}/{@code plain}. */
     public record Cell(
-            int right, int up, int back, int part, StructureRole role, String plain, int design, List<Choice> alternatives) {
+            int right,
+            int up,
+            int back,
+            int part,
+            StructureRole role,
+            String plain,
+            int design,
+            List<Choice> alternatives) {
         public Cell(int right, int up, int back, int part, StructureRole role) {
             this(right, up, back, part, role, null, -1, List.of());
         }

@@ -26,7 +26,6 @@ import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.LayoutCell;
 import gregtech.api.multiblock.LayoutRepeat;
 import gregtech.api.multiblock.StructureLayout;
-import gregtech.api.multiblock.StructureRole;
 import gregtech.api.recipe.RecipeMapSpec;
 import gregtech.content.data.FuelRecipeMapDefinitions;
 import gregtech.content.data.GregTechTags;
@@ -1132,5 +1131,4 @@ public final class AddonMachines {
         throw new IllegalStateException(
                 source + " layout '" + layout + "' cell '" + block + "' does not support design " + cell.design());
     }
-
 }
