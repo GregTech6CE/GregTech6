@@ -9,7 +9,7 @@ final class EnergyRateText {
     }
 
     static String offered(long packets, long rated, long min, long max, String unit) {
-        return net.minecraft.network.chat.Component.translatable("jade.gt6ce.energy.max_packets", packets).getString()
-                + " " + rate(rated, min, max, unit);
+        return net.minecraft.network.chat.Component.translatable("jade.gt6ce.energy.max_packets", packets)
+                        .getString() + " " + rate(rated, min, max, unit);
     }
 }
