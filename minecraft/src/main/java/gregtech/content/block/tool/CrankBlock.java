@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * Hand crank (GT6 multi-tile 32111). Activation is latched to a player's last interaction,
- * not a fixed pulse or gaze timer: MultiTileEntityCrank:72-112, UT.Entities:3142-3158.
+ * not a fixed pulse or gaze timer: MultiTileEntityCrank:72-112, UT.Entities.
  * Every server tick each eligible operator supplies one potion-adjusted RU offer. A rejected
  * offer does not stop motion/redstone or cause hunger. FACING is the handle side; its opposite
  * is the mount and energy recipient. No stored energy or rotational decay exists here.

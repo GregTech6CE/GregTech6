@@ -53,6 +53,39 @@ public final class StructureWatchIndex {
         return data != null && data.pending.contains(chunk);
     }
 
+    /** Finds an unambiguous tool target without claiming a part of an incomplete structure. */
+    public static TrackedMultiblock toolTarget(ServerLevel level, BlockPos pos) {
+        WorldData data = existing(level);
+        if (data == null || !level.hasChunkAt(pos)) return null;
+        List<StructureTracker> trackers = data.sections.get(sectionKey(pos));
+        if (trackers == null) return null;
+        TrackedMultiblock result = null;
+        BlockState state = level.getBlockState(pos);
+        for (StructureTracker tracker : trackers) {
+            BlockEntity entity = tracker.entity();
+            if (tracker.unloading()
+                    || entity.isRemoved()
+                    || !level.hasChunkAt(entity.getBlockPos())
+                    || level.getBlockEntity(entity.getBlockPos()) != entity) continue;
+            var machine = tracker.machine();
+            if (!(machine.structureDefinition() instanceof StructureDefinition.Declarative definition)
+                    || !definition.declaredFootprint(machine).contains(pos)) continue;
+            CompiledPattern pattern = definition.compile(LayoutStructures.facing(entity));
+            if (pattern == null) continue;
+            BlockPos offset = pos.subtract(entity.getBlockPos());
+            boolean[] matches = {false};
+            pattern.locate(offset.getX(), offset.getY(), offset.getZ(), (repeat, index, copy) -> {
+                var matcher = repeat ? pattern.repeatMatcher(index) : pattern.matcher(index);
+                if (matcher != null && matcher.match(level, pos, state) != CompiledPattern.FAILED) matches[0] = true;
+            });
+            if (!matches[0]) continue;
+            // Shared walls must not select a controller according to registration order.
+            if (result != null && result != machine) return null;
+            result = machine;
+        }
+        return result;
+    }
+
     static void unloadWorld(ServerLevel level) {
         WorldData data = existing(level);
         if (data == null) return;

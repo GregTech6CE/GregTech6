@@ -153,7 +153,7 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
     }
 
     /**
-     * GT6's click handling (§57): the click lands in the exact slot the player aimed at (GT6's
+     * GT6's click handling: the click lands in the exact slot the player aimed at (GT6's
      * {@code tIndex} formula over the 28-slot layout). Ordinary occupied slots give their item back;
      * buttons and levers activate until taken with sneaking or pincers.
      */
@@ -219,7 +219,7 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
     }
 
     /**
-     * GT6's shelf drops everything it holds when broken (§61). GT6 overrides {@code breakBlock},
+     * GT6's shelf drops everything it holds when broken. GT6 overrides {@code breakBlock},
      * which every removal path goes through, so the port hangs the drop on {@code onRemove} instead
      * of on the player-only hook — a piston, an explosion or {@code /setblock} now drop the books
      * too.
@@ -238,7 +238,7 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
-    /** GT6's shelf tooltips (§62): no GUI, pincers take the books out, the magnifying glass reads them. */
+    /** GT6's shelf tooltips: no GUI, pincers take the books out, the magnifying glass reads them. */
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,

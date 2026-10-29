@@ -25,6 +25,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         var data = new CompoundTag();
         if (!(entity instanceof StructureController controller)) return data;
         data.putBoolean("formed", controller.isStructureOk());
+        data.putBoolean("crucible", entity instanceof gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity);
         if (entity instanceof gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity fusion) {
             data.putLong("fusionCharge", fusion.chargeRemaining());
             data.putLong("fusionOutput", fusion.isRunning() ? fusion.outputEU() : 0);
@@ -109,11 +110,17 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
                     data.getInt("axialInput"), data.getInt("axialOutput")));
         }
         for (var value : data.getList("energy", 10)) {
+            if (data.getBoolean("crucible") && !accessor.showDetails()) break;
             var row = (CompoundTag) value;
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.energy", row.getLong("stored"), row.getLong("capacity"),
+            Object capacity = row.getLong("capacity") == Long.MAX_VALUE
+                    ? Component.translatable("jade.gt6ce.unlimited") : row.getLong("capacity");
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.energy", row.getLong("stored"), capacity,
                     row.getString("unit")));
         }
         for (var value : data.getList("fluids", 10)) {
+            if (data.getBoolean("crucible")) break;
+            if (accessor.getBlockEntity() instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity)
+                break;
             var row = (CompoundTag) value;
 //? if >=1.21.1 {
             /*var fluid = net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(), row.getCompound("fluid"));

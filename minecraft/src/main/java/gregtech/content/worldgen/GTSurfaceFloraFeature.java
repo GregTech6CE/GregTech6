@@ -24,8 +24,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 /**
  * Port of GT6's surface flora worldgen: the forest floor pieces of {@code Loader_Worldgen}
  * that are not ores or trees — fallen logs ({@code WorldgenLogDry/Rotten/Mossy/Frozen},
- * {@code :603-606}), twigs on the ground ({@code WorldgenSticks}, {@code :630}) and glowtus on
- * jungle/swamp water ({@code WorldgenGlowtus}, {@code :632}).
+ * ), twigs on the ground ({@code WorldgenSticks}) and glowtus on
+ * jungle/swamp water ({@code WorldgenGlowtus}).
  *
  * <p>All of them are GT6 {@code WorldgenOnSurface} generators, so this feature uses the same
  * algorithm as {@link GTTreesFeature}: a number of target columns per chunk, a {@code 1/probability}

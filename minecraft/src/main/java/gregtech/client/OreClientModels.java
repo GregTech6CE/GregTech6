@@ -39,7 +39,7 @@ import java.util.Map;
  * {@code BlockStateTag}/{@code BlockEntityTag} on the stack) plus the material's icon-set ore overlay
  * (tint 0 → material color via the registered color handlers).
  *
- * <p>§103.B: because the host rock became a state property, the baking result holds one model location
+ * <p>Because the host rock is a state property, the baking result holds one model location
  * per state ({@code gt6ce:ore_iron#stone=granite}) instead of a single {@code #}; each gets the
  * stone-pinned {@link OreBakedModel#stoneModel} view. The blockstate JSON still only needs its one
  * {@code ""} variant.

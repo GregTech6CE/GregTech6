@@ -114,7 +114,7 @@ def modProperties = [
         mod_version: project.version.toString(),
         mod_license: rootProject.property('mod_license'),
         mod_description: rootProject.property('mod_description'),
-        mod_authors: 'saltnya, brokestar233, Lorbineitte Masson, GregTech 6 team'
+        mod_authors: rootProject.property('mod_authors')
 ]
 
 tasks.named('processResources', ProcessResources).configure {

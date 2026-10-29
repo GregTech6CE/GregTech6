@@ -2,17 +2,11 @@
   "type": "gt6ce:spike_conversion",
   "ingredients": [
     {
-      "item": "gt6ce:spike_fancy"
+      "item": "gt6ce:spike_ball_falling_fancy_gold"
     }
   ],
   "result": {
-    "item": "gt6ce:spike_fancy",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "omni",
-        "secondary": "false"
-      }
-    }
+    "item": "gt6ce:spike_ball_fancy_gold",
+    "count": 1
   }
 }

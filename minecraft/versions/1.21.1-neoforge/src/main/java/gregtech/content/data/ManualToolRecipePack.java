@@ -63,6 +63,11 @@ public final class ManualToolRecipePack extends AbstractPackResources {
     private synchronized Map<ResourceLocation, byte[]> data() {
         if (resources != null) return resources;
         Map<ResourceLocation, byte[]> generated = new HashMap<>();
+        // Core's 1.20 recipe directory is not discovered by Minecraft 1.21.
+        generated.put(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/tools/repair.json"),
+                GSON.toJson(Map.of("type", "gt6ce:tool_repair", "category", "equipment"))
+                        .getBytes(StandardCharsets.UTF_8));
         int shaped = 0, heads = 0, assemblies = 0;
         List<String> without = new ArrayList<>();
         for (var type : gregtech.engine.tool.GTToolType.values()) {

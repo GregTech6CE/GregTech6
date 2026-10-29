@@ -35,6 +35,8 @@ public final class MachineEnergyPort {
     private long auxStored;
     private long startup;
     private final MachineInputAverage inputAverage = new MachineInputAverage();
+    private long lastOverloadTick = Long.MIN_VALUE;
+    private long lastInsufficientTick = Long.MIN_VALUE;
 
     public long stored() {
         return stored;
@@ -71,6 +73,27 @@ public final class MachineEnergyPort {
 
     public double average(@Nullable Level level) {
         return level == null ? 0 : inputAverage.average(level.getGameTime());
+    }
+
+    /** Rejected packets do not enter the input average, but must remain visible during inspection. */
+    public void recordOverload(@Nullable Level level) {
+        if (level != null) lastOverloadTick = level.getGameTime();
+    }
+
+    public boolean overloaded(@Nullable Level level) {
+        if (level == null || lastOverloadTick == Long.MIN_VALUE) return false;
+        long elapsed = level.getGameTime() - lastOverloadTick;
+        return elapsed >= 0 && elapsed < 20;
+    }
+
+    public void recordInsufficient(@Nullable Level level) {
+        if (level != null) lastInsufficientTick = level.getGameTime();
+    }
+
+    public boolean insufficient(@Nullable Level level) {
+        if (level == null || lastInsufficientTick == Long.MIN_VALUE) return false;
+        long elapsed = level.getGameTime() - lastInsufficientTick;
+        return elapsed >= 0 && elapsed < 20;
     }
 
     public long auxStored() {

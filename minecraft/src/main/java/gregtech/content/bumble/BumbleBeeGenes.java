@@ -23,11 +23,11 @@ import org.jetbrains.annotations.Nullable;
  *       <td>booleans</td></tr>
  * </table>
  *
- * <p>Inheritance ({@code :109-128}) is <b>not</b> blending: every gene is taken from one of the two
+ * <p>Inheritance is <b>not</b> blending: every gene is taken from one of the two
  * parents, chosen independently per gene, except that a bee may never end up inactive both day and
  * night or both inside and outside — GT6 ORs those pairs so at least one side is always set.</p>
  *
- * <p>Fresh genes come from the environment ({@code :130-153}): the humidity band from the biome's
+ * <p>Fresh genes come from the environment: the humidity band from the biome's
  * rainfall, the temperature band from the environment temperature ±15 ± 0..30, and the day/night and
  * inside/outside flags from where the bee was born.</p>
  */
@@ -51,7 +51,7 @@ public final class BumbleBeeGenes {
 
     // ── the tag ──────────────────────────────────────────────────────────
 
-    /** The stack's genome, generating a random one when the stack carries none (GT6 {@code :97}). */
+    /** The stack's genome, generating a random one when the stack carries none (GT6's). */
     public static CompoundTag of(ItemStack stack, RandomSource random) {
 //? if >=1.21.1 {
         /*CompoundTag genes = peek(stack);
@@ -85,7 +85,7 @@ public final class BumbleBeeGenes {
 //?}
     }
 
-    /** Writes a genome onto the stack and returns it (GT6 {@code :104}). */
+    /** Writes a genome onto the stack and returns it (GT6's). */
     public static ItemStack with(ItemStack stack, CompoundTag genes) {
 //? if >=1.21.1 {
         /*gregtech.platform.neoforge.StackCustomData.update(

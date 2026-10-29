@@ -94,8 +94,8 @@ import java.util.Set;
  * <p>GT6's {@code MultiTileEntityPipeFluid.getFluidTanks2(aSide)} returns the whole {@code mTanks}
  * array for <em>every</em> side ({@code MultiTileEntityPipeFluid:477}), and its
  * {@code getFluidTankFillable2} picks the first tank already holding that fluid and otherwise the
- * first empty one ({@code :463-466}). A face only gates <em>connectivity</em>
- * ({@code canAcceptFluidsFrom}/{@code canEmitFluidsTo}, {@code :510-511}). The port is the same
+ * first empty one. A face only gates <em>connectivity</em>
+ * ({@code canAcceptFluidsFrom}/{@code canEmitFluidsTo}). The port is the same
  * shape: sided handlers gate connectivity, filters and channel-local backflow, while unsided
  * access serves the pipe's own cover operations. All faces see the same channels. The one
  * exception is the pressure valve, which hard-codes {@code mTanks[0]}
@@ -305,7 +305,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         return level != null && level.getBlockEntity(worldPosition.relative(side)) instanceof FluidPipeBlockEntity;
     }
 
-    /** Cover behaviour id of a face; {@code null} when no cover is attached ({@code CoverItems:52}). */
+    /** Cover behaviour id of a face; {@code null} when no cover is attached. */
     private String coverIdOf(Direction side) {
         return CoverItems.behavior(getCover(side));
     }
@@ -343,9 +343,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /**
-     * Two of the three player-facing entry points of a filter cover, copied name for name from
-     * {@code BasicMachineBlockEntity:1631-1646} so that both hosts delegate to the same statics and
-     * {@code BasicMachineBlock.use}'s call order can be mirrored in {@code FluidPipeBlock.use}.
+     * Two of the three player-facing entry points of a filter cover, shared with
+     * {@link BasicMachineBlockEntity} and {@link ItemPipeBlockEntity} so that all hosts delegate to
+     * the same statics and the machine block's {@code use} call order can be mirrored in
+     * {@link FluidPipeBlock}'s.
      *
      * <p>GT6's right-click on a filter cover ({@code CoverFilterItem:88-112},
      * {@code CoverFilterFluid:92-114}) and on the retriever ({@code CoverRetrieverItem:123-136}): the
@@ -382,9 +383,9 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /**
-     * The screwdriver and soft-hammer halves of the same covers, copied from
-     * {@code BasicMachineBlockEntity:1658-1672}: the screwdriver flips whitelist/blacklist
-     * ({@code CoverFilterFluid:62-66}) and the soft hammer clears the filter ({@code :67-70}).
+     * The screwdriver and soft-hammer halves of the same covers, shared with
+     * {@link BasicMachineBlockEntity}: the screwdriver flips whitelist/blacklist
+     * ({@code CoverFilterFluid:62-66}) and the soft hammer clears the filter ({@code CoverFilterFluid:67-70}).
      */
     public boolean configureFilterCover(Direction side, boolean screwdriver, boolean softHammer) {
         String id = coverIdOf(side);
@@ -932,22 +933,19 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /**
-     * GT6 {@code CoverFilterFluid:117-129} asked about the cover on {@code side}; the pipe's copy of
-     * {@code BasicMachineBlockEntity.coverFluidFilterPermits:1591-1594}. {@code true} means "may
-     * pass", which is the inverse of the original's {@code interceptFluidFill} /
-     * {@code interceptFluidDrain}.
+     * GT6 {@code CoverFilterFluid:117-129} asked about the cover on {@code side}; the pipe's
+     * counterpart of {@link BasicMachineBlockEntity#coverFluidFilterPermits(Direction, FluidStack)}.
+     * {@code true} means "may pass", which is the inverse of the original's
+     * {@code interceptFluidFill} / {@code interceptFluidDrain}.
      *
-     * <p>The §108 rule holds here, verified by reading the implementation rather than assuming it:
-     * {@code CoverItems.behavior(ItemStack.EMPTY)} is {@code null} ({@code CoverItems:53}), so
-     * {@link CoverUtilityBehaviors#fluidFilterPermits}'s first line,
-     * {@code FILTER_FLUID.equals(CoverItems.behavior(cover))}, is false for a face with <b>no cover at
-     * all</b> and for a face whose cover is not a fluid filter — both return {@code true}, i.e.
-     * permit, without looking at the candidate. An <em>empty filter stack on a real fluid filter
-     * cover</em> is the other case and is not permissive: it returns
-     * {@code MachineCoverSpec.inverted(cover)}, false in the default whitelist mode and true only in
-     * the inverted one — GT6 {@code CoverFilterFluid:120}
+     * <p>A face with <b>no cover at all</b> and a face whose cover is not a fluid filter both permit:
+     * {@code CoverItems.behavior(ItemStack.EMPTY)} is {@code null}, so the {@code FILTER_FLUID} test
+     * in {@link CoverUtilityBehaviors#fluidFilterPermits} fails and the candidate is never looked at.
+     * An <em>empty filter stack on a real fluid filter cover</em> is the other case and is not
+     * permissive: it returns {@code MachineCoverSpec.inverted(cover)}, false in the default whitelist
+     * mode and true only in the inverted one — GT6 {@code CoverFilterFluid:120}
      * {@code return aData.mVisuals[aCoverSide] == 0;}. A suspended cover (a controller cover holding
-     * the pipe) refuses everything, {@code :119}.</p>
+     * the pipe) refuses everything.</p>
      */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
 //? if >=1.21.1 {
@@ -1077,9 +1075,9 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /**
-     * The pipe had no update packet before this batch, so covers would never have reached the client
-     * renderer; {@code BasicMachineBlockEntity:1326-1335} is the machine's pair of the same two
-     * methods, and the payload is the update tag above.
+     * Covers have to reach the client renderer, so the pipe sends the update tag built above; this is
+     * the same packet pair as {@link BasicMachineBlockEntity#getUpdatePacket()} and
+     * {@link ItemPipeBlockEntity#getUpdatePacket()}.
      */
     @Override
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {

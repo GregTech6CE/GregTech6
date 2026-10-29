@@ -55,11 +55,19 @@ public final class MaterialFluidVisuals {
                 BY_MATERIAL.putIfAbsent(GTMaterial.sanitize(suffix), entry);
             }
         }
+        BY_MATERIAL.put(Materials.Milk.getName(), RegisteredFluids.Milk);
+        BY_MATERIAL.put(Materials.Honey.getName(), RegisteredFluids.Honey);
     }
 
     public static Appearance forMaterial(GTMaterial material) {
         bootstrap();
         GTMaterial resolved = material.resolve();
+        if (resolved == Materials.Water.resolve())
+            return new Appearance(ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still"),
+                    null, 0xFF3F76E4, true);
+        if (resolved == Materials.Lava.resolve())
+            return new Appearance(ResourceLocation.fromNamespaceAndPath("minecraft", "block/lava_still"),
+                    null, 0xFFFFFFFF, false);
         if (!resolved.isValid()) {
             return genericMolten(resolved);
         }

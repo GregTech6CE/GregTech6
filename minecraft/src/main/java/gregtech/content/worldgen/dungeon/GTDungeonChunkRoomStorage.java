@@ -18,7 +18,7 @@ import gregtech.content.registry.GTFluids;
  * <p>The room is a dead end: GT6's {@code DungeonChunkRoomVault} ({@code DungeonChunkRoomVault.java:27-34}),
  * which GT6's store room extends, refuses every cell that does not have exactly one connection, and GT6's
  * dispatcher only offers the dead end list to those cells ({@code WorldgenDungeonGT:260-267}). The port's
- * dispatcher copies that ({@code GTDungeonFeature:129-134}), and the check is kept here as well.</p>
+ * dispatcher copies that ({@code GTDungeonFeature}), and the check is kept here as well.</p>
  *
  * <h2>Port differences</h2>
  * <ul>
@@ -32,8 +32,8 @@ import gregtech.content.registry.GTFluids;
  *   <li><b>Fluid walls.</b> GT6 fills every side without a neighbour with columns of one to four fluid
  *       tank multi-tiles (32714 wooden and 32734 ironwood barrel, 32102 bronze drum - three fluid
  *       families, each with seven fluids) or a barometer gas cylinder (32055 propane, 32056 oxygen and
- *       helium), {@code :65-132}. The port owns every one of those containers
- *       ({@link GTDungeonData#container}) and builds all four walls, {@code :58-63} fluid tables
+ *       helium). The port owns every one of those containers
+ *       ({@link GTDungeonData#container}) and builds all four walls, fluid tables
  *       included ({@link #fluidWall}). GT6's fluid pick is {@code UT.Code.select(NF, tFluids[tType])},
  *       which draws from its <em>global</em> RNG rather than the cell's stream, so the port draws it
  *       from a stream of its own ({@link GTDungeonData#select}) and the cell's roll sequence stays
@@ -42,7 +42,7 @@ import gregtech.content.registry.GTFluids;
  *       {@code Lubricant} fluid.</li>
      *   <li><b>Crates.</b> GT6 stacks one of its crate multi-tiles per cell - {@code BlocksGT.crateGtDust},
      *       {@code crateGtIngot}, {@code crateGtPlate}, {@code crateGtGem} and {@code crateGtRaw} plus their
-     *       64x variants, twelve of them in the metal quadrant alone ({@code :135}). The port owns both
+     *       64x variants, twelve of them in the metal quadrant alone. The port owns both
      *       sixteen- and sixty-four-piece blocks and this room places
  *       them through {@link GTDungeonData#crate} with GT6's own material tables
  *       ({@link GTDungeonData#CRATE_DUSTS}, {@code CRATE_WOODS}, {@code CRATE_GEMS}, {@code CRATE_METALS},
@@ -51,11 +51,11 @@ import gregtech.content.registry.GTFluids;
      *       The size rolls ({@code next1in2}/{@code next1in3}/{@code next1in4} inside GT6's
      *       {@code set} calls) choose the corresponding block.</li>
  *   <li><b>Raw ore blocks.</b> GT6's ore quadrant tops its crate stacks with raw ore blocks
- *       ({@code BlocksGT.blockRaw}, {@code :179-182}); the port owns that block too
+ *       ({@code BlocksGT.blockRaw}); the port owns that block too
  *       ({@code MaterialPrefixes.blockRaw}) and places it through {@link GTDungeonData#rawBlock}, so the
  *       quadrant's four decorations and the roll of each are GT6's again.</li>
  *   <li><b>Mod quadrants.</b> GT6 rolls {@code next(7 + Hexxit + Thaumcraft)} for the category of each of
- *       the four quadrants and leaves the quadrant empty for the mods it does not have ({@code :138-209}).
+ *       the four quadrants and leaves the quadrant empty for the mods it does not have.
  *       The port has neither mod, so it rolls {@code next(7)} and leaves cases 5 and 6 empty, which is
  *       exactly what GT6 does without them.</li>
      *   <li><b>Piles.</b> GT6's {@code ingots_or_plates} ({@code DungeonData:259-264}) rolls the ingot's
@@ -83,21 +83,21 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
             // GT6: the vault door is not important enough to fail the entire room.
         }
 
-        // GT6's :65-132: the four fluid tank walls on the sides that have no neighbour cell. GT6 tests
+        // the four fluid tank walls on the sides that have no neighbour cell. GT6 tests
         // mRoomLayout[mRoomX±1][mRoomZ] / [mRoomX][mRoomZ±1] == 0, which is the port's !connected(...).
-        if (!data.connected(1, 0)) fluidWall(data, 12, 6, 3, 4);    // GT6 :65-81,  the +X wall
-        if (!data.connected(-1, 0)) fluidWall(data, 1, 6, 3, 4);    // GT6 :82-98,  the -X wall
-        if (!data.connected(0, 1)) fluidWall(data, 6, 12, 4, 3);    // GT6 :99-115, the +Z wall
-        if (!data.connected(0, -1)) fluidWall(data, 6, 1, 4, 3);    // GT6 :116-132, the -Z wall
+        if (!data.connected(1, 0)) fluidWall(data, 12, 6, 3, 4);    // the +X wall
+        if (!data.connected(-1, 0)) fluidWall(data, 1, 6, 3, 4);    // the -X wall
+        if (!data.connected(0, 1)) fluidWall(data, 6, 12, 4, 3);    // the +Z wall
+        if (!data.connected(0, -1)) fluidWall(data, 6, 1, 4, 3);    // the -Z wall
 
-        // GT6's :135-136: the crate variants and the four quadrants (start/end are GT6's tStart/tEnd).
+        // the crate variants and the four quadrants (start/end are GT6's tStart/tEnd).
         int[] start = {1, 12}, end = {3, 14};
         for (int a = 0; a < 2; a++) {
             for (int b = 0; b < 2; b++) {
-                // GT6's :138: one category per quadrant, rolled after the two mods the port does not have.
+                // one category per quadrant, rolled after the two mods the port does not have.
                 switch (data.next(7)) {
                     case 0 -> {
-                        // GT6's :139-149: crates of one metal, with a pile on the floor or on the stack.
+                        // crates of one metal, with a pile on the floor or on the stack.
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
@@ -120,7 +120,7 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         }
                     }
                     case 1 -> {
-                        // GT6's :150-157: crates of one dust.
+                        // crates of one dust.
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
@@ -134,7 +134,7 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         }
                     }
                     case 2 -> {
-                        // GT6's :158-165: crates of one gem.
+                        // crates of one gem.
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
@@ -148,7 +148,7 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         }
                     }
                     case 3 -> {
-                        // GT6's :166-173: crates of one wood (64x plate crates only, so no size roll).
+                        // crates of one wood (64x plate crates only, so no size roll).
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
@@ -164,7 +164,7 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         }
                     }
                     case 4 -> {
-                        // GT6's :174-184: crates of one raw ore, topped by raw ore blocks.
+                        // crates of one raw ore, topped by raw ore blocks.
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
@@ -186,8 +186,8 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                             }
                         }
                     }
-                    // GT6's :185-195 (Hexorium crates of Hexxit) and :196-206 (infused crystals of
-                    // Thaumcraft) are other-mod content, and GT6's default (:207) does nothing either:
+                    // (Hexorium crates of Hexxit) and (infused crystals of
+                    // Thaumcraft) are other-mod content, and GT6's default does nothing either:
                     // those quadrants stay empty, exactly like GT6 without the two mods installed.
                     default -> {
                         // Nothing.
@@ -200,12 +200,12 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     }
 
     /**
-     * GT6's four fluid tank walls ({@code :65-132}). Each of the four blocks of GT6's code is the same
+     * GT6's four fluid tank walls. Each of the four blocks of GT6's code is the same
      * three statements, only the origin and the extent change, so the port keeps one copy:
      *
      * <pre>
-     * if (next1in2()) {                       // GT6 :66 - half the walls stay bare rock
-     *     int type = next(3);                 // GT6 :67 - one of the three containers of tIDs (:63)
+     * if (next1in2()) { // - half the walls stay bare rock
+     *     int type = next(3); // - one of the three containers of tIDs
      *     for i in 0..countI, j in 0..countJ:
      *         if (next1in2()) for k in 0..3: setTank(x, 1+k, z, type); if (next2in3()) break;
      *         else if (next1in2()) switch (next(3)) { propane | oxygen | helium gas cylinder }
@@ -217,22 +217,22 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
      * and the two extents - and the roll order (i outer, j inner) is GT6's.</p>
      */
     private static void fluidWall(GTDungeonData data, int baseX, int baseZ, int countI, int countJ) {
-        if (!data.next1in2()) return;                                 // GT6 :66, :83, :100, :117
-        int type = data.next(CONTAINERS.length);                       // GT6 :67 tIDs[tType]
+        if (!data.next1in2()) return;                                 // half the walls stay bare rock
+        int type = data.next(CONTAINERS.length);                       // tIDs[tType]
         for (int i = 0; i < countI; i++) {
             for (int j = 0; j < countJ; j++) {
                 int x = baseX + i, z = baseZ + j;
-                if (data.next1in2()) {                                 // GT6 :69 - a column of tanks
+                if (data.next1in2()) {                                 // - a column of tanks
                     for (int k = 0; k < 4; k++) {
                         data.tank(x, 1 + k, z, GTDungeonData.container(CONTAINERS[type]),
                                 GTFluids.stack(data.select(FLUIDS[type], x, 1 + k, z), AMOUNTS[type]));
-                        if (data.next2in3()) break;                    // GT6 :71
+                        if (data.next2in3()) break;
                     }
-                } else if (data.next1in2()) {                          // GT6 :72 - one gas cylinder
-                    switch (data.next(3)) {                            // GT6 :73
-                        case 0 -> gasCylinder(data, x, z, false, PROPANE);   // GT6 :74, 32055
-                        case 1 -> gasCylinder(data, x, z, true, OXYGEN);     // GT6 :75, 32056
-                        default -> gasCylinder(data, x, z, true, HELIUM);    // GT6 :76, 32056
+                } else if (data.next1in2()) {                          // - one gas cylinder
+                    switch (data.next(3)) {
+                        case 0 -> gasCylinder(data, x, z, false, PROPANE);   // 32055
+                        case 1 -> gasCylinder(data, x, z, true, OXYGEN);     // 32056
+                        default -> gasCylinder(data, x, z, true, HELIUM);    // 32056
                     }
                 }
             }
@@ -240,7 +240,7 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     }
 
     /**
-     * GT6's gas cylinder writes ({@code :74-76}): {@code 32055} Steel Barometer Gas Cylinder with
+     * GT6's gas cylinder writes: {@code 32055} Steel Barometer Gas Cylinder with
      * 8000 mB of propane, {@code 32056} Stainless Barometer Gas Cylinder with 8000 mB of oxygen or
      * helium. GT6 also paints them ({@code NBT_COLOR} red / light blue / yellow); the port's cylinder is
      * one block per material with no paint channel, like the workshop's own cylinders (documented there).
@@ -252,15 +252,15 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                 GTFluids.stack(fluid, 8000));
     }
 
-    /** GT6's three tank families ({@code :58-63}): the container, its fluid list and its amount. */
+    /** GT6's three tank families: the container, its fluid list and its amount. */
     private static final String[] CONTAINERS = {"wood_barrel_treated", "wood_barrel_ironwood", "drum_bronze"};
     private static final int[] AMOUNTS = {16000, 32000, 64000};
     private static final String[][] FLUIDS = {
-            // GT6 :59 - Wooden Barrel 32714, 16000 mB (GT6's FL.lube is the port's Lubricant).
+            // - Wooden Barrel 32714, 16000 mB (GT6's FL.lube is the port's Lubricant).
             {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Purple_Drink"},
-            // GT6 :60 - Ironwood Barrel 32734, 32000 mB; the water is holy water here.
+            // - Ironwood Barrel 32734, 32000 mB; the water is holy water here.
             {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Holywater", "Purple_Drink"},
-            // GT6 :61 - Bronze Drum 32102, 64000 mB; normal oil twice, then the five special oils.
+            // - Bronze Drum 32102, 64000 mB; normal oil twice, then the five special oils.
             {"Oil_Normal", "Oil_Normal", "Oil_Soulsand", "Oil_Light", "Oil_Medium", "Oil_Heavy",
                     "Oil_ExtraHeavy"}};
 
@@ -269,16 +269,15 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     private static final String HELIUM = "Helium";
 
     /**
-     * GT6's metal quadrant crate: {@code aData.set(tMetalCrates, i, y, j, sMetals)} ({@code :141-143}),
-     * one of GT6's twelve crate entries of {@code :135} for one metal of its {@code sMetals}.
+     * GT6's metal quadrant crate: {@code aData.set(tMetalCrates, i, y, j, sMetals)},
+     * one of GT6's twelve crate entries of for one metal of its {@code sMetals}.
      */
     private static boolean crate(GTDungeonData data, int x, int y, int z) {
         return data.crate(x, y, z, METAL_CRATES, GTDungeonData.CRATE_METALS);
     }
 
     /**
-     * GT6's {@code aData.next1inX() ? BlocksGT.crateGt64<Form> : BlocksGT.crateGt<Form>} pairs
-     * ({@code :152-154}, {@code :160-162}, {@code :176-178}).
+     * GT6's {@code aData.next1inX() ? BlocksGT.crateGt64<Form>: BlocksGT.crateGt<Form>} pairs.
      *
      * <p>The caller draws the size roll before choosing either the partial or full prefix, preserving
      * GT6's random stream order.</p>
@@ -288,21 +287,21 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                 GTDungeonData.CRATE_DUSTS);
     }
 
-    /** GT6's gem crates ({@code :160-162}); see {@link #dustCrate} for the size roll. */
+    /** GT6's gem crates; see {@link #dustCrate} for the size roll. */
     private static boolean gemCrate(GTDungeonData data, int x, int y, int z, boolean large) {
         return data.crate(x, y, z, large ? GTDungeonData.CrateForm.GEM64 : GTDungeonData.CrateForm.GEM,
                 GTDungeonData.CRATE_GEMS);
     }
 
-    /** GT6's raw ore crates ({@code :176-178}); see {@link #dustCrate} for the size roll. */
+    /** GT6's raw ore crates; see {@link #dustCrate} for the size roll. */
     private static boolean rawCrate(GTDungeonData data, int x, int y, int z, boolean large) {
         return data.crate(x, y, z, large ? GTDungeonData.CrateForm.RAW64 : GTDungeonData.CrateForm.RAW,
                 GTDungeonData.CRATE_ORES);
     }
 
     /**
-     * GT6's {@code tMetalCrates} ({@code :135}): dust twice, ingot four times, plate twice, then the 64
-     * sized dust, plate and ingot twice. GT6's {@code set(IPrefixBlock[], ...)} draws one entry at
+     * GT6's {@code tMetalCrates}: dust twice, ingot four times, plate twice, then the 64
+     * sized dust, plate and ingot twice. GT6's {@code set(IPrefixBlock[],...)} draws one entry at
      * random, so the multiplicities are the odds - and because the port has one block per form, the
      * twelve entries keep their distinct sizes and GT6's odds (dust 3/12, ingot 6/12, plate 3/12).
      */

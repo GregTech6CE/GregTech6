@@ -34,20 +34,20 @@ import java.util.List;
  * {@code Loader_MultiTileEntities.java:2240} under the "Coins" category).
  *
  * <p>GT6's coin pile is a 4x4 grid of coin stacks on one block - sixteen faces, each holding up to
- * {@code COIN_STACKSIZE} = 16 coins ({@code MultiTileEntityCoin.java:71} and {@code :74}). Only the
- * top face can be clicked ({@code :156}), the click lands on one face ({@code :158}), an empty hand
- * takes one coin off that face ({@code :159-165}), a coin of the pile's own kind adds one
- * ({@code :166-172}) and the pile removes its block once the last coin is gone ({@code :174-176}).
- * Breaking the pile drops all of its coins, in stacks of at most 64 ({@code :112-122}).</p>
+ * {@code COIN_STACKSIZE} = 16 coins ({@code MultiTileEntityCoin.java:71}). Only the
+ * top face can be clicked, the click lands on one face, an empty hand
+ * takes one coin off that face, a coin of the pile's own kind adds one
+ * and the pile removes its block once the last coin is gone.
+ * Breaking the pile drops all of its coins, in stacks of at most 64.</p>
  *
  * <h2>The coins</h2>
  *
  * <p>GT6's coin <em>item</em> is the placeable pile itself: {@code MultiTileEntityCoin} is registered
- * like any other multi-tile, and its item stack carries the material in {@code gt.material}
- * ({@code :83}, {@code :90}) plus a {@code gt.coin.unique} flag ({@code :82}) and the two 16x16
- * pixel-shape bitsets {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} ({@code :79-80}) that
- * only its own renderer reads. Its {@code COIN_MAP} ({@code :124-133}, filled in
- * {@code onRegistration :285-328}) holds one such stack per material. GT6's {@code OP.coin} prefix is
+ * like any other multi-tile, and its item stack carries the material in {@code gt.material},
+ * a {@code gt.coin.unique} flag and the two 16x16
+ * pixel-shape bitsets {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} that
+ * only its own renderer reads. Its {@code COIN_MAP} (filled in
+ * {@code onRegistration}) holds one such stack per material. GT6's {@code OP.coin} prefix is
  * declared {@code unused} ({@code gregapi/data/OP.java:473}) and generates no items at all.</p>
  *
  * <p>The port has no multi-tile items, so it registers <b>one coin item per material</b> like every
@@ -61,7 +61,7 @@ import java.util.List;
  *
  * <ul>
  *   <li>A pile compares the full coin item and tags, as GT6's {@code ST.equal} against
- *       {@code getCoin(1, registry, id)} does ({@code :157} and {@code :167}). It therefore keeps
+ *       {@code getCoin(1, registry, id)} does, tags included. It therefore keeps
  *       both one material and one die pattern per pile.</li>
  *   <li>The pile's own block item is <b>not</b> a coin and is refused. In GT6 the pile's item and the
  *       coin are one and the same stack, but a bare pile item carries no material, so it matches no
@@ -71,14 +71,14 @@ import java.util.List;
  *       the placed pile renders that custom die. Inventory models still show the default relief.
  *       {@link #COINS} and {@link #FILL} are legacy summary state for other consumers.</li>
  *   <li>No tooltips: GT6's pile lists the material and the three {@code gt.tooltip.coins.*} lines
- *       about its "3D Coins" client config ({@code :136-147}); the port has no such config, and the
+ *       about its "3D Coins" client config; the port has no such config, and the
  *       material is already the coin item's own name, which the pile shows in the world through the
  *       tint of its model.</li>
  *   <li>The bare {@code coin_pile} block item starts empty because it carries no material; placing a
- *       material coin item instead seeds the clicked cell, as GT6's {@code onPlaced} does
- *       ({@code :251-255}).</li>
+ *       material coin item instead seeds the clicked cell, as GT6's {@code onPlaced} does.
+ *       </li>
  *   <li>GT6 merges dropped coins into a matching nearby pile or creates a new pile after 200 ticks
- *       ({@code IMTE_OnDespawn}, {@code :186-232}); {@link CoinItemExpireHandler} handles this.</li>
+ *       ({@code IMTE_OnDespawn}); {@link CoinItemExpireHandler} handles this.</li>
  * </ul>
  */
 public class CoinPileBlock extends Block implements EntityBlock {
@@ -160,10 +160,10 @@ public class CoinPileBlock extends Block implements EntityBlock {
     /**
      * GT6's click behaviour ({@code MultiTileEntityCoin.java:155-179}).
      *
-     * <p>GT6 only reacts to the top face ({@code :156}) and works out which of the sixteen faces was
-     * hit from the click position ({@code :158}); the port does the same. An empty hand takes one coin
-     * off that face ({@code :159-165}), a coin of the pile's material adds one unless the face already
-     * holds {@code COIN_STACKSIZE} ({@code :166-172}) and anything else does nothing at all - GT6's
+     * <p>GT6 only reacts to the top face and works out which of the sixteen faces was
+     * hit from the click position; the port does the same. An empty hand takes one coin
+     * off that face, a coin of the pile's material adds one unless the face already
+     * holds {@code COIN_STACKSIZE} and anything else does nothing at all - GT6's
      * coin pile never hands a coin out for a non-matching item, unlike the ingot piles.</p>
      */
 //? if >=1.21.1 {
@@ -176,17 +176,17 @@ public class CoinPileBlock extends Block implements EntityBlock {
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile)) return InteractionResult.PASS;
-        // GT6 :178 returns true for every face, including an ignored side click.
+        // returns true for every face, including an ignored side click.
         if (hit.getDirection() != Direction.UP) return InteractionResult.sidedSuccess(level.isClientSide);
-        // GT6 :156-178 does all of its work on the server side.
+        // does all of its work on the server side.
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        // GT6's block-relative click coordinates (:158 and :253).
+        // GT6's block-relative click coordinates ({@code MultiTileEntityCoin:158} and following).
         int face = CoinPileBlockEntity.faceAt(hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
         ItemStack held = player.getItemInHand(hand);
 
         if (held.isEmpty()) {
             if (pile.faceCount(face) > 0) {
-                // GT6 :161 takes a coin only if it can enter the inventory; creative players delete
+                // takes a coin only if it can enter the inventory; creative players delete
                 // it without receiving one. A full inventory leaves the coin on the pile.
                 ItemStack offered = pile.coinItem().isEmpty() ? defaultCoin() : pile.coinItem().copyWithCount(1);
                 if (player.isCreative() || player.getInventory().add(offered)) {
@@ -195,10 +195,10 @@ public class CoinPileBlock extends Block implements EntityBlock {
                 }
             }
         } else if (pile.add(face, held) > 0) {
-            // GT6 :168: a creative player does not spend the held coin.
+            // a creative player does not spend the held coin.
             if (!player.isCreative()) held.shrink(1);
         }
-        // GT6 :174-178 also clears a bare empty pile after any top click and always consumes the click.
+        // also clears a bare empty pile after any top click and always consumes the click.
         if (pile.isEmpty()) level.removeBlock(pos, false);
         return InteractionResult.CONSUME;
     }

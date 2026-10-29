@@ -86,7 +86,7 @@ public final class BasicMachineCatalog {
      * <p>
      * The {@code large*} batch machines are deliberately <em>not</em> in this set: the port has no
      * multiblock controller for them yet (GT6 does), so their single-block definition is the only
-     * implementation and removing it would delete the machine. See docs/PORTING_REMAINING_2026-09-14.md.
+     * implementation and removing it would delete the machine.
      * </p>
      */
     private static final Set<String> MULTIBLOCK_ONLY =

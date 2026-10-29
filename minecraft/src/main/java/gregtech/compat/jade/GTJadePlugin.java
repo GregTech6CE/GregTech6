@@ -31,6 +31,8 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void register(IWailaCommonRegistration registration) {
+        registration.registerItemStorage(DrawerQuadJadeProvider.INSTANCE,
+                gregtech.content.blockentity.inventory.DrawerQuadBlockEntity.class);
         registration.registerBlockDataProvider(BatteryBoxJadeProvider.INSTANCE, gregtech.content.blockentity.energy.EnergyNodeBlockEntity.class);
         registration.registerBlockDataProvider(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.entity.BlockEntity.class);
         registration.registerBlockDataProvider(FluidVesselJadeProvider.INSTANCE, gregtech.content.blockentity.machine.TankBlockEntity.class);
@@ -63,11 +65,13 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.registerItemStorageClient(DrawerQuadJadeProvider.INSTANCE);
         registration.registerBlockComponent(PyriteOreJadeProvider.INSTANCE, gregtech.content.block.OreBlock.class);
         registration.registerBlockComponent(BatteryBoxJadeProvider.INSTANCE, gregtech.content.block.energy.EnergyNodeBlock.class);
         registration.registerBlockComponent(OmniJadeProvider.INSTANCE, net.minecraft.world.level.block.Block.class);
         registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.TankBlock.class);
         registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.FluidPipeBlock.class);
+        registration.registerBlockComponent(FluidVesselJadeProvider.INSTANCE, gregtech.content.block.inventory.EnderGarbageBlock.class);
         registration.registerBlockComponent(MagicFieldAbsorberJadeProvider.INSTANCE, gregtech.content.block.energy.MagicFieldAbsorberBlock.class);
         registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE, gregtech.content.block.energy.PowerCellBlock.class);
         registration.registerBlockComponent(DustFunnelJadeProvider.INSTANCE,

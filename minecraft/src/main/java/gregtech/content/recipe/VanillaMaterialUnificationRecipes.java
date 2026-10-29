@@ -17,7 +17,8 @@ public final class VanillaMaterialUnificationRecipes {
     public static int register() {
         int count = 0;
         for (String name :
-                new String[] {"Iron", "Gold", "Copper", "Netherite", "Diamond", "Emerald", "Coal", "Lapis", "Redstone"}) {
+                new String[] {"Iron", "Gold", "Copper", "Netherite", "Diamond", "Emerald", "Coal", "Lapis", "Redstone"
+                }) {
             var material = GTMaterialRegistry.get(name);
             if (material == null) continue;
             for (var prefix : new BlockMaterialPrefix[] {
@@ -44,14 +45,29 @@ public final class VanillaMaterialUnificationRecipes {
             "Redstone",
             "Sugar",
             "Gunpowder",
-            "Glowstone", "EnderPearl", "EnderEye", "NetherQuartz", "NetherStar", "Wood", "Blaze",
-            "Brick", "NetherBrick", "Bone", "Paper", "Glass"
+            "Glowstone",
+            "EnderPearl",
+            "EnderEye",
+            "NetherQuartz",
+            "NetherStar",
+            "Wood",
+            "Blaze",
+            "Brick",
+            "NetherBrick",
+            "Bone",
+            "Paper",
+            "Glass"
         }) {
             var material = GTMaterialRegistry.get(name);
             if (material == null) continue;
             for (var prefix : new MaterialPrefix[] {
-                MaterialPrefix.ingot, MaterialPrefix.nugget, MaterialPrefix.gem, MaterialPrefix.dust,
-                MaterialPrefix.dustTiny, MaterialPrefix.stick, MaterialPrefix.plate
+                MaterialPrefix.ingot,
+                MaterialPrefix.nugget,
+                MaterialPrefix.gem,
+                MaterialPrefix.dust,
+                MaterialPrefix.dustTiny,
+                MaterialPrefix.stick,
+                MaterialPrefix.plate
             }) {
                 var entry = GTItems.getObject(prefix, material);
                 if (entry != null) count += add(new ItemStack(entry.get()));

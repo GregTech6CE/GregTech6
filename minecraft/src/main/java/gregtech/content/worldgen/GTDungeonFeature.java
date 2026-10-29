@@ -71,7 +71,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
     public static final GTDungeonChunk BARRACKS = new GTDungeonChunkBarracks();
     public static final GTDungeonChunk ROOM_EMPTY = new GTDungeonChunkRoomEmpty();
 
-    /** GT6's {@code ROOMS} list ({@code :85-94}), minus the rooms of mods the port does not have. */
+    /** GT6's {@code ROOMS} list, minus the rooms of mods the port does not have. */
     public static final List<GTDungeonChunk> ROOMS = List.of(
             new GTDungeonChunkRoomWorkshop(),
             new GTDungeonChunkRoomMiningBedrock(),
@@ -80,7 +80,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
             new GTDungeonChunkRoomFarmCrop(),
             new GTDungeonChunkRoomFarmFish());
 
-    /** GT6's {@code DEAD_END} list ({@code :96-103}), minus the three portal rooms of mods the port does not have. */
+    /** GT6's {@code DEAD_END} list, minus the three portal rooms of mods the port does not have. */
     public static final List<GTDungeonChunk> DEAD_END = List.of(
             new GTDungeonChunkRoomStorage(),
             new GTDungeonChunkRoomPortalNether(),

@@ -37,33 +37,33 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
  *       overlay, the FOV change, the bubble HUD and drowning; it tests the {@code FluidType}
  *       instance. {@code Entity.updateFluidHeightAndDoFluidPushing(TagKey, double)} ignores its tag
  *       argument for water and returns {@code isInFluidType(ForgeMod.WATER_TYPE.get())}
- *       ({@code Entity.java:3035-3040}), the per-type height map it fills is keyed by
- *       {@code fluidstate.getFluidType()} ({@code Entity.java:3078,3127}), {@code isInFluidType}
- *       compares the type instance ({@code IForgeEntity.java:267-270}), and
+ *       ({@code Entity.java}), the per-type height map it fills is keyed by
+ *       {@code fluidstate.getFluidType()} ({@code Entity.java}), {@code isInFluidType}
+ *       compares the type instance ({@code IForgeEntity.java}), and
  *       {@code Entity.isEyeInFluid(FluidTags.WATER)} is {@code isEyeInFluidType(ForgeMod.WATER_TYPE)}
  *       with {@code isEyeInFluidType} being {@code type == this.getEyeInFluidType()}
- *       ({@code Entity.java:1320-1325}, {@code IForgeEntity.java:316-319}). Because
+ *       ({@code Entity.java}, {@code IForgeEntity.java}). Because
  *       {@code Entity.updateInWaterStateAndDoWaterCurrentPushing} drives {@code wasTouchingWater}
- *       and {@code doWaterSplashEffect} from that answer ({@code Entity.java:1208-1233}), a GT6
+ *       and {@code doWaterSplashEffect} from that answer ({@code Entity.java}), a GT6
  *       water that reported its own {@code FluidType} produced no splash sound and no swimming at
  *       all. {@code FluidState.getFluidType()} delegates to the fluid
- *       ({@code IForgeFluidState.java:49-52}), so reporting vanilla water's type from
- *       {@code ForgeFlowingFluid.getFluidType} ({@code ForgeFlowingFluid.java:60-64}) makes every
+ *       ({@code IForgeFluidState.java}), so reporting vanilla water's type from
+ *       {@code ForgeFlowingFluid.getFluidType} ({@code ForgeFlowingFluid.java}) makes every
  *       one of those checks answer exactly as it does for {@code minecraft:water}.
  *       <p>Consequences that are intended: lava flowing next to a GT6 water turns it into obsidian
  *       or cobblestone, because Forge's own interaction is registered on
  *       {@code ForgeMod.LAVA_TYPE} and tests {@code fluidstate.getFluidType() == ForgeMod.WATER_TYPE}
- *       ({@code FluidInteractionRegistry.java:79-92,133-136}), and the GT6 world water block keeps
+ *       ({@code FluidInteractionRegistry.java}), and the GT6 world water block keeps
  *       scheduling its fluid tick because {@code FluidInteractionRegistry.canInteract} then finds no
- *       interaction for a water source ({@code FluidInteractionRegistry.java:59-77}).</li>
+ *       interaction for a water source ({@code FluidInteractionRegistry.java}).</li>
  *   <li><b>Source conversion.</b> {@code WaterFluid.canConvertToSource(Level)} honours
- *       {@code RULE_WATER_SOURCE_CONVERSION} ({@code WaterFluid.java:57-59}); plain
+ *       {@code RULE_WATER_SOURCE_CONVERSION} ({@code WaterFluid.java}); plain
  *       {@code ForgeFlowingFluid.canConvertToSource} answers from the {@code FluidType} instead
- *       ({@code ForgeFlowingFluid.java:84-88}), so it is repeated here.</li>
+ *       ({@code ForgeFlowingFluid.java}), so it is repeated here.</li>
  *   <li><b>Replacement.</b> {@code WaterFluid.canBeReplacedWith} only lets a fluid in downwards and
- *       never lets anything in {@code #minecraft:water} in ({@code WaterFluid.java:86-88}); vanilla
+ *       never lets anything in {@code #minecraft:water} in ({@code WaterFluid.java}); vanilla
  *       {@code ForgeFlowingFluid.canBeReplacedWith} only refuses the same fluid
- *       ({@code ForgeFlowingFluid.java:115-120}).</li>
+ *       ({@code ForgeFlowingFluid.java}).</li>
  *   <li><b>Waterlogged blocks.</b> Vanilla's waterlogged-block contract identity-checks
  *       {@code Fluids.WATER}; see {@link VanillaWaterlogging} for the mechanism, for why the hook has
  *       to be {@code getNewLiquid} rather than {@code canSpreadTo}/{@code spreadTo}, and for what the
@@ -96,33 +96,33 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
  *       overlay, the FOV change, the bubble HUD and drowning; it tests the {@code FluidType}
  *       instance. {@code Entity.updateFluidHeightAndDoFluidPushing(TagKey, double)} ignores its tag
  *       argument for water and returns {@code isInFluidType(NeoForgeMod.WATER_TYPE.value())}
- *       ({@code Entity.java:3035-3040}), the per-type height map it fills is keyed by
- *       {@code fluidstate.getFluidType()} ({@code Entity.java:3078,3127}), {@code isInFluidType}
- *       compares the type instance ({@code IForgeEntity.java:267-270}), and
+ *       ({@code Entity.java}), the per-type height map it fills is keyed by
+ *       {@code fluidstate.getFluidType()} ({@code Entity.java}), {@code isInFluidType}
+ *       compares the type instance ({@code IForgeEntity.java}), and
  *       {@code Entity.isEyeInFluid(FluidTags.WATER)} is {@code isEyeInFluidType(NeoForgeMod.WATER_TYPE)}
  *       with {@code isEyeInFluidType} being {@code type == this.getEyeInFluidType()}
- *       ({@code Entity.java:1320-1325}, {@code IForgeEntity.java:316-319}). Because
+ *       ({@code Entity.java}, {@code IForgeEntity.java}). Because
  *       {@code Entity.updateInWaterStateAndDoWaterCurrentPushing} drives {@code wasTouchingWater}
- *       and {@code doWaterSplashEffect} from that answer ({@code Entity.java:1208-1233}), a GT6
+ *       and {@code doWaterSplashEffect} from that answer ({@code Entity.java}), a GT6
  *       water that reported its own {@code FluidType} produced no splash sound and no swimming at
  *       all. {@code FluidState.getFluidType()} delegates to the fluid
- *       ({@code IForgeFluidState.java:49-52}), so reporting vanilla water's type from
- *       {@code BaseFlowingFluid.getFluidType} ({@code BaseFlowingFluid.java:60-64}) makes every
+ *       ({@code IForgeFluidState.java}), so reporting vanilla water's type from
+ *       {@code BaseFlowingFluid.getFluidType} ({@code BaseFlowingFluid.java}) makes every
  *       one of those checks answer exactly as it does for {@code minecraft:water}.
  *       <p>Consequences that are intended: lava flowing next to a GT6 water turns it into obsidian
  *       or cobblestone, because Forge's own interaction is registered on
  *       {@code ForgeMod.LAVA_TYPE} and tests {@code fluidstate.getFluidType() == NeoForgeMod.WATER_TYPE}
- *       ({@code FluidInteractionRegistry.java:79-92,133-136}), and the GT6 world water block keeps
+ *       ({@code FluidInteractionRegistry.java}), and the GT6 world water block keeps
  *       scheduling its fluid tick because {@code FluidInteractionRegistry.canInteract} then finds no
- *       interaction for a water source ({@code FluidInteractionRegistry.java:59-77}).</li>
+ *       interaction for a water source ({@code FluidInteractionRegistry.java}).</li>
  *   <li><b>Source conversion.</b> {@code WaterFluid.canConvertToSource(Level)} honours
- *       {@code RULE_WATER_SOURCE_CONVERSION} ({@code WaterFluid.java:57-59}); plain
+ *       {@code RULE_WATER_SOURCE_CONVERSION} ({@code WaterFluid.java}); plain
  *       {@code BaseFlowingFluid.canConvertToSource} answers from the {@code FluidType} instead
- *       ({@code BaseFlowingFluid.java:84-88}), so it is repeated here.</li>
+ *       ({@code BaseFlowingFluid.java}), so it is repeated here.</li>
  *   <li><b>Replacement.</b> {@code WaterFluid.canBeReplacedWith} only lets a fluid in downwards and
- *       never lets anything in {@code #minecraft:water} in ({@code WaterFluid.java:86-88}); vanilla
+ *       never lets anything in {@code #minecraft:water} in ({@code WaterFluid.java}); vanilla
  *       {@code BaseFlowingFluid.canBeReplacedWith} only refuses the same fluid
- *       ({@code BaseFlowingFluid.java:115-120}).</li>
+ *       ({@code BaseFlowingFluid.java}).</li>
  *   <li><b>Waterlogged blocks.</b> Vanilla's waterlogged-block contract identity-checks
  *       {@code Fluids.WATER}; see {@link VanillaWaterlogging} for the mechanism, for why the hook has
  *       to be {@code getNewLiquid} rather than {@code canSpreadTo}/{@code spreadTo}, and for what the
@@ -189,7 +189,7 @@ public final class GTWorldWaterFluid {
 
     /**
      * {@code WaterFluid.Source} for GT6's world waters. It has to override {@code getNewLiquid}
-     * ({@code FlowingFluid.java:153-187}) rather than the {@code canSpreadTo}/{@code spreadTo} pair,
+     * ({@code FlowingFluid.java}) rather than the {@code canSpreadTo}/{@code spreadTo} pair,
      * because {@code getSpread} decides with {@code FlowingFluid}'s private helpers which fluid the
      * target is asked with; see {@link VanillaWaterlogging}.
      */

@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Loader_MultiTileEntities 14500..14515 and MultiTileEntityBatteryLU8..8192. */
+ * GT6's rechargeable energy crystals (Loader_MultiTileEntities 14500..14515,
+ * MultiTileEntityBatteryLU8..8192). */
 package gregtech.content.energy;
 
 import gregtech.api.material.GTMaterial;

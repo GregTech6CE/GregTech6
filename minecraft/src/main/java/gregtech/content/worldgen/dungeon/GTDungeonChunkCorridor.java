@@ -29,7 +29,7 @@ public class GTDungeonChunkCorridor extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6's central box (:36-52).
+        // GT6's central box.
         for (int x = 5; x <= 10; x++) {
             for (int z = 5; z <= 10; z++) {
                 for (int y = 0; y <= 4; y++) {
@@ -46,7 +46,7 @@ public class GTDungeonChunkCorridor extends GTDungeonChunkPillar {
             }
         }
 
-        // GT6's centre lamp (:81-94).
+        // GT6's centre lamp.
         if (skyOrLiquid(data, 7, 7) || skyOrLiquid(data, 7, 8) || skyOrLiquid(data, 8, 7) || skyOrLiquid(data, 8, 8)) {
             data.glassglow(7, 4, 7);
             data.glassglow(7, 4, 8);
@@ -59,7 +59,7 @@ public class GTDungeonChunkCorridor extends GTDungeonChunkPillar {
             data.redstoned(8, 4, 8);
         }
 
-        // GT6's four arms (:96-187). Order matters: an arm overwrites the shared wall into an opening.
+        // GT6's four arms. Order matters: an arm overwrites the shared wall into an opening.
         if (data.connected(1, 0)) {
             arm(data, 10, 15, 5, 10, true);
             data.redstoned(13, 4, 6);

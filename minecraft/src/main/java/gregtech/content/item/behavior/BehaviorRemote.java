@@ -32,7 +32,7 @@ import java.util.List;
  */
 public final class BehaviorRemote {
 
-    /** GT6 {@code Behavior_Remote:56} (and {@code :95}): {@code tList.size() >= 64} per dimension. */
+    /** GT6 {@code Behavior_Remote:56} (and {@code Behavior_Remote:95}): {@code tList.size() >= 64} per dimension. */
     public static final int MAX_COORDS = 64;
 
     /** GT6 {@code Behavior_Remote:80}: {@code Math.abs(...) <= 128} on every axis, from the player. */
@@ -79,15 +79,15 @@ public final class BehaviorRemote {
     }
 
     /**
-     * GT6 {@code Behavior_Remote.getCoords} ({@code :110-119}): the coordinates bound to a stack in this
+     * GT6 {@code Behavior_Remote.getCoords}: the coordinates bound to a stack in this
      * dimension.
      *
      * <p>The read loop is the original's, marker first: {@code i = -1} and
-     * {@code while (compound.contains("c" + (++i)))} ({@code :115}), so a list that lost its markers
+     * {@code while (compound.contains("c" + (++i)))}, so a list that lost its markers
      * (or one written by a different layout) stops at the first gap instead of reading garbage.</p>
      *
      * @param tag   the stack's tag; {@code null} reads as an empty list, like GT6's own
-     *              {@code if (aNBT == null) return rList} ({@code :112})
+     *              {@code if (aNBT == null) return rList}
      * @param level the level whose dimension key is read
      * @return a fresh mutable list, empty when nothing is bound — the callers of this layer are expected
      *         to edit it and hand it to {@link #setCoords} (GT6's list is an {@code ArrayListNoNulls})
@@ -97,30 +97,26 @@ public final class BehaviorRemote {
         List<BlockPos> coords = new ArrayList<>();
         if (tag == null) return coords;
         CompoundTag dimension = tag.getCompound(dimKey(level));
-        // :113
         if (dimension.isEmpty()) return coords;
-        // :114
         int index = -1;
         while (dimension.contains("c" + (++index))) {
-            // :115
             coords.add(new BlockPos(dimension.getInt("x" + index), dimension.getInt("y" + index),
                     dimension.getInt("z" + index)));
-            // :116
         }
         return coords;
     }
 
     /**
-     * GT6 {@code Behavior_Remote.setCoords} ({@code :121-135}): replace this dimension's list.
+     * GT6 {@code Behavior_Remote.setCoords}: replace this dimension's list.
      *
      * <p>Field for field the original's writer: index {@code i} from {@code 0}, a boolean
-     * {@code "c" + i} that is only the end marker for {@link #getCoords}, then {@code "x"/"y"/"z" + i}
-     * ({@code :126-132}). An empty list removes the dimension's compound rather than storing an empty
-     * one ({@code :122-123}), so an item that has nothing bound carries no tag for that dimension.</p>
+     * {@code "c" + i} that is only the end marker for {@link #getCoords}, then {@code "x"/"y"/"z" + i}.
+     * An empty list removes the dimension's compound rather than storing an empty
+     * one, so an item that has nothing bound carries no tag for that dimension.</p>
      *
-     * @param tag    the tag to write into — the stack's own tag, which the caller stores back; must not
+     * @param tag   the tag to write into — the stack's own tag, which the caller stores back; must not
      *               be {@code null} (GT6 dereferences it as well)
-     * @param level  the level whose dimension key is written
+     * @param level the level whose dimension key is written
      * @param coords the surviving coordinates; an empty list removes the entry
      */
 
@@ -128,21 +124,18 @@ public final class BehaviorRemote {
         String key = dimKey(level);
         if (coords.isEmpty()) {
             tag.remove(key);
-            // :122-123
             return;
         }
         CompoundTag dimension = new CompoundTag();
         for (int index = 0, size = coords.size(); index < size; index++) {
-            // :126-132
             BlockPos coord = coords.get(index);
             dimension.putBoolean("c" + index, true);
-            // :128 - the end marker only
+            // - the end marker only
             dimension.putInt("x" + index, coord.getX());
             dimension.putInt("y" + index, coord.getY());
             dimension.putInt("z" + index, coord.getZ());
         }
         tag.put(key, dimension);
-        // :133
     }
 
     /**
@@ -167,135 +160,117 @@ public final class BehaviorRemote {
     }
 
     /**
-     * GT6 {@code Behavior_Remote.onItemUseFirst} ({@code :47-73}) — the binding half: sneak-click a block
+     * GT6 {@code Behavior_Remote.onItemUseFirst} — the binding half: sneak-click a block
      * to toggle its coordinate.
      *
-     * <p>The gates are the original's and in its order ({@code :48}): never on the client side, never
+     * <p>The gates are the original's and in its order: never on the client side, never
      * without a player, only while sneaking — a plain right-click is the activation half, see
      * {@link #useInAir} — and only where the player may build. GT6's {@code aPlayer} cannot be
      * {@code null}, but the port's behaviour-click signature allows it (the auto-tool case elsewhere in
      * this layer), so a {@code null} player refuses instead of throwing at {@code isSneaking()}.</p>
      *
-     * <p>The four chat lines are GT6's own words ({@code :53,57,62,66}), sent with
+     * <p>The four chat lines are GT6's own words, sent with
      * {@code Player.displayClientMessage}, the 1.20.1 form of {@code UT.Entities.sendchat}; the
      * accompanying beeps are not played (see the class javadoc). The list is written back in every
-     * branch ({@code :70-71}) and the stack is neither consumed nor damaged.</p>
+     * branch and the stack is neither consumed nor damaged.</p>
      *
-     * @return GT6's {@code T} ({@code :72}) once the gates are passed — the click is handled even when
+     * @return GT6's {@code T} once the gates are passed — the click is handled even when
      *         nothing was bound; {@code F} on a gate
      */
 
     public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player,
             ItemStack stack, float hitX, float hitY, float hitZ) {
         if (level.isClientSide) return Outcome.refused(stack);
-        // :48
         if (player == null) return Outcome.refused(stack);
         if (!player.isShiftKeyDown()) return Outcome.refused(stack);
-        // :48
 //? if >=1.21.1 {
         /*if (!ManualToolBehaviorAccess.mayEdit(level, player, pos)) return Outcome.refused(stack);
-        // :48
+        //
 *///?} else {
         if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);
-        // :48
 //?}
 
 //? if >=1.21.1 {
         /*CompoundTag tag = gregtech.platform.neoforge.StackCustomData.read(stack);
-        // :49 UT.NBT.getNBT
+        // UT.NBT.getNBT
 *///?} else {
         CompoundTag tag = stack.getOrCreateTag();
-        // :49 UT.NBT.getNBT
+        // UT.NBT.getNBT
 //?}
         List<BlockPos> coords = getCoords(tag, level);
-        // :50
         if (coords.contains(pos)) {
-            // :52-55
             message(player, "Coordinates removed!");
             coords.remove(pos);
         } else if (coords.size() >= MAX_COORDS) {
-            // :56-58
             message(player, "Cant hold more than 64 Coordinates per Dimension!");
         } else if (target(level, pos) != null) {
-            // :59-64
             message(player, "Coordinates added!");
             coords.add(pos.immutable());
         } else {
-            // :65-68
             message(player, "This cannot be added!");
         }
 //? if >=1.21.1 {
         /*gregtech.platform.neoforge.StackCustomData.update(stack, nbt -> setCoords(nbt, level, coords));
-        // :70-71
+        //
 *///?} else {
         setCoords(tag, level, coords);
-        // :70-71
 //?}
         return Outcome.acted(stack);
-        // :72
     }
 
     /**
-     * GT6 {@code Behavior_Remote.onItemRightClick} ({@code :76-90}) — the activation half: fire every
+     * GT6 {@code Behavior_Remote.onItemRightClick} — the activation half: fire every
      * bound coordinate of this dimension that is within {@link #RANGE} blocks of the player.
      *
-     * <p>The gates are the original's ({@code :77}): never on the client side, only while <em>not</em>
+     * <p>The gates are the original's: never on the client side, only while <em>not</em>
      * sneaking (sneaking is the binding half), and only when the stack carries a tag at all — an item
      * that has never bound anything is left completely alone. GT6 reads {@code aPlayer} without a
      * {@code null} test here too, and this signature allows {@code null}, so it refuses like
      * {@link #useOn} does.</p>
      *
-     * <p>The keep rule is GT6's, coordinate by coordinate ({@code :79-86}): inside the range the
+     * <p>The keep rule is GT6's, coordinate by coordinate: inside the range the
      * coordinate survives only if the block is a {@link RemoteActivatable} <em>and</em> its
      * {@code remoteActivate} answers {@code true} — a switch stays, a fired charge does not; outside the
      * range the coordinate is kept unread and untouched, so a remote can hold a list that reaches beyond
-     * its activation radius ({@code :83-85}). The survivors are written back ({@code :87}), and the
+     * its activation radius. The survivors are written back, and the
      * {@code MC_CLICK} sound is not played (see the class javadoc).</p>
      *
      * <p>The stack that comes in is the stack that goes out — only its tag changes — so a caller can
      * pass the held stack straight through.</p>
      *
-     * @return GT6's "handled, this is the stack" ({@code :89}); {@code F} on a gate
+     * @return GT6's "handled, this is the stack"; {@code F} on a gate
      */
 
     public static Outcome useInAir(Level level, @Nullable Player player, ItemStack stack) {
         if (level.isClientSide) return Outcome.refused(stack);
-        // :77
         if (player == null) return Outcome.refused(stack);
         if (player.isShiftKeyDown()) return Outcome.refused(stack);
-        // :77
 //? if >=1.21.1 {
         /*CompoundTag tag = gregtech.platform.neoforge.StackCustomData.read(stack);
         if (tag.isEmpty()) return Outcome.refused(stack);
-        // :77
+        //
 *///?} else {
         CompoundTag tag = stack.getTag();
         if (tag == null) return Outcome.refused(stack);
-        // :77
 //?}
 
         List<BlockPos> kept = new ArrayList<>();
         for (BlockPos coords : getCoords(tag, level)) {
-            // :79
             if (inRange(coords, player)) {
-                // :80
                 RemoteActivatable activatable = target(level, coords);
-                // :82 - the coordinate stays only when the block answers "keep me bound".
+                // - the coordinate stays only when the block answers "keep me bound".
                 if (activatable != null && activatable.remoteActivate(level, coords)) kept.add(coords);
             } else {
                 kept.add(coords);
-                // :83-85
             }
         }
 //? if >=1.21.1 {
         /*gregtech.platform.neoforge.StackCustomData.update(stack, nbt -> setCoords(nbt, level, kept));
-        // :87
+        //
 *///?} else {
         setCoords(tag, level, kept);
-        // :87
 //?}
         return Outcome.acted(stack);
-        // :89
     }
 
     /**
@@ -310,7 +285,7 @@ public final class BehaviorRemote {
     }
 
     /**
-     * GT6's {@code UT.Entities.sendchat(aPlayer, …)} ({@code :53,57,62,66}) in 1.20.1: a chat line for
+     * GT6's {@code UT.Entities.sendchat(aPlayer, …)} in 1.20.1: a chat line for
      * that one player, not an action-bar message — the second argument {@code false} is what makes it
      * land in the chat, where GT6's chat messages go.
      */

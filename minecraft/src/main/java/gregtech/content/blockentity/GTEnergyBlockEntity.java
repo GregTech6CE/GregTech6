@@ -116,13 +116,15 @@ public abstract class GTEnergyBlockEntity extends BlockEntity implements IEnergy
             setChanged();
             BlockState state = getBlockState();
             level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
-            ClientboundBlockEntityDataPacket packet = ClientboundBlockEntityDataPacket.create(this);
+            ClientboundBlockEntityDataPacket packet = null;
             double x = worldPosition.getX() + 0.5;
             double y = worldPosition.getY() + 0.5;
             double z = worldPosition.getZ() + 0.5;
             double distSq = 64.0 * 64.0;
             for (ServerPlayer player : serverLevel.players()) {
                 if (player.distanceToSqr(x, y, z) <= distSq) {
+                    // Keep the immediate delivery, but serialize only if it has a recipient.
+                    if (packet == null) packet = ClientboundBlockEntityDataPacket.create(this);
                     player.connection.send(packet);
                 }
             }

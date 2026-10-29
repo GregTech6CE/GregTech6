@@ -20,6 +20,7 @@ public class SlotFluid extends SlotItemHandler {
     private final int tankIndex;
     private final boolean isInput;
     private FluidStack fluid = FluidStack.EMPTY;
+    private long amount, capacity;
 
     public SlotFluid(IItemHandler dummy, int slotIndex, int x, int y, int tankIndex, boolean isInput) {
         super(dummy, slotIndex, x, y);
@@ -31,7 +32,13 @@ public class SlotFluid extends SlotItemHandler {
     public boolean isInput() { return isInput; }
 
     public FluidStack fluid() { return fluid; }
-    public void setFluid(FluidStack f) { this.fluid = f != null ? f.copy() : FluidStack.EMPTY; }
+    public long amount() { return amount; }
+    public long capacity() { return capacity; }
+    public void setFluid(FluidStack f, long amount, long capacity) {
+        this.fluid = f != null ? f.copy() : FluidStack.EMPTY;
+        this.amount = Math.max(0, amount);
+        this.capacity = Math.max(0, capacity);
+    }
 
     @Override
     public boolean mayPlace(ItemStack stack) { return false; }

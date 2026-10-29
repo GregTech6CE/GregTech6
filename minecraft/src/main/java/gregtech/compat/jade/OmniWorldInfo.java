@@ -51,7 +51,7 @@ final class OmniWorldInfo {
         } else if (entity instanceof SapBagBlockEntity bag) {
             info.item("collected", 0, bag.stored());
             var tank = bag.tank();
-            info.fluid("collected", 0, tank.getFluid(), tank.getAmount(), tank.getCapacity());
+            info.fluid("collected", 0, tank.getFluid(), tank.getAmount(), tank.capacity());
         } else if (entity instanceof FluidSpringBlockEntity spring) {
             var fluid = spring.springFluid();
             if (!fluid.isEmpty()) info.line("spring_fluid", fluid);

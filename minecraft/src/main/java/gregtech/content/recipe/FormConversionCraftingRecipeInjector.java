@@ -165,7 +165,7 @@ public final class FormConversionCraftingRecipeInjector {
 
 *///?} else {
 //?}
-    /** Source :615-616: all standard/dense prefix aliases, including actual vanilla ore blocks. */
+    /** All standard/dense prefix aliases, including actual vanilla ore blocks ({@code Loader_Recipes_Handlers.java:615-616}). */
 //? if >=1.21.1 {
     /*private static void registerOreConversions(Map<ResourceLocation, byte[]> recipes) {
 *///?} else {

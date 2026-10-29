@@ -37,7 +37,7 @@ import java.util.List;
  *       {@code display.Name} tag, which is where 1.20.1 reads a custom name from as well, so
  *       {@link #withName} writes the same place and the stack shows {@code Key #N} like the original.</li>
  *   <li><b>Stack size.</b> GT6's keys keep the multi-item default of 64
- *       ({@code MultiItem.getItemStackLimit:392-396} only forces a limit of one for energy items), so
+ *       ({@code MultiItem.getItemStackLimit} only forces a limit of one for energy items), so
  *       the port registers them with 64 as well.</li>
  * </ul>
  */

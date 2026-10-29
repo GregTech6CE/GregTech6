@@ -17,13 +17,7 @@
     }
   },
   "result": {
-    "item": "gt6ce:spike_metal",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "wall",
-        "secondary": "false"
-      }
-    }
+    "item": "gt6ce:spike_metal_copper",
+    "count": 1
   }
 }

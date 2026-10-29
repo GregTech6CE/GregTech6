@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Loader_MultiTileEntities 10031..10035 / 11031..11035 and TileEntityBase11Bipolar. */
+ * GT6's two bipolar magnet multi-tile families (Loader_MultiTileEntities 10031..10035 /
+ * 11031..11035, TileEntityBase11Bipolar). */
 package gregtech.content.energy;
 
 import gregtech.api.material.GTMaterial;

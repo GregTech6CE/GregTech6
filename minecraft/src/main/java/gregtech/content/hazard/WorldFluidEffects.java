@@ -37,11 +37,11 @@ import java.util.List;
  *   // BlockBaseFluid:404-409 - a body that overlaps the fluid block
  *   if (!world.isRemote &amp;&amp; !mEffectsBathing.isEmpty() &amp;&amp; entity instanceof EntityLivingBase
  *       &amp;&amp; !UT.Entities.isWearingFullChemHazmat(entity))
- *       for (int[] e : mEffectsBathing) UT.Entities.applyPotion(entity, e[0], e[1], e[2], F);
+ *       for (int[] e: mEffectsBathing) UT.Entities.applyPotion(entity, e[0], e[1], e[2], F);
  *
  *   // BlockBaseFluid:411-415 / BlockWaterlike:226-231 - a head inside it
  *   if (!world.isRemote &amp;&amp; effects non-empty &amp;&amp; gate)
- *       for (int[] e : effects) UT.Entities.applyPotion(entity, e[0], e[1], e[2], F);
+ *       for (int[] e: effects) UT.Entities.applyPotion(entity, e[0], e[1], e[2], F);
  *       if (getMaterial() != Material.water &amp;&amp; SERVER_TIME % 20 == 0)
  *           entity.attackEntityFrom(DamageSource.drown, 2.0F);
  * </pre>
@@ -53,9 +53,9 @@ import java.util.List;
  *       drown damage either, which is why {@code seawater} and {@code riverwater} are completely
  *       harmless in GT6 ({@code Loader_Blocks.java:135,136} pass no effects) although they are water.</li>
  *   <li><b>The two head-inside paths have different gates.</b> {@code BlockBaseFluid} always asks
- *       {@code isImmuneToBreathingGases} ({@code :412}), even for the oils, which are liquids;
- *       {@code BlockWaterlike} picks per fluid - {@code FL.gas(fluid) ? !isImmuneToBreathingGases
- *       : !isWearingFullChemHazmat} ({@code :227}). The swamp is the only waterlike fluid with a row,
+ *       {@code isImmuneToBreathingGases}, even for the oils, which are liquids;
+ *       {@code BlockWaterlike} picks per fluid - {@code FL.gas(fluid) ? !isImmuneToBreathingGases:
+ *       !isWearingFullChemHazmat}. The swamp is the only waterlike fluid with a row,
  *       and its material <em>is</em> water ({@code BlockWaterlike:65 super(aFluid, Material.water)}),
  *       so swamp water never drowns you - only the hunger and confusion land.</li>
  *   <li><b>Drown damage keys on the material, not on the fluid class.</b> Oils and natural gas carry
@@ -70,7 +70,7 @@ import java.util.List;
  * {@code ID_SLIPPERY}, {@code ID_STICKY}; the ids themselves are the negatives
  * {@code CS.java:1577}). 1.20.1 has no Immersive Engineering, so those three are recorded as
  * not-applicable rather than invented - the vanilla {@code blindness 60/1} that sits next to them on
- * the same line is applied. The web behaviour ({@code .setWeb()} on the extra-heavy and heavy lines)
+ * the same line is applied. The web behaviour ({@code.setWeb()} on the extra-heavy and heavy lines)
  * is ported: {@code setWeb()} is 1.7.10's {@code Entity#setInWeb}, i.e. vanilla cobweb's
  * {@code makeStuckInBlock(state, 0.25, 0.05, 0.25)}.</p>
  *
@@ -117,7 +117,7 @@ public final class WorldFluidEffects {
 
     /** GT6 {@code BlockBaseFluid:414} / {@code BlockWaterlike:229}: {@code SERVER_TIME % 20 == 0}. */
     public static final int DROWN_INTERVAL = 20;
-    /** GT6 {@code :414}: {@code attackEntityFrom(DamageSource.drown, 2.0F)}. */
+    /** GT6's: {@code attackEntityFrom(DamageSource.drown, 2.0F)}. */
     public static final float DROWN_DAMAGE = 2.0F;
 
     private WorldFluidEffects() {}

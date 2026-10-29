@@ -27,6 +27,7 @@ public final class MachineRecipeBootstrap {
     }
 
     private static void loadRecipes() {
+        gregtech.content.material.MeatItemMaterials.register();
         register("VanillaMaterialUnificationRecipes", VanillaMaterialUnificationRecipes::register);
         runStep("OreProcessingRecipeLoader", new OreProcessingRecipeLoader());
         runStep("PartRecipeLoader", new PartRecipeLoader());

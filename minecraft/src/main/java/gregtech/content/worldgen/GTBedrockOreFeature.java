@@ -50,7 +50,7 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
         int centerZ = chunkPos.getMinBlockZ() + 4 + gridRandom.nextInt(8);
 
         RandomSource random = context.random();
-        // §56: GT6's vein is chunk anchored (its shape spans the chunk's own 16x16 columns).
+        // GT6's vein is chunk anchored (its shape spans the chunk's own 16x16 columns).
         if (!placeVein(level, random, chunkPos.getMinBlockX(), chunkPos.getMinBlockZ(), pick.material())) {
             return false;
         }
@@ -95,7 +95,7 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's {@code WorldgenOresBedrock.generateVein} (§56): the vein is <b>chunk anchored</b>, not a
+     * GT6's {@code WorldgenOresBedrock.generateVein}: the vein is <b>chunk anchored</b>, not a
      * blob around a point.
      *
      * <ol>

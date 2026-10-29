@@ -35,7 +35,7 @@ public final class LogisticsRoutingRules {
         long energyCost = 0;
         for (int passIndex = 0; passIndex < logicProcessors; passIndex++) {
             Result passResult = empty();
-            // GT6 :451-468: imports prefer exports (filtered→generic), then storage
+            // imports prefer exports (filtered→generic), then storage
             // (filtered→generic); each priority pair tries fluid before items.
             for (int destinationIndex = 0; destinationIndex < 6 && passResult.operations() == 0; destinationIndex++) {
                 var destinationRole = destinationIndex < 3

@@ -24,14 +24,14 @@ import java.util.List;
  * <p>GT6 keeps exactly one stack in {@code mStack} ({@code MultiTileEntityPlaceable.java:49}), read
  * from and written to the key {@code "gt.value"} ({@code NBT_VALUE}, {@code CS.java:1218}), and
  * derives the material from the stack's ore dictionary data ({@code OM.anydata},
- * {@code :55-63}). The port stores the same single stack under the same NBT key and derives the
+ * ). The port stores the same single stack under the same NBT key and derives the
  * prefix and material from the port's own registries instead (see {@link #prefixOf} and
  * {@link #materialOf}).</p>
  *
  * <h2>Storage layout</h2>
  *
  * <pre>
- * gt.value : ItemStack compound of the stored stack, count 1..64   (GT6's NBT_VALUE)
+ * gt.value: ItemStack compound of the stored stack, count 1..64 (GT6's NBT_VALUE)
  * </pre>
  *
  * <p>A pile holds one stack of one material up to {@code MAX_SIZE} = 64 items - GT6's own cap
@@ -183,7 +183,7 @@ public class PileBlockEntity extends BlockEntity {
     /**
      * GT6's merge branch ({@code MultiTileEntityPlaceable.java:81-96}), on the port's terms: the whole
      * held stack goes in, but never past {@code MAX_SIZE} - and a full pile takes nothing at all,
-     * which is where GT6 returns early ({@code :82}).
+     * which is where GT6 returns early.
      *
      * <p>GT6 shrinks the player's stack itself; the port returns the moved amount and lets
      * {@link PileBlock#use} do that, like the port's book shelf does.</p>
@@ -206,7 +206,7 @@ public class PileBlockEntity extends BlockEntity {
      * GT6's take branch ({@code MultiTileEntityPlaceable.java:98-111}) takes exactly one item
      * ({@code ST.amount(1, mStack)}); the port keeps the amount as a parameter so a future machine can
      * take more. Emptying the pile clears the stored stack and hence the material the pile was bound
-     * to, which is what GT6's {@code setToAir()} amounts to ({@code :107}).
+     * to, which is what GT6's {@code setToAir()} amounts to.
      *
      * @return the taken stack, or {@link ItemStack#EMPTY} when the pile is empty
      */

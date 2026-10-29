@@ -23,13 +23,8 @@ final class OmniSensorInfo {
                     ? String.format(Locale.ROOT, "%.2f", sample.value() / 100.0)
                     : Long.toString(sample.value());
             info.line("sensor_reading", value, unit);
-            if (sample.maximum() > 0)
-                info.line(
-                        "sensor_maximum",
-                        sensor.kind() == SensorBlockEntity.Kind.TPS
-                                ? String.format(Locale.ROOT, "%.2f", sample.maximum() / 100.0)
-                                : Long.toString(sample.maximum()),
-                        unit);
+            if (sample.maximum() > 0 && sample.value() >= sample.maximum())
+                info.line("state", JadeInspection.label("sensor_over_limit"));
         } else info.line("sensor_no_sample");
         info.line("sensor_display", sensor.displayText());
         if (SensorControl.hasThreshold(sample.mode())) info.line("sensor_threshold", sample.threshold());

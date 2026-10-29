@@ -295,7 +295,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
         if (gregtech.engine.tool.ToolInteractions.use(state,level,worldPosition,player,hand,hit))
             return InteractionResult.CONSUME;
 
-        // Source BoilerTank:165-178: a clean tank is inert; scale removal returns its actual amount.
+        // Source BoilerTank: a clean tank is inert; scale removal returns its actual amount.
         if (GTToolHelper.matchesTool(held, GTToolType.CHISEL)) {
             int removed = 10000 - efficiency;
             if (removed <= 0) return InteractionResult.PASS;

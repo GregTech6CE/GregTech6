@@ -108,9 +108,10 @@ public class PartScreen extends MachineContainerScreen<PartMenu> {
         }
         blit(graphics, left, top, BehaviorMachine.UV_TANK_MARKS_U, BehaviorMachine.UV_TANK_V,
                 BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT);
-        Component name = fluid.isEmpty() ? Component.translatable("tooltip.gt6ce.portable_fluid.empty") : fluid.getDisplayName();
+        FluidSlotPresentation.amount(graphics, font, fluid.getAmount(), left + 1, top + 1,
+                BehaviorMachine.TANK_WIDTH - 2, BehaviorMachine.TANK_HEIGHT - 2);
         hovers.add(new Hover(left, top, BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT,
-                List.of(name, Component.literal(fluid.getAmount() + " / " + capacity))));
+                FluidSlotPresentation.tooltip(fluid, fluid.getAmount(), capacity)));
     }
 
     private void drawFields(GuiGraphics graphics, BehaviorState state) {

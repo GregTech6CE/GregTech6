@@ -40,9 +40,8 @@ import java.util.Map;
  * property (or, for items, the {@code BlockStateTag}/{@code BlockEntityTag} the stack carries) plus
  * the material's icon-set ore overlay tinted with the material color (tint index 0).
  *
- * <p>§103.B: the background used to come from the ore block entity's model data
- * ({@code OreBlockEntity.STONE_PROPERTY}); it is part of the block state now, so no model data and no
- * block entity are involved. Because it is a custom loader, the blockstate JSON stays the single
+ * <p>The background comes from the ore block's state, not from model data, so no block entity is
+ * involved in rendering it. Because it is a custom loader, the blockstate JSON stays the single
  * {@code ""} variant — the 39 host rocks need no asset expansion.
  *
  * <p>Quads are produced by UV-remapping the quads of a template cube model (vanilla stone)

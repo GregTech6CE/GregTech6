@@ -33,17 +33,17 @@ import java.util.List;
  * advanced one. Both blocks extend {@link ShapedToolBlock} for GT6's cube shape, its wrench rotation
  * and the block state the blockstate files describe.</p>
  *
- * <h2>Interaction ({@code onBlockActivated3:282-296})</h2>
+ * <h2>Interaction ({@code onBlockActivated3})</h2>
  * <p>Only the <b>top</b> face opens the machine ({@code SIDES_TOP[aSide]}); every other side falls
  * through to the shared tool interactions, which keeps the wrench rotation working. GT6 also charges
- * five minutes of breeding countdown for the disturbance ({@code :289},
+ * five minutes of breeding countdown for the disturbance (
  * {@code BumbliaryBlockEntity#onOpened}) and lets a living queen sting the player once. A creative player opens GT6's scoop GUI without
- * the penalty ({@code :285-288}). A usable scoop opens that same alternate mode and
+ * the penalty. A usable scoop opens that same alternate mode and
  * takes GT6's 10000-unit tool-click cost. The mode is synced as menu data; a live queen
  * remains locked by the common inventory predicate in both modes.</p>
  *
  * <p>The quicksilver thermometer reads temperature and humidity on any face without opening
- * the nest, delaying breeding, or provoking its queen (GT6 onToolClick2:299-315).</p>
+ * the nest, delaying breeding, or provoking its queen (GT6 onToolClick2).</p>
  */
 public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
 
@@ -94,7 +94,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
-        // GT6 :283 `SIDES_TOP[aSide]`: the bees are only reachable from above.
+        // `SIDES_TOP[aSide]`: the bees are only reachable from above.
 //? if >=1.21.1 {
         /*var heldId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getItemInHand(hand).getItem());
         if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "quicksilver_thermometer").equals(heldId)
@@ -113,7 +113,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
             boolean scoop = GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCOOP);
             if (player.isCreative() || scoop || held.isEmpty() || !GTToolHelper.isTool(held)) {
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                    // GT6 :289-290: disturbance delays breeding and the queen defends the nest.
+                    // disturbance delays breeding and the queen defends the nest.
                     if (!player.isCreative()) {
                         machine.onOpened();
                         machine.attackEntity(player);
@@ -137,7 +137,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     }
 
     /**
-     * GT6's {@code breakDrop:346} and {@code breakBlock} ({@code TileEntityBase05Inventories:152-171}):
+     * GT6's {@code breakDrop} and {@code breakBlock} ({@code TileEntityBase05Inventories:152-171}):
      * the machine hands its whole inventory out when it disappears - a player's break, a piston or an
      * explosion alike - and a running machine ({@code mLife > 0}) kills every bee on the way out, so a
      * broken bumbliary never gives a live queen back.
@@ -173,7 +173,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     }
 
     /**
-     * GT6's three tooltips ({@code addToolTips:87-92}): the machine's range, the scoop hint and the
+     * GT6's three tooltips ({@code addToolTips}): the machine's range, the scoop hint and the
      * thermometer hint. The port reuses its own thermometer key and adds the two missing ones.
      */
     @Override

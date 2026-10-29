@@ -26,13 +26,13 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
         var data = new CompoundTag();
         if (accessor.getBlockEntity() instanceof TankBlockEntity tank) {
             data.putString("kind", "tank");
+            var stored = tank.getFluidTank();
+            data.put("fluid", FluidView.writeDefault(JadeFluidObject.of(stored.getFluidLong().getFluid(),
+                    stored.getAmount()), stored.capacity()));
             data.putBoolean("auto", tank.isAutoOutput());
             data.putBoolean("sealed", tank.getSoftHammerState());
             data.putLong("time", tank.getSealedTime());
             data.putLong("duration", tank.getMaxSealedTime());
-            data.putLong("limit", tank.spec().maxTemperature());
-            data.putLong("amount", tank.getFluidTank().getAmount());
-            data.putLong("capacity", tank.getFluidTank().capacity());
         } else if (accessor.getBlockEntity() instanceof FluidPipeBlockEntity pipe) {
             data.putString("kind", "pipe");
             var contents = new ListTag();
@@ -47,23 +47,31 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
     }
 
     @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (accessor.getBlockEntity() instanceof gregtech.content.blockentity.inventory.EnderGarbageBlockEntity) {
+            // The int-sized fluid capability describes a transfer window, not finite storage.
+            tooltip.remove(UNIVERSAL_FLUID_STORAGE);
+            tooltip.add(JadeBars.progress(0, Component.translatable("jade.gt6ce.unlimited"), 0x808080));
+            return;
+        }
         if (!accessor.getServerData().contains("gt_vessel")) return;
         var data = accessor.getServerData().getCompound("gt_vessel");
         if (data.getString("kind").equals("tank")) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.amount", data.getLong("amount"), data.getLong("capacity")));
+            tooltip.remove(UNIVERSAL_FLUID_STORAGE);
+            var view = JadeBars.readFluid(data.getCompound("fluid"));
+            if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
+                    : Component.translatable("jade.fluid", view.fluidName, view.current)));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.auto", Component.translatable(
                     "jade.gt6ce.vessel." + (data.getBoolean("auto") ? "enabled" : "disabled"))));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));
             if (data.getBoolean("sealed") && data.getLong("duration") > 0) {
                 tooltip.add(JadeBars.time(data.getLong("time"), data.getLong("duration"), 1));
             }
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.temperature_limit", data.getLong("limit")));
         } else {
             // Replace Jade's combined storage view so each physical tank has just one bar.
             tooltip.remove(UNIVERSAL_FLUID_STORAGE);
             var contents = data.getList("contents", CompoundTag.TAG_COMPOUND);
             for (int i = 0; i < Math.min(4, contents.size()); i++) {
-                var view = FluidView.readDefault(contents.getCompound(i));
+                var view = JadeBars.readFluid(contents.getCompound(i));
                 if (view == null) continue;
                 Component label = view.overrideText != null ? view.overrideText
                         : Component.translatable("jade.fluid", view.fluidName, view.current);

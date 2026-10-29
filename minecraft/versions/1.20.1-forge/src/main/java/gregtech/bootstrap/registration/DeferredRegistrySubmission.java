@@ -18,7 +18,7 @@ public record DeferredRegistrySubmission(IEventBus bus) implements Initializatio
         GTItems.registerAddonItems(bus);
         GTTechnological.ITEMS.register(bus);
         gregtech.content.registry.GTMultiItems.register(bus);
-        // §108: the few GT6 food items the port was actually missing (today: none - the 266 food
+        // the few GT6 food items the port was actually missing (today: none - the 266 food
         // items were all registered already, only their numbers were missing) submit here.
         gregtech.content.registry.GTFoodItems.register(bus);
         GTBlocks.BLOCKS.register(bus);

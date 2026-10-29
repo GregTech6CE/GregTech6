@@ -6,10 +6,10 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * GT6's bumblebee mutation and combination tables as pure functions over the port's species ids
- * ({@code MultiItemBumbles.bumbleMutateChance:459-467}, {@code bumbleMutate:470-478} and
- * {@code bumbleCombine:370-437}).
+ * ({@code MultiItemBumbles.bumbleMutateChance}, {@code bumbleMutate} and
+ * {@code bumbleCombine}).
  *
- * <p>GT6 registers one item with a meta per species and type ({@code MultiItemBumbles.make:581-597}),
+ * <p>GT6 registers one item with a meta per species and type ({@code MultiItemBumbles.make}),
  * so its tables are written in terms of {@code meta / 10} (the species id) and {@code meta % 10} (the
  * type). The port registers one item per (species, type) pair and the type lives in the item id, so the
  * same tables are keyed by the species ids of {@link GTBumbleSpecies} here, and the type is a
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>Port differences to GT6, all in one place:</p>
  * <ul>
  *   <li>{@code bumbleCombine} first delegates to the other bee's item when one of the two bees comes
- *       from an addon mod ({@code :372-376}); the port has no addon bees, so an input that does not
+ *       from an addon mod; the port has no addon bees, so an input that does not
  *       resolve through {@link BumbleBeeType#speciesOf} makes these methods answer with an empty stack
  *       (or the input, for {@link #mutate}) instead of inventing an item.</li>
  *   <li>GT6 can build a stack for <em>any</em> meta through {@code ST.make(this, 1, meta)}, even one
@@ -39,18 +39,18 @@ public final class GTBumbleMutations {
     /**
      * GT6's combination table, the nested switch of {@code bumbleCombine}
      * ({@code MultiItemBumbles:378-435}), as {@code {speciesA, speciesB, result}} triples in GT6's own
-     * order. A result is always the base species of a tier (the {@code ...00} one), because GT6 returns
+     * order. A result is always the base species of a tier (the {@code...00} one), because GT6 returns
      * {@code result + aBumbleType}, i.e. a drone (0) or a princess (1).
      *
-     * <p>GT6's comments next to the species ({@code MultiItemBumbles.addItems:120-185}) name the
+     * <p>GT6's comments next to the species ({@code MultiItemBumbles.addItems}) name the
      * intended recipes; they are repeated per entry. The reverse direction is listed wherever GT6 lists
      * it, which makes the table symmetric; a pair that is <em>not</em> listed falls back to the first
-     * parent ({@code :436}).</p>
+     * parent.</p>
      *
      * <p>Skip check: GT6's switch names the species 30, 130, 330, 430, 530, 630, 730, 930, 10000,
      * 10100, 10200, 10300, 10400, 10500, 10530, 20000, 20100, 20200 and 20300, and every one of them
      * exists in {@link GTBumbleSpecies}, so all twenty entries are ported and none was skipped. GT6's
-     * {@code addItems:180-185} lists six further ideas it never implemented (Jungle + Water = Swamp,
+     * {@code addItems} lists six further ideas it never implemented (Jungle + Water = Swamp,
      * Rocky + Sandy = Red Sand, Rocky + Frozen = Coal, Rocky + Nether = Heavy Metal, Royal + ??? =
      * Heroic, Frosty + Nether = Gloomstone); there is nothing to port for those.</p>
      */

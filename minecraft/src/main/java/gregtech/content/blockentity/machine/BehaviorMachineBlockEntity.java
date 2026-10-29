@@ -628,11 +628,15 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return new ContainerData() {
             @Override public int get(int index) { return menuValue(index); }
             @Override public void set(int index, int value) {}
-            @Override public int getCount() { return 3 + tanks.length * 2; }
+            @Override public int getCount() { return 7 + tanks.length * 2; }
         };
     }
 
     private int menuValue(int index) {
+        int energyStart = 3 + tanks.length * 2;
+        // Container data is transmitted as signed shorts on Forge; split all 64 bits explicitly.
+        if (index >= energyStart && index < energyStart + 4)
+            return (int) (stored >>> ((index - energyStart) * 16)) & 0xFFFF;
         if (index == 0) return (int) Math.min(Integer.MAX_VALUE, stored);
         if (index == 1) return progress;
         if (index == 2) return toggles;
