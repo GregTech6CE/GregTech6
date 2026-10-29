@@ -44,7 +44,7 @@ final class JadeText {
         return switch (state) {
             case "working", "running", "yes", "enabled" -> text.withStyle(ChatFormatting.GREEN);
             case "waiting", "preheating", "manual_work" -> text.withStyle(ChatFormatting.BLUE);
-            case "disabled", "stopped", "dry", "incomplete" -> text.withStyle(ChatFormatting.RED);
+            case "disabled", "stopped", "dry", "incomplete", "sensor_over_limit" -> text.withStyle(ChatFormatting.RED);
             case "collect_outputs", "pending", "prepared" -> text.withStyle(ChatFormatting.GOLD);
             default -> text;
         };

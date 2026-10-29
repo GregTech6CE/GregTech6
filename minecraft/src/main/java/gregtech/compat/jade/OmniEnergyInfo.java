@@ -12,11 +12,7 @@ final class OmniEnergyInfo {
     private OmniEnergyInfo() {}
 
     static void append(JadeInspection info, BlockEntity entity) {
-        if (entity instanceof ElectricWireBlockEntity wire) {
-            info.line("transferred", wire.lastWattage(), "EU");
-            info.line("wire_rating", wire.voltage(), wire.amperage(), wire.lossPerBlock());
-            if (wire.burnCounter() > 0) info.line("wire_overloads", wire.burnCounter());
-        } else if (entity instanceof AxleBlockEntity axle) {
+        if (entity instanceof AxleBlockEntity axle) {
             info.line("transferred", axle.transferredLast(), "RU");
             info.line("axle_rating", axle.maxSpeed(), axle.maxPower());
         } else if (entity instanceof EnergyNodeBlockEntity node && node.spec() != null && !node.isBatteryBox()) {
@@ -24,29 +20,24 @@ final class OmniEnergyInfo {
             var control = node.machineControl(null);
             if (!node.isSteamConverter()) {
                 info.state(control.enabled(), control.running());
-                info.flag("delivering", control.active());
                 if (!node.isSolar()) {
                     info.line(
-                            "rated_input",
-                            node.getEnergySizeInputRecommended(spec.inType(), null),
-                            spec.inType().getShortName());
-                    info.line(
-                            "packet_range",
+                            "energy_rate",
                             JadeInspection.label("input"),
-                            node.getEnergySizeInputMin(spec.inType(), null),
-                            node.getEnergySizeInputMax(spec.inType(), null),
-                            spec.inType().getShortName());
+                            EnergyRateText.rate(
+                                    node.getEnergySizeInputRecommended(spec.inType(), null),
+                                    node.getEnergySizeInputMin(spec.inType(), null),
+                                    node.getEnergySizeInputMax(spec.inType(), null),
+                                    spec.inType().getShortName()));
                 }
                 info.line(
-                        "rated_output",
-                        node.getEnergySizeOutputRecommended(spec.outType(), null),
-                        spec.outType().getShortName());
-                info.line(
-                        "packet_range",
+                        "energy_rate",
                         JadeInspection.label("output"),
-                        node.getEnergySizeOutputMin(spec.outType(), null),
-                        node.getEnergySizeOutputMax(spec.outType(), null),
-                        spec.outType().getShortName());
+                        EnergyRateText.rate(
+                                node.getEnergySizeOutputRecommended(spec.outType(), null),
+                                node.getEnergySizeOutputMin(spec.outType(), null),
+                                node.getEnergySizeOutputMax(spec.outType(), null),
+                                spec.outType().getShortName()));
                 long capacity = node.getEnergyCapacity(spec.inType(), null);
                 if (capacity > 0)
                     info.line("buffer", node.stored(), capacity, spec.inType().getShortName());
@@ -80,27 +71,12 @@ final class OmniEnergyInfo {
             var spec = converter.spec();
             var control = converter.machineControl(null);
             info.state(control.enabled(), control.running());
-            info.flag("delivering", control.active());
-            info.line("rated_input", spec.input(), spec.inputType().getShortName());
-            info.line(
-                    "packet_range",
-                    JadeInspection.label("input"),
-                    converter.getEnergySizeInputMin(spec.inputType(), null),
-                    converter.getEnergySizeInputMax(spec.inputType(), null),
-                    spec.inputType().getShortName());
-            info.line("rated_output", spec.output(), spec.outputType().getShortName());
             info.line("converter_input", converter.lastInput(), spec.inputType().getShortName());
             info.line("transferred", converter.lastOutput(), spec.outputType().getShortName());
-            info.line(
-                    "converter_input_face",
-                    spec.backInputOnly()
-                            ? OmniTransportInfo.side(converter.front().getOpposite())
-                            : JadeInspection.label("except_output"));
-            info.line("converter_output_face", OmniTransportInfo.side(converter.front()));
         } else if (entity instanceof PumpBlockEntity pump) {
             info.line("stored", pump.storedPumpEnergy(), "RU");
             var tank = pump.tankForInspection();
-            info.fluid("output", 0, tank.getFluid(), tank.getAmount(), tank.getCapacity());
+            info.fluid("output", 0, tank.getFluid(), tank.getAmount(), tank.capacity());
             info.line(
                     "state",
                     JadeInspection.label(

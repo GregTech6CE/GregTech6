@@ -114,7 +114,7 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        // FACING points away from the support: GT6 ButtonAdvanced:264,278-279.
+        // FACING points away from the support: GT6 {@code MultiTileEntityButtonAdvanced:264,278-279}.
         return switch (state.getValue(FACING)) {
             case NORTH -> box(4, 4, 14, 12, 12, 16);
             case EAST -> box(0, 4, 4, 2, 12, 12);

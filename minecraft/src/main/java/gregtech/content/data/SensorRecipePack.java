@@ -44,7 +44,7 @@ import java.util.TreeMap;
  * Crafting recipes for the port's 20 sensor machines, taken from the original GT6 registrations
  * ({@link GTSensorRecipesGen}, generated from {@code Loader_MultiTileEntities.java:1979-1998}).
  * <p>
- * §108 brought the port up to GT6's twenty sensors but none of them could be crafted. This pack
+ * brought the port up to GT6's twenty sensors but none of them could be crafted. This pack
  * closes that: it is the same "generated table + server data pack" route {@link MultiblockRecipePack}
  * already uses for the multiblock controllers, with three deliberate translations.
  * </p>
@@ -70,7 +70,7 @@ import java.util.TreeMap;
  * <p>
  * The port's sensors are not tiered machines - GT6 registers all twenty against {@code aUtilMetal}
  * with a {@code null} material argument, and the only tiered key in the twenty rows is
- * {@code IL.SENSORS[1]} (the Laser-O-Meter's centre, {@code :1998}), which is the <b>LV</b> compact
+ * {@code IL.SENSORS[1]} (the Laser-O-Meter's centre), which is the <b>LV</b> compact
  * sensor. {@link #SENSOR_TIER} is therefore 1: it makes {@code il:SENSORS} resolve to
  * {@code gt6ce:compact_sensor_lv} exactly as GT6's index does, and no other key is tier-sensitive.
  * </p>
@@ -81,7 +81,7 @@ import java.util.TreeMap;
  * {@code C} even where the pattern has no such cell. GT6's own recipe handler ignores extra keys, but
  * vanilla's does not: {@code ShapedRecipe.dissolvePattern} throws
  * {@code JsonSyntaxException("Key defines symbols that aren't used in pattern: […]")}
- * ({@code ShapedRecipe.java:174-175}), and the port's {@code gt6ce:tool_shaped} serializer
+ * ({@code ShapedRecipe.java}), and the port's {@code gt6ce:tool_shaped} serializer
  * delegates straight to it. Emitting the rows verbatim therefore made all twenty recipes fail to
  * load. {@link #usedSymbols(List)} is the filter, and the key map is resolved
  * <em>after</em> filtering so an unused key cannot log a substitution it never needed.

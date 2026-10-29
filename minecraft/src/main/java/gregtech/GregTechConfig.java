@@ -124,6 +124,7 @@ public final class GregTechConfig {
         AFK_HUNGER("general.AFK_Hunger", true),
         TOOL_BREAK_FATIGUE("general.ToolBreakFatique", true),
         SMALLER_VANILLA_TOOL_DURABILITY("general.SmallerVanillaToolDurability", true),
+        RANDOMIZE_VANILLA_FLINT_AND_STEEL("general.RandomizeVanillaFlintAndSteel", true),
         NUTRITION("general.NutritionSystem", true),
         OVERDOSE_DEATH("general.DeathByOverdosingCertainFoods", true),
         ALWAYS_DRINK("general.drinks_always_drinkable", false),
@@ -218,6 +219,7 @@ public final class GregTechConfig {
             if (rule.client || rule.key.startsWith("worldgen.") || rule.key.startsWith("recipes.")) builder.worldRestart();
             String description = switch (rule) {
                 case SMALLER_VANILLA_TOOL_DURABILITY -> "Original GT6: wood/stone/gold/iron/diamond swords, pickaxes, shovels, axes and hoes use 8/16/32/128/512 durability. Netherite and custom stack durability are unchanged. Does not rewrite existing damage.";
+                case RANDOMIZE_VANILLA_FLINT_AND_STEEL -> "Use original GT6's 30 percent success chance for vanilla flint and steel on blocks. Failed attempts cost one durability. Creative players are exempt. Disable to restore vanilla ignition behavior.";
                 case DISABLE_VANILLA_ORES -> "Disable vanilla ore generation. Nether gold ore and ancient debris have independent settings.";
                 case DISABLE_VANILLA_DECORATIVE_STONE -> "Disable vanilla granite, diorite and andesite ore features in newly generated chunks.";
                 case TOOL_MERGING -> "Allow two identical GT tools with matching head and handle materials to be crafted together to repair durability, with the vanilla 5 percent bonus.";

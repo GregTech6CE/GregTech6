@@ -238,8 +238,8 @@ public final class CoverAttachmentBehaviors {
      *
      * <p>Split out from {@link #collectRain} because it is the only part of the rain path that can be
      * checked in isolation: the live path needs {@code Level.isRaining()}, which is the interpolated
-     * {@code rainLevel} that the server only ramps by 0.01 per tick ({@code ServerLevel:624-628})
-     * before comparing it against 0.2 ({@code Level:786-788}), so a single call cannot drive it.</p>
+     * {@code rainLevel} that the server only ramps by 0.01 per tick ({@code ServerLevel})
+     * before comparing it against 0.2 ({@code Level}), so a single call cannot drive it.</p>
      *
      * @return the millibuckets one operation delivers, or {@code 0} when the biome cannot rain
      */
@@ -279,8 +279,8 @@ public final class CoverAttachmentBehaviors {
      * One air vent operation: GT6 {@code CoverVent:44-64}, air from in front of the cover into the
      * machine.
      *
-     * <p>The order of the original's tests is kept — cycle slot first ({@code :45}), then
-     * {@code WD.collectable_air} ({@code :46}), then the dimension switch — because that is what
+     * <p>The order of the original's tests is kept — cycle slot first, then
+     * {@code WD.collectable_air}, then the dimension switch — because that is what
      * decides how often the (cheaper) world queries are reached at all.</p>
      *
      * @param level       the server level the machine stands in; also the dimension the air comes from
@@ -336,7 +336,7 @@ public final class CoverAttachmentBehaviors {
      * {@code STATE_GASEOUS}, which the port keeps as {@code RegisteredFluids.FluidEntry#gas()} and
      * which {@code FluidHazards} resolves for a live fluid, falling back to Forge's
      * lighter-than-air flag only for fluids GT6 never declared
-     * ({@code FluidHazards:125-128}). It allocates nothing and caches nothing, so calling it from
+     * ({@code FluidHazards}). It allocates nothing and caches nothing, so calling it from
      * {@link #drainsAt} on the cover tick is what it is meant for.</p>
      */
     private static boolean isGas(Fluid fluid) {

@@ -92,6 +92,10 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     /** Cached fermenter recipe of the sealed barrel, plus the fluid it was matched for. */
     private Recipe fermentRecipe;
     private Fluid fermentInput;
+//? if >=1.21.1 {
+    /*private boolean fluidAccessKnown;
+    @Nullable private Direction blockedFluidSide;
+*///?}
 
     private static final String NBT_TEMPERATURE = "gt.temperature";
     private static final String NBT_AUTO_OUTPUT = "gt.auto_output";
@@ -181,7 +185,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
                 autoOutputFluid(fluid);
             }
 
-            // GT6 TileEntityBase08Barrel#onTick2:188-207 — a sealed barrel ferments its content.
+            // GT6 TileEntityBase08Barrel#onTick2 — a sealed barrel ferments its content.
             if (softHammerState) tickFermentation(fluid);
         } else if (softHammerState && sealedTime > 0) {
             // Discard cached fermentation work when the contents run dry.
@@ -261,7 +265,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         FluidStack out = fermentRecipe.mFluidOutputs[0];
         long produced = gregtech.engine.fluid.BarrelFermentationRules.output(out.getAmount(),tank.getAmount(),in.getAmount());
 //?}
-        tank.setFluid(new FluidStack(out.getFluid(), (int) Math.min(Math.max(1, produced), tank.getCapacity())));
+        tank.setFluid(out, Math.min(Math.max(1, produced), tank.capacity()));
         resetSeal();
         setChanged();
     }
@@ -292,13 +296,15 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         ItemStack itemInput = new ItemStack(selector);
         for (Recipe recipe : MachineRecipeMaps.Fermenter.mRecipeList) {
             if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
-            if (recipe.mInputs.length != 1 || !RecipeInputs.matches(recipe.mInputs[0], itemInput)) continue;
+            if (recipe.mInputs.length != 1) continue;
             if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
             // Barrel conversion replaces the whole fluid; presence-only rows belong to ordinary fermenters.
             if (recipe.isPresenceFluidInput(0)) continue;
             FluidStack input = recipe.mFluidInputs[0];
             FluidStack output = recipe.mFluidOutputs[0];
             if (input == null || output == null || !input.isFluidEqual(fluid)) continue;
+            // Reject unrelated fluids before material/tag matching; keep recipe order and live flags.
+            if (!RecipeInputs.matches(recipe.mInputs[0], itemInput)) continue;
             if (GTFluids.isGas(input) || GTFluids.isGas(output)) continue;
             return recipe;
         }
@@ -467,25 +473,25 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 
     // === Capability ===
 
+    @Nullable
+    private Direction blockedFluidSide() {
+        if (!autoOutput || tank.isEmpty()) return null;
+        return FluidHazards.isLighterThanAir(tank.getFluid().getFluid()) ? Direction.UP : Direction.DOWN;
+    }
+
 //? if >=1.21.1 {
     /*public @Nullable IFluidHandler capabilityHandler(@Nullable Direction side) {
-        if(side!=null&&autoOutput&&!tank.isEmpty()){
-            boolean gas=FluidHazards.isLighterThanAir(tank.getFluid().getFluid());
-            if(gas&&side==Direction.UP||!gas&&side==Direction.DOWN)return null;
+        if (side != null && side == blockedFluidSide()) return null;
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.FLUID_HANDLER) {
             // When auto-output is enabled and the tank has fluid, block input from the output side
             // to prevent backflow: liquid outputs DOWN, gas outputs UP
-            if (side != null && autoOutput && !tank.isEmpty()) {
-                boolean isGas = FluidHazards.isLighterThanAir(tank.getFluid().getFluid());
-                if (isGas && side == Direction.UP) return LazyOptional.empty();
-                if (!isGas && side == Direction.DOWN) return LazyOptional.empty();
-            }
+            if (side != null && side == blockedFluidSide()) return LazyOptional.empty();
             return side==null?handler.cast():componentFaceCaps.computeIfAbsent(side,face->LazyOptional.of(()->gregtech.content.cover.ComponentCoverAccess.fluids(this,face,this))).cast();
-//?}
         }
+//?}
 //? if >=1.21.1 {
         /*return side==null?this:gregtech.content.cover.ComponentCoverAccess.fluids(this,side,this);
 *///?} else {
@@ -496,7 +502,16 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //? if >=1.21.1 {
     /*public void contentsChanged(){
         setChanged();
-        if(level!=null){level.invalidateCapabilities(worldPosition);if(!level.isClientSide)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),2);}
+        if (level != null) {
+            Direction blocked = blockedFluidSide();
+            // The handler reads contents and covers live. Only output-side availability needs
+            // rediscovery; invalidating it on every amount change discards neighbouring caches.
+            boolean accessChanged = !fluidAccessKnown || blockedFluidSide != blocked;
+            fluidAccessKnown = true;
+            blockedFluidSide = blocked;
+            if (accessChanged) level.invalidateCapabilities(worldPosition);
+            if (!level.isClientSide) level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),2);
+        }
 *///?} else {
     @Override
     public void invalidateCaps() {
@@ -564,6 +579,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         fermentInput = null;
 //? if >=1.21.1 {
         /*if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"),lookup);
+        fluidAccessKnown = false;
 *///?} else {
         if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"));
 //?}

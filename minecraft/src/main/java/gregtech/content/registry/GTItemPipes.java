@@ -88,7 +88,7 @@ public final class GTItemPipes {
     }
 
     /**
-     * GT6's stack sizes for item pipes ({@code MultiTileEntityPipeItem.addItemPipes:77-82}):
+     * GT6's stack sizes for item pipes ({@code MultiTileEntityPipeItem.addItemPipes}):
      * medium 64, large 32, huge 16 — the restrictive variants follow their base size.
      */
     public static int stackSize(ItemPipeSpec.ItemPipeSize size) {

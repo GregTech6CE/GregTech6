@@ -94,6 +94,15 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                 &&!gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))return 0;
         var host=owner();
         if(host==null) {
+            // Atomic structures have no transport bindings until complete. Tool lookup is read-only.
+            var target = level instanceof ServerLevel server
+                    ? gregtech.engine.multiblock.tracking.StructureWatchIndex.toolTarget(server, worldPosition) : null;
+            if (target != null) {
+                if (gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.BUILDER_WAND))
+                    return MultiblockTools.buildTracked(context, target);
+                MultiblockTools.appendDiagnosis(target, messages);
+                return MultiblockToolRules.MAGNIFIER_COST;
+            }
             messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.NO_CONTROLLER));
             return MultiblockToolRules.MAGNIFIER_COST;
         }
@@ -332,6 +341,9 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag t,Direction side) {var o=owner();return o!=null&&isEnergyType(t,side,false)?o.portEnergyInputRecommended(role,t):0;}
     @Override public long getEnergySizeInputMin(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyInputMin(role,t);}
     @Override public long getEnergySizeInputMax(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyInputMax(role,t);}
+    @Override public void onInsufficientEnergy(GregTechTags.Tag type, Direction side) {
+        if (owner() instanceof gregtech.engine.energy.IEnergyBlock target) target.onInsufficientEnergy(type, null);
+    }
     @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyOutputSize(role,t);}
     @Override public long getEnergyOffered(GregTechTags.Tag t,Direction side,long size) {return 0;}
     @Override public long getEnergyDemanded(GregTechTags.Tag t,Direction side,long size) {var o=owner();return o!=null&&isEnergyAcceptingFrom(t,side,false)?o.portEnergyDemanded(role,t,size):0;}

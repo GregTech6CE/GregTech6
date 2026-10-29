@@ -124,7 +124,7 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /**
      * GT6 asks {@code WorldgenOresBedrock.generateVein(MT.OREMATS.Coltan, …)} for the centre chunk
-     * before scattering anything — that vein is what the rest of the field points at. §56 gave the
+     * before scattering anything — that vein is what the rest of the field points at. gave the
      * port GT6's real vein shape, so the centre chunk gets exactly what GT6 generates there.
      */
     private void placeCentreVein(WorldGenLevel level, RandomSource random, int minX, int minZ) {

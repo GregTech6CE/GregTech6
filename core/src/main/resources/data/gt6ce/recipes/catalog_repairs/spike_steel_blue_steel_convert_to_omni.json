@@ -2,17 +2,11 @@
   "type": "gt6ce:spike_conversion",
   "ingredients": [
     {
-      "item": "gt6ce:spike_steel"
+      "item": "gt6ce:spike_ball_falling_steel_blue_steel"
     }
   ],
   "result": {
-    "item": "gt6ce:spike_steel",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "omni",
-        "secondary": "false"
-      }
-    }
+    "item": "gt6ce:spike_ball_steel_blue_steel",
+    "count": 1
   }
 }

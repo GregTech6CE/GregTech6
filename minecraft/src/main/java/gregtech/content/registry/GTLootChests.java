@@ -33,7 +33,7 @@ public final class GTLootChests {
      * {@code suffix|table} — the shared configurable loot-chest catalogue. The table is
      * the key {@code GTLootTables} uses: GT's own tables by name, the vanilla categories as
      * {@code van.<ChestGenHooks constant>} (that is how the loot transpiler emits the rows GT6 added to
-     * the vanilla chest tables, §21).
+     * the vanilla chest tables).
      */
     private static final java.util.List<String> TABLES = gregtech.content.loot.LootChestCatalog.ENTRIES;
 

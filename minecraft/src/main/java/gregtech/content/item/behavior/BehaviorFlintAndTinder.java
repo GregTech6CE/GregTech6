@@ -41,7 +41,7 @@ public final class BehaviorFlintAndTinder {
     /** GT6 {@code Behavior_FlintAndTinder:48}: {@code long tDamage = 5000} when no branch fired. */
     public static final long NO_IGNITION_COST = 5000L;
 
-    /** GT6 {@code :58}: {@code units(max(10000, tDamage), 10000, 100, T)}. */
+    /** GT6's: {@code units(max(10000, tDamage), 10000, 100, T)}. */
     public static final long MIN_TOOL_COST = 10000L;
 
     private BehaviorFlintAndTinder() {}
@@ -76,23 +76,23 @@ public final class BehaviorFlintAndTinder {
      */
     public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack stack,
                                 int flintChance, RandomSource random, float hitX, float hitY, float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack);                    // :57, moved up
+        if (level.isClientSide) return Outcome.refused(stack);                    // moved up
 //? if >=1.21.1 {
-        /*if (player != null && ManualToolBehaviorAccess.obstructed(level, pos, side)) return Outcome.refused(stack); // :46
+        /*if (player != null && ManualToolBehaviorAccess.obstructed(level, pos, side)) return Outcome.refused(stack); //
 *///?} else {
-        if (player != null && ItemBehaviors.obstructed(level, pos, side)) return Outcome.refused(stack); // :46
+        if (player != null && ItemBehaviors.obstructed(level, pos, side)) return Outcome.refused(stack);
 //?}
 
         boolean flammable = GTToolHelper.getStatMaterial(stack).has(MaterialProperty.FLAMMABLE);
         int chance = ignitionChance(GTToolHelper.getStatMaterial(stack).getToolDurability(), flammable, flintChance);
 
         long clickCost = 0L;
-        if (random.nextInt(100) < chance) {                                       // :49-55
+        if (random.nextInt(100) < chance) {
             clickCost = ignite(level, pos, side, player, stack, hitX, hitY, hitZ);
         }
-        // :58 - always at least 100 durability, whether the roll fired or not.
+        // - always at least 100 durability, whether the roll fired or not.
         GTToolHelper.damageForToolClickReturn(stack, Math.max(MIN_TOOL_COST, clickCost), player);
-        return Outcome.acted(stack);                                              // :60
+        return Outcome.acted(stack);
     }
 
     /**
@@ -112,10 +112,10 @@ public final class BehaviorFlintAndTinder {
 //?}
         if (cost > 0) return cost;
 //? if >=1.21.1 {
-        /*if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // ToolCompat:203-207
+        /*if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // GT6 ToolCompat:203-207
         if (ManualToolBehaviorAccess.lightVanillaFire(level, player, pos, side, stack)) return ManualToolBehaviorAccess.TNT_COST;
 *///?} else {
-        if (ItemBehaviors.primeTnt(level, pos, player)) return ItemBehaviors.TNT_COST;   // ToolCompat:203-207
+        if (ItemBehaviors.primeTnt(level, pos, player)) return ItemBehaviors.TNT_COST;   // GT6 ToolCompat:203-207
         if (ItemBehaviors.lightVanillaFire(level, player, pos, side, stack)) return ItemBehaviors.TNT_COST;
 //?}
         return 0L;
@@ -132,9 +132,9 @@ public final class BehaviorFlintAndTinder {
      * @return whether the entity was a creeper and got ignited
      */
     public static boolean igniteCreeper(Entity entity, ItemStack stack, @Nullable Player player) {
-        if (!(entity instanceof Creeper creeper)) return false;                   // :71-76
+        if (!(entity instanceof Creeper creeper)) return false;
         GTToolHelper.damageForToolClickReturn(stack, MIN_TOOL_COST, player);
-        creeper.ignite();                                                         // :74
+        creeper.ignite();
         return true;
     }
 }

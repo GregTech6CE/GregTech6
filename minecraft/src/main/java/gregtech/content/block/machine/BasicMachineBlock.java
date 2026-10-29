@@ -348,7 +348,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
 
 
-        // §108: the utility covers of CoverUtilityBehaviors. GT6 CoverCrafting:49-54 opens a workbench
+        // the utility covers of CoverUtilityBehaviors. GT6 CoverCrafting:49-54 opens a workbench
 
         // on a bare-handed click of the cover's face; the item/fluid filters and the item retriever
 
@@ -356,7 +356,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
         // CoverRetrieverItem:123-136), the screwdriver flips whitelist/blacklist and the soft hammer
 
-        // clears it (:58-70, CoverRetrieverItem:94-102). Nothing here fires when no such cover is on
+        // clears it (CoverFilterItem:58-70, CoverRetrieverItem:94-102). Nothing here fires when no such cover is on
 
         // the clicked face - the checks are all keyed on the face's cover id.
 
@@ -522,7 +522,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
     /**
 
-     * §108: GT6's asphalt cover boosts whoever walks over it ({@code CoverAsphalt:38-41}: the entity's
+     * GT6's asphalt cover boosts whoever walks over it ({@code CoverAsphalt:38-41}: the entity's
 
      * horizontal motion is multiplied while it moves, is on the ground, is not sneaking and is not in
 
@@ -623,6 +623,11 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 *///?} else {
                         buf.writeFluidStack(fs);
 //?}
+                        var inputs = basicBe.getTanksInput();
+                        var tank = i < inputs.length ? inputs[i] : basicBe.getTanksOutput()[i - inputs.length];
+                        buf.writeVarLong(tank.getAmount());
+                        buf.writeVarLong(tank.capacity());
+
 
 
 

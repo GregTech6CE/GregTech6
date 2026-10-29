@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * GT6 {@code Loader_Recipes_Woods:183-185} and {@code :203-205} applied to the vanilla woods the port
+ * GT6 {@code Loader_Recipes_Woods:183-185} and applied to the vanilla woods the port
  * already processes in machines ({@code VanillaWoodProcessingRecipes.WOODS} plus the two nether stem
  * woods). Those entries used GT6's own beam blocks; in the port the beam identity is the modern
  * stripped log.

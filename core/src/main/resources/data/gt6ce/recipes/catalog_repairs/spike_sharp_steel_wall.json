@@ -17,13 +17,7 @@
     }
   },
   "result": {
-    "item": "gt6ce:spike_sharp",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "wall",
-        "secondary": "false"
-      }
-    }
+    "item": "gt6ce:spike_sharp_steel",
+    "count": 1
   }
 }

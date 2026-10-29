@@ -36,9 +36,9 @@ import java.util.List;
  * {@code MultiTileEntityPlate} (32085) and {@code MultiTileEntityPlateGem} (32086), see
  * {@code Loader_MultiTileEntities.java:2036-2038}. All three share the same behaviour from
  * {@code gregapi/tileentity/misc/MultiTileEntityPlaceable.java}: they carry exactly one stack
- * ({@code mStack}, read from {@code NBT_VALUE} = {@code "gt.value"} in {@code :55-63}), a right click
- * merges an identical stack into the pile ({@code :81-96}) or takes one item back out of it
- * ({@code :98-111}), and breaking the pile drops that stack ({@code :72-74}). GT6's dungeon places
+ * ({@code mStack}, read from {@code NBT_VALUE} = {@code "gt.value"} in), a right click
+ * merges an identical stack into the pile or takes one item back out of it,
+ * and breaking the pile drops that stack. GT6's dungeon places
  * them from real material stacks ({@code DungeonData.java:262-275}) and dropped ingots and plates
  * form new piles when they expire ({@code GT_API_Proxy.java:1468-1470}). The port keeps the three material pile
  * kinds and adds that behaviour through {@link PileBlockEntity}.
@@ -52,20 +52,20 @@ import java.util.List;
  *   <li>A held stack is matched by prefix and material ({@link PileBlockEntity#canAccept}) instead of
  *       GT6's item identity ({@code ST.equal}, {@code ST.java:92-94}), so the port's own iron ingot
  *       and the unified vanilla iron ingot can share one pile.</li>
- *   <li>An empty pile refuses the click where GT6 removes the block on any click ({@code :80}) - the
+ *   <li>An empty pile refuses the click where GT6 removes the block on any click - the
  *       port's pile can legitimately exist empty, and deleting a block the player just placed would
- *       be surprising. A take that empties a non-empty pile still removes the block like GT6
- *       ({@code :107}).</li>
+ *       be surprising. A take that empties a non-empty pile still removes the block like GT6.
+ *       </li>
  *   <li>Clicks the port cannot use return {@link InteractionResult#PASS} instead of GT6's "always
  *       consume" ({@code onBlockActivated2} returns {@code T} on every path), so a refused click
  *       still lets the player place the held block.</li>
  *   <li>GT6 renders one layer per eight stored ingots and grows the collision box with the stack
- *       ({@code MultiTileEntityIngot.java:45-49} and {@code :129-131}); the port bakes GT6's own pass
+ *       ({@code MultiTileEntityIngot.java:45-49}); the port bakes GT6's own pass
  *       geometry into one model per stack size and carries that size in {@link #STACK}, and synchronizes material data with a block entity packet
  *       ({@code MultiTileEntityPlaceable.java:116-125}) - the block state travels with the chunk and
  *       with every placement, which is the port's equivalent of GT6's data packet.</li>
  *   <li>GT6's piles are soft (hardness 0.25F, {@code MultiTileEntityPlaceable.java:138}) and do not
- *       obstruct placement ({@code :131-133}); the port keeps the block properties these blocks
+ *       obstruct placement; the port keeps the block properties these blocks
  *       already had.</li>
  * </ul>
  */
@@ -170,13 +170,13 @@ public class PileBlock extends Block implements EntityBlock {
     /**
      * GT6's click behaviour ({@code MultiTileEntityPlaceable.java:77-113}).
      *
-     * <p>GT6 does its work on the server and reports the click as handled on the client
-     * ({@code :78}); the port keeps that answer so the arm still swings. Server side the port follows
-     * GT6: a matching stack is merged into the pile, a whole stack at a time and capped at 64
-     * ({@code :81-96}), and anything else takes one item back out of the pile - out of the
-     * <em>topmost</em> pile of a column of identical piles above the clicked one
-     * ({@code :99-105}), because GT6 keeps its counter in the top block of the column. A take that
-     * empties its pile removes that block ({@code :107}), since in GT6 the pile is its items.</p>
+     * <p>GT6 does its work on the server and reports the click as handled on the client;
+     * the port keeps that answer so the arm still swings. Server side the port follows
+     * GT6: a matching stack is merged into the pile, a whole stack at a time and capped at 64,
+     * and anything else takes one item back out of the pile - out of the
+     * <em>topmost</em> pile of a column of identical piles above the clicked one,
+     * because GT6 keeps its counter in the top block of the column. A take that
+     * empties its pile removes that block, since in GT6 the pile is its items.</p>
      */
 //? if >=1.21.1 {
     /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
@@ -193,12 +193,12 @@ public class PileBlock extends Block implements EntityBlock {
         if (level.isClientSide) return InteractionResult.SUCCESS;
         ItemStack held = player.getItemInHand(hand);
 
-        // GT6 :80-96: a matching stack is merged - an empty pile binds to the first stack of its own
+        // a matching stack is merged - an empty pile binds to the first stack of its own
         // form. The port's emptiness branch below replaces GT6's `ST.invalid(mStack) -> setToAir()`.
         if (pile.canAccept(held)) {
             int moved = pile.add(held);
-            if (moved <= 0) return InteractionResult.PASS;   // GT6 :82: a full pile takes nothing
-            // GT6 :84/:91/:94 shrinks the held stack unconditionally - unlike its coin pile, which
+            if (moved <= 0) return InteractionResult.PASS;   // a full pile takes nothing
+            // shrinks the held stack unconditionally - unlike its coin pile, which
             // spares a creative player (MultiTileEntityCoin.java:168).
             held.shrink(moved);
             playCollect(level, pos);
@@ -206,7 +206,7 @@ public class PileBlock extends Block implements EntityBlock {
         }
         if (pile.isEmpty()) return InteractionResult.PASS;
 
-        // GT6 :98-111: everything else - an empty hand, another material or another prefix - takes
+        // everything else - an empty hand, another material or another prefix - takes
         // one item out of the top of the column.
         PileBlockEntity target = topOfColumn(level, pos, pile);
         ItemStack taken = target.take(1);
@@ -261,7 +261,7 @@ public class PileBlock extends Block implements EntityBlock {
      * GT6 hands the stored stack out through {@code getDrops}
      * ({@code MultiTileEntityPlaceable.java:72-74}) - the drop route a player break, a piston move with
      * drops and an explosion take: {@code Block.dropResources} passes the block entity as the
-     * {@code BLOCK_ENTITY} loot parameter ({@code Level.destroyBlock:290-291}), which is where the port
+     * {@code BLOCK_ENTITY} loot parameter ({@code Level.destroyBlock}), which is where the port
      * reads the pile from.
      *
      * <p>The pile is emptied as it hands its contents over, so {@link #onRemove} - the catch-all for the

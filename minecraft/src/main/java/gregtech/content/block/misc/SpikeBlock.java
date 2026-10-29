@@ -33,7 +33,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -44,22 +43,15 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/**
- * GT6's five {@code BlockBaseSpike} families. The original's metadata bits encode a material
- * choice and wall/omni/falling shape; named blockstate properties preserve those in 1.20.1.
- * Worldgen's existing default {@code spike_steel} state is omni, as GT6's mob farm uses meta 6/14.
- */
-public final class SpikeBlock extends Block implements ToolInteractionTarget, gregtech.engine.block.StatefulBlockLoot {
-    @Override public java.util.List<String> lootStateProperties(){return java.util.List.of("mode","secondary");}
+/** Material and shape are registry identity; only mounting direction is block state. */
+public final class SpikeBlock extends Block implements ToolInteractionTarget {
     public enum Family { METAL, STEEL, SHARP, FANCY, SUPER }
     public enum Mode implements StringRepresentable {
         WALL("wall"), OMNI("omni"), FALLING("falling");
@@ -69,8 +61,6 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
     }
 
     public static final DirectionProperty FACING = DirectionProperty.create("facing");
-    public static final EnumProperty<Mode> MODE = EnumProperty.create("mode", Mode.class);
-    public static final BooleanProperty SECONDARY = BooleanProperty.create("secondary");
     private static final VoxelShape OMNI_COLLISION = box(2, 2, 2, 14, 14, 14);
     private static final VoxelShape[] WALL_COLLISION = new VoxelShape[6];
     static {
@@ -83,17 +73,22 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
     }
 
     private final Family family;
+    private final Mode mode;
+    private final boolean secondary;
 
-    public SpikeBlock(Family family, Properties properties) {
+    public SpikeBlock(Family family, Mode mode, boolean secondary, Properties properties) {
         super(properties.noOcclusion());
         this.family = family;
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.DOWN)
-                .setValue(MODE, Mode.OMNI).setValue(SECONDARY, false));
+        this.mode = mode;
+        this.secondary = secondary;
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.DOWN));
     }
 
     public Family family() { return family; }
+    public Mode mode() { return mode; }
+    public boolean secondary() { return secondary; }
 
-    public int materialTint(boolean secondary) {
+    public int materialTint() {
         return switch (family) {
             case METAL -> secondary ? Materials.Lead.getColor() : Materials.Copper.getColor();
             case STEEL -> secondary ? Materials.RedSteel.getColor() : Materials.BlueSteel.getColor();
@@ -105,49 +100,32 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
     }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, MODE, SECONDARY);
+        builder.add(FACING);
     }
 
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
         // GT6 onBlockPlaced stores the opposite face: floor-mounted wall spikes point upwards.
-        return defaultBlockState().setValue(MODE, Mode.WALL)
+        return defaultBlockState()
                 .setValue(FACING, context.getClickedFace().getOpposite());
     }
 
 //? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,Player player){return packed(state);}
-    private ItemStack packed(BlockState state){ItemStack stack=new ItemStack(this);stack.set(net.minecraft.core.component.DataComponents.BLOCK_STATE,new net.minecraft.world.item.component.BlockItemStateProperties(java.util.Map.of("mode",state.getValue(MODE).getSerializedName(),"secondary",Boolean.toString(state.getValue(SECONDARY)))));return stack;}
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(packed(state));}
+    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,Player player){return new ItemStack(this);}
+    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
 *///?} else {
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        // GT6 pick-block keeps material and omni/falling form, but a wall spike faces its new mount.
-        ItemStack stack = new ItemStack(this);
-        CompoundTag blockState = new CompoundTag();
-        blockState.putString("mode", state.getValue(MODE).getSerializedName());
-        blockState.putString("secondary", Boolean.toString(state.getValue(SECONDARY)));
-        stack.getOrCreateTag().put("BlockStateTag", blockState);
-        return stack;
+        return new ItemStack(this);
     }
 //?}
 
-    /** Native placement starts as a primary-material WALL, then overlays item state properties.
-     * These identity readers intentionally exclude FACING and do not invent legacy-component reads. */
     public static Mode itemMode(ItemStack stack) {
-        return MODE.getValue(itemProperty(stack, MODE.getName())).orElse(Mode.WALL);
+        return stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof SpikeBlock spike ? spike.mode : Mode.WALL;
     }
 
     public static boolean itemSecondary(ItemStack stack) {
-        return SECONDARY.getValue(itemProperty(stack, SECONDARY.getName())).orElse(false);
-    }
-
-    private static String itemProperty(ItemStack stack, String name) {
-//? if >=1.21.1 {
-        /*return stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
-                net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties().getOrDefault(name, "");
-*///?} else {
-        var state = stack.getTagElement("BlockStateTag");
-        return state == null ? "" : state.getString(name);
-//?}
+        return stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof SpikeBlock spike && spike.secondary;
     }
 
     @Override public BlockState rotate(BlockState state, Rotation rotation) {
@@ -159,7 +137,7 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
     }
 
     @Override public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean moved) {
-        if (state.getValue(MODE) == Mode.FALLING) {
+        if (mode == Mode.FALLING) {
             level.scheduleTick(pos, this, 2);
             if (!level.isClientSide && !oldState.is(this))
                 level.playSound(null, pos, net.minecraft.sounds.SoundEvents.ANVIL_LAND,
@@ -170,12 +148,12 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
 
     @Override public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
                                             LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        if (state.getValue(MODE) == Mode.FALLING) level.scheduleTick(pos, this, 2);
+        if (mode == Mode.FALLING) level.scheduleTick(pos, this, 2);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }
 
     @Override public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(MODE) == Mode.FALLING && pos.getY() >= level.getMinBuildHeight()
+        if (mode == Mode.FALLING && pos.getY() >= level.getMinBuildHeight()
                 && FallingBlock.isFree(level.getBlockState(pos.below()))) {
             FallingBlockEntity.fall(level, pos, state);
         }
@@ -193,13 +171,13 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
             if (entity instanceof ItemEntity || entity instanceof ExperienceOrb || entity instanceof Projectile)
                 return Shapes.empty();
         }
-        return state.getValue(MODE) == Mode.WALL
+        return mode == Mode.WALL
                 ? WALL_COLLISION[state.getValue(FACING).ordinal()] : OMNI_COLLISION;
     }
 
     @Override public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof LivingEntity
-                && (state.getValue(MODE) != Mode.WALL || state.getValue(FACING) != Direction.UP)) {
+                && (mode != Mode.WALL || state.getValue(FACING) != Direction.UP)) {
             entity.setDeltaMovement(entity.getDeltaMovement().multiply(gregtech.content.block.SpikeRules.WALK_FACTOR,1.0,gregtech.content.block.SpikeRules.WALK_FACTOR));
         }
         super.stepOn(level, pos, state, entity);
@@ -216,9 +194,9 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
     /** Exact GT6 damage table without TFC's optional ×80 health compatibility multiplier. */
     public float damageFor(BlockState state, LivingEntity living) {
 //? if >=1.21.1 {
-        /*return gregtech.content.block.SpikeRules.damage(family.name(),state.getValue(SECONDARY),state.getValue(MODE)!=Mode.WALL,living instanceof IronGolem,living instanceof Skeleton,living instanceof Slime,living.getType().is(EntityTypeTags.ARTHROPOD),living.getType().is(EntityTypeTags.UNDEAD),isEnderOrWere(living));
+        /*return gregtech.content.block.SpikeRules.damage(family.name(),secondary,mode!=Mode.WALL,living instanceof IronGolem,living instanceof Skeleton,living instanceof Slime,living.getType().is(EntityTypeTags.ARTHROPOD),living.getType().is(EntityTypeTags.UNDEAD),isEnderOrWere(living));
 *///?} else {
-        return gregtech.content.block.SpikeRules.damage(family.name(),state.getValue(SECONDARY),state.getValue(MODE)!=Mode.WALL,living instanceof IronGolem,living instanceof Skeleton,living instanceof Slime,living.getMobType()==MobType.ARTHROPOD,living.getMobType()==MobType.UNDEAD,isEnderOrWere(living));
+        return gregtech.content.block.SpikeRules.damage(family.name(),secondary,mode!=Mode.WALL,living instanceof IronGolem,living instanceof Skeleton,living instanceof Slime,living.getMobType()==MobType.ARTHROPOD,living.getMobType()==MobType.UNDEAD,isEnderOrWere(living));
 //?}
     }
 
@@ -229,15 +207,15 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, gr
     }
 
     @Override public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {
-        if (family == Family.FANCY) return state.getValue(SECONDARY)
+        if (family == Family.FANCY) return secondary
                 ? !(entity instanceof EnderDragon) : !(entity instanceof WitherBoss);
-        if (family == Family.SUPER && state.getValue(SECONDARY))
+        if (family == Family.SUPER && secondary)
             return !(entity instanceof EnderDragon || entity instanceof WitherBoss);
         return super.canEntityDestroy(state, level, pos, entity);
     }
 
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return state.getValue(MODE) == Mode.WALL && GTToolHelper.isMachineWrench(tool)
+        return mode == Mode.WALL && GTToolHelper.isMachineWrench(tool)
                 ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
 

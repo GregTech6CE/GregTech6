@@ -17,66 +17,66 @@ public final class OriginalFormConversions {
 
     public static final Form UNKNOWN = new Form("", "");
     public static final List<Conversion> FIXED = List.of(
-            new Conversion("oreRaw", 1, "gem", 1, true), // :552
-            new Conversion("oreRaw", 1, "rawOreChunk", 3, true), // :553
-            new Conversion("crushed", 1, "crushedTiny", 9, true), // :554
-            new Conversion("crushed", 1, "gemFlawed", 1, true), // :555
-            new Conversion("crushedPurified", 1, "crushedPurifiedTiny", 9, true), // :556
-            new Conversion("crushedPurified", 1, "gemFlawed", 1, true), // :557
-            new Conversion("crushedCentrifuged", 1, "crushedCentrifugedTiny", 9, true), // :558
-            new Conversion("crushedCentrifuged", 1, "gemFlawed", 1, true), // :559
-            new Conversion("ingot", 1, "nugget", 9, true), // :560
-            new Conversion("ingot", 1, "chunkGt", 4, true), // :561
-            new Conversion("billet", 1, "nugget", 6, true), // :562
-            new Conversion("dust", 1, "dustTiny", 9, true), // :563
-            new Conversion("dust", 1, "dustSmall", 4, true), // :564
-            new Conversion("dustTiny", 1, "dustDiv72", 8, true), // :565
-            new Conversion("dustSmall", 1, "dustDiv72", 18, true), // :566
-            new Conversion("blockRaw", 1, "oreRaw", 9, true), // :567
-            new Conversion("blockDust", 1, "dust", 9, true), // :568
-            new Conversion("blockDust", 1, "dustSmall", 36, true), // :569
-            new Conversion("blockIngot", 1, "ingot", 9, true), // :570
-            new Conversion("blockIngot", 1, "chunkGt", 36, true), // :571
-            new Conversion("blockGem", 1, "gem", 9, true), // :572
-            new Conversion("blockPlate", 1, "plate", 9, true), // :573
-            new Conversion("blockPlateGem", 1, "plateGem", 9, true), // :574
-            new Conversion("rawOreChunk", 3, "oreRaw", 1, false), // :576
-            new Conversion("crushedTiny", 9, "crushed", 1, false), // :577
-            new Conversion("crushedPurifiedTiny", 9, "crushedPurified", 1, false), // :578
-            new Conversion("crushedCentrifugedTiny", 9, "crushedCentrifuged", 1, false), // :579
-            new Conversion("ingot", 2, "billet", 3, false), // :580
-            new Conversion("ingot", 3, "nugget", 27, false), // :581
-            new Conversion("ingot", 4, "billet", 6, false), // :582
-            new Conversion("ingot", 5, "nugget", 45, false), // :583
-            new Conversion("ingot", 6, "billet", 9, false), // :584
-            new Conversion("ingot", 7, "nugget", 63, false), // :585
-            new Conversion("ingot", 8, "billet", 12, false), // :586
-            new Conversion("ingot", 9, "blockIngot", 1, false), // :587
-            new Conversion("billet", 2, "nugget", 12, false), // :588
-            new Conversion("billet", 3, "ingot", 2, false), // :589
-            new Conversion("billet", 4, "nugget", 24, false), // :590
-            new Conversion("billet", 5, "nugget", 30, false), // :591
-            new Conversion("billet", 6, "ingot", 4, false), // :592
-            new Conversion("billet", 7, "nugget", 42, false), // :593
-            new Conversion("billet", 8, "nugget", 48, false), // :594
-            new Conversion("billet", 9, "ingot", 6, false), // :595
-            new Conversion("chunkGt", 4, "ingot", 1, false), // :596
-            new Conversion("chunkGt", 8, "billet", 3, false), // :597
-            new Conversion("nugget", 6, "billet", 1, false), // :598
-            new Conversion("nugget", 9, "ingot", 1, false), // :599
-            new Conversion("dustDiv72", 8, "dustTiny", 1, false), // :600
-            new Conversion("dustTiny", 9, "dust", 1, false), // :601
-            new Conversion("dustSmall", 4, "dust", 1, false), // :602
-            new Conversion("dustSmall", 8, "dust", 2, false), // :603
-            new Conversion("oreRaw", 9, "blockRaw", 1, false), // :604
-            new Conversion("dust", 9, "blockDust", 1, false), // :605
-            new Conversion("gem", 9, "blockGem", 1, false), // :606
-            new Conversion("plate", 9, "blockPlate", 1, false), // :607
-            new Conversion("plateGem", 9, "blockPlateGem", 1, false), // :608
-            new Conversion("plateTiny", 5, "casingSmall", 1, false), // :609
-            new Conversion("plateTiny", 9, "casingSmall", 2, false), // :610
-            new Conversion("plateGemTiny", 5, "casingSmall", 1, false), // :611
-            new Conversion("plateGemTiny", 9, "casingSmall", 2, false)); // :612
+            new Conversion("oreRaw", 1, "gem", 1, true),
+            new Conversion("oreRaw", 1, "rawOreChunk", 3, true),
+            new Conversion("crushed", 1, "crushedTiny", 9, true),
+            new Conversion("crushed", 1, "gemFlawed", 1, true),
+            new Conversion("crushedPurified", 1, "crushedPurifiedTiny", 9, true),
+            new Conversion("crushedPurified", 1, "gemFlawed", 1, true),
+            new Conversion("crushedCentrifuged", 1, "crushedCentrifugedTiny", 9, true),
+            new Conversion("crushedCentrifuged", 1, "gemFlawed", 1, true),
+            new Conversion("ingot", 1, "nugget", 9, true),
+            new Conversion("ingot", 1, "chunkGt", 4, true),
+            new Conversion("billet", 1, "nugget", 6, true),
+            new Conversion("dust", 1, "dustTiny", 9, true),
+            new Conversion("dust", 1, "dustSmall", 4, true),
+            new Conversion("dustTiny", 1, "dustDiv72", 8, true),
+            new Conversion("dustSmall", 1, "dustDiv72", 18, true),
+            new Conversion("blockRaw", 1, "oreRaw", 9, true),
+            new Conversion("blockDust", 1, "dust", 9, true),
+            new Conversion("blockDust", 1, "dustSmall", 36, true),
+            new Conversion("blockIngot", 1, "ingot", 9, true),
+            new Conversion("blockIngot", 1, "chunkGt", 36, true),
+            new Conversion("blockGem", 1, "gem", 9, true),
+            new Conversion("blockPlate", 1, "plate", 9, true),
+            new Conversion("blockPlateGem", 1, "plateGem", 9, true),
+            new Conversion("rawOreChunk", 3, "oreRaw", 1, false),
+            new Conversion("crushedTiny", 9, "crushed", 1, false),
+            new Conversion("crushedPurifiedTiny", 9, "crushedPurified", 1, false),
+            new Conversion("crushedCentrifugedTiny", 9, "crushedCentrifuged", 1, false),
+            new Conversion("ingot", 2, "billet", 3, false),
+            new Conversion("ingot", 3, "nugget", 27, false),
+            new Conversion("ingot", 4, "billet", 6, false),
+            new Conversion("ingot", 5, "nugget", 45, false),
+            new Conversion("ingot", 6, "billet", 9, false),
+            new Conversion("ingot", 7, "nugget", 63, false),
+            new Conversion("ingot", 8, "billet", 12, false),
+            new Conversion("ingot", 9, "blockIngot", 1, false),
+            new Conversion("billet", 2, "nugget", 12, false),
+            new Conversion("billet", 3, "ingot", 2, false),
+            new Conversion("billet", 4, "nugget", 24, false),
+            new Conversion("billet", 5, "nugget", 30, false),
+            new Conversion("billet", 6, "ingot", 4, false),
+            new Conversion("billet", 7, "nugget", 42, false),
+            new Conversion("billet", 8, "nugget", 48, false),
+            new Conversion("billet", 9, "ingot", 6, false),
+            new Conversion("chunkGt", 4, "ingot", 1, false),
+            new Conversion("chunkGt", 8, "billet", 3, false),
+            new Conversion("nugget", 6, "billet", 1, false),
+            new Conversion("nugget", 9, "ingot", 1, false),
+            new Conversion("dustDiv72", 8, "dustTiny", 1, false),
+            new Conversion("dustTiny", 9, "dust", 1, false),
+            new Conversion("dustSmall", 4, "dust", 1, false),
+            new Conversion("dustSmall", 8, "dust", 2, false),
+            new Conversion("oreRaw", 9, "blockRaw", 1, false),
+            new Conversion("dust", 9, "blockDust", 1, false),
+            new Conversion("gem", 9, "blockGem", 1, false),
+            new Conversion("plate", 9, "blockPlate", 1, false),
+            new Conversion("plateGem", 9, "blockPlateGem", 1, false),
+            new Conversion("plateTiny", 5, "casingSmall", 1, false),
+            new Conversion("plateTiny", 9, "casingSmall", 2, false),
+            new Conversion("plateGemTiny", 5, "casingSmall", 1, false),
+            new Conversion("plateGemTiny", 9, "casingSmall", 2, false));
     public static final Set<String> STANDARD_ORES = Set.of(
             "ore",
             "oreBlackgranite",

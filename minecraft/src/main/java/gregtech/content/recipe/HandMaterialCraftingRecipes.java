@@ -26,7 +26,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/** GT6 BlockStones:262, Loader_Recipes_Vanilla:155-157 and Loader_OreProcessing:150-194. */
+/** GT6's hand-crafting rows that need material-specific tools (BlockStones:262,
+ * Loader_Recipes_Vanilla:155-157, Loader_OreProcessing:150-194). */
 public final class HandMaterialCraftingRecipes {
     private HandMaterialCraftingRecipes() {}
 
@@ -87,7 +88,7 @@ public final class HandMaterialCraftingRecipes {
         var stickLong = mat("stickLong", material);
         var gem = mat("gem", material);
 
-        // :150 four plates and four sticks held by a wrench; smithable materials only.
+        // four plates and four sticks held by a wrench; smithable materials only.
         var gear = mat("gearGt", material);
         if (material.has(MaterialProperty.SMITHABLE) && !gear.isEmpty() && !plate.isEmpty() && !stick.isEmpty())
             put(rows, "craft/gear/" + m, List.of("XYX", "YwY", "XYX"),
@@ -95,13 +96,13 @@ public final class HandMaterialCraftingRecipes {
                             "Y", form("plate", material, plate),
                             "w", WRENCH), copy(gear, 1));
 
-        // :164 one stick saws into two bolts; wood and coated materials keep their own rows.
+        // one stick saws into two bolts; wood and coated materials keep their own rows.
         var bolt = mat("bolt", material);
         if (!material.has(MaterialProperty.WOOD) && !bolt.isEmpty() && !stick.isEmpty())
             put(rows, "craft/bolt/" + m, List.of("s ", " S"),
                     Map.of("s", SAW, "S", form("stick", material, stick)), copy(bolt, 2));
 
-        // :166-169 gem -> ring, chunk -> round, foil -> fine wire, plate -> thin wire.
+        // gem -> ring, chunk -> round, foil -> fine wire, plate -> thin wire.
         var ring = mat("ring", material);
         if (!ring.isEmpty() && !gem.isEmpty())
             put(rows, "craft/ring/" + m, List.of("f ", " X"),
@@ -121,14 +122,14 @@ public final class HandMaterialCraftingRecipes {
             put(rows, "craft/wire/" + m, List.of("Px"),
                     Map.of("P", form("plate", material, plate), "x", WIRE_CUTTER), copy(wire, 1));
 
-        // :170 eight tiny plates from one plate; paper and wood use their own forms.
+        // eight tiny plates from one plate; paper and wood use their own forms.
         var plateTiny = mat("plateTiny", material);
         if (!plateTiny.isEmpty() && !plate.isEmpty()
                 && !material.getName().equals("Paper") && !material.has(MaterialProperty.WOOD))
             put(rows, "craft/plate_tiny/" + m, List.of("s ", " P"),
                     Map.of("s", SAW, "P", form("plate", material, plate)), copy(plateTiny, 8));
 
-        // :171,175-178 gem plates and tiny gem plates.
+        // 175-178 gem plates and tiny gem plates.
         var plateGem = mat("plateGem", material);
         var plateGemTiny = mat("plateGemTiny", material);
         if (!plateGem.isEmpty()) {
@@ -144,7 +145,7 @@ public final class HandMaterialCraftingRecipes {
             gemPlate(rows, material, "bouleGt", 3, plateGem);
         }
 
-        // :157-159 long sticks from flawless gems; :160 a long stick saws into two sticks.
+        // long sticks from flawless gems; a long stick saws into two sticks.
         gemStick(rows, material, "stick_long", "gemFlawless", 1, stickLong, new String[] {"sf", " X"});
         gemStick(rows, material, "stick_long", "gemExquisite", 2, stickLong, new String[] {"sf", " X"});
         gemStick(rows, material, "stick_long", "gemLegendary", 4, stickLong, new String[] {"sf", " X"});
@@ -152,13 +153,13 @@ public final class HandMaterialCraftingRecipes {
             put(rows, "craft/stick_long_from_long/" + m, List.of("s ", " X"),
                     Map.of("s", SAW, "X", form("stickLong", material, stickLong)), copy(stick, 2));
 
-        // :161-164 gems cut and filed into sticks.
+        // gems cut and filed into sticks.
         gemStick(rows, material, "stick", "gem", 1, stick, new String[] {"s ", "fX"});
         gemStick(rows, material, "stick", "gemFlawless", 2, stick, new String[] {"s ", "fX"});
         gemStick(rows, material, "stick", "gemExquisite", 4, stick, new String[] {"s ", "fX"});
         gemStick(rows, material, "stick", "gemLegendary", 8, stick, new String[] {"s ", "fX"});
 
-        // :179 cart wheels: two rings around a stick, hammered and wrenched.
+        // cart wheels: two rings around a stick, hammered and wrenched.
         var wheels = mat("minecartWheels", material);
         if (!wheels.isEmpty() && !ring.isEmpty() && !stick.isEmpty())
             put(rows, "craft/minecart_wheels/" + m, List.of(" h ", "XSX", " w "),
@@ -179,7 +180,7 @@ public final class HandMaterialCraftingRecipes {
         String m = slug(material);
         var arrowHead = mat("toolHeadArrow", material);
 
-        // :181-182 arrow head plus the headless shaft.
+        // arrow head plus the headless shaft.
         var woodShaft = mat("arrowGtWood", empty);
         var woodArrow = mat("arrowGtWood", material);
         if (!arrowHead.isEmpty() && !woodShaft.isEmpty() && !woodArrow.isEmpty())
@@ -191,7 +192,7 @@ public final class HandMaterialCraftingRecipes {
             putShapeless(rows, "shapeless/arrow_plastic/" + m,
                     List.of(form("toolHeadArrow", material, arrowHead), item(plasticShaft)), copy(plasticArrow, 1));
 
-        // :185 tiny dust and an empty tube fill a tube; :186 melting the tube returns the dust.
+        // tiny dust and an empty tube fill a tube; melting the tube returns the dust.
         var emptyTube = mat("glasstube", empty);
         var tube = mat("glasstube", material);
         var tinyDust = mat("dustTiny", material);
@@ -203,7 +204,7 @@ public final class HandMaterialCraftingRecipes {
                         List.of(form("glasstube", material, tube)), copy(tinyDust, 1));
         }
 
-        // :187-188 shovel or spade head, filed and sawn, becomes the raw universal spade head.
+        // shovel or spade head, filed and sawn, becomes the raw universal spade head.
         var rawUniversalSpade = mat("toolHeadRawUniversalSpade", material);
         if (!coated(material) && !rawUniversalSpade.isEmpty()) {
             for (String source : List.of("toolHeadShovel", "toolHeadSpade")) {
@@ -215,7 +216,7 @@ public final class HandMaterialCraftingRecipes {
             }
         }
 
-        // :189 a raw pickaxe head, filed and hammered, becomes the construction pickaxe head.
+        // a raw pickaxe head, filed and hammered, becomes the construction pickaxe head.
         var constructionPickaxe = mat("toolHeadConstructionPickaxe", material);
         var rawPickaxe = mat("toolHeadRawPickaxe", material);
         if (!coated(material) && !constructionPickaxe.isEmpty() && !rawPickaxe.isEmpty())
@@ -223,7 +224,7 @@ public final class HandMaterialCraftingRecipes {
                     List.of(form("toolHeadRawPickaxe", material, rawPickaxe), FILE, HAMMER),
                     copy(constructionPickaxe, 1));
 
-        // :190-192 an any-iron pickaxe head plus two flawed gems of this material.
+        // an any-iron pickaxe head plus two flawed gems of this material.
         var gemHead = mat("toolHeadPickaxeGem", material);
         var flawedGem = mat("gemFlawed", material);
         if (!gemHead.isEmpty() && !flawedGem.isEmpty()) {

@@ -22,11 +22,11 @@ import javax.annotation.Nullable;
  *
  * <h2>What the original does</h2>
  *
- * <p>One click, on the server only ({@code :50}): resolve the block entity
- * ({@code :51}), and for each of the six sides in GT6's own order, drain a <em>simulated</em>
- * {@code 1000} mB ({@code :53}). The first side that reports any fluid at all is the one that
- * matters: the tool pays {@code mCosts} durability ({@code :54}) and only then is the drain really
- * executed, followed by GT6's trampoline sound ({@code :55-56}). When the tool cannot pay — broken,
+ * <p>One click, on the server only: resolve the block entity,
+ * and for each of the six sides in GT6's own order, drain a <em>simulated</em>
+ * {@code 1000} mB. The first side that reports any fluid at all is the one that
+ * matters: the tool pays {@code mCosts} durability and only then is the drain really
+ * executed, followed by GT6's trampoline sound. When the tool cannot pay — broken,
  * or {@code doDamage} refused — the tank keeps its fluid, because the simulated drain never changed
  * anything. When no side has fluid the click does nothing and reports {@code F}.</p>
  *
@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
  *       enough, the real drain then takes up to {@code 1000} mB.</li>
  *   <li>GT6's creative bypass lives in {@code MultiItemTool.doDamage} ({@code MultiItemTool:434}:
  *       {@code hasInfiniteItems(aPlayer)} returns {@code T} without damaging), and a tool that cannot
- *       take the damage is rejected before anything happens ({@code :435}). Both are kept:
+ *       take the damage is rejected before anything happens. Both are kept:
  *       {@link GTToolHelper#isUsable} is the port's {@code isItemStackUsable}.</li>
  * </ul>
  *
@@ -55,7 +55,7 @@ import javax.annotation.Nullable;
  *
  * <p>{@code Behavior_Plunger_Item} (item pipes) is entirely commented out in the original
  * ({@code Behavior_Plunger_Item.java:42-64}) and {@code Behavior_Plunger_Essentia}
- * ({@code :41-71}) needs Thaumcraft's {@code IEssentiaTransport}; neither is implemented here.</p>
+ * needs Thaumcraft's {@code IEssentiaTransport}; neither is implemented here.</p>
  */
 public final class BehaviorPlungerFluid {
 
@@ -84,14 +84,14 @@ public final class BehaviorPlungerFluid {
      */
     public static boolean plungeFluid(Level level, BlockPos pos, @Nullable Player player, ItemStack plunger,
                                       int costs) {
-        if (level.isClientSide) return false;                                  // :50
+        if (level.isClientSide) return false;
 //? if >=1.21.1 {
-        /*if (level.getBlockEntity(pos)==null) return false; // :51-52
+        /*if (level.getBlockEntity(pos)==null) return false; //
 *///?} else {
-        if (!(level.getBlockEntity(pos) instanceof IFluidHandler handler)) return false; // :51-52
+        if (!(level.getBlockEntity(pos) instanceof IFluidHandler handler)) return false;
 //?}
 
-        for (Direction side : Direction.values()) {                            // :53
+        for (Direction side : Direction.values()) {
 //? if >=1.21.1 {
             /*IFluidHandler handler=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,pos,side);
             if(handler==null)continue;
@@ -99,8 +99,8 @@ public final class BehaviorPlungerFluid {
 //?}
             FluidStack simulated = handler.drain(DRAIN_AMOUNT, IFluidHandler.FluidAction.SIMULATE);
             if (simulated.isEmpty()) continue;
-            if (!pay(plunger, costs, player)) return false;                    // :54
-            FluidStack drained = handler.drain(DRAIN_AMOUNT, IFluidHandler.FluidAction.EXECUTE); // :55
+            if (!pay(plunger, costs, player)) return false;
+            FluidStack drained = handler.drain(DRAIN_AMOUNT, IFluidHandler.FluidAction.EXECUTE);
             return !drained.isEmpty();
         }
         return false;
@@ -114,11 +114,11 @@ public final class BehaviorPlungerFluid {
      */
     public static boolean pay(ItemStack plunger, int costs, @Nullable Player player) {
 //? if >=1.21.1 {
-        /*if (ManualToolBehaviorAccess.creative(player)) return true;                       // :434
+        /*if (ManualToolBehaviorAccess.creative(player)) return true; //
 *///?} else {
-        if (ItemBehaviors.creative(player)) return true;                       // :434
+        if (ItemBehaviors.creative(player)) return true;
 //?}
-        if (!usable(plunger)) return false;                                    // :435
+        if (!usable(plunger)) return false;
         GTToolHelper.damageForUse(plunger, costs, player);
         return true;
     }

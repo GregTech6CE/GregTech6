@@ -106,7 +106,7 @@ final class JadeInspection {
     void tanks(String role, gregtech.engine.fluid.FluidTankGT[] tanks) {
         if (tanks == null) return;
         for (int i = 0; i < Math.min(16, tanks.length); i++)
-            fluid(role, i, tanks[i].getFluid(), tanks[i].getAmount(), tanks[i].getCapacity());
+            fluid(role, i, tanks[i].getFluid(), tanks[i].getAmount(), tanks[i].capacity());
     }
 
     void state(boolean enabled, boolean active) { line("state", label(!enabled ? "disabled" : active ? "working" : "waiting")); }

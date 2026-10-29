@@ -11,6 +11,7 @@
     "OreHostHardnessMixin",
     "OreHostToolSpeedMixin",
     "VanillaToolDurabilityMixin",
+    "VanillaToolDurabilityBarMixin",
     "GasImmersionMixin",
     "ConstructionRecipeMixin",
     "VanillaOreConfigMixin",
@@ -54,6 +55,7 @@
     "defaultRequire": 0
   },
   "client": [
+    "OreTerrainParticleMixin",
     "FormConversionGhostPlaceMixin",
     "JadeOreHarvestToolMixin",
     "BlockPaintColorMixin",

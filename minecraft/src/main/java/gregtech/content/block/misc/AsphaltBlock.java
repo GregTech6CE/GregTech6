@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /** Asphalt road block — applies a speed boost to entities walking on it. */
 public class AsphaltBlock extends ColoredConstructionBlock {
     public AsphaltBlock(Properties properties) {
-        super(properties, net.minecraft.world.item.DyeColor.GRAY);
+        super(properties.isValidSpawn((state, level, pos, entity) -> false), net.minecraft.world.item.DyeColor.GRAY);
     }
 
     @Override

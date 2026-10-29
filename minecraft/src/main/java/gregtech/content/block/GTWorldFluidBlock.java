@@ -238,7 +238,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
      * ({@code BlockBaseFluid:374}) is the same fact seen from the path finder's side; it has no 1.20.1
      * equivalent for a fluid block (whether a block blocks movement comes from
      * {@code BlockBehaviour.Properties}, which a {@code LiquidBlock} cannot change without replacing
-     * vanilla fluid physics), so only the web half is ported and the other is recorded in §108.
+     * vanilla fluid physics), so only the web half is ported and the other is recorded in.
      */
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {

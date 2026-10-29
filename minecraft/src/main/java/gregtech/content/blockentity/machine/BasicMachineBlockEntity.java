@@ -279,10 +279,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public double averageEnergyInput() {
         return energyPort.average(level);
     }
+    public boolean isEnergyOverloaded() { return energyPort.overloaded(level); }
+    public boolean isEnergyInsufficient() { return energyPort.insufficient(level); }
+    @Override public void onInsufficientEnergy(GregTechTags.Tag type, @Nullable Direction side) {
+        if (!usesAuxiliaryInput(type, side)) energyPort.recordInsufficient(level);
+    }
     public boolean isRunning() { return mRunning; }
     public int getProgressPercent() {
+        return (int) (getProgressFraction() * 100);
+    }
+
+    public double getProgressFraction() {
         if (processor.totalWork() <= 0) return 0;
-        return (int) Math.min(100, (double) processor.progress() / processor.totalWork() * 100);
+        return Math.max(0, Math.min(1, (double) processor.progress() / processor.totalWork()));
     }
 
     // ── Server tick ──────────────────────────────────────────────────────
@@ -547,7 +556,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 case gregtech.content.cover.CoverAttachmentBehaviors.AIR_VENT -> tickAirVentCover(level, pos, side);
             }
         }
-        // §108: the second batch of cover behaviours (item retriever, pressure valve, filters, ...)
+        // the remaining cover behaviours (item retriever, pressure valve, filters, ...)
         // is dispatched by tickUtilityCovers below; it walks the six faces itself and has its own
         // panels.stopped() gate, so calling it here is enough to make those covers act.
         tickUtilityCovers(level, pos);
@@ -637,10 +646,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(changed)level.updateNeighborsAt(worldPosition,getBlockState().getBlock());
     }
     /**
-     * §108: GT6's redstone torch cover is an <em>inverter</em> and its repeater a <em>follower</em>
+     * GT6's redstone torch cover is an <em>inverter</em> and its repeater a <em>follower</em>
      * ({@code CoverRedstoneTorch:43} / {@code CoverRedstoneRepeater:43}, both through
      * {@code AbstractCoverAttachmentTorch:50-57}: {@code mVisuals == 0 ? 15 : 0}). The wire they hang
-     * on is this machine's powered state, which is {@code mRunning}. Until §108 both covers were
+     * on is this machine's powered state, which is {@code mRunning}. Until both covers were
      * answered with the same {@code mRunning ? 15 : 0}, so the torch was inverted.
      */
     private int redstoneCoverSignal(Direction side){
@@ -953,6 +962,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Original root overload policy, shared by EU, RU, KU and other machine inputs. */
     @Override public void overloadEnergy(long size, GregTechTags.Tag energyType) {
+        energyPort.recordOverload(level);
         gregtech.engine.energy.MachineOverload.apply(this, size, energyType);
     }
 
@@ -1327,11 +1337,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             implements IItemHandler {
         @Override public int getSlots() { return inner.getSlots(); }
         @Override public ItemStack getStackInSlot(int slot) { return inner.getStackInSlot(slot); }
-        // §108: the face's cover is the pipe filter. GT6 asks that from its item handler's
+        // the face's cover is the pipe filter. GT6 asks that from its item handler's
         // interceptItemInsert/interceptItemExtract hooks (CoverFilterItem:115-127), and the retriever
         // cover refuses both outright on its own face (CoverRetrieverItem:138-139, "aCoverSide ==
         // aSide"). A face without such a cover admits everything, which is what keeps every other
-        // machine behaving exactly as before this batch.
+        // machine behaving exactly as before.
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             Direction side = be.relativeToAbsolute(relativeSide);
             return canInsert && be.acceptsAutomaticInput(stack) && be.allowsItemTraffic(side, stack, true)
@@ -1367,7 +1377,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
                     && be.coverFluidFilterPermits(side, stack) && be.isFluidValid(tank, stack);
         }
-        // §108: GT6 CoverFilterFluid:117-129 interceptFluidFill / interceptFluidDrain.
+        // GT6 CoverFilterFluid:117-129 interceptFluidFill / interceptFluidDrain.
         @Override public int fill(FluidStack resource, FluidAction action) {
             Direction side = be.relativeToAbsolute(relativeSide);
             return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
@@ -1431,7 +1441,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     //
     // The behaviours live in gregtech.content.cover.CoverUtilityBehaviors; this
     // section only owns the dispatch and the per-face state that dispatch needs, exactly like the
-    // drain/vent pair above. Nothing before this line is touched.
+    // drain/vent pair above. Nothing above that pair is touched.
 
     /**
      * Whether this machine's covers were suspended by a controller cover on the previous utility
@@ -1541,7 +1551,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /**
-     * §108: GT6 {@code CoverRetrieverItem:138-139} — the retriever refuses <em>every</em> item insert
+     * GT6 {@code CoverRetrieverItem:138-139} — the retriever refuses <em>every</em> item insert
      * and extract on its own face ({@code return aCoverSide == aSide;}, both hooks), so a pipe can
      * neither push into nor pull out of the face the retriever owns; only the retriever itself moves
      * items there. That is the whole interception rule for that cover — unlike the item filter, whose

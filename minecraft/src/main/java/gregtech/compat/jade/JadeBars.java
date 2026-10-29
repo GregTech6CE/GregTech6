@@ -13,9 +13,20 @@ final class JadeBars {
     static IElement time(long completed, long total, double workPerTick) {
         double ratio = total <= 0 ? 0 : Math.max(0, Math.min(1, (double) completed / total));
         double perSecond = Math.max(1, workPerTick) * 20;
+        double seconds = Math.max(0, total) / perSecond;
+        String unit = seconds >= 3600 ? "h" : seconds >= 60 ? "min" : seconds >= 1 ? "s" : "tick";
+        double divisor = switch (unit) {
+            case "h" -> 3600;
+            case "min" -> 60;
+            case "tick" -> .05;
+            default -> 1;
+        };
+        int decimals = unit.equals("tick") ? 0 : 1;
         return progress(ratio, Component.translatable("jade.gt6ce.machine.time",
-                JadeText.decimal(Math.max(0, Math.min(completed, total)) / perSecond, 1),
-                JadeText.decimal(Math.max(0, total) / perSecond, 1), JadeText.decimal(ratio * 100, 1)), 0xBD4141);
+                Component.translatable("jade.gt6ce.time." + unit,
+                        JadeText.decimal(Math.max(0, Math.min(completed, total)) / perSecond / divisor, decimals)),
+                Component.translatable("jade.gt6ce.time." + unit, JadeText.decimal(seconds / divisor, decimals)),
+                JadeText.decimal(ratio * 100, 1)), 0xBD4141);
     }
 
     static IElement progress(double ratio, Component label, int color) {
@@ -25,9 +36,16 @@ final class JadeBars {
 *///?} else {
         var box = BoxStyle.DEFAULT;
 //?}
-        int dark = 0xFF000000 | ((color & 0xFEFEFE) >>> 1);
         return helper.progress((float) Math.max(0, Math.min(1, ratio)), label,
-                helper.progressStyle().color(dark, 0xFF000000 | color), box, true);
+                helper.progressStyle().color(0xFF000000 | color).textColor(0xFFFFFF), box, true);
+    }
+
+    static float borderWidth() {
+//? if >=1.21.1 {
+        /*return BoxStyle.getNestedBox().borderWidth();
+*///?} else {
+        return BoxStyle.DEFAULT.borderWidth();
+//?}
     }
 
     static IElement fluid(FluidView view, Component label) {
@@ -38,5 +56,12 @@ final class JadeBars {
         var box = BoxStyle.DEFAULT;
 //?}
         return helper.progress(view.ratio, label, helper.progressStyle().overlay(view.overlay), box, true);
+    }
+
+    static FluidView readFluid(net.minecraft.nbt.CompoundTag data) {
+        var view = FluidView.readDefault(data);
+        // An unbounded tank has no meaningful fullness ratio; retain its real amount label.
+        if (view != null && data.getLong("capacity") == Long.MAX_VALUE && view.ratio > 0) view.ratio = 1;
+        return view;
     }
 }

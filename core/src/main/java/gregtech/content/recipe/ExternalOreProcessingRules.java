@@ -70,7 +70,8 @@ public final class ExternalOreProcessingRules {
             new Route("Crusher", MaterialPrefix.rubble, MaterialPrefix.pebbles, 1, 128),
             new Route("Sifting", MaterialPrefix.pebbles, MaterialPrefix.dust, 3, 512));
 
-    /** Source :117-119/:129-131 select two Shredder speeds; :158-160 require an empty Anvil workpiece. */
+    /** Two Shredder speeds ({@code Loader_Recipes_Handlers.java:117-131}); the Anvil rows require an
+     *  empty workpiece ({@code Loader_Recipes_Handlers.java:158-160}). */
     public record GrindingRoute(
             String map, MaterialPrefix input, int dustCount, int fineCount, boolean excludesBedrock) {
         public GrindingRoute(String map, MaterialPrefix input, int dustCount) {
@@ -124,7 +125,7 @@ public final class ExternalOreProcessingRules {
             new GrindingRoute("Anvil", MaterialPrefix.chunk, 2),
             new GrindingRoute("Anvil", MaterialPrefix.rubble, 2),
             new GrindingRoute("Anvil", MaterialPrefix.pebbles, 2),
-            // Source :120-124/:132-136 and :161-165 have no fines at all.
+            // No fines at all ({@code Loader_Recipes_Handlers.java:120-136,161-165}).
             new GrindingRoute("Shredder", MaterialPrefix.clump, 1, false),
             new GrindingRoute("Shredder", MaterialPrefix.reduced, 1, false),
             new GrindingRoute("Shredder", MaterialPrefix.crystalline, 1, false),
@@ -135,14 +136,14 @@ public final class ExternalOreProcessingRules {
             new GrindingRoute("Anvil", MaterialPrefix.crystalline, 1, false),
             new GrindingRoute("Anvil", MaterialPrefix.cleanGravel, 1, false),
             new GrindingRoute("Anvil", MaterialPrefix.cluster, 3, false),
-            // :84/:86/:87/:89 use OM.pulverize(target amount), not a fixed dust count.
+            // use OM.pulverize(target amount), not a fixed dust count.
             new GrindingRoute("Mortar", MaterialPrefix.cleanGravel, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.crystalline, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.reduced, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.clump, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.dirtyGravel, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.crystal, 0, false),
-            // Source :114-116/:126-128: registered inputs only, no Bedrock, explicit fines.
+            // Registered inputs only, no Bedrock, explicit fines ({@code Loader_Recipes_Handlers.java:114-128}).
             new GrindingRoute("Shredder", MaterialPrefix.dustImpure, 1, 1, true),
             new GrindingRoute("Shredder", MaterialPrefix.dustPure, 1, 2, true),
             new GrindingRoute("Shredder", MaterialPrefix.dustRefined, 1, 3, true));

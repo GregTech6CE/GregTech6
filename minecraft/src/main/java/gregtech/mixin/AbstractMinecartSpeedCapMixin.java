@@ -8,20 +8,20 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * §115: lets a GT6 rail actually reach its own speed — the port's replacement for GT6's
+ * lets a GT6 rail actually reach its own speed — the port's replacement for GT6's
  * {@code Minecraft_RemoveCartSpeedCap} ASM transformer.
  *
  * <p>Forge routes a rail's speed through the cart: {@code AbstractMinecart.getMaxSpeedWithRail()} is
  * {@code Math.min(railMaxSpeed, getCurrentCartSpeedCapOnRail())}
- * ({@code AbstractMinecart.java:854-863}), the cap starts at {@code getMaxCartSpeedOnRail()} and
+ * ({@code AbstractMinecart.java}), the cap starts at {@code getMaxCartSpeedOnRail()} and
  * <b>Forge's setter clamps every assignment back down to that same ceiling</b>
- * ({@code AbstractMinecart.java:844}: {@code currentSpeedCapOnRail = Math.min(value,
+ * ({@code AbstractMinecart.java}: {@code currentSpeedCapOnRail = Math.min(value,
  * getMaxCartSpeedOnRail())}). For a vanilla minecart that ceiling is <b>1.2</b>
  * ({@code IForgeAbstractMinecart.getMaxCartSpeedOnRail()}, whose comment warns that faster carts can
  * outrun chunk loading), so GT6's three fastest rails — Tungstensteel 1.40, Tungstencarbide 1.60 and
- * Adamantium 4.00 ({@code Loader_Rails:41-72}) — were silently capped at 1.2. The port recorded that as
- * a deliberate difference for as long as it had no mixins ({@code TrackBlock}'s class javadoc, §68.3);
- * §105 added the mixin infrastructure, so the difference can be closed.</p>
+ * Adamantium 4.00 ({@code Loader_Rails:41-72}) — were silently capped at 1.2. {@code TrackBlock}'s class
+ * javadoc records that as a deliberate difference the port could not fix without mixins; this mixin
+ * closes it.</p>
  *
  * <h2>What this does and does not change</h2>
  *

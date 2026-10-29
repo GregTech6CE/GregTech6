@@ -82,7 +82,7 @@ public final class OriginalControllerTooltips {
         if (faces.fluidAutoOutput() >= 0 || faces.itemAutoOutput() >= 0)
             add(lines, "gt.lang.use.monkey.wrench.to.toggle.auto.outputs", ChatFormatting.DARK_GRAY);
         add(lines, "gt.lang.use.soft.hammer.to.reset", ChatFormatting.DARK_GRAY);
-        inherited(lines);
+        inherited(lines, true);
     }
 
     public static void standalone(Family family, List<Component> lines) {
@@ -111,13 +111,14 @@ public final class OriginalControllerTooltips {
                     .append(Component.translatable("tooltip.gt6ce.ui.total_per_tick")
                             .withStyle(ChatFormatting.WHITE));
         }
-        inherited(lines);
+        // The GT6 drill is fixed upright (MultiTileEntityBedrockDrill.getValidSides()).
+        inherited(lines, !drill);
     }
 
-    private static void inherited(List<Component> lines) {
+    private static void inherited(List<Component> lines, boolean rotatable) {
         add(lines, "gt.lang.use.builder.wand.to.ease.building", ChatFormatting.DARK_GRAY);
         add(lines, "gt.lang.use.magnifyingglass.to.detail", ChatFormatting.DARK_GRAY);
-        StorageBlockTooltips.facing(lines);
+        if (rotatable) StorageBlockTooltips.facing(lines);
     }
 
     private static void io(List<Component> lines, String key, List<String> faces, int auto, ChatFormatting color) {

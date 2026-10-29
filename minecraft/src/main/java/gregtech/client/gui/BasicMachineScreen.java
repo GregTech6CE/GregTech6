@@ -6,22 +6,16 @@ package gregtech.client.gui;
 import gregtech.GregTech;
 //?}
 
-import gregtech.engine.fluid.FluidSlotAmountOverlay;
-import gregtech.content.data.RegisteredFluids;
-import gregtech.content.registry.GTFluidType;
-import gregtech.content.registry.GTFluids;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.level.material.Fluid;
 
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -32,13 +26,12 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class BasicMachineScreen extends MachineContainerScreen<BasicMachineContainerMenu> implements FluidRecipeScreen {
     private final ResourceLocation texture;
+    private final MachineProgressRenderer progressRenderer = new MachineProgressRenderer();
 
     private boolean overRecipeArrow(double mouseX, double mouseY) {
         return mouseX >= leftPos + 78 && mouseX < leftPos + 98
@@ -95,26 +88,11 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
         for (Slot slot : menu.slots) {
             if (!(slot instanceof SlotFluid sf)) continue;
             FluidStack fluid = sf.fluid();
-            if (fluid.isEmpty()) continue;
-
             int x = leftPos + slot.x;
             int y = topPos + slot.y;
             if (mouseX < x || mouseX >= x + 16 || mouseY < y || mouseY >= y + 16) continue;
 
-            List<Component> tooltip = new ArrayList<>();
-            Fluid f = fluid.getFluid();
-            ResourceLocation fluidId = BuiltInRegistries.FLUID.getKey(f);
-            // entryForFluid: keyed by the fluid, so it also resolves a flowing variant and survives
-            // the three world waters reporting vanilla water's FluidType (see GTWorldWaterFluid).
-            RegisteredFluids.FluidEntry entry = fluidId != null ? GTFluids.entryForFluid(f) : null;
-            // Name line (GTFluidType.describeTooltip doesn't include the name)
-            if (entry != null) {
-                String path = RegisteredFluids.sanitizePath(entry.registryName());
-                tooltip.add(GTFluidType.describe(entry, path));
-            } else {
-                tooltip.add(fluid.getDisplayName());
-            }
-            tooltip.addAll(GTFluidType.describeTooltip(fluid, fluid.getAmount(), false));
+            List<Component> tooltip = FluidSlotPresentation.tooltip(fluid, sf.amount(), sf.capacity());
             graphics.renderTooltip(font, tooltip, Optional.empty(), mouseX, mouseY);
             break;
         }
@@ -143,15 +121,7 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
 
             graphics.blit(x, y, 0, 16, 16, sprite, r, g, b, 1.0F);
 
-            // Original FL.display(tank, true, true): capped bucket count, vanilla item overlay.
-            String amount = FluidSlotAmountOverlay.text(fluid.getAmount());
-            if (!amount.isEmpty()) {
-                graphics.pose().pushPose();
-                graphics.pose().translate(0, 0, 200);
-                graphics.drawString(font, amount, FluidSlotAmountOverlay.x(x, font.width(amount)),
-                        FluidSlotAmountOverlay.y(y), 0xFFFFFF, true);
-                graphics.pose().popPose();
-            }
+            FluidSlotPresentation.amount(graphics, font, sf.amount(), x, y, 16, 16);
         }
     }
 
@@ -166,14 +136,7 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
         graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
 
         // Progress arrow overlay (UV 176,0 in the 256x256 texture, 20x18)
-        int progress = menu.progressPercent();
-        if (progress > 0) {
-            int arrowWidth = Math.max(1, 20 * Math.min(progress, 95) / 95);
-            graphics.blit(texture,
-                    leftPos + 78, topPos + 24,  // render x, y
-                    176, 0,                      // uv x, y
-                    arrowWidth, 18,              // render width, height
-                    256, 256);                   // texture size
-        }
+        progressRenderer.draw(graphics, texture, leftPos + 78, topPos + 24,
+                176, 0, 20, 18, menu.progressFraction());
     }
 }

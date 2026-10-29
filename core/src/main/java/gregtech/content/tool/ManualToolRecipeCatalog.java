@@ -19,8 +19,8 @@ import java.util.Map;
  *       GTToolAssemblyRecipe.</li>
  *   <li><b>One-piece tools</b> (wrench, knife, cutters, club, …) — GT6 writes a shaped
  *       {@code CR.shaped} pattern per material through {@code OreProcessing_Tool}, e.g.
- *       {@code WRENCH = {"PhP"," P "," P "}}. These used to be ported as one shapeless assembly,
- *       which is wrong twice: the shape is part of the recipe and the recipe never showed up in the
+ *       {@code WRENCH = {"PhP"," P "," P "}}. Porting them as one shapeless assembly is wrong
+ *       twice: the shape is part of the recipe and the recipe never shows up in the
  *       crafting-table recipe list. GTToolCraftingRecipe registers GT6's pattern instead.</li>
  *   <li><b>Tool heads</b> — the {@code mToolHeadRecipes} of the same registrations (e.g.
  *       {@code PICKAXE = {"PII","f h"}}), which turn a material's plates/ingots into its head;

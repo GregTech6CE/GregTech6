@@ -65,8 +65,10 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
         poseStack.pushPose();
         if (be.isDisplayedMolten()) {
             MaterialFluidVisuals.Appearance appearance = CrucibleContentIcons.moltenAppearance(material);
-            int tint = appearance.tintBase() ? appearance.tintArgb() : 0xFFFFFFFF;
-            drawTop(poseStack, bufferSource, appearance.baseTexture(), tint, topY, x0, z0, x1, z1, 0xF000F0);
+            int tint = CrucibleContentIcons.surfaceTint(material, appearance, be.getLevel(), be.getBlockPos());
+            int light = CrucibleContentIcons.surfaceLight(be.getLevel(), be.getBlockPos().above(),
+                    be.getTemperature(), packedLight);
+            drawTop(poseStack, bufferSource, appearance.baseTexture(), tint, topY, x0, z0, x1, z1, light);
         } else {
             drawTop(poseStack, bufferSource, CrucibleContentIcons.SOLID_GRAY_BASE, CrucibleContentIcons.solidGrayTint(),
                     topY, x0, z0, x1, z1, packedLight);

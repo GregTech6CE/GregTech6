@@ -18,28 +18,28 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  * <h2>The original</h2>
  *
- * <p>{@code remove(...)} ({@code :95-115}) asks, in this order: an {@code ITileEntityFoamable} block
- * entity ({@code :99}), an {@code IBlockFoamable} block ({@code :101}), an IC2 cable's
- * {@code foamed} byte ({@code :103-111}), then the IC2 foam and reinforced-foam blocks
- * ({@code :113}). The first two answer with {@code 10} uses; a C-Foam <em>slab</em> costs {@code 5}
- * instead ({@code :101}, {@code aBlock instanceof BlockCFoamFresh && SIDES_VALID[mSide]}). Note the
- * gate is {@code aUses < 1} ({@code :96}), not {@code < 10} — a nearly empty can still sprays a whole
+ * <p>{@code remove(...)} asks, in this order: an {@code ITileEntityFoamable} block
+ * entity, an {@code IBlockFoamable} block, an IC2 cable's
+ * {@code foamed} byte, then the IC2 foam and reinforced-foam blocks.
+ * The first two answer with {@code 10} uses; a C-Foam <em>slab</em> costs {@code 5}
+ * instead ({@code aBlock instanceof BlockCFoamFresh && SIDES_VALID[mSide]}). Note the
+ * gate is {@code aUses < 1}, not {@code < 10} — a nearly empty can still sprays a whole
  * block and simply runs negative afterwards, which is how GT6's own code empties it.</p>
  *
  * <p>Both C-Foam blocks are foamable, and both answer {@code removeFoam} by setting the block to air
  * ({@code BlockCFoamFresh:115-117} for the wet one, {@code BlockCFoam:63-65} for the hardened one), so
  * the spray removes hardened foam too. The wet/hardened pair is in the port as
- * {@code gt6ce:cfoam_fresh} / {@code gt6ce:cfoam} ({@code CFoamBlock}, {@code GTDecorBlocks:96-97}).</p>
+ * {@code gt6ce:cfoam_fresh} / {@code gt6ce:cfoam} ({@code CFoamBlock}, {@code GTDecorBlocks}).</p>
  *
  * <h2>Port limits</h2>
  *
  * <ul>
  *   <li><b>No slabs.</b> The port registers the two full C-Foam blocks only, so the {@code 5} use
- *       branch ({@code :101}) has nothing to apply to; {@link #SLAB_REMOVE_COST} records the number
+ *       branch has nothing to apply to; {@link #SLAB_REMOVE_COST} records the number
  *       and the test pins it against the {@code 10} the port does use.</li>
  *   <li><b>No IC2 and no {@code ITileEntityFoamable}.</b> The IC2 foam/reinforced-foam/scaffold
- *       branches ({@code :113}, and {@code Behavior_Spray_Foam:129-130} on the placement side) and
- *       the machine-face foaming ({@code :99}) need content the port does not have.</li>
+ *       branches (and {@code Behavior_Spray_Foam:129-130} on the placement side) and
+ *       the machine-face foaming need content the port does not have.</li>
  * </ul>
  */
 public final class BehaviorSprayFoamRemover {
@@ -50,10 +50,10 @@ public final class BehaviorSprayFoamRemover {
     /** GT6 {@code Behavior_Spray_Foam_Remover:54}: {@code mUses = aUses * 10}. */
     public static final int USES_MULTIPLIER = 10;
 
-    /** GT6 {@code :101}: a full C-Foam block costs this many uses. */
+    /** GT6's: a full C-Foam block costs this many uses. */
     public static final int REMOVE_COST = 10;
 
-    /** GT6 {@code :101}: the same block as a slab costs this many. Nothing in the port is a foam slab. */
+    /** GT6's: the same block as a slab costs this many. Nothing in the port is a foam slab. */
     public static final int SLAB_REMOVE_COST = 5;
 
     private BehaviorSprayFoamRemover() {}
@@ -91,9 +91,9 @@ public final class BehaviorSprayFoamRemover {
     }
 
     /**
-     * GT6 {@code :95-115} for the port's content: wet and hardened C-Foam are set to air.
+     * GT6's removal spray for the port's content: wet and hardened C-Foam are set to air.
      *
-     * @return {@link #REMOVE_COST} when a foam block was removed, {@code 0} otherwise
+     * @return {@link #REMOVE_COST} when a foam block is there to remove, {@code 0} otherwise
      */
     public static long remove(
             Level level,
@@ -105,9 +105,9 @@ public final class BehaviorSprayFoamRemover {
             float hitX,
             float hitY,
             float hitZ) {
-        if (uses < 1L) return 0L; // :96
+        if (uses < 1L) return 0L;
         BlockState state = level.getBlockState(pos);
-        if (!(state.getBlock() instanceof CFoamBlock)) return 0L; // :101, :113 replaced
+        if (!(state.getBlock() instanceof CFoamBlock)) return 0L; // replaced
         // GT6's removeFoam is `setBlockToAir` with WD's flag 3 on both foam blocks.
         if (!level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3)) return 0L;
         return REMOVE_COST;

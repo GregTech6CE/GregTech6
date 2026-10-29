@@ -17,13 +17,7 @@
     }
   },
   "result": {
-    "item": "gt6ce:spike_steel",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "omni",
-        "secondary": "true"
-      }
-    }
+    "item": "gt6ce:spike_ball_steel_red_steel",
+    "count": 1
   }
 }

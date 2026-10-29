@@ -81,7 +81,7 @@ final class OmniMachineInfo {
             info.item("ash", 0, box.ashForInspection());
             info.item("pending", 0, box.pendingAshForInspection());
             var tank = box.fuelTankForInspection();
-            if (tank != null) info.fluid("fuel", 0, tank.getFluid(), tank.getAmount(), tank.getCapacity());
+            if (tank != null) info.fluid("fuel", 0, tank.getFluid(), tank.getAmount(), tank.capacity());
         } else if (entity instanceof SolidBurningBoxBlockEntity box) {
             info.state(true, box.isBurning());
             long rate = box.getEnergySizeOutputRecommended(gregtech.content.data.GregTechTags.Energy.HU, Direction.UP);

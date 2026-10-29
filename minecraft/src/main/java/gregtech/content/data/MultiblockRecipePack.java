@@ -107,6 +107,8 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         EMITTED.clear();
 
         for (MultiblockCraftingRecipes.Entry entry : MultiblockCraftingRecipes.ENTRIES) {
+            // The native wall family owns these rows, including its complete tool tags.
+            if (OriginalHandCraftingRows.hasMetalWallRecipe(entry.blockId())) continue;
             ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", entry.blockId());
 //? if >=1.21.1 {
             /*Block block = BuiltInRegistries.BLOCK.get(blockId);

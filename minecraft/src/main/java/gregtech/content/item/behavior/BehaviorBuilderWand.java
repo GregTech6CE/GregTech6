@@ -23,7 +23,7 @@ public final class BehaviorBuilderWand {
     private BehaviorBuilderWand() {}
 
     /**
-     * One right-click with the wand — GT6 {@code Behavior_Builderwand.onItemUse} ({@code :44-136}).
+     * One right-click with the wand — GT6 {@code Behavior_Builderwand.onItemUse}.
      *
      * @param side the clicked face; its axis is the one the plane does <em>not</em> walk
      * @return {@code acted} when at least one copy was placed, with the (possibly damaged) wand
@@ -60,9 +60,9 @@ public final class BehaviorBuilderWand {
                 for (int dz = step(side, Direction.Axis.Z, -reach); dz <= step(side, Direction.Axis.Z, reach); dz++) {
                     BlockPos target = pos.offset(dx, dy, dz);
                     if (!level.hasChunkAt(target)) continue;
-                    // GT6 :92 - only positions already holding the very same block (and meta) count.
+                    // - only positions already holding the very same block (and meta) count.
                     if (!level.getBlockState(target).equals(clicked)) continue;
-                    // GT6 :94-95 - the position itself and the one the face points at must both be editable.
+                    // - the position itself and the one the face points at must both be editable.
 //? if >=1.21.1 {
                     /*if (!ManualToolBehaviorAccess.mayEdit(level, player, target)) continue;
                     if (!ManualToolBehaviorAccess.mayEdit(level, player, target.relative(side))) continue;
@@ -95,18 +95,19 @@ public final class BehaviorBuilderWand {
 //?}
     }
 
-    /** The loop bound for one axis: the clicked face's own axis never moves ({@code :89-91}). */
+    /** The loop bound for one axis: the clicked face's own axis never moves. */
     private static int step(Direction side, Direction.Axis axis, int bound) {
         return side.getAxis() == axis ? 0 : bound;
     }
 
     /**
-     * The block the wand will copy from the player's inventory — GT6 {@code :97-117}.
+     * The stack the wand copies from the player's inventory: the last one whose block is the
+     * clicked block.
      *
      * <p>GT6 scans {@code player.inventory.mainInventory} from the end backwards, which in 1.7.10
      * means the main grid first and the hotbar last; 1.20.1 puts the hotbar at 0-8 and the main grid at
      * 9-35, so the same order is {@code 35 → 0}. A stack qualifies when its block is the clicked block
-     * ({@code ST.block(tStack) == aBlock}). Ore host/broken and spike material/mode identity is now encoded in item state
+     * ({@code ST.block(tStack) == aBlock}). Ore host/broken identity is encoded in item state
      * rather than separate source blocks, so compare those identity properties explicitly. Placement
      * orientation remains the item's responsibility; do not compare arbitrary placement states.</p>
      */
@@ -121,11 +122,6 @@ public final class BehaviorBuilderWand {
                             != gregtech.content.block.OreBlock.stoneOf(clicked)
                     || gregtech.content.block.OreBlock.isBrokenStack(candidate)
                             != gregtech.content.block.OreBlock.isBroken(clicked))) continue;
-            if (clicked.getBlock() instanceof gregtech.content.block.misc.SpikeBlock
-                    && (gregtech.content.block.misc.SpikeBlock.itemMode(candidate)
-                            != clicked.getValue(gregtech.content.block.misc.SpikeBlock.MODE)
-                    || gregtech.content.block.misc.SpikeBlock.itemSecondary(candidate)
-                            != clicked.getValue(gregtech.content.block.misc.SpikeBlock.SECONDARY))) continue;
             return slot;
         }
         return -1;

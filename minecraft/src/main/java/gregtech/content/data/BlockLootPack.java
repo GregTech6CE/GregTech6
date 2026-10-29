@@ -86,8 +86,7 @@ public final class BlockLootPack extends AbstractPackResources {
                     k -> new TreeSet<>()).add(id.toString());
             if (block.asItem() == Items.AIR) continue;
             // Supply vanilla loot only. Blocks overriding getDrops retain their specialized NBT/drop behavior.
-            // GT6 spike metadata distinguished the two materials and wall/omni/falling mode. Copy
-            // those properties into BlockStateTag so mining a configured spike does not erase them.
+            // Only blocks with stack-carried variants copy state; flattened variants drop their own item ID.
             Map<String, Object> entry = block instanceof gregtech.engine.block.StatefulBlockLoot stateful
 //? if >=1.21.1 {
             /*// Version-specific branch.

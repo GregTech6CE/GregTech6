@@ -36,7 +36,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
  *       start is created at the chunk's {@code STRUCTURE_STARTS} status, long before any decoration.</li>
  *   <li>{@code tags/worldgen/biome/has_structure/gt_dungeon.json} - {@code #minecraft:is_overworld},
  *       GT6's {@code GEN_OVERWORLD} of {@code Loader_Worldgen:652}. The tag is also what
- *       {@code ChunkGeneratorStructureState.hasBiomesForStructureSet} ({@code ChunkGeneratorStructureState:59-65})
+ *       {@code ChunkGeneratorStructureState.hasBiomesForStructureSet} ({@code ChunkGeneratorStructureState})
  *       reads to decide whether the structure set belongs to a dimension at all.</li>
  *   <li>{@code worldgen/structure_set/gt_dungeons.json} - one entry, this structure at weight 1, with the
  *       {@code gt6ce:gt_dungeon_lattice} placement (see {@link GTDungeonPlacement}).</li>
@@ -66,7 +66,7 @@ public class GTDungeonStructure extends Structure {
      * {@link GTDungeonFeature} rolls the very same value from the very same seed. Rolling it here as well
      * is what keeps the two in step: an anchor that fails holds no structure, so vanilla's
      * {@code StructureCheck} answers {@code START_NOT_PRESENT} for it
-     * ({@code StructureCheck:91-93} checks this method) and {@code /locate} walks on to an anchor that
+     * ({@code StructureCheck} checks this method) and {@code /locate} walks on to an anchor that
      * really holds a dungeon, without forcing a chunk for the empty ones. An anchor that passes returns
      * the one {@link GTDungeonAnchorPiece}, which places no blocks - the dungeon itself is still the
      * feature's, cell by cell.</p>

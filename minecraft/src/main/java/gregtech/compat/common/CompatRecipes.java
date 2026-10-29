@@ -53,7 +53,7 @@ public final class CompatRecipes {
 
     public static synchronized int added() { return added; }
 
-    /** Rows this pass currently owns. The datapack overlay excludes them from its baseline. */
+    /** Rows the overlays currently own. The datapack overlay excludes them from its baseline. */
     public static synchronized Set<Recipe> owned() {
         var all = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
         for (var rows : OWNED.values()) all.addAll(rows);

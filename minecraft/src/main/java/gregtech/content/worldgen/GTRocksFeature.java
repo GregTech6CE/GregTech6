@@ -115,7 +115,7 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
             if (!rockGround(state)) return false;
             BlockPos above = cursor.above();
             // GT6's `WD.easyRep`: the block above must be replaceable — air, a snow layer or the
-            // plants the vanilla REPLACEABLE tag covers, not just air (§59).
+            // plants the vanilla REPLACEABLE tag covers, not just air.
             if (!replaceable(level.getBlockState(above))) return false;
             return placeRock(level, above, litterFor(random));
         }

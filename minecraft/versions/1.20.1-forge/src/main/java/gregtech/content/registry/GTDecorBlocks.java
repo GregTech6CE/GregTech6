@@ -28,11 +28,6 @@ public final class GTDecorBlocks {
     public static RegistryObject<ColoredGlassBlock> GLASS_GLOW;
 
     // N11: Spikes (5)
-    public static RegistryObject<Block> SPIKE_METAL;
-    public static RegistryObject<Block> SPIKE_STEEL;
-    public static RegistryObject<Block> SPIKE_SHARP;
-    public static RegistryObject<Block> SPIKE_FANCY;
-    public static RegistryObject<Block> SPIKE_SUPER;
 
     // N11: GT6 four-segment bars (Brass and Steel occur in bedrock dungeons).
     public static RegistryObject<BarsBlock> BARS_IRON;
@@ -156,11 +151,6 @@ public final class GTDecorBlocks {
         GREG_LANTERN = reference("greg_lantern");
         SANDWICH_BLOCK = reference("sandwich_block");
         BUMBLE_HIVE = reference("bumble_hive_light_gray");
-        SPIKE_METAL = reference("spike_metal");
-        SPIKE_STEEL = reference("spike_steel");
-        SPIKE_SHARP = reference("spike_sharp");
-        SPIKE_FANCY = reference("spike_fancy");
-        SPIKE_SUPER = reference("spike_super");
         BARS_IRON = reference("bars_iron");
         BARS_STEEL = reference("bars_steel");
         BARS_BRASS = reference("bars_brass");

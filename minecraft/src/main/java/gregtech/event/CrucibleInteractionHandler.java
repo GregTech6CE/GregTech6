@@ -22,9 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 
 /**
- * Server-side crucible interactions. {@link net.minecraft.world.level.block.Block#use} runs on the
- * client first and returning {@link InteractionResult#SUCCESS} there can prevent the server packet
- * from applying block-entity changes; all authoritative logic lives here instead.
+ * Predict container handling on the client and apply transfers only on the server.
+ * Both sides consume the click so BucketItem cannot also place fluid in the world.
  * <p>
  * Mold and basin right-click pour is handled by {@link SmelteryInteractionHandler}.
  */
@@ -38,13 +37,22 @@ public final class CrucibleInteractionHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getLevel().isClientSide()) {
-            return;
-        }
+        if (event.getEntity().isSpectator()) return;
         if (event.getHitVec().getDirection() != Direction.UP) {
             return;
         }
         BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
+        boolean container = gregtech.engine.machine.crucible.CrucibleContainerInteraction.handles(event.getItemStack());
+        if (event.getLevel().isClientSide()) {
+            var state = event.getLevel().getBlockState(event.getPos());
+            var formed = gregtech.content.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
+            if (container && (blockEntity instanceof gregtech.engine.fluid.MoltenMaterialStorage
+                    || state.hasProperty(formed) && state.getValue(formed))) {
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.SUCCESS);
+            }
+            return;
+        }
 //? if >=1.21.1 {
         /*SmeltingCrucibleEntity crucible = blockEntity instanceof SmeltingCrucibleEntity direct
 *///?} else {
@@ -52,22 +60,18 @@ public final class CrucibleInteractionHandler {
 //?}
                 ? direct : blockEntity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port
 //? if >=1.21.1 {
-                        /*&& port.isCrucibleUpperPort() && port.crucibleController() instanceof SmeltingCrucibleEntity owner ? owner : null;
+                        /*&& (container || port.isCrucibleUpperPort()) && port.crucibleController() instanceof SmeltingCrucibleEntity owner ? owner : null;
 *///?} else {
-                        && port.isCrucibleUpperPort() ? port.crucibleController() : null;
+                        && (container || port.isCrucibleUpperPort()) ? port.crucibleController() : null;
 //?}
         if (crucible == null) return;
         if (crucible instanceof gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity large
                 && !large.isStructureOk()) return;
-//? if >=1.21.1 {
-        /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(event.getEntity(), event.getHand(),
-                new gregtech.engine.fluid.MoltenFluidHandler(crucible))) {
-*///?} else {
-        if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(event.getEntity(), event.getHand(),
-                new gregtech.engine.fluid.MoltenFluidHandler(crucible))) {
-//?}
+        var transfer = gregtech.engine.machine.crucible.CrucibleContainerInteraction.interact(
+                crucible, event.getEntity(), event.getHand(), event.getPos());
+        if (transfer != InteractionResult.PASS) {
             event.setCanceled(true);
-            event.setCancellationResult(InteractionResult.CONSUME);
+            event.setCancellationResult(transfer);
             return;
         }
         InteractionResult result = crucible.tryUse(event.getEntity(), event.getHand(), event.getHitVec());

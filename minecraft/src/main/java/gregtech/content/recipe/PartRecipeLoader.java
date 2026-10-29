@@ -123,7 +123,7 @@ public class PartRecipeLoader implements InitializationStep {
                 machiningOutputs(m, in, inCount, out, outCount, output));
     }
 
-    /** RecipeMapHandlerPrefix:213–218 → OM.pulverize:370–371, including target identity and ratio. */
+    /** RecipeMapHandlerPrefix:213–218 → OM.pulverize, including target identity and ratio. */
     private static ItemStack[] machiningOutputs(GTMaterial material, MaterialPrefix in, int inCount,
                                                 MaterialPrefix out, int outCount, ItemStack output) {
         return machiningOutputs(material, in.getMaterialWeight() * inCount, out, outCount, output);
@@ -154,7 +154,7 @@ public class PartRecipeLoader implements InitializationStep {
         }
     }
 
-    /** Source Handlers:632–652; holders and ordinary collisions remain native admission decisions. */
+    /** Source Handlers; holders and ordinary collisions remain native admission decisions. */
     private void cut(GTMaterial material, SourceCutterRules.Rule rule, SourceCutterRules.Coolant coolant,
                      SourceCutterRules.Decision decision) {
         ItemStack input = rule.blockInput() == null ? mat(rule.input(), material, 1)

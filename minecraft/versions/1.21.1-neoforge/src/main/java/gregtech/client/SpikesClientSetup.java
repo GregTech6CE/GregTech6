@@ -1,6 +1,5 @@
 package gregtech.client;
 
-import gregtech.content.block.misc.SpikeBlock;
 import gregtech.content.registry.GTSpikes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,38 +12,15 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
         value = Dist.CLIENT)
 public final class SpikesClientSetup {
     @SubscribeEvent
-    public static void setup(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
-        event.enqueueWork(() -> gregtech.content.registry.GTSpikes.all()
-                .forEach(entry -> net.minecraft.client.renderer.item.ItemProperties.register(
-                        entry.get().asItem(),
-                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "spike_omni"),
-                        (stack, level, entity, seed) -> gregtech.content.block.misc.SpikeBlock.itemMode(stack)
-                                        == gregtech.content.block.misc.SpikeBlock.Mode.WALL
-                                ? 0
-                                : 1)));
-    }
-
-    @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block e) {
-        for (var b : GTSpikes.all())
-            e.register(
-                    (s, l, p, t) -> t == 0 ? b.get().materialTint(s.getValue(SpikeBlock.SECONDARY)) : 0xFFFFFF,
-                    b.get());
+        for (var b : GTSpikes.all()) e.register((s, l, p, t) -> t == 0 ? b.get().materialTint() : 0xFFFFFF, b.get());
     }
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item e) {
         for (var b : GTSpikes.all())
             e.register(
-                    ItemColorARGB.opaque((s, t) -> {
-                        var data = s.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
-                        return t == 0
-                                ? b.get()
-                                        .materialTint(data != null
-                                                && Boolean.parseBoolean(
-                                                        data.properties().getOrDefault("secondary", "false")))
-                                : 0xFFFFFF;
-                    }),
+                    ItemColorARGB.opaque((s, t) -> t == 0 ? b.get().materialTint() : 0xFFFFFF),
                     b.get().asItem());
     }
 }

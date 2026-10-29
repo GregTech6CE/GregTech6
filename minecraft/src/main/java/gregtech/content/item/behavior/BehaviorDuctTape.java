@@ -16,14 +16,14 @@ import net.minecraft.world.level.Level;
  *
  * <ul>
  *   <li>the click is refused outright while the stack is stacked, while the client side runs, or
- *       when the player may not edit the block ({@code :55});</li>
+ *       when the player may not edit the block;</li>
  *   <li>a full roll turns into its used roll and starts at {@code mUses}
- *       ({@code :63-67}) — and that conversion sticks even when the click itself does nothing,
- *       because the counter is written back unconditionally at {@code :76-78};</li>
- *   <li>the used roll calls {@code tape(...)} ({@code :68-75}); only a finite-item player spends its uses;
- *       at zero uses the stack either turns into the empty item or is consumed
- *       ({@code :80-87});</li>
- *   <li>{@code tape(...)} ({@code :91-99}) refuses an ordinary player's obstructed face
+ *       — and that conversion sticks even when the click itself does nothing,
+ *       because the counter is written back unconditionally at;</li>
+ *   <li>the used roll calls {@code tape(...)}; only a finite-item player spends its uses;
+ *       at zero uses the stack either turns into the empty item or is consumed;
+ *       </li>
+ *   <li>{@code tape(...)} refuses an ordinary player's obstructed face
  *       — {@code WD.obstructed}, i.e. the player cannot reach through the block behind it — and
  *       otherwise forwards to {@code IBlockToolable.Util.onToolClick(TOOL_ducttape, aUses, mQuality,
  *       ...)}, which is how a GT6 mass storage gets sealed
@@ -33,14 +33,14 @@ import net.minecraft.world.level.Level;
  *
  * <h2>The port's three rolls</h2>
  *
- * <p>The port registers the same six items ({@code GTMultiItemsGen.ENTRIES:140-145}: {@code tape} /
+ * <p>The port registers the same six items ({@code GTMultiItemsGen.ENTRIES}: {@code tape} /
  * {@code tape_2}, {@code duct_tape} / {@code duct_tape_2} and the BrainTech roll plus its {@code _2}
  * variant — the registered-first one is the full roll, the {@code _2} one the used roll, matching
- * {@code MultiItemRandomTools:555-556}, {@code :564-565} and {@code :573-574}). The qualities and
+ * {@code MultiItemRandomTools:555-556}). The qualities and
  * use counts are the original's constructor arguments:
- * {@link #TAPE_QUALITY}/{@link #TAPE_USES} ({@code :559}),
- * {@link #DUCT_TAPE_QUALITY}/{@link #DUCT_TAPE_USES} ({@code :568}) and
- * {@link #BRAIN_TAPE_QUALITY}/{@link #BRAIN_TAPE_USES} ({@code :577}).</p>
+ * {@link #TAPE_QUALITY}/{@link #TAPE_USES},
+ * {@link #DUCT_TAPE_QUALITY}/{@link #DUCT_TAPE_USES} and
+ * {@link #BRAIN_TAPE_QUALITY}/{@link #BRAIN_TAPE_USES}.</p>
  *
  * <p>{@code TOOL_ducttape} has exactly one implementor in GT6: Mass Storage.
  * The port's {@code MassStorageBlockEntity} implements {@link Tapeable} and
@@ -148,7 +148,7 @@ public final class BehaviorDuctTape {
      * unchanged; the original also performs its empty/consume step after a miss
      * (ALIGN-135).</p>
      *
-     * @param player the clicking player, or {@code null} for a direct automated call
+     * @param player   the clicking player, or {@code null} for a direct automated call
      * @return whether the click did something, plus the stack to store back
      */
     public static Outcome useOn(
@@ -179,12 +179,12 @@ public final class BehaviorDuctTape {
             float hitY,
             float hitZ) {
         if (level.isClientSide) return Outcome.refused(stack);
-        if (stack.getCount() != 1) return Outcome.refused(stack); // :55
-        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack); // :55
+        if (stack.getCount() != 1) return Outcome.refused(stack);
+        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);
         Consumable can = consumableOf(stack);
         if (can == null) return Outcome.refused(stack);
 
-        ItemStack prepared = can.prepared(stack); // :63-67
+        ItemStack prepared = can.prepared(stack);
         boolean sneaking = player != null && player.isShiftKeyDown();
         long spent = tape(
                 level,
@@ -199,12 +199,12 @@ public final class BehaviorDuctTape {
                 hitX,
                 hitY,
                 hitZ);
-        if (spent <= 0) return Outcome.refused(prepared); // :76-78 keeps the counter
-        return Outcome.acted(can.spent(prepared, spent)); // :80-87
+        if (spent <= 0) return Outcome.refused(prepared); // keeps the counter
+        return Outcome.acted(can.spent(prepared, spent));
     }
 
     /**
-     * GT6 {@code Behavior_Duct_Tape.tape(...)} ({@code :91-99}): hand the click to the block, but
+     * GT6 {@code Behavior_Duct_Tape.tape(...)}: hand the click to the block, but
      * only when the clicked face is not obstructed.
      *
      * <p>The original bypasses the obstruction gate for a null player, an invalid
@@ -217,7 +217,7 @@ public final class BehaviorDuctTape {
      * the "obstructed faces are never taped" rule independently testable.</p>
      *
      * @param target the block that would be taped, or {@code null} when none is there
-     * @param uses   the uses the tape has left
+     * @param uses     the uses the tape has left
      * @return the uses the target consumed, {@code 0} when nothing happened
      */
     public static long tape(
@@ -233,7 +233,7 @@ public final class BehaviorDuctTape {
             float hitX,
             float hitY,
             float hitZ) {
-        if (ItemBehaviors.obstructed(level, pos, side)) return 0L; // :92
+        if (ItemBehaviors.obstructed(level, pos, side)) return 0L;
         if (target == null) return 0L;
         return Math.max(0L, target.onTape(level, pos, side, player, stack, uses, quality, sneaking, hitX, hitY, hitZ));
     }

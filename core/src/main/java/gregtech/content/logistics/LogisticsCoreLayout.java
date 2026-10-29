@@ -13,13 +13,13 @@ public final class LogisticsCoreLayout {
             STORAGE = 18203,
             CONVERSION = 18204;
 
-    /** GT6 {@code :64}: {@code MAX_STORAGE_CPU_COUNT}. */
+    /** GT6's: {@code MAX_STORAGE_CPU_COUNT}. */
     public static final int MAX_STORAGE_CPU_COUNT = 108;
 
-    /** The original scans {@code tX+i, tY+j, tZ+k} for {@code i,j,k} in {@code [-2,2]} ({@code :117}). */
+    /** The original scans {@code tX+i, tY+j, tZ+k} for {@code i,j,k} in {@code [-2,2]}. */
     public static final int RADIUS = 2;
 
-    /** The three structural classes of {@code :118/:137/:139}. */
+    /** The three structural classes of. */
     public enum Kind {
         CPU,
         VENT,
@@ -30,22 +30,22 @@ public final class LogisticsCoreLayout {
 
     public record Counts(int logic, int control, int storage, int conversion) {
 
-        /** GT6 {@code :144}: every counter must be positive, and the structure must be complete. */
+        /** GT6's: every counter must be positive, and the structure must be complete. */
         public boolean valid() {
             return logic > 0 && control > 0 && storage > 0 && conversion > 0;
         }
 
-        /** GT6 {@code :216}: minimum stored energy before a routing pass can start. */
+        /** GT6's: minimum stored energy before a routing pass can start. */
         public long routingThreshold() {
             return 128L + (long) logic * 64L * conversion;
         }
 
-        /** GT6 {@code :699}: the nominal buffer ceiling (an incoming packet may exceed it). */
+        /** GT6's: the nominal buffer ceiling (an incoming packet may exceed it). */
         public long energyCapacity() {
             return 128L + (long) logic * 256L * conversion;
         }
 
-        /** GT6 {@code :209,504}: fixed charge on every server tick. */
+        /** GT6's: fixed charge on every server tick. */
         public long fixedEnergyPerTick() {
             return 20L + logic + control + storage + conversion;
         }

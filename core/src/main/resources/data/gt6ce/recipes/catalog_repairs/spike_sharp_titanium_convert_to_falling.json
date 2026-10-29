@@ -2,17 +2,11 @@
   "type": "gt6ce:spike_conversion",
   "ingredients": [
     {
-      "item": "gt6ce:spike_sharp"
+      "item": "gt6ce:spike_ball_sharp_titanium"
     }
   ],
   "result": {
-    "item": "gt6ce:spike_sharp",
-    "count": 1,
-    "nbt": {
-      "BlockStateTag": {
-        "mode": "falling",
-        "secondary": "true"
-      }
-    }
+    "item": "gt6ce:spike_ball_falling_sharp_titanium",
+    "count": 1
   }
 }

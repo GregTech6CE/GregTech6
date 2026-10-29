@@ -3,7 +3,7 @@ package gregtech.engine.machine;
 
 import java.util.List;
 
-/** Original39 smelting vessel identities, retaining existing port registry paths. */
+/** GT6's 39 smelting vessel identities, retaining existing port registry paths. */
 public final class OriginalCrucibleDefinitions {
     private OriginalCrucibleDefinitions() {}
 

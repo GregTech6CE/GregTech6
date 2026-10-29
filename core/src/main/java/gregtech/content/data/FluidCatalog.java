@@ -1751,7 +1751,7 @@ public class FluidCatalog {
      * Missing imported MOLTEN declarations, not new general material properties.
      * GT6 3703e40308c8c030763fd6297dea8b210d2a77b1 MT:394,695-696,715,744-746,757-760,
      * 793,1077,1086,1095,1123,1156,1311-1312,1631,3748,3798-3801;
-     * Loader_Fluids:659 creates these phases through FL.createMolten:1074-1077.
+     * Loader_Fluids:659 creates these phases through FL.createMolten.
      * Keep this finite ID/name proof local to fluid generation: MELTING, METAL, item forms,
      * targets and compatibility overrides must not be inferred or mutated from it.
      */

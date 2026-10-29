@@ -68,12 +68,11 @@ public final class SmelteryBlockEntityHelper {
     /**
      * Heat damage when picking up a hot solid without protection.
      *
-     * <p>This used to be its own formula (a 320&nbsp;K threshold and {@code (T-320)/100} capped at 8).
-     * GT6 has exactly one rule for "a surface of temperature T hurts to touch":
+     * <p>GT6 has exactly one rule for "a surface of temperature T hurts to touch":
      * {@code UT.Entities.applyTemperatureDamage(entity, temperature, 1, 5.0F)} - above 320&nbsp;K it
      * deals {@code max(1, min(5, (T - 300) / 50))}, below 260&nbsp;K it freezes instead - and it also
      * applies GT6's protections (creative mode, a full heat/frost hazard suit, blazes and fire
-     * resistance). The port now shares that rule with the fluid pipes and the burning boxes, so the
+     * resistance). The port shares that rule with the fluid pipes and the burning boxes, so the
      * same molten metal cannot burn for 6.8 points here and 5.0 points there.
      */
     public static void applyHeatDamage(Player player, long temperatureK) {

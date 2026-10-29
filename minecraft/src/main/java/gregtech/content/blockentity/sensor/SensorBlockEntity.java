@@ -34,8 +34,8 @@ public class SensorBlockEntity extends BlockEntity {
         THERMOMETER, TACHOMETER, WEIGHTOMETRIC, BUCKETOMETER,
         KILOBUCKETOMETER, GIBBLOMETER, STACKOMETER, LUMINOMETER,
         PLAYERCOUNTER, CHRONOMETER, GEIGER, LASEROMETER,
-        // §108: GT6 has four weight-o-meters that differ only in their scale (gramm / kilogramme /
-        // tons / kilotons - Loader_MultiTileEntities:1988-1991) and a TPS meter (:1992). The port's
+        // GT6 has four weight-o-meters that differ only in their scale (gramm / kilogramme /
+        // tons / kilotons - Loader_MultiTileEntities:1988-1991) and a TPS meter. The port's
         // WEIGHTOMETRIC is GT6's Heavy one (tonnes, maximum 65535), so these complete the set.
         WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM, WEIGHTOMETRIC_SUPER_HEAVY, TPS, KILOGIBBLOMETER
     }
@@ -224,11 +224,8 @@ public class SensorBlockEntity extends BlockEntity {
                             .resolve().orElse(null);
 //?}
                     if (fluids != null) {
-                        long amount = 0, capacity = 0;
-                        for (int i = 0; i < fluids.getTanks(); i++) {
-                            amount += fluids.getFluidInTank(i).getAmount();
-                            capacity += fluids.getTankCapacity(i);
-                        }
+                        var totals = gregtech.engine.fluid.FluidStorageInspection.read(target, fluids);
+                        long amount = totals.amount(), capacity = totals.capacity();
                         newValue = amount;
                         maximum = capacity;
                     }
@@ -331,11 +328,8 @@ public class SensorBlockEntity extends BlockEntity {
                             .resolve().orElse(null);
 //?}
                     if (fluids != null) {
-                        long amount = 0, capacity = 0;
-                        for (int i = 0; i < fluids.getTanks(); i++) {
-                            amount += fluids.getFluidInTank(i).getAmount();
-                            capacity += fluids.getTankCapacity(i);
-                        }
+                        var totals = gregtech.engine.fluid.FluidStorageInspection.read(target, fluids);
+                        long amount = totals.amount(), capacity = totals.capacity();
                         newValue = switch (be.kind) {
                             case BUCKETOMETER -> gregtech.engine.sensor.SensorMeasurements.cubicMetres(amount);
                             case KILOBUCKETOMETER -> gregtech.engine.sensor.SensorMeasurements.cubicDecametres(amount);

@@ -72,9 +72,10 @@ public final class CommonBlockTooltips {
                     && !gregtech.content.block.stone.StoneVariantFlags.spawnsCreatures(stone.variant())
                 || block instanceof gregtech.content.block.misc.CFoamBlock
                 || block instanceof gregtech.content.block.misc.CFoamSlabBlock
-                || block instanceof gregtech.content.block.misc.ConcreteBlock;
+                || block instanceof gregtech.content.block.misc.ConcreteBlock
+                || block instanceof gregtech.content.block.misc.AsphaltBlock;
         if (spawnProof && !containsKey(lines, "tooltip.gt6ce.no_mob_spawning"))
-            rows.add(Component.translatable("tooltip.gt6ce.no_mob_spawning").withStyle(ChatFormatting.DARK_GRAY));
+            rows.add(Component.translatable("tooltip.gt6ce.no_mob_spawning").withStyle(ChatFormatting.AQUA));
         if (block instanceof BookShelfBlock && !containsKey(lines, ENCHANT))
             rows.add(Component.translatable(ENCHANT).withStyle(ChatFormatting.DARK_GRAY));
         if (hasAttachedCover(stack) && !containsKey(lines, UNCOVER))

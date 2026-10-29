@@ -26,7 +26,7 @@ import java.util.List;
  *
  * <p>GTMultiItems owns the registrations; this class resolves them without registering aliases.
  * Each key stacks to 64, GT6's multi-item default
- * ({@code MultiItem.getItemStackLimit:392-396}).</p>
+ * ({@code MultiItem.getItemStackLimit}).</p>
  */
 public final class GTDungeonKeys {
 

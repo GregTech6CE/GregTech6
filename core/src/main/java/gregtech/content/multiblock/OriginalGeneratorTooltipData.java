@@ -1,5 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Original 17211..17234, MultiBlockConverter / Energy_Stats / LH.addToolTipsEfficiency. */
+ * Controller ids and inherited tooltip values of GT6's generators (17211..17234,
+ * MultiBlockConverter / Energy_Stats / LH.addToolTipsEfficiency). */
 package gregtech.content.multiblock;
 
 import java.util.*;
