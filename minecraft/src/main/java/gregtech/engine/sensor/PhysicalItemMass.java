@@ -1,6 +1,6 @@
 package gregtech.engine.sensor;
 
-import gregtech.api.material.WeightedMaterial;
+import gregtech.api.material.MaterialComponent;
 import gregtech.content.block.BlockMaterialWeights;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.stone.GTStoneBlock;
@@ -27,7 +27,7 @@ public final class PhysicalItemMass {
         }
         // Some native block registrations have no item-composition entry. Preserve their
         // physical components without applying ore crushing multipliers or recovery vetoes.
-        java.util.List<WeightedMaterial> components = java.util.List.of();
+        java.util.List<MaterialComponent> components = java.util.List.of();
         if (stack.getItem() instanceof BlockItem item) {
             var block = item.getBlock();
             if (block instanceof MaterialBlockLike material)

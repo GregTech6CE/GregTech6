@@ -2,6 +2,7 @@
 package gregtech.content.multiblock;
 
 import gregtech.api.multiblock.StructureGrid;
+import gregtech.api.multiblock.StructureRole;
 import java.util.*;
 
 /** Original five boiler variants, rated capacities and geometry. */
@@ -11,23 +12,23 @@ public final class OriginalLargeBoilerParameters {
     public static final int WATER_CAPACITY = 128_000, HU_PER_WATER = 80, STEAM_PER_WATER = 160;
 
     /** Source checkStructure2 uses world X/Z around the body centre, irrespective of front. */
-    public record CheckCell(int x, int y, int z, StructureGrid.Role role) {}
+    public record CheckCell(int x, int y, int z, StructureRole role) {}
 
     public static final List<CheckCell> CHECK_ORDER = checkOrder();
 
     private static List<CheckCell> checkOrder() {
         var cells = new ArrayList<CheckCell>();
-        cells.add(new CheckCell(0, 1, 0, StructureGrid.Role.AIR));
+        cells.add(new CheckCell(0, 1, 0, StructureRole.AIR));
         for (int y = -1; y <= 0; y++)
             for (int z = -1; z <= 1; z++)
                 for (int x = -1; x <= 1; x++)
                     cells.add(new CheckCell(
-                            x, y, z, y == -1 ? StructureGrid.Role.HEAT_INPUT : StructureGrid.Role.FLUID_INPUT));
-        cells.add(new CheckCell(0, 2, 0, StructureGrid.Role.FLUID_OUTPUT));
+                            x, y, z, y == -1 ? StructureRole.HEAT_INPUT : StructureRole.FLUID_INPUT));
+        cells.add(new CheckCell(0, 2, 0, StructureRole.FLUID_OUTPUT));
         for (int y = 1; y <= 2; y++)
             for (int z = -1; z <= 1; z++)
                 for (int x = -1; x <= 1; x++)
-                    if (x != 0 || z != 0) cells.add(new CheckCell(x, y, z, StructureGrid.Role.FLUID_OUTPUT));
+                    if (x != 0 || z != 0) cells.add(new CheckCell(x, y, z, StructureRole.FLUID_OUTPUT));
         return List.copyOf(cells);
     }
 
@@ -81,11 +82,11 @@ public final class OriginalLargeBoilerParameters {
         for (int y = -1; y <= 2; y++)
             for (int back = 0; back <= 2; back++)
                 for (int right = -1; right <= 1; right++) {
-                    StructureGrid.Role role;
-                    if (y == -1) role = StructureGrid.Role.HEAT_INPUT;
-                    else if (y == 0) role = StructureGrid.Role.FLUID_INPUT;
-                    else if (y == 1 && right == 0 && back == 1) role = StructureGrid.Role.AIR;
-                    else role = StructureGrid.Role.FLUID_OUTPUT;
+                    StructureRole role;
+                    if (y == -1) role = StructureRole.HEAT_INPUT;
+                    else if (y == 0) role = StructureRole.FLUID_INPUT;
+                    else if (y == 1 && right == 0 && back == 1) role = StructureRole.AIR;
+                    else role = StructureRole.FLUID_OUTPUT;
                     cells.add(new StructureGrid.Cell(right, y, back, role));
                 }
         return new StructureGrid(cells);

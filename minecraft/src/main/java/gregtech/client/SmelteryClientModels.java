@@ -55,7 +55,7 @@ public final class SmelteryClientModels {
 
     @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
-        for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
 //? if >=1.21.1 {
             /*event.register(ModelResourceLocation.standalone(MoldBasinIcons.sharedModelLocation(set)));
             event.register(ModelResourceLocation.standalone(CrucibleMoldIcons.sharedModelLocation(set)));
@@ -197,7 +197,7 @@ public final class SmelteryClientModels {
 //?}
             Function<MaterialTextureSet, ResourceLocation> sharedModel,
             MaterialTextureSet textureSet) {
-        for (MaterialTextureSet fallback : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
             if (fallback == textureSet) {
                 continue;
             }
@@ -280,7 +280,7 @@ public final class SmelteryClientModels {
         if (model != null) {
             return model;
         }
-        for (MaterialTextureSet fallback : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
             if (fallback == textureSet) {
                 continue;
             }

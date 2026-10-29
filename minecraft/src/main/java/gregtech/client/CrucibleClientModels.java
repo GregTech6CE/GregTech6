@@ -47,7 +47,7 @@ public final class CrucibleClientModels {
 
     @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
-        for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
 //? if >=1.21.1 {
             /*event.register(ModelResourceLocation.standalone(CrucibleBowlIcons.sharedModelLocation(set)));
 *///?} else {
@@ -89,7 +89,7 @@ public final class CrucibleClientModels {
             MaterialTextureSet textureSet = MaterialIcons.resolveTextureSet(spec.material());
             BakedModel shared = lookupModel(models, CrucibleBowlIcons.sharedModelLocation(textureSet));
             if (shared == null) {
-                for (MaterialTextureSet fallback : MaterialTextureSet.MODELED) {
+                for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
                     if (fallback == textureSet) {
                         continue;
                     }

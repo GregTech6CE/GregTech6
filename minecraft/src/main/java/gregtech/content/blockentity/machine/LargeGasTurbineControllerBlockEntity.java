@@ -29,7 +29,7 @@ import java.util.*;
 
 /** GT6 gas turbines: solid 3x3x4 structure, front fuel and bottom exhaust. */
 public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, IFluidHandler,
-        gregtech.api.machine.MachineControl.Provider, gregtech.engine.multiblock.tracking.TrackedMultiblock {
+        gregtech.api.platform.machine.MachineControl.Provider, gregtech.engine.multiblock.tracking.TrackedMultiblock {
     public static final int INPUT_MAX = 12288, OUTPUT_MAX = 8192; // Legacy lowest-grade constants.
 
     public gregtech.content.multiblock.GasTurbineDefinitions.Grade grade() {
@@ -40,7 +40,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     private boolean stopped;
     private boolean converting, emitted;
     private boolean rotorFormed, rotorActive;
-    private final gregtech.api.machine.MachineControl control =
+    private final gregtech.api.platform.machine.MachineControl control =
             gregtech.engine.machine.MachineControls.switchable(this,
                     () -> !this.stopped,
                     value -> {
@@ -51,7 +51,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
                     () -> this.emitted);
 
     @Override
-    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+    public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
         return control;
     }
 

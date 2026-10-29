@@ -22,16 +22,16 @@ import net.minecraftforge.energy.IEnergyStorage;
 import java.util.*;
 
 /** Packet-preserving conversion, with the original 50% EU/LU and 8:1 RF/LU ratios. */
-public final class LaserConverterBlockEntity extends GTEnergyBlockEntity implements gregtech.api.machine.MachineControl.Provider {
+public final class LaserConverterBlockEntity extends GTEnergyBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long energy;
     private boolean stopped;
     private boolean emitted;
     private long lastInput, lastOutput;
     public long lastInput() { return lastInput; }
     public long lastOutput() { return lastOutput; }
-    private final gregtech.api.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
             ()->!this.stopped,value->{this.stopped=!value;setChanged();},()->getBlockState().getValue(LaserConverterBlock.ACTIVE),()->emitted);
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
 //? if >=1.21.1 {
     /*private final IEnergyStorage forgeEnergy = createForgeEnergy();
     private IEnergyStorage createForgeEnergy() { return new IEnergyStorage() {

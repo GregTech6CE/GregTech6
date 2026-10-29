@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 
 /** Steam -> KU engine. Implements GT6 steam engine physics: energy storage (mEN),
  *  variable output based on fill level, preheating, and soft shutdown (no explosion). */
-public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.machine.MachineControl.Provider,
+public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider,
         gregtech.engine.machine.AdjacentEnergyControl.Provider {
 
     SteamEngineData spec;
@@ -44,9 +44,9 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     boolean enabled = true;
     boolean shutdown;
     private boolean emitted,working;
-    private final gregtech.api.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
             this::isEnabled,value->{this.enabled=value;setChanged();},()->working,()->emitted);
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
     @Override public gregtech.engine.machine.AdjacentEnergyControl adjacentEnergyControl() {
         return value -> {
             if (!isRemoved() && (level == null || !level.isClientSide) && enabled != value) {

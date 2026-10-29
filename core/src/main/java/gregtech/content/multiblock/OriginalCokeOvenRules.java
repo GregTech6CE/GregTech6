@@ -19,6 +19,7 @@
 package gregtech.content.multiblock;
 
 import gregtech.api.multiblock.StructureGrid;
+import gregtech.api.multiblock.StructureRole;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public final class OriginalCokeOvenRules {
                             y,
                             z,
                             air ? 0 : 18000,
-                            air ? StructureGrid.Role.AIR : StructureGrid.Role.ITEM_FLUID_ENERGY));
+                            air ? StructureRole.AIR : StructureRole.ITEM_FLUID_ENERGY));
                 }
         return List.copyOf(cells);
     }

@@ -47,7 +47,7 @@ import java.util.List;
  * Built-in engines and turbines do not use this class.
  */
 public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBlock, IFluidHandler,
-        gregtech.api.machine.MachineControl.Provider {
+        gregtech.api.platform.machine.MachineControl.Provider {
     private final FluidTank fuel;
     private final List<FluidTank> exhaust;
     private final RecipeMap recipes;
@@ -60,7 +60,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 /**///?} else {
     @Nullable private LazyOptional<IFluidHandler> fluids;
 //?}
-    private final gregtech.api.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
+    private final gregtech.api.platform.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
             () -> !stopped, value -> { stopped = !value; setChanged(); }, () -> stored > 0, () -> emitted);
 
     public FuelGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -94,7 +94,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         return amount;
     }
 
-    @Override public gregtech.api.machine.MachineControl machineControl(Direction side) { return control; }
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side) { return control; }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FuelGeneratorBlockEntity be) { be.tick(); }
 

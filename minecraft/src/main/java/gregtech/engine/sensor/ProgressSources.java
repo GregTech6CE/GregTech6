@@ -1,6 +1,6 @@
 package gregtech.engine.sensor;
 
-import gregtech.api.machine.MachineControl;
+import gregtech.api.platform.machine.MachineControl;
 import gregtech.api.sensor.ProgressSensorSource;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;

@@ -20,7 +20,6 @@ import gregtech.engine.machine.MachineSpec;
 import gregtech.api.material.GTMaterial;
 //?}
 
-import gregtech.api.material.WeightedMaterial;
 import gregtech.content.data.MachineRecipeMaps;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
