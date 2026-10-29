@@ -10,8 +10,10 @@ import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /** Addon large veins and small ores, appended after the built-in tables. */
@@ -20,43 +22,57 @@ public final class AddonOreVeins {
 
     private record Key(String dimension, String kind, String name) {}
 
-    private static volatile List<OreVein> overworldVeins = List.of();
-    private static volatile List<OreVein> endVeins = List.of();
-    private static volatile List<SmallOre> overworldSmall = List.of();
-    private static volatile List<SmallOre> netherSmall = List.of();
-    private static volatile List<SmallOre> endSmall = List.of();
+    private static volatile Map<String, List<OreVein>> veinsByDimension = Map.of();
+    private static volatile Map<String, List<SmallOre>> smallOresByDimension = Map.of();
     private static Set<GTMaterial> builtinOres;
 
     private AddonOreVeins() {}
 
+    /** Addon large veins declared for {@code dimension}. */
+    public static List<OreVein> veins(String dimension) {
+        return veinsByDimension.getOrDefault(dimension, List.of());
+    }
+
+    /** Addon small ores declared for {@code dimension}. */
+    public static List<SmallOre> smallOres(String dimension) {
+        return smallOresByDimension.getOrDefault(dimension, List.of());
+    }
+
+    /** Dimensions with at least one addon large vein. */
+    public static Set<String> veinDimensions() {
+        return veinsByDimension.keySet();
+    }
+
+    /** Dimensions with at least one addon small ore. */
+    public static Set<String> smallOreDimensions() {
+        return smallOresByDimension.keySet();
+    }
+
     public static List<OreVein> overworldVeins() {
-        return overworldVeins;
+        return veins(OreVeinDeclaration.OVERWORLD);
     }
 
     public static List<OreVein> endVeins() {
-        return endVeins;
+        return veins(OreVeinDeclaration.END);
     }
 
     public static List<SmallOre> overworldSmall() {
-        return overworldSmall;
+        return smallOres(SmallOreDeclaration.OVERWORLD);
     }
 
     public static List<SmallOre> netherSmall() {
-        return netherSmall;
+        return smallOres(SmallOreDeclaration.NETHER);
     }
 
     public static List<SmallOre> endSmall() {
-        return endSmall;
+        return smallOres(SmallOreDeclaration.END);
     }
 
     public static void publish(List<Submission> submissions) {
-        var taken = new java.util.HashMap<Key, String>();
+        var taken = new HashMap<Key, String>();
         claimBuiltIn(taken);
-        var overworld = new ArrayList<OreVein>();
-        var end = new ArrayList<OreVein>();
-        var overworldSmallOres = new ArrayList<SmallOre>();
-        var netherSmallOres = new ArrayList<SmallOre>();
-        var endSmallOres = new ArrayList<SmallOre>();
+        var veinBuckets = new HashMap<String, List<OreVein>>();
+        var smallBuckets = new HashMap<String, List<SmallOre>>();
         for (Submission submission : submissions) {
             for (OreVeinDeclaration vein : submission.veins) {
                 claim(taken, submission.addonId, vein.dimension(), "large", vein.name());
@@ -71,8 +87,9 @@ public final class AddonOreVeins {
                         ore(submission.addonId, vein.name(), vein.bottom()),
                         ore(submission.addonId, vein.name(), vein.between()),
                         ore(submission.addonId, vein.name(), vein.spread()));
-                if (OreVeinDeclaration.END.equals(vein.dimension())) end.add(resolved);
-                else overworld.add(resolved);
+                veinBuckets
+                        .computeIfAbsent(vein.dimension(), key -> new ArrayList<>())
+                        .add(resolved);
             }
             for (SmallOreDeclaration ore : submission.smallOres) {
                 claim(taken, submission.addonId, ore.dimension(), "small", ore.name());
@@ -82,18 +99,20 @@ public final class AddonOreVeins {
                         ore.maxY(),
                         ore.amount(),
                         ore(submission.addonId, ore.name(), ore.material()));
-                if (SmallOreDeclaration.NETHER.equals(ore.dimension())) netherSmallOres.add(resolved);
-                else if (SmallOreDeclaration.END.equals(ore.dimension())) endSmallOres.add(resolved);
-                else overworldSmallOres.add(resolved);
+                smallBuckets
+                        .computeIfAbsent(ore.dimension(), key -> new ArrayList<>())
+                        .add(resolved);
             }
         }
-        fit(GTOreVeins.OVERWORLD_VEINS, overworld, 0);
-        fit(GTOreVeins.END_VEINS, end, GTOreVeins.END_EMPTY_VEIN_WEIGHT);
-        overworldVeins = List.copyOf(overworld);
-        endVeins = List.copyOf(end);
-        overworldSmall = List.copyOf(overworldSmallOres);
-        netherSmall = List.copyOf(netherSmallOres);
-        endSmall = List.copyOf(endSmallOres);
+        var veins = new HashMap<String, List<OreVein>>();
+        for (var entry : veinBuckets.entrySet()) {
+            fit(entry.getKey(), entry.getValue());
+            veins.put(entry.getKey(), List.copyOf(entry.getValue()));
+        }
+        var smallOres = new HashMap<String, List<SmallOre>>();
+        for (var entry : smallBuckets.entrySet()) smallOres.put(entry.getKey(), List.copyOf(entry.getValue()));
+        veinsByDimension = Map.copyOf(veins);
+        smallOresByDimension = Map.copyOf(smallOres);
     }
 
     private static void claimBuiltIn(java.util.Map<Key, String> taken) {
@@ -118,11 +137,21 @@ public final class AddonOreVeins {
                 "Addon '" + addonId + "' " + label + " '" + name + "' for " + dimension + " is already " + previous);
     }
 
-    private static void fit(List<OreVein> base, List<OreVein> added, int emptyWeight) {
-        long sum = emptyWeight;
-        for (OreVein vein : base) sum = Math.addExact(sum, vein.weight());
+    /** Built-in entries of the dimension count toward its weight total; other dimensions are addon-only. */
+    private static void fit(String dimension, List<OreVein> added) {
+        long sum;
+        if (OreVeinDeclaration.OVERWORLD.equals(dimension)) sum = weight(GTOreVeins.OVERWORLD_VEINS, 0);
+        else if (OreVeinDeclaration.END.equals(dimension))
+            sum = weight(GTOreVeins.END_VEINS, GTOreVeins.END_EMPTY_VEIN_WEIGHT);
+        else sum = 0;
         for (OreVein vein : added) sum = Math.addExact(sum, vein.weight());
         if (sum > Integer.MAX_VALUE) throw new IllegalStateException("Ore vein weights do not fit in an int");
+    }
+
+    private static long weight(List<OreVein> veins, int emptyWeight) {
+        long sum = emptyWeight;
+        for (OreVein vein : veins) sum = Math.addExact(sum, vein.weight());
+        return sum;
     }
 
     private static GTMaterial ore(String addonId, String vein, String name) {

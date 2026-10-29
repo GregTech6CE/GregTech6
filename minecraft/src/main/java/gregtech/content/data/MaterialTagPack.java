@@ -606,6 +606,13 @@ public final class MaterialTagPack extends AbstractPackResources {
         kind = switch (kind) { case "items" -> "item"; case "blocks" -> "block"; default -> kind; };
 *///?} else {
 //?}
+        addOne(tags,ns,kind,path,value);
+//? if >=1.21.1 {
+        /*// NeoForge 1.21.1 reads the c: namespace for common tags; keep forge: for older consumers.
+        if(ns.equals("forge")) addOne(tags,"c",kind,path,value);
+*///?}
+    }
+    private static void addOne(Map<String,Set<String>> tags,String ns,String kind,String path,String value) {
         tags.computeIfAbsent(ns+":tags/"+kind+"/"+path+".json",k->new TreeSet<>()).add(value);
         int slash=path.indexOf('/');
         if(slash>0) tags.computeIfAbsent(ns+":tags/"+kind+"/"+path.substring(0,slash)+".json",k->new TreeSet<>()).add("#"+ns+":"+path);

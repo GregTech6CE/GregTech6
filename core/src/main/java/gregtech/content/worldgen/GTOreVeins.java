@@ -1,5 +1,7 @@
 package gregtech.content.worldgen;
 
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
+import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.Materials;
 import java.util.List;
@@ -406,6 +408,21 @@ public final class GTOreVeins {
 
     public static List<SmallOre> activeEndSmallOres() {
         return append(END_SMALL_ORES, AddonOreVeins.endSmall());
+    }
+
+    /** Built-in large veins of {@code dimension}, then its addon veins. Other dimensions are addon-only. */
+    public static List<OreVein> activeVeins(String dimension) {
+        if (OreVeinDeclaration.OVERWORLD.equals(dimension)) return activeOverworldVeins();
+        if (OreVeinDeclaration.END.equals(dimension)) return activeEndVeins();
+        return AddonOreVeins.veins(dimension);
+    }
+
+    /** Built-in small ores of {@code dimension}, then its addon small ores. Other dimensions are addon-only. */
+    public static List<SmallOre> activeSmallOres(String dimension) {
+        if (SmallOreDeclaration.OVERWORLD.equals(dimension)) return activeOverworldSmallOres();
+        if (SmallOreDeclaration.NETHER.equals(dimension)) return activeNetherSmallOres();
+        if (SmallOreDeclaration.END.equals(dimension)) return activeEndSmallOres();
+        return AddonOreVeins.smallOres(dimension);
     }
 
     private static <T> List<T> append(List<T> base, List<T> extra) {

@@ -1,5 +1,6 @@
 package gregtech.content.worldgen;
 
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.worldgen.GTOreVeins.OreVein;
 import java.util.Random;
@@ -40,20 +41,12 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         if (!gregtech.GregTechConfig.Worldgen.GEOLOGY.enabled()) return false;
         WorldGenLevel level = context.level();
 
-        // Per-dimension vein tables (GT6 ORE_OVERWORLD / ORE_END; the Nether had no large veins).
-        java.util.List<OreVein> veins;
-        int totalWeight;
-        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim =
-                level.getLevel().dimension();
-        if (dim == net.minecraft.world.level.Level.END) {
-            veins = GTOreVeins.activeEndVeins();
-            totalWeight = GTOreVeins.endSelectionWeight(veins);
-        } else if (dim == net.minecraft.world.level.Level.NETHER) {
-            return false;
-        } else {
-            veins = GTOreVeins.activeOverworldVeins();
-            totalWeight = veins.stream().mapToInt(OreVein::weight).sum();
-        }
+        // Per-dimension vein tables: built-ins where they exist, then addon veins for this dimension.
+        String dimension = level.getLevel().dimension().location().toString();
+        java.util.List<OreVein> veins = GTOreVeins.activeVeins(dimension);
+        int totalWeight = OreVeinDeclaration.END.equals(dimension)
+                ? GTOreVeins.endSelectionWeight(veins)
+                : veins.stream().mapToInt(OreVein::weight).sum();
         if (veins.isEmpty() || totalWeight <= 0) return false;
 
         RandomSource chunkRandom = context.random();

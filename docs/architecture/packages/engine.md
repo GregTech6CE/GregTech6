@@ -15,7 +15,7 @@
 | `engine.prefix` | 材料形态/前缀的注册与解析 | `PrefixRegistry`、`BlockPrefixRegistry` |
 | `engine.recipe` | 配方成本、并行与输出空间拟合、燃料批次、可合成性和界面坐标等共享机制 | `MachineWorkCost`、`ParallelFit`、`FluidFuelChargeMath`；不能夹带游戏栈 |
 | `engine.recipe.data` | 配方文档模型、组件、解析及校验 | `MachineRecipeDocuments`、`ItemComponent`、`FluidComponent` |
-| `engine.machine` | 通用机器规格、供能、燃烧与执行规则 | `BasicMachineEnergy`、`BoilerSpec`、`BurningBoxFuelRules` |
+| `engine.machine` | 通用机器规格、供能、燃烧与执行规则 | `BasicMachineEnergy`、`BoilerSpec`、`MaterialFuelRules` |
 | `engine.machine.crucible` | 坩埚能量、物料、温度与加工过程 | `CrucibleProcess`、`CrucibleMath`、`CrucibleMaterialStack` |
 | `engine.multiblock` | 多方块处理、部件绑定、控制器与工具操作规则 | `PartBindings`、`LargeMachineProcessingRules`；世界探测在 Minecraft 层 |
 | `engine.energy` | 能源转换、连接、存储状态和门控 | `EnergyBridge`、`EnergyGate`、`BatteryBoxState` |

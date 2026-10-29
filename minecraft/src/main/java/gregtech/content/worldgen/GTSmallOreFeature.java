@@ -30,17 +30,9 @@ public class GTSmallOreFeature extends Feature<NoneFeatureConfiguration> {
         int minX = origin.getX() & ~15;
         int minZ = origin.getZ() & ~15;
 
-        // Per-dimension tables (GT6 GEN_OVERWORLD / GEN_NETHER / GEN_END).
-        java.util.List<SmallOre> ores;
-        net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim =
-                level.getLevel().dimension();
-        if (dim == net.minecraft.world.level.Level.NETHER) {
-            ores = GTOreVeins.activeNetherSmallOres();
-        } else if (dim == net.minecraft.world.level.Level.END) {
-            ores = GTOreVeins.activeEndSmallOres();
-        } else {
-            ores = GTOreVeins.activeOverworldSmallOres();
-        }
+        // Built-in tables for the three original dimensions, plus addon small ores for this dimension.
+        String dimension = level.getLevel().dimension().location().toString();
+        java.util.List<SmallOre> ores = GTOreVeins.activeSmallOres(dimension);
 
         boolean placedAny = false;
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();

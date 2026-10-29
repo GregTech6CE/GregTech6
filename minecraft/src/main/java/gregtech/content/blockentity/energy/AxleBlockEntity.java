@@ -2,7 +2,6 @@ package gregtech.content.blockentity.energy;
 
 import gregtech.engine.energy.AxleSpec;
 import gregtech.engine.energy.EnergyBlockViews;
-import gregtech.engine.energy.EnergyNet;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.energy.IEnergyConductor;
@@ -35,7 +34,6 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
     // Sample the existing transfer accumulator between entity ticks; never substitute energy.
     @Override public long progressValue(int side) { return transferredPower(); }
     @Override public long progressMaximum(int side) { return maxPower(); }
-    private boolean initialized;
 //? if >=1.21.1 {
     /*public static final net.neoforged.neoforge.client.model.data.ModelProperty<Integer> ROTATION = new net.neoforged.neoforge.client.model.data.ModelProperty<>();
 *///?} else {
@@ -72,48 +70,6 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
             requestModelDataUpdate();
             gregtech.engine.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
         }
-        if (!initialized && level != null && !level.isClientSide) {
-            initialized = true;
-            EnergyNet.onPlace(level, worldPosition);
-            onConnectionChanged();
-        }
-    }
-
-    public void onRemoved() {
-        if (level != null && !level.isClientSide) EnergyNet.onRemove(level, worldPosition);
-    }
-
-    /**
-     * Releases this axle's {@link EnergyNet} entry when the block entity goes away.
-     *
-     * <p>{@link #onRemoved} is otherwise reached only from {@code AxleBlock#onRemove}, which runs when
-     * the block is replaced or broken - a chunk unload never goes through the block. Vanilla unloads a
-     * chunk by calling {@code BlockEntity#onChunkUnloaded} and then {@code setRemoved} on every block
-     * entity of the chunk and dropping them from the chunk map
-     * ({@code LevelChunk#clearAllBlockEntities}). Without these two overrides the axle position stayed
-     * in the per-dimension adjacency map for the lifetime of the level: the map grew with every chunk a
-     * player visited and never shrank, which is the unbounded growth this fixes. Both calls are
-     * idempotent, and a reloaded chunk builds a fresh block entity that registers itself again from
-     * {@link #onLoad}.</p>
-     */
-    @Override
-    public void setRemoved() {
-        onRemoved();
-        super.setRemoved();
-    }
-
-    /** The other half of vanilla's unload pair; see {@link #setRemoved()}. */
-    @Override
-    public void onChunkUnloaded() {
-        onRemoved();
-        super.onChunkUnloaded();
-    }
-
-    public void onConnectionChanged() {
-        if (level == null || level.isClientSide) return;
-        BlockState state = getBlockState();
-        EnergyNet.onConnectionChange(level, worldPosition, state, AxleBlock.CONNECTIONS);
-        setChanged();
     }
 
     private static boolean canConnectTo(BlockEntity entity,Direction side) {
@@ -140,7 +96,6 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
                 BlockState neighborCandidate =
                         neighborAxle.getBlockState().setValue(AxleBlock.propFor(clickedFace), true);
                 if (!AxleBlock.isValidConnectionState(neighborCandidate)) {
-                    onConnectionChanged();
                     return;
                 }
                 state = state.setValue(AxleBlock.propFor(toNeighbor), true);
@@ -192,8 +147,6 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
                 }
             }
         }
-
-        onConnectionChanged();
     }
 
     @Override
