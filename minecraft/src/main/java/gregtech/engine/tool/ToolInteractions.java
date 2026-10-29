@@ -1,7 +1,6 @@
 package gregtech.engine.tool;
 
 import gregtech.util.GTPlacementCode;
-import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -108,7 +107,5 @@ public final class ToolInteractions {
         /*level.invalidateCapabilities(pos);
 *///?} else {
 //?}
-        if (level.getBlockEntity(pos) instanceof ElectricWireBlockEntity wire) wire.onConnectionChanged();
-        if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.energy.AxleBlockEntity axle) axle.onConnectionChanged();
     }
 }
