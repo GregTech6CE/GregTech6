@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
-/** Native world boundary for the optional original IC2 crop contract. */
+/** Native world boundary for the optional crop-analysis contract. */
 public final class BehaviorCropnalyzer {
     private BehaviorCropnalyzer() {}
 

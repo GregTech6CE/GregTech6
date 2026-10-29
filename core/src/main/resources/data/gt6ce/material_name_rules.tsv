@@ -1,0 +1,210 @@
+# Material-specific display rules for the GT6 material naming function.
+# Columns: materials (comma separated) <TAB> prefix condition <TAB> name template
+# Condition: "=name" exact prefix name, "name*" prefix name prefix, "#TAG|TAG" any prefix tag, "*" any prefix.
+# Template: {before}, {after} and {local} resolve from the prefix and the material display name;
+# {display:Material} resolves another material's display name.
+# Rules are evaluated in file order per material; the first matching condition wins.
+
+Stone	=rockGt	Rock
+AncientDebris	=rockGt	{local}
+AncientDebris	=oreRaw	Big Chunks of {local}
+AncientDebris	=crushed	Recycled {local}
+AncientDebris	=crushedTiny	Tiny Recycled {local}
+AncientDebris	=nugget	Tiny Piece of Netherite Scrap
+AncientDebris	=chunkGt	Small Piece of Netherite Scrap
+AncientDebris	=billet	Billet of Netherite Scrap
+AncientDebris	=scrap	Scrap Piece of Netherite Scrap
+AncientDebris	ore*	{local}
+AncientDebris	crushed*	{before}{local}
+AncientDebris	#DUST_BASED	{before}Netherite Scrap Powder
+AncientDebris	ingot*	{before}Netherite Scrap
+Sand,RedSand,Soulsand,WhiteEndSand,BlackEndSand	=crushed	Ground {local}
+Sand,RedSand,Soulsand,WhiteEndSand,BlackEndSand	=crushedTiny	Tiny Ground {local}
+Sand,RedSand,Soulsand,WhiteEndSand,BlackEndSand	ore*	{local}
+Sand,RedSand,Soulsand,WhiteEndSand,BlackEndSand	crushed*	{before}{local}
+Sand,RedSand,Soulsand,WhiteEndSand,BlackEndSand	#DUST_BASED	{before}{local}
+Netherrack	=rockGt	Nether Rock
+Endstone	=rockGt	End Rock
+MeteoricIron,Meteorite	=rockGt	Meteorite
+MeteoricIron,Meteorite	=oreRaw	Big Meteorite
+SpaceStone	=rockGt	Space Rock
+MoonStone	=rockGt	Moon Rock
+MarsStone	=rockGt	Mars Rock
+MoonTurf	#DUST_BASED	{before}Moon Turf
+MoonTurf	crushed*	{before}Moon Turf
+MoonTurf	=rockGt	Moon Surface Rock
+MarsSand	#DUST_BASED	{before}Mars Turf
+MarsSand	crushed*	{before}Mars Turf
+MarsSand	=rockGt	Mars Surface Rock
+Holystone	=rockGt	Holy Rock
+Umber	=rockGt	Umber Rock
+Betweenstone	=rockGt	Betweenrock
+Pitstone	=rockGt	Pit Rock
+Gneiss	=rockGt	Gneiss
+Glass	=scrapGt	{local} Shards
+Glass	=round	{local} Marble
+Glass	=plateGem	Cast {local} Pane
+Glass	=plateGemTiny	Tiny Cast {local} Pane
+Glass	gem*	{before}{local} Crystal
+Glass	plate*	{before}{local} Pane
+Prismarine,PrismarineDark	=rockGt	{local} Shard
+Prismarine,PrismarineDark	=scrapGt	{local} Shards
+Prismarine,PrismarineDark	=round	{local} Marble
+Prismarine,PrismarineDark	gem*	{before}{local} Crystal
+Frezarite,Fluix	gem*	{before}{local} Crystal
+InfusedDull	ore*	Dull Crystals
+InfusedDull	gem*	{before}Dull Shard
+InfusedDull	crystal*	{before}Dull Shard
+InfusedDull	crushed*	{before}Dull Shards
+InfusedDull	#DUST_BASED	{before}Dull Crystal Powder
+InfusedDull	=chemtube	{before}Dull Crystal Powder
+InfusedDull	*	{before}Dull{after}
+InfusedBalance	ore*	Balance infused Stone
+InfusedBalance	gem*	{before}Balance Shard
+InfusedBalance	crystal*	{before}Balance Shard
+InfusedBalance	crushed*	{before}Balance Shards
+InfusedBalance	#DUST_BASED	{before}Balance infused Powder
+InfusedBalance	=chemtube	{before}Balance infused Powder
+InfusedBalance	*	{before}Balance infused{after}
+InfusedVis	ore*	Magic infused Stone
+InfusedVis	gem*	{before}Magic Shard
+InfusedVis	crystal*	{before}Magic Shard
+InfusedVis	crushed*	{before}Magic Shards
+InfusedVis	#DUST_BASED	{before}Magic infused Powder
+InfusedVis	=chemtube	{before}Magic infused Powder
+InfusedVis	*	{before}Magic infused{after}
+InfusedAir	ore*	Air infused Stone
+InfusedAir	gem*	{before}Air Shard
+InfusedAir	crystal*	{before}Air Shard
+InfusedAir	crushed*	{before}Air Shards
+InfusedAir	#DUST_BASED	{before}Air infused Powder
+InfusedAir	=chemtube	{before}Air infused Powder
+InfusedAir	*	{before}Air infused{after}
+InfusedWater	ore*	Water infused Stone
+InfusedWater	gem*	{before}Water Shard
+InfusedWater	crystal*	{before}Water Shard
+InfusedWater	crushed*	{before}Water Shards
+InfusedWater	#DUST_BASED	{before}Water infused Powder
+InfusedWater	=chemtube	{before}Water infused Powder
+InfusedWater	*	{before}Water infused{after}
+InfusedEarth	ore*	Earth infused Stone
+InfusedEarth	gem*	{before}Earth Shard
+InfusedEarth	crystal*	{before}Earth Shard
+InfusedEarth	crushed*	{before}Earth Shards
+InfusedEarth	#DUST_BASED	{before}Earth infused Powder
+InfusedEarth	=chemtube	{before}Earth infused Powder
+InfusedEarth	*	{before}Earth infused{after}
+InfusedFire	ore*	Fire infused Stone
+InfusedFire	gem*	{before}Fire Shard
+InfusedFire	crystal*	{before}Fire Shard
+InfusedFire	crushed*	{before}Fire Shards
+InfusedFire	#DUST_BASED	{before}Fire infused Powder
+InfusedFire	=chemtube	{before}Fire infused Powder
+InfusedFire	*	{before}Fire infused{after}
+InfusedOrder	ore*	Order infused Stone
+InfusedOrder	gem*	{before}Order Shard
+InfusedOrder	crystal*	{before}Order Shard
+InfusedOrder	crushed*	{before}Order Shards
+InfusedOrder	#DUST_BASED	{before}Order infused Powder
+InfusedOrder	=chemtube	{before}Order infused Powder
+InfusedOrder	*	{before}Order infused{after}
+InfusedEntropy	ore*	Entropy infused Stone
+InfusedEntropy	gem*	{before}Entropy Shard
+InfusedEntropy	crystal*	{before}Entropy Shard
+InfusedEntropy	crushed*	{before}Entropy Shards
+InfusedEntropy	#DUST_BASED	{before}Entropy infused Powder
+InfusedEntropy	=chemtube	{before}Entropy infused Powder
+InfusedEntropy	*	{before}Entropy infused{after}
+Peridot	#DUST_BASED	{before}Olivine
+Craponite	#DUST_BASED	{before}Flavourite
+Wheat	#DUST_BASED	{before}Flour
+Oat	#DUST_BASED	{before}Oatmeal
+AbyssalOat	#DUST_BASED	{before}Abyssal Oatmeal
+Rye	#DUST_BASED	{before}Rye Flour
+Barley	#DUST_BASED	{before}Barley Flour
+Corn	#DUST_BASED	{before}Cornmeal
+Rice	#DUST_BASED	{before}Rice
+Ice	=gemChipped	Ice Cubes
+Ice	=gemFlawed	Medium Ice Cube
+Ice	=gem	Large Ice Cube
+Ice	#DUST_BASED	{before}Crushed Ice
+WoodTreated	=rockGt	{local}
+WoodTreated	=scrapGt	{local} Splinters
+WoodTreated	bolt*	Short Treated Stick
+WoodTreated	stick*	{before}Treated Stick
+WoodTreated	#DUST_BASED	{before}{local} Pulp
+WoodTreated	=nugget	{before}{local} Chip
+WoodTreated	plate*	{before}Treated Plank
+FierySteel	#IS_CONTAINER	{before}Fiery Blood{after}
+Steeleaf,Fireleaf	=plantGtBlossom	{local} Leaf
+Steeleaf,Fireleaf	ingot*	{before}{local}
+Bark	#DUST_BASED	{before}Tree Bark
+Tea,Mint	=plantGtBlossom	{local} Leaf
+Tea,Mint	#DUST_BASED	{before}{local} Powder
+Bone	ore*	{before}Fossil
+Bone	#DUST_BASED	{before}Bonemeal
+Bone	crushed*	{before}Bones
+Flint	=rockGt	Mario
+Pyrite	#ORE	{before}{display:Gold}{after}
+MagnesiumCarbonate	#ORE|ORE_PROCESSING_BASED	{before}Magnesite{after}
+Asbestos	#ORE|ORE_PROCESSING_BASED	{before}Chrysotile{after}
+Talc	#ORE|ORE_PROCESSING_BASED	{before}Soapstone{after}
+AluminiumHydroxide	#ORE|ORE_PROCESSING_BASED	{before}Gibbsite{after}
+Gold	=plantGtBlossom	Aurelia Leaf
+Iron	=plantGtBlossom	Ferru Leaf
+Lead	=plantGtBlossom	Plumbilia Leaf
+Silver	=plantGtBlossom	Argentia Leaf
+Tin	=plantGtTwig	Tine Twig
+Copper	=plantGtFiber	Coppon Fiber
+Emerald	=plantGtBerry	Bobs-Yer-Uncle-Berry
+Milk	=plantGtWart	Milkwart
+Milk	#DUST_BASED	{before}{local} Powder
+Chocolate,Cheese	#DUST_BASED	{before}{local} Powder
+Chocolate,Cheese	ingot*	{before}{local} Bar
+Butter,SaltedButter	ingot*	{before}{local}
+Indigo,ConstructionFoam,Cocoa,Curry,Coffee,Chili,Snow	#DUST_BASED	{before}{local} Powder
+Potato,Hazelnut,Pistachio,Almond,Peanut,Nutmeg,Cinnamon,Vanilla,PepperBlack	#DUST_BASED	{before}Ground {local}
+Paper	#DUST_BASED	{before}Chad
+Paper	=scrapGt	Shredded {local}
+Paper	=plateTiny	Tiny piece of Paper
+Paper	=plate	Sheet of Paper
+Paper	=plateDouble	Paperboard
+Paper	=plateTriple	Carton
+Paper	=plateQuadruple	Cardboard
+Paper	=plateQuintuple	Thick Cardboard
+Paper	=plateDense	Strong Cardboard
+FishRaw	#DUST_BASED	{before}Fishmeal
+FishCooked	#DUST_BASED	{before}Cooked Fishmeal
+FishRotten	#DUST_BASED	{before}Rotten Fishmeal
+MeatRaw	#DUST_BASED	{before}Mince Meat
+MeatCooked	#DUST_BASED	{before}Cooked Mince Meat
+MeatRotten	#DUST_BASED	{before}Rotten Mince Meat
+SoylentGreen,Tofu	#DUST_BASED	{before}Silken {local}
+SoylentGreen,Tofu	ingot*	{before}{local} Bar
+Peat,PeatBituminous	#DUST_BASED	{before}{local}
+Peat,PeatBituminous	ingot*	{before}{local} Brick
+Lignite,LigniteCoke,Charcoal,Coal,CoalCoke,Anthracite,Prismane,Lonsdaleite,PetroleumCoke,HydratedCoal	ingot*	{before}{local} Brick
+Lignite,LigniteCoke,Charcoal,Coal,CoalCoke,Anthracite,Prismane,Lonsdaleite,PetroleumCoke,HydratedCoal	=chunkGt	{before}{local} Chunk
+Lignite,LigniteCoke,Charcoal,Coal,CoalCoke,Anthracite,Prismane,Lonsdaleite,PetroleumCoke,HydratedCoal	=nugget	{before}{local} Pellet
+Sugar	=gemChipped	Sugar Cubes
+Sylvite	#DUST_BASED	{before}Rock Salt
+Ceramic	=scrapGt	Brittle Ceramic Scraps
+Ceramic	#DUST_BASED	{before}Dry Clay Powder
+Blizz,Blaze,Basalz,Blitz,Breeze	#DUST_BASED	{before}{local} Powder
+Blizz,Blaze,Basalz,Blitz,Breeze	stick*	{before}{local} Rod
+Blizz,Blaze,Basalz,Blitz,Breeze	ingot*	{before}{local} Bar
+Clay,ClayBrown,ClayRed,Bentonite,Palygorskite,Kaolinite	#DUST_BASED	{before}{local} Powder
+Teflon,PVC,Bakelite,HardPlastic,Plastic,Rubber	#DUST_BASED	{before}{local} Pulp
+Teflon,PVC,Bakelite,HardPlastic,Plastic,Rubber	plate*	{before}{local} Sheet
+Teflon,PVC,Bakelite,HardPlastic,Plastic,Rubber	ingot*	{before}{local} Bar
+Teflon,PVC,Bakelite,HardPlastic,Plastic,Rubber	=nugget	{before}{local} Chip
+Teflon,PVC,Bakelite,HardPlastic,Plastic,Rubber	foil*	Thin {local} Sheet
+Dilithium	gem*	{before}{local} Crystal
+Ectoplasm,Tallow,Gunpowder,Salt,IodineSalt,Asphalt	#DUST_BASED	{before}{local}
+Black,Red,Green,Brown,Blue,Purple,Cyan,LightGray,Gray,Pink,Lime,Yellow,LightBlue,Magenta,Orange,White	=plantGtFiber	{local} String
+Black,Red,Green,Brown,Blue,Purple,Cyan,LightGray,Gray,Pink,Lime,Yellow,LightBlue,Magenta,Orange,White	#DUST_BASED	{before}{local} Dye
+Wax,WaxMagic,WaxAmnesic,WaxSoulful,WaxBee,WaxRefractory,WaxPlant,WaxParaffin,Ashes,DarkAshes,VolcanicAshes,ArcaneAshes,ArcaneCompound,Vermiculite,Magnetite,BasalticMineralSand,GraniticMineralSand,GarnetSand,SluiceSand,QuartzSand,Pitchblende,RareEarth,OilSand	ore*	{before}{local}
+Wax,WaxMagic,WaxAmnesic,WaxSoulful,WaxBee,WaxRefractory,WaxPlant,WaxParaffin,Ashes,DarkAshes,VolcanicAshes,ArcaneAshes,ArcaneCompound,Vermiculite,Magnetite,BasalticMineralSand,GraniticMineralSand,GarnetSand,SluiceSand,QuartzSand,Pitchblende,RareEarth,OilSand	#DUST_BASED	{before}{local}
+Wax,WaxMagic,WaxAmnesic,WaxSoulful,WaxBee,WaxRefractory,WaxPlant,WaxParaffin,Ashes,DarkAshes,VolcanicAshes,ArcaneAshes,ArcaneCompound,Vermiculite,Magnetite,BasalticMineralSand,GraniticMineralSand,GarnetSand,SluiceSand,QuartzSand,Pitchblende,RareEarth,OilSand	=crushed	Ground {local}
+Wax,WaxMagic,WaxAmnesic,WaxSoulful,WaxBee,WaxRefractory,WaxPlant,WaxParaffin,Ashes,DarkAshes,VolcanicAshes,ArcaneAshes,ArcaneCompound,Vermiculite,Magnetite,BasalticMineralSand,GraniticMineralSand,GarnetSand,SluiceSand,QuartzSand,Pitchblende,RareEarth,OilSand	=crushedTiny	Tiny Ground {local}
+Wax,WaxMagic,WaxAmnesic,WaxSoulful,WaxBee,WaxRefractory,WaxPlant,WaxParaffin,Ashes,DarkAshes,VolcanicAshes,ArcaneAshes,ArcaneCompound,Vermiculite,Magnetite,BasalticMineralSand,GraniticMineralSand,GarnetSand,SluiceSand,QuartzSand,Pitchblende,RareEarth,OilSand	crushed*	{before}{local}
