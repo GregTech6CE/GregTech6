@@ -29,9 +29,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Installs the Forge fluid and recipe entry. */
-
-/** SPDX-License-Identifier: LGPL-3.0-or-later. Installs the NeoForge fluid and recipe entry. */
+/** SPDX-License-Identifier: LGPL-3.0-or-later. Installs the loader fluid and recipe entry. */
 public final class AddonLoaderServices {
     private AddonLoaderServices() {}
 
