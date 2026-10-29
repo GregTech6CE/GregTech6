@@ -25,10 +25,7 @@ public abstract class PacketFrameDecoderMixin {
 
     @Redirect(
             method = "decode",
-            at =
-                    @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/network/FriendlyByteBuf;readVarInt()I"))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/network/FriendlyByteBuf;readVarInt()I"))
     private static int boundedLength(FriendlyByteBuf lengthPrefix) {
         int length = lengthPrefix.readVarInt();
         if (length < 0 || length > MAX_FRAME_LENGTH) {
