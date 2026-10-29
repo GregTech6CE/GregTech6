@@ -47,10 +47,10 @@ public final class OriginalMachineMaterialData {
         return Optional.ofNullable(DATA.get(machine + "/" + tier));
     }
 
-    public static List<WeightedMaterial> weights(String machine, int tier) {
+    public static List<MaterialComponent> weights(String machine, int tier) {
         return find(machine, tier)
                 .map(data -> data.components().stream()
-                        .map(part -> new WeightedMaterial(part.material(), part.amount()))
+                        .map(part -> new MaterialComponent(part.material(), part.amount()))
                         .toList())
                 .orElse(List.of());
     }

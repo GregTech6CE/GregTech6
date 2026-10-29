@@ -1,6 +1,7 @@
 package gregtech.content.multiblock;
 
 import gregtech.api.multiblock.StructureGrid;
+import gregtech.api.multiblock.StructureRole;
 import java.util.ArrayList;
 
 /** GT6 MultiTileEntityLargeTurbine: front-centered, solid 3x3x4 housing. */
@@ -10,7 +11,7 @@ public final class SharedTurbineStructure {
 
     public static final StructureGrid LAYOUT = create();
 
-    public static StructureGrid.Role role(int right, int up, int back) {
+    public static StructureRole role(int right, int up, int back) {
         return StructureGrid.axialRole(0, right, up, back, true);
     }
 

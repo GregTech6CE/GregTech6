@@ -5,13 +5,10 @@ import gregtech.api.addon.AddonFailures;
 import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.machine.AddonMachine;
 import gregtech.api.addon.machine.AddonMachineContributor;
-import gregtech.api.addon.machine.AddonMachineDefinition;
-import gregtech.api.addon.machine.AddonMachineLayout;
 import gregtech.api.addon.machine.BehaviorMachine;
 import gregtech.api.addon.machine.CompressedGasTankDeclaration;
 import gregtech.api.addon.machine.FuelGenerator;
 import gregtech.api.addon.machine.FuelOutput;
-import gregtech.api.addon.machine.GregTechMachineContributor;
 import gregtech.api.addon.machine.LayoutPart;
 import gregtech.api.addon.pipe.FluidPipeDeclaration;
 import gregtech.api.addon.pipe.ItemPipeDeclaration;
@@ -28,7 +25,6 @@ import gregtech.api.machine.MachineIo;
 import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.LayoutCell;
 import gregtech.api.multiblock.LayoutRepeat;
-import gregtech.api.multiblock.StructureGrid;
 import gregtech.api.multiblock.StructureLayout;
 import gregtech.api.multiblock.StructureRole;
 import gregtech.api.recipe.RecipeMapSpec;
@@ -147,7 +143,7 @@ public final class AddonMachines {
     private record PreparedLayout(String addonId, String machineName, SharedLargeMachineLayouts.Layout layout) {}
 
     public static void collectContributors() {
-        collectContributors(GregTechMachineContributor.class.getClassLoader());
+        collectContributors(AddonMachineContributor.class.getClassLoader());
     }
 
     /** A second call does not load services again. */
@@ -156,21 +152,6 @@ public final class AddonMachines {
         if (installed) throw new IllegalStateException("Addon machine contributors are closed");
         collected = true;
         Objects.requireNonNull(loader, "loader");
-        for (GregTechMachineContributor contributor : ServiceLoader.load(GregTechMachineContributor.class, loader)) {
-            try {
-                accept(
-                        contributor.addonId(),
-                        contributor.recipeMaps(),
-                        contributor.machines(),
-                        contributor.layouts(),
-                        List.of());
-            } catch (RuntimeException | Error failure) {
-                throw AddonFailures.of(
-                        "Addon machine contributor failed: " + safeId(contributor) + " ("
-                                + contributor.getClass().getName() + ")",
-                        failure);
-            }
-        }
         for (AddonMachineContributor contributor : ServiceLoader.load(AddonMachineContributor.class, loader)) {
             try {
                 var recipes = new ArrayList<RecipeMapSpec>();
@@ -277,18 +258,6 @@ public final class AddonMachines {
                 table.bucketOut());
     }
 
-    private static StructureLayout structureLayout(AddonMachineLayout layout) {
-        var builder = StructureLayout.builder(layout.machineName());
-        for (AddonMachineLayout.Cell cell : layout.cells())
-            builder.cell(
-                    cell.right(),
-                    cell.up(),
-                    cell.back(),
-                    CellMatch.parse(cell.part()),
-                    StructureRole.valueOf(cell.role().name()));
-        return builder.build();
-    }
-
     private static MachineFaceMasks faces(RecipeMachine machine) {
         MachineIo io = machine.io();
         EnergyInput energy = machine.energy();
@@ -337,7 +306,7 @@ public final class AddonMachines {
             String addonId,
             List<RecipeMapSpec> recipeMaps,
             List<AddonMachineDefinition> machines,
-            List<AddonMachineLayout> layouts) {
+            List<StructureLayout> layouts) {
         accept(addonId, recipeMaps, machines, layouts, List.of());
     }
 
@@ -346,7 +315,7 @@ public final class AddonMachines {
             String addonId,
             List<RecipeMapSpec> recipeMaps,
             List<AddonMachineDefinition> machines,
-            List<AddonMachineLayout> layouts,
+            List<StructureLayout> layouts,
             List<BehaviorMachine> behavior) {
         accept(addonId, recipeMaps, machines, layouts, behavior, List.of(), List.of());
     }
@@ -356,7 +325,7 @@ public final class AddonMachines {
             String addonId,
             List<RecipeMapSpec> recipeMaps,
             List<AddonMachineDefinition> machines,
-            List<AddonMachineLayout> layouts,
+            List<StructureLayout> layouts,
             List<BehaviorMachine> behavior,
             List<RecipeMapSpec> fuelMaps,
             List<FuelGenerator> generators) {
@@ -368,7 +337,7 @@ public final class AddonMachines {
             String addonId,
             List<RecipeMapSpec> recipeMaps,
             List<AddonMachineDefinition> machines,
-            List<AddonMachineLayout> layouts,
+            List<StructureLayout> layouts,
             List<BehaviorMachine> behavior,
             List<RecipeMapSpec> fuelMaps,
             List<FuelGenerator> generators,
@@ -381,7 +350,7 @@ public final class AddonMachines {
             String addonId,
             List<RecipeMapSpec> recipeMaps,
             List<AddonMachineDefinition> machines,
-            List<AddonMachineLayout> layouts,
+            List<StructureLayout> layouts,
             List<BehaviorMachine> behavior,
             List<RecipeMapSpec> fuelMaps,
             List<FuelGenerator> generators,
@@ -407,7 +376,7 @@ public final class AddonMachines {
             String addonId,
             List<RecipeMapSpec> recipeMaps,
             List<AddonMachineDefinition> machines,
-            List<AddonMachineLayout> layouts,
+            List<StructureLayout> layouts,
             List<BehaviorMachine> behavior,
             List<RecipeMapSpec> fuelMaps,
             List<FuelGenerator> generators,
@@ -415,21 +384,11 @@ public final class AddonMachines {
             List<FluidPipeDeclaration> fluidPipes,
             List<ItemPipeDeclaration> itemPipes,
             List<CompressedGasTankDeclaration> tanks) {
-        var convertedLayouts = new ArrayList<StructureLayout>();
-        for (AddonMachineLayout layout : Objects.requireNonNull(layouts, "layouts")) {
-            for (AddonMachineLayout.Cell cell : layout.cells()) {
-                if ((cell.part().startsWith("#") || cell.part().indexOf(':') >= 0)
-                        && cell.role() != StructureGrid.Role.CASING)
-                    throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
-                            + "' plain block '" + cell.part() + "' requires the casing role");
-            }
-            convertedLayouts.add(structureLayout(layout));
-        }
         enqueue(
                 addonId,
                 recipeMaps,
                 machines,
-                convertedLayouts,
+                Objects.requireNonNull(layouts, "layouts"),
                 behavior,
                 fuelMaps,
                 generators,
@@ -1123,7 +1082,7 @@ public final class AddonMachines {
     }
 
     private static SharedLargeMachineLayouts.Cell sharedCell(String source, String layoutName, LayoutCell cell) {
-        var role = StructureGrid.Role.valueOf(cell.role().name());
+        var role = cell.role();
         var choices = sharedChoices(source, layoutName, cell);
         var primary = choices.get(0);
         return new SharedLargeMachineLayouts.Cell(
@@ -1174,12 +1133,4 @@ public final class AddonMachines {
                 source + " layout '" + layout + "' cell '" + block + "' does not support design " + cell.design());
     }
 
-    private static String safeId(GregTechMachineContributor contributor) {
-        try {
-            String id = contributor.addonId();
-            return id == null ? contributor.getClass().getName() : id;
-        } catch (RuntimeException ignored) {
-            return contributor.getClass().getName();
-        }
-    }
 }

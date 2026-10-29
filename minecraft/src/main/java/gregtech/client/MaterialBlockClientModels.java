@@ -54,7 +54,7 @@ public final class MaterialBlockClientModels {
             if (registered.add(location)) event.register(location);
 //?}
         }
-        for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
                 if (prefix.isAddon()) continue;
 //? if >=1.21.1 {
@@ -158,7 +158,7 @@ public final class MaterialBlockClientModels {
         if (model != null) {
             return model;
         }
-        for (MaterialTextureSet fallback : MaterialTextureSet.MODELED) {
+        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
             if (fallback == primary) {
                 continue;
             }

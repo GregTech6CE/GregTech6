@@ -4,6 +4,7 @@ package gregtech.content.blockentity.energy;
 
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.api.machine.*;
+import gregtech.api.platform.machine.MachineControl;
 import gregtech.engine.machine.*;
 import gregtech.engine.machine.*;
 import gregtech.content.block.energy.MagicFieldAbsorberBlock;

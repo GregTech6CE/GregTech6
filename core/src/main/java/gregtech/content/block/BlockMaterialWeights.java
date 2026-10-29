@@ -2,7 +2,7 @@ package gregtech.content.block;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.WeightedMaterial;
+import gregtech.api.material.MaterialComponent;
 import gregtech.engine.material.MaterialChemistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import java.util.ArrayList;
@@ -12,11 +12,11 @@ import java.util.List;
 public final class BlockMaterialWeights {
     private BlockMaterialWeights() {}
 
-    public static List<WeightedMaterial> contained(GTMaterial material, BlockMaterialPrefix prefix) {
-        List<WeightedMaterial> out =
+    public static List<MaterialComponent> contained(GTMaterial material, BlockMaterialPrefix prefix) {
+        List<MaterialComponent> out =
                 new ArrayList<>(MaterialChemistry.materialWeights(material, prefix.getMaterialWeight()));
         if (prefix.isCrate()) {
-            out.add(new WeightedMaterial(gregtech.content.material.generated.WoodMaterials.Wood, GTValues.U));
+            out.add(new MaterialComponent(gregtech.content.material.generated.WoodMaterials.Wood, GTValues.U));
         }
         return List.copyOf(out);
     }

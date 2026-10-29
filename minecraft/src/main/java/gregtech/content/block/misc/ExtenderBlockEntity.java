@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** Extender/bridge state for covers, routed capabilities, machine controls and signals. */
 public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRelayBlockEntity
-        implements gregtech.api.machine.MachineControl.Provider,
+        implements gregtech.api.platform.machine.MachineControl.Provider,
         gregtech.engine.sensor.ProgressSources.Provider,
         gregtech.content.cover.PanelCoverHost, gregtech.engine.inventory.BlockContents {
     private static final gregtech.engine.logistics.RelayVisitSet<ExtenderBlockEntity> CONTROLS =
@@ -197,7 +197,7 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
         return universal();
     }
 
-    private <T> T controlOperation(Direction side, T absent, java.util.function.Function<gregtech.api.machine.MachineControl,
+    private <T> T controlOperation(Direction side, T absent, java.util.function.Function<gregtech.api.platform.machine.MachineControl,
             T> operation) {
         if (!universal() || level == null || isRemoved()) return absent;
         var visited = CONTROLS.get();
@@ -205,7 +205,7 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
         try {
             var destination = target(side);
             if (destination == null || !level.hasChunkAt(destination.position())) return absent;
-            var control = gregtech.api.machine.MachineControl.find(level.getBlockEntity(destination.position()), destination.side());
+            var control = gregtech.api.platform.machine.MachineControl.find(level.getBlockEntity(destination.position()), destination.side());
             return control == null ? absent : operation.apply(control);
         } finally {
             visited.remove(this);
@@ -241,9 +241,9 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
     }
 
     @Override
-    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+    public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
         if (!universal() || (((SourceExtenderBlock) getBlockState().getBlock()).spec().bridge && side == null)) return null;
-        return new gregtech.api.machine.MachineControl() {
+        return new gregtech.api.platform.machine.MachineControl() {
 
             // Resolve feature queries just like commands: targets can disappear, change or form a cycle.
             public boolean available() {

@@ -46,10 +46,22 @@ public class GregTechConstants {
 
     public static final int EU_PER_LAVA = 80;
 
-    public static final String[] VN = gregtech.api.energy.GTVoltageTiers.NAMES.clone();
+    public static final String[] VN = tierNames();
 
     /** Original GT6 CS.V; the last two finite entries are 2147483648 and 8589934592. */
-    public static final long[] V = gregtech.api.energy.GTVoltageTiers.VOLTAGES.clone();
+    public static final long[] V = tierVoltages();
+
+    private static String[] tierNames() {
+        var names = new String[gregtech.api.energy.GTVoltageTiers.tierCount()];
+        for (int i = 0; i < names.length; i++) names[i] = gregtech.api.energy.GTVoltageTiers.tierName(i);
+        return names;
+    }
+
+    private static long[] tierVoltages() {
+        var voltages = new long[gregtech.api.energy.GTVoltageTiers.tierCount()];
+        for (int i = 0; i < voltages.length; i++) voltages[i] = gregtech.api.energy.GTVoltageTiers.tierVoltage(i);
+        return voltages;
+    }
 
     public static final String[] DYE_NAMES = {
         "Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "Light Gray",

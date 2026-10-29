@@ -21,12 +21,12 @@ import java.util.*;
 
 /** Shared solid 3x3x4 assembly and rear shaft output. Storage belongs only to the controller. */
 public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,
-        gregtech.api.machine.MachineControl.Provider, gregtech.engine.multiblock.tracking.TrackedMultiblock {
+        gregtech.api.platform.machine.MachineControl.Provider, gregtech.engine.multiblock.tracking.TrackedMultiblock {
     protected long energy;
     protected boolean stopped, overloaded;
     private boolean converting, emitted;
     private boolean rotorFormed, rotorActive;
-    private final gregtech.api.machine.MachineControl control =
+    private final gregtech.api.platform.machine.MachineControl control =
             gregtech.engine.machine.MachineControls.switchable(this,
                     () -> !this.stopped,
                     value -> {
@@ -37,7 +37,7 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
                     () -> this.emitted && !this.overloaded && structureOk());
 
     @Override
-    public gregtech.api.machine.MachineControl machineControl(Direction side) {
+    public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
         return control;
     }
 

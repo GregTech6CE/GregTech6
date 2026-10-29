@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid.Role;
+import gregtech.api.multiblock.StructureRole;
 import java.util.*;
 
 /** Original 17101 front-bottom tower and heat-transmitter base, preserving role gates. */
@@ -20,7 +20,7 @@ public final class SharedDistillationTowerStructure {
                             y,
                             z,
                             y < 0 ? 18101 : 18102,
-                            y < 0 ? Role.ENERGY_INPUT : y == 0 ? Role.ITEM_FLUID_IO : Role.FLUID_OUTPUT));
+                            y < 0 ? StructureRole.ENERGY_INPUT : y == 0 ? StructureRole.ITEM_FLUID_IO : StructureRole.FLUID_OUTPUT));
                 }
         return List.copyOf(cells);
     }

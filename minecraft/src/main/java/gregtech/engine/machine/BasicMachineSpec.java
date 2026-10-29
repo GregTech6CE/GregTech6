@@ -4,7 +4,7 @@ import gregtech.api.machine.IoTarget;
 import gregtech.api.machine.MachineControllerKind;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.WeightedMaterial;
+import gregtech.api.material.MaterialComponent;
 import gregtech.content.data.BasicMachineOriginalParams;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMaps;
@@ -31,7 +31,7 @@ public record BasicMachineSpec(
         float hardness,
         float blastResistance,
         FaceConfig faceConfig,
-        List<WeightedMaterial> constructionMaterials,
+        List<MaterialComponent> constructionMaterials,
         RecipeMap recipeMap,
         int parallelLimit,
         /** Minimum energy per tick accepted, from GT6 {@code NBT_INPUT_MIN}. */
@@ -169,7 +169,7 @@ public record BasicMachineSpec(
             float hardness,
             float blastResistance,
             FaceConfig faceConfig,
-            List<WeightedMaterial> constructionMaterials,
+            List<MaterialComponent> constructionMaterials,
             RecipeMap recipeMap,
             int parallelLimit,
             long energyInMin,
@@ -244,7 +244,7 @@ public record BasicMachineSpec(
             float hardness,
             float blastResistance,
             FaceConfig faceConfig,
-            List<WeightedMaterial> constructionMaterials) {
+            List<MaterialComponent> constructionMaterials) {
         this(
                 id,
                 material,
@@ -418,7 +418,7 @@ public record BasicMachineSpec(
         private float resistance = 5;
         private FaceConfig faces = FaceConfig.ALL_SIDES;
         private RecipeMap recipes;
-        private List<WeightedMaterial> construction;
+        private List<MaterialComponent> construction;
         private long energyInMin;
         private long energyInMax;
         private String namespace = "gt6ce";
@@ -525,7 +525,7 @@ public record BasicMachineSpec(
             return this;
         }
 
-        public Builder constructionMaterials(List<WeightedMaterial> value) {
+        public Builder constructionMaterials(List<MaterialComponent> value) {
             construction = List.copyOf(value);
             return this;
         }

@@ -5,7 +5,6 @@ import gregtech.api.addon.AddonApiRemoval;
 import gregtech.api.addon.AddonFailures;
 import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.material.AddonMaterialContributor;
-import gregtech.api.addon.material.GregTechMaterialContributor;
 import gregtech.api.addon.material.MaterialComposition;
 import gregtech.api.addon.material.MaterialDeclaration;
 import gregtech.api.addon.material.MaterialFormRequest;
@@ -20,13 +19,13 @@ import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
-import gregtech.api.material.MaterialDefinition;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.mod.ModData;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.engine.machine.crucible.CrucibleReactions;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -138,7 +137,7 @@ public final class AddonMaterials {
 
     /** Load contributors from the class loader that loaded this API, then keep the result. */
     public static void collectContributors() {
-        collectContributors(GregTechMaterialContributor.class.getClassLoader());
+        collectContributors(AddonMaterialContributor.class.getClassLoader());
     }
 
     /** Test and platform entry. A second call does not load services again. */
@@ -147,16 +146,6 @@ public final class AddonMaterials {
         if (closed) throw new IllegalStateException("Addon material contributors are closed");
         collected = true;
         Objects.requireNonNull(loader, "loader");
-        for (GregTechMaterialContributor contributor : ServiceLoader.load(GregTechMaterialContributor.class, loader)) {
-            try {
-                submit(contributor.addonId(), contributor.materials(), contributor.forms(), contributor::link);
-            } catch (RuntimeException | Error failure) {
-                throw AddonFailures.of(
-                        "Addon material contributor failed: "
-                                + contributor.getClass().getName(),
-                        failure);
-            }
-        }
         for (AddonMaterialContributor contributor : ServiceLoader.load(AddonMaterialContributor.class, loader)) {
             try {
                 List<MaterialDeclaration> declarations = contributor.materials();
@@ -221,7 +210,7 @@ public final class AddonMaterials {
     }
 
     /**
-     * Direct queue used by tests and by the deprecated {@link GregTechMaterialContributor}.
+     * Direct queue used by tests.
      * The numeric id on each definition is ignored. Duplicate addon ids and calls after the queue closes fail immediately.
      */
     public static synchronized void submit(

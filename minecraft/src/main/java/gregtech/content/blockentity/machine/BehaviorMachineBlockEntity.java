@@ -1146,7 +1146,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         }
         @Override public int tier() { return declaration.casing().tier(); }
         @Override public int itemSlots() { return items.getSlots(); }
-        @Override public ItemStack item(int slot) { return items.getStackInSlot(slot); }
+        @Override public ItemStack liveItem(int slot) { return items.getStackInSlot(slot); }
         @Override public void setItem(int slot, ItemStack stack) { items.setStackInSlot(slot, stack == null ? ItemStack.EMPTY : stack.copy()); }
         @Override public ItemStack insertOutput(ItemStack stack) {
             ItemStack left = stack == null ? ItemStack.EMPTY : stack.copy();
@@ -1162,7 +1162,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         }
         @Override public int tanks() { return tanks.length; }
         @Override public FluidStack fluid(int tank) { return tanks[tank].copy(); }
-        @Override public int capacity(int tank) { return tanks[tank].capacity; }
+        @Override public int tankCapacity(int tank) { return tanks[tank].capacity; }
         @Override public int fill(int tank, FluidStack stack, boolean simulate) {
             int taken = tanks[tank].fill(stack, simulate);
             if (!simulate && taken > 0) setChanged();
@@ -1173,7 +1173,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             if (!simulate && !drained.isEmpty()) setChanged();
             return drained;
         }
-        @Override public long energy() { return hasInput() ? stored : 0; }
+        @Override public long mainInputStored() { return hasInput() ? stored : 0; }
         @Override public boolean consume(long amount) {
             if (amount < 0) throw new IllegalArgumentException("negative energy");
             if (!hasInput() || stored < amount) return false;
@@ -1181,7 +1181,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
             return true;
         }
-        @Override public long energy(String type) {
+        @Override public long auxiliaryStored(String type) {
             if (declaration.auxiliary() == null || !sameEnergy(type, declaration.auxiliary().type())) return 0;
             return auxiliaryStored;
         }
@@ -1202,21 +1202,21 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
             return added;
         }
-        @Override public long capacity() { return capacity; }
+        @Override public long energyCapacity() { return capacity; }
         @Override public void setCapacity(long value) {
             if (value < 0) throw new IllegalArgumentException("gt.capacity " + value);
             capacity = value;
             capacitySet = true;
             setChanged();
         }
-        @Override public long emit(long size, long amount) { return BehaviorMachineBlockEntity.this.emit(size, amount); }
+        @Override public long emitPacketsFromFaces(long size, long amount) { return BehaviorMachineBlockEntity.this.emit(size, amount); }
         @Override public long emitTo(BlockPos target, Direction side, long size, long amount) {
             return BehaviorMachineBlockEntity.this.emitTo(target, side, size, amount);
         }
         @Override public long pushToPart(String part, String type, long size, long amount) {
             return BehaviorMachineBlockEntity.this.pushToPart(part, type, size, amount);
         }
-        @Override public long emit(String part, long size, long amount) {
+        @Override public long moveUnitsToPart(String part, long size, long amount) {
             return BehaviorMachineBlockEntity.this.emitToPart(part, size, amount);
         }
         @Override public boolean toggle(int index) { return (toggles & (1 << index)) != 0; }
@@ -1227,7 +1227,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
         }
         @Override public float progress() { return progress / 1000.0F; }
-        @Override public void progress(float fraction) {
+        @Override public void setProgress(float fraction) {
             float clamped = Math.max(0.0F, Math.min(1.0F, fraction));
             int next = Math.round(clamped * 1000.0F);
             if (next != progress) {

@@ -1,6 +1,6 @@
 package gregtech.engine.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
+import gregtech.api.multiblock.StructureRole;
 
 /** Shared parameters for bedrock drills and lightning rod output. */
 public final class AdvancedControllerRules {
@@ -12,10 +12,10 @@ public final class AdvancedControllerRules {
             LIGHTNING_CAPACITY = 18000 * LIGHTNING_PACKET;
     public static final int DRILL_LUBRICANT = 100;
 
-    public static StructureGrid.Role drillRole(int x, int y, int z) {
+    public static StructureRole drillRole(int x, int y, int z) {
         return y == -4
-                ? StructureGrid.Role.CASING
-                : y == -1 && ((x == 0) != (z == 0)) ? StructureGrid.Role.ENERGY_INPUT : StructureGrid.Role.FLUID_INPUT;
+                ? StructureRole.CASING
+                : y == -1 && ((x == 0) != (z == 0)) ? StructureRole.ENERGY_INPUT : StructureRole.FLUID_INPUT;
     }
 
     public static long lightningDrain(long energy, long sentPackets) {
