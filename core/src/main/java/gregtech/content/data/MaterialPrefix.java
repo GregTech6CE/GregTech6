@@ -5,6 +5,7 @@ import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.generated.MaterialForms;
 import gregtech.content.material.generated.WoodMaterials;
+import gregtech.content.recipe.SourceExtrusionRules;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.function.Predicate;
@@ -190,34 +191,49 @@ public final class MaterialPrefix {
     // `TD.java:577` but used by no material in `MT.java`, so the original registers no impure dusts at
     // all. The port therefore consults only `DUSTS` here and keeps its own impure dusts (they drive the
     // port's ore-processing chain).
-    private static final Predicate<GTMaterial> HAS_DUST =
-            m -> m.hasAny(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.ELEMENT)
-                    || MaterialForms.has(m, "DUSTS");
+    /**
+     * Source form flags and the port's property predicate are combined until the generated
+     * {@code MaterialForms} table carries every factory preset (see card 72). Source negatives
+     * are not yet trusted to remove a form the port already registers.
+     */
+    private static Predicate<GTMaterial> nativeOr(Predicate<GTMaterial> legacy, Predicate<GTMaterial> source) {
+        return m -> legacy.test(m) || source.test(m);
+    }
+
+    private static final Predicate<GTMaterial> HAS_DUST = nativeOr(
+            m -> m.hasAny(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.ELEMENT),
+            m -> MaterialForms.has(m, "DUSTS"));
     private static final Predicate<GTMaterial> HAS_ORE_PROCESSING =
             m -> m.hasAny(MaterialProperty.ORE, MaterialProperty.GENERATE_ORE, MaterialProperty.GENERATE_ORE_PROCESSING)
                     || MaterialForms.has(m, "ORES"); // GT6 OP.ore = ORES
     private static final Predicate<GTMaterial> HAS_DIRTY_DUST =
             m -> m.has(MaterialProperty.GENERATE_DIRTY_DUST) || HAS_ORE_PROCESSING.test(m);
-    private static final Predicate<GTMaterial> HAS_INGOT = m -> m.hasAny(
+    private static final Predicate<GTMaterial> HAS_INGOT = nativeOr(
+            m -> m.hasAny(
                     MaterialProperty.INGOT,
                     MaterialProperty.METAL,
                     MaterialProperty.GENERATE_INGOT,
-                    MaterialProperty.ALLOY)
-            || MaterialForms.has(m, "INGOTS"); // GT6 OP.ingot = INGOTS
-    private static final Predicate<GTMaterial> HAS_GEM =
-            m -> m.has(MaterialProperty.GEM) || MaterialForms.has(m, "GEMS"); // GT6 OP.gem = GEMS
+                    MaterialProperty.ALLOY),
+            m -> MaterialForms.has(m, "INGOTS")); // GT6 OP.ingot = INGOTS
+    private static final Predicate<GTMaterial> HAS_GEM = nativeOr(
+            m -> m.has(MaterialProperty.GEM),
+            // Forced gems (OP:613-615) are added as explicit properties after the source table.
+            m -> MaterialForms.has(m, "GEMS") || m.has(MaterialProperty.GEM)); // GT6 OP.gem = GEMS
     private static final Predicate<GTMaterial> HAS_BOULE = m -> m.has(MaterialProperty.BOULE);
-    private static final Predicate<GTMaterial> HAS_PLATE = m -> (HAS_INGOT.test(m) && !HAS_GEM.test(m))
-            || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE)
+    private static final Predicate<GTMaterial> HAS_PLATE = nativeOr(
+            m -> (HAS_INGOT.test(m) && !HAS_GEM.test(m)) || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE),
             // GT6 OP.plate = And(Or(ingot, gem.NOT), PLATES)
-            || (MaterialForms.has(m, "PLATES") && (MaterialForms.has(m, "INGOTS") || !MaterialForms.has(m, "GEMS")));
-    private static final Predicate<GTMaterial> HAS_STICKS = m -> m.has(MaterialProperty.GENERATE_STICKS)
-            || HAS_INGOT.test(m)
-            || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE)
-            || MaterialForms.has(m, "STICKS"); // GT6 OP.stick = STICKS
-    private static final Predicate<GTMaterial> HAS_PARTS =
-            m -> m.has(MaterialProperty.GENERATE_PARTS) && (HAS_INGOT.test(m) || HAS_GEM.test(m))
-                    || MaterialForms.has(m, "PARTS"); // GT6 OP.gearGt/ring/spring/rotor/casingSmall = PARTS
+            m -> MaterialForms.has(m, "PLATES") && (MaterialForms.has(m, "INGOTS") || !MaterialForms.has(m, "GEMS")));
+    private static final Predicate<GTMaterial> HAS_STICKS = nativeOr(
+            m -> m.has(MaterialProperty.GENERATE_STICKS)
+                    || HAS_INGOT.test(m)
+                    || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE),
+            m -> MaterialForms.has(m, "STICKS")); // GT6 OP.stick = STICKS
+    private static final Predicate<GTMaterial> HAS_PARTS = nativeOr(
+            m -> m.has(MaterialProperty.GENERATE_PARTS) && (HAS_INGOT.test(m) || HAS_GEM.test(m)),
+            // GT6 registers knocked stone parts even though G_STONE carries no PARTS flag.
+            m -> MaterialForms.has(m, "PARTS")
+                    || m.has(MaterialProperty.STONE)); // OP.gearGt/ring/spring/rotor/casingSmall
     private static final Predicate<GTMaterial> HAS_PLANT =
             m -> m.hasAny(MaterialProperty.GENERATE_PLANT, MaterialProperty.WOOD)
                     || MaterialForms.has(m, "PLANTS"); // GT6 OP.plantGt* = PLANTS
@@ -233,6 +249,17 @@ public final class MaterialPrefix {
     /** GT6 OP:247 also accepts wood and Rubber (MT:1301: type 1, BOUNCY/STRETCHY, quality 0). */
     private static final Predicate<GTMaterial> GT6_HAMMER =
             GT6_TOOL_HEAD.or(m -> m.has(MaterialProperty.WOOD) || m.getName().equals("Rubber"));
+    /** GT6 typemin(1); unknown/addon materials keep the legacy property fallback. */
+    private static final Predicate<GTMaterial> TOOL_HEAD_1 = m ->
+            MaterialForms.of(m).isEmpty() ? HAS_TOOL_HEAD.test(m) || m.getToolQuality() >= 1 : m.getToolTypes() >= 1;
+    /** GT6 typemin(2) for files, saws, chisels, drills and machine heads. */
+    private static final Predicate<GTMaterial> TOOL_HEAD_2 = m ->
+            MaterialForms.of(m).isEmpty() ? HAS_TOOL_HEAD.test(m) || m.getToolQuality() >= 2 : m.getToolTypes() >= 2;
+    /** GT6 OP:247: typemin(1) and (BOUNCY, STRETCHY, WOOD or qualmin(1)); flags not imported yet. */
+    private static final Predicate<GTMaterial> TOOL_HEAD_HAMMER =
+            m -> MaterialForms.of(m).isEmpty()
+                    ? HAS_TOOL_HEAD.test(m) || GT6_HAMMER.test(m)
+                    : m.getToolTypes() >= 1 && (m.getToolQuality() >= 1 || m.has(MaterialProperty.WOOD));
 
     private static final Predicate<GTMaterial> HAS_PROJECTILE = m -> m.has(MaterialProperty.GENERATE_PROJECTILE);
 
@@ -358,31 +385,42 @@ public final class MaterialPrefix {
         ingotHot = def(
                 "ingotHot",
                 "Hot Ingot",
-                m -> HAS_INGOT.test(m) && m.has(MaterialProperty.SMITHABLE) || GT6_INGOTS_HOT.test(m),
+                nativeOr(m -> HAS_INGOT.test(m) && m.has(MaterialProperty.SMITHABLE), m -> GT6_INGOTS_HOT.test(m)),
                 true);
         ingotDouble = def(
                 "ingotDouble",
                 "Double Ingot",
-                m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
+                nativeOr(
+                        m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT),
+                        m -> MaterialForms.has(m, "MULTIINGOTS")));
         ingotTriple = def(
                 "ingotTriple",
                 "Triple Ingot",
-                m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
+                nativeOr(
+                        m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT),
+                        m -> MaterialForms.has(m, "MULTIINGOTS")));
         ingotQuadruple = def(
                 "ingotQuadruple",
                 "Quadruple Ingot",
-                m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
+                nativeOr(
+                        m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT),
+                        m -> MaterialForms.has(m, "MULTIINGOTS")));
         ingotQuintuple = def(
                 "ingotQuintuple",
                 "Quintuple Ingot",
-                m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT) || GT6_MULTIINGOTS.test(m));
+                nativeOr(
+                        m -> HAS_INGOT.test(m) && m.has(MaterialProperty.GENERATE_MULTIINGOT),
+                        m -> MaterialForms.has(m, "MULTIINGOTS")));
 
         // GT6 OP.plateGem = And(Or(gem, bouleGt), PLATES)
         plateGem = def(
                 "plateGem",
                 "Gem Plate",
-                m -> (HAS_GEM.test(m) || HAS_BOULE.test(m)) && m.has(MaterialProperty.GENERATE_PLATE)
-                        || (GT6_PLATES.test(m) && (GT6_GEMS.test(m) || HAS_BOULE.test(m))));
+                nativeOr(
+                        m -> (HAS_GEM.test(m) || HAS_BOULE.test(m)) && m.has(MaterialProperty.GENERATE_PLATE),
+                        // OP:616 force-generates boules for the semiconductor materials.
+                        m -> MaterialForms.has(m, "PLATES")
+                                && (MaterialForms.has(m, "GEMS") || m.has(MaterialProperty.BOULE))));
         plateGemTiny = child("plateGemTiny", "Tiny Gem Plate", plateGem);
         plate = def("plate", "Plate", HAS_PLATE);
         // GT6 `OP.java:198`: `plateTiny = plate`, and `OP.java:617` forces the Paper case
@@ -396,30 +434,41 @@ public final class MaterialPrefix {
         plateDouble = def(
                 "plateDouble",
                 "Double Plate",
-                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+                nativeOr(
+                        m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE),
+                        m -> MaterialForms.has(m, "MULTIPLATES")));
         plateTriple = def(
                 "plateTriple",
                 "Triple Plate",
-                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+                nativeOr(
+                        m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE),
+                        m -> MaterialForms.has(m, "MULTIPLATES")));
         plateQuadruple = def(
                 "plateQuadruple",
                 "Quadruple Plate",
-                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+                nativeOr(
+                        m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE),
+                        m -> MaterialForms.has(m, "MULTIPLATES")));
         plateQuintuple = def(
                 "plateQuintuple",
                 "Quintuple Plate",
-                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE) || GT6_MULTIPLATES.test(m));
+                nativeOr(
+                        m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_MULTIPLATE),
+                        m -> MaterialForms.has(m, "MULTIPLATES")));
         plateDense = def(
                 "plateDense",
                 "Dense Plate",
-                m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_DENSEPLATE) || GT6_DENSEPLATES.test(m));
+                nativeOr(
+                        m -> HAS_PLATE.test(m) && m.has(MaterialProperty.GENERATE_DENSEPLATE),
+                        m -> MaterialForms.has(m, "DENSEPLATES")));
         plateCurved = child("plateCurved", "Curved Plate", plate);
         foil = def(
                 "foil",
                 "Foil",
-                m -> m.has(MaterialProperty.GENERATE_FOIL)
-                                && (HAS_INGOT.test(m) || HAS_GEM.test(m) || m.has(MaterialProperty.WOOD))
-                        || GT6_FOILS.test(m));
+                nativeOr(
+                        m -> m.has(MaterialProperty.GENERATE_FOIL)
+                                && (HAS_INGOT.test(m) || HAS_GEM.test(m) || m.has(MaterialProperty.WOOD)),
+                        m -> MaterialForms.has(m, "FOILS")));
 
         scrapGt = def("scrapGt", "Scrap", m -> HAS_DUST.test(m) || HAS_INGOT.test(m) || HAS_GEM.test(m), true);
         oreDense = def("oreDense", "Dense Ore", m -> false, true);
@@ -440,23 +489,36 @@ public final class MaterialPrefix {
         springSmall = child("springSmall", "Small Spring", spring);
 
         rotor = def("rotor", "Rotor", HAS_PARTS.or(GT6_PARTS));
-        lens = def("lens", "Lens", m -> m.has(MaterialProperty.GENERATE_LENS) && HAS_GEM.test(m) || GT6_LENSES.test(m));
+        lens = def(
+                "lens",
+                "Lens",
+                nativeOr(
+                        m -> m.has(MaterialProperty.GENERATE_LENS) && HAS_GEM.test(m),
+                        m -> MaterialForms.has(m, "LENSES")));
         // GT6 OP.java:209: `round = Or(PARTS, And(PROJECTILES, nugget))` — rounds come from the parts
         // form, or from a nugget-bearing projectile material (the port's HAS_INGOT stands in for the
         // nugget form, which it generates for ingot materials).
         round = def(
                 "round",
                 "Round",
-                m -> HAS_PARTS.test(m) || GT6_PARTS.test(m) || (GT6_PROJECTILES.test(m) && HAS_INGOT.test(m)));
+                nativeOr(
+                        m -> HAS_PARTS.test(m) || (GT6_PROJECTILES.test(m) && HAS_INGOT.test(m)),
+                        m -> MaterialForms.has(m, "PARTS")
+                                || (MaterialForms.has(m, "PROJECTILES") && MaterialForms.has(m, "INGOTS"))));
         itemCasing = tex("itemCasing", "Item Casing", "casingsmall", HAS_PARTS.or(GT6_PARTS));
         wireFine = def(
                 "wireFine",
                 "Fine Wire",
-                m -> m.has(MaterialProperty.GENERATE_WIRE)
-                        || (HAS_PARTS.test(m) && HAS_INGOT.test(m))
-                        || MaterialForms.has(m, "WIRES"));
-        minecartWheels =
-                def("minecartWheels", "Minecart Wheels", m -> HAS_PARTS.test(m) && m.has(MaterialProperty.SMITHABLE));
+                nativeOr(
+                        m -> m.has(MaterialProperty.GENERATE_WIRE) || (HAS_PARTS.test(m) && HAS_INGOT.test(m)),
+                        m -> MaterialForms.has(m, "WIRES")
+                                || (MaterialForms.has(m, "PARTS") && SourceExtrusionRules.smithable(m))));
+        minecartWheels = def(
+                "minecartWheels",
+                "Minecart Wheels",
+                nativeOr(
+                        m -> HAS_PARTS.test(m) && m.has(MaterialProperty.SMITHABLE),
+                        m -> MaterialForms.has(m, "PARTS") && SourceExtrusionRules.smithable(m)));
         railGt = def(
                 "railGt",
                 "Rail",
@@ -477,50 +539,50 @@ public final class MaterialPrefix {
 
         coin = def("coin", "Coin", MaterialPrefix::gt6Coin);
 
-        // The tool-head family follows GT6's `typemin(1)` conditions (see GT6_TOOL_HEAD above): the
-        // port's own HAS_TOOL_HEAD plus every material with tool stats, so stone/basalt/blackstone get
-        // their knapped heads (and the recipes that press/forge them resolve).
-        toolHeadSword = def("toolHeadSword", "Sword Blade", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        // The tool-head family follows GT6's typemin conditions: type >= 1 for blades and basic
+        // heads, type >= 2 for files, saws, chisels and machine heads. Starved port materials
+        // without source form data keep the legacy property fallback.
+        toolHeadSword = def("toolHeadSword", "Sword Blade", TOOL_HEAD_1);
         toolHeadRawSword = child("toolHeadRawSword", "Raw Sword Blade", toolHeadSword);
-        toolHeadPickaxe = def("toolHeadPickaxe", "Pickaxe Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadPickaxe = def("toolHeadPickaxe", "Pickaxe Head", TOOL_HEAD_1);
         toolHeadRawPickaxe = child("toolHeadRawPickaxe", "Raw Pickaxe Head", toolHeadPickaxe);
         toolHeadPickaxeGem = def("toolHeadPickaxeGem", "Gem Pickaxe Head", m -> gemFlawed.isValidFor(m));
         toolHeadConstructionPickaxe =
                 child("toolHeadConstructionPickaxe", "Construction Pickaxe Head", toolHeadPickaxe);
-        toolHeadBuilderwand = def("toolHeadBuilderwand", "Builder Wand Head", HAS_TOOL_HEAD);
-        toolHeadShovel = def("toolHeadShovel", "Shovel Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadBuilderwand = def("toolHeadBuilderwand", "Builder Wand Head", TOOL_HEAD_2);
+        toolHeadShovel = def("toolHeadShovel", "Shovel Head", TOOL_HEAD_1);
         toolHeadRawShovel = child("toolHeadRawShovel", "Raw Shovel Head", toolHeadShovel);
-        toolHeadSpade = def("toolHeadSpade", "Spade Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadSpade = def("toolHeadSpade", "Spade Head", TOOL_HEAD_1);
         toolHeadRawSpade = child("toolHeadRawSpade", "Raw Spade Head", toolHeadSpade);
-        toolHeadAxe = def("toolHeadAxe", "Axe Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadAxe = def("toolHeadAxe", "Axe Head", TOOL_HEAD_1);
         toolHeadRawAxe = child("toolHeadRawAxe", "Raw Axe Head", toolHeadAxe);
-        toolHeadAxeDouble = def("toolHeadAxeDouble", "Double Axe Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadAxeDouble = def("toolHeadAxeDouble", "Double Axe Head", TOOL_HEAD_1);
         toolHeadRawAxeDouble = child("toolHeadRawAxeDouble", "Raw Double Axe Head", toolHeadAxeDouble);
-        toolHeadHoe = def("toolHeadHoe", "Hoe Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadHoe = def("toolHeadHoe", "Hoe Head", TOOL_HEAD_1);
         toolHeadRawHoe = child("toolHeadRawHoe", "Raw Hoe Head", toolHeadHoe);
-        toolHeadHammer = def("toolHeadHammer", "Hammer Head", HAS_TOOL_HEAD.or(GT6_HAMMER));
-        toolHeadFile = def("toolHeadFile", "File Head", HAS_TOOL_HEAD);
-        toolHeadChisel = def("toolHeadChisel", "Chisel Head", HAS_TOOL_HEAD);
+        toolHeadHammer = def("toolHeadHammer", "Hammer Head", TOOL_HEAD_HAMMER);
+        toolHeadFile = def("toolHeadFile", "File Head", TOOL_HEAD_2);
+        toolHeadChisel = def("toolHeadChisel", "Chisel Head", TOOL_HEAD_2);
         toolHeadRawChisel = child("toolHeadRawChisel", "Raw Chisel Head", toolHeadChisel);
-        toolHeadSaw = def("toolHeadSaw", "Saw Blade", HAS_TOOL_HEAD);
+        toolHeadSaw = def("toolHeadSaw", "Saw Blade", TOOL_HEAD_2);
         toolHeadRawSaw = child("toolHeadRawSaw", "Raw Saw Blade", toolHeadSaw);
-        toolHeadDrill = def("toolHeadDrill", "Drill Head", HAS_TOOL_HEAD);
-        toolHeadChainsaw = def("toolHeadChainsaw", "Chainsaw Head", HAS_TOOL_HEAD);
-        toolHeadWrench = def("toolHeadWrench", "Wrench Head", HAS_TOOL_HEAD);
-        toolHeadScrewdriver = def("toolHeadScrewdriver", "Screwdriver Head", HAS_TOOL_HEAD);
-        toolHeadUniversalSpade = def("toolHeadUniversalSpade", "Universal Spade Head", HAS_TOOL_HEAD);
+        toolHeadDrill = def("toolHeadDrill", "Drill Head", TOOL_HEAD_2);
+        toolHeadChainsaw = def("toolHeadChainsaw", "Chainsaw Head", TOOL_HEAD_2);
+        toolHeadWrench = def("toolHeadWrench", "Wrench Head", TOOL_HEAD_2);
+        toolHeadScrewdriver = def("toolHeadScrewdriver", "Screwdriver Head", TOOL_HEAD_2);
+        toolHeadUniversalSpade = def("toolHeadUniversalSpade", "Universal Spade Head", TOOL_HEAD_2);
         toolHeadRawUniversalSpade =
                 child("toolHeadRawUniversalSpade", "Raw Universal Spade Head", toolHeadUniversalSpade);
-        toolHeadSense = def("toolHeadSense", "Sense Tool Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadSense = def("toolHeadSense", "Sense Tool Head", TOOL_HEAD_1);
         toolHeadRawSense = child("toolHeadRawSense", "Raw Sense Tool Head", toolHeadSense);
-        toolHeadPlow = def("toolHeadPlow", "Plow Head", HAS_TOOL_HEAD.or(GT6_TOOL_HEAD));
+        toolHeadPlow = def("toolHeadPlow", "Plow Head", TOOL_HEAD_1);
         toolHeadRawPlow = child("toolHeadRawPlow", "Raw Plow Head", toolHeadPlow);
-        toolHeadBuzzSaw = def("toolHeadBuzzSaw", "Buzz Saw Blade", HAS_TOOL_HEAD);
+        toolHeadBuzzSaw = def("toolHeadBuzzSaw", "Buzz Saw Blade", TOOL_HEAD_2);
         // GT6 `OP.java:254`: `toolHeadArrow` = And(PROJECTILES, typemin(1)) — arrow heads follow the
         // projectile flag, not tool quality (every GT6 metal and wood has them). The port keeps its
         // stricter HAS_TOOL_HEAD as an *additional* source so materials it gives tool heads to keep
         // their arrow heads, but GT6's own flag now decides too (Trinium/Naquadah, the renamed woods).
-        toolHeadArrow = def("toolHeadArrow", "Arrow Head", HAS_TOOL_HEAD.or(GT6_PROJECTILES));
+        toolHeadArrow = def("toolHeadArrow", "Arrow Head", TOOL_HEAD_1.and(GT6_PROJECTILES));
         toolHeadRawArrow = child("toolHeadRawArrow", "Raw Arrow Head", toolHeadArrow);
 
         arrowGtWood = def(

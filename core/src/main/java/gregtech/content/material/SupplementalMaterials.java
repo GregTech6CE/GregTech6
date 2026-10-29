@@ -22,6 +22,10 @@ public final class SupplementalMaterials {
                 .setStats(clayBrick.getMeltingPoint(), clayBrick.getBoilingPoint(), clayBrick.getDensity());
         modernStone(9902, "RedNetherBrick", "Red Nether Brick", 0x6A1317, MaterialTextureSet.BRICK);
         modernStone(9903, "Purpur", "Purpur", 0xAA7AAA, MaterialTextureSet.BRICK);
+        // MT.java:8525 brick(...) is the one stone material the generated catalog omitted.
+        modernStone(8525, "Templerock", "Templerock", 0xAB9E6A, MaterialTextureSet.BRICK)
+                .setStats(1600, 3200, 1.0F)
+                .setToolStats(1, 5F, 128, 1);
         GTMaterialRegistry.registerDefinition(MaterialDefinition.builder(9223, "Blackstone")
                 .color(0x1E1414)
                 .texture(MaterialTextureSet.FINE)

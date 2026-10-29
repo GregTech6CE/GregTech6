@@ -133,6 +133,11 @@ public final class SourceExtrusionRules {
         if (source.equals(port)) return true;
         return source.replaceAll("[^A-Za-z0-9]", "").equalsIgnoreCase(port.replaceAll("[^A-Za-z0-9]", ""));
     }
+    /** Source SMITHABLE where the profile exists; unknown/addon materials keep the port property. */
+    public static boolean smithable(GTMaterial material) {
+        Profile profile = profile(material);
+        return profile != null ? profile.smithable() : material.has(gregtech.api.material.MaterialProperty.SMITHABLE);
+    }
     public static GTMaterial target(GTMaterial material, Profile profile) {
         if (profile.target().isEmpty()) return material;
         String name=GTMaterialFields.materialOf(profile.target());
@@ -154,8 +159,10 @@ public final class SourceExtrusionRules {
     public static long simpleTicks(long outputUnits) { return Math.max(1,(outputUnits*64+GTValues.U-1)/GTValues.U); }
     private static final String DATA="""
 '''
-for ident,name in sorted(profiles.items()):
+for ident in sorted(set(profiles) | set(positive)):
  row=positive.get(ident)
+ name=profiles.get(ident) or (row[1] if row else None)
+ if not name:continue
  if row:flags='1'+str(int(row[2]))+str(int(row[3]));target=row[4];amount=648648000 if row[5]=='U' else int(row[5])
  else:flags='000';target='';amount=648648000
  content+=f'            {ident}|{name}|{flags}|{target}|{amount}\n'

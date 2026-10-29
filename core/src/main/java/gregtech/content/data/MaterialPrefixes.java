@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.generated.MaterialForms;
+import gregtech.content.recipe.SourceExtrusionRules;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockMaterialPrefix.MapColor;
 import gregtech.engine.prefix.BlockMaterialPrefix.SoundType;
@@ -627,13 +628,14 @@ public class MaterialPrefixes {
         }
         PrefixRegistry.ensurePrefixesLoaded();
 
-        // GT6 OP.java:186-…: the machine casings are `PARTS` — not "smithable parts of an ingot/gem
-        // material" as the port approximated, which left PARTS materials such as the element metals
-        // (Trinium, Naquadah, Adamantium …) and the plastics (Teflon, PVC, Bakelite) without casings.
-        Predicate<GTMaterial> hasSmithableParts = m -> m.has(MaterialProperty.GENERATE_PARTS)
-                        && m.has(MaterialProperty.SMITHABLE)
-                        && (MaterialPrefix.ingot.isValidFor(m) || MaterialPrefix.gem.isValidFor(m))
-                || MaterialForms.has(m, "PARTS");
+        // GT6 OP.casingMachine = And(PARTS, SMITHABLE). Unknown/addon materials keep the port's
+        // former approximation only when no source form set exists.
+        Predicate<GTMaterial> hasSmithableParts = m -> MaterialForms.of(m).isEmpty()
+                ? m.has(MaterialProperty.GENERATE_PARTS)
+                                && m.has(MaterialProperty.SMITHABLE)
+                                && (MaterialPrefix.ingot.isValidFor(m) || MaterialPrefix.gem.isValidFor(m))
+                        || MaterialForms.has(m, "PARTS")
+                : MaterialForms.has(m, "PARTS") && SourceExtrusionRules.smithable(m);
 
         casingMachine = registerBlock(block("casingMachine")
                 .display("Machine Casings", "", " Machine Casing")

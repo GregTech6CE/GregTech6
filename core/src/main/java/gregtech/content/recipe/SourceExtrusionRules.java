@@ -2,9 +2,9 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
+import gregtech.content.recipe.generated.GTMaterialFields;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.content.recipe.generated.GTMaterialFields;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,10 +14,13 @@ import java.util.Map;
  */
 public final class SourceExtrusionRules {
     private SourceExtrusionRules() {}
+
     public record Profile(boolean extrudable, boolean simple, boolean smithable, String target, long forgingAmount) {}
+
     private record Row(String name, Profile profile) {}
+
     private static final Map<Integer, Row> ROWS = new HashMap<>();
-    private static final String DATA="""
+    private static final String DATA = """
             0|Empty|000||648648000
             1|Photon|000||648648000
             2|Neutrino|000||648648000
@@ -514,6 +517,9 @@ public final class SourceExtrusionRules {
             8522|Holystone|110||648648000
             8523|Deadrock|110||648648000
             8524|Cragrock|110||648648000
+            8525|Templerock|110||648648000
+            8526|Mazestone|110||648648000
+            8527|Castlerock|110||648648000
             8528|SkyStone|110||648648000
             8599|Bedrock|000||648648000
             8600|Electrum|101||648648000
@@ -1089,41 +1095,66 @@ public final class SourceExtrusionRules {
             9886|Latex|000||648648000
             9887|WhaleOil|000||648648000
             """;
+
     static {
         for (String line : DATA.strip().split("\n")) {
             String[] f = line.strip().split("\\|", -1);
-            ROWS.put(Integer.parseInt(f[0]), new Row(f[1], new Profile(f[2].charAt(0)=='1',
-                    f[2].charAt(1)=='1', f[2].charAt(2)=='1', f[3], Long.parseLong(f[4]))));
+            ROWS.put(
+                    Integer.parseInt(f[0]),
+                    new Row(
+                            f[1],
+                            new Profile(
+                                    f[2].charAt(0) == '1',
+                                    f[2].charAt(1) == '1',
+                                    f[2].charAt(2) == '1',
+                                    f[3],
+                                    Long.parseLong(f[4]))));
         }
     }
+
     public static Profile profile(GTMaterial material) {
-        if (material == null || !material.isValid() || material.resolve()!=material || AddonMaterials.owns(material)) return null;
-        Row row=ROWS.get(material.getId());
-        return row != null && sameName(row.name(), material.getName()) && GTMaterialRegistry.get(material.getId())==material
-                && GTMaterialRegistry.get(material.getName())==material ? row.profile() : null;
+        if (material == null || !material.isValid() || material.resolve() != material || AddonMaterials.owns(material))
+            return null;
+        Row row = ROWS.get(material.getId());
+        return row != null
+                        && sameName(row.name(), material.getName())
+                        && GTMaterialRegistry.get(material.getId()) == material
+                        && GTMaterialRegistry.get(material.getName()) == material
+                ? row.profile()
+                : null;
     }
     /** The source list spells e.g. {@code SpaceStone} where the port spells {@code Space Stone}. */
     private static boolean sameName(String source, String port) {
         if (source.equals(port)) return true;
         return source.replaceAll("[^A-Za-z0-9]", "").equalsIgnoreCase(port.replaceAll("[^A-Za-z0-9]", ""));
     }
+    /** Source SMITHABLE where the profile exists; unknown/addon materials keep the port property. */
+    public static boolean smithable(GTMaterial material) {
+        Profile profile = profile(material);
+        return profile != null ? profile.smithable() : material.has(gregtech.api.material.MaterialProperty.SMITHABLE);
+    }
+
     public static GTMaterial target(GTMaterial material, Profile profile) {
         if (profile.target().isEmpty()) return material;
-        String name=GTMaterialFields.materialOf(profile.target());
-        GTMaterial result=name==null?null:GTMaterialRegistry.get(name);
-        return result==null?null:result.resolve();
+        String name = GTMaterialFields.materialOf(profile.target());
+        GTMaterial result = name == null ? null : GTMaterialRegistry.get(name);
+        return result == null ? null : result.resolve();
     }
     /** Original ceil input / floor output ratio, and the two 64-stack output limit. */
     public static long[] amounts(long inputWeight, long outputWeight) {
-        if (inputWeight<=0 || outputWeight<=0) return null;
-        long input=outputWeight>inputWeight?(outputWeight+inputWeight-1)/inputWeight:1;
-        long output=outputWeight>inputWeight?1:inputWeight/outputWeight;
-        if (input>64 || output<1) return null;
-        return new long[]{input, Math.min(128,output), output};
+        if (inputWeight <= 0 || outputWeight <= 0) return null;
+        long input = outputWeight > inputWeight ? (outputWeight + inputWeight - 1) / inputWeight : 1;
+        long output = outputWeight > inputWeight ? 1 : inputWeight / outputWeight;
+        if (input > 64 || output < 1) return null;
+        return new long[] {input, Math.min(128, output), output};
     }
+
     public static long normalTicks(GTMaterial input, GTMaterial output, long inputUnits) {
-        double kilograms=input.getDensity()*111.111111*inputUnits/GTValues.U;
-        return Math.max(16,1+(long)Math.abs((output.getMeltingPoint()-293d)*kilograms/(75*96)));
+        double kilograms = input.getDensity() * 111.111111 * inputUnits / GTValues.U;
+        return Math.max(16, 1 + (long) Math.abs((output.getMeltingPoint() - 293d) * kilograms / (75 * 96)));
     }
-    public static long simpleTicks(long outputUnits) { return Math.max(1,(outputUnits*64+GTValues.U-1)/GTValues.U); }
+
+    public static long simpleTicks(long outputUnits) {
+        return Math.max(1, (outputUnits * 64 + GTValues.U - 1) / GTValues.U);
+    }
 }
