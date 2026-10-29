@@ -17,8 +17,8 @@ public final class SharedMatterFabricatorStructure {
                     if (x == 0 && y == 0 && z == 0) continue;
                     boolean air = x == 0 && y == 2 && z == 2;
                     int part = air ? 0 : Math.abs(x) == 2 || y == 0 || y == 4 || z == 0 || z == 4 ? 18031 : 18044;
-                    cells.add(
-                            new SharedLargeMachineLayouts.Cell(x, y, z, part, air ? StructureRole.AIR : StructureRole.ITEM_FLUID_ENERGY));
+                    cells.add(new SharedLargeMachineLayouts.Cell(
+                            x, y, z, part, air ? StructureRole.AIR : StructureRole.ITEM_FLUID_ENERGY));
                 }
         int processor = 0;
         for (int x = -2; x <= 2; x++)

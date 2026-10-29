@@ -250,8 +250,14 @@ public final class BasicMachineCatalog {
     private static int legacyParallelLimit(String machineName) {
         return switch (machineName) {
             case "largemixer", "largefermenter" -> 256;
-            case "largecoagulator", "largebath", "largeoven", "largesluice",
-                 "largecrusher", "largeshredder", "largesqueezer", "largemassfab" -> 64;
+            case "largecoagulator",
+                    "largebath",
+                    "largeoven",
+                    "largesluice",
+                    "largecrusher",
+                    "largeshredder",
+                    "largesqueezer",
+                    "largemassfab" -> 64;
             case "largecentrifuge", "largeelectrolyzer", "largeautoclave" -> 16;
             default -> 1;
         };
@@ -282,8 +288,7 @@ public final class BasicMachineCatalog {
                 long energyIn = original != null
                         ? original.energyInput()
                         : (def.energy().equals("TU") ? 1 : baseEnergy << (2 * t)); // x4 per tier
-                int parallel =
-                        original != null ? original.parallel() : legacyParallelLimit(def.name());
+                int parallel = original != null ? original.parallel() : legacyParallelLimit(def.name());
                 List<MaterialComponent> materials = OriginalMachineMaterialData.weights(def.name(), tierNumber);
                 var energyType = gregtech.content.data.GregTechTags.Energy.ALL.stream()
                         .filter(type -> type.getShortName().equals(energyName))

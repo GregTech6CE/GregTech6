@@ -20,7 +20,9 @@ public final class SharedDistillationTowerStructure {
                             y,
                             z,
                             y < 0 ? 18101 : 18102,
-                            y < 0 ? StructureRole.ENERGY_INPUT : y == 0 ? StructureRole.ITEM_FLUID_IO : StructureRole.FLUID_OUTPUT));
+                            y < 0
+                                    ? StructureRole.ENERGY_INPUT
+                                    : y == 0 ? StructureRole.ITEM_FLUID_IO : StructureRole.FLUID_OUTPUT));
                 }
         return List.copyOf(cells);
     }
