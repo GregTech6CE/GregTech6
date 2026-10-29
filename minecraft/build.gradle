@@ -1,4 +1,4 @@
-// Runtime source tree; public contracts live in the GregTech6API submodule.
+// Runtime source tree; public contracts live in the inlined api/ sources.
 
 stonecutter.filters.include('**/*.json', '**/*.mcmeta')
 // Restrict loader rewriting to entire JSON documents. Java text blocks also

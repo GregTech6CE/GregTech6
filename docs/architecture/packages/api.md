@@ -4,7 +4,7 @@
 
 ## 独立公共 API
 
-源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，属于 [GregTech6API](https://github.com/GregTech6CE/GregTech6API) 独立仓库。主库通过 `api/` 子模块锁定版本，并将 `common/` 接为 `:api`。模块使用 Java 17，仅依赖 JDK；core 和游戏侧 API 单向依赖它。以下表内路径相对于 `gregtech`。
+源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，内联自 [GregTech6API](https://github.com/GregTech6CE/GregTech6API)（a9c879176，API 0.3.0）。`common/` 接为 `:api`。模块使用 Java 17，仅依赖 JDK；core 和游戏侧 API 单向依赖它。以下表内路径相对于 `gregtech`。
 
 | 包 | 应当承担 | 代表入口/关注点 |
 | --- | --- | --- |
@@ -29,7 +29,7 @@
 
 ## Minecraft 层的 API
 
-入口为 [minecraft/gregtech/api](../../../api/minecraft/src/main/java/gregtech/api)。同样属于独立 API 仓库，共享源码由 `:api-platform:<node>` 经 Stonecutter 分别编译为 Forge / NeoForge API；编译路径不包含 core 或模组 main 输出。
+入口为 [minecraft/gregtech/api](../../../api/minecraft/src/main/java/gregtech/api)。源码内联自独立 API 仓库（a9c879176），共享源码由 `:api-platform:<node>` 经 Stonecutter 分别编译为 Forge / NeoForge API；编译路径不包含 core 或模组 main 输出。
 
 | 包 | 应当承担 | 边界 |
 | --- | --- | --- |
@@ -41,4 +41,4 @@
 
 先确认外部消费者需要什么，再定义最小契约；由 engine 提供执行，bootstrap/platform 绑定，content 消费。接口新增字段、方法或默认行为时，检查两个加载器的实现与附属生命周期，说明二进制、源码和数据兼容影响。
 
-公共库和平台 SDK 均由独立仓库构建，平台 SDK 在 POM 中依赖公共库。主库只消费其 Gradle 项目，并导出兼容的 SDK 任务。主模组携带唯一一份 API，附属仅作编译依赖，详见[附属 API 说明](../../ADDON_API.zh-CN.md)。优先运行 `./gradlew -p api/common check assemble`，再按改动选择一个相关平台编译、SDK 与最终 JAR 检查；不默认运行双平台全量验证。
+公共库和平台 SDK 均由库内 `:api` 与 `:api-platform` 项目构建，平台 SDK 在 POM 中依赖公共库。主库直接消费这些 Gradle 项目，并导出兼容的 SDK 任务。主模组携带唯一一份 API，附属仅作编译依赖，详见[附属 API 说明](../../ADDON_API.zh-CN.md)。优先运行 `./gradlew :api:check :api:assemble`，再按改动选择一个相关平台编译、SDK 与最终 JAR 检查；不默认运行双平台全量验证。

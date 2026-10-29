@@ -18,23 +18,23 @@
 
 ## 独立库与 SDK 构建
 
-所有 API 源码由独立仓库 [GregTech6API](https://github.com/GregTech6CE/GregTech6API) 维护；主库的 `api/` 是锁定提交的 Git 子模块，不是主库源码副本。首次克隆使用 `git clone --recurse-submodules`，已有检出先运行 `git submodule update --init --recursive`。更新 API 时先在独立仓库提交并推送，再在主库提交新的子模块指针；主库构建不自动跟随远程分支。
+API 源码内联在库内 `api/`（[GregTech6API](https://github.com/GregTech6CE/GregTech6API) a9c879176，API 0.3.0）；普通 `git clone` 即可，不需要子模块初始化。API 变更直接在本仓库 `api/` 内提交，并在提交信息中记录 API 版本变化；上游 GregTech6API 不再是构建依赖。主库构建不自动跟随远程分支。
 
 命令在仓库根执行：
 
 ```bash
-./gradlew -p api/common check assemble
+./gradlew :api:check :api:assemble
 ./gradlew :minecraft:1.20.1-forge:addonSdk
 ./gradlew :minecraft:1.21.1-neoforge:addonSdk
 ```
 
-以上平台命令按目标选择一条；本地不默认运行双平台全量检查。Windows 使用 `.\gradlew.bat`。纯 API 的独立构建入口由 [api/common/settings.gradle](../api/common/settings.gradle) 提供，`-p api/common` 不配置 Minecraft、Stonecutter 或模组资源，使用 Java 17；可通过 `JAVA17_HOME` 提供工具链。
+以上平台命令按目标选择一条；本地不默认运行双平台全量检查。Windows 使用 `.\gradlew.bat`。公共 API 由 `:api` 项目编译，不配置 Minecraft、Stonecutter 或模组资源，使用 Java 17；可通过 `JAVA17_HOME` 提供工具链。
 
 | 产物坐标 | 内容与输出 |
 | --- | --- |
-| `gregtech:gt6ce-api:0.2.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
-| `gregtech:gt6ce-addon-sdk-1.20.1-forge:0.2.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
-| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:0.2.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-api:0.3.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
+| `gregtech:gt6ce-addon-sdk-1.20.1-forge:0.3.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:0.3.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
 
 这些是构建配置中的坐标，不表示已发布到公共 Maven 仓库。版本以 [api/common/build.gradle](../api/common/build.gradle) 为准，与模组版本独立；`GregTechAddons.apiVersion()` 表示 API 的 minor，不能据此推断某个模组构建兼容。
 

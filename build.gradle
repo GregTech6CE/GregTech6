@@ -12,8 +12,8 @@ subprojects {
     tasks.withType(org.gradle.jvm.tasks.Jar).configureEach { includeEmptyDirs = false }
 }
 
-// Formatting lives in the build, not in individual edits. The API submodule owns its
-// own lifecycle; committed generated sources stay untouched in this pass.
+// Formatting lives in the build, not in individual edits. The inlined API sources keep
+// their own formatting pass; committed generated sources stay untouched in this pass.
 def spotlessProjects = [':core', ':minecraft', ':minecraft:1.20.1-forge', ':minecraft:1.21.1-neoforge']
 configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
     // Spotless resolves the formatter and its transitive dependencies from this project's

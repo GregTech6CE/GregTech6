@@ -1,0 +1,14 @@
+GregTech 6 Community Edition
+Code: SPDX-License-Identifier: LGPL-3.0-or-later
+
+This project's code is distributed under the GNU Lesser General Public License,
+version 3 or (at your option) any later version. See LICENSE and GPL-3.0.txt.
+In the API JARs, both license texts are included under META-INF/gt6ce-api/.
+
+Original GregTech 6: Gregorius Techneticies and its contributors.
+
+Upstream GT6 default assets are CC0-1.0 unless otherwise stated.
+GregTech logos and derivatives are licensed under CC-BY-NC-4.0.
+Assets and third-party components retain their respective licenses and notices;
+the project's code license does not replace them.
+The API libraries do not bundle the mod's assets or third-party components.

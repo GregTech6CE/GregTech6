@@ -5,7 +5,7 @@
 ## 环境与首次检查
 
 1. 阅读[根工作规则](../../AGENTS.md)，运行 `git status --short`，确认已有变更。
-   初次克隆使用 `git clone --recurse-submodules`；已有检出运行 `git submodule update --init --recursive`，取得 `api/` 中锁定版本的独立 API 仓库。
+   API 源码已内联在 `api/`（GregTech6API a9c879176），普通 `git clone` 即可，不需要子模块初始化。
 2. 准备 JDK 17 与 21。`core` 和 Forge 节点使用 17，NeoForge 节点使用 21；`JAVA_HOME` 决定启动 Gradle 的 JVM，`JAVA17_HOME`、`JAVA21_HOME` 被项目配置用于发现工具链。
 3. 使用仓库 Wrapper：Linux/macOS 为 `./gradlew`，Windows PowerShell 为 `.\gradlew.bat`。当前 Wrapper 指向 Gradle 8.8，Stonecutter 为 0.7.11，以配置文件为准。
 4. 初次运行需要下载 Gradle、插件及游戏依赖。先执行 `./gradlew --version`，再按需查询 `./gradlew projects` 和目标节点的 `tasks --all`。
@@ -18,7 +18,7 @@
 
 | 目的 | 命令 |
 | --- | --- |
-| 独立 API 检查与库产物（不配置 Minecraft） | `./gradlew -p api/common check assemble` |
+| 公共 API 检查与库产物 | `./gradlew :api:check :api:assemble` |
 | core 检查 | `./gradlew :core:check` |
 | 两个平台编译 | `./gradlew compileBothPlatforms` |
 | Forge 发行 JAR | `./gradlew :minecraft:1.20.1-forge:distributionJar` |
@@ -28,7 +28,7 @@
 | 代码格式化（core、共享与节点源码） | `./gradlew format` |
 | 单节点完整构建，与 CI 一致 | `./gradlew :minecraft:1.20.1-forge:build` 或 `./gradlew :minecraft:1.21.1-neoforge:build` |
 
-`format` 使用 Spotless + Palantir Java Format（4 空格、120 列）。`api/` 子模块、`**/generated/**` 与带 Stonecutter `//?` 标记的共享文件不在本轮范围内；后两者需要按节点处理，不要直接套用该任务。`spotlessCheck` 已接入各项目的 `check`。
+`format` 使用 Spotless + Palantir Java Format（4 空格、120 列）。`api/` 内联源码、`**/generated/**` 与带 Stonecutter `//?` 标记的共享文件不在本轮范围内；后两者需要按节点处理，不要直接套用该任务。`spotlessCheck` 已接入各项目的 `check`。
 
 发行文件在 `minecraft/versions/<version-loader>/build/libs/`。Forge `jar` 输出到 `build/forge-intermediates/`，最终交付使用 `distributionJar`；两平台发行包均携带 core、公共 API 和游戏 API。独立公共库位于 `api/common/build/libs/`，平台 SDK 位于节点 `build/addon-sdk/`，使用方式见[附属 API](../ADDON_API.zh-CN.md)。不要把 API 库、SDK、sources 或 javadoc JAR 当模组安装。
 

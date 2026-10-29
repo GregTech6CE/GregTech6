@@ -4,7 +4,7 @@
 
 ## 输入与生成结果
 
-主模组共享输入是 `minecraft/src/<sourceSet>/`，节点输入是 `minecraft/versions/<node>/src/<sourceSet>/`。当前 [minecraft/build.gradle](../../minecraft/build.gradle)将节点编译/资源处理接到 `stonecutterGenerate*`，使用节点 `build/generated/stonecutter/<sourceSet>/` 与节点自身源码。游戏侧协议来自独立子模块 `api/minecraft/src/main/`，由 `:api-platform:<node>` 编译；公共 `:api` 来自 `api/common/`。主模组依赖这些项目和 core，并将它们各自的输出嵌入最终包。
+主模组共享输入是 `minecraft/src/<sourceSet>/`，节点输入是 `minecraft/versions/<node>/src/<sourceSet>/`。当前 [minecraft/build.gradle](../../minecraft/build.gradle)将节点编译/资源处理接到 `stonecutterGenerate*`，使用节点 `build/generated/stonecutter/<sourceSet>/` 与节点自身源码。游戏侧协议来自内联 API 的 `api/minecraft/src/main/`，由 `:api-platform:<node>` 编译；公共 `:api` 来自 `api/common/`。主模组依赖这些项目和 core，并将它们各自的输出嵌入最终包。
 
 要修复生成结果中的错误，回到共享输入、条件分支或节点输入。新增类之前检查同全限定名是否已在另一输入出现，不假定节点代码会自动覆盖共享同名类。
 

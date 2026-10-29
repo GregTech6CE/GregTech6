@@ -5,9 +5,9 @@
 | 修改范围 | 最小合理验证 | 还需关注 |
 | --- | --- | --- |
 | 文档、AGENTS、忽略规则 | 链接、引用、命令来源、`git check-ignore` | 是否误忽略文档/资源/Wrapper |
-| 公共 API | `./gradlew -p api/common check assemble`，仅依赖 JAR 的消费者回归 | 公开签名闭包、版本与兼容迁移；按需选一个宿主平台 |
+| 公共 API | `./gradlew :api:check :api:assemble`，仅依赖 JAR 的消费者回归 | 公开签名闭包、版本与兼容迁移；按需选一个宿主平台 |
 | core 规则 | 针对性回归；按需执行 `./gradlew :core:check` | API 调用方、能源及材料规则 |
-| 游戏 API、共享 Minecraft 实现、Stonecutter 条件 | 一个相关 `:api-platform:<node>:compileJava` 或模组节点 `compileJava` | 子模块版本、该节点生成结果、专用服务端类加载 |
+| 游戏 API、共享 Minecraft 实现、Stonecutter 条件 | 一个相关 `:api-platform:<node>:compileJava` 或模组节点 `compileJava` | 内联 API 版本、该节点生成结果、专用服务端类加载 |
 | 资源、元数据、构建打包 | 一个相关节点的 Forge `distributionJar` 或 NeoForge `jar`，按需检查 SDK | API 类恰好一份、缺资源、错误版本路径、混入临时文件 |
 | 平台专属修改 | 对应节点必要的编译或定向检查 | 跨平台差异通过源码核对，未验证平台明确说明 |
 | 机器、配方、流体、能源、存储 | 上述构建加游戏内复现 | tick、边界数量、模拟/实际转移、重载与存档 |

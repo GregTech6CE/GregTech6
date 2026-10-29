@@ -2,7 +2,7 @@
 
 先遵守[根指南](../AGENTS.md)，再读[架构边界](../docs/architecture/README.md)。这里使用 Java 17，独立于游戏和加载器。
 
-- `gregtech.api` 由独立仓库子模块 `api/common/` 提供，core 通过 `:api` 使用；不要在 core 中重新建立同包副本，参见 [API 指南](../docs/architecture/packages/api.md)。
+- `gregtech.api` 由仓库内 `api/common/` 提供（内联自 GregTech6API a9c879176），core 通过 `:api` 使用；不要在 core 中重新建立同包副本，参见 [API 指南](../docs/architecture/packages/api.md)。
 - `gregtech.content`：材料、配方、布局、参数和内容目录，表达“有什么”，参见 [content 指南](../docs/architecture/packages/content.md)。
 - `gregtech.engine`：计算、状态、解析、查询和执行机制，表达“怎么工作”，参见 [engine 指南](../docs/architecture/packages/engine.md)。
 - `gregtech.bootstrap`：共享初始化步骤契约；加载器装配属于 Minecraft 层。

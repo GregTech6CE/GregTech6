@@ -6,9 +6,9 @@
 
 | 源码层 | 职责 | 允许的方向 |
 | --- | --- | --- |
-| `api/common`（独立仓库子模块） | Java 17 公共协议、模型、声明与宿主服务接口 | 仅依赖 JDK；主库接为 `:api` |
+| `api/common`（内联自 GregTech6API） | Java 17 公共协议、模型、声明与宿主服务接口 | 仅依赖 JDK；主库接为 `:api` |
 | `core` | 纯 Java 内容定义、规则、状态与共享资源 | 依赖 api，不依赖 Minecraft 层 |
-| `api/minecraft`（独立仓库子模块） | 含 Minecraft/加载器类型的公开协议 | `:api-platform:<node>` 依赖公共 API 及平台类型，不依赖 core 或模组 main |
+| `api/minecraft`（内联自 GregTech6API） | 含 Minecraft/加载器类型的公开协议 | `:api-platform:<node>` 依赖公共 API 及平台类型，不依赖 core 或模组 main |
 | `minecraft/src` | 游戏对象、共享运行时与跨版本输入 | 可调用 core；版本差异由 Stonecutter/适配承接 |
 | `minecraft/versions/*/src` | 原生加载器入口与版本差异 | 组合共享输入及 core，不引用另一节点专属实现 |
 

@@ -1,0 +1,89 @@
+// Compile-only game API. The host mod owns runtime services, remapping and packaging.
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+def forge = project.name.endsWith('forge') && !project.name.endsWith('neoforge')
+apply plugin: forge ? 'net.minecraftforge.gradle' : 'net.neoforged.moddev'
+evaluationDependsOn(':api')
+def commonApi = project(':api')
+def loader = forge ? 'forge' : 'neoforge'
+def minecraftVersion = forge ? '1.20.1' : '1.21.1'
+
+group = commonApi.group
+version = commonApi.version
+base { archivesName = "gt6ce-addon-sdk-${minecraftVersion}-${loader}" }
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(forge ? 17 : 21)
+    withSourcesJar()
+    withJavadocJar()
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api project(':api')
+    compileOnly 'org.jspecify:jspecify:1.0.0'
+}
+if (forge) {
+    minecraft {
+        mappings channel: 'official', version: minecraftVersion
+        reobf = false
+    }
+    dependencies { minecraft 'net.minecraftforge:forge:1.20.1-47.4.20' }
+} else {
+    neoForge { version = '21.1.243' }
+}
+
+sourceSets.configureEach { sources ->
+    def suffix = sources.name == 'main' ? '' : sources.name.capitalize()
+    def generate = tasks.named('stonecutterGenerate' + suffix)
+    tasks.named(sources.compileJavaTaskName).configure { dependsOn generate }
+    tasks.named(sources.processResourcesTaskName).configure { dependsOn generate }
+    sources.java.setSrcDirs(files(
+            layout.buildDirectory.dir("generated/stonecutter/${sources.name}/java"),
+            layout.projectDirectory.dir("src/${sources.name}/java")).builtBy(generate))
+    sources.resources.setSrcDirs(files(
+            layout.buildDirectory.dir("generated/stonecutter/${sources.name}/resources"),
+            layout.projectDirectory.dir("src/${sources.name}/resources")).builtBy(generate))
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = forge ? 17 : 21
+}
+tasks.withType(Jar).configureEach {
+    from(commonApi.file('src/main/resources'))
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    includeEmptyDirs = false
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+tasks.named('sourcesJar').configure { dependsOn 'stonecutterGenerate' }
+tasks.named('javadoc', Javadoc).configure {
+    dependsOn 'stonecutterGenerate'
+    options.encoding = 'UTF-8'
+    options.docEncoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+    options.noTimestamp = true
+    options.addBooleanOption('Xdoclint:all,-missing', true)
+}
+
+// Do not reobfuscate these compilation artifacts. The host's Forge jar embeds
+// the API classes before its own reobfuscation; the common Java API stays untouched.
+publishing {
+    publications {
+        addonApi(MavenPublication) {
+            artifactId = base.archivesName.get()
+            artifact tasks.named('jar')
+            artifact tasks.named('sourcesJar')
+            artifact tasks.named('javadocJar')
+            pom.withXml {
+                def dependency = asNode().appendNode('dependencies').appendNode('dependency')
+                dependency.appendNode('groupId', commonApi.group.toString())
+                dependency.appendNode('artifactId', commonApi.base.archivesName.get())
+                dependency.appendNode('version', commonApi.version.toString())
+                dependency.appendNode('scope', 'compile')
+            }
+        }
+    }
+}
+tasks.named('check').configure { dependsOn ':api:check' }

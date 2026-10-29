@@ -12,7 +12,7 @@
 ## 项目事实
 
 - GT6CE 是现代 Minecraft 的 GregTech 6 移植工程。模组 ID 与命名以现有 `GregTechIdentity` 和加载器元数据为准，不要顺手改名。
-- `api/`：GregTech6API 独立仓库的 Git 子模块；修改前阅读其中 `AGENTS.md`。`common/` 提供 Java 17 公共契约，`minecraft/` 提供按版本编译的游戏 API。主库只记录子模块提交，不再维护 API 源码副本。
+- `api/`：内联自 GregTech6API 的源码（锁定 a9c879176，API 0.3.0）；`common/` 提供 Java 17 公共契约，`minecraft/` 提供按版本编译的游戏 API。修改公共签名时直接在本仓库 `api/` 内更新，并在提交信息中记录 API 版本变化。
 - `core/`：Java 17 的平台无关内容定义、计算和共享资源，依赖公共 API；不得引入 Minecraft、Forge、NeoForge、客户端或可选模组类型。
 - `minecraft/src/`：两版本共享的 Minecraft 代码与 Stonecutter 输入。
 - `minecraft/versions/1.20.1-forge/src/`：Forge 版本源码及资源，Java 17。

@@ -18,9 +18,6 @@ plugins {
 }
 
 rootProject.name = 'gt6ce'
-if (!file('api/common/build.gradle').isFile()) {
-    throw new GradleException('API submodule is missing. Run: git submodule update --init --recursive')
-}
 include 'api', 'core'
 project(':api').projectDir = file('api/common')
 include 'api-platform'

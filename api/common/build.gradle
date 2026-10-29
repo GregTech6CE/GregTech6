@@ -1,0 +1,67 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.jspecify:jspecify:1.0.0'
+}
+
+group = 'gregtech'
+version = '0.3.0'
+base { archivesName = 'gt6ce-api' }
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+    withJavadocJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+tasks.withType(Jar).configureEach {
+    includeEmptyDirs = false
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+    options.docEncoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+    options.noTimestamp = true
+    options.addBooleanOption('Xdoclint:all,-missing', true)
+}
+tasks.named('javadocJar', Jar).configure {
+    from('src/main/resources')
+}
+
+publishing {
+    publications {
+        api(MavenPublication) {
+            from components.java
+            artifactId = 'gt6ce-api'
+        }
+    }
+}
+
+// Exercise the delivered JAR as an external consumer, without main classes or core.
+sourceSets.test {
+    compileClasspath = files(tasks.named('jar')) + configurations.testCompileClasspath
+    runtimeClasspath = output + compileClasspath + configurations.testRuntimeClasspath
+}
+def apiContracts = tasks.register('apiContracts', JavaExec) {
+    description = 'Checks the standalone API JAR and machine energy contracts.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'gregtech.api.contracts.ApiContracts'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    args project.version.toString()
+}
+tasks.named('check').configure { dependsOn apiContracts }

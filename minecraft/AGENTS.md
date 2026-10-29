@@ -3,7 +3,7 @@
 先遵守[根指南](../AGENTS.md)，按任务读[运行时包](../docs/architecture/packages/runtime.md)、[平台适配](../docs/architecture/packages/platforms.md)和[跨版本指南](../docs/architecture/versions.md)。
 
 - 共享输入在本目录 `src/`；版本输入在 `versions/<version-loader>/src/`。同名包不代表文件可放任意源码目录。
-- 公开游戏 API 位于独立子模块 `api/minecraft/src/main/`，由 `:api-platform:<node>` 编译；本目录只依赖其输出，不再维护 `src/api` 副本。
+- 公开游戏 API 位于仓库内 `api/minecraft/src/main/`（内联自 GregTech6API a9c879176），由 `:api-platform:<node>` 编译；本目录只依赖其输出，不再维护 `src/api` 副本。
 - 当前 Stonecutter 活动节点为 `1.20.1-forge`。保留条件标记，尽量用小范围条件分支处理差异；整类差异才考虑版本节点实现。
 - `versions/*/build/generated/stonecutter/` 是生成结果，只读检查，不手工修复。新增同名类前检查共享输入和两节点，避免重复类。
 - 渲染、模型、屏幕及客户端事件留在 `gregtech.client` 和明确的客户端初始化路径，公用静态初始化不引用客户端类型。

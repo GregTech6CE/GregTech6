@@ -1,10 +1,10 @@
-// Compatibility entry points: SDKs are built by the independent API repository.
+// Compatibility entry points: SDKs are built by the in-repo :api-platform projects.
 def platformApi = project(":api-platform:${project.name}")
 def exports = [addonSdkJar: 'jar', addonSdkSourcesJar: 'sourcesJar', addonSdkJavadocJar: 'javadocJar']
 exports.each { localName, producerName ->
     def producer = platformApi.tasks.named(producerName, Jar)
     tasks.register(localName, Copy) {
-        description = "Export ${producerName} from the independent ${project.name} API project."
+        description = "Export ${producerName} from the ${project.name} :api-platform project."
         group = 'build'
         from producer.flatMap { it.archiveFile }
         into layout.buildDirectory.dir('addon-sdk')
