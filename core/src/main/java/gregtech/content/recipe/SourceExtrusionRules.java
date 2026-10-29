@@ -2,9 +2,9 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.content.recipe.generated.GTMaterialFields;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.content.recipe.generated.GTMaterialFields;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,13 +14,10 @@ import java.util.Map;
  */
 public final class SourceExtrusionRules {
     private SourceExtrusionRules() {}
-
     public record Profile(boolean extrudable, boolean simple, boolean smithable, String target, long forgingAmount) {}
-
     private record Row(String name, Profile profile) {}
-
     private static final Map<Integer, Row> ROWS = new HashMap<>();
-    private static final String DATA = """
+    private static final String DATA="""
             0|Empty|000||648648000
             1|Photon|000||648648000
             2|Neutrino|000||648648000
@@ -493,31 +490,31 @@ public final class SourceExtrusionRules {
             8469|GoldenAmber|000||648648000
             8470|Carminite|000||648648000
             8471|Breeze|000||648648000
-            8500|Stone|000||648648000
-            8501|Concrete|000||648648000
-            8502|Netherrack|000||648648000
-            8503|NetherBrick|000||648648000
-            8504|Endstone|000||648648000
-            8505|Basalt|000||648648000
-            8506|Marble|000||648648000
-            8507|GraniteRed|000||648648000
-            8508|GraniteBlack|000||648648000
-            8509|Redrock|000||648648000
-            8511|Diorite|000||648648000
-            8512|SpaceStone|000||648648000
-            8513|MoonStone|000||648648000
-            8514|MoonTurf|000||648648000
-            8515|MarsStone|000||648648000
-            8516|MarsSand|000||648648000
-            8517|Umber|000||648648000
-            8518|Granite|000||648648000
-            8519|Betweenstone|000||648648000
-            8520|Pitstone|000||648648000
-            8521|Livingrock|000||648648000
-            8522|Holystone|000||648648000
-            8523|Deadrock|000||648648000
-            8524|Cragrock|000||648648000
-            8528|SkyStone|000||648648000
+            8500|Stone|110||648648000
+            8501|Concrete|110||648648000
+            8502|Netherrack|110||648648000
+            8503|NetherBrick|110||648648000
+            8504|Endstone|110||648648000
+            8505|Basalt|110||648648000
+            8506|Marble|110||648648000
+            8507|GraniteRed|110||648648000
+            8508|GraniteBlack|110||648648000
+            8509|Redrock|110||648648000
+            8511|Diorite|110||648648000
+            8512|SpaceStone|110||648648000
+            8513|MoonStone|110||648648000
+            8514|MoonTurf|110||648648000
+            8515|MarsStone|110||648648000
+            8516|MarsSand|110||648648000
+            8517|Umber|110||648648000
+            8518|Granite|110||648648000
+            8519|Betweenstone|110||648648000
+            8520|Pitstone|110||648648000
+            8521|Livingrock|110||648648000
+            8522|Holystone|110||648648000
+            8523|Deadrock|110||648648000
+            8524|Cragrock|110||648648000
+            8528|SkyStone|110||648648000
             8599|Bedrock|000||648648000
             8600|Electrum|101||648648000
             8601|SterlingSilver|101||648648000
@@ -708,7 +705,7 @@ public final class SourceExtrusionRules {
             8811|VividAlloy|101||648648000
             8812|CrystallineAlloy|101||648648000
             8813|CrystallinePinkSlime|101||648648000
-            9000|Pumice|000||648648000
+            9000|Pumice|110||648648000
             9001|Diatomite|000||648648000
             9003|BasalticMineralSand|000||648648000
             9004|GraniticMineralSand|000||648648000
@@ -786,28 +783,28 @@ public final class SourceExtrusionRules {
             9166|Kyanite|000||648648000
             9167|Kaolinite|000||648648000
             9169|Talc|000||648648000
-            9170|Gneiss|000||648648000
-            9171|Greenschist|000||648648000
-            9172|Greenstone|000||648648000
-            9173|Greywacke|000||648648000
+            9170|Gneiss|110||648648000
+            9171|Greenschist|110||648648000
+            9172|Greenstone|110||648648000
+            9173|Greywacke|110||648648000
             9174|Graphite|000||648648000
             9175|Graphene|000||648648000
-            9176|Gabbro|000||648648000
-            9177|Komatiite|000||648648000
-            9178|Siltstone|000||648648000
-            9179|Rhyolite|000||648648000
-            9180|Quartzite|000||648648000
-            9181|Migmatite|000||648648000
-            9182|Epidote|000||648648000
+            9176|Gabbro|110||648648000
+            9177|Komatiite|110||648648000
+            9178|Siltstone|110||648648000
+            9179|Rhyolite|110||648648000
+            9180|Quartzite|110||648648000
+            9181|Migmatite|110||648648000
+            9182|Epidote|110||648648000
             9183|Emery|000||648648000
-            9184|Blueschist|000||648648000
-            9185|Bluestone|000||648648000
-            9186|Chert|000||648648000
-            9187|Dacite|000||648648000
-            9188|Andesite|000||648648000
-            9189|Limestone|000||648648000
-            9190|Shale|000||648648000
-            9191|Eclogite|000||648648000
+            9184|Blueschist|110||648648000
+            9185|Bluestone|110||648648000
+            9186|Chert|110||648648000
+            9187|Dacite|110||648648000
+            9188|Andesite|110||648648000
+            9189|Limestone|110||648648000
+            9190|Shale|110||648648000
+            9191|Eclogite|110||648648000
             9192|Rutile|000||648648000
             9193|Stolzite|000||648648000
             9194|Ferberite|000||648648000
@@ -834,40 +831,40 @@ public final class SourceExtrusionRules {
             9215|Fluorite|000||648648000
             9216|Arsenopyrite|000||648648000
             9217|Wolframite|000||648648000
-            9218|Kimberlite|000||648648000
-            9219|Prismarine|000||648648000
-            9220|PrismarineDark|000||648648000
+            9218|Kimberlite|110||648648000
+            9219|Prismarine|110||648648000
+            9220|PrismarineDark|110||648648000
             9221|Bischofite|000||648648000
-            9222|Slate|000||648648000
-            9223|Blackstone|000||648648000
+            9222|Slate|110||648648000
+            9223|Blackstone|110||648648000
             9243|ClayBrick|000||648648000
-            9244|Grayschist|000||648648000
-            9245|Pinkschist|000||648648000
+            9244|Grayschist|110||648648000
+            9245|Pinkschist|110||648648000
             9246|Columbite|000||648648000
             9247|Coltan|000||648648000
-            9248|Deepslate|000||648648000
-            9249|PhobosRock|000||648648000
-            9250|DeimosRock|000||648648000
-            9251|VenusRock|000||648648000
-            9252|MercuryRock|000||648648000
-            9253|CeresRock|000||648648000
-            9254|JupiterRock|000||648648000
-            9255|IoRock|000||648648000
-            9256|EuropaRock|000||648648000
-            9257|GanymedeRock|000||648648000
-            9258|CallistoRock|000||648648000
-            9259|SaturnRock|000||648648000
-            9260|RheaRock|000||648648000
-            9261|TitanRock|000||648648000
-            9262|OberonRock|000||648648000
-            9263|IapetusRock|000||648648000
-            9264|UranusRock|000||648648000
-            9265|TitaniaRock|000||648648000
-            9266|NeptuneRock|000||648648000
-            9267|TritonRock|000||648648000
-            9268|PlutoRock|000||648648000
-            9269|ErisRock|000||648648000
-            9270|Kepler22bRock|000||648648000
+            9248|Deepslate|110||648648000
+            9249|PhobosRock|110||648648000
+            9250|DeimosRock|110||648648000
+            9251|VenusRock|110||648648000
+            9252|MercuryRock|110||648648000
+            9253|CeresRock|110||648648000
+            9254|JupiterRock|110||648648000
+            9255|IoRock|110||648648000
+            9256|EuropaRock|110||648648000
+            9257|GanymedeRock|110||648648000
+            9258|CallistoRock|110||648648000
+            9259|SaturnRock|110||648648000
+            9260|RheaRock|110||648648000
+            9261|TitanRock|110||648648000
+            9262|OberonRock|110||648648000
+            9263|IapetusRock|110||648648000
+            9264|UranusRock|110||648648000
+            9265|TitaniaRock|110||648648000
+            9266|NeptuneRock|110||648648000
+            9267|TritonRock|110||648648000
+            9268|PlutoRock|110||648648000
+            9269|ErisRock|110||648648000
+            9270|Kepler22bRock|110||648648000
             9271|Quicklime|000||648648000
             9300|Oak|000||648648000
             9301|Birch|000||648648000
@@ -1092,56 +1089,41 @@ public final class SourceExtrusionRules {
             9886|Latex|000||648648000
             9887|WhaleOil|000||648648000
             """;
-
     static {
         for (String line : DATA.strip().split("\n")) {
             String[] f = line.strip().split("\\|", -1);
-            ROWS.put(
-                    Integer.parseInt(f[0]),
-                    new Row(
-                            f[1],
-                            new Profile(
-                                    f[2].charAt(0) == '1',
-                                    f[2].charAt(1) == '1',
-                                    f[2].charAt(2) == '1',
-                                    f[3],
-                                    Long.parseLong(f[4]))));
+            ROWS.put(Integer.parseInt(f[0]), new Row(f[1], new Profile(f[2].charAt(0)=='1',
+                    f[2].charAt(1)=='1', f[2].charAt(2)=='1', f[3], Long.parseLong(f[4]))));
         }
     }
-
     public static Profile profile(GTMaterial material) {
-        if (material == null || !material.isValid() || material.resolve() != material || AddonMaterials.owns(material))
-            return null;
-        Row row = ROWS.get(material.getId());
-        return row != null
-                        && row.name().equals(material.getName())
-                        && GTMaterialRegistry.get(material.getId()) == material
-                        && GTMaterialRegistry.get(material.getName()) == material
-                ? row.profile()
-                : null;
+        if (material == null || !material.isValid() || material.resolve()!=material || AddonMaterials.owns(material)) return null;
+        Row row=ROWS.get(material.getId());
+        return row != null && sameName(row.name(), material.getName()) && GTMaterialRegistry.get(material.getId())==material
+                && GTMaterialRegistry.get(material.getName())==material ? row.profile() : null;
     }
-
+    /** The source list spells e.g. {@code SpaceStone} where the port spells {@code Space Stone}. */
+    private static boolean sameName(String source, String port) {
+        if (source.equals(port)) return true;
+        return source.replaceAll("[^A-Za-z0-9]", "").equalsIgnoreCase(port.replaceAll("[^A-Za-z0-9]", ""));
+    }
     public static GTMaterial target(GTMaterial material, Profile profile) {
         if (profile.target().isEmpty()) return material;
-        String name = GTMaterialFields.materialOf(profile.target());
-        GTMaterial result = name == null ? null : GTMaterialRegistry.get(name);
-        return result == null ? null : result.resolve();
+        String name=GTMaterialFields.materialOf(profile.target());
+        GTMaterial result=name==null?null:GTMaterialRegistry.get(name);
+        return result==null?null:result.resolve();
     }
     /** Original ceil input / floor output ratio, and the two 64-stack output limit. */
     public static long[] amounts(long inputWeight, long outputWeight) {
-        if (inputWeight <= 0 || outputWeight <= 0) return null;
-        long input = outputWeight > inputWeight ? (outputWeight + inputWeight - 1) / inputWeight : 1;
-        long output = outputWeight > inputWeight ? 1 : inputWeight / outputWeight;
-        if (input > 64 || output < 1) return null;
-        return new long[] {input, Math.min(128, output), output};
+        if (inputWeight<=0 || outputWeight<=0) return null;
+        long input=outputWeight>inputWeight?(outputWeight+inputWeight-1)/inputWeight:1;
+        long output=outputWeight>inputWeight?1:inputWeight/outputWeight;
+        if (input>64 || output<1) return null;
+        return new long[]{input, Math.min(128,output), output};
     }
-
     public static long normalTicks(GTMaterial input, GTMaterial output, long inputUnits) {
-        double kilograms = input.getDensity() * 111.111111 * inputUnits / GTValues.U;
-        return Math.max(16, 1 + (long) Math.abs((output.getMeltingPoint() - 293d) * kilograms / (75 * 96)));
+        double kilograms=input.getDensity()*111.111111*inputUnits/GTValues.U;
+        return Math.max(16,1+(long)Math.abs((output.getMeltingPoint()-293d)*kilograms/(75*96)));
     }
-
-    public static long simpleTicks(long outputUnits) {
-        return Math.max(1, (outputUnits * 64 + GTValues.U - 1) / GTValues.U);
-    }
+    public static long simpleTicks(long outputUnits) { return Math.max(1,(outputUnits*64+GTValues.U-1)/GTValues.U); }
 }

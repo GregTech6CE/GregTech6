@@ -61,9 +61,10 @@ public final class StoneAndToolSurvivalRecipes {
      * stone tools reachable: the raw heads they produce are the ones the sharpening chain finishes
      * (the port's stone tool heads come from of the porting notes).
      *
-     * <p>GT6 iterates {@code mEqualBlocks[STONE]} and {@code mEqualBlocks[COBBL]}, i.e. only those two
-     * variant groups — not every masonry variant. The port's equivalent sets are the {@code _stone} and
-     * {@code _cobble} blocks of each {@link StoneType}.</p>
+     * <p>GT6 iterates {@code mEqualBlocks[STONE]} and {@code mEqualBlocks[COBBL]} and also repeats the
+     * shape rows for each type's smooth block. The port's equivalent sets are the {@code _stone},
+     * {@code _cobble} and {@code _smooth} blocks of each {@link StoneType}; the dust-block input is
+     * covered by the generic prefix matrix.</p>
      *
      * <p>Two shapes output blocks rather than material forms: the ingot mold yields the rock's brick
      * variant and the block mold its plain stone variant ({@code ST.make(this, 1, BRICK/STONE)}). For the
@@ -102,7 +103,11 @@ public final class StoneAndToolSurvivalRecipes {
 //?}
             if (!(block instanceof GTStoneBlock stone)) continue;
             var variant = stone.variant();
-            if (variant != StoneVariant.STONE && variant != StoneVariant.COBBLE) continue;
+            // BlockStones extrudes aStone, aCobble, aSmooth and aDustBlock; the dust block rows
+            // come from the generic prefix matrix, while the three masonry groups are literal.
+            if (variant != StoneVariant.STONE
+                    && variant != StoneVariant.COBBLE
+                    && variant != StoneVariant.SMOOTH) continue;
             var material = stone.stoneMaterial();
             var input = new ItemStack(block);
             var bricks = blockItem(stone.stoneType().registryId() + "_" + StoneVariant.BRICKS.registrySuffix());

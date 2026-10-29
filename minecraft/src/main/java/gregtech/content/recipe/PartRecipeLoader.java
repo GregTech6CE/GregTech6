@@ -47,10 +47,11 @@ public class PartRecipeLoader implements InitializationStep {
             extruder(m);
             smelting(m);
         }
+        int extruderSpecials = SourceExtruderRecipes.registerSpecialRecipes();
         extruderPairCount = SourceExtruderRecipes.finishRegistration();
         com.mojang.logging.LogUtils.getLogger().info(
-                "[gregtech] Part processing recipes added; extruder matrix: {} recipes ({} GT6 outputs skipped: {})",
-                extruderPairCount, EXTRUDER_SKIPPED.size(), EXTRUDER_SKIPPED);
+                "[gregtech] Part processing recipes added; extruder: {} recipes ({} special rows, {} GT6 outputs skipped: {})",
+                extruderPairCount, extruderSpecials, EXTRUDER_SKIPPED.size(), EXTRUDER_SKIPPED);
     }
 
     // ── RollingMill: ingots → plates ────────────────────────────────────────

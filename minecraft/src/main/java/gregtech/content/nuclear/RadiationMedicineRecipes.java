@@ -33,17 +33,7 @@ public final class RadiationMedicineRecipes {
         var empty = item("empty_wax_pill");
         add(MachineRecipeMaps.Boxinator, new ItemStack[]{GTItems.getStack(MaterialPrefix.dust,
                 GTMaterialRegistry.get("Iodine"), 1), empty}, item("radaway"), 16);
-        for (String wax : new String[]{"WaxPlant", "WaxParaffin", "WaxBee"}) {
-            for (var prefix : new MaterialPrefix[]{MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny}) {
-                int amount = prefix == MaterialPrefix.dust ? 1 : prefix == MaterialPrefix.dustSmall ? 4 : 9;
-                var input = GTItems.getStack(prefix, GTMaterialRegistry.get(wax), amount);
-                if (input.isEmpty()) continue;
-                for (String shape : new String[]{"extruder_shape_bottle", "low_heat_extruder_shape_bottle"}) {
-                    var mold = GTTechnological.get(shape);
-                    if (mold != null) add(MachineRecipeMaps.Extruder, new ItemStack[]{input, new ItemStack(mold)}, empty, 64);
-                }
-            }
-        }
+        // The complete wax pill and capsule matrix belongs to SourceExtruderRecipes.
     }
     private static ItemStack item(String id) {
 //? if >=1.21.1 {

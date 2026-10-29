@@ -48,11 +48,7 @@ public final class ReactorRodRecipes {
         var tritium=GTFluids.still("Tritium");
         if(tritium==null)throw new IllegalStateException("Missing tritium");
         add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{GTFuelRods.stack(9431)},new ItemStack[]{GTFuelRods.stack(9201)},null,null,null,new FluidStack[]{new FluidStack(tritium.get(),500)},16,16,0));
-        var zirconium=GTMaterialRegistry.get("Zirconium");
-        var shape=GTTechnological.get("extruder_shape_cell");
-        long ticks=Math.max(64,(long)((zirconium.getMeltingPoint()-293)*(1+zirconium.getDensity())/6144));
-        for(var prefix:new MaterialPrefix[]{MaterialPrefix.ingot,MaterialPrefix.dust})
-            add(MachineRecipeMaps.Extruder,new Recipe(new ItemStack[]{mat(prefix,"Zirconium",1),new ItemStack(shape)},new ItemStack[]{GTFuelRods.stack(9201)},null,null,null,null,ticks,96,0));
+        // The zirconium reactor-rod extruder rows belong to SourceExtruderRecipes.
         return count;
     }
     private static ItemStack mat(MaterialPrefix prefix,String material,int amount){var stack=GTItems.getStack(prefix,GTMaterialRegistry.get(material),amount);if(stack.isEmpty())throw new IllegalStateException("Missing reactor recipe form: "+prefix.getName()+"/"+material);return stack;}

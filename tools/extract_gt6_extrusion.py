@@ -22,7 +22,16 @@ src=raw.decode()
 profiles={int(i):n for i,n in re.findall(r'(\d+)\|([^|\n]+)\|[01]{4}',
     (ROOT/'core/src/main/java/gregtech/content/material/SourceLatheMaterialProfiles.java').read_text())}
 methods={}
-for m in re.finditer(r'static OreDictMaterial\s+(\w+)\s*\(([^\n]*?)\)\s*\{return ([^\n]+?)\}',src):methods.setdefault(m[1],[]).append((m[2],m[3]))
+# Factory bodies are not always one expression: MT.stone(...) spans several statements and
+# carries the EXTRUDER/EXTRUDER_SIMPLE flags for every stone and brick material.
+for m in re.finditer(r'static OreDictMaterial\s+(\w+)\s*\(([^)]*)\)\s*\{',src):
+    depth=1; i=m.end()
+    while i<len(src) and depth:
+        if src[i]=='{':depth+=1
+        elif src[i]=='}':depth-=1
+        i+=1
+    if depth==0: methods.setdefault(m[1],[]).append((m[2],src[m.end():i-1]))
+
 flags=('EXTRUDER','EXTRUDER_SIMPLE','SMITHABLE')
 def factoryflags(name,seen=()):
  if name in seen:return set()
@@ -31,7 +40,7 @@ def factoryflags(name,seen=()):
   # The threshold applies only to elemental overloads and is evaluated at declaration below.
   body=re.sub(r'aMeltingPoint <= 1200.*','',body)
   result|={f for f in flags if re.search(r'\b'+f+r'\b',body)}
-  parent=re.match(r'(\w+)\s*\(',body)
+  parent=re.search(r'return\s+(\w+)\s*\(',body)
   if parent:result|=factoryflags(parent[1],seen+(name,))
  return result
 # Forge targets are independent of smelting. Copy the source target closure in call order,
@@ -69,11 +78,13 @@ for line in src.splitlines():
  field,fac=m.groups(); statement=line
  # zero-argument elemental convenience methods carry the full declaration in their return.
  if re.match(r'\s*\)',line[m.end():]) and fac in methods:
-  statement=methods[fac][0][1]; fac=re.match(r'(\w+)\s*\(',statement)[1]
+  ret=re.search(r'return\s+(.+?);',methods[fac][0][1],re.S)
+  if not ret:continue
+  statement=ret.group(1).strip(); fac=re.match(r'(\w+)\s*\(',statement)[1]
  idname=re.search(r'\(\s*(\d+)\s*,\s*"([^"]+)"',statement)
  if not idname:continue
- ident=int(idname[1]);name=profiles.get(ident)
- if name is None:continue
+ ident=int(idname[1]);name=profiles.get(ident) or idname[2]
+
  f=factoryflags(fac)|{f for f in flags if re.search(r'\b'+f+r'\b',statement)}
  # Elemental metal overload: id,name,symbol,Z,N,melting.
  elem=re.search(r'\(\s*\d+\s*,\s*"[^"]+"\s*,\s*"[^"]*"\s*,\s*\d+\s*,\s*\d+\s*,\s*(\d+)',statement)
@@ -82,7 +93,8 @@ for line in src.splitlines():
  target,amount=forging(field)
  if target==field: target=''
  rows.append((ident,name,'EXTRUDER_SIMPLE' in f,'SMITHABLE' in f,target,amount,field,fac))
-assert len(methods)==310 and len(rows)==336 and sum(r[2] for r in rows)==100, 'Source extraction changed'
+print('methods=%d profiles=%d simple=%d' % (len(methods),len(rows),sum(r[2] for r in rows)))
+assert len(methods)==312 and len(rows)==414 and sum(r[2] for r in rows)==178, 'Source extraction changed'
 positive={r[0]:r for r in rows}
 content='''package gregtech.content.recipe;
 
@@ -113,8 +125,13 @@ public final class SourceExtrusionRules {
     public static Profile profile(GTMaterial material) {
         if (material == null || !material.isValid() || material.resolve()!=material || AddonMaterials.owns(material)) return null;
         Row row=ROWS.get(material.getId());
-        return row != null && row.name().equals(material.getName()) && GTMaterialRegistry.get(material.getId())==material
+        return row != null && sameName(row.name(), material.getName()) && GTMaterialRegistry.get(material.getId())==material
                 && GTMaterialRegistry.get(material.getName())==material ? row.profile() : null;
+    }
+    /** The source list spells e.g. {@code SpaceStone} where the port spells {@code Space Stone}. */
+    private static boolean sameName(String source, String port) {
+        if (source.equals(port)) return true;
+        return source.replaceAll("[^A-Za-z0-9]", "").equalsIgnoreCase(port.replaceAll("[^A-Za-z0-9]", ""));
     }
     public static GTMaterial target(GTMaterial material, Profile profile) {
         if (profile.target().isEmpty()) return material;
@@ -150,6 +167,9 @@ start=content.index('    private static final String DATA='); end=content.index(
 content=content[:end]+content[start:content.rfind('\n}')]+ '\n'+content[end:start]+'}\n'
 output=ROOT/'core/src/main/java/gregtech/content/recipe/SourceExtrusionRules.java'
 if args.check:
-    if output.read_text()!=content: raise SystemExit('Extrusion facts differ')
+    # Spotless formats and reorders imports; compare the class body, not layout or import order.
+    def body(text): return re.sub(r'\s+','',text[text.index('public final class'):])
+    if body(output.read_text())!=body(content):
+        raise SystemExit('Extrusion facts differ')
 else: output.write_text(content)
-print('Verified extrusion facts: 336 eligible / 100 simple native profiles')
+print('Verified extrusion facts: %d eligible / %d simple native profiles' % (len(rows),sum(r[2] for r in rows)))

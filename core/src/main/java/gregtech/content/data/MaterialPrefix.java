@@ -458,7 +458,14 @@ public final class MaterialPrefix {
         minecartWheels =
                 def("minecartWheels", "Minecart Wheels", m -> HAS_PARTS.test(m) && m.has(MaterialProperty.SMITHABLE));
         railGt = def(
-                "railGt", "Rail", m -> m.has(MaterialProperty.GENERATE_RAIL) && HAS_INGOT.test(m) || GT6_RAILS.test(m));
+                "railGt",
+                "Rail",
+                // GT6 OP.railGt = RAILS. Keep the port's legacy flag only for materials without
+                // a source form set (addons); native materials follow the extracted flag.
+                m -> GT6_RAILS.test(m)
+                        || (MaterialForms.of(m).isEmpty()
+                                && m.has(MaterialProperty.GENERATE_RAIL)
+                                && HAS_INGOT.test(m)));
 
         plantGtBerry = def("plantGtBerry", "Berry", HAS_PLANT.or(GT6_PLANTS), true);
         plantGtBlossom = def("plantGtBlossom", "Blossom", HAS_PLANT.or(GT6_PLANTS), true);

@@ -85,12 +85,7 @@ public final class DyeProcessingRecipes {
         add(MachineRecipeMaps.Drying,new Recipe(new ItemStack[]{new ItemStack(GTTechnological.selectorTag(0))},
                 new ItemStack[]{colored("concrete",net.minecraft.world.item.DyeColor.LIGHT_GRAY,1)},null,null,
                 new FluidStack[]{fluid("Concrete",144)},new FluidStack[]{fluid("DistW",8)},16,16,0).withCatalystInputs(0));
-        for(var prefix:new MaterialPrefix[]{MaterialPrefix.ingot,MaterialPrefix.plate,MaterialPrefix.dust})
-            for(String mold:new String[]{"extruder_shape_cell","low_heat_extruder_shape_cell"}) {
-                var feed=GTItems.getStack(prefix,GTMaterialRegistry.get("Plastic"),3);
-                if(!feed.isEmpty())add(MachineRecipeMaps.Extruder,new Recipe(new ItemStack[]{feed,item("gt6ce:"+mold,1)},
-                        new ItemStack[]{item("gt6ce:plastic_canister",1)},null,null,null,null,192,16,0).withCatalystInputs(1));
-            }
+        // The complete plastic-canister prefix matrix belongs to SourceExtruderRecipes.
         var co2=gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid("CarbonDioxide",16000);
         if(co2==null||co2.isEmpty())throw new IllegalStateException("Missing CO2");
         add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gt6ce:empty_spray_can",1)},new ItemStack[]{item("gt6ce:fire_extinguisher_co2",1)},null,null,
