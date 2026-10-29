@@ -5,9 +5,7 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 
-/** SPDX-License-Identifier: LGPL-3.0-or-later */
-
-/** Maps whose addon machines roll two item outputs as one choice. */
+/** SPDX-License-Identifier: LGPL-3.0-or-later. Maps whose addon machines roll two item outputs as one choice. */
 public final class ExclusiveOutputMaps {
     private ExclusiveOutputMaps() {}
 
