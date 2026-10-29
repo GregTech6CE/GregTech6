@@ -47,15 +47,15 @@
     "CoverSignalMixin",
     "CoverHarvestMixin",
     "PacketFrameEncoderMixin",
-    "PacketFrameDecoderMixin",
     "LoginQueryPayloadMixin",
     "CustomPayloadLimitMixin"
   ],
   "injectors": {
-    "defaultRequire": 0
+    "defaultRequire": 1
   },
   "client": [
     "OreTerrainParticleMixin",
+    "PacketFrameDecoderMixin",
     "FormConversionGhostPlaceMixin",
     "JadeOreHarvestToolMixin",
     "BlockPaintColorMixin",
