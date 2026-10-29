@@ -5,7 +5,10 @@ package gregtech.compat.jei;
 //?} else {
 import gregtech.GregTech;
 //?}
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
+import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.worldgen.AddonOreVeins;
 import gregtech.content.worldgen.GTOreVeins;
 import gregtech.content.worldgen.GTStoneLayersGen;
 import gregtech.content.worldgen.GTWorldgenScale;
@@ -76,6 +79,15 @@ public class WorldgenInfoData {
         for (GTOreVeins.OreVein v : end) {
             out.add(new VeinInfo(v.name(), "minecraft:the_end", v.minY(), v.maxY(), v.weight(),
                     endWeight, v.top(), v.bottom(), v.between(), v.spread(), false));
+        }
+        for (String dimension : AddonOreVeins.veinDimensions()) {
+            if (OreVeinDeclaration.OVERWORLD.equals(dimension) || OreVeinDeclaration.END.equals(dimension)) continue;
+            var veins = GTOreVeins.activeVeins(dimension);
+            int totalWeight = veins.stream().mapToInt(GTOreVeins.OreVein::weight).sum();
+            for (GTOreVeins.OreVein v : veins) {
+                out.add(new VeinInfo(v.name(), dimension, v.minY(), v.maxY(), v.weight(), totalWeight,
+                        v.top(), v.bottom(), v.between(), v.spread(), false));
+            }
         }
         if (gregtech.content.worldgen.GTWorldgenDefaults.STONE_LAYERS) {
             java.util.Set<String> seen = new java.util.HashSet<>();
@@ -245,6 +257,14 @@ public class WorldgenInfoData {
         }
         for (GTOreVeins.SmallOre o : GTOreVeins.activeEndSmallOres()) {
             out.add(new SmallOreInfo(o.name(), "minecraft:the_end", o.minY(), o.maxY(), o.amount(), o.material(), false));
+        }
+        for (String dimension : AddonOreVeins.smallOreDimensions()) {
+            if (SmallOreDeclaration.OVERWORLD.equals(dimension)
+                    || SmallOreDeclaration.NETHER.equals(dimension)
+                    || SmallOreDeclaration.END.equals(dimension)) continue;
+            for (GTOreVeins.SmallOre o : GTOreVeins.activeSmallOres(dimension)) {
+                out.add(new SmallOreInfo(o.name(), dimension, o.minY(), o.maxY(), o.amount(), o.material(), false));
+            }
         }
         return out;
     }
