@@ -1,5 +1,6 @@
 package gregtech.mixin;
 
+import gregtech.content.block.OreBlock;
 import gregtech.content.data.OreHostPhysics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -15,7 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class OreHostHardnessMixin {
     @Inject(method = "getDestroySpeed", at = @At("RETURN"), cancellable = true, require = 1)
     private void gregtech$sourceOreHostHardness(BlockGetter level, BlockPos pos, CallbackInfoReturnable<Float> result) {
-        OreHostPhysics.params((BlockState) (Object) this).ifPresent(value -> result.setReturnValue(value.hardness()));
+        BlockState state = (BlockState) (Object) this;
+        if (state.getBlock() instanceof OreBlock && OreBlock.isBedrockOre(state)) {
+            result.setReturnValue(-1.0F);
+            return;
+        }
+        OreHostPhysics.params(state).ifPresent(value -> result.setReturnValue(value.hardness()));
     }
 
     @Inject(method = "requiresCorrectToolForDrops", at = @At("RETURN"), cancellable = true, require = 1)
