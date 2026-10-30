@@ -174,8 +174,8 @@ public final class StoneVariantRecipes {
                 case BRICKS_REDSTONE -> {
                     ItemStack redstone = new ItemStack(Items.REDSTONE);
                     hammer(in, rock4, 7000);
-                    crusher(in, block(type, StoneVariant.BRICKS_CRACKED), 64L + harvest * 64L, redstone);
-                    shred("shredder", in, dust9, 64L + harvest * 64L, redstone);
+                    crusher(in, block(type, StoneVariant.BRICKS_CRACKED), 16L + harvest * 16L, redstone);
+                    shred("shredder", in, dust9, 16L + harvest * 16L, redstone);
                 }
                 // — the decorative families shatter like cracked bricks.
                 default -> {

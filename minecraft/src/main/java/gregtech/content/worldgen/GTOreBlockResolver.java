@@ -180,6 +180,9 @@ public final class GTOreBlockResolver {
         if (host.is(Blocks.TUFF)) return OreHostStone.TUFF;
         if (host.is(Blocks.NETHERRACK)) return OreHostStone.NETHERRACK;
         if (host.is(Blocks.END_STONE)) return OreHostStone.END_STONE;
+        // GT6 ore.normal.sandstone: sandstone-hosted ores have the sandstone host and no gangue.
+        if (host.is(Blocks.SANDSTONE) || host.is(Blocks.CUT_SANDSTONE) || host.is(Blocks.CHISELED_SANDSTONE))
+            return OreHostStone.SANDSTONE;
 //? if >=1.21.1 {
         /*if (host.is(BlockTags.DEEPSLATE_ORE_REPLACEABLES)) return OreHostStone.DEEPSLATE;
 *///?} else {

@@ -15,7 +15,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -35,6 +37,30 @@ import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
 final class SourceOreCrushingAdapter {
     private SourceOreCrushingAdapter() {}
     enum NativeKind { HOST_ORE, FIXED_STONE, DENSE, RAW_ITEM, RAW_BLOCK }
+
+    /** Vanilla ore blocks are GT6 ore-prefix blocks with a fixed host, not a host selector.
+     *  The material name matches the registry name OPL passes for the same block. */
+    private static final Map<Item, String> VANILLA_ORES = Map.ofEntries(
+            Map.entry(Items.COAL_ORE, "Coal"), Map.entry(Items.DEEPSLATE_COAL_ORE, "Coal"),
+            Map.entry(Items.IRON_ORE, "Iron"), Map.entry(Items.DEEPSLATE_IRON_ORE, "Iron"),
+            Map.entry(Items.COPPER_ORE, "Copper"), Map.entry(Items.DEEPSLATE_COPPER_ORE, "Copper"),
+            Map.entry(Items.GOLD_ORE, "Gold"), Map.entry(Items.DEEPSLATE_GOLD_ORE, "Gold"),
+            Map.entry(Items.REDSTONE_ORE, "Redstone"), Map.entry(Items.DEEPSLATE_REDSTONE_ORE, "Redstone"),
+            Map.entry(Items.EMERALD_ORE, "Emerald"), Map.entry(Items.DEEPSLATE_EMERALD_ORE, "Emerald"),
+            Map.entry(Items.LAPIS_ORE, "Lapis"), Map.entry(Items.DEEPSLATE_LAPIS_ORE, "Lapis"),
+            Map.entry(Items.DIAMOND_ORE, "Diamond"), Map.entry(Items.DEEPSLATE_DIAMOND_ORE, "Diamond"),
+            Map.entry(Items.NETHER_GOLD_ORE, "Gold"), Map.entry(Items.NETHER_QUARTZ_ORE, "NetherQuartz"),
+            Map.entry(Items.ANCIENT_DEBRIS, "AncientDebris"));
+
+    /** Gangue host of a vanilla ore item; "none" keeps a source without a host prefix from
+     *  gaining a byproduct. */
+    private static final Map<Item, String> VANILLA_ORE_HOSTS = Map.ofEntries(
+            Map.entry(Items.DEEPSLATE_COAL_ORE, "deepslate"), Map.entry(Items.DEEPSLATE_IRON_ORE, "deepslate"),
+            Map.entry(Items.DEEPSLATE_COPPER_ORE, "deepslate"), Map.entry(Items.DEEPSLATE_GOLD_ORE, "deepslate"),
+            Map.entry(Items.DEEPSLATE_REDSTONE_ORE, "deepslate"), Map.entry(Items.DEEPSLATE_EMERALD_ORE, "deepslate"),
+            Map.entry(Items.DEEPSLATE_LAPIS_ORE, "deepslate"), Map.entry(Items.DEEPSLATE_DIAMOND_ORE, "deepslate"),
+            Map.entry(Items.NETHER_GOLD_ORE, "netherrack"), Map.entry(Items.NETHER_QUARTZ_ORE, "netherrack"),
+            Map.entry(Items.ANCIENT_DEBRIS, "none"));
     enum Domain { SOURCE_PROFILE, SOURCE_NO, UNKNOWN_HOST }
     enum Action { SUPPORTED, SOURCE_NO_ROW, DEFERRED_NO_ROW, LEGACY_UNSUPPORTED }
     record Candidate(GTMaterial material, ItemStack input, NativeKind kind) {
@@ -69,25 +95,41 @@ final class SourceOreCrushingAdapter {
         var rows = new ArrayList<Recipe>();
         if (candidate.kind() == NativeKind.HOST_ORE) {
             OreBlock block = (OreBlock)((BlockItem)candidate.input().getItem()).getBlock();
+            // Distinct block-state hosts share one source profile (vanilla and GT granite, for
+            // example); one row with a host-set predicate covers all of them, as the source does.
+            var hostsByProfile = new LinkedHashMap<String, List<OreHostStone>>();
             for (OreHostStone host : OreHostStone.values()) {
                 if (SourceOreCrushingFacts.hostDecision(host.id()) != Decision.YES) continue;
                 var profile = SourceOreCrushingFacts.hostProfile(host.id());
-                Gangue gangue = s.gangue(profile);
-                if (gangue == null) return none(Action.LEGACY_UNSUPPORTED, "gangue-provenance:" + host.id());
+                hostsByProfile.computeIfAbsent(profile.sourcePrefix(), ignored -> new ArrayList<>()).add(host);
+            }
+            for (var hosts : hostsByProfile.values()) {
+                var profile = SourceOreCrushingFacts.hostProfile(hosts.get(0).id());
+                var gangue = s.gangueList(profile);
+                if (gangue == null)
+                    return none(Action.LEGACY_UNSUPPORTED, "gangue-provenance:" + hosts.get(0).id());
                 Result result = plan(new Request(machine, Kind.STANDARD, input, profile.hexoriumAdjusted(),
-                        List.of(gangue), capacity(machine)), s::available);
+                        gangue, capacity(machine)), s::available);
                 Outcome unsupported = unsupported(result);
                 if (unsupported != null) return unsupported;
                 if (result.status() == Status.NO_ROW) continue;
-                ItemStack representative = OreBlock.withStone(candidate.input(), block.stateFor(host));
+                var hostIds = new HashSet<String>();
+                for (OreHostStone host : hosts) hostIds.add(host.id());
+                ItemStack representative = OreBlock.withStone(candidate.input(), block.stateFor(hosts.get(0)));
                 Predicate<ItemStack> matches = stack -> {
                     HostSelection actual = classifyHost(stack);
-                    return actual.domain() == Domain.SOURCE_PROFILE && actual.host().equals(host.id());
+                    return actual.domain() == Domain.SOURCE_PROFILE && hostIds.contains(actual.host());
                 };
                 Recipe row = make(machine, representative, result, matches, s);
                 if (row == null) return none(Action.DEFERRED_NO_ROW, "native-normalization");
-                if (SourceOreCrushingFacts.hasBrokenSourcePair(host.id())) row.withViewerInputAlternatives(0,
-                        List.of(representative, OreBlock.withStone(candidate.input(), block.brokenStateFor(host))));
+                if (SourceOreCrushingFacts.hasBrokenSourcePair(hosts.get(0).id())) {
+                    var alternatives = new ArrayList<ItemStack>();
+                    for (OreHostStone host : hosts) {
+                        alternatives.add(OreBlock.withStone(candidate.input(), block.stateFor(host)));
+                        alternatives.add(OreBlock.withStone(candidate.input(), block.brokenStateFor(host)));
+                    }
+                    row.withViewerInputAlternatives(0, alternatives);
+                }
                 rows.add(row);
             }
             return new Outcome(Action.SUPPORTED, rows, true, "verified-host-domains");
@@ -98,9 +140,13 @@ final class SourceOreCrushingAdapter {
         };
         var gangue = new ArrayList<Gangue>();
         if (candidate.kind() == NativeKind.FIXED_STONE) {
-            Gangue stone = s.gangue(SourceOreCrushingFacts.hostProfile("stone"));
-            if (stone == null) return none(Action.LEGACY_UNSUPPORTED, "stone-gangue-provenance");
-            gangue.add(stone);
+            String host = s.vanillaHost(candidate.input());
+            if (!"none".equals(host)) {
+                var profile = SourceOreCrushingFacts.hostProfile(host);
+                Gangue fixed = profile == null ? null : s.gangue(profile);
+                if (fixed == null) return none(Action.LEGACY_UNSUPPORTED, "stone-gangue-provenance");
+                gangue.add(fixed);
+            }
         }
         Result result = plan(new Request(machine, kind, input, false, gangue, capacity(machine)), s::available);
         Outcome unsupported = unsupported(result);
@@ -223,10 +269,17 @@ final class SourceOreCrushingAdapter {
                     MaterialPrefix.crushedPurified, MaterialPrefix.crushedPurifiedTiny,
                     MaterialPrefix.crushedCentrifuged, MaterialPrefix.crushedCentrifugedTiny));
         }
+        String vanillaHost(ItemStack input) {
+            return VANILLA_ORE_HOSTS.getOrDefault(input.getItem(), "stone");
+        }
+
         NativeKind kind(GTMaterial material, ItemStack input, boolean raw) {
             if (raw) return SourceFurnaceNativeAdapter.nativeForm(MaterialPrefix.oreRaw, material, input)
                     && direct(MaterialPrefix.oreRaw, material).availability() == Availability.PRESENT
                     && direct(MaterialPrefix.oreRaw, material).stack().getItem() == input.getItem() ? NativeKind.RAW_ITEM : null;
+            String vanillaMaterial = VANILLA_ORES.get(input.getItem());
+            if (vanillaMaterial != null)
+                return material.getName().equals(vanillaMaterial) ? NativeKind.FIXED_STONE : null;
             if (!(input.getItem() instanceof BlockItem item)
                     || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) return null;
             var block = item.getBlock();
@@ -242,10 +295,12 @@ final class SourceOreCrushingAdapter {
                         && GTBlocks.getStack(BlockMaterialPrefix.blockRaw, material).getItem() == item
                         && composition(input, null, material, 18 * U, true) ? NativeKind.RAW_BLOCK : null;
             if (!special(block)) return null;
+            // These are GT-owned typed blocks in the special-ore registry; the block class carries
+            // the dense/vanilla prefix, and the item cannot be an external substitute.
             if (block instanceof DenseOreBlock dense && dense.material().resolve() == material)
-                return composition(input, MaterialPrefix.oreDense, material, 4 * U, false) ? NativeKind.DENSE : null;
+                return NativeKind.DENSE;
             if (block instanceof VanillaOreBlock ordinary && ordinary.material().resolve() == material)
-                return composition(input, MaterialPrefix.oreVanillastone, material, 2 * U, false) ? NativeKind.FIXED_STONE : null;
+                return NativeKind.FIXED_STONE;
             return null;
         }
         private static boolean special(net.minecraft.world.level.block.Block block) {
@@ -278,8 +333,15 @@ final class SourceOreCrushingAdapter {
             return material.getByProducts().stream().map(GTMaterial::resolve)
                     .anyMatch(m -> identity(m) && m.getId() == id && m.getName().equals(name));
         }
+        /** Null is an unresolved gangue identity; an empty list is a source host without gangue. */
+        List<Gangue> gangueList(SourceOreCrushingFacts.HostProfile profile) {
+            if (!profile.hasGangue()) return List.of();
+            Gangue gangue = gangue(profile);
+            return gangue == null ? null : List.of(gangue);
+        }
+
         Gangue gangue(SourceOreCrushingFacts.HostProfile profile) {
-            GTMaterial material = material(profile.gangueMaterial());
+            GTMaterial material = profile.gangueMaterial() == null ? null : material(profile.gangueMaterial());
             GTMaterial target = material == null ? null : target(material);
             return !identity(material) || !identity(target) ? null
                     : new Gangue(id(material), profile.gangueAmount(), quality(material), id(target), amount(material));

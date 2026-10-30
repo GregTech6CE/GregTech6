@@ -103,13 +103,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             int baseMultiplier = Math.max(1, Math.min(64,
                     material.getOreMultiplier() * material.getOreProcessingMultiplier()));
 
-            // A bearing rock is 9/4 material units, not a complete ore block.
-            ItemStack rock = mat(MaterialPrefix.rockGt, material, 1);
-            if (!rock.isEmpty() && !SourceOreMacerationAdapter.retireRock(material, rock, mMaceration)) {
-                ItemStack powder = OM.dust(material.getTargetPulverMaterial(),
-                        material.getTargetPulverAmount() * 9 / 4);
-                if (!powder.isEmpty()) MachineRecipeMaps.pulverizing(rock, powder);
-            }
+            // A bearing rock is 9/4 material units. Its single crusher row belongs to
+            // CrusherFamilyRecipes (GT6 RecipeMapHandlerPrefix costs: 16 EU/t, 16*quality units);
+            // a second compatibility row here would win the collision with the wrong duration.
 
             // ── Oilsands special handling ─────────────────────────────────
             if (isOilsands(material)) {

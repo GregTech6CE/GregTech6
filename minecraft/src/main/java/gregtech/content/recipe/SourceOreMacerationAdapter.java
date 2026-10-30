@@ -99,22 +99,6 @@ final class SourceOreMacerationAdapter {
         return new Outcome(Action.SOURCE_ROW, new Definition(input.copy(), outputs, duration), "verified");
     }
 
-    /** Relinquish only OPL's early rock rows. CrusherFamilyRecipes owns the actual amount-aware row. */
-    static boolean retireRock(GTMaterial material, ItemStack input, Snapshot snapshot) {
-        if (input == null
-                || input.isEmpty()
-                || !snapshot.identity(material)
-                || snapshot.overridden(material, List.of(MaterialPrefix.rockGt))) return false;
-        NativeForm actual = snapshot.direct(MaterialPrefix.rockGt, material);
-        if (actual.availability() != Availability.PRESENT || !ItemStack.matches(input, actual.stack())) return false;
-        GTMaterial target = snapshot.target(material);
-        if (target == null || !target.isValid()) return true;
-        if (!snapshot.identity(target) || snapshot.overridden(target, OUTPUTS)) return false;
-        for (MaterialPrefix prefix : OUTPUTS)
-            if (snapshot.direct(prefix, target).availability() == Availability.UNKNOWN) return false;
-        return true;
-    }
-
     /** One startup observation: never reinterpret generation exclusions as missing registered inputs. */
     static class Snapshot {
         private final Map<GTMaterial, Set<MaterialPrefix>> overrides = new IdentityHashMap<>();

@@ -95,7 +95,9 @@ public final class SourceOilSandRules {
                 : new HostProfile(
                         host.sourcePrefix(),
                         WEIGHT_STANDARD,
-                        List.of(new Byproduct(host.gangueMaterial(), host.gangueAmount())));
+                        host.hasGangue()
+                                ? List.of(new Byproduct(host.gangueMaterial(), host.gangueAmount()))
+                                : List.of());
     }
 
     public static Decision hostDecision(String nativeHostId) {

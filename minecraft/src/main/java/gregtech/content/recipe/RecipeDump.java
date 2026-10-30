@@ -215,6 +215,9 @@ public final class RecipeDump {
         }
         json.addProperty("count", stack.getCount());
         json.addProperty("displayName", stack.getHoverName().getString());
+        if (item instanceof BlockItem blockItem && blockItem.getBlock() instanceof gregtech.content.block.OreBlock) {
+            json.addProperty("host", gregtech.content.block.OreBlock.stoneOfStack(stack).id());
+        }
 
 //? if >=1.21.1 {
 /*        if (!stack.getComponentsPatch().isEmpty()) json.addProperty("components", true);

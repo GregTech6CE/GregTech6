@@ -22,8 +22,13 @@ public final class VanillaBlockProcessingRecipes extends OriginalRecipeBatch {
     }
 
     private void smash(String input, ItemStack output) {
-        add("hammer/" + input, MachineRecipeMaps.Hammer, 16, 16, items(mc(input, 1)), items(output), null, null);
-        add("crusher/" + input, MachineRecipeMaps.Crusher, 32, 16, items(mc(input, 1)), items(output), null, null);
+        smashItem(mc(input, 1), output);
+    }
+
+    private void smashItem(ItemStack input, ItemStack output) {
+        String id = input.getItem().toString();
+        add("hammer/" + id, MachineRecipeMaps.Hammer, 16, 16, items(input.copy()), items(output), null, null);
+        add("crusher/" + id, MachineRecipeMaps.Crusher, 32, 16, items(input.copy()), items(output), null, null);
     }
 
     private void smashing() {
@@ -31,14 +36,48 @@ public final class VanillaBlockProcessingRecipes extends OriginalRecipeBatch {
         smash("red_mushroom_block", mc("red_mushroom", 1));
         for (String quartz : new String[] {"quartz_block", "chiseled_quartz_block", "quartz_pillar"})
             smash(quartz, mc("quartz", 4));
-        // Modern stonecutting produces one stair from one four-quartz block.
-        smash("quartz_stairs", mc("quartz", 4));
+        // GT6 Loader_Recipes_Vanilla: one quartz stair pair yields six quartz.
+        smash("quartz_stairs", mc("quartz", 6));
         smash("quartz_slab", mc("quartz", 2));
         smash("stone_bricks", mc("cracked_stone_bricks", 1));
         for (String block :
                 new String[] {"mossy_stone_bricks", "cracked_stone_bricks", "chiseled_stone_bricks", "stone"})
             smash(block, mc("cobblestone", 1));
         smash("cobblestone", mc("gravel", 1));
+        // GT6 Loader_Recipes_OreDict: netherrack/end stone are rock sources, obsidian yields dust
+        // with a 25 % second pile. These crusher rows have no hammer counterpart.
+        add(
+                "crusher/netherrack",
+                MachineRecipeMaps.Crusher,
+                16,
+                16,
+                items(mc("netherrack", 1)),
+                items(mat(MaterialPrefix.rockGt, "Netherrack", 4)),
+                null,
+                null);
+        add(
+                "crusher/end_stone",
+                MachineRecipeMaps.Crusher,
+                16,
+                16,
+                items(mc("end_stone", 1)),
+                items(mat(MaterialPrefix.rockGt, "Endstone", 4)),
+                null,
+                null);
+        add(
+                "crusher/obsidian",
+                MachineRecipeMaps.Crusher,
+                600,
+                16,
+                new long[] {10000, 2500},
+                items(mc("obsidian", 1)),
+                items(mat(MaterialPrefix.dust, "Obsidian", 8), mat(MaterialPrefix.dust, "Obsidian", 1)),
+                null,
+                null);
+        // GT6 Loader_Recipes_Vanilla: the three generator modules smash back into their source rock.
+        smashItem(item("gt6ce:stone_generator_module", 1), mc("cobblestone", 1));
+        smashItem(item("gt6ce:basalt_generator_module", 1), item("gt6ce:stone_basalt_cobble", 1));
+        smashItem(item("gt6ce:blackstone_generator_module", 1), item("gt6ce:stone_basalt_cobble", 1));
         for (String block : new String[] {"sandstone", "chiseled_sandstone", "cut_sandstone"})
             smash(block, mc("sand", 1));
         smash("ice", mat(MaterialPrefix.dust, "Ice", 1));

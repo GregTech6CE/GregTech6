@@ -26,6 +26,8 @@ public enum OreHostStone implements StringRepresentable {
     ANDESITE("andesite"),
     DEEPSLATE("deepslate"),
     TUFF("tuff"),
+    /** GT6 {@code ore.normal.sandstone}: sandstone-hosted ores carry no gangue output. */
+    SANDSTONE("sandstone"),
     NETHERRACK("netherrack"),
     END_STONE("end_stone"),
     /** Bedrock-background ores are unbreakable and drop nothing (GT6 bedrock deposits). */

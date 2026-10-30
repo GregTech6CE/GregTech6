@@ -58,7 +58,13 @@ public final class SourceOreCrushingFacts {
             String sourcePrefix, Identity gangueMaterial, long gangueAmount, boolean hexoriumAdjusted) {
         public HostProfile {
             Objects.requireNonNull(sourcePrefix);
-            Objects.requireNonNull(gangueMaterial);
+            if (gangueAmount < 0) throw new IllegalArgumentException("Negative gangue amount");
+            // Sandstone has an empty source byproduct list; only a positive amount needs an identity.
+            if (gangueAmount > 0) Objects.requireNonNull(gangueMaterial);
+        }
+
+        public boolean hasGangue() {
+            return gangueAmount > 0;
         }
     }
 
@@ -129,6 +135,9 @@ public final class SourceOreCrushingFacts {
         host(result, "oreDarkprismarine", 9220, "PrismarineDark", false, "stone_prismarine_dark"); // OP704, MT1640
         host(result, "oreKimberlite", 9218, "Kimberlite", false, "stone_kimberlite"); // OP705, MT3827
         host(result, "oreQuartzite", 9180, "Quartzite", false, "stone_quartzite"); // OP706, MT3828
+        // OP.oreSandstone declares no byproducts, so this host contributes no gangue slot.
+        if (result.put("sandstone", new HostProfile("oreSandstone", null, 0, false)) != null)
+            throw new IllegalStateException("Duplicate source host sandstone");
         return Map.copyOf(result);
     }
 
