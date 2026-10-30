@@ -1,6 +1,5 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.content.damage.GTDamageTypes;
 import gregtech.content.data.GregTechConstants;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
@@ -38,7 +37,7 @@ public final class SmelteryBlockEntityHelper {
         level.setBlock(pos, Blocks.LAVA.defaultBlockState().setValue(LiquidBlock.LEVEL, 4), Block.UPDATE_ALL);
         AABB area = new AABB(pos).inflate(0.5);
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, area)) {
-            entity.hurt(GTDamageTypes.heat(level), 4.0F);
+            GTEntityHelper.applyHeatDamage(entity, 4.0F);
         }
     }
 

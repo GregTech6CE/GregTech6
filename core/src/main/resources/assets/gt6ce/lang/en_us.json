@@ -16992,5 +16992,7 @@
   "block.gt6ce.spike_ball_falling_super_tungstensteel": "Falling Tungstensteel Spike Block",
   "block.gt6ce.spike_super_adamantium": "Adamantium Wall Spike",
   "block.gt6ce.spike_ball_super_adamantium": "Adamantium Block Spike",
-  "block.gt6ce.spike_ball_falling_super_adamantium": "Falling Adamantium Spike Block"
+  "block.gt6ce.spike_ball_falling_super_adamantium": "Falling Adamantium Spike Block",
+  "message.gt6ce.mold.auto_input": "Automatic input (%s): %s",
+  "message.gt6ce.mold.redstone": "Automatic input requires redstone: %s"
 }

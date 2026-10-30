@@ -196,11 +196,18 @@ public final class SmelteryInteractionHandler {
         }
         // Monkey wrench: toggle auto-input / redstone
         if (GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
-            Direction clickedFace = hit.getDirection();
+            Direction clickedFace = gregtech.engine.tool.ToolInteractions.selectedFace(hit);
             if (clickedFace == Direction.UP) {
                 mold.toggleRedstoneControl();
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                        "message.gt6ce.mold.redstone", net.minecraft.network.chat.Component.translatable(
+                                mold.isUseRedstone() ? "options.on" : "options.off")), true);
             } else if (clickedFace.getAxis().isHorizontal()) {
                 mold.toggleAutoInput(clickedFace);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                        "message.gt6ce.mold.auto_input", net.minecraft.network.chat.Component.translatable(
+                                "jade.gt6ce.direction." + clickedFace.getName()), net.minecraft.network.chat.Component.translatable(
+                                (mold.getAutoPullDirections() & (1 << clickedFace.ordinal())) != 0 ? "options.on" : "options.off")), true);
             }
 //? if >=1.21.1 {
             /*level.playSound(null, mold.getBlockPos(), gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -276,8 +283,15 @@ public final class SmelteryInteractionHandler {
         } else if (GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
             if (clickedFace == Direction.UP) {
                 mold.toggleRedstoneControl();
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                        "message.gt6ce.mold.redstone", net.minecraft.network.chat.Component.translatable(
+                                mold.isUseRedstone() ? "options.on" : "options.off")), true);
             } else if (clickedFace.getAxis().isHorizontal()) {
                 mold.toggleAutoInput(clickedFace);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                        "message.gt6ce.mold.auto_input", net.minecraft.network.chat.Component.translatable(
+                                "jade.gt6ce.direction." + clickedFace.getName()), net.minecraft.network.chat.Component.translatable(
+                                (mold.getAutoPullDirections() & (1 << clickedFace.ordinal())) != 0 ? "options.on" : "options.off")), true);
             }
 //? if >=1.21.1 {
             /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);

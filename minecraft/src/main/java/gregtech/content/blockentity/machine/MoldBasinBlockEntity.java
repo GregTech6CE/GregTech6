@@ -40,7 +40,36 @@ import org.jetbrains.annotations.Nullable;
  * Produces solid metal blocks when filled and cooled. Only accepts input from the top face.
  * Supports auto-input from adjacent crucibles and item pickup with pincers.
  */
-public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold {
+public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.Access {
+
+    private final MoldAutomation[] automation = new MoldAutomation[7];
+    public MoldAutomation automation(@Nullable Direction side) {
+        int index = side == null ? 6 : side.ordinal();
+        if (automation[index] == null) automation[index] = new MoldAutomation(this, side);
+        return automation[index];
+    }
+//? if <1.21.1 {
+    private java.util.List<net.minecraftforge.common.util.LazyOptional<MoldAutomation>> automationCaps = createAutomationCaps();
+    private java.util.List<net.minecraftforge.common.util.LazyOptional<MoldAutomation>> createAutomationCaps() {
+        return java.util.stream.IntStream.range(0, 7).mapToObj(index ->
+                net.minecraftforge.common.util.LazyOptional.of(() -> automation(index == 6 ? null : Direction.from3DDataValue(index)))).toList();
+    }
+    @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction side) {
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER
+                || capability == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER)
+            return automationCaps.get(side == null ? 6 : side.ordinal()).cast();
+        return super.getCapability(capability, side);
+    }
+    @Override public void invalidateCaps() {
+        super.invalidateCaps();
+        automationCaps.forEach(net.minecraftforge.common.util.LazyOptional::invalidate);
+    }
+    @Override public void reviveCaps() {
+        super.reviveCaps();
+        automationCaps = createAutomationCaps();
+    }
+//?}
 
     /** Current temperature (environment temperature when empty). */
     private long temperature = GregTechConstants.DEF_ENV_TEMP;
@@ -146,7 +175,10 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
         ItemStack output = gregtech.engine.material.MaterialUnification.canonical(GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial));
         // An unavailable output must never erase the stored material.
         if (output.isEmpty()) return;
+        long castingTemperature = temperature;
         consumeContent(getMoldRequiredMaterialUnits());
+        // Solidifying is not instant cooling; automation still waits for a safe temperature.
+        temperature = castingTemperature;
         solidOutputTint = solidMaterial.getColor() | 0xFF000000;
         storeOutputItem(output);
     }
@@ -162,6 +194,35 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
     }
 
     /** Get the stored solid output (for hopper/automation extraction). */
+    @Override public ItemStack automaticOutput() {
+        if (level == null || temperature >= SmelteryBlockEntityHelper.environmentTemperature(level, worldPosition) + 50)
+            return ItemStack.EMPTY;
+        if (!solidOutput.isEmpty()) return solidOutput.copy();
+        if (contentMaterial == null || temperature >= contentMaterial.getMeltingPoint()
+                || contentAmount < getMoldRequiredMaterialUnits()) return ItemStack.EMPTY;
+        if (level.getBlockEntity(worldPosition.above()) instanceof MoldBlockEntity) return ItemStack.EMPTY;
+        return gregtech.engine.material.MaterialUnification.canonical(
+                GTBlocks.getStack(BlockMaterialPrefix.blockSolid, getSolidifyingMaterial(contentMaterial)));
+    }
+
+    @Override public ItemStack extractAutomaticOutput(int count, boolean simulate) {
+        if (count <= 0) return ItemStack.EMPTY;
+        ItemStack output = automaticOutput();
+        if (output.isEmpty()) return ItemStack.EMPTY;
+        ItemStack extracted = output.copyWithCount(Math.min(count, output.getCount()));
+        if (!simulate) {
+            if (solidOutput.isEmpty()) {
+                solidOutput = output;
+                contentAmount -= getMoldRequiredMaterialUnits();
+                if (contentAmount == 0) contentMaterial = null;
+            }
+            solidOutput.shrink(extracted.getCount());
+            setChanged();
+            syncToClient();
+        }
+        return extracted;
+    }
+
     public ItemStack getSolidOutput() {
         return solidOutput;
     }
@@ -344,16 +405,23 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
 
     @Override
     public long fillMold(GTMaterial material, long amount, long temp, int side) {
+        return fillMold(material, amount, temp, side, true);
+    }
+
+    @Override
+    public long fillMold(GTMaterial material, long amount, long temp, int side, boolean execute) {
         if (material == null) return 0;
         if (contentMaterial != null) return 0; // Already filled
         if (!solidOutput.isEmpty()) return 0; // Solid output not yet extracted
         if (!isMoldInputSide(side)) return 0;
         // GT6: acid melts reject non-acid-proof basins
         if (!spec().acidProof() && material.has(gregtech.api.material.MaterialProperty.ACID)) return 0;
+        if (GTBlocks.getStack(BlockMaterialPrefix.blockSolid, getSolidifyingMaterial(material)).isEmpty()) return 0;
 
         long required = getMoldRequiredMaterialUnits();
         if (required <= 0) return 0;
         if (amount >= required) {
+            if (!execute) return required;
             contentMaterial = material;
             contentAmount = required;
             this.temperature = temp;

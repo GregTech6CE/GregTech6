@@ -29,7 +29,7 @@ public final class MoltenFluidHandler implements IFluidHandler {
         int rated = MoltenFluidPlans.millibuckets(units, ratio(material, displayed));
         return displayed == null || displayed.isEmpty() ? rated : Math.max(rated, displayed.getAmount());
     }
-    private static GTMaterial material(FluidStack fluid) {
+    public static GTMaterial material(FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return null;
         if (fluid.getFluid() == net.minecraft.world.level.material.Fluids.WATER
                 || fluid.getFluid() == net.minecraft.world.level.material.Fluids.FLOWING_WATER)

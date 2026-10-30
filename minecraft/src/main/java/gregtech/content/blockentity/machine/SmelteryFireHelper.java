@@ -2,7 +2,6 @@
  * Original smeltery gas/fire/meltdown rules; preexisting companion proximity burn retained. */
 package gregtech.content.blockentity.machine;
 
-import gregtech.content.damage.GTDamageTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -28,7 +27,7 @@ public final class SmelteryFireHelper {
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, area)) {
             double dist = entity.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
             if (dist <= 1.0) {
-                entity.hurt(GTDamageTypes.heat(level), damage);
+                gregtech.util.GTEntityHelper.applyHeatDamage(entity, damage);
             }
         }
     }

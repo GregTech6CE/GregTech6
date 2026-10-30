@@ -29,20 +29,4 @@ public final class MoldEntity extends gregtech.content.blockentity.machine.MoldB
     public long fillMold(gregtech.api.material.GTMaterial material, long amount, long temperature, Direction side) {
         return fillMold(material, amount, temperature, side.ordinal());
     }
-
-    @Override
-    public long fillMold(gregtech.api.material.GTMaterial material, long amount, long temperature, int side) {
-        // Retain the existing native output preflight before consuming a molten form unavailable on this platform.
-        if (level != null
-                && level.getBlockEntity(worldPosition.below())
-                        instanceof gregtech.content.blockentity.machine.MoldBasinBlockEntity)
-            return super.fillMold(material, amount, temperature, side);
-        var recipe = gregtech.engine.machine.crucible.MoldShapes.recipe(getMoldShape());
-        if (recipe == null || material == null) return 0;
-        var output = recipe.blockSolid()
-                ? gregtech.content.registry.GTBlocks.getStack(
-                        gregtech.engine.prefix.BlockMaterialPrefix.blockSolid, material)
-                : gregtech.content.registry.GTItems.getStack(recipe.itemPrefix(), material);
-        return output.isEmpty() ? 0 : super.fillMold(material, amount, temperature, side);
-    }
 }

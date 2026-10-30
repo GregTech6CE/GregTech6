@@ -135025,5 +135025,7 @@
   "block.gt6ce.spike_ball_falling_super_tungstensteel": "坠落的钨钢制尖刺方块",
   "block.gt6ce.spike_super_adamantium": "艾德曼合金制壁刺",
   "block.gt6ce.spike_ball_super_adamantium": "艾德曼合金制尖刺方块",
-  "block.gt6ce.spike_ball_falling_super_adamantium": "坠落的艾德曼合金制尖刺方块"
+  "block.gt6ce.spike_ball_falling_super_adamantium": "坠落的艾德曼合金制尖刺方块",
+  "message.gt6ce.mold.auto_input": "自动输入（%s）：%s",
+  "message.gt6ce.mold.redstone": "自动输入需要红石信号：%s"
 }

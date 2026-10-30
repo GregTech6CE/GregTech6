@@ -44,7 +44,7 @@ import org.jetbrains.annotations.Nullable;
  * Supports: chisel shape selection (5x5 grid), auto-input from crucibles, redstone control,
  * soft hammer reset, and pincers item pickup.
  */
-public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gregtech.api.sensor.TemperatureSource {
+public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Access, gregtech.api.sensor.TemperatureSource {
 
     private final CrucibleSpec spec;
 
@@ -56,6 +56,35 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
 
     /** Redstone control mode: requires redstone signal to auto-pull. */
     private boolean useRedstone = false;
+
+    private final MoldAutomation[] automation = new MoldAutomation[7];
+    public MoldAutomation automation(@Nullable Direction side) {
+        int index = side == null ? 6 : side.ordinal();
+        if (automation[index] == null) automation[index] = new MoldAutomation(this, side);
+        return automation[index];
+    }
+//? if <1.21.1 {
+    private java.util.List<net.minecraftforge.common.util.LazyOptional<MoldAutomation>> automationCaps = createAutomationCaps();
+    private java.util.List<net.minecraftforge.common.util.LazyOptional<MoldAutomation>> createAutomationCaps() {
+        return java.util.stream.IntStream.range(0, 7).mapToObj(index ->
+                net.minecraftforge.common.util.LazyOptional.of(() -> automation(index == 6 ? null : Direction.from3DDataValue(index)))).toList();
+    }
+    @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction side) {
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER
+                || capability == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER)
+            return automationCaps.get(side == null ? 6 : side.ordinal()).cast();
+        return super.getCapability(capability, side);
+    }
+    @Override public void invalidateCaps() {
+        super.invalidateCaps();
+        automationCaps.forEach(net.minecraftforge.common.util.LazyOptional::invalidate);
+    }
+    @Override public void reviveCaps() {
+        super.reviveCaps();
+        automationCaps = createAutomationCaps();
+    }
+//?}
 
     /** Current temperature (environment temperature when empty). */
     private long temperature = GregTechConstants.DEF_ENV_TEMP;
@@ -207,6 +236,44 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
         syncToClient();
     }
 
+    @Override public ItemStack automaticOutput() {
+        if (level == null || temperature >= SmelteryBlockEntityHelper.environmentTemperature(level, worldPosition) + 50)
+            return ItemStack.EMPTY;
+        if (!solidOutput.isEmpty()) return solidOutput.copy();
+        if (contentMaterial == null || temperature >= contentMaterial.getMeltingPoint()
+                || contentAmount < getMoldRequiredMaterialUnits()) return ItemStack.EMPTY;
+        return castingOutput(contentMaterial);
+    }
+
+    private ItemStack castingOutput(GTMaterial molten) {
+        Object prefix = getMoldRecipePrefix();
+        GTMaterial material = getSolidifyingMaterial(molten);
+        if (material == null) return ItemStack.EMPTY;
+        ItemStack result = prefix instanceof BlockMaterialPrefix block ? GTBlocks.getStack(block, material)
+                : prefix instanceof MaterialPrefix item ? GTItems.getStack(item, material) : ItemStack.EMPTY;
+        if (!result.isEmpty() && isNuggetFallback()) result.setCount(Integer.bitCount(moldShape));
+        return gregtech.engine.material.MaterialUnification.canonical(result);
+    }
+
+    @Override public ItemStack extractAutomaticOutput(int count, boolean simulate) {
+        if (count <= 0) return ItemStack.EMPTY;
+        ItemStack output = automaticOutput();
+        if (output.isEmpty()) return ItemStack.EMPTY;
+        ItemStack extracted = output.copyWithCount(Math.min(count, output.getCount()));
+        if (!simulate) {
+            if (solidOutput.isEmpty()) {
+                solidOutput = output;
+                contentAmount -= getMoldRequiredMaterialUnits();
+                if (contentAmount == 0) contentMaterial = null;
+                contentSolidified = false;
+            }
+            solidOutput.shrink(extracted.getCount());
+            setChanged();
+            syncToClient();
+        }
+        return extracted;
+    }
+
     /** Get the stored solid output (for hopper/automation extraction). */
     public ItemStack getSolidOutput() {
         return solidOutput;
@@ -345,6 +412,8 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
         if (!side.getAxis().isHorizontal()) return false;
         byte bit = directionToBit(side);
         autoPullDirections ^= bit;
+        setChanged();
+        syncToClient();
         return true;
     }
 
@@ -353,10 +422,8 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
      */
     public void toggleRedstoneControl() {
         useRedstone = !useRedstone;
-        if (!useRedstone) {
-            // Soft hammer resets both redstone and auto-pull
-            autoPullDirections = 0;
-        }
+        setChanged();
+        syncToClient();
     }
 
     /**
@@ -365,6 +432,8 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
     public void resetSettings() {
         useRedstone = false;
         autoPullDirections = 0;
+        setChanged();
+        syncToClient();
     }
 
     /**
@@ -525,6 +594,11 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
 
     @Override
     public long fillMold(GTMaterial material, long amount, long temperature, int side) {
+        return fillMold(material, amount, temperature, side, true);
+    }
+
+    @Override
+    public long fillMold(GTMaterial material, long amount, long temperature, int side, boolean execute) {
         if (material == null) return 0;
         if (!isMoldInputSide(side)) return 0;
         // GT6: acid melts reject non-acid-proof molds
@@ -533,16 +607,18 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
         // Mold-basin stacking: redirect fill to basin below if present
         MoldBasinBlockEntity basin = getBasinBelow();
         if (basin != null) {
-            return basin.fillMold(material, amount, temperature, Direction.UP.ordinal());
+            return basin.fillMold(material, amount, temperature, Direction.UP.ordinal(), execute);
         }
 
         if (contentMaterial != null) return 0; // Already filled
         if (!solidOutput.isEmpty()) return 0; // Solid output not yet extracted
+        if (castingOutput(material).isEmpty()) return 0;
 
         long required = getMoldRequiredMaterialUnits();
         long accepted = gregtech.engine.machine.crucible.MoldCastingRules.acceptedAmount(
                 material, amount, required, spec().acidProof(), contentMaterial != null || !solidOutput.isEmpty());
         if (accepted > 0) {
+            if (!execute) return accepted;
             contentMaterial = material;
             contentAmount = accepted;
             this.temperature = temperature;
