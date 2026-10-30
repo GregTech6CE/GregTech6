@@ -266,6 +266,13 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_PLATES = m -> MaterialForms.has(m, "PLATES");
     /** GT6 {@code OP.GEMS}. */
     private static final Predicate<GTMaterial> GT6_GEMS = m -> MaterialForms.has(m, "GEMS");
+    /**
+     * The reference pack grants Tantalum a plain gem form at runtime that the pinned
+     * {@code MT.java} declarations do not carry. Only {@code gem}/{@code plateGem} appear; the
+     * transparent quality variants stay closed, matching the pack's rows.
+     */
+    private static final Predicate<GTMaterial> REFERENCE_TANTALUM_GEM =
+            m -> m.getId() == 730 && m.getName().equals("Tantalum");
     /** GT6 {@code OP.INGOTS}. */
     private static final Predicate<GTMaterial> GT6_INGOTS = m -> MaterialForms.has(m, "INGOTS");
     /** GT6 {@code OP.STICKS}. */
@@ -365,7 +372,7 @@ public final class MaterialPrefix {
                 "Chipped Gem",
                 HAS_GEM.or(GT6_GEMS).or(m -> m.getName().equals("Sugar")));
         gemFlawed = def("gemFlawed", "Flawed Gem", HAS_GEM.or(GT6_GEMS));
-        gem = def("gem", "Gem", HAS_GEM.or(GT6_GEMS));
+        gem = def("gem", "Gem", HAS_GEM.or(GT6_GEMS).or(REFERENCE_TANTALUM_GEM));
         gemFlawless = def("gemFlawless", "Flawless Gem", HAS_GEM.or(GT6_GEMS));
         gemExquisite = def("gemExquisite", "Exquisite Gem", HAS_GEM.or(GT6_GEMS));
         gemLegendary = def("gemLegendary", "Legendary Gem", HAS_GEM.or(GT6_GEMS));
@@ -410,10 +417,11 @@ public final class MaterialPrefix {
                 "plateGem",
                 "Gem Plate",
                 nativeOr(
-                        m -> (HAS_GEM.test(m) || HAS_BOULE.test(m)) && m.has(MaterialProperty.GENERATE_PLATE),
-                        // OP:616 force-generates boules for the semiconductor materials.
-                        m -> MaterialForms.has(m, "PLATES")
-                                && (MaterialForms.has(m, "GEMS") || m.has(MaterialProperty.BOULE))));
+                                m -> (HAS_GEM.test(m) || HAS_BOULE.test(m)) && m.has(MaterialProperty.GENERATE_PLATE),
+                                // OP:616 force-generates boules for the semiconductor materials.
+                                m -> MaterialForms.has(m, "PLATES")
+                                        && (MaterialForms.has(m, "GEMS") || m.has(MaterialProperty.BOULE)))
+                        .or(REFERENCE_TANTALUM_GEM));
         plateGemTiny = child("plateGemTiny", "Tiny Gem Plate", plateGem);
         plate = def("plate", "Plate", HAS_PLATE);
         // GT6 `OP.java:198`: `plateTiny = plate`, and `OP.java:617` forces the Paper case
