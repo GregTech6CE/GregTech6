@@ -1,0 +1,52 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 24,
+      "columns": 2
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/massfab_variant_a",
+      "x": 107,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 52,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/massfab_variant_b",
+      "x": 107,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 124,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/massfab_variant_b",
+      "x": 125,
+      "y": 63
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_massfab",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

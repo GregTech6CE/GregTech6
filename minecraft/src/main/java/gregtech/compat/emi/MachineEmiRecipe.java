@@ -1,7 +1,7 @@
 package gregtech.compat.emi;
 
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
+import gregtech.client.gui.RecipeGuiLayout;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
@@ -90,27 +90,24 @@ public final class MachineEmiRecipe implements EmiRecipe {
     @Override public List<EmiIngredient> getCatalysts() { return catalysts; }
     @Override public List<EmiStack> getOutputs() { return outputs; }
     @Override public boolean supportsRecipeTree() { return !recipe.mFakeRecipe; }
-    @Override public int getDisplayWidth() { return 176; }
-    @Override public int getDisplayHeight() { return Math.max(64,Math.min(146,net.minecraft.client.Minecraft.getInstance().getWindow().getGuiScaledHeight()-140)); }
+    @Override public int getDisplayWidth() { return new RecipeGuiLayout(map,recipe).width(); }
+    @Override public int getDisplayHeight() { return new RecipeGuiLayout(map,recipe).height(); }
     @Override public void addWidgets(WidgetHolder widgets) {
+        var layout = new RecipeGuiLayout(map, recipe);
         // EMI may clamp the requested height. Fit drawing and slot hitboxes together.
-        float scale=Math.min(1f,Math.min(widgets.getWidth()/176f,widgets.getHeight()/146f));
-        float offset=(widgets.getWidth()-176*scale)/2;
-        // The new rounded frame still has a white corner at x=3: omit one more column.
-        var texture=new dev.emi.emi.api.widget.TextureWidget(MachineGuiLayout.texture(map),4,3,169,79,4,3);
+        float scale=Math.min(1f,Math.min(widgets.getWidth()/(float)layout.width(),widgets.getHeight()/(float)layout.height()));
+        float offset=(widgets.getWidth()-layout.width()*scale)/2;
         widgets.addDrawable(0,0,widgets.getWidth(),widgets.getHeight(),(graphics,mouseX,mouseY,delta)->{
             graphics.pose().pushPose();
             try {
                 graphics.pose().translate(offset,0,0);graphics.pose().scale(scale,scale,1);
-                texture.render(graphics,(int)((mouseX-offset)/scale),(int)(mouseY/scale),delta);
-                gregtech.client.gui.MachineGuiChrome.brand(graphics,MachineGuiLayout.texture(map));
-                gregtech.client.RecipeDisplayCaptions.draw(graphics,map,recipe);
+                layout.draw(graphics);
             } finally {graphics.pose().popPose();}
         });
-        side(widgets, true, recipe.mInputs, recipe.mFluidInputs,scale,offset);
-        side(widgets, false, recipe.mOutputs, recipe.mFluidOutputs,scale,offset);
+        side(widgets, true, recipe.mInputs, recipe.mFluidInputs,scale,offset,layout);
+        side(widgets, false, recipe.mOutputs, recipe.mFluidOutputs,scale,offset,layout);
         var special = RecipeSpecialItems.display(recipe.mSpecialItems);
-        if (!special.isEmpty()) widgets.add(new FittedSlot(EmiIngredient.of(special.stream().map(EmiStack::of).toList()),79,42,scale,offset))
+        if (!special.isEmpty()) widgets.add(new FittedSlot(EmiIngredient.of(special.stream().map(EmiStack::of).toList()),layout.special().x()-1,layout.special().y()-1,scale,offset))
                 .catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
     }
     /** Retain SlotWidget identity, recipe context, shortcuts and tooltips at the fitted coordinates. */
@@ -118,7 +115,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
         private final float scale,offset;
         private boolean drawing;
         private FittedSlot(EmiIngredient ingredient,int x,int y,float scale,float offset) {
-            super(ingredient,x,y);this.scale=scale;this.offset=offset;
+            super(ingredient,x,y);this.scale=scale;this.offset=offset;drawBack(false);
         }
         @Override public dev.emi.emi.api.widget.Bounds getBounds() {
             var raw=super.getBounds();if(drawing)return raw;
@@ -135,14 +132,13 @@ public final class MachineEmiRecipe implements EmiRecipe {
     }
     private void side(WidgetHolder widgets, boolean input, ItemStack[] items,
 //? if >=1.21.1 {
-                      /*net.neoforged.neoforge.fluids.FluidStack[] fluids,float scale,float offset) {
+                      /*net.neoforged.neoforge.fluids.FluidStack[] fluids,float scale,float offset,RecipeGuiLayout layout) {
 *///?} else {
-                      net.minecraftforge.fluids.FluidStack[] fluids,float scale,float offset) {
+                      net.minecraftforge.fluids.FluidStack[] fluids,float scale,float offset,RecipeGuiLayout layout) {
 //?}
-        int count = input ? map.mInputItemsCount : map.mOutputItemsCount;
         for (int i = 0; i < items.length; i++) {
             if (items[i] == null || items[i].isEmpty()) continue;
-            var p = MachineGuiLayout.item(input, i, count, input ? map.mInputFluidCount : map.mOutputFluidCount);
+            var p = layout.point(input, false, i);
             int chance = input ? 0 : recipe.getOutputChance(i);
             var slot = widgets.add(new FittedSlot(input ? ingredients.ingredient(recipe,i) : EmiStack.of(items[i]).setChance(chance / 10000f),p.x()-1,p.y()-1,scale,offset));
             if (input && recipe.isCatalystInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
@@ -155,8 +151,8 @@ public final class MachineEmiRecipe implements EmiRecipe {
             }
         }
         for (int i = 0; i < fluids.length; i++) {
-            if (fluids[i] == null || fluids[i].isEmpty()) continue;
-            var p = MachineGuiLayout.fluid(input, i);
+            if (fluids[i] == null || fluids[i].getFluid() == net.minecraft.world.level.material.Fluids.EMPTY) continue;
+            var p = layout.point(input, true, i);
             var slot = widgets.add(new FittedSlot(displayFluid(fluids[i]),p.x()-1,p.y()-1,scale,offset));
             if (input && (recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)))
                 slot.catalyst(true).appendTooltip(Component.translatable(recipe.isPresenceFluidInput(i)

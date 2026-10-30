@@ -1,0 +1,26 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/magnetic_separator_variant_a",
+      "x": 53,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:special/shredder_panel",
+      "x": 106,
+      "y": 6
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_crusher",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

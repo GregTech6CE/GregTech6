@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "width": 176,
+  "height": 166,
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 87
+    },
+    {
+      "sprite": "gt6ce:overlay/nei",
+      "x": 152,
+      "y": 88
+    }
+  ],
+  "brand": true
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/cluster_mill_variant_a",
+      "x": 53,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/roll_former",
+      "x": 107,
+      "y": 25
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_roll_former",
+    "x": 76,
+    "y": 24
+  },
+  "brand": true
+}

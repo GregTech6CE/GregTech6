@@ -1,0 +1,867 @@
+{
+  "base/background": {
+    "texture": "gt6ce:textures/gui/components/base/background.png",
+    "width": 16,
+    "height": 16
+  },
+  "base/label": {
+    "texture": "gt6ce:textures/gui/components/base/label.png",
+    "width": 11,
+    "height": 14
+  },
+  "icon/coagulator": {
+    "texture": "gt6ce:textures/gui/components/icon/coagulator.png",
+    "width": 18,
+    "height": 18
+  },
+  "icon/icon": {
+    "texture": "gt6ce:textures/gui/components/icon/icon.png",
+    "width": 19,
+    "height": 19
+  },
+  "icon/icon_g": {
+    "texture": "gt6ce:textures/gui/components/icon/icon_g.png",
+    "width": 19,
+    "height": 19
+  },
+  "icon/lathe": {
+    "texture": "gt6ce:textures/gui/components/icon/lathe.png",
+    "width": 5,
+    "height": 18
+  },
+  "icon/moldchisel": {
+    "texture": "gt6ce:textures/gui/components/icon/moldchisel.png",
+    "width": 20,
+    "height": 15
+  },
+  "icon/printer_cmyk": {
+    "texture": "gt6ce:textures/gui/components/icon/printer_cmyk.png",
+    "width": 5,
+    "height": 26
+  },
+  "icon/void": {
+    "texture": "gt6ce:textures/gui/components/icon/void.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/advanced_crafting_table": {
+    "texture": "gt6ce:textures/gui/components/overlay/advanced_crafting_table.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/advanced_crafting_table_charging": {
+    "texture": "gt6ce:textures/gui/components/overlay/advanced_crafting_table_charging.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/autoclave_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/autoclave_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/autoclave_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/autoclave_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/boxinator_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/boxinator_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/boxinator_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/boxinator_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/bumblelyzer_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/bumblelyzer_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/bumblelyzer_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/bumblelyzer_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/bumblelyzer_variant_c": {
+    "texture": "gt6ce:textures/gui/components/overlay/bumblelyzer_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/bumblelyzer_variant_d": {
+    "texture": "gt6ce:textures/gui/components/overlay/bumblelyzer_variant_d.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/bumbliary_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/bumbliary_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/bumbliary_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/bumbliary_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/canner_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/canner_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/canner_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/canner_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/catalytic_cracking": {
+    "texture": "gt6ce:textures/gui/components/overlay/catalytic_cracking.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/centrifuge_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/centrifuge_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/centrifuge_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/centrifuge_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/cluster_mill_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/cluster_mill_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/cluster_mill_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/cluster_mill_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/coke_oven": {
+    "texture": "gt6ce:textures/gui/components/overlay/coke_oven.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/compressor": {
+    "texture": "gt6ce:textures/gui/components/overlay/compressor.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/crafting_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/crafting_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/crafting_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/crafting_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/crusher": {
+    "texture": "gt6ce:textures/gui/components/overlay/crusher.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/cryo_distillation_tower_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/cryo_distillation_tower_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/cryo_distillation_tower_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/cryo_distillation_tower_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/cryo_distillation_tower_variant_c": {
+    "texture": "gt6ce:textures/gui/components/overlay/cryo_distillation_tower_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/cryo_distillation_tower_variant_d": {
+    "texture": "gt6ce:textures/gui/components/overlay/cryo_distillation_tower_variant_d.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/crystallisation_crucible_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/crystallisation_crucible_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/crystallisation_crucible_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/crystallisation_crucible_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/cutter": {
+    "texture": "gt6ce:textures/gui/components/overlay/cutter.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/electrolyzer_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/electrolyzer_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/electrolyzer_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/electrolyzer_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/extruder": {
+    "texture": "gt6ce:textures/gui/components/overlay/extruder.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/filter": {
+    "texture": "gt6ce:textures/gui/components/overlay/filter.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/hdd_switch": {
+    "texture": "gt6ce:textures/gui/components/overlay/hdd_switch.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/implosion_compressor_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/implosion_compressor_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/implosion_compressor_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/implosion_compressor_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/injector": {
+    "texture": "gt6ce:textures/gui/components/overlay/injector.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/juicer": {
+    "texture": "gt6ce:textures/gui/components/overlay/juicer.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/laminator_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/laminator_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/laminator_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/laminator_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/laminator_variant_c": {
+    "texture": "gt6ce:textures/gui/components/overlay/laminator_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/laser_engraver": {
+    "texture": "gt6ce:textures/gui/components/overlay/laser_engraver.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/lathe_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/lathe_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/lathe_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/lathe_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/loom": {
+    "texture": "gt6ce:textures/gui/components/overlay/loom.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/magnetic_separator_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/magnetic_separator_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/magnetic_separator_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/magnetic_separator_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/massfab_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/massfab_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/massfab_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/massfab_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/moldchisel": {
+    "texture": "gt6ce:textures/gui/components/overlay/moldchisel.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/nanofab": {
+    "texture": "gt6ce:textures/gui/components/overlay/nanofab.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/nei": {
+    "texture": "gt6ce:textures/gui/components/overlay/nei.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/plantalyzer_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/plantalyzer_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/plantalyzer_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/plantalyzer_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/press_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/press_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/press_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/press_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/press_variant_c": {
+    "texture": "gt6ce:textures/gui/components/overlay/press_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/press_variant_d": {
+    "texture": "gt6ce:textures/gui/components/overlay/press_variant_d.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/printer_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/printer_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/printer_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/printer_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/printer_variant_c": {
+    "texture": "gt6ce:textures/gui/components/overlay/printer_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/replicator": {
+    "texture": "gt6ce:textures/gui/components/overlay/replicator.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/roaster": {
+    "texture": "gt6ce:textures/gui/components/overlay/roaster.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/roll_former": {
+    "texture": "gt6ce:textures/gui/components/overlay/roll_former.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/rolling_mill": {
+    "texture": "gt6ce:textures/gui/components/overlay/rolling_mill.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/scanner_molecular": {
+    "texture": "gt6ce:textures/gui/components/overlay/scanner_molecular.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/scanner_visuals": {
+    "texture": "gt6ce:textures/gui/components/overlay/scanner_visuals.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/sharpener": {
+    "texture": "gt6ce:textures/gui/components/overlay/sharpener.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/slicer_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/slicer_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/slicer_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/slicer_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/slicer_variant_c": {
+    "texture": "gt6ce:textures/gui/components/overlay/slicer_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_a": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_b": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_c": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_d": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_d.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_e": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_e.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_f": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_f.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_g": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_g.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_h": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_h.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_i": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_i.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_j": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_j.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_k": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_k.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_l": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_l.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_m": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_m.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_n": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_n.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_o": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_o.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/usb_switch_variant_p": {
+    "texture": "gt6ce:textures/gui/components/overlay/usb_switch_variant_p.png",
+    "width": 16,
+    "height": 16
+  },
+  "overlay/wiremill": {
+    "texture": "gt6ce:textures/gui/components/overlay/wiremill.png",
+    "width": 16,
+    "height": 16
+  },
+  "progress_bar/progress_bar_alloying": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_alloying.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_anvil": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_anvil.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_anvil_bending_big": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_anvil_bending_big.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_bath": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_bath.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_boxinator": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_boxinator.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_bumblelyzer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_bumblelyzer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_burn_mixer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_burn_mixer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_calciner": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_calciner.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_canner": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_canner.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_catalytic_cracking": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_catalytic_cracking.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_centrifuge": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_centrifuge.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_cluster_mill": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_cluster_mill.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_compressor": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_compressor.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_crusher": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_crusher.png",
+    "width": 42,
+    "height": 18
+  },
+  "progress_bar/progress_bar_cryo_distillation_tower": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_cryo_distillation_tower.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_cryo_mixer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_cryo_mixer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_crystallisation_crucible": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_crystallisation_crucible.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_cutter": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_cutter.png",
+    "width": 44,
+    "height": 19
+  },
+  "progress_bar/progress_bar_distillation_tower": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_distillation_tower.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_distillery": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_distillery.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_dryer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_dryer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_extruder": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_extruder.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_freezer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_freezer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_fusion": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_fusion.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_generifier": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_generifier.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_implosion_compressor": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_implosion_compressor.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_injector": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_injector.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_lathe": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_lathe.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_magnetic_separator": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_magnetic_separator.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_massfab": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_massfab.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_mixer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_mixer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_nanofab": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_nanofab.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_printer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_printer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_replicator": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_replicator.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_roll_bender": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_roll_bender.png",
+    "width": 48,
+    "height": 18
+  },
+  "progress_bar/progress_bar_roll_former": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_roll_former.png",
+    "width": 48,
+    "height": 18
+  },
+  "progress_bar/progress_bar_scanner_molecular": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_scanner_molecular.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_scanner_visuals": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_scanner_visuals.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_sifter": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_sifter.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_slicer": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_slicer.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_sluice": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_sluice.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_steam_cracking": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_steam_cracking.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_unboxinator": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_unboxinator.png",
+    "width": 40,
+    "height": 18
+  },
+  "progress_bar/progress_bar_welder": {
+    "texture": "gt6ce:textures/gui/components/progress_bar/progress_bar_welder.png",
+    "width": 40,
+    "height": 18
+  },
+  "slot/bee": {
+    "texture": "gt6ce:textures/gui/components/slot/bee.png",
+    "width": 18,
+    "height": 18
+  },
+  "slot/bee_dark": {
+    "texture": "gt6ce:textures/gui/components/slot/bee_dark.png",
+    "width": 18,
+    "height": 18
+  },
+  "slot/fluid": {
+    "texture": "gt6ce:textures/gui/components/slot/fluid.png",
+    "width": 18,
+    "height": 18
+  },
+  "slot/item": {
+    "texture": "gt6ce:textures/gui/components/slot/item.png",
+    "width": 18,
+    "height": 18
+  },
+  "special/advanced_crafting_table_controls": {
+    "texture": "gt6ce:textures/gui/components/special/advanced_crafting_table_controls.png",
+    "width": 36,
+    "height": 18
+  },
+  "special/anvil_base": {
+    "texture": "gt6ce:textures/gui/components/special/anvil_base.png",
+    "width": 22,
+    "height": 9
+  },
+  "special/anvil_bending_big_base": {
+    "texture": "gt6ce:textures/gui/components/special/anvil_bending_big_base.png",
+    "width": 27,
+    "height": 10
+  },
+  "special/anvil_bending_small_base": {
+    "texture": "gt6ce:textures/gui/components/special/anvil_bending_small_base.png",
+    "width": 27,
+    "height": 10
+  },
+  "special/bath_item_grid": {
+    "texture": "gt6ce:textures/gui/components/special/bath_item_grid.png",
+    "width": 54,
+    "height": 36
+  },
+  "special/bumbliary_controller_slots": {
+    "texture": "gt6ce:textures/gui/components/special/bumbliary_controller_slots.png",
+    "width": 18,
+    "height": 36
+  },
+  "special/burn_mixer_fluid_grid": {
+    "texture": "gt6ce:textures/gui/components/special/burn_mixer_fluid_grid.png",
+    "width": 54,
+    "height": 36
+  },
+  "special/burn_mixer_item_grid": {
+    "texture": "gt6ce:textures/gui/components/special/burn_mixer_item_grid.png",
+    "width": 54,
+    "height": 36
+  },
+  "special/catalytic_cracking_coils": {
+    "texture": "gt6ce:textures/gui/components/special/catalytic_cracking_coils.png",
+    "width": 36,
+    "height": 18
+  },
+  "special/cooker_fluid_grid": {
+    "texture": "gt6ce:textures/gui/components/special/cooker_fluid_grid.png",
+    "width": 54,
+    "height": 18
+  },
+  "special/cooker_pot": {
+    "texture": "gt6ce:textures/gui/components/special/cooker_pot.png",
+    "width": 54,
+    "height": 54
+  },
+  "special/crusher_gears": {
+    "texture": "gt6ce:textures/gui/components/special/crusher_gears.png",
+    "width": 54,
+    "height": 72
+  },
+  "special/cryo_mixer_fluid_grid": {
+    "texture": "gt6ce:textures/gui/components/special/cryo_mixer_fluid_grid.png",
+    "width": 54,
+    "height": 36
+  },
+  "special/family_tree_input_panel": {
+    "texture": "gt6ce:textures/gui/components/special/family_tree_input_panel.png",
+    "width": 54,
+    "height": 18
+  },
+  "special/family_tree_output_panel": {
+    "texture": "gt6ce:textures/gui/components/special/family_tree_output_panel.png",
+    "width": 54,
+    "height": 72
+  },
+  "special/item_panel": {
+    "texture": "gt6ce:textures/gui/components/special/item_panel.png",
+    "width": 54,
+    "height": 36
+  },
+  "special/moldchisel_dark_panel": {
+    "texture": "gt6ce:textures/gui/components/special/moldchisel_dark_panel.png",
+    "width": 96,
+    "height": 96
+  },
+  "special/moldchisel_light_panel": {
+    "texture": "gt6ce:textures/gui/components/special/moldchisel_light_panel.png",
+    "width": 96,
+    "height": 96
+  },
+  "special/shredder_panel": {
+    "texture": "gt6ce:textures/gui/components/special/shredder_panel.png",
+    "width": 54,
+    "height": 72
+  },
+  "special/trash_opening": {
+    "texture": "gt6ce:textures/gui/components/special/trash_opening.png",
+    "width": 64,
+    "height": 68
+  },
+  "widget/advanced_crafting_table_charging": {
+    "texture": "gt6ce:textures/gui/components/widget/advanced_crafting_table_charging.png",
+    "width": 16,
+    "height": 16
+  },
+  "widget/advanced_crafting_table_variant_a": {
+    "texture": "gt6ce:textures/gui/components/widget/advanced_crafting_table_variant_a.png",
+    "width": 16,
+    "height": 16
+  },
+  "widget/advanced_crafting_table_variant_b": {
+    "texture": "gt6ce:textures/gui/components/widget/advanced_crafting_table_variant_b.png",
+    "width": 16,
+    "height": 16
+  },
+  "widget/advanced_crafting_table_variant_c": {
+    "texture": "gt6ce:textures/gui/components/widget/advanced_crafting_table_variant_c.png",
+    "width": 16,
+    "height": 16
+  },
+  "widget/advanced_crafting_table_variant_d": {
+    "texture": "gt6ce:textures/gui/components/widget/advanced_crafting_table_variant_d.png",
+    "width": 16,
+    "height": 16
+  },
+  "widget/advanced_crafting_table_variant_e": {
+    "texture": "gt6ce:textures/gui/components/widget/advanced_crafting_table_variant_e.png",
+    "width": 16,
+    "height": 16
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "format": 1,
+  "width": 176,
+  "height": 166,
+  "background": "gt6ce:base/background",
+  "menu_slots": true,
+  "brand": true,
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_alloying",
+    "x": 78,
+    "y": 24
+  }
+}

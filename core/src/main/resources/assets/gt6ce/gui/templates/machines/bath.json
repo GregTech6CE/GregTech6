@@ -1,0 +1,39 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 15,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 33,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 52,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 62,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:special/bath_item_grid",
+      "x": 16,
+      "y": 15
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_bath",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

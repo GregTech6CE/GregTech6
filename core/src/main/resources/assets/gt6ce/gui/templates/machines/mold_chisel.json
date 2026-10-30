@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "width": 176,
+  "height": 128,
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 111,
+      "y": 29
+    },
+    {
+      "sprite": "gt6ce:overlay/moldchisel",
+      "x": 112,
+      "y": 30
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 136,
+      "y": 48
+    },
+    {
+      "sprite": "gt6ce:special/moldchisel_light_panel",
+      "x": 8,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:icon/moldchisel",
+      "x": 110,
+      "y": 49
+    }
+  ],
+  "brand": false
+}

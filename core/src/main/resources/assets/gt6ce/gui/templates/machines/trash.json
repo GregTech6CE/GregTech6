@@ -1,0 +1,11 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:special/trash_opening",
+      "x": 56,
+      "y": 4
+    }
+  ],
+  "brand": false
+}

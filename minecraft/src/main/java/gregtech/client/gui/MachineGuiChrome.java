@@ -35,22 +35,17 @@ import java.util.concurrent.ConcurrentHashMap;
 /** Resource-pack textures in GUI pixels: fixed end caps, repeated four-pixel middle. */
 @EventBusSubscriber(modid = "gt6ce", value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public final class MachineGuiChrome {
-    private static final ResourceLocation LEFT = texture("label_l");
-    private static final ResourceLocation MIDDLE = texture("label_m");
-    private static final ResourceLocation RIGHT = texture("label_r");
-    private static final ResourceLocation BRAND = texture("icon_g");
     private static final int BRAND_X = 79, BRAND_Y = 62, BRAND_SIZE = 19;
     private static final Map<ResourceLocation, Boolean> BRAND_SPACE = new ConcurrentHashMap<>();
 
     private MachineGuiChrome() {}
 
-    private static ResourceLocation texture(String name) {
-        return ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/" + name + ".png");
-    }
-
     @SubscribeEvent
     public static void registerReloadListener(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener((ResourceManagerReloadListener) resources -> BRAND_SPACE.clear());
+        event.registerReloadListener((ResourceManagerReloadListener) resources -> {
+            BRAND_SPACE.clear();
+            GuiTemplates.reload();
+        });
     }
 
     /** Resolve the registry translation key, never the translated/possibly ambiguous display text. */
@@ -86,11 +81,11 @@ public final class MachineGuiChrome {
         int middleWidth = tabWidth - 7;
         RenderSystem.enableBlend();
         graphics.setColor(1, 1, 1, 1);
-        // The PSD tab overlaps the top four rows of the panel. Its right cap starts one row lower.
-        graphics.blit(LEFT, 0, -10, 0, 0, 4, 14, 4, 14);
+        var label = GuiTemplates.sprite("base/label");
+        label.region(graphics, 0, -10, 0, 0, 4, 14);
         for (int x = 4; x < 4 + middleWidth; x += 4)
-            graphics.blit(MIDDLE, x, -10, 0, 0, 4, 14, 4, 14);
-        graphics.blit(RIGHT, 4 + middleWidth, -9, 0, 0, 3, 13, 3, 13);
+            label.region(graphics, x, -10, 4, 0, 4, 14);
+        label.region(graphics, 4 + middleWidth, -10, 8, 0, 3, 14);
         if (!icon.isEmpty()) {
             graphics.pose().pushPose();
             graphics.pose().translate(4, -7, 0);
@@ -130,11 +125,13 @@ public final class MachineGuiChrome {
         if (texture == null || !BRAND_SPACE.computeIfAbsent(texture, MachineGuiChrome::hasBlankBrandArea)) return;
         RenderSystem.enableBlend();
         graphics.setColor(1, 1, 1, 1);
-        graphics.blit(BRAND, BRAND_X, BRAND_Y, 0, 0, BRAND_SIZE, BRAND_SIZE, BRAND_SIZE, BRAND_SIZE);
+        GuiTemplates.sprite("icon/icon_g").draw(graphics, BRAND_X, BRAND_Y);
     }
 
     private static boolean hasBlankBrandArea(ResourceLocation texture) {
-        var resource = Minecraft.getInstance().getResourceManager().getResource(texture);
+        var template = GuiTemplates.find(GuiTemplates.forTexture(texture));
+        if (template.isPresent()) return template.get().brand();
+        var resource = Minecraft.getInstance().getResourceManager().getResource(GuiTemplates.legacyTexture(texture));
         if (resource.isEmpty()) return false;
         try (var stream = resource.get().open(); var image = NativeImage.read(stream)) {
             // GUI sheets have 256 logical pixels; read the equivalent area in HD resource packs.

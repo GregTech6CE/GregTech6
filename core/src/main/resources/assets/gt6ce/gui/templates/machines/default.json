@@ -1,0 +1,38 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 42
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 16,
+      "y": 62,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 62,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:special/item_panel",
+      "x": 16,
+      "y": 15
+    },
+    {
+      "sprite": "gt6ce:special/item_panel",
+      "x": 106,
+      "y": 15
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_alloying",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

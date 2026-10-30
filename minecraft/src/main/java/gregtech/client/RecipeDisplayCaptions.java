@@ -12,7 +12,8 @@ public final class RecipeDisplayCaptions {
 
     private RecipeDisplayCaptions() {}
 
-    public static void draw(GuiGraphics graphics, RecipeMap map, Recipe recipe) {
+    public static java.util.List<Component> lines(RecipeMap map, Recipe recipe) {
+        var lines = new java.util.ArrayList<Component>();
         boolean informational = map == gregtech.content.data.MachineRecipeMaps.ByProductList
                 || map == gregtech.content.data.MachineRecipeMaps.DidYouKnow;
         boolean showTier = !informational && !gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map);
@@ -20,52 +21,50 @@ public final class RecipeDisplayCaptions {
         var visibility = gregtech.engine.recipe.RecipeCaptionVisibility.of(
                 recipe.mEUt, map.mCombinePower, map.mShowVoltageAmperage);
         if (recipe.mEUt != 0) {
-            caption(
-                    graphics,
-                    Component.translatable(
-                            stats.generating() ? "gt6ce.jei.gain" : "gt6ce.jei.costs",
-                            stats.costs().toString(),
-                            ENERGY_UNIT),
-                    86);
+            lines.add(Component.translatable(
+                    stats.generating() ? "gt6ce.jei.gain" : "gt6ce.jei.costs",
+                    stats.costs().toString(),
+                    ENERGY_UNIT));
             if (visibility.usage())
-                caption(
-                        graphics,
-                        Component.translatable(
-                                stats.generating() ? "gt6ce.jei.output" : "gt6ce.jei.usage",
-                                stats.usage().toString(),
-                                ENERGY_UNIT),
-                        98);
+                lines.add(Component.translatable(
+                        stats.generating() ? "gt6ce.jei.output" : "gt6ce.jei.usage",
+                        stats.usage().toString(),
+                        ENERGY_UNIT));
             if (showTier && visibility.tier())
-                caption(
-                        graphics,
-                        Component.translatable("gt6ce.jei.tier", stats.tier().toString(), ENERGY_UNIT),
-                        110);
+                lines.add(Component.translatable("gt6ce.jei.tier", stats.tier().toString(), ENERGY_UNIT));
             if (visibility.power() && map != gregtech.content.data.MachineRecipeMaps.Fusion)
-                caption(graphics, Component.translatable("gt6ce.jei.power", stats.power()), 122);
-        } else if (showTier && visibility.tier()) {
-            caption(graphics, Component.translatable("gt6ce.jei.tier_unspecified"), 110);
+                lines.add(Component.translatable("gt6ce.jei.power", stats.power()));
         }
         // Instant maps (the crucibles) convert on contact, so a duration line would be a lie.
         if (!map.mInstantRecipes && !informational)
-            caption(graphics, Component.translatable("gt6ce.jei.time_" + stats.timeUnit(), stats.time()), 134);
+            lines.add(Component.translatable("gt6ce.jei.time_" + stats.timeUnit(), stats.time()));
         if (map == gregtech.content.data.MachineRecipeMaps.Fusion)
-            caption(graphics, Component.translatable("gt6ce.fusion.startup", recipe.mSpecialValue), 122);
+            lines.add(Component.translatable("gt6ce.fusion.startup", recipe.mSpecialValue));
         else if (map.hasSpecialValueLabel() && recipe.mSpecialValue != 0)
             // GT6 NEI special value, e.g. the crucible's "Temperature: 1811 K".
-            caption(
-                    graphics,
-                    Component.translatable(
-                            "gt6ce.jei.special_value",
-                            recipe.mSpecialValue * map.mSpecialValueMultiplier,
-                            map.mSpecialValuePost.trim()),
-                    122);
+            lines.add(Component.translatable(
+                    "gt6ce.jei.special_value",
+                    recipe.mSpecialValue * map.mSpecialValueMultiplier,
+                    map.mSpecialValuePost.trim()));
+        return java.util.List.copyOf(lines);
     }
 
-    private static void caption(GuiGraphics graphics, Component text, int y) {
+    public static void draw(GuiGraphics graphics, RecipeMap map, Recipe recipe) {
+        draw(graphics, lines(map, recipe), 4, 86, 168);
+    }
+
+    public static void draw(GuiGraphics graphics, java.util.List<Component> lines, int x, int y, int width) {
+        for (var line : lines) {
+            caption(graphics, line, x, y, width);
+            y += 12;
+        }
+    }
+
+    private static void caption(GuiGraphics graphics, Component text, int x, int y, int width) {
         var font = net.minecraft.client.Minecraft.getInstance().font;
-        float scale = Math.min(1f, 168f / Math.max(1, font.width(text)));
+        float scale = Math.min(1f, (float) width / Math.max(1, font.width(text)));
         graphics.pose().pushPose();
-        graphics.pose().translate(4, y, 0);
+        graphics.pose().translate(x, y, 0);
         graphics.pose().scale(scale, scale, 1);
         graphics.drawString(font, text, 0, 0, 0x555555, false);
         graphics.pose().popPose();

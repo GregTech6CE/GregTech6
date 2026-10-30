@@ -11,6 +11,7 @@
 
 ## 次要主题
 
+- [碎片贴图与机器 GUI 模板](gui-templates.md)
 - [Issue 分类与标签](github-issue-tags.md)
 
 ## 其他主题

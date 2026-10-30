@@ -15,7 +15,7 @@ final class MachineProgressRenderer {
     private float from, target;
     private long changedAt = -1;
 
-    private float sample(float progress) {
+    float sample(float progress) {
         long now = Util.getMillis();
         progress = Math.max(0, Math.min(1, progress));
         // A new recipe or reset must never interpolate backwards through the completed batch.
@@ -37,7 +37,12 @@ final class MachineProgressRenderer {
 
     void draw(GuiGraphics graphics, ResourceLocation texture, int x, int y, int u, int v,
               int width, int height, float progress) {
-        float filled = width * sample(progress);
+        drawFraction(graphics, texture, x, y, u, v, width, height, 256, 256, sample(progress));
+    }
+
+    static void drawFraction(GuiGraphics graphics, ResourceLocation texture, int x, int y, int u, int v,
+                             int width, int height, int textureWidth, int textureHeight, float progress) {
+        float filled = width * Math.max(0, Math.min(1, progress));
         if (texture == null || filled <= 0) return;
         // Integer GuiGraphics.blit/scissor bounds snap to GUI pixels. Clip geometry and UVs together instead.
         graphics.flush();
@@ -48,8 +53,8 @@ final class MachineProgressRenderer {
         RenderSystem.defaultBlendFunc();
         var pose = graphics.pose().last().pose();
         float right = x + filled, bottom = y + height;
-        float u0 = u / 256.0F, u1 = (u + filled) / 256.0F;
-        float v0 = v / 256.0F, v1 = (v + height) / 256.0F;
+        float u0 = u / (float) textureWidth, u1 = (u + filled) / textureWidth;
+        float v0 = v / (float) textureHeight, v1 = (v + height) / (float) textureHeight;
 //? if >=1.21.1 {
         /*var buffer = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         buffer.addVertex(pose, x, y, 0).setUv(u0, v0);

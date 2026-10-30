@@ -1,0 +1,21 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_anvil_bending_big",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

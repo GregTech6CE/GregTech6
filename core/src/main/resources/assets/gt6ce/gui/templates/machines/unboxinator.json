@@ -1,0 +1,45 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 6,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/boxinator_variant_b",
+      "x": 53,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 42,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 60,
+      "columns": 3
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_unboxinator",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

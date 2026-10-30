@@ -36,8 +36,7 @@ public final class DataSwitchScreen extends MachineContainerScreen<DataSwitchMen
         return menu.kind() == UsbSwitchBlock.Kind.USB ? USB : HDD;
     }
     @Override protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
-        graphics.blit(menu.kind() == UsbSwitchBlock.Kind.USB ? USB : HDD,
-                leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        GuiTemplates.background(graphics, brandingTexture(), leftPos, topPos, imageWidth, imageHeight, menu.slots);
     }
     @Override public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
 

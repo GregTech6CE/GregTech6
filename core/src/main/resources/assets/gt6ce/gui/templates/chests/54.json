@@ -1,0 +1,68 @@
+{
+  "format": 1,
+  "width": 176,
+  "height": 222,
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 17,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 35,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 53,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 71,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 89,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 107,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 139,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 157,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 175,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 197,
+      "columns": 9
+    }
+  ],
+  "brand": false
+}

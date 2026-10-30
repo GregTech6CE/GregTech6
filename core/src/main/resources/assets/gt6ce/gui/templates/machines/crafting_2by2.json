@@ -1,0 +1,32 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 15
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 33,
+      "columns": 2
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 15
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_alloying",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

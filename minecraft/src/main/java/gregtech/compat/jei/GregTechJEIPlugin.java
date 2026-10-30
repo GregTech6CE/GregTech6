@@ -196,6 +196,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
                 if (recipe.mEnabled && !recipe.mHidden) recipes.add(recipe);
             }
             if (!recipes.isEmpty()) {
+                entry.getValue().fitRecipes(recipes);
                 registration.addRecipes(entry.getValue().getRecipeType(),recipes);
                 shown += recipes.size();
             }

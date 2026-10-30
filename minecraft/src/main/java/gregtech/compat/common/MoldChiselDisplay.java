@@ -19,11 +19,10 @@ import net.minecraft.world.item.ItemStack;
 /** Shared data and pixel coordinates for native JEI and EMI mold-chiseling pages. */
 public final class MoldChiselDisplay {
     public static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/recipes/moldchisel.png");
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/machines/mold_chisel.png");
     public static final int WIDTH = 176, HEIGHT = 128;
     public static final int GRID_X = 16, GRID_Y = 16, CELL = 16;
     public static final int CHISEL_X = 112, CHISEL_Y = 30, OUTPUT_X = 137, OUTPUT_Y = 49;
-    private static final int CARVED_V_OFFSET = 129;
 
     public record Info(MoldChiselPatterns.Pattern pattern, List<ItemStack> outputs) {
         public String id() {
@@ -69,12 +68,13 @@ public final class MoldChiselDisplay {
     }
 
     public static void draw(GuiGraphics graphics, Info info) {
-        graphics.blit(TEXTURE, 0, 0, 0, 0, WIDTH, HEIGHT, 256, 256);
+        gregtech.client.gui.GuiTemplates.background(graphics, TEXTURE, 0, 0, WIDTH, HEIGHT);
         for (int row = 0; row < 5; row++)
             for (int col = 0; col < 5; col++) {
                 if (!info.pattern().carved(col, row)) continue;
                 int x = GRID_X + col * CELL, y = GRID_Y + row * CELL;
-                graphics.blit(TEXTURE, x, y, x, y + CARVED_V_OFFSET, CELL, CELL, 256, 256);
+                gregtech.client.gui.GuiTemplates.sprite("special/moldchisel_dark_panel")
+                        .region(graphics, x, y, x - 8, y - 8, CELL, CELL);
             }
         // The supplied texture has a tool stencil; the actual item occupies this same native slot.
         graphics.fill(CHISEL_X, CHISEL_Y, CHISEL_X + 16, CHISEL_Y + 16, 0xff8b8b8b);

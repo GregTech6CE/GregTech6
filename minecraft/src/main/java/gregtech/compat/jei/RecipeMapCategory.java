@@ -6,7 +6,7 @@ package gregtech.compat.jei;
 import gregtech.GregTech;
 //?}
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
+import gregtech.client.gui.RecipeGuiLayout;
 import gregtech.engine.fluid.FluidDisplayBinding;
 //? if >=1.21.1 {
 /*import mezz.jei.api.neoforge.NeoForgeTypes;
@@ -30,17 +30,28 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 import java.util.Locale;
 
-/** The actual GT6 machine panel, with the same slots as the live container. */
+/** Compact shared GUI components with native JEI ingredients and recipe indexing. */
 public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
     private final RecipeMap map;
-    private final IDrawable background,icon,slot;
-    private final ResourceLocation texture;
+    private IDrawable background;
+    private final IDrawable icon;
+    private final IGuiHelper helper;
     public RecipeMapCategory(IGuiHelper helper,RecipeMap map,ItemStack icon) {
         this.map=map;
-        texture=MachineGuiLayout.texture(map);
-        background=helper.createBlankDrawable(176,146);
+        this.helper=helper;
+        background=helper.createBlankDrawable(140,96);
         this.icon=helper.createDrawableItemStack(icon);
-        slot=helper.getSlotDrawable();
+
+    }
+    /** JEI fixes dimensions per category; choose the smallest bounds containing its actual rows. */
+    public void fitRecipes(java.util.List<Recipe> recipes) {
+        int width = 140, height = 26;
+        for (var recipe : recipes) {
+            var layout = new RecipeGuiLayout(map, recipe);
+            width = Math.max(width, layout.width());
+            height = Math.max(height, layout.height());
+        }
+        background = helper.createBlankDrawable(width, height);
     }
     public static RecipeType<Recipe> recipeType(RecipeMap map) {
 //? if >=1.21.1 {
@@ -54,19 +65,19 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
     @Override public IDrawable getBackground() {return background;}
     @Override public IDrawable getIcon() {return icon;}
     @Override public void setRecipe(IRecipeLayoutBuilder builder,Recipe recipe,IFocusGroup focuses) {
-        addSide(builder,true,recipe.mInputs,recipe.mFluidInputs,recipe);
-        addSide(builder,false,recipe.mOutputs,recipe.mFluidOutputs,recipe);
+        var layout = new RecipeGuiLayout(map, recipe);
+        addSide(builder,true,recipe.mInputs,recipe.mFluidInputs,recipe,layout);
+        addSide(builder,false,recipe.mOutputs,recipe.mFluidOutputs,recipe,layout);
         var special = RecipeSpecialItems.display(recipe.mSpecialItems);
-        if (!special.isEmpty()) builder.addSlot(RecipeIngredientRole.CATALYST, 80, 43)
-                .setSlotName("special_tool").setBackground(slot, -1, -1).addItemStacks(special)
+        if (!special.isEmpty()) builder.addSlot(RecipeIngredientRole.CATALYST, layout.special().x(), layout.special().y())
+                .setSlotName("special_tool").addItemStacks(special)
                 .addTooltipCallback((view, tooltip) -> tooltip.add(Component.translatable("gt6ce.jei.catalyst")));
     }
-    private void addSide(IRecipeLayoutBuilder builder,boolean input,ItemStack[] items,FluidStack[] fluids,Recipe recipe) {
+    private void addSide(IRecipeLayoutBuilder builder,boolean input,ItemStack[] items,FluidStack[] fluids,Recipe recipe,RecipeGuiLayout layout) {
         var role=input?RecipeIngredientRole.INPUT:RecipeIngredientRole.OUTPUT;
-        int count=input?map.mInputItemsCount:map.mOutputItemsCount;
         for(int i=0;i<items.length;i++) {
             if(items[i]==null||items[i].isEmpty()) continue;
-            var point=MachineGuiLayout.item(input,i,count,input ? map.mInputFluidCount : map.mOutputFluidCount);
+            var point=layout.point(input,false,i);
             var itemSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_item_"+i);
             var choices=input?recipe.viewerInputAlternatives(i):java.util.List.<ItemStack>of();
             if (input && !recipe.mExactItemInputs && !recipe.hasItemInputGuard(i)) {
@@ -99,7 +110,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             boolean catalyst=input&&(presence||recipe.isCatalystFluidInput(i));
             var fluidRole=catalyst?RecipeIngredientRole.CATALYST:role;
             var shown=fluid;
-            var point=MachineGuiLayout.fluid(input,i);
+            var point=layout.point(input,true,i);
 //? if >=1.21.1 {
             /*var display=FluidDisplayBinding.display(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),shown);
 *///?} else {
@@ -126,28 +137,12 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         }
     }
     @Override public void draw(Recipe recipe,IRecipeSlotsView slots,GuiGraphics graphics,double mouseX,double mouseY) {
-        // Crop the rounded frame without moving any item/fluid slot coordinates.
-        graphics.blit(texture,4,3,4,3,169,79,256,256);
-        gregtech.client.gui.MachineGuiChrome.brand(graphics,texture);
-        var client=net.minecraft.client.Minecraft.getInstance();
-        long tick=client.level==null?0:client.level.getGameTime();
-        graphics.blit(texture,78,24,176,0,(int)(tick%40)*20/40,18,256,256);
-        // Draw backgrounds from the same coordinates to cover legacy maps lacking their own original GUI.
-        for(boolean input:new boolean[]{true,false}) {
-            int count=input?map.mInputItemsCount:map.mOutputItemsCount;
-            for(int i=0;i<count;i++) {
-                var point=MachineGuiLayout.item(input,i,count,input ? map.mInputFluidCount : map.mOutputFluidCount);
-                slot.draw(graphics,point.x()-1,point.y()-1);
-            }
-            int fluids=input?map.mInputFluidCount:map.mOutputFluidCount;
-            for(int i=0;i<fluids;i++) {var point=MachineGuiLayout.fluid(input,i);slot.draw(graphics,point.x()-1,point.y()-1);}
-        }
-        gregtech.client.RecipeDisplayCaptions.draw(graphics, map, recipe);
+        new RecipeGuiLayout(map, recipe).draw(graphics);
     }
     @Override public java.util.List<Component> getTooltipStrings(Recipe recipe,IRecipeSlotsView slots,double mouseX,double mouseY) {
         if(map==gregtech.content.data.MachineRecipeMaps.Anvil || map==gregtech.content.data.MachineRecipeMaps.AnvilBendBig || map==gregtech.content.data.MachineRecipeMaps.AnvilBendSmall) {
             for(int i=0;i<recipe.mInputs.length;i++) if(recipe.mInputs[i]==null || recipe.mInputs[i].isEmpty()) {
-                var point=MachineGuiLayout.item(true,i,map.mInputItemsCount,0);
+                var point=new RecipeGuiLayout(map,recipe).point(true,false,i);
                 if(mouseX>=point.x()&&mouseX<point.x()+16&&mouseY>=point.y()&&mouseY<point.y()+16)
                     return java.util.List.of(Component.translatable("gt6ce.jei.empty_workpiece"));
             }

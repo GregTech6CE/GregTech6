@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-/** Uses the original GT6 texture, including its 16-slot store and five tool slots. */
+/** Shared GUI composition with the 16-slot store and five tool slots. */
 public final class AdvancedCraftingScreen extends MachineContainerScreen<AdvancedCraftingMenu> {
 
     public AdvancedCraftingScreen(AdvancedCraftingMenu menu, Inventory inventory, Component title) {
@@ -26,14 +26,7 @@ public final class AdvancedCraftingScreen extends MachineContainerScreen<Advance
 
     @Override
     protected void renderBg(GuiGraphics graphics, float tick, int x, int y) {
-//? if >=1.21.1 {
-        /*graphics.blit(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
-                (menu.modes() & 32) != 0 ? "textures/gui/machines/advanced_crafting_table_charging.png"
-                : "textures/gui/machines/advanced_crafting_table.png"), leftPos, topPos, 0, 0, imageWidth, imageHeight);
-*///?} else {
-        graphics.blit(GregTech.id((menu.modes() & 32) != 0 ? "textures/gui/machines/advanced_crafting_table_charging.png"
-                : "textures/gui/machines/advanced_crafting_table.png"), leftPos, topPos, 0, 0, imageWidth, imageHeight);
-//?}
+        GuiTemplates.background(graphics, brandingTexture(), leftPos, topPos, imageWidth, imageHeight, menu.slots);
         var blueprint = menu.getSlot(0).getItem();
         if (minecraft != null && minecraft.level != null) {
             var pattern = gregtech.content.data.CraftingBlueprintData.readItem(minecraft.level, blueprint);

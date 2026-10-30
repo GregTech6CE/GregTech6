@@ -1,0 +1,143 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 6,
+      "y": 7,
+      "columns": 4
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:overlay/advanced_crafting_table_charging",
+      "x": 80,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 97,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:overlay/advanced_crafting_table_charging",
+      "x": 98,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 115,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:overlay/advanced_crafting_table_charging",
+      "x": 116,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 133,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:widget/advanced_crafting_table_charging",
+      "x": 134,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:widget/advanced_crafting_table_charging",
+      "x": 152,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 6,
+      "y": 25,
+      "columns": 4
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 27,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 134,
+      "y": 27
+    },
+    {
+      "sprite": "gt6ce:widget/advanced_crafting_table_variant_b",
+      "x": 135,
+      "y": 28
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 152,
+      "y": 27
+    },
+    {
+      "sprite": "gt6ce:widget/advanced_crafting_table_variant_c",
+      "x": 153,
+      "y": 28
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 6,
+      "y": 43,
+      "columns": 4
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 45,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 6,
+      "y": 61,
+      "columns": 4
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 63,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 134,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:widget/advanced_crafting_table_variant_d",
+      "x": 135,
+      "y": 64
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 152,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:widget/advanced_crafting_table_variant_e",
+      "x": 153,
+      "y": 64
+    },
+    {
+      "sprite": "gt6ce:special/advanced_crafting_table_controls",
+      "x": 134,
+      "y": 45
+    }
+  ],
+  "brand": false
+}

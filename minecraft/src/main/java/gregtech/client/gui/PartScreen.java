@@ -50,7 +50,7 @@ public class PartScreen extends MachineContainerScreen<PartMenu> {
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         hovers.clear();
-        if (texture != null) graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        if (texture != null) GuiTemplates.background(graphics, texture, leftPos, topPos, imageWidth, imageHeight, menu.slots);
         for (int i = 0; i < menu.machineSlotCount(); i++) {
             Slot slot = menu.slots.get(i);
             blit(graphics, leftPos + slot.x - 1, topPos + slot.y - 1,

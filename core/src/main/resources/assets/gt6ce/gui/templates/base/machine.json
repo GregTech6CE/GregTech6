@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "width": 176,
+  "height": 166,
+  "background": "gt6ce:base/background",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 83,
+      "columns": 9,
+      "rows": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 141,
+      "columns": 9
+    }
+  ]
+}

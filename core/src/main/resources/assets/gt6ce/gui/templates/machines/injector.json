@@ -1,0 +1,51 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/canner_variant_a",
+      "x": 35,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 34,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/injector",
+      "x": 35,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 52,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 62
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_injector",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

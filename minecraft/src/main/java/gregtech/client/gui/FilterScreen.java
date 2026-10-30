@@ -28,16 +28,9 @@ public class FilterScreen extends MachineContainerScreen<FilterMenu> {
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
-        var texture = ResourceLocation.parse("minecraft:textures/gui/container/generic_54.png");
-        if (menu.prefixMode()) {
-            graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, 35);
-            graphics.fill(leftPos + 7, topPos + 17, leftPos + 169, topPos + 35, 0xFFC6C6C6);
-            graphics.blit(texture, leftPos + 79, topPos + 17, 7, 17, 18, 18);
-            graphics.blit(texture, leftPos, topPos + 35, 0, 126, imageWidth, 96);
-            return;
-        }
-        graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, 125);
-        graphics.blit(texture, leftPos, topPos + 125, 0, 126, imageWidth, 96);
+        GuiTemplates.panel(graphics, leftPos, topPos, imageWidth, imageHeight);
+        var slot = GuiTemplates.sprite("slot/item");
+        for (var placed : menu.slots) slot.draw(graphics, leftPos + placed.x - 1, topPos + placed.y - 1);
     }
 //? if >=1.21.1 {
     /*@Override

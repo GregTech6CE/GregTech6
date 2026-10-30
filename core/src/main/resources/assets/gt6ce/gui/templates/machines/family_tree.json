@@ -1,0 +1,21 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:special/family_tree_output_panel",
+      "x": 106,
+      "y": 6
+    },
+    {
+      "sprite": "gt6ce:special/family_tree_input_panel",
+      "x": 16,
+      "y": 24
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_alloying",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

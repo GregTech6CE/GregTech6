@@ -1,0 +1,18 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 25,
+      "columns": 4
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 43,
+      "columns": 4
+    }
+  ],
+  "brand": true
+}

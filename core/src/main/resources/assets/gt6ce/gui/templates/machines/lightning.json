@@ -1,0 +1,155 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 16,
+      "y": 6
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_a",
+      "x": 17,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 6
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_a",
+      "x": 35,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 6
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_a",
+      "x": 53,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 6,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 16,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_a",
+      "x": 17,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_a",
+      "x": 35,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_a",
+      "x": 53,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 16,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_b",
+      "x": 17,
+      "y": 45
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 34,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_b",
+      "x": 35,
+      "y": 45
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 52,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_b",
+      "x": 53,
+      "y": 45
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 44,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 16,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_b",
+      "x": 17,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 34,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_b",
+      "x": 35,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 52,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/electrolyzer_variant_b",
+      "x": 53,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 62,
+      "columns": 3
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_centrifuge",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

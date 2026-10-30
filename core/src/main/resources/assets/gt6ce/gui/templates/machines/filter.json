@@ -1,0 +1,572 @@
+{
+  "format": 1,
+  "width": 176,
+  "height": 222,
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 8,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 25,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 26,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 43,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 44,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 61,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 62,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 80,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 97,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 98,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 115,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 116,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 133,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 134,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 17
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 152,
+      "y": 18
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 8,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 25,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 26,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 43,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 44,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 61,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 62,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 80,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 97,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 98,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 115,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 116,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 133,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 134,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 35
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 152,
+      "y": 36
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 8,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 25,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 26,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 43,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 44,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 61,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 62,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 80,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 97,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 98,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 115,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 116,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 133,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 134,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 53
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 152,
+      "y": 54
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 8,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 25,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 26,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 43,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 44,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 61,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 62,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 80,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 97,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 98,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 115,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 116,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 133,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 134,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 71
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 152,
+      "y": 72
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 8,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 25,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 26,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 43,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 44,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 61,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 62,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 80,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 97,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 98,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 115,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 116,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 133,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 134,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 89
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 152,
+      "y": 90
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 8,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 25,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 26,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 43,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 44,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 61,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 62,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 79,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 80,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 97,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 98,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 115,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 116,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 133,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 134,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 151,
+      "y": 107
+    },
+    {
+      "sprite": "gt6ce:overlay/filter",
+      "x": 152,
+      "y": 108
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 139,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 157,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 175,
+      "columns": 9
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 7,
+      "y": 197,
+      "columns": 9
+    }
+  ],
+  "brand": false
+}

@@ -1,0 +1,117 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 6,
+      "columns": 3
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 26
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 107,
+      "y": 27
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 124,
+      "y": 26
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 125,
+      "y": 27
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 142,
+      "y": 26
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 143,
+      "y": 27
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 107,
+      "y": 45
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 124,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 125,
+      "y": 45
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 142,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 143,
+      "y": 45
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 107,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 124,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 125,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 142,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:overlay/catalytic_cracking",
+      "x": 143,
+      "y": 63
+    },
+    {
+      "sprite": "gt6ce:special/catalytic_cracking_coils",
+      "x": 34,
+      "y": 62
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_steam_cracking",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

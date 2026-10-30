@@ -46,7 +46,7 @@ public class BumbliaryScreen extends MachineContainerScreen<BumbliaryContainerMe
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
-        graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        GuiTemplates.background(graphics, texture, leftPos, topPos, imageWidth, imageHeight, menu.slots);
     }
 
     @Override

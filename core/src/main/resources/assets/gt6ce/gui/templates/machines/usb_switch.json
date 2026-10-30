@@ -1,0 +1,166 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_a",
+      "x": 53,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 70,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_b",
+      "x": 71,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 88,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_c",
+      "x": 89,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 7
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_d",
+      "x": 107,
+      "y": 8
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_e",
+      "x": 53,
+      "y": 26
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 70,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_f",
+      "x": 71,
+      "y": 26
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 88,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_g",
+      "x": 89,
+      "y": 26
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_h",
+      "x": 107,
+      "y": 26
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 43
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_i",
+      "x": 53,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 70,
+      "y": 43
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_j",
+      "x": 71,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 88,
+      "y": 43
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_k",
+      "x": 89,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 43
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_l",
+      "x": 107,
+      "y": 44
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 61
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_m",
+      "x": 53,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 70,
+      "y": 61
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_n",
+      "x": 71,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 88,
+      "y": 61
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_o",
+      "x": 89,
+      "y": 62
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 61
+    },
+    {
+      "sprite": "gt6ce:overlay/usb_switch_variant_p",
+      "x": 107,
+      "y": 62
+    }
+  ],
+  "brand": false
+}

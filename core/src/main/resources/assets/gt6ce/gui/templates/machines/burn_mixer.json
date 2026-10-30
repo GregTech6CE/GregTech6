@@ -1,0 +1,32 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:slot/fluid",
+      "x": 106,
+      "y": 62,
+      "columns": 2
+    },
+    {
+      "sprite": "gt6ce:special/burn_mixer_item_grid",
+      "x": 16,
+      "y": 6
+    },
+    {
+      "sprite": "gt6ce:special/burn_mixer_fluid_grid",
+      "x": 16,
+      "y": 44
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_burn_mixer",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}

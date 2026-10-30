@@ -6,10 +6,8 @@ package gregtech.client.gui;
 import gregtech.GregTech;
 //?}
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,8 +32,13 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
     private final MachineProgressRenderer progressRenderer = new MachineProgressRenderer();
 
     private boolean overRecipeArrow(double mouseX, double mouseY) {
-        return mouseX >= leftPos + 78 && mouseX < leftPos + 98
-                && mouseY >= topPos + 24 && mouseY < topPos + 42;
+        var template = GuiTemplates.find(GuiTemplates.forTexture(texture));
+        if (template.isPresent() && template.get().progress() == null) return false;
+        var progress = template.map(GuiTemplate::progress).orElse(null);
+        int x = progress == null ? 78 : progress.x(), y = progress == null ? 24 : progress.y();
+        int width = progress == null ? 20 : progress.width(), height = progress == null ? 18 : progress.height();
+        return mouseX >= leftPos + x && mouseX < leftPos + x + width
+                && mouseY >= topPos + y && mouseY < topPos + y + height;
     }
 
     @Override
@@ -130,13 +133,16 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
 
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, texture);
-        graphics.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        GuiTemplates.background(graphics, texture, leftPos, topPos, imageWidth, imageHeight, menu.slots);
 
-        // Progress arrow overlay (UV 176,0 in the 256x256 texture, 20x18)
-        progressRenderer.draw(graphics, texture, leftPos + 78, topPos + 24,
-                176, 0, 20, 18, menu.progressFraction());
+        var template = GuiTemplates.find(GuiTemplates.forTexture(texture));
+        if (template.isPresent() && template.get().progress() != null) {
+            var progress = template.get().progress();
+            progress.draw(graphics, leftPos + progress.x(), topPos + progress.y(),
+                    progressRenderer.sample(menu.progressFraction()));
+        } else if (template.isEmpty()) {
+            progressRenderer.draw(graphics, GuiTemplates.legacyTexture(texture), leftPos + 78, topPos + 24,
+                    176, 0, 20, 18, menu.progressFraction());
+        }
     }
 }

@@ -1,0 +1,15 @@
+{
+  "parent": "gt6ce:base/automatic",
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_bath",
+    "x": 78,
+    "y": 24
+  },
+  "elements": [
+    {
+      "sprite": "gt6ce:overlay/lathe_variant_a",
+      "x": 53,
+      "y": 25
+    }
+  ]
+}

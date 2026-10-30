@@ -1,0 +1,41 @@
+{
+  "parent": "gt6ce:base/machine",
+  "elements": [
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/scanner_molecular",
+      "x": 35,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 52,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/replicator",
+      "x": 53,
+      "y": 25
+    },
+    {
+      "sprite": "gt6ce:slot/item",
+      "x": 106,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:overlay/replicator",
+      "x": 107,
+      "y": 25
+    }
+  ],
+  "progress": {
+    "sprite": "gt6ce:progress_bar/progress_bar_scanner_molecular",
+    "x": 78,
+    "y": 24
+  },
+  "brand": true
+}
