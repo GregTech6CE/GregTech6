@@ -1,0 +1,13 @@
+name: 建议 / Suggestion
+description: 新功能、平衡性、便利性等建议 / New features, balance, QoL, etc.
+labels: ["enhancement", "needs triage"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议内容 / Suggestion
+      placeholder: |-
+        新功能、平衡性、便利性等建议
+        New features, balance, QoL, etc.
+    validations:
+      required: true

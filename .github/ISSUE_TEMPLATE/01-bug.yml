@@ -1,0 +1,94 @@
+name: 缺陷 / Bug
+description: 缺陷、崩溃、原版差异与翻译问题 / Bug, crash, parity and translation issues
+labels: ["bug", "needs triage"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 分类 / Type
+      options:
+        - 缺陷 / Bug
+        - 崩溃 / Crash
+        - 原版差异 / Parity
+        - 翻译 / Translation
+    validations:
+      required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: 模组版本 / Mod version
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: loader
+    attributes:
+      label: 游戏版本 / Minecraft Version
+      description: 受支持的游戏版本与加载器 / Supported game version and loader
+      options:
+        - "1.21.1 NeoForge"
+        - "1.20.1 Forge"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: side
+    attributes:
+      label: 运行环境 / Environment
+      options:
+        - 联机 / Multiplayer
+        - 单人 / Singleplayer
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题 / Problem
+      placeholder: |-
+        当前行为或翻译
+        Current behavior or translation
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤 / Steps to Reproduce
+      placeholder: |-
+        1. xxx
+        2. yyy
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望 / Expected
+      placeholder: |-
+        期望行为或翻译
+        Expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: mods
+    attributes:
+      label: 模组列表 / Mod list
+      placeholder: |-
+        整合包名称或全部模组及版本
+        Modpack name or all mods and versions
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 补充信息 / Additional information
+      placeholder: |-
+        拖入 logs/latest.log、崩溃报告或截图
+        Drop logs/latest.log, crash report or screenshots
+    validations:
+      required: false
