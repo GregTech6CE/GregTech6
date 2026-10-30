@@ -466,7 +466,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Lead,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 5000,
-                16,
+                64,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -474,7 +474,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 4500,
-                20,
+                80,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -482,7 +482,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 7500,
-                24,
+                96,
                 7.0F,
                 7.0F));
         values.add(entry(
@@ -490,7 +490,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 8000,
-                24,
+                96,
                 7.0F,
                 7.0F));
         values.add(entry(
@@ -498,7 +498,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                28,
+                112,
                 7.0F,
                 7.0F));
         values.add(entry(
@@ -506,7 +506,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Invar,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 10000,
-                16,
+                64,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -514,7 +514,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Steel,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 7000,
-                32,
+                128,
                 6.0F,
                 6.0F));
         values.add(entry(
@@ -522,7 +522,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Chromium,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 8500,
-                112,
+                448,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -530,7 +530,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Titanium,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 8500,
-                96,
+                384,
                 9.0F,
                 9.0F));
         values.add(entry(
@@ -538,7 +538,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                96,
+                384,
                 9.0F,
                 9.0F));
         values.add(entry(
@@ -546,7 +546,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 10000,
-                128,
+                512,
                 10.0F,
                 10.0F));
         values.add(entry(
@@ -554,7 +554,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                128,
+                512,
                 12.5F,
                 12.5F));
         values.add(entry(
@@ -562,7 +562,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 10000,
-                256,
+                1024,
                 12.5F,
                 12.5F));
         values.add(entry(
@@ -570,7 +570,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                256,
+                1024,
                 12.5F,
                 12.5F));
         values.add(entry(
@@ -802,7 +802,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Lead,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 5000,
-                64,
+                256,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -810,7 +810,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Bismuth,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 4500,
-                80,
+                320,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -818,7 +818,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Bronze,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 7500,
-                96,
+                384,
                 7.0F,
                 7.0F));
         values.add(entry(
@@ -826,7 +826,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.ArsenicCopper,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 8000,
-                96,
+                384,
                 7.0F,
                 7.0F));
         values.add(entry(
@@ -834,7 +834,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                112,
+                448,
                 7.0F,
                 7.0F));
         values.add(entry(
@@ -842,7 +842,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Invar,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 10000,
-                64,
+                256,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -850,7 +850,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Steel,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 7000,
-                128,
+                512,
                 6.0F,
                 6.0F));
         values.add(entry(
@@ -858,7 +858,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Chromium,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 8500,
-                448,
+                1792,
                 4.0F,
                 4.0F));
         values.add(entry(
@@ -866,7 +866,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Titanium,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 8500,
-                384,
+                1536,
                 9.0F,
                 9.0F));
         values.add(entry(
@@ -874,7 +874,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                384,
+                1536,
                 9.0F,
                 9.0F));
         values.add(entry(
@@ -882,7 +882,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 10000,
-                512,
+                2048,
                 10.0F,
                 10.0F));
         values.add(entry(
@@ -890,7 +890,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Tungstensteel,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                512,
+                2048,
                 12.5F,
                 12.5F));
         values.add(entry(
@@ -898,7 +898,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 10000,
-                1024,
+                4096,
                 12.5F,
                 12.5F));
         values.add(entry(
@@ -906,7 +906,7 @@ public final class BurningBoxDefinitions {
                 gregtech.content.material.generated.CompoundMaterials.Ultimet,
                 BurningBoxFuelType.FLUIDIZED_BED,
                 9000,
-                1024,
+                4096,
                 12.5F,
                 12.5F));
         values.add(new Entry(BurningBoxFuelType.SOLID, InitialSmelteryDefinitions.brickBurningBox()));
