@@ -174,6 +174,23 @@ public class OreBlock extends Block implements MaterialBlockLike {
         return "oreSmall".equals(prefix.getName());
     }
 
+    @Override
+//? if >=1.21.1 {
+    /*public int getExpDrop(BlockState state, net.minecraft.world.level.LevelAccessor level, BlockPos pos,
+                          net.minecraft.world.level.block.entity.BlockEntity blockEntity,
+                          net.minecraft.world.entity.Entity breaker, ItemStack tool) {
+        RandomSource random = level.getRandom();
+        boolean silkTouch = gregtech.content.worldgen.OreHarvest.from(level, tool).silkTouch();
+*///?} else {
+    public int getExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
+                          int fortuneLevel, int silkTouchLevel) {
+        boolean silkTouch = silkTouchLevel > 0;
+//?}
+        if (silkTouch || isBroken(state) || stoneOf(state).isBedrock()) return 0;
+        if (isSmall()) return 1 + random.nextInt(3);
+        return stoneOf(state) == OreHostStone.END_STONE ? 2 + random.nextInt(4) : random.nextInt(2);
+    }
+
     /**
      * Copies the host rock onto an item stack. Two tags on purpose:
      * <ul>
