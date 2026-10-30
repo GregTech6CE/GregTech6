@@ -122,6 +122,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
                     || net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f -> !f.isEmpty()).isPresent())) return false;
 //?}
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;
+            if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
         }
 //? if >=1.21.1 {
         /*if (formSelector.variants() == 0) return true;

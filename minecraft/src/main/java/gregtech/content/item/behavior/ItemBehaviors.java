@@ -345,6 +345,7 @@ public final class ItemBehaviors {
      */
     @Nullable
     public static BehaviorLighter.LighterSpec lighterSpec(String itemId) {
+        if (itemId == null) return null;
         return switch (itemId) {
             case "match" -> BehaviorLighter.match();
             case "match_box", "match_box_full" -> BehaviorLighter.matchBox();

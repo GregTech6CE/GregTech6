@@ -106,6 +106,22 @@ public final class BehaviorLighter {
         return spec(null, null, null, 1, 5500);
     }
 
+    /** Crafting and world ignition spend the same counter; a recipe costs one use. */
+    public static ItemStack craftingRemainder(ItemStack stack) {
+        var spec = ItemBehaviors.lighterSpec(ItemBehaviors.itemId(stack));
+        if (spec == null || spec.singleUse() || !spec.can().matches(stack)) return ItemStack.EMPTY;
+        return spec.can().spent(spec.can().prepared(stack.copyWithCount(1)), 1);
+    }
+
+    /** Empty used variants must not ignite a recipe just because their item remains in a tag. */
+    public static boolean usableForCrafting(ItemStack stack) {
+        var spec = ItemBehaviors.lighterSpec(ItemBehaviors.itemId(stack));
+        return spec == null
+                || spec.singleUse()
+                || !spec.can().isUsed(stack)
+                || spec.can().remaining(stack) > 0;
+    }
+
     /**
      * GT6 {@code Behavior_Lighter:82-120}: one block click.
      *

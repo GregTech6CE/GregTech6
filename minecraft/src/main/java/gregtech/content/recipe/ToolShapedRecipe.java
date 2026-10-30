@@ -186,6 +186,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
     protected boolean toolsUsable(CraftingInput input) {
         for (int i = 0; i < input.size(); i++) {
             var stack = input.getItem(i);
+            if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
             if (requireEmptyFluidContainers && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
             if (requireEmptyFluidContainers && net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(
                     fluid -> !fluid.isEmpty()).isPresent()) return false;
@@ -343,6 +344,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
     protected boolean toolsUsable(CraftingContainer inventory) {
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
             var stack = inventory.getItem(slot);
+            if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
             if (requireEmptyFluidContainers && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
             if (requireEmptyFluidContainers && net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(
                     f -> !f.isEmpty()).isPresent()) return false;

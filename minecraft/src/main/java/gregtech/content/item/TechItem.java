@@ -20,6 +20,18 @@ public class TechItem extends Item implements gregtech.engine.recipe.RecipeCatal
     public String englishName() { return englishName; }
 
     @Override
+    public boolean hasCraftingRemainingItem(net.minecraft.world.item.ItemStack stack) {
+        return !gregtech.content.item.behavior.BehaviorLighter.craftingRemainder(stack).isEmpty()
+                || super.hasCraftingRemainingItem(stack);
+    }
+
+    @Override
+    public net.minecraft.world.item.ItemStack getCraftingRemainingItem(net.minecraft.world.item.ItemStack stack) {
+        var remainder = gregtech.content.item.behavior.BehaviorLighter.craftingRemainder(stack);
+        return remainder.isEmpty() ? super.getCraftingRemainingItem(stack) : remainder;
+    }
+
+    @Override
     public void appendHoverText(net.minecraft.world.item.ItemStack stack,
 //? if >=1.21.1 {
             /*net.minecraft.world.item.Item.TooltipContext context,
