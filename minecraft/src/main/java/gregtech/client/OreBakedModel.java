@@ -71,15 +71,17 @@ public final class OreBakedModel implements IDynamicBakedModel {
         STONE_TEXTURES.put("netherrack", ResourceLocation.fromNamespaceAndPath("minecraft", "block/netherrack"));
         STONE_TEXTURES.put("end_stone", ResourceLocation.fromNamespaceAndPath("minecraft", "block/end_stone"));
 //?}
-        // Loose sediments — small ores only (GT6 sand/gravel small ores).
+        // Loose sediments — GT6's DUST_ORE hosts.
 //? if >=1.21.1 {
         /*STONE_TEXTURES.put("sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/sand"));
         STONE_TEXTURES.put("red_sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/red_sand"));
         STONE_TEXTURES.put("gravel", ResourceLocation.fromNamespaceAndPath("minecraft", "block/gravel"));
+        STONE_TEXTURES.put("mud", ResourceLocation.fromNamespaceAndPath("minecraft", "block/mud"));
 *///?} else {
         STONE_TEXTURES.put("sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/sand"));
         STONE_TEXTURES.put("red_sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/red_sand"));
         STONE_TEXTURES.put("gravel", ResourceLocation.fromNamespaceAndPath("minecraft", "block/gravel"));
+        STONE_TEXTURES.put("mud", ResourceLocation.fromNamespaceAndPath("minecraft", "block/mud"));
 //?}
         // Bedrock deposits (unbreakable ores).
 //? if >=1.21.1 {

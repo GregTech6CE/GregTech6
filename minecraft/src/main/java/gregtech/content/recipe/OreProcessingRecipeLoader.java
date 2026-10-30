@@ -453,8 +453,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             if (mByProductListed.contains(material)) continue;
             mByProductListed.add(material);
 
-            // Input chain: oreRaw → rockGt → crushed → crushedPurified → crushedCentrifuged
+            // Input chain: vanilla-stone ore block → oreRaw → rockGt → crushed → crushedPurified → crushedCentrifuged
             List<ItemStack> inputs = new ArrayList<>();
+            ItemStack oreBlock = blockStack(gregtech.engine.prefix.BlockMaterialPrefix.ore, material);
+            if (!oreBlock.isEmpty() && oreBlock.getCount() > 0) inputs.add(oreBlock);
             addIfValid(inputs, MaterialPrefix.oreRaw, material, 1);
             addIfValid(inputs, MaterialPrefix.rockGt, material, 1);
             addIfValid(inputs, MaterialPrefix.crushed, material, 1);

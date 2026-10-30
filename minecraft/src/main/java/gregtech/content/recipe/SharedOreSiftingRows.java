@@ -1,12 +1,22 @@
 package gregtech.content.recipe;
 
+import static gregtech.api.material.GTValues.U9;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.OreHostStone;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
+import gregtech.util.OM;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
@@ -15,6 +25,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 import java.util.*;
+import java.util.function.Predicate;
 import static gregtech.content.recipe.SourceOreSiftingRules.*;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 import static gregtech.content.recipe.SharedOreWashingRows.NativeForm;
@@ -54,12 +65,21 @@ public final class SharedOreSiftingRows {
   try{for(var definition:planned){var row=definition.admit();if(row!=null)OWNED.add(row);}}
   catch(RuntimeException|Error failure){clear();throw failure;}
  }
- record Definition(boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,long duration,long power,boolean special){
+ record Definition(boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,long duration,long power,boolean special,
+                   Predicate<ItemStack> inputPredicate){
+  Definition(boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,long duration,long power,boolean special){
+   this(optimize,input,outputs,chances,duration,power,special,null);
+  }
   Recipe admit(){
    // Source descriptors retain their literal chance arrays. The native map normalizes them to the
    // effective output slots; unused long quartz tails are not a second runtime metadata contract.
-   return MachineRecipeMaps.Sifting.addRecipe(optimize,new ItemStack[]{input},outputs,null,chances,
+   Recipe row=RecipeMap.make(optimize,new ItemStack[]{input},outputs,null,chances,
        new FluidStack[0],new FluidStack[0],duration,power,0);
+   if(row==null)return null;
+   // The host-tagged representative distinguishes the row; the predicate lets a stack with the
+   // same host but different stored data (or an older tag format) match at runtime.
+   if(inputPredicate!=null)row.withSameItemInputPredicate(0,inputPredicate);
+   return MachineRecipeMaps.Sifting.addRecipe(row);
   }
  }
  record GenericOutputs(Availability availability,ItemStack[] outputs){
@@ -97,7 +117,60 @@ public final class SharedOreSiftingRows {
    if(state==Availability.UNKNOWN)unresolved.computeIfAbsent(m,k->EnumSet.noneOf(Size.class)).add(row.size());
   }
   for(var material:selected)generic(material.resolve(),snapshot,captured,unresolved,out);
+  sediment(selected,out);
   return List.copyOf(out);
+ }
+
+ /** GT6 Loader_OreProcessing:351 — every DUST_ORE host ore stack gets a Sifter row. The host is a
+  * block state in the port, so each sediment host gets one row over the same ore block. */
+ private static final List<OreHostStone> DUST_ORE_HOSTS=List.of(
+     OreHostStone.SAND,OreHostStone.RED_SAND,OreHostStone.GRAVEL,OreHostStone.MUD);
+ private static final long[] DUST_ORE_CHANCES={10000,10000,1500,1000,500};
+ private static final int DUST_ORE_TICKS=256;
+
+ private static void sediment(Collection<GTMaterial> selected,List<Definition> out){
+  for(var candidate:selected){
+   GTMaterial material=candidate.resolve();
+   // Oilsands has its own Centrifuge event instead of the standard ore rows. Stone has no ore
+   // stack in GT6 (only the block), so it gets no DUST_ORE rows even though the port registers one.
+   if(!material.isValid()||"OilSand".equals(material.getName())||"Stone".equals(material.getName())
+       ||!MaterialPrefix.crushed.isValidFor(material))continue;
+   GTMaterial target=material.getTargetCrushingMaterial().resolve();
+   if(target==null||!target.isValid())continue;
+   ItemStack oreStack=GTBlocks.getStack(BlockMaterialPrefix.ore,material);
+   if(oreStack.isEmpty()||!(oreStack.getItem() instanceof BlockItem item)||!(item.getBlock() instanceof OreBlock ore))continue;
+   int multiplier=Math.max(1,Math.min(64,target.getOreMultiplier()*material.getOreProcessingMultiplier()));
+   ItemStack purified=GTItems.getStack(MaterialPrefix.crushedPurified,target,multiplier);
+   var byproducts=target.getByProducts();
+   ItemStack primary=sedimentTiny(byproducts,0,OM.dustOrIngot(target,U9));
+   ItemStack secondary=sedimentTiny(byproducts,1,primary);
+   ItemStack tertiary=sedimentTiny(byproducts,2,secondary);
+   ItemStack[] outputs={purified,purified.isEmpty()?ItemStack.EMPTY:purified.copy(),
+       scaled(primary,multiplier),scaled(secondary,multiplier),scaled(tertiary,multiplier)};
+   for(OreHostStone host:DUST_ORE_HOSTS){
+    ItemStack input=OreBlock.withStone(oreStack.copy(),ore.stateFor(host));
+    out.add(new Definition(OPTIMIZE,input,outputs,DUST_ORE_CHANCES,DUST_ORE_TICKS,POWER,false,stack->{
+     var data=SourceOreCrushingAdapter.hostData(stack);
+     return !data.broken()&&data.host().equals(host.id());
+    }));
+   }
+  }
+ }
+ /** The source's first three byproducts, falling back to earlier slots (own dust first). */
+ private static ItemStack sedimentTiny(List<GTMaterial> byproducts,int index,ItemStack fallback){
+  if(index<byproducts.size()){
+   GTMaterial material=byproducts.get(index);
+   if(material!=null&&material.isValid()){
+    ItemStack stack=OM.dustOrIngot(material.resolve(),U9);
+    if(!stack.isEmpty())return stack;
+   }
+  }
+  return fallback;
+ }
+ /** Source ST.amount(multiplier, stack): keeps the form, multiplies its count. */
+ private static ItemStack scaled(ItemStack stack,int multiplier){
+  if(stack==null||stack.isEmpty())return ItemStack.EMPTY;
+  ItemStack copy=stack.copy();copy.setCount(Math.max(1,Math.min(64,copy.getCount()*multiplier)));return copy;
  }
  private static Availability special(GTMaterial m,SpecialRow row,Snapshot s,List<Definition> out){
   if(!sourceIdentity(m,row.input())){s.note(m,"fixed/"+row.sourceLine(),"unverified-source-material");return Availability.UNKNOWN;}

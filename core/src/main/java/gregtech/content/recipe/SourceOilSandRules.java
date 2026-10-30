@@ -85,6 +85,7 @@ public final class SourceOilSandRules {
             case "sand" -> "oreSand";
             case "red_sand" -> "oreRedSand";
             case "gravel" -> "oreGravel";
+            case "mud" -> "oreMud";
             default -> null;
         };
         // OP 115/117/118: 2U, DUST_ORE, and no byproduct assignment in the source init closure.

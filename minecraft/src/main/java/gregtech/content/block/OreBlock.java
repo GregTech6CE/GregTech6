@@ -101,7 +101,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
             BlockPos pos, @Nullable net.minecraft.world.entity.Entity entity) {
         return switch (stoneOf(state)) {
             case SAND, RED_SAND -> net.minecraft.world.level.block.SoundType.SAND;
-            case GRAVEL -> net.minecraft.world.level.block.SoundType.GRAVEL;
+            case GRAVEL, MUD -> net.minecraft.world.level.block.SoundType.GRAVEL;
             default -> super.getSoundType(state, level, pos, entity);
         };
     }
@@ -303,10 +303,11 @@ public class OreBlock extends Block implements MaterialBlockLike {
 //?}
             var origin=builder.getOptionalParameter(LootContextParams.ORIGIN);
             BlockPos pos=origin==null?BlockPos.ZERO:BlockPos.containing(origin);
-            String host=stoneOf(state).id();
-            if(host.startsWith("stone_"))host=host.substring(6);
-            String name=switch(host){case "end_stone"->"Endstone";case "netherrack"->"Netherrack";default->host.substring(0,1).toUpperCase(java.util.Locale.ROOT)+host.substring(1);};
-            return SmallOreDrops.drops(material,pos,fortune,silk,GTMaterialRegistry.get(name));
+            // GT6 Drops_SmallOre's secondary drop is the host rock's dust, but its argument is not
+            // always the rock itself (gravel and sandstone drop stone/sand dust); mud has none.
+            String dust=stoneOf(state).smallOreDustMaterial();
+            return SmallOreDrops.drops(material,pos,fortune,silk,
+                    dust==null?null:GTMaterialRegistry.get(dust));
         }
         ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
         if (tool == null) tool = ItemStack.EMPTY;

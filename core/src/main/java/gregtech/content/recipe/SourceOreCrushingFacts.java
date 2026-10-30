@@ -98,10 +98,13 @@ public final class SourceOreCrushingFacts {
 
     public static Decision hostDecision(String nativeHostId) {
         if (hostProfile(nativeHostId) != null) return Decision.YES;
+        // GT6's crusher handler excludes every DUST_ORE prefix, so their hosts never get a
+        // crushing row of their own (the sifter and OilSand events handle them instead).
         if ("bedrock".equals(nativeHostId)
                 || "sand".equals(nativeHostId)
                 || "red_sand".equals(nativeHostId)
-                || "gravel".equals(nativeHostId)) return Decision.NO;
+                || "gravel".equals(nativeHostId)
+                || "mud".equals(nativeHostId)) return Decision.NO;
         return Decision.UNKNOWN;
     }
     /** False is lack of paired source evidence, not a new material/host prohibition.
@@ -138,6 +141,19 @@ public final class SourceOreCrushingFacts {
         // OP.oreSandstone declares no byproducts, so this host contributes no gangue slot.
         if (result.put("sandstone", new HostProfile("oreSandstone", null, 0, false)) != null)
             throw new IllegalStateException("Duplicate source host sandstone");
+        // Port-only hosts: these StoneTypes are GT6 worldgen *stone layers*, not ore-host blocks
+        // (GT6's WD.setOre does not place ores in them), so the reference dump has no rows for them.
+        // The port's block-state model does place ores in every StoneType, so each gets the same
+        // 4U self-gangue profile as the reviewed hosts; the prefix names are port-local, not GT6.
+        portHost(result, "chalk", 9112, "Chalk");
+        portHost(result, "dolomite", 9163, "Dolomite");
+        portHost(result, "gabbro", 9176, "Gabbro");
+        portHost(result, "gypsum", 9161, "Gypsum");
+        portHost(result, "oilshale", 9853, "OilShale");
+        portHost(result, "rhyolite", 9179, "Rhyolite");
+        portHost(result, "salt", 8204, "Salt");
+        portHost(result, "sylvite", 8203, "Sylvite");
+        portHost(result, "talc", 9169, "Talc");
         return Map.copyOf(result);
     }
 
@@ -152,5 +168,18 @@ public final class SourceOreCrushingFacts {
         for (String host : nativeHostIds) {
             if (result.put(host, profile) != null) throw new IllegalStateException("Duplicate source host " + host);
         }
+    }
+
+    /** One port-only stone-layer host, keyed by its {@code StoneType.registryId()}. */
+    private static void portHost(Map<String, HostProfile> result, String stone, int materialId, String name) {
+        String host = "stone_" + stone;
+        if (result.put(
+                        host,
+                        new HostProfile(
+                                "portOre" + Character.toUpperCase(stone.charAt(0)) + stone.substring(1),
+                                new Identity(materialId, name),
+                                4 * U,
+                                false))
+                != null) throw new IllegalStateException("Duplicate source host " + host);
     }
 }

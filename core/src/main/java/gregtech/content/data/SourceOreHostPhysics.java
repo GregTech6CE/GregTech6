@@ -220,6 +220,13 @@ public final class SourceOreHostPhysics {
                     case SMALL -> new Tuple(0.6F, 0.8F, -1, 0, "SHOVEL");
                     default -> null;
                 };
+            // Loader_Ores direct (oreMud/oreSmallMud); no distinct broken source block
+            case "mud" ->
+                switch (mode) {
+                    case NORMAL -> new Tuple(0.3F, 0.5F, 0, 0, "SHOVEL");
+                    case SMALL -> new Tuple(0.3F, 0.5F, -1, 0, "SHOVEL");
+                    default -> null;
+                };
             // Loader_Ores -w206–208 native blocks; original EtFu209–211 default rockset
             case "granite" ->
                 switch (mode) {

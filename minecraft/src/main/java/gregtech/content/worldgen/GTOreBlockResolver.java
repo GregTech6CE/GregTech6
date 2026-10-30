@@ -39,7 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>Hosts are the {@link OreHostStone} values: the vanilla rocks ({@code stone}, {@code granite},
  * {@code diorite}, {@code andesite}, {@code deepslate}, {@code tuff}, {@code netherrack},
  * {@code end_stone}), {@code bedrock}, the loose sediments ({@code sand}, {@code red_sand},
- * {@code gravel} — small ores only) and GT's own rocks via
+ * {@code gravel}, {@code mud} — GT6's DUST_ORE hosts) and GT's own rocks via
  * {@link gregtech.content.block.stone.StoneType#registryId()} ({@code stone_basalt}, ...).</p>
  */
 public final class GTOreBlockResolver {
@@ -73,8 +73,9 @@ public final class GTOreBlockResolver {
         return placement != null && level.setBlock(pos, placement.state(), 2);
 *///?} else {
         OreHostStone stone = stoneOf(host);
-        // Small ores additionally generate in loose sediments (GT6 sand/gravel small ores).
-        if (stone == null && small) stone = sedimentOf(host);
+        // GT6 WD.setOre/setSmallOre replace sand and gravel as well, so both normal and small
+        // ores can carry a sediment host.
+        if (stone == null) stone = sedimentOf(host);
         return placeOre(level, pos, stone, material, small);
 //?}
     }
@@ -101,8 +102,9 @@ public final class GTOreBlockResolver {
 
     public static OrePlacement resolve(BlockState host, GTMaterial material, boolean small) {
         OreHostStone stone = stoneOf(host);
-        // Small ores additionally generate in loose sediments (GT6 sand/gravel small ores).
-        if (stone == null && small) stone = sedimentOf(host);
+        // GT6 WD.setOre/setSmallOre replace sand and gravel as well, so both normal and small
+        // ores can carry a sediment host.
+        if (stone == null) stone = sedimentOf(host);
 //? if >=1.21.1 {
         /*OrePlacement placement = resolve(stone, material, small);
         if (placement == null) return null;
@@ -202,7 +204,7 @@ public final class GTOreBlockResolver {
         return null;
     }
 
-    /** Loose-sediment backgrounds — valid hosts for SMALL ores only. */
+    /** GT6's DUST_ORE backgrounds: both normal and small ores replace sand and gravel. */
     @Nullable
 
     public static OreHostStone sedimentOf(BlockState host) {

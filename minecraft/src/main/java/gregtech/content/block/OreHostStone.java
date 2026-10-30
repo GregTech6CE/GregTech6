@@ -20,50 +20,53 @@ import net.minecraft.util.StringRepresentable;
  */
 public enum OreHostStone implements StringRepresentable {
     // --- vanilla hosts (the ids OreBlockEntity used) ---
-    STONE("stone"),
-    GRANITE("granite"),
-    DIORITE("diorite"),
-    ANDESITE("andesite"),
-    DEEPSLATE("deepslate"),
-    TUFF("tuff"),
+    STONE("stone", "Stone"),
+    GRANITE("granite", "Granite"),
+    DIORITE("diorite", "Diorite"),
+    ANDESITE("andesite", "Andesite"),
+    DEEPSLATE("deepslate", "Deepslate"),
+    TUFF("tuff", "Tuff"),
     /** GT6 {@code ore.normal.sandstone}: sandstone-hosted ores carry no gangue output. */
-    SANDSTONE("sandstone"),
-    NETHERRACK("netherrack"),
-    END_STONE("end_stone"),
+    SANDSTONE("sandstone", "Sand"),
+    NETHERRACK("netherrack", "Netherrack"),
+    END_STONE("end_stone", "Endstone"),
     /** Bedrock-background ores are unbreakable and drop nothing (GT6 bedrock deposits). */
-    BEDROCK("bedrock"),
-    // --- loose sediments: valid hosts for SMALL ores only (GT6 sand/gravel small ores) ---
-    SAND("sand"),
-    RED_SAND("red_sand"),
-    GRAVEL("gravel"),
+    BEDROCK("bedrock", null),
+    // --- loose sediments: GT6's DUST_ORE hosts, carried by normal and small ores ---
+    SAND("sand", "Sand"),
+    RED_SAND("red_sand", "RedSand"),
+    /** GT6 {@code oreSmallGravel} drops plain stone dust, not a gravel material. */
+    GRAVEL("gravel", "Stone"),
+    /** GT6 {@code oreMud}/{@code oreSmallMud}: the mud ore has no secondary drop. */
+    MUD("mud", null),
     // --- GT6's own rocks (StoneType.registryId(), e.g. stone_basalt) ---
-    GRANITE_BLACK("stone_granite_black"),
-    GRANITE_RED("stone_granite_red"),
-    BASALT("stone_basalt"),
-    MARBLE("stone_marble"),
-    LIMESTONE("stone_limestone"),
-    GT_GRANITE("stone_granite"),
-    GT_DIORITE("stone_diorite"),
-    GT_ANDESITE("stone_andesite"),
-    KOMATIITE("stone_komatiite"),
-    GREENSCHIST("stone_greenschist"),
-    BLUESCHIST("stone_blueschist"),
-    KIMBERLITE("stone_kimberlite"),
-    QUARTZITE("stone_quartzite"),
-    PRISMARINE_LIGHT("stone_prismarine_light"),
-    PRISMARINE_DARK("stone_prismarine_dark"),
-    SLATE("stone_slate"),
-    SHALE("stone_shale"),
-    CHALK("stone_chalk"),
-    DOLOMITE("stone_dolomite"),
-    GABBRO("stone_gabbro"),
-    GNEISS("stone_gneiss"),
-    GYPSUM("stone_gypsum"),
-    OILSHALE("stone_oilshale"),
-    RHYOLITE("stone_rhyolite"),
-    SALT("stone_salt"),
-    SYLVITE("stone_sylvite"),
-    TALC("stone_talc");
+    GRANITE_BLACK("stone_granite_black", "GraniteBlack"),
+    GRANITE_RED("stone_granite_red", "GraniteRed"),
+    BASALT("stone_basalt", "Basalt"),
+    MARBLE("stone_marble", "Marble"),
+    LIMESTONE("stone_limestone", "Limestone"),
+    GT_GRANITE("stone_granite", "Granite"),
+    GT_DIORITE("stone_diorite", "Diorite"),
+    GT_ANDESITE("stone_andesite", "Andesite"),
+    KOMATIITE("stone_komatiite", "Komatiite"),
+    GREENSCHIST("stone_greenschist", "Greenschist"),
+    BLUESCHIST("stone_blueschist", "Blueschist"),
+    KIMBERLITE("stone_kimberlite", "Kimberlite"),
+    QUARTZITE("stone_quartzite", "Quartzite"),
+    PRISMARINE_LIGHT("stone_prismarine_light", "Prismarine"),
+    PRISMARINE_DARK("stone_prismarine_dark", "PrismarineDark"),
+    SLATE("stone_slate", "Slate"),
+    SHALE("stone_shale", "Shale"),
+    CHALK("stone_chalk", "Chalk"),
+    DOLOMITE("stone_dolomite", "Dolomite"),
+    GABBRO("stone_gabbro", "Gabbro"),
+    GNEISS("stone_gneiss", "Gneiss"),
+    GYPSUM("stone_gypsum", "Gypsum"),
+    OILSHALE("stone_oilshale", "OilShale"),
+    RHYOLITE("stone_rhyolite", "Rhyolite"),
+    SALT("stone_salt", "Salt"),
+    SYLVITE("stone_sylvite", "Sylvite"),
+    TALC("stone_talc", "Talc");
 
     /** {@code id -> value}, for parsing an id (an old block entity's tag, a block state property value). */
     private static final Map<String, OreHostStone> BY_ID = new LinkedHashMap<>();
@@ -75,9 +78,11 @@ public enum OreHostStone implements StringRepresentable {
     }
 
     private final String id;
+    private final String smallOreDust;
 
-    OreHostStone(String id) {
+    OreHostStone(String id, String smallOreDust) {
         this.id = id;
+        this.smallOreDust = smallOreDust;
     }
 
     /** The canonical host-stone id, identical to what {@code OreBlockEntity.TAG_STONE} used to hold. */
@@ -85,14 +90,23 @@ public enum OreHostStone implements StringRepresentable {
         return id;
     }
 
+    /**
+     * Registry name of the dust a small ore in this host drops as its secondary drop, or {@code null}
+     * when the host has none. GT6's {@code Drops_SmallOre} argument is not always the rock itself
+     * ({@code oreSmallGravel} uses stone, {@code oreSmallSandstone} uses sand, mud has none).
+     */
+    public String smallOreDustMaterial() {
+        return smallOreDust;
+    }
+
     /** Bedrock-backed ores (GT6 bedrock deposits): unbreakable, no drops. */
     public boolean isBedrock() {
         return this == BEDROCK;
     }
 
-    /** Loose sediments — a host for small ores only (GT6 sand/gravel small ores). */
+    /** Loose sediments — GT6's {@code DUST_ORE} hosts (sand, red sand, gravel, mud). */
     public boolean isSediment() {
-        return this == SAND || this == RED_SAND || this == GRAVEL;
+        return this == SAND || this == RED_SAND || this == GRAVEL || this == MUD;
     }
 
     @Override
