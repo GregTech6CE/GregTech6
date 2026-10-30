@@ -4,6 +4,7 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -140,7 +141,9 @@ public final class GTMainRecipes {
             new Row("Unboxinator", true, 16, 16, "tech:loot_pouch:1",
                     "tech:dynamite:1;tech:modeled_porcelain_cup:1;i:rockGt:MeteoricIron:1;"
                             + "i:dust:Zeolite:1",
-                    "", "", "GT6_Main:393"));
+                    "", "", "GT6_Main:393"),
+            new Row("Unboxinator", true, 16, 16, "g:loot_crate:1",
+                    "g:loot_crate:1|1 Vanilla Loot Table Stack;g:crate:1", "", "", "GT6_Main:386"));
 
     /** Rows GT6 has that the port cannot show (their content is not registered), with the reason. */
     private static final List<String> SKIPPED = new ArrayList<>();
@@ -225,7 +228,7 @@ public final class GTMainRecipes {
         if (specs == null || specs.isEmpty()) return new ItemStack[0];
         List<ItemStack> out = new ArrayList<>();
         for (String spec : specs.split(";")) {
-            ItemStack stack = GeneratedRecipeResolver.resolveSpec(stripLabel(spec));
+            ItemStack stack = resolve(stripLabel(spec));
             if (stack == null || stack.isEmpty()) return null;
             String label = labelOf(spec);
             if (label != null) {
@@ -239,6 +242,22 @@ public final class GTMainRecipes {
             out.add(stack);
         }
         return out.toArray(ItemStack[]::new);
+    }
+
+    /** Item specs plus {@code g:<path>:<count>} for the port's own blocks that are not GT technological items. */
+    private static ItemStack resolve(String spec) {
+        if (!spec.startsWith("g:")) return GeneratedRecipeResolver.resolveSpec(spec);
+        String[] parts = spec.split(":");
+        if (parts.length != 3) return null;
+//? if >=1.21.1 {
+        /*var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", parts[1]));
+*///?} else {
+        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", parts[1]));
+//?}
+        return item == null || item == net.minecraft.world.item.Items.AIR
+                ? null : new ItemStack(item, Integer.parseInt(parts[2]));
     }
 
     /** A spec may carry a display label after a {@code |} (the port's form of GT6's named stacks). */
@@ -255,10 +274,10 @@ public final class GTMainRecipes {
     /** The first spec of a row that does not resolve — the reason a row is skipped. */
     private static String firstMissing(Row row) {
         for (String spec : row.inputs().split(";")) {
-            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveSpec(stripLabel(spec)) == null) return "input " + spec;
+            if (!spec.isEmpty() && resolve(stripLabel(spec)) == null) return "input " + spec;
         }
         for (String spec : row.outputs().split(";")) {
-            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveSpec(stripLabel(spec)) == null) return "output " + spec;
+            if (!spec.isEmpty() && resolve(stripLabel(spec)) == null) return "output " + spec;
         }
         for (String spec : row.fluidIn().split(";")) {
             if (!spec.isEmpty() && GeneratedRecipeResolver.resolveFluidSpec(stripLabel(spec)) == null) return "fluid " + spec;

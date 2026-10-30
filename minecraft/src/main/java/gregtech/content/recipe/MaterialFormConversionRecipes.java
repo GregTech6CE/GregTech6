@@ -7,19 +7,25 @@ import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.block.LootCrateBlock;
+import gregtech.content.block.MaterialBlockLike;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
+import gregtech.content.material.Materials;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -34,11 +40,23 @@ import java.util.List;
  *       {@code dust 1 -> plateGem 1}, {@code blockPlate 1 -> plateDense 1}.</li>
  *   <li>{@code Loader_Recipes_Handlers:451-489} — {@code RM.Unboxinator} handlers,
  *       e.g. {@code blockIngot 1 -> ingot 9}, {@code ingot 1 -> nugget 9},
- *       {@code dust 1 -> dustTiny 9}, {@code dustSmall 1 -> dustDiv72 18}.</li>
+ *       {@code dust 1 -> dustTiny 9}, {@code dustSmall 1 -> dustDiv72 18},
+ *       {@code toolHeadPickaxeGem 1 -> gemFlawed 2 + empty head}, and the crate rows that
+ *       return the empty {@code IL.Crate}.</li>
  *   <li>{@code Loader_Recipes_Handlers:492-550} — {@code RM.Boxinator} handlers; the packing
  *       direction needs a circuit ({@code ST.tag(n)}, port: {@link GTTechnological#selectorTag(int)})
- *       so the machine knows which compression is meant, exactly like GT6.</li>
+ *       so the machine knows which compression is meant, exactly like GT6. Crate rows consume the
+ *       empty crate instead, and the block-to-crates rows fill nine crates in one 144-tick pass.</li>
  * </ul>
+ *
+ * <p>One source condition still has no port equivalent: {@code EXPLODES_IN_NONVANILLA_CRAFTING_GRID}
+ * (on the block, nugget and crushed rows) is not linked to any material property, so the port applies
+ * those rows to every non-antimatter material. No built-in material carries that property, so the
+ * registered set matches; an addon that does would gain rows the original excludes.</p>
+ *
+ * <p>{@code IL.Crate_Fireproof} is the fireproof treated plank in GT6 ({@code Loader_Woods}); the port
+ * registers neither that plank nor a fireproof crate item, so the fireproof boxinator rows are
+ * recorded in {@link #skipped()} instead of consuming the ordinary crate.</p>
  * <p>
  * Duration/EU rules are GT6's: every handler runs at 16 EU/t. {@code RecipeMapHandlerPrefix} uses a
  * fixed duration when the handler passes one (the packing/unpacking handlers all pass 16 ticks) and
@@ -49,9 +67,9 @@ import java.util.List;
  * are imported by {@code tools/extract_gt6_workability.py} into {@link MaterialWorkability}.
  * <p>
  * Pairs GT6 has but the port cannot express yet are recorded in {@link #skipped()} instead of being
- * guessed: the port has no {@code compressed}, {@code plateSteamcraft} or {@code casingSmall}
- * prefix. The separately registered {@code plateTiny} and {@code rawOreChunk} prefixes do exist;
- * their presence alone does not complete every original conversion involving them.
+ * guessed: the port has no {@code compressed} or {@code plateSteamcraft} prefix and no fireproof
+ * crate item. GT6's {@code casingSmall} is the port's {@link MaterialPrefix#itemCasing}, so the
+ * {@code plateTiny}/{@code plateGemTiny} boxinator rows are registered under that identity.
  */
 public final class MaterialFormConversionRecipes {
     /** One registered conversion: the GT6 handler family, its GT6 prefix pair, and the recipe. */
@@ -73,17 +91,19 @@ public final class MaterialFormConversionRecipes {
         skippedOnce("compressor", "ingot 1 -> compressed 1", "MaterialPrefix.compressed is missing");
         skippedOnce("compressor", "billet 1 -> plateSteamcraft 1", "MaterialPrefix.plateSteamcraft is missing");
         skippedOnce("compressor", "compressed 9 -> plateDense 1", "MaterialPrefix.compressed is missing");
-        skippedOnce("boxinator", "plateTiny 9 -> casingSmall 2", "MaterialPrefix.casingSmall is missing");
-        skippedOnce("boxinator", "plateGemTiny 9 -> casingSmall 2", "MaterialPrefix.casingSmall is missing");
+        skippedOnce("boxinator", "fireproof partial/full/block crate rows",
+                "no fireproof crate item (IL.Crate_Fireproof is the fireproof treated plank)");
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.has(MaterialProperty.ANTIMATTER)) continue; // GT6: ANTIMATTER.NOT on all of these handlers
             boolean easy = MaterialWorkability.isEasyWorkable(material);
             int quality = material.getToolQuality();
             compressor(material, easy, quality);
+            gemPickaxeHead(material);
             unboxinator(material);
             boxinator(material);
         }
+        crates();
 //? if >=1.21.1 {
         /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 material form conversions ({} GT6 pairs skipped: {})",
 *///?} else {
@@ -109,6 +129,15 @@ public final class MaterialFormConversionRecipes {
         compressing(material, denseTicks, MaterialPrefix.plateTriple, 3, MaterialPrefix.plateDense, 1);
         compressingBlock(material, denseTicks, BlockMaterialPrefix.blockPlate, 1, MaterialPrefix.plateDense, 1);
         compressingBlock(material, denseTicks, BlockMaterialPrefix.blockSolid, 1, MaterialPrefix.plateDense, 1);
+    }
+
+    /** GT6 {@code Loader_Recipes_Handlers:451}: the gem pickaxe head is a cast that returns two flawed gems. */
+    private static void gemPickaxeHead(GTMaterial material) {
+        ItemStack input = GTItems.getStack(MaterialPrefix.toolHeadPickaxeGem, material, 1);
+        ItemStack gems = GTItems.getStack(MaterialPrefix.gemFlawed, material, 2);
+        ItemStack empty = GTItems.getStack(MaterialPrefix.toolHeadPickaxeGem, Materials.Empty, 1);
+        if (input.isEmpty() || gems.isEmpty() || empty.isEmpty()) return;
+        unboxItems("toolHeadPickaxeGem 1 -> gemFlawed 2 + empty head", input, gems, empty);
     }
 
     /** GT6 {@code Loader_Recipes_Handlers:451-489}: 1 block / big form -> 9 (or 6/18/8) smaller forms. */
@@ -158,17 +187,118 @@ public final class MaterialFormConversionRecipes {
         pack("ingot 2 -> billet 3", MaterialPrefix.ingot, 2, 6, MaterialPrefix.billet, 3, material);
         pack("chunkGt 4 -> ingot 1", MaterialPrefix.chunkGt, 4, 4, MaterialPrefix.ingot, 1, material);
         pack("billet 3 -> ingot 2", MaterialPrefix.billet, 3, 3, MaterialPrefix.ingot, 2, material);
-        pack("billet 6 -> ingot 4", MaterialPrefix.billet, 6, 6, MaterialPrefix.ingot, 4, material);
-        pack("billet 9 -> ingot 6", MaterialPrefix.billet, 9, 9, MaterialPrefix.ingot, 6, material);
-        pack("chunkGt 8 -> billet 3", MaterialPrefix.chunkGt, 8, 8, MaterialPrefix.billet, 3, material);
         pack("crushedTiny 9 -> crushed 1", MaterialPrefix.crushedTiny, 9, 9, MaterialPrefix.crushed, 1, material);
         pack("crushedPurifiedTiny 9 -> crushedPurified 1", MaterialPrefix.crushedPurifiedTiny, 9, 9,
                 MaterialPrefix.crushedPurified, 1, material);
         pack("crushedCentrifugedTiny 9 -> crushedCentrifuged 1", MaterialPrefix.crushedCentrifugedTiny, 9, 9,
                 MaterialPrefix.crushedCentrifuged, 1, material);
+        // GT6 casingSmall is the port's itemCasing (PrefixRegistry alias).
+        pack("plateTiny 9 -> casingSmall 2", MaterialPrefix.plateTiny, 9, 9, MaterialPrefix.itemCasing, 2, material);
+        pack("plateGemTiny 9 -> casingSmall 2", MaterialPrefix.plateGemTiny, 9, 9,
+                MaterialPrefix.itemCasing, 2, material);
+    }
+
+    /**
+     * GT6's crate rows ({@code Loader_Recipes_Handlers:461-473}, {@code :495-509}). A crate always
+     * returns the empty {@code IL.Crate}; the sixteen-piece crates pack from the quarter-sized forms,
+     * and a block of 64 pieces fills nine full crates in one 144-tick pass.
+     */
+    private static void crates() {
+        ItemStack empty = LootCrateBlock.crateStack();
+        if (empty.isEmpty()) {
+            skippedOnce("boxinator", "all crate rows", "gt6ce:crate is not registered");
+            return;
+        }
+        // Fixed form order, so a material whose gem and dust blocks canonicalize to the same stack
+        // (Redstone: both are minecraft:redstone_block) keeps the dust row, matching the existing
+        // blockGem/blockDust unbox order instead of letting registry order decide.
+        List<Block> crateBlocks = new ArrayList<>();
+        for (Block block : BuiltInRegistries.BLOCK)
+            if (block instanceof MaterialBlockLike crate && crate.prefix().isCrate()) crateBlocks.add(block);
+        crateBlocks.sort(Comparator.comparingInt(MaterialFormConversionRecipes::crateFormOrder)
+                .thenComparing(block -> BuiltInRegistries.BLOCK.getKey(block).toString()));
+        for (Block block : crateBlocks) {
+            MaterialBlockLike crate = (MaterialBlockLike) block;
+            BlockMaterialPrefix prefix = crate.prefix();
+            GTMaterial material = crate.material();
+            if (material == null || material.has(MaterialProperty.ANTIMATTER)) continue;
+            boolean full = prefix.getName().startsWith("crateGt64");
+            String form = prefix.getName().substring(full ? "crateGt64".length() : "crateGt".length());
+            MaterialPrefix content = switch (form) {
+                case "Raw" -> MaterialPrefix.oreRaw;
+                case "Dust" -> MaterialPrefix.dust;
+                case "Gem" -> MaterialPrefix.gem;
+                case "Ingot" -> MaterialPrefix.ingot;
+                case "Plate" -> MaterialPrefix.plate;
+                case "PlateGem" -> MaterialPrefix.plateGem;
+                default -> null;
+            };
+            BlockMaterialPrefix packed = switch (form) {
+                case "Raw" -> BlockMaterialPrefix.blockRaw;
+                case "Dust" -> BlockMaterialPrefix.blockDust;
+                case "Gem" -> BlockMaterialPrefix.blockGem;
+                case "Ingot" -> BlockMaterialPrefix.blockIngot;
+                case "Plate" -> BlockMaterialPrefix.blockPlate;
+                case "PlateGem" -> BlockMaterialPrefix.blockPlateGem;
+                default -> null;
+            };
+            int amount = full ? 64 : 16;
+            ItemStack contents = content == null ? ItemStack.EMPTY : GTItems.getStack(content, material, amount);
+            if (contents.isEmpty()) continue;
+            ItemStack crateStack = new ItemStack(block);
+            unboxItems(prefix.getName() + " 1 -> " + content.getName() + " " + amount + " + crate",
+                    crateStack, contents, item(empty, 1));
+            if (full) {
+                boxItems(content.getName() + " 64 + crate -> " + prefix.getName(), 16,
+                        new ItemStack[]{GTItems.getStack(content, material, 64), item(empty, 1)},
+                        crateStack);
+                ItemStack blockStack = packed == null ? ItemStack.EMPTY : GTBlocks.getStack(packed, material);
+                if (!blockStack.isEmpty())
+                    boxItems(packed.getName() + " 64 + 9 crates -> " + prefix.getName() + " 9", 144,
+                            new ItemStack[]{item(blockStack, 64), item(empty, 9)}, item(crateStack, 9));
+            } else if ("Dust".equals(form)) {
+                packCrate(material, content, MaterialPrefix.dustSmall, 64, crateStack, empty);
+            } else if ("Ingot".equals(form)) {
+                packCrate(material, content, MaterialPrefix.chunkGt, 64, crateStack, empty);
+                packCrate(material, content, MaterialPrefix.billet, 24, crateStack, empty);
+            }
+        }
+    }
+
+    private static int crateFormOrder(Block block) {
+        String name = ((MaterialBlockLike) block).prefix().getName();
+        String form = name.substring(name.startsWith("crateGt64") ? "crateGt64".length() : "crateGt".length());
+        return switch (form) {
+            case "Raw" -> 0;
+            case "Dust" -> 1;
+            case "Gem" -> 2;
+            case "Ingot" -> 3;
+            case "Plate" -> 4;
+            case "PlateGem" -> 5;
+            default -> 6;
+        };
+    }
+
+    /** Quarter-sized input that fills a sixteen-piece crate. */
+    private static void packCrate(GTMaterial material, MaterialPrefix content, MaterialPrefix from,
+                                  int fromCount, ItemStack crate, ItemStack empty) {
+        ItemStack input = GTItems.getStack(from, material, fromCount);
+        if (input.isEmpty()) return;
+        boxItems(from.getName() + " " + fromCount + " + crate -> " + content.getName() + " crate", 16,
+                new ItemStack[]{input, item(empty, 1)}, crate);
     }
 
     // ── helpers ──────────────────────────────────────────────────────────────
+
+    /** Unboxinator route with extra output stacks (the empty crate or the empty tool head). */
+    private static void unboxItems(String route, ItemStack input, ItemStack... outputs) {
+        recipe("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, new ItemStack[]{input}, outputs);
+    }
+
+    /** Boxinator route whose second input consumes the empty crate instead of a selector circuit. */
+    private static void boxItems(String route, long ticks, ItemStack[] inputs, ItemStack output) {
+        recipe("boxinator", route, MachineRecipeMaps.Boxinator, ticks, inputs, new ItemStack[]{output});
+    }
 
     /** Compressor route with a block input ({@code blockPlate 1 -> plateDense 1}). */
     private static void compressingBlock(GTMaterial material, long ticks, BlockMaterialPrefix from, int fromCount,
@@ -240,6 +370,13 @@ public final class MaterialFormConversionRecipes {
                 : map.addRecipe2(false, 16, ticks, input, new ItemStack(GTTechnological.selectorTag(circuit)), output);
         // A null result means an already registered recipe claims the same inputs: GT6 keeps the first
         // one too, and the port's hand-written recipes are registered before this table on purpose.
+        if (recipe == null) return;
+        ENTRIES.add(new Entry(kind, route, map, recipe));
+    }
+
+    private static void recipe(String kind, String route, RecipeMap map, long ticks, ItemStack[] inputs,
+                               ItemStack... outputs) {
+        Recipe recipe = map.addRecipeX(false, 16, ticks, inputs, outputs);
         if (recipe == null) return;
         ENTRIES.add(new Entry(kind, route, map, recipe));
     }

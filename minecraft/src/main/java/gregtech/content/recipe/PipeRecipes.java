@@ -118,9 +118,12 @@ public final class PipeRecipes {
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (!material.isValid()) continue;
-            if (material.has(MaterialProperty.ANTIMATTER) || material.has(MaterialProperty.FLAMMABLE)) continue;
-            if (!material.has(MaterialProperty.SMITHABLE)) continue;      // GT6 SMITHABLE
-            for (PipeWeldingRules.Row row : ROWS) weld(material, row, fluid, item);
+            if (material.has(MaterialProperty.ANTIMATTER)) continue;
+            if (material.has(MaterialProperty.SMITHABLE) && !material.has(MaterialProperty.FLAMMABLE)) {
+                for (PipeWeldingRules.Row row : ROWS) weld(material, row, fluid, item);
+            }
+            // GT6's boxinator/unboxinator pipe rows apply to every registered pipe, not just the
+            // smithable (weldable) ones: carbon, plastic, rubber and treated wood pack too.
             bundle(material, fluid);
         }
 //? if >=1.21.1 {
@@ -158,6 +161,10 @@ public final class PipeRecipes {
         if (small != null && nonuple != null) {
             ItemStack nine = small.copy();
             nine.setCount(9);
+            ItemStack tag = new ItemStack(GTTechnological.selectorTag(9));
+            Recipe pack = MachineRecipeMaps.Boxinator.addRecipe2(true, 16, 16, nine.copy(), tag, nonuple.copy());
+            if (pack != null) ENTRIES.add(new Entry(material.getName(), PipeSpec.PipeSize.NONUPLE,
+                    nonuple.getItem().toString(), false, pack));
             Recipe unpack = MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, nonuple.copy(), nine.copy());
             if (unpack != null) ENTRIES.add(new Entry(material.getName(), PipeSpec.PipeSize.SMALL,
                     small.getItem().toString(), false, unpack));

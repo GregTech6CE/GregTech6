@@ -6,7 +6,6 @@ import gregtech.content.block.misc.ConcreteBlock;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import gregtech.engine.recipe.*;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 
 /** Missing source survival manufacturing routes; common tables, native stack boundary. */
@@ -114,47 +113,5 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
                 items(item("gt6ce:hardening_spray", 1)),
                 null,
                 null);
-        // Full material crates pack 64 pieces; partial crates are normally loot and unpack 16.
-        for (var block : BuiltInRegistries.BLOCK)
-            if (block instanceof gregtech.content.block.MaterialBlockLike materialBlock
-                    && materialBlock.prefix().isCrate()) {
-                String prefix = materialBlock.prefix().getName();
-                boolean full = prefix.startsWith("crateGt64");
-                String form = prefix.replace("crateGt64", "").replace("crateGt", "");
-                var itemPrefix = switch (form) {
-                    case "Raw" -> MaterialPrefix.oreRaw;
-                    case "Dust" -> MaterialPrefix.dust;
-                    case "Gem" -> MaterialPrefix.gem;
-                    case "Ingot" -> MaterialPrefix.ingot;
-                    case "Plate" -> MaterialPrefix.plate;
-                    case "PlateGem" -> MaterialPrefix.plateGem;
-                    default -> throw new IllegalStateException(prefix);
-                };
-                var material = materialBlock.material();
-                if (material.has(gregtech.api.material.MaterialProperty.ANTIMATTER)) continue;
-                var contents = GTItems.getStack(itemPrefix, material, full ? 64 : 16);
-                if (contents.isEmpty())
-                    continue; // Prefix registration may precede an unavailable external material form.
-                String path = BuiltInRegistries.BLOCK.getKey(block).getPath();
-                add(
-                        "unpack/" + path,
-                        MachineRecipeMaps.Unboxinator,
-                        16,
-                        16,
-                        items(new ItemStack(block)),
-                        items(contents, item("gt6ce:crate", 1)),
-                        null,
-                        null);
-                if (full)
-                    add(
-                            "pack/" + path,
-                            MachineRecipeMaps.Boxinator,
-                            16,
-                            16,
-                            items(contents, item("gt6ce:crate", 1)),
-                            items(new ItemStack(block)),
-                            null,
-                            null);
-            }
     }
 }
