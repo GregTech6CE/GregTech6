@@ -161,7 +161,7 @@ public final class MaterialModTags {
         ImportedMaterialData.ElvenQuartz.mod(ModReferences.BOTA);
         ImportedMaterialData.Elvorium.mod(ModReferences.ALF);
         ImportedMaterialData.Emerald.mod(ModReferences.MC);
-        ImportedMaterialData.Empty.mod(ModReferences.MC);
+        // Empty is the frozen sentinel from MaterialSentinels and takes no provenance.
         ImportedMaterialData.EndSandBlack.mod(ModReferences.EnLi);
         ImportedMaterialData.EndSandWhite.mod(ModReferences.EnLi);
         ImportedMaterialData.EndSteel.mod(ModReferences.EIO);

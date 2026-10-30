@@ -2,6 +2,7 @@ package gregtech.content.data;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.data.generated.MaterialForms;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -1787,7 +1788,12 @@ public class FluidCatalog {
         return material.getName().equals(name);
     }
 
-    /** GT6 Loader_Fluids: auto-register {@code molten.{material}} using existing or reviewed phase evidence. */
+    /**
+     * GT6 Loader_Fluids registers a molten fluid for every material carrying
+     * {@code TD.ItemGenerator.MOLTEN}; the port's metal/alloy properties are a wider approximation, so
+     * the source flag is added as positive evidence for materials those properties miss (Carbon,
+     * Sulfur, the chloride/carbonate salts, the glowstones, hematite, …).
+     */
     public static void registerGeneratedMoltenFluids(Collection<GTMaterial> materials) {
         for (GTMaterial raw : materials) {
             GTMaterial material = raw.resolve();
@@ -1797,6 +1803,7 @@ public class FluidCatalog {
             if (!material.has(MaterialProperty.MOLTEN)
                     && !material.has(MaterialProperty.METAL)
                     && !material.has(MaterialProperty.ALLOY)
+                    && !MaterialForms.has(material, "MOLTEN")
                     && !hasReviewedSourceMoltenPhase(material)) {
                 continue;
             }
@@ -1849,8 +1856,11 @@ public class FluidCatalog {
             if (!material.isValid() || material.getId() <= 0 || material.has(MaterialProperty.HIDDEN)) {
                 continue;
             }
-            boolean gas = material.has(MaterialProperty.GAS);
-            boolean liquid = material.has(MaterialProperty.LIQUID);
+            // GT6's Loader_Fluids loop registers gas/liquid fluids from the same TD.ItemGenerator
+            // flags (GASES/LIQUID); the port's phase properties are the approximation, the flag is
+            // positive evidence only.
+            boolean gas = material.has(MaterialProperty.GAS) || MaterialForms.has(material, "GASES");
+            boolean liquid = material.has(MaterialProperty.LIQUID) || MaterialForms.has(material, "LIQUID");
             if (!gas && !liquid) continue;
             String lower = material.getName().toLowerCase(Locale.ROOT);
             String dedicated = fieldOfRegistryName(lower);

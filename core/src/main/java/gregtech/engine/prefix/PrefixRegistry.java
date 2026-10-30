@@ -14,9 +14,11 @@ public final class PrefixRegistry {
      * <p>Only spellings of the identical form belong here — the port renamed a few prefixes when it
      * split GT6's single item class into several items, and recipes carried over from the original
      * name them by their GT6 name ({@code OP.casingSmall} is the port's {@code itemCasing}, registered
-     * with the original's {@code casingsmall} texture).</p>
+     * with the original's {@code casingsmall} texture; {@code OP.chemtube} is the port's
+     * {@code glasstube}, whose language keys still use the original spelling).</p>
      */
-    private static final java.util.Map<String, String> ALIASES = java.util.Map.of("casingSmall", "itemCasing");
+    private static final java.util.Map<String, String> ALIASES =
+            java.util.Map.of("casingSmall", "itemCasing", "chemtube", "glasstube");
 
     private PrefixRegistry() {}
 

@@ -20,7 +20,6 @@ public class ModReferences {
             GAPI = new ModData("gregapi", "Greg-API"),
             GAPI_POST = new ModData("gregapi_post", "Greg-API-Post"),
             GT5U = new ModData("gregtech", "GregTech 5 Unofficial"),
-            GT6U = new ModData("gregtech", "GregTech 6 Reborn"),
             QT = new ModData("qwertech", "QwerTech"),
             IC2 = new ModData("IC2", "IndustrialCraft 2"),
             IC2C = new ModData("IC2-Classic-Spmod", "IndustrialCraft 2 Classic"),
