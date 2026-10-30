@@ -39,7 +39,7 @@ import java.util.Locale;
 
 /**
  * Development-only dump of every registered {@link RecipeMap}, written in the same shape as the
- * original GT6 recipe dump so {@code tools/compare_gt6_recipes.py} can diff this port against it.
+ * original GT6 recipe dump so a local comparator can diff this port against it.
  *
  * <p>Disabled unless {@code -Dgt6ce.recipeDump=<dir>} or the {@code GT6CE_RECIPE_DUMP=<dir>}
  * environment variable names an output directory; the environment form is what a Gradle run task
@@ -223,8 +223,8 @@ public final class RecipeDump {
     /**
      * GT6 form identity of a material block: the OP prefix name and material id, which is the same
      * {@code gt.meta.<prefix>#<id>} identity the material items use. GT6 keeps some of these forms in
-     * material meta items and others in multi-tile metas; {@code tools/compare_gt6_recipes.py} maps
-     * the original side onto the same prefix names (see {@code tools/gt6_multiblock_identities.json}).
+     * material meta items and others in multi-tile metas; the local comparator maps the original
+     * side onto the same prefix names through its generated multi-tile identity table.
      */
     private static String[] blockForm(Block block) {
         if (block instanceof MaterialBlockLike material) {

@@ -6,7 +6,7 @@ replaced by whitespace (newlines kept). Differences mean code, literals or
 Stonecutter markers changed.
 
 Usage:
-  python tools/verify_comments_only.py [--base REV] [paths...]
+  python tools/comments/verify_comments_only.py [--base REV] [paths...]
 """
 import argparse
 import os
@@ -58,7 +58,7 @@ def main():
     ap.add_argument("paths", nargs="*")
     args = ap.parse_args()
 
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     if args.paths:
         paths = args.paths
     else:

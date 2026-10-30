@@ -19,7 +19,7 @@
 - **维护的生成输入**：`core/src/main/java/gregtech/content/{data,material,recipe}/generated/` 等内容表参与生产编译，需要纳入版本控制；文件头可能引用历史转换工具。
 - **可再生构建输出**：各节点 `build/generated/stonecutter/`、编译类、资源副本、JAR 与构建报告由 Gradle 生成，Git 忽略，不能手工维护。
 
-例如 `MaterialRegistryExtras` 引用了历史 `tools/generate_material_metadata.py`，部分配方表引用 `tools/transpile_gt6_chem.py`。当前工作树未包含这些工具，不能把这些命令写成可直接运行的流程。需要改表时先确认上游来源与转换方式；恢复可维护生成器后放 `tools/`，注明输入版本、许可证、命令与输出范围。生成器尚缺失时，确需修表应说明依据、局部变更及无法重新生成的限制。
+例如 `MaterialRegistryExtras` 引用了历史 `tools/generate_material_metadata.py`，部分配方表引用 `tools/transpile_gt6_chem.py`。当前工作树未包含这些工具，不能把这些命令写成可直接运行的流程。需要改表时先确认上游来源与转换方式；一次性导入/再生成脚本放本机被忽略的 `work/local-tools/`，不随仓库提交。生成器不在仓库时，确需修表应说明依据、局部变更及无法重新生成的限制。
 
 ## 数据生成与打包
 

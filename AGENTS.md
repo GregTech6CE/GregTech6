@@ -38,7 +38,7 @@
 - 本仓库代码引用用 `{@link Foo}`、`{@link #member}`（JavaDoc）或类名、方法名（`//`），不写行号。
 - 上游 GT6 引用不带裸 `:123`：写 `{@code Foo.java:123-145}`、`{@code ClassName:123}`（GT6 一类一文件）或 `{@code Foo.bar(...)}`。所有行号相对固定提交 `3703e40308c8c030763fd6297dea8b210d2a77b1`（2026-06-15）；换版本只改这一处，并单独核对受影响的引用。
 - 纯数据表（一行一条的配方/物品行）可保留逐行上游行号；“只写出处”的单行注释应改写成含义或删除。
-- 检查：`python tools/check_comment_refs.py`；`python tools/verify_comments_only.py` 可证明一次改动只碰了注释。
+- 检查：`python tools/comments/check_comment_refs.py`；`python tools/comments/verify_comments_only.py` 可证明一次改动只碰了注释。
 
 ## 文件必须放对地方
 
@@ -46,8 +46,8 @@
 | --- | --- |
 | 生产 Java 与实际打包资源 | 对应模块的 `src/main/java`、`src/main/resources` |
 | 可重复运行的自动测试 | 对应模块实际接入构建的 `src/test/`；先确认测试框架与任务 |
-| 一次性脚本、下载、反编译、原始日志、截图、探针结果、个人计划 | `work/<任务名>/`，已忽略；系统临时数据也可放 `/tmp/` |
-| 可复用且值得维护的开发脚本 | `tools/`，注明输入、依赖、输出与运行方式 |
+| 一次性脚本、上游导入/再生成脚本、下载、反编译、原始日志、截图、探针结果、个人计划 | `work/<任务名>/`，已忽略；系统临时数据也可放 `/tmp/` |
+| 可复用且随代码演进的开发/检查脚本 | `tools/<scope>/`，脚本、自带数据与该目录 `README.md` 同放，README 注明输入、依赖、输出与运行方式 |
 | 长期开发指南 | `docs/development/` |
 | 架构与包职责 | `docs/architecture/` |
 | 跨模组/跨平台对照、来源、验证结论 | `docs/integration/` |

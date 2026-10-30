@@ -266,7 +266,7 @@ public final class MaterialPrefix {
     // ---- GT6's own form conditions (OP.java) ------------------------------------------------
     //
     // GT6 decides which forms a material has from the item-generator flags it hands the material
-    // (`TD.ItemGenerator`, imported by tools/extract_gt6_form_flags.py into MaterialForms); each
+    // (`TD.ItemGenerator`, imported from GT6 into MaterialForms); each
     // prefix carries that condition (`OP.java`, e.g. `plate = And(Or(ingot, gem.NOT), PLATES)`).
     // The port's properties approximate those flags, which is why forms the original registers were
     // missing (the quartz family's gems/plates/sticks, Asbestos' plates, Paper's multi-plates, …).

@@ -8,7 +8,7 @@ Findings:
   history         comments about batches/changes instead of the current code
 
 Usage:
-  python tools/check_comment_refs.py [--upstream PATH] [--json] [--strict]
+  python tools/comments/check_comment_refs.py [--upstream PATH] [--json] [--strict]
 
 --upstream  a checkout of the GT6 tree at the commit pinned in AGENTS.md;
             enabled line numbers are checked against that file's length.
@@ -132,7 +132,7 @@ def main():
     for stream in (sys.stdout, sys.stderr):
         stream.reconfigure(encoding="utf-8", errors="replace")
 
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     repo_classes, repo_packages, paths = load_repo(root)
     upstream = load_upstream(args.upstream) if args.upstream else {}
 
