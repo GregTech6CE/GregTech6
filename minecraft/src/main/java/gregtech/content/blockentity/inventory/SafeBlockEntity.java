@@ -99,17 +99,19 @@ public class SafeBlockEntity extends BlockEntity {
         setChanged();
     }
     public gregtech.client.gui.HopperContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory playerInventory) {
-        // Keep contents from older 27-slot test saves; refill the 15-slot inventory as room becomes available.
-        for (int i = overflow.size() - 1; i >= 0; i--) {
-            var rest = inventory.addItem(overflow.get(i));
-            if (rest.isEmpty()) overflow.remove(i); else overflow.set(i, rest);
+        if (!playerInventory.player.isSpectator()) {
+            // Keep contents from older 27-slot test saves; refill the 15-slot inventory as room becomes available.
+            for (int i = overflow.size() - 1; i >= 0; i--) {
+                var rest = inventory.addItem(overflow.get(i));
+                if (rest.isEmpty()) overflow.remove(i); else overflow.set(i, rest);
+            }
+            setChanged();
+            generateDungeonLoot();
         }
-        setChanged();
-        generateDungeonLoot();
         return new gregtech.client.gui.StorageContainerMenu(id, playerInventory, inventory) {
             @Override public boolean stillValid(Player player) {
                 return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == SafeBlockEntity.this
-                        && canOpen(player) && player.distanceToSqr(worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;
+                        && (player.isSpectator() || canOpen(player)) && player.distanceToSqr(worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;
             }
         };
     }

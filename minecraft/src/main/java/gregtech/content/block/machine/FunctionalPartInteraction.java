@@ -47,7 +47,7 @@ public final class FunctionalPartInteraction {
         return used || runtime.opensMenu() ? InteractionResult.sidedSuccess(false) : InteractionResult.PASS;
     }
 
-    private static void openMenu(ServerPlayer server, FunctionalPartRuntime.Host host) {
+    public static void openMenu(ServerPlayer server, FunctionalPartRuntime.Host host) {
         Component title = host.blockState().getBlock().getName();
         var provider = new SimpleMenuProvider((id, inventory, player) -> new PartMenu(id, inventory, host), title);
 //? if >=1.21.1 {

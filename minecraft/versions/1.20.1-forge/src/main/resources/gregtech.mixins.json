@@ -9,6 +9,7 @@
     "PolymorphToolResultMixin",
     "DungeonRedstoneInitializationMixin",
     "OreHostHardnessMixin",
+    "SpectatorMenuMixin",
     "OreHostToolSpeedMixin",
     "VanillaToolDurabilityMixin",
     "VanillaToolDurabilityBarMixin",

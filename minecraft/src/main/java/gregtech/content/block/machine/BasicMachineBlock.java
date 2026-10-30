@@ -596,6 +596,20 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
 
 
+                openMenu(sp, basicBe);
+
+                return InteractionResult.sidedSuccess(level.isClientSide);
+
+            }
+
+        }
+
+        return InteractionResult.sidedSuccess(level.isClientSide);
+
+    }
+
+    /** Shared menu payload for normal interaction and spectator previews. */
+    public void openMenu(ServerPlayer sp, BasicMachineBlockEntity basicBe) {
 //? if >=1.21.1 {
 /*                sp.openMenu(basicBe, buf -> {
 *///?} else {
@@ -634,14 +648,6 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
                     }
 
                 });
-
-                return InteractionResult.sidedSuccess(level.isClientSide);
-
-            }
-
-        }
-
-        return InteractionResult.sidedSuccess(level.isClientSide);
 
     }
 

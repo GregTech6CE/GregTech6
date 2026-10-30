@@ -224,7 +224,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
-        generateLootIfNeeded();
+        if (!player.isSpectator()) generateLootIfNeeded();
         return new ChestMenu(containerId, playerInv, this);
     }
 

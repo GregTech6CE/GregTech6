@@ -41,6 +41,7 @@ public final class ComponentCoverEvents {
     /** A consumed cover action cancels the native block/item callback below this event. */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void use(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getEntity().isSpectator()) return;
         if (!(event.getLevel().getBlockEntity(event.getPos()) instanceof PanelCoverHost host)) return;
         var held = event.getEntity().getItemInHand(event.getHand());
         boolean crowbar = gregtech.engine.tool.GTToolHelper.matchesTool(held,
