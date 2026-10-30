@@ -580,14 +580,14 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
                                            InteractionHand hand, BlockEntity be) {
 
-        // Right-click with empty hand or non-tool opens GUI
+        // Tool-specific actions already ran; an unhandled tool may open the GUI.
 
 
 
 //? if >=1.21.1 {
-/*        if (!level.isClientSide && !NeoToolBindings.isTool(player.getItemInHand(hand))) {
+/*        if (!level.isClientSide) {
 *///?} else {
-        if (!level.isClientSide && !GTToolHelper.isTool(player.getItemInHand(hand))) {
+        if (!level.isClientSide) {
 //?}
 
 
