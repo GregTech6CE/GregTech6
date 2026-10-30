@@ -18,6 +18,7 @@
     "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "CraftingFormPositionMixin",
+    "FormConversionRecipeCacheMixin",
     "AbstractMinecartSpeedCapMixin",
     "BlockEntityPaintMixin",
     "WolfCollarAccessor",

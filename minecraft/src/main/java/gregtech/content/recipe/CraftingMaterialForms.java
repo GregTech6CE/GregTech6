@@ -174,8 +174,14 @@ public final class CraftingMaterialForms {
         var expected = form(input);
         if (expected == null) return Ingredient.of(input);
         var choices = new JsonArray();
+        var seen = new HashSet<ResourceLocation>();
         for (var item : aliases.getOrDefault(expected, List.of(input.getItem()))) {
-            var value = new JsonObject(); value.addProperty("item", BuiltInRegistries.ITEM.getKey(item).toString()); choices.add(value);
+            // Runtime rebinding bypasses the JSON recipe rewrite. Do not reintroduce the
+            // hidden GT copies through explicit alternatives after tags were unified.
+            var canonical = MaterialUnification.canonical(new ItemStack(item));
+            var id = BuiltInRegistries.ITEM.getKey(canonical.getItem());
+            if (!seen.add(id)) continue;
+            var value = new JsonObject(); value.addProperty("item", id.toString()); choices.add(value);
         }
         String material = MaterialEquivalence.materialName(GTMaterialRegistry.get(expected.material()));
         addTag(choices, "gt6ce:" + MaterialPrefix.camelToSnake(expected.prefix()) + "/" + material);
@@ -229,9 +235,14 @@ public final class CraftingMaterialForms {
     }
 
     public static boolean replaces(CraftingRecipe recipe, RegistryAccess access) {
-        if (recipe instanceof gregtech.engine.recipe.AutocraftableCraftingRecipe) return false;
+        // Tool-aware serializers also wrap ordinary material rows. Only the selector
+        // makes a single-input row position-sensitive; the marker alone must not keep
+        // a legacy shapeless unpacking recipe ahead of the ordered replacement.
+        if (recipe instanceof ToolShapelessRecipe tool && tool.formSelector().variants() > 0) return false;
+        if (recipe instanceof gregtech.engine.recipe.AutocraftableCraftingRecipe
+                && !(recipe instanceof ToolShapelessRecipe) && !(recipe instanceof ToolShapedRecipe)) return false;
         boolean shapeless = recipe instanceof ShapelessRecipe;
-        if (!shapeless && !(recipe instanceof ShapedRecipe)) return false;
+        if (!shapeless && !(recipe instanceof ShapedRecipe) && !(recipe instanceof ToolShapedRecipe)) return false;
         var cells = new ArrayList<Form>();
         for (var ingredient : recipe.getIngredients()) {
             if (ingredient == Ingredient.EMPTY) { cells.add(null); continue; }
@@ -239,8 +250,10 @@ public final class CraftingMaterialForms {
             var form = values.length == 0 ? null : form(values[0]);
             cells.add(form == null ? OriginalFormConversions.UNKNOWN : form);
         }
-        int width = shapeless ? cells.size() : ((ShapedRecipe) recipe).getWidth();
-        int height = shapeless ? 1 : ((ShapedRecipe) recipe).getHeight();
+        int width = shapeless ? cells.size() : recipe instanceof ToolShapedRecipe tool
+                ? tool.getWidth() : ((ShapedRecipe) recipe).getWidth();
+        int height = shapeless ? 1 : recipe instanceof ToolShapedRecipe tool
+                ? tool.getHeight() : ((ShapedRecipe) recipe).getHeight();
         return OriginalFormConversions.replaces(cells, width, height, shapeless, false, form(recipe.getResultItem(access)));
     }
 }

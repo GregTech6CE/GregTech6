@@ -35,6 +35,9 @@ public class ToolShapedRecipe implements CraftingRecipe, gregtech.engine.recipe.
     private final ShapedRecipe base;
     private final boolean allowMirror, requireEmptyFluidContainers;
 
+    public int getWidth() { return base.getWidth(); }
+    public int getHeight() { return base.getHeight(); }
+
     public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror) {
         this(base, allowMirror, false);
     }
