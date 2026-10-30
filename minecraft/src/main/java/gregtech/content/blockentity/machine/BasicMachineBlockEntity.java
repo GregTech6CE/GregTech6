@@ -273,6 +273,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public long minimumEnergy() { return processor.minimumEnergy(); }
     /** Clamped batch size of the current job. */
     public int parallelCount() { return processor.parallelCount(); }
+    @Nullable public gregtech.engine.machine.RecipeProcessor.RecipeDetails recipeDetails() { return processor.recipeDetails(); }
 
     private MachineItemHandler itemHandler() { return inventory == null ? null : inventory.items(); }
     private FluidTankGT[] tanksInput() { return inventory == null ? null : inventory.tanksInput(); }

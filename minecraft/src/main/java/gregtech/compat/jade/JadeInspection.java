@@ -162,6 +162,7 @@ final class JadeInspection {
         tooltip.add(Component.translatable("jade.gt6ce.omni.group_" + first.getString("kind"),
                 Component.translatable("jade.gt6ce.omni." + role)).withStyle(color));
         if ("items".equals(first.getString("kind"))) {
+            var summary = new JadeItemSummary();
             for (var row : rows) {
                 var args = row.getList("args", 10);
                 for (int j = 0; j < args.size(); j++) {
@@ -169,9 +170,10 @@ final class JadeInspection {
                     if (!arg.contains("item")) continue;
                     var item = readItem(accessor, arg);
                     if (item.isEmpty()) continue;
-                    JadeText.item(tooltip, item);
+                    summary.add(item);
                 }
             }
+            summary.render(tooltip);
         } else for (var row : rows) renderLine(tooltip, accessor, row);
     }
 

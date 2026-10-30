@@ -23,6 +23,8 @@ import snownee.jade.api.fluid.JadeFluidObject;
 import snownee.jade.api.view.FluidView;
 
 import java.util.Locale;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /** One snapshot and renderer for all recipe machines, including their bound multiblock parts. */
 public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
@@ -56,6 +58,11 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         data.putLong("work", control.progressMax());
         data.putLong("recipe", machine.minimumEnergy());
         data.putInt("parallel", machine.parallelCount());
+        var details = machine.recipeDetails();
+        if (details != null) {
+            data.putLong("basePower", details.power());
+            data.putLong("baseDuration", details.duration());
+        }
         data.putInt("slots", machine.inputSlots());
         int occupied = 0;
         for (int i = 0; i < machine.inputSlots(); i++)
@@ -154,7 +161,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             double power = data.getBoolean("timed") ? 1 : Math.max(Math.max(1, data.getLong("recipe")), average);
             tooltip.add(JadeBars.time(progress, work, power));
         }
-        if (data.getLong("recipe") > 0) line(tooltip, "recipe_energy", data.getLong("recipe"), unit, data.getInt("parallel"));
+        appendRecipeDetails(tooltip, accessor, data, rates, unit, average);
         for (String role : new String[]{"pending", "input", "output", "program"}) {
             if (role.equals("pending") && (!data.getList("pendingItems", 10).isEmpty()
                     || !data.getList("pendingFluids", 10).isEmpty()))
@@ -170,16 +177,64 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         if (data.getBoolean("cokeHint")) line(tooltip, "coke_recipe_hint");
     }
 
+    private static void appendRecipeDetails(ITooltip tooltip, BlockAccessor accessor, CompoundTag data,
+                                           long[] rates, String unit, double average) {
+        long minimum = data.getLong("recipe"), work = data.getLong("work");
+        if (minimum <= 0 || work <= 0) return;
+        int parallel = Math.max(1, data.getInt("parallel"));
+        boolean timed = unit.equalsIgnoreCase("TU");
+        var line = timed
+                ? Component.translatable("jade.gt6ce.machine.recipe_parallel", parallel)
+                : Component.translatable("jade.gt6ce.omni.recipe_energy", format(minimum),
+                        gregtech.client.EnergyText.unit(unit), parallel);
+        long duration = data.getLong("baseDuration");
+        if (duration > 0 && rates.length == 3 && rates[2] > 0) {
+            // Retain tick rounding: the processor completes at most one batch per tick.
+            // A paused job uses its minimum viable supply only to estimate future energy cost.
+            double required = Math.max(1, Math.max(minimum, rates[1]));
+            double power = timed ? 1 : Math.min(rates[2], Math.max(required, average));
+            var supply = BigDecimal.valueOf(power);
+            var ticks = BigDecimal.valueOf(work).divide(supply, 0, RoundingMode.CEILING);
+            boolean running = data.getBoolean("active") && data.getBoolean("enabled")
+                    && !data.getBoolean("overloaded") && (timed || average >= required && average <= rates[2]);
+            double speed = running ? (double) duration * parallel / ticks.doubleValue() : 0;
+            line.append(Component.translatable("jade.gt6ce.machine.effective_speed", JadeText.decimal(speed, 2)));
+            JadeText.add(tooltip, line);
+            if (accessor.showDetails()) {
+                if (timed) {
+                    JadeText.detail(tooltip, "jade.gt6ce.machine.original_time", format(duration));
+                    tooltip.add(Component.translatable("jade.gt6ce.machine.no_external_energy"));
+                } else {
+                    JadeText.detail(tooltip, "jade.gt6ce.machine.original_recipe", format(data.getLong("basePower")),
+                            gregtech.client.EnergyText.unit(unit), format(duration));
+                    var energy = ticks.multiply(supply);
+                    JadeText.detail(tooltip, "jade.gt6ce.machine.estimated_energy", decimal(energy),
+                            gregtech.client.EnergyText.unit(unit),
+                            decimal(energy.divide(BigDecimal.valueOf(parallel), 2, RoundingMode.HALF_UP)),
+                            gregtech.client.EnergyText.unit(unit));
+                }
+            }
+        } else {
+            JadeText.add(tooltip, line);
+        }
+    }
+
+    private static String decimal(BigDecimal value) {
+        return new java.text.DecimalFormat("#,##0.##", java.text.DecimalFormatSymbols.getInstance(Locale.US)).format(value);
+    }
+
     private static void renderItems(ITooltip tooltip, BlockAccessor accessor, ListTag items) {
         if (items.isEmpty()) return;
+        var summary = new JadeItemSummary();
         for (int i = 0; i < items.size(); i++) {
 //? if >=1.21.1 {
             /*var stack = ItemStack.parseOptional(accessor.getLevel().registryAccess(), items.getCompound(i));
 *///?} else {
             var stack = ItemStack.of(items.getCompound(i));
 //?}
-            JadeText.item(tooltip, stack);
+            summary.add(stack);
         }
+        summary.render(tooltip);
     }
 
     private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, ListTag fluids) {

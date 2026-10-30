@@ -93,11 +93,15 @@ public final class RecipeProcessor {
      */
     public record Evaluation(Recipe recipe, boolean outputTanks, int parallel, @Nullable MachineWorkCost.Cost cost) {}
 
+    /** Display-only source values of the consumed job; never used to advance or price it. */
+    public record RecipeDetails(long power, long duration) {}
+
     private static final String NBT_PROGRESS = "gt.progress";
     private static final String NBT_MAX_PROGRESS = "gt.max_progress";
     private static final String NBT_PARALLEL = "gt.parallel";
     private static final String NBT_MIN_ENERGY = "gt.min_energy";
     private static final String NBT_PENDING_OUTPUTS = "gt.pending_outputs";
+    private static final String NBT_RECIPE_DETAILS = "gt.recipe_details";
     private static final long MAX_SAVED_WORK = Long.MAX_VALUE / 2;
 
     private final Config config;
@@ -108,6 +112,7 @@ public final class RecipeProcessor {
     private int parallel = 1;
     private long progress;
     private MachineWorkOutputs pendingOutputs;
+    private @Nullable RecipeDetails recipeDetails;
     private @Nullable Evaluation cached;
     private long cachedAt = Long.MIN_VALUE;
     private boolean dirty = true;
@@ -132,6 +137,11 @@ public final class RecipeProcessor {
 
     public int parallelCount() {
         return parallel;
+    }
+
+    @Nullable
+    public RecipeDetails recipeDetails() {
+        return totalWork > 0 ? recipeDetails : null;
     }
 
     @Nullable
@@ -219,6 +229,7 @@ public final class RecipeProcessor {
         var remaining = RecipeInputs.consume(evaluation.recipe(), inventory.inputItems(), fluids, evaluation.parallel());
         if (remaining == null || evaluation.parallel() < 1) {
             totalWork = 0;
+            recipeDetails = null;
             io.clearStartupEnergy();
             invalidate();
             return false;
@@ -231,6 +242,7 @@ public final class RecipeProcessor {
         io.markJobStarted();
 
         parallel = evaluation.parallel();
+        recipeDetails = new RecipeDetails(evaluation.recipe().mEUt, evaluation.recipe().mDuration);
         progress = 0;
         io.setStartupEnergy(config.startupEnergyFor(evaluation.recipe()));
         invalidate();
@@ -240,6 +252,7 @@ public final class RecipeProcessor {
     /** No recipe matched: the original path cleared the work total and let the host clear startup. */
     public void abandon() {
         totalWork = 0;
+        recipeDetails = null;
         invalidate();
     }
 
@@ -278,6 +291,7 @@ public final class RecipeProcessor {
         progress = 0;
         totalWork = 0;
         minimumEnergy = 0;
+        recipeDetails = null;
         invalidate();
     }
 
@@ -290,6 +304,14 @@ public final class RecipeProcessor {
         tag.putLong(NBT_MAX_PROGRESS, totalWork);
         tag.putInt(NBT_PARALLEL, parallel);
         tag.putLong(NBT_MIN_ENERGY, minimumEnergy);
+        if (recipeDetails() != null) {
+            var details = new CompoundTag();
+            details.putLong("power", recipeDetails.power());
+            details.putLong("duration", recipeDetails.duration());
+            tag.put(NBT_RECIPE_DETAILS, details);
+        } else {
+            tag.remove(NBT_RECIPE_DETAILS);
+        }
         if (pendingOutputs != null) {
 //? if >=1.21.1 {
             /*tag.put(NBT_PENDING_OUTPUTS, pendingOutputs.save((net.minecraft.core.HolderLookup.Provider) lookup));
@@ -305,6 +327,14 @@ public final class RecipeProcessor {
         if (tag.contains(NBT_MAX_PROGRESS)) totalWork = tag.getLong(NBT_MAX_PROGRESS);
         if (tag.contains(NBT_PARALLEL)) parallel = Math.max(1, tag.getInt(NBT_PARALLEL));
         minimumEnergy = tag.getLong(NBT_MIN_ENERGY);
+        // Older jobs have no source snapshot. Leave the new details absent until their next job.
+        recipeDetails = null;
+        if (tag.contains(NBT_RECIPE_DETAILS)) {
+            var details = tag.getCompound(NBT_RECIPE_DETAILS);
+            long power = details.getLong("power"), duration = details.getLong("duration");
+            if (power >= 0 && duration > 0)
+                recipeDetails = new RecipeDetails(power, duration);
+        }
 //? if >=1.21.1 {
         /*if (tag.contains(NBT_PENDING_OUTPUTS)) pendingOutputs = MachineWorkOutputs.load(tag.getCompound(NBT_PENDING_OUTPUTS), (net.minecraft.core.HolderLookup.Provider) lookup);
 *///?} else {
@@ -325,6 +355,7 @@ public final class RecipeProcessor {
             progress = 0;
             totalWork = 0;
             minimumEnergy = 0;
+            recipeDetails = null;
             return;
         }
         var savedCost = savedJobCost();
@@ -339,6 +370,13 @@ public final class RecipeProcessor {
             totalWork = clamp(totalWork, 0, MAX_SAVED_WORK);
         }
         progress = clamp(progress, 0, totalWork);
+        if (recipeDetails != null) {
+            var cost = MachineWorkCost.calculate(recipeDetails.power(), recipeDetails.duration(), parallel,
+                    config.parallelScalesDuration(), config.efficiency(), config.inputMinimum(), config.inputMaximum(),
+                    config.cheapOverclocking(), config.usesTimeEnergy());
+            if (cost == null || cost.totalWork() != totalWork || cost.minimumPower() != minimumEnergy)
+                recipeDetails = null;
+        }
     }
 
     /** Recomputes the current job cost without consuming inputs or rolling outputs. */
