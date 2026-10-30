@@ -7,6 +7,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.MaterialPrefixes;
 import gregtech.content.material.Materials;
+import gregtech.content.material.generated.StoneMaterials;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
@@ -312,7 +313,28 @@ public final class SourceExtruderRecipes {
         plasticCanisterRows();
         tinAlloyRows();
         zirconiumRodRows();
+        generatorModuleRows();
         return PENDING.size() - before;
+    }
+
+    /**
+     * The block and brick mold rows of the basalt and blackstone generator modules
+     * ({@code Loader_Recipes_Extruder.java:25-60}). Their source stacks are the rock fallbacks:
+     * basalt stone for the block mold and basalt bricks for the ingot mold.
+     */
+    private static void generatorModuleRows() {
+        GTMaterial basalt = StoneMaterials.Basalt;
+        if (basalt == null || !basalt.isValid()) return;
+        ItemStack plain = registryItem("gt6ce:stone_basalt_stone", 1);
+        ItemStack bricks = registryItem("gt6ce:stone_basalt_bricks", 1);
+        for (String module : new String[] {"gt6ce:basalt_generator_module", "gt6ce:blackstone_generator_module"}) {
+            ItemStack input = registryItem(module, 1);
+            if (input.isEmpty()) continue;
+            for (String family : new String[] {"extruder_shape_", "low_heat_extruder_shape_"}) {
+                addSpecial(basalt, "module", input, family + "block", "block", plain, 64, 16);
+                addSpecial(basalt, "module", input, family + "ingot", "ingot", bricks, 64, 16);
+            }
+        }
     }
 
     private static void waxRows(GTMaterial material, ItemStack pill) {

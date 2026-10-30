@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -55,7 +56,7 @@ public final class MaterialUnification {
             case "dustTiny/Blaze" -> Items.BLAZE_POWDER;
             case "dust/Bone" -> Items.BONE_MEAL;
             case "plate/Paper" -> Items.PAPER;
-            case "plate/Glass" -> Items.GLASS_PANE;
+            case "plate/Glass", "plateGem/Glass" -> Items.GLASS_PANE;
             case "gem/Amethyst" -> Items.AMETHYST_SHARD;
             case "gem/Coal" -> Items.COAL;
             case "gem/Charcoal" -> Items.CHARCOAL;
@@ -64,8 +65,23 @@ public final class MaterialUnification {
             case "dust/Sugar" -> Items.SUGAR;
             case "dust/Gunpowder" -> Items.GUNPOWDER;
             case "dust/Glowstone" -> Items.GLOWSTONE_DUST;
+            // GT6 stores these food materials' ingot as the matching multi-item food bar.
+            case "ingot/Cheese" -> gtItem("cheese_bar");
+            case "ingot/Chocolate" -> gtItem("chocolate_bar");
+            case "ingot/Tofu" -> gtItem("tofu_bar");
+            case "ingot/SoylentGreen" -> gtItem("emerald_green_bar");
+            case "ingot/MeatRaw" -> gtItem("raw_meat_bar");
+            case "ingot/MeatCooked" -> gtItem("cooked_meat_bar");
+            case "ingot/FishRaw" -> gtItem("raw_fish_bar");
+            case "ingot/FishCooked" -> gtItem("cooked_fish_bar");
             default -> null;
         };
+    }
+
+    /** A registered port item by id, or null when this runtime set does not have it. */
+    private static Item gtItem(String id) {
+        Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+        return item == Items.AIR ? null : item;
     }
 
     /**
@@ -79,6 +95,7 @@ public final class MaterialUnification {
         Map<String, Item> items = new HashMap<>();
         items.put(formKey("ingot", "NetherBrick"), Items.NETHER_BRICK);
         items.put(formKey("plate", "Glass"), Items.GLASS_PANE);
+        items.put(formKey("plateGem", "Glass"), Items.GLASS_PANE);
         items.put(formKey("blockDust", "Stone"), Items.GRAVEL);
         items.put(formKey("blockSolid", "Stone"), Items.SMOOTH_STONE);
         items.put(formKey("blockSolid", "Endstone"), Items.END_STONE);
