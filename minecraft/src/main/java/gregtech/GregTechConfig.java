@@ -121,6 +121,7 @@ public final class GregTechConfig {
         CONSTANT_ENERGY("general.UninterruptedEnergyRequirement", true),
         OBSTRUCTION_CHECKS("general.ObstructionChecks", true),
         EU_AS_RF("general.Emit_EU_as_RF_from_Blocks", false),
+        TANKS_REQUIRE_FLUID_TOOLS("general.TanksRequireFluidTools", true),
         AFK_HUNGER("general.AFK_Hunger", true),
         TOOL_BREAK_FATIGUE("general.ToolBreakFatique", true),
         SMALLER_VANILLA_TOOL_DURABILITY("general.SmallerVanillaToolDurability", true),
@@ -227,6 +228,7 @@ public final class GregTechConfig {
                 case GENERATE_ANCIENT_DEBRIS -> "Generate vanilla ancient debris, independently of DisableVanillaOres.";
                 case VANILLA_STORAGE_BLOCK_RECIPES -> "Enable vanilla crafting recipes for compressing materials into storage blocks.";
                 case COVER_SNEAK -> "Require sneaking to place or preview covers. Disable to attach and preview covers with a plain right-click, as in original GT6.";
+                case TANKS_REQUIRE_FLUID_TOOLS -> "Require taps, funnels or other fluid-transfer tools to fill or empty GT tanks by hand. Disable to allow direct right-click transfer with buckets and other fluid containers. Does not affect pipes or automation.";
                 default -> rule.key.substring(rule.key.lastIndexOf('.') + 1);
             };
             settings.put(rule, option(builder, rule.key, rule.initial, description));
