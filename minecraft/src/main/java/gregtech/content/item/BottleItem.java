@@ -45,7 +45,8 @@ public class BottleItem extends Item {
 
     public BottleItem(String fluidKey, Properties properties) {
         super(properties);
-        this.fluidKey = fluidKey;
+        // The native lubricant is used when no Railcraft fluid replaces FL.lube.
+        this.fluidKey = "LubRoCant".equals(fluidKey) ? "Lubricant" : fluidKey;
     }
 
     /** The GT6 fluid expression this bottle was generated from ({@code Beer}, {@code potion.x}, …). */

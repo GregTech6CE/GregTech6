@@ -27,7 +27,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
     public PotionBottleHandler(ItemStack container) { this.container = container; }
 
     public static boolean acceptsItem(Item item) {
-        return item == Items.GLASS_BOTTLE || item == Items.POTION || item == Items.SPLASH_POTION
+        return item instanceof gregtech.content.item.BottleItem || item == Items.GLASS_BOTTLE || item == Items.POTION || item == Items.SPLASH_POTION
                 || item == Items.LINGERING_POTION || BuiltInRegistries.ITEM.getKey(item)
                 .equals(ResourceLocation.fromNamespaceAndPath("gt6ce", "bottle_empty"));
     }
@@ -41,6 +41,12 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
         if (!fluid.isFluidEqual(plain)) return ItemStack.EMPTY;
 //?}
         if (fluid.getFluid() == Fluids.WATER) return bottle(new VanillaPotionBottling.Bottle("water", "potion"));
+        var bottles = gregtech.content.data.generated.GTBottlesGen.ENTRIES;
+        for (int i = 0; i < bottles.length; i += 3) {
+            var item = gregtech.content.food.GTFoodItems.itemOrNull(bottles[i]);
+            if (item instanceof gregtech.content.item.BottleItem bottle && bottle.fluid() == fluid.getFluid())
+                return new ItemStack(item);
+        }
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         return entry == null ? ItemStack.EMPTY : bottle(VanillaPotionBottling.bottle(entry.registryName()));
     }
@@ -60,6 +66,10 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
 
     /** Reject custom effects/names/components: draining must not silently discard potion data. */
     public static FluidStack contents(ItemStack stack) {
+        if (stack.getItem() instanceof gregtech.content.item.BottleItem bottle) {
+            var fluid = bottle.fluid();
+            return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, VanillaPotionBottling.AMOUNT);
+        }
         if (!stack.is(Items.POTION) && !stack.is(Items.SPLASH_POTION) && !stack.is(Items.LINGERING_POTION))
             return FluidStack.EMPTY;
 //? if >=1.21.1 {
@@ -91,7 +101,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
     @Override public boolean isFluidValid(int tank, FluidStack stack) { return tank == 0 && !filled(stack).isEmpty(); }
 
     @Override public int fill(FluidStack resource, FluidAction action) {
-        if (container.getCount() != 1 || container.is(Items.POTION) || container.is(Items.SPLASH_POTION)
+        if (container.getCount() != 1 || container.getItem() instanceof gregtech.content.item.BottleItem || container.is(Items.POTION) || container.is(Items.SPLASH_POTION)
                 || container.is(Items.LINGERING_POTION) || resource.getAmount() < VanillaPotionBottling.AMOUNT)
             return 0;
         var result = filled(resource);
@@ -113,7 +123,8 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
     @Override public FluidStack drain(int amount, FluidAction action) {
         if (container.getCount() != 1 || amount < VanillaPotionBottling.AMOUNT) return FluidStack.EMPTY;
         var stored = contents(container);
-        if (!stored.isEmpty() && action.execute()) container = new ItemStack(Items.GLASS_BOTTLE);
+        if (!stored.isEmpty() && action.execute()) container = container.getItem() instanceof gregtech.content.item.BottleItem
+                ? gregtech.content.item.BottleItem.emptyBottle() : new ItemStack(Items.GLASS_BOTTLE);
         return stored;
     }
 }

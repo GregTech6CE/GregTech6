@@ -42,6 +42,7 @@ import java.util.List;
 
 /** A finite 1000L bucket: only source-listed fluids fit; filled variants retain their metal band. */
 public final class WoodenBucketItem extends TechItem {
+    private static final String FLUID_KEY = "gt.bucket.fluid";
     private final Band band;
     private final Content content;
 
@@ -67,11 +68,45 @@ public final class WoodenBucketItem extends TechItem {
         Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",
                 WoodenBucketCatalog.itemId(band, next)));
 //? if >=1.21.1 {
-        /*return stack.transmuteCopy(item, 1);
+        /*ItemStack result = stack.transmuteCopy(item, 1);
 *///?} else {
         ItemStack result = new ItemStack(item);
         if (stack.hasTag()) result.setTag(stack.getTag().copy());
+//?}
+        writeFluidKey(result, "");
         return result;
+    }
+
+    /** Alternate fluids sharing a sprite must round-trip without being converted to its default. */
+    public Fluid containedFluid(ItemStack stack) {
+//? if >=1.21.1 {
+        /*var tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+*///?} else {
+        var tag = stack.getTag();
+//?}
+        if (tag != null && tag.contains(FLUID_KEY)) {
+            var id = ResourceLocation.tryParse(tag.getString(FLUID_KEY));
+            var actual = id == null ? Fluids.EMPTY : BuiltInRegistries.FLUID.get(id);
+            if (contentOf(actual) == content) return actual;
+        }
+        return fluid(content);
+    }
+
+    private static void writeFluidKey(ItemStack stack, String key) {
+//? if >=1.21.1 {
+        /*var tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+*///?} else {
+        var tag = stack.hasTag() ? stack.getTag().copy() : new net.minecraft.nbt.CompoundTag();
+//?}
+        tag.remove(FLUID_KEY);
+        if (!key.isEmpty()) tag.putString(FLUID_KEY, key);
+//? if >=1.21.1 {
+        /*if (tag.isEmpty()) stack.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        else stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+*///?} else {
+        stack.setTag(tag.isEmpty() ? null : tag);
 //?}
     }
 
@@ -161,7 +196,7 @@ public final class WoodenBucketItem extends TechItem {
         var result = content.empty()
                 ? FluidUtil.tryPickUpFluid(held.copyWithCount(1), player, level, pos, hit.getDirection())
                 : FluidUtil.tryPlaceFluid(player, level, hand, pos.relative(hit.getDirection()),
-                        held.copyWithCount(1), new FluidStack(fluid(content), 1000));
+                        held.copyWithCount(1), new FluidStack(containedFluid(held), 1000));
         if (!result.isSuccess()) return InteractionResultHolder.fail(held);
         ItemStack next = player.isCreative() && !content.empty() ? held
                 : ItemUtils.createFilledResult(held, player, result.getResult());
@@ -226,7 +261,7 @@ public final class WoodenBucketItem extends TechItem {
 
         @Override
         public FluidStack getFluidInTank(int tank) {
-            Fluid type = fluid(current);
+            Fluid type = container.getItem() instanceof WoodenBucketItem bucket ? bucket.containedFluid(container) : Fluids.EMPTY;
             return tank != 0 || current.empty() || type == Fluids.EMPTY ? FluidStack.EMPTY : new FluidStack(type, 1000);
         }
 
@@ -238,10 +273,18 @@ public final class WoodenBucketItem extends TechItem {
         @Override
         public int fill(FluidStack resource, FluidAction action) {
             if (container.getCount() != 1 || !current.empty() || resource.isEmpty() || resource.getAmount() < 1000) return 0;
+            var plain = new FluidStack(resource.getFluid(), resource.getAmount());
+//? if >=1.21.1 {
+            /*if (!FluidStack.isSameFluidSameComponents(resource, plain)) return 0;
+*///?} else {
+            if (!resource.isFluidEqual(plain)) return 0;
+//?}
             Content next = contentOf(resource.getFluid());
             if (next == null) return 0;
             if (action.execute()) {
                 container = variant(container, next);
+                if (!resource.getFluid().isSame(fluid(next)))
+                    writeFluidKey(container, BuiltInRegistries.FLUID.getKey(resource.getFluid()).toString());
                 current = next;
             }
             return 1000;
