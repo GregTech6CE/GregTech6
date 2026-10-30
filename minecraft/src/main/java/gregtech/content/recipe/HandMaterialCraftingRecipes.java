@@ -170,10 +170,8 @@ public final class HandMaterialCraftingRecipes {
     }
 
     /**
-     * Loader_OreProcessing:181-192 {@code OreProcessing_Shapeless} rows: arrows, chemical tubes,
-     * the universal-spade/construction-pickaxe head conversions and the gem-tipped pickaxe head.
-     * The port's glass-tube form is named {@code glasstube}; it carries the original {@code chemtube}
-     * material and glass composition (see {@code MaterialChemistry}).
+     * Loader_OreProcessing:181-192 {@code OreProcessing_Shapeless} rows: arrows, the
+     * universal-spade/construction-pickaxe head conversions and the gem-tipped pickaxe head.
      */
     private static void shapeless(Map<ResourceLocation, JsonObject> rows, GTMaterial material, GTMaterial empty) {
         if (empty == null) return;
@@ -191,18 +189,6 @@ public final class HandMaterialCraftingRecipes {
         if (!arrowHead.isEmpty() && !plasticShaft.isEmpty() && !plasticArrow.isEmpty())
             putShapeless(rows, "shapeless/arrow_plastic/" + m,
                     List.of(form("toolHeadArrow", material, arrowHead), item(plasticShaft)), copy(plasticArrow, 1));
-
-        // tiny dust and an empty tube fill a tube; melting the tube returns the dust.
-        var emptyTube = mat("glasstube", empty);
-        var tube = mat("glasstube", material);
-        var tinyDust = mat("dustTiny", material);
-        if (!emptyTube.isEmpty() && !tube.isEmpty() && !tinyDust.isEmpty()) {
-            putShapeless(rows, "shapeless/chem_tube/" + m,
-                    List.of(form("dustTiny", material, tinyDust), item(emptyTube)), copy(tube, 1));
-            if (material.getMeltingPoint() >= 293)
-                putShapeless(rows, "shapeless/dust_tiny/" + m,
-                        List.of(form("glasstube", material, tube)), copy(tinyDust, 1));
-        }
 
         // shovel or spade head, filed and sawn, becomes the raw universal spade head.
         var rawUniversalSpade = mat("toolHeadRawUniversalSpade", material);

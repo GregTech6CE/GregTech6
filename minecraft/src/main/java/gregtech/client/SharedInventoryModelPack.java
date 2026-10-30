@@ -153,19 +153,6 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), json);
         }
-        // Material bushes share the existing 28 geometries; resource packs can override each identity.
-        byte[] bushStates=gregtech.content.plant.MaterialBerryBushCatalog.blockstateJson().getBytes(StandardCharsets.UTF_8);
-        byte[] bushItem=MaterialIconDefinitions.sharedInventoryJson("gt6ce:block/plants/bush_stage3").getBytes(StandardCharsets.UTF_8);
-        for(var block:gregtech.content.registry.GTBushes.allBlocks()) {
-            var berryId=((gregtech.content.block.plant.BushBlock)block).berryId();
-            int berryColon=berryId.indexOf(':');
-            if(!berryId.substring(berryColon+1).startsWith("plant_gt_berry_"))continue;
-            var id=BuiltInRegistries.BLOCK.getKey(block);
-            if(!JsonResourceAliases.contains("/assets/"+id.getNamespace()+"/blockstates/"+id.getPath()+".json"))
-                result.put(named(id.getNamespace(),"blockstates/"+id.getPath()+".json"),bushStates);
-            if(!JsonResourceAliases.contains("/assets/"+id.getNamespace()+"/models/item/"+id.getPath()+".json"))
-                result.put(named(id.getNamespace(),"models/item/"+id.getPath()+".json"),bushItem);
-        }
         // Registration gained material forms after the original static data generation.
         // Supply only absent states, using the same real template as the existing alias hook.
         int states = 0;

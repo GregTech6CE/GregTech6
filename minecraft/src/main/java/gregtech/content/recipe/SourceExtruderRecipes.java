@@ -332,7 +332,6 @@ public final class SourceExtruderRecipes {
         if (glass == null || !glass.isValid()) return;
         Form paneForm = forms(glass).get("plateGem");
         ItemStack pane = paneForm == null ? ItemStack.EMPTY : paneForm.stack().copyWithCount(1);
-        ItemStack tube = GTItems.getStack(MaterialPrefix.glasstube, Materials.Empty, 3);
         ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
         var forms = forms(glass);
         for (String name : SPECIAL_PREFIXES) {
@@ -343,10 +342,6 @@ public final class SourceExtruderRecipes {
             if (!name.equals("plateGem") && !pane.isEmpty()) {
                 addSpecial(glass, name, input, "extruder_shape_plate", "plateGem", pane, 64, 16);
                 addSpecial(glass, name, input, "low_heat_extruder_shape_plate", "plateGem", pane, 64, 16);
-            }
-            if (!tube.isEmpty()) {
-                addSpecial(glass, name, input, "extruder_shape_cell", "glasstube", tube, 64, 16);
-                addSpecial(glass, name, input, "low_heat_extruder_shape_cell", "glasstube", tube, 64, 16);
             }
             addSpecial(glass, name, input, "extruder_shape_bottle", "glassBottle", bottle, 64, 16);
             addSpecial(glass, name, input, "low_heat_extruder_shape_bottle", "glassBottle", bottle, 64, 16);

@@ -56,7 +56,6 @@ public class BerryBushCatalog {
         if (id == null || id.isEmpty()) return "bush";
         int colon = id.indexOf(':');
         if (colon >= 0) id = id.substring(colon + 1);
-        if (id.startsWith("plant_gt_berry_")) return "bush_" + id;
         BerryType type = byId(id);
         return type == null ? null : type == DEFAULT ? "bush_cotton" : "bush_" + type.id();
     }
@@ -98,12 +97,8 @@ public class BerryBushCatalog {
         };
     }
 
-    /** Source inventory pass: food/cotton show immature berries, material berries show solid RGB. */
+    /** Source inventory pass: food and cotton bushes show immature berries. */
     public static int inventoryColour(BerryType type) {
-        if (type == null) return NO_BERRY_COLOUR;
-        String id = type.id();
-        int colon = id.indexOf(':');
-        if (colon >= 0) id = id.substring(colon + 1);
-        return id.startsWith("plant_gt_berry_") ? type.berry() : type.immature();
+        return type == null ? NO_BERRY_COLOUR : type.immature();
     }
 }

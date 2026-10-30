@@ -27,8 +27,6 @@ public final class GTBushes {
     static {
         for (var type : BerryBushCatalog.worldgenTypes())
             register(BerryBushCatalog.blockPath(type.id()), type.id());
-        for (var type : gregtech.content.plant.MaterialBerryBushCatalog.variants())
-            register(type.blockPath(), type.berryItemId());
     }
 
 //? if >=1.21.1 {

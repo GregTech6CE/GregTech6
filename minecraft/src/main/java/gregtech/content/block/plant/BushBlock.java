@@ -228,7 +228,7 @@ public class BushBlock extends Block implements EntityBlock {
             }
             return InteractionResult.PASS;
         }
-        // A berryless bush adopts the berry the player is holding (GT6 accepts any plantGtBerry).
+        // A berryless bush adopts the berry the player is holding.
         BerryLookup lookup = BerryLookup.current(player.getItemInHand(hand));
         if (lookup == null || gregtech.content.registry.GTBushes.byBerry(lookup.id())==null) return InteractionResult.PASS;
         bush.setBerry(lookup.id());

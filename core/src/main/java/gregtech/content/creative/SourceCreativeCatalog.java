@@ -2678,6 +2678,6 @@ public final class SourceCreativeCatalog {
                     if (id.equals(gregtech.content.tool.WoodenBucketCatalog.itemId(band, content)))
                         return new Entry("equipment", band.originalBase() + content.offset());
         }
-        return ITEMS.get(id.startsWith("bush_plant_gt_berry_") ? "bush" : id);
+        return ITEMS.get(id);
     }
 }

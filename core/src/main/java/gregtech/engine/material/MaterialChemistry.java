@@ -61,10 +61,6 @@ public final class MaterialChemistry {
         if (prefix == null || (!material.isValid() && !("Empty".equals(material.getName()) && prefix.hasEmptyForm()))) {
             return List.of();
         }
-        if ("Empty".equals(material.getName()) && prefix == MaterialPrefix.glasstube) {
-            // The empty tube is the glass part of OP.chemtube's byproduct.
-            return List.of(new MaterialComponent(Materials.Glass, GTValues.U3));
-        }
         if ("Empty".equals(material.getName()) && prefix == MaterialPrefix.toolHeadPickaxeGem) {
             return List.of();
         }
@@ -80,19 +76,6 @@ public final class MaterialChemistry {
         if (prefix == MaterialPrefix.toolHeadPickaxeGem) {
             // OP716: ANY.Iron targets MT.Fe, not the WroughtIron group member.
             return headComponents(material, GTValues.U, Materials.Iron, GTValues.U9 * 26);
-        }
-        if (prefix == MaterialPrefix.glasstube) {
-            List<MaterialComponent> out = new ArrayList<>(2);
-            out.add(new MaterialComponent(material, GTValues.U9));
-            out.add(new MaterialComponent(Materials.Glass, GTValues.U3));
-            return List.copyOf(out);
-        }
-        if (prefix == MaterialPrefix.plantGtTwig) {
-            // OP357/730: U/9 of the named material plus a generic ANY.Wood stick (U/2).
-            GTMaterial primary = material.resolve();
-            GTMaterial wood = gregtech.content.material.generated.WoodMaterials.Wood.resolve();
-            if (primary == wood) return List.of(new MaterialComponent(wood, GTValues.U9 + GTValues.U2));
-            return List.of(new MaterialComponent(primary, GTValues.U9), new MaterialComponent(wood, GTValues.U2));
         }
         if (prefix == MaterialPrefix.arrowGtWood) {
             List<MaterialComponent> out = new ArrayList<>(2);

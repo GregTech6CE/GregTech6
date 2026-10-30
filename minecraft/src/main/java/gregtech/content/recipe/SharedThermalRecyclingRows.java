@@ -89,7 +89,7 @@ final class SharedThermalRecyclingRows {
             "sheetGt", "foil", "stick", "stickLong", "bolt", "screw", "round", "ring", "chain", "spring",
             "springSmall", "wireFine", "minecartWheels", "gearGt", "gearGtSmall", "railGt", "casingSmall",
             "casingMachine", "casingMachineDouble", "casingMachineQuadruple", "casingMachineDense", "rotor",
-            "chemtube", "cell", "toolHeadSaw", "toolHeadFile", "toolHeadChisel", "toolHeadBuzzSaw",
+            "cell", "toolHeadSaw", "toolHeadFile", "toolHeadChisel", "toolHeadBuzzSaw",
             "toolHeadChainsaw", "toolHeadWrench", "toolHeadDrill", "toolHeadSword", "toolHeadPickaxe",
             "toolHeadShovel", "toolHeadSpade", "toolHeadAxe", "toolHeadHoe", "toolHeadSense",
             "toolHeadPlow", "toolHeadHammer", "toolHeadScrewdriver", "toolHeadBuilderwand",
@@ -107,7 +107,7 @@ final class SharedThermalRecyclingRows {
             "wireGt10", "wireGt09", "wireGt08", "wireGt07", "wireGt06", "wireGt05", "wireGt04", "wireGt03",
             "wireGt02", "wireGt01", "cableGt12", "cableGt08", "cableGt04", "cableGt02", "cableGt01",
             "blockGem", "blockDust", "blockIngot", "blockPlate", "blockPlateGem", "blockSolid",
-            "oreberry", "plantGtBerry", "plantGtTwig", "plantGtFiber", "plantGtWart", "plantGtBlossom");
+            "oreberry");
 
     /** The listener rejects prefixes carrying ORE or ORE_PROCESSING_DIRTY before conversion. */
     private static final Set<String> ORE_FORMS = Set.of(

@@ -115,16 +115,6 @@ public final class MaterialPrefix {
     public static final MaterialPrefix minecartWheels;
     public static final MaterialPrefix railGt;
 
-    // --- plants ---
-    public static final MaterialPrefix plantGtBerry;
-    public static final MaterialPrefix plantGtBlossom;
-    public static final MaterialPrefix plantGtFiber;
-    public static final MaterialPrefix plantGtTwig;
-    public static final MaterialPrefix plantGtWart;
-
-    // --- containers ---
-    public static final MaterialPrefix glasstube;
-
     /**
      * GT6's coin form.
      *
@@ -234,9 +224,6 @@ public final class MaterialPrefix {
             // GT6 registers knocked stone parts even though G_STONE carries no PARTS flag.
             m -> MaterialForms.has(m, "PARTS")
                     || m.has(MaterialProperty.STONE)); // OP.gearGt/ring/spring/rotor/casingSmall
-    private static final Predicate<GTMaterial> HAS_PLANT =
-            m -> m.hasAny(MaterialProperty.GENERATE_PLANT, MaterialProperty.WOOD)
-                    || MaterialForms.has(m, "PLANTS"); // GT6 OP.plantGt* = PLANTS
     /** GT6 {@code OP.PROJECTILES}: the flag behind the arrows and bullets. */
     private static final Predicate<GTMaterial> GT6_PROJECTILES = m -> MaterialForms.has(m, "PROJECTILES");
 
@@ -295,8 +282,6 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_RAILS = m -> MaterialForms.has(m, "RAILS");
     /** GT6 {@code OP.ORES}: raw ore, crushed ore, rock. */
     private static final Predicate<GTMaterial> GT6_ORES = m -> MaterialForms.has(m, "ORES");
-    /** GT6 {@code OP.PLANTS}: berry, blossom, fiber, twig, wart. */
-    private static final Predicate<GTMaterial> GT6_PLANTS = m -> MaterialForms.has(m, "PLANTS");
     /** GT6 {@code OP.ingotHot}: {@code And(INGOTS_HOT, SMITHABLE, meltmin(800))}. */
     private static final Predicate<GTMaterial> GT6_INGOTS_HOT =
             m -> MaterialForms.has(m, "INGOTS_HOT") && m.has(MaterialProperty.SMITHABLE) && m.getMeltingPoint() >= 800;
@@ -534,14 +519,6 @@ public final class MaterialPrefix {
                         || (MaterialForms.of(m).isEmpty()
                                 && m.has(MaterialProperty.GENERATE_RAIL)
                                 && HAS_INGOT.test(m)));
-
-        plantGtBerry = def("plantGtBerry", "Berry", HAS_PLANT.or(GT6_PLANTS), true);
-        plantGtBlossom = def("plantGtBlossom", "Blossom", HAS_PLANT.or(GT6_PLANTS), true);
-        plantGtFiber = def("plantGtFiber", "Fiber", HAS_PLANT.or(GT6_PLANTS), true);
-        plantGtTwig = def("plantGtTwig", "Twig", HAS_PLANT.or(GT6_PLANTS), true);
-        plantGtWart = def("plantGtWart", "Wart", HAS_PLANT.or(GT6_PLANTS), true);
-
-        glasstube = def("glasstube", "Glass Tube", m -> HAS_GEM.test(m) || HAS_PLATE.test(m));
 
         coin = def("coin", "Coin", MaterialPrefix::gt6Coin);
 
@@ -815,9 +792,6 @@ public final class MaterialPrefix {
             case "gem_legendary" -> GTValues.U * 8;
             // OP183: one boule contains four material units, not the generic one-unit fallback.
             case "boule_gt" -> GTValues.U * 4;
-            // OP356-360: botanical primary content; Twig also has a separate Wood secondary.
-            case "plant_gt_berry", "plant_gt_blossom", "plant_gt_fiber", "plant_gt_twig" -> GTValues.U9;
-            case "plant_gt_wart" -> GTValues.U4;
             // misc
             case "scrap_gt" -> GTValues.U9;
             // gears / rotor
@@ -852,8 +826,6 @@ public final class MaterialPrefix {
             case "tool_head_raw_pickaxe", "tool_head_raw_sense" -> GTValues.U * 3;
             case "tool_head_raw_plow" -> GTValues.U * 4;
             case "tool_head_raw_arrow" -> GTValues.U / 8;
-            // containers
-            case "glasstube" -> GTValues.U9;
             // casing
             case "item_casing" -> GTValues.U2;
             // projectiles
@@ -930,9 +902,9 @@ public final class MaterialPrefix {
                 || this == bulletGtLarge;
     }
 
-    /** Empty-material containers and the forced empty gem pickaxe head ({@code OP.java:621}). */
+    /** Empty-material ammunition and the forced empty gem pickaxe head ({@code OP.java:621}). */
     public boolean hasEmptyForm() {
-        return hasEmptyAmmunitionForm() || this == glasstube || this == toolHeadPickaxeGem;
+        return hasEmptyAmmunitionForm() || this == toolHeadPickaxeGem;
     }
 
     public String getItemId(GTMaterial material) {

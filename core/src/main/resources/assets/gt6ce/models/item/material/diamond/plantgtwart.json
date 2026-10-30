@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gt6ce:item/material_icons/diamond/plantgtwart",
-    "layer1": "gt6ce:item/material_icons/diamond/plantgtwart_overlay"
-  }
-}

@@ -19,13 +19,10 @@ public final class ItemMaterialRegistry {
         boolean compositeHead = prefix == MaterialPrefix.toolHeadWrench || prefix == MaterialPrefix.toolHeadChainsaw
                 || prefix == MaterialPrefix.toolHeadDrill || prefix == MaterialPrefix.toolHeadPickaxeGem;
         if (item != null && material != null && prefix != null
-                && (prefix.hasEmptyForm() || prefix == MaterialPrefix.plantGtTwig || compositeHead)) {
+                && (prefix.hasEmptyForm() || compositeHead)) {
             var parts = MaterialChemistry.prefixMaterialWeights(material, prefix).stream()
                     .map(c -> MaterialComponent.of(c.material(), c.amount())).toList();
-            String source = compositeHead ? "GT6 OP tool-head components"
-                    : prefix == MaterialPrefix.plantGtTwig ? "GT6 OP twig components"
-                    : prefix == MaterialPrefix.glasstube ? "GT6 OP chemtube components"
-                    : "GT6 OP ammunition components";
+            String source = compositeHead ? "GT6 OP tool-head components" : "GT6 OP ammunition components";
             if (!parts.isEmpty()) register(item, new ItemComposition(prefix, parts, source, true));
             return;
         }
