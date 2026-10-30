@@ -64,17 +64,18 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
         return 10000;
     }
     @Override protected IFluidHandler automaticFluidOutputTarget(Level level,BlockPos pos,Direction absolute) {
+        var output=getTanksOutput()[0].getFluid();if(output.isEmpty())return null;
         if(fluidOutputTarget!=null && level.hasChunkAt(fluidOutputTarget)) {
-            var cached=fluidHandler(fluidOutputTarget);if(cached!=null)return cached;
+            var cached=fluidHandler(fluidOutputTarget);
+            if(cached!=null && cached.fill(output.copy(),IFluidHandler.FluidAction.SIMULATE)>0)return cached;
         }
         fluidOutputTarget=null;
-        var output=getTanksOutput()[0].getFluid();if(output.isEmpty())return null;
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         for(var offset:OriginalCokeOvenRules.fluidTargets()) {
             var target=pos.relative(front.getClockWise(),offset.x()).above(offset.y()).relative(front.getOpposite(),offset.z());
             if(!level.hasChunkAt(target))continue;
             var handler=fluidHandler(target);if(handler==null)continue;
-            for(int tank=0;tank<handler.getTanks();tank++) if(handler.isFluidValid(tank,output)) {fluidOutputTarget=target;return handler;}
+            if(handler.fill(output.copy(),IFluidHandler.FluidAction.SIMULATE)>0) {fluidOutputTarget=target;return handler;}
         }
         return null;
     }
