@@ -112,12 +112,17 @@ public class LootCrateBlock extends Block {
 *///?} else {
 //?}
     public static ItemStack crateStack() {
+        return crateStack("crate");
+    }
+
+    /** {@code IL.Crate_Fireproof} resolves through the same meta-item family in GT6. */
+    public static ItemStack crateStack(String id) {
 //? if >=1.21.1 {
         /*var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
 *///?} else {
         var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
 //?}
-                ResourceLocation.fromNamespaceAndPath("gt6ce", "crate"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? ItemStack.EMPTY : new ItemStack(block);
     }
 

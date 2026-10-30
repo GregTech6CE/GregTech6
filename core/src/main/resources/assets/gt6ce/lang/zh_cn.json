@@ -1229,6 +1229,7 @@
   "block.gt6ce.conversion_quadcore_processor_unit": "转换四核处理器",
   "block.gt6ce.crank": "手动曲柄",
   "block.gt6ce.crate": "板条箱",
+  "block.gt6ce.crate_fireproof": "板条箱（防火）",
   "block.gt6ce.crate_gt64_dust": "%s粉板条箱",
   "block.gt6ce.crate_gt64_gem": "整箱%s",
   "block.gt6ce.crate_gt64_ingot": "%s锭板条箱",

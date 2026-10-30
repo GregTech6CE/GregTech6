@@ -54,9 +54,11 @@ import java.util.List;
  * those rows to every non-antimatter material. No built-in material carries that property, so the
  * registered set matches; an addon that does would gain rows the original excludes.</p>
  *
- * <p>{@code IL.Crate_Fireproof} is the fireproof treated plank in GT6 ({@code Loader_Woods}); the port
- * registers neither that plank nor a fireproof crate item, so the fireproof boxinator rows are
- * recorded in {@link #skipped()} instead of consuming the ordinary crate.</p>
+ * <p>{@code IL.Crate_Fireproof} is the fireproof twin of the treated crate in GT6
+ * ({@code Loader_Woods}). The port registers it as its own block, so the fireproof boxinator rows
+ * ({@code Loader_Recipes_Handlers:511-525}) consume it exactly like the ordinary empty crate.
+ * Unboxing still returns the ordinary empty crate: GT6's unboxinator handlers name
+ * {@code IL.Crate} regardless of which crate filled the box.</p>
  * <p>
  * Duration/EU rules are GT6's: every handler runs at 16 EU/t. {@code RecipeMapHandlerPrefix} uses a
  * fixed duration when the handler passes one (the packing/unpacking handlers all pass 16 ticks) and
@@ -67,8 +69,8 @@ import java.util.List;
  * are imported by {@code tools/extract_gt6_workability.py} into {@link MaterialWorkability}.
  * <p>
  * Pairs GT6 has but the port cannot express yet are recorded in {@link #skipped()} instead of being
- * guessed: the port has no {@code compressed} or {@code plateSteamcraft} prefix and no fireproof
- * crate item. GT6's {@code casingSmall} is the port's {@link MaterialPrefix#itemCasing}, so the
+ * guessed: the port has no {@code compressed} or {@code plateSteamcraft} prefix. GT6's
+ * {@code casingSmall} is the port's {@link MaterialPrefix#itemCasing}, so the
  * {@code plateTiny}/{@code plateGemTiny} boxinator rows are registered under that identity.
  */
 public final class MaterialFormConversionRecipes {
@@ -91,8 +93,6 @@ public final class MaterialFormConversionRecipes {
         skippedOnce("compressor", "ingot 1 -> compressed 1", "MaterialPrefix.compressed is missing");
         skippedOnce("compressor", "billet 1 -> plateSteamcraft 1", "MaterialPrefix.plateSteamcraft is missing");
         skippedOnce("compressor", "compressed 9 -> plateDense 1", "MaterialPrefix.compressed is missing");
-        skippedOnce("boxinator", "fireproof partial/full/block crate rows",
-                "no fireproof crate item (IL.Crate_Fireproof is the fireproof treated plank)");
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.has(MaterialProperty.ANTIMATTER)) continue; // GT6: ANTIMATTER.NOT on all of these handlers
@@ -199,9 +199,11 @@ public final class MaterialFormConversionRecipes {
     }
 
     /**
-     * GT6's crate rows ({@code Loader_Recipes_Handlers:461-473}, {@code :495-509}). A crate always
+     * GT6's crate rows ({@code Loader_Recipes_Handlers:461-473}, {@code Loader_Recipes_Handlers:495-525}). A crate always
      * returns the empty {@code IL.Crate}; the sixteen-piece crates pack from the quarter-sized forms,
-     * and a block of 64 pieces fills nine full crates in one 144-tick pass.
+     * and a block of 64 pieces fills nine full crates in one 144-tick pass. The fireproof empty
+     * crate packs the same rows as the ordinary one, but unboxing always returns the ordinary crate
+     * because GT6's unboxinator handlers name {@code IL.Crate} as the additional output.
      */
     private static void crates() {
         ItemStack empty = LootCrateBlock.crateStack();
@@ -209,6 +211,9 @@ public final class MaterialFormConversionRecipes {
             skippedOnce("boxinator", "all crate rows", "gt6ce:crate is not registered");
             return;
         }
+        ItemStack fireproof = LootCrateBlock.crateStack("crate_fireproof");
+        if (fireproof.isEmpty())
+            skippedOnce("boxinator", "fireproof crate rows", "gt6ce:crate_fireproof is not registered");
         // Fixed form order, so a material whose gem and dust blocks canonicalize to the same stack
         // (Redstone: both are minecraft:redstone_block) keeps the dust row, matching the existing
         // blockGem/blockDust unbox order instead of letting registry order decide.
@@ -248,21 +253,54 @@ public final class MaterialFormConversionRecipes {
             ItemStack crateStack = new ItemStack(block);
             unboxItems(prefix.getName() + " 1 -> " + content.getName() + " " + amount + " + crate",
                     crateStack, contents, item(empty, 1));
-            if (full) {
-                boxItems(content.getName() + " 64 + crate -> " + prefix.getName(), 16,
-                        new ItemStack[]{GTItems.getStack(content, material, 64), item(empty, 1)},
-                        crateStack);
-                ItemStack blockStack = packed == null ? ItemStack.EMPTY : GTBlocks.getStack(packed, material);
-                if (!blockStack.isEmpty())
-                    boxItems(packed.getName() + " 64 + 9 crates -> " + prefix.getName() + " 9", 144,
-                            new ItemStack[]{item(blockStack, 64), item(empty, 9)}, item(crateStack, 9));
-            } else if ("Dust".equals(form)) {
-                packCrate(material, content, MaterialPrefix.dustSmall, 64, crateStack, empty);
-            } else if ("Ingot".equals(form)) {
-                packCrate(material, content, MaterialPrefix.chunkGt, 64, crateStack, empty);
-                packCrate(material, content, MaterialPrefix.billet, 24, crateStack, empty);
-            }
+            packingRows(prefix, full, form, content, material, packed, crateStack, empty);
+            if (!fireproof.isEmpty())
+                packingRows(prefix, full, form, content, material, packed, crateStack, fireproof);
         }
+        fireproofCrate(empty, fireproof);
+    }
+
+    /** Boxinator rows that fill {@code empty} into this crate prefix ({@code Loader_Recipes_Handlers:495-525}). */
+    private static void packingRows(BlockMaterialPrefix prefix, boolean full, String form, MaterialPrefix content,
+                                    GTMaterial material, BlockMaterialPrefix packed, ItemStack crate, ItemStack empty) {
+        if (full) {
+            boxItems(content.getName() + " 64 + crate -> " + prefix.getName(), 16,
+                    new ItemStack[]{GTItems.getStack(content, material, 64), item(empty, 1)}, crate);
+            ItemStack blockStack = packed == null ? ItemStack.EMPTY : GTBlocks.getStack(packed, material);
+            if (!blockStack.isEmpty())
+                boxItems(packed.getName() + " 64 + 9 crates -> " + prefix.getName() + " 9", 144,
+                        new ItemStack[]{item(blockStack, 64), item(empty, 9)}, item(crate, 9));
+        } else if ("Dust".equals(form)) {
+            packCrate(material, content, MaterialPrefix.dustSmall, 64, crate, empty);
+        } else if ("Ingot".equals(form)) {
+            packCrate(material, content, MaterialPrefix.chunkGt, 64, crate, empty);
+            packCrate(material, content, MaterialPrefix.billet, 24, crate, empty);
+        }
+    }
+
+    /**
+     * GT6's fireproofing rows for the crate metadata ({@code Loader_Recipes_Woods:86-96}, the
+     * crate pass of the plank family). The port has no fireproof plank family, but the crate itself
+     * exists, so its three source rows are registered; they are how the fireproof crate is obtained.
+     */
+    private static void fireproofCrate(ItemStack empty, ItemStack fireproof) {
+        if (empty.isEmpty() || fireproof.isEmpty()) return;
+        addLaminator("plate WaxRefractory 1 + crate -> crate_fireproof",
+                GTItems.getStack(MaterialPrefix.plate, Materials.WaxRefractory, 1), empty, fireproof);
+        addLaminator("foil WaxRefractory 4 + crate -> crate_fireproof",
+                GTItems.getStack(MaterialPrefix.foil, Materials.WaxRefractory, 4), empty, fireproof);
+        var potion = DyeProcessingRecipes.fluid("Potion_FireResistance_1L", 20);
+        Recipe recipe = MachineRecipeMaps.Bath.addRecipe1(false, 0, 32,
+                item(empty, 1), potion, null, fireproof.copy());
+        if (recipe != null)
+            ENTRIES.add(new Entry("bath", "crate + Potion_FireResistance_1L 20 -> crate_fireproof",
+                    MachineRecipeMaps.Bath, recipe));
+    }
+
+    private static void addLaminator(String route, ItemStack wax, ItemStack empty, ItemStack fireproof) {
+        if (wax.isEmpty()) return;
+        Recipe recipe = MachineRecipeMaps.Laminator.addRecipe2(false, 16, 32, item(empty, 1), wax, fireproof.copy());
+        if (recipe != null) ENTRIES.add(new Entry("laminator", route, MachineRecipeMaps.Laminator, recipe));
     }
 
     private static int crateFormOrder(Block block) {

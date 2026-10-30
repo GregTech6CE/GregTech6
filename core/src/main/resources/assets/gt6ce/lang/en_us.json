@@ -1155,6 +1155,7 @@
   "block.gt6ce.conversion_quadcore_processor_unit": "Conversion Quadcore Processor Unit",
   "block.gt6ce.crank": "Hand Crank",
   "block.gt6ce.crate": "Crate",
+  "block.gt6ce.crate_fireproof": "Crate (Fireproof)",
   "block.gt6ce.crate_gt64_dust": "Crate of %s Dust",
   "block.gt6ce.crate_gt64_gem": "Crate of %s",
   "block.gt6ce.crate_gt64_ingot": "Crate of %s Ingot",
