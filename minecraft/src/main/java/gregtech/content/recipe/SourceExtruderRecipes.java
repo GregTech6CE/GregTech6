@@ -13,6 +13,7 @@ import gregtech.content.registry.GTTechnological;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
 import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
 import java.util.*;
@@ -488,6 +489,16 @@ public final class SourceExtruderRecipes {
             OUTPUTS.forEach(o -> names.add(o.form()));
             var blockPrefixes = MaterialPrefixes.all();
             for (String name : names) {
+                // Forms the source stores as a vanilla item replace any GT stack of that form.
+                ItemStack vanilla = MaterialUnification.vanillaFormStack(name, m);
+                if (!vanilla.isEmpty()) {
+                    MaterialPrefix vanillaPrefix = PrefixRegistry.byName(name);
+                    long weight = vanillaPrefix != null
+                            ? vanillaPrefix.getMaterialWeight()
+                            : blockWeight(blockPrefixes.get(name));
+                    if (weight > 0) result.put(name, new Form(name, weight, vanilla));
+                    continue;
+                }
                 MaterialPrefix prefix = PrefixRegistry.byName(name);
                 if (prefix != null) {
                     ItemStack stack = GTItems.getStack(prefix, m, 1);
@@ -500,19 +511,19 @@ public final class SourceExtruderRecipes {
                     if (!stack.isEmpty()) result.putIfAbsent(name, new Form(name, block.getMaterialWeight(), stack));
                 }
             }
-            // GT6 OP.capcellcon is gated by PIPES; pipe registration is the port's equivalent identity.
-            boolean hasPipe = false;
-            for (String name : result.keySet())
-                if (name.startsWith("pipe") && !name.startsWith("pipeRestrictive")) {
-                    hasPipe = true;
-                    break;
-                }
-            if (hasPipe) {
-                ItemStack cell = cellStack(m);
-                if (!cell.isEmpty()) result.putIfAbsent("capcellcon", new Form("capcellcon", GTValues.U9, cell));
-            }
+            // A rock type's smooth block is the stone material's blockSolid stack (GT6 OP.blockSolid).
+            ItemStack smooth = StoneAndToolSurvivalRecipes.smoothStoneBlocks().get(m);
+            if (smooth != null) result.putIfAbsent("blockSolid", new Form("blockSolid", GTValues.U * 9, smooth));
+            // GT6 OP.capcellcon is gated by PIPES. The port's forty cell items name exactly the
+            // materials that gate covers, including item-pipe-only ones (Tin, waxes).
+            ItemStack cell = cellStack(m);
+            if (!cell.isEmpty()) result.putIfAbsent("capcellcon", new Form("capcellcon", GTValues.U9, cell));
             return result;
         });
+    }
+
+    private static long blockWeight(MaterialPrefixes.Entry entry) {
+        return entry != null && entry.isBlock() ? entry.getBlockDelegate().getMaterialWeight() : 0;
     }
 
     private static ItemStack cellStack(GTMaterial material) {

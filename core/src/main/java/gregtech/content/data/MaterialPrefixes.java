@@ -628,14 +628,14 @@ public class MaterialPrefixes {
         }
         PrefixRegistry.ensurePrefixesLoaded();
 
-        // GT6 OP.casingMachine = And(PARTS, SMITHABLE). Unknown/addon materials keep the port's
-        // former approximation only when no source form set exists.
+        // GT6 OP.casingMachine = And(PARTS, SMITHABLE). GT6's PARTS also covers the PARTS grant
+        // from OreDictMaterial.qual, which the static form table cannot see; GT6_PARTS adds it.
         Predicate<GTMaterial> hasSmithableParts = m -> MaterialForms.of(m).isEmpty()
                 ? m.has(MaterialProperty.GENERATE_PARTS)
                                 && m.has(MaterialProperty.SMITHABLE)
                                 && (MaterialPrefix.ingot.isValidFor(m) || MaterialPrefix.gem.isValidFor(m))
                         || MaterialForms.has(m, "PARTS")
-                : MaterialForms.has(m, "PARTS") && SourceExtrusionRules.smithable(m);
+                : MaterialPrefix.GT6_PARTS.test(m) && SourceExtrusionRules.smithable(m);
 
         casingMachine = registerBlock(block("casingMachine")
                 .display("Machine Casings", "", " Machine Casing")

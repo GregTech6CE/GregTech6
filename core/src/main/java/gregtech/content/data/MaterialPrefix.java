@@ -246,7 +246,10 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> TOOL_HEAD_HAMMER =
             m -> MaterialForms.of(m).isEmpty()
                     ? HAS_TOOL_HEAD.test(m) || GT6_HAMMER.test(m)
-                    : m.getToolTypes() >= 1 && (m.getToolQuality() >= 1 || m.has(MaterialProperty.WOOD));
+                    : m.getToolTypes() >= 1
+                            && (m.getToolQuality() >= 1
+                                    || m.has(MaterialProperty.WOOD)
+                                    || m.getName().equals("Rubber"));
 
     private static final Predicate<GTMaterial> HAS_PROJECTILE = m -> m.has(MaterialProperty.GENERATE_PROJECTILE);
 
@@ -277,7 +280,7 @@ public final class MaterialPrefix {
      * ({@code OreDictMaterial:899}), which is how wood species carry wooden gears, rings, chains,
      * springs, rotors and casings that the item-generator form table does not list.
      */
-    private static final Predicate<GTMaterial> GT6_PARTS = m -> MaterialForms.has(m, "PARTS") || m.getToolTypes() > 0;
+    static final Predicate<GTMaterial> GT6_PARTS = m -> MaterialForms.has(m, "PARTS") || m.getToolTypes() > 0;
     /** GT6 {@code OP.RAILS}. */
     private static final Predicate<GTMaterial> GT6_RAILS = m -> MaterialForms.has(m, "RAILS");
     /** GT6 {@code OP.ORES}: raw ore, crushed ore, rock. */
@@ -502,14 +505,16 @@ public final class MaterialPrefix {
                 "Fine Wire",
                 nativeOr(
                         m -> m.has(MaterialProperty.GENERATE_WIRE) || (HAS_PARTS.test(m) && HAS_INGOT.test(m)),
+                        // GT6 OP.wireFine = Or(WIRES, And(PARTS, SMITHABLE)); PARTS includes qual.
                         m -> MaterialForms.has(m, "WIRES")
-                                || (MaterialForms.has(m, "PARTS") && SourceExtrusionRules.smithable(m))));
+                                || (GT6_PARTS.test(m) && SourceExtrusionRules.smithable(m))));
         minecartWheels = def(
                 "minecartWheels",
                 "Minecart Wheels",
                 nativeOr(
                         m -> HAS_PARTS.test(m) && m.has(MaterialProperty.SMITHABLE),
-                        m -> MaterialForms.has(m, "PARTS") && SourceExtrusionRules.smithable(m)));
+                        // GT6 OP.minecartWheels = And(PARTS, SMITHABLE); PARTS includes qual.
+                        m -> GT6_PARTS.test(m) && SourceExtrusionRules.smithable(m)));
         railGt = def(
                 "railGt",
                 "Rail",

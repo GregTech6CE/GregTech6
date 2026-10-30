@@ -53,10 +53,10 @@ public final class StoneAndToolSurvivalRecipes {
      * stone tools reachable: the raw heads they produce are the ones the sharpening chain finishes
      * (the port's stone tool heads come from of the porting notes).
      *
-     * <p>GT6 iterates {@code mEqualBlocks[STONE]} and {@code mEqualBlocks[COBBL]} and also repeats the
-     * shape rows for each type's smooth block. The port's equivalent sets are the {@code _stone},
-     * {@code _cobble} and {@code _smooth} blocks of each {@link StoneType}; the dust-block input is
-     * covered by the generic prefix matrix.</p>
+     * <p>GT6 iterates {@code mEqualBlocks[STONE]} and {@code mEqualBlocks[COBBL]}; the port's
+     * equivalent sets are the {@code _stone} and {@code _cobble} blocks of each {@link StoneType}.
+     * A type's smooth block is the material's {@code blockSolid} stack, so its rows come from the
+     * generic prefix matrix like the dust-block input.</p>
      *
      * <p>Two shapes output blocks rather than material forms: the ingot mold yields the rock's brick
      * variant and the block mold its plain stone variant ({@code ST.make(this, 1, BRICK/STONE)}). For the
@@ -87,21 +87,39 @@ public final class StoneAndToolSurvivalRecipes {
     /** The mould id prefixes of {@link #registerStoneExtrusions()}, for reporting and tests. */
     public static String[] stoneExtrusionMolds(){return STONE_EXTRUDER_MOLDS.clone();}
 
-    private static void registerStoneExtrusions() {
+    private static Map<GTMaterial, ItemStack> SMOOTH_BLOCKS;
+
+    /** The smooth block of each rock type; it is the stone material's {@code blockSolid} stack. */
+    public static synchronized Map<GTMaterial, ItemStack> smoothStoneBlocks() {
+        if (SMOOTH_BLOCKS != null) return SMOOTH_BLOCKS;
+        var result = new HashMap<GTMaterial, ItemStack>();
+        for (var stone : stoneBlocks()) {
+            if (stone.variant() != StoneVariant.SMOOTH) continue;
+            result.putIfAbsent(stone.stoneMaterial(), new ItemStack(stone));
+        }
+        return SMOOTH_BLOCKS = result;
+    }
+
+    private static List<GTStoneBlock> stoneBlocks() {
+        var result = new ArrayList<GTStoneBlock>();
 //? if >=1.21.1 {
-        /*for (var block : BuiltInRegistries.BLOCK) {
+        /*for (var block : BuiltInRegistries.BLOCK) if (block instanceof GTStoneBlock stone) result.add(stone);
 *///?} else {
-        for (var block : ForgeRegistries.BLOCKS.getValues()) {
+        for (var block : ForgeRegistries.BLOCKS.getValues()) if (block instanceof GTStoneBlock stone) result.add(stone);
 //?}
-            if (!(block instanceof GTStoneBlock stone)) continue;
+        return result;
+    }
+
+    private static void registerStoneExtrusions() {
+        for (var stone : stoneBlocks()) {
             var variant = stone.variant();
-            // BlockStones extrudes aStone, aCobble, aSmooth and aDustBlock; the dust block rows
-            // come from the generic prefix matrix, while the three masonry groups are literal.
+            // BlockStones extrudes aStone, aCobble, aSmooth and aDustBlock. The smooth block is
+            // the material's blockSolid stack, so its rows come from the generic prefix matrix;
+            // only the stone and cobblestone groups are literal here.
             if (variant != StoneVariant.STONE
-                    && variant != StoneVariant.COBBLE
-                    && variant != StoneVariant.SMOOTH) continue;
+                    && variant != StoneVariant.COBBLE) continue;
             var material = stone.stoneMaterial();
-            var input = new ItemStack(block);
+            var input = new ItemStack(stone);
             var bricks = blockItem(stone.stoneType().registryId() + "_" + StoneVariant.BRICKS.registrySuffix());
             var plain = blockItem(stone.stoneType().registryId() + "_" + StoneVariant.STONE.registrySuffix());
             for (String family : STONE_EXTRUDER_MOLDS) {

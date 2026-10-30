@@ -1,6 +1,10 @@
 package gregtech.engine.material;
 
+import gregtech.api.material.GTMaterial;
 import gregtech.content.block.MaterialBlockLike;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -62,6 +66,37 @@ public final class MaterialUnification {
             case "dust/Glowstone" -> Items.GLOWSTONE_DUST;
             default -> null;
         };
+    }
+
+    /**
+     * Material forms GT6 stores as a vanilla item, keyed by form and material. These are the
+     * material's only stack of that form in the original; metals keep their GT storage blocks
+     * and are deliberately absent here.
+     */
+    private static final Map<String, Item> VANILLA_FORM_ITEMS = vanillaFormItems();
+
+    private static Map<String, Item> vanillaFormItems() {
+        Map<String, Item> items = new HashMap<>();
+        items.put(formKey("ingot", "NetherBrick"), Items.NETHER_BRICK);
+        items.put(formKey("plate", "Glass"), Items.GLASS_PANE);
+        items.put(formKey("blockDust", "Stone"), Items.GRAVEL);
+        items.put(formKey("blockSolid", "Stone"), Items.SMOOTH_STONE);
+        items.put(formKey("blockSolid", "Endstone"), Items.END_STONE);
+        items.put(formKey("blockSolid", "Netherrack"), Items.NETHERRACK);
+        items.put(formKey("blockSolid", "Glass"), Items.GLASS);
+        items.put(formKey("blockSolid", "Obsidian"), Items.OBSIDIAN);
+        return Map.copyOf(items);
+    }
+
+    private static String formKey(String form, String material) {
+        return (form + "/" + material).replaceAll("[^A-Za-z0-9]", "").toLowerCase(Locale.ROOT);
+    }
+
+    /** The vanilla stack GT6 uses for this material form, or EMPTY when it keeps the GT item. */
+    public static ItemStack vanillaFormStack(String form, GTMaterial material) {
+        if (material == null || !material.isValid()) return ItemStack.EMPTY;
+        Item item = VANILLA_FORM_ITEMS.get(formKey(form, material.getName()));
+        return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
     /** The explicitly replaced GT entries, shared by creative tabs, JEI and EMI. */
