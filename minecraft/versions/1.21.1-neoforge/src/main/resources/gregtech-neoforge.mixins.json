@@ -47,8 +47,7 @@
     "CoverWalkMixin",
     "CoverCollisionMixin",
     "CoverSignalMixin",
-    "BucketContentAccessor",
-    "CoverHarvestMixin"
+    "BucketContentAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -114,7 +114,8 @@ public final class GTToolHelper {
             return electric.interactionType(stack) == type && electric.canInteract(stack);
         }
         if (stack.getItem() instanceof GTToolItem toolItem) {
-            if (getType(stack) != type) {
+            if (getType(stack) != type
+                    && !(getType(stack) == GTToolType.UNIVERSAL_SPADE && type == GTToolType.CROWBAR)) {
                 return false;
             }
             if (!type.requiresHeadAssembly()) {

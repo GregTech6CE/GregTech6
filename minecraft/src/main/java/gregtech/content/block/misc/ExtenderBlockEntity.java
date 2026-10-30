@@ -51,7 +51,7 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
     @Override
     public void dropContents() {
         for (var side : Direction.values()) {
-            if (!gregtech.content.cover.CoverDrops.retained(this)) gregtech.engine.inventory.BlockContents.drop(this,
+            gregtech.engine.inventory.BlockContents.drop(this,
                     getCover(side));
             covers[side.ordinal()] = net.minecraft.world.item.ItemStack.EMPTY;
         }

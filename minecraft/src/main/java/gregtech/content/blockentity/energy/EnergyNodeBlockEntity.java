@@ -1251,7 +1251,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     }
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
-        if(!gregtech.content.cover.CoverDrops.retained(this))for(var cover:batteryCovers.values())gregtech.engine.inventory.BlockContents.drop(this,cover);
+        for(var cover:batteryCovers.values())gregtech.engine.inventory.BlockContents.drop(this,cover);
         if(!batteryCovers.isEmpty())batteryCovers.clear();
         for (var battery : batteries) gregtech.engine.inventory.BlockContents.drop(this, battery);
         batteries.clear();

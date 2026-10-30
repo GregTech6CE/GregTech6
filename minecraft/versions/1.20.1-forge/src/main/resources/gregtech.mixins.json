@@ -46,7 +46,6 @@
     "CoverWalkMixin",
     "CoverCollisionMixin",
     "CoverSignalMixin",
-    "CoverHarvestMixin",
     "PacketFrameEncoderMixin",
     "LoginQueryPayloadMixin",
     "CustomPayloadLimitMixin"

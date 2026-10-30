@@ -78,10 +78,6 @@ public final class ComponentCoverStorage {
 
     public void drop() {
         if (covers == null) return;
-        if (CoverDrops.retained(host.coverOwner())) {
-            java.util.Arrays.fill(covers, ItemStack.EMPTY);
-            return;
-        }
         for (var side : Direction.values())
             gregtech.engine.inventory.BlockContents.drop(host.coverOwner(), remove(side));
     }

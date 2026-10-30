@@ -174,7 +174,7 @@ public final class LogisticsCovers {
 
     public void dropAll() {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
-            if (!faces[faceIndex].isEmpty() && !gregtech.content.cover.CoverDrops.retained(owner))
+            if (!faces[faceIndex].isEmpty())
                 BlockContents.drop(owner, faces[faceIndex]);
             faces[faceIndex] = ItemStack.EMPTY;
             displaySignals[faceIndex] = 0;

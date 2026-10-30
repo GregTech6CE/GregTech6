@@ -92,10 +92,9 @@ public final class ComponentCoverFallback {
         if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag);}
 //?}
     }
-    /** Harvested GT block items retain the native attachment data. */
+    /** Covers are dropped separately; portable host contents retain their existing persistence rules. */
     public static CompoundTag forItem(BlockEntity owner,CompoundTag tag){
-        // Native harvested block data retains attached covers and their configuration.
-        return tag;
+        return CoverDrops.withoutCovers(tag);
     }
 //? if >=1.21.1 {
     /*public static void read(BlockEntity owner,CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){

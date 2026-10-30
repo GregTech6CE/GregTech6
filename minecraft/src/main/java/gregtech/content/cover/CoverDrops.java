@@ -1,74 +1,78 @@
 package gregtech.content.cover;
-import net.minecraft.core.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.*;
-/** Original cover data follows the harvested GT block; a crowbar returns a default attachment. */
+
+/** Covers drop through their host's removal path, separately from the host item. */
 public final class CoverDrops {
-    private CoverDrops(){}
-    private static final Set<BlockEntity> RETAINED=Collections.newSetFromMap(new WeakHashMap<>());
-    private static final Map<BlockEntity,CompoundTag> HARVEST=new WeakHashMap<>();
-    public static boolean retained(BlockEntity owner){return RETAINED.contains(owner);}
-    public static void saveRuntime(BlockEntity owner,CompoundTag tag){
-        if(!ComponentCoverFallback.ownClass(owner)||!(owner instanceof PanelCoverHost host))return;
-        if(host.hasAttachedCovers())tag.putBoolean("gt.cover.stopped",host.panels().stopped());
+    private CoverDrops() {}
+
+    public static void saveRuntime(BlockEntity owner, CompoundTag tag) {
+        if (!ComponentCoverFallback.ownClass(owner) || !(owner instanceof PanelCoverHost host)) return;
+        if (host.hasAttachedCovers()) tag.putBoolean("gt.cover.stopped", host.panels().stopped());
     }
-    public static void loadRuntime(BlockEntity owner,CompoundTag tag){
-        if(ComponentCoverFallback.ownClass(owner)&&owner instanceof PanelCoverHost host&&tag.contains("gt.cover.stopped"))host.panels().restoreStopped(tag.getBoolean("gt.cover.stopped"));
+
+    public static void loadRuntime(BlockEntity owner, CompoundTag tag) {
+        if (ComponentCoverFallback.ownClass(owner) && owner instanceof PanelCoverHost host
+                && tag.contains("gt.cover.stopped")) host.panels().restoreStopped(tag.getBoolean("gt.cover.stopped"));
     }
-    private static CompoundTag coverData(BlockEntity owner,ServerLevel level){
-        if (owner instanceof PanelCoverHost host && !host.hasAttachedCovers()) return new CompoundTag();
-//? if >=1.21.1 {
-        /*var saved=owner.saveWithoutMetadata(level.registryAccess());var result=new CompoundTag();
-*///?} else {
-        var saved=owner.saveWithoutMetadata();var result=new CompoundTag();
-//?}
-        for(String key:saved.getAllKeys())if(key.startsWith("gt_cover_")||key.startsWith("gt.battery_cover_")||key.startsWith("gt.logistics.cover.")||key.equals("gt.component_covers")||key.equals("gt.cover.stopped"))result.put(key,saved.get(key).copy());
-        return result;
+
+    private static boolean coverKey(String key) {
+        return key.startsWith("gt_cover_") || key.startsWith("gt.battery_cover_")
+                || key.startsWith("gt.logistics.cover.") || key.equals("gt.component_covers")
+                || key.equals("gt.cover.stopped");
     }
-    /** Player destruction removes the block before calculating its loot: snapshot attachments first. */
-    public static BlockEntity beginHarvest(ServerLevel level,BlockPos pos,net.minecraft.server.level.ServerPlayer player){
-        var state=level.getBlockState(pos);var owner=level.getBlockEntity(pos);
-        if(owner==null||!ComponentCoverFallback.ownClass(owner)||player.isCreative()||player.isSpectator()
-                ||!state.canHarvestBlock(level,pos,player)||state.getBlock().asItem()==net.minecraft.world.item.Items.AIR)return null;
-        var saved=coverData(owner,level);if(saved.isEmpty())return null;
-        HARVEST.put(owner,saved);RETAINED.add(owner);return owner;
+
+    public static CompoundTag withoutCovers(CompoundTag tag) {
+        for (String key : new ArrayList<>(tag.getAllKeys())) if (coverKey(key)) tag.remove(key);
+        return tag;
     }
-    public static void finishHarvest(BlockEntity owner,boolean success){
-        if(owner==null)return;
-        HARVEST.remove(owner);if(!success)RETAINED.remove(owner);
+
+    /** Called on block replacement, not chunk unload; clearing slots makes native drop paths idempotent. */
+    public static void dropAll(BlockEntity owner) {
+        if (owner.getLevel() == null || owner.getLevel().isClientSide) return;
+        if (owner instanceof PanelCoverHost host) for (var side : net.minecraft.core.Direction.values()) {
+            var cover = host.removeCover(side);
+            if (!cover.isEmpty()) net.minecraft.world.level.block.Block.popResource(owner.getLevel(), owner.getBlockPos(), cover);
+        }
+        if (owner instanceof gregtech.content.logistics.LogisticsCoverHost host) host.logisticsCovers().dropAll();
     }
-    public static List<ItemStack> capture(BlockState state,ServerLevel level,BlockEntity owner,List<ItemStack> drops){
-        if(owner==null||!ComponentCoverFallback.ownClass(owner))return drops;
+
+    public static List<ItemStack> capture(BlockState state, ServerLevel level, BlockEntity owner, List<ItemStack> drops) {
+        if (owner == null || !net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals("gt6ce")) return drops;
         boolean machine = owner instanceof gregtech.content.blockentity.machine.HopperBlockEntity
                 || owner instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity
                 || owner instanceof gregtech.content.blockentity.GTEnergyBlockEntity
                     && !(owner instanceof gregtech.content.blockentity.machine.TankBlockEntity)
                     && !(owner instanceof gregtech.content.blockentity.machine.LogisticsTankBlockEntity)
                     && !(owner instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity);
-        if (machine) for (var stack : drops) if (stack.is(state.getBlock().asItem())) {
+        for (var stack : drops) {
+            if (!stack.is(state.getBlock().asItem())) continue;
 //? if >=1.21.1 {
-            /*stack.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+            /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+            if (data == null) continue;
+            var tag = data.copyTag();
 *///?} else {
-            stack.removeTagKey("BlockEntityTag");
+            var existing = stack.getTagElement("BlockEntityTag");
+            if (existing == null) continue;
+            var tag = existing.copy();
 //?}
-        }
-        var coverData=HARVEST.get(owner);
-        if(coverData==null)coverData=coverData(owner,level);
-        if(coverData.isEmpty())return drops;
-        for(var stack:drops)if(!stack.isEmpty()&&stack.is(state.getBlock().asItem())){
+            // Preserve intentional contents of portable tanks, but never duplicate their covers.
+            withoutCovers(tag);
+            boolean empty = tag.isEmpty() || tag.size() == 1 && tag.contains("id");
 //? if >=1.21.1 {
-            /*var data=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);var blockTag=data==null?new CompoundTag():data.copyTag();
-            blockTag.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(owner.getType()).toString());
-            blockTag.merge(coverData);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(blockTag));
+            /*if (machine || empty) stack.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+            else stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
+                    net.minecraft.world.item.component.CustomData.of(tag));
 *///?} else {
-            var existing=stack.getTagElement("BlockEntityTag");var blockTag=existing==null?new CompoundTag():existing.copy();
-            blockTag.merge(coverData);stack.addTagElement("BlockEntityTag",blockTag);
+            if (machine || empty) stack.removeTagKey("BlockEntityTag");
+            else stack.addTagElement("BlockEntityTag", tag);
 //?}
-            RETAINED.add(owner);break;
         }
         return drops;
     }

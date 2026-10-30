@@ -103,12 +103,11 @@ public final class CoverStore {
         return panels().removed(side, cover);
     }
 
-    /** Break-time drop of every face, honouring the harvested-cover retention of {@link CoverDrops}. */
+    /** Covers are separate drops; the harvested host never carries their state. */
     public void drop() {
         if (covers == null) return;
-        boolean retained = CoverDrops.retained(host.coverOwner());
         for (int i = 0; i < covers.length; i++) {
-            if (!retained) BlockContents.drop(host.coverOwner(), covers[i]);
+            BlockContents.drop(host.coverOwner(), covers[i]);
             covers[i] = ItemStack.EMPTY;
         }
         hasCovers = false;
