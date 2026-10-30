@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 public final class BlockHarvestEvents {
  @SubscribeEvent public static void harvest(PlayerEvent.HarvestCheck event) {
+  if(event.getTargetBlock().getBlock() instanceof gregtech.content.block.machine.TankBlock){event.setCanHarvest(true);return;}
   var oreDecision=OreHostHarvest.decision(event.getEntity().getMainHandItem(),event.getTargetBlock());
   if(oreDecision.isPresent()){event.setCanHarvest(oreDecision.get());return;}
   // Spike harvest levels follow their registered material quality.

@@ -142,8 +142,7 @@ public class TankBlock extends Block implements EntityBlock {
 
     public static Properties defaultProperties(TankSpec spec) {
         return Properties.of()
-                .strength(spec.hardness(), spec.blastResistance())
-                .requiresCorrectToolForDrops();
+                .strength(spec.hardness(), spec.blastResistance());
     }
 
     public static Properties woodProperties(TankSpec spec) {

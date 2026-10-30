@@ -23,9 +23,11 @@ public final class BlockHarvestPolicy {
   return original;
  }
  public static boolean handHarvestable(Block block) {
+  if(block instanceof gregtech.content.block.machine.TankBlock)return true;
   return source(block).map(SourceBlockProperties.Params::handHarvestable).orElse(!block.defaultBlockState().requiresCorrectToolForDrops());
  }
  public static Tool tool(Block block) {
+  if(block instanceof gregtech.content.block.machine.TankBlock)return Tool.WRENCH;
   if(block instanceof MaterialBlockLike material && material.prefix().isCrate())return Tool.CROWBAR;
   var original=source(block);
   if(original.isPresent())return Tool.valueOf(original.get().tool().toUpperCase(java.util.Locale.ROOT));
@@ -68,6 +70,7 @@ public final class BlockHarvestPolicy {
   return Tool.PICKAXE;
  }
  public static int level(Block block) {
+  if(block instanceof gregtech.content.block.machine.TankBlock)return 0;
   var original=source(block);if(original.isPresent())return original.get().level();
   if(block instanceof gregtech.content.block.misc.LongDistPipeBlock) return 3;
   if(block instanceof gregtech.content.block.misc.LongDistEndpointBlock endpoint) return endpoint.material().getToolQuality();
