@@ -12,6 +12,7 @@ crash-reports/
 # IDE and OS files.
 .idea/
 .vscode/
+.eclipse/
 .classpath
 .project
 .settings/
