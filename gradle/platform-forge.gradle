@@ -11,6 +11,11 @@ evaluationDependsOn(':api')
 evaluationDependsOn(":api-platform:${project.name}")
 def platformApi = project(":api-platform:${project.name}")
 
+// GameTest runs use the normal test source set; it never enters either release jar.
+sourceSets.test {
+    compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+    runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+}
 
 version = mod_version
 // Stonecutter gives the host and API nodes the same project name. Keep their
@@ -113,6 +118,14 @@ minecraft {
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', mod_id, '--all', '--output', rootProject.file('minecraft/versions/1.20.1-forge/src/main/resources/'), '--existing', file('build/resources/main/')
+        }
+
+        // ./gradlew :minecraft:1.20.1-forge:runGameTestServer
+        gameTestServer {
+            workingDirectory project.file(project.findProperty('gameTestDirectory') ?: 'build/gametest-run')
+            jvmArgs "-Xmx${project.findProperty('gameTestHeap') ?: '3g'}"
+            property 'forge.enabledGameTestNamespaces', 'gt6ce'
+            mods { "${mod_id}" { source sourceSets.test } }
         }
     }
 }

@@ -35,6 +35,14 @@ sourceSets.matching { it.name != 'addonSample' }.configureEach { sources ->
             layout.projectDirectory.dir("src/${sources.name}/resources")).builtBy(generate))
 }
 
+// GameTest templates live once under the shared test tree; each node gets the path it reads.
+tasks.named('processTestResources', ProcessResources).configure {
+    from(rootProject.file('minecraft/src/test/templates')) {
+        include '*.nbt'
+        into(project.name.endsWith('neoforge') ? 'data/gt6ce/structure' : 'data/gt6ce/structures')
+    }
+}
+
 // CI builds each loader node directly; retain the API and core verification lifecycle.
 // Shared sources are formatted once in :minecraft, so every node checks them too.
 tasks.named('check').configure { dependsOn ':api:check', ':core:check', ':minecraft:spotlessCheck' }

@@ -2,7 +2,7 @@
 
 本仓库的自动测试是常驻回归；测试目录不使用 `.gitignore` 的 transient 规则。一次性验证放 `work/<任务名>/`（已忽略）或手动删除，不通过忽略测试目录来管理。
 
-当前接入状态：`core` JUnit 已接入并通过 `:core:test` 运行。当前分支尚未注册 `runGameTestServer`，也没有 `minecraft/src/test`、GameTest 案例表和 NBT 映射；下文 GameTest 部分是接入约定，任务存在前不要按这些命令验收。
+当前接入状态：`core` JUnit 与 GameTest 最小接线已接入；两个节点的 `runGameTestServer` 可运行。GameTest 案例表尚未建立，新增运行时案例时按下方 schema 创建。
 
 ## 分层与边界
 
@@ -24,16 +24,16 @@ core 测试不得引入 Minecraft、Forge、NeoForge 类型。GameTest 共享测
 
 测试结果在 `core/build/test-results/test/*.xml`。配方根目录由 `core/build.gradle` 的 `gt6ce.recipeRoot` 系统属性提供；从 IDE 直接运行时回退到 `core/src/main/resources/data/gt6ce/recipes`。
 
-### GameTest（当前分支尚未接入）
+### GameTest
 
-以下命令、案例表和模板映射是接入约定；当前分支只有 `runGameTestServer` 任务出现后才可用。
+以下命令在对应节点可用；案例表和模板按下方位置维护。
 
 ```bash
 ./gradlew :minecraft:1.20.1-forge:runGameTestServer
 ./gradlew :minecraft:1.21.1-neoforge:runGameTestServer
 ```
 
-接入后，GameTest 不接入 `check` 或 CI；`check` 只编译测试源集。首次运行会下载游戏资源，失败时先区分环境问题与断言失败。EULA 由运行环境处理，不把 `eula.txt` 提交到仓库。
+GameTest 不接入 `check` 或 CI；`check` 只编译测试源集。首次运行会下载游戏资源，失败时先区分环境问题与断言失败。EULA 由运行环境处理，不把 `eula.txt` 提交到仓库。
 
 ## 案例表
 
@@ -56,7 +56,7 @@ issue  source  kind  target  expected
 
 ### GameTest 全量表
 
-GameTest 接入后使用 `minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`，列：
+GameTest 案例表路径为 `minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`；当前仅有最小接线，尚未建立该文件，新增案例时按以下列创建：
 
 ```text
 issue  recipe  level  expected_type  result_item  result_count  setup  notes
@@ -73,7 +73,7 @@ issue  recipe  level  expected_type  result_item  result_count  setup  notes
 
 ## 结构模板
 
-GameTest 接入时只保留一份 canonical `minecraft/src/test/resources/templates/test_empty.nbt`，由 `minecraft/build.gradle` 的 `processTestResources` 按节点映射到 `data/gt6ce/structures`（1.20.1）或 `data/gt6ce/structure`（1.21.1），并把 `templates/**` 从默认资源拷贝中排除。
+GameTest 只保留一份 canonical `minecraft/src/test/templates/test_empty.nbt`，由 `minecraft/build.gradle` 的 `processTestResources` 按节点映射到 `data/gt6ce/structures`（1.20.1）或 `data/gt6ce/structure`（1.21.1）。
 
 不要把 NBT 放进 `gradle/`、`src/main/resources` 或每个版本节点各复制一份；单 namespace `gt6ce` 配单模板即可。
 
@@ -90,6 +90,6 @@ GameTest 接入时只保留一份 canonical `minecraft/src/test/resources/templa
 
 - Spotless 失败：`./gradlew :core:spotlessApply` 后重跑 `:core:check`。
 - core 测试找不到配方：确认 `gt6ce.recipeRoot` 已设置，或从 `core` 目录运行。
-- GameTest 接入后找不到模板：确认测试类使用 `@GameTestHolder("gt6ce")`、`@PrefixGameTestTemplate(false)`，并检查 NBT 输出路径是 `structures`（1.20.1）还是 `structure`（1.21.1）。
-- GameTest 接入后没有运行：确认 `runGameTestServer` 任务存在、`forge.enabledGameTestNamespaces`/`neoforge.enabledGameTestNamespaces` 为 `gt6ce`。
+- GameTest 找不到模板：确认测试类使用 `@GameTestHolder("gt6ce")`、`@PrefixGameTestTemplate(false)`，并检查 NBT 输出路径是 `structures`（1.20.1）还是 `structure`（1.21.1）。
+- GameTest 没有运行：确认 `runGameTestServer` 任务存在、`forge.enabledGameTestNamespaces`/`neoforge.enabledGameTestNamespaces` 为 `gt6ce`。
 - EULA、代理、资源下载失败：先检查运行环境，不要通过放宽断言绕过。
