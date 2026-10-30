@@ -61,6 +61,11 @@ public final class RecipeDump {
 
     public static final String PROPERTY = "gt6ce.recipeDump";
     public static final String ENVIRONMENT = "GT6CE_RECIPE_DUMP";
+    public static final String OVERLAY_PROPERTY = "gt6ce.recipeDumpOverlay";
+    public static final String OVERLAY_ENVIRONMENT = "GT6CE_RECIPE_DUMP_OVERLAY";
+    /** Optional comma-separated {@code nameInternal} filter; empty writes every map. */
+    public static final String MAPS_PROPERTY = "gt6ce.recipeDumpMaps";
+    public static final String MAPS_ENVIRONMENT = "GT6CE_RECIPE_DUMP_MAPS";
 
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -69,8 +74,20 @@ public final class RecipeDump {
 
     /** Writes the dump when a target directory was requested; never throws into recipe registration. */
     public static void afterRegistration() {
-        String target = System.getProperty(PROPERTY);
-        if (target == null || target.isBlank()) target = System.getenv(ENVIRONMENT);
+        dumpIfRequested(PROPERTY, ENVIRONMENT);
+    }
+
+    /**
+     * Second snapshot after {@code MachineRecipeOverlay.apply}, which adds the tag/overlay producers
+     * (thermal recycling, ore washing and the other rebuilds) that the static snapshot cannot see.
+     */
+    public static void afterOverlay() {
+        dumpIfRequested(OVERLAY_PROPERTY, OVERLAY_ENVIRONMENT);
+    }
+
+    private static void dumpIfRequested(String property, String environment) {
+        String target = System.getProperty(property);
+        if (target == null || target.isBlank()) target = System.getenv(environment);
         if (target == null || target.isBlank()) return;
         try {
             write(Paths.get(target));
@@ -79,16 +96,27 @@ public final class RecipeDump {
         }
     }
 
+    private static java.util.Set<String> mapFilter() {
+        String value = System.getProperty(MAPS_PROPERTY);
+        if (value == null || value.isBlank()) value = System.getenv(MAPS_ENVIRONMENT);
+        if (value == null || value.isBlank()) return java.util.Set.of();
+        var filter = new java.util.HashSet<String>();
+        for (String name : value.split(",")) if (!name.isBlank()) filter.add(name.trim());
+        return filter;
+    }
+
     private static void write(Path directory) throws IOException {
         long started = System.nanoTime();
         Path maps = directory.resolve("maps");
         Files.createDirectories(maps);
         JsonObject index = new JsonObject();
         JsonArray indexMaps = new JsonArray();
+        var filter = mapFilter();
         int total = 0;
         int written = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
             if (map.mNameInternal.isEmpty()) continue;
+            if (!filter.isEmpty() && !filter.contains(map.mNameInternal)) continue;
             JsonObject json = mapJson(map);
             String file = "maps/" + fileName(map.mNameInternal) + ".json";
             Files.writeString(maps.resolve(fileName(map.mNameInternal) + ".json"),

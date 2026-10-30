@@ -45,6 +45,7 @@ public final class MachineRecipeOverlay {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static int logged;
     private static int applications;
+    private static boolean overlayDumped;
     private static Result lastResult = Result.unchanged();
     private static List<Recipe> furnaceAdded = List.of();
     private static List<Recipe> furnaceRemoved = List.of();
@@ -102,6 +103,7 @@ public final class MachineRecipeOverlay {
         // New purified-acid calls do not displace the earlier imported/static Bath producers.
         SharedPurifiedAcidRows.rebuild();
         SharedThermalInputRows.rebuild();
+        SharedThermalRecyclingRows.rebuild();
         MaterialDisplayBinding.invalidate();
         logged = 0;
         var tally = new Tally();
@@ -114,6 +116,10 @@ public final class MachineRecipeOverlay {
                 baselineRows(), restoreMillis, moved, tally.removed, tally.added, tally.rejected);
         lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false);
         applications++;
+        if (!overlayDumped) {
+            overlayDumped = true;
+            RecipeDump.afterOverlay();
+        }
         return lastResult;
     }
 
@@ -180,6 +186,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(SharedOilSandRows.baselineExcluded());
         exclude.addAll(SharedPurifiedAcidRows.owned());
         exclude.addAll(SharedThermalInputRows.owned());
+        exclude.addAll(SharedThermalRecyclingRows.owned());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }

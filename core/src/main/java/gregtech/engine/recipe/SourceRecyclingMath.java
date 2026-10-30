@@ -98,6 +98,48 @@ public final class SourceRecyclingMath {
         return new Result(target, mb, (long) duration);
     }
 
+    /**
+     * Multi-component listener arithmetic: the fluid amount and target units are already resolved
+     * from the one phase-capable component, while the duration uses the whole item's source mass
+     * ({@code OM.weight(getAllMaterialStacks())}). Same expression and rounding as {@link #singleFluid}.
+     */
+    public static long weightedTicks(
+            double weight,
+            long targetMelting,
+            long actualFluidTemperature,
+            long environmentTemperature,
+            int millibuckets,
+            boolean lava) {
+        if (!Double.isFinite(weight)
+                || weight < 0
+                || targetMelting < 0
+                || actualFluidTemperature < 0
+                || environmentTemperature < 0
+                || millibuckets <= 0) throw new IllegalArgumentException("Unreviewed thermal mass");
+        long delta = Math.subtractExact(Math.max(targetMelting, actualFluidTemperature), environmentTemperature);
+        double thermal = (weight * delta) / 1600;
+        long lavaEnergy = Math.multiplyExact((long) millibuckets, 80L);
+        long base = lava ? lavaEnergy / 16 + (lavaEnergy % 16 == 0 ? 0 : 1) : 16;
+        double duration = Math.max(base, thermal);
+        if (!Double.isFinite(thermal) || !Double.isFinite(duration) || duration >= 0x1.0p63)
+            throw new ArithmeticException("Thermal duration exceeds supported long range");
+        return (long) duration;
+    }
+
+    /** One source component's target amount; the listener only adds positive converted amounts. */
+    public static long targetUnits(long inputUnits, long sourceUnit, long targetPerUnit) {
+        if (inputUnits < 0 || sourceUnit <= 0 || targetPerUnit < 0)
+            throw new IllegalArgumentException("Unreviewed thermal amount");
+        return unitsDown(inputUnits, sourceUnit, targetPerUnit);
+    }
+
+    /** Source mass of one material stack: {@code OM.weight} keeps density × 111.111 × amount / U. */
+    public static double materialWeight(double density, long inputUnits, long sourceUnit) {
+        if (!Double.isFinite(density) || density < 0 || inputUnits < 0 || sourceUnit <= 0)
+            throw new IllegalArgumentException("Unreviewed thermal density");
+        return (density * 111.111111 * inputUnits) / sourceUnit;
+    }
+
     private static long unitsDown(long amount, long original, long target) {
         if (target == 0) return 0;
         if (original == target || original == 0) return amount;
