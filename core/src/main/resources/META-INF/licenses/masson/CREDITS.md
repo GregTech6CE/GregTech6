@@ -2,9 +2,9 @@
 
 ## 项目
 
-- **作者**：Lorbineitte Masson
+- **作者**：lombinaxmasson
 - **许可证**：LGPL-3.0-or-later（见 `LICENSE`）
-- **Issue Tracker**：https://github.com/icodestuljh/cruciblecraft/issues
+- **Issue Tracker**：https://github.com/lombinaxmasson/cruciblecraft/issues
 
 ## 固定来源（GT6 / GTM）
 
