@@ -63,8 +63,14 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
             float x=2+col*2.4f,z=2+row*2.4f;
             var from=new Vector3f(x,1,z);var to=new Vector3f(x+2.4f,3,z+2.4f);
             for(var direction:Direction.values()) {
-                float[] uv=direction.getAxis()==Direction.Axis.Y ? new float[]{x,z,x+2.4f,z+2.4f}
-                        : new float[]{x,13,x+2.4f,15};
+                float[] uv = switch (direction) {
+                    case UP -> new float[]{x, z, x+2.4f, z+2.4f};
+                    case DOWN -> new float[]{x, 16-z-2.4f, x+2.4f, 16-z};
+                    case NORTH -> new float[]{16-x-2.4f, 13, 16-x, 15};
+                    case SOUTH -> new float[]{x, 13, x+2.4f, 15};
+                    case WEST -> new float[]{z, 13, z+2.4f, 15};
+                    case EAST -> new float[]{16-z-2.4f, 13, 16-z, 15};
+                };
                 var face=new BlockElementFace(null,0,"",new BlockFaceUV(uv,0));
 //? if >=1.21.1 {
                 /*quads.add(bakery.bakeQuad(from,to,face,sprite,direction,BlockModelRotation.X0_Y0,null,true));

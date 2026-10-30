@@ -117,7 +117,8 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
 
         CrucibleSpec spec = mold.spec();
         int tint = spec != null ? spec.tintRgb() : 0xFFFFFF;
-        TextureAtlasSprite sprite = CrucibleRenderSprites.resolve(SOLID_BASE);
+        TextureAtlasSprite sprite = CrucibleRenderSprites.resolve(spec == null || spec.material().getTextureSet() == null ? SOLID_BASE
+                : BlockMaterialIcons.baseTexture(spec.material().getTextureSet(), gregtech.engine.prefix.BlockMaterialPrefix.blockSolid));
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.solid());
         Matrix4f matrix = poseStack.last().pose();
         float r = ((tint >> 16) & 0xFF) / 255.0F;
@@ -177,11 +178,11 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
 //?}
 
                 // Side faces — render where adjacent cell is cavity (bit=1) or out-of-bounds
-                // UV: center 12/16 region, V narrowed to center strip for 2px face height
-                float sideU0 = cu0;
-                float sideU1 = cu1;
-                float sideV0 = sprite.getV0() + (7.0F / 16.0F) * vSpan;
-                float sideV1 = sprite.getV0() + (9.0F / 16.0F) * vSpan;
+                // Match the hull model's block-space UVs on every axis.
+                float sideU0 = sprite.getU0() + (1 - cx1) * uSpan;
+                float sideU1 = sprite.getU0() + (1 - cx0) * uSpan;
+                float sideV0 = sprite.getV0() + (13.0F / 16.0F) * vSpan;
+                float sideV1 = sprite.getV0() + (15.0F / 16.0F) * vSpan;
 
                 // North face (z-), CW from south view: LB→RB→RT→LT (X left, Y up)
                 if (row == 0 || (shape & (1 << ((row - 1) * 5 + col))) != 0) {
@@ -197,6 +198,8 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
                     consumer.vertex(matrix, cx1, y1, cz0).color(r * northShade, g * northShade, b * northShade, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, -1).endVertex();
 //?}
                 }
+                sideU0 = cu0;
+                sideU1 = cu1;
                 // South face (z+), CW from north view: LB→RB→RT→LT (X right, Y up)
                 if (row == 4 || (shape & (1 << ((row + 1) * 5 + col))) != 0) {
 //? if >=1.21.1 {
@@ -211,6 +214,8 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
                     consumer.vertex(matrix, cx0, y1, cz1).color(r * southShade, g * southShade, b * southShade, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), 0, 0, 1).endVertex();
 //?}
                 }
+                sideU0 = sprite.getU0() + cz0 * uSpan;
+                sideU1 = sprite.getU0() + cz1 * uSpan;
                 // West face (x-), CW from west view: LB→RB→RT→LT (Z right, Y up)
                 if (col == 0 || (shape & (1 << (row * 5 + (col - 1)))) != 0) {
 //? if >=1.21.1 {
@@ -225,6 +230,8 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
                     consumer.vertex(matrix, cx0, y1, cz0).color(r * westShade, g * westShade, b * westShade, a).uv(sideU0, sideV0).overlayCoords(overlay).uv2(packedLight).normal(poseStack.last().normal(), -1, 0, 0).endVertex();
 //?}
                 }
+                sideU0 = sprite.getU0() + (1 - cz1) * uSpan;
+                sideU1 = sprite.getU0() + (1 - cz0) * uSpan;
                 // East face (x+), CW from east view: LB→RB→RT→LT (Z left, Y up)
                 if (col == 4 || (shape & (1 << (row * 5 + (col + 1)))) != 0) {
 //? if >=1.21.1 {
@@ -244,7 +251,7 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
     }
 
     /** Render content fill — molten fluid (fullbright) or solidifying material.
-     *  Mold content uses center 12×12 of texture shifted down 4px. */
+     *  Mold content uses the same centered 12×12 texture region as the grid. */
     private static void renderContent(PoseStack poseStack, MultiBufferSource bufferSource,
                                       GTMaterial material, long temperature, float topY,
                                       float x0, float z0, float x1, float z1, int packedLight,
@@ -332,7 +339,7 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
 //?}
     }
 
-    /** drawTop variant using center 12×12 of texture, shifted down 4px — for mold content. */
+    /** drawTop variant using the same centered 12×12 texture region as the grid — for mold content. */
     private static void drawTopCentered(PoseStack poseStack, MultiBufferSource bufferSource,
                                         ResourceLocation texture, int tint,
                                         float y, float x0, float z0, float x1, float z1, int packedLight) {
@@ -346,11 +353,11 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
         if (a == 0) a = 1.0F;
         float uSpan = sprite.getU1() - sprite.getU0();
         float vSpan = sprite.getV1() - sprite.getV0();
-        // Center 12×12 of 16×16 texture, shifted down 4px
+        // Center 12×12 of the 16×16 texture, aligned with the cavity grid
         float u0 = sprite.getU0() + 2.0F / 16.0F * uSpan;
         float u1 = sprite.getU0() + 14.0F / 16.0F * uSpan;
-        float v0 = sprite.getV0() + 4.0F / 16.0F * vSpan;
-        float v1 = sprite.getV0() + 16.0F / 16.0F * vSpan;
+        float v0 = sprite.getV0() + 2.0F / 16.0F * vSpan;
+        float v1 = sprite.getV0() + 14.0F / 16.0F * vSpan;
         int overlay = OverlayTexture.NO_OVERLAY;
 //? if >=1.21.1 {
         /*consumer.addVertex(matrix, x0, y, z0).setColor(r, g, b, a).setUv(u0, v0).setOverlay(overlay).setLight(packedLight).setNormal(0, 1, 0);
