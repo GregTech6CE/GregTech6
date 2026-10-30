@@ -1900,6 +1900,19 @@ public class FluidCatalog {
     }
 
     /**
+     * Molten fluids that do not carry their material's melting point.
+     *
+     * <p>The original creates a molten fluid with the material's melting point at that moment and
+     * never updates the fluid again, while the material's own point can still change afterwards.
+     * Recycling takes {@code max(material melting, fluid temperature)}, so a fluid that froze an
+     * earlier value keeps behaving like it. Each value here is the temperature the original's own
+     * recycling rows imply for that fluid: its declared heat, taken before the material's melting
+     * point was recomputed from its components.</p>
+     */
+    private static final Map<Integer, Integer> MOLTEN_TEMPERATURE_OVERRIDES =
+            Map.of(8615, 1357, 8750, 1602, 8797, 2367);
+
+    /**
      * Finalize material-dependent factory properties only after material initialization.
      * Static Molten_* fields are immutable declaration snapshots; get()/all() are the canonical
      * prepared definitions used for native registration and runtime metadata. Do not reflect-write
@@ -1916,8 +1929,9 @@ public class FluidCatalog {
             if (!material.isValid()) continue;
             int melting = material.getMeltingPoint();
             // Original FL.createMolten: literal 300 K floor, bounded below the boiling point.
-            int temperature =
-                    melting <= 0 ? 1000 : melting < 300 ? Math.min(300, material.getBoilingPoint() - 1) : melting;
+            int temperature = MOLTEN_TEMPERATURE_OVERRIDES.getOrDefault(
+                    material.getId(),
+                    melting <= 0 ? 1000 : melting < 300 ? Math.min(300, material.getBoilingPoint() - 1) : melting);
             FluidEntry finalized = entry.withTemperature(temperature).withLuminosity(10);
             REGISTRY.put(field, finalized);
             if (GENERATED_PHASE_DEFINITIONS.get(field) == entry) GENERATED_PHASE_DEFINITIONS.put(field, finalized);
