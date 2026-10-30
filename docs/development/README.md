@@ -7,7 +7,8 @@
 1. [上手](getting-started.md)
 2. [文件归属](repository-layout.md)
 3. [验证](validation.md)
-4. [架构](../architecture/README.md)
+4. [测试](testing.md)
+5. [架构](../architecture/README.md)
 
 ## 次要主题
 

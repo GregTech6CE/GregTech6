@@ -9,7 +9,7 @@
 | 0：开始工作 | [开发上手](development/getting-started.md)、[文件归属](development/repository-layout.md) | 选择 JDK、构建目标和文件位置 |
 | 1：建立整体认识 | [架构](architecture/README.md)、[包索引](architecture/packages/README.md) | 区分模块、领域、运行时与适配 |
 | 2：进入具体包 | [API](architecture/packages/api.md)、[engine](architecture/packages/engine.md)、[content](architecture/packages/content.md)、[运行时](architecture/packages/runtime.md)、[平台](architecture/packages/platforms.md) | 定位职责、代表入口和修改边界 |
-| 3：处理横向问题 | [跨版本](architecture/versions.md)、[资源与生成物](architecture/resources.md)、[验证](development/validation.md)、[附属 API](ADDON_API.zh-CN.md) | 安全修改跨平台功能、资源和扩展接口 |
+| 3：处理横向问题 | [跨版本](architecture/versions.md)、[资源与生成物](architecture/resources.md)、[验证](development/validation.md)、[测试](development/testing.md)、[附属 API](ADDON_API.zh-CN.md) | 安全修改跨平台功能、资源和扩展接口 |
 | 4：留下可维护成果 | [集成证据](integration/README.md)、[操作与部署](operations/README.md)、[决策](decisions/README.md) | 保存可复现结论与执行记录 |
 
 ## 按任务找入口
@@ -25,4 +25,4 @@
 
 `development/` 写操作步骤，`architecture/` 写职责与原理，`integration/` 写来源与验证，`operations/` 写交付与运行，`decisions/` 写长期取舍。原始日志、下载、个人计划和一次性脚本统一放根目录 `work/<任务名>/`。
 
-这些目录是长期归档约定，不代表已配置发布服务、自动测试套件或外部示例项目。新增文档先挂到所属入口；接口、命令、包或流程变更时一并更新相关页面。
+这些目录是长期归档约定，不代表已配置发布服务或外部示例项目；自动测试的现状与入口见[测试](development/testing.md)。新增文档先挂到所属入口；接口、命令、包或流程变更时一并更新相关页面。

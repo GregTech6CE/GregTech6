@@ -2,8 +2,21 @@ plugins {
     id 'java-library'
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     api project(':api')
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test').configure {
+    useJUnitPlatform()
+    systemProperty 'gt6ce.recipeRoot',
+            layout.projectDirectory.dir('src/main/resources/data/gt6ce/recipes').asFile.absolutePath
 }
 
 java {

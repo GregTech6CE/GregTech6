@@ -1,0 +1,17 @@
+# issue	source	kind	target	expected
+155	json	shaped	smeltery_survival/burning_box_solid_brick.json	type=gt6ce:tool_shaped;pattern=BBB/BBB/BFB;key:B=tag:gt6ce:ingot/brick;key:F=tag:gt6ce:crafting_firestarters;result=gt6ce:burning_box_solid_brick;count=1
+161	json	shaped	tool_blocks/sap_bag.json	type=gt6ce:tool_shaped;pattern=SSS/LsL/LLL;key:S=tag:gt6ce:ammunition/sticks_wood;key:L=tag:gt6ce:book_binding/leather;key:s=item:gt6ce:tool_saw;result=gt6ce:sap_bag;count=1
+171	json	custom	tools/repair.json	type=gt6ce:tool_repair;category=equipment
+157	json	shapeless	clay_molds/imprint_221_anywoodplastic.json	type=gt6ce:tool_shapeless;ingredient:0=item:gt6ce:clay_mold;ingredient:1=tag:gt6ce:molds/forms/stick/anywoodplastic;result=gt6ce:clay_rod_mold;count=1
+157	mold	form	stick/AnyWoodPlastic	prefix=stick;family=AnyWoodPlastic;tag=molds/forms/stick/anywoodplastic
+2	vanilla	row	minecraft:furnace	pattern=XXX/XFX/XXX;key:X=tag:minecraft:stone_crafting_materials;key:F=firestarter;result=minecraft:furnace;count=1
+2	vanilla	row	minecraft:paper	pattern=XXX;key:X=item:minecraft:sugar_cane;result=minecraft:paper;count=1
+2	vanilla	row	minecraft:book	pattern=;key:L=item:minecraft:leather;key:A=item:minecraft:paper;key:B=item:minecraft:paper;key:C=item:minecraft:paper;result=minecraft:book;count=1
+2	vanilla	row	gt6ce:vanilla/oak_planks_saw	pattern=s/L;key:s=tool:saw;key:L=tag:minecraft:oak_logs;result=minecraft:oak_planks;count=4
+148	vanilla	row	gt6ce:vanilla/stick_from_wooden_rod	pattern=;key:S=tag:gt6ce:convertible_wooden_rods;result=minecraft:stick;count=1
+176	form	conversion	blockDust->dust	inputCount=1;outputCount=9;single=true
+176	form	conversion	blockDust->dustSmall	inputCount=1;outputCount=36;single=true
+209	form	conversion	blockIngot->ingot	inputCount=1;outputCount=9;single=true
+209	form	conversion	blockGem->gem	inputCount=1;outputCount=9;single=true
+209	form	conversion	blockPlate->plate	inputCount=1;outputCount=9;single=true
+209	form	conversion	blockDust->dust	inputCount=1;outputCount=9;single=true
