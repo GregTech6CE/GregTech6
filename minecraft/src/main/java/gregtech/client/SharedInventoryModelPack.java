@@ -121,8 +121,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             boolean fluidDisplay = item instanceof gregtech.content.item.FluidItem;
 //?}
             if (!id.getNamespace().equals("gt6ce") && !materialForm && !fluidDisplay) continue;
-            if (SharedInventoryModelPack.class.getResource("/assets/" + id.getNamespace()
-                    + "/models/item/" + id.getPath() + ".json") != null) continue;
+            if (JsonResourceAliases.contains("/assets/" + id.getNamespace()
+                    + "/models/item/" + id.getPath() + ".json")) continue;
             ResourceLocation parent = null;
             if (item instanceof gregtech.engine.material.MaterialFormItem material) {
                 parent = MaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.getMaterial()), material.getPrefix());
@@ -147,8 +147,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             }
             // Do not invent a missing template or hide it behind a dummy model. Unsupported
             // references remain visible in the usual bakery warning and final model checks.
-            if (parent == null || SharedInventoryModelPack.class.getResource("/assets/" + parent.getNamespace()
-                    + "/models/" + parent.getPath() + ".json") == null) continue;
+            if (parent == null || !JsonResourceAliases.contains("/assets/" + parent.getNamespace()
+                    + "/models/" + parent.getPath() + ".json")) continue;
             byte[] json = references.computeIfAbsent(parent, key ->
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), json);
@@ -161,9 +161,9 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             int berryColon=berryId.indexOf(':');
             if(!berryId.substring(berryColon+1).startsWith("plant_gt_berry_"))continue;
             var id=BuiltInRegistries.BLOCK.getKey(block);
-            if(SharedInventoryModelPack.class.getResource("/assets/"+id.getNamespace()+"/blockstates/"+id.getPath()+".json")==null)
+            if(!JsonResourceAliases.contains("/assets/"+id.getNamespace()+"/blockstates/"+id.getPath()+".json"))
                 result.put(named(id.getNamespace(),"blockstates/"+id.getPath()+".json"),bushStates);
-            if(SharedInventoryModelPack.class.getResource("/assets/"+id.getNamespace()+"/models/item/"+id.getPath()+".json")==null)
+            if(!JsonResourceAliases.contains("/assets/"+id.getNamespace()+"/models/item/"+id.getPath()+".json"))
                 result.put(named(id.getNamespace(),"models/item/"+id.getPath()+".json"),bushItem);
         }
         // Registration gained material forms after the original static data generation.
@@ -172,14 +172,18 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof MaterialBlockLike material)) continue;
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("gt6ce") || SharedInventoryModelPack.class.getResource(
-                    "/assets/gt6ce/blockstates/" + id.getPath() + ".json") != null) continue;
+            if (!id.getNamespace().equals("gt6ce") || JsonResourceAliases.contains(
+                    "/assets/gt6ce/blockstates/" + id.getPath() + ".json")) continue;
             var parent = BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
-            if (SharedInventoryModelPack.class.getResource("/assets/gt6ce/models/" + parent.getPath() + ".json") == null) continue;
+            if (!JsonResourceAliases.contains("/assets/gt6ce/models/" + parent.getPath() + ".json")) continue;
             byte[] json = ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8);
             result.put(location("blockstates/" + id.getPath() + ".json"), json);
             states++;
         }
+        // Keep aliases at the same low priority as the original mod assets. Each path
+        // serves its original bytes, so a user pack can override aliases independently.
+        JsonResourceAliases.resources().forEach((path, bytes) ->
+                result.put(location(path.substring("/assets/gt6ce/".length())), bytes));
         resources = Collections.unmodifiableMap(result);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Shared inventory resources: {} item references, {} templates, {} missing static blockstates",
                 result.size() - states, references.size(), states);

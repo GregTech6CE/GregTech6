@@ -1,0 +1,97 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+/** Retain public resource paths while generating repeated JSON structures from templates in release jars. */
+abstract class CompactModelJson extends DefaultTask {
+    @InputFiles @PathSensitive(PathSensitivity.RELATIVE)
+    abstract ConfigurableFileCollection getResourceRoots()
+
+    @OutputDirectory
+    abstract DirectoryProperty getOutputDirectory()
+
+    @TaskAction
+    void generate() {
+        def paths = new TreeMap<String, File>()
+        resourceRoots.files.each { root ->
+            if (!root.exists()) return
+            project.fileTree(root) {
+                include 'assets/gt6ce/models/**/*.json', 'assets/gt6ce/blockstates/*.json'
+            }.files.each { file ->
+                String path = root.toPath().relativize(file.toPath()).toString().replace('\\', '/')
+                if (paths.put(path, file) != null) throw new GradleException("Duplicate resource input: ${path}")
+            }
+        }
+        def groups = new LinkedHashMap<String, Map>()
+        paths.each { path, file ->
+            List<String> segments = []
+            List<String> parameters = []
+            StringBuilder text = new StringBuilder()
+            CompactModelJson.render(new JsonSlurper().parse(file, 'UTF-8'), text, segments, parameters)
+            segments.add(text.toString())
+            String shape = JsonOutput.toJson(segments)
+            def group = groups.computeIfAbsent(shape) { [segments: segments, variants: new LinkedHashMap()] }
+            String values = JsonOutput.toJson(parameters)
+            def variant = group.variants.computeIfAbsent(values) { [parameters, []] }
+            variant[1].add(path)
+        }
+        // Unique shapes stay ordinary JSON; only repeated structures become templates.
+        def templates = groups.values().findAll { group ->
+            group.variants.values().sum { it[1].size() } > 1
+        }.collect { [segments: it.segments, variants: it.variants.values().toList()] }
+        File index = outputDirectory.file('META-INF/gt6ce/model-json-aliases.json').get().asFile
+        index.parentFile.mkdirs()
+        index.setText(JsonOutput.toJson([version: 1, groups: templates]), 'UTF-8')
+        int count = templates.sum { it.variants.sum { it[1].size() } } ?: 0
+        logger.lifecycle("Shared JSON: ${count} resources generated from ${templates.size()} templates")
+    }
+
+    // Separate JSON syntax from string parameters. Keys, numeric values and array order
+    // remain in the template; parameters are JSON-escaped again by the runtime reader.
+    static void render(Object value, StringBuilder text, List<String> segments, List<String> parameters) {
+        if (value instanceof Map) {
+            text.append('{')
+            boolean first = true
+            value.each { key, child ->
+                if (!first) text.append(',')
+                first = false
+                text.append(JsonOutput.toJson(key.toString())).append(':')
+                CompactModelJson.render(child, text, segments, parameters)
+            }
+            text.append('}')
+        } else if (value instanceof List) {
+            text.append('[')
+            value.eachWithIndex { child, index ->
+                if (index != 0) text.append(',')
+                CompactModelJson.render(child, text, segments, parameters)
+            }
+            text.append(']')
+        } else if (value instanceof String) {
+            segments.add(text.toString())
+            text.setLength(0)
+            parameters.add(value)
+        } else {
+            text.append(JsonOutput.toJson(value))
+        }
+    }
+}
+
+def compact = tasks.register('compactModelJson', CompactModelJson) {
+    dependsOn tasks.named('processResources'), ':core:processResources'
+    resourceRoots.from(sourceSets.main.output.resourcesDir, project(':core').sourceSets.main.output.resourcesDir)
+    outputDirectory = layout.buildDirectory.dir('generated/compact-model-json')
+}
+
+tasks.named(project.name.endsWith('neoforge') ? 'jar' : 'distributionJar', Jar).configure {
+    dependsOn compact
+    from(compact.flatMap { it.outputDirectory })
+    Set<String> omitted = [] as Set
+    doFirst {
+        File index = compact.get().outputDirectory.file('META-INF/gt6ce/model-json-aliases.json').get().asFile
+        omitted = new JsonSlurper().parse(index).groups.collectMany { group ->
+            group.variants.collectMany { variant -> variant[1] }
+        } as Set
+    }
+    eachFile { details ->
+        if (omitted.contains(details.path)) details.exclude()
+    }
+}
