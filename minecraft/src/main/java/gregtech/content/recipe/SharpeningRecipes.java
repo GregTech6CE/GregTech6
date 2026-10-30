@@ -29,10 +29,13 @@ import java.util.List;
  *       quality-scaled multiplier 16.</li>
  *   <li>Seven grinding rows: {@code nugget → round}, {@code plateGem → lens},
  *       {@code gem/ingot/billet → stick}, {@code gemChipped → 2 arrow heads},
- *       {@code rockGt → 8 arrow heads}, EU 16 with multiplier 256. Where the input holds more material
- *       than the output, GT6 adds the pulverized remainder as a second output
- *       ({@code aOutputPulverizedRemains}).</li>
+ *       {@code rockGt → 8 arrow heads}, EU 16 with multiplier 256.</li>
  * </ul>
+ * <p>
+ * Every row enables GT6's pulverized remainder ({@code aOutputPulverizedRemains}, the {@code T} in
+ * {@code ... T, T, F, ...}), so a raw head loses its sprue material as a dust byproduct to the
+ * finished head's smaller weight.
+ * </p>
  * <p>
  * GT6's extra {@code COATED.NOT} condition has no port counterpart; {@code ANTIMATTER.NOT} is applied.
  * </p>
@@ -66,12 +69,12 @@ public final class SharpeningRecipes {
 
     /** Grinding rows, EU 16 with multiplier 256; the 4th field marks pulverized remains. */
     private static final List<String[]> GRINDING_ROWS = List.of(
-            new String[]{"nugget", "round", "1", "F"},
+            new String[]{"nugget", "round", "1", "T"},
             new String[]{"plateGem", "lens", "1", "T"},
             new String[]{"gem", "stick", "1", "T"},
             new String[]{"ingot", "stick", "1", "T"},
             new String[]{"billet", "stick", "1", "T"},
-            new String[]{"gemChipped", "toolHeadArrow", "2", "F"},
+            new String[]{"gemChipped", "toolHeadArrow", "2", "T"},
             new String[]{"rockGt", "toolHeadArrow", "8", "T"});
 
     private static boolean registered;
@@ -92,7 +95,7 @@ public final class SharpeningRecipes {
         registered = true;
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
-            for (String[] row : TOOL_HEAD_ROWS) sharpen(material, row[0], 1, row[1], 1, 16, false);
+            for (String[] row : TOOL_HEAD_ROWS) sharpen(material, row[0], 1, row[1], 1, 16, true);
             for (String[] row : GRINDING_ROWS) {
                 sharpen(material, row[0], 1, row[1], Integer.parseInt(row[2]), 256, "T".equals(row[3]));
             }

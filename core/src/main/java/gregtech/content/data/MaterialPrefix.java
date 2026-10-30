@@ -284,8 +284,13 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_FOILS = m -> MaterialForms.has(m, "FOILS");
     /** GT6 {@code OP.LENSES}. */
     private static final Predicate<GTMaterial> GT6_LENSES = m -> MaterialForms.has(m, "LENSES");
-    /** GT6 {@code OP.PARTS}: gears, rings, springs, rotors, casings. */
-    private static final Predicate<GTMaterial> GT6_PARTS = m -> MaterialForms.has(m, "PARTS");
+    /**
+     * GT6 {@code OP.PARTS}: gears, rings, springs, rotors, casings. <br>
+     * {@code OreDictMaterial.qual} also grants PARTS to every material with a positive tool type
+     * ({@code OreDictMaterial:899}), which is how wood species carry wooden gears, rings, chains,
+     * springs, rotors and casings that the item-generator form table does not list.
+     */
+    private static final Predicate<GTMaterial> GT6_PARTS = m -> MaterialForms.has(m, "PARTS") || m.getToolTypes() > 0;
     /** GT6 {@code OP.RAILS}. */
     private static final Predicate<GTMaterial> GT6_RAILS = m -> MaterialForms.has(m, "RAILS");
     /** GT6 {@code OP.ORES}: raw ore, crushed ore, rock. */
@@ -497,13 +502,14 @@ public final class MaterialPrefix {
                         m -> MaterialForms.has(m, "LENSES")));
         // GT6 OP.java:209: `round = Or(PARTS, And(PROJECTILES, nugget))` — rounds come from the parts
         // form, or from a nugget-bearing projectile material (the port's HAS_INGOT stands in for the
-        // nugget form, which it generates for ingot materials).
+        // nugget form, which it generates for ingot materials). PARTS also covers qual's tool-stat
+        // grant, which is how the untreated wood species have rounds.
         round = def(
                 "round",
                 "Round",
                 nativeOr(
-                        m -> HAS_PARTS.test(m) || (GT6_PROJECTILES.test(m) && HAS_INGOT.test(m)),
-                        m -> MaterialForms.has(m, "PARTS")
+                        m -> GT6_PARTS.test(m) || (GT6_PROJECTILES.test(m) && HAS_INGOT.test(m)),
+                        m -> GT6_PARTS.test(m)
                                 || (MaterialForms.has(m, "PROJECTILES") && MaterialForms.has(m, "INGOTS"))));
         itemCasing = tex("itemCasing", "Item Casing", "casingsmall", HAS_PARTS.or(GT6_PARTS));
         wireFine = def(
@@ -829,8 +835,9 @@ public final class MaterialPrefix {
             case "tool_head_chisel" -> GTValues.U2 * 3 - GTValues.U9;
             case "tool_head_wrench" -> GTValues.U * 4;
             // OP250: the construction head has the same primary amount as a finished pickaxe.
-            case "tool_head_pickaxe", "tool_head_sense", "tool_head_construction_pickaxe", "tool_head_builderwand" ->
-                GTValues.U9 * 26;
+            case "tool_head_pickaxe", "tool_head_sense", "tool_head_construction_pickaxe" -> GTValues.U9 * 26;
+            // OP:249 gives the builder's wand cap a whole unit, unlike the other pickaxe-shaped heads.
+            case "tool_head_builderwand" -> GTValues.U;
             case "tool_head_plow" -> GTValues.U9 * 35;
             case "tool_head_arrow" -> GTValues.U9;
             case "tool_head_buzz_saw", "tool_head_drill" -> GTValues.U * 4;

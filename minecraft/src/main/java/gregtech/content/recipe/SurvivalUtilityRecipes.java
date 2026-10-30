@@ -9,25 +9,18 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-/** Original Vanilla and Other processing for paper, common supplies and material recovery. */
+/** Original Vanilla and Other processing for common supplies and material recovery. */
 public final class SurvivalUtilityRecipes extends OriginalRecipeBatch {
     public static final SurvivalUtilityRecipes INSTANCE = new SurvivalUtilityRecipes();
     private SurvivalUtilityRecipes() {}
     public static int register() {
         if (!INSTANCE.entries().isEmpty()) throw new IllegalStateException("Survival utilities registered twice");
-        INSTANCE.paper();
+        INSTANCE.loom();
         INSTANCE.supplies();
         INSTANCE.recovery();
         return INSTANCE.entries().size();
     }
-    private void paper() {
-        MaterialPrefix[] forms = {MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny};
-        int[] counts = {1, 4, 9};
-        for (String material : new String[]{"Wood", "Bark", "Paper"}) for (int i = 0; i < forms.length; i++)
-            for (String water : new String[]{"Water", "MnWtr", "DistW", "SpDew"})
-                add("pulp/" + material + "/" + i + "/" + water, MachineRecipeMaps.Bath, 16, 0,
-                        items(mat(forms[i], material, counts[i])), items(new ItemStack(Items.PAPER)),
-                        fluids(fluid(water, water.equals("DistW") ? 100 : 125)), null);
+    private void loom() {
         add("item_frame", MachineRecipeMaps.Loom, 16, 16, items(new ItemStack(Items.LEATHER), new ItemStack(Items.STICK, 8)),
                 items(new ItemStack(Items.ITEM_FRAME)), null, null);
         for (DyeColor color : DyeColor.values())

@@ -5,6 +5,7 @@ import gregtech.engine.recipe.*;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
+import gregtech.content.tool.PaintingRules;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
@@ -79,6 +80,7 @@ public final class DyeProcessingRecipes {
         flower("white_tulip","LightGray",false);flower("pink_tulip","Pink",false);flower("oxeye_daisy","LightGray",false);
         flower("dandelion","Yellow",false);flower("lilac","Magenta",true);flower("rose_bush","Red",true);flower("peony","Pink",true);
         precursors();
+        bathDyeing();
         add(MachineRecipeMaps.Drying,new Recipe(new ItemStack[]{GTItems.getStack(MaterialPrefix.stick,GTMaterialRegistry.get("Iron"),1)},
                 new ItemStack[]{colored("concrete_reinforced",net.minecraft.world.item.DyeColor.LIGHT_GRAY,1)},null,null,
                 new FluidStack[]{fluid("Concrete",144)},new FluidStack[]{fluid("DistW",8)},16,16,0));
@@ -103,13 +105,105 @@ public final class DyeProcessingRecipes {
         for(var map:new RecipeMap[]{MachineRecipeMaps.Squeezer,MachineRecipeMaps.Juicer})
             add(map,new Recipe(new ItemStack[]{new ItemStack(Items.SUNFLOWER)},new ItemStack[]{new ItemStack(Items.YELLOW_DYE,2)},null,null,null,
                     new FluidStack[]{fluid("Oil_Sunflower",map==MachineRecipeMaps.Squeezer?100:75)},16,16,0));
-        for(String water:new String[]{"Water","MnWtr","DistW","SpDew"}){
-            mixer(128,new ItemStack[]{dust("Stone",6),dust("SiO2",2),GTItems.getStack(MaterialPrefix.dustSmall,GTMaterialRegistry.get("Clay"),1)},
-                    new FluidStack[]{fluid(water,1000)},fluid("CFoam",1000));
-            mixer(512,new ItemStack[]{dust("Stone",24),dust("SiO2",8),dust("Clay",1)},
-                    new FluidStack[]{fluid(water,4000)},fluid("CFoam",4000));
+        foamFamilies();
+    }
+
+    /**
+     * Loader_Recipes_Other:252-330: the C-Foam mixing cross-product. Every (rock group, sand, clay,
+     * water) triple mixes in both batch sizes; a rock's group decides the foam colour, and the first
+     * group leaves it undyed. GT6's {@code OM.dust(clay, U4)} is one small pile while the large
+     * recipe takes one full dust.
+     */
+    private static void foamFamilies(){
+        String[] waters={"Water","MnWtr","DistW","SpDew"};
+        for(String[] group:FOAM_ROCKS_BY_DYE){
+            String dye=group[0];
+            String output=dye.isEmpty()?"CFoam":"CFoam_Dyed_"+dye;
+            for(int rock=1;rock<group.length;rock++) for(String sand:FOAM_SANDS) for(String clay:FOAM_CLAYS)
+                for(String water:waters){
+                    mixer(128,new ItemStack[]{dust(group[rock],6),dust(sand,2),
+                                    GTItems.getStack(MaterialPrefix.dustSmall,GTMaterialRegistry.get(clay),1)},
+                            new FluidStack[]{fluid(water,1000)},fluid(output,1000));
+                    mixer(512,new ItemStack[]{dust(group[rock],24),dust(sand,8),dust(clay,1)},
+                            new FluidStack[]{fluid(water,4000)},fluid(output,4000));
+                }
         }
     }
+
+    /**
+     * Loader_Recipes_Other:449-462: Bath recolouring. A white construction block takes 1/24 of a dye
+     * unit, a slab 1/48, and any panel 1/144; each colour's dye fluids are its water-mixed, flower
+     * and chemical dyes plus the source list's extra entries (squid ink for black, indigo and
+     * blueberry juice for blue, cranberry juice for red). EU 0, 16 ticks.
+     */
+    private static void bathDyeing(){
+        for(PaintingRules.Dye dye:PaintingRules.DYES){
+            var target=net.minecraft.world.item.DyeColor.byName(dye.id(),net.minecraft.world.item.DyeColor.WHITE);
+            for(String family:new String[]{"cfoam","asphalt","concrete","concrete_reinforced"}){
+                var white=colored(family,net.minecraft.world.item.DyeColor.WHITE,1);
+                var result=colored(family,target,1);
+                for(String[] d:dyeFluids(dye.index())) bath(white,d,result,24);
+            }
+            // The port has only the C-Foam slab; asphalt/concrete/reinforced slabs have no identity yet.
+            var whiteSlab=colored("cfoam_slab",net.minecraft.world.item.DyeColor.WHITE,1);
+            var colouredSlab=colored("cfoam_slab",target,1);
+            for(String[] d:dyeFluids(dye.index())) bath(whiteSlab,d,colouredSlab,48);
+            for(String kind:new String[]{"concrete","cfoam","asphalt"}){
+                var out=item("gt6ce:panel_"+kind+"_"+dye.id(),1);
+                for(PaintingRules.Dye source:PaintingRules.DYES){
+                    var in=item("gt6ce:panel_"+kind+"_"+source.id(),1);
+                    for(String[] d:dyeFluids(dye.index())) bath(in,d,out,144);
+                }
+            }
+        }
+    }
+    /** One colour's dye fluids with their unit amounts in mB. */
+    private static List<String[]> dyeFluids(int index){
+        StringBuilder camel=new StringBuilder();
+        for(String part:PaintingRules.DYES.get(index).id().split("_"))
+            camel.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1));
+        List<String[]> fluids=new ArrayList<>();
+        for(String kind:new String[]{"Water","Flower","Chemical"})
+            fluids.add(new String[]{"Dye_"+kind+"_"+camel,"144"});
+        switch(index){
+            case 0 -> fluids.add(new String[]{"InkSquid","144"});
+            case 1 -> fluids.add(new String[]{"Juice_Cranberry","250"});
+            case 4 -> {fluids.add(new String[]{"Indigo","144"});fluids.add(new String[]{"Juice_Blueberry","250"});}
+            default -> {}
+        }
+        return fluids;
+    }
+    private static void bath(ItemStack input,String[] dye,ItemStack output,int divisor){
+        int mb=(int)Math.max(1,(Long.parseLong(dye[1])+divisor-1)/divisor);
+        add(MachineRecipeMaps.Bath,new Recipe(new ItemStack[]{input.copy()},new ItemStack[]{output.copy()},null,null,
+                new FluidStack[]{fluid(dye[0],mb)},null,16,0,0));
+    }
+
+    /** GT6's rock-to-foam-colour partition; an empty first entry means the foam stays undyed. */
+    private static final String[][] FOAM_ROCKS_BY_DYE={
+            {"","Stone","Concrete","Asbestos","Dolomite","Talc","Gneiss","Rhyolite","Chert","Shale","OilShale"},
+            {"White","Diorite","Marble","Chalk","Calcite","Endstone","Livingrock","Holystone","Castlerock"},
+            {"Black","Basalt","Gabbro","GraniteBlack","Deepslate"},
+            {"Gray","Migmatite","Eclogite","SpaceStone","Slate","Cragrock"},
+            {"LightGray","Andesite","Dacite","Deadrock","Greywacke","MoonStone","MoonTurf"},
+            {"LightBlue","Blueschist"},
+            {"Lime","Greenschist","Betweenstone","Prismarine"},
+            {"Green","Pitstone","PrismarineDark","Mazestone"},
+            {"Red","Redrock","MarsStone","MarsSand","Netherrack","GraniteRed","Granite"},
+            {"Yellow","Komatiite","Templerock"},
+            {"Orange","Limestone"},
+            {"Pink","Quartzite","Siltstone"},
+            {"Brown","Umber","Kimberlite"}};
+
+    /** GT6 {@code ANY.SiO2.mToThis}, in the order the source group registers them. */
+    private static final String[] FOAM_SANDS={
+            "SiliconDioxide","Glass","Flint","Sand","RedSand","WhiteEndSand","BlackEndSand",
+            "NetherQuartz","CertusQuartz","ChargedCertusQuartz","QuartzBlack","Fluix","SunnyQuartz",
+            "LavenderQuartz","RedQuartz","BlazeQuartz","SmokeyQuartz","ManaQuartz","ElvenQuartz",
+            "MilkyQuartz","VoidQuartz","Quartzite"};
+
+    /** GT6 {@code ANY.Clay.mToThis}. */
+    private static final String[] FOAM_CLAYS={"Clay","ClayBrown","ClayRed","Bentonite","Palygorskite","Kaolinite"};
     private static ItemStack dust(String material,int count){
         return GTItems.getStack(MaterialPrefix.dust,GTMaterialRegistry.get(material),count);
     }

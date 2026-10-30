@@ -24,14 +24,11 @@ public final class StoneAndToolSurvivalRecipes {
     /** The BlockStones rows of {@link #registerStoneExtrusions()}, for reporting and tests. */
     public static List<Recipe> stoneExtrusions(){return List.copyOf(STONE_EXTRUSIONS);}
     public static int stoneExtrusionCount(){return STONE_EXTRUSIONS.size();}
-    private static void add(RecipeMap map, ItemStack in, ItemStack out, long ticks) {
-        if(in.isEmpty()||out.isEmpty())return;
-        var recipe=new Recipe(new ItemStack[]{in},new ItemStack[]{out},null,null,null,null,ticks,16,0);
-        if(map.addRecipe(recipe)!=null)ADDED.add(recipe);
-    }
     public static int register() {
         // Dense BlockRockOres / BlockCrystalOres are handled by Loader_Recipes_OreProcessing,
-        // which applies GT6's doubled ore yield. Keep this class for the stone tool chain.
+        // which applies GT6's doubled ore yield. Keep this class for the stone tool chain;
+        // Loader_Recipes_Handlers' sharpening rows belong to SharpeningRecipes, which also applies
+        // the pulverized remainder and the quality-scaled duration.
         for(var material:GTMaterialRegistry.sortedMaterials()) {
             if(material.resolve()!=material||!material.isValid()||material.has(MaterialProperty.ANTIMATTER))continue;
             var rock=GTItems.getStack(MaterialPrefix.rockGt,material);
@@ -41,11 +38,6 @@ public final class StoneAndToolSurvivalRecipes {
                 var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,null,
                         Math.max(1,36L*(material.getToolQuality()+1L)),16,0);
                 if(MachineRecipeMaps.Anvil.addRecipe(recipe)!=null)ADDED.add(recipe);
-            }
-            for(var prefix:gregtech.engine.prefix.PrefixRegistry.all()) {
-                if(!prefix.getName().startsWith("toolHeadRaw"))continue;
-                var target=gregtech.engine.prefix.PrefixRegistry.all().stream().filter(p -> p.getName().equals(prefix.getName().replace("toolHeadRaw","toolHead"))).findFirst().orElse(null);
-                if(target!=null)add(MachineRecipeMaps.Sharpening,GTItems.getStack(prefix,material),GTItems.getStack(target,material),16);
             }
         }
         registerStoneExtrusions();

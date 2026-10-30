@@ -39,6 +39,7 @@ public final class MachineRecipeBootstrap {
         register("RegisteredWoodSurvivalRecipes", RegisteredWoodSurvivalRecipes::register);
         register("CropProcessingRecipes", CropProcessingRecipes::register);
         register("DyeProcessingRecipes", DyeProcessingRecipes::register);
+        register("BathMaterialRecipes", BathMaterialRecipes::register);
         register("TextileFinishingRecipes", TextileFinishingRecipes::register);
         register("BiologicalMaterialRecipes", BiologicalMaterialRecipes::register);
         register("GlowtusProcessingRecipes", GlowtusProcessingRecipes::register);
@@ -101,6 +102,7 @@ public final class MachineRecipeBootstrap {
         // Imported rows only fill gaps; never run these before the explicit recipes.
         runStep("imported recipe tables", GeneratedRecipeResolver::loadAll);
         gregtech.engine.recipe.RecipeDiagnostics.report();
+        RecipeDump.afterRegistration();
     }
 
     private static void register(String name, IntSupplier registration) {
