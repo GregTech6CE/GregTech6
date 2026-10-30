@@ -523,6 +523,11 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //?}
     }
 
+    @Override
+    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+
     // === NBT ===
 
     /**
