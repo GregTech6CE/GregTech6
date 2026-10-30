@@ -126,7 +126,7 @@ public final class RecipeDump {
             entry.addProperty("file", file);
             entry.addProperty("recipeCount", json.get("recipeCount").getAsInt());
             indexMaps.add(entry);
-            total += map.mRecipeList.size();
+            total += json.get("recipeCount").getAsInt();
             written++;
         }
         index.addProperty("generatedBy", "gt6ce RecipeDump");
@@ -160,9 +160,13 @@ public final class RecipeDump {
         json.addProperty("maxFluidInputSize", map.mMaxFluidInputSize);
         json.addProperty("maxFluidOutputSize", map.mMaxFluidOutputSize);
         JsonArray rows = new JsonArray();
-        for (Recipe recipe : map.mRecipeList) rows.add(recipeJson(recipe));
+        int count = 0;
+        for (Recipe recipe : map.allRecipes()) {
+            rows.add(recipeJson(recipe));
+            count++;
+        }
         json.add("recipes", rows);
-        json.addProperty("recipeCount", map.mRecipeList.size());
+        json.addProperty("recipeCount", count);
         return json;
     }
 

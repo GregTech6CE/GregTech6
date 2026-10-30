@@ -81,7 +81,9 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         long started = System.nanoTime();
         int rows = 0, categories = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            if (!map.mViewerAllowed || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)) continue;
+            if (!map.mViewerAllowed
+                    || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)
+                            && !map.hasDynamicEnumeration()) continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
             ItemStack icon = workstations.isEmpty() ? new ItemStack(Items.ANVIL) : workstations.get(0);
             var preferred = gregtech.compat.common.RecipeViewerIcons.map(map);
@@ -99,7 +101,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             int before = rows;
             long mapStarted = System.nanoTime();
             com.mojang.logging.LogUtils.getLogger().debug("[gregtech] EMI registering {}", map.mNameInternal);
-            for (var recipe : map.mRecipeList) {
+            for (var recipe : map.allRecipes()) {
                 int recipeIndex = i++;
                 if (!recipe.mEnabled || recipe.mHidden) continue;
                 registry.addRecipe(new MachineEmiRecipe(

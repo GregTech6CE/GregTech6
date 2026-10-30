@@ -79,6 +79,47 @@ public class RecipeMap {
         return this;
     }
 
+    /**
+     * GT6's NEI pass over a handler: the rows a rule family generates on demand. The family must
+     * produce exactly the rows its {@link DynamicRecipes} provider matches, so the viewers, the
+     * dump and the addon query surface enumerate the same conversions the machine performs.
+     */
+    @FunctionalInterface
+    public interface DynamicEnumeration {
+        Iterable<Recipe> rows();
+    }
+
+    @javax.annotation.Nullable
+    private DynamicEnumeration mDynamicEnumeration;
+
+    public RecipeMap dynamicEnumeration(DynamicEnumeration provider) {
+        mDynamicEnumeration = provider;
+        return this;
+    }
+
+    /** Whether this map has a rule family whose rows only exist when something enumerates them. */
+    public boolean hasDynamicEnumeration() {
+        return mDynamicEnumeration != null;
+    }
+
+    /**
+     * Registered rows followed by the rule family's generated rows. Iterating this can build the
+     * family's rows again, so only viewers and development tools should use it.
+     */
+    public Iterable<Recipe> allRecipes() {
+        Iterable<Recipe> statics = mRecipeList;
+        DynamicEnumeration generated = mDynamicEnumeration;
+        if (generated == null) return statics;
+        return () -> concat(statics.iterator(), generated.rows().iterator());
+    }
+
+    private static <T> java.util.Iterator<T> concat(java.util.Iterator<T> first, java.util.Iterator<T> second) {
+        return new java.util.Iterator<>() {
+            @Override public boolean hasNext() { return first.hasNext() || second.hasNext(); }
+            @Override public T next() { return first.hasNext() ? first.next() : second.next(); }
+        };
+    }
+
     /** Whether this map computes rows from input NBT (reported by the start-up log line). */
     public boolean hasDynamicRecipes() {
         return mDynamicRecipes != null || mAddonDynamicRecipes.length != 0 || mContextRecipes != null;
@@ -991,12 +1032,16 @@ public class RecipeMap {
         return mMinInputTankSizes.getOrDefault(fluidKey, 0L);
     }
 
-    /** Whether any registered recipe accepts the given item as input. */
+    /** Whether any registered recipe, including a rule family's generated row, accepts the item. */
     public boolean containsInput(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
         var recipes = mRecipeItemMap.get(stack.getItem());
         if (recipes != null && recipes.stream().anyMatch(r -> containsInput(r, stack, true))) return true;
-        return mRecipeList.stream().anyMatch(r -> containsInput(r, stack, false));
+        if (mRecipeList.stream().anyMatch(r -> containsInput(r, stack, false))) return true;
+        // Only a rule family with a published enumeration answers an item it has not indexed yet.
+        if (mDynamicEnumeration == null) return false;
+        Recipe generated = firstDynamicRecipe(List.of(stack), List.of());
+        return generated != null && generated.mEnabled && !generated.mFakeRecipe;
     }
 
     private static boolean containsInput(Recipe recipe, ItemStack stack, boolean indexed) {
