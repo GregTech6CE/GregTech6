@@ -1,7 +1,7 @@
-CrucibleCraft third-party notices
-=================================
+GregTech 6 Community Edition third-party notices
+================================================
 
-CrucibleCraft source and authored resources are licensed under
+The project's source and authored resources are licensed under
 LGPL-3.0-or-later. See LICENSE.
 
 GregTech 6
@@ -10,10 +10,9 @@ GregTech 6
 Source-derived material, recipe, world-generation, and machine evidence is
 traced to GregTech 6 revision 3703e40308c8c030763fd6297dea8b210d2a77b1.
 GregTech 6 is LGPL-3.0-or-later. Its default assets are CC0 1.0; GregTech
-logos and derivative logos are CC-BY-NC-4.0. CrucibleCraft does not use a
+logos and derivative logos are CC-BY-NC-4.0. This project does not use a
 GregTech logo. The anvil block model is GregTech 6 MultiTileEntityAnvil
-empty-state ISBRH geometry (ID 32025). See CREDITS.md and the source-policy
-artifacts in tools/.
+empty-state ISBRH geometry (ID 32025). See CREDITS.md.
 
 GregTech Modern
 ---------------
@@ -48,9 +47,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Jade, EMI, Reliable EMI (REMI / EMI++), YetAnotherConfigLib, and KubeJS are
-optional, unbundled dependencies and retain their own licenses. Files below
-net/neoforged/ preserve their LGPL-2.1-only SPDX notices.
+Jade, EMI, and KubeJS are optional, unbundled dependencies and retain their
+own licenses.
 
 Other comparison sources
 ------------------------
