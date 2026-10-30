@@ -6,6 +6,7 @@ import gregtech.content.data.GregTechConstants;
 
 /** Material factory defaults used by the port; these do not initialize a global alias table. */
 public class MaterialFactories {
+    private static final java.util.List<GTMaterial> WOODS = new java.util.ArrayList<>();
     private static final java.util.List<GTMaterial> NORMAL_WOODS = new java.util.ArrayList<>();
 
     protected MaterialFactories() {}
@@ -131,7 +132,7 @@ public class MaterialFactories {
     }
 
     public static GTMaterial wood(int id, String name, String localName, int color, MaterialProperty... props) {
-        return create(id, name, localName, color, props)
+        var material = create(id, name, localName, color, props)
                 .put(
                         MaterialProperty.WOOD,
                         MaterialProperty.DUST,
@@ -145,6 +146,13 @@ public class MaterialFactories {
                 .setTextureSet(MaterialTextureSet.WOOD)
                 .setFurnaceBurnTime(GregTechConstants.TICKS_PER_SMELT / 2L)
                 .setBurning(gregtech.content.material.generated.CompoundMaterials.Ashes, GregTechConstants.U9);
+        WOODS.add(material);
+        return material;
+    }
+
+    /** {@code ANY.Wood} members: every material the wood factory creates, normal woods included. */
+    public static java.util.List<GTMaterial> woods() {
+        return java.util.List.copyOf(WOODS);
     }
 
     /** MT.woodnormal: RGB, tool speed and durability are separate from thermal properties. */
