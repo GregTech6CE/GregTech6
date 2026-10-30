@@ -38,7 +38,7 @@
 
 ## .gitignore 的边界
 
-规则覆盖构建、运行实例、IDE、本地环境、工具缓存与 `work/`，保留 Wrapper JAR、资源 JSON、生成内容表和 `docs/operations/records/`。历史 `docs/card-plans/` 与 `docs/supersymmetry-*.md` 继续忽略，新笔记使用 `work/`。
+规则覆盖构建、运行实例、IDE、本地环境、工具缓存与 `work/`，保留 Wrapper JAR、资源 JSON、生成内容表和 `docs/operations/records/`。历史本地笔记位置继续忽略，新笔记使用 `work/`。
 
 不要用 `*.jar`、`*.json`、`*.md` 或任意 `generated/` 的全局规则掩盖真实输入；也不要随意 `git add -f`。`.gitignore` 不影响已跟踪文件，也不保护秘密；若凭据已经提交，仅新增忽略规则不能消除泄露。
 
