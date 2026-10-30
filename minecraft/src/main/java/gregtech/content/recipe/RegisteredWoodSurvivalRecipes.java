@@ -97,6 +97,9 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
         if (dust.isEmpty()) throw new IllegalStateException("Missing wood slab pulverization material " + name);
         MachineRecipeMaps.pulverizing(slab, dust);
         MachineRecipeMaps.generify(slab, new ItemStack(net.minecraft.world.level.block.Blocks.OAK_SLAB));
+        // Loader_Recipes_Woods:211: every species plank is the generic wood plank.
+        MachineRecipeMaps.generify(
+                item("gt6ce:planks_" + wood, 1), new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS));
         add(
                 "petrify/slab/" + wood,
                 MachineRecipeMaps.Injector,

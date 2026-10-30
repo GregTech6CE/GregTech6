@@ -84,6 +84,8 @@ public final class MachineRecipeBootstrap {
         // Specific recipes win collisions. Generic form handlers follow them,
         // and the imported bulk tables remain last.
         register("MaterialFormConversionRecipes", MaterialFormConversionRecipes::register);
+        register("GenerifierExplicitRecipes", GenerifierExplicitRecipes::register);
+        register("GenerifierRecipeFamily", GenerifierRecipeFamily::register);
         register("MortarGrindingRecipes", MortarGrindingRecipes::register);
         register("PressAmmunitionRecipes", PressAmmunitionRecipes::register);
         register("WelderFamilyRecipes", WelderFamilyRecipes::register);
