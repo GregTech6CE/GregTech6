@@ -209,7 +209,6 @@ final class SharedThermalRecyclingRows {
             MaterialPrefix prefix,
             BlockMaterialPrefix blockPrefix,
             List<MaterialComponent> components,
-            boolean primaryComponentOnly,
             StoneType stoneType,
             StoneVariant stoneVariant,
             boolean stoneSlab) {
@@ -229,12 +228,9 @@ final class SharedThermalRecyclingRows {
             if (!allows(prefix)) continue;
             if (data.material() != null && containerForm(prefix) && !"Empty".equals(data.material().getName()))
                 continue;
-            // CR.REV block data reconstructs a crafting recipe (casing plus tier parts); the source
-            // ore item carries only the primary material, so recycling must not merge the recipe parts.
-            boolean primaryOnly = data.source() != null && data.source().contains("CR.REV")
-                    && data.components().size() > 1;
-            List<MaterialComponent> components = primaryOnly ? List.of(data.components().get(0)) : data.components();
-            out.add(new Candidate(new ItemStack(item), prefix, null, components, primaryOnly, null, null, false));
+            // Every component counts: the source scores duration by the whole item's mass, and a
+            // crafting-derived block keeps the parts its recipe puts in it.
+            out.add(new Candidate(new ItemStack(item), prefix, null, data.components(), null, null, false));
         }
         for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
             if (!allowsBlock(prefix.getName())) continue;
@@ -245,7 +241,7 @@ final class SharedThermalRecyclingRows {
                 if (stack.isEmpty()) continue;
                 var components = BlockMaterialWeights.contained(material, prefix);
                 if (components.isEmpty()) continue;
-                out.add(new Candidate(stack, null, prefix, components, false, null, null, false));
+                out.add(new Candidate(stack, null, prefix, components, null, null, false));
             }
         }
         for (Block block : BuiltInRegistries.BLOCK) {
@@ -265,7 +261,7 @@ final class SharedThermalRecyclingRows {
             if (material == null || !material.isValid()) continue;
             var components = StoneMaterialWeights.contained(material, variant, slab);
             if (components.isEmpty()) continue;
-            out.add(new Candidate(new ItemStack(block), null, null, components, false, type, variant, slab));
+            out.add(new Candidate(new ItemStack(block), null, null, components, type, variant, slab));
         }
         return out;
     }
@@ -432,7 +428,6 @@ final class SharedThermalRecyclingRows {
             BlockMaterialPrefix blockPrefix,
             GTMaterial blockMaterial,
             List<MaterialComponent> components,
-            boolean primaryComponentOnly,
             StoneType stoneType,
             StoneVariant stoneVariant,
             boolean stoneSlab) {
@@ -444,7 +439,6 @@ final class SharedThermalRecyclingRows {
                     candidate.blockPrefix(),
                     candidate.blockPrefix() == null ? null : candidate.components().get(0).material().resolve(),
                     List.copyOf(candidate.components()),
-                    candidate.primaryComponentOnly(),
                     candidate.stoneType(),
                     candidate.stoneVariant(),
                     candidate.stoneSlab());
@@ -483,10 +477,7 @@ final class SharedThermalRecyclingRows {
                 var data = ItemMaterialRegistry.get(copy).orElse(null);
                 if (data == null || !ItemMaterialRegistry.canRecover(copy) || !Objects.equals(prefix, data.prefix()))
                     return false;
-                var effective = primaryComponentOnly && data.components().size() > 1
-                        ? List.of(data.components().get(0))
-                        : data.components();
-                if (!effective.equals(components)) return false;
+                if (!data.components().equals(components)) return false;
                 // Reject filled fluid containers exactly like the audited producer.
 //? if >=1.21.1 {
                 /*var handler = FluidUtil.getFluidHandler(copy).orElse(null);
