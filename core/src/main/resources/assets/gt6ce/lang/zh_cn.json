@@ -135021,5 +135021,19 @@
   "block.gt6ce.spike_ball_super_adamantium": "艾德曼合金制尖刺方块",
   "block.gt6ce.spike_ball_falling_super_adamantium": "坠落的艾德曼合金制尖刺方块",
   "message.gt6ce.mold.auto_input": "自动输入（%s）：%s",
-  "message.gt6ce.mold.redstone": "自动输入需要红石信号：%s"
+  "message.gt6ce.mold.redstone": "自动输入需要红石信号：%s",
+  "message.gt6ce.machine.output_empty": "仅在输出完全清空时生产",
+  "message.gt6ce.machine.output_space": "有足够输出空间时即可生产",
+  "message.gt6ce.machine.input_empty": "仅接受向空输入槽输入物品",
+  "message.gt6ce.machine.input_all": "接受向所有输入槽输入物品",
+  "message.gt6ce.machine.processing_reset": "已重置当前加工，未完成的产物已清除",
+  "message.gt6ce.machine.no_auto_transfer": "此面没有可切换的自动输入或输出",
+  "message.gt6ce.machine.auto_item_input_enabled": "已启用自动物品输入",
+  "message.gt6ce.machine.auto_item_input_disabled": "已禁用自动物品输入",
+  "message.gt6ce.machine.auto_item_output_enabled": "已启用自动物品输出",
+  "message.gt6ce.machine.auto_item_output_disabled": "已禁用自动物品输出",
+  "message.gt6ce.machine.auto_fluid_input_enabled": "已启用自动流体输入",
+  "message.gt6ce.machine.auto_fluid_input_disabled": "已禁用自动流体输入",
+  "message.gt6ce.machine.auto_fluid_output_enabled": "已启用自动流体输出",
+  "message.gt6ce.machine.auto_fluid_output_disabled": "已禁用自动流体输出"
 }

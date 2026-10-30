@@ -434,6 +434,11 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
 
 
 
+        if (be instanceof BasicMachineBlockEntity machine) {
+            var result = machine.useMachineTool(player, hand, hit);
+            if (result != InteractionResult.PASS) return result;
+        }
+
         // Fluid injection from held fluid container (GT6: right-click machine with fluid cell)
 
         if (!held.isEmpty() && be instanceof BasicMachineBlockEntity basicBe) {
@@ -575,6 +580,13 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
     }
 
 
+
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        // The monkey wrench controls automatic transfers on recipe machines, not their facing.
+        return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.MONKEY_WRENCH)
+                ? null : super.toolInteraction(state, tool);
+    }
 
     private InteractionResult useRemainder(BlockState state, Level level, BlockPos pos, Player player,
 

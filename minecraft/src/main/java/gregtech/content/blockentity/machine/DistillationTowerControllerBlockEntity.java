@@ -27,7 +27,8 @@ public class DistillationTowerControllerBlockEntity extends LargeRecipeMachineBl
     protected boolean cryogenic() {return false;}
     @Override protected void beforeMachineTick() {
         // Source onTick2 outputs fluids before doWork, even without energy or while stopped.
-        if(faceConfig().fluidAutoOutput()<0)return;
+        if(faceConfig().fluidAutoOutput()<0
+                || !automaticTransferEnabled(gregtech.engine.machine.MachineToolSettings.Transfer.FLUID_OUTPUT))return;
         var front=getBlockState().getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING);
         for(var tank:getTanksOutput()) {
             var offer=tank.getFluid();if(offer.isEmpty())continue;

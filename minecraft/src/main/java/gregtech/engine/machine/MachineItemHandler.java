@@ -12,6 +12,11 @@ import org.jetbrains.annotations.NotNull;
 public class MachineItemHandler extends ItemStackHandler {
     private final int inputCount;
     private final Runnable onChanged;
+    private java.util.function.BooleanSupplier emptyInputsOnly = () -> false;
+
+    public void setEmptyInputsOnly(java.util.function.BooleanSupplier rule) {
+        emptyInputsOnly = rule;
+    }
 
     public MachineItemHandler(int totalSlots, int inputCount, Runnable onChanged) {
         super(totalSlots);
@@ -66,6 +71,7 @@ public class MachineItemHandler extends ItemStackHandler {
     @Override
     public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
         if (slot >= inputCount) return stack;
+        if (emptyInputsOnly.getAsBoolean() && !getStackInSlot(slot).isEmpty()) return stack;
         return super.insertItem(slot, stack, simulate);
     }
 

@@ -16988,5 +16988,19 @@
   "block.gt6ce.spike_ball_super_adamantium": "Adamantium Block Spike",
   "block.gt6ce.spike_ball_falling_super_adamantium": "Falling Adamantium Spike Block",
   "message.gt6ce.mold.auto_input": "Automatic input (%s): %s",
-  "message.gt6ce.mold.redstone": "Automatic input requires redstone: %s"
+  "message.gt6ce.mold.redstone": "Automatic input requires redstone: %s",
+  "message.gt6ce.machine.output_empty": "Only produce when Output is completely empty",
+  "message.gt6ce.machine.output_space": "Produce whenever there is space",
+  "message.gt6ce.machine.input_empty": "Only accept Input on empty Input Slots",
+  "message.gt6ce.machine.input_all": "Accept Input on all Input Slots",
+  "message.gt6ce.machine.processing_reset": "Current processing reset; pending products discarded",
+  "message.gt6ce.machine.no_auto_transfer": "No automatic transfer on this side",
+  "message.gt6ce.machine.auto_item_input_enabled": "Auto Item Input Enabled",
+  "message.gt6ce.machine.auto_item_input_disabled": "Auto Item Input Disabled",
+  "message.gt6ce.machine.auto_item_output_enabled": "Auto Item Output Enabled",
+  "message.gt6ce.machine.auto_item_output_disabled": "Auto Item Output Disabled",
+  "message.gt6ce.machine.auto_fluid_input_enabled": "Auto Fluid Input Enabled",
+  "message.gt6ce.machine.auto_fluid_input_disabled": "Auto Fluid Input Disabled",
+  "message.gt6ce.machine.auto_fluid_output_enabled": "Auto Fluid Output Enabled",
+  "message.gt6ce.machine.auto_fluid_output_disabled": "Auto Fluid Output Disabled"
 }

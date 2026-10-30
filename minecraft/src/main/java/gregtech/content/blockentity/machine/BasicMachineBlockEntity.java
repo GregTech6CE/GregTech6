@@ -1,6 +1,19 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.api.machine.BlockFace;
+import gregtech.engine.machine.MachineToolSettings;
+import gregtech.engine.machine.MachineToolSettings.Transfer;
+import gregtech.engine.multiblock.MultiblockToolTarget;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+
 
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.FaceConfig;
@@ -97,6 +110,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;
+    private final MachineToolSettings toolSettings = new MachineToolSettings();
 
     // ── Processing state ─────────────────────────────────────────────────
     private final MachineEnergyPort energyPort = new MachineEnergyPort();
@@ -105,6 +119,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public RecipeMap recipeMap() { return BasicMachineBlockEntity.this.recipeMap; }
         public boolean searchOutputTanks() { return usesOutputTankSearch(); }
         public boolean exclusiveOutputs() { return usesExclusiveOutputs(); }
+        public boolean requireEmptyOutputs() { return toolSettings.emptyOutputsOnly(); }
         public int parallelLimit() { return spec == null ? 1 : spec.parallelLimit(); }
         public boolean parallelScalesDuration() { return BasicMachineBlockEntity.this.parallelScalesDuration(); }
         public boolean cheapOverclocking() { return BasicMachineBlockEntity.this.cheapOverclocking(); }
@@ -258,6 +273,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         processor.invalidate();
         this.faceConfig = spec.faceConfig();
         this.inventory = new MachineInventory(recipeMap, this::inventoryChanged);
+        this.inventory.items().setEmptyInputsOnly(toolSettings::emptyInputsOnly);
         if (specDirty) sanitizeForSpec();
     }
 
@@ -805,33 +821,118 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected void positionedFluidInput() {}
 
     private void autoIO(Level level, BlockPos pos) {
-        if (faceConfig == null) return;
-
-        int autoIn = faceConfig.itemAutoInput();
-        if (FaceConfig.autoValid(autoIn) && inventory != null) {
-            autoInputItems(level, pos, autoIn);
-        } else if (inventory != null) {
-            positionedItemInput();
+        if (faceConfig == null || inventory == null) return;
+        if (automaticTransferEnabled(Transfer.ITEM_INPUT)) {
+            int side = faceConfig.itemAutoInput();
+            if (FaceConfig.autoValid(side)) autoInputItems(level, pos, side);
+            else positionedItemInput();
         }
-
-        int autoOut = faceConfig.itemAutoOutput();
-        if (FaceConfig.autoValid(autoOut) && inventory != null) {
-            autoOutputItems(level, pos, autoOut);
-        } else if (inventory != null) {
-            positionedItemOutput();
+        if (automaticTransferEnabled(Transfer.ITEM_OUTPUT)) {
+            int side = faceConfig.itemAutoOutput();
+            if (FaceConfig.autoValid(side)) autoOutputItems(level, pos, side);
+            else positionedItemOutput();
         }
-
-        int fluidAutoIn = faceConfig.fluidAutoInput();
-        if (FaceConfig.autoValid(fluidAutoIn) && inventory != null && inventory.tanksInput().length > 0) {
-            autoInputFluids(level, pos, fluidAutoIn);
-        } else if (inventory != null && inventory.tanksInput().length > 0) {
-            positionedFluidInput();
+        if (automaticTransferEnabled(Transfer.FLUID_INPUT)
+                && inventory.tanksInput().length > 0) {
+            int side = faceConfig.fluidAutoInput();
+            if (FaceConfig.autoValid(side)) autoInputFluids(level, pos, side);
+            else positionedFluidInput();
         }
-
-        int fluidAutoOut = faceConfig.fluidAutoOutput();
-        if (FaceConfig.autoValid(fluidAutoOut) && inventory != null && inventory.tanksOutput().length > 0) {
-            autoOutputFluids(level, pos, fluidAutoOut);
+        if (automaticTransferEnabled(Transfer.FLUID_OUTPUT)
+                && inventory.tanksOutput().length > 0 && FaceConfig.autoValid(faceConfig.fluidAutoOutput())) {
+            autoOutputFluids(level, pos, faceConfig.fluidAutoOutput());
         }
+    }
+
+    protected boolean automaticTransferEnabled(Transfer transfer) {
+        return toolSettings.enabled(transfer);
+    }
+
+    protected boolean toolModeAllowsStart() {
+        return !toolSettings.emptyOutputsOnly() || inventory == null
+                || !inventory.hasItemOutput() && !inventory.hasFluidOutput();
+    }
+
+    /** A reset cancels consumed work, but never removes items already in the machine's slots. */
+    protected void resetProcessingWithTool() {
+        processor.cancelJob();
+        successful = workPossible = mActive = mRunning = false;
+        updateBlockStates(false, false);
+    }
+
+    public InteractionResult useMachineTool(Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        var held = player.getItemInHand(hand);
+        GTToolType tool = null;
+        for (var candidate : new GTToolType[] {
+                GTToolType.SCREWDRIVER, GTToolType.MONKEY_WRENCH,
+                GTToolType.SOFT_HAMMER, GTToolType.MAGNIFYING_GLASS}) {
+            if (GTToolHelper.matchesTool(held, candidate)) { tool = candidate; break; }
+        }
+        if (tool == null || level == null || spec == null) return InteractionResult.PASS;
+        if (player.isSpectator() || !player.mayBuild() || !level.mayInteract(player, worldPosition))
+            return InteractionResult.FAIL;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        var messages = new java.util.ArrayList<Component>();
+        long cost = 0;
+        switch (tool) {
+            case SCREWDRIVER -> {
+                toolSettings.cycleMode();
+                appendProcessingMode(messages);
+                cost = 10000;
+            }
+            case MONKEY_WRENCH -> {
+                for (var transfer : Transfer.values()) {
+                    int side = transfer.side(faceConfig);
+                    if (FaceConfig.autoValid(side) && relativeToAbsolute(side) == hit.getDirection()) {
+                        toolSettings.toggle(transfer);
+                        messages.add(Component.translatable(transfer.message(toolSettings.enabled(transfer))));
+                        cost += 10000;
+                    }
+                }
+                if (cost == 0) messages.add(Component.translatable("message.gt6ce.machine.no_auto_transfer"));
+            }
+            case SOFT_HAMMER -> {
+                resetProcessingWithTool();
+                messages.add(Component.translatable("message.gt6ce.machine.processing_reset"));
+                cost = 10000;
+            }
+            case MAGNIFYING_GLASS -> {
+                // Preserve multiblock inspection as well as the basic machine settings report.
+                if (this instanceof MultiblockToolTarget target)
+                    target.useMultiblockTool(new UseOnContext(player, hand, hit), messages);
+                else appendMachineInspection(messages);
+                cost = 1;
+            }
+            default -> { return InteractionResult.PASS; }
+        }
+        for (var message : messages) player.displayClientMessage(message, false);
+        if (cost > 0) {
+            GTToolHelper.damageForToolClickReturn(held, cost, player,
+                    hand == InteractionHand.MAIN_HAND
+                            ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+            if (tool != GTToolType.MAGNIFYING_GLASS) {
+                inventoryChanged();
+                markMachineDataChanged();
+                level.playSound(null, worldPosition, SoundEvents.LEVER_CLICK,
+                        SoundSource.BLOCKS, 0.5F, 1.0F);
+            }
+        }
+        return InteractionResult.CONSUME;
+    }
+
+    protected void appendMachineInspection(java.util.List<Component> messages) {
+        appendProcessingMode(messages);
+        for (var transfer : Transfer.values())
+            if (FaceConfig.autoValid(transfer.side(faceConfig)))
+                messages.add(Component.translatable(transfer.message(toolSettings.enabled(transfer))));
+    }
+
+    private void appendProcessingMode(java.util.List<Component> messages) {
+        messages.add(Component.translatable(toolSettings.emptyOutputsOnly()
+                ? "message.gt6ce.machine.output_empty" : "message.gt6ce.machine.output_space"));
+        messages.add(Component.translatable(toolSettings.emptyInputsOnly()
+                ? "message.gt6ce.machine.input_empty" : "message.gt6ce.machine.input_all"));
     }
 
     @Override public MachineInventory autoIOInventory() { return inventory; }
@@ -1125,6 +1226,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         if(sourceRequiresIgnition())tag.putByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
         tag.putBoolean("gt.control_stopped",controlStopped);
+        toolSettings.save(tag);
         tag.putInt("gt.external_signals",packedExternalSignals());
         tag.putLong("gt.cover_ticks",coverTicks);
         if (inventory != null)
@@ -1271,6 +1373,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
         sourceIgnitionTicks=Math.max(0,tag.getByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT));
         controlStopped=tag.getBoolean("gt.control_stopped");
+        toolSettings.load(tag);
         unpackExternalSignals(tag.getInt("gt.external_signals"));
         adjacentEnergySourcesChanged();
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;

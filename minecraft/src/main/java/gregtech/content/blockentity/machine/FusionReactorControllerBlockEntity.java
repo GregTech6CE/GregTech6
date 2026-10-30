@@ -168,7 +168,17 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         running = passive = processing = completed = false;
     }
 
+    @Override protected void resetProcessingWithTool() {
+        super.resetProcessingWithTool();
+        products = null;
+        continuousRecipe = null;
+        chargeRemaining = chargeTotal = progress = duration = outputEU = 0;
+        running = passive = processing = completed = false;
+        updateActivity();
+    }
+
     private boolean startRecipe() {
+        if (!toolModeAllowsStart()) return false;
         var items=new ArrayList<ItemStack>();
         for(int i=0;i<inputSlots();i++)items.add(inventory().getStackInSlot(i));
         var fluids=Arrays.stream(getTanksInput()).map(t->t.getFluidInTank(0)).toList();

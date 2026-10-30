@@ -36,6 +36,8 @@ public final class RecipeProcessor {
 
         boolean exclusiveOutputs();
 
+        default boolean requireEmptyOutputs() { return false; }
+
         int parallelLimit();
 
         boolean parallelScalesDuration();
@@ -287,6 +289,14 @@ public final class RecipeProcessor {
     }
 
     /** Clears the finished job's cost and progress; the host clears startup energy itself. */
+    /** Soft-hammer reset discards the current job, including its rolled but unflushed products. */
+    public void cancelJob() {
+        pendingOutputs = null;
+        parallel = 1;
+        reset();
+        io.clearStartupEnergy();
+    }
+
     public void reset() {
         progress = 0;
         totalWork = 0;
@@ -430,6 +440,7 @@ public final class RecipeProcessor {
         MachineInventory inventory = io.inventory();
         RecipeMap map = config.recipeMap();
         if (maxParallel <= 0 || map == null || inventory == null) return maxParallel;
+        if (config.requireEmptyOutputs() && (inventory.hasItemOutput() || inventory.hasFluidOutput())) return 0;
 
         // Items: simulate the output section using the same slot rules as MachineWorkOutputs#flush.
         int firstOutput = map.mInputItemsCount;

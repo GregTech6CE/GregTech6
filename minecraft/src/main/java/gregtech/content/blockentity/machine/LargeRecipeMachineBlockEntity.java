@@ -231,6 +231,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     @Override protected void beforeMachineTick() {
         super.beforeMachineTick();
+        if (!automaticTransferEnabled(gregtech.engine.machine.MachineToolSettings.Transfer.FLUID_OUTPUT)) return;
         var output = fluidOutput();
         if (output == null) return;
         if (spec().fluidOutputTarget() == null && faceConfig().fluidAutoOutput() < 0) return;
@@ -318,6 +319,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             return MultiblockToolRules.BUILDER_COST;
         }
         if (GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.MAGNIFYING_GLASS)) {
+            appendMachineInspection(messages);
             messages.add(Component.literal(MultiblockToolRules.structureMessage(structureFormed, isStructureOk())));
             if (!structureFormed) MultiblockTools.appendDiagnosis(this, messages);
             return MultiblockToolRules.MAGNIFIER_COST;
