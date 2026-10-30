@@ -212,8 +212,9 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> HAS_BOULE = m -> m.has(MaterialProperty.BOULE);
     private static final Predicate<GTMaterial> HAS_PLATE = nativeOr(
             m -> (HAS_INGOT.test(m) && !HAS_GEM.test(m)) || m.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE),
-            // GT6 OP.plate = And(Or(ingot, gem.NOT), PLATES)
-            m -> MaterialForms.has(m, "PLATES") && (MaterialForms.has(m, "INGOTS") || !MaterialForms.has(m, "GEMS")));
+            // GT6 OP.plate = And(Or(ingot, gem.NOT), PLATES), PLATES including the qual grant
+            m -> MaterialPrefix.GT6_PLATES.test(m)
+                    && (MaterialForms.has(m, "INGOTS") || !MaterialForms.has(m, "GEMS")));
     private static final Predicate<GTMaterial> HAS_STICKS = nativeOr(
             m -> m.has(MaterialProperty.GENERATE_STICKS)
                     || HAS_INGOT.test(m)
@@ -262,21 +263,39 @@ public final class MaterialPrefix {
     // missing (the quartz family's gems/plates/sticks, Asbestos' plates, Paper's multi-plates, …).
     // These predicates add the original's answer; they never remove a form the port already has.
 
-    /** GT6 {@code OP.PLATES} materials. */
-    private static final Predicate<GTMaterial> GT6_PLATES = m -> MaterialForms.has(m, "PLATES");
+    /**
+     * GT6 {@code OP.PLATES} materials. {@code OreDictMaterial.qual} also grants PLATES to every
+     * material with a positive tool type ({@code OreDictMaterial:899}), alongside PARTS and STICKS.
+     */
+    private static final Predicate<GTMaterial> GT6_PLATES = m -> MaterialForms.has(m, "PLATES") || m.getToolTypes() > 0;
     /** GT6 {@code OP.GEMS}. */
     private static final Predicate<GTMaterial> GT6_GEMS = m -> MaterialForms.has(m, "GEMS");
+    /** One pinned GT6 material; the id and name must both match so addons cannot borrow the row. */
+    private static Predicate<GTMaterial> sourceMaterial(int id, String name) {
+        return m -> m.getId() == id && m.getName().equals(name);
+    }
     /**
      * The reference pack grants Tantalum a plain gem form at runtime that the pinned
      * {@code MT.java} declarations do not carry. Only {@code gem}/{@code plateGem} appear; the
      * transparent quality variants stay closed, matching the pack's rows.
      */
-    private static final Predicate<GTMaterial> REFERENCE_TANTALUM_GEM =
-            m -> m.getId() == 730 && m.getName().equals("Tantalum");
+    private static final Predicate<GTMaterial> REFERENCE_TANTALUM_GEM = sourceMaterial(730, "Tantalum");
+    /**
+     * {@code OP.java:613-615}: the gem forms force-generated for the salt crystals and the two
+     * crystalline materials the item-generator form table lists without GEMS.
+     */
+    private static final Predicate<GTMaterial> FORCED_GEM_FLAWED = sourceMaterial(9802, "Ice")
+            .or(sourceMaterial(8204, "Salt"))
+            .or(sourceMaterial(8203, "Sylvite"))
+            .or(sourceMaterial(8242, "IodineSalt"))
+            .or(sourceMaterial(8342, "Firestone"));
+
+    private static final Predicate<GTMaterial> FORCED_GEM_CHIPPED = FORCED_GEM_FLAWED.or(sourceMaterial(9703, "Sugar"));
+    private static final Predicate<GTMaterial> FORCED_GEM = FORCED_GEM_FLAWED.or(REFERENCE_TANTALUM_GEM);
     /** GT6 {@code OP.INGOTS}. */
     private static final Predicate<GTMaterial> GT6_INGOTS = m -> MaterialForms.has(m, "INGOTS");
-    /** GT6 {@code OP.STICKS}. */
-    private static final Predicate<GTMaterial> GT6_STICKS = m -> MaterialForms.has(m, "STICKS");
+    /** GT6 {@code OP.STICKS}. Like {@link #GT6_PARTS}, {@code OreDictMaterial.qual} grants it. */
+    private static final Predicate<GTMaterial> GT6_STICKS = m -> MaterialForms.has(m, "STICKS") || m.getToolTypes() > 0;
     /** GT6 {@code OP.FOILS}. */
     private static final Predicate<GTMaterial> GT6_FOILS = m -> MaterialForms.has(m, "FOILS");
     /** GT6 {@code OP.LENSES}. */
@@ -367,12 +386,9 @@ public final class MaterialPrefix {
         rockGt = def("rockGt", "Rock", m -> HAS_ORE_PROCESSING.test(m) || m.has(MaterialProperty.STONE));
 
         // OP.gemChipped.forceItemGeneration(MT.Sugar): this one form does not make sugar a gem material.
-        gemChipped = def(
-                "gemChipped",
-                "Chipped Gem",
-                HAS_GEM.or(GT6_GEMS).or(m -> m.getName().equals("Sugar")));
-        gemFlawed = def("gemFlawed", "Flawed Gem", HAS_GEM.or(GT6_GEMS));
-        gem = def("gem", "Gem", HAS_GEM.or(GT6_GEMS).or(REFERENCE_TANTALUM_GEM));
+        gemChipped = def("gemChipped", "Chipped Gem", HAS_GEM.or(GT6_GEMS).or(FORCED_GEM_CHIPPED));
+        gemFlawed = def("gemFlawed", "Flawed Gem", HAS_GEM.or(GT6_GEMS).or(FORCED_GEM_FLAWED));
+        gem = def("gem", "Gem", HAS_GEM.or(GT6_GEMS).or(FORCED_GEM));
         gemFlawless = def("gemFlawless", "Flawless Gem", HAS_GEM.or(GT6_GEMS));
         gemExquisite = def("gemExquisite", "Exquisite Gem", HAS_GEM.or(GT6_GEMS));
         gemLegendary = def("gemLegendary", "Legendary Gem", HAS_GEM.or(GT6_GEMS));

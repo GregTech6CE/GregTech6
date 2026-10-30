@@ -150,6 +150,17 @@ final class MaterialFormCorrections {
         var blackstone = gregtech.engine.material.GTMaterialRegistry.get("Blackstone");
         if (blackstone != null && blackstone.isValid()) blackstone.setToolStats(1, 5.0F, 64, 1);
 
+        // The source's stone factories put TD.Properties.STONE — `stone(...)` (MT.java:323, which
+        // `brick(...)` at :194 delegates to) for Blackstone, and the explicit argument of
+        // `create(8599, "Bedrock", …)` (MT.java:1637). Without it OP.rockGt (Or(ORES, STONE))
+        // skipped both, so their anvil, mortar and sharpener rows had no rock.
+        // MT.CFoam (9883) also declares STONE, but the port's property-based plate/stick/parts
+        // branches would then give it forms the source form set (DUSTS only) does not have.
+        for (String name : new String[] {"Blackstone", "Bedrock"}) {
+            var material = gregtech.engine.material.GTMaterialRegistry.get(name);
+            if (material != null && material.isValid()) material.put(MaterialProperty.STONE);
+        }
+
         // MT.Ice uses G_GEM_TRANSPARENT and SET_CUBE_SHINY, not a dust-only group.
         CompoundMaterials.Ice.put(
                         MaterialProperty.GEM,
