@@ -62,6 +62,10 @@ public final class SmelteryInteractionHandler {
         ItemStack held = player.getItemInHand(event.getHand());
         BlockHitResult hit = event.getHitVec();
 
+        // Placing infrastructure must not pick up a casting or trigger a pour instead.
+        if (held.getItem() instanceof net.minecraft.world.item.BlockItem
+                && (blockEntity instanceof MoldBlockEntity || blockEntity instanceof MoldBasinBlockEntity)) return;
+
         if (blockEntity instanceof MoldBlockEntity mold) {
             if (event.getLevel().isClientSide()) {
                 player.swing(event.getHand());
@@ -145,6 +149,7 @@ public final class SmelteryInteractionHandler {
 //?}
     private static InteractionResult handleMoldInteraction(MoldBlockEntity mold, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
+        if (held.getItem() instanceof net.minecraft.world.item.BlockItem) return InteractionResult.PASS;
         // Original ordinary activation works with any held item or unrelated GT tool.
         // Only the specific mold tools below take precedence. The held item is never
         // melted: a top click asks the adjacent crucible to pour.
@@ -223,6 +228,7 @@ public final class SmelteryInteractionHandler {
 
     private static InteractionResult handleBasinInteraction(MoldBasinBlockEntity basin, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
+        if (held.getItem() instanceof net.minecraft.world.item.BlockItem) return InteractionResult.PASS;
         // Original basin activation accepts any held item on top; the monkey wrench
         // keeps its dedicated auto-input toggle instead of picking up or pouring.
         if (hit.getDirection() == Direction.UP && !GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {

@@ -113,6 +113,28 @@ public final class PortableFluidContainerItem extends BlockItem implements gregt
     public net.minecraft.world.InteractionResultHolder<ItemStack> use(Level level,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (!player.isShiftKeyDown() && drinkVessel() && stack.getCount() == 1) {
+            var hit = getPlayerPOVHitResult(level, player, net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY);
+            if (hit.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) {
+                var pos = hit.getBlockPos();
+                var fluid = level.getFluidState(pos);
+                var container = FluidUtil.getFluidHandler(stack.copyWithCount(1)).orElse(null);
+                if (fluid.isSource() && container != null && level.mayInteract(player, pos)
+                        && player.mayUseItemAt(pos, hit.getDirection(), stack)
+                        && container.fill(new FluidStack(fluid.getType(), 1000),
+//? if >=1.21.1 {
+                        /*net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE) == 1000) {
+*///?} else {
+                        net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE) == 1000) {
+//?}
+                    if (level.isClientSide) return net.minecraft.world.InteractionResultHolder.success(stack);
+                    // The platform transaction removes a source only after the full bucket fits.
+                    var pickedUp = FluidUtil.tryPickUpFluid(stack.copyWithCount(1), player, level, pos, hit.getDirection());
+                    if (pickedUp.isSuccess())
+                        return net.minecraft.world.InteractionResultHolder.success(pickedUp.getResult());
+                }
+            }
+        }
         if (!drinkVessel() || stack.getCount() != 1 || !gregtech.content.food.GTDrinks.canDrink(player,
                 FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY)))
             return net.minecraft.world.InteractionResultHolder.pass(stack);
@@ -160,6 +182,10 @@ public final class PortableFluidContainerItem extends BlockItem implements gregt
         if (player == null || !context.getLevel().mayInteract(player, context.getClickedPos())
                 || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack)) return InteractionResult.PASS;
         if (player.isShiftKeyDown() || context.getLevel().isClientSide) return InteractionResult.PASS;
+        var target = context.getLevel().getBlockEntity(context.getClickedPos());
+        if (target instanceof gregtech.content.blockentity.machine.MoldBlockEntity
+                || target instanceof gregtech.content.blockentity.machine.MoldBasinBlockEntity)
+            return InteractionResult.PASS;
         return FluidUtil.interactWithFluidHandler(player, context.getHand(), context.getLevel(),
                 context.getClickedPos(), context.getClickedFace()) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
