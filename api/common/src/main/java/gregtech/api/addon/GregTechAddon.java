@@ -12,7 +12,10 @@ public interface GregTechAddon {
 
     /** Loader-neutral lifecycle information; Minecraft stacks remain platform types. */
     record Context(String platform, String minecraftVersion) {
-        /** Minor API number for an optional feature branch. Compatibility is the loader version range. */
+        /**
+         * Monotonic API version code ({@code major * 1000 + minor}) for an optional feature branch.
+         * Compatibility is the loader version range.
+         */
         public int apiVersion() { return GregTechAddons.apiVersion(); }
     }
 }

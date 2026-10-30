@@ -1,7 +1,6 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. Source boiler tool and structure rules. */
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
 import gregtech.api.multiblock.StructureRole;
 import java.util.*;
 

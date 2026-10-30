@@ -2,14 +2,13 @@
 
 package gregtech.api.addon.platform;
 
+import java.util.Set;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
 import org.jspecify.annotations.Nullable;
-import java.util.Set;
 
 /**
  * Client screens and renderers for one addon's behavior machines. List this class in
@@ -23,20 +22,9 @@ public interface BehaviorMachineClient {
 
     Set<String> machineTypes();
 
-    /**
-     * Null keeps GregTech's default screen. The menu view is read-only.
-     * @deprecated Override {@link #screen(String, BehaviorMachineMenuView, Inventory, Component)}
-     * to see which machine type is being opened.
-     */
-    @Deprecated(since = "0.0")
-    @Nullable
-    default Screen screen(BehaviorMachineMenuView menu, Inventory inventory, Component title) { return null; }
-
     /** Null keeps GregTech's default screen. The menu view is read-only. */
     @Nullable
-    default Screen screen(String machineType, BehaviorMachineMenuView menu, Inventory inventory, Component title) {
-        return screen(menu, inventory, title);
-    }
+    default Screen screen(String machineType, BehaviorMachineMenuView menu, Inventory inventory, Component title) { return null; }
 
     /** Null when this machine has no extra drawing. GregTech registers the dispatcher. */
     @Nullable BlockEntityRenderer<BlockEntity> renderer(String machineType);

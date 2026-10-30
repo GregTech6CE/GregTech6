@@ -1,6 +1,6 @@
 package gregtech.content.data;
 
-import gregtech.api.recipe.RecipeMapSpec;
+import gregtech.content.recipe.RecipeMapSpec;
 
 /** Complete original machine recipe-map catalogue; actual rows live at platform boundaries. */
 public final class MachineRecipeMapDefinitions {

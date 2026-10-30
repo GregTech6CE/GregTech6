@@ -1,6 +1,5 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
 import gregtech.api.multiblock.StructureRole;
 import java.util.ArrayList;
 

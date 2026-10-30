@@ -5,7 +5,8 @@ package gregtech.api.material;
 /**
  * GregTech material units ({@code CS.U} in GT6).
  * Prefix amounts, composition parts, smelting targets and {@code GregTechMaterials.Component}
- * all use this unit. One ingot is {@link #U}.
+ * all use this unit. One ingot is {@link #U}. Prefix, composition and smelting-target amounts
+ * are positive multiples of {@link #U72}, the finest fraction the unit defines.
  */
 public final class GTValues {
     /** One ingot or one dust. */

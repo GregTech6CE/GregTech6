@@ -7,6 +7,7 @@ package gregtech.api.addon.platform;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
+import org.jspecify.annotations.Nullable;
 
 /**
  * Tanks owned by a machine or structure part. All amounts and capacities are mB.
@@ -24,7 +25,7 @@ public interface FluidAccess {
     int capacity(int tank);
 
     /** Returns accepted mB. Null/empty means no fluid. Negative amounts throw. */
-    int fill(int tank, FluidStack stack, boolean simulate);
+    int fill(int tank, @Nullable FluidStack stack, boolean simulate);
 
     /** Returns up to {@code amount} mB. Zero drains nothing; negative amounts throw. */
     FluidStack drain(int tank, int amount, boolean simulate);

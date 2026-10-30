@@ -2,11 +2,7 @@
 
 package gregtech.api.addon.machine;
 
-
-
-
-
-import gregtech.api.machine.*;
+import gregtech.api.machine.MachineCasing;
 
 /** A recipe machine, a behavior machine, or a fuel generator. */
 public interface AddonMachine {

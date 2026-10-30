@@ -6,43 +6,56 @@ import gregtech.api.addon.AddonNames;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A multiblock layout bound by name. The name equals the controller {@code machineType}.
  * Layouts are not inlined into a machine declaration.
+ *
+ * @param name the layout name
+ * @param cells fixed cells
+ * @param repeats repeatable layer groups
  */
-public final class StructureLayout {
-    private final String name;
-    private final List<LayoutCell> cells;
-    private final List<LayoutRepeat> repeats;
-
-    private StructureLayout(String name, List<LayoutCell> cells, List<LayoutRepeat> repeats) {
-        this.name = name;
-        this.cells = cells;
-        this.repeats = repeats;
+public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRepeat> repeats) {
+    public StructureLayout {
+        if (!AddonNames.matches(AddonNames.MACHINE_TYPE, name))
+            throw new IllegalArgumentException("Invalid layout name: " + name);
+        if (cells == null || repeats == null)
+            throw new IllegalArgumentException("Missing structure layout lists");
+        cells = List.copyOf(cells);
+        repeats = List.copyOf(repeats);
+        if (cells.isEmpty() && repeats.isEmpty())
+            throw new IllegalArgumentException("Layout '" + name + "' is empty");
+        var seen = new HashSet<LayoutPosition>();
+        for (LayoutCell cell : cells) {
+            if (cell.right() == 0 && cell.up() == 0 && cell.back() == 0)
+                throw new IllegalArgumentException("Structure cell cannot be the origin");
+            if (!seen.add(new LayoutPosition(cell.right(), cell.up(), cell.back())))
+                throw new IllegalArgumentException("Duplicate structure cell at "
+                        + cell.right() + "/" + cell.up() + "/" + cell.back());
+        }
+        var keys = new HashSet<String>();
+        for (LayoutRepeat repeat : repeats) {
+            if (!keys.add(repeat.key()))
+                throw new IllegalArgumentException("Duplicate structure repeat key: " + repeat.key());
+            // A bounded group may contain every copy up to max, so check them all: the first copy
+            // alone misses a later required layer and two groups whose first copies do not touch.
+            // An unbounded group only guarantees its minimum; the runtime stops at the first copy
+            // that fails to match, so a fixed cap above a repeating tower is valid.
+            int copies = repeat.unbounded() ? repeat.min() : repeat.max();
+            List<LayoutCell> group = repeat.cells();
+            for (int copy = 0; copy < copies; copy++) {
+                for (LayoutCell cell : group) {
+                    int absoluteUp = absoluteLayer(repeat, cell, copy);
+                    if (cell.right() == 0 && absoluteUp == 0 && cell.back() == 0)
+                        throw new IllegalArgumentException("Structure repeat '" + repeat.key()
+                                + "' copy " + copy + " cell cannot be the origin");
+                    if (!seen.add(new LayoutPosition(cell.right(), absoluteUp, cell.back())))
+                        throw new IllegalArgumentException("Structure repeat '" + repeat.key()
+                                + "' copy " + copy + " overlaps another cell");
+                }
+            }
+        }
     }
-
-    public String name() { return name; }
-
-    /** Fixed cells. Repeat groups live in {@link #repeats()}. */
-    public List<LayoutCell> cells() { return List.copyOf(cells); }
-
-    /** Repeatable layer groups. Empty when the layout does not repeat. */
-    public List<LayoutRepeat> repeats() { return List.copyOf(repeats); }
-
-    @Override public boolean equals(Object other) {
-        if (this == other) return true;
-        if (!(other instanceof StructureLayout that)) return false;
-        return name.equals(that.name) && cells.equals(that.cells) && repeats.equals(that.repeats);
-    }
-
-    @Override public String toString() {
-        return "StructureLayout[name=" + name + ", cells=" + cells.size()
-                + ", repeats=" + repeats.size() + "]";
-    }
-
-    @Override public int hashCode() { return Objects.hash(name, cells, repeats); }
 
     public static Builder builder(String name) { return new Builder(name); }
 
@@ -75,37 +88,7 @@ public final class StructureLayout {
         }
 
         public StructureLayout build() {
-            if (!AddonNames.matches(AddonNames.MACHINE_TYPE, name))
-                throw new IllegalArgumentException("Invalid layout name: " + name);
-            if (cells.isEmpty() && repeats.isEmpty())
-                throw new IllegalArgumentException("Layout '" + name + "' is empty");
-            var seen = new HashSet<LayoutPosition>();
-            for (LayoutCell cell : cells) {
-                if (!seen.add(new LayoutPosition(cell.right(), cell.up(), cell.back())))
-                    throw new IllegalArgumentException("Duplicate structure cell at "
-                            + cell.right() + "/" + cell.up() + "/" + cell.back());
-            }
-            var keys = new HashSet<String>();
-            for (LayoutRepeat repeat : repeats) {
-                if (!keys.add(repeat.key()))
-                    throw new IllegalArgumentException("Duplicate structure repeat key: " + repeat.key());
-                // Every copy a formed structure can contain. Checking the first copy alone misses a
-                // later required layer, and misses two groups whose first copies do not touch.
-                int copies = repeat.unbounded() ? LayoutRepeat.MAX_COPIES : repeat.max();
-                List<LayoutCell> group = repeat.cells();
-                for (int copy = 0; copy < copies; copy++) {
-                    for (LayoutCell cell : group) {
-                        int absoluteUp = absoluteLayer(repeat, cell, copy);
-                        if (cell.right() == 0 && absoluteUp == 0 && cell.back() == 0)
-                            throw new IllegalArgumentException("Structure repeat '" + repeat.key()
-                                    + "' copy " + copy + " cell cannot be the origin");
-                        if (!seen.add(new LayoutPosition(cell.right(), absoluteUp, cell.back())))
-                            throw new IllegalArgumentException("Structure repeat '" + repeat.key()
-                                    + "' copy " + copy + " overlaps another cell");
-                    }
-                }
-            }
-            return new StructureLayout(name, List.copyOf(cells), List.copyOf(repeats));
+            return new StructureLayout(name, cells, repeats);
         }
     }
 

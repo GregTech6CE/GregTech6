@@ -99,7 +99,7 @@ public final class MachineRecipeMaps {
     public static final RecipeMap AnvilBendBig=fromDefinition(MachineRecipeMapDefinitions.AnvilBendBig);
     public static final RecipeMap BumbleQueens=fromDefinition(MachineRecipeMapDefinitions.BumbleQueens);
     public static final RecipeMap Trees=fromDefinition(MachineRecipeMapDefinitions.Trees);
-    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.api.recipe.RecipeMapSpec spec) {
+    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.content.recipe.RecipeMapSpec spec) {
         var map=new gregtech.engine.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
                 spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
                 spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
@@ -603,7 +603,7 @@ public class MachineRecipeMaps {
     }
 //? if >=1.21.1 {
 //?} else {
-    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.api.recipe.RecipeMapSpec spec) {
+    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.content.recipe.RecipeMapSpec spec) {
         var map=new gregtech.engine.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
                 spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
                 spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,

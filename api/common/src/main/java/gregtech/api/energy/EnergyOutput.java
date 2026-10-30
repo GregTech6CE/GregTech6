@@ -3,10 +3,7 @@
 package gregtech.api.energy;
 
 import gregtech.api.machine.MachineFace;
-
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Energy leaving a behavior machine, or an energy structure part.
@@ -14,73 +11,38 @@ import java.util.Objects;
  * with no faces, which is sent only with {@code MachineBehaviorContext.emitTo}.
  * {@code minSize} defaults to 1. {@code allowNegative()} is only for KU and RU, where the sign
  * is direction. A part also names a positive capacity on {@link gregtech.api.addon.machine.LayoutPart}.
- * Equality compares faces without order and the energy type case-insensitively.
+ * Equality compares faces without order; {@link #faces()} stores them in {@link MachineFace#index()}
+ * order, and the energy type is compared by its canonical name.
+ *
+ * @param type the energy type
+ * @param faces emitting faces in {@link MachineFace#index()} order
+ * @param minSize smallest accepted packet size
+ * @param maxSize largest accepted packet size
+ * @param maxAmount most energy one tick may emit
+ * @param allowNegative true for KU or RU, where the sign is direction
+ * @param remote true when the output may be declared without faces
  */
-public final class EnergyOutput {
-    private final String type;
-    private final List<MachineFace> faces;
-    private final long minSize;
-    private final long maxSize;
-    private final long maxAmount;
-    private final boolean allowNegative;
-    private final boolean remote;
-
-    private EnergyOutput(String type, List<MachineFace> faces, long minSize, long maxSize, long maxAmount,
-                         boolean allowNegative, boolean remote) {
-        this.type = type;
-        this.faces = faces;
-        this.minSize = minSize;
-        this.maxSize = maxSize;
-        this.maxAmount = maxAmount;
-        this.allowNegative = allowNegative;
-        this.remote = remote;
+public record EnergyOutput(EnergyType type, List<MachineFace> faces, long minSize, long maxSize, long maxAmount,
+                           boolean allowNegative, boolean remote) {
+    public EnergyOutput {
+        if (type == null) throw new IllegalArgumentException("Missing energy output type");
+        if (maxSize < 1 || maxAmount < 1)
+            throw new IllegalArgumentException("Energy output maximum must be positive");
+        if (minSize < 1 || minSize > maxSize)
+            throw new IllegalArgumentException("Energy output minimum must sit inside the maximum");
+        if (allowNegative && !type.signedDirection())
+            throw new IllegalArgumentException("Energy output type cannot be negative");
+        faces = MachineFace.canonical(faces, "energy output face");
+        if (faces.isEmpty() && !remote)
+            throw new IllegalArgumentException("Energy output needs a face");
     }
 
-    public String type() { return type; }
-
-    public List<MachineFace> faces() { return List.copyOf(faces); }
-
-    /** Smallest accepted packet size. A negative packet is checked by its absolute value. */
-    public long minSize() { return minSize; }
-
-    public long maxSize() { return maxSize; }
-
-    public long maxAmount() { return maxAmount; }
-
-    /** True only for KU or RU. The sign is direction, not a negative amount of energy. */
-    public boolean allowNegative() { return allowNegative; }
-
-    /**
-     * True when this output may be declared without faces. Such an output does not emit to a
-     * neighbor; the behavior sends it with {@code MachineBehaviorContext.emitTo}.
-     * An output with faces may also set this flag and support both paths.
-     */
-    public boolean remote() { return remote; }
-
-    @Override public boolean equals(Object other) {
-        if (this == other) return true;
-        if (!(other instanceof EnergyOutput that)) return false;
-        return minSize == that.minSize && maxSize == that.maxSize && maxAmount == that.maxAmount
-                && allowNegative == that.allowNegative && remote == that.remote
-                && EnergyType.same(type, that.type) && MachineFace.sameSet(faces, that.faces);
-    }
-
-    @Override public String toString() {
-        return "EnergyOutput[type=" + type + ", faces=" + faces + ", minSize=" + minSize + ", maxSize=" + maxSize
-                + ", maxAmount=" + maxAmount + ", allowNegative=" + allowNegative + ", remote=" + remote + "]";
-    }
-
-    @Override public int hashCode() {
-        return Objects.hash(type == null ? null : type.toLowerCase(Locale.ROOT),
-                MachineFace.hashSet(faces), minSize, maxSize, maxAmount, allowNegative, remote);
-    }
-
-    public static Builder builder(String type, long maxSize, long maxAmount) {
+    public static Builder builder(EnergyType type, long maxSize, long maxAmount) {
         return new Builder(type, maxSize, maxAmount);
     }
 
     public static final class Builder {
-        private final String type;
+        private final EnergyType type;
         private final long maxSize;
         private final long maxAmount;
         private List<MachineFace> faces = List.of();
@@ -89,7 +51,7 @@ public final class EnergyOutput {
         private boolean allowNegative;
         private boolean remote;
 
-        private Builder(String type, long maxSize, long maxAmount) {
+        private Builder(EnergyType type, long maxSize, long maxAmount) {
             this.type = type;
             this.maxSize = maxSize;
             this.maxAmount = maxAmount;
@@ -118,17 +80,17 @@ public final class EnergyOutput {
         }
 
         public EnergyOutput build() {
-            String resolved = EnergyType.require(type, "Missing energy output type");
+            if (type == null) throw new IllegalArgumentException("Missing energy output type");
             if (maxSize < 1 || maxAmount < 1)
                 throw new IllegalArgumentException("Energy output maximum must be positive");
             if (minSize < 1 || minSize > maxSize)
                 throw new IllegalArgumentException("Energy output minimum must sit inside the maximum");
-            if (allowNegative && !EnergyType.signedDirection(resolved))
+            if (allowNegative && !type.signedDirection())
                 throw new IllegalArgumentException("Energy output type cannot be negative");
             var distinct = MachineFace.distinct(faces, "energy output face");
             if ((!facesSpecified || distinct.isEmpty()) && !remote)
                 throw new IllegalArgumentException("Energy output needs a face");
-            return new EnergyOutput(resolved, distinct, minSize, maxSize, maxAmount, allowNegative, remote);
+            return new EnergyOutput(type, distinct, minSize, maxSize, maxAmount, allowNegative, remote);
         }
     }
 }

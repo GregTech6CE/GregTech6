@@ -1,5 +1,6 @@
 package gregtech.content.blockentity.energy;
 
+import gregtech.api.machine.BlockFace;
 import gregtech.api.platform.machine.MachineControl;
 import gregtech.api.signal.GtSignalCarrier;
 import gregtech.api.signal.GtSignalReceiver;
@@ -176,7 +177,7 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
                     if (state.hasBlockEntity()) {
                         var entity = level.getBlockEntity(pos);
                         if (entity instanceof GtSignalReceiver) continue;
-                        if (entity instanceof GtSignalSource source) emitted = GtSignalCarrier.clamp(source.gtSignal(side.ordinal()));
+                        if (entity instanceof GtSignalSource source) emitted = GtSignalCarrier.clamp(source.gtSignal(BlockFace.of(side.ordinal())));
                         else emitted = level.getSignal(pos, side) * UNIT;
                     } else emitted = level.getSignal(pos, side) * UNIT;
                     long candidate = emitted - wire.loss();

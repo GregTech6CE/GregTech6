@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.BoilerSpec;
 import gregtech.engine.tool.GTToolHelper;
@@ -86,8 +88,8 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
         this.steamTank = new FluidTankGT(spec.steamCapacity()).setOnChanged(this::setChanged);
     }
 
-    @Override public long gibblValue(int side) { return steamTank.getAmount(); }
-    @Override public long gibblMaximum(int side) { return steamTank.getCapacity(); }
+    @Override public long gibblValue(BlockFace side) { return steamTank.getAmount(); }
+    @Override public long gibblMaximum(BlockFace side) { return steamTank.getCapacity(); }
     public BoilerSpec spec() { return spec; }
     public long storedHeat() { return heat; }
 

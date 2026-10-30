@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.sensor;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.api.addon.platform.AddonSensor;
 import gregtech.api.addon.platform.SensorContext;
 import gregtech.engine.energy.IEnergyBlock;
@@ -267,8 +269,8 @@ public class SensorBlockEntity extends BlockEntity {
                 }
                 case THERMOMETER -> {
                     if (target instanceof gregtech.api.sensor.TemperatureSource source) {
-                        newValue = source.temperatureK(facing.ordinal());
-                        maximum = source.maximumK(facing.ordinal());
+                        newValue = source.temperatureK(BlockFace.of(facing.ordinal()));
+                        maximum = source.maximumK(BlockFace.of(facing.ordinal()));
                     }
 //? if >=1.21.1 {
                     /*else if (target instanceof gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity crucible) {
@@ -297,7 +299,7 @@ public class SensorBlockEntity extends BlockEntity {
                     double kilograms = 0;
                     if (target instanceof gregtech.api.sensor.WeightSensorSource source) {
                         // The host owns the physical contents; a crucible's cache is not its contents.
-                        kilograms = source.weightKilograms(facing.ordinal());
+                        kilograms = source.weightKilograms(BlockFace.of(facing.ordinal()));
                     } else {
 //? if >=1.21.1 {
                         /*IItemHandler items = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,target.getBlockPos(),facing);
@@ -344,7 +346,7 @@ public class SensorBlockEntity extends BlockEntity {
                 }
                 case GIBBLOMETER, KILOGIBBLOMETER -> {
                     if (target instanceof gregtech.api.sensor.CompressionSensorSource compressed) {
-                        long amount = compressed.gibblValue(facing.ordinal()), capacity = compressed.gibblMaximum(facing.ordinal());
+                        long amount = compressed.gibblValue(BlockFace.of(facing.ordinal())), capacity = compressed.gibblMaximum(BlockFace.of(facing.ordinal()));
                         newValue = be.kind == Kind.GIBBLOMETER
                                 ? gregtech.engine.sensor.SensorMeasurements.gibbl(amount)
                                 : gregtech.engine.sensor.SensorMeasurements.kiloGibbl(amount);

@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.inventory;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.inventory.MassStorageMaterialForms;
 
 //? if >=1.21.1 {
@@ -82,10 +84,10 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         return storage.count();
     }
 
-    @Override public long progressValue(int side) { return stored(); }
-    @Override public long progressMaximum(int side) { return baseCapacity(); }
+    @Override public long progressValue(BlockFace side) { return stored(); }
+    @Override public long progressMaximum(BlockFace side) { return baseCapacity(); }
 
-    @Override public double weightKilograms(int side) {
+    @Override public double weightKilograms(BlockFace side) {
         // Original weightometer reads the full storage slot even while taped shut.
         // Partial material units are not an inventory stack in the original either.
         var item = template();

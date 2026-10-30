@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.energy;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.energy.IEnergyConductor;
@@ -27,8 +29,8 @@ import java.util.Set;
 /** GT6 electric wire block entity (EU cable, pipe-style connection grid). */
 public class ElectricWireBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
     // Sample the existing transfer accumulator between entity ticks; never substitute energy.
-    @Override public long progressValue(int side) { return transferredAmperes(); }
-    @Override public long progressMaximum(int side) { return amperage(); }
+    @Override public long progressValue(BlockFace side) { return transferredAmperes(); }
+    @Override public long progressMaximum(BlockFace side) { return amperage(); }
     // GT6 runtime-only wire counters: aggregate transfers between entity ticks.
     private long lastWattage;
     private long transferredWattage;

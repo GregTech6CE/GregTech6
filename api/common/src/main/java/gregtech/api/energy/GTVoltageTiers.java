@@ -17,6 +17,7 @@ public final class GTVoltageTiers {
             8L, 32L, 128L, 512L, 2048L, 8192L, 32768L, 131072L, 524288L, 2097152L,
             8388608L, 33554432L, 134217728L, 536870912L, 2147483648L, 8589934592L};
 
+    // GT6's last two tiers both use the name XV, so the duplicate entry is intentional.
     private static final String[] NAME_TABLE = {
             "ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "PUV1",
             "PUV2", "PUV3", "PUV4", "PUV5", "XV", "XV"};
@@ -43,7 +44,9 @@ public final class GTVoltageTiers {
     /**
      * GT6 {@code UT.Code.tier}/{@code tierMax}: the index of the tier {@code size} belongs to.
      * A value above the table returns 16, as GT6 does; that is not a valid index, so clamp it to
-     * 15 before indexing. {@code Long.MIN_VALUE} keeps GT6's signed-magnitude behavior and returns tier 0.
+     * 15 before indexing. {@code Long.MIN_VALUE} keeps GT6's signed-magnitude behavior and returns
+     * tier 0 here, although {@link EnergyTransfer} rejects it as a packet size because it cannot
+     * represent a magnitude.
      */
     public static int tierMax(long size) {
         long value = Math.abs(size);

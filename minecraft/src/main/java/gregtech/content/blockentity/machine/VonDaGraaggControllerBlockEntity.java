@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.multiblock.MultiblockLayout;
 import gregtech.engine.multiblock.MultiblockPortOwner;
 import gregtech.engine.multiblock.PartBindings;
@@ -50,22 +52,22 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
     }
 
     @Override
-    public long progressValue(int side) {
+    public long progressValue(BlockFace side) {
         return range;
     }
 
     @Override
-    public long progressMaximum(int side) {
+    public long progressMaximum(BlockFace side) {
         return gregtech.content.multiblock.VonDaGraaggRules.SENSOR_MAXIMUM;
     }
 
     @Override
-    public long gibblValue(int side) {
+    public long gibblValue(BlockFace side) {
         return 1000L * range;
     }
 
     @Override
-    public long gibblMaximum(int side) {
+    public long gibblMaximum(BlockFace side) {
         return 1000L * progressMaximum(side);
     }
 

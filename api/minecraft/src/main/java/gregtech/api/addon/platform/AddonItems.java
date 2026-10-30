@@ -4,7 +4,6 @@ package gregtech.api.addon.platform;
 
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.recipe.SelectorTags;
-
 import net.minecraft.world.item.ItemStack;
 
 /**

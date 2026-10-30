@@ -3,157 +3,83 @@
 package gregtech.api.energy;
 
 import gregtech.api.machine.MachineFace;
-
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Energy coming into a recipe machine or a behavior machine.
  * Packet bounds, accepted range, faces and capacity are checked by the template, not here:
  * those rules are not the same for the two templates.
- * Two declarations with the same faces in a different order are equal, while {@link #faces()}
- * keeps the written order. A capacity of zero is the behavior-machine default and is
- * indistinguishable from leaving it unset once the machine is built.
+ * Two declarations with the same faces in a different order are equal; {@link #faces()} stores
+ * them in {@link MachineFace#index()} order. A capacity of zero is the behavior-machine default
+ * and is stored as unspecified, so it is indistinguishable from leaving capacity unset.
+ *
+ * @param type the energy type; {@link EnergyType#ANY} exactly when {@link #dynamic()} is true
+ * @param perTick energy consumed each tick
+ * @param rangeMin smallest accepted packet, or 0 when no range was declared
+ * @param rangeMax largest accepted packet, or 0 when no range was declared
+ * @param facesSpecified true when the declaration named faces
+ * @param faces accepted faces in {@link MachineFace#index()} order
+ * @param capacity stored-energy cap, or 0 when unspecified
+ * @param anyPacket true when packet size is not checked
+ * @param overload true unless overload was disabled
+ * @param dynamic true when the input locks its type from the first accepted packet
  */
-public final class EnergyInput {
-    private final String type;
-    private final long perTick;
-    private final boolean rangeSpecified;
-    private final long rangeMin;
-    private final long rangeMax;
-    private final boolean facesSpecified;
-    private final List<MachineFace> faces;
-    private final boolean capacitySpecified;
-    private final long capacity;
-    private final boolean anyPacket;
-    private final boolean overload;
-    private final boolean dynamic;
-
-    private EnergyInput(String type, long perTick, boolean rangeSpecified, long rangeMin, long rangeMax,
-                        boolean facesSpecified, List<MachineFace> faces, boolean capacitySpecified, long capacity,
-                        boolean anyPacket, boolean overload, boolean dynamic) {
-        this.type = type;
-        this.perTick = perTick;
-        this.rangeSpecified = rangeSpecified;
-        this.rangeMin = rangeMin;
-        this.rangeMax = rangeMax;
-        this.facesSpecified = facesSpecified;
-        this.faces = faces;
-        this.capacitySpecified = capacitySpecified;
-        this.capacity = capacity;
-        this.anyPacket = anyPacket;
-        this.overload = overload;
-        this.dynamic = dynamic;
+public record EnergyInput(EnergyType type, long perTick, long rangeMin, long rangeMax,
+                          boolean facesSpecified, List<MachineFace> faces, long capacity,
+                          boolean anyPacket, boolean overload, boolean dynamic) {
+    public EnergyInput {
+        if (type == null) throw new IllegalArgumentException("Missing energy input type");
+        if (rangeMin == 0 ? rangeMax != 0 : (rangeMin < 1 || rangeMax < rangeMin))
+            throw new IllegalArgumentException("Invalid energy range: " + rangeMin + ".." + rangeMax);
+        if (anyPacket && rangeMin != 0)
+            throw new IllegalArgumentException("Energy input cannot both limit packets and accept any packet");
+        if (capacity < 0)
+            throw new IllegalArgumentException("Negative energy capacity");
+        if (type.wildcard() != dynamic)
+            throw new IllegalArgumentException(dynamic
+                    ? "A dynamic energy input must use the wildcard type, not " + type
+                    : "The wildcard energy type needs a dynamic input");
+        faces = MachineFace.canonical(faces, "energy face");
     }
-
-    public String type() { return type; }
-
-    /** True when the input locks the energy type from the first accepted packet. {@code type()} is then {@code *}. */
-    public boolean dynamic() { return dynamic; }
-
-    public long perTick() { return perTick; }
 
     /** False until {@link Builder#range(long, long)} is called. Both bounds stay 0. */
-    public boolean rangeSpecified() { return rangeSpecified; }
+    public boolean rangeSpecified() { return rangeMin != 0; }
 
-    public long rangeMin() { return rangeMin; }
-
-    public long rangeMax() { return rangeMax; }
-
-    /**
-     * False when the builder did not name faces. A built machine still returns the template
-     * default from {@link #faces()}: six faces for a recipe machine, every face but the front
-     * for a behavior machine.
-     */
-    public boolean facesSpecified() { return facesSpecified; }
+    /** True when a non-zero capacity is stored. A zero capacity is stored as unspecified. */
+    public boolean capacitySpecified() { return capacity != 0; }
 
     /**
-     * An immutable copy. Empty when no faces were named and no template has filled the default.
-     * Order is preserved as written and does not take part in equality.
-     */
-    public List<MachineFace> faces() { return List.copyOf(faces); }
-
-    /** True when {@link Builder#capacity(long)} was called, including a call with zero. */
-    public boolean capacitySpecified() { return capacitySpecified; }
-
-    /**
-     * Stored-energy cap for a behavior machine. Zero means the buffer is the rated input.
-     * Recipe machines reject a specified capacity, so a built recipe machine returns 0 here.
-     */
-    public long capacity() { return capacity; }
-
-    /**
-     * True when {@link Builder#anyPacket()} was called. Packet size is not checked and this
-     * input does not overload. A declared range cannot be combined with it.
-     */
-    public boolean anyPacket() { return anyPacket; }
-
-    /**
-     * True unless {@link Builder#overload(boolean)} was called with false.
-     * A behavior machine's main input then refuses a packet outside its window
-     * and does not overload. The default still overloads above the maximum.
-     */
-    public boolean overload() { return overload; }
-
-    /**
-     * Returns a copy with {@code resolved} faces. A zero capacity is stored as unspecified,
-     * matching how a built machine treats it; duplicate or null faces are rejected.
+     * Returns a copy with {@code resolved} faces. Duplicate or null faces are rejected;
+     * every other value, including a zero capacity, is kept as it is.
      */
     public EnergyInput withFaces(List<MachineFace> resolved) {
-        return new EnergyInput(type, perTick, rangeSpecified, rangeMin, rangeMax,
-                facesSpecified, MachineFace.distinct(resolved, "energy face"),
-                capacitySpecified && capacity != 0, capacity, anyPacket, overload, dynamic);
+        return new EnergyInput(type, perTick, rangeMin, rangeMax, facesSpecified, resolved, capacity,
+                anyPacket, overload, dynamic);
     }
 
-    @Override public boolean equals(Object other) {
-        if (this == other) return true;
-        if (!(other instanceof EnergyInput that)) return false;
-        return perTick == that.perTick && rangeSpecified == that.rangeSpecified
-                && rangeMin == that.rangeMin && rangeMax == that.rangeMax
-                && facesSpecified == that.facesSpecified && capacitySpecified == that.capacitySpecified
-                && capacity == that.capacity && anyPacket == that.anyPacket && overload == that.overload
-                && dynamic == that.dynamic && EnergyType.same(type, that.type)
-                && MachineFace.sameSet(faces, that.faces);
-    }
-
-    @Override public String toString() {
-        return "EnergyInput[type=" + type + ", perTick=" + perTick
-                + ", range=" + (rangeSpecified ? rangeMin + ".." + rangeMax : "unset")
-                + ", faces=" + faces + ", capacity=" + (capacitySpecified ? capacity : "unset")
-                + ", anyPacket=" + anyPacket + ", overload=" + overload + ", dynamic=" + dynamic + "]";
-    }
-
-    @Override public int hashCode() {
-        return Objects.hash(type == null ? null : type.toLowerCase(Locale.ROOT), perTick,
-                rangeSpecified, rangeMin, rangeMax, facesSpecified, MachineFace.hashSet(faces),
-                capacitySpecified, capacity, anyPacket, overload, dynamic);
-    }
-
-    public static Builder builder(String type, long perTick) { return new Builder(type, perTick); }
+    public static Builder builder(EnergyType type, long perTick) { return new Builder(type, perTick); }
 
     public static final class Builder {
-        private String type;
+        private EnergyType type;
         private final long perTick;
-        private boolean rangeSpecified;
+        private boolean rangeDeclared;
         private long rangeMin;
         private long rangeMax;
         private boolean facesSpecified;
         private List<MachineFace> faces = List.of();
-        private boolean capacitySpecified;
         private long capacity;
         private boolean anyPacket;
         private boolean overload = true;
         private boolean dynamic;
 
-        private Builder(String type, long perTick) {
+        private Builder(EnergyType type, long perTick) {
             this.type = type;
             this.perTick = perTick;
         }
 
         /** Accepted packet size. {@code 1 <= min <= max}. Not calling leaves the range unset. */
         public Builder range(long min, long max) {
-            rangeSpecified = true;
+            rangeDeclared = true;
             rangeMin = min;
             rangeMax = max;
             return this;
@@ -166,17 +92,18 @@ public final class EnergyInput {
         }
 
         public Builder faces(List<MachineFace> faces) {
+            if (faces == null)
+                throw new IllegalArgumentException("Faces must not be null; pass an empty list or omit faces()");
             facesSpecified = true;
-            this.faces = faces == null ? List.of() : MachineFace.listed(faces.toArray(new MachineFace[0]));
+            this.faces = MachineFace.listed(faces.toArray(new MachineFace[0]));
             return this;
         }
 
         /**
-         * Zero is a real value for a behavior machine, and a built machine treats it as the unset
-         * default. A recipe machine rejects any call.
+         * Zero means the unset default and is stored as unspecified. A recipe machine rejects a
+         * non-zero capacity.
          */
         public Builder capacity(long value) {
-            capacitySpecified = true;
             capacity = value;
             return this;
         }
@@ -189,8 +116,9 @@ public final class EnergyInput {
 
         /**
          * Lock the energy type from the first accepted packet. Only a behavior machine's main input
-         * may use this; {@link #type()} becomes {@link EnergyType#ANY}. The constructor type is
-         * replaced; {@code EnergyInput.builder("EU", 32).anyType()} is the usual form.
+         * may use this; {@link #type()} becomes {@link EnergyType#ANY}. The type passed to
+         * {@link #builder} is replaced; {@code EnergyInput.builder(EnergyType.EU, 32).anyType()}
+         * is the usual form.
          */
         public Builder anyType() {
             dynamic = true;
@@ -209,15 +137,15 @@ public final class EnergyInput {
         }
 
         public EnergyInput build() {
-            String resolved = dynamic ? EnergyType.ANY : EnergyType.require(type);
-            if (rangeSpecified && (rangeMin < 1 || rangeMax < rangeMin))
+            if (type == null) throw new IllegalArgumentException("Missing energy input type");
+            if (rangeDeclared && (rangeMin < 1 || rangeMax < rangeMin))
                 throw new IllegalArgumentException("Invalid energy range: " + rangeMin + ".." + rangeMax);
-            if (anyPacket && rangeSpecified)
+            if (anyPacket && rangeDeclared)
                 throw new IllegalArgumentException("Energy input cannot both limit packets and accept any packet");
-            if (capacitySpecified && capacity < 0)
+            if (capacity < 0)
                 throw new IllegalArgumentException("Negative energy capacity");
-            return new EnergyInput(resolved, perTick, rangeSpecified, rangeMin, rangeMax, facesSpecified,
-                    MachineFace.distinct(faces, "energy face"), capacitySpecified, capacity, anyPacket, overload, dynamic);
+            return new EnergyInput(type, perTick, rangeMin, rangeMax, facesSpecified, faces, capacity,
+                    anyPacket, overload, dynamic);
         }
     }
 }

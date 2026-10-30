@@ -2,10 +2,7 @@
 
 package gregtech.api.addon.machine;
 
-
-
-
-import gregtech.api.machine.*;
+import gregtech.api.machine.MachineFace;
 
 /** Which faces may move items, and how many of a stack fit. The behavior still has to allow the item. */
 public final class PartSlotRules {

@@ -1,5 +1,6 @@
 package gregtech.engine.sensor;
 
+import gregtech.api.machine.BlockFace;
 import gregtech.api.platform.machine.MachineControl;
 import gregtech.api.sensor.ProgressSensorSource;
 import javax.annotation.Nullable;
@@ -27,7 +28,7 @@ public final class ProgressSources {
     public static Access find(BlockEntity entity, Direction side) {
         if (entity == null || entity.isRemoved()) return null;
         if (entity instanceof ProgressSensorSource source) {
-            int face = side == null ? -1 : side.ordinal();
+            BlockFace face = BlockFace.of(side == null ? BlockFace.DOWN.index() : side.ordinal());
             return new Access() {
                 @Override
                 public long value() {

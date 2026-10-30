@@ -2,10 +2,7 @@
 
 package gregtech.api.addon.material;
 
-
-
-
-import gregtech.api.addon.*;
+import gregtech.api.addon.AddonRuntime;
 
 /**
  * Prefix names GregTech already generates, such as {@code dust}, {@code dustTiny}, {@code ingot} and {@code plantGtBerry},

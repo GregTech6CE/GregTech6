@@ -2,21 +2,16 @@
 
 package gregtech.api.addon.recipe;
 
-
-import gregtech.api.addon.machine.*;
-
-
-
-
-
-import gregtech.api.addon.*;
-
-import gregtech.api.energy.*;
-
-import gregtech.api.machine.*;
-
+import gregtech.api.addon.AddonLimits;
+import gregtech.api.addon.AddonNames;
+import gregtech.api.addon.AuxiliaryEnergy;
+import gregtech.api.addon.machine.AddonMachine;
+import gregtech.api.energy.EnergyInput;
+import gregtech.api.machine.MachineCasing;
+import gregtech.api.machine.MachineFace;
+import gregtech.api.machine.MachineIo;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -24,97 +19,90 @@ import org.jspecify.annotations.Nullable;
  * efficiency 10000, constant energy on, cheap overclock unset and off, no light gate.
  * The machine type is the id unchanged; call {@code machineType(...)} when the id is not a valid
  * machine type (for example it contains a slash).
+ *
+ * @param casing the resolved block casing
+ * @param energy the main energy input, with the six-side default already applied
+ * @param auxiliary the second input, or null when the machine has none
+ * @param startupEnergy true when a recipe's special value is charged from the auxiliary buffer
+ * @param io item and fluid faces, or null when they stay at the six-side default
+ * @param largeRecipe true for a large recipe machine
+ * @param recipeMap the recipe map name
+ * @param parallel recipes processed in parallel
+ * @param efficiency processing efficiency in parts per 10,000
+ * @param constantEnergy true when every parallel runs at the same energy
+ * @param cheapOverclocking true when the machine uses cheap overclocking
+ * @param cheapOverclockingSpecified true when {@link #cheapOverclocking()} was set explicitly
+ * @param minimumLightAbove lowest light level the machine needs, or 0
+ * @param searchOutputTanks true when the machine searches output tanks for room
+ * @param exclusiveOutputs true when an output slot may hold only one recipe's result
+ * @param structureKeys structure keys the multiblock controller binds
  */
-public final class RecipeMachine implements AddonMachine {
-    private final MachineCasing casing;
-    private final EnergyInput energy;
-    private final EnergyInput auxiliary;
-    private final boolean startupEnergy;
-    private final MachineIo io;
-    private final boolean largeRecipe;
-    private final String recipeMap;
-    private final int parallel;
-    private final int efficiency;
-    private final boolean constantEnergy;
-    private final boolean cheapOverclocking;
-    private final boolean cheapOverclockingSpecified;
-    private final int minimumLightAbove;
-    private final boolean searchOutputTanks;
-    private final boolean exclusiveOutputs;
-    private final List<String> structureKeys;
-
-    private RecipeMachine(MachineCasing casing, EnergyInput energy, EnergyInput auxiliary, boolean startupEnergy,
-                          MachineIo io, boolean largeRecipe, String recipeMap, int parallel, int efficiency,
-                          boolean constantEnergy, boolean cheapOverclocking, boolean cheapOverclockingSpecified,
-                          int minimumLightAbove, boolean searchOutputTanks, boolean exclusiveOutputs,
-                          List<String> structureKeys) {
-        this.casing = casing;
-        this.energy = energy;
-        this.auxiliary = auxiliary;
-        this.startupEnergy = startupEnergy;
-        this.io = io;
-        this.largeRecipe = largeRecipe;
-        this.recipeMap = recipeMap;
-        this.parallel = parallel;
-        this.efficiency = efficiency;
-        this.constantEnergy = constantEnergy;
-        this.cheapOverclocking = cheapOverclocking;
-        this.cheapOverclockingSpecified = cheapOverclockingSpecified;
-        this.minimumLightAbove = minimumLightAbove;
-        this.searchOutputTanks = searchOutputTanks;
-        this.exclusiveOutputs = exclusiveOutputs;
-        this.structureKeys = structureKeys;
+public record RecipeMachine(MachineCasing casing, EnergyInput energy, @Nullable EnergyInput auxiliary,
+                            boolean startupEnergy, @Nullable MachineIo io, boolean largeRecipe, String recipeMap,
+                            int parallel, int efficiency, boolean constantEnergy, boolean cheapOverclocking,
+                            boolean cheapOverclockingSpecified, int minimumLightAbove, boolean searchOutputTanks,
+                            boolean exclusiveOutputs, List<String> structureKeys) implements AddonMachine {
+    public RecipeMachine {
+        if (casing == null) throw new IllegalArgumentException("Missing casing");
+        String id = casing.id();
+        String machineType = casing.machineType() == null ? id : casing.machineType();
+        if (!AddonNames.matches(AddonNames.MACHINE_TYPE, machineType))
+            throw new IllegalArgumentException("Invalid machine type for " + id + ": " + machineType
+                    + (casing.machineType() == null
+                            ? "; call machineType(...) when the id is not a valid machine type" : ""));
+        int tier = casing.tierSpecified() ? casing.tier() : 1;
+        if (tier < 1 || tier > AddonLimits.MAX_TIER)
+            throw new IllegalArgumentException("Invalid tier for " + id + ": " + tier);
+        if (energy == null) throw new IllegalArgumentException("Missing energy type for " + id);
+        if (energy.dynamic())
+            throw new IllegalArgumentException("Recipe machine '" + id + "' cannot pick its energy type");
+        if (energy.capacitySpecified())
+            throw new IllegalArgumentException("Recipe machine '" + id + "' cannot declare energy capacity");
+        if (energy.anyPacket())
+            throw new IllegalArgumentException("Recipe machine '" + id + "' cannot ignore packet size");
+        if (!energy.overload())
+            throw new IllegalArgumentException("Recipe machine '" + id + "' cannot disable overload");
+        if (energy.perTick() < 1 || energy.perTick() > AddonLimits.MAX_PER_TICK)
+            throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
+        if (energy.rangeSpecified()
+                && (energy.perTick() < energy.rangeMin() || energy.perTick() > energy.rangeMax()))
+            throw new IllegalArgumentException("Recipe machine '" + id
+                    + "' energy per tick must sit inside the packet range");
+        if (energy.rangeSpecified() && energy.type().time())
+            throw new IllegalArgumentException("TU machines cannot declare an energy range: " + id);
+        var mainFaces = energy.facesSpecified() ? energy.faces() : MachineFace.all();
+        var storedEnergy = energy.withFaces(mainFaces);
+        var storedAuxiliary = AuxiliaryEnergy.validate("Recipe", id, storedEnergy, auxiliary);
+        if (storedAuxiliary == null && startupEnergy)
+            throw new IllegalArgumentException("Recipe machine '" + id + "' startup energy needs auxiliary energy");
+        if (!AddonNames.matches(AddonNames.RECIPE_MAP, recipeMap))
+            throw new IllegalArgumentException("Invalid recipe map name: " + recipeMap);
+        if (parallel < 1 || parallel > AddonLimits.MAX_PARALLEL)
+            throw new IllegalArgumentException("Invalid parallel for " + id + ": " + parallel);
+        if (efficiency < 1 || efficiency > AddonLimits.MAX_EFFICIENCY)
+            throw new IllegalArgumentException("Invalid efficiency for " + id + ": " + efficiency);
+        if (minimumLightAbove < 0 || minimumLightAbove > AddonLimits.MAX_LIGHT_LEVEL)
+            throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
+        if (structureKeys == null)
+            throw new IllegalArgumentException(
+                    "Structure keys must not be null for " + id + "; pass an empty list");
+        var keys = List.copyOf(structureKeys);
+        var seenKeys = new HashSet<String>();
+        for (String key : keys) {
+            if (!AddonNames.matches(AddonNames.RECIPE_MAP, key))
+                throw new IllegalArgumentException("Invalid structure key for " + id + ": " + key);
+            if (!seenKeys.add(key))
+                throw new IllegalArgumentException("Recipe machine '" + id + "' repeats structure key '" + key + "'");
+        }
+        if (io != null && io.hasTarget() && !largeRecipe)
+            throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
+        casing = casing.resolve(machineType, true, tier);
+        energy = storedEnergy;
+        auxiliary = storedAuxiliary;
+        structureKeys = keys;
     }
-
-    @Override public MachineCasing casing() { return casing; }
-    public EnergyInput energy() { return energy; }
-
-    /** Second input. Its buffer is separate from {@link #energy}; null when the machine has none. */
-    public @Nullable EnergyInput auxiliary() { return auxiliary; }
-
-    /** When true, a recipe's special value is charged from the auxiliary buffer before progress starts. */
-    public boolean startupEnergy() { return startupEnergy; }
-
-    /** Null when item and fluid faces were left at the six-side default with no automatic face. */
-    public @Nullable MachineIo io() { return io; }
 
     public boolean basic() { return !largeRecipe; }
-    public boolean largeRecipe() { return largeRecipe; }
-    public String recipeMap() { return recipeMap; }
-    public int parallel() { return parallel; }
-    public int efficiency() { return efficiency; }
-    public boolean constantEnergy() { return constantEnergy; }
-    public boolean cheapOverclocking() { return cheapOverclocking; }
-    public boolean cheapOverclockingSpecified() { return cheapOverclockingSpecified; }
-    public int minimumLightAbove() { return minimumLightAbove; }
-    public boolean searchOutputTanks() { return searchOutputTanks; }
-    public boolean exclusiveOutputs() { return exclusiveOutputs; }
-    public List<String> structureKeys() { return List.copyOf(structureKeys); }
-
-    @Override public boolean equals(Object other) {
-        if (this == other) return true;
-        if (!(other instanceof RecipeMachine that)) return false;
-        return largeRecipe == that.largeRecipe && parallel == that.parallel && efficiency == that.efficiency
-                && constantEnergy == that.constantEnergy && cheapOverclocking == that.cheapOverclocking
-                && cheapOverclockingSpecified == that.cheapOverclockingSpecified
-                && minimumLightAbove == that.minimumLightAbove && searchOutputTanks == that.searchOutputTanks
-                && exclusiveOutputs == that.exclusiveOutputs && startupEnergy == that.startupEnergy
-                && casing.equals(that.casing) && energy.equals(that.energy)
-                && Objects.equals(auxiliary, that.auxiliary) && Objects.equals(io, that.io)
-                && recipeMap.equals(that.recipeMap) && structureKeys.equals(that.structureKeys);
-    }
-
-    @Override public String toString() {
-        return "RecipeMachine[casing=" + casing + ", energy=" + energy + ", auxiliary=" + auxiliary
-                + ", startupEnergy=" + startupEnergy + ", recipeMap=" + recipeMap + ", parallel=" + parallel
-                + ", efficiency=" + efficiency + ", largeRecipe=" + largeRecipe + "]";
-    }
-
-    @Override public int hashCode() {
-        return Objects.hash(casing, energy, auxiliary, startupEnergy, io, largeRecipe, recipeMap, parallel,
-                efficiency, constantEnergy, cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
-                searchOutputTanks, exclusiveOutputs, structureKeys);
-    }
 
     public static Builder builder(MachineCasing casing) { return new Builder(casing); }
 
@@ -169,83 +157,17 @@ public final class RecipeMachine implements AddonMachine {
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
         public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
-        public Builder structureKeys(@Nullable List<String> value) { structureKeys = value; return this; }
+        public Builder structureKeys(List<String> value) {
+            if (value == null)
+                throw new IllegalArgumentException("Structure keys must not be null; pass an empty list");
+            structureKeys = value;
+            return this;
+        }
 
         public RecipeMachine build() {
-            if (casing == null) throw new IllegalArgumentException("Missing casing");
-            String id = casing.id();
-            String machineType = casing.machineType() == null ? id : casing.machineType();
-            if (!AddonNames.matches(AddonNames.MACHINE_TYPE, machineType))
-                throw new IllegalArgumentException("Invalid machine type for " + id + ": " + machineType
-                        + (casing.machineType() == null
-                                ? "; call machineType(...) when the id is not a valid machine type" : ""));
-            int tier = casing.tierSpecified() ? casing.tier() : 1;
-            if (tier < 1 || tier > 255)
-                throw new IllegalArgumentException("Invalid tier for " + id + ": " + tier);
-            if (energy == null) throw new IllegalArgumentException("Missing energy type for " + id);
-            if (energy.dynamic())
-                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot pick its energy type");
-            if (energy.capacitySpecified())
-                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot declare energy capacity");
-            if (energy.anyPacket())
-                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot ignore packet size");
-            if (!energy.overload())
-                throw new IllegalArgumentException("Recipe machine '" + id + "' cannot disable overload");
-            if (energy.perTick() < 1 || energy.perTick() > AddonLimits.MAX_PER_TICK)
-                throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
-            if (energy.rangeSpecified()
-                    && (energy.perTick() < energy.rangeMin() || energy.perTick() > energy.rangeMax()))
-                throw new IllegalArgumentException("Recipe machine '" + id
-                        + "' energy per tick must sit inside the packet range");
-            if (energy.rangeSpecified() && EnergyType.time(energy.type()))
-                throw new IllegalArgumentException("TU machines cannot declare an energy range: " + id);
-            if (auxiliary != null) {
-                if (auxiliary.dynamic())
-                    throw new IllegalArgumentException("Recipe machine '" + id + "' auxiliary energy cannot pick its type");
-                if (!auxiliary.anyPacket() && !auxiliary.rangeSpecified())
-                    throw new IllegalArgumentException("Recipe machine '" + id
-                            + "' auxiliary energy needs a packet range or anyPacket");
-                if (auxiliary.perTick() < 1 || auxiliary.perTick() > AddonLimits.MAX_PER_TICK)
-                    throw new IllegalArgumentException("Invalid auxiliary energy per tick for " + id);
-                if (!auxiliary.capacitySpecified() || auxiliary.capacity() < 1)
-                    throw new IllegalArgumentException("Recipe machine '" + id
-                            + "' auxiliary energy capacity must be positive");
-                if (!auxiliary.facesSpecified() || auxiliary.faces().isEmpty())
-                    throw new IllegalArgumentException("Recipe machine '" + id + "' auxiliary energy needs a face");
-                if (auxiliary.rangeSpecified()
-                        && (auxiliary.perTick() < auxiliary.rangeMin() || auxiliary.perTick() > auxiliary.rangeMax()))
-                    throw new IllegalArgumentException("Recipe machine '" + id
-                            + "' auxiliary energy per tick must sit inside the packet range");
-                if (EnergyType.same(auxiliary.type(), energy.type())) {
-                    var mainFaces = energy.facesSpecified() ? energy.faces() : MachineFace.all();
-                    for (MachineFace face : auxiliary.faces())
-                        if (mainFaces.contains(face))
-                            throw new IllegalArgumentException("Recipe machine '" + id
-                                    + "' auxiliary energy overlaps an input face");
-                }
-            } else if (startupEnergy) {
-                throw new IllegalArgumentException("Recipe machine '" + id + "' startup energy needs auxiliary energy");
-            }
-            var faces = energy.facesSpecified() ? energy.faces() : MachineFace.all();
-            if (!AddonNames.matches(AddonNames.RECIPE_MAP, recipeMap))
-                throw new IllegalArgumentException("Invalid recipe map name: " + recipeMap);
-            if (parallel < 1)
-                throw new IllegalArgumentException("Invalid parallel for " + id + ": " + parallel);
-            if (efficiency < 1 || efficiency > AddonLimits.MAX_EFFICIENCY)
-                throw new IllegalArgumentException("Invalid efficiency for " + id + ": " + efficiency);
-            if (minimumLightAbove < 0 || minimumLightAbove > 15)
-                throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
-            var keys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
-            for (String key : keys) {
-                if (!AddonNames.matches(AddonNames.RECIPE_MAP, key))
-                    throw new IllegalArgumentException("Invalid structure key for " + id + ": " + key);
-            }
-            if (io != null && io.hasTarget() && !largeRecipe)
-                throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
-            return new RecipeMachine(casing.resolve(machineType, true, tier), energy.withFaces(faces),
-                    auxiliary == null ? null : auxiliary.withFaces(auxiliary.faces()), startupEnergy, io,
-                    largeRecipe, recipeMap, parallel, efficiency, constantEnergy, cheapOverclocking,
-                    cheapOverclockingSpecified, minimumLightAbove, searchOutputTanks, exclusiveOutputs, keys);
+            return new RecipeMachine(casing, energy, auxiliary, startupEnergy, io, largeRecipe, recipeMap,
+                    parallel, efficiency, constantEnergy, cheapOverclocking, cheapOverclockingSpecified,
+                    minimumLightAbove, searchOutputTanks, exclusiveOutputs, structureKeys);
         }
     }
 }

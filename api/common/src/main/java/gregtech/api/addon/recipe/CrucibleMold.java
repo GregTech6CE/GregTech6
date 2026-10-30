@@ -2,12 +2,8 @@
 
 package gregtech.api.addon.recipe;
 
-
-import gregtech.api.addon.material.*;
-
-
-
-
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.machine.BlockFace;
 
 /**
  * The addon-facing target of a molten-material pour.
@@ -24,11 +20,10 @@ public interface CrucibleMold {
      * @param material    GregTech material to pour; an invalid material is rejected
      * @param amount      available material amount in GT units
      * @param temperature temperature of the material in Kelvin
-     * @param side        {@code Direction.ordinal()} of the mold face receiving the pour.
-     *                    This core type cannot name {@code Direction}.
+     * @param side        absolute face of the mold receiving the pour.
      *                    {@code MachineBehavior.fillMoldAtSide} receives a {@code Direction};
-     *                    pass {@code side.ordinal()} here
+     *                    the host maps it to {@link BlockFace}
      * @return amount actually consumed
      */
-    long fillMold(GregTechMaterials.Material material, long amount, long temperature, int side);
+    long fillMold(GregTechMaterials.Material material, long amount, long temperature, BlockFace side);
 }

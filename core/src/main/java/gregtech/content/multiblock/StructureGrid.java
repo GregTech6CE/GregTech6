@@ -1,10 +1,14 @@
-package gregtech.api.multiblock;
+package gregtech.content.multiblock;
 
-import java.util.*;
+import gregtech.api.multiblock.StructureRole;
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
 
 /** Loader-free source coordinates and roles. Minecraft world/registry access is a boundary. */
 public final class StructureGrid {
     public record Position(int x, int y, int z) {}
+
     public record Cell(int right, int up, int back, StructureRole role) {}
 
     private final List<Cell> cells;
@@ -47,11 +51,17 @@ public final class StructureGrid {
         return faceY == 0 || gas || faceY == (density < 0 ? 1 : -1);
     }
 
-    public static boolean hollowTank(int controllerX, int controllerY, int controllerZ,
-                                     int frontX, int frontY, int frontZ, int size,
-                                     java.util.function.Predicate<Position> loaded,
-                                     java.util.function.Predicate<Position> wall,
-                                     java.util.function.Predicate<Position> air) {
+    public static boolean hollowTank(
+            int controllerX,
+            int controllerY,
+            int controllerZ,
+            int frontX,
+            int frontY,
+            int frontZ,
+            int size,
+            Predicate<Position> loaded,
+            Predicate<Position> wall,
+            Predicate<Position> air) {
         if (size != 3 && size != 5) throw new IllegalArgumentException("Tank size: " + size);
         int radius = size / 2;
         int centerX = controllerX - frontX * radius,

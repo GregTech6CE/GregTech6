@@ -2,7 +2,9 @@
  * LGPL-3.0-or-later. Original specialized multiblock controllers and their registered defaults. */
 package gregtech.content.multiblock;
 
+import gregtech.api.machine.MachineFace;
 import gregtech.api.machine.MachineFaceMasks;
+import gregtech.content.machine.HostMachineFaces;
 import java.util.List;
 
 public final class OriginalLargeRecipeMachineData {
@@ -99,19 +101,8 @@ public final class OriginalLargeRecipeMachineData {
     }
 
     public static MachineFaceMasks faces(String name) {
-        var all = MachineFaceMasks.ALL_SIDES;
-        int output = name.equals("largefermenter") ? MachineFaceMasks.BACK : MachineFaceMasks.BOTTOM;
-        return new MachineFaceMasks(
-                all.itemInputs(),
-                all.itemOutputs(),
-                all.fluidInputs(),
-                all.fluidOutputs(),
-                all.energyInputs(),
-                0,
-                -1,
-                output,
-                -1,
-                output);
+        int output = name.equals("largefermenter") ? MachineFace.BACK.index() : MachineFace.BOTTOM.index();
+        return HostMachineFaces.fromMask(63, 63, 63, 63, 63, 0, -1, output, -1, output);
     }
 
     public static Target output(String name, boolean items) {

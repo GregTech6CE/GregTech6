@@ -2,15 +2,24 @@ package gregtech.content.blockentity.machine;
 
 import gregtech.engine.addon.AddonMachines;
 import gregtech.engine.addon.BehaviorEnergyRules;
+import gregtech.api.energy.EnergyTransfer;
+import gregtech.api.energy.EnergyType;
 import gregtech.api.energy.EnergyOutput;
 import gregtech.api.addon.machine.BehaviorMachine;
 import gregtech.api.addon.recipe.CrucibleContent;
 import gregtech.api.addon.recipe.CrucibleMold;
+import gregtech.api.machine.BlockFace;
 import gregtech.api.machine.MachineFace;
 import gregtech.engine.addon.PartEnergyRules;
 import gregtech.api.addon.machine.BehaviorRangeRules;
 import gregtech.engine.addon.BehaviorMachineHosts;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
+import gregtech.api.addon.platform.EnergyAccess;
+import gregtech.api.addon.platform.FluidAccess;
+import gregtech.api.addon.platform.MachineInventoryAccess;
+import gregtech.api.addon.platform.MachinePanel;
+import gregtech.api.addon.platform.StructureAccess;
+import gregtech.api.addon.platform.WorldAccess;
 import gregtech.api.addon.platform.BehaviorState;
 //? if >=1.21.1 {
 /*import gregtech.api.addon.platform.EnergyBlock;
@@ -166,13 +175,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         this.toggles = declaration.initialToggles();
         this.capacity = declaredCapacity();
         this.energyTag = !hasInput() || declaration.energy().dynamic() ? null : GregTechTags.Energy.ALL.stream()
-                .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.energy().type()))
+                .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.energy().type().name()))
                 .findFirst().orElseThrow();
         this.energyOutTag = energyOutName().isBlank() ? null : GregTechTags.Energy.ALL.stream()
                 .filter(tag -> tag.getShortName().equalsIgnoreCase(energyOutName()))
                 .findFirst().orElseThrow();
         this.auxiliaryTag = declaration.auxiliary() == null ? null : GregTechTags.Energy.ALL.stream()
-                .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.auxiliary().type()))
+                .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.auxiliary().type().name()))
                 .findFirst().orElseThrow();
         this.clientKeys = java.util.Set.copyOf(declaration.clientState());
     }
@@ -185,10 +194,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     public AddonMachines.AcceptedBehavior accepted() { return accepted; }
 
     @Override
-    public long gtSignal(int side) {
-        if (level == null || level.isClientSide || !declaration.signalOutput() || side < 0 || side > 5) return 0;
+    public long gtSignal(BlockFace side) {
+        if (level == null || level.isClientSide || !declaration.signalOutput() || side == null) return 0;
         return gregtech.api.signal.GtSignalCarrier.clamp(
-                behavior.gtSignal(context, Direction.from3DDataValue(side)));
+                behavior.gtSignal(context, Direction.from3DDataValue(side.index())));
     }
     public BehaviorState state() { return state; }
 
@@ -234,26 +243,24 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override
     public long getCrucibleTemperature() {
-        return behavior.getCrucibleTemperature(context);
+        return behavior.crucibleContent(context).temperature();
     }
 
     @Override
     public long getCrucibleContentAmount() {
-        return behavior.getCrucibleContentAmount(context);
+        return behavior.crucibleContent(context).amount();
     }
 
     /** Read-only crucible snapshot for a bound part. Nothing is removed and no controller is kept. */
     public CrucibleContent crucibleContent() {
-        return new CrucibleContent(behavior.getCrucibleMaterial(context),
-                behavior.getCrucibleContentAmount(context),
-                behavior.getCrucibleTemperature(context));
+        return behavior.crucibleContent(context);
     }
 
     private static CrucibleMold moldTarget(ITileEntityMold mold) {
         return (material, amount, temperature, side) -> {
             if (material == null || !material.valid() || material.resolve() == null) return 0;
             var resolved = GTMaterialRegistry.get(material.resolve().name());
-            return resolved.isValid() ? mold.fillMold(resolved, amount, temperature, side) : 0;
+            return resolved.isValid() ? mold.fillMold(resolved, amount, temperature, side.index()) : 0;
         };
     }
 //? if >=1.21.1 {
@@ -270,8 +277,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     public IItemHandler itemHandler(@Nullable Direction side) {
         if (side == null || declaration.io() == null) return pipeItems;
         int rel = relative(side);
-        boolean insert = FaceConfig.has(declaration.itemInputMask(), rel);
-        boolean extract = FaceConfig.has(declaration.itemOutputMask(), rel);
+        boolean insert = FaceConfig.has(declaration.itemInputFaces(), rel);
+        boolean extract = FaceConfig.has(declaration.itemOutputFaces(), rel);
         if (!insert && !extract) return null;
         IItemHandler cached = itemSides[rel];
         if (cached == null) itemSides[rel] = cached = new PipeItems(faceAt(rel), insert, extract);
@@ -284,8 +291,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (tanks.length == 0) return null;
         if (side == null || declaration.io() == null) return pipeFluids;
         int rel = relative(side);
-        boolean fill = FaceConfig.has(declaration.fluidInputMask(), rel);
-        boolean drain = FaceConfig.has(declaration.fluidOutputMask(), rel);
+        boolean fill = FaceConfig.has(declaration.fluidInputFaces(), rel);
+        boolean drain = FaceConfig.has(declaration.fluidOutputFaces(), rel);
         if (!fill && !drain) return null;
         IFluidHandler cached = fluidSides[rel];
         if (cached == null) fluidSides[rel] = cached = new PipeFluids(faceAt(rel), fill, drain);
@@ -399,16 +406,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private boolean accepts(Direction side) {
-        return side == null || FaceConfig.has(declaration.energyMask(), relative(side));
+        return side == null || FaceConfig.has(declaration.energyFaces(), relative(side));
     }
 
     private boolean auxiliaryFace(Direction side) {
         return declaration.auxiliary() != null && side != null
-                && FaceConfig.has(declaration.auxiliaryMask(), relative(side));
+                && FaceConfig.has(declaration.auxiliaryFaces(), relative(side));
     }
 
     private boolean auxiliaryAccepts(String energy, Direction side) {
-        return auxiliaryFace(side) && energy != null && energy.equalsIgnoreCase(declaration.auxiliary().type());
+        return auxiliaryFace(side) && energy != null && energy.equalsIgnoreCase(declaration.auxiliary().type().name());
     }
 
     private boolean sameEnergy(String energy, String type) {
@@ -419,7 +426,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private boolean mainAccepts(String energy) {
         if (!hasInput() || energy == null) return false;
         var input = declaration.energy();
-        if (!input.dynamic()) return sameEnergy(energy, input.type());
+        if (!input.dynamic()) return sameEnergy(energy, input.type().name());
         if (dynamicEnergy != null) return sameEnergy(energy, dynamicEnergy);
         for (var tag : GregTechTags.Energy.ALL_GT) if (sameEnergy(energy, tag.getShortName())) return true;
         return false;
@@ -439,7 +446,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private String energyOutName() {
-        return declaration.output() == null ? "" : declaration.output().type();
+        return declaration.output() == null ? "" : declaration.output().type().name();
     }
 
     private long energyOutSize() {
@@ -451,11 +458,11 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private boolean emits(Direction side) {
-        return declaration.emitsEnergy() && (side == null || FaceConfig.has(declaration.energyOutMask(), relative(side)));
+        return declaration.emitsEnergy() && (side == null || FaceConfig.has(declaration.outputFaces(), relative(side)));
     }
 
     private long outputSize(String energy, Direction side) {
-        return isEnergyEmittingTo(energy, side, true) ? energyOutSize() : 0;
+        return isEnergyEmittingTo(EnergyType.of(energy), side, true) ? energyOutSize() : 0;
     }
 
     private boolean hasInput() { return declaration.energy() != null; }
@@ -557,10 +564,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (output == null) return 0;
         BehaviorEnergyRules.requireEmit(size, amount, output.minSize(), output.maxSize(), output.maxAmount(),
                 output.allowNegative());
-        String offered = declaration.output() != null ? declaration.output().type()
+        String offered = declaration.output() != null ? declaration.output().type().name()
                 : dynamicEnergy != null ? dynamicEnergy
-                : declaration.energy() != null && !declaration.energy().dynamic() ? declaration.energy().type() : null;
-        if (offered != null && !offered.equalsIgnoreCase(output.type())) return 0;
+                : declaration.energy() != null && !declaration.energy().dynamic() ? declaration.energy().type().name() : null;
+        if (offered != null && !offered.equalsIgnoreCase(output.type().name())) return 0;
         long magnitude = output.allowNegative() ? Math.abs(size) : size;
         if (magnitude < 1) return 0;
         long packets = Math.min(amount, Math.max(0, stored) / magnitude);
@@ -695,47 +702,48 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
 //?}
     @Override
-    public boolean isEnergyType(String energy, Direction side, boolean emitting) {
+    public boolean isEnergyType(EnergyType energy, Direction side, boolean emitting) {
         if (energy == null) return false;
-        if (emitting) return declaration.emitsEnergy() && energy.equalsIgnoreCase(energyOutName());
-        return mainAccepts(energy)
-                || (declaration.auxiliary() != null && sameEnergy(energy, declaration.auxiliary().type()));
+        if (emitting) return declaration.emitsEnergy() && energy.name().equalsIgnoreCase(energyOutName());
+        return mainAccepts(energy.name())
+                || (declaration.auxiliary() != null
+                        && sameEnergy(energy.name(), declaration.auxiliary().type().name()));
     }
 
-    @Override public java.util.Collection<String> getEnergyTypes(Direction side) {
-        var names = new java.util.ArrayList<String>();
+    @Override public java.util.Collection<EnergyType> getEnergyTypes(Direction side) {
+        var types = new java.util.ArrayList<EnergyType>();
         if (hasInput()) {
-            if (dynamicEnergy != null) names.add(dynamicEnergy);
+            if (dynamicEnergy != null) types.add(EnergyType.of(dynamicEnergy));
             else if (declaration.energy().dynamic())
-                for (var tag : GregTechTags.Energy.ALL_GT) names.add(tag.getShortName());
-            else names.add(declaration.energy().type());
+                for (var tag : GregTechTags.Energy.ALL_GT) types.add(EnergyType.of(tag.getShortName()));
+            else types.add(declaration.energy().type());
         }
-        if (declaration.auxiliary() != null && !containsEnergy(names, declaration.auxiliary().type()))
-            names.add(declaration.auxiliary().type());
-        if (declaration.emitsEnergy() && !containsEnergy(names, energyOutName()))
-            names.add(energyOutName());
-        return List.copyOf(names);
+        if (declaration.auxiliary() != null && !containsEnergy(types, declaration.auxiliary().type()))
+            types.add(declaration.auxiliary().type());
+        if (declaration.emitsEnergy() && !containsEnergy(types, EnergyType.of(energyOutName())))
+            types.add(EnergyType.of(energyOutName()));
+        return List.copyOf(types);
     }
 
-    private static boolean containsEnergy(java.util.List<String> names, String energy) {
-        for (String name : names) if (name.equalsIgnoreCase(energy)) return true;
+    private static boolean containsEnergy(java.util.List<EnergyType> types, EnergyType energy) {
+        for (EnergyType type : types) if (type.name().equalsIgnoreCase(energy.name())) return true;
         return false;
     }
 
     @Override
-    public boolean isEnergyAcceptingFrom(String energy, Direction side, boolean theoretical) {
-        if (auxiliaryAccepts(energy, side)) return true;
-        return mainAccepts(energy) && accepts(side);
+    public boolean isEnergyAcceptingFrom(EnergyType energy, Direction side, boolean theoretical) {
+        if (auxiliaryAccepts(energy.name(), side)) return true;
+        return mainAccepts(energy.name()) && accepts(side);
     }
 
     @Override
-    public boolean isEnergyEmittingTo(String energy, Direction side, boolean theoretical) {
+    public boolean isEnergyEmittingTo(EnergyType energy, Direction side, boolean theoretical) {
         return isEnergyType(energy, side, true) && emits(side);
     }
 
     @Override
-    public long doInject(String energy, Direction side, long size, long amount, boolean doInject) {
-        if (auxiliaryAccepts(energy, side)) return injectAuxiliary(energy, side, size, amount, doInject);
+    public long doInject(EnergyType energy, Direction side, long size, long amount, boolean doInject) {
+        if (auxiliaryAccepts(energy.name(), side)) return injectAuxiliary(energy.name(), side, size, amount, doInject);
         if (!hasInput() || !isEnergyAcceptingFrom(energy, side, false)
                 || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
         var input = declaration.energy();
@@ -745,13 +753,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 any, input.overload(), any || input.rangeSpecified());
         if (!takePacket(decision.packets(), decision.overload(), energy, side, size, amount)) return 0;
         if (decision.overload()) {
-            if (doInject) gregtech.engine.energy.MachineOverload.apply(this, Math.abs(size), energy);
+            if (doInject) gregtech.engine.energy.MachineOverload.apply(this, Math.abs(size), energy.name());
             return decision.packets();
         }
         if (doInject && decision.packets() > 0) {
             if (input.dynamic() && dynamicEnergy == null) {
-                var locked = tagFor(energy);
-                dynamicEnergy = locked == null ? energy : locked.getShortName();
+                var locked = tagFor(energy.name());
+                dynamicEnergy = locked == null ? energy.name() : locked.getShortName();
             }
             stored = BasicMachineEnergy.add(stored, bufferCapacity(), size, decision.packets());
             setChanged();
@@ -764,7 +772,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         boolean anyPacket = auxiliary.anyPacket();
         var decision = PartEnergyRules.admit(auxiliaryStored, auxiliary.capacity(), size, amount,
                 anyPacket ? 1 : auxiliary.rangeMin(), anyPacket ? Long.MAX_VALUE : auxiliary.rangeMax(), anyPacket);
-        if (!takePacket(decision.packets(), decision.overload(), energy, side, size, amount)) return 0;
+        if (!takePacket(decision.packets(), decision.overload(), EnergyType.of(energy), side, size, amount)) return 0;
         if (decision.overload()) {
             if (doInject) gregtech.engine.energy.MachineOverload.apply(this, Math.abs(size), energy);
             return decision.packets();
@@ -777,15 +785,15 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     /** False after the face and buffer checks means this packet is refused whole. */
-    private boolean takePacket(long packets, boolean overload, String energy, Direction side, long size, long amount) {
+    private boolean takePacket(long packets, boolean overload, EnergyType energy, Direction side, long size, long amount) {
         if (packets <= 0 && !overload) return false;
         MachineFace face = side == null ? null : clickedFace(side);
         return behavior.acceptsEnergy(context, energy, face, size, amount);
     }
 
     @Override
-    public long getEnergyDemanded(String energy, Direction side, long size) {
-        if (auxiliaryAccepts(energy, side)) {
+    public long getEnergyDemanded(EnergyType energy, Direction side, long size) {
+        if (auxiliaryAccepts(energy.name(), side)) {
             if (size == 0 || size == Long.MIN_VALUE) return 0;
             var auxiliary = declaration.auxiliary();
             if (!auxiliary.anyPacket()) {
@@ -804,53 +812,59 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return BasicMachineEnergy.demanded(stored, bufferCapacity(), size);
     }
 
-    @Override public long getEnergyOffered(String energy, Direction side, long size) { return 0; }
-    @Override public long getEnergySizeInputRecommended(String energy, Direction side) {
-        if (auxiliaryAccepts(energy, side)) return declaration.auxiliary().perTick();
-        return mainAccepts(energy) ? declaration.energy().perTick() : 0;
+    @Override public long getEnergyOffered(EnergyType energy, Direction side, long size) { return 0; }
+    @Override public long getEnergySizeInputRecommended(EnergyType energy, Direction side) {
+        if (auxiliaryAccepts(energy.name(), side)) return declaration.auxiliary().perTick();
+        return mainAccepts(energy.name()) ? declaration.energy().perTick() : 0;
     }
-    @Override public long getEnergySizeOutputRecommended(String energy, Direction side) { return outputSize(energy, side); }
-    @Override public long getEnergySizeOutputMin(String energy, Direction side) { return outputSize(energy, side); }
-    @Override public long getEnergySizeOutputMax(String energy, Direction side) { return outputSize(energy, side); }
-    @Override public long getEnergySizeInputMin(String energy, Direction side) {
-        if (auxiliaryAccepts(energy, side))
+    @Override public long getEnergySizeOutputRecommended(EnergyType energy, Direction side) {
+        return outputSize(energy.name(), side);
+    }
+    @Override public long getEnergySizeOutputMin(EnergyType energy, Direction side) {
+        return outputSize(energy.name(), side);
+    }
+    @Override public long getEnergySizeOutputMax(EnergyType energy, Direction side) {
+        return outputSize(energy.name(), side);
+    }
+    @Override public long getEnergySizeInputMin(EnergyType energy, Direction side) {
+        if (auxiliaryAccepts(energy.name(), side))
             return declaration.auxiliary().anyPacket() ? 1 : declaration.auxiliary().rangeMin();
-        if (!mainAccepts(energy)) return 0;
+        if (!mainAccepts(energy.name())) return 0;
         return declaration.energy().anyPacket() ? 1 : accepted.energyInMin();
     }
-    @Override public long getEnergySizeInputMax(String energy, Direction side) {
-        if (auxiliaryAccepts(energy, side))
+    @Override public long getEnergySizeInputMax(EnergyType energy, Direction side) {
+        if (auxiliaryAccepts(energy.name(), side))
             return declaration.auxiliary().anyPacket() ? Long.MAX_VALUE : declaration.auxiliary().rangeMax();
-        if (!mainAccepts(energy)) return 0;
+        if (!mainAccepts(energy.name())) return 0;
         return declaration.energy().anyPacket() ? Long.MAX_VALUE : accepted.energyInMax();
     }
 
-    @Override public boolean isEnergyCapacitorType(String energy, Direction side) {
-        if (auxiliaryAccepts(energy, side)) return true;
-        return hasInput() && capacity > 0 && mainAccepts(energy) && accepts(side);
+    @Override public boolean isEnergyCapacitorType(EnergyType energy, Direction side) {
+        if (auxiliaryAccepts(energy.name(), side)) return true;
+        return hasInput() && capacity > 0 && mainAccepts(energy.name()) && accepts(side);
     }
 
-    @Override public long getEnergyStored(String energy, Direction side) {
-        if (auxiliaryAccepts(energy, side)) return auxiliaryStored;
+    @Override public long getEnergyStored(EnergyType energy, Direction side) {
+        if (auxiliaryAccepts(energy.name(), side)) return auxiliaryStored;
         return isEnergyCapacitorType(energy, side) ? stored : 0;
     }
 
-    @Override public long getEnergyCapacity(String energy, Direction side) {
-        if (auxiliaryAccepts(energy, side)) return declaration.auxiliary().capacity();
+    @Override public long getEnergyCapacity(EnergyType energy, Direction side) {
+        if (auxiliaryAccepts(energy.name(), side)) return declaration.auxiliary().capacity();
         return isEnergyCapacitorType(energy, side) ? capacity : 0;
     }
 
-    @Override public java.util.Collection<String> getEnergyCapacitorTypes(Direction side) {
-        var names = new java.util.ArrayList<String>();
+    @Override public java.util.Collection<EnergyType> getEnergyCapacitorTypes(Direction side) {
+        var types = new java.util.ArrayList<EnergyType>();
         if (hasInput() && capacity > 0) {
-            if (dynamicEnergy != null) names.add(dynamicEnergy);
+            if (dynamicEnergy != null) types.add(EnergyType.of(dynamicEnergy));
             else if (declaration.energy().dynamic())
-                for (var tag : GregTechTags.Energy.ALL_GT) names.add(tag.getShortName());
-            else names.add(declaration.energy().type());
+                for (var tag : GregTechTags.Energy.ALL_GT) types.add(EnergyType.of(tag.getShortName()));
+            else types.add(declaration.energy().type());
         }
-        if (declaration.auxiliary() != null && !containsEnergy(names, declaration.auxiliary().type()))
-            names.add(declaration.auxiliary().type());
-        return List.copyOf(names);
+        if (declaration.auxiliary() != null && !containsEnergy(types, declaration.auxiliary().type()))
+            types.add(declaration.auxiliary().type());
+        return List.copyOf(types);
     }
 
     @Override
@@ -1143,16 +1157,92 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private final class Context implements MachineBehaviorContext {
+        private final MachineInventoryAccess inventoryView = new MachineInventoryAccess() {
+            @Override public int slots() { return itemSlots(); }
+            @Override public ItemStack snapshot(int slot) { return liveItem(slot).copy(); }
+            @Override public void set(int slot, ItemStack stack) { setItem(slot, stack); }
+            @Override public ItemStack insertOutput(ItemStack stack) { return Context.this.insertOutput(stack); }
+        };
+        private final FluidAccess fluidView = new FluidAccess() {
+            @Override public int tanks() { return Context.this.tanks(); }
+            @Override public FluidStack snapshot(int tank) { return fluid(tank); }
+            @Override public int capacity(int tank) { return tankCapacity(tank); }
+            @Override public int fill(int tank, FluidStack stack, boolean simulate) {
+                return Context.this.fill(tank, stack, simulate);
+            }
+            @Override public FluidStack drain(int tank, int amount, boolean simulate) {
+                return Context.this.drain(tank, amount, simulate);
+            }
+        };
+        private final EnergyAccess energyView = new EnergyAccess() {
+            @Override public long mainStored() { return mainInputStored(); }
+            @Override public boolean consumeMain(long units) { return consume(units); }
+            @Override public long generateMain(long units) { return generate(units); }
+            @Override public long mainCapacity() { return energyCapacity(); }
+            @Override public void setMainCapacity(long units) { setCapacity(units); }
+            @Override public long auxiliaryStored(EnergyType type) { return Context.this.auxiliaryStored(type.name()); }
+            @Override public boolean consumeAuxiliary(EnergyType type, long units) {
+                return Context.this.consume(type.name(), units);
+            }
+            @Override public EnergyTransfer emitFromFaces(long packetSize, long packetCount) {
+                return EnergyTransfer.fromPackets(
+                        packetSize, packetCount, Context.this.emitPacketsFromFaces(packetSize, packetCount));
+            }
+            @Override public EnergyTransfer emitTo(BlockPos target, Direction side, long packetSize, long packetCount) {
+                return EnergyTransfer.fromPackets(
+                        packetSize, packetCount, Context.this.emitTo(target, side, packetSize, packetCount));
+            }
+            @Override public EnergyTransfer transferToPart(String part, long packetSize, long packetCount) {
+                return new EnergyTransfer(packetSize, packetCount,
+                        Context.this.moveUnitsToPart(part, packetSize, packetCount));
+            }
+            @Override public EnergyTransfer supplyPart(String part, EnergyType type, long packetSize, long packetCount) {
+                return new EnergyTransfer(packetSize, packetCount,
+                        Context.this.pushToPart(part, type.name(), packetSize, packetCount));
+            }
+        };
+        private final StructureAccess structureView = new StructureAccess() {
+            @Override public boolean formed() { return structureFormed(); }
+            @Override public List<EnergyPart> energyParts() { return Context.this.energyParts(); }
+            @Override public int repeats(String key) { return structureRepeats(key); }
+            @Override public List<BoundPart> parts() { return Context.this.parts(); }
+            @Override public boolean conditionsMet() { return Context.this.conditionsMet(); }
+        };
+        private final MachinePanel panelView = new MachinePanel() {
+            @Override public boolean toggle(int index) { return Context.this.toggle(index); }
+            @Override public void setToggle(int index, boolean on) { Context.this.setToggle(index, on); }
+            @Override public float progress() { return Context.this.progress(); }
+            @Override public void setProgress(float fraction) { Context.this.setProgress(fraction); }
+            @Override public void working(boolean value) { Context.this.working(value); }
+        };
+        private final WorldAccess worldView = new WorldAccess() {
+            @Override public boolean breakBlock(BlockPos pos) { return Context.this.breakBlock(pos); }
+            @Override public int collectItems(int radius, boolean voidThem) {
+                return Context.this.collectItems(radius, voidThem);
+            }
+            @Override public int pushCompressedGas(Direction face, FluidStack stack) {
+                return Context.this.pushCompressedGas(face, stack);
+            }
+        };
+
         @Override public Level level() { return BehaviorMachineBlockEntity.this.level; }
         @Override public BlockPos pos() { return worldPosition; }
         @Override public Direction facing() {
             return getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         }
         @Override public int tier() { return declaration.casing().tier(); }
-        @Override public int itemSlots() { return items.getSlots(); }
-        @Override public ItemStack liveItem(int slot) { return items.getStackInSlot(slot); }
-        @Override public void setItem(int slot, ItemStack stack) { items.setStackInSlot(slot, stack == null ? ItemStack.EMPTY : stack.copy()); }
-        @Override public ItemStack insertOutput(ItemStack stack) {
+        @Override public MachineInventoryAccess inventory() { return inventoryView; }
+        @Override public FluidAccess fluids() { return fluidView; }
+        @Override public EnergyAccess energy() { return energyView; }
+        @Override public StructureAccess structure() { return structureView; }
+        @Override public MachinePanel panel() { return panelView; }
+        @Override public WorldAccess world() { return worldView; }
+        @Override public BehaviorState state() { return state; }
+
+        int itemSlots() { return items.getSlots(); }
+        ItemStack liveItem(int slot) { return items.getStackInSlot(slot); }
+        void setItem(int slot, ItemStack stack) { items.setStackInSlot(slot, stack == null ? ItemStack.EMPTY : stack.copy()); }
+        ItemStack insertOutput(ItemStack stack) {
             ItemStack left = stack == null ? ItemStack.EMPTY : stack.copy();
             for (int slot = 0; slot < items.getSlots() && !left.isEmpty(); slot++) {
                 if (declaration.items().get(slot).role() == BehaviorMachine.SlotRole.OUTPUT)
@@ -1164,40 +1254,41 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             }
             return left;
         }
-        @Override public int tanks() { return tanks.length; }
-        @Override public FluidStack fluid(int tank) { return tanks[tank].copy(); }
-        @Override public int tankCapacity(int tank) { return tanks[tank].capacity; }
-        @Override public int fill(int tank, FluidStack stack, boolean simulate) {
+        int tanks() { return tanks.length; }
+        FluidStack fluid(int tank) { return tanks[tank].copy(); }
+        int tankCapacity(int tank) { return tanks[tank].capacity; }
+        int fill(int tank, FluidStack stack, boolean simulate) {
             int taken = tanks[tank].fill(stack, simulate);
             if (!simulate && taken > 0) setChanged();
             return taken;
         }
-        @Override public FluidStack drain(int tank, int amount, boolean simulate) {
+        FluidStack drain(int tank, int amount, boolean simulate) {
             FluidStack drained = tanks[tank].drain(amount, simulate);
             if (!simulate && !drained.isEmpty()) setChanged();
             return drained;
         }
-        @Override public long mainInputStored() { return hasInput() ? stored : 0; }
-        @Override public boolean consume(long amount) {
+        long mainInputStored() { return hasInput() ? stored : 0; }
+        boolean consume(long amount) {
             if (amount < 0) throw new IllegalArgumentException("negative energy");
             if (!hasInput() || stored < amount) return false;
             stored -= amount;
             setChanged();
             return true;
         }
-        @Override public long auxiliaryStored(String type) {
-            if (declaration.auxiliary() == null || !sameEnergy(type, declaration.auxiliary().type())) return 0;
+        long auxiliaryStored(String type) {
+            if (declaration.auxiliary() == null || !sameEnergy(type, declaration.auxiliary().type().name())) return 0;
             return auxiliaryStored;
         }
-        @Override public boolean consume(String type, long amount) {
+        boolean consume(String type, long amount) {
             if (amount < 0) throw new IllegalArgumentException("negative energy");
-            if (declaration.auxiliary() == null || !sameEnergy(type, declaration.auxiliary().type())) return false;
+            if (declaration.auxiliary() == null || !sameEnergy(type, declaration.auxiliary().type().name()))
+                return false;
             if (auxiliaryStored < amount) return false;
             auxiliaryStored -= amount;
             setChanged();
             return true;
         }
-        @Override public long generate(long amount) {
+        long generate(long amount) {
             if (amount < 0) throw new IllegalArgumentException("negative energy");
             long room = bufferCapacity() - Math.min(stored, bufferCapacity());
             long added = Math.min(amount, Math.max(0, room));
@@ -1206,32 +1297,32 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
             return added;
         }
-        @Override public long energyCapacity() { return capacity; }
-        @Override public void setCapacity(long value) {
+        long energyCapacity() { return capacity; }
+        void setCapacity(long value) {
             if (value < 0) throw new IllegalArgumentException("gt.capacity " + value);
             capacity = value;
             capacitySet = true;
             setChanged();
         }
-        @Override public long emitPacketsFromFaces(long size, long amount) { return BehaviorMachineBlockEntity.this.emit(size, amount); }
-        @Override public long emitTo(BlockPos target, Direction side, long size, long amount) {
+        long emitPacketsFromFaces(long size, long amount) { return BehaviorMachineBlockEntity.this.emit(size, amount); }
+        long emitTo(BlockPos target, Direction side, long size, long amount) {
             return BehaviorMachineBlockEntity.this.emitTo(target, side, size, amount);
         }
-        @Override public long pushToPart(String part, String type, long size, long amount) {
+        long pushToPart(String part, String type, long size, long amount) {
             return BehaviorMachineBlockEntity.this.pushToPart(part, type, size, amount);
         }
-        @Override public long moveUnitsToPart(String part, long size, long amount) {
+        long moveUnitsToPart(String part, long size, long amount) {
             return BehaviorMachineBlockEntity.this.emitToPart(part, size, amount);
         }
-        @Override public boolean toggle(int index) { return (toggles & (1 << index)) != 0; }
-        @Override public void setToggle(int index, boolean on) {
+        boolean toggle(int index) { return (toggles & (1 << index)) != 0; }
+        void setToggle(int index, boolean on) {
             if (index < 0 || index >= declaration.toggles().size())
                 throw new IllegalArgumentException("toggle " + index);
             toggles = on ? toggles | (1 << index) : toggles & ~(1 << index);
             setChanged();
         }
-        @Override public float progress() { return progress / 1000.0F; }
-        @Override public void setProgress(float fraction) {
+        float progress() { return progress / 1000.0F; }
+        void setProgress(float fraction) {
             float clamped = Math.max(0.0F, Math.min(1.0F, fraction));
             int next = Math.round(clamped * 1000.0F);
             if (next != progress) {
@@ -1239,19 +1330,18 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 setChanged();
             }
         }
-        @Override public void working(boolean value) { working = value; }
-        @Override public boolean structureFormed() { return formed; }
-        @Override public List<EnergyPart> energyParts() { return formed ? energyParts : List.of(); }
-        @Override public int structureRepeats(String key) { return formed && key != null ? repeatCounts.getOrDefault(key, 0) : 0; }
-        @Override public List<BoundPart> parts() { return formed ? boundParts : List.of(); }
-        @Override public boolean conditionsMet() {
+        void working(boolean value) { working = value; }
+        boolean structureFormed() { return formed; }
+        List<EnergyPart> energyParts() { return formed ? energyParts : List.of(); }
+        int structureRepeats(String key) { return formed && key != null ? repeatCounts.getOrDefault(key, 0) : 0; }
+        List<BoundPart> parts() { return formed ? boundParts : List.of(); }
+        boolean conditionsMet() {
             for (EnergyPart part : energyParts()) if (part.condition() && !part.satisfied()) return false;
             return true;
         }
-        @Override public BehaviorState state() { return state; }
-        @Override public boolean breakBlock(BlockPos pos) { return breakOne(pos); }
-        @Override public int collectItems(int radius, boolean voidThem) { return collect(radius, voidThem); }
-        @Override public int pushCompressedGas(Direction face, FluidStack stack) {
+        boolean breakBlock(BlockPos pos) { return breakOne(pos); }
+        int collectItems(int radius, boolean voidThem) { return collect(radius, voidThem); }
+        int pushCompressedGas(Direction face, FluidStack stack) {
             if (face == null || stack == null || stack.isEmpty() || level == null) return 0;
             BlockPos target = worldPosition.relative(face);
             if (!level.hasChunkAt(target)) return 0;
@@ -1834,7 +1924,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             } else if (declaration.energy().dynamic()) {
                 tags.addAll(GregTechTags.Energy.ALL_GT);
             } else {
-                var tag = tagFor(declaration.energy().type());
+                var tag = tagFor(declaration.energy().type().name());
                 if (tag != null) tags.add(tag);
             }
             if (auxiliaryTag != null && !tags.contains(auxiliaryTag)) tags.add(auxiliaryTag);
@@ -1898,6 +1988,6 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (!formed || !energyInput(role) || type == null) return 0;
         if (auxiliaryTag != null && type == auxiliaryTag)
             return injectAuxiliary(type.getShortName(), null, size, amount, execute);
-        return doInject(type.getShortName(), null, size, amount, execute);
+        return doInject(EnergyType.of(type.getShortName()), null, size, amount, execute);
     }
 }

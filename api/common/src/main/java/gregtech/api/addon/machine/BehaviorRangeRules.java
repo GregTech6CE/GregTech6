@@ -2,15 +2,15 @@
 
 package gregtech.api.addon.machine;
 
-
-
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Internal: not part of the addon contract; may change without notice.
  * Range and per-tick budget for behavior-machine world actions.
  */
+@ApiStatus.Internal
 public final class BehaviorRangeRules {
-    /** Largest {@code maxRange} a declaration may name. kTFRU's widest miner is 32. */
+    /** Largest {@code maxRange} a declaration may name; larger ranges are rejected. */
     public static final int LIMIT = 32;
     /** Successful block breaks the shell allows during one server tick. */
     public static final int BREAKS_PER_TICK = 1;

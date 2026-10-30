@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 package gregtech.api.addon.platform;
 
+import java.util.Objects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import java.util.Objects;
 
 /** Notifications for addon-owned data used by a multiblock's matching rules. */
 public final class AddonStructures {

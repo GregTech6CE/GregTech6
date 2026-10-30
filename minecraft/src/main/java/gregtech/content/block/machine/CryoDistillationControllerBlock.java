@@ -19,9 +19,9 @@ public class CryoDistillationControllerBlock extends BasicMachineBlock {
     }
     public static BasicMachineSpec makeSpec() {
         var p=gregtech.content.multiblock.OriginalMultiblockMachineParameters.cryoDistillationTower();
-        return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energyType(),p.tier(),p.energyIn(),p.energyOut(),
+        return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energy().type().name(),p.energy().tier(),p.energy().energyIn(),p.energy().energyOut(),
                 p.hardness(),p.blastResistance(),gregtech.engine.energy.FaceConfig.from(p.faceConfig()),p.constructionMaterials(),
-                gregtech.content.data.MachineRecipeMaps.CryoDistillationTower,p.parallelLimit(),p.energyInMin(),p.energyInMax());
+                gregtech.content.data.MachineRecipeMaps.CryoDistillationTower,p.options().parallelLimit(),p.energy().energyInMin(),p.energy().energyInMax());
     }
     @Override public BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) {
         return new gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity(pos,state);

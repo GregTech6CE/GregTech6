@@ -2,13 +2,12 @@
 
 package gregtech.api.addon.worldgen;
 
-
-
-
-import gregtech.api.addon.*;
+import gregtech.api.addon.AddonNames;
 
 /** Shared checks for ore-vein and small-ore declarations. */
 final class WorldgenNames {
+    private static final int MAX_Y = 255;
+
     private WorldgenNames() {}
 
     static String check(String name, String kind) {
@@ -18,8 +17,21 @@ final class WorldgenNames {
     }
 
     static void checkHeight(String name, int minY, int maxY) {
-        if (minY < 0 || maxY > 255 || minY >= maxY)
-            throw new IllegalArgumentException("'" + name + "' Y range must sit inside 0..255, with min below max");
+        if (minY < 0 || maxY > MAX_Y || minY >= maxY)
+            throw new IllegalArgumentException("'" + name + "' Y range must sit inside 0.." + MAX_Y
+                    + ", with min below max");
+    }
+
+    /** Any resource location, so addon dimensions are usable. */
+    static String dimension(String owner, String dimension) {
+        if (dimension == null) throw new IllegalArgumentException("'" + owner + "' dimension is missing");
+        int colon = dimension.indexOf(':');
+        if (colon <= 0 || colon != dimension.lastIndexOf(':') || colon == dimension.length() - 1
+                || !AddonNames.matches(AddonNames.RESOURCE_NAMESPACE, dimension.substring(0, colon))
+                || !AddonNames.matches(AddonNames.RESOURCE_PATH, dimension.substring(colon + 1)))
+            throw new IllegalArgumentException(
+                    "'" + owner + "' dimension must be a resource location: " + dimension);
+        return dimension;
     }
 
     static String material(String owner, String name) {

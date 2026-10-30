@@ -2,12 +2,12 @@
 
 package gregtech.api.addon.worldgen;
 
-
-
-
 /**
  * One small ore, with the same fields as a built-in {@code SmallOre}.
- * Heights are the pre-remap values used by the built-in tables. The overworld generator stretches them.
+ * Heights are the pre-remap values used by the built-in tables; the overworld generator stretches
+ * them and other dimensions use them as absolute Y values.
+ * {@code dimension} accepts any resource location. The host's small-ore feature must be registered
+ * for that dimension; the built-in biome modifiers cover the overworld, the nether and the end.
  */
 public record SmallOreDeclaration(
         String name,
@@ -23,10 +23,7 @@ public record SmallOreDeclaration(
 
     public SmallOreDeclaration {
         name = WorldgenNames.check(name, "Small ore");
-        if (!OVERWORLD.equals(dimension) && !NETHER.equals(dimension) && !END.equals(dimension))
-            throw new IllegalArgumentException("Small ore '" + name
-                    + "' dimension must be minecraft:overworld, minecraft:the_nether or minecraft:the_end: "
-                    + dimension);
+        dimension = WorldgenNames.dimension(name, dimension);
         WorldgenNames.checkHeight(name, minY, maxY);
         if (amount <= 0)
             throw new IllegalArgumentException("Small ore '" + name + "' amount must be positive");

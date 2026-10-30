@@ -1,5 +1,6 @@
-package gregtech.api.material;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
+package gregtech.api.material;
 
 /**
  * Material behavior flags, analogous to GregTech {@code TD.Properties} / {@code TD.Processing}
@@ -68,8 +69,8 @@ public enum MaterialProperty {
     /**
      * GT6 {@code TD.Processing.NEVER_FURNACE} — the material may not be produced by furnace
      * smelting. GT6 flags Iron, Wrought Iron, Steel, Titanium and Tungsten with it; those metals
-     * have to be melted in a crucible instead, and {@code Loader_Recipes_Furnace:122-130} replaces
-     * any furnace recipe whose result carries this flag with {@code scrapGt}.
+     * have to be melted in a crucible instead, and the host replaces any furnace recipe whose
+     * result carries this flag with {@code scrapGt}.
      */
     NEVER_FURNACE,
     /** Silicon boules and similar  - force-added per material in GT6. */

@@ -212,7 +212,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 //?}
     private GregTechTags.Tag energyType() {
         if (energy != null) return energy;
-        String name = declaration().output().type();
+        String name = declaration().output().type().name();
         energy = GregTechTags.Energy.ALL.stream().filter(tag -> tag.getShortName().equalsIgnoreCase(name)).findFirst().orElse(null);
         return energy;
     }

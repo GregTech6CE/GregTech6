@@ -2,11 +2,10 @@
 
 package gregtech.api.addon.platform;
 
+import java.util.Set;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
 import org.jspecify.annotations.Nullable;
-import java.util.Set;
 
 /**
  * Client renderers for one addon's functional parts. List this class in

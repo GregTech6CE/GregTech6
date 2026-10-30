@@ -3,6 +3,7 @@
 package gregtech.api.addon.platform;
 
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Inventory owned by a machine or a structure part, used during its server callback.
@@ -18,10 +19,11 @@ public interface InventoryAccess {
 
     /**
      * Replaces a slot through the host's normal storage notification path.
-     * Null means empty. Replacement limits remain host-specific (parts clamp to their declared
-     * limit; the legacy machine setter does not). This is not a capacity-checked insertion.
+     * Null means empty. Invalid slots throw. Replacement limits remain host-specific (parts clamp
+     * to their declared limit; the legacy machine setter does not). This is not a capacity-checked
+     * insertion.
      */
-    void set(int slot, ItemStack stack);
+    void set(int slot, @Nullable ItemStack stack);
 
     /**
      * Takes up to {@code amount} items from a slot, regardless of its input/output role.

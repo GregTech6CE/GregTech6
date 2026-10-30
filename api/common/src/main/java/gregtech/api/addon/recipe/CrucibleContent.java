@@ -2,12 +2,7 @@
 
 package gregtech.api.addon.recipe;
 
-
-import gregtech.api.addon.material.*;
-
-
-
-
+import gregtech.api.addon.material.GregTechMaterials;
 
 /**
  * A read-only snapshot of the molten material a crucible controller exposes.
@@ -20,7 +15,8 @@ public record CrucibleContent(String material, long amount, long temperature) {
     public static final CrucibleContent EMPTY = new CrucibleContent("", 0L, 0L);
 
     public CrucibleContent {
-        material = material == null ? "" : material;
+        if (material == null)
+            throw new IllegalArgumentException("Crucible content needs a material name; pass an empty string when empty");
         amount = Math.max(0L, amount);
         temperature = Math.max(0L, temperature);
     }

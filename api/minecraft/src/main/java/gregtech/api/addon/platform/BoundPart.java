@@ -4,7 +4,6 @@ package gregtech.api.addon.platform;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
-
 import org.jspecify.annotations.Nullable;
 
 /**

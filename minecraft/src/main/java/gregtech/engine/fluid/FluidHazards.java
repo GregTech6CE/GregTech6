@@ -210,7 +210,7 @@ public final class FluidHazards {
      * The acid half of the table, against an already-resolved entry so the callers above share one
      * lookup. {@link FluidVisualPolicy#material} is the port's canonical "which material is this
      * fluid?" resolution ({@code materialKey}, then {@code boundMaterial}, then the name prefix), and
-     * an unknown material resolves to {@code MaterialSentinels.Invalid} rather than {@code null}.
+     * an unknown material resolves to {@code MaterialSentinels.INVALID} rather than {@code null}.
      */
     private static boolean isAcid(RegisteredFluids.FluidEntry entry) {
         GTMaterial material = FluidVisualPolicy.material(entry);

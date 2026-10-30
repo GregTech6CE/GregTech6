@@ -26,7 +26,7 @@ public record ItemComposition(
     // Compatibility accessors for callers that need the primary material.
     public GTMaterial material() {
         return components.isEmpty()
-                ? MaterialSentinels.Invalid
+                ? MaterialSentinels.INVALID
                 : components.get(0).material();
     }
 

@@ -50,7 +50,7 @@ public class FuelRecipeMaps {
     public static final java.util.List<RecipeMap> FUEL_MAP_LIST =
             java.util.List.of(FluidBed, Burn, Gas, Hot, Plasma, Engine, Turbine, Magic);
 
-    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.api.recipe.RecipeMapSpec spec) {
+    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.content.recipe.RecipeMapSpec spec) {
         var map = new gregtech.engine.recipe.RecipeMap(
                 null,
                 spec.mNameInternal,

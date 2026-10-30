@@ -23,6 +23,13 @@ repositories {
 dependencies {
     api project(':api')
     compileOnly 'org.jspecify:jspecify:1.0.0'
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
 if (forge) {
     minecraft {
@@ -51,7 +58,6 @@ tasks.withType(JavaCompile).configureEach {
     options.release = forge ? 17 : 21
 }
 tasks.withType(Jar).configureEach {
-    from(commonApi.file('src/main/resources'))
     duplicatesStrategy = DuplicatesStrategy.FAIL
     includeEmptyDirs = false
     preserveFileTimestamps = false
@@ -72,17 +78,8 @@ tasks.named('javadoc', Javadoc).configure {
 publishing {
     publications {
         addonApi(MavenPublication) {
+            from components.java
             artifactId = base.archivesName.get()
-            artifact tasks.named('jar')
-            artifact tasks.named('sourcesJar')
-            artifact tasks.named('javadocJar')
-            pom.withXml {
-                def dependency = asNode().appendNode('dependencies').appendNode('dependency')
-                dependency.appendNode('groupId', commonApi.group.toString())
-                dependency.appendNode('artifactId', commonApi.base.archivesName.get())
-                dependency.appendNode('version', commonApi.version.toString())
-                dependency.appendNode('scope', 'compile')
-            }
         }
     }
 }

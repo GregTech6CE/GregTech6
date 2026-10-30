@@ -2,9 +2,6 @@
 
 package gregtech.api.addon.machine;
 
-
-
-
 import java.util.List;
 
 /**

@@ -1,6 +1,5 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
 import java.util.*;
 
 /** Original coke/cryo shell geometry, preserving unconstrained internal cells. */

@@ -1,7 +1,8 @@
 package gregtech.content.machine;
 
-import static gregtech.api.machine.MachineFaceMasks.*;
+import static gregtech.api.machine.MachineFace.*;
 
+import gregtech.api.energy.EnergyType;
 import gregtech.api.machine.BasicMachineParameters;
 import gregtech.api.machine.MachineFaceMasks;
 import gregtech.api.material.GTMaterial;
@@ -296,17 +297,19 @@ public final class BasicMachineCatalog {
                         .orElseThrow();
                 BasicMachineParameters spec = BasicMachineParameters.builder(id, mat)
                         .machineType(def.name())
-                        .energy(energyType.getShortName(), energyIn)
+                        .energy(EnergyType.of(energyType.getShortName()), energyIn)
                         .tier(tierNumber)
                         // GT6 NBT_INPUT_MIN/MAX; without an explicit range GT6 itself uses
                         // input/2..input*2 (MultiTileEntityBasicMachine.readFromNBT2).
                         .energyRange(
                                 original != null
                                         ? original.energyInputMin()
-                                        : BasicMachineParameters.defaultEnergyInMin(energyName, energyIn),
+                                        : BasicMachineParameters.defaultEnergyInMin(
+                                                EnergyType.of(energyName), energyIn),
                                 original != null
                                         ? original.energyInputMax()
-                                        : BasicMachineParameters.defaultEnergyInMax(energyName, energyIn))
+                                        : BasicMachineParameters.defaultEnergyInMax(
+                                                EnergyType.of(energyName), energyIn))
                         .parallel(parallel)
                         .strength(
                                 def.name().equals("massfab") ? 16 : stats[0],
@@ -333,7 +336,7 @@ public final class BasicMachineCatalog {
                                 name + "_osmiridium_t" + tier,
                                 gregtech.engine.material.GTMaterialRegistry.get("Osmiridium"))
                         .machineType(name)
-                        .energy(energyType.getShortName(), energyIn)
+                        .energy(EnergyType.of(energyType.getShortName()), energyIn)
                         .tier(tier)
                         .parallel(original != null ? original.parallel() : 1)
                         .energyRange(

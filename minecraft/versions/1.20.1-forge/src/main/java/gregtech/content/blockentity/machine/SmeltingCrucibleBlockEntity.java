@@ -1,5 +1,6 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.client.CrucibleModelData;
@@ -68,18 +69,18 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity
                 gregtech.api.sensor.WeightSensorSource,
                 gregtech.api.sensor.CompressionSensorSource {
     @Override
-    public double weightKilograms(int side) {
+    public double weightKilograms(BlockFace side) {
         return CrucibleMaterialStack.weight(content);
     }
 
     @Override
-    public long gibblValue(int side) {
+    public long gibblValue(BlockFace side) {
         return gregtech.engine.machine.crucible.CrucibleMath.units(
                 CrucibleMaterialStack.total(content), GTValues.U9, 1000, true);
     }
 
     @Override
-    public long gibblMaximum(int side) {
+    public long gibblMaximum(BlockFace side) {
         return gregtech.engine.machine.crucible.CrucibleMath.units(maxMaterialAmount(), GTValues.U9, 1000, true);
     }
 

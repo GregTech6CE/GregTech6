@@ -1,6 +1,7 @@
 package gregtech.engine.addon;
 
 import gregtech.api.addon.platform.EnergyBlock;
+import gregtech.api.energy.EnergyType;
 import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.IEnergyBlock;
 import java.util.ArrayList;
@@ -21,84 +22,84 @@ public final class AddonEnergyAdapter implements IEnergyBlock {
         return new AddonEnergyAdapter(addon);
     }
 
-    private static String name(GregTechTags.Tag energy) {
-        return energy == null ? "" : energy.getShortName();
+    private static EnergyType type(GregTechTags.Tag energy) {
+        return energy == null ? null : EnergyType.of(energy.getShortName());
     }
 
     @Override
     public boolean isEnergyType(GregTechTags.Tag energyType, Direction side, boolean emitting) {
-        return addon.isEnergyType(name(energyType), side, emitting);
+        return addon.isEnergyType(type(energyType), side, emitting);
     }
 
     @Override
     public Collection<GregTechTags.Tag> getEnergyTypes(Direction side) {
-        Collection<String> names = addon.getEnergyTypes(side);
-        if (names == null || names.isEmpty()) return List.of();
-        var tags = new ArrayList<GregTechTags.Tag>(names.size());
-        for (String energy : names) tags.add(AddonPlatformServices.tag(energy));
+        Collection<EnergyType> types = addon.getEnergyTypes(side);
+        if (types == null || types.isEmpty()) return List.of();
+        var tags = new ArrayList<GregTechTags.Tag>(types.size());
+        for (EnergyType energy : types) tags.add(AddonPlatformServices.tag(energy.name()));
         return List.copyOf(tags);
     }
 
     @Override
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, Direction side, boolean theoretical) {
-        return addon.isEnergyAcceptingFrom(name(energyType), side, theoretical);
+        return addon.isEnergyAcceptingFrom(type(energyType), side, theoretical);
     }
 
     @Override
     public boolean isEnergyEmittingTo(GregTechTags.Tag energyType, Direction side, boolean theoretical) {
-        return addon.isEnergyEmittingTo(name(energyType), side, theoretical);
+        return addon.isEnergyEmittingTo(type(energyType), side, theoretical);
     }
 
     @Override
     public long doEnergyInjection(
             GregTechTags.Tag energyType, Direction side, long size, long amount, boolean doInject) {
-        return addon.doEnergyInjection(name(energyType), side, size, amount, doInject);
+        return addon.doEnergyInjection(type(energyType), side, size, amount, doInject);
     }
 
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, Direction side, long size) {
-        return addon.getEnergyDemanded(name(energyType), side, size);
+        return addon.getEnergyDemanded(type(energyType), side, size);
     }
 
     @Override
     public long doEnergyExtraction(
             GregTechTags.Tag energyType, Direction side, long size, long amount, boolean doExtract) {
-        return addon.doEnergyExtraction(name(energyType), side, size, amount, doExtract);
+        return addon.doEnergyExtraction(type(energyType), side, size, amount, doExtract);
     }
 
     @Override
     public long getEnergyOffered(GregTechTags.Tag energyType, Direction side, long size) {
-        return addon.getEnergyOffered(name(energyType), side, size);
+        return addon.getEnergyOffered(type(energyType), side, size);
     }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergySizeInputMin(name(energyType), side);
+        return addon.getEnergySizeInputMin(type(energyType), side);
     }
 
     @Override
     public long getEnergySizeOutputMin(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergySizeOutputMin(name(energyType), side);
+        return addon.getEnergySizeOutputMin(type(energyType), side);
     }
 
     @Override
     public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergySizeInputRecommended(name(energyType), side);
+        return addon.getEnergySizeInputRecommended(type(energyType), side);
     }
 
     @Override
     public long getEnergySizeOutputRecommended(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergySizeOutputRecommended(name(energyType), side);
+        return addon.getEnergySizeOutputRecommended(type(energyType), side);
     }
 
     @Override
     public long getEnergySizeInputMax(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergySizeInputMax(name(energyType), side);
+        return addon.getEnergySizeInputMax(type(energyType), side);
     }
 
     @Override
     public long getEnergySizeOutputMax(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergySizeOutputMax(name(energyType), side);
+        return addon.getEnergySizeOutputMax(type(energyType), side);
     }
 
     @Override
@@ -108,35 +109,35 @@ public final class AddonEnergyAdapter implements IEnergyBlock {
 
     @Override
     public boolean isEnergyCapacitorType(GregTechTags.Tag energyType, Direction side) {
-        return addon.isEnergyCapacitorType(name(energyType), side);
+        return addon.isEnergyCapacitorType(type(energyType), side);
     }
 
     @Override
     public long getEnergyStored(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergyStored(name(energyType), side);
+        return addon.getEnergyStored(type(energyType), side);
     }
 
     @Override
     public long getEnergyCapacity(GregTechTags.Tag energyType, Direction side) {
-        return addon.getEnergyCapacity(name(energyType), side);
+        return addon.getEnergyCapacity(type(energyType), side);
     }
 
     @Override
     public Collection<GregTechTags.Tag> getEnergyCapacitorTypes(Direction side) {
-        Collection<String> names = addon.getEnergyCapacitorTypes(side);
-        if (names == null || names.isEmpty()) return List.of();
-        var tags = new ArrayList<GregTechTags.Tag>(names.size());
-        for (String energy : names) tags.add(AddonPlatformServices.tag(energy));
+        Collection<EnergyType> types = addon.getEnergyCapacitorTypes(side);
+        if (types == null || types.isEmpty()) return List.of();
+        var tags = new ArrayList<GregTechTags.Tag>(types.size());
+        for (EnergyType energy : types) tags.add(AddonPlatformServices.tag(energy.name()));
         return List.copyOf(tags);
     }
 
     @Override
     public long doInject(GregTechTags.Tag energyType, Direction side, long size, long amount, boolean doInject) {
-        return addon.doInject(name(energyType), side, size, amount, doInject);
+        return addon.doInject(type(energyType), side, size, amount, doInject);
     }
 
     @Override
     public long doExtract(GregTechTags.Tag energyType, Direction side, long size, long amount, boolean doExtract) {
-        return addon.doExtract(name(energyType), side, size, amount, doExtract);
+        return addon.doExtract(type(energyType), side, size, amount, doExtract);
     }
 }

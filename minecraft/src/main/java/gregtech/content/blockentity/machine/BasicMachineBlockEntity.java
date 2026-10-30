@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.machine.BasicMachineEnergy;
@@ -263,8 +265,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public RecipeMap recipeMap() { return recipeMap; }
     public FaceConfig faceConfig() { return faceConfig; }
     public FluidTankGT[] getTanksInput() { return tanksInput(); }
-    @Override public long gibblValue(int side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::getAmount).sum(); }
-    @Override public long gibblMaximum(int side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::capacity).sum(); }
+    @Override public long gibblValue(BlockFace side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::getAmount).sum(); }
+    @Override public long gibblMaximum(BlockFace side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::capacity).sum(); }
     public FluidTankGT[] getTanksOutput() { return tanksOutput(); }
     public long getEnergyTick() { return energyPort.stored(); }
     /** Sanitized per-tick cost of the current job; 0 when idle. */

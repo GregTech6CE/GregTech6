@@ -9,10 +9,18 @@ repositories {
 
 dependencies {
     compileOnly 'org.jspecify:jspecify:1.0.0'
+    compileOnly 'org.jetbrains:annotations:26.1.0'
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
 group = 'gregtech'
-version = '0.3.0'
+version = '1.0.0'
 base { archivesName = 'gt6ce-api' }
 
 java {
@@ -29,6 +37,9 @@ tasks.withType(Jar).configureEach {
     includeEmptyDirs = false
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    from(file('../LICENSE')) { into 'META-INF/gt6ce-api' }
+    from(file('../NOTICE')) { into 'META-INF/gt6ce-api' }
+    from(file('../GPL-3.0.txt')) { into 'META-INF/gt6ce-api' }
 }
 tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
@@ -37,10 +48,6 @@ tasks.withType(Javadoc).configureEach {
     options.noTimestamp = true
     options.addBooleanOption('Xdoclint:all,-missing', true)
 }
-tasks.named('javadocJar', Jar).configure {
-    from('src/main/resources')
-}
-
 publishing {
     publications {
         api(MavenPublication) {

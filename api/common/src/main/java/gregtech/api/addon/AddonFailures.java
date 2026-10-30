@@ -2,10 +2,13 @@
 
 package gregtech.api.addon;
 
+import org.jetbrains.annotations.ApiStatus;
+
 /**
  * Internal: not part of the addon contract; may change without notice.
  * Addon callback failures keep {@link Error} unwrapped.
  */
+@ApiStatus.Internal
 public final class AddonFailures {
     private AddonFailures() {}
 

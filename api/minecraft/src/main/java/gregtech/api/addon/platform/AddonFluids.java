@@ -8,6 +8,7 @@ package gregtech.api.addon.platform;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 import net.minecraft.world.level.material.Fluid;
+import org.jspecify.annotations.Nullable;
 
 /**
  * GregTech fluids. {@code name} is the fluid field, such as {@code DistW}, not a material name.
@@ -33,7 +34,7 @@ public final class AddonFluids {
     }
 
     /** True when {@code fluid} is a gas. Null and empty are false. */
-    public static boolean gas(Fluid fluid) {
+    public static boolean gas(@Nullable Fluid fluid) {
         return fluid != null && AddonLoader.services().gas(fluid);
     }
 
@@ -43,7 +44,7 @@ public final class AddonFluids {
     }
 
     /** True when {@code fluid} is acid. Null and empty are false. */
-    public static boolean acid(Fluid fluid) {
+    public static boolean acid(@Nullable Fluid fluid) {
         return fluid != null && AddonLoader.services().acid(fluid);
     }
 
@@ -53,7 +54,7 @@ public final class AddonFluids {
     }
 
     /** True when {@code fluid} is plasma. Null and empty are false. */
-    public static boolean plasma(Fluid fluid) {
+    public static boolean plasma(@Nullable Fluid fluid) {
         return fluid != null && AddonLoader.services().plasma(fluid);
     }
 
@@ -63,7 +64,7 @@ public final class AddonFluids {
     }
 
     /** True when {@code fluid} is magical. Null and empty are false. */
-    public static boolean magic(Fluid fluid) {
+    public static boolean magic(@Nullable Fluid fluid) {
         return fluid != null && AddonLoader.services().magic(fluid);
     }
 }

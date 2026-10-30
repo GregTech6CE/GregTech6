@@ -54,8 +54,8 @@ public final class GTMaterialRegistry {
     private static RegistrationPhase phase = RegistrationPhase.DEFINITIONS;
 
     static {
-        register(MaterialSentinels.Invalid);
-        register(MaterialSentinels.Empty);
+        register(MaterialSentinels.INVALID);
+        register(MaterialSentinels.EMPTY);
     }
 
     public static RegistrationPhase registrationPhase() {
@@ -194,7 +194,7 @@ public final class GTMaterialRegistry {
 
     public static GTMaterial get(String name) {
         GTMaterial material = BY_NAME.get(GTMaterial.sanitize(name));
-        return material == null ? MaterialSentinels.Invalid : material.resolve();
+        return material == null ? MaterialSentinels.INVALID : material.resolve();
     }
 
     /** GT6 field name (e.g. {@code Cu}) pointing at the canonical registry name (e.g. {@code Copper}). */
@@ -233,9 +233,9 @@ public final class GTMaterialRegistry {
     }
 
     public static GTMaterial get(int id) {
-        if (id <= 0) return MaterialSentinels.Invalid;
+        if (id <= 0) return MaterialSentinels.INVALID;
         GTMaterial material = BY_ID.get(id);
-        return material == null ? MaterialSentinels.Invalid : material.resolve();
+        return material == null ? MaterialSentinels.INVALID : material.resolve();
     }
 
     public static Collection<GTMaterial> allMaterials() {

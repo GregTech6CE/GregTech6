@@ -26,8 +26,8 @@ public final class BasicMachineDefinitions {
   var result = new java.util.ArrayList<BasicMachineSpec>();
   var matched = new java.util.HashSet<MachineTuningRules.Key>();
   for (var parameters : BasicMachineCatalog.specifications()) {
-   var applied = MachineTunings.find(parameters.machineName(), parameters.tier());
-   if (applied != null) matched.add(new MachineTuningRules.Key(parameters.machineName(), parameters.tier()));
+   var applied = MachineTunings.find(parameters.machineName(), parameters.energy().tier());
+   if (applied != null) matched.add(new MachineTuningRules.Key(parameters.machineName(), parameters.energy().tier()));
    result.add(applied == null ? from(parameters) : from(parameters, applied));
   }
 
@@ -63,7 +63,7 @@ public final class BasicMachineDefinitions {
   long energyInMin = tuning.energyInMin() != null ? tuning.energyInMin() : base.energyInMin();
   long energyInMax = tuning.energyInMax() != null ? tuning.energyInMax() : base.energyInMax();
   int parallel = tuning.parallelLimit() != null ? tuning.parallelLimit() : base.parallelLimit();
-  var key = new MachineTuningRules.Key(p.machineName(), p.tier());
+  var key = new MachineTuningRules.Key(p.machineName(), p.energy().tier());
   MachineTuningRules.checkEffectiveValues(key, energyIn, parallel);
   if (energyIn < energyInMin || energyIn > energyInMax)
    throw new IllegalStateException("Tuned energy for " + key + " sits outside its effective range: "
@@ -93,7 +93,7 @@ public final class BasicMachineDefinitions {
  }
 
  private static BasicMachineSpec raw(BasicMachineParameters p) {
-  return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energyType(),p.tier(),p.energyIn(),p.energyOut(),p.hardness(),p.blastResistance(),FaceConfig.from(p.faceConfig()),p.constructionMaterials(),MachineRecipeMaps.byMachineName(p.machineName()),p.parallelLimit(),p.energyInMin(),p.energyInMax());
+  return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energy().type().name(),p.energy().tier(),p.energy().energyIn(),p.energy().energyOut(),p.hardness(),p.blastResistance(),FaceConfig.from(p.faceConfig()),p.constructionMaterials(),MachineRecipeMaps.byMachineName(p.machineName()),p.options().parallelLimit(),p.energy().energyInMin(),p.energy().energyInMax());
  }
 
  private static void logApplied(MachineTuningRules.Merged applied, BasicMachineSpec base, BasicMachineSpec tuned) {

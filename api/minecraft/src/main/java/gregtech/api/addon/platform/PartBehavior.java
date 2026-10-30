@@ -11,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
-
 import java.util.List;
 
 /**
@@ -40,7 +39,7 @@ public interface PartBehavior {
     /** A pipe may take from this tank. The face list is checked before this. */
     default boolean canDrain(PartContext context, int tank) { return true; }
 
-    /** A slot changed through a pipe or {@link PartContext#setItem}. */
+    /** A slot changed through a pipe or {@link PartContext#inventory()}. */
     default void onSlotsChanged(PartContext context, int slot) {}
 
     /** Lines a magnifying glass shows. Empty leaves the click unhandled. */

@@ -3,12 +3,15 @@
 package gregtech.api.machine;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Machine-relative face. {@link #index()} and {@link #bit()} are the mask positions.
+ * A machine-relative face. The declaration order is the GT6 side index
+ * (bottom 0, top 1, right 2, front 3, left 4, back 5), exposed through {@link #index()}.
+ * Use {@link BlockFace} for an absolute direction.
  */
 public enum MachineFace {
     BOTTOM(0), TOP(1), RIGHT(2), FRONT(3), LEFT(4), BACK(5);
@@ -22,15 +25,6 @@ public enum MachineFace {
     MachineFace(int index) { this.index = index; }
 
     public int index() { return index; }
-
-    public int bit() { return 1 << index; }
-
-    /** Mask of {@code faces}; a null list is empty. */
-    public static int mask(@Nullable List<MachineFace> faces) {
-        int mask = 0;
-        if (faces != null) for (MachineFace face : faces) mask |= face.bit();
-        return mask;
-    }
 
     /** All six faces, in {@link #index()} order. */
     public static List<MachineFace> all() { return ALL; }
@@ -52,25 +46,20 @@ public enum MachineFace {
         return List.copyOf(copy);
     }
 
+    /**
+     * Copies {@code faces} in {@link #index()} order, rejecting a null entry or a repeated face.
+     * Order-independent equality can then use the stored list directly.
+     */
+    public static List<MachineFace> canonical(@Nullable List<MachineFace> faces, String label) {
+        var copy = new ArrayList<>(distinct(faces, label));
+        copy.sort(Comparator.comparingInt(MachineFace::index));
+        return List.copyOf(copy);
+    }
+
     /** Null entries stay; this does not reject repeats. {@link #distinct} does. */
     public static List<MachineFace> listed(MachineFace... faces) {
         var list = new ArrayList<MachineFace>();
         if (faces != null) for (MachineFace face : faces) list.add(face);
         return list;
-    }
-
-    /** Same faces, ignoring order. */
-    public static boolean sameSet(@Nullable List<MachineFace> left, @Nullable List<MachineFace> right) {
-        if (left == right) return true;
-        if (left == null || right == null || left.size() != right.size()) return false;
-        return new HashSet<>(left).equals(new HashSet<>(right));
-    }
-
-    /**
-     * Order-independent hash for {@link #sameSet}. Repeated faces count once, matching the set
-     * comparison; length still takes part in {@code sameSet}.
-     */
-    public static int hashSet(@Nullable List<MachineFace> faces) {
-        return faces == null ? 0 : new HashSet<>(faces).hashCode();
     }
 }

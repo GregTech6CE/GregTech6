@@ -45,7 +45,7 @@ public final class AddonCoreServices {
 
         @Override
         public GregTechMaterials.Material invalid() {
-            return new Handle(MaterialSentinels.Invalid);
+            return new Handle(MaterialSentinels.INVALID);
         }
 
         @Override
@@ -60,7 +60,7 @@ public final class AddonCoreServices {
         private final GTMaterial material;
 
         private Handle(GTMaterial material) {
-            this.material = material == null ? MaterialSentinels.Invalid : material;
+            this.material = material == null ? MaterialSentinels.INVALID : material;
         }
 
         @Override

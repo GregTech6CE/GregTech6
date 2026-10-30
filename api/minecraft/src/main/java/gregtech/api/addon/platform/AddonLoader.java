@@ -2,8 +2,6 @@
 
 package gregtech.api.addon.platform;
 
-import gregtech.api.addon.*;
-
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {

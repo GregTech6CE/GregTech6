@@ -2,19 +2,10 @@
 
 package gregtech.api.addon.machine;
 
-import gregtech.api.addon.pipe.*;
-
-import gregtech.api.addon.recipe.*;
-
-
-
-
-
-
-
-
-import gregtech.api.multiblock.*;
-
+import gregtech.api.addon.pipe.FluidPipeDeclaration;
+import gregtech.api.addon.pipe.ItemPipeDeclaration;
+import gregtech.api.addon.recipe.RecipeTable;
+import gregtech.api.multiblock.StructureLayout;
 import java.util.List;
 
 /**

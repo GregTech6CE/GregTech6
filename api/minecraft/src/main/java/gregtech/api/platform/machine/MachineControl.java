@@ -4,7 +4,6 @@ package gregtech.api.platform.machine;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -15,10 +14,8 @@ import org.jspecify.annotations.Nullable;
  * Capability bits: {@link #available()} reports whether controls work at all this tick.
  * {@link #supportsSwitch()} and {@link #supportsProgress()} default to true for machines that
  * expose the matching state; an implementation without that state should override them to false.
- * {@link #supportsWrite()} defaults to false, and every built-in machine keeps it false, so
- * {@link #setProgress(long)} and {@link #setEnergy(long)} do nothing until an implementation opens
- * writes and applies the value itself. {@link #supportsMode()} defaults to false. Callers must
- * check the matching bit instead of inferring support from {@link #available()}.
+ * {@link #supportsMode()} defaults to false. Callers must check the matching bit instead of
+ * inferring support from {@link #available()}. Progress and energy are read-only on this surface.
  */
 public interface MachineControl {
     default boolean available() {
@@ -48,32 +45,13 @@ public interface MachineControl {
         return 0;
     }
 
-    /**
-     * Whether {@link #setProgress(long)} and {@link #setEnergy(long)} are honoured. Built-in
-     * machines answer {@code false}: this surface is read-only until a later decision opens writes.
-     * Callers must check this bit instead of inferring write support from {@link #available()}.
-     */
-    default boolean supportsWrite() {
-        return false;
-    }
-
-    /** Does nothing unless {@link #supportsWrite()} and the machine's own checks allow the value. */
-    default boolean setProgress(long value) {
-        return false;
-    }
-
-    /** Does nothing unless {@link #supportsWrite()} and the machine's own checks allow the value. */
-    default boolean setEnergy(long value) {
-        return false;
-    }
-
     /** External control signal on {@code side}, 0–15. It is combined with that face's cover signal. */
     default int externalSignal(Direction side) {
         return 0;
     }
 
     /**
-     * Control input, not a state write: accepted even when {@link #supportsWrite()} is {@code false}.
+     * Control input, not a state write: accepted regardless of the read-only progress and energy state.
      * Returns whether the value was accepted; a machine may clamp it to 0–15.
      */
     default boolean setExternalSignal(Direction side, int level) {

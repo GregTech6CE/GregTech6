@@ -11,6 +11,8 @@ import gregtech.engine.addon.LayoutPartHosts;
 import gregtech.api.addon.platform.BehaviorState;
 import gregtech.api.addon.platform.MachineBehavior;
 import gregtech.api.addon.platform.PartBehavior;
+import gregtech.api.addon.platform.FluidAccess;
+import gregtech.api.addon.platform.InventoryAccess;
 import gregtech.api.addon.platform.PartContext;
 import gregtech.api.addon.platform.PartHit;
 import net.minecraft.core.BlockPos;
@@ -450,11 +452,33 @@ public final class FunctionalPartRuntime {
 
         @Override public String name() { return host.declaration().name(); }
 
-        @Override public int slots() { return items.getSlots(); }
+        @Override public InventoryAccess inventory() {
+            return new InventoryAccess() {
+                @Override public int slots() { return Context.this.slots(); }
+                @Override public ItemStack snapshot(int slot) { return item(slot); }
+                @Override public void set(int slot, ItemStack stack) { setItem(slot, stack); }
+            };
+        }
 
-        @Override public ItemStack item(int slot) { return FunctionalPartRuntime.this.item(slot); }
+        @Override public FluidAccess fluids() {
+            return new FluidAccess() {
+                @Override public int tanks() { return Context.this.tanks(); }
+                @Override public FluidStack snapshot(int tank) { return fluid(tank); }
+                @Override public int capacity(int tank) { return tankCapacity(tank); }
+                @Override public int fill(int tank, FluidStack stack, boolean simulate) {
+                    return Context.this.fill(tank, stack, simulate);
+                }
+                @Override public FluidStack drain(int tank, int amount, boolean simulate) {
+                    return Context.this.drain(tank, amount, simulate);
+                }
+            };
+        }
 
-        @Override public void setItem(int slot, ItemStack stack) {
+        int slots() { return items.getSlots(); }
+
+        ItemStack item(int slot) { return FunctionalPartRuntime.this.item(slot); }
+
+        void setItem(int slot, ItemStack stack) {
             if (slot < 0 || slot >= items.getSlots())
                 throw new IllegalArgumentException("slot " + slot);
             ItemStack next = stack == null || stack.isEmpty() ? ItemStack.EMPTY : stack.copy();
@@ -463,25 +487,25 @@ public final class FunctionalPartRuntime {
             items.setStackInSlot(slot, next);
         }
 
-        @Override public int tanks() { return FunctionalPartRuntime.this.tanks.length; }
+        int tanks() { return FunctionalPartRuntime.this.tanks.length; }
 
-        @Override public FluidStack fluid(int tank) {
+        FluidStack fluid(int tank) {
             if (tank < 0 || tank >= tanks()) return FluidStack.EMPTY;
             return FunctionalPartRuntime.this.tanks[tank].getFluid();
         }
 
-        @Override public int tankCapacity(int tank) {
+        int tankCapacity(int tank) {
             if (tank < 0 || tank >= tanks()) return 0;
             return FunctionalPartRuntime.this.tanks[tank].getCapacity();
         }
 
-        @Override public int fill(int tank, FluidStack stack, boolean simulate) {
+        int fill(int tank, FluidStack stack, boolean simulate) {
             if (tank < 0 || tank >= tanks()) throw new IllegalArgumentException("tank " + tank);
             return FunctionalPartRuntime.this.tanks[tank].fill(stack,
                     simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE);
         }
 
-        @Override public FluidStack drain(int tank, int amount, boolean simulate) {
+        FluidStack drain(int tank, int amount, boolean simulate) {
             if (tank < 0 || tank >= tanks()) throw new IllegalArgumentException("tank " + tank);
             return FunctionalPartRuntime.this.tanks[tank].drain(amount,
                     simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE);

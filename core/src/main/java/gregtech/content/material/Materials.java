@@ -12,8 +12,8 @@ public final class Materials {
         GTMaterialRegistry.init();
     }
 
-    public static final GTMaterial Invalid = gregtech.api.material.MaterialSentinels.Invalid;
-    public static final GTMaterial Empty = gregtech.api.material.MaterialSentinels.Empty;
+    public static final GTMaterial Invalid = gregtech.api.material.MaterialSentinels.INVALID;
+    public static final GTMaterial Empty = gregtech.api.material.MaterialSentinels.EMPTY;
     public static final GTMaterial Magic = gregtech.content.data.ImportedMaterialData.Ma;
     public static final GTMaterial Photon = ParticleMaterials.Photon;
     public static final GTMaterial Neutrino = ParticleMaterials.Neutrino;

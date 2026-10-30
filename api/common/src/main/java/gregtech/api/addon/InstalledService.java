@@ -2,12 +2,15 @@
 
 package gregtech.api.addon;
 
+import org.jetbrains.annotations.ApiStatus;
+
 /**
  * Internal: not part of the addon contract; may change without notice.
  * One-time bind, lock-free read. The first bind owns the implementation; a later bind fails
  * with the first binder's class and a cause carrying its call stack.
  * GregTech installs the platform services; addons must not call {@code bind}.
  */
+@ApiStatus.Internal
 public final class InstalledService<T> {
     private volatile T value;
     private Throwable firstBind;
@@ -22,6 +25,11 @@ public final class InstalledService<T> {
             firstBind = new Throwable("first bind");
             value = implementation;
         }
+    }
+
+    /** True once a service has been bound. */
+    public boolean isBound() {
+        return value != null;
     }
 
     public T get(String missing) {

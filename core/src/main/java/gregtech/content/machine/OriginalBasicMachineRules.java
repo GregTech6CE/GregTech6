@@ -2,7 +2,7 @@
  * Original MultiTileEntityBasicMachine and 247 Basic Machines registrations. */
 package gregtech.content.machine;
 
-import gregtech.api.machine.MachineFaceMasks;
+import gregtech.api.machine.MachineFace;
 import gregtech.content.data.BasicMachineOriginalParams;
 import java.util.List;
 import java.util.Set;
@@ -108,23 +108,23 @@ public final class OriginalBasicMachineRules {
 
     public static String faceKey(int side) {
         return switch (side) {
-            case MachineFaceMasks.BOTTOM -> "gt.lang.face.bottom";
-            case MachineFaceMasks.TOP -> "gt.lang.face.top";
-            case MachineFaceMasks.LEFT -> "gt.lang.face.left";
-            case MachineFaceMasks.RIGHT -> "gt.lang.face.right";
-            case MachineFaceMasks.FRONT -> "gt.lang.face.front";
-            case MachineFaceMasks.BACK -> "gt.lang.face.back";
+            case 0 -> "gt.lang.face.bottom";
+            case 1 -> "gt.lang.face.top";
+            case 4 -> "gt.lang.face.left";
+            case 2 -> "gt.lang.face.right";
+            case 3 -> "gt.lang.face.front";
+            case 5 -> "gt.lang.face.back";
             default -> throw new IllegalArgumentException("Source face:" + side);
         };
     }
 
     public static final List<Integer> FACE_ORDER = List.of(
-            MachineFaceMasks.BOTTOM,
-            MachineFaceMasks.TOP,
-            MachineFaceMasks.LEFT,
-            MachineFaceMasks.FRONT,
-            MachineFaceMasks.RIGHT,
-            MachineFaceMasks.BACK);
+            MachineFace.BOTTOM.index(),
+            MachineFace.TOP.index(),
+            MachineFace.LEFT.index(),
+            MachineFace.FRONT.index(),
+            MachineFace.RIGHT.index(),
+            MachineFace.BACK.index());
 
     public static String unitKey(String type) {
         return "gt.td.short.energy."
@@ -157,10 +157,10 @@ public final class OriginalBasicMachineRules {
         if (slots <= 0) return null;
         final int selected = mask & 63;
         if (selected == 63)
-            return new IoRow(true, MachineFaceMasks.autoValid(auto) ? List.of(new IoFace(auto, true)) : List.of());
+            return new IoRow(true, (auto >= 0 && auto < 6) ? List.of(new IoFace(auto, true)) : List.of());
 
         var faces = FACE_ORDER.stream()
-                .filter(side -> MachineFaceMasks.has(selected, side))
+                .filter(side -> ((selected & (1 << side)) != 0))
                 .map(side -> new IoFace(side, side == auto))
                 .toList();
         return faces.isEmpty() ? null : new IoRow(false, faces);

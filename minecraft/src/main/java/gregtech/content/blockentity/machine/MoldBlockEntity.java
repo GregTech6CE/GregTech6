@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.crucible.MoldShapes;
 import gregtech.engine.machine.ITileEntityCrucible;
@@ -741,8 +743,8 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold, gre
     public boolean isContentSolidified() { return contentSolidified; }
     public boolean isUseRedstone() { return useRedstone; }
     public byte getAutoPullDirections() { return autoPullDirections; }
-    @Override public long temperatureK(int side) { return getTemperature(); }
-    @Override public long maximumK(int side) { return getMoldMaxTemperature(); }
+    @Override public long temperatureK(BlockFace side) { return getTemperature(); }
+    @Override public long maximumK(BlockFace side) { return getMoldMaxTemperature(); }
     public long getTemperature() { return temperature; }
     public CrucibleSpec spec() { return spec; }
 //? if >=1.21.1 {

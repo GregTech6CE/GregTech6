@@ -2,15 +2,13 @@
 
 package gregtech.api.addon.recipe;
 
-
-
-
-import gregtech.api.addon.*;
-
 /** Programmed circuit numbers. 0 through 24 are {@code integrated_circuit_0} through {@code integrated_circuit_24}. */
 public final class SelectorTags {
-    public static final int MIN = AddonLimits.live(0);
-    public static final int MAX = AddonLimits.live(24);
+    public static final int MIN = value(0);
+    public static final int MAX = value(24);
+
+    /** Keeps a value out of the compile-time constant pool so javac cannot inline it. */
+    private static int value(int value) { return value; }
 
     private SelectorTags() {}
 

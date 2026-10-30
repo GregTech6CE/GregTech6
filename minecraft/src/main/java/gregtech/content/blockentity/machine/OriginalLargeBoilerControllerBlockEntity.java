@@ -1,6 +1,8 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. Source boiler tool and structure rules. */
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.multiblock.MultiblockLayout;
 import gregtech.engine.multiblock.MultiblockPortOwner;
@@ -121,8 +123,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         return -insertHeat(-signedHU, simulate);
     }
     public long waterAmount() { return water.getAmount(); }
-    @Override public long gibblValue(int side) { return steam.getAmount(); }
-    @Override public long gibblMaximum(int side) { return steam.getCapacity(); }
+    @Override public long gibblValue(BlockFace side) { return steam.getAmount(); }
+    @Override public long gibblMaximum(BlockFace side) { return steam.getCapacity(); }
     public long steamAmount() { return steam.getAmount(); }
     public int efficiency() { return efficiency; }
     public int barometerValue() { return barometer; }

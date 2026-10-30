@@ -2,10 +2,7 @@
 
 package gregtech.api.addon.machine;
 
-
-
-
-import gregtech.api.machine.*;
+import gregtech.api.machine.MachineFace;
 
 /** Which faces may move fluid. The behavior still has to allow the fluid. */
 public final class PartTankRules {

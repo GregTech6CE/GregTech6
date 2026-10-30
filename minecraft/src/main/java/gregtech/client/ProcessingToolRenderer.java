@@ -42,7 +42,7 @@ public final class ProcessingToolRenderer implements BlockEntityRenderer<Process
             // never the ingredient's item model.
             var material = gregtech.engine.material.ItemMaterialRegistry.get(stack)
                     .map(gregtech.engine.material.ItemComposition::material)
-                    .orElse(gregtech.api.material.MaterialSentinels.Invalid).resolve();
+                    .orElse(gregtech.api.material.MaterialSentinels.INVALID).resolve();
             var set = material.isValid() ? MaterialIcons.resolveTextureSet(material)
                     : gregtech.api.material.MaterialTextureSet.METALLIC;
             var texture = CrucibleContentIcons.blockIcon(set, "blockdust", false);

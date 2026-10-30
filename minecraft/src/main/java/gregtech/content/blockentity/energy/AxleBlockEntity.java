@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.energy;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.energy.AxleSpec;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.EnergyTransfer;
@@ -32,8 +34,8 @@ import java.util.Set;
 /** GT6 rotational axle block entity — RU conductor, pipe-style connection grid. */
 public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
     // Sample the existing transfer accumulator between entity ticks; never substitute energy.
-    @Override public long progressValue(int side) { return transferredPower(); }
-    @Override public long progressMaximum(int side) { return maxPower(); }
+    @Override public long progressValue(BlockFace side) { return transferredPower(); }
+    @Override public long progressMaximum(BlockFace side) { return maxPower(); }
 //? if >=1.21.1 {
     /*public static final net.neoforged.neoforge.client.model.data.ModelProperty<Integer> ROTATION = new net.neoforged.neoforge.client.model.data.ModelProperty<>();
 *///?} else {

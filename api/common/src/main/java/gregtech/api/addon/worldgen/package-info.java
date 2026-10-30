@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 /** Addon ore-vein and small-ore worldgen declarations. */
 @NullMarked
 package gregtech.api.addon.worldgen;

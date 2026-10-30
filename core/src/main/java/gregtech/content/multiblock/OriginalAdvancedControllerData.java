@@ -2,9 +2,12 @@
  * Original 17110/17198/17199 registrations and their inherited BasicMachine defaults. */
 package gregtech.content.multiblock;
 
+import gregtech.api.energy.EnergyType;
 import gregtech.api.machine.BasicMachineParameters;
+import gregtech.api.machine.MachineFace;
 import gregtech.api.machine.MachineFaceMasks;
 import gregtech.content.data.BasicMachineOriginalParams;
+import gregtech.content.machine.HostMachineFaces;
 import gregtech.content.machine.OriginalMachineMaterialData;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.util.List;
@@ -50,8 +53,8 @@ public final class OriginalAdvancedControllerData {
 
     public static MachineFaceMasks faces(String name) {
         if (!handles(name)) throw new IllegalArgumentException(name);
-        int output = name.equals("fusionreactor") ? -1 : MachineFaceMasks.BOTTOM;
-        return new MachineFaceMasks(63, 63, 63, 63, 63, 0, -1, output, -1, output);
+        int output = name.equals("fusionreactor") ? -1 : MachineFace.BOTTOM.index();
+        return HostMachineFaces.fromMask(63, 63, 63, 63, 63, 0, -1, output, -1, output);
     }
 
     public static BasicMachineParameters parameters(String name, String id) {
@@ -62,20 +65,15 @@ public final class OriginalAdvancedControllerData {
             case "fusionreactor" -> "SteelGalvanized";
             default -> "Pb";
         };
-        return new BasicMachineParameters(
-                id,
-                GTMaterialRegistry.get(hull),
-                name,
-                source.energyType(),
-                1,
-                source.energyInput(),
-                0,
-                source.hardness(),
-                source.resistance(),
-                faces(name),
-                OriginalMachineMaterialData.weights(name, 1),
-                source.parallel(),
-                source.energyInputMin(),
-                source.energyInputMax());
+        return BasicMachineParameters.builder(id, GTMaterialRegistry.get(hull))
+                .machineType(name)
+                .energy(EnergyType.of(source.energyType()), source.energyInput())
+                .tier(source.tier())
+                .energyRange(source.energyInputMin(), source.energyInputMax())
+                .parallel(source.parallel())
+                .strength(source.hardness(), source.resistance())
+                .faces(faces(name))
+                .constructionMaterials(OriginalMachineMaterialData.weights(name, 1))
+                .build();
     }
 }

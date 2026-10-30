@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
 package gregtech.api.material;
 
 import java.util.List;
@@ -51,7 +53,11 @@ public enum MaterialTextureSet {
 
     private static final MaterialTextureSet[] MODELED_SETS = values();
 
-    /** Texture sets that have shared model JSON under {@code models/item/material/}. */
+    /**
+     * Texture sets that have shared model JSON under {@code models/item/material/}. Every constant
+     * currently qualifies, so this has the same elements as {@link #values()}; use this method
+     * rather than assuming the two stay equal.
+     */
     public static List<MaterialTextureSet> modeled() { return List.of(MODELED_SETS); }
 
     /** Lowercase folder name used in resource locations (MC normalizes paths to lowercase). */

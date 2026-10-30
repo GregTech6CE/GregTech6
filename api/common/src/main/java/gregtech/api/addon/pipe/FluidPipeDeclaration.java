@@ -2,10 +2,7 @@
 
 package gregtech.api.addon.pipe;
 
-
-
-
-import gregtech.api.addon.*;
+import gregtech.api.addon.AddonNames;
 
 /**
  * One addon fluid-pipe material. GregTech expands it into the seven built-in sizes,
@@ -15,15 +12,18 @@ import gregtech.api.addon.*;
 public record FluidPipeDeclaration(String idSuffix, String material, long baseCapacity,
                                    boolean gasProof, boolean acidProof, boolean plasmaProof,
                                    boolean magicProof, long maxTemperature, int flammability) {
+    private static final int MAX_SIZE_MULTIPLIER = 24;
+
     public FluidPipeDeclaration {
         if (!AddonNames.matches(AddonNames.LOWER_PATH, idSuffix))
             throw new IllegalArgumentException("Fluid pipe id must be a lower-case suffix: " + idSuffix);
-        if (material == null || material.isBlank())
-            throw new IllegalArgumentException("Fluid pipe '" + idSuffix + "' needs a material");
+        if (!AddonNames.matches(AddonNames.MATERIAL, material))
+            throw new IllegalArgumentException(
+                    "Fluid pipe '" + idSuffix + "' has an invalid material name: " + material);
         if (baseCapacity <= 0)
             throw new IllegalArgumentException("Fluid pipe '" + idSuffix + "' capacity must be positive");
         try {
-            Math.multiplyExact(baseCapacity, 24);
+            Math.multiplyExact(baseCapacity, MAX_SIZE_MULTIPLIER);
         } catch (ArithmeticException overflow) {
             throw new IllegalArgumentException("Fluid pipe '" + idSuffix + "' capacity overflows", overflow);
         }

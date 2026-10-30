@@ -2,9 +2,9 @@
 
 package gregtech.api.addon.platform;
 
-import gregtech.api.addon.machine.*;
-
+import gregtech.api.addon.machine.LayoutPart;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Per-block-entity values GregTech writes to NBT. A machine accepts any key matching
@@ -35,5 +35,5 @@ public interface BehaviorState {
     ItemStack item(String key);
 
     /** Stores a copy and marks the host changed; null/empty removes the stored item. */
-    void setItem(String key, ItemStack stack);
+    void setItem(String key, @Nullable ItemStack stack);
 }

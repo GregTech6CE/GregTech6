@@ -199,7 +199,7 @@ public class Recipe {
 
     /** Presence-only gates use positive native representatives, never zero-sized native stacks. */
     public Recipe withPresenceFluidInputs(int... indices) {
-        for (int index : gregtech.api.addon.recipe.RecipeKeptInputs.normalizeFluids(indices, mFluidInputs.length)) {
+        for (int index : RecipeKeptInputs.normalizeFluids(indices, mFluidInputs.length)) {
             if (mFluidInputs[index] == null || mFluidInputs[index].isEmpty())
                 throw new IllegalArgumentException("Presence fluid input " + index + " needs a positive representative");
             if (catalystFluidInputs.get(index))

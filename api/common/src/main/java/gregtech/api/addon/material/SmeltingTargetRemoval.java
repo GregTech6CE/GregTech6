@@ -2,12 +2,7 @@
 
 package gregtech.api.addon.material;
 
-
-
-
-import gregtech.api.addon.*;
-
-import java.util.Objects;
+import gregtech.api.addon.AddonNames;
 
 /**
  * Removes the crucible smelting target of a material, including a built-in one.
@@ -16,7 +11,6 @@ import java.util.Objects;
  */
 public record SmeltingTargetRemoval(String material) {
     public SmeltingTargetRemoval {
-        Objects.requireNonNull(material, "material");
         if (!AddonNames.matches(AddonNames.MATERIAL, material))
             throw new IllegalArgumentException("Use a material name: " + material);
     }

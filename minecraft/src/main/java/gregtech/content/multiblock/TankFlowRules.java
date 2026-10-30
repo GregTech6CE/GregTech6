@@ -8,6 +8,6 @@ public final class TankFlowRules {
     private TankFlowRules() {}
 
     public static boolean canAutoOutput(Direction face, boolean gas, int density) {
-        return gregtech.api.multiblock.StructureGrid.canAutoOutput(face.getStepY(), gas, density);
+        return gregtech.content.multiblock.StructureGrid.canAutoOutput(face.getStepY(), gas, density);
     }
 }

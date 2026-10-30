@@ -2,9 +2,6 @@
 
 package gregtech.api.addon.material;
 
-
-
-
 /**
  * Fixed filters for an addon prefix. An addon cannot pass its own predicate.
  */
@@ -34,7 +31,9 @@ public enum PrefixCondition {
     ALLOY;
 
     public boolean positive() {
-        return this == HAS_TOOL_STATS || this == SMITHABLE
-                || this == METAL || this == MOLTEN || this == ALLOY;
+        return switch (this) {
+            case HAS_TOOL_STATS, SMITHABLE, METAL, MOLTEN, ALLOY -> true;
+            case NOT_WOOD, NOT_COAL, NOT_STONE, NOT_FOOD, NOT_MEAT -> false;
+        };
     }
 }

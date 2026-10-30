@@ -89,8 +89,8 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
 
     // --- special / sentinel materials ---
 
-    public static final GTMaterial NULL = gregtech.api.material.MaterialSentinels.Invalid;
-    public static final GTMaterial Empty = gregtech.api.material.MaterialSentinels.Empty;
+    public static final GTMaterial NULL = gregtech.api.material.MaterialSentinels.INVALID;
+    public static final GTMaterial Empty = gregtech.api.material.MaterialSentinels.EMPTY;
 
     /**
      * Magic pseudo-element ({@code Ma}). Used in Ender Pearl ({@code BeK₄N₅Ma₆}) and other magical chemistry.

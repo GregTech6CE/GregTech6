@@ -2,7 +2,7 @@
 
 package gregtech.api.addon.platform;
 
-import gregtech.api.addon.machine.*;
+import gregtech.api.addon.machine.BehaviorMachine;
 
 /**
  * Behavior machine state GregTech has synced to the client. A renderer reads this.

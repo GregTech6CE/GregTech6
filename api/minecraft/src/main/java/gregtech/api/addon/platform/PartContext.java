@@ -2,19 +2,10 @@
 
 package gregtech.api.addon.platform;
 
-import gregtech.api.addon.machine.*;
-
 import gregtech.api.addon.recipe.CrucibleContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.FluidStack;
-*///?} else {
-import net.minecraftforge.fluids.FluidStack;
-//?}
-
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -22,16 +13,6 @@ import org.jspecify.annotations.Nullable;
  * and while a bound controller is calling back into the same behavior.
  */
 public interface PartContext {
-    /** Unified snapshot reads and explicit writes for this part's inventory. */
-    default InventoryAccess inventoryAccess() {
-        return BehaviorAccess.inventory(this::slots, this::item, this::setItem);
-    }
-
-    /** Unified snapshot reads and mB operations for this part's tanks. */
-    default FluidAccess fluidAccess() {
-        return BehaviorAccess.fluids(this::tanks, this::fluid, this::tankCapacity, this::fill, this::drain);
-    }
-
     Level level();
 
     BlockPos pos();
@@ -41,35 +22,11 @@ public interface PartContext {
     /** Registry path of the part block, without the addon namespace. */
     String name();
 
-    int slots();
+    /** Uniform snapshot reads and explicit writes for this part's inventory. */
+    InventoryAccess inventory();
 
-    /** Detached stack in GT's part host. Prefer {@link #inventoryAccess()} for uniform bounds checking. */
-    ItemStack item(int slot);
-
-    /**
-     * Replaces one slot. This does not ask {@link PartBehavior#canInsert} or the face list.
-     * A count above the declared stack limit is cut to that limit.
-     */
-    void setItem(int slot, ItemStack stack);
-
-    int tanks();
-
-    /**
-     * Legacy tank view; do not modify the returned stack. Empty for an absent/empty tank.
-     * Use {@link #fluidAccess()} for a guaranteed detached snapshot and uniform bounds checking.
-     */
-    FluidStack fluid(int tank);
-
-    int tankCapacity(int tank);
-
-    /**
-     * Puts fluid into one tank. This does not ask {@link PartBehavior#canFill} or the face list.
-     * Returns the millibuckets stored.
-     */
-    int fill(int tank, FluidStack stack, boolean simulate);
-
-    /** Takes fluid from one tank. This does not ask {@link PartBehavior#canDrain} or the face list. */
-    FluidStack drain(int tank, int amount, boolean simulate);
+    /** Uniform snapshot reads and mB operations for this part's tanks. */
+    FluidAccess fluids();
 
     /** True when a formed controller currently claims this part. */
     boolean bound();

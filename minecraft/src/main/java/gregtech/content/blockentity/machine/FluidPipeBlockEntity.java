@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.fluid.FluidPipeChannels;
 import gregtech.engine.fluid.FluidPipeSafety;
 import gregtech.engine.fluid.PipeIgnition;
@@ -103,12 +105,12 @@ import java.util.Set;
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
 public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, CoverStore.Hooks, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
-    @Override public long gibblValue(int side) {
+    @Override public long gibblValue(BlockFace side) {
         long total = 0;
         for (var tank : tanks) total += tank.getAmount();
         return total;
     }
-    @Override public long gibblMaximum(int side) { return spec.capacity() * tanks.length; }
+    @Override public long gibblMaximum(BlockFace side) { return spec.capacity() * tanks.length; }
     private final PipeSpec spec;
     private final FluidTankGT[] tanks;
     private final byte[] lastReceivedFrom;
@@ -1122,11 +1124,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     // Counter lifetime is the existing native pipe tick interval, not tank occupancy.
-    @Override public long progressValue(int side) { return transferredAmount; }
-    @Override public long progressMaximum(int side) { return spec.capacity() * tanks.length; }
+    @Override public long progressValue(BlockFace side) { return transferredAmount; }
+    @Override public long progressMaximum(BlockFace side) { return spec.capacity() * tanks.length; }
     public long getTransferredAmount() { return transferredAmount; }
-    @Override public long temperatureK(int side) { return temperature; }
-    @Override public long maximumK(int side) { return spec.maxTemperature(); }
+    @Override public long temperatureK(BlockFace side) { return temperature; }
+    @Override public long maximumK(BlockFace side) { return spec.maxTemperature(); }
     public long getTemperature() { return temperature; }
 
     /** Container transactions use the clicked face, including its connection, filter and backflow rules. */

@@ -84,7 +84,7 @@ public final class OriginalMaterialNameRules {
             return aprilFools ? "Schrödingers Ore" : "Unidentified Ore";
 
         if (aprilFools) {
-            if (material == MaterialSentinels.Empty) {
+            if (material == MaterialSentinels.EMPTY) {
                 if (prefix.name().equals("bulletGtSmall")) return prefix.before() + "Bolt Shaft";
                 if (prefix.name().equals("bulletGtMedium")) return prefix.before() + "Bolt Shaft";
                 if (prefix.name().equals("bulletGtLarge")) return prefix.before() + "Bolt Shaft";
@@ -95,7 +95,7 @@ public final class OriginalMaterialNameRules {
             }
         }
 
-        if (material == MaterialSentinels.Empty) {
+        if (material == MaterialSentinels.EMPTY) {
             if (prefix.name().equals("chemtube")) return "Empty Glass Tube";
             if (prefix.name().equals("arrowGtWood")) return "Headless Wood Arrow";
             if (prefix.name().equals("arrowGtPlastic")) return "Headless Plastic Arrow";

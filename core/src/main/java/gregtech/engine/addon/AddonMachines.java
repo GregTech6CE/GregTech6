@@ -17,6 +17,7 @@ import gregtech.api.addon.recipe.RecipeTable;
 import gregtech.api.energy.EnergyInput;
 import gregtech.api.energy.EnergyType;
 import gregtech.api.machine.BasicMachineParameters;
+import gregtech.api.machine.EnergyRange;
 import gregtech.api.machine.IoTarget;
 import gregtech.api.machine.MachineControllerKind;
 import gregtech.api.machine.MachineFace;
@@ -26,12 +27,13 @@ import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.LayoutCell;
 import gregtech.api.multiblock.LayoutRepeat;
 import gregtech.api.multiblock.StructureLayout;
-import gregtech.api.recipe.RecipeMapSpec;
 import gregtech.content.data.FuelRecipeMapDefinitions;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMapDefinitions;
+import gregtech.content.machine.HostMachineFaces;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.content.multiblock.SharedLargeMachineParts;
+import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -118,7 +120,7 @@ public final class AddonMachines {
     private record FuelSignature(
             String fuelMap,
             int efficiency,
-            String energy,
+            EnergyType energy,
             long outputPerTick,
             int tankCapacity,
             FuelOutput output,
@@ -126,16 +128,16 @@ public final class AddonMachines {
             int amperes) {}
 
     private record BehaviorSignature(
-            String energy,
-            String auxiliary,
-            String energyOut,
+            EnergyType energy,
+            EnergyType auxiliary,
+            EnergyType energyOut,
             List<BehaviorMachine.SlotRole> items,
             List<BehaviorMachine.SlotRole> fluids,
             List<String> toggleKeys,
-            int itemIn,
-            int itemOut,
-            int fluidIn,
-            int fluidOut,
+            Set<MachineFace> itemIn,
+            Set<MachineFace> itemOut,
+            Set<MachineFace> fluidIn,
+            Set<MachineFace> fluidOut,
             long outMin,
             boolean outNegative) {}
 
@@ -186,10 +188,10 @@ public final class AddonMachines {
     }
 
     private static boolean hasIoTarget(BasicMachineParameters parameters) {
-        return parameters.itemOutputTarget() != null
-                || parameters.fluidOutputTarget() != null
-                || parameters.itemInputSource() != null
-                || parameters.fluidInputSource() != null;
+        return parameters.io().itemOutputTarget() != null
+                || parameters.io().fluidOutputTarget() != null
+                || parameters.io().itemInputSource() != null
+                || parameters.io().fluidInputSource() != null;
     }
 
     private static final int ALL_MASK = 0b111111;
@@ -227,7 +229,7 @@ public final class AddonMachines {
                 machine.efficiency(),
                 machine.constantEnergy(),
                 machine.structureKeys(),
-                auxiliary == null ? null : auxiliary.type(),
+                auxiliary == null ? null : auxiliary.type().name(),
                 auxiliary == null ? 0 : auxiliary.perTick(),
                 auxiliary == null ? 0 : (auxiliary.anyPacket() ? 1 : auxiliary.rangeMin()),
                 auxiliary == null ? 0 : (auxiliary.anyPacket() ? Long.MAX_VALUE : auxiliary.rangeMax()),
@@ -261,27 +263,27 @@ public final class AddonMachines {
         MachineIo io = machine.io();
         EnergyInput energy = machine.energy();
         if (io == null && !energy.facesSpecified()) return MachineFaceMasks.ALL_SIDES;
-        return new MachineFaceMasks(
+        return HostMachineFaces.fromMask(
                 io == null ? ALL_MASK : mask(io.itemInputs()),
                 io == null ? ALL_MASK : mask(io.itemOutputs()),
                 io == null ? ALL_MASK : mask(io.fluidInputs()),
                 io == null ? ALL_MASK : mask(io.fluidOutputs()),
                 energy.facesSpecified() ? mask(energy.faces()) : ALL_MASK,
                 0,
-                io == null ? MachineFaceMasks.AUTO_NONE : auto(io.itemAutoInput()),
-                io == null ? MachineFaceMasks.AUTO_NONE : auto(io.itemAutoOutput()),
-                io == null ? MachineFaceMasks.AUTO_NONE : auto(io.fluidAutoInput()),
-                io == null ? MachineFaceMasks.AUTO_NONE : auto(io.fluidAutoOutput()));
+                io == null ? -1 : auto(io.itemAutoInput()),
+                io == null ? -1 : auto(io.itemAutoOutput()),
+                io == null ? -1 : auto(io.fluidAutoInput()),
+                io == null ? -1 : auto(io.fluidAutoOutput()));
     }
 
     private static int mask(List<MachineFace> faces) {
         int mask = 0;
-        for (MachineFace face : faces) mask |= face.bit();
+        for (MachineFace face : faces) mask |= 1 << face.index();
         return mask;
     }
 
     private static int auto(MachineFace face) {
-        return face == null ? MachineFaceMasks.AUTO_NONE : face.index();
+        return face == null ? -1 : face.index();
     }
 
     private static GregTechTags.Tag energy(String shortName) {
@@ -289,6 +291,10 @@ public final class AddonMachines {
                 .filter(tag -> tag.getShortName().equalsIgnoreCase(shortName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unknown machine energy type: " + shortName));
+    }
+
+    private static GregTechTags.Tag energy(EnergyType type) {
+        return energy(type.name());
     }
 
     private static String safeMachineId(AddonMachineContributor contributor) {
@@ -674,9 +680,11 @@ public final class AddonMachines {
                 if (previousOwner != null && !previousOwner.equals(submission.addonId))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' uses the same machine name as addon '" + previousOwner + "'");
-                if (EnergyType.time(parameters.energyType()) && parameters.energyRangeSpecified())
+                if (parameters.energy().type().time() && parameters.energy().range() instanceof EnergyRange.Declared)
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' cannot declare an energy range for TU");
+                var machineOptions = parameters.options();
+                var machineIo = parameters.io();
                 var signature = new Signature(
                         definition.recipeMapName(),
                         definition.kind(),
@@ -684,18 +692,23 @@ public final class AddonMachines {
                         definition.constantEnergy(),
                         definition.structureKeys(),
                         parameters.faceConfig(),
-                        parameters.cheapOverclocking(),
-                        parameters.cheapOverclockingSpecified(),
-                        parameters.minimumLightAbove(),
-                        parameters.searchOutputTanks(),
-                        parameters.exclusiveOutputs(),
-                        parameters.itemOutputTarget(),
-                        parameters.fluidOutputTarget(),
-                        parameters.itemInputSource(),
-                        parameters.fluidInputSource(),
-                        parameters.energyRangeSpecified(),
-                        parameters.energyRangeSpecified() ? parameters.energyInMin() : 0,
-                        parameters.energyRangeSpecified() ? parameters.energyInMax() : 0);
+                        machineOptions.cheapOverclocking() == BasicMachineParameters.Options.CheapOverclocking.ENABLED,
+                        machineOptions.cheapOverclocking()
+                                != BasicMachineParameters.Options.CheapOverclocking.UNSPECIFIED,
+                        machineOptions.minimumLightAbove(),
+                        machineOptions.searchOutputTanks(),
+                        machineOptions.exclusiveOutputs(),
+                        machineIo.itemOutputTarget(),
+                        machineIo.fluidOutputTarget(),
+                        machineIo.itemInputSource(),
+                        machineIo.fluidInputSource(),
+                        parameters.energy().range() instanceof EnergyRange.Declared,
+                        parameters.energy().range() instanceof EnergyRange.Declared
+                                ? parameters.energy().energyInMin()
+                                : 0,
+                        parameters.energy().range() instanceof EnergyRange.Declared
+                                ? parameters.energy().energyInMax()
+                                : 0);
                 Signature existing = machineSignature.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
@@ -919,7 +932,7 @@ public final class AddonMachines {
                 if (material == null || !material.isValid())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + id
                             + "' uses unknown material '" + materialName + "'");
-                String energyType = "";
+                EnergyType energyType = null;
                 long min = 0;
                 long max = 0;
                 if (declaration.energy() != null) {
@@ -998,9 +1011,11 @@ public final class AddonMachines {
                 var signature = new BehaviorSignature(
                         energyType,
                         declaration.auxiliary() == null
-                                ? ""
+                                ? null
                                 : declaration.auxiliary().type(),
-                        declaration.output() == null ? "" : declaration.output().type(),
+                        declaration.output() == null
+                                ? null
+                                : declaration.output().type(),
                         declaration.items().stream()
                                 .map(BehaviorMachine.ItemSlot::role)
                                 .toList(),
@@ -1010,10 +1025,10 @@ public final class AddonMachines {
                         declaration.toggles().stream()
                                 .map(BehaviorMachine.Toggle::translationKey)
                                 .toList(),
-                        declaration.itemInputMask(),
-                        declaration.itemOutputMask(),
-                        declaration.fluidInputMask(),
-                        declaration.fluidOutputMask(),
+                        declaration.itemInputFaces(),
+                        declaration.itemOutputFaces(),
+                        declaration.fluidInputFaces(),
+                        declaration.fluidOutputFaces(),
                         declaration.output() == null ? 0 : declaration.output().minSize(),
                         declaration.output() != null && declaration.output().allowNegative());
                 BehaviorSignature existing = signatures.putIfAbsent(machineName, signature);

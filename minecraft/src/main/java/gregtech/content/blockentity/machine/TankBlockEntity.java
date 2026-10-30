@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.api.machine.BlockFace;
+
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.TankSpec;
@@ -319,8 +321,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         fermentInput = null;
     }
 
-    @Override public long progressValue(int side) { return sealedTime; }
-    @Override public long progressMaximum(int side) { return maxSealedTime; }
+    @Override public long progressValue(BlockFace side) { return sealedTime; }
+    @Override public long progressMaximum(BlockFace side) { return maxSealedTime; }
     public long getSealedTime() { return sealedTime; }
     public long getMaxSealedTime() { return maxSealedTime; }
     public FluidStack getFermentationOutput() {

@@ -2,7 +2,6 @@ package gregtech.engine.recipe;
 
 import java.util.*;
 import net.minecraft.world.item.ItemStack;
-import gregtech.api.addon.recipe.RecipeKeptInputs;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {

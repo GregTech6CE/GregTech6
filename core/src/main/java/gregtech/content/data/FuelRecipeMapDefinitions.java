@@ -1,6 +1,6 @@
 package gregtech.content.data;
 
-import gregtech.api.recipe.RecipeMapSpec;
+import gregtech.content.recipe.RecipeMapSpec;
 
 /** Exact original GT6 fuel-map schemas; MC stacks belong to the platforms. */
 public final class FuelRecipeMapDefinitions {

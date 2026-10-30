@@ -1,10 +1,12 @@
 package gregtech.engine.addon;
 
-import gregtech.api.recipe.RecipeMapSpec;
+import gregtech.api.machine.BasicMachineParameters;
+import gregtech.api.machine.EnergyRange;
 import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
+import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.machine.BasicMachineSpec;
 import gregtech.engine.recipe.RecipeMap;
@@ -75,10 +77,12 @@ public final class AddonMachineRuntime {
         var spec = BasicMachineSpec.builder(parameters.id(), parameters.material())
                 .machineType(parameters.machineName())
                 .recipes(recipes)
-                .energy(AddonPlatformServices.tag(parameters.energyType()), parameters.energyIn())
-                .energyOutput(parameters.energyOut())
-                .tier(parameters.tier())
-                .parallel(parameters.parallelLimit())
+                .energy(
+                        AddonPlatformServices.tag(parameters.energy().type().name()),
+                        parameters.energy().energyIn())
+                .energyOutput(parameters.energy().energyOut())
+                .tier(parameters.energy().tier())
+                .parallel(parameters.options().parallelLimit())
                 .strength(parameters.hardness(), parameters.blastResistance())
                 .faces(FaceConfig.from(parameters.faceConfig()))
                 .constructionMaterials(parameters.constructionMaterials())
@@ -87,20 +91,28 @@ public final class AddonMachineRuntime {
                 .processingEfficiency(definition.efficiency())
                 .constantEnergy(definition.constantEnergy())
                 .structureKeys(definition.structureKeys())
-                .minimumLightAbove(parameters.minimumLightAbove())
-                .searchOutputTanks(parameters.searchOutputTanks())
-                .exclusiveOutputs(parameters.exclusiveOutputs())
-                .itemOutputTarget(parameters.itemOutputTarget())
-                .fluidOutputTarget(parameters.fluidOutputTarget())
-                .itemInputSource(parameters.itemInputSource())
-                .fluidInputSource(parameters.fluidInputSource());
-        if (parameters.energyRangeSpecified()) spec.energyRange(parameters.energyInMin(), parameters.energyInMax());
+                .minimumLightAbove(parameters.options().minimumLightAbove())
+                .searchOutputTanks(parameters.options().searchOutputTanks())
+                .exclusiveOutputs(parameters.options().exclusiveOutputs())
+                .itemOutputTarget(parameters.io().itemOutputTarget())
+                .fluidOutputTarget(parameters.io().fluidOutputTarget())
+                .itemInputSource(parameters.io().itemInputSource())
+                .fluidInputSource(parameters.io().fluidInputSource());
+        if (parameters.energy().range() instanceof EnergyRange.Declared)
+            spec.energyRange(
+                    parameters.energy().energyInMin(), parameters.energy().energyInMax());
         else if (definition.kind() == gregtech.api.machine.MachineControllerKind.LARGE_RECIPE)
-            spec.implicitEnergyRange(parameters.acceptedEnergyInMin(true), parameters.acceptedEnergyInMax(true));
-        else if (parameters.energyInMin() > 0)
-            spec.implicitEnergyRange(parameters.energyInMin(), parameters.energyInMax());
+            spec.implicitEnergyRange(
+                    parameters.energy().acceptedEnergyInMin(true),
+                    parameters.energy().acceptedEnergyInMax(true));
+        else if (parameters.energy().energyInMin() > 0)
+            spec.implicitEnergyRange(
+                    parameters.energy().energyInMin(), parameters.energy().energyInMax());
         if (definition.kind() == gregtech.api.machine.MachineControllerKind.BASIC
-                || parameters.cheapOverclockingSpecified()) spec.cheapOverclocking(parameters.cheapOverclocking());
+                || parameters.options().cheapOverclocking()
+                        != BasicMachineParameters.Options.CheapOverclocking.UNSPECIFIED)
+            spec.cheapOverclocking(parameters.options().cheapOverclocking()
+                    == BasicMachineParameters.Options.CheapOverclocking.ENABLED);
         if (definition.auxiliaryEnergyType() != null) {
             var tag = gregtech.content.data.GregTechTags.Energy.ALL.stream()
                     .filter(candidate -> candidate.getShortName().equalsIgnoreCase(definition.auxiliaryEnergyType()))

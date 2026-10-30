@@ -1,6 +1,8 @@
 package gregtech.engine.energy;
 
+import gregtech.api.machine.MachineFace;
 import gregtech.api.machine.MachineFaceMasks;
+import java.util.Set;
 import net.minecraft.core.Direction;
 
 /** Platform direction adapter for the shared original face masks. */
@@ -15,26 +17,20 @@ public record FaceConfig(
         int itemAutoOutput,
         int fluidAutoInput,
         int fluidAutoOutput) {
-    public static final int BOTTOM = MachineFaceMasks.BOTTOM,
-            TOP = MachineFaceMasks.TOP,
-            LEFT = MachineFaceMasks.LEFT,
-            RIGHT = MachineFaceMasks.RIGHT,
-            FRONT = MachineFaceMasks.FRONT,
-            BACK = MachineFaceMasks.BACK,
-            AUTO_NONE = MachineFaceMasks.AUTO_NONE;
+    public static final int BOTTOM = 0, TOP = 1, LEFT = 4, RIGHT = 2, FRONT = 3, BACK = 5, AUTO_NONE = -1;
 
     public static FaceConfig from(MachineFaceMasks m) {
         return new FaceConfig(
-                m.itemInputs(),
-                m.itemOutputs(),
-                m.fluidInputs(),
-                m.fluidOutputs(),
-                m.energyInputs(),
-                m.energyOutputs(),
-                m.itemAutoInput(),
-                m.itemAutoOutput(),
-                m.fluidAutoInput(),
-                m.fluidAutoOutput());
+                mask(m.itemInputs()),
+                mask(m.itemOutputs()),
+                mask(m.fluidInputs()),
+                mask(m.fluidOutputs()),
+                mask(m.energyInputs()),
+                mask(m.energyOutputs()),
+                auto(m.itemAutoInput()),
+                auto(m.itemAutoOutput()),
+                auto(m.fluidAutoInput()),
+                auto(m.fluidAutoOutput()));
     }
 
     public static final FaceConfig ALL_SIDES = from(MachineFaceMasks.ALL_SIDES);
@@ -44,19 +40,45 @@ public record FaceConfig(
     public static final FaceConfig NO_ENERGY = from(MachineFaceMasks.NO_ENERGY);
 
     public static boolean has(int mask, Direction d) {
-        return d != null && MachineFaceMasks.has(mask, d.get3DDataValue());
+        return d != null && has(mask, d.get3DDataValue());
+    }
+
+    public static boolean has(Set<MachineFace> faces, int rel) {
+        for (MachineFace face : faces) if (face.index() == rel) return true;
+        return false;
     }
 
     public static boolean has(int mask, int d) {
-        return MachineFaceMasks.has(mask, d);
+        return (mask & (1 << d)) != 0;
     }
 
     public static boolean autoValid(int d) {
-        return MachineFaceMasks.autoValid(d);
+        return d >= 0 && d < MachineFace.values().length;
     }
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    private static int mask(Set<MachineFace> faces) {
+        int mask = 0;
+        for (MachineFace face : faces) mask |= 1 << face.index();
+        return mask;
+    }
+
+    private static int auto(MachineFace face) {
+        return face == null ? AUTO_NONE : face.index();
+    }
+
+    private static MachineFace face(int index) {
+        if (!autoValid(index)) throw new IllegalArgumentException("Machine face must be 0..5: " + index);
+        return MachineFace.values()[index];
+    }
+
+    private static MachineFace[] faces(int... indexes) {
+        var faces = new MachineFace[indexes.length];
+        for (int i = 0; i < indexes.length; i++) faces[i] = face(indexes[i]);
+        return faces;
     }
 
     public static class Builder {
@@ -70,7 +92,7 @@ public record FaceConfig(
         }
 
         public Builder itemIn(int... ds) {
-            delegate.itemIn(ds);
+            delegate.itemIn(faces(ds));
             return this;
         }
 
@@ -79,7 +101,7 @@ public record FaceConfig(
         }
 
         public Builder itemOut(int... ds) {
-            delegate.itemOut(ds);
+            delegate.itemOut(faces(ds));
             return this;
         }
 
@@ -88,7 +110,7 @@ public record FaceConfig(
         }
 
         public Builder fluidIn(int... ds) {
-            delegate.fluidIn(ds);
+            delegate.fluidIn(faces(ds));
             return this;
         }
 
@@ -97,7 +119,7 @@ public record FaceConfig(
         }
 
         public Builder fluidOut(int... ds) {
-            delegate.fluidOut(ds);
+            delegate.fluidOut(faces(ds));
             return this;
         }
 
@@ -106,7 +128,7 @@ public record FaceConfig(
         }
 
         public Builder energyIn(int... ds) {
-            delegate.energyIn(ds);
+            delegate.energyIn(faces(ds));
             return this;
         }
 
@@ -115,7 +137,7 @@ public record FaceConfig(
         }
 
         public Builder energyOut(int... ds) {
-            delegate.energyOut(ds);
+            delegate.energyOut(faces(ds));
             return this;
         }
 
@@ -124,39 +146,39 @@ public record FaceConfig(
         }
 
         public Builder itemAutoIn(int d) {
-            delegate.itemAutoIn(d);
+            delegate.itemAutoIn(d < 0 ? null : face(d));
             return this;
         }
 
         public Builder itemAutoIn(Direction d) {
-            return itemAutoIn(d == null ? -1 : d.get3DDataValue());
+            return itemAutoIn(d == null ? AUTO_NONE : d.get3DDataValue());
         }
 
         public Builder itemAutoOut(int d) {
-            delegate.itemAutoOut(d);
+            delegate.itemAutoOut(d < 0 ? null : face(d));
             return this;
         }
 
         public Builder itemAutoOut(Direction d) {
-            return itemAutoOut(d == null ? -1 : d.get3DDataValue());
+            return itemAutoOut(d == null ? AUTO_NONE : d.get3DDataValue());
         }
 
         public Builder fluidAutoIn(int d) {
-            delegate.fluidAutoIn(d);
+            delegate.fluidAutoIn(d < 0 ? null : face(d));
             return this;
         }
 
         public Builder fluidAutoIn(Direction d) {
-            return fluidAutoIn(d == null ? -1 : d.get3DDataValue());
+            return fluidAutoIn(d == null ? AUTO_NONE : d.get3DDataValue());
         }
 
         public Builder fluidAutoOut(int d) {
-            delegate.fluidAutoOut(d);
+            delegate.fluidAutoOut(d < 0 ? null : face(d));
             return this;
         }
 
         public Builder fluidAutoOut(Direction d) {
-            return fluidAutoOut(d == null ? -1 : d.get3DDataValue());
+            return fluidAutoOut(d == null ? AUTO_NONE : d.get3DDataValue());
         }
 
         public FaceConfig build() {

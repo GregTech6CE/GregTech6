@@ -39,6 +39,9 @@ public sealed interface CellMatch permits CellMatch.Part, CellMatch.Air, CellMat
         if (name.equals("anyfluid")) return anyFluid();
         if (name.equals("anyopaque")) return anyOpaque();
         if (name.startsWith("anyfluid#")) return anyFluid(name.substring("anyfluid#".length()));
+        if (!AddonNames.matches(AddonNames.LOWER_PATH, name))
+            throw new IllegalArgumentException(
+                    "Structure part name must be a lower-case registry path: " + name);
         return new Part(name);
     }
 

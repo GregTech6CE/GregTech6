@@ -2,17 +2,10 @@
 
 package gregtech.api.addon.material;
 
-import gregtech.api.addon.worldgen.*;
-
-import gregtech.api.addon.recipe.*;
-
-
-
-
-
-
-
-
+import gregtech.api.addon.recipe.CrucibleReactionDeclaration;
+import gregtech.api.addon.recipe.CrucibleReactionRemoval;
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
+import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import java.util.List;
 
 /**
@@ -25,9 +18,11 @@ public interface AddonMaterialContributor {
     /** The addon's own loader mod id, not {@code gt6ce}, {@code gregtech6} or {@code minecraft}. */
     String addonId();
 
-    List<MaterialDeclaration> materials();
+    /** Materials this addon declares. Defaults to none, so declaration-only contributors can skip it. */
+    default List<MaterialDeclaration> materials() { return List.of(); }
 
-    List<MaterialFormRequest> forms();
+    /** Item forms to register for this addon's materials. Defaults to none. */
+    default List<MaterialFormRequest> forms() { return List.of(); }
 
     /**
      * Item prefixes this addon adds. GregTech registers them after the built-in prefixes.

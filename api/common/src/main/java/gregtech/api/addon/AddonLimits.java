@@ -10,14 +10,19 @@ public final class AddonLimits {
     public static final int MAX_CAPACITY = live(1_024_000_000);
     /** Largest processing efficiency, in parts per 10,000. */
     public static final int MAX_EFFICIENCY = live(100_000);
+    /** Largest accepted processing parallel for a recipe machine. */
+    public static final int MAX_PARALLEL = live(1_000_000);
     /** Default processing efficiency, in parts per 10,000 (10,000 is 100%). */
     public static final int DEFAULT_EFFICIENCY = live(10_000);
+    /** Largest machine tier accepted by a behavior or recipe machine. */
+    public static final int MAX_TIER = live(255);
+    /** Highest light level a declaration may require. */
+    public static final int MAX_LIGHT_LEVEL = live(15);
 
-    /** Keeps a public value out of the compile-time constant pool so javac cannot inline it. */
-    public static int live(int value) { return value; }
+    /** Keeps a value out of the compile-time constant pool so javac cannot inline it. */
+    private static int live(int value) { return value; }
 
-    /** {@code long} overload of {@link #live(int)}. */
-    public static long live(long value) { return value; }
+    private static long live(long value) { return value; }
 
     private AddonLimits() {}
 }

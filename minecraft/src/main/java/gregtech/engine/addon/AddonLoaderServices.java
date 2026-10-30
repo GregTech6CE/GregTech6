@@ -1,6 +1,6 @@
 package gregtech.engine.addon;
 
-import gregtech.api.addon.recipe.RecipeKeptInputs;
+import gregtech.engine.recipe.RecipeKeptInputs;
 import gregtech.api.addon.recipe.RecipeOutputChances;
 import gregtech.api.addon.platform.AddonFluids;
 import gregtech.api.addon.platform.AddonLoader;
@@ -164,7 +164,7 @@ public final class AddonLoaderServices {
         long[] chances = new long[outputChances.length];
         for (int i = 0; i < chances.length; i++) chances[i] = outputChances[i];
         return new Recipe(inputs, line.itemOutputs(), null, chances,
-                fluidInputs, line.fluidOutputs(), line.duration(), line.euPerTick(), line.special())
+                fluidInputs, line.fluidOutputs(), line.duration(), line.energyPerTick(), line.special())
                 .withCatalystInputs(line.keptInputs())
                 .withCatalystFluidInputs(line.keptFluidInputs())
                 .withPresenceFluidInputs(line.presenceFluidInputs());

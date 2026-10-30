@@ -2,17 +2,16 @@
 
 package gregtech.api.addon.platform;
 
-import gregtech.api.addon.*;
-
-import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.InstalledService;
-
-import net.minecraft.core.Direction;
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.energy.EnergyType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Platform entry installed by GregTech before material initialization.
@@ -47,9 +46,9 @@ public final class AddonPlatform {
 
         void damageTool(ItemStack stack, int amount, LivingEntity user, EquipmentSlot slot);
 
-        long inject(EnergyBlock block, String energy, Direction side, long size, long amount, boolean execute);
+        long inject(EnergyBlock block, EnergyType energy, @Nullable Direction side, long size, long amount, boolean execute);
 
-        long extract(EnergyBlock block, String energy, Direction side, long size, long amount, boolean execute);
+        long extract(EnergyBlock block, EnergyType energy, @Nullable Direction side, long size, long amount, boolean execute);
 
         /** Prefix and material units already stored for this stack, or empty when the stack is unknown. */
         GregTechMaterials.StackComposition composition(ItemStack stack);

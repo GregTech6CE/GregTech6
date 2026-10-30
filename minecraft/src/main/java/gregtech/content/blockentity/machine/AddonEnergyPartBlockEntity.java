@@ -233,19 +233,19 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
 
     private GregTechTags.Tag outputTag() {
         if (outputTag != null) return outputTag;
-        outputTag = tag(energy().type());
+        outputTag = tag(energy().type().name());
         return outputTag;
     }
 
     /** The part's output energy type, or an empty string when it does not emit. */
-    public String outputType() { return energy() == null ? "" : energy().type(); }
+    public String outputType() { return energy() == null ? "" : energy().type().name(); }
 
     /** The part's output tag, or null when it does not emit. */
     public GregTechTags.Tag outputEnergyTag() { return energy() == null ? null : outputTag(); }
 
     private GregTechTags.Tag inputTag() {
         if (inputTag != null) return inputTag;
-        inputTag = tag(input().type());
+        inputTag = tag(input().type().name());
         return inputTag;
     }
 

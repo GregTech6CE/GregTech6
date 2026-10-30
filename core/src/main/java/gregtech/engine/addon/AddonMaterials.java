@@ -1,7 +1,6 @@
 package gregtech.engine.addon;
 
 import gregtech.api.addon.*;
-import gregtech.api.addon.AddonApiRemoval;
 import gregtech.api.addon.AddonFailures;
 import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.material.AddonMaterialContributor;
@@ -45,14 +44,12 @@ public final class AddonMaterials {
      * @deprecated Addon materials no longer pick a numeric id. Use {@code MaterialDeclaration.builder(String)}. Removal is 0.9.
      */
     @Deprecated(since = "0.0", forRemoval = true)
-    @AddonApiRemoval(id = "gregtech.engine.addon.AddonMaterials#ADDON_ID_MIN", removeAt = "0.9")
     public static final int ADDON_ID_MIN = 4291;
 
     /**
      * @deprecated Addon materials no longer pick a numeric id. Use {@code MaterialDeclaration.builder(String)}. Removal is 0.9.
      */
     @Deprecated(since = "0.0", forRemoval = true)
-    @AddonApiRemoval(id = "gregtech.engine.addon.AddonMaterials#ADDON_ID_MAX", removeAt = "0.9")
     public static final int ADDON_ID_MAX = 7899;
 
     private static final MaterialProperty[] METAL_FLAGS = {
@@ -196,13 +193,13 @@ public final class AddonMaterials {
                     .meltingPointKelvin(declaration.meltingPoint())
                     .boilingPointKelvin(declaration.boilingPoint())
                     .density(declaration.density());
-            if (declaration.metal()) builder.properties(METAL_FLAGS);
-            else if (declaration.dust()) builder.dust();
-            if (declaration.gas()) builder.gas();
-            if (declaration.liquid()) builder.liquid();
-            if (declaration.centrifuge())
+            if (declaration.has(MaterialDeclaration.Feature.METAL)) builder.properties(METAL_FLAGS);
+            else if (declaration.has(MaterialDeclaration.Feature.DUST)) builder.dust();
+            if (declaration.has(MaterialDeclaration.Feature.GAS)) builder.gas();
+            if (declaration.has(MaterialDeclaration.Feature.LIQUID)) builder.liquid();
+            if (declaration.has(MaterialDeclaration.Feature.CENTRIFUGE))
                 builder.properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.CENTRIFUGE);
-            if (declaration.electrolyzer())
+            if (declaration.has(MaterialDeclaration.Feature.ELECTROLYZER))
                 builder.properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.ELECTROLYSER);
             definitions.add(builder.build());
         }
@@ -405,7 +402,7 @@ public final class AddonMaterials {
     private static List<OreDeclaration> oreDeclarations(List<MaterialDeclaration> declarations) {
         var ores = new ArrayList<OreDeclaration>();
         for (MaterialDeclaration declaration : declarations) {
-            if (!declaration.ores()) continue;
+            if (!declaration.has(MaterialDeclaration.Feature.ORES)) continue;
             ores.add(new OreDeclaration(GTMaterial.sanitize(declaration.name()), declaration.oreByproducts()));
         }
         return List.copyOf(ores);
@@ -414,8 +411,12 @@ public final class AddonMaterials {
     private static List<FormTag> formTags(List<MaterialDeclaration> declarations) {
         var tags = new ArrayList<FormTag>();
         for (MaterialDeclaration declaration : declarations) {
-            if (!declaration.polymer() && !declaration.wires()) continue;
-            tags.add(new FormTag(GTMaterial.sanitize(declaration.name()), declaration.polymer(), declaration.wires()));
+            if (!declaration.has(MaterialDeclaration.Feature.POLYMER)
+                    && !declaration.has(MaterialDeclaration.Feature.WIRES)) continue;
+            tags.add(new FormTag(
+                    GTMaterial.sanitize(declaration.name()),
+                    declaration.has(MaterialDeclaration.Feature.POLYMER),
+                    declaration.has(MaterialDeclaration.Feature.WIRES)));
         }
         return List.copyOf(tags);
     }

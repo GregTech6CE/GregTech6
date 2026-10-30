@@ -3,6 +3,7 @@
 package gregtech.api.crop;
 
 import java.util.List;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Optional crop-analysis boundary for addons on both loaders. A crop block entity can
@@ -12,7 +13,7 @@ import java.util.List;
  * matching GregTech 6's original Cropnalyzer behavior.
  */
 public interface CropScanSource {
-    CropScanData cropScanData();
+    @Nullable CropScanData cropScanData();
     void setCropScanLevel(int level);
 
     record CropScanData(String name, List<String> attributes, String discoveredBy,

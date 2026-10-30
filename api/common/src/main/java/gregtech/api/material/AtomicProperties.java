@@ -1,5 +1,6 @@
-package gregtech.api.material;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
 
+package gregtech.api.material;
 
 /** GT6 atomic counts; for antimatter these mean antiparticles. Additional mass may be negative (Magic). */
 public record AtomicProperties(long protons, long electrons, long neutrons, long additionalMass) {

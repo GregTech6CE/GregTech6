@@ -1,6 +1,5 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.multiblock.StructureGrid;
 import gregtech.engine.multiblock.*;
 import net.minecraft.core.*;
 

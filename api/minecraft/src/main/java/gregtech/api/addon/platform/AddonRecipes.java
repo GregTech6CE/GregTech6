@@ -9,10 +9,7 @@ import net.minecraft.world.level.material.Fluids;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
-
-import gregtech.api.addon.recipe.RecipeKeptInputs;
 import gregtech.api.addon.recipe.RecipeOutputChances;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -91,7 +88,7 @@ public final class AddonRecipes {
         private final FluidStack[] fluidInputs;
         private final FluidStack[] fluidOutputs;
         private final long duration;
-        private final long euPerTick;
+        private final long energyPerTick;
         private final long special;
         private final int[] outputChances;
         private final int[] keptInputs;
@@ -116,7 +113,7 @@ public final class AddonRecipes {
         public FluidStack[] fluidOutputs() { return copyFluids(fluidOutputs); }
 
         public long duration() { return duration; }
-        public long euPerTick() { return euPerTick; }
+        public long energyPerTick() { return energyPerTick; }
         public long special() { return special; }
 
         public int[] outputChances() { return outputChances.clone(); }
@@ -129,74 +126,74 @@ public final class AddonRecipes {
          * Adding that row again still rejects an input whose amount is not positive.
          */
         public static Line read(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
-                                FluidStack[] fluidOutputs, long duration, long euPerTick, long special,
+                                FluidStack[] fluidOutputs, long duration, long energyPerTick, long special,
                                 int[] outputChances, int[] keptInputs) {
-            return read(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+            return read(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special,
                     outputChances, keptInputs, null);
         }
 
         public static Line read(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
-                                FluidStack[] fluidOutputs, long duration, long euPerTick, long special,
+                                FluidStack[] fluidOutputs, long duration, long energyPerTick, long special,
                                 int[] outputChances, int[] keptInputs, int[] keptFluidInputs) {
-            return read(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+            return read(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special,
                     outputChances, keptInputs, keptFluidInputs, null);
         }
 
         public static Line read(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
-                                FluidStack[] fluidOutputs, long duration, long euPerTick, long special,
+                                FluidStack[] fluidOutputs, long duration, long energyPerTick, long special,
                                 int[] outputChances, int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs) {
-            return new Line(true, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+            return new Line(true, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special,
                     outputChances, keptInputs, keptFluidInputs, presenceFluidInputs);
         }
 
         /** Every item output is certain. No input is marked kept. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
-                    long duration, long euPerTick, long special) {
-            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, null, null, null, null);
+                    long duration, long energyPerTick, long special) {
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special, null, null, null, null);
         }
 
         /** No input is marked kept. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
-                    long duration, long euPerTick, long special, int[] outputChances) {
-            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, outputChances, null, null, null);
+                    long duration, long energyPerTick, long special, int[] outputChances) {
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special, outputChances, null, null, null);
         }
 
         /** No fluid input is marked kept. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
-                    long duration, long euPerTick, long special, int[] outputChances, int[] keptInputs) {
-            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                    long duration, long energyPerTick, long special, int[] outputChances, int[] keptInputs) {
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special,
                     outputChances, keptInputs, null, null);
         }
 
         /** Compatibility overload: positive kept amounts, no presence-only gates. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
-                    long duration, long euPerTick, long special, int[] outputChances, int[] keptInputs, int[] keptFluidInputs) {
-            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                    long duration, long energyPerTick, long special, int[] outputChances, int[] keptInputs, int[] keptFluidInputs) {
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special,
                     outputChances, keptInputs, keptFluidInputs, null);
         }
 
         /** Positive input amounts, including presence-only gates. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
-                    long duration, long euPerTick, long special, int[] outputChances, int[] keptInputs,
+                    long duration, long energyPerTick, long special, int[] outputChances, int[] keptInputs,
                     int[] keptFluidInputs, int[] presenceFluidInputs) {
-            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+            this(false, itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick, special,
                     outputChances, keptInputs, keptFluidInputs, presenceFluidInputs);
         }
 
         private Line(boolean reading, ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
-                     FluidStack[] fluidOutputs, long duration, long euPerTick, long special, int[] outputChances,
+                     FluidStack[] fluidOutputs, long duration, long energyPerTick, long special, int[] outputChances,
                      int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs) {
             this.itemInputs = reading ? copyItems(itemInputs) : copyItemInputs(itemInputs);
             this.itemOutputs = copyItems(itemOutputs);
             this.fluidInputs = reading ? copyFluids(fluidInputs) : copyFluidInputs(fluidInputs);
             this.fluidOutputs = copyFluids(fluidOutputs);
             this.duration = Math.max(1, duration);
-            this.euPerTick = euPerTick;
+            this.energyPerTick = energyPerTick;
             this.special = special;
             this.outputChances = RecipeOutputChances.normalize(outputChances, this.itemOutputs.length);
-            this.keptInputs = RecipeKeptInputs.normalize(keptInputs, this.itemInputs.length);
-            this.keptFluidInputs = RecipeKeptInputs.normalizeFluids(keptFluidInputs, this.fluidInputs.length);
-            this.presenceFluidInputs = RecipeKeptInputs.normalizeFluids(presenceFluidInputs, this.fluidInputs.length);
+            this.keptInputs = normalizeKeptInputs(keptInputs, this.itemInputs.length);
+            this.keptFluidInputs = normalizeKeptFluids(keptFluidInputs, this.fluidInputs.length);
+            this.presenceFluidInputs = normalizeKeptFluids(presenceFluidInputs, this.fluidInputs.length);
             for (int index : this.presenceFluidInputs) {
                 if (this.fluidInputs[index].isEmpty()) throw new IllegalArgumentException("Presence fluid input " + index + " is empty");
                 for (int kept : this.keptFluidInputs) if (kept == index)
@@ -217,7 +214,7 @@ public final class AddonRecipes {
             private FluidStack[] fluidInputs;
             private FluidStack[] fluidOutputs;
             private long duration = 1;
-            private long euPerTick;
+            private long energyPerTick;
             private long special;
             private int[] outputChances;
             private int[] keptInputs;
@@ -254,9 +251,12 @@ public final class AddonRecipes {
                 return this;
             }
 
-            /** The recipe map's existing EU/t work value; its sign and interpretation are unchanged. */
-            public Builder euPerTick(long value) {
-                euPerTick = value;
+            /**
+             * The recipe map's existing energy-per-tick work value, in the unit that map uses
+             * (EU, TU, HU and so on). Its sign and interpretation are unchanged.
+             */
+            public Builder energyPerTick(long value) {
+                energyPerTick = value;
                 return this;
             }
 
@@ -292,7 +292,7 @@ public final class AddonRecipes {
 
             /** Validates the fields and creates an independent immutable row. */
             public Line build() {
-                return new Line(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick,
+                return new Line(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, energyPerTick,
                         special, outputChances, keptInputs, keptFluidInputs, presenceFluidInputs);
             }
 
@@ -309,7 +309,7 @@ public final class AddonRecipes {
                     && sameFluids(fluidInputs, line.fluidInputs)
                     && sameFluids(fluidOutputs, line.fluidOutputs)
                     && duration == line.duration
-                    && euPerTick == line.euPerTick
+                    && energyPerTick == line.energyPerTick
                     && special == line.special
                     && Arrays.equals(outputChances, line.outputChances)
                     && Arrays.equals(keptInputs, line.keptInputs)
@@ -323,7 +323,7 @@ public final class AddonRecipes {
             result = 31 * result + hashFluids(fluidInputs);
             result = 31 * result + hashFluids(fluidOutputs);
             result = 31 * result + Long.hashCode(duration);
-            result = 31 * result + Long.hashCode(euPerTick);
+            result = 31 * result + Long.hashCode(energyPerTick);
             result = 31 * result + Long.hashCode(special);
             result = 31 * result + Arrays.hashCode(outputChances);
             result = 31 * result + Arrays.hashCode(keptInputs);
@@ -393,7 +393,7 @@ public final class AddonRecipes {
                     + ", fluidInputs=" + Arrays.toString(fluidInputs)
                     + ", fluidOutputs=" + Arrays.toString(fluidOutputs)
                     + ", duration=" + duration
-                    + ", euPerTick=" + euPerTick
+                    + ", energyPerTick=" + energyPerTick
                     + ", special=" + special
                     + ", outputChances=" + Arrays.toString(outputChances)
                     + ", keptInputs=" + Arrays.toString(keptInputs)
@@ -410,7 +410,7 @@ public final class AddonRecipes {
                     throw new IllegalArgumentException("Item input " + i + " is null");
                 if (stack.isEmpty())
                     throw new IllegalArgumentException("Item input " + i + " is empty");
-                RecipeKeptInputs.requirePositiveCount(stack.getCount(), i);
+                requirePositiveCount(stack.getCount(), i);
                 copy[i] = stack.copy();
             }
             return copy;
@@ -423,7 +423,7 @@ public final class AddonRecipes {
                 FluidStack stack = stacks[i];
                 if (stack == null || stack.getFluid() == Fluids.EMPTY)
                     throw new IllegalArgumentException("Fluid input " + i + " is empty");
-                RecipeKeptInputs.requirePositiveFluid(stack.getAmount(), i);
+                requirePositiveFluid(stack.getAmount(), i);
                 copy[i] = stack.copy();
             }
             return copy;
@@ -437,6 +437,52 @@ public final class AddonRecipes {
         private static FluidStack[] copyFluids(FluidStack[] stacks) {
             if (stacks == null) return new FluidStack[0];
             return Arrays.stream(stacks).map(stack -> stack == null || stack.isEmpty() ? FluidStack.EMPTY : stack.copy()).toArray(FluidStack[]::new);
+        }
+
+        /** Null and an empty list mark nothing. Out of range and duplicates fail. Order is kept. */
+        private static int[] normalizeKeptInputs(int[] kept, int itemInputs) {
+            return normalizeIndexes(kept, itemInputs, "item input count", "Kept input ", "Duplicate kept input ");
+        }
+
+        /** Null and an empty list mark nothing. Out of range and duplicates fail. Order is kept. */
+        private static int[] normalizeKeptFluids(int[] kept, int fluidInputs) {
+            return normalizeIndexes(kept, fluidInputs, "fluid input count", "Kept fluid input ",
+                    "Duplicate kept fluid input ");
+        }
+
+        private static int[] normalizeIndexes(int[] kept, int count, String countLabel, String outside,
+                                              String duplicate) {
+            if (count < 0) throw new IllegalArgumentException("Invalid " + countLabel + ": " + count);
+            if (kept == null || kept.length == 0) return new int[0];
+            boolean[] seen = new boolean[count];
+            int[] copy = new int[kept.length];
+            for (int i = 0; i < kept.length; i++) {
+                int index = kept[i];
+                if (index < 0 || index >= count)
+                    throw new IllegalArgumentException(outside + index + " is outside "
+                            + (count == 0 ? "an empty range" : "0.." + (count - 1)));
+                if (seen[index]) throw new IllegalArgumentException(duplicate + index);
+                seen[index] = true;
+                copy[i] = index;
+            }
+            return copy;
+        }
+
+        /** Count 0 is rejected. The message names {@code keptInputs}. */
+        private static void requirePositiveCount(int count, int index) {
+            if (count > 0) return;
+            throw new IllegalArgumentException("Item input " + index + " has count " + count
+                    + "; mark it in keptInputs and leave the count at 1");
+        }
+
+        /**
+         * Native stack representatives must stay positive so their fluid identity survives copying.
+         * Textual zero-mB inputs are normalized before this boundary and use separate presence indexes;
+         * positive retained quantities use {@code keptFluidInputs}.
+         */
+        private static void requirePositiveFluid(int amount, int index) {
+            if (amount > 0) return;
+            throw new IllegalArgumentException("Fluid input " + index + " has amount " + amount);
         }
     }
 }

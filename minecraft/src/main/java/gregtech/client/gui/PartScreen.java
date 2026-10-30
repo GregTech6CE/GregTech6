@@ -1,5 +1,7 @@
 package gregtech.client.gui;
 
+import gregtech.api.addon.platform.BehaviorMachineGui;
+
 import gregtech.api.addon.machine.BehaviorMachine;
 import gregtech.api.addon.machine.LayoutPart;
 import gregtech.api.addon.platform.BehaviorState;
@@ -52,11 +54,11 @@ public class PartScreen extends MachineContainerScreen<PartMenu> {
         for (int i = 0; i < menu.machineSlotCount(); i++) {
             Slot slot = menu.slots.get(i);
             blit(graphics, leftPos + slot.x - 1, topPos + slot.y - 1,
-                    BehaviorMachine.UV_SLOT_U, BehaviorMachine.UV_SLOT_V,
-                    BehaviorMachine.SLOT, BehaviorMachine.SLOT);
+                    BehaviorMachineGui.UV_SLOT_U, BehaviorMachineGui.UV_SLOT_V,
+                    BehaviorMachineGui.SLOT, BehaviorMachineGui.SLOT);
         }
         PartContext context = menu.runtime().context();
-        for (int tank = 0; tank < context.tanks(); tank++) drawTank(graphics, tank, context);
+        for (int tank = 0; tank < context.fluids().tanks(); tank++) drawTank(graphics, tank, context);
         drawFields(graphics, context.state());
     }
 
@@ -77,10 +79,10 @@ public class PartScreen extends MachineContainerScreen<PartMenu> {
     private void drawTank(GuiGraphics graphics, int tank, PartContext context) {
         int left = leftPos + menu.layout().tankX[tank];
         int top = topPos + menu.layout().tankY;
-        blit(graphics, left, top, BehaviorMachine.UV_TANK_U, BehaviorMachine.UV_TANK_V,
-                BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT);
-        FluidStack fluid = context.fluid(tank);
-        int capacity = context.tankCapacity(tank);
+        blit(graphics, left, top, BehaviorMachineGui.UV_TANK_U, BehaviorMachineGui.UV_TANK_V,
+                BehaviorMachineGui.TANK_WIDTH, BehaviorMachineGui.TANK_HEIGHT);
+        FluidStack fluid = context.fluids().snapshot(tank);
+        int capacity = context.fluids().capacity(tank);
         if (!fluid.isEmpty() && capacity > 0) {
             var extensions = IClientFluidTypeExtensions.of(fluid.getFluid());
             int tint = extensions.getTintColor(fluid);
@@ -89,28 +91,28 @@ public class PartScreen extends MachineContainerScreen<PartMenu> {
             float blue = (tint & 255) / 255.0F;
             TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
                     .apply(extensions.getStillTexture(fluid));
-            int filled = (int) Math.max(1, Math.min(BehaviorMachine.TANK_HEIGHT - 2L,
-                    fluid.getAmount() * (BehaviorMachine.TANK_HEIGHT - 2L) / capacity));
-            int bottom = top + BehaviorMachine.TANK_HEIGHT - 1;
+            int filled = (int) Math.max(1, Math.min(BehaviorMachineGui.TANK_HEIGHT - 2L,
+                    fluid.getAmount() * (BehaviorMachineGui.TANK_HEIGHT - 2L) / capacity));
+            int bottom = top + BehaviorMachineGui.TANK_HEIGHT - 1;
             int drawn = 0;
             while (drawn < filled) {
                 int height = Math.min(16, filled - drawn);
 //? if >=1.21.1 {
-/*                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachine.TANK_WIDTH - 2, height,
+/*                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height,
                         sprite, red, green, blue, 1.0F);
 *///?} else {
                 graphics.setColor(red, green, blue, 1.0F);
-                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachine.TANK_WIDTH - 2, height, sprite);
+                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height, sprite);
                 graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 //?}
                 drawn += height;
             }
         }
-        blit(graphics, left, top, BehaviorMachine.UV_TANK_MARKS_U, BehaviorMachine.UV_TANK_V,
-                BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT);
+        blit(graphics, left, top, BehaviorMachineGui.UV_TANK_MARKS_U, BehaviorMachineGui.UV_TANK_V,
+                BehaviorMachineGui.TANK_WIDTH, BehaviorMachineGui.TANK_HEIGHT);
         FluidSlotPresentation.amount(graphics, font, fluid.getAmount(), left + 1, top + 1,
-                BehaviorMachine.TANK_WIDTH - 2, BehaviorMachine.TANK_HEIGHT - 2);
-        hovers.add(new Hover(left, top, BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT,
+                BehaviorMachineGui.TANK_WIDTH - 2, BehaviorMachineGui.TANK_HEIGHT - 2);
+        hovers.add(new Hover(left, top, BehaviorMachineGui.TANK_WIDTH, BehaviorMachineGui.TANK_HEIGHT,
                 FluidSlotPresentation.tooltip(fluid, fluid.getAmount(), capacity)));
     }
 

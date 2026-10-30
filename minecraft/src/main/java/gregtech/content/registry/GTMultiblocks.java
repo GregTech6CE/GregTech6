@@ -58,10 +58,10 @@ public final class GTMultiblocks {
         FUSION_REACTOR_MAIN = controller("fusion_reactor_main", () -> new FusionReactorControllerBlock(properties(12.5f)));
         var original = OriginalMultiblockMachineParameters.distillationTower();
         var spec = new gregtech.engine.machine.BasicMachineSpec(original.id(), original.material(),
-                original.machineName(), original.energyType(), original.tier(), original.energyIn(), original.energyOut(),
+                original.machineName(), original.energy().type().name(), original.energy().tier(), original.energy().energyIn(), original.energy().energyOut(),
                 original.hardness(), original.blastResistance(), gregtech.engine.energy.FaceConfig.from(original.faceConfig()),
                 original.constructionMaterials(), gregtech.content.data.MachineRecipeMaps.DistillationTower,
-                original.parallelLimit(), original.energyInMin(), original.energyInMax());
+                original.options().parallelLimit(), original.energy().energyInMin(), original.energy().energyInMax());
         DISTILLATION_TOWER_MAIN = RegisteredBlock.wrap(spec.id(),
                 gregtech.engine.machine.MachineRegistry.registerBasicMachine(spec, props -> new MultiblockControllerBlock(spec, props)));
         //?}

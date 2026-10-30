@@ -11,19 +11,21 @@
 | `api` | API 包的总体契约说明 | `package-info.java` |
 | `api.addon` | 附属发现、身份、生命周期、命名限制与 SPI | `GregTechAddon`、`GregTechAddons`、`AddonRuntime`；声明失败应有上下文 |
 | `api.addon.material` | 材料、前缀、成分、形态与熔炼声明 | `MaterialDeclaration`、`MaterialComposition`、`GregTechMaterials` |
-| `api.addon.machine` | 机器、行为、部件、布局及参数声明 | `AddonMachineDefinition`、`AddonMachineLayout`、`BehaviorMachine` |
+| `api.addon.machine` | 机器、行为、部件、布局及参数声明 | `BehaviorMachine`、`LayoutPart`、`AddonMachineContributor`、`PartSlots` |
 | `api.addon.recipe` | 配方表、坩埚反应、模具、保留输入与概率声明 | `RecipeMachine`、`CrucibleReactionDeclaration`、`RecipeOutputChances` |
 | `api.addon.pipe` | 附属物品/流体管道的定义 | `ItemPipeDeclaration`、`FluidPipeDeclaration` |
 | `api.addon.worldgen` | 矿脉与小矿生成声明及命名规则 | `OreVeinDeclaration`、`SmallOreDeclaration` |
-| `api.material` | 材料公共模型、成分、性质、原子属性和数量常量 | `GTMaterial`、`MaterialDefinition`、`GTValues`；不可引入物品栈 |
+| `api.material` | 材料公共模型、成分、性质、原子属性和数量常量 | `GTMaterial`、`MaterialComponent`、`GTValues`；不可引入物品栈 |
 | `api.energy` | 能源类型、输入输出与转移契约 | `EnergyType`、`EnergyInput`、`EnergyOutput`、`GTVoltageTiers` |
 | `api.machine` | 机器面、方向掩码、基础参数、热处理等协议 | `MachineFace`、`MachineFaceMasks`、`BasicMachineParameters` |
-| `api.multiblock` | 布局、单元、角色、重复段与匹配结果 | `StructureLayout`、`StructureGrid`、`LayoutCell`；不直接查询世界 |
-| `api.recipe` | 配方表规格 | `RecipeMapSpec`；具体配方和执行在 content/engine |
+| `api.multiblock` | 布局、单元、角色、重复段与匹配结果 | `StructureLayout`、`LayoutCell`、`StructureRole`、`CellMatch`；不直接查询世界 |
+| `api.recipe` | 配方包入口说明 | 仅 `package-info.java`；`RecipeMapSpec` 属于宿主 `gregtech.content.recipe` |
 | `api.sensor` | 压力、温度、重量和进度等观测源 | `TemperatureSource`、`ProgressSensorSource` |
 | `api.signal` | GT 信号的发送、接收和承载契约 | `GtSignalSource`、`GtSignalReceiver`、`GtSignalCarrier` |
 | `api.crop` | 作物扫描协议 | `CropScanSource` |
 | `api.mod` | 模组存在性等公共信息接口 | `ModData`；具体加载器绑定在启动阶段 |
+
+`StructureGrid` 与 `RecipeMapSpec` 已移回宿主，分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`；它们不属于附属契约。
 
 这些包只定义必要可消费的协议，不放注册执行、游戏世界访问、客户端渲染或内部缓存。扩展输入在进入运行时前验证身份、范围、冲突与引用，避免把错误拖到机器 tick 才暴露。
 

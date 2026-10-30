@@ -9,6 +9,7 @@ import gregtech.api.addon.recipe.RecipeMachine;
 import gregtech.api.addon.recipe.RecipeTable;
 import gregtech.api.energy.EnergyInput;
 import gregtech.api.energy.EnergyOutput;
+import gregtech.api.energy.EnergyType;
 import gregtech.api.machine.MachineCasing;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.multiblock.CellMatch;
@@ -71,15 +72,15 @@ public final class GT6CEMachinesEvent implements KubeEvent {
     }
 
     public EnergyInput.Builder energy(String type, long perTick) {
-        return EnergyInput.builder(type, perTick);
+        return EnergyInput.builder(EnergyType.of(type), perTick);
     }
 
     public EnergyOutput.Builder energyOutput(String type, long maxSize, long maxAmount) {
-        return EnergyOutput.builder(type, maxSize, maxAmount);
+        return EnergyOutput.builder(EnergyType.of(type), maxSize, maxAmount);
     }
 
     public FuelOutput.Builder fuelOutput(String type, long perTick) {
-        return FuelOutput.builder(type, perTick);
+        return FuelOutput.builder(EnergyType.of(type), perTick);
     }
 
     public MachineFace face(String name) {

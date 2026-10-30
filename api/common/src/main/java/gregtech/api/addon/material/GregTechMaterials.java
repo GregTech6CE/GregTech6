@@ -2,11 +2,7 @@
 
 package gregtech.api.addon.material;
 
-
-
-
-import gregtech.api.addon.*;
-
+import gregtech.api.addon.AddonRuntime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,16 +92,26 @@ public final class GregTechMaterials {
     public record StackComposition(String prefix, List<Component> units) {
         public static final StackComposition EMPTY = new StackComposition("", List.of());
 
+        /**
+         * Stores {@code units} as given: an empty list stays empty, but individual entries are
+         * not filtered. Use {@link #of(String, List)} to drop null units, empty material names
+         * and non-positive amounts.
+         */
         public StackComposition {
-            prefix = prefix == null ? "" : prefix;
-            units = units == null || units.isEmpty() ? List.of() : List.copyOf(units);
+            if (prefix == null)
+                throw new IllegalArgumentException("Stack composition prefix must not be null; pass an empty string");
+            if (units == null)
+                throw new IllegalArgumentException("Stack composition units must not be null; pass an empty list");
+            units = units.isEmpty() ? List.of() : List.copyOf(units);
         }
 
         /**
          * Null units, empty material names and non-positive amounts are dropped.
-         * A unit list with nothing left is empty. A null prefix becomes an empty name.
+         * A unit list with nothing left is empty. A null prefix is rejected; pass an empty name.
          */
         public static StackComposition of(String prefix, List<Component> units) {
+            if (prefix == null)
+                throw new IllegalArgumentException("Stack composition prefix must not be null; pass an empty string");
             if (units == null || units.isEmpty()) return EMPTY;
             var copy = new ArrayList<Component>();
             for (Component unit : units) {

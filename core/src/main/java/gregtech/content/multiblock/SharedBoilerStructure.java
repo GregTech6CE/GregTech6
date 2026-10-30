@@ -2,7 +2,6 @@ package gregtech.content.multiblock;
 
 import static gregtech.api.multiblock.StructureRole.*;
 
-import gregtech.api.multiblock.StructureGrid;
 import java.util.ArrayList;
 
 /** GT6: nine heat transmitters under a hollow 3x3x3 boiler, controller at front-bottom centre. */

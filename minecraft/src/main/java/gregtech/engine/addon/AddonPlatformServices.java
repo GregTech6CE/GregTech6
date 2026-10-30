@@ -5,6 +5,7 @@ import gregtech.api.addon.platform.AddonPlatform;
 import gregtech.api.addon.platform.AddonTool;
 import gregtech.api.addon.platform.EnergyBlock;
 import gregtech.api.addon.recipe.SelectorTags;
+import gregtech.api.energy.EnergyType;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MaterialPrefix;
@@ -85,15 +86,17 @@ public final class AddonPlatformServices {
         }
 
         @Override
-        public long inject(EnergyBlock block, String energy, Direction side, long size, long amount, boolean execute) {
+        public long inject(
+                EnergyBlock block, EnergyType energy, Direction side, long size, long amount, boolean execute) {
             return EnergyBlockDefaults.doEnergyInjection(
-                    AddonEnergyAdapter.of(block), tag(energy), side, size, amount, execute);
+                    AddonEnergyAdapter.of(block), tag(energy.name()), side, size, amount, execute);
         }
 
         @Override
-        public long extract(EnergyBlock block, String energy, Direction side, long size, long amount, boolean execute) {
+        public long extract(
+                EnergyBlock block, EnergyType energy, Direction side, long size, long amount, boolean execute) {
             return EnergyBlockDefaults.doEnergyExtraction(
-                    AddonEnergyAdapter.of(block), tag(energy), side, size, amount, execute);
+                    AddonEnergyAdapter.of(block), tag(energy.name()), side, size, amount, execute);
         }
 
         @Override

@@ -2,9 +2,6 @@
 
 package gregtech.api.addon.recipe;
 
-
-
-
 /** Item-output chances in parts per 10_000. An empty list means every output is certain. */
 public final class RecipeOutputChances {
     public static final int CERTAIN = 10_000;

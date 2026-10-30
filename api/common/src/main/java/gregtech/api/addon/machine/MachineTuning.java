@@ -2,17 +2,14 @@
 
 package gregtech.api.addon.machine;
 
-
-
-
-import gregtech.api.addon.*;
-
+import gregtech.api.addon.AddonLimits;
+import gregtech.api.addon.AddonNames;
 import org.jspecify.annotations.Nullable;
 
 /**
  * One override for a built-in machine variant, keyed by {@code machineName + tier}.
  * Only non-null fields change; every other field keeps its built-in value.
- * The result is rebuilt through the canonical {@code BasicMachineSpec} constructor.
+ * The result is rebuilt from the host's canonical machine specification.
  * The patch is applied at startup and is never written into a save.
  */
 public record MachineTuning(
