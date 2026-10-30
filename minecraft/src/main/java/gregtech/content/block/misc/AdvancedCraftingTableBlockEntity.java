@@ -37,6 +37,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
 //?}
     private long revision;
     private long cachedRevision = -1;
+    private long cachedTick = Long.MIN_VALUE;
     private RecipeManager cachedManager;
     private long cachedRecipeGeneration = -1;
     private net.minecraft.resources.ResourceLocation lastRecipeId;
@@ -190,7 +191,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     }
 
     /** Ordinary inputs use exact tags; GT tools additionally require matching heads and usable state. */
-    private static boolean same(ItemStack a, ItemStack b) {
+    static boolean same(ItemStack a, ItemStack b) {
         if (a.isEmpty() || b.isEmpty() || a.getItem() != b.getItem()) return false;
         if (a.getItem() instanceof gregtech.content.item.GTToolItem) return gregtech.engine.tool.GTToolHelper.isUsable(a)
                 && gregtech.engine.tool.GTToolHelper.isUsable(b)
@@ -206,10 +207,10 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         return gregtech.content.storage.AdvancedCraftingRules.source(i -> same(state[i], wanted), i -> state[i].getCount(), gridSlot);
     }
 //? if >=1.21.1 {
-    /*private record Plan(ItemStack[] after, ItemStack output, RecipeHolder<CraftingRecipe> recipe, CraftingContainer grid) {
+    /*private record Plan(ItemStack[] after, ItemStack output, RecipeHolder<CraftingRecipe> recipe, CraftingContainer grid, ConnectedCraftingInputs connected) {
     }
 *///?} else {
-    private record Plan(ItemStack[] after, ItemStack output, CraftingRecipe recipe, CraftingContainer grid) {
+    private record Plan(ItemStack[] after, ItemStack output, CraftingRecipe recipe, CraftingContainer grid, ConnectedCraftingInputs connected) {
     }
 //?}
     private Plan plan() {
@@ -218,7 +219,8 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         long generation = gregtech.content.recipe.AdvancedCraftingRecipeReload.generation();
         Object identity = lastRecipeId == null ? null : manager.byKey(lastRecipeId).orElse(null);
         if (cachedRevision == revision && cachedManager == manager && cachedRecipeGeneration == generation
-                && cachedRecipeIdentity == identity) return cachedPlan;
+                && cachedRecipeIdentity == identity && cachedTick == level.getGameTime()) return cachedPlan;
+        cachedTick = level.getGameTime();
         cachedRevision = revision;
         cachedManager = manager;
         cachedRecipeGeneration = generation;
@@ -226,6 +228,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         cachedPlan = null;
         cachedPreview = ItemStack.EMPTY;
         ItemStack[] pattern = pattern(), after = new ItemStack[SIZE], used = new ItemStack[9];
+        var connected = new ConnectedCraftingInputs(level, worldPosition);
         int[] sources = new int[9];
         Arrays.fill(sources, -1);
 //? if >=1.21.1 {
@@ -248,6 +251,8 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         for (int i = 0; i < 9; i++) {
             used[i] = ItemStack.EMPTY;
             if (pattern[i].isEmpty()) continue;
+            used[i] = connected.take(pattern[i]);
+            if (!used[i].isEmpty()) continue;
             int slot = source(after, pattern[i], 21 + i);
             if (slot < 0) return null;
             sources[i] = slot;
@@ -285,12 +290,13 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         for (int i = 0; i < 9; i++) if (!remains.get(i).isEmpty()) {
             ItemStack rest = remains.get(i).copy();
             int original = sources[i];
+            if (original >= 0 && connected.refill(used[i], rest)) rest = used[i].copyWithCount(1);
             if (original >= 0) rest = put(after, original, rest);
             for (int slot : INPUTS) rest = put(after, slot, rest);
             // Never destroy a bucket/tool when all destinations are full. No source mutation on failure.
             if (!rest.isEmpty()) return null;
         }
-        return cachedPlan = new Plan(after, result, recipe, grid);
+        return cachedPlan = new Plan(after, result, recipe, grid, connected);
     }
 
     private static ItemStack put(ItemStack[] state, int slot, ItemStack stack) {
@@ -319,8 +325,10 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     }
 
     public ItemStack craftOne(Player player) {
+        // Neighbours can change without changing this inventory, even within the current tick.
+        cachedRevision = -1;
         Plan plan = plan();
-        if (plan == null) return ItemStack.EMPTY;
+        if (plan == null || !plan.connected.commit()) return ItemStack.EMPTY;
         loading = true;
         try {
             for (int i = 0; i < SIZE; i++) inventory.setStackInSlot(i, plan.after[i].copy());
