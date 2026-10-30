@@ -14,10 +14,15 @@ public final class StoneMaterialWeights {
         long stoneAmount = slab ? GTValues.U * 9 / 2 : GTValues.U * 9;
         List<MaterialComponent> out = new ArrayList<>(2);
         out.add(new MaterialComponent(stoneMaterial, stoneAmount));
+        // The reinforcement is part of the block it belongs to, so a slab carries half of it.
         if (variant == StoneVariant.BRICKS_REINFORCED) {
-            out.add(new MaterialComponent(gregtech.content.material.generated.ElementMaterials.Iron, GTValues.U / 2));
+            out.add(new MaterialComponent(
+                    gregtech.content.material.generated.ElementMaterials.Iron,
+                    slab ? GTValues.U / 4 : GTValues.U / 2));
         } else if (variant == StoneVariant.BRICKS_REDSTONE) {
-            out.add(new MaterialComponent(gregtech.content.material.generated.CompoundMaterials.Redstone, GTValues.U));
+            out.add(new MaterialComponent(
+                    gregtech.content.material.generated.CompoundMaterials.Redstone,
+                    slab ? GTValues.U / 2 : GTValues.U));
         }
         return List.copyOf(out);
     }
