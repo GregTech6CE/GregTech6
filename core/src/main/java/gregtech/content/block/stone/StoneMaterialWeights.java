@@ -17,8 +17,7 @@ public final class StoneMaterialWeights {
         // The reinforcement is part of the block it belongs to, so a slab carries half of it.
         if (variant == StoneVariant.BRICKS_REINFORCED) {
             out.add(new MaterialComponent(
-                    gregtech.content.material.generated.ElementMaterials.Iron,
-                    slab ? GTValues.U / 4 : GTValues.U / 2));
+                    gregtech.content.material.generated.ElementMaterials.Iron, slab ? GTValues.U / 4 : GTValues.U / 2));
         } else if (variant == StoneVariant.BRICKS_REDSTONE) {
             out.add(new MaterialComponent(
                     gregtech.content.material.generated.CompoundMaterials.Redstone,
