@@ -151,11 +151,13 @@ public final class GTFoodItems {
 
     /** The same lookup without recording a miss, for callers that keep their own skip list. */
     public static Item itemOrNull(String id) {
+        if (id == null) return null;
+        var key = id.contains(":") ? ResourceLocation.parse(id) : ResourceLocation.fromNamespaceAndPath("gt6ce", id);
 //? if >=1.21.1 {
-        /*if(id==null)return null; Item item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id));return item==net.minecraft.world.item.Items.AIR?null:item;
+        /*Item item = BuiltInRegistries.ITEM.get(key);
+        return item == net.minecraft.world.item.Items.AIR ? null : item;
 *///?} else {
-        return id == null ? null
-                : ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+        return ForgeRegistries.ITEMS.getValue(key);
 //?}
     }
 

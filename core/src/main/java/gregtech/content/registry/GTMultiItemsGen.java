@@ -405,8 +405,6 @@ final class GTMultiItemsGen {
         "grilled_rib_eye_steak", "Grilled Rib Eye Steak", "food", "T",
         "dogmeat", "Dogmeat", "food", "T",
         "grilled_dogmeat", "Grilled Dogmeat", "food", "T",
-        "mutton", "Mutton", "food", "T",
-        "grilled_mutton", "Grilled Mutton", "food", "",
         "horse_meat", "Horse Meat", "food", "",
         "grilled_horse_meat", "Grilled Horse Meat", "food", "",
         "mule_meat", "Mule Meat", "food", "",

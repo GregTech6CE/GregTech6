@@ -1021,7 +1021,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("grilled_donkey_meat", new Entry("nature_foods", 398));
         ITEMS.put("grilled_horse_meat", new Entry("nature_foods", 394));
         ITEMS.put("grilled_mule_meat", new Entry("nature_foods", 396));
-        ITEMS.put("grilled_mutton", new Entry("nature_foods", 392));
         ITEMS.put("grilled_rib_eye_steak", new Entry("nature_foods", 388));
         ITEMS.put("grilled_ribs", new Entry("nature_foods", 385));
         ITEMS.put("grindstone_block", new Entry("tool_blocks", 1272));
@@ -1665,7 +1664,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("mud_2", new Entry("nature_foods", 473));
         ITEMS.put("mule_hoof", new Entry("nature_foods", 486));
         ITEMS.put("mule_meat", new Entry("nature_foods", 395));
-        ITEMS.put("mutton", new Entry("nature_foods", 391));
         ITEMS.put("neapolitan_ice_cream", new Entry("nature_foods", 526));
     }
 

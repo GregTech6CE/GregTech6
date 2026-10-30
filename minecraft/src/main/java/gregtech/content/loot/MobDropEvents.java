@@ -218,7 +218,7 @@ public final class MobDropEvents {
         if (!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))
             return tag(stack, "c:foods/raw_meat") || tag(stack, "c:foods/cooked_meat") || tag(stack, "forge:raw_meats") || tag(stack, "forge:cooked_meats");
         return Set.of("dogmeat", "grilled_dogmeat", "raw_ham", "cooked_ham", "raw_ham_slice", "cooked_ham_slice",
-                "raw_bacon", "grilled_bacon", "raw_ribs", "grilled_ribs", "raw_rib_eye_steak", "grilled_rib_eye_steak", "mutton", "grilled_mutton",
+                "raw_bacon", "grilled_bacon", "raw_ribs", "grilled_ribs", "raw_rib_eye_steak", "grilled_rib_eye_steak",
                 "donkey_meat", "grilled_donkey_meat", "mule_meat", "grilled_mule_meat").contains(id(stack));
     }
 }

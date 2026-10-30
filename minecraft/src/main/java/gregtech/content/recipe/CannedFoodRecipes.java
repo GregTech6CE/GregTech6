@@ -46,10 +46,16 @@ public final class CannedFoodRecipes {
         for (var cut : gregtech.content.food.MeatCutCatalog.CUTS) {
             if (cut.cannedName().isEmpty()) continue;
             for (String id : new String[] {cut.raw(), cut.cooked()}) {
+                var input = new ItemStack(gregtech.content.food.GTFoodItems.item(id));
                 var food = gregtech.content.food.GTFoodItems.entryFor(id);
-                int size = Math.max(0, food.food().level() / 2 - 1);
+//? if >=1.21.1 {
+                /*int nutrition = food == null ? input.getFoodProperties(null).nutrition() : food.food().level();
+*///?} else {
+                int nutrition = food == null ? input.getFoodProperties(null).getNutrition() : food.food().level();
+//?}
+                int size = Math.max(0, nutrition / 2 - 1);
                 if (size >= sizes.length) throw new IllegalStateException("Unsupported meat can size: " + id);
-                registered += pack(can(id, 1), sizes[size] + "_food_can_meat", cut.cannedName());
+                registered += pack(input, sizes[size] + "_food_can_meat", cut.cannedName());
             }
         }
         return registered;

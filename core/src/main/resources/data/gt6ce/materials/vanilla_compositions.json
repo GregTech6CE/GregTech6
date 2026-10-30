@@ -1486,10 +1486,11 @@
   },
   "cooked_mutton": {
     "components": {
-      "MeatCooked": 648648000
+      "Bone": 72072000,
+      "MeatCooked": 1297296000
     },
-    "recoverable": false,
-    "source": "1.20.1 material family"
+    "recoverable": true,
+    "source": "GT6CE modern vanilla meat cuts"
   },
   "cooked_porkchop": {
     "components": {
@@ -1501,10 +1502,11 @@
   },
   "cooked_rabbit": {
     "components": {
-      "MeatCooked": 648648000
+      "Bone": 72072000,
+      "MeatCooked": 1297296000
     },
-    "recoverable": false,
-    "source": "1.20.1 material family"
+    "recoverable": true,
+    "source": "GT6CE modern vanilla meat cuts"
   },
   "cooked_salmon": {
     "components": {
@@ -4179,10 +4181,11 @@
   },
   "mutton": {
     "components": {
-      "MeatRaw": 648648000
+      "Bone": 72072000,
+      "MeatRaw": 1297296000
     },
-    "recoverable": false,
-    "source": "1.20.1 material family"
+    "recoverable": true,
+    "source": "GT6CE modern vanilla meat cuts"
   },
   "name_tag": {
     "components": {
@@ -5168,10 +5171,11 @@
   },
   "rabbit": {
     "components": {
-      "MeatRaw": 648648000
+      "Bone": 72072000,
+      "MeatRaw": 1297296000
     },
-    "recoverable": false,
-    "source": "1.20.1 material family"
+    "recoverable": true,
+    "source": "GT6CE modern vanilla meat cuts"
   },
   "rabbit_foot": {
     "components": {

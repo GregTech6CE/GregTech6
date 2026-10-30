@@ -40,8 +40,8 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:grilled_rib_eye_steak", 33), // MultiItemFood.java:554
             new Entry("gt6ce:dogmeat", 29), // MultiItemFood.java:558
             new Entry("gt6ce:grilled_dogmeat", 30), // MultiItemFood.java:559
-            new Entry("gt6ce:mutton", 29), // MultiItemFood.java:563
-            new Entry("gt6ce:grilled_mutton", 30), // MultiItemFood.java:564
+            new Entry("minecraft:mutton", 29), // MultiItemFood.java:563
+            new Entry("minecraft:cooked_mutton", 30), // MultiItemFood.java:564
             new Entry("gt6ce:horse_meat", 29), // MultiItemFood.java:568
             new Entry("gt6ce:grilled_horse_meat", 30), // MultiItemFood.java:569
             new Entry("gt6ce:mule_meat", 29), // MultiItemFood.java:572

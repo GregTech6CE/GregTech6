@@ -17,7 +17,8 @@ public final class MeatCutCatalog {
             new Cut("raw_ribs", "grilled_ribs", 2 * U, U, "Canned Ribs"),
             new Cut("raw_rib_eye_steak", "grilled_rib_eye_steak", 3 * U, U / 4, "Canned Beef"),
             new Cut("dogmeat", "grilled_dogmeat", 2 * U, U / 9, "Canned Dog"),
-            new Cut("mutton", "grilled_mutton", 2 * U, U / 4, "Canned Mutton"),
+            new Cut("minecraft:mutton", "minecraft:cooked_mutton", 2 * U, U / 9, "Canned Mutton"),
+            new Cut("minecraft:rabbit", "minecraft:cooked_rabbit", 2 * U, U / 9, ""),
             new Cut("horse_meat", "grilled_horse_meat", 2 * U, U / 4, "Canned Horse"),
             new Cut("mule_meat", "grilled_mule_meat", 5 * U / 2, U / 4, "Canned Horse"),
             new Cut("donkey_meat", "grilled_donkey_meat", 5 * U / 2, U / 9, "Canned Horse"));

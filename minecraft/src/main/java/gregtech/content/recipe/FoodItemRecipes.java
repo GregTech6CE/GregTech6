@@ -158,7 +158,6 @@ public final class FoodItemRecipes {
             {"raw_ribs", "grilled_ribs", "549"},
             {"raw_rib_eye_steak", "grilled_rib_eye_steak", "555"},
             {"dogmeat", "grilled_dogmeat", "560"},
-            {"mutton", "grilled_mutton", "565"},
             {"horse_meat", "grilled_horse_meat", "570"},
             {"donkey_meat", "grilled_donkey_meat", "578"},
             {"mule_meat", "grilled_mule_meat", "574"},
