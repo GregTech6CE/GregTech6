@@ -84,6 +84,14 @@ public final class MortarGrindingRecipes {
     public static int register() {
         if (registered) throw new IllegalStateException("Mortar grinding recipes registered twice");
         registered = true;
+        for (var entry : java.util.Map.of(net.minecraft.world.item.Items.CLAY_BALL, 1,
+                net.minecraft.world.item.Items.CLAY, 4).entrySet()) {
+            var input = new ItemStack(entry.getKey());
+            var output = OM.dust(GTMaterialRegistry.get("Clay"), entry.getValue() * GTValues.U);
+            var recipe = MachineRecipeMaps.Mortar.addRecipe1(true, 16, 16L * entry.getValue(), input, output);
+            if (recipe != null) ENTRIES.add(new Entry("vanilla_clay", MachineRecipeMaps.Mortar, recipe));
+        }
+
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
             // small rocks only require ANTIMATTER.NOT, not MORTAR.

@@ -130,6 +130,8 @@ public final class MachineRecipeIngredients {
             }
             case "tag":
                 return Map.of("tag", argument.trim());
+            case "container1000":
+                return Map.of("type", "gt6ce:finite_fluid_container_1000", "fluid", argument.trim());
             case "block": {
                 String[] parts = splitMaterial(argument);
                 return blockIngredient(blockPrefix(parts[0]),

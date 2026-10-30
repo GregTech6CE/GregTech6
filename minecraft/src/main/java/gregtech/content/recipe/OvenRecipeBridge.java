@@ -476,6 +476,8 @@ public final class OvenRecipeBridge {
                 && ItemStack.isSameItemSameTags(output, ironScrap)
 //?}
                 && java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.RAW_IRON))) return true;
+        if (recipe instanceof AbstractCookingRecipe cookingRecipe
+                && cookingRecipe.category() == CookingBookCategory.FOOD) return true;
         if (output.getCount() != 1) return false;
         // Modern raw-metal items are not GT oreRaw aliases. Keep their ordinary cooking entry;
         // the existing NEVER_FURNACE output policy below still turns iron into scrap.
@@ -493,6 +495,8 @@ public final class OvenRecipeBridge {
             return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.COBBLESTONE));
         if (output.is(net.minecraft.world.item.Items.SMOOTH_STONE))
             return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.STONE));
+        if (output.is(net.minecraft.world.item.Items.TERRACOTTA))
+            return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.CLAY));
         if (output.is(net.minecraft.world.item.Items.BRICK))
             return java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.CLAY_BALL));
         if (output.is(net.minecraft.world.item.Items.GLASS))

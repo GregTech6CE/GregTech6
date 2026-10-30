@@ -64,6 +64,7 @@ public final class HandMaterialCraftingRecipes {
                     Map.of("f", FILE, "X", form("bolt", material, bolt)), copy(screw, 1));
         }
         cables(rows);
+        signalWires(rows);
         return Map.copyOf(rows);
     }
 
@@ -75,6 +76,16 @@ public final class HandMaterialCraftingRecipes {
     private static void handForms(Map<ResourceLocation, JsonObject> rows, GTMaterial material) {
         String m = slug(material);
         var plate = mat("plate", material);
+        if (material.has(MaterialProperty.WOOD)) {
+            var head = mat("toolHeadHammer", material);
+            if (!head.isEmpty() && !plate.isEmpty()) {
+                var cutting = new JsonArray();
+                cutting.add(SAW);
+                cutting.add(tag("forge:tools/axe"));
+                put(rows, "craft/wooden_hammer_head/" + m, List.of("PP ", "PPg", "PPv"),
+                        Map.of("P", form("plate", material, plate), "g", tag("forge:tools/hand_drill"), "v", cutting), head);
+            }
+        }
         var rotor = mat("rotor", material);
         var curved = mat("plateCurved", material);
         var rotorRing = mat("ring", material);
@@ -250,6 +261,22 @@ public final class HandMaterialCraftingRecipes {
             putShapeless(rows, "shapeless/cable/" + size + "/" + slug(cable.spec().material()),
                     List.of(item(new ItemStack(wire)), tag("gt6ce:technology/any_rubber_plate")),
                     new ItemStack(cable));
+        }
+    }
+
+    private static void signalWires(Map<ResourceLocation, JsonObject> rows) {
+        for (var entry : gregtech.content.registry.GTSignalWires.all()) {
+            var wire = entry.get();
+            if (wire.insulated()) continue;
+            var plate = mat("plate", wire.material());
+            if (plate.isEmpty()) continue;
+            put(rows, "craft/signal_wire/" + slug(wire.material()), List.of("Px"),
+                    Map.of("P", form("plate", wire.material(), plate), "x", WIRE_CUTTER), new ItemStack(wire));
+            var cable = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",
+                    BuiltInRegistries.BLOCK.getKey(wire).getPath().replace("wire_01_", "cable_01_")));
+            if (cable != Items.AIR)
+                putShapeless(rows, "shapeless/signal_cable/" + slug(wire.material()),
+                        List.of(item(new ItemStack(wire)), tag("gt6ce:technology/any_rubber_plate")), new ItemStack(cable));
         }
     }
 

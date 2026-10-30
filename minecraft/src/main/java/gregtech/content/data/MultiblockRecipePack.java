@@ -137,7 +137,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         /*com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original multiblock crafting datapack: {} emitted, {} not registered or unresolved", generated.size(), MultiblockCraftingRecipes.ENTRIES.size()-generated.size());
 *///?} else {
 //?}
-        for (var row : java.util.stream.Stream.concat(OriginalSurvivalRecipes.ROWS.stream(), UtilityCraftingRows.ROWS.stream()).toList()) {
+        for (var row : java.util.stream.Stream.concat(OriginalSurvivalRecipes.allRows().stream(), UtilityCraftingRows.ROWS.stream()).toList()) {
             var blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", row.id());
 //? if >=1.21.1 {
             /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(blockId);

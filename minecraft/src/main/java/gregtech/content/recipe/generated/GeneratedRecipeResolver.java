@@ -68,6 +68,7 @@ public final class GeneratedRecipeResolver {
         SET_STATS.clear();
         load("original_distillation", GeneratedRecipeResolver::originalDistillation);
         load("chem", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerChemicalSource, GTChemGen::load));
+        load("air_roasting", () -> gregtech.content.recipe.AirRoastingRows.emit(GeneratedRecipeResolver::registerChemicalSource));
         load("other", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerOtherSource, GTOtherGen::load));
         // Loader_Recipes_Other's nested prefix loops are outside what the transpiler emits.
         load("other_compounds", GTCompoundMixerRows::load);

@@ -15,6 +15,29 @@ public final class OriginalSurvivalRecipes {
         }
     }
 
+    public static List<Row> allRows() {
+        var rows = new java.util.ArrayList<>(ROWS);
+        for (var entry : gregtech.content.transport.HopperCatalog.ALL) {
+            rows.add(new Row(
+                    entry.spec().id(),
+                    1,
+                    entry.spec().material(),
+                    entry.queue() ? "PCP|XCX|wXh" : "PwP|XCX| Xh",
+                    Map.of(
+                            'P',
+                            "mat:plate",
+                            'X',
+                            "mat:plateCurved",
+                            'C',
+                            "tag:forge:chests/wooden",
+                            'w',
+                            "item:gt6ce:tool_wrench",
+                            'h',
+                            "item:gt6ce:tool_hammer")));
+        }
+        return List.copyOf(rows);
+    }
+
     public static final List<Row> ROWS = List.of(
             new Row(
                     "crucible_faucet_stone",
@@ -1741,7 +1764,7 @@ public final class OriginalSurvivalRecipes {
                     1,
                     ImportedMaterialData.Ceramic,
                     "CBC|BWB|CBC",
-                    Map.of('B', "mat:ingot@Brick", 'C', "mat:dust@Clay", 'W', "item:minecraft:water_bucket")),
+                    Map.of('B', "mat:ingot@Brick", 'C', "mat:dust@Clay", 'W', "container1000:Water")),
             new Row(
                     "bedrock_mining_drill_head",
                     1,
