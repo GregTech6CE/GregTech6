@@ -28,6 +28,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /*import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -205,6 +206,8 @@ public final class GTFluids {
                         .motionScale(0.007D);
 //?}
         boolean nonLiquid = FluidPhysicalProperties.nonLiquid(entry);
+        properties.sound(SoundActions.BUCKET_FILL, net.minecraft.sounds.SoundEvents.BUCKET_FILL)
+                .sound(SoundActions.BUCKET_EMPTY, net.minecraft.sounds.SoundEvents.BUCKET_EMPTY);
         if (nonLiquid) properties.canPushEntity(false).motionScale(0.0D)
                 .fallDistanceModifier(1.0F).canExtinguish(false).canSwim(false).canDrown(false);
         FluidType type = new FluidType(properties) {

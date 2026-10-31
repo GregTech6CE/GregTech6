@@ -260,6 +260,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
             if (drained.getAmount() != amount) return false;
             level.setBlockAndUpdate(below, net.minecraft.world.level.block.Blocks.WATER_CAULDRON.defaultBlockState().setValue(
                     net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL, current + added));
+            pourSound(level, pos, drained);
             return true;
         }
         var target = level.getBlockEntity(below);
@@ -277,6 +278,19 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         if (!water && entry != null && gregtech.engine.fluid.FluidTexturePolicy.kind(
                 entry) == gregtech.engine.fluid.FluidTexturePolicy.Kind.MOLTEN) limit = 144;
-        return !FluidUtil.tryFluidTransfer(sink, source, limit, true).isEmpty();
+        var transferred = FluidUtil.tryFluidTransfer(sink, source, limit, true);
+        if (transferred.isEmpty()) return false;
+        pourSound(level, pos, transferred);
+        return true;
+    }
+
+    private static void pourSound(Level level, BlockPos pos, FluidStack fluid) {
+//? if >=1.21.1 {
+        /*var sound = fluid.getFluidType().getSound(fluid, net.neoforged.neoforge.common.SoundActions.BUCKET_EMPTY);
+*///?} else {
+        var sound = fluid.getFluid().getFluidType().getSound(fluid, net.minecraftforge.common.SoundActions.BUCKET_EMPTY);
+//?}
+        if (sound == null) sound = net.minecraft.sounds.SoundEvents.BUCKET_EMPTY;
+        level.playSound(null, pos, sound, net.minecraft.sounds.SoundSource.BLOCKS, 1, 1);
     }
 }

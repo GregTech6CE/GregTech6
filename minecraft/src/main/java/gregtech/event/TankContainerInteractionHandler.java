@@ -35,6 +35,12 @@ public final class TankContainerInteractionHandler {
     public static void use(PlayerInteractEvent.RightClickBlock event) {
         if (!GregTechConfig.Rule.TANKS_REQUIRE_FLUID_TOOLS.enabled() || event.getEntity().isSpectator()) return;
         var held = event.getItemStack();
+        // Fluid display items are a direct editing tool, not a survival bucket or vessel.
+//? if >=1.21.1 {
+        /*if (held.getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) return;
+*///?} else {
+        if (held.getItem() instanceof gregtech.content.item.FluidItem) return;
+//?}
         if (held.isEmpty() || !tank(event.getLevel().getBlockEntity(event.getPos()))
                 || !FluidUtil.getFluidHandler(held.copyWithCount(1)).isPresent()) return;
         if (event.getEntity().isShiftKeyDown() && held.getItem() instanceof BlockItem) {
