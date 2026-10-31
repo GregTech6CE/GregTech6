@@ -95,32 +95,43 @@ public final class AddonLoaderServices {
 
         @Override public AddonRecipes.Line add(AddonRecipes.Line line) {
             gregtech.engine.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
-            Recipe recipe = map.addRecipe(recipe(line));
+            Recipe recipe;
+            if (!line.materialInputs().isEmpty()) {
+                var entry = line.materialInputs().entrySet().iterator().next();
+                recipe = gregtech.engine.recipe.MaterialUnitRecipes.add(map, recipe(line), entry.getKey(), entry.getValue());
+            } else recipe = map.addRecipe(recipe(line));
             return recipe == null ? null : line(recipe);
         }
 
+        @Override public AddonRecipes.Line addMaterial(AddonRecipes.Line line, int inputIndex,
+                gregtech.api.addon.recipe.MaterialUnitIngredient ingredient) {
+            gregtech.engine.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
+            return add(line.withMaterialInput(inputIndex, ingredient));
+        }
+
         @Override public AddonRecipes.Line addDisplay(AddonRecipes.Line line) {
+            if (!line.materialInputs().isEmpty()) throw new IllegalArgumentException("Register material rules with add or addMaterial");
             gregtech.engine.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = map.addFakeRecipe(false, recipe(line));
             return recipe == null ? null : line(recipe);
         }
 
         @Override public AddonRecipes.Line collision(AddonRecipes.Line line) {
+            if (!line.materialInputs().isEmpty()) return null;
             Recipe recipe = map.findCollision(recipe(line));
             return recipe == null ? null : line(recipe);
         }
 
         @Override public boolean hasItemInput(ItemStack stack) {
             if (stack == null || stack.isEmpty()) return false;
-            Collection<Recipe> recipes = map.mRecipeItemMap.get(stack.getItem());
-            return recipes != null && recipes.stream().anyMatch(recipe -> Arrays.stream(recipe.mInputs)
-                    .anyMatch(candidate -> candidate != null && candidate.getItem() == stack.getItem()));
+            return map.containsInput(stack);
         }
 
         @Override public void addDynamic(AddonRecipes.Dynamic provider) {
             if (provider == null) throw new IllegalArgumentException("dynamic recipe provider");
             map.addDynamicRecipes((items, fluids) -> {
                 AddonRecipes.Line line = provider.find(itemSnapshot(items), fluidSnapshot(fluids));
+                if (line != null && !line.materialInputs().isEmpty()) throw new IllegalArgumentException("Dynamic providers must return a concrete batch; register material rules with addMaterial");
                 return line == null ? null : recipe(line);
             });
         }
@@ -163,11 +174,14 @@ public final class AddonLoaderServices {
         int[] outputChances = line.outputChances();
         long[] chances = new long[outputChances.length];
         for (int i = 0; i < chances.length; i++) chances[i] = outputChances[i];
-        return new Recipe(inputs, line.itemOutputs(), null, chances,
+        var recipe = new Recipe(inputs, line.itemOutputs(), null, chances,
                 fluidInputs, line.fluidOutputs(), line.duration(), line.energyPerTick(), line.special())
                 .withCatalystInputs(line.keptInputs())
                 .withCatalystFluidInputs(line.keptFluidInputs())
                 .withPresenceFluidInputs(line.presenceFluidInputs());
+        line.itemTags().forEach(recipe::withItemTagInput);
+        line.fluidTags().forEach(recipe::withFluidTagInput);
+        return recipe;
     }
 
     private static AddonRecipes.Line line(Recipe recipe) {
@@ -176,8 +190,14 @@ public final class AddonLoaderServices {
         for (int i = 0; i < outputs; i++)
             chances[i] = recipe.mChances != null && i < recipe.mChances.length
                     ? (int) recipe.mChances[i] : RecipeOutputChances.CERTAIN;
-        return AddonRecipes.Line.read(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
+        var itemTags = new java.util.HashMap<Integer, net.minecraft.resources.ResourceLocation>();
+        var fluidTags = new java.util.HashMap<Integer, net.minecraft.resources.ResourceLocation>();
+        for (int i = 0; i < recipe.mInputs.length; i++) if (recipe.itemTag(i) != null) itemTags.put(i, recipe.itemTag(i).location());
+        for (int i = 0; i < recipe.mFluidInputs.length; i++) if (recipe.fluidTag(i) != null) fluidTags.put(i, recipe.fluidTag(i).location());
+        var snapshot = AddonRecipes.Line.read(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
                 recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances, recipe.explicitCatalystInputs(),
-                recipe.explicitCatalystFluidInputs(), recipe.explicitPresenceFluidInputs());
+                recipe.explicitCatalystFluidInputs(), recipe.explicitPresenceFluidInputs()).withInputTags(itemTags, fluidTags);
+        for (var declaration : recipe.materialDeclarations.entrySet()) snapshot = snapshot.withMaterialInput(declaration.getKey(), declaration.getValue());
+        return snapshot;
     }
 }

@@ -54,6 +54,7 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
                 items(item("gt6ce:railroad", 4)),
                 fluids(fluid("Latex", 144), fluid("Dye_Chemical_White", 144)),
                 null);
+        var pelletInputs = new java.util.LinkedHashMap<Integer, java.util.List<ItemStack>>();
         for (String wood : new String[] {
             "Wood", "Bark", "LiveRoot", "Livingwood", "Greatwood", "Dreamwood", "Shimmerwood", "Silverwood"
         }) {
@@ -66,15 +67,26 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
             int count = java.util.Set.of("LiveRoot", "Livingwood", "Greatwood").contains(wood)
                     ? 2
                     : java.util.Set.of("Dreamwood", "Shimmerwood", "Silverwood").contains(wood) ? 4 : 1;
-            add(
-                    "pellet/" + wood,
-                    MachineRecipeMaps.Mixer,
+            pelletInputs
+                    .computeIfAbsent(count, ignored -> new java.util.ArrayList<>())
+                    .add(powder);
+        }
+        // Magical woods have different yields and glue consumption; only equal-yield dusts
+        // share a tag, rather than accepting every wood in the cheapest recipe.
+        for (var entry : pelletInputs.entrySet()) {
+            int count = entry.getKey();
+            var group = RecipeInputGroups.items("wood_pellet_dusts/yield_" + count, entry.getValue());
+            var recipe = new Recipe(
+                    items(group.stack(1)),
+                    items(item("gt6ce:wood_pellet", count)),
+                    null,
+                    null,
+                    fluids(fluid("Glue", 25 * count)),
+                    null,
                     16L * count,
                     16,
-                    items(powder),
-                    items(item("gt6ce:wood_pellet", count)),
-                    fluids(fluid("Glue", 25 * count)),
-                    null);
+                    0);
+            publish("pellet/yield_" + count, MachineRecipeMaps.Mixer, group.apply(recipe, 0));
         }
         add(
                 "pellet_planks",

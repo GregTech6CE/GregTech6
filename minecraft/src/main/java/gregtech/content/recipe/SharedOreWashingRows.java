@@ -78,7 +78,15 @@ public final class SharedOreWashingRows {
   return List.copyOf(out);
  }
  record Definition(RecipeMap map,boolean optimize,ItemStack[] inputs,ItemStack[] outputs,long[] chances,
-                   FluidStack[] fluidInputs,FluidStack[] fluidOutputs,long duration,long power){
+                   FluidStack[] fluidInputs,FluidStack[] fluidOutputs,long duration,long power,boolean waterTag){
+  Definition(RecipeMap map,boolean optimize,ItemStack[] inputs,ItemStack[] outputs,long[] chances,
+             FluidStack[] fluidInputs,FluidStack[] fluidOutputs,long duration,long power){
+   this(map,optimize,inputs,outputs,chances,fluidInputs,fluidOutputs,duration,power,false);
+  }
+  Definition withWater(){return new Definition(map,optimize,inputs,outputs,chances,fluidInputs,fluidOutputs,duration,power,true);}
+  Recipe tagWater(Recipe row){
+   return waterTag&&row!=null?row.withFluidTagInput(0,net.minecraft.resources.ResourceLocation.parse("gt6ce:water")):row;
+  }
   Recipe admit(){
    // RecipeMap discards EMPTY fluids. Reject required unresolved bindings before it can create a free row.
    for(var fluid:fluidInputs)if(fluid==null||fluid.isEmpty())return null;
@@ -100,9 +108,10 @@ public final class SharedOreWashingRows {
     var retained=new Recipe(new ItemStack[]{normalized.mInputs[0].copy(),reagent},normalized.mOutputs,
         normalized.mSpecialItems,normalized.mChances,normalized.mFluidInputs,normalized.mFluidOutputs,
         normalized.mDuration,normalized.mEUt,normalized.mSpecialValue).withCatalystInputs(1);
-    return map.addRecipe(retained);
+    return map.addRecipe(tagWater(retained));
    }
-   return map.addRecipe(optimize,inputs,outputs,null,chances,fluidInputs,fluidOutputs,duration,power,0);
+   var row=RecipeMap.make(optimize,inputs,outputs,null,chances,fluidInputs,fluidOutputs,duration,power,0);
+   return row==null?null:map.addRecipe(tagWater(row));
   }
  }
  private static boolean hasOverlap(ItemStack[] inputs,ItemStack[] outputs){
@@ -155,11 +164,13 @@ public final class SharedOreWashingRows {
    for(int i=0;i<8;i++){var fine=s.purified(Size.TINY,products.get(i),size.byproductCount());outputs[i+1]=fine.stack();known&=fine.availability()!=Availability.UNKNOWN;}
    if(!known){s.defer(m,route,"unknown-output-form");continue;}
    FluidStack sluice=s.fluid("Sluice",size.waterMb());if(!s.fluidReady(m,route,sluice))continue;
-   for(String water:WATERS){
-    FluidStack fluid=s.fluid(water,size.waterMb());if(!s.fluidReady(m,route+"/"+water,fluid))continue;
-    out.add(new Definition(MachineRecipeMaps.Sluice,WATER_OPTIMIZE,new ItemStack[]{size==Size.WHOLE?whole.stack():tiny.stack()},
+   var waters=waters(m,s,route,size.waterMb());
+   for(FluidStack fluid:waters){
+    var row=new Definition(MachineRecipeMaps.Sluice,WATER_OPTIMIZE,new ItemStack[]{size==Size.WHOLE?whole.stack():tiny.stack()},
         copies(outputs),SLUICE_CHANCES.stream().mapToLong(Long::longValue).toArray(),new FluidStack[]{fluid},
-        new FluidStack[]{sluice.copy()},size.ticks(),SLUICE_POWER));
+        new FluidStack[]{sluice.copy()},size.ticks(),SLUICE_POWER);
+    out.add(waters.size()==WATERS.length?row.withWater():row);
+    if(waters.size()==WATERS.length)break;
    }
   }
   for(var tag:SourceOreWashingData.Tag.values()){
@@ -186,14 +197,24 @@ public final class SharedOreWashingRows {
       var fluid=s.fluid("Steam",shape.outputSize().steamMb());if(!s.fluidReady(m,route,fluid))continue;steam=new FluidStack[]{fluid};
      }
      var input=s.input(shape.input(),m,shape.inputCount());if(!s.ready(m,route,input.availability()))continue;
-     for(String water:WATERS){
-      var fluid=s.fluid(water,shape.outputSize().waterMb());if(!s.fluidReady(m,route+"/"+water,fluid))continue;
-      out.add(new Definition(MachineRecipeMaps.Bath,REAGENT_BATH_OPTIMIZE,new ItemStack[]{input.stack(),reagent.stack()},copies(outputs),new long[0],
-          new FluidStack[]{fluid},copies(steam),shape.outputSize().ticks(),BATH_POWER));
+     var waters=waters(m,s,route,shape.outputSize().waterMb());
+     for(FluidStack fluid:waters){
+      var row=new Definition(MachineRecipeMaps.Bath,REAGENT_BATH_OPTIMIZE,new ItemStack[]{input.stack(),reagent.stack()},copies(outputs),new long[0],
+          new FluidStack[]{fluid},copies(steam),shape.outputSize().ticks(),BATH_POWER);
+      out.add(waters.size()==WATERS.length?row.withWater():row);
+      if(waters.size()==WATERS.length)break;
      }
     }
    }
   }
+ }
+ private static List<FluidStack> waters(GTMaterial material,Snapshot snapshot,String route,int amount){
+  var result=new ArrayList<FluidStack>();
+  for(String water:WATERS){
+   var fluid=snapshot.fluid(water,amount);
+   if(snapshot.fluidReady(material,route+"/"+water,fluid))result.add(fluid);
+  }
+  return result;
  }
  private static ItemStack[] bathOutputs(GTMaterial m,GTMaterial product,Size size,Snapshot s){
   var counts=size==Size.WHOLE?WHOLE_BATH_BYPRODUCT_COUNTS:TINY_BATH_BYPRODUCT_COUNTS;

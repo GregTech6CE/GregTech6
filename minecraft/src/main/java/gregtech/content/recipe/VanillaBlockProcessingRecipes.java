@@ -95,19 +95,8 @@ public final class VanillaBlockProcessingRecipes extends OriginalRecipeBatch {
     }
 
     private void saw(String id, int count, int ticks, int coolant, boolean food, ItemStack... outputs) {
-        for (var variant : SawingCoolants.variants(food)) {
-            add(
-                    "saw/" + id + "/" + variant.field(),
-                    MachineRecipeMaps.Cutter,
-                    ticks * variant.multiplier(),
-                    16,
-                    items(mc(id, count)),
-                    outputs,
-                    fluids(fluid(variant.field(), coolant * variant.multiplier())),
-                    null);
-            // A block carrying stored items must be emptied before dismantling.
-            entries().get(entries().size() - 1).recipe().withEmptyContainerInputs();
-        }
+        for (var variant : RecipeInputGroups.coolants(food))
+            addCooled("saw/" + id + "/" + variant.field(), ticks, 16, items(mc(id, count)), outputs, coolant, variant);
     }
 
     private void cutting() {

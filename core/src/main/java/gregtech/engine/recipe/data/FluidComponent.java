@@ -1,9 +1,14 @@
 package gregtech.engine.recipe.data;
 
-/** One fluid stack in millibuckets. An amount of 0 means any amount. */
-public record FluidComponent(String fluid, long amount) {
+/** One fluid identity or input tag in millibuckets. Zero denotes a presence requirement. */
+public record FluidComponent(String fluid, String tag, long amount) {
+    public FluidComponent(String fluid, long amount) {
+        this(fluid, null, amount);
+    }
+
     public FluidComponent {
-        if (fluid == null || fluid.isBlank()) throw new IllegalArgumentException("fluid");
+        if ((fluid == null) == (tag == null) || fluid != null && fluid.isBlank() || tag != null && tag.isBlank())
+            throw new IllegalArgumentException("fluid component needs exactly one of fluid or tag");
         if (amount < 0) throw new IllegalArgumentException("amount");
     }
 }

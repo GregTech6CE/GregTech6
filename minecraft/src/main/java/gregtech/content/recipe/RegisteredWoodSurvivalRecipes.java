@@ -59,17 +59,17 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
         for (String species : new String[] {"crimson", "warped"}) INSTANCE.netherWood(species);
         for (var wood : NaturalWoodCraftingRows.SPECIES) INSTANCE.naturalWood(wood);
         for (String wood : gregtech.content.plant.WoodSlabCatalog.WOODS)
-            for (var coolant : SawingCoolants.variants(false))
-                INSTANCE.add(
+            for (var coolant : RecipeInputGroups.coolants(false))
+                INSTANCE.addCooled(
                         "saw/slab/" + wood + "/" + coolant.field(),
-                        MachineRecipeMaps.Cutter,
-                        72L * coolant.multiplier(),
+                        72,
                         16,
                         items(item("gt6ce:planks_" + wood, 1)),
                         items(item("gt6ce:slab_" + wood, 2)),
-                        fluids(fluid(coolant.field(), 3 * coolant.multiplier())),
-                        null);
+                        3,
+                        coolant);
         for (String wood : gregtech.content.plant.WoodSlabCatalog.WOODS) INSTANCE.slabUses(wood);
+        INSTANCE.petrifySlabs();
         return INSTANCE.entries().size();
     }
     /**
@@ -78,8 +78,9 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
      * Adding a species must only change this number; keep this formula in step with the species lists.
      */
     public static int expectedRows() {
-        int coolants = SawingCoolants.variants(false).size();
-        return gregtech.content.plant.WoodSlabCatalog.WOODS.size() * (coolants + 1)
+        int coolants = RecipeInputGroups.coolants(false).size();
+        return gregtech.content.plant.WoodSlabCatalog.WOODS.size() * coolants
+                + 1
                 + WoodSpecies.values().length * (2 * coolants + 7)
                 + 2 * 2 * 2 * coolants
                 + NaturalWoodCraftingRows.SPECIES.size() * (coolants + 3);
@@ -100,15 +101,24 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
         // Loader_Recipes_Woods:211: every species plank is the generic wood plank.
         MachineRecipeMaps.generify(
                 item("gt6ce:planks_" + wood, 1), new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS));
-        add(
-                "petrify/slab/" + wood,
-                MachineRecipeMaps.Injector,
+    }
+
+    private void petrifySlabs() {
+        var choices = WoodSlabCatalog.WOODS.stream()
+                .map(wood -> item("gt6ce:slab_" + wood, 1))
+                .toList();
+        var group = RecipeInputGroups.exactItems("petrifiable_wood_slabs", choices);
+        var recipe = new gregtech.engine.recipe.Recipe(
+                items(group.stack(9)),
+                items(mat(MaterialPrefix.rockGt, "PetrifiedWood", 2)),
+                null,
+                null,
+                fluids(fluid("MnWtr", 500)),
+                null,
                 64,
                 16,
-                items(item("gt6ce:slab_" + wood, 9)),
-                items(mat(MaterialPrefix.rockGt, "PetrifiedWood", 2)),
-                fluids(fluid("MnWtr", 500)),
-                null);
+                0);
+        publish("petrify/slabs", MachineRecipeMaps.Injector, group.apply(recipe, 0));
     }
 
     static GTMaterial material(String wood) {
@@ -126,16 +136,8 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
     }
 
     private void saw(String id, ItemStack input, ItemStack... output) {
-        for (var coolant : SawingCoolants.variants(false))
-            add(
-                    "saw/" + id + "/" + coolant.field(),
-                    MachineRecipeMaps.Cutter,
-                    128L * coolant.multiplier(),
-                    16,
-                    items(input),
-                    output,
-                    fluids(fluid(coolant.field(), 4 * coolant.multiplier())),
-                    null);
+        for (var coolant : RecipeInputGroups.coolants(false))
+            addCooled("saw/" + id + "/" + coolant.field(), 128, 16, items(input), output, 4, coolant);
     }
 
     private void wood(WoodSpecies s) {

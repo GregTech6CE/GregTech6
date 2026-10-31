@@ -11,14 +11,29 @@ public record MachineRecipeSpec(
         List<FluidComponent> fluidOutputs,
         long euPerTick,
         long duration,
-        long special) {
+        long special,
+        gregtech.api.addon.recipe.MaterialUnitIngredient materialInput) {
+    public MachineRecipeSpec(
+            String map,
+            List<ItemComponent> items,
+            List<FluidComponent> fluids,
+            List<ItemResult> outputs,
+            List<FluidComponent> fluidOutputs,
+            long power,
+            long duration,
+            long special) {
+        this(map, items, fluids, outputs, fluidOutputs, power, duration, special, null);
+    }
+
     public MachineRecipeSpec {
         if (map == null || map.isBlank()) throw new IllegalArgumentException("map");
         itemInputs = List.copyOf(itemInputs);
         fluidInputs = List.copyOf(fluidInputs);
         itemOutputs = List.copyOf(itemOutputs);
         fluidOutputs = List.copyOf(fluidOutputs);
-        if (itemInputs.isEmpty() && fluidInputs.isEmpty())
+        if (fluidOutputs.stream().anyMatch(fluid -> fluid.tag() != null))
+            throw new IllegalArgumentException("fluid output does not take a tag");
+        if (itemInputs.isEmpty() && fluidInputs.isEmpty() && materialInput == null)
             throw new IllegalArgumentException("machine recipe has no inputs");
         if (itemOutputs.isEmpty() && fluidOutputs.isEmpty())
             throw new IllegalArgumentException("machine recipe has no outputs");

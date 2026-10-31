@@ -90,6 +90,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
         categories.clear();
         machines = RecipeMachines.collect();
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
+        for (var family : MaterialUnitTagCategory.FAMILIES)
+            registration.addRecipeCategories(new MaterialUnitTagCategory(guiHelper, family));
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
             if (!map.mViewerAllowed
                     || map.mRecipeList.stream().noneMatch(recipe -> recipe.mEnabled && !recipe.mHidden)
@@ -190,6 +192,9 @@ public final class GregTechJEIPlugin implements IModPlugin {
 //?}
 
         registration.addRecipes(MoldChiselCategory.TYPE, gregtech.compat.common.MoldChiselDisplay.recipes());
+        var unitTags = gregtech.compat.common.MaterialUnitTagDisplay.entries();
+        for (var family : MaterialUnitTagCategory.FAMILIES)
+            registration.addRecipes(MaterialUnitTagCategory.type(family), MaterialUnitTagCategory.pages(family, unitTags));
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
             List<Recipe> recipes = new ArrayList<>();
             for (Recipe recipe : entry.getKey().allRecipes()) {

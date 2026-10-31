@@ -51,16 +51,8 @@ public final class VanillaWoodProcessingRecipes extends OriginalRecipeBatch {
     }
 
     private void saw(String input, int ticks, int coolant, ItemStack... outputs) {
-        for (var v : SawingCoolants.variants(false))
-            add(
-                    "saw/" + input + "/" + v.field(),
-                    MachineRecipeMaps.Cutter,
-                    ticks * v.multiplier(),
-                    16,
-                    items(mc(input, 1)),
-                    outputs,
-                    fluids(fluid(v.field(), coolant * v.multiplier())),
-                    null);
+        for (var v : RecipeInputGroups.coolants(false))
+            addCooled("saw/" + input + "/" + v.field(), ticks, 16, items(mc(input, 1)), outputs, coolant, v);
     }
 
     private void wood(String wood) {

@@ -61,6 +61,13 @@ public final class MaterialTagPack extends AbstractPackResources {
         if(resources!=null) return resources;
         var tags=new TreeMap<String,Set<String>>();
         var preferredItems = new HashMap<String, String>();
+        gregtech.content.recipe.DyeProcessingRecipes.foamTags(
+                (path,stack)->add(tags,"gt6ce","items",path,BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()),
+                (path,stack)->add(tags,"gt6ce","fluids",path,BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString()));
+        gregtech.content.recipe.RecipeInputGroups.tags(
+                (path,id)->addInputGroup(tags,"items",path,id),
+                (path,id)->addInputGroup(tags,"fluids",path,id));
+        gregtech.content.recipe.MaterialUnitInputTags.tags((path,id)->addInputGroup(tags,"items",path,id));
         var copperMaterials=MaterialGroups.Cu.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         var ironMaterials=MaterialGroups.Iron.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         // Per-material tag: every form of one material (gear, rod, ingot, dust, block, fluid, unit...)
@@ -542,10 +549,10 @@ public final class MaterialTagPack extends AbstractPackResources {
         });
         var gson=new com.google.gson.Gson(); var result=new HashMap<ResourceLocation,byte[]>();
 //? if >=1.21.1 {
-        /*tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",compatibleValues(path,values,aliases))).getBytes(StandardCharsets.UTF_8)));
+        /*tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,compatibleValues(path,values,aliases)))).getBytes(StandardCharsets.UTF_8)));
         result.put(ResourceLocation.parse("gt6ce:tags/item/ammunition/feathers.json"),gson.toJson(Map.of(
 *///?} else {
-        tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",values)).getBytes(StandardCharsets.UTF_8)));
+        tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,values))).getBytes(StandardCharsets.UTF_8)));
         result.put(ResourceLocation.parse("gt6ce:tags/items/ammunition/feathers.json"),gson.toJson(Map.of(
 //?}
                 "replace",false,"values",List.of("minecraft:feather",
@@ -603,7 +610,7 @@ public final class MaterialTagPack extends AbstractPackResources {
 //? if >=1.21.1 {
         /*// 1.21 registries use singular resource directories. Historical callers still
         // supply plural Forge names; normalize before both leaf and parent creation.
-        kind = switch (kind) { case "items" -> "item"; case "blocks" -> "block"; default -> kind; };
+        kind = switch (kind) { case "items" -> "item"; case "blocks" -> "block"; case "fluids" -> "fluid"; default -> kind; };
 *///?} else {
 //?}
         addOne(tags,ns,kind,path,value);
@@ -611,6 +618,13 @@ public final class MaterialTagPack extends AbstractPackResources {
         /*// NeoForge 1.21.1 reads the c: namespace for common tags; keep forge: for older consumers.
         if(ns.equals("forge")) addOne(tags,"c",kind,path,value);
 *///?}
+    }
+    /** Input domains have no all-material parent: it would be huge and unusable as an ingredient. */
+    private static void addInputGroup(Map<String,Set<String>> tags,String kind,String path,String value) {
+//? if >=1.21.1 {
+        /*kind = switch (kind) { case "items" -> "item"; case "fluids" -> "fluid"; default -> kind; };
+*///?}
+        tags.computeIfAbsent("gt6ce:tags/"+kind+"/"+path+".json",k->new TreeSet<>()).add(value);
     }
     private static void addOne(Map<String,Set<String>> tags,String ns,String kind,String path,String value) {
         tags.computeIfAbsent(ns+":tags/"+kind+"/"+path+".json",k->new TreeSet<>()).add(value);
@@ -630,7 +644,13 @@ public final class MaterialTagPack extends AbstractPackResources {
         return bytes==null?null:()->new ByteArrayInputStream(bytes);
     }
     public void listResources(PackType type,String ns,String path,ResourceOutput out) {
-        if(type==PackType.SERVER_DATA)data().forEach((id,bytes)->{if(id.getNamespace().equals(ns)&&id.getPath().startsWith(path+"/"))out.accept(id,()->new ByteArrayInputStream(bytes));});
+        // This pack contains only tags; data-map and recipe scans cannot return any entries.
+        if (type != PackType.SERVER_DATA || !(path.equals("tags") || path.startsWith("tags/"))) return;
+        String prefix = path + "/";
+        data().forEach((id, bytes) -> {
+            if (id.getNamespace().equals(ns) && id.getPath().startsWith(prefix))
+                out.accept(id, () -> new ByteArrayInputStream(bytes));
+        });
     }
 //? if >=1.21.1 {
     /*public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","c","gt6ce","minecraft"):Set.of(); }

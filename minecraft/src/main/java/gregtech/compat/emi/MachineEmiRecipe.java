@@ -43,10 +43,8 @@ public final class MachineEmiRecipe implements EmiRecipe {
         for (int i = 0; i < recipe.mFluidInputs.length; i++) {
             var fluid = recipe.mFluidInputs[i];
             if (fluid == null || fluid.isEmpty()) continue;
-            var choices = new ArrayList<EmiStack>();
-            choices.add(fluid(fluid));
-            for (var container : gregtech.engine.fluid.FluidContainerDisplayBinding.containers(fluid)) choices.add(EmiStack.of(container));
-            ((recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)) ? catalysts : inputs).add(EmiIngredient.of(choices));
+            ((recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)) ? catalysts : inputs)
+                    .add(ingredients.fluidIngredient(recipe, i));
         }
         for (var special : RecipeSpecialItems.display(recipe.mSpecialItems)) catalysts.add(EmiStack.of(special));
         for (int i = 0; i < recipe.mOutputs.length; i++) {
@@ -122,6 +120,11 @@ public final class MachineEmiRecipe implements EmiRecipe {
             int left=(int)Math.floor(offset+raw.x()*scale),top=(int)Math.floor(raw.y()*scale);
             return new dev.emi.emi.api.widget.Bounds(left,top,(int)Math.ceil(offset+raw.right()*scale)-left,(int)Math.ceil(raw.bottom()*scale)-top);
         }
+        @Override public boolean mouseClicked(int mouseX, int mouseY, int button) {
+            if ((button == 0 || button == 1) && getBounds().contains(mouseX, mouseY)
+                    && stack instanceof MaterialUnitEmiIngredient unit && unit.openTag()) return true;
+            return super.mouseClicked(mouseX, mouseY, button);
+        }
         @Override public void render(net.minecraft.client.gui.GuiGraphics graphics,int mouseX,int mouseY,float delta) {
             graphics.pose().pushPose();drawing=true;
             try {
@@ -151,9 +154,12 @@ public final class MachineEmiRecipe implements EmiRecipe {
             }
         }
         for (int i = 0; i < fluids.length; i++) {
-            if (fluids[i] == null || fluids[i].getFluid() == net.minecraft.world.level.material.Fluids.EMPTY) continue;
+            if (fluids[i] == null || fluids[i].isEmpty()) continue;
             var p = layout.point(input, true, i);
-            var slot = widgets.add(new FittedSlot(displayFluid(fluids[i]),p.x()-1,p.y()-1,scale,offset));
+            EmiIngredient ingredient = input && recipe.fluidTag(i) != null
+                    ? EmiIngredient.of(recipe.fluidTag(i), fluids[i].getAmount())
+                    : displayFluid(fluids[i]);
+            var slot = widgets.add(new FittedSlot(ingredient,p.x()-1,p.y()-1,scale,offset));
             if (input && (recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)))
                 slot.catalyst(true).appendTooltip(Component.translatable(recipe.isPresenceFluidInput(i)
                         ? "gt6ce.jei.fluid_presence" : "gt6ce.jei.catalyst"));

@@ -40,10 +40,14 @@ public final class DyeProcessingRecipes {
         for(String color:RegisteredFluids.DYE_OREDICTS_POST){
             String vanilla=color.replace("LightBlue","light_blue").replace("LightGray","light_gray").toLowerCase(Locale.ROOT);
             var dye=item("minecraft:"+vanilla+"_dye",1);
-            for(String water:new String[]{"Water","MnWtr","DistW","SpDew"})
-                mixer(16,new ItemStack[]{dye.copy()},new FluidStack[]{fluid(water,144)},fluid("Dye_Water_"+color,216));
-            for(String kind:new String[]{"Water","Flower"})for(String oil:new String[]{"Oil_Sunflower","Oil_Olive","Oil_Nut","Oil_Seed","Oil_Lin","Oil_Hemp"})
-                mixer(16,null,new FluidStack[]{fluid("Dye_"+kind+"_"+color,216),fluid(oil,20)},fluid("Dye_Chemical_"+color,288));
+            var waters=RecipeInputGroups.fluids("water","Water","MnWtr","DistW","SpDew");
+            add(MachineRecipeMaps.Mixer,waters.apply(new Recipe(new ItemStack[]{dye.copy()},null,null,null,
+                    new FluidStack[]{waters.stack(144)},new FluidStack[]{fluid("Dye_Water_"+color,216)},16,16,0),0));
+            var naturalDyes=RecipeInputGroups.fluids("dyes/"+vanilla+"/natural","Dye_Water_"+color,"Dye_Flower_"+color);
+            var oils=RecipeInputGroups.fluids("vegetable_oils","Oil_Sunflower","Oil_Olive","Oil_Nut","Oil_Seed","Oil_Lin","Oil_Hemp");
+            var chemical=new Recipe(null,null,null,null,new FluidStack[]{naturalDyes.stack(216),oils.stack(20)},
+                    new FluidStack[]{fluid("Dye_Chemical_"+color,288)},16,16,0);
+            naturalDyes.apply(chemical,0); oils.apply(chemical,1); add(MachineRecipeMaps.Mixer,chemical);
             mixer(16,null,new FluidStack[]{fluid("Dye_Chemical_"+color,16),fluid("CFoam",100)},fluid("CFoam_Dyed_"+color,100));
             // MultiItemRandomTools:246: 16 dye units (16 * 144 mB), 256 ticks at 16 EU/t.
             add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gt6ce:empty_spray_can",1)},
@@ -64,11 +68,11 @@ public final class DyeProcessingRecipes {
             add(MachineRecipeMaps.Injector,new Recipe(new ItemStack[]{new ItemStack(Items.GLOWSTONE_DUST),colored("glass_clear",dyeColor,1)},
                     new ItemStack[]{colored("glass_glow",dyeColor,1)},null,null,null,null,32,16,0));
             for(String kind:new String[]{"glass_clear","glass_glow","cfoam"})
-                for(var coolant:SawingCoolants.variants(false))
-                    add(MachineRecipeMaps.Cutter,new Recipe(new ItemStack[]{colored(kind,dyeColor,1)},
+                for(var coolant:RecipeInputGroups.coolants(false))
+                    add(MachineRecipeMaps.Cutter,coolant.apply(new Recipe(new ItemStack[]{colored(kind,dyeColor,1)},
                             new ItemStack[]{colored(kind+"_slab",dyeColor,2)},null,null,
                             new FluidStack[]{fluid(coolant.field(),5*coolant.multiplier())},null,
-                            16*coolant.multiplier(),16,0).withEmptyContainerInputs());
+                            16*coolant.multiplier(),16,0).withEmptyContainerInputs()));
 
             mixer(16,new ItemStack[]{GTItems.getStack(MaterialPrefix.dustSmall,GTMaterialRegistry.get("Palladium"),1)},
                     new FluidStack[]{fluid("CFoam_Dyed_"+color,100)},fluid("CFoam_DyedOwned_"+color,100));
@@ -109,25 +113,44 @@ public final class DyeProcessingRecipes {
     }
 
     /**
-     * Loader_Recipes_Other:252-330: the C-Foam mixing cross-product. Every (rock group, sand, clay,
-     * water) triple mixes in both batch sizes; a rock's group decides the foam colour, and the first
+     * {@code Loader_Recipes_Other.java:252-330}: one tagged row per colour and batch size.
+     * A rock's group decides the foam colour, and the first
      * group leaves it undyed. GT6's {@code OM.dust(clay, U4)} is one small pile while the large
      * recipe takes one full dust.
      */
     private static void foamFamilies(){
-        String[] waters={"Water","MnWtr","DistW","SpDew"};
         for(String[] group:FOAM_ROCKS_BY_DYE){
             String dye=group[0];
             String output=dye.isEmpty()?"CFoam":"CFoam_Dyed_"+dye;
-            for(int rock=1;rock<group.length;rock++) for(String sand:FOAM_SANDS) for(String clay:FOAM_CLAYS)
-                for(String water:waters){
-                    mixer(128,new ItemStack[]{dust(group[rock],6),dust(sand,2),
-                                    GTItems.getStack(MaterialPrefix.dustSmall,GTMaterialRegistry.get(clay),1)},
-                            new FluidStack[]{fluid(water,1000)},fluid(output,1000));
-                    mixer(512,new ItemStack[]{dust(group[rock],24),dust(sand,8),dust(clay,1)},
-                            new FluidStack[]{fluid(water,4000)},fluid(output,4000));
-                }
+            for(boolean large:new boolean[]{false,true}) {
+                int multiplier=large?4:1;
+                var recipe=new Recipe(new ItemStack[]{dust(group[1],6*multiplier),dust(FOAM_SANDS[0],2*multiplier),
+                        GTItems.getStack(large?MaterialPrefix.dust:MaterialPrefix.dustSmall,GTMaterialRegistry.get(FOAM_CLAYS[0]),1)},
+                        null,null,null,new FluidStack[]{fluid("Water",1000*multiplier)},
+                        new FluidStack[]{fluid(output,1000*multiplier)},128*multiplier,16,0)
+                        .withItemTagInput(0,materialTag("stone_dusts/"+(dye.isEmpty()?"neutral":dye.toLowerCase(Locale.ROOT))))
+                        .withItemTagInput(1,materialTag("silica_dusts"))
+                        .withItemTagInput(2,materialTag(large?"clay_dusts":"small_clay_dusts"))
+                        .withFluidTagInput(0,materialTag("water"));
+                add(MachineRecipeMaps.Mixer,recipe);
+            }
         }
+    }
+
+    private static ResourceLocation materialTag(String path){return ResourceLocation.fromNamespaceAndPath("gt6ce",path);}
+
+    /** Feed the built-in datapack from the same material groups used by the mixer recipes. */
+    public static void foamTags(java.util.function.BiConsumer<String,ItemStack> items,
+            java.util.function.BiConsumer<String,FluidStack> fluids){
+        for(String[] group:FOAM_ROCKS_BY_DYE)
+            for(int rock=1;rock<group.length;rock++) items.accept(materialTag("stone_dusts/"+
+                    (group[0].isEmpty()?"neutral":group[0].toLowerCase(Locale.ROOT))).getPath(),dust(group[rock],1));
+        for(String sand:FOAM_SANDS) items.accept(materialTag("silica_dusts").getPath(),dust(sand,1));
+        for(String clay:FOAM_CLAYS){
+            items.accept(materialTag("clay_dusts").getPath(),dust(clay,1));
+            items.accept(materialTag("small_clay_dusts").getPath(),GTItems.getStack(MaterialPrefix.dustSmall,GTMaterialRegistry.get(clay),1));
+        }
+        for(String water:new String[]{"Water","MnWtr","DistW","SpDew"}) fluids.accept(materialTag("water").getPath(),fluid(water,1));
     }
 
     /**
@@ -142,18 +165,17 @@ public final class DyeProcessingRecipes {
             for(String family:new String[]{"cfoam","asphalt","concrete","concrete_reinforced"}){
                 var white=colored(family,net.minecraft.world.item.DyeColor.WHITE,1);
                 var result=colored(family,target,1);
-                for(String[] d:dyeFluids(dye.index())) bath(white,d,result,24);
+                for(var d:dyeGroups(dye.index())) bath(white,null,d,result,24);
             }
             // The port has only the C-Foam slab; asphalt/concrete/reinforced slabs have no identity yet.
             var whiteSlab=colored("cfoam_slab",net.minecraft.world.item.DyeColor.WHITE,1);
             var colouredSlab=colored("cfoam_slab",target,1);
-            for(String[] d:dyeFluids(dye.index())) bath(whiteSlab,d,colouredSlab,48);
+            for(var d:dyeGroups(dye.index())) bath(whiteSlab,null,d,colouredSlab,48);
             for(String kind:new String[]{"concrete","cfoam","asphalt"}){
                 var out=item("gt6ce:panel_"+kind+"_"+dye.id(),1);
-                for(PaintingRules.Dye source:PaintingRules.DYES){
-                    var in=item("gt6ce:panel_"+kind+"_"+source.id(),1);
-                    for(String[] d:dyeFluids(dye.index())) bath(in,d,out,144);
-                }
+                var panels=RecipeInputGroups.exactItems("panels/"+kind,PaintingRules.DYES.stream()
+                        .map(source->item("gt6ce:panel_"+kind+"_"+source.id(),1)).toList());
+                for(var d:dyeGroups(dye.index())) bath(panels.stack(1),panels,d,out,144);
             }
         }
     }
@@ -173,10 +195,23 @@ public final class DyeProcessingRecipes {
         }
         return fluids;
     }
-    private static void bath(ItemStack input,String[] dye,ItemStack output,int divisor){
-        int mb=(int)Math.max(1,(Long.parseLong(dye[1])+divisor-1)/divisor);
-        add(MachineRecipeMaps.Bath,new Recipe(new ItemStack[]{input.copy()},new ItemStack[]{output.copy()},null,null,
-                new FluidStack[]{fluid(dye[0],mb)},null,16,0,0));
+    private record DyeGroup(int unit,RecipeInputGroups.Fluids fluids) {}
+    private static final Map<Integer,List<DyeGroup>> DYE_GROUPS=new HashMap<>();
+    private static List<DyeGroup> dyeGroups(int index){
+        return DYE_GROUPS.computeIfAbsent(index,key->{
+            Map<Integer,List<String>> groups=new LinkedHashMap<>();
+            for(String[] dye:dyeFluids(key))groups.computeIfAbsent(Integer.parseInt(dye[1]),ignored->new ArrayList<>()).add(dye[0]);
+            return groups.entrySet().stream().map(e->new DyeGroup(e.getKey(),RecipeInputGroups.fluids(
+                    "dyes/"+PaintingRules.DYES.get(key).id()+"/"+(e.getKey()==144?"standard":"juices"),
+                    e.getValue().toArray(String[]::new)))).toList();
+        });
+    }
+    private static void bath(ItemStack input,RecipeInputGroups.Items items,DyeGroup dye,ItemStack output,int divisor){
+        int mb=Math.max(1,(dye.unit()+divisor-1)/divisor);
+        var recipe=new Recipe(new ItemStack[]{input.copy()},new ItemStack[]{output.copy()},null,null,
+                new FluidStack[]{dye.fluids().stack(mb)},null,16,0,0);
+        dye.fluids().apply(recipe,0); if(items!=null)items.apply(recipe,0);
+        add(MachineRecipeMaps.Bath,recipe);
     }
 
     /** GT6's rock-to-foam-colour partition; an empty first entry means the foam stays undyed. */

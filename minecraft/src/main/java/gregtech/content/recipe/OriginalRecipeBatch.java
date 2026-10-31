@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.recipe.*;
 import gregtech.engine.recipe.*;
 import gregtech.content.data.MaterialPrefix;
@@ -26,6 +27,11 @@ public abstract class OriginalRecipeBatch {
             ItemStack[] inputs, ItemStack[] outputs, FluidStack[] fluids, FluidStack[] results) {
         publish(id, map, new Recipe(inputs, outputs, null, null, fluids, results, ticks, power, 0));
     }
+    protected final void addCooled(String id, long ticks, long power, ItemStack[] inputs, ItemStack[] outputs,
+            int amount, RecipeInputGroups.Coolant coolant) {
+        publish(id, MachineRecipeMaps.Cutter, coolant.apply(new Recipe(inputs, outputs, null, null,
+                fluids(coolant.group().stack(amount * coolant.multiplier())), null, ticks * coolant.multiplier(), power, 0)));
+    }
     /** Row with source per-slot chances (GT6's {@code long[] tChances}). */
     protected final void add(String id, RecipeMap map, long ticks, long power, long[] chances,
             ItemStack[] inputs, ItemStack[] outputs, FluidStack[] fluids, FluidStack[] results) {
@@ -40,7 +46,7 @@ public abstract class OriginalRecipeBatch {
         if (recipe == null) throw new IllegalStateException("Collapsed source row " + id);
         publish(id, map, recipe);
     }
-    private void publish(String id, RecipeMap map, Recipe recipe) {
+    protected final void publish(String id, RecipeMap map, Recipe recipe) {
         for (var stack : recipe.mInputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty input");
         for (var stack : recipe.mOutputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty output");
         if (!rowIds.add(id)) throw new IllegalStateException("Duplicate source row " + id);

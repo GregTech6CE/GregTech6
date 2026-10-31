@@ -124,12 +124,15 @@ final class ScriptValues {
         return MachineRecipeScript.result(text(json.get("item")), count, chance);
     }
 
-    private static FluidComponent fluid(Object value) {
+    static FluidComponent fluid(Object value) {
         Object unwrapped = unwrap(value);
         if (unwrapped instanceof CharSequence text) return MachineRecipeScript.fluid(text.toString(), 0);
         var json = object(unwrapped);
         long amount = json.containsKey("amount") ? ((Number) unwrap(json.get("amount"))).longValue() : 0;
-        return MachineRecipeScript.fluid(text(json.get("fluid")), amount);
+        return new FluidComponent(
+                json.get("fluid") == null ? null : text(json.get("fluid")),
+                json.get("tag") == null ? null : text(json.get("tag")),
+                amount);
     }
 
     private static Object first(Object camel, Object snake) {

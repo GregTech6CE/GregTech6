@@ -14,6 +14,21 @@ final class MachineEmiIngredient implements EmiIngredient {
     private final List<EmiStack> alternatives;
     private long amount;
     private float chance = 1;
+    private EmiStack renderedSource, rendered;
+    private long renderedAmount;
+    private float renderedChance;
+
+    /** Reuse the current decorated candidate until rotation or amount/chance actually changes. */
+    private EmiStack decorated() {
+        var source = current();
+        if (source != renderedSource || amount != renderedAmount || chance != renderedChance) {
+            renderedSource = source;
+            renderedAmount = amount;
+            renderedChance = chance;
+            rendered = source.copy().setAmount(source.getAmount() * amount).setChance(chance);
+        }
+        return rendered;
+    }
 
     MachineEmiIngredient(List<EmiStack> alternatives, long amount) {
         if (alternatives.isEmpty()) throw new IllegalArgumentException("Empty machine ingredient");
@@ -59,7 +74,7 @@ final class MachineEmiIngredient implements EmiIngredient {
 
     @Override
     public void render(GuiGraphics draw, int x, int y, float delta, int flags) {
-        current().copy().setAmount(amount).setChance(chance).render(draw, x, y, delta, flags & ~RENDER_INGREDIENT);
+        decorated().render(draw, x, y, delta, flags & ~RENDER_INGREDIENT);
         if ((flags & RENDER_INGREDIENT) != 0) EmiRender.renderIngredientIcon(this, draw, x, y);
     }
 
@@ -68,7 +83,7 @@ final class MachineEmiIngredient implements EmiIngredient {
         var tooltip = new ArrayList<ClientTooltipComponent>();
         tooltip.add(ClientTooltipComponent.create(
                 Component.translatable("tooltip.emi.accepts").getVisualOrderText()));
-        tooltip.addAll(current().copy().setAmount(amount).setChance(chance).getTooltip());
+        tooltip.addAll(decorated().getTooltip());
         return tooltip;
     }
 }

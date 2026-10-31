@@ -67,7 +67,7 @@ public final class RecipeDiagnostics {
 *///?} else {
             Object data = stack.getTag();
 //?}
-            var key = new StackKey(stack.getItem(), data, stack.getCount(),
+            var key = new StackKey(recipe.itemTag(i) == null ? stack.getItem() : recipe.itemTag(i), data, stack.getCount(),
                     recipe.isCatalystInput(i), false);
             items.merge(key, 1, Integer::sum);
         }
@@ -79,7 +79,7 @@ public final class RecipeDiagnostics {
 *///?} else {
             Object data = stack.getTag();
 //?}
-            var key = new StackKey(stack.getFluid(), data, stack.getAmount(),
+            var key = new StackKey(recipe.fluidTag(i) == null ? stack.getFluid() : recipe.fluidTag(i), data, stack.getAmount(),
                     recipe.isCatalystFluidInput(i), recipe.isPresenceFluidInput(i));
             fluids.merge(key, 1, Integer::sum);
         }

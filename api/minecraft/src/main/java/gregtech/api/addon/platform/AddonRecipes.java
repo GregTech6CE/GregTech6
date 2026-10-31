@@ -44,6 +44,9 @@ public final class AddonRecipes {
         /** Adds a static row. Null means the map rejected it. */
         @Nullable Line add(Line line);
 
+        /** Replaces one input with a reusable material-unit rule. Other inputs and catalysts keep their roles. */
+        Line addMaterial(Line line, int inputIndex, gregtech.api.addon.recipe.MaterialUnitIngredient ingredient);
+
         /** A display row for JEI and EMI. Machines do not craft it. Null means the map rejected it. */
         @Nullable Line addDisplay(Line line);
 
@@ -94,6 +97,49 @@ public final class AddonRecipes {
         private final int[] keptInputs;
         private final int[] keptFluidInputs;
         private final int[] presenceFluidInputs;
+        private final java.util.Map<Integer, net.minecraft.resources.ResourceLocation> itemTags;
+        private final java.util.Map<Integer, net.minecraft.resources.ResourceLocation> fluidTags;
+
+        private java.util.Map<Integer, gregtech.api.addon.recipe.MaterialUnitIngredient> materialInputs = java.util.Map.of();
+        public java.util.Map<Integer, gregtech.api.addon.recipe.MaterialUnitIngredient> materialInputs() { return materialInputs; }
+        /** Material inputs are rules, never executable unit-item placeholders. */
+        public Line withMaterialInput(int index, gregtech.api.addon.recipe.MaterialUnitIngredient ingredient) {
+            if (ingredient == null || index < 0 || index >= itemInputs.length || itemTags.containsKey(index)
+                    || java.util.Arrays.stream(keptInputs).anyMatch(value -> value == index))
+                throw new IllegalArgumentException("Material input " + index);
+            if (!materialInputs.isEmpty() && !materialInputs.containsKey(index))
+                throw new IllegalArgumentException("Only one material-unit input is supported per rule");
+            var copy = new Line(this, itemTags, fluidTags);
+            copy.materialInputs = java.util.Map.of(index, ingredient);
+            return copy;
+        }
+
+        /** Input tag ids keyed by slot. Representatives provide counts, not additional accepted identities. */
+        public java.util.Map<Integer, net.minecraft.resources.ResourceLocation> itemTags() { return itemTags; }
+        public java.util.Map<Integer, net.minecraft.resources.ResourceLocation> fluidTags() { return fluidTags; }
+
+        /** A detached snapshot with native input tags. Empty tags cannot match; outputs remain concrete. */
+        public Line withInputTags(java.util.Map<Integer, net.minecraft.resources.ResourceLocation> items,
+                java.util.Map<Integer, net.minecraft.resources.ResourceLocation> fluids) {
+            for (int index : items.keySet()) if (index < 0 || index >= itemInputs.length || itemInputs[index].isEmpty())
+                throw new IllegalArgumentException("Item tag input " + index);
+            for (int index : fluids.keySet()) if (index < 0 || index >= fluidInputs.length || fluidInputs[index].isEmpty())
+                throw new IllegalArgumentException("Fluid tag input " + index);
+            for (int index : materialInputs.keySet()) if (items.containsKey(index))
+                throw new IllegalArgumentException("Material input cannot also be a tag");
+            return new Line(this, items, fluids);
+        }
+
+        private Line(Line source, java.util.Map<Integer, net.minecraft.resources.ResourceLocation> items,
+                java.util.Map<Integer, net.minecraft.resources.ResourceLocation> fluids) {
+            materialInputs = source.materialInputs;
+            itemInputs = source.itemInputs; itemOutputs = source.itemOutputs;
+            fluidInputs = source.fluidInputs; fluidOutputs = source.fluidOutputs;
+            duration = source.duration; energyPerTick = source.energyPerTick; special = source.special;
+            outputChances = source.outputChances; keptInputs = source.keptInputs;
+            keptFluidInputs = source.keptFluidInputs; presenceFluidInputs = source.presenceFluidInputs;
+            itemTags = java.util.Map.copyOf(items); fluidTags = java.util.Map.copyOf(fluids);
+        }
 
         /** Named construction with the same validation and defaults as the public constructors. */
         public static Builder builder() {
@@ -183,6 +229,7 @@ public final class AddonRecipes {
         private Line(boolean reading, ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
                      FluidStack[] fluidOutputs, long duration, long energyPerTick, long special, int[] outputChances,
                      int[] keptInputs, int[] keptFluidInputs, int[] presenceFluidInputs) {
+            itemTags = java.util.Map.of(); fluidTags = java.util.Map.of();
             this.itemInputs = reading ? copyItems(itemInputs) : copyItemInputs(itemInputs);
             this.itemOutputs = copyItems(itemOutputs);
             this.fluidInputs = reading ? copyFluids(fluidInputs) : copyFluidInputs(fluidInputs);
@@ -304,7 +351,7 @@ public final class AddonRecipes {
         @Override public boolean equals(Object other) {
             if (this == other) return true;
             if (!(other instanceof Line line)) return false;
-            return sameItems(itemInputs, line.itemInputs)
+            return materialInputs.equals(line.materialInputs) && sameItems(itemInputs, line.itemInputs)
                     && sameItems(itemOutputs, line.itemOutputs)
                     && sameFluids(fluidInputs, line.fluidInputs)
                     && sameFluids(fluidOutputs, line.fluidOutputs)
@@ -314,11 +361,13 @@ public final class AddonRecipes {
                     && Arrays.equals(outputChances, line.outputChances)
                     && Arrays.equals(keptInputs, line.keptInputs)
                     && Arrays.equals(keptFluidInputs, line.keptFluidInputs)
-                    && Arrays.equals(presenceFluidInputs, line.presenceFluidInputs);
+                    && Arrays.equals(presenceFluidInputs, line.presenceFluidInputs)
+                    && itemTags.equals(line.itemTags)
+                    && fluidTags.equals(line.fluidTags);
         }
 
         @Override public int hashCode() {
-            int result = hashItems(itemInputs);
+            int result = 31 * hashItems(itemInputs) + materialInputs.hashCode();
             result = 31 * result + hashItems(itemOutputs);
             result = 31 * result + hashFluids(fluidInputs);
             result = 31 * result + hashFluids(fluidOutputs);
@@ -328,7 +377,9 @@ public final class AddonRecipes {
             result = 31 * result + Arrays.hashCode(outputChances);
             result = 31 * result + Arrays.hashCode(keptInputs);
             result = 31 * result + Arrays.hashCode(keptFluidInputs);
-            return 31 * result + Arrays.hashCode(presenceFluidInputs);
+            result = 31 * result + Arrays.hashCode(presenceFluidInputs);
+            result = 31 * result + itemTags.hashCode();
+            return 31 * result + fluidTags.hashCode();
         }
 
         private static boolean sameItems(ItemStack[] left, ItemStack[] right) {

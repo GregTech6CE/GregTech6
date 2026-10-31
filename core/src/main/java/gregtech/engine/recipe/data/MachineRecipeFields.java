@@ -21,8 +21,6 @@ public final class MachineRecipeFields {
     public static final String CHANCE = "chance";
     /** GT6 output chances are parts per 10_000. 10_000 is certain. */
     public static final int CHANCE_CERTAIN = 10_000;
-    /** Tag inputs expand to one concrete row per item, and stop at this product. */
-    public static final int EXPANSION_LIMIT = 4096;
 
     public static final long MAX_AMOUNT = Integer.MAX_VALUE;
 

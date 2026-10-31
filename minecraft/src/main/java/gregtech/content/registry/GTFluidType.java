@@ -68,8 +68,7 @@ public final class GTFluidType {
                 FluidHazards.isAcid(fluid), FluidHazards.isMagic(fluid), industrial, owner);
         var fuels = new ArrayList<Fuel>();
         if (!industrial) for (var map : FuelRecipeMaps.FUEL_MAP_LIST) {
-            var recipes = map.mRecipeFluidMap.get(id.toString());
-            if (recipes == null) continue;
+            var recipes = map.recipesForFluid(stack);
             BigInteger maximum = BigInteger.ZERO;
             for (var recipe : recipes) {
                 if (!recipe.mEnabled || recipe.mFluidInputs.length == 0 || recipe.mFluidInputs[0] == null) continue;

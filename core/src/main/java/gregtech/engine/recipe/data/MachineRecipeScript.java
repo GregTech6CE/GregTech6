@@ -70,6 +70,8 @@ public final class MachineRecipeScript {
     }
 
     public static FluidComponent fluid(String fluid, long amount) {
-        return new FluidComponent(fluid, amount);
+        return fluid != null && fluid.startsWith("#")
+                ? new FluidComponent(null, fluid.substring(1), amount)
+                : new FluidComponent(fluid, amount);
     }
 }

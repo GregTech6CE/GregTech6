@@ -383,10 +383,10 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
             if (recipe.isPresenceFluidInput(0)) continue;
             FluidStack input = recipe.mFluidInputs[0];
             FluidStack output = recipe.mFluidOutputs[0];
-            if (input == null || output == null || !input.isFluidEqual(fluid)) continue;
+            if (input == null || output == null || !recipe.matchesFluidInput(0, fluid)) continue;
             // Reject unrelated fluids before material/tag matching; keep recipe order and live flags.
-            if (!RecipeInputs.matches(recipe.mInputs[0], itemInput)) continue;
-            if (GTFluids.isGas(input) || GTFluids.isGas(output)) continue;
+            if (!recipe.matchesItemInput(0, itemInput)) continue;
+            if (GTFluids.isGas(fluid) || GTFluids.isGas(output)) continue;
             return recipe;
         }
         return null;

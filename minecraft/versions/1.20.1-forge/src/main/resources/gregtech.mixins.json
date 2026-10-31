@@ -66,6 +66,7 @@
     "GasFluidRenderMixin",
     "FluidAlphaConfigMixin",
     "EmiStructureFocusMixin",
+    "EmiMaterialUsesMixin",
     "ReliableEmiNamespaceMixin"
   ]
 }

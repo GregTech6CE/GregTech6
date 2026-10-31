@@ -49,6 +49,7 @@ public final class RecipeInputs {
             for (int i = 0; i < fluidCounts.length; i++) fluidCounts[i] = fluids.get(i).getAmount();
             Arrays.fill(retainedItems, 0);
             Arrays.fill(retainedFluids, 0);
+            if (recipe.hasTaggedInputs()) return tagged(recipe, parallel);
             // Reserve catalysts alongside consumables; restore them only in the final consumption plan.
             for (int input = 0; input < recipe.mInputs.length; input++) {
                 var required = recipe.mInputs[input];
@@ -101,6 +102,76 @@ public final class RecipeInputs {
             }
             return true;
         }
+
+        private boolean tagged(Recipe recipe, int parallel) {
+            long[] itemDemand = new long[recipe.mInputs.length];
+            boolean[][] itemAccepts = new boolean[itemDemand.length][items.size()];
+            boolean[] homogeneousItems = new boolean[itemDemand.length];
+            Arrays.fill(homogeneousItems, true);
+            for (int input = 0; input < itemDemand.length; input++) {
+                ItemStack required = recipe.mInputs[input];
+                if (required == null || required.isEmpty()) continue;
+                itemDemand[input] = (long) required.getCount() * (recipe.isCatalystInput(input) ? 1 : parallel);
+                for (int slot = 0; slot < items.size(); slot++) {
+                    var available = items.get(slot);
+                    itemAccepts[input][slot] = recipe.matchesItemInput(input, available)
+                            && (recipe.itemTag(input) != null || !recipe.mExactItemInputs || sameItem(required, available))
+                            && (!recipe.mRequiresEmptyContainerInputs || !gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available))
+                            && (!recipe.mMaterialRecovery || !available.isDamaged() && gregtech.engine.material.ItemMaterialRegistry.canRecover(available));
+                }
+            }
+            int[] itemIdentities = new int[items.size()];
+            for (int slot = 0; slot < items.size(); slot++) {
+                itemIdentities[slot] = slot;
+                for (int previous = 0; previous < slot; previous++) if (sameItem(items.get(slot), items.get(previous))) {
+                    itemIdentities[slot] = itemIdentities[previous]; break;
+                }
+            }
+            int[][] itemPlan = IngredientAllocation.plan(itemCounts, itemDemand, itemAccepts, itemIdentities, homogeneousItems);
+            if (itemPlan == null) return false;
+            long[] fluidDemand = new long[recipe.mFluidInputs.length];
+            boolean[][] fluidAccepts = new boolean[fluidDemand.length][fluids.size()];
+            boolean[] homogeneousFluids = new boolean[fluidDemand.length];
+            Arrays.fill(homogeneousFluids, true);
+            for (int input = 0; input < fluidDemand.length; input++) {
+                var required = recipe.mFluidInputs[input];
+                if (required == null || required.isEmpty()) continue;
+                boolean present = false;
+                for (int tank = 0; tank < fluids.size(); tank++) {
+                    fluidAccepts[input][tank] = recipe.matchesFluidInput(input, fluids.get(tank));
+                    present |= fluidAccepts[input][tank];
+                }
+                if (recipe.isPresenceFluidInput(input)) {
+                    if (!present) return false;
+                } else fluidDemand[input] = RecipeKeptInputs.fluidDemand(recipe.isCatalystFluidInput(input), required.getAmount(), parallel);
+            }
+            int[] fluidIdentities = new int[fluids.size()];
+            for (int tank = 0; tank < fluids.size(); tank++) {
+                fluidIdentities[tank] = tank;
+                for (int previous = 0; previous < tank; previous++) if (sameFluid(fluids.get(tank), fluids.get(previous))) {
+                    fluidIdentities[tank] = fluidIdentities[previous]; break;
+                }
+            }
+            int[][] fluidPlan = IngredientAllocation.plan(fluidCounts, fluidDemand, fluidAccepts, fluidIdentities, homogeneousFluids);
+            if (fluidPlan == null) return false;
+            for (int input = 0; input < itemPlan.length; input++) for (int slot = 0; slot < items.size(); slot++) {
+                itemCounts[slot] -= itemPlan[input][slot];
+                if (recipe.isCatalystInput(input)) retainedItems[slot] += itemPlan[input][slot];
+            }
+            for (int input = 0; input < fluidPlan.length; input++) for (int tank = 0; tank < fluids.size(); tank++) {
+                fluidCounts[tank] -= fluidPlan[input][tank];
+                if (recipe.isCatalystFluidInput(input)) retainedFluids[tank] += fluidPlan[input][tank];
+            }
+            return true;
+        }
+    }
+
+    private static boolean sameItem(ItemStack a, ItemStack b) {
+//? if >=1.21.1 {
+        /*return ItemStack.isSameItemSameComponents(a, b);
+*///?} else {
+        return ItemStack.isSameItemSameTags(a, b);
+//?}
     }
     public static boolean sameFluid(FluidStack available, FluidStack required) {
 //? if >=1.21.1 {

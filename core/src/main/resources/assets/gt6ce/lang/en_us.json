@@ -17055,5 +17055,11 @@
   "tooltip.gt6ce.ui.liters_of.mb": "%s mB of ",
   "tooltip.gt6ce.ui.max_fluid.mb": "; Max: %s mB",
   "gt6ce.configuration.display.fluid_in_mB": "Display fluids in mB",
-  "jade.gt6ce.engine.waiting_steam": "Waiting for steam"
+  "jade.gt6ce.engine.waiting_steam": "Waiting for steam",
+  "gt6ce.recipe.material_units": "%s = %s units of this material.",
+  "gt6ce.recipe.material_forms": "Search links include other forms; only forms allowed by this recipe can be processed.",
+  "gt6ce.recipe.material_batch_whole": "Consumes whole items. Round input count up and complete products down; no remainder is stored. Time scales with products.",
+  "gt6ce.recipe.material_batch_exact": "Consumes whole items in the smallest batch with exact outputs. Fluid yield follows material content; no remainder is stored.",
+  "gt6ce.recipe.material_inputs.smeltable": "Smelter Input Tags",
+  "gt6ce.recipe.material_inputs.extrudable": "Extruder Input Tags"
 }

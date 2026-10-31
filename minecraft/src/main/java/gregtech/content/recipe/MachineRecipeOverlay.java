@@ -88,6 +88,7 @@ public final class MachineRecipeOverlay {
         int moved = 0;
         for (var map : RecipeMap.RECIPE_MAP_LIST) moved += map.restoreBaseline();
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
+        gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
         long producersStarted = System.nanoTime();
         ExternalOreProcessing.rebuild();
         gregtech.content.recipe.NonOreMacerationRows.rebuild();
@@ -103,8 +104,10 @@ public final class MachineRecipeOverlay {
         SharedOilSandRows.rebuild();
         // New purified-acid calls do not displace the earlier imported/static Bath producers.
         SharedPurifiedAcidRows.rebuild();
+        MoltenMetalUnitRecipes.begin();
         SharedThermalInputRows.rebuild();
         SharedThermalRecyclingRows.rebuild();
+        MoltenMetalUnitRecipes.finish();
         long producersMillis = (System.nanoTime() - producersStarted) / 1_000_000L;
         MaterialDisplayBinding.invalidate();
         logged = 0;
@@ -159,7 +162,7 @@ public final class MachineRecipeOverlay {
             var view = view(recipe);
             for (var marker : markers)
                 if (marker.removal() != null && marker.removal().map().equals(furnace.mNameInternal)
-                        && MachineRecipeMatch.matches(marker.removal(), view, MachineRecipeOverlay::itemInTag)) {
+                        && MachineRecipeMatch.matches(marker.removal(), view, TAG_QUERY)) {
                     drop.add(recipe);
                     break;
                 }
@@ -235,19 +238,11 @@ public final class MachineRecipeOverlay {
         List<List<ItemStack>> slots;
         try {
             slots = itemSlots(spec.itemInputs());
+            if (spec.materialInput() != null) slots.add(0, List.of(gregtech.engine.recipe.MaterialUnitRecipes.display(spec.materialInput())));
         } catch (IllegalArgumentException failure) {
             tally.rejected++;
             problem(id + " " + failure.getMessage());
             return;
-        }
-        long product = 1;
-        for (var slot : slots) {
-            product *= slot.size();
-            if (product > MachineRecipeFields.EXPANSION_LIMIT) {
-                tally.rejected++;
-                problem(id + " tag expansion exceeds " + MachineRecipeFields.EXPANSION_LIMIT);
-                return;
-            }
         }
         FluidStack[] fluidInputs;
         FluidStack[] fluidOutputs;
@@ -263,24 +258,9 @@ public final class MachineRecipeOverlay {
         }
         var chances = new long[spec.itemOutputs().size()];
         for (int i = 0; i < chances.length; i++) chances[i] = spec.itemOutputs().get(i).chance();
-        if (slots.isEmpty()) {
-            add(map, new ItemStack[0], outputs, chances, fluidInputs, fluidOutputs, spec, tally);
-            return;
-        }
-        var index = new int[slots.size()];
-        while (true) {
-            var items = new ItemStack[slots.size()];
-            for (int i = 0; i < slots.size(); i++) items[i] = slots.get(i).get(index[i]).copy();
-            add(map, items, outputs, chances, fluidInputs, fluidOutputs, spec, tally);
-            int cursor = 0;
-            while (cursor < index.length) {
-                index[cursor]++;
-                if (index[cursor] < slots.get(cursor).size()) break;
-                index[cursor] = 0;
-                cursor++;
-            }
-            if (cursor == index.length) return;
-        }
+        var items = new ItemStack[slots.size()];
+        for (int i = 0; i < slots.size(); i++) items[i] = slots.get(i).get(0).copy();
+        add(map, items, outputs, chances, fluidInputs, fluidOutputs, spec, tally);
     }
 
     private static void add(RecipeMap map, ItemStack[] items, ItemStack[] outputs, long[] chances,
@@ -301,8 +281,21 @@ public final class MachineRecipeOverlay {
         for (int i = 0; i < fluidOutputs.length; i++) copiedFluidOutputs[i] = fluidOutputs[i].copy();
         var recipe = new Recipe(items, copiedOutputs, null, chances, copiedFluidInputs, copiedFluidOutputs,
                 spec.duration(), gregtech.content.data.FuelRecipeMaps.storedEu(map, spec.euPerTick()), spec.special());
+        for (int i = 0; i < spec.itemInputs().size(); i++)
+            if (spec.itemInputs().get(i).tag() != null) recipe.withItemTagInput(i + (spec.materialInput() == null ? 0 : 1), ResourceLocation.parse(spec.itemInputs().get(i).tag()));
+        for (int i = 0; i < spec.fluidInputs().size(); i++)
+            if (spec.fluidInputs().get(i).tag() != null) recipe.withFluidTagInput(i, ResourceLocation.parse(spec.fluidInputs().get(i).tag()));
         recipe.withPresenceFluidInputs(java.util.stream.IntStream.range(0, spec.fluidInputs().size())
                 .filter(i -> spec.fluidInputs().get(i).amount() == 0).toArray());
+        if (spec.materialInput() != null) {
+            try {
+                gregtech.engine.recipe.MaterialUnitRecipes.add(map, recipe, 0, spec.materialInput());
+                tally.added++;
+            } catch (IllegalArgumentException failure) {
+                tally.rejected++; problem(spec.map() + " " + failure.getMessage());
+            }
+            return;
+        }
         if (map.addRecipe(recipe, true, false, false, false) == null) tally.rejected++;
         else tally.added++;
     }
@@ -329,7 +322,7 @@ public final class MachineRecipeOverlay {
             for (var recipe : entry.getKey().mRecipeList) {
                 var view = view(recipe);
                 for (var marker : entry.getValue())
-                    if (MachineRecipeMatch.matches(marker.removal(), view, MachineRecipeOverlay::itemInTag)) {
+                    if (MachineRecipeMatch.matches(marker.removal(), view, TAG_QUERY)) {
                         drop.add(recipe);
                         break;
                     }
@@ -344,21 +337,48 @@ public final class MachineRecipeOverlay {
         return item != null && tag != null && item.builtInRegistryHolder().is(TagKey.create(Registries.ITEM, tag));
     }
 
+    private static final MachineRecipeMatch.TagQuery TAG_QUERY = new MachineRecipeMatch.TagQuery() {
+        public boolean itemInTag(String item, String tag) { return MachineRecipeOverlay.itemInTag(item, tag); }
+        public boolean fluidInTag(String fluid, String tag) {
+            return BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluid)).builtInRegistryHolder()
+                    .is(TagKey.create(Registries.FLUID, ResourceLocation.parse(tag)));
+        }
+        public boolean itemTagsOverlap(String a, String b) {
+            if (a.equals(b)) return true;
+            var other = TagKey.create(Registries.ITEM, ResourceLocation.parse(b));
+            for (var holder : BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, ResourceLocation.parse(a))))
+                if (holder.is(other)) return true;
+            return false;
+        }
+        public boolean fluidTagsOverlap(String a, String b) {
+            if (a.equals(b)) return true;
+            var other = TagKey.create(Registries.FLUID, ResourceLocation.parse(b));
+            for (var holder : BuiltInRegistries.FLUID.getTagOrEmpty(TagKey.create(Registries.FLUID, ResourceLocation.parse(a))))
+                if (holder.is(other)) return true;
+            return false;
+        }
+    };
+
     private static MachineRecipeMatch.RecipeView view(Recipe recipe) {
         var items = new ArrayList<ItemStack>();
         var itemCounts = new ArrayList<Integer>();
-        for (var stack : recipe.mInputs) {
+        var itemTags = new ArrayList<String>();
+        for (int input = 0; input < recipe.mInputs.length; input++) {
+            var stack = recipe.mInputs[input];
             if (stack == null || stack.isEmpty()) continue;
             items.add(stack);
             itemCounts.add(stack.getCount());
+            itemTags.add(recipe.itemTag(input) == null ? null : recipe.itemTag(input).location().toString());
         }
         var fluids = new ArrayList<FluidStack>();
         var fluidAmounts = new ArrayList<Integer>();
+        var fluidTags = new ArrayList<String>();
         for (int i = 0; i < recipe.mFluidInputs.length; i++) {
             var fluid = recipe.mFluidInputs[i];
             if (fluid != null && !fluid.isEmpty()) {
                 fluids.add(fluid);
                 fluidAmounts.add(recipe.isPresenceFluidInput(i) ? 0 : fluid.getAmount());
+                fluidTags.add(recipe.fluidTag(i) == null ? null : recipe.fluidTag(i).location().toString());
             }
         }
         var outputs = new ArrayList<ItemStack>();
@@ -374,9 +394,11 @@ public final class MachineRecipeOverlay {
         return new MachineRecipeMatch.RecipeView() {
             public int inputItems() { return items.size(); }
             public String inputItem(int index) { return BuiltInRegistries.ITEM.getKey(items.get(index).getItem()).toString(); }
+            public String inputItemTag(int index) { return itemTags.get(index); }
             public int inputItemCount(int index) { return itemCounts.get(index); }
             public int inputFluids() { return fluids.size(); }
             public String inputFluid(int index) { return fluidKey(fluids.get(index)); }
+            public String inputFluidTag(int index) { return fluidTags.get(index); }
             public long inputFluidAmount(int index) { return fluidAmounts.get(index); }
             public int outputItems() { return outputs.size(); }
             public String outputItem(int index) { return BuiltInRegistries.ITEM.getKey(outputs.get(index).getItem()).toString(); }
@@ -422,6 +444,19 @@ public final class MachineRecipeOverlay {
     private static FluidStack[] fluids(List<FluidComponent> components, boolean input) {
         var stacks = new FluidStack[components.size()];
         for (int i = 0; i < components.size(); i++) {
+            if (components.get(i).tag() != null) {
+                if (!input) throw new IllegalArgumentException("fluid output does not take a tag");
+                var tag = TagKey.create(Registries.FLUID, ResourceLocation.parse(components.get(i).tag()));
+                Fluid representative = null;
+                for (var holder : BuiltInRegistries.FLUID.getTagOrEmpty(tag)) {
+                    if (holder.value() == Fluids.EMPTY) continue;
+                    if (representative == null || BuiltInRegistries.FLUID.getKey(holder.value()).toString()
+                            .compareTo(BuiltInRegistries.FLUID.getKey(representative).toString()) < 0) representative = holder.value();
+                }
+                if (representative == null) throw new IllegalArgumentException("empty fluid tag " + components.get(i).tag());
+                stacks[i] = new FluidStack(representative, (int) Math.max(1, components.get(i).amount()));
+                continue;
+            }
             var parsed = ResourceLocation.tryParse(components.get(i).fluid());
             Fluid fluid = parsed == null ? Fluids.EMPTY : BuiltInRegistries.FLUID.get(parsed);
             if (fluid == null || fluid == Fluids.EMPTY) throw new IllegalArgumentException("unknown fluid " + components.get(i).fluid());

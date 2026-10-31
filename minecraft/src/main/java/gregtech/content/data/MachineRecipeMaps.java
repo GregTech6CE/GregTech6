@@ -585,11 +585,11 @@ public class MachineRecipeMaps {
         if (invalid(aInput) || aOutputs == null || aOutputs.length <= 0 || invalid(aOutputs[0])) return false;
         long amount = Math.max(1, aLubricantAmount);
         boolean registered = false;
-        for (var variant : gregtech.content.recipe.SawingCoolants.variants(aIsFoodItem)) {
+        for (var variant : gregtech.content.recipe.RecipeInputGroups.coolants(aIsFoodItem)) {
             var coolant = gregtech.content.recipe.DyeProcessingRecipes.fluid(variant.field(), Math.toIntExact(amount * variant.multiplier()));
             var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[]{aInput}, aOutputs,
                     null, null, new FluidStack[]{coolant}, null, aDuration * variant.multiplier(), aEUt, 0).withEmptyContainerInputs();
-            registered |= Cutter.addRecipe(recipe) != null;
+            registered |= Cutter.addRecipe(variant.apply(recipe)) != null;
         }
         return registered;
     }

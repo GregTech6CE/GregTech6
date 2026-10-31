@@ -16,7 +16,8 @@ import net.minecraft.world.item.Items;
 /** Native EMI uses the same material-specific assembly rows and legal handles as JEI. */
 public final class ToolAssemblyEmiRecipe implements EmiRecipe {
     private final EmiRecipeCategory category;
-    private final ToolAssemblyCatalog.ToolAssemblyInfo info;
+    private final gregtech.content.recipe.GTToolRecipes.Pattern pattern;
+    private final boolean headAssembly;
     private final ResourceLocation id;
     private final List<EmiIngredient> slots;
     private final List<EmiIngredient> inputs;
@@ -24,14 +25,19 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
     private final List<EmiStack> outputs;
 
     public ToolAssemblyEmiRecipe(EmiRecipeCategory category, ToolAssemblyCatalog.ToolAssemblyInfo info) {
+        this(category, info, new EmiItemCandidates());
+    }
+
+    private ToolAssemblyEmiRecipe(
+            EmiRecipeCategory category, ToolAssemblyCatalog.ToolAssemblyInfo info, EmiItemCandidates candidates) {
         this.category = category;
-        this.info = info;
+        this.pattern = info.pattern();
+        this.headAssembly = info.headAssembly();
         int material = gregtech.engine.tool.GTToolHelper.getHead(info.output()).getId();
         this.id = ResourceLocation.fromNamespaceAndPath(
                 "gt6ce", "/tool_assembly/" + info.type().id() + "/" + material);
         this.slots = info.inputs().stream()
-                .map(options -> (EmiIngredient) new MachineEmiIngredient(
-                        options.stream().map(EmiStack::of).toList(), 1))
+                .map(options -> (EmiIngredient) new MachineEmiIngredient(candidates.of(options), 1))
                 .toList();
         var consumed = new ArrayList<EmiIngredient>();
         var tools = new ArrayList<EmiIngredient>();
@@ -50,6 +56,15 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
     }
 
     public static void register(EmiRegistry registry) {
+        var candidates = new EmiItemCandidates();
+        try {
+            register(registry, candidates);
+        } finally {
+            candidates.finish();
+        }
+    }
+
+    static void register(EmiRegistry registry, EmiItemCandidates candidates) {
         var rows = ToolAssemblyCatalog.build();
         if (rows.isEmpty()) return;
         var category =
@@ -63,7 +78,9 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
                 };
         registry.addCategory(category);
         registry.addWorkstation(category, EmiStack.of(Items.CRAFTING_TABLE));
-        for (var row : rows) registry.addRecipe(new ToolAssemblyEmiRecipe(category, row));
+        // Material rows repeat tool and handle candidates. Convert each exact list once per reload,
+        // while keeping amount/chance and rendering state private to each ingredient wrapper.
+        for (var row : rows) registry.addRecipe(new ToolAssemblyEmiRecipe(category, row, candidates));
     }
 
     @Override
@@ -109,20 +126,18 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         int slot = 0;
-        if (info.pattern() == null) {
+        if (pattern == null) {
             for (var ingredient : slots) widgets.addSlot(ingredient, (slot++) * 18, 18);
         } else
-            for (int y = 0; y < info.pattern().height(); y++)
-                for (int x = 0; x < info.pattern().width(); x++) {
-                    if (info.pattern().at(x, y) != ' ') widgets.addSlot(slots.get(slot++), x * 18, y * 18);
+            for (int y = 0; y < pattern.height(); y++)
+                for (int x = 0; x < pattern.width(); x++) {
+                    if (pattern.at(x, y) != ' ') widgets.addSlot(slots.get(slot++), x * 18, y * 18);
                 }
         widgets.addSlot(outputs.get(0), 90, 18).recipeContext(this);
         widgets.addText(
-                info.headAssembly()
+                headAssembly
                         ? Component.translatable("gt6ce.jei.info.tool_head_and_handle")
-                        : Component.translatable(
-                                "gt6ce.jei.info.tool_material_forms",
-                                info.inputs().size()),
+                        : Component.translatable("gt6ce.jei.info.tool_material_forms", slots.size()),
                 1,
                 58,
                 0xff404040,

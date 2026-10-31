@@ -166,6 +166,13 @@ final class SharedThermalRecyclingRows {
             LOGGER.info("[gregtech] Thermal deferred {}: {}", DEFERRED.get(i).source(), DEFERRED.get(i).reason());
     }
 
+    static void smeltingInputs(java.util.function.BiConsumer<ItemStack, FluidStack> visitor) {
+        if (!initialized) return;
+        var snapshot = new SourceThermalNativeAdapter.Snapshot();
+        for (var candidate : candidates()) for (var row : plan(candidate, snapshot).rows())
+            if (row.map() == gregtech.content.data.MachineRecipeMaps.Smelter) visitor.accept(row.input(), row.output());
+    }
+
     private enum Action { ROWS, NO_ROW, DEFERRED }
 
     private enum Reason {
@@ -189,6 +196,8 @@ final class SharedThermalRecyclingRows {
 
     private record Row(RecipeMap map, ItemStack input, FluidStack output, long ticks, ThermalRecyclingProof proof) {
         Recipe admit() {
+            if (map == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
+                    input, output, ticks, SourceThermalRecyclingRules.POWER, proof::matches)) return null;
             var recipe = RecipeMap.make(
                     true,
                     new ItemStack[] {input.copy()},

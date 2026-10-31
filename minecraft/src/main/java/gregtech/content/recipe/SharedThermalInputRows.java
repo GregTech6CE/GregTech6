@@ -67,9 +67,18 @@ public final class SharedThermalInputRows {
             }
         } catch (RuntimeException | Error failure) { clear(); throw failure; }
     }
+    static void smeltingInputs(java.util.function.BiConsumer<ItemStack, FluidStack> visitor) {
+        if (!initialized) return;
+        for (var definition : definitions(materials, new Snapshot())) {
+            var row = definition.row();
+            if (row.map() == gregtech.content.data.MachineRecipeMaps.Smelter) visitor.accept(row.input(), row.output());
+        }
+    }
     record Definition(GTMaterial material, MaterialPrefix prefix, NativeRow row) {
         Recipe admit() {
             if (row.input().isEmpty() || row.output().isEmpty()) return null;
+            if (row.map() == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
+                    row.input(), row.output(), row.ticks(), row.power(), row.inputProof()::matches)) return null;
             var recipe = RecipeMap.make(true, new ItemStack[]{row.input().copy()}, new ItemStack[0], null, null,
                     new FluidStack[0], new FluidStack[]{row.output().copy()}, row.ticks(), row.power(), 0);
             // Retain the registration proof at lookup and consumption: no damaged or filled input.

@@ -18,7 +18,8 @@ public final class MachineRecipeDocuments {
             MachineRecipeFields.FLUID_OUTPUTS,
             MachineRecipeFields.EU_PER_TICK,
             MachineRecipeFields.DURATION,
-            MachineRecipeFields.SPECIAL);
+            MachineRecipeFields.SPECIAL,
+            "material_input");
     private static final Set<String> ROOT_REMOVAL = Set.of(
             MachineRecipeFields.TYPE_REMOVAL, "type",
             MachineRecipeFields.MAP, MachineRecipeFields.CLEAR,
@@ -26,7 +27,8 @@ public final class MachineRecipeDocuments {
             MachineRecipeFields.ITEM_OUTPUTS, MachineRecipeFields.FLUID_OUTPUTS);
     private static final Set<String> ITEM =
             Set.of(MachineRecipeFields.ITEM, MachineRecipeFields.TAG, MachineRecipeFields.COUNT);
-    private static final Set<String> FLUID = Set.of(MachineRecipeFields.FLUID, MachineRecipeFields.AMOUNT);
+    private static final Set<String> FLUID =
+            Set.of(MachineRecipeFields.FLUID, MachineRecipeFields.TAG, MachineRecipeFields.AMOUNT);
     private static final Set<String> RESULT =
             Set.of(MachineRecipeFields.ITEM, MachineRecipeFields.COUNT, MachineRecipeFields.CHANCE);
 
@@ -50,7 +52,8 @@ public final class MachineRecipeDocuments {
                 fluids(json, MachineRecipeFields.FLUID_OUTPUTS, true),
                 requiredLong(json, MachineRecipeFields.EU_PER_TICK),
                 requiredLong(json, MachineRecipeFields.DURATION),
-                optionalLong(json, MachineRecipeFields.SPECIAL));
+                optionalLong(json, MachineRecipeFields.SPECIAL),
+                json.containsKey("material_input") ? material(object(json.get("material_input"))) : null);
         for (var input : spec.itemInputs()) if (input.count() < 1) throw new IllegalArgumentException("count");
         for (var input : spec.fluidInputs()) if (input.amount() < 0) throw new IllegalArgumentException("amount");
         for (var output : spec.itemOutputs()) {
@@ -99,6 +102,7 @@ public final class MachineRecipeDocuments {
         json.number(MachineRecipeFields.EU_PER_TICK, spec.euPerTick());
         json.number(MachineRecipeFields.DURATION, spec.duration());
         json.number(MachineRecipeFields.SPECIAL, spec.special());
+        if (spec.materialInput() != null) json.raw("material_input", materialJson(spec.materialInput()));
         return json.finish();
     }
 
@@ -129,6 +133,45 @@ public final class MachineRecipeDocuments {
         return json.finish();
     }
 
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> object(Object value) {
+        if (!(value instanceof Map<?, ?> map)) throw new IllegalArgumentException("Expected material input object");
+        return (Map<String, Object>) map;
+    }
+
+    public static gregtech.api.addon.recipe.MaterialUnitIngredient material(Map<String, Object> json) {
+        rejectUnknown(json, Set.of("material", "units", "forms", "rounding"));
+        Object rawForms = json.get("forms");
+        if (!(rawForms instanceof List<?> list)) throw new IllegalArgumentException("Material forms");
+        var forms = new ArrayList<String>();
+        for (Object form : list) {
+            if (!(form instanceof String name) || !name.matches("[A-Za-z][A-Za-z0-9_]*"))
+                throw new IllegalArgumentException("Material form name");
+            forms.add(name);
+        }
+        String rounding = optionalString(json, "rounding");
+        return new gregtech.api.addon.recipe.MaterialUnitIngredient(
+                requiredString(json, "material"),
+                gregtech.engine.recipe.MaterialUnitAmount.parse(requiredString(json, "units")),
+                forms,
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.valueOf(
+                        (rounding == null ? "whole_outputs" : rounding).toUpperCase(java.util.Locale.ROOT)));
+    }
+
+    public static String materialJson(gregtech.api.addon.recipe.MaterialUnitIngredient material) {
+        var json = new Out();
+        json.string("material", material.material());
+        json.string("units", gregtech.engine.recipe.MaterialUnitAmount.format(material.amount()));
+        json.string("rounding", material.rounding().name().toLowerCase(java.util.Locale.ROOT));
+        var forms = new ArrayList<String>();
+        for (String form : material.forms()) {
+            if (!form.matches("[A-Za-z][A-Za-z0-9_]*")) throw new IllegalArgumentException("Material form name");
+            forms.add("\"" + form + "\"");
+        }
+        json.raw("forms", array(forms));
+        return json.finish();
+    }
+
     private static String map(Map<String, Object> json) {
         var map = requiredString(json, MachineRecipeFields.MAP);
         checkMap(map);
@@ -153,12 +196,16 @@ public final class MachineRecipeDocuments {
         var out = new ArrayList<FluidComponent>();
         for (var element : objects(json, key)) {
             rejectUnknown(element, FLUID);
-            var fluid = requiredString(element, MachineRecipeFields.FLUID);
-            checkId(fluid, MachineRecipeFields.FLUID);
+            var fluid = optionalString(element, MachineRecipeFields.FLUID);
+            var tag = optionalString(element, MachineRecipeFields.TAG);
+            if (fluid != null) checkId(fluid, MachineRecipeFields.FLUID);
+            if (tag != null) checkId(tag, MachineRecipeFields.TAG);
+            if (tag != null && key.equals(MachineRecipeFields.FLUID_OUTPUTS))
+                throw new IllegalArgumentException("fluid output does not take a tag");
             long amount = addition ? requiredLong(element, MachineRecipeFields.AMOUNT) : optionalAmount(element);
             if (amount < 0) throw new IllegalArgumentException("amount");
             if (amount > MachineRecipeFields.MAX_AMOUNT) throw new IllegalArgumentException("amount");
-            out.add(new FluidComponent(fluid, amount));
+            out.add(new FluidComponent(fluid, tag, amount));
         }
         return out;
     }
@@ -301,7 +348,8 @@ public final class MachineRecipeDocuments {
 
     private static String fluidJson(FluidComponent value, boolean addition) {
         var json = new Out();
-        json.string(MachineRecipeFields.FLUID, value.fluid());
+        if (value.fluid() != null) json.string(MachineRecipeFields.FLUID, value.fluid());
+        else json.string(MachineRecipeFields.TAG, value.tag());
         if (addition || value.amount() != 0) json.number(MachineRecipeFields.AMOUNT, value.amount());
         return json.finish();
     }

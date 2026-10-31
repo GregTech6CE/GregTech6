@@ -62,11 +62,13 @@ public final class FermentationAccess {
                 if (recipe.isPresenceFluidInput(0)) continue;
                 var input = recipe.mFluidInputs[0];
                 var output = recipe.mFluidOutputs[0];
-                if (input == null || output == null || input.getFluid() != fluid.getFluid()) continue;
+                if (input == null || output == null || !recipe.matchesFluidInput(0, fluid)) continue;
                 // Reject unrelated fluids before material/tag matching; keep recipe order and live flags.
-                if (!gregtech.engine.recipe.RecipeInputs.matches(recipe.mInputs[0], item)) continue;
-                if (FluidHazards.isGas(input.getFluid()) || FluidHazards.isGas(output.getFluid())) continue;
-                return new Recipe(input, output, recipe.mEUt, recipe.mDuration);
+                if (!recipe.matchesItemInput(0, item)) continue;
+                if (FluidHazards.isGas(fluid.getFluid()) || FluidHazards.isGas(output.getFluid())) continue;
+                var actual = fluid.copy();
+                actual.setAmount(input.getAmount());
+                return new Recipe(actual, output, recipe.mEUt, recipe.mDuration);
             }
             return null;
         });

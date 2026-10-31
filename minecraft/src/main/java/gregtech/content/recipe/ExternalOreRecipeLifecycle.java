@@ -38,6 +38,7 @@ public final class ExternalOreRecipeLifecycle {
         SharedPurifiedAcidRows.clear();
         SharedThermalInputRows.clear();
         SharedThermalRecyclingRows.clear();
+        MoltenMetalUnitRecipes.clear();
         gregtech.engine.material.MaterialDisplayBinding.invalidate();
     }
 }

@@ -26,6 +26,11 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * GT6's Bath conversions that are not tied to untreated wood:
@@ -46,11 +51,6 @@ import java.util.Set;
 public final class BathMaterialRecipes extends OriginalRecipeBatch {
     public static final BathMaterialRecipes INSTANCE = new BathMaterialRecipes();
 
-    /** FL.waters(125, 100): water, mineral water and spectral dew at 125, distilled water at 100. */
-    private static final String[] WATER_REGISTRY_NAMES = {
-        "water", "potion.mineralwater", "ic2distilledwater", "spectral_dew"
-    };
-    private static final int[] WATER_AMOUNTS = {125, 125, 100, 125};
     private static final String[] DUST_FORMS = {"dust", "dustSmall", "dustTiny"};
     private static final int[] DUST_COUNTS = {1, 4, 9};
     private static final long PAPER_TICKS = 16;
@@ -59,12 +59,17 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
     private static final long CONVERSION_TICKS = 144;
 
     private final Set<String> used = new HashSet<>();
+    private record Conversion(long ticks, int amount, FluidStack fluid, ItemStack output, List<ItemStack> inputs) {}
+    private record Input(net.minecraft.world.item.Item item, net.minecraft.world.level.material.Fluid fluid) {}
+    private final Map<String, Conversion> conversions = new LinkedHashMap<>();
+    private final Map<Input, Integer> acceptedInputs = new java.util.HashMap<>();
 
     private BathMaterialRecipes() {}
 
     public static int register() {
         INSTANCE.paper();
         INSTANCE.conversions();
+        INSTANCE.flushConversions();
         return INSTANCE.entries().size();
     }
 
@@ -80,28 +85,22 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
             GTMaterial material = GTMaterialRegistry.get(name);
             if (material.isValid()) sources.add(material);
         }
-        ItemStack paper = new ItemStack(Items.PAPER, 1);
-        for (GTMaterial material : sources) {
-            for (int form = 0; form < DUST_FORMS.length; form++) {
-                MaterialPrefix prefix = PrefixRegistry.byName(DUST_FORMS[form]);
-                if (prefix == null) continue;
-                ItemStack input = GTItems.getStack(prefix, material, DUST_COUNTS[form]);
-                if (input.isEmpty()) continue;
-                for (int water = 0; water < WATER_REGISTRY_NAMES.length; water++) {
-                    FluidStack fluid = GeneratedRecipeResolver.byRegistryName(
-                            WATER_REGISTRY_NAMES[water], WATER_AMOUNTS[water]);
-                    if (fluid == null || fluid.isEmpty()) continue;
-                    add(
-                            "paper/" + material.getName() + "/" + DUST_FORMS[form] + "/"
-                                    + WATER_REGISTRY_NAMES[water],
-                            MachineRecipeMaps.Bath,
-                            PAPER_TICKS,
-                            0,
-                            items(input.copy()),
-                            items(paper.copy()),
-                            fluids(fluid),
-                            null);
-                }
+        var waters = RecipeInputGroups.fluids("ordinary_water", "Water", "SpDew", "MnWtr");
+        for (int form = 0; form < DUST_FORMS.length; form++) {
+            MaterialPrefix prefix = PrefixRegistry.byName(DUST_FORMS[form]);
+            if (prefix == null) continue;
+            var candidates = sources.stream().map(m -> GTItems.getStack(prefix, m, 1))
+                    .filter(stack -> !stack.isEmpty()).toList();
+            if (candidates.isEmpty()) continue;
+            var group = RecipeInputGroups.items("pulp_dusts/" + DUST_FORMS[form].toLowerCase(java.util.Locale.ROOT), candidates);
+            for (boolean distilled : new boolean[] {false, true}) {
+                var fluid = distilled ? GeneratedRecipeResolver.byRegistryName("ic2distilledwater", 100) : waters.stack(125);
+                if (fluid == null || fluid.isEmpty()) continue;
+                var recipe = new Recipe(items(group.stack(DUST_COUNTS[form])), items(new ItemStack(Items.PAPER)),
+                        null, null, fluids(fluid), null, PAPER_TICKS, 0, 0);
+                group.apply(recipe, 0);
+                if (!distilled) waters.apply(recipe, 0);
+                publish("paper/" + DUST_FORMS[form] + "/" + distilled, MachineRecipeMaps.Bath, recipe);
             }
         }
     }
@@ -231,14 +230,33 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
                 0,
                 0);
         if (MachineRecipeMaps.Bath.findCollision(probe) != null) return;
-        add(
-                "convert/" + input.getName() + "/" + output.getName() + "/" + prefix + "/" + fluidName,
-                MachineRecipeMaps.Bath,
-                ticks,
-                0,
-                items(source.copy()),
-                items(target.copy()),
-                fluids(fluid),
-                null);
+        // Match the original first-registered row when canonical block forms overlap, even
+        // though the grouped rows are published only after collecting all family members.
+        var inputKey = new Input(probe.mInputs[0].getItem(), fluid.getFluid());
+        Integer previousAmount = acceptedInputs.get(inputKey);
+        if (previousAmount != null && previousAmount <= mb) return;
+        acceptedInputs.put(inputKey, mb);
+        String group = output.getName().toLowerCase(Locale.ROOT) + "/" + prefix.toLowerCase(Locale.ROOT)
+                + "/" + fluidName;
+        var batch = conversions.computeIfAbsent(group,
+                ignored -> new Conversion(ticks, mb, fluid.copy(), target.copy(), new ArrayList<>()));
+        if (batch.ticks() != ticks || batch.amount() != mb || !ItemStack.matches(batch.output(), target))
+            throw new IllegalStateException("Non-equivalent bath conversion: " + group);
+        batch.inputs().add(source.copy());
+    }
+
+    private void flushConversions() {
+        for (var entry : conversions.entrySet()) {
+            var batch = entry.getValue();
+            var recipe = new Recipe(items(batch.inputs().get(0)), items(batch.output()), null, null,
+                    fluids(batch.fluid()), null, batch.ticks(), 0, 0);
+            if (batch.inputs().size() > 1) {
+                var group = RecipeInputGroups.items("bath_materials/" + entry.getKey(), batch.inputs());
+                group.apply(recipe, 0);
+            }
+            publish("convert/" + entry.getKey(), MachineRecipeMaps.Bath, recipe);
+        }
+        conversions.clear();
+        acceptedInputs.clear();
     }
 }

@@ -65,10 +65,6 @@ public final class HotFluidFuelCycle {
     private static boolean matchesFluid(Recipe recipe, FluidTankGT hot) {
         return recipe != null && recipe.mEnabled && !recipe.mFakeRecipe && recipe.mInputs.length == 0
                 && recipe.mFluidInputs.length == 1 && !recipe.mFluidInputs[0].isEmpty()
-//? if >=1.21.1 {
-                /*&& FluidStack.isSameFluidSameComponents(hot.getFluidLong(), recipe.mFluidInputs[0]);
-*///?} else {
-                && hot.getFluidLong().isFluidEqual(recipe.mFluidInputs[0]);
-//?}
+                && recipe.matchesFluidInput(0, hot.getFluidLong());
     }
 }

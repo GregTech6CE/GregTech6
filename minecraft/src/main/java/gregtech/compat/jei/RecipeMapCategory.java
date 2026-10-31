@@ -36,6 +36,13 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
     private IDrawable background;
     private final IDrawable icon;
     private final IGuiHelper helper;
+    private final java.util.Map<net.minecraft.world.item.Item, java.util.List<ItemStack>> materialAliases = new java.util.IdentityHashMap<>();
+    private long materialRevision = -1;
+    private java.util.List<ItemStack> unitAliases(ItemStack stack) {
+        long revision = gregtech.engine.material.MaterialDisplayBinding.revision();
+        if (revision != materialRevision) { materialAliases.clear(); materialRevision = revision; }
+        return materialAliases.computeIfAbsent(stack.getItem(), ignored -> gregtech.engine.material.MaterialDisplayBinding.alternatives(stack));
+    }
     public RecipeMapCategory(IGuiHelper helper,RecipeMap map,ItemStack icon) {
         this.map=map;
         this.helper=helper;
@@ -79,8 +86,16 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             if(items[i]==null||items[i].isEmpty()) continue;
             var point=layout.point(input,false,i);
             var itemSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_item_"+i);
+            var unit = input ? recipe.materialInputDisplay(i) : null;
+            if (unit != null) {
+                itemSlot.addItemStack(items[i].copyWithCount(1))
+                        .setCustomRenderer(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, new MaterialUnitRenderer(unit.amount()))
+                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(gregtech.client.MaterialUnitDisplay.tooltip(unit)));
+                builder.addInvisibleIngredients(role).addItemStacks(unitAliases(items[i]));
+                continue;
+            }
             var choices=input?recipe.viewerInputAlternatives(i):java.util.List.<ItemStack>of();
-            if (input && !recipe.mExactItemInputs && !recipe.hasItemInputGuard(i)) {
+            if (input && recipe.itemTag(i) == null && !recipe.mExactItemInputs && !recipe.hasItemInputGuard(i)) {
                 var displayed = choices.isEmpty() ? java.util.List.of(items[i]) : choices;
                 var expanded = new java.util.ArrayList<ItemStack>();
                 for (var candidate : displayed) {
@@ -90,14 +105,14 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
                 }
                 choices = expanded;
             }
-            if(choices.isEmpty())itemSlot.addItemStack(items[i]);else itemSlot.addItemStacks(choices);
+            if(choices.isEmpty()){if(!input||recipe.itemTag(i)==null)itemSlot.addItemStack(items[i]);}else itemSlot.addItemStacks(choices);
             var inputNote=input?recipe.viewerInputNote(i):"";
             if(!inputNote.isEmpty()) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(
                     Component.translatable(inputNote)));
             var materialAliases=gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map)
                     ? gregtech.content.recipe.CrucibleDisplayItems.aliases(items[i])
                     : gregtech.engine.material.MaterialDisplayBinding.alternatives(items[i]);
-            if(!materialAliases.isEmpty())builder.addInvisibleIngredients(role).addItemStacks(materialAliases);
+            if((!input||recipe.itemTag(i)==null)&&!materialAliases.isEmpty())builder.addInvisibleIngredients(role).addItemStacks(materialAliases);
             int chance=recipe.getOutputChance(i);
             boolean showChance=!input&&(chance<10000||gregtech.engine.addon.ExclusiveOutputMaps.enabled(map));
             if(showChance) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(
@@ -109,20 +124,19 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             boolean presence=input&&recipe.isPresenceFluidInput(i);
             boolean catalyst=input&&(presence||recipe.isCatalystFluidInput(i));
             var fluidRole=catalyst?RecipeIngredientRole.CATALYST:role;
-            var shown=fluid;
             var point=layout.point(input,true,i);
+            var fluidSlot=builder.addSlot(fluidRole,point.x(),point.y()).setSlotName(fluidRole.name()+"_fluid_"+i);
+            for(var shown:input?recipe.viewerFluidInputAlternatives(i):java.util.List.of(fluid)) {
 //? if >=1.21.1 {
             /*var display=FluidDisplayBinding.display(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),shown);
 *///?} else {
             var display=FluidDisplayBinding.display(shown);
 //?}
-            var fluidSlot=builder.addSlot(fluidRole,point.x(),point.y()).setSlotName(fluidRole.name()+"_fluid_"+i);
             if (input) {
                 var containers = gregtech.engine.fluid.FluidContainerDisplayBinding.containers(shown);
                 if (!containers.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStacks(containers);
             }
-            if(!display.isEmpty()) fluidSlot.addItemStack(display).addTooltipCallback((view,tooltip)->
-                    tooltip.add(gregtech.engine.fluid.FluidUnits.text("gt6ce.fluid.amount",presence ? 0 : fluid.getAmount())));
+            if(!display.isEmpty()) fluidSlot.addItemStack(display);
 //? if >=1.21.1 {
             /*else fluidSlot.addIngredient(NeoForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
             builder.addInvisibleIngredients(fluidRole).addIngredient(NeoForgeTypes.FLUID_STACK,shown);
@@ -130,10 +144,12 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             else fluidSlot.addIngredient(ForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
             builder.addInvisibleIngredients(fluidRole).addIngredient(ForgeTypes.FLUID_STACK,shown);
 //?}
-            if(catalyst) fluidSlot.addTooltipCallback((view,tooltip)->tooltip.add(Component.translatable(
-                    presence ? "gt6ce.jei.fluid_presence" : "gt6ce.jei.catalyst")));
             // Generic creative proxies still find all compatible fluid variants via U/R.
             if(!display.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStack(new ItemStack(display.getItem()));
+            }
+            fluidSlot.addTooltipCallback((view,tooltip)->tooltip.add(gregtech.engine.fluid.FluidUnits.text("gt6ce.fluid.amount",presence?0:fluid.getAmount())));
+            if(catalyst) fluidSlot.addTooltipCallback((view,tooltip)->tooltip.add(gregtech.engine.fluid.FluidUnits.text(
+                    presence ? "gt6ce.jei.fluid_presence" : "gt6ce.jei.catalyst")));
         }
     }
     @Override public void draw(Recipe recipe,IRecipeSlotsView slots,GuiGraphics graphics,double mouseX,double mouseY) {

@@ -298,12 +298,14 @@ final class SourceThermalNativeAdapter {
   boolean defaultNoPhase(GTMaterial material,Facts source){return noExternalPhase(material,source,null);}
   boolean noExternalPhase(GTMaterial material,Facts source,String selectedField){
    String name=material.getName(),lower=name.toLowerCase(Locale.ROOT);
+   String moltenField="GenMolten_"+name,liquidField="GenLiquid_"+name,gasField="GenGas_"+name;
+   String moltenName="molten."+lower;
    for(var definition:definitions.entrySet()){
     String field=definition.getKey();var entry=definition.getValue();
     String bound=entry.materialKey()!=null?entry.materialKey():FluidCatalog.boundMaterial(entry.registryName());
     boolean related=bound!=null&&GTMaterialRegistry.get(bound).resolve()==material
-        ||field.equals("GenMolten_"+name)||field.equals("GenLiquid_"+name)||field.equals("GenGas_"+name)
-        ||entry.registryName().equals(lower)||entry.registryName().equals("molten."+lower);
+        ||field.equals(moltenField)||field.equals(liquidField)||field.equals(gasField)
+        ||entry.registryName().equals(lower)||entry.registryName().equals(moltenName);
     if(!related||field.equals(selectedField))continue;
     // A proven source NO may coexist with the port's known over-broad molten factory artifact.
     if(defaultMolten(material,source,field,entry))continue;

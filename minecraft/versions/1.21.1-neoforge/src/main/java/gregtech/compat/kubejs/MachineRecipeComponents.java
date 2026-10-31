@@ -62,7 +62,7 @@ final class MachineRecipeComponents {
 
     record MachineResult(String item, int count, int chance) {}
 
-    record MachineFluid(String fluid, long amount) {}
+    record MachineFluid(String fluid, String tag, long amount) {}
 
     private static final class MachineItemComponent implements RecipeComponent<MachineItem> {
         static final RecipeComponentType<MachineItem> TYPE = RecipeComponentType.unit(
@@ -145,9 +145,10 @@ final class MachineRecipeComponents {
         static final RecipeComponentType<MachineFluid> TYPE = RecipeComponentType.unit(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_fluid"), new MachineFluidComponent());
         private static final Codec<MachineFluid> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        Codec.STRING.fieldOf("fluid").forGetter(MachineFluid::fluid),
+                        Codec.STRING.optionalFieldOf("fluid").forGetter(value -> optional(value.fluid)),
+                        Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag)),
                         Codec.LONG.fieldOf("amount").forGetter(MachineFluid::amount))
-                .apply(instance, MachineRecipeComponents::fluid));
+                .apply(instance, (fluid, tag, amount) -> fluid(fluid.orElse(null), tag.orElse(null), amount)));
 
         @Override
         public RecipeComponentType<?> type() {
@@ -167,13 +168,16 @@ final class MachineRecipeComponents {
         @Override
         public MachineFluid wrap(RecipeScriptContext cx, Object from) {
             Object value = unwrap(from);
-            if (value instanceof MachineFluid fluid) return fluid(fluid.fluid, fluid.amount);
+            if (value instanceof MachineFluid fluid) return fluid(fluid.fluid, fluid.tag, fluid.amount);
             if (value instanceof FluidStack stack) {
                 if (stack.isEmpty()) throw new IllegalArgumentException("empty fluid");
-                return fluid(BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString(), stack.getAmount());
+                return fluid(BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString(), null, stack.getAmount());
             }
             var json = map(value);
-            return fluid(text(json.get("fluid")), ((Number) unwrap(json.get("amount"))).longValue());
+            return fluid(
+                    json.get("fluid") == null ? null : text(json.get("fluid")),
+                    json.get("tag") == null ? null : text(json.get("tag")),
+                    ((Number) unwrap(json.get("amount"))).longValue());
         }
     }
 
@@ -203,10 +207,13 @@ final class MachineRecipeComponents {
         return new MachineResult(item, count, chance);
     }
 
-    private static MachineFluid fluid(String fluid, long amount) {
-        if (fluid == null || fluid.isBlank() || fluid.indexOf(':') < 0) throw new IllegalArgumentException("fluid");
-        if (amount < 1) throw new IllegalArgumentException("amount must be at least 1");
-        return new MachineFluid(fluid, amount);
+    private static MachineFluid fluid(String fluid, String tag, long amount) {
+        if ((fluid == null) == (tag == null))
+            throw new IllegalArgumentException("exactly one of fluid or tag is required");
+        String id = fluid == null ? tag : fluid;
+        if (id.isBlank() || ResourceLocation.tryParse(id) == null) throw new IllegalArgumentException("fluid/tag");
+        if (amount < 0 || amount > Integer.MAX_VALUE) throw new IllegalArgumentException("amount");
+        return new MachineFluid(fluid, tag, amount);
     }
 
     private static Optional<String> optional(String value) {

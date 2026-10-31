@@ -41,17 +41,19 @@ public final class ConcreteMixerRecipes {
             if (material.isValid() && SOURCE_STONE.accepts(MaterialPrefix.dust, material))
                 stones.add(material.resolve());
         }
-        for (GTMaterial stone : stones) {
-            if (stone == concrete || calcites.contains(stone)) continue;
-            for (GTMaterial calcite : calcites)
-                for (GTMaterial ash : ashes) {
-                    add(1296, block(stone, 9), block(calcite, 1), block(ash, 1), block(concrete, 11));
-                    add(1296, block(stone, 9), block(calcite, 1), dust(ash, 9), block(concrete, 11));
-                    add(1296, block(stone, 9), dust(calcite, 9), block(ash, 1), block(concrete, 11));
-                    add(144, block(stone, 1), dust(calcite, 1), dust(ash, 1), dust(concrete, 11));
-                    add(16, dust(stone, 9), dust(calcite, 1), dust(ash, 1), dust(concrete, 11));
-                }
-        }
+        stones.remove(concrete);
+        stones.removeAll(calcites);
+        var stoneDust = group("stone_dusts/aggregate", stones, false);
+        var stoneBlocks = group("stone_dust_blocks/aggregate", stones, true);
+        var calciteDust = group("calcite_dusts", calcites, false);
+        var calciteBlocks = group("calcite_dust_blocks", calcites, true);
+        var ashDust = group("ash_dusts", ashes, false);
+        var ashBlocks = group("ash_dust_blocks", ashes, true);
+        add(1296, stoneBlocks, 9, calciteBlocks, 1, ashBlocks, 1, block(concrete, 11));
+        add(1296, stoneBlocks, 9, calciteBlocks, 1, ashDust, 9, block(concrete, 11));
+        add(1296, stoneBlocks, 9, calciteDust, 9, ashBlocks, 1, block(concrete, 11));
+        add(144, stoneBlocks, 1, calciteDust, 1, ashDust, 1, dust(concrete, 11));
+        add(16, stoneDust, 9, calciteDust, 1, ashDust, 1, dust(concrete, 11));
         return REGISTERED.size();
     }
 
@@ -70,10 +72,37 @@ public final class ConcreteMixerRecipes {
         return stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(count);
     }
 
-    private static void add(long ticks, ItemStack stone, ItemStack calcite, ItemStack ash, ItemStack result) {
-        if (stone.isEmpty() || calcite.isEmpty() || ash.isEmpty() || result.isEmpty()) return;
+    private static RecipeInputGroups.Items group(String name, Set<GTMaterial> materials, boolean blocks) {
+        var stacks = materials.stream()
+                .map(m -> blocks ? block(m, 1) : dust(m, 1))
+                .filter(stack -> !stack.isEmpty())
+                .toList();
+        return stacks.isEmpty() ? null : RecipeInputGroups.items(name, stacks);
+    }
+
+    private static void add(
+            long ticks,
+            RecipeInputGroups.Items stone,
+            int stones,
+            RecipeInputGroups.Items calcite,
+            int calcites,
+            RecipeInputGroups.Items ash,
+            int ashes,
+            ItemStack result) {
+        if (stone == null || calcite == null || ash == null || result.isEmpty()) return;
         Recipe recipe = new Recipe(
-                new ItemStack[] {stone, calcite, ash}, new ItemStack[] {result}, null, null, null, null, ticks, 16, 0);
+                new ItemStack[] {stone.stack(stones), calcite.stack(calcites), ash.stack(ashes)},
+                new ItemStack[] {result},
+                null,
+                null,
+                null,
+                null,
+                ticks,
+                16,
+                0);
+        stone.apply(recipe, 0);
+        calcite.apply(recipe, 1);
+        ash.apply(recipe, 2);
         if (MachineRecipeMaps.Mixer.addRecipe(recipe) == recipe) REGISTERED.add(recipe);
     }
 

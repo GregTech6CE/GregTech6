@@ -52,6 +52,12 @@ public class RecipeMap {
                 net.minecraft.world.level.block.entity.BlockEntity machine, ItemStack special,
                 List<ItemStack> items, List<FluidStack> fluids);
     }
+    private java.util.function.Predicate<ItemStack> mDynamicInputAdmission;
+    /** Rule families can admit ingredients without enumerating every physical input/output pair. */
+    public RecipeMap dynamicInputAdmission(java.util.function.Predicate<ItemStack> admission) {
+        mDynamicInputAdmission = mDynamicInputAdmission == null ? admission : mDynamicInputAdmission.or(admission);
+        return this;
+    }
     private ContextRecipes mContextRecipes;
     public RecipeMap contextualRecipes(ContextRecipes provider) {
         mContextRecipes = provider;
@@ -389,6 +395,12 @@ public class RecipeMap {
             row.mHidden = false;
             row.mFakeRecipe = false;
             if (!validate(row, mLogErrors)) continue;
+            if (row.hasTaggedInputs()) {
+                Recipe collision = findCollision(row);
+                if (collision != null) RecipeDiagnostics.rejected(this, collision, row);
+                else if (add(row) == row) { accepted.add(row); indexCollisionAnchor(row, anchors, unanchored); }
+                continue;
+            }
             boolean collision = false;
             for (ItemStack input : row.mInputs) {
                 if (empty(input)) continue;
@@ -425,13 +437,18 @@ public class RecipeMap {
     private static void canonicalInputs(Recipe recipe) {
         if (recipe.mExactItemInputs) return;
         for (int i = 0; i < recipe.mInputs.length; i++) {
-            if (!recipe.hasItemInputGuard(i) && !recipe.hasSameItemInputPredicate(i))
+            if (recipe.itemTag(i) == null && !recipe.hasItemInputGuard(i) && !recipe.hasSameItemInputPredicate(i))
                 recipe.mInputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.mInputs[i]);
         }
     }
 
     private static void indexCollisionAnchor(Recipe row, Map<Item, List<Recipe>> anchors,
                                             List<Recipe> unanchored) {
+        if (row.hasTaggedInputs()) {
+            // covers() cannot prove guarded domains; do not rescan them for every concrete row.
+            if (!row.hasItemInputGuards() && !row.hasSameItemInputPredicates()) unanchored.add(row);
+            return;
+        }
         for (ItemStack required : row.mInputs) if (!empty(required)) {
             anchors.computeIfAbsent(required.getItem(), key -> new ArrayList<>()).add(row);
             return;
@@ -440,6 +457,7 @@ public class RecipeMap {
     }
 
     private boolean collisionReachable(Recipe existing, Recipe candidate) {
+        if (existing.hasTaggedInputs() || candidate.hasTaggedInputs()) return true;
         for (ItemStack input : candidate.mInputs) if (!empty(input)) {
             var pool = mRecipeItemMap.get(input.getItem());
             if (pool != null && pool.contains(existing)) return true;
@@ -738,6 +756,13 @@ public class RecipeMap {
      * keep the pool scan. Both paths end in {@link #inputsSatisfiedBy}, which decides alone.
      */
     public Recipe findCollision(Recipe aRecipe) {
+        if (aRecipe.hasTaggedInputs()) {
+            // Whole-domain collision checks cannot prove coverage for guarded inputs.
+            if (aRecipe.hasItemInputGuards() || aRecipe.hasSameItemInputPredicates()) return null;
+            for (Recipe existing : mRecipeList) if (RecipeTagInputs.covers(existing, aRecipe)) return existing;
+            return null;
+        }
+        for (Recipe existing : lookupTable.tagged()) if (RecipeTagInputs.covers(existing, aRecipe)) return existing;
         if (mCollisionDirty || mCollisionRows != mRecipeList.size()) rebuildCollisionIndex();
         int[] keys = availableCollisionIds(aRecipe);
         if (keys.length > COLLISION_SIGNATURE_KEYS) return findCollisionByPools(aRecipe);
@@ -771,17 +796,36 @@ public class RecipeMap {
             if (empty(in)) continue;
             Collection<Recipe> tPool = mRecipeItemMap.get(in.getItem());
             if (tPool == null) continue;
-            if (tChecked == null) tChecked = new HashSet<>();
-            for (Recipe t : tPool) if (tChecked.add(t) && inputsSatisfiedBy(t, aRecipe)) return t;
+            if (tChecked == null) tChecked = new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet<>();
+            for (Recipe t : tPool) if (collisionItemTypesPossible(t, aRecipe)
+                    && tChecked.add(t) && inputsSatisfiedBy(t, aRecipe)) return t;
         }
         for (FluidStack f : aRecipe.mFluidInputs) {
             if (f == null || f.getFluid() == Fluids.EMPTY) continue;
             Collection<Recipe> tPool = mRecipeFluidMap.get(fluidKey(f));
             if (tPool == null) continue;
-            if (tChecked == null) tChecked = new HashSet<>();
-            for (Recipe t : tPool) if (tChecked.add(t) && inputsSatisfiedBy(t, aRecipe)) return t;
+            if (tChecked == null) tChecked = new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet<>();
+            for (Recipe t : tPool) if (collisionItemTypesPossible(t, aRecipe)
+                    && tChecked.add(t) && inputsSatisfiedBy(t, aRecipe)) return t;
         }
         return null;
+    }
+
+    /** Reject unrelated mold/tool buckets before allocating entries in the collision visited set. */
+    private static boolean collisionItemTypesPossible(Recipe aExisting, Recipe aCandidate) {
+        if (aExisting.hasTaggedInputs() || aCandidate.hasTaggedInputs()) return true;
+        for (ItemStack required : aExisting.mInputs) {
+            if (empty(required)) continue;
+            boolean present = false;
+            for (ItemStack candidate : aCandidate.mInputs) {
+                if (!empty(candidate) && candidate.getItem() == required.getItem()) {
+                    present = true;
+                    break;
+                }
+            }
+            if (!present) return false;
+        }
+        return true;
     }
 
     /** Whether every input of {@code aExisting} is covered by the inputs of {@code aCandidate}. */
@@ -793,6 +837,7 @@ public class RecipeMap {
             long candidateEmpty = java.util.Arrays.stream(aCandidate.mInputs).filter(RecipeMap::empty).count();
             if (requiredEmpty != candidateEmpty) return false;
         }
+        if (aExisting.hasTaggedInputs() || aCandidate.hasTaggedInputs()) return RecipeTagInputs.covers(aExisting, aCandidate);
         // Common inputs such as molds put many unrelated recipes in the same index bucket.
         // Reject an impossible item match before copying any stacks, while retaining the full
         // count and NBT/component comparison below for every possible match.
@@ -999,9 +1044,10 @@ public class RecipeMap {
     /** Removes all recipes that use the given item as one of their inputs. */
     public synchronized boolean removeRecipesByInput(ItemStack aInput) {
         if (empty(aInput)) return false;
-        Collection<Recipe> tPool = mRecipeItemMap.get(aInput.getItem());
-        if (tPool == null || tPool.isEmpty()) return false;
-        removeAll(new ArrayList<>(tPool));
+        var removed = new HashSet<Recipe>(mRecipeItemMap.getOrDefault(aInput.getItem(), List.of()));
+        for (Recipe recipe : lookupTable.tagged()) if (containsInput(recipe, aInput, false)) removed.add(recipe);
+        if (removed.isEmpty()) return false;
+        removeAll(removed);
         return true;
     }
 
@@ -1234,9 +1280,11 @@ public class RecipeMap {
     }
 
     static boolean exactItems(Recipe recipe, List<ItemStack> inputs) {
-        for (var required : recipe.mInputs) {
+        for (int input = 0; input < recipe.mInputs.length; input++) {
+            var required = recipe.mInputs[input];
             boolean found = false;
-            for (var available : inputs) if (required.is(available.getItem())) { found = true; break; }
+            for (var available : inputs) if (recipe.itemTag(input) != null ? available.is(recipe.itemTag(input))
+                    : required.is(available.getItem())) { found = true; break; }
             if (!found) return false;
         }
         return true;
@@ -1313,7 +1361,14 @@ public class RecipeMap {
 
     /** Minimum recommended tank size for a given fluid, or 0 if unknown. */
     public long minTankSize(String fluidKey) {
-        return mMinInputTankSizes.getOrDefault(fluidKey, 0L);
+        long size = mMinInputTankSizes.getOrDefault(fluidKey, 0L);
+        var id = net.minecraft.resources.ResourceLocation.tryParse(fluidKey);
+        var fluid = id == null ? Fluids.EMPTY : net.minecraft.core.registries.BuiltInRegistries.FLUID.get(id);
+        if (fluid != Fluids.EMPTY) for (var recipe : lookupTable.tagged())
+            for (int i = 0; i < recipe.mFluidInputs.length; i++)
+                if (recipe.fluidTag(i) != null && fluid.builtInRegistryHolder().is(recipe.fluidTag(i)))
+                    size = Math.max(size, recipe.mFluidInputs[i].getAmount());
+        return size;
     }
 
     /** Whether any registered recipe, including a rule family's generated row, accepts the item. */
@@ -1338,6 +1393,7 @@ public class RecipeMap {
             found = expected;
         }
         if (found) return true;
+        if (mDynamicInputAdmission != null && mDynamicInputAdmission.test(stack)) return true;
         // Only a rule family with a published enumeration answers an item it has not indexed yet.
         if (mDynamicEnumeration == null) return false;
         Recipe generated = firstDynamicRecipe(List.of(stack), List.of());
@@ -1360,11 +1416,11 @@ public class RecipeMap {
 
     private static boolean containsInput(Recipe recipe, ItemStack stack, boolean indexed) {
         if (!recipe.mEnabled || recipe.mFakeRecipe) return false;
-        if (indexed && !recipe.hasSameItemInputPredicates() && !recipe.hasItemInputGuards()) return true;
+        if (indexed && !recipe.hasTaggedInputs() && !recipe.hasSameItemInputPredicates() && !recipe.hasItemInputGuards()) return true;
         for (int input = 0; input < recipe.mInputs.length; input++) {
             ItemStack required = recipe.mInputs[input];
             if (empty(required)) continue;
-            if (recipe.hasSameItemInputPredicate(input) || recipe.hasItemInputGuard(input) || !indexed) {
+            if (recipe.hasTaggedInputs() || recipe.hasSameItemInputPredicate(input) || recipe.hasItemInputGuard(input) || !indexed) {
                 if (recipe.matchesItemInput(input, stack)) return true;
             } else {
                 // Preserve the old index-only admission for unmarked inputs, including palette aliases.
@@ -1380,14 +1436,26 @@ public class RecipeMap {
     /** Whether any registered recipe accepts the given fluid as input. */
     public boolean containsInput(FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return false;
+        if (MaterialUnitRecipeIndex.acceptsFluid(this, fluid)) return true;
         var recipes = mRecipeFluidMap.get(fluidKey(fluid));
-        return recipes != null && recipes.stream().anyMatch(r -> r.mEnabled && !r.mFakeRecipe
+        if (recipes != null && recipes.stream().anyMatch(r -> acceptsFluid(r, fluid))) return true;
+        return lookupTable.tagged().stream().anyMatch(r -> acceptsFluid(r, fluid));
+    }
 
-//? if >=1.21.1 {
-/*                && Arrays.stream(r.mFluidInputs).anyMatch(f -> f != null && FluidStack.isSameFluidSameComponents(f,fluid)));
-*///?} else {
-                && Arrays.stream(r.mFluidInputs).anyMatch(f -> f != null && f.isFluidEqual(fluid)));
-//?}
+    private static boolean acceptsFluid(Recipe recipe, FluidStack fluid) {
+        if (!recipe.mEnabled || recipe.mFakeRecipe) return false;
+        for (int i = 0; i < recipe.mFluidInputs.length; i++)
+            if (recipe.matchesFluidInput(i, fluid)) return true;
+        return false;
+    }
 
+    /** Concrete index plus tag rows, without materializing a recipe for each tag member. */
+    public Collection<Recipe> recipesForFluid(FluidStack fluid) {
+        if (fluid == null || fluid.isEmpty()) return List.of();
+        var rows = new LinkedHashSet<Recipe>();
+        for (var recipe : mRecipeFluidMap.getOrDefault(fluidKey(fluid), List.of()))
+            if (acceptsFluid(recipe, fluid)) rows.add(recipe);
+        for (var recipe : lookupTable.tagged()) if (acceptsFluid(recipe, fluid)) rows.add(recipe);
+        return rows;
     }
 }

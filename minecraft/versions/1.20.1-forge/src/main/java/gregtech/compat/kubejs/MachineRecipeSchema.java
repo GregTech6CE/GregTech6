@@ -1,6 +1,5 @@
 package gregtech.compat.kubejs;
 
-import dev.latvian.mods.kubejs.fluid.InputFluid;
 import dev.latvian.mods.kubejs.fluid.OutputFluid;
 import dev.latvian.mods.kubejs.item.InputItem;
 import dev.latvian.mods.kubejs.item.OutputItem;
@@ -19,11 +18,13 @@ final class MachineRecipeSchema {
             .preferred("itemInputs")
             .optional(new InputItem[0])
             .alwaysWrite();
-    static final RecipeKey<InputFluid[]> FLUID_INPUTS = FluidComponents.INPUT_ARRAY
-            .key("fluid_inputs")
-            .preferred("fluidInputs")
-            .optional(new InputFluid[0])
-            .alwaysWrite();
+    static final RecipeKey<gregtech.engine.recipe.data.FluidComponent[]> FLUID_INPUTS =
+            MachineFluidInputComponent.INSTANCE
+                    .asArray()
+                    .key("fluid_inputs")
+                    .preferred("fluidInputs")
+                    .optional(new gregtech.engine.recipe.data.FluidComponent[0])
+                    .alwaysWrite();
     static final RecipeKey<OutputItem[]> ITEM_OUTPUTS = ItemComponents.OUTPUT_ARRAY
             .key("item_outputs")
             .preferred("itemOutputs")
@@ -46,6 +47,10 @@ final class MachineRecipeSchema {
             .preferred("special")
             .optional(0L)
             .alwaysWrite();
+    static final RecipeKey<gregtech.api.addon.recipe.MaterialUnitIngredient> MATERIAL_INPUT = MachineMaterialInputComponent.INSTANCE
+            .key("material_input")
+            .preferred("materialInput")
+            .optional((gregtech.api.addon.recipe.MaterialUnitIngredient) null);
     static final RecipeSchema SCHEMA = new RecipeSchema(
                     MachineRecipeJS.class,
                     MachineRecipeJS::new,
@@ -56,7 +61,8 @@ final class MachineRecipeSchema {
                     FLUID_OUTPUTS,
                     EU,
                     DURATION,
-                    SPECIAL)
+                    SPECIAL,
+                    MATERIAL_INPUT)
             .constructor(MAP);
 
     private MachineRecipeSchema() {}

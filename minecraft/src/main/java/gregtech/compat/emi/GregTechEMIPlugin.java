@@ -69,7 +69,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                     item,
                     dev.emi.emi.api.stack.Comparison.compareData(
                             stack -> gregtech.engine.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));
-        ToolAssemblyEmiRecipe.register(registry);
+        var candidates = new EmiItemCandidates();
+        ToolAssemblyEmiRecipe.register(registry, candidates);
         MoldChiselEmiRecipe.register(registry);
         LootEmiRecipe.register(registry);
         StructureEmiRecipe.register(registry);
@@ -77,7 +78,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         // Rebuild aliases from this reload's compositions before creating ingredient templates.
         gregtech.engine.material.MaterialDisplayBinding.invalidate();
         var machines = RecipeMachines.collect();
-        var ingredients = new MachineEmiIngredients();
+        MaterialUnitTagEmiRecipe.register(registry);
+        var ingredients = new MachineEmiIngredients(candidates);
         long started = System.nanoTime();
         int rows = 0, categories = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
@@ -122,6 +124,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                                 map.mNameInternal,
                                 (System.nanoTime() - mapStarted) / 1_000_000);
         }
+        candidates.finish();
         com.mojang.logging.LogUtils.getLogger()
                 .info(
                         "[gregtech] EMI registered {} machine recipes in {} categories in {} ms (overlay {})",

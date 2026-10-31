@@ -193,6 +193,13 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
 //?}
     }
     private ItemStack[] consume(Recipe recipe) {
+        if (recipe.hasTaggedInputs()) {
+            long emptyInputs = java.util.Arrays.stream(recipe.mInputs).filter(ItemStack::isEmpty).count();
+            long emptyWork = java.util.Arrays.stream(work).filter(ItemStack::isEmpty).count();
+            if (emptyInputs > emptyWork) return null;
+            var remaining = gregtech.engine.recipe.RecipeInputs.consume(recipe, java.util.Arrays.asList(work), java.util.List.of(), 1);
+            return remaining == null ? null : remaining.items().toArray(ItemStack[]::new);
+        }
         return gregtech.content.tool.AnvilWorkInputs.consume(work,recipe.mInputs);
     }
     private void give(Player player, ItemStack item) { if(player==null) gregtech.engine.inventory.BlockContents.drop(this,item); else if (!item.isEmpty() && !player.addItem(item)) player.drop(item, false); }

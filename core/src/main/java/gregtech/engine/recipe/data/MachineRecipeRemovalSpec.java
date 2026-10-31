@@ -19,6 +19,8 @@ public record MachineRecipeRemovalSpec(
         fluidInputs = List.copyOf(fluidInputs);
         itemOutputs = List.copyOf(itemOutputs);
         fluidOutputs = List.copyOf(fluidOutputs);
+        if (fluidOutputs.stream().anyMatch(fluid -> fluid.tag() != null))
+            throw new IllegalArgumentException("fluid output does not take a tag");
         boolean matched =
                 !itemInputs.isEmpty() || !fluidInputs.isEmpty() || !itemOutputs.isEmpty() || !fluidOutputs.isEmpty();
         if (clear && matched) throw new IllegalArgumentException("clear cannot be combined with a match");

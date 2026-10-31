@@ -13,7 +13,6 @@ import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
-import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
@@ -42,6 +41,60 @@ public final class SourceExtruderRecipes {
     private record Form(String name, long weight, ItemStack stack) {}
 
     private record Output(String form, String mold, boolean nonSmithable) {}
+
+    private record UnitKey(GTMaterial material, Item mold, Item output, long units, long ticks, long power) {}
+
+    private record UnitRule(
+            GTMaterial material,
+            GTMaterial target,
+            String outputForm,
+            String moldId,
+            long units,
+            gregtech.engine.recipe.MaterialUnitRecipe rule) {}
+
+    private static final Map<UnitKey, UnitRule> UNIT_RULES = new LinkedHashMap<>();
+
+    private static void unitRule(
+            GTMaterial material,
+            GTMaterial target,
+            String outputForm,
+            ItemStack output,
+            long units,
+            long ticks,
+            long power,
+            String moldId,
+            List<Form> inputs) {
+        var mold = mold(moldId);
+        var display = GTItems.getStack(MaterialPrefix.unit, material, 1);
+        if (display.isEmpty() || mold.isEmpty() || output.isEmpty()) return;
+        var key = new UnitKey(material, mold.getItem(), output.getItem(), units, ticks, power);
+        var rule = UNIT_RULES.computeIfAbsent(key, ignored -> {
+            var template = new Recipe(
+                            new ItemStack[] {display, mold},
+                            new ItemStack[] {output.copyWithCount(1)},
+                            null,
+                            null,
+                            null,
+                            null,
+                            ticks,
+                            power,
+                            0)
+                    .withCatalystInputs(1);
+            return new UnitRule(
+                    material,
+                    target,
+                    outputForm,
+                    moldId,
+                    units,
+                    new gregtech.engine.recipe.MaterialUnitRecipe(
+                            template,
+                            0,
+                            material,
+                            units,
+                            gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS));
+        });
+        for (Form input : inputs) rule.rule.source(input.stack(), input.weight());
+    }
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<Entry> PENDING = new ArrayList<>();
@@ -232,71 +285,50 @@ public final class SourceExtruderRecipes {
         if (!profile.extrudable() || profile.forgingAmount() < GTValues.U) return 0;
         GTMaterial target = SourceExtrusionRules.target(material, profile);
         if (target == null || !target.isValid()) return 0;
-        int before = PENDING.size();
         var inputs = forms(material);
         var outputs = forms(target);
         boolean nativeProfile = SourceExtrusionRules.profile(material) != null;
-        for (String name : INPUTS) {
-            if (!nativeProfile && !Set.of("ingot", "plate", "gem", "dust").contains(name)) continue;
-            Form input = inputs.get(name);
-            if (input == null) continue;
-            for (Output row : OUTPUTS) {
-                if (name.equals(row.form()) || row.nonSmithable() && profile.smithable()) continue;
-                Form output = outputs.get(row.form());
-                if (output == null) continue;
-                long[] amounts = SourceExtrusionRules.amounts(input.weight(), output.weight());
-                if (amounts == null) continue;
-                long ticks = profile.simple()
-                        ? SourceExtrusionRules.simpleTicks(output.weight() * amounts[2])
-                        : SourceExtrusionRules.normalTicks(material, target, input.weight() * amounts[0]);
-                add(material, target, input, output, row, amounts, ticks, profile.simple(), false);
-                if (profile.simple()) add(material, target, input, output, row, amounts, ticks, true, true);
+        int rulesBefore = UNIT_RULES.size();
+        for (Output row : OUTPUTS) {
+            if (row.nonSmithable() && profile.smithable()) continue;
+            Form output = outputs.get(row.form());
+            if (output == null) continue;
+            var allowed = new ArrayList<Form>();
+            for (String name : INPUTS) {
+                if (name.equals(row.form())
+                        || !nativeProfile
+                                && !Set.of("ingot", "plate", "gem", "dust").contains(name)) continue;
+                Form input = inputs.get(name);
+                if (input != null && SourceExtrusionRules.amounts(input.weight(), output.weight()) != null)
+                    allowed.add(input);
             }
-        }
-        return PENDING.size() - before;
-    }
-
-    private static void add(
-            GTMaterial material,
-            GTMaterial target,
-            Form input,
-            Form output,
-            Output row,
-            long[] amounts,
-            long ticks,
-            boolean simple,
-            boolean lowHeat) {
-        var shape = GTTechnological.get((lowHeat ? "low_heat_extruder_shape_" : "extruder_shape_") + row.mold());
-        if (shape == null) throw new IllegalStateException("Missing registered extruder mold " + row.mold());
-        ItemStack in = input.stack().copyWithCount((int) amounts[0]);
-        int count = (int) amounts[1];
-        ItemStack[] out = count > 64
-                ? new ItemStack[] {
-                    output.stack().copyWithCount(64), output.stack().copyWithCount(count - 64)
-                }
-                : new ItemStack[] {output.stack().copyWithCount(count)};
-        Recipe recipe = new Recipe(
-                        new ItemStack[] {in, new ItemStack(shape)},
-                        out,
-                        null,
-                        null,
-                        null,
-                        null,
+            if (allowed.isEmpty()) continue;
+            long ticks = profile.simple()
+                    ? SourceExtrusionRules.simpleTicks(output.weight())
+                    : SourceExtrusionRules.normalTicks(material, target, output.weight());
+            unitRule(
+                    material,
+                    target,
+                    row.form(),
+                    output.stack(),
+                    output.weight(),
+                    ticks,
+                    profile.simple() ? 16 : 96,
+                    "extruder_shape_" + row.mold(),
+                    allowed);
+            if (profile.simple())
+                unitRule(
+                        material,
+                        target,
+                        row.form(),
+                        output.stack(),
+                        output.weight(),
                         ticks,
-                        simple ? 16 : 96,
-                        0)
-                .withCatalystInputs(1)
-                .withItemInputGuard(0, stack -> !ItemMaterialRegistry.hasStoredContents(stack));
-        PENDING.add(new Entry(
-                material,
-                target,
-                input.name(),
-                output.name(),
-                lowHeat,
-                simple,
-                input.weight() * amounts[0],
-                output.weight() * amounts[1],
-                recipe));
+                        16,
+                        "low_heat_extruder_shape_" + row.mold(),
+                        allowed);
+        }
+        return UNIT_RULES.size() - rulesBefore;
     }
 
     /**
@@ -304,7 +336,7 @@ public final class SourceExtruderRecipes {
      * panes/tubes/bottles, the plastic canister, tin-alloy food cans and the zirconium reactor-rod hull.
      */
     public static int registerSpecialRecipes() {
-        int before = PENDING.size();
+        int before = PENDING.size() + UNIT_RULES.size();
         ItemStack waxPill = registryItem("gt6ce:empty_wax_pill", 1);
         waxRows(Materials.WaxPlant, waxPill);
         waxRows(Materials.WaxParaffin, waxPill);
@@ -314,7 +346,7 @@ public final class SourceExtruderRecipes {
         tinAlloyRows();
         zirconiumRodRows();
         generatorModuleRows();
-        return PENDING.size() - before;
+        return PENDING.size() + UNIT_RULES.size() - before;
     }
 
     /**
@@ -445,6 +477,21 @@ public final class SourceExtruderRecipes {
             long eut) {
         ItemStack mold = mold(moldId);
         if (input.isEmpty() || mold.isEmpty() || output.isEmpty()) return;
+        Form source = forms(material).get(inputName);
+        if (source != null && source.weight() * input.getCount() % output.getCount() == 0) {
+            long units = source.weight() * input.getCount() / output.getCount();
+            unitRule(
+                    material,
+                    material,
+                    outputName,
+                    output.copyWithCount(1),
+                    units,
+                    Math.max(1, (ticks + output.getCount() - 1) / output.getCount()),
+                    eut,
+                    moldId,
+                    List.of(source));
+            return;
+        }
         // The original addRecipe2 calls pass optimize=true: common stack factors are divided out,
         // and the duration follows the same division (9 tiny dust + 3 tubes -> 3 + 1, 64 -> 21 t).
         long divisor = gcd(input.getCount(), output.getCount());
@@ -500,6 +547,25 @@ public final class SourceExtruderRecipes {
                 PENDING.stream().map(Entry::recipe).toList()));
         for (Entry entry : PENDING) if (accepted.contains(entry.recipe())) ENTRIES.add(entry);
         PENDING.clear();
+        var pool = new gregtech.engine.recipe.MaterialUnitRecipe.SourcePool();
+        for (UnitRule rule : UNIT_RULES.values()) {
+            var template = rule.rule
+                    .publish(MachineRecipeMaps.Extruder, pool)
+                    .withMaterialInputTag(0, MaterialUnitInputTags.extrudable(rule.material));
+            ENTRIES.add(new Entry(
+                    rule.material,
+                    rule.target,
+                    "unit",
+                    rule.outputForm,
+                    rule.moldId.startsWith("low_heat_extruder_shape_"),
+                    template.mEUt == 16,
+                    rule.units,
+                    rule.units,
+                    template));
+        }
+        UNIT_RULES.clear();
+        FORMS.clear();
+        physical = null;
         return ENTRIES.size();
     }
 

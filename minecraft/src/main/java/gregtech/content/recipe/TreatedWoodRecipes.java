@@ -13,7 +13,8 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
-import java.util.HashSet;
+import gregtech.engine.recipe.Recipe;
+import java.util.*;
 import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
@@ -123,6 +124,7 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
                     mat(MaterialPrefix.plate, "WoodTreated", 1));
         }
         INSTANCE.materialBath();
+        INSTANCE.flush();
         return INSTANCE.entries().size();
     }
 
@@ -162,7 +164,11 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
         }
     }
 
-    /** One prefix for one material: treated rows for the seven oils, polished rows for fish/whale. */
+    private record Batch(String group, long ticks, int mb, String oil, ItemStack output, List<ItemStack> inputs) {}
+
+    private final Map<String, Batch> batches = new LinkedHashMap<>();
+
+    /** Collect identities before constructing recipes; each group retains the source amounts. */
     private void bathForm(
             Set<String> used,
             GTMaterial material,
@@ -175,57 +181,63 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
         long ticks = Math.max(1, (TREATMENT_TICKS * weight + GTValues.U - 1) / GTValues.U);
         if (!treatedStack.isEmpty()) {
             int mb = (int) Math.max(1, (TREATED_UNIT_MB * weight + GTValues.U - 1) / GTValues.U);
-            for (String oil : TREATED_OILS)
-                if (used.add(itemKey(input) + "|" + oil))
-                    add(
-                            "treated/" + material.getName() + "/" + form + "/" + oil,
-                            MachineRecipeMaps.Bath,
-                            ticks,
-                            0,
-                            items(input.copy()),
-                            items(treatedStack.copy()),
-                            fluids(fluid(oil, mb)),
-                            null);
+            if (used.add(itemKey(input) + "|treated"))
+                queue("treated/" + form + "/" + weight, ticks, mb, "treated", input, treatedStack);
         }
-        if (!polishedStack.isEmpty()) {
+        if (!polishedStack.isEmpty())
             for (int i = 0; i < POLISHED_OILS.length; i++) {
                 int mb = (int) Math.max(1, (POLISHED_UNIT_MB[i] * weight + GTValues.U - 1) / GTValues.U);
                 if (used.add(itemKey(input) + "|" + POLISHED_OILS[i]))
-                    add(
-                            "polished/" + material.getName() + "/" + form + "/" + POLISHED_OILS[i],
-                            MachineRecipeMaps.Bath,
-                            ticks,
-                            0,
-                            items(input.copy()),
-                            items(polishedStack.copy()),
-                            fluids(fluid(POLISHED_OILS[i], mb)),
-                            null);
+                    queue("polished/" + form + "/" + weight, ticks, mb, POLISHED_OILS[i], input, polishedStack);
             }
-        }
     }
 
     private static String itemKey(ItemStack stack) {
         return BuiltInRegistries.ITEM.getKey(stack.getItem()) + "#" + stack.getCount();
     }
 
+    private void queue(String group, long ticks, int mb, String oil, ItemStack input, ItemStack output) {
+        String key = group + "/" + oil;
+        var batch = batches.computeIfAbsent(
+                key, ignored -> new Batch(group, ticks, mb, oil, output.copy(), new ArrayList<>()));
+        if (batch.ticks() != ticks || batch.mb() != mb || !ItemStack.matches(batch.output(), output))
+            throw new IllegalStateException("Non-equivalent wood treatment: " + key);
+        batch.inputs().add(input.copy());
+    }
+
     private void treat(String source, ItemStack input, ItemStack output) {
         long weight = MaterialPrefix.plate.getMaterialWeight();
         int mb = (int) Math.max(1, (TREATED_UNIT_MB * weight + GTValues.U - 1) / GTValues.U);
         long ticks = Math.max(1, (TREATMENT_TICKS * weight + GTValues.U - 1) / GTValues.U);
-        for (String oil : TREATED_OILS) {
-            add(
-                    "treated/" + source + "/" + oil,
-                    MachineRecipeMaps.Bath,
-                    ticks,
-                    0,
-                    items(input.copy()),
-                    items(output.copy()),
-                    fluids(fluid(oil, mb)),
-                    null);
-        }
+        queue("treated/planks/" + weight, ticks, mb, "treated", input, output);
     }
 
+    private void flush() {
+        var oils = RecipeInputGroups.fluids("wood_treatment_oils", TREATED_OILS);
+        for (var entry : batches.entrySet()) {
+            var batch = entry.getValue();
+            var woods =
+                    RecipeInputGroups.items("untreated_wood/" + batch.group().toLowerCase(Locale.ROOT), batch.inputs());
+            boolean treated = batch.oil().equals("treated");
+            var recipe = new Recipe(
+                    items(woods.stack(1)),
+                    items(batch.output()),
+                    null,
+                    null,
+                    fluids(treated ? oils.stack(batch.mb()) : fluid(batch.oil(), batch.mb())),
+                    null,
+                    batch.ticks(),
+                    0,
+                    0);
+            woods.apply(recipe, 0);
+            if (treated) oils.apply(recipe, 0);
+            publish(entry.getKey(), MachineRecipeMaps.Bath, recipe);
+        }
+        batches.clear();
+    }
+
+    /** All untreated plank species and treatment oils share one row. */
     public static int expectedRows() {
-        return (VANILLA_PLANKS.length + WoodSpecies.values().length) * TREATED_OILS.length;
+        return 1;
     }
 }

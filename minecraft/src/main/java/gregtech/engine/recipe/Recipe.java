@@ -14,6 +14,83 @@ import net.minecraftforge.fluids.FluidStack;
  * and fluids, processing duration, energy cost, and output chances.</p>
  */
 public class Recipe {
+    private static final ItemStack[] NO_ITEMS = new ItemStack[0];
+    private static final FluidStack[] NO_FLUIDS = new FluidStack[0];
+    private static final long[] NO_CHANCES = new long[0];
+    // Shared only while empty; each mutator detaches before setting a bit.
+    private static final java.util.BitSet NO_FLAGS = new java.util.BitSet(0);
+
+    private java.util.Map<Integer, net.minecraft.tags.TagKey<net.minecraft.world.item.Item>> itemTags = java.util.Map.of();
+    private java.util.Map<Integer, net.minecraft.tags.TagKey<net.minecraft.world.level.material.Fluid>> fluidTags = java.util.Map.of();
+
+    /** Representatives retain amounts/layout; the tag, not its representative, defines acceptance. */
+    public Recipe withItemTagInput(int index, net.minecraft.resources.ResourceLocation id) {
+        if (index < 0 || index >= mInputs.length || mInputs[index].isEmpty()) throw new IllegalArgumentException("Item tag input " + index);
+        var tags = new java.util.HashMap<>(itemTags);
+        tags.put(index, net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, id));
+        itemTags = java.util.Map.copyOf(tags);
+        return this;
+    }
+
+    public Recipe withFluidTagInput(int index, net.minecraft.resources.ResourceLocation id) {
+        if (index < 0 || index >= mFluidInputs.length || mFluidInputs[index].isEmpty()) throw new IllegalArgumentException("Fluid tag input " + index);
+        var tags = new java.util.HashMap<>(fluidTags);
+        tags.put(index, net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.FLUID, id));
+        fluidTags = java.util.Map.copyOf(tags);
+        return this;
+    }
+
+    public net.minecraft.tags.TagKey<net.minecraft.world.item.Item> itemTag(int index) { return itemTags.get(index); }
+    public net.minecraft.tags.TagKey<net.minecraft.world.level.material.Fluid> fluidTag(int index) { return fluidTags.get(index); }
+    public boolean hasTaggedInputs() { return !itemTags.isEmpty() || !fluidTags.isEmpty(); }
+
+    public boolean matchesFluidInput(int index, FluidStack available) {
+        if (index < 0 || index >= mFluidInputs.length || available == null || available.isEmpty()
+                || mFluidInputs[index] == null || mFluidInputs[index].isEmpty()) return false;
+        var tag = fluidTags.get(index);
+        return tag == null ? RecipeInputs.sameFluid(available, mFluidInputs[index])
+                : available.getFluid().builtInRegistryHolder().is(tag);
+    }
+
+    public java.util.List<FluidStack> viewerFluidInputAlternatives(int index) {
+        var tag = fluidTags.get(index);
+        if (tag == null) return java.util.List.of(mFluidInputs[index]);
+        var choices = new java.util.ArrayList<FluidStack>();
+        for (var holder : net.minecraft.core.registries.BuiltInRegistries.FLUID.getTagOrEmpty(tag))
+            if (holder.value() != net.minecraft.world.level.material.Fluids.EMPTY)
+                choices.add(new FluidStack(holder.value(), mFluidInputs[index].getAmount()));
+        return java.util.List.copyOf(choices);
+    }
+    public record MaterialInputDisplay(long amount, java.util.List<ItemStack> alternatives, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding rounding, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag) {
+        public MaterialInputDisplay(long amount, java.util.List<ItemStack> alternatives, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding rounding) {
+            this(amount, alternatives, rounding, null);
+        }
+        public MaterialInputDisplay {
+            if (amount <= 0) throw new IllegalArgumentException("Material input amount");
+            alternatives = java.util.List.copyOf(alternatives);
+        }
+    }
+    private java.util.Map<Integer, MaterialInputDisplay> materialInputDisplays = java.util.Map.of();
+    /** A unit icon describes a rule; its physical input is resolved to a whole-item batch at runtime. */
+    public Recipe withMaterialInputDisplay(int index, long amount, java.util.List<ItemStack> alternatives, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding rounding) {
+        if (index < 0 || index >= mInputs.length || mInputs[index].isEmpty()) throw new IllegalArgumentException("Material display slot");
+        var displays = new java.util.HashMap<>(materialInputDisplays);
+        displays.put(index, new MaterialInputDisplay(amount, alternatives, rounding));
+        materialInputDisplays = java.util.Map.copyOf(displays);
+        return this;
+    }
+    public MaterialInputDisplay materialInputDisplay(int index) { return materialInputDisplays.get(index); }
+    /** Viewer membership is separate from quantity-aware physical matching. */
+    public Recipe withMaterialInputTag(int index, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag) {
+        var display = java.util.Objects.requireNonNull(materialInputDisplays.get(index));
+        var displays = new java.util.HashMap<>(materialInputDisplays);
+        displays.put(index, new MaterialInputDisplay(display.amount(), display.alternatives(), display.rounding(), tag));
+        materialInputDisplays = java.util.Map.copyOf(displays);
+        return this;
+    }
+
+    public java.util.Map<Integer, gregtech.api.addon.recipe.MaterialUnitIngredient> materialDeclarations = java.util.Map.of();
+
     public final ItemStack[] mInputs;
     public final ItemStack[] mOutputs;
     public final FluidStack[] mFluidInputs;
@@ -40,14 +117,14 @@ public class Recipe {
     public Recipe(ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecialItems,
                   long[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs,
                   long aDuration, long aEUt, long aSpecialValue) {
-        mInputs       = aInputs      != null ? aInputs      : new ItemStack[0];
-        mOutputs      = aOutputs     != null ? aOutputs     : new ItemStack[0];
+        mInputs       = aInputs      != null ? aInputs      : NO_ITEMS;
+        mOutputs      = aOutputs     != null ? aOutputs     : NO_ITEMS;
         for (int i = 0; i < mOutputs.length; i++) if (mOutputs[i] != null)
             mOutputs[i] = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(mOutputs[i]);
-        mFluidInputs  = aFluidInputs != null ? aFluidInputs : new FluidStack[0];
-        mFluidOutputs = aFluidOutputs!= null ? aFluidOutputs: new FluidStack[0];
-        mChances      = aChances     != null ? aChances     : new long[mOutputs.length];
-        mMaxChances   = new long[mChances.length];
+        mFluidInputs  = aFluidInputs != null ? aFluidInputs : NO_FLUIDS;
+        mFluidOutputs = aFluidOutputs!= null ? aFluidOutputs: NO_FLUIDS;
+        mChances      = aChances     != null ? aChances     : mOutputs.length == 0 ? NO_CHANCES : new long[mOutputs.length];
+        mMaxChances   = mChances.length == 0 ? NO_CHANCES : new long[mChances.length];
         for (int i = 0; i < mChances.length; i++) {
             if (mChances[i] <= 0) mChances[i] = 10000;
             mMaxChances[i] = 10000;
@@ -111,7 +188,10 @@ public class Recipe {
         ItemStack required = mInputs[index];
         if (required == null || required.isEmpty()) return false;
         var predicate = sameItemInputPredicates.get(index);
-        boolean matches = predicate == null ? RecipeInputs.matches(required, available)
+        var tag = itemTags.get(index);
+        boolean matches = tag != null ? available.is(tag) && RecipeInputs.emptyContainerMatches(required, available)
+                && (predicate == null || predicate.test(available))
+                : predicate == null ? RecipeInputs.matches(required, available)
                 : required.is(available.getItem()) && RecipeInputs.emptyContainerMatches(required, available)
                 && predicate.test(available);
         var guard = itemInputGuards.get(index);
@@ -122,12 +202,19 @@ public class Recipe {
     /** Informational choices for one displayed slot; this never broadens machine matching. */
     public Recipe withViewerInputAlternatives(int index, java.util.List<ItemStack> alternatives) {
         if (index < 0 || index >= mInputs.length || alternatives.isEmpty()) throw new IllegalArgumentException("Viewer input " + index);
-        var next = new java.util.HashMap<>(viewerInputAlternatives);
-        next.put(index, alternatives.stream().map(ItemStack::copy).toList());
-        viewerInputAlternatives = java.util.Map.copyOf(next);
+        if (viewerInputAlternatives.isEmpty()) viewerInputAlternatives = new java.util.HashMap<>();
+        viewerInputAlternatives.put(index, alternatives.stream().map(ItemStack::copy).toList());
         return this;
     }
     public java.util.List<ItemStack> viewerInputAlternatives(int index) {
+        var tag = itemTags.get(index);
+        if (tag != null) {
+            var choices = new java.util.ArrayList<ItemStack>();
+            for (var holder : net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(tag))
+                if (holder.value() != net.minecraft.world.item.Items.AIR)
+                    choices.add(new ItemStack(holder.value(), mInputs[index].getCount()));
+            return java.util.List.copyOf(choices);
+        }
         var stored = viewerInputAlternatives.get(index);
         if (stored == null)
             return gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(mInputs[index]);

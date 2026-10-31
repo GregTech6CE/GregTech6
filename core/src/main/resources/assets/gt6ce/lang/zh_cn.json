@@ -135088,5 +135088,11 @@
   "tooltip.gt6ce.ui.liters_of.mb": "%s mB ",
   "tooltip.gt6ce.ui.max_fluid.mb": "；最大容量：%s mB",
   "gt6ce.configuration.display.fluid_in_mB": "使用 mB 显示流体",
-  "jade.gt6ce.engine.waiting_steam": "等待供汽"
+  "jade.gt6ce.engine.waiting_steam": "等待供汽",
+  "gt6ce.recipe.material_units": "%s = %s 份此材料。",
+  "gt6ce.recipe.material_forms": "同材料的其他形态也可查到此配方；实际仅接受配方允许的形态。",
+  "gt6ce.recipe.material_batch_whole": "按整件投入：所需物品数向上取整，完整产物数向下取整，不缓存余料；耗时随产量换算。",
+  "gt6ce.recipe.material_batch_exact": "按可精确产出的最小整件批次投入；流体产量按材料含量换算，不缓存余料。",
+  "gt6ce.recipe.material_inputs.smeltable": "液化炉输入标签",
+  "gt6ce.recipe.material_inputs.extrudable": "挤压机输入标签"
 }
