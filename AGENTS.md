@@ -63,7 +63,7 @@
 - 文档/忽略规则：检查相对链接、命令与配置一致性，用 `git check-ignore` 验证规则；无需启动游戏或全量构建。
 - `core` 逻辑：按改动运行 `./gradlew :core:check`，必要时补充有意义的回归测试。
 - 共享 Minecraft 逻辑：先 `./gradlew compileBothPlatforms`；涉及资源或打包时使用 `./gradlew assembleBothPlatforms`。
-- 完整检查使用 `./gradlew check`；CI 对两个节点分别执行 `build`，详见[验证指南](docs/development/validation.md)。
+- 完整检查使用 `./gradlew check`；CI 先由 verify job 运行 `:api:check`、`:core:check` 与 `:minecraft:spotlessCheck`，再对两个节点分别执行 `assemble`，详见[验证指南](docs/development/validation.md)。
 - GameTest：按需运行 `./gradlew :minecraft:<node>:runGameTestServer`，见[测试指南](docs/development/testing.md)。
 - 世界、机器 tick、交互、渲染、Mixin、网络或可选集成还需对应游戏内验证，记录未覆盖的平台与场景。
 - 新增命令/参数/注册步骤同步对应文档，新增包职责同步包索引。

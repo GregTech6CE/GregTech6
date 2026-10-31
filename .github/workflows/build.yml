@@ -3,7 +3,18 @@ name: Dual-platform build
 on:
   push:
     branches: [main, master]
-    paths-ignore: ['README*']
+    paths:
+      - 'api/**'
+      - 'core/**'
+      - 'minecraft/**'
+      - 'gradle/**'
+      - 'gradlew'
+      - 'gradlew.bat'
+      - 'build.gradle'
+      - 'settings.gradle'
+      - 'gradle.properties'
+      - '.github/workflows/build.yml'
+      - '.github/actions/**'
   pull_request:
     branches: [main, master]
     paths-ignore: ['README*']
@@ -18,13 +29,26 @@ defaults:
 
 concurrency:
   group: build-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: true
 
 jobs:
+  verify:
+    name: Verify tests and formatting
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-build
+      - name: JUnit and formatting
+        run: ./gradlew --no-daemon --stacktrace :api:check :core:check :minecraft:spotlessCheck
+
   build:
     name: Build ${{ matrix.minecraft }} ${{ matrix.loader }}
+    needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     strategy:
       fail-fast: false
       matrix:
@@ -38,8 +62,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-build
+      - name: Compute snapshot version
+        id: version
+        run: |
+          set -euo pipefail
+          base=$(sed -n 's/^mod_version=//p' gradle.properties | tr -d '\r')
+          test -n "$base"
+          echo "version=${base}-${GITHUB_SHA:0:8}" >> "$GITHUB_OUTPUT"
       - name: Build platform
-        run: ./gradlew --no-daemon --stacktrace ":minecraft:${{ matrix.node }}:build"
+        run: >-
+          ./gradlew --no-daemon --stacktrace
+          :api:jar
+          ":minecraft:${{ matrix.node }}:assemble"
+          ":minecraft:${{ matrix.node }}:compileTestJava"
+          ":minecraft:${{ matrix.node }}:spotlessCheck"
+          -Pmod_version=${{ steps.version.outputs.version }}
       - name: Upload platform artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -52,7 +89,7 @@ jobs:
 
   nightly:
     name: Publish nightly release
-    needs: build
+    needs: [verify, build]
     if: >-
       github.event_name != 'pull_request' &&
       github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
@@ -66,9 +103,12 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
+      GH_SERVER: ${{ github.server_url }}
       BUILD_SHA: ${{ github.sha }}
+      VERSION: ${{ needs.build.outputs.version }}
       DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
       RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      RUN_ID: ${{ github.run_id }}
     steps:
       - name: Download both platform artifacts
         uses: actions/download-artifact@v4
@@ -91,7 +131,7 @@ jobs:
               echo "Expected one installable mod jar for $node, found ${#jars[@]}" >&2
               exit 1
             fi
-            cp "${jars[0]}" "release/gt6ce-${node}-${BUILD_SHA:0:12}.jar"
+            cp "${jars[0]}" "release/gt6ce-${node}-${VERSION}.jar"
           done
       - name: Update nightly release
         run: |
@@ -102,21 +142,35 @@ jobs:
             echo "Default branch advanced; leave publication to its build."
             exit 0
           fi
-          cat > notes.md <<EOF
-          Automated development build of GregTech 6 Community Edition.
-
-          - Commit: $BUILD_SHA
-          - Build: $RUN_URL
-          - Minecraft 1.20.1: install the Forge jar.
-          - Minecraft 1.21.1: install the NeoForge jar.
-
-          Both platform builds passed. This prerelease is updated after successful default-branch builds.
-          EOF
+          forge=gt6ce-1.20.1-forge-${VERSION}.jar
+          neoforge=gt6ce-1.21.1-neoforge-${VERSION}.jar
+          download=$GH_SERVER/$GH_REPO/releases/download/nightly
+          printf 'Automated development build of GregTech 6 Community Edition.\n\n- Commit: %s\n- Run: [%s](%s) at %s (UTC+8)\n\n| Minecraft | Loader | File |\n| --- | --- | --- |\n| 1.20.1 | Forge | [%s](%s/%s) |\n| 1.21.1 | NeoForge | [%s](%s/%s) |\n' \
+            "$BUILD_SHA" "$RUN_ID" "$RUN_URL" "$(date -u -d '+8 hours' '+%Y-%m-%d %H:%M')" \
+            "$forge" "$download" "$forge" "$neoforge" "$download" "$neoforge" \
+            > notes.md
+          stable=$(gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
+            --jq '[.[] | select(.prerelease | not) | select(.tag_name | test("^v[0-9]"))][0].tag_name' \
+            2>/dev/null | head -n1 || true)
+          if [[ -n "$stable" ]]; then
+            if count=$(gh api "repos/$GH_REPO/compare/${stable}...${BUILD_SHA}" \
+                --jq '.commits | length' 2>/dev/null); then
+              [[ -n "$count" ]] || count=0
+              {
+                printf '\n<details><summary>Commits since %s (%s)</summary>\n\n' "$stable" "$count"
+                gh api "repos/$GH_REPO/compare/${stable}...${BUILD_SHA}" \
+                  --jq '.commits[] | "- `\(.sha[0:7])` \(.commit.message | split("\n")[0])"'
+                printf '\n[compare](%s/%s/compare/%s...%s)\n</details>\n' "$GH_SERVER" "$GH_REPO" "$stable" "$BUILD_SHA"
+              } >> notes.md
+            fi
+          fi
           release_id=$(gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
             --jq '.[] | select(.tag_name == "nightly") | .id')
           if [[ -z "$release_id" ]]; then
+            # A leftover tag without a release blocks creation; drop it so the release owns the ref.
+            gh api --method DELETE "repos/$GH_REPO/git/refs/tags/nightly" --silent 2>/dev/null || true
             gh release create nightly release/*.jar --target "$BUILD_SHA" \
-              --title "Latest build" --notes-file notes.md --prerelease --latest=false
+              --title "Snapshot v$VERSION" --notes-file notes.md --prerelease --latest=false
           else
             # Upload the complete new pair before removing any previous downloads.
             gh release upload nightly release/*.jar --clobber
@@ -124,7 +178,7 @@ jobs:
           # Only the generated nightly tag moves; branch history is never rewritten.
           gh api --method PATCH "repos/$GH_REPO/git/refs/tags/nightly" \
             -f sha="$BUILD_SHA" -F force=true --silent
-          gh release edit nightly --title "Latest build" --notes-file notes.md \
+          gh release edit nightly --title "Snapshot v$VERSION" --notes-file notes.md \
             --prerelease --latest=false
           release_id=$(gh api "repos/$GH_REPO/releases/tags/nightly" --jq '.id')
           gh api --paginate "repos/$GH_REPO/releases/$release_id/assets?per_page=100" \

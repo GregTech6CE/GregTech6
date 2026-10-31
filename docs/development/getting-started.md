@@ -26,7 +26,8 @@
 | 两个平台组装 | `./gradlew assembleBothPlatforms` |
 | 全仓检查 | `./gradlew check` |
 | 代码格式化（core、共享与节点源码） | `./gradlew format` |
-| 单节点完整构建，与 CI 一致 | `./gradlew :minecraft:1.20.1-forge:build` 或 `./gradlew :minecraft:1.21.1-neoforge:build` |
+| 单节点打包，与 CI 一致 | `./gradlew :api:jar :minecraft:1.20.1-forge:assemble` 或 `./gradlew :api:jar :minecraft:1.21.1-neoforge:assemble` |
+| 单节点完整检查 | `./gradlew :minecraft:1.20.1-forge:build` 或 `./gradlew :minecraft:1.21.1-neoforge:build` |
 
 `format` 使用 Spotless + Palantir Java Format（4 空格、120 列）。`api/` 内联源码、`**/generated/**` 与带 Stonecutter `//?` 标记的共享文件不在本轮范围内；后两者需要按节点处理，不要直接套用该任务。`spotlessCheck` 已接入各项目的 `check`。
 

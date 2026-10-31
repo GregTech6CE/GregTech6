@@ -15,7 +15,7 @@
 | 客户端、GUI、网络、Mixin | 客户端与专用服务端验证 | 同步、交互权限、类加载、Mixin 目标 |
 | 可选集成 | 无该模组与安装目标模组两组启动 | 依赖版本、配方显示/行为、未安装时加载隔离 |
 
-CI 位于 [build.yml](../../.github/workflows/build.yml)，使用 Java 17/21 工具链，对两个节点分别运行 `build` 并收集模组、公共 API 和平台 SDK JAR。根 `check` 依赖 api、core 与两个节点的 `check`，不作为默认定向检查；未经明确要求，不运行双平台全量验证。GameTest 通过两个节点的 `runGameTestServer` 运行。
+CI 位于 [build.yml](../../.github/workflows/build.yml)，使用 Java 17/21 工具链：`verify` job 运行 `:api:check`、`:core:check` 与 `:minecraft:spotlessCheck`，两个节点随后分别运行 `assemble`、`compileTestJava` 与 `spotlessCheck`，并收集模组、公共 API 和平台 SDK JAR；默认分支的成功构建把 `nightly` 预发布更新为本次产物。根 `check` 依赖 api、core 与两个节点的 `check`，不作为默认定向检查；未经明确要求，不运行双平台全量验证。GameTest 通过两个节点的 `runGameTestServer` 运行。
 
 公共库的 `apiContracts` 从 API JAR 编译并运行测试，不借用 main 输出或 core；core 的 JUnit 回归通过 `./gradlew :core:test` 运行；针对性 GameTest 通过两个节点的 `runGameTestServer` 运行。它们不能替代附属 SPI 发现、客户端与专用服务端启动验证。
 
