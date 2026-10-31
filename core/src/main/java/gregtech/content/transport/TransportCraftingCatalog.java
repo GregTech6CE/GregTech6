@@ -166,6 +166,7 @@ public final class TransportCraftingCatalog {
         }
         rows.addAll(gregtech.content.energy.OriginalThermalCrafting.rows());
         rows.addAll(gregtech.content.energy.OriginalMagnetCrafting.rows());
+        rows.addAll(gregtech.content.energy.OriginalRotaryCrafting.rows());
         rows.addAll(gregtech.content.energy.OriginalSteamTurbines.rows());
         return List.copyOf(rows);
     }

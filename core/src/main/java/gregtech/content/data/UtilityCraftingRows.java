@@ -13,21 +13,6 @@ public final class UtilityCraftingRows {
 
     private static List<OriginalSurvivalRecipes.Row> rows() {
         var rows = new ArrayList<OriginalSurvivalRecipes.Row>();
-        // The three upper RF grades were omitted by the first energy-node import.
-        for (var tier : gregtech.content.energy.FluxRotaryCatalog.TIERS.subList(2, 5)) {
-            rows.add(new OriginalSurvivalRecipes.Row(
-                    "flux_motor_" + tier.tier(),
-                    1,
-                    tier.material(),
-                    "GMG",
-                    Map.of('M', "item:gt6ce:electric_motor_" + tier.tier(), 'G', "mat:gearGt")));
-            rows.add(new OriginalSurvivalRecipes.Row(
-                    "flux_dynamo_" + tier.tier(),
-                    1,
-                    tier.material(),
-                    "SMS|SGS",
-                    Map.of('M', "item:gt6ce:electric_dynamo_" + tier.tier(), 'G', "mat:gearGt", 'S', "mat:stickLong")));
-        }
         for (var spec : gregtech.content.energy.HeatExchangerCatalog.ALL)
             rows.add(new OriginalSurvivalRecipes.Row(
                     spec.id(),
