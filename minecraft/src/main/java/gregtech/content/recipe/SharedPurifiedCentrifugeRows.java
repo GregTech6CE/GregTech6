@@ -42,7 +42,7 @@ public final class SharedPurifiedCentrifugeRows {
   var seen=Collections.newSetFromMap(new IdentityHashMap<GTMaterial,Boolean>());var list=new ArrayList<GTMaterial>();
   for(var m:GTMaterialRegistry.allMaterials())if(seen.add(m.resolve()))list.add(m.resolve());materials=List.copyOf(list);rebuild();
  }
- public static void clear(){for(var row:OWNED)MachineRecipeMaps.Centrifuge.unlink(row);OWNED.clear();STATUS.clear();}
+ public static void clear(){MachineRecipeMaps.Centrifuge.removeAll(OWNED);OWNED.clear();STATUS.clear();}
  public static void rebuild(){
   if(!initialized)return;
   // Resolve every definition before changing any map. Every reload uses fresh selected forms/bindings.

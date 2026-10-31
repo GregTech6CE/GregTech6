@@ -69,11 +69,7 @@ public final class ExternalOreProcessing {
         // Restore displaced source rows before removing them; otherwise an old mirror can resurrect this reload's
         // predecessors.
         gregtech.content.recipe.OvenRecipeBridge.clearMirrors();
-        OWNED.forEach((map, rows) -> {
-            map.mRecipeList.removeAll(rows);
-            map.mRecipeItemMap.values().forEach(values -> values.removeAll(rows));
-            map.mRecipeFluidMap.values().forEach(values -> values.removeAll(rows));
-        });
+        OWNED.forEach(RecipeMap::removeAll);
         OWNED.clear();
         publishCompositions(Map.of());
         cooking = Map.of();

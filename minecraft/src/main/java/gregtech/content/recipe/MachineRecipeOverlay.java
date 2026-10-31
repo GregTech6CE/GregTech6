@@ -88,6 +88,7 @@ public final class MachineRecipeOverlay {
         int moved = 0;
         for (var map : RecipeMap.RECIPE_MAP_LIST) moved += map.restoreBaseline();
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
+        long producersStarted = System.nanoTime();
         ExternalOreProcessing.rebuild();
         gregtech.content.recipe.NonOreMacerationRows.rebuild();
         gregtech.content.recipe.SourceOreOutputRows.rebuild();
@@ -104,16 +105,23 @@ public final class MachineRecipeOverlay {
         SharedPurifiedAcidRows.rebuild();
         SharedThermalInputRows.rebuild();
         SharedThermalRecyclingRows.rebuild();
+        long producersMillis = (System.nanoTime() - producersStarted) / 1_000_000L;
         MaterialDisplayBinding.invalidate();
         logged = 0;
         var tally = new Tally();
         var markers = markers(manager);
         var furnaceBefore = furnaceRows();
-        for (var marker : markers) if (marker.removal() != null) remove(marker.id(), marker.removal(), tally);
+        var removeStarted = System.nanoTime();
+        removeMarkers(markers, tally);
+        long removeMillis = (System.nanoTime() - removeStarted) / 1_000_000L;
+        var installStarted = System.nanoTime();
         for (var marker : markers) if (marker.addition() != null) install(marker.id(), marker.addition(), tally);
+        long installMillis = (System.nanoTime() - installStarted) / 1_000_000L;
         rememberFurnaceChanges(furnaceBefore);
-        LOGGER.info("[gregtech] Machine recipe overlay baseline {} rows, restore {} ms, moved {}, removed {}, added {}, rejected {}",
-                baselineRows(), restoreMillis, moved, tally.removed, tally.added, tally.rejected);
+        LOGGER.info("[gregtech] Machine recipe overlay baseline {} rows, restore {} ms, producers {} ms, moved {}, "
+                        + "removed {} ({} ms), added {} ({} ms), rejected {}",
+                baselineRows(), restoreMillis, producersMillis, moved, tally.removed, removeMillis, tally.added,
+                installMillis, tally.rejected);
         lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false);
         applications++;
         if (!overlayDumped) {
@@ -133,7 +141,7 @@ public final class MachineRecipeOverlay {
      */
     public static void restoreFurnaceBeforeMirror() {
         var furnace = gregtech.content.data.MachineRecipeMaps.Furnace;
-        for (var recipe : furnaceAdded) furnace.unlink(recipe);
+        furnace.removeAll(furnaceAdded);
         for (var recipe : furnaceRemoved) if (!furnace.mRecipeList.contains(recipe)) furnace.add(recipe);
         furnaceAdded = List.of();
         furnaceRemoved = List.of();
@@ -146,9 +154,17 @@ public final class MachineRecipeOverlay {
         var before = furnaceRows();
         var tally = new Tally();
         var markers = markers(manager);
-        for (var marker : markers)
-            if (marker.removal() != null && marker.removal().map().equals(furnace.mNameInternal))
-                remove(marker.id(), marker.removal(), tally);
+        var drop = new ArrayList<Recipe>();
+        for (var recipe : furnace.mRecipeList) {
+            var view = view(recipe);
+            for (var marker : markers)
+                if (marker.removal() != null && marker.removal().map().equals(furnace.mNameInternal)
+                        && MachineRecipeMatch.matches(marker.removal(), view, MachineRecipeOverlay::itemInTag)) {
+                    drop.add(recipe);
+                    break;
+                }
+        }
+        furnace.removeAll(drop);
         for (var marker : markers)
             if (marker.addition() != null && marker.addition().map().equals(furnace.mNameInternal))
                 install(marker.id(), marker.addition(), tally);
@@ -291,17 +307,35 @@ public final class MachineRecipeOverlay {
         else tally.added++;
     }
 
-    private static void remove(String id, MachineRecipeRemovalSpec spec, Tally tally) {
-        var map = RecipeMap.RECIPE_MAPS.get(spec.map());
-        if (map == null) {
-            tally.rejected++;
-            problem(id + " unknown recipe map " + spec.map());
-            return;
+    /**
+     * Applies every datapack removal marker. One map's rows are compared once against all of that
+     * map's markers, in the markers' original order, so each row builds one comparison view and the
+     * first matching marker keeps the attribution.
+     */
+    private static void removeMarkers(List<Marker> markers, Tally tally) {
+        var perMap = new java.util.LinkedHashMap<RecipeMap, List<Marker>>();
+        for (var marker : markers) {
+            if (marker.removal() == null) continue;
+            var map = RecipeMap.RECIPE_MAPS.get(marker.removal().map());
+            if (map == null) {
+                tally.rejected++;
+                problem(marker.id() + " unknown recipe map " + marker.removal().map());
+                continue;
+            }
+            perMap.computeIfAbsent(map, unused -> new ArrayList<>()).add(marker);
         }
-        var drop = new ArrayList<Recipe>();
-        for (var recipe : map.mRecipeList)
-            if (MachineRecipeMatch.matches(spec, view(recipe), MachineRecipeOverlay::itemInTag)) drop.add(recipe);
-        for (var recipe : drop) if (map.unlink(recipe)) tally.removed++;
+        for (var entry : perMap.entrySet()) {
+            var drop = new ArrayList<Recipe>();
+            for (var recipe : entry.getKey().mRecipeList) {
+                var view = view(recipe);
+                for (var marker : entry.getValue())
+                    if (MachineRecipeMatch.matches(marker.removal(), view, MachineRecipeOverlay::itemInTag)) {
+                        drop.add(recipe);
+                        break;
+                    }
+            }
+            tally.removed += entry.getKey().removeAll(drop);
+        }
     }
 
     private static boolean itemInTag(String itemId, String tagId) {

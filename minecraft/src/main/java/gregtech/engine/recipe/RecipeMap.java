@@ -730,8 +730,42 @@ public class RecipeMap {
         return !tFailed;
     }
 
-    /** Returns an already-registered recipe whose inputs would also be satisfied by the given recipe's inputs. */
+    /**
+     * Returns an already-registered recipe whose inputs would also be satisfied by the given
+     * recipe's inputs. Only rows whose required identities are all offered by the candidate can
+     * qualify, so the candidate enumerates the subsets of its own identities instead of walking
+     * the shared input pools; rows with more identities than {@link #COLLISION_SIGNATURE_KEYS}
+     * keep the pool scan. Both paths end in {@link #inputsSatisfiedBy}, which decides alone.
+     */
     public Recipe findCollision(Recipe aRecipe) {
+        if (mCollisionDirty || mCollisionRows != mRecipeList.size()) rebuildCollisionIndex();
+        int[] keys = availableCollisionIds(aRecipe);
+        if (keys.length > COLLISION_SIGNATURE_KEYS) return findCollisionByPools(aRecipe);
+        for (int mask = 1; mask < (1 << keys.length); mask++) {
+            int[] subset = new int[Integer.bitCount(mask)];
+            int next = 0;
+            for (int bit = 0; bit < keys.length; bit++) if ((mask & (1 << bit)) != 0) subset[next++] = keys[bit];
+            var bucket = mCollisionBuckets.get(new CollisionSignature(subset));
+            if (bucket == null) continue;
+            for (Recipe existing : bucket) if (inputsSatisfiedBy(existing, aRecipe)) return existing;
+        }
+        // A row that requires nothing is reachable only through an input the candidate also has.
+        for (Recipe existing : mCollisionDegenerate)
+            if (sharesReachKey(existing, keys) && inputsSatisfiedBy(existing, aRecipe)) return existing;
+        return null;
+    }
+
+    private boolean sharesReachKey(Recipe existing, int[] candidateKeys) {
+        for (FluidStack fluid : existing.mFluidInputs) {
+            if (fluid == null || fluid.getFluid() == Fluids.EMPTY) continue;
+            int id = collisionFluidId(fluidKey(fluid));
+            for (int key : candidateKeys) if (key == id) return true;
+        }
+        return false;
+    }
+
+    /** The original input-index scan, kept for candidates with too many identities. */
+    private Recipe findCollisionByPools(Recipe aRecipe) {
         Set<Recipe> tChecked = null;
         for (ItemStack in : aRecipe.mInputs) {
             if (empty(in)) continue;
@@ -844,7 +878,11 @@ public class RecipeMap {
             LOGGER.error("[{}] Presence-only fluid inputs are unsupported by this map's direct fuel converters; recipe rejected", mNameInternal);
             return null;
         }
-        mRecipeList.add(aRecipe);
+        boolean inserted = mRecipeList.add(aRecipe);
+        if (inserted) {
+            for (var capture : mAdditionCaptures) capture.record(aRecipe);
+            indexCollision(aRecipe);
+        }
         // Index by input items
         for (ItemStack in : aRecipe.mInputs) {
             if (empty(in)) continue;
@@ -886,7 +924,7 @@ public class RecipeMap {
         keep.addAll(mBaseline);
         var drop = new ArrayList<Recipe>();
         for (var recipe : mRecipeList) if (!keep.contains(recipe)) drop.add(recipe);
-        for (var recipe : drop) unlink(recipe);
+        removeAll(drop);
         var present = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
         present.addAll(mRecipeList);
         int restored = 0;
@@ -903,6 +941,7 @@ public class RecipeMap {
         mRecipeList.clear();
         mRecipeItemMap.clear();
         mRecipeFluidMap.clear();
+        clearCollisionIndex();
         for (var recipe : mBaseline) add(recipe);
         return mBaseline.size();
     }
@@ -910,38 +949,232 @@ public class RecipeMap {
     /** Removes one stored row and its input indexes. */
     public synchronized boolean unlink(Recipe recipe) {
         if (recipe == null || !mRecipeList.remove(recipe)) return false;
+        unlinkIndexes(recipe);
+        return true;
+    }
+
+    /**
+     * Removes {@code rows} from this map and from every index entry {@link #add} created for them.
+     * The one deletion entry for overlay markers, reload producers and baseline restores: the
+     * stored rows and the auxiliary indexes cannot drift apart.
+     *
+     * @return how many of the given rows were stored here
+     */
+    public synchronized int removeAll(Collection<Recipe> rows) {
+        if (rows == null || rows.isEmpty()) return 0;
+        // Removing one row at a time keeps the membership test on the stored set's own hash.
+        var present = new ArrayList<Recipe>(rows.size());
+        for (Recipe recipe : rows) if (recipe != null && mRecipeList.remove(recipe)) present.add(recipe);
+        for (Recipe recipe : present) unlinkIndexes(recipe);
+        return present.size();
+    }
+
+    /** Drops every index entry {@link #add} created for an already-unstored row. */
+    private void unlinkIndexes(Recipe recipe) {
         for (ItemStack in : recipe.mInputs) {
             if (empty(in)) continue;
-            var keys = new ArrayList<ItemStack>();
-            keys.add(in);
-            keys.addAll(gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in));
-            for (var key : keys) {
-                var pool = mRecipeItemMap.get(key.getItem());
-                if (pool == null) continue;
-                pool.remove(recipe);
-                if (pool.isEmpty()) mRecipeItemMap.remove(key.getItem());
-            }
+            removeItemIndex(in.getItem(), recipe);
+            for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in))
+                removeItemIndex(color.getItem(), recipe);
         }
         for (FluidStack fluid : recipe.mFluidInputs) {
-            if (fluid == null || fluid.isEmpty()) continue;
+            // add() indexes every non-empty fluid, amount 0 included; the removal must mirror it.
+            if (fluid == null || fluid.getFluid() == Fluids.EMPTY) continue;
             String key = fluidKey(fluid);
             var pool = mRecipeFluidMap.get(key);
             if (pool == null) continue;
             pool.remove(recipe);
             if (pool.isEmpty()) mRecipeFluidMap.remove(key);
         }
-        return true;
+        unindexCollision(recipe);
+    }
+
+    private void removeItemIndex(Item item, Recipe recipe) {
+        var pool = mRecipeItemMap.get(item);
+        if (pool == null) return;
+        pool.remove(recipe);
+        if (pool.isEmpty()) mRecipeItemMap.remove(item);
     }
 
     /** Removes all recipes that use the given item as one of their inputs. */
-    public boolean removeRecipesByInput(ItemStack aInput) {
+    public synchronized boolean removeRecipesByInput(ItemStack aInput) {
         if (empty(aInput)) return false;
-        Collection<Recipe> tPool = mRecipeItemMap.remove(aInput.getItem());
+        Collection<Recipe> tPool = mRecipeItemMap.get(aInput.getItem());
         if (tPool == null || tPool.isEmpty()) return false;
-        mRecipeList.removeAll(tPool);
-        for (Collection<Recipe> c : mRecipeItemMap.values()) c.removeAll(tPool);
-        for (Collection<Recipe> c : mRecipeFluidMap.values()) c.removeAll(tPool);
+        removeAll(new ArrayList<>(tPool));
         return true;
+    }
+
+    // ── Added-row capture ────────────────────────────────────────────────
+
+    /** One in-flight {@link #captureAdditions(List, Runnable)} scope, owned by its calling thread. */
+    private static final class AdditionCapture {
+        private final Thread owner = Thread.currentThread();
+        private final List<Recipe> rows = new ArrayList<>();
+
+        void record(Recipe recipe) {
+            if (Thread.currentThread() == owner) rows.add(recipe);
+        }
+    }
+
+    private final List<AdditionCapture> mAdditionCaptures = new ArrayList<>();
+
+    /**
+     * Replaces a before/after snapshot of the whole collection by the rows this thread adds to this
+     * map inside {@code body} that are still stored when it returns, in registration order.
+     * Adding a row that is already stored is not an addition, and a row dropped again before the
+     * scope ended is left out. Nested scopes each see the rows added anywhere inside them; a scope
+     * on another thread never sees these rows. When {@code body} throws the list stays empty and
+     * the failure propagates unchanged.
+     */
+    public void captureAdditions(List<Recipe> out, Runnable body) {
+        var capture = new AdditionCapture();
+        synchronized (this) { mAdditionCaptures.add(capture); }
+        boolean completed = false;
+        try {
+            body.run();
+            completed = true;
+        } finally {
+            synchronized (this) { mAdditionCaptures.remove(capture); }
+            out.clear();
+            if (completed) {
+                var seen = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+                for (Recipe recipe : capture.rows)
+                    if (seen.add(recipe) && mRecipeList.contains(recipe)) out.add(recipe);
+            }
+        }
+    }
+
+    // ── Collision candidates ─────────────────────────────────────────────
+
+    /**
+     * Ceiling on the distinct input identities a new row may have before the collision check falls
+     * back to the input-index scan. Candidates are found by enumerating the identity subsets, which
+     * costs 2^n lookups; the shipped content peaks at four, so this only bounds addon rows.
+     */
+    private static final int COLLISION_SIGNATURE_KEYS = 10;
+
+    /** Strict required-input identities of one stored row, in ascending identity order. */
+    private static final class CollisionSignature {
+        private final int[] ids;
+        private final int hash;
+
+        CollisionSignature(int[] ids) {
+            this.ids = ids;
+            this.hash = Arrays.hashCode(ids);
+        }
+
+        @Override public int hashCode() { return hash; }
+
+        @Override public boolean equals(Object other) {
+            return other instanceof CollisionSignature signature && hash == signature.hash
+                    && Arrays.equals(ids, signature.ids);
+        }
+    }
+
+    /** Stored rows grouped by the exact set of inputs they require. */
+    private final Map<CollisionSignature, List<Recipe>> mCollisionBuckets = new HashMap<>();
+    private final Map<Item, Integer> mCollisionItemIds = new IdentityHashMap<>();
+    private final Map<String, Integer> mCollisionFluidIds = new HashMap<>();
+    /** Rows that require nothing but are still reachable through a zero-amount fluid. */
+    private final List<Recipe> mCollisionDegenerate = new ArrayList<>();
+    private int mCollisionNextId;
+    /** Rows this index has seen; a different count means the public collection was changed directly. */
+    private volatile int mCollisionRows;
+    /** Set when registered rows may have changed identity in place; the next check rebuilds. */
+    private volatile boolean mCollisionDirty;
+
+    private int collisionItemId(Item item) {
+        return mCollisionItemIds.computeIfAbsent(item, unused -> mCollisionNextId++);
+    }
+
+    private int collisionFluidId(String key) {
+        Integer id = mCollisionFluidIds.get(key);
+        if (id == null) mCollisionFluidIds.put(key, id = mCollisionNextId++);
+        return id;
+    }
+
+    /** Identities a stored row needs from a candidate before {@link #inputsSatisfiedBy} can pass. */
+    private int[] requiredCollisionIds(Recipe recipe) {
+        int[] ids = new int[recipe.mInputs.length + recipe.mFluidInputs.length];
+        int count = 0;
+        for (ItemStack required : recipe.mInputs) {
+            if (empty(required)) continue;
+            ids[count++] = collisionItemId(required.getItem());
+        }
+        for (int index = 0; index < recipe.mFluidInputs.length; index++) {
+            FluidStack required = recipe.mFluidInputs[index];
+            if (required == null || required.getFluid() == Fluids.EMPTY) continue;
+            // A zero-amount non-presence fluid is indexed by add() but not required by the matcher.
+            if (!recipe.isPresenceFluidInput(index) && required.getAmount() <= 0) continue;
+            ids[count++] = collisionFluidId(fluidKey(required));
+        }
+        return distinctSorted(ids, count);
+    }
+
+    /** Identities a candidate offers, matching the pools {@link #add} would index it under. */
+    private int[] availableCollisionIds(Recipe recipe) {
+        int[] ids = new int[recipe.mInputs.length + recipe.mFluidInputs.length];
+        int count = 0;
+        for (ItemStack available : recipe.mInputs) {
+            if (empty(available)) continue;
+            ids[count++] = collisionItemId(available.getItem());
+        }
+        for (FluidStack available : recipe.mFluidInputs) {
+            if (available == null || available.getFluid() == Fluids.EMPTY) continue;
+            ids[count++] = collisionFluidId(fluidKey(available));
+        }
+        return distinctSorted(ids, count);
+    }
+
+    private static int[] distinctSorted(int[] ids, int count) {
+        Arrays.sort(ids, 0, count);
+        int size = 0;
+        for (int index = 0; index < count; index++)
+            if (size == 0 || ids[size - 1] != ids[index]) ids[size++] = ids[index];
+        return Arrays.copyOf(ids, size);
+    }
+
+    private void indexCollision(Recipe recipe) {
+        mCollisionRows++;
+        int[] ids = requiredCollisionIds(recipe);
+        if (ids.length == 0) {
+            if (reachableFluid(recipe)) mCollisionDegenerate.add(recipe);
+            return;
+        }
+        mCollisionBuckets.computeIfAbsent(new CollisionSignature(ids), unused -> new ArrayList<>()).add(recipe);
+    }
+
+    private void unindexCollision(Recipe recipe) {
+        mCollisionRows--;
+        int[] ids = requiredCollisionIds(recipe);
+        if (ids.length == 0) {
+            mCollisionDegenerate.remove(recipe);
+            return;
+        }
+        var signature = new CollisionSignature(ids);
+        var bucket = mCollisionBuckets.get(signature);
+        if (bucket == null) return;
+        bucket.remove(recipe);
+        if (bucket.isEmpty()) mCollisionBuckets.remove(signature);
+    }
+
+    private static boolean reachableFluid(Recipe recipe) {
+        for (FluidStack fluid : recipe.mFluidInputs)
+            if (fluid != null && fluid.getFluid() != Fluids.EMPTY) return true;
+        return false;
+    }
+
+    private void clearCollisionIndex() {
+        mCollisionBuckets.clear();
+        mCollisionDegenerate.clear();
+        mCollisionRows = 0;
+        mCollisionDirty = false;
+    }
+
+    private synchronized void rebuildCollisionIndex() {
+        clearCollisionIndex();
+        for (Recipe recipe : mRecipeList) indexCollision(recipe);
     }
 
     // ── Recipe lookup ────────────────────────────────────────────────────
@@ -1010,7 +1243,10 @@ public class RecipeMap {
     }
 
     /** Call after mutating the ingredients of an already registered row in place. */
-    public void invalidateLookup() { lookupTable.invalidate(); }
+    public void invalidateLookup() {
+        lookupTable.invalidate();
+        mCollisionDirty = true;
+    }
 
     /** Whether a null {@link #findRecipe} answer can only come from the static row table. */
     public boolean hasOnlyStaticLookup() {

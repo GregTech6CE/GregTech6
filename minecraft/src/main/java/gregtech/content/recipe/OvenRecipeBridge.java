@@ -53,9 +53,7 @@ public final class OvenRecipeBridge {
     public static void clearMirrors() {
         gregtech.content.recipe.MachineRecipeOverlay.restoreFurnaceBeforeMirror();
         var map=MachineRecipeMaps.Furnace;
-        map.mRecipeList.removeAll(MIRRORED);
-        map.mRecipeItemMap.values().forEach(rows->rows.removeAll(MIRRORED));
-        map.mRecipeFluidMap.values().forEach(rows->rows.removeAll(MIRRORED));
+        map.removeAll(MIRRORED);
         for(var row:DISPLACED) if(!map.mRecipeList.contains(row)) map.add(row);
 //? if >=1.21.1 {
         /*MIRRORED.clear(); DISPLACED.clear(); ADDED_TO_VANILLA.clear();

@@ -34,7 +34,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -63,11 +62,7 @@ public final class CompatRecipes {
     public static synchronized List<String> problems() { return List.copyOf(PROBLEMS); }
 
     public static synchronized void clear() {
-        OWNED.forEach((map, rows) -> {
-            map.mRecipeList.removeAll(rows);
-            map.mRecipeItemMap.values().forEach(values -> values.removeAll(rows));
-            map.mRecipeFluidMap.values().forEach(values -> values.removeAll(rows));
-        });
+        OWNED.forEach(RecipeMap::removeAll);
         OWNED.clear();
         PROBLEMS.clear();
         added = 0;
@@ -144,19 +139,23 @@ public final class CompatRecipes {
                     problem(row.source(), row.id() + " generify needs one stack on each side");
                     return;
                 }
-                var before = identity(map.mRecipeList);
-                if (!MachineRecipeMaps.generify(from.get(0).copy(), outputs.get(0).copy()))
-                    problem(row.source(), row.id() + " generify was rejected");
-                for (var recipe : map.mRecipeList) if (!before.contains(recipe)) keep(map, row, recipe);
+                var added = new ArrayList<Recipe>();
+                map.captureAdditions(added, () -> {
+                    if (!MachineRecipeMaps.generify(from.get(0).copy(), outputs.get(0).copy()))
+                        problem(row.source(), row.id() + " generify was rejected");
+                });
+                for (var recipe : added) keep(map, row, recipe);
             }
         }
     }
 
     private static void saw(RecipeMap map, CompatSpecs.MachineRow row, ItemStack input, List<ItemStack> outputs) {
-        var before = identity(map.mRecipeList);
-        if (!MachineRecipeMaps.sawing(row.eut(), row.duration(), row.food(), row.lubricant(), input.copy(), copy(outputs)))
-            problem(row.source(), row.id() + " sawing was rejected");
-        for (var recipe : map.mRecipeList) if (!before.contains(recipe)) keep(map, row, recipe);
+        var added = new ArrayList<Recipe>();
+        map.captureAdditions(added, () -> {
+            if (!MachineRecipeMaps.sawing(row.eut(), row.duration(), row.food(), row.lubricant(), input.copy(), copy(outputs)))
+                problem(row.source(), row.id() + " sawing was rejected");
+        });
+        for (var recipe : added) keep(map, row, recipe);
     }
 
     private static void keep(RecipeMap map, CompatSpecs.MachineRow row, Recipe recipe) {
@@ -307,12 +306,6 @@ public final class CompatRecipes {
 
     private static ItemStack[] copy(List<ItemStack> stacks) {
         return stacks.stream().map(ItemStack::copy).toArray(ItemStack[]::new);
-    }
-
-    private static Set<Recipe> identity(Collection<Recipe> recipes) {
-        var set = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
-        set.addAll(recipes);
-        return set;
     }
 
     private static void problem(String source, String message) {

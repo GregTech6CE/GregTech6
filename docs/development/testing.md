@@ -39,6 +39,8 @@ GameTest 首次运行会下载游戏资源，失败时先区分环境问题与�
 
 针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威，core 表是静态子集。
 
+引擎契约不属于某个配方 issue，不写进上面的案例表，例如 `RecipeMap` 的注册、删除与碰撞判定：这类约定直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。
+
 ### core 静态子集
 
 `core/src/test/resources/gregtech/crafting-issue-static-cases.tsv`，5 列：

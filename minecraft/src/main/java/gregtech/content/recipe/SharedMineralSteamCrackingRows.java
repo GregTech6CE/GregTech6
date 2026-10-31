@@ -52,7 +52,7 @@ public final class SharedMineralSteamCrackingRows {
     }
 
     public static void clear() {
-        for (Recipe recipe : OWNED) MachineRecipeMaps.SteamCracking.unlink(recipe);
+        MachineRecipeMaps.SteamCracking.removeAll(OWNED);
         OWNED.clear();
         STATUS.clear();
     }
