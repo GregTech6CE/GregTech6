@@ -22,7 +22,7 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
             var appearance = CrucibleContentIcons.moltenAppearance(material);
             var surface = be.getBlockPos().above((int) Math.ceil(top));
             int light = CrucibleContentIcons.surfaceLight(be.getLevel(), surface, be.getTemperature(), packedLight);
-            SmeltingCrucibleRenderer.drawTop(pose, buffers, appearance.baseTexture(),
+            SmeltingCrucibleRenderer.drawFluidTop(pose, buffers, appearance.baseTexture(),
                     CrucibleContentIcons.surfaceTint(material, appearance, be.getLevel(), surface),
                     top, -0.999F, -0.999F, 1.999F, 1.999F, light);
         } else {

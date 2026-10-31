@@ -68,7 +68,7 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
             int tint = CrucibleContentIcons.surfaceTint(material, appearance, be.getLevel(), be.getBlockPos());
             int light = CrucibleContentIcons.surfaceLight(be.getLevel(), be.getBlockPos().above(),
                     be.getTemperature(), packedLight);
-            drawTop(poseStack, bufferSource, appearance.baseTexture(), tint, topY, x0, z0, x1, z1, light);
+            drawFluidTop(poseStack, bufferSource, appearance.baseTexture(), tint, topY, x0, z0, x1, z1, light);
         } else {
             drawTop(poseStack, bufferSource, CrucibleContentIcons.SOLID_GRAY_BASE, CrucibleContentIcons.solidGrayTint(),
                     topY, x0, z0, x1, z1, packedLight);
@@ -85,6 +85,30 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
     /** A separate cutout pass retains the transparent pixels in GT6 material detail layers. */
     static void drawTop(PoseStack poseStack, MultiBufferSource bufferSource, ResourceLocation texture, int tint,
                         float y, float x0, float z0, float x1, float z1, int packedLight, RenderType renderType) {
+        drawTopUv(poseStack, bufferSource, texture, tint, y, x0, z0, x1, z1, packedLight, renderType, 0, 0, 1, 1);
+    }
+
+    static void drawFluidTop(PoseStack pose, MultiBufferSource buffers, ResourceLocation texture, int tint,
+                             float y, float x0, float z0, float x1, float z1, int light) {
+        drawFluidTop(pose, buffers, texture, tint, y, x0, z0, x1, z1, light, RenderType.solid());
+    }
+
+    /** Crop small surfaces and tile large ones at block boundaries, without sampling adjacent atlas sprites. */
+    static void drawFluidTop(PoseStack pose, MultiBufferSource buffers, ResourceLocation texture, int tint,
+                             float y, float x0, float z0, float x1, float z1, int light, RenderType layer) {
+        for (int x = (int) Math.floor(x0); x < Math.ceil(x1); x++) {
+            for (int z = (int) Math.floor(z0); z < Math.ceil(z1); z++) {
+                float left = Math.max(x0, x), right = Math.min(x1, x + 1);
+                float near = Math.max(z0, z), far = Math.min(z1, z + 1);
+                drawTopUv(pose, buffers, texture, tint, y, left, near, right, far, light, layer,
+                        left - x, near - z, right - x, far - z);
+            }
+        }
+    }
+
+    private static void drawTopUv(PoseStack poseStack, MultiBufferSource bufferSource, ResourceLocation texture, int tint,
+                                  float y, float x0, float z0, float x1, float z1, int packedLight, RenderType renderType,
+                                  float minU, float minV, float maxU, float maxV) {
         TextureAtlasSprite sprite = CrucibleRenderSprites.resolve(texture);
         VertexConsumer consumer = bufferSource.getBuffer(renderType);
         Matrix4f matrix = poseStack.last().pose();
@@ -95,10 +119,10 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
         if (a == 0) {
             a = 1.0F;
         }
-        float u0 = sprite.getU0();
-        float u1 = sprite.getU1();
-        float v0 = sprite.getV0();
-        float v1 = sprite.getV1();
+        float u0 = sprite.getU0() + (sprite.getU1() - sprite.getU0()) * minU;
+        float u1 = sprite.getU0() + (sprite.getU1() - sprite.getU0()) * maxU;
+        float v0 = sprite.getV0() + (sprite.getV1() - sprite.getV0()) * minV;
+        float v1 = sprite.getV0() + (sprite.getV1() - sprite.getV0()) * maxV;
         int overlay = OverlayTexture.NO_OVERLAY;
         // CCW when viewed from above (+Y): normal (0, 1, 0)
 //? if >=1.21.1 {

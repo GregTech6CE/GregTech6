@@ -39,22 +39,8 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
             float bottom = shape.equals("jug") ? 10/16f : 1/16f;
             float top = shape.equals("jug") ? 14/16f : shape.equals("cup") ? 5/16f : 8/16f;
             float y = bottom + (top-bottom-.001f)*Math.min(1f,fluid.getAmount()/(float)Math.max(1,capacity));
-            // Upward winding; the surface stays inside the open vessel rim.
-            float[][] points={{min,y,min},{min,y,max},{max,y,max},{max,y,min}};
-            for (int v=0;v<4;v++) {
-                var point=points[v];
-//? if >=1.21.1 {
-                /*consumer.addVertex(pose.last().pose(),point[0],point[1],point[2])
-                        .setColor((tint>>16)&255,(tint>>8)&255,tint&255,(tint>>>24)==0?255:tint>>>24)
-                        .setUv(v<2?sprite.getU0():sprite.getU1(),v==0||v==3?sprite.getV0():sprite.getV1())
-                        .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose.last(),0,1,0);
-*///?} else {
-                consumer.vertex(pose.last().pose(),point[0],point[1],point[2])
-                        .color((tint>>16)&255,(tint>>8)&255,tint&255,(tint>>>24)==0?255:tint>>>24)
-                        .uv(v<2?sprite.getU0():sprite.getU1(),v==0||v==3?sprite.getV0():sprite.getV1())
-                        .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(pose.last().normal(),0,1,0).endVertex();
-//?}
-            }
+            SmeltingCrucibleRenderer.drawFluidTop(pose, buffers, texture, tint, y, min, min, max, max,
+                    light, ConfiguredAlphaModels.gtTranslucent());
             return;
         }
         for(int[] bounds:gregtech.content.tool.PortableContainerShapes.bounds("cell")) {
@@ -64,13 +50,16 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
             int[][] normals={{0,0,-1},{0,0,1},{-1,0,0},{1,0,0}};
             for(int face=0;face<4;face++)for(int v=0;v<4;v++) {
                 var point=faces[face][v];var normal=normals[face];
+                float u = switch (face) { case 0 -> 1-point[0]; case 1 -> point[0]; case 2 -> point[2]; default -> 1-point[2]; };
+                float atlasU = sprite.getU0() + (sprite.getU1()-sprite.getU0())*u;
+                float atlasV = sprite.getV0() + (sprite.getV1()-sprite.getV0())*(1-point[1]);
 //? if >=1.21.1 {
                 /*consumer.addVertex(pose.last().pose(),point[0],point[1],point[2]).setColor((tint>>16)&255,(tint>>8)&255,tint&255,(tint>>>24)==0?255:tint>>>24)
-                        .setUv(v==0||v==3?sprite.getU0():sprite.getU1(),v<2?sprite.getV1():sprite.getV0())
+                        .setUv(atlasU,atlasV)
                         .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose.last(),normal[0],normal[1],normal[2]);
 *///?} else {
                 consumer.vertex(pose.last().pose(),point[0],point[1],point[2]).color((tint>>16)&255,(tint>>8)&255,tint&255,(tint>>>24)==0?255:tint>>>24)
-                        .uv(v==0||v==3?sprite.getU0():sprite.getU1(),v<2?sprite.getV1():sprite.getV0())
+                        .uv(atlasU,atlasV)
                         .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(pose.last().normal(),normal[0],normal[1],normal[2]).endVertex();
 //?}
             }

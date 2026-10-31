@@ -30,7 +30,7 @@ public final class ProcessingToolRenderer implements BlockEntityRenderer<Process
             var visual = net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions.of(fluid.getFluid());
 //?}
             var texture = visual.getStillTexture(fluid);
-            if (texture != null) SmeltingCrucibleRenderer.drawTop(pose, buffers, texture, visual.getTintColor(fluid),
+            if (texture != null) SmeltingCrucibleRenderer.drawFluidTop(pose, buffers, texture, visual.getTintColor(fluid),
                     juicer ? .13f : topY, juicer ? .25f : .125f, juicer ? .25f : .125f, juicer ? .75f : .875f, juicer ? .75f : .875f, light);
             return;
         }

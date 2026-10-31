@@ -260,13 +260,8 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
         if (isMolten) {
             MaterialFluidVisuals.Appearance appearance = MaterialFluidVisuals.forMaterial(material);
             int tint = appearance.tintBase() ? appearance.tintArgb() : 0xFFFFFFFF;
-            if (useMoldUv) {
-                drawTopCentered(poseStack, bufferSource, appearance.baseTexture(), tint,
-                        topY, x0, z0, x1, z1, 0xF000F0);
-            } else {
-                drawTop(poseStack, bufferSource, appearance.baseTexture(), tint,
-                        topY, x0, z0, x1, z1, 0xF000F0);
-            }
+            SmeltingCrucibleRenderer.drawFluidTop(poseStack, bufferSource, appearance.baseTexture(), tint,
+                    topY, x0, z0, x1, z1, 0xF000F0);
         } else {
             int tint = material.getColor() | 0xFF000000;
             if (useMoldUv) {

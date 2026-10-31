@@ -97,7 +97,14 @@ public final class PortableFluidItemModel extends BakedModelWrapper<BakedModel> 
     }
 
     private static BakedQuad quad(Vector3f from, Vector3f to, Direction side, TextureAtlasSprite sprite, int tint) {
-        var face = new BlockElementFace(null, -1, "", new BlockFaceUV(new float[]{0, 0, 16, 16}, 0));
+        var face = new BlockElementFace(null, -1, "", new BlockFaceUV(switch (side) {
+            case DOWN -> new float[]{from.x(), 16-to.z(), to.x(), 16-from.z()};
+            case UP -> new float[]{from.x(), from.z(), to.x(), to.z()};
+            case NORTH -> new float[]{16-to.x(), 16-to.y(), 16-from.x(), 16-from.y()};
+            case SOUTH -> new float[]{from.x(), 16-to.y(), to.x(), 16-from.y()};
+            case WEST -> new float[]{from.z(), 16-to.y(), to.z(), 16-from.y()};
+            case EAST -> new float[]{16-to.z(), 16-to.y(), 16-from.z(), 16-from.y()};
+        }, 0));
 //? if >=1.21.1 {
         /*var quad = new FaceBakery().bakeQuad(from, to, face, sprite, side, BlockModelRotation.X0_Y0, null, true);
 *///?} else {
