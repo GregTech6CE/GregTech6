@@ -1,4 +1,15 @@
 {
   "replace": false,
-  "values": ["gt6ce:heat", "gt6ce:frost"]
+  "values": [
+    "gt6ce:heat",
+    "gt6ce:frost",
+    "gt6ce:chemical",
+    "gt6ce:alcohol",
+    "gt6ce:caffeine",
+    "gt6ce:dehydration",
+    "gt6ce:sugar",
+    "gt6ce:fat",
+    "gt6ce:electric",
+    "gt6ce:radiation"
+  ]
 }
