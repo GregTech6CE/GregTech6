@@ -106,10 +106,16 @@ public final class DiggableRecipes {
         }
         // MultiItemFood:168-178: the ordinary ball and five colored balls roll into plates,
         // while one dust unit compresses back into the matching ball.
-        clayBallForms(Materials.Clay, new ItemStack(Items.CLAY_BALL), "vanilla clay");
-        for (Variant row : PACKABLE) if (row.material() != null)
-            clayBallForms(row.material(), stack(row.ball(), 1), row.ball());
+        clayBalls().forEach((material, ball) -> clayBallForms(material, ball, material.getName()));
         return registeredCount;
+    }
+
+    static java.util.Map<GTMaterial, ItemStack> clayBalls() {
+        var result = new java.util.LinkedHashMap<GTMaterial, ItemStack>();
+        result.put(Materials.Clay, new ItemStack(Items.CLAY_BALL));
+        for (Variant row : PACKABLE) if (row.material() != null)
+            result.put(row.material(), stack(row.ball(), 1));
+        return result;
     }
 
     private static void clayBallForms(GTMaterial material, ItemStack ball, String name) {
@@ -121,6 +127,12 @@ public final class DiggableRecipes {
                 "roll " + name);
         add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, dust, ball),
                 "compress clay dust " + name);
+        // Unfired clay is moldable but not SMITHABLE; metal-only shaping rules exclude it.
+        var curved = GTItems.getStack(MaterialPrefix.plateCurved, material);
+        if (!curved.isEmpty()) {
+            add(MachineRecipeMaps.RollBender.addRecipe1(true, 16, 16, plate, curved), "bend clay " + name);
+            add(MachineRecipeMaps.RollingMill.addRecipe1(true, 16, 16, curved, plate), "flatten clay " + name);
+        }
     }
 
     private static void add(Recipe recipe, String source) {

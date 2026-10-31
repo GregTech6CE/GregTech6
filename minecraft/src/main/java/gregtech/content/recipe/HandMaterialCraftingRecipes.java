@@ -39,6 +39,7 @@ public final class HandMaterialCraftingRecipes {
 
     public static Map<ResourceLocation, JsonObject> recipes() {
         var rows = new LinkedHashMap<ResourceLocation, JsonObject>();
+        clayForms(rows);
         rocks(rows, GTMaterialRegistry.get("Stone"), new ItemStack(Items.COBBLESTONE));
         rocks(rows, GTMaterialRegistry.get("Netherrack"), new ItemStack(Items.NETHERRACK));
         rocks(rows, GTMaterialRegistry.get("Endstone"), new ItemStack(Items.END_STONE));
@@ -66,6 +67,23 @@ public final class HandMaterialCraftingRecipes {
         cables(rows);
         signalWires(rows);
         return Map.copyOf(rows);
+    }
+
+    private static void clayForms(Map<ResourceLocation, JsonObject> rows) {
+        var rollingPin = item("gt6ce:tool_rolling_pin");
+        DiggableRecipes.clayBalls().forEach((material, ball) -> {
+            var plate = mat("plate", material);
+            var curved = mat("plateCurved", material);
+            if (plate.isEmpty() || ball.isEmpty()) return;
+            // MultiItemFood's rolling-pin recipe, including all five colored clay balls.
+            put(rows, "clay/plate/" + slug(material), List.of("R", "C"),
+                    Map.of("R", rollingPin, "C", item(ball)), plate);
+            if (!curved.isEmpty()) {
+                putShapeless(rows, "clay/bend/" + slug(material), List.of(item(plate)), curved);
+                put(rows, "clay/flatten/" + slug(material), List.of("R", "C"),
+                        Map.of("R", rollingPin, "C", item(curved)), plate);
+            }
+        });
     }
 
     /**
