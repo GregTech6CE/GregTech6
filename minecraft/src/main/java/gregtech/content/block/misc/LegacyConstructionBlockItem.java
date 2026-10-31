@@ -10,22 +10,50 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class LegacyConstructionBlockItem extends BlockItem {
     protected LegacyConstructionBlockItem(Block block, Properties properties) { super(block, properties); }
 
+    private static final java.util.Map<Block, java.util.List<ItemStack>> MATCHING_ALTERNATIVES =
+            new java.util.concurrent.ConcurrentHashMap<>();
+
     /**
      * A bare legacy ingredient used to accept every color of the same palette block.
      * The recipe lookup index expands these variants as requirement keys; change both together.
      */
     public static java.util.List<ItemStack> ingredientAlternatives(ItemStack stack) {
-        if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof LegacyConstructionBlockItem legacy)
-                || !gregtech.content.registry.GTConstructionVariants.legacy(legacy.getBlock())) return java.util.List.of();
-//? if >=1.21.1 {
-        /*if (!stack.getComponentsPatch().isEmpty()) return java.util.List.of(canonical(stack));
-*///?} else {
-        if (stack.hasTag()) return java.util.List.of(canonical(stack));
-//?}
-        var result = new java.util.ArrayList<ItemStack>();
-        for (var color : net.minecraft.world.item.DyeColor.values())
-            result.add(new ItemStack(gregtech.content.registry.GTConstructionVariants.coloredBlock(legacy.getBlock(), color), stack.getCount()));
+        if (!plainPalette(stack)) return matchingAlternatives(stack);
+        var shared = matchingAlternatives(stack);
+        var result = new java.util.ArrayList<ItemStack>(shared.size());
+        for (var color : shared) result.add(color.copyWithCount(stack.getCount()));
         return result;
+    }
+
+    /**
+     * Shared palette alternatives for matching: one count-1 stack per color, cached per legacy block.
+     * Callers must only read the returned stacks; use {@link #ingredientAlternatives} for stacks that
+     * may be modified or need the offered count.
+     */
+    public static java.util.List<ItemStack> matchingAlternatives(ItemStack stack) {
+        if (!legacyPalette(stack)) return java.util.List.of();
+        if (!plainPalette(stack)) return java.util.List.of(canonical(stack));
+        var block = ((LegacyConstructionBlockItem) stack.getItem()).getBlock();
+        return MATCHING_ALTERNATIVES.computeIfAbsent(block, key -> {
+            var result = new java.util.ArrayList<ItemStack>(net.minecraft.world.item.DyeColor.values().length);
+            for (var color : net.minecraft.world.item.DyeColor.values())
+                result.add(new ItemStack(gregtech.content.registry.GTConstructionVariants.coloredBlock(key, color)));
+            return java.util.List.copyOf(result);
+        });
+    }
+
+    private static boolean legacyPalette(ItemStack stack) {
+        return stack != null && !stack.isEmpty() && stack.getItem() instanceof LegacyConstructionBlockItem legacy
+                && gregtech.content.registry.GTConstructionVariants.legacy(legacy.getBlock());
+    }
+
+    private static boolean plainPalette(ItemStack stack) {
+        if (!legacyPalette(stack)) return false;
+//? if >=1.21.1 {
+        /*return stack.getComponentsPatch().isEmpty();
+*///?} else {
+        return !stack.hasTag();
+//?}
     }
 
     /** Normalized offered identity; {@code RecipeInputs.offerKeys} mirrors this normalization. */

@@ -4,8 +4,10 @@ import gregtech.api.material.*;
 
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.resources.ResourceLocation;
 import java.util.*;
 
@@ -30,16 +32,34 @@ public final class MaterialEquivalence {
         if(m.getName().equals("Tungstensteel")) return "tungsten_steel";
         return m.getName().replaceAll("([a-z0-9])([A-Z])","$1_$2").toLowerCase(Locale.ROOT);
     }
+    /** One tag path plus the alias spellings {@link #hasForgeTag} also accepts, cached per Form. */
+    private record TagForms(String path, String alias, String alternate) {
+        static final TagForms NONE = new TagForms(null, null, null);
+
+        static TagForms of(String path) {
+            return new TagForms(path,
+                    path.replace("/aluminium", "/aluminum").replace("/quartz", "/nether_quartz")
+                            .replace("/sulfur", "/sulphur"),
+                    MaterialTagAliases.alternatePath(path));
+        }
+    }
+
+    private static final Map<Form, TagForms> FORM_TAGS = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<String, TagForms> PATH_TAGS = new java.util.concurrent.ConcurrentHashMap<>();
+    /** Tag identities only; membership stays a live read of the candidate stack. */
+    private static final Map<String, List<TagKey<Item>>> TAG_KEYS = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<String, TagKey<Item>> FORGE_TAGS = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<String, TagKey<Item>> COMMON_TAGS = new java.util.concurrent.ConcurrentHashMap<>();
+
     public static String tagPath(Form f) {
-        String group=COMMON.get(f.prefix().getName());
-        return group==null?null:group+"/"+materialName(f.material());
+        return forms(f).path();
     }
     /** Check the canonical Forge form tag and the established alternate material spellings. */
     public static boolean hasForgeTag(ItemStack candidate, String path) {
-        if(tagged(candidate,path))return true;
-        String alias=path.replace("/aluminium","/aluminum").replace("/quartz","/nether_quartz").replace("/sulfur","/sulphur");
-        String alternate=MaterialTagAliases.alternatePath(path);
-        return (!alias.equals(path)&&tagged(candidate,alias))||(alternate!=null&&tagged(candidate,alternate));
+        var forms = pathForms(path);
+        if(tagged(candidate,forms.path()))return true;
+        return (!forms.alias().equals(forms.path())&&tagged(candidate,forms.alias()))
+                ||(forms.alternate()!=null&&tagged(candidate,forms.alternate()));
     }
     /**
      * Tags {@link #hasForgeTag(ItemStack, String)} may test for this form. The recipe lookup index
@@ -48,24 +68,52 @@ public final class MaterialEquivalence {
     public static void addTagKeys(Form form, Set<Object> out) {
         String path = tagPath(form);
         if (path == null) return;
-        addTagKey(out, path);
-        String alias = path.replace("/aluminium", "/aluminum").replace("/quartz", "/nether_quartz")
-                .replace("/sulfur", "/sulphur");
-        if (!alias.equals(path)) addTagKey(out, alias);
-        String alternate = MaterialTagAliases.alternatePath(path);
-        if (alternate != null) addTagKey(out, alternate);
+        out.addAll(tagKeys(path));
     }
 
-    private static void addTagKey(Set<Object> out, String path) {
-        out.add(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", path)));
-        out.add(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", path)));
+    private static TagForms forms(Form form) {
+        return FORM_TAGS.computeIfAbsent(form, f -> {
+            String group = COMMON.get(f.prefix().getName());
+            return group == null ? TagForms.NONE : pathForms(group + "/" + materialName(f.material()));
+        });
+    }
+
+    private static TagForms pathForms(String path) {
+        return PATH_TAGS.computeIfAbsent(path, TagForms::of);
+    }
+
+    /** Forge and common tags of the canonical path, then of its alias and alternate spellings. */
+    private static List<TagKey<Item>> tagKeys(String path) {
+        return TAG_KEYS.computeIfAbsent(path, p -> {
+            var forms = pathForms(p);
+            var keys = new ArrayList<TagKey<Item>>(8);
+            addTagKeys(keys, forms.path());
+            if (!forms.alias().equals(forms.path())) addTagKeys(keys, forms.alias());
+            if (forms.alternate() != null) addTagKeys(keys, forms.alternate());
+            return List.copyOf(keys);
+        });
+    }
+
+    private static void addTagKeys(List<TagKey<Item>> out, String path) {
+        out.add(forgeTag(path));
+        out.add(commonTag(path));
+    }
+
+    private static TagKey<Item> forgeTag(String path) {
+        return FORGE_TAGS.computeIfAbsent(path,
+                p -> ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", p)));
+    }
+
+    private static TagKey<Item> commonTag(String path) {
+        return COMMON_TAGS.computeIfAbsent(path,
+                p -> ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", p)));
     }
 
     private static boolean tagged(ItemStack candidate, String path) {
 //? if >=1.21.1 {
-        /*return candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",path))) || candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c",path)));
+        /*return candidate.is(forgeTag(path)) || candidate.is(commonTag(path));
 *///?} else {
-        return candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",path)));
+        return candidate.is(forgeTag(path));
 //?}
     }
     /** Modern vanilla raw metals have their own recipes, not GT6 oreRaw substitutions. */

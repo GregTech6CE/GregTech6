@@ -58,7 +58,8 @@ public class Recipe {
         mSpecialItems = aSpecialItems;
     }
 
-    private final java.util.BitSet catalystInputs = new java.util.BitSet();
+    /** Allocated on the first mark; unmarked recipes keep every group absent. */
+    private RecipeInputMarks catalystInputs;
 
     private java.util.Map<Integer, java.util.function.Predicate<ItemStack>> sameItemInputPredicates = java.util.Map.of();
     private java.util.Map<Integer, java.util.function.Predicate<ItemStack>> itemInputGuards = java.util.Map.of();
@@ -117,17 +118,20 @@ public class Recipe {
         return matches && (guard == null || guard.test(available));
     }
 
-    private final java.util.Map<Integer, java.util.List<ItemStack>> viewerInputAlternatives = new java.util.HashMap<>();
+    private java.util.Map<Integer, java.util.List<ItemStack>> viewerInputAlternatives = java.util.Map.of();
     /** Informational choices for one displayed slot; this never broadens machine matching. */
     public Recipe withViewerInputAlternatives(int index, java.util.List<ItemStack> alternatives) {
         if (index < 0 || index >= mInputs.length || alternatives.isEmpty()) throw new IllegalArgumentException("Viewer input " + index);
-        viewerInputAlternatives.put(index, alternatives.stream().map(ItemStack::copy).toList());
+        var next = new java.util.HashMap<>(viewerInputAlternatives);
+        next.put(index, alternatives.stream().map(ItemStack::copy).toList());
+        viewerInputAlternatives = java.util.Map.copyOf(next);
         return this;
     }
     public java.util.List<ItemStack> viewerInputAlternatives(int index) {
-        if (!viewerInputAlternatives.containsKey(index))
+        var stored = viewerInputAlternatives.get(index);
+        if (stored == null)
             return gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(mInputs[index]);
-        return viewerInputAlternatives.getOrDefault(index, java.util.List.of()).stream().map(ItemStack::copy).toList();
+        return stored.stream().map(ItemStack::copy).toList();
     }
 
     private java.util.Map<Integer, String> viewerInputNotes = java.util.Map.of();
@@ -150,12 +154,13 @@ public class Recipe {
     public Recipe withCatalystInputs(int... indices) {
         for (int index : indices) {
             if (index < 0 || index >= mInputs.length) throw new IllegalArgumentException("Catalyst input " + index);
+            if (catalystInputs == null) catalystInputs = new RecipeInputMarks();
             catalystInputs.set(index);
         }
         return this;
     }
     public boolean isCatalystInput(int index) {
-        boolean marked = catalystInputs.get(index);
+        boolean marked = catalystInputs != null && catalystInputs.get(index);
         boolean itemCatalyst = !marked && !mExplicitCatalystsOnly
                 && mInputs[index].getItem() instanceof RecipeCatalystLike tool && tool.isCatalyst();
         return RecipeCatalystInputs.isCatalyst(mExplicitCatalystsOnly, marked, itemCatalyst);
@@ -163,60 +168,57 @@ public class Recipe {
 
     /** Indexes passed to {@link #withCatalystInputs(int...)}, in ascending order. Implicit catalyst items are not listed. */
     public int[] explicitCatalystInputs() {
-        int[] indices = new int[catalystInputs.cardinality()];
-        int cursor = 0;
-        for (int bit = catalystInputs.nextSetBit(0); bit >= 0; bit = catalystInputs.nextSetBit(bit + 1))
-            indices[cursor++] = bit;
-        return indices;
+        return catalystInputs == null ? RecipeInputMarks.NO_INDEXES : catalystInputs.toArray();
     }
 
-    private final java.util.BitSet catalystFluidInputs = new java.util.BitSet();
+    private RecipeInputMarks catalystFluidInputs;
 
     /** Mark fluid inputs that are checked at their declared amount and not drained. */
     public Recipe withCatalystFluidInputs(int... indices) {
         for (int index : indices) {
             if (index < 0 || index >= mFluidInputs.length) throw new IllegalArgumentException("Catalyst fluid input " + index);
-            if (presenceFluidInputs.get(index)) throw new IllegalArgumentException("Fluid input " + index + " is presence-only");
+            if (isPresenceFluidInput(index)) throw new IllegalArgumentException("Fluid input " + index + " is presence-only");
+            if (catalystFluidInputs == null) catalystFluidInputs = new RecipeInputMarks();
             catalystFluidInputs.set(index);
         }
         return this;
     }
 
     public boolean isCatalystFluidInput(int index) {
-        return index >= 0 && index < mFluidInputs.length && catalystFluidInputs.get(index);
+        return index >= 0 && index < mFluidInputs.length && catalystFluidInputs != null && catalystFluidInputs.get(index);
     }
 
     /** Indexes passed to {@link #withCatalystFluidInputs(int...)}, in ascending order. */
     public int[] explicitCatalystFluidInputs() {
-        int[] indices = new int[catalystFluidInputs.cardinality()];
-        int cursor = 0;
-        for (int bit = catalystFluidInputs.nextSetBit(0); bit >= 0; bit = catalystFluidInputs.nextSetBit(bit + 1))
-            indices[cursor++] = bit;
-        return indices;
+        return catalystFluidInputs == null ? RecipeInputMarks.NO_INDEXES : catalystFluidInputs.toArray();
     }
 
-    private final java.util.BitSet presenceFluidInputs = new java.util.BitSet();
+    private RecipeInputMarks presenceFluidInputs;
 
     /** Presence-only gates use positive native representatives, never zero-sized native stacks. */
     public Recipe withPresenceFluidInputs(int... indices) {
         for (int index : RecipeKeptInputs.normalizeFluids(indices, mFluidInputs.length)) {
             if (mFluidInputs[index] == null || mFluidInputs[index].isEmpty())
                 throw new IllegalArgumentException("Presence fluid input " + index + " needs a positive representative");
-            if (catalystFluidInputs.get(index))
+            if (isCatalystFluidInput(index))
                 throw new IllegalArgumentException("Fluid input " + index + " cannot be both kept and presence-only");
             mFluidInputs[index] = mFluidInputs[index].copy();
             mFluidInputs[index].setAmount(1);
+            if (presenceFluidInputs == null) presenceFluidInputs = new RecipeInputMarks();
             presenceFluidInputs.set(index);
         }
         return this;
     }
 
     public boolean isPresenceFluidInput(int index) {
-        return index >= 0 && index < mFluidInputs.length && presenceFluidInputs.get(index);
+        return index >= 0 && index < mFluidInputs.length && presenceFluidInputs != null && presenceFluidInputs.get(index);
     }
 
+    /** Whether any fluid input is a presence-only gate. */
+    boolean hasPresenceFluidInputs() { return presenceFluidInputs != null && !presenceFluidInputs.isEmpty(); }
+
     public int[] explicitPresenceFluidInputs() {
-        return presenceFluidInputs.stream().toArray();
+        return presenceFluidInputs == null ? RecipeInputMarks.NO_INDEXES : presenceFluidInputs.toArray();
     }
 
     // ── Output helpers ───────────────────────────────────────────────────

@@ -174,6 +174,10 @@ public class RecipeMap {
     public final String mNameInternal;
     public final String mNameLocal;
     public final String mGUIPath;
+    /** Direct fuel converters read fluid amounts instead of presence gates. */
+    private final boolean mDirectFuelConverter;
+    /** Anvil rows treat an empty input slot as a required empty work area. */
+    private final boolean mAnvilRowMap;
 
     // ── Recipe storage ───────────────────────────────────────────────────
     public final Collection<Recipe> mRecipeList;
@@ -277,6 +281,12 @@ public class RecipeMap {
         lookupTable = new RecipeLookupTable((aRecipeList != null) ? aRecipeList : new HashSet<>(), aNameInternal);
         mRecipeList = lookupTable;
         mNameInternal = aNameInternal;
+        mDirectFuelConverter = switch (aNameInternal) {
+            case "gt.recipe.fuels.burn", "gt.recipe.fuels.gas", "gt.recipe.fuels.fluidbed",
+                    "gt.recipe.fuels.engine", "gt.recipe.fuels.hot" -> true;
+            default -> false;
+        };
+        mAnvilRowMap = aNameInternal.startsWith("gt.recipe.anvil");
         mNameLocal = aNameLocal;
         mGUIPath = aGUIPath.endsWith(".png") ? aGUIPath : aGUIPath + ".png";
         mInputItemsCount   = Math.max(aInputItemsCount, aMinimalInputItems);
@@ -744,7 +754,7 @@ public class RecipeMap {
     private boolean inputsSatisfiedBy(Recipe aExisting, Recipe aCandidate) {
         if (aExisting.mFakeRecipe) return false;
         // In an anvil recipe an empty entry is a required empty work area, not a wildcard.
-        if (mNameInternal.startsWith("gt.recipe.anvil")) {
+        if (mAnvilRowMap) {
             long requiredEmpty = java.util.Arrays.stream(aExisting.mInputs).filter(RecipeMap::empty).count();
             long candidateEmpty = java.util.Arrays.stream(aCandidate.mInputs).filter(RecipeMap::empty).count();
             if (requiredEmpty != candidateEmpty) return false;
@@ -824,12 +834,7 @@ public class RecipeMap {
 
     /** These builtin converters still interpret fluid input amounts directly, not as presence gates. */
     private boolean supportsFluidPresence(Recipe recipe) {
-        if (recipe.explicitPresenceFluidInputs().length == 0) return true;
-        return switch (mNameInternal) {
-            case "gt.recipe.fuels.burn", "gt.recipe.fuels.gas", "gt.recipe.fuels.fluidbed",
-                    "gt.recipe.fuels.engine", "gt.recipe.fuels.hot" -> false;
-            default -> true;
-        };
+        return !recipe.hasPresenceFluidInputs() || !mDirectFuelConverter;
     }
 
     /** Stores the recipe and updates lookup indices, rejecting unsupported presence-only fuel rows. */
@@ -962,14 +967,16 @@ public class RecipeMap {
         // Preserve the existing exact-item pass and collection order. HashSet index iteration must
         // never choose a different recipe when two rows accept the same input.
         var candidates = lookupTable.candidates(inputItems, inputFluids);
+        // Both candidate stages already apply exactItems to every static row; the cached candidate
+        // lists keep that split for the same input identities, so the check is not repeated here.
         for (Recipe r : candidates.exact()) {
-            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r) || !exactItems(r, inputItems)) continue;
+            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r)) continue;
             if (needsOutputs && r.mNeedsEmptyOutput && !emptyOutputs) continue;
             if (matcher.matches(r, 1)) return r;
         }
         // Material aliases, legacy colour alternatives and tag-derived forms retain the full fallback.
         for (Recipe r : candidates.alternatives()) {
-            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r) || exactItems(r, inputItems)) continue;
+            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r)) continue;
             if (needsOutputs && r.mNeedsEmptyOutput && !emptyOutputs) continue;
             if (matcher.matches(r, 1)) return r;
         }
@@ -1127,7 +1134,7 @@ public class RecipeMap {
                 // Preserve the old index-only admission for unmarked inputs, including palette aliases.
                 // An unrelated unmarked slot must not bypass a marked slot's predicate.
                 if (required.is(stack.getItem())) return true;
-                for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required))
+                for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.matchingAlternatives(required))
                     if (color.is(stack.getItem())) return true;
             }
         }

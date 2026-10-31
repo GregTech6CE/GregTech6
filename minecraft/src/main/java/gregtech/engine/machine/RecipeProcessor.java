@@ -1,5 +1,6 @@
 package gregtech.engine.machine;
 
+import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.recipe.MachineWorkCost;
 import gregtech.engine.recipe.MachineWorkOutputs;
 import gregtech.engine.recipe.ParallelFit;
@@ -451,9 +452,10 @@ public final class RecipeProcessor {
                 config.parallelScalesDuration(), config.usesTimeEnergy());
         for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) high = ParallelFit.amountCap(high, fluid.getAmount());
         var items = io.inventory().inputItems();
+        var matcher = new RecipeInputs.Matcher(items, fluids);
         while (low < high) {
             int mid = low + (high - low + 1) / 2;
-            if (RecipeInputs.consume(recipe, items, fluids, mid) != null) low = mid; else high = mid - 1;
+            if (matcher.matches(recipe, mid)) low = mid; else high = mid - 1;
         }
         return Math.min(low, outputLimitedParallel(recipe, low));
     }
@@ -477,68 +479,87 @@ public final class RecipeProcessor {
         int firstOutput = map.mInputItemsCount;
         if (recipe.mOutputs.length > 0 && firstOutput < inventory.items().getSlots()) {
             var present = new ItemStack[inventory.items().getSlots()];
-            for (int i = firstOutput; i < inventory.items().getSlots(); i++) present[i] = inventory.items().getStackInSlot(i).copy();
-            int limit = maxParallel;
-            while (limit > 0 && !itemsFit(recipe, limit, firstOutput, present)) limit--;
-            maxParallel = Math.min(maxParallel, limit);
+            for (int i = firstOutput; i < inventory.items().getSlots(); i++)
+                present[i] = inventory.items().getStackInSlot(i).copy();
+            maxParallel = Math.min(maxParallel,
+                    ItemOutputs.of(recipe.mOutputs).largestFitting(firstOutput, present, maxParallel));
         }
 
         // Fluids: free capacity of the output tanks, filled the same way flush() does.
         if (recipe.mFluidOutputs.length > 0 && inventory.tanksOutput().length > 0) {
-            int limit = maxParallel;
-            while (limit > 0 && !fluidsFit(recipe, limit)) limit--;
-            maxParallel = Math.min(maxParallel, limit);
+            maxParallel = Math.min(maxParallel,
+                    FluidOutputs.of(recipe.mFluidOutputs).largestFitting(inventory.tanksOutput(), maxParallel));
         }
         return maxParallel;
     }
 
-    /** Whether {@code parallel} runs of the recipe's item outputs fit into the output section. */
-    private static boolean itemsFit(Recipe recipe, int parallel, int firstOutput, ItemStack[] present) {
-        var outputs = new java.util.ArrayList<ItemStack>();
-        for (var output : recipe.mOutputs) if (output != null && !output.isEmpty()) outputs.add(output);
-        int[] group = itemGroups(outputs);
-        int groups = groupCount(group);
-        int[] slotKeys = new int[present.length - firstOutput];
-        int[] slotCounts = new int[slotKeys.length];
-        for (int i = 0; i < slotKeys.length; i++) {
-            ItemStack slot = present[firstOutput + i];
-            if (slot == null || slot.isEmpty()) {
-                slotKeys[i] = ParallelFit.EMPTY;
-                continue;
+    /**
+     * Fixed item-output grouping for one evaluation; every probe rebuilds the slot state from the
+     * same baseline, so a rejected batch leaves no partial fill behind.
+     */
+    private record ItemOutputs(java.util.List<ItemStack> outputs, int[] group, int[] capacities, long[] counts) {
+        static ItemOutputs of(ItemStack[] declared) {
+            var nonEmpty = new java.util.ArrayList<ItemStack>(declared.length);
+            for (var output : declared) if (output != null && !output.isEmpty()) nonEmpty.add(output);
+            var outputs = java.util.List.copyOf(nonEmpty);
+            int[] group = itemGroups(outputs);
+            int[] capacities = new int[groupCount(group)];
+            long[] counts = new long[capacities.length];
+            for (int output = 0; output < outputs.size(); output++) {
+                int key = group[output];
+                capacities[key] = Math.min(64, outputs.get(output).getMaxStackSize());
+                counts[key] += outputs.get(output).getCount();
             }
-            slotKeys[i] = groupOf(outputs, group, slot);
-            slotCounts[i] = slot.getCount();
+            return new ItemOutputs(outputs, group, capacities, counts);
         }
-        int[] capacities = new int[groups];
-        long[] counts = new long[groups];
-        for (int output = 0; output < outputs.size(); output++) {
-            int key = group[output];
-            capacities[key] = Math.min(64, outputs.get(output).getMaxStackSize());
-            counts[key] += outputs.get(output).getCount();
+
+        int largestFitting(int firstOutput, ItemStack[] present, int maxParallel) {
+            int slots = present.length - firstOutput;
+            return ParallelFit.largestFitting(maxParallel, parallel -> {
+                int[] slotKeys = new int[slots];
+                int[] slotCounts = new int[slots];
+                for (int i = 0; i < slots; i++) {
+                    ItemStack slot = present[firstOutput + i];
+                    if (slot == null || slot.isEmpty()) {
+                        slotKeys[i] = ParallelFit.EMPTY;
+                        continue;
+                    }
+                    slotKeys[i] = groupOf(outputs, group, slot);
+                    slotCounts[i] = slot.getCount();
+                }
+                return ParallelFit.itemsFit(slotKeys, slotCounts, capacities, counts, parallel);
+            });
         }
-        return ParallelFit.itemsFit(slotKeys, slotCounts, capacities, counts, parallel);
     }
 
-    /** Whether {@code parallel} runs of the recipe's fluid outputs fit into the output tanks. */
-    private boolean fluidsFit(Recipe recipe, int parallel) {
-        var tanksOutput = io.inventory().tanksOutput();
-        var outputs = new java.util.ArrayList<FluidStack>();
-        for (var output : recipe.mFluidOutputs) if (output != null && !output.isEmpty()) outputs.add(output);
-        int[] group = fluidGroups(outputs);
-        int groups = groupCount(group);
-        int[] tankKeys = new int[tanksOutput.length];
-        long[] free = new long[tanksOutput.length];
-        for (int i = 0; i < tanksOutput.length; i++) {
-            free[i] = Math.max(0, tanksOutput[i].capacity() - tanksOutput[i].getAmount());
-            if (tanksOutput[i].isEmpty()) {
-                tankKeys[i] = ParallelFit.EMPTY;
-                continue;
-            }
-            tankKeys[i] = groupOfFluid(outputs, group, tanksOutput[i].getFluid());
+    /** Fixed fluid-output grouping; each probe reads the tanks again for its baseline capacity. */
+    private record FluidOutputs(java.util.List<FluidStack> outputs, int[] group, long[] amounts) {
+        static FluidOutputs of(FluidStack[] declared) {
+            var nonEmpty = new java.util.ArrayList<FluidStack>(declared.length);
+            for (var output : declared) if (output != null && !output.isEmpty()) nonEmpty.add(output);
+            var outputs = java.util.List.copyOf(nonEmpty);
+            int[] group = fluidGroups(outputs);
+            long[] amounts = new long[groupCount(group)];
+            for (int output = 0; output < outputs.size(); output++)
+                amounts[group[output]] += outputs.get(output).getAmount();
+            return new FluidOutputs(outputs, group, amounts);
         }
-        long[] amounts = new long[groups];
-        for (int output = 0; output < outputs.size(); output++) amounts[group[output]] += outputs.get(output).getAmount();
-        return ParallelFit.fluidsFit(tankKeys, free, amounts, parallel);
+
+        int largestFitting(FluidTankGT[] tanks, int maxParallel) {
+            return ParallelFit.largestFitting(maxParallel, parallel -> {
+                int[] tankKeys = new int[tanks.length];
+                long[] free = new long[tanks.length];
+                for (int i = 0; i < tanks.length; i++) {
+                    free[i] = Math.max(0, tanks[i].capacity() - tanks[i].getAmount());
+                    if (tanks[i].isEmpty()) {
+                        tankKeys[i] = ParallelFit.EMPTY;
+                        continue;
+                    }
+                    tankKeys[i] = groupOfFluid(outputs, group, tanks[i].getFluid());
+                }
+                return ParallelFit.fluidsFit(tankKeys, free, amounts, parallel);
+            });
+        }
     }
 
     /**

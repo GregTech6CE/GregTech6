@@ -2,6 +2,8 @@
 
 package gregtech.engine.recipe;
 
+import java.util.function.IntPredicate;
+
 /**
  * Internal: not part of the addon contract; may change without notice.
  *
@@ -27,6 +29,26 @@ public final class ParallelFit {
     /** Keeps a fluid output's scaled amount representable as an {@code int}. */
     public static int amountCap(int limit, long amount) {
         return amount <= 0 ? limit : (int) Math.min(limit, Integer.MAX_VALUE / amount);
+    }
+
+    /**
+     * Largest {@code parallel} in {@code [0, limit]} whose simulation fits.
+     *
+     * <p>Requires a monotone probe: when a batch fits, every smaller batch fits too. That holds for
+     * {@link #itemsFit} and {@link #fluidsFit} because a smaller batch never fills more of a slot or
+     * tank than a larger one. The probe rebuilds its simulation state from the baseline on each call,
+     * so a failed batch leaves no residue behind.</p>
+     */
+    public static int largestFitting(int limit, IntPredicate fits) {
+        if (limit <= 0) return 0;
+        if (fits.test(limit)) return limit;
+        int low = 0, high = limit - 1;
+        while (low < high) {
+            int mid = low + (high - low + 1) / 2;
+            if (fits.test(mid)) low = mid;
+            else high = mid - 1;
+        }
+        return low;
     }
 
     /**

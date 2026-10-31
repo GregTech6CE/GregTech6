@@ -124,7 +124,7 @@ public final class RecipeInputs {
             out.add(form);
             gregtech.engine.material.MaterialEquivalence.addTagKeys(form, out);
         }
-        for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required))
+        for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.matchingAlternatives(required))
             requireKeys(color, out);
     }
 
@@ -147,7 +147,7 @@ public final class RecipeInputs {
         // Normalize the offered identity too; expanding only the requirement rejects its bare alias.
         var canonical = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(available);
         if (canonical != available) return matches(required, canonical);
-        var colors = gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required);
+        var colors = gregtech.content.block.misc.LegacyConstructionBlockItem.matchingAlternatives(required);
         if (!colors.isEmpty()) return colors.stream().anyMatch(color -> matches(color, available));
         if(!required.is(available.getItem())) return gregtech.engine.material.MaterialEquivalence.matches(required,available);
         if (!emptyContainerMatches(required, available)) return false;
