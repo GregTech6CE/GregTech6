@@ -44,6 +44,7 @@ import java.util.*;
 //?}
 public final class SharedInventoryModelPack extends AbstractPackResources {
     private Map<ResourceLocation, byte[]> resources;
+    private Set<String> namespaces;
 
     /** Internal model references remain loaded without appearing as a user-selectable pack. */
     @Override
@@ -91,6 +92,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         if (resources != null) return resources;
         Map<ResourceLocation, byte[]> result = new HashMap<>();
         Map<ResourceLocation, byte[]> references = new HashMap<>();
+        // Many material items refer to the same template. Check the classpath once per parent.
+        Map<ResourceLocation, Boolean> templates = new HashMap<>();
         emitStructureParts(result);
         emitAddonPipes(result);
         emitCompressedTanks(result);
@@ -147,8 +150,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             }
             // Do not invent a missing template or hide it behind a dummy model. Unsupported
             // references remain visible in the usual bakery warning and final model checks.
-            if (parent == null || !JsonResourceAliases.contains("/assets/" + parent.getNamespace()
-                    + "/models/" + parent.getPath() + ".json")) continue;
+            if (parent == null || !templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
+                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"))) continue;
             byte[] json = references.computeIfAbsent(parent, key ->
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), json);
@@ -162,7 +165,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             if (!id.getNamespace().equals("gt6ce") || JsonResourceAliases.contains(
                     "/assets/gt6ce/blockstates/" + id.getPath() + ".json")) continue;
             var parent = BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
-            if (!JsonResourceAliases.contains("/assets/gt6ce/models/" + parent.getPath() + ".json")) continue;
+            if (!templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
+                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"))) continue;
             byte[] json = ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8);
             result.put(location("blockstates/" + id.getPath() + ".json"), json);
             states++;
@@ -320,15 +324,17 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     @Override
     public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
         if (type != PackType.CLIENT_RESOURCES) return;
+        String prefix = path + "/";
         data().forEach((id, json) -> {
-            if (id.getNamespace().equals(namespace) && id.getPath().startsWith(path + "/"))
+            if (id.getNamespace().equals(namespace) && id.getPath().startsWith(prefix))
                 output.accept(id, () -> new ByteArrayInputStream(json));
         });
     }
 
     @Override
-    public Set<String> getNamespaces(PackType type) {
+    public synchronized Set<String> getNamespaces(PackType type) {
         if (type != PackType.CLIENT_RESOURCES) return Set.of();
+        if (namespaces != null) return namespaces;
         var names = new HashSet<String>();
         names.add("gt6ce");
         for (var prefix : gregtech.engine.prefix.PrefixRegistry.addonPrefixes())
@@ -341,11 +347,12 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         names.addAll(gregtech.content.registry.AddonPipeRegistration.namespaces());
         for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials())
             names.addAll(gregtech.engine.addon.AddonMaterials.owners(material));
-        return Set.copyOf(names);
+        namespaces = Set.copyOf(names);
+        return namespaces;
     }
 
     @Override
-    public void close() { resources = null; }
+    public synchronized void close() { resources = null; namespaces = null; }
 
     private record Reference(ResourceLocation parent) implements IUnbakedGeometry<Reference> {
         @Override

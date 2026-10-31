@@ -58,12 +58,10 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
     /** Below this, noDeep layers (coal seams etc.) keep the host — GT6 used y<24. */
     private static final int NO_DEEP_Y = GTWorldgenScale.remapY(24);
 
-    private record Ore(GTMaterial material, int chanceDiv, int minY, int maxY, StoneLayerOreRules.Rule rule) {}
-
-    private record ContactKey(String above, String below) {}
+    private record Ore(GTMaterial material, int chanceDiv, int minY, int maxY, StoneLayerOreRules.Rule rule, @Nullable net.minecraft.resources.ResourceLocation explicitBlock) {}
 
     private static volatile Layer[] LAYER_CACHE;
-    private static volatile Map<ContactKey, List<Ore>> CONTACT_CACHE;
+    private static volatile Map<String, Map<String, List<Ore>>> CONTACT_CACHE;
     private static final Map<Long, GTCellNoise> NOISE_BY_SEED = new ConcurrentHashMap<>();
 
     public GTStoneLayerFeature() {
@@ -79,7 +77,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos origin = context.origin();
 
         Layer[] layers = layers();
-        Map<ContactKey, List<Ore>> contacts = contacts();
+        Map<String, Map<String, List<Ore>>> contacts = contacts();
         GTCellNoise noise = NOISE_BY_SEED.computeIfAbsent(level.getSeed(), GTCellNoise::new);
         int listSize = layers.length;
 
@@ -121,9 +119,10 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                         if (scan[5] == scan[1]) {
                             // Interior of one layer: the layer's own ores.
                             boolean core = scan[6] == scan[0];
-                            for (Ore ore : layer.ores()) {
+                            for (int oreIndex = 0; oreIndex < layer.ores().size(); oreIndex++) {
+                                Ore ore = layer.ores().get(oreIndex);
                                 if (y < ore.minY() || y > ore.maxY()) continue;
-                                if (!StoneLayerOrePlacement.enabled(ore.rule())) continue;
+                                if (!StoneLayerOrePlacement.enabled(ore.explicitBlock())) continue;
                                 if (!ore.rule().biomes().isEmpty() && !StoneLayerOrePlacement.matches(ore.rule(), level.getBiome(cursor))) continue;
                                 if (random.nextInt(ore.chanceDiv()) != 0) continue;
                                 if (placeOre(level, cursor, background, ore, !core)) {
@@ -134,11 +133,13 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                             }
                         } else {
                             // Layer boundary: contact ores (GT6 doublelayers).
-                            List<Ore> contactOres = contacts.get(new ContactKey(scan[5].material(), scan[1].material()));
+                            var below = contacts.get(scan[5].material());
+                            List<Ore> contactOres = below == null ? null : below.get(scan[1].material());
                             if (contactOres != null) {
-                                for (Ore ore : contactOres) {
+                                for (int oreIndex = 0; oreIndex < contactOres.size(); oreIndex++) {
+                                    Ore ore = contactOres.get(oreIndex);
                                     if (y < ore.minY() || y > ore.maxY()) continue;
-                                    if (!StoneLayerOrePlacement.enabled(ore.rule())) continue;
+                                    if (!StoneLayerOrePlacement.enabled(ore.explicitBlock())) continue;
                                     if (!ore.rule().biomes().isEmpty() && !StoneLayerOrePlacement.matches(ore.rule(), level.getBiome(cursor))) continue;
                                     if (random.nextInt(ore.chanceDiv()) != 0) continue;
                                     if (placeOre(level, cursor, background, ore, random.nextBoolean())) {
@@ -191,7 +192,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static boolean placeOre(WorldGenLevel level, BlockPos pos, BlockState background, Ore ore, boolean small) {
-        BlockState explicit = StoneLayerOrePlacement.explicitState(ore.rule());
+        BlockState explicit = StoneLayerOrePlacement.explicitState(ore.explicitBlock());
         return explicit != null ? level.setBlock(pos, explicit, 2)
                 : GTOreBlockResolver.placeOre(level, pos, background, ore.material(), small);
     }
@@ -251,18 +252,20 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
         }
     }
 
-    private static Map<ContactKey, List<Ore>> contacts() {
-        Map<ContactKey, List<Ore>> cached = CONTACT_CACHE;
+    private static Map<String, Map<String, List<Ore>>> contacts() {
+        Map<String, Map<String, List<Ore>>> cached = CONTACT_CACHE;
         if (cached != null) return cached;
         synchronized (GTStoneLayerFeature.class) {
             if (CONTACT_CACHE != null) return CONTACT_CACHE;
-            Map<ContactKey, List<Ore>> map = new HashMap<>();
+            Map<String, Map<String, List<Ore>>> map = new HashMap<>();
             for (GTStoneLayersGen.ContactDef def : GTStoneLayersGen.CONTACTS) {
                 List<Ore> ores = resolveOres(def.ores());
                 if (ores.isEmpty()) continue;
-                map.merge(new ContactKey(def.materialA(), def.materialB()), ores, GTStoneLayerFeature::concat);
+                map.computeIfAbsent(def.materialA(), ignored -> new HashMap<>())
+                        .merge(def.materialB(), ores, GTStoneLayerFeature::concat);
                 if (def.bothSides()) {
-                    map.merge(new ContactKey(def.materialB(), def.materialA()), ores, GTStoneLayerFeature::concat);
+                    map.computeIfAbsent(def.materialB(), ignored -> new HashMap<>())
+                            .merge(def.materialA(), ores, GTStoneLayerFeature::concat);
                 }
             }
             CONTACT_CACHE = map;
@@ -281,8 +284,10 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
         for (GTStoneLayersGen.OreDef def : defs) {
             GTMaterial material = GTMaterialRegistry.get(def.material());
             if (material == null || !material.resolve().isValid()) continue;
+            var rule = StoneLayerOreRules.rule(def);
+            var block = rule.blockId().isEmpty() ? null : net.minecraft.resources.ResourceLocation.parse(rule.blockId());
             out.add(new Ore(material.resolve(), Math.max(1, def.chanceDiv()),
-                    GTWorldgenScale.remapY(def.minY()), GTWorldgenScale.remapY(def.maxY()), StoneLayerOreRules.rule(def)));
+                    GTWorldgenScale.remapY(def.minY()), GTWorldgenScale.remapY(def.maxY()), rule, block));
         }
         return List.copyOf(out);
     }
