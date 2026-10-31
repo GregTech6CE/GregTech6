@@ -144,7 +144,8 @@ public final class MultiblockTools {
     public static Component tankContent(gregtech.engine.fluid.FluidTankGT tank, String emptyMessage) {
         if (tank.isEmpty()) return Component.literal(emptyMessage);
         var fluid = tank.getFluidLong();
-        return Component.literal(MultiblockToolRules.amount(tank.getAmount()) + " L of ")
+        return Component.literal(MultiblockToolRules.amount(tank.getAmount()) + " "
+                        + gregtech.engine.fluid.FluidUnits.unit() + " of ")
                 .append(fluid.getDisplayName())
                 .append(gregtech.content.registry.GTFluids.isGas(fluid) ? " (Gaseous)" : " (Liquid)");
     }

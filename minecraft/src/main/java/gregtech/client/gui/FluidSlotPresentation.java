@@ -22,7 +22,7 @@ final class FluidSlotPresentation {
     static List<Component> tooltip(FluidStack fluid, long amount, long capacity) {
         if (fluid.isEmpty()) return List.of(capacity == Long.MAX_VALUE
                 ? Component.translatable("gui.gt6ce.fluid.capacity_unlimited")
-                : Component.translatable("gui.gt6ce.fluid.capacity", capacity));
+                : gregtech.engine.fluid.FluidUnits.text("gui.gt6ce.fluid.capacity", capacity));
         var result = new ArrayList<Component>();
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         result.add(entry == null ? fluid.getDisplayName()
@@ -32,7 +32,7 @@ final class FluidSlotPresentation {
     }
 
     static void amount(GuiGraphics graphics, Font font, long liters, int x, int y, int width, int height) {
-        String text = FluidSlotAmountOverlay.text(liters);
+        String text = gregtech.engine.fluid.FluidUnits.compact(liters);
         if (text.isEmpty()) return;
         float scale = Math.min(1.0F, (width - 1.0F) / Math.max(1, font.width(text)));
         graphics.pose().pushPose();

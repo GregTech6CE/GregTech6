@@ -122,7 +122,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
                 if (!containers.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStacks(containers);
             }
             if(!display.isEmpty()) fluidSlot.addItemStack(display).addTooltipCallback((view,tooltip)->
-                    tooltip.add(Component.translatable("gt6ce.fluid.amount",presence ? 0 : fluid.getAmount())));
+                    tooltip.add(gregtech.engine.fluid.FluidUnits.text("gt6ce.fluid.amount",presence ? 0 : fluid.getAmount())));
 //? if >=1.21.1 {
             /*else fluidSlot.addIngredient(NeoForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
             builder.addInvisibleIngredients(fluidRole).addIngredient(NeoForgeTypes.FLUID_STACK,shown);

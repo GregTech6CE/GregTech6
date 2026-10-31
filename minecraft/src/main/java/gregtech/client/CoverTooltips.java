@@ -20,7 +20,7 @@ public final class CoverTooltips {
         if (CoverItems.isCover(stack)) hint(tooltip, "tooltip.gt6ce.cover.sneak_place");
         for (var line : CoverDisplayInfo.describe(stack, level)) {
             Object[] args = java.util.Arrays.stream(line.arguments()).map(CoverTooltips::display).toArray();
-            tooltip.add(Component.translatable(line.key(), args).withStyle(ChatFormatting.AQUA));
+            tooltip.add(gregtech.engine.fluid.FluidUnits.text(line.key(), args).withStyle(ChatFormatting.AQUA));
         }
         String behavior = CoverItems.behavior(stack);
         boolean component = ComponentCoverRuntime.kind(stack) != null;
@@ -56,6 +56,6 @@ public final class CoverTooltips {
 
     private static void hint(List<Component> lines, String key) {
         if (!CommonBlockTooltips.containsKey(lines, key))
-            lines.add(Component.translatable(key).withStyle(ChatFormatting.DARK_GRAY));
+            lines.add(gregtech.engine.fluid.FluidUnits.text(key).withStyle(ChatFormatting.DARK_GRAY));
     }
 }

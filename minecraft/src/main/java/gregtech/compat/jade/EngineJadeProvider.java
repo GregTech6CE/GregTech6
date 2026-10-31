@@ -89,6 +89,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 if (be instanceof KineticSteamEngineBlockEntity se) {
                     var control = se.machineControl(null);
                     tag.putBoolean("gt_eng_working", control.running());
+                    tag.putBoolean("gt_eng_waiting_steam", se.isWaitingForSteam());
                     if (se.spec() != null) tag.putDouble("gt_eng_warmup_end", se.spec().minimumRunningFill());
                     tag.putLong(NBT_OUT_RATE, control.running() && se.isEnabled() && !se.isShutdown() && se.spec() != null
                             ? se.spec().outputRate() * (se.pressureState() + 1) / 16 : 0);
@@ -140,7 +141,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(data.getCompound("gt_diesel_" + tank));
 //?}
                 Component content = fluid.isEmpty() ? Component.translatable("jade.gt6ce.engine.diesel.empty")
-                        : fluid.getDisplayName().copy().append(" " + format(fluid.getAmount()) + " L");
+                        : fluid.getDisplayName().copy().append(" " + format(fluid.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit());
                 JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel." + tank, content,
                         format(data.getLong("gt_diesel_" + tank + "_capacity"))));
             }
@@ -187,13 +188,14 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         if (data.contains("gt_eng_tank_steam")) {
             var view = JadeBars.readFluid(data.getCompound("gt_eng_tank_steam"));
             if (view != null) tooltip.add(JadeBars.fluid(view, view.ratio <= 0
-                    ? Component.translatable("fluid.gt6ce.steam").append(" 0L")
+                    ? Component.translatable("fluid.gt6ce.steam").append(" " + gregtech.engine.fluid.FluidUnits.compact(0))
                     : view.overrideText != null ? view.overrideText
                     : Component.translatable("jade.fluid", view.fluidName, view.current)));
         }
         boolean venting = data.getBoolean(NBT_SHUTDOWN) && stored > 0;
         boolean running = data.getBoolean("gt_eng_working") && !venting && data.getBoolean(NBT_ENABLED);
         String state = venting ? "jade.gt6ce.engine.overload_protection"
+                : data.getBoolean("gt_eng_waiting_steam") ? "jade.gt6ce.engine.waiting_steam"
                 : "jade.gt6ce.boiler.state." + (!data.getBoolean(NBT_ENABLED) || stored <= 0 ? "stopped"
                         : running ? "running" : "preheating");
         Component label = Component.translatable("jade.gt6ce.boiler.gauge", Component.translatable(state), percent);

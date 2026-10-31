@@ -1,16 +1,22 @@
 package gregtech.engine.fluid;
 
-/** Compact slot labels; tooltips retain exact liters. */
+/** Compact slot labels; one stored unit is one millibucket, or one legacy GT liter. */
 public final class FluidSlotAmountOverlay {
     private FluidSlotAmountOverlay() {}
 
     public static String text(long liters) {
+        return text(liters, true);
+    }
+
+    public static String text(long liters, boolean millibuckets) {
         if (liters <= 0) return "";
-        if (liters < 10_000) return liters + "L";
+        if (liters < 10_000) return liters + (millibuckets ? "mB" : "L");
         long divisor = 1_000;
-        String[] units = {"KL", "ML", "BL", "TL", "QL", "EL"};
+        String[] units = millibuckets
+                ? new String[] {"B", "kB", "MB", "GB", "TB", "PB", "EB"}
+                : new String[] {"KL", "ML", "GL", "TL", "PL", "EL"};
         int unit = 0;
-        while (unit < units.length - 1 && liters / divisor >= 1_000) {
+        while (unit < units.length - 1 && divisor <= Long.MAX_VALUE / 1_000 && liters / divisor >= 1_000) {
             divisor *= 1_000;
             unit++;
         }

@@ -73,11 +73,11 @@ public final class FunctionalBlockTooltips {
             List<Component> lines) {
         lines.add(Component.translatable("gt.lang.energy.convert.from")
                 .withStyle(ChatFormatting.AQUA)
-                .append(" 1 L ")
+                .append(" " + gregtech.engine.fluid.FluidUnits.exact(1) + " ")
                 .append(Component.translatable("block.minecraft.water"))
                 .append(" ")
                 .append(Component.translatable("gt.lang.energy.convert.to"))
-                .append(" 160 L ")
+                .append(" " + gregtech.engine.fluid.FluidUnits.exact(160) + " ")
                 .append(Component.translatable("gt.td.long.energy.steam"))
                 .append(" ")
                 .append(Component.translatable("gt.lang.energy.convert.using"))

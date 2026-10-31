@@ -37,12 +37,12 @@ public final class MultiblockTankTooltips {
         var fluid = tank.getFluidLong();
         if (fluid.isEmpty()) {
             add(lines, "gt.lang.pipe.stats.capacity", ChatFormatting.AQUA)
-                    .append(OriginalTankTooltipData.formatNumber(tank.baseCapacity()) + " L");
+                    .append(OriginalTankTooltipData.formatNumber(tank.baseCapacity()) + " " + gregtech.engine.fluid.FluidUnits.unit());
         } else {
-            lines.add(Component.literal(OriginalTankTooltipData.formatNumber(tank.getAmount()) + " L of ")
+            lines.add(Component.literal(OriginalTankTooltipData.formatNumber(tank.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit() + " of ")
                     .append(fluid.getDisplayName())
                     .append(" (" + (FluidHazards.isGas(fluid.getFluid()) ? "Gaseous" : "Liquid") + "); Max: "
-                            + OriginalTankTooltipData.formatNumber(tank.capacity()) + " L)").withStyle(ChatFormatting.AQUA));
+                            + OriginalTankTooltipData.formatNumber(tank.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit() + ")").withStyle(ChatFormatting.AQUA));
         }
         add(lines, "gt.lang.nogui.funnel.tap.tank", ChatFormatting.GOLD);
         add(lines, "gt.lang.no.powerconducting.fluids", ChatFormatting.GOLD);
@@ -60,7 +60,7 @@ public final class MultiblockTankTooltips {
     }
 
     private static net.minecraft.network.chat.MutableComponent add(List<Component> lines, String key, ChatFormatting color) {
-        var line = Component.translatable(key).withStyle(color);
+        var line = gregtech.engine.fluid.FluidUnits.text(key).withStyle(color);
         lines.add(line);
         return line;
     }

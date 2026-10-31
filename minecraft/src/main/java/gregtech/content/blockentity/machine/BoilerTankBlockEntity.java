@@ -330,7 +330,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
             if (!waterTank.isEmpty()) {
                 String waterName = waterTank.getFluid().getDisplayName().getString();
                 player.displayClientMessage(
-                        Component.literal("Water: " + waterTank.getAmount() + "L of " + waterName)
+                        Component.literal("Water: " + waterTank.getAmount() + gregtech.engine.fluid.FluidUnits.unit() + " of " + waterName)
                                 .withStyle(ChatFormatting.GRAY), false);
             }
             return InteractionResult.CONSUME;

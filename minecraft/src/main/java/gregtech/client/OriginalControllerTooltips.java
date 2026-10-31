@@ -70,7 +70,7 @@ public final class OriginalControllerTooltips {
                     "gt.lang.face.right",
                     "gt.lang.face.back")) {
                 if (index++ > 0) line.append(", ");
-                line.append(Component.translatable(key).withStyle(ChatFormatting.WHITE));
+                line.append(gregtech.engine.fluid.FluidUnits.text(key).withStyle(ChatFormatting.WHITE));
             }
             line.append(")");
             // The tower overrides addToolTipsSided: its six structure rows describe all IO.
@@ -132,7 +132,7 @@ public final class OriginalControllerTooltips {
     }
 
     private static MutableComponent add(List<Component> lines, String key, ChatFormatting color) {
-        var line = Component.translatable(key).withStyle(color);
+        var line = gregtech.engine.fluid.FluidUnits.text(key).withStyle(color);
         lines.add(line);
         return line;
     }

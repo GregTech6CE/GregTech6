@@ -106,7 +106,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         }
         if (data.contains("axialState")) {
             JadeText.add(tooltip, Component.translatable("gt.axial.state." + data.getString("axialState")));
-            JadeText.add(tooltip, Component.translatable(data.getBoolean("axialSteam") ? "gt.tooltip.axial.steam" : "gt.tooltip.axial.dynamo",
+            JadeText.add(tooltip, gregtech.engine.fluid.FluidUnits.text(data.getBoolean("axialSteam") ? "gt.tooltip.axial.steam" : "gt.tooltip.axial.dynamo",
                     data.getInt("axialInput"), data.getInt("axialOutput")));
         }
         for (var value : data.getList("energy", 10)) {
@@ -127,7 +127,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
 *///?} else {
             var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(row.getCompound("fluid"));
 //?}
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(),
+            JadeText.add(tooltip, gregtech.engine.fluid.FluidUnits.text("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(),
                     row.contains("amount") ? row.getLong("amount") : fluid.getAmount(), row.getLong("capacity")));
         }
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.jei"));

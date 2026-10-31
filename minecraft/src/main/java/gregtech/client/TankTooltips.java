@@ -53,12 +53,12 @@ public final class TankTooltips {
         var fluid = tank.getFluidLong();
         if (fluid.isEmpty()) {
             tooltip.add(Component.translatable("gt.lang.pipe.stats.capacity")
-                    .append(Component.literal(formatLargeNumber(tank.capacity()) + " L")).withStyle(ChatFormatting.AQUA));
+                    .append(Component.literal(formatLargeNumber(tank.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit())).withStyle(ChatFormatting.AQUA));
         } else {
-            tooltip.add(Component.literal(formatLargeNumber(tank.getAmount()) + " L of ")
+            tooltip.add(Component.literal(formatLargeNumber(tank.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit() + " of ")
                     .append(fluid.getDisplayName())
                     .append(Component.literal(" (" + (gregtech.engine.fluid.FluidHazards.isGas(fluid.getFluid())
-                            ? "Gaseous" : "Liquid") + "); Max: " + formatLargeNumber(tank.capacity()) + " L)"))
+                            ? "Gaseous" : "Liquid") + "); Max: " + formatLargeNumber(tank.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit() + ")"))
                     .withStyle(ChatFormatting.AQUA));
         }
         if (tank.getAmount() > 0 && sealed) tooltip.add(Component.translatable("tooltip.gt6ce.ui.sealed_time", sealedTime)
@@ -115,14 +115,14 @@ public final class TankTooltips {
         tooltip.add(Component.empty()
                 .append(Component.translatable("gt.lang.pipe.stats.bandwidth")
                         .withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(formatLargeNumber(bandwidth) + " L/t")
+                .append(Component.literal(formatLargeNumber(bandwidth) + " " + gregtech.engine.fluid.FluidUnits.unit() + "/t")
                         .withStyle(ChatFormatting.WHITE)));
 
         // Capacity
         tooltip.add(Component.empty()
                 .append(Component.translatable("gt.lang.pipe.stats.capacity")
                         .withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(formatLargeNumber(spec.capacity()) + " L")
+                .append(Component.literal(formatLargeNumber(spec.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit())
                         .withStyle(ChatFormatting.WHITE)));
 
         if (spec.tankCount() > 1) tooltip.add(Component.translatable("gt.lang.pipe.stats.amount")
@@ -317,14 +317,14 @@ public final class TankTooltips {
                     .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.capacity")
 //?}
                             .withStyle(ChatFormatting.WHITE))
-                    .append(Component.literal(": " + formatLargeNumber(spec.capacity()) + " L")
+                    .append(Component.literal(": " + formatLargeNumber(spec.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit())
                             .withStyle(ChatFormatting.AQUA)));
         } else {
             player.sendSystemMessage(Component.empty()
-                    .append(Component.translatable("tooltip.gt6ce.ui.liters_of", formatLargeNumber(tank.getFluidTank().getAmount()))
+                    .append(gregtech.engine.fluid.FluidUnits.text("tooltip.gt6ce.ui.liters_of", formatLargeNumber(tank.getFluidTank().getAmount()))
                             .withStyle(ChatFormatting.WHITE))
                     .append(fluid.getDisplayName())
-                    .append(Component.translatable("tooltip.gt6ce.ui.max_fluid", formatLargeNumber(spec.capacity()))
+                    .append(gregtech.engine.fluid.FluidUnits.text("tooltip.gt6ce.ui.max_fluid", formatLargeNumber(spec.capacity()))
                             .withStyle(ChatFormatting.AQUA)));
         }
     }

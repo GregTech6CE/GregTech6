@@ -35,11 +35,13 @@ public enum TurbineJadeProvider implements IBlockComponentProvider, IServerDataP
         long input = data.getLong("gt.turbine.input"), output = data.getLong("gt.turbine.output");
         long amount = data.getLong("gt.turbine.steam"), capacity = data.getLong("gt.turbine.capacity");
         int percent = capacity == 0 ? 0 : (int) (amount * 100 / capacity);
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.steam", amount, capacity, percent));
+        JadeText.add(
+                tooltip, gregtech.engine.fluid.FluidUnits.text("jade.gt6ce.boiler.steam", amount, capacity, percent));
         JadeText.add(
                 tooltip,
                 Component.translatable("gt.lang.energy.input")
-                        .append(": " + (input <= 16 ? 1 : input / 2) + "–" + input * 2 + " L/t"));
+                        .append(": " + (input <= 16 ? 1 : input / 2) + "–" + input * 2 + " "
+                                + gregtech.engine.fluid.FluidUnits.unit() + "/t"));
         JadeText.add(
                 tooltip,
                 Component.translatable("gt.lang.energy.output").append(": " + output / 2 + "–" + output * 2 + " RU/t"));

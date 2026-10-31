@@ -87,7 +87,7 @@ public final class PowerCellItem extends BlockItem implements IItemEnergy {
             gregtech.client.TooltipHelper.appendPortableBattery(stored(stack), spec().capacity(),
                     1, spec().voltage(), "EU", tip);
         }
-        tip.add(Component.translatable("tooltip.gt6ce.power_cell.fuel").withStyle(net.minecraft.ChatFormatting.GOLD));
+        tip.add(gregtech.engine.fluid.FluidUnits.text("tooltip.gt6ce.power_cell.fuel").withStyle(net.minecraft.ChatFormatting.GOLD));
         tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.place").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

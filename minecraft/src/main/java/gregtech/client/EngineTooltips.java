@@ -128,7 +128,7 @@ public final class EngineTooltips {
         long out = ms.outputRate();
         int eff = spec.efficiency();
 
-        tooltip.add(Component.translatable("tooltip." + MOD + ".engine.desc.steam")
+        tooltip.add(gregtech.engine.fluid.FluidUnits.text("tooltip." + MOD + ".engine.desc.steam")
                 .withStyle(ChatFormatting.BLUE));
 
         appendEfficiencyLine(eff, tooltip);

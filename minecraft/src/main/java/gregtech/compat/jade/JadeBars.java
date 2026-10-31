@@ -60,6 +60,19 @@ final class JadeBars {
 
     static FluidView readFluid(net.minecraft.nbt.CompoundTag data) {
         var view = FluidView.readDefault(data);
+        if (view == null) return null;
+//? if >=1.21.1 {
+        /*var fluid = snownee.jade.api.fluid.JadeFluidObject.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE,
+                data.get("fluid")).result().orElse(null);
+        long amount = fluid == null ? 0 : fluid.getAmount();
+*///?} else {
+        long amount = data.getLong("amount");
+//?}
+        view.current = gregtech.engine.fluid.FluidUnits.compact(amount);
+        view.max = data.getLong("capacity") == Long.MAX_VALUE
+                ? Component.translatable("jade.gt6ce.unlimited").getString()
+                : gregtech.engine.fluid.FluidUnits.compact(data.getLong("capacity"));
+        if (view.overrideText != null) view.overrideText = Component.translatable("jade.fluid", FluidView.EMPTY_FLUID, view.max);
         // An unbounded tank has no meaningful fullness ratio; retain its real amount label.
         if (view != null && data.getLong("capacity") == Long.MAX_VALUE && view.ratio > 0) view.ratio = 1;
         return view;

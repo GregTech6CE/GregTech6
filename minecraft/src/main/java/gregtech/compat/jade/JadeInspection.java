@@ -214,7 +214,7 @@ final class JadeInspection {
             }
             values[j] = value;
         }
-        var text = Component.translatable(row.getString("key"), values);
+        var text = gregtech.engine.fluid.FluidUnits.text(row.getString("key"), values);
         if (row.getString("key").equals("jade.gt6ce.omni.state") && values.length == 1)
             tooltip.add((Component) values[0]);
         else if (icon == null) JadeText.detail(tooltip, row.getString("key"), values);

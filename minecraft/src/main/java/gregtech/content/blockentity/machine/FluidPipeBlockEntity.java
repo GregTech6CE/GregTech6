@@ -727,7 +727,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             FluidStack f = tanks[i].getFluid();
             if (!f.isEmpty()) {
                 sb.append("[").append(i).append("] ").append(f.getDisplayName().getString())
-                        .append(" ").append(f.getAmount()).append("L, ");
+                        .append(" ").append(f.getAmount()).append(gregtech.engine.fluid.FluidUnits.unit() + ", ");
             }
         }
         player.sendSystemMessage(Component.literal(sb.toString()));
@@ -744,7 +744,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             if (!f.isEmpty()) {
                 pipeHasFluid = true;
                 player.sendSystemMessage(Component.empty()
-                        .append(Component.literal(formatLargeNumber(f.getAmount()) + " L of ")
+                        .append(Component.literal(formatLargeNumber(f.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit() + " of ")
                                 .withStyle(ChatFormatting.WHITE))
                         .append(f.getDisplayName().copy().withStyle(ChatFormatting.AQUA)));
             }
@@ -793,7 +793,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                     .withStyle(ChatFormatting.WHITE));
             for (FluidStack f : networkFluids.values()) {
                 player.sendSystemMessage(Component.empty()
-                        .append(Component.literal(formatLargeNumber(f.getAmount()) + " L of ")
+                        .append(Component.literal(formatLargeNumber(f.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit() + " of ")
                                 .withStyle(ChatFormatting.WHITE))
                         .append(f.getDisplayName().copy().withStyle(ChatFormatting.AQUA)));
             }

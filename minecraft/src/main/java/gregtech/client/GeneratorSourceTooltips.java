@@ -71,7 +71,7 @@ public final class GeneratorSourceTooltips {
             String unit,
             ChatFormatting labelColor,
             ChatFormatting unitColor) {
-        lines.add(Component.translatable(key)
+        lines.add(gregtech.engine.fluid.FluidUnits.text(key)
                 .withStyle(labelColor)
                 .append(": ")
                 .append(Component.literal(rec + " ").withStyle(ChatFormatting.WHITE))

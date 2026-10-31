@@ -58,6 +58,12 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     }
     private int engineState, piston;
     private long engineTicks;
+    // Presentation timer only: unloading resets the grace period; stored steam and KU are unchanged.
+    private int ticksWithoutSteam;
+    private long previousSteamAmount;
+    public boolean isWaitingForSteam() {
+        return enabled && !shutdown && !working && ticksWithoutSteam >= 200;
+    }
     long clientOutputRate;
 
     /** Pre-resolved distilled water Fluid, cached at setSpec() time. */
@@ -161,7 +167,11 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         public FluidStack getFluidInTank(int slot){return steamTank.getFluid().copy();}
         public int getTankCapacity(int slot){return (int)steamTank.capacity();}
         public boolean isFluidValid(int slot,FluidStack fluid){return isSteam(fluid);}
-        public int fill(FluidStack fluid,FluidAction action){return !isRemoved()&&isSteam(fluid)?steamTank.fill(fluid,action):0;}
+        public int fill(FluidStack fluid,FluidAction action){
+            int accepted = !isRemoved() && isSteam(fluid) ? steamTank.fill(fluid,action) : 0;
+            if (accepted > 0 && action.execute()) ticksWithoutSteam = 0;
+            return accepted;
+        }
         public FluidStack drain(FluidStack fluid,FluidAction action){return FluidStack.EMPTY;}
         public FluidStack drain(int amount,FluidAction action){return FluidStack.EMPTY;}
     };}
@@ -277,6 +287,9 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
             Level level, BlockPos pos, BlockState state, KineticSteamEngineBlockEntity be) {
         if (level.isClientSide||be.spec==null||be.steamTank==null)return;
         long cap=be.energyCapacity();
+        // Also recognize direct tank edits, which bypass the external input port.
+        if (be.steamTank.getAmount() > be.previousSteamAmount) be.ticksWithoutSteam = 0;
+        else if (be.ticksWithoutSteam < 200) be.ticksWithoutSteam++;
         if(be.enabled&&!be.shutdown&&isSteam(be.steamTank.getFluid())){
             long ops=be.steamTank.getAmount()/be.spec.steamPerOp();
             if(ops>0){
@@ -306,6 +319,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
             be.kuEnergy=Math.max(0,be.kuEnergy-Math.max(1,cap/64));
             if(be.kuEnergy==0)be.shutdown=false;
         }
+        be.previousSteamAmount = be.steamTank.getAmount();
         autoOutputDistilledWater(level,be);
         // GT6 emits recoverable exhaust to adjacent tanks, then discards unrecovered condensate.
         be.distilledWaterTank.setEmpty();

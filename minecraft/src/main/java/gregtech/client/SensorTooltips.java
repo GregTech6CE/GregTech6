@@ -27,9 +27,9 @@ public final class SensorTooltips {
 
     private static void addDescription(List<Component> lines, String key) {
         if (CommonBlockTooltips.containsKey(lines, key)) return;
-        lines.add(Component.translatable(key).withStyle(ChatFormatting.AQUA));
+        lines.add(gregtech.engine.fluid.FluidUnits.text(key).withStyle(ChatFormatting.AQUA));
         if (key.equals("gt.tooltip.sensor.kilogibblometer"))
-            lines.add(Component.translatable("tooltip.gt6ce.sensor.kilogibblometer.boiler")
+            lines.add(gregtech.engine.fluid.FluidUnits.text("tooltip.gt6ce.sensor.kilogibblometer.boiler")
                     .withStyle(ChatFormatting.GRAY));
         lines.add(Component.translatable("gt.lang.nogui.rightclick.interact").withStyle(ChatFormatting.GOLD));
         for (var tool : List.of(

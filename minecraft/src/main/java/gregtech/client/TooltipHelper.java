@@ -37,7 +37,7 @@ public final class TooltipHelper {
                     : Component.literal(value instanceof Long || value instanceof Integer
                             ? formatLong(((Number) value).longValue()) : String.valueOf(value)).withStyle(ChatFormatting.WHITE);
         }
-        return Component.translatable(key, arguments).withStyle(color);
+        return gregtech.engine.fluid.FluidUnits.text(key, arguments).withStyle(color);
     }
 
     public static void appendPortableBattery(long stored, long capacity, long min, long max,

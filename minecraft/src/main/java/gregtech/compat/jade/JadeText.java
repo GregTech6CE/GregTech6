@@ -35,11 +35,11 @@ final class JadeText {
 
     /** Resolve the whole translation before splitting, including arguments in the label. */
     static void detail(ITooltip tooltip, String key, Object... args) {
-        add(tooltip, Component.translatable(key, args));
+        add(tooltip, gregtech.engine.fluid.FluidUnits.text(key, args));
     }
 
     static MutableComponent status(String key) {
-        var text = Component.translatable(key);
+        var text = gregtech.engine.fluid.FluidUnits.text(key);
         String state = key.substring(key.lastIndexOf('.') + 1);
         return switch (state) {
             case "working", "running", "yes", "enabled" -> text.withStyle(ChatFormatting.GREEN);
@@ -158,8 +158,9 @@ final class JadeText {
 
     static Component unit(String unit) {
         // Physical units retain their existing colour; energy units share the item tooltip palette.
-        if (unit.equals("L") || unit.equals("K") || unit.equals("A"))
-            return Component.literal(unit).withStyle(ChatFormatting.AQUA);
+        if (unit.equals("L"))
+            return Component.literal(gregtech.engine.fluid.FluidUnits.unit()).withStyle(ChatFormatting.AQUA);
+        if (unit.equals("K") || unit.equals("A")) return Component.literal(unit).withStyle(ChatFormatting.AQUA);
         return gregtech.client.EnergyText.unit(unit);
     }
 }

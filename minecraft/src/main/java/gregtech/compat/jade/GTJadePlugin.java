@@ -31,6 +31,7 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void register(IWailaCommonRegistration registration) {
+        registration.registerFluidStorage(FluidUnitsJadeProvider.INSTANCE, net.minecraft.world.level.block.entity.BlockEntity.class);
         registration.registerItemStorage(DrawerQuadJadeProvider.INSTANCE,
                 gregtech.content.blockentity.inventory.DrawerQuadBlockEntity.class);
         registration.registerBlockDataProvider(BatteryBoxJadeProvider.INSTANCE, gregtech.content.blockentity.energy.EnergyNodeBlockEntity.class);
@@ -65,6 +66,7 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.registerFluidStorageClient(FluidUnitsJadeProvider.INSTANCE);
         registration.registerItemStorageClient(DrawerQuadJadeProvider.INSTANCE);
         registration.registerBlockComponent(PyriteOreJadeProvider.INSTANCE, gregtech.content.block.OreBlock.class);
         registration.registerBlockComponent(BatteryBoxJadeProvider.INSTANCE, gregtech.content.block.energy.EnergyNodeBlock.class);

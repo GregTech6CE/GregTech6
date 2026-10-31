@@ -17,7 +17,7 @@ public final class AdvancedControllerTooltips {
                 .withStyle(ChatFormatting.AQUA)
                 .append(":"));
         for (var key : OriginalAdvancedControllerData.structureKeys(spec.machineName()))
-            lines.add(Component.translatable(key).withStyle(ChatFormatting.WHITE));
+            lines.add(gregtech.engine.fluid.FluidUnits.text(key).withStyle(ChatFormatting.WHITE));
         BasicMachineSourceTooltips.appendDefaults(
                 spec,
                 lines,

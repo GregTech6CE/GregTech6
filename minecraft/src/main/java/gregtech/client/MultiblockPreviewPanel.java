@@ -74,7 +74,7 @@ public final class MultiblockPreviewPanel {
         if(mouseY>=height-24 && info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17998).asItem()))
             return List.of(Component.translatable("gt6ce.jei.assembly_lightning"));
         if(mouseY>=height-24 && info.controller().is(gregtech.content.multiblock.LargeMachineParts.block(17999).asItem()))
-            return List.of(Component.translatable("gt6ce.jei.assembly_drill"));
+            return List.of(gregtech.engine.fluid.FluidUnits.text("gt6ce.jei.assembly_drill"));
         if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem boilerItem
                 && boilerItem.getBlock() instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock)
             return List.of(Component.translatable("gt6ce.jei.assembly_boiler"));

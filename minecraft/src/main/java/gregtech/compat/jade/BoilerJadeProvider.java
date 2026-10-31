@@ -102,7 +102,7 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.boiler.warn_high_pressure").withStyle(ChatFormatting.RED));
         }
         if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.boiler.steam", steamAmt, steamCap, steamPct);
-        if (data.contains("gt_steam_offer")) JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " L/t"));
+        if (data.contains("gt_steam_offer")) JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " " + gregtech.engine.fluid.FluidUnits.unit() + "/t"));
 
         long waterAmt = data.getLong(WATER_AMT);
 

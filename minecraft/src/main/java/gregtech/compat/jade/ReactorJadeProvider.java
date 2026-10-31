@@ -24,9 +24,9 @@ public enum ReactorJadeProvider implements IBlockComponentProvider,IServerDataPr
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.reactor.ports",JadeText.direction(d.getString("gt_reactor_hot_side")),JadeText.direction(d.getString("gt_reactor_cold_side"))));
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.reactor.heat",d.getLong("gt_reactor_stored")));
 //? if >=1.21.1 {
-        /*for(String key:new String[]{"gt_reactor_in","gt_reactor_out"}){var fluid=net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(),d.getCompound(key));if(!fluid.isEmpty())JadeText.add(tooltip, Component.translatable("jade.gt6ce.reactor.fluid",fluid.getDisplayName(),fluid.getAmount()));}
+        /*for(String key:new String[]{"gt_reactor_in","gt_reactor_out"}){var fluid=net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(),d.getCompound(key));if(!fluid.isEmpty())JadeText.add(tooltip, gregtech.engine.fluid.FluidUnits.text("jade.gt6ce.reactor.fluid",fluid.getDisplayName(),fluid.getAmount()));}
 *///?} else {
-        for(String key:new String[]{"gt_reactor_in","gt_reactor_out"}){var fluid=net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(d.getCompound(key));if(!fluid.isEmpty())JadeText.add(tooltip, Component.translatable("jade.gt6ce.reactor.fluid",fluid.getDisplayName(),fluid.getAmount()));}
+        for(String key:new String[]{"gt_reactor_in","gt_reactor_out"}){var fluid=net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(d.getCompound(key));if(!fluid.isEmpty())JadeText.add(tooltip, gregtech.engine.fluid.FluidUnits.text("jade.gt6ce.reactor.fluid",fluid.getDisplayName(),fluid.getAmount()));}
 //?}
     }
 }

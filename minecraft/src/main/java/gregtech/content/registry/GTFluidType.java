@@ -84,13 +84,13 @@ public final class GTFluidType {
             for (var part : line.parts()) {
                 if (capacity >= 0 && (OriginalFluidDisplayRules.PREFIX + "amount").equals(part.key())) {
                     rendered.append((capacity == Long.MAX_VALUE
-                            ? Component.translatable("gui.gt6ce.fluid.amount_unlimited", amount)
-                            : Component.translatable("gui.gt6ce.fluid.amount_capacity", amount, capacity))
+                            ? gregtech.engine.fluid.FluidUnits.text("gui.gt6ce.fluid.amount_unlimited", amount)
+                            : gregtech.engine.fluid.FluidUnits.text("gui.gt6ce.fluid.amount_capacity", amount, capacity))
                             .withStyle(ChatFormatting.valueOf(part.color().name())));
                     continue;
                 }
                 var text = part.key() == null ? Component.literal((String) part.arguments().get(0))
-                        : Component.translatable(part.key(), part.arguments().toArray());
+                        : gregtech.engine.fluid.FluidUnits.text(part.key(), part.arguments().toArray());
                 if (part.color() != Color.DEFAULT) text.withStyle(ChatFormatting.valueOf(part.color().name()));
                 rendered.append(text);
             }

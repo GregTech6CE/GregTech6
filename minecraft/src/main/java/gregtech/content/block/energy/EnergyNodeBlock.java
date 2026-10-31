@@ -315,7 +315,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             case TURBINE -> {
                 tooltip.add(Component.translatable("gt.lang.energy.input").append(": ")
                         .withStyle(net.minecraft.ChatFormatting.GREEN)
-                        .append(Component.literal(spec.inputRate() + " L/t ").append(Component.translatable("fluid_type.gt6ce.steam"))
+                        .append(Component.literal(spec.inputRate() + " " + gregtech.engine.fluid.FluidUnits.unit() + "/t ").append(Component.translatable("fluid_type.gt6ce.steam"))
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
                 tooltip.add(gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit));
             }

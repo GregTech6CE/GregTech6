@@ -320,9 +320,9 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
             if (GTToolHelper.isMagnifyingGlass(held)) {
                 if (!level.isClientSide) {
                     if (engine instanceof KineticDieselEngineBlockEntity diesel) {
-                        player.sendSystemMessage(Component.translatable("jade.gt6ce.engine.diesel.fuel",
+                        player.sendSystemMessage(gregtech.engine.fluid.FluidUnits.text("jade.gt6ce.engine.diesel.fuel",
                                 gregtech.engine.multiblock.MultiblockTools.tankContent(diesel.fuelTank(), "Empty"), diesel.fuelTank().getCapacity()));
-                        player.sendSystemMessage(Component.translatable("jade.gt6ce.engine.diesel.exhaust",
+                        player.sendSystemMessage(gregtech.engine.fluid.FluidUnits.text("jade.gt6ce.engine.diesel.exhaust",
                                 gregtech.engine.multiblock.MultiblockTools.tankContent(diesel.exhaustTank(), "Empty"), diesel.exhaustTank().getCapacity()));
                     } else if (engine instanceof KineticSteamEngineBlockEntity steam) {
                         player.sendSystemMessage(

@@ -87,6 +87,9 @@ public final class GregTechConfig {
             "tooltips.chemical_formulas", true, "Show chemical formulas in item and fluid tooltips.");
     private static final BooleanSupplier MATERIAL_DETAILS = option(CLIENT,
             "tooltips.material_details", true, "Show material amounts and properties with F3+H. Disabling also hides the corresponding hint.");
+    private static final BooleanSupplier FLUID_MILLIBUCKETS = option(CLIENT,
+            "display.fluid_in_mB", true,
+            "True: display fluids in mB/B/kB/MB/GB/TB/PB/EB. False: use L/KL/ML/GL/TL/PL/EL. Display only; stored amounts do not change.");
 
     public enum Rule {
         STREETS("worldgen.center.streets", false),
@@ -343,6 +346,10 @@ public final class GregTechConfig {
 
     public static boolean materialDetails() {
         return MATERIAL_DETAILS.getAsBoolean();
+    }
+
+    public static boolean fluidInMillibuckets() {
+        return FLUID_MILLIBUCKETS.getAsBoolean();
     }
 
     private GregTechConfig() {}
