@@ -1,0 +1,27 @@
+# issue	recipe	level	expected_type	expected_pattern	result_item	result_count	setup	notes
+2	minecraft:paper	R	gt6ce:tool_shaped	-	minecraft:paper	1	fill	vanilla paper replacement
+2	minecraft:book	R	minecraft:crafting_shapeless	-	minecraft:book	1	fill	vanilla book replacement
+2	minecraft:furnace	S	gt6ce:tool_shaped	###/###/###	minecraft:furnace	1	none	GT furnace replacement
+2	gt6ce:vanilla/oak_planks_saw	S	gt6ce:tool_shaped	#/#	minecraft:oak_planks	4	none	GT saw plank row
+148	gt6ce:vanilla/stick_from_wooden_rod	R	minecraft:crafting_shapeless	-	minecraft:stick	1	fill	wooden rod to vanilla stick
+151	gt6ce:vanilla/torch/coal/dust	R	gt6ce:tool_shaped	-	minecraft:torch	4	fill	coal dust torch route
+153	minecraft:stone_crafting_materials	T	-	-	*	-	none	GT cobble accepted by furnace material tag
+155	gt6ce:smeltery_survival/burning_box_solid_brick	R	gt6ce:tool_shaped	-	gt6ce:burning_box_solid_brick	1	fill	firestarter tag instead of flint and steel
+157	gt6ce:molds/forms/stick/anywoodplastic	T	-	-	minecraft:stick	-	none	vanilla stick imprints the rod mold
+157	gt6ce:clay_molds/imprint_221_anywoodplastic	S	gt6ce:tool_shapeless	-	gt6ce:clay_rod_mold	1	none	rod mold recipe
+158	prefix:hand/raw_tool_heads/	S	gt6ce:tool_shaped	#_/_#	-	-	none	raw tool head filing rows
+161	gt6ce:tool_blocks/sap_bag	S	gt6ce:tool_shaped	###/###/###	gt6ce:sap_bag	1	none	latex collecting bag row
+171	gt6ce:tools/repair	P	gt6ce:tool_repair	-	-	-	none	tool merge custom recipe and serializer
+173	prefix:hand/wall/	S	gt6ce:tool_shaped	###/###	-	-	none	metal wall rows
+173	prefix:hand_material/craft/gear_small/	S	gt6ce:tool_shaped	#_/_#	-	-	none	small gear rows
+173	prefix:hand_material/craft/gear/	S	gt6ce:tool_shaped	###/###/###	-	-	none	large gear rows
+176	prefix:form_conversion/blockdust_to_dust/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	block dust unpacks to nine dust
+176	prefix:form_conversion/blockdust_to_dustsmall/	R	gt6ce:tool_shapeless	-	-	36	one@1/2x2	block dust unpacks to thirty-six small dust
+185	prefix:hand_material/craft/rotor/	S	gt6ce:tool_shaped	###/###/###	-	-	none	rotor rows
+209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	block ingot in even slot
+209	prefix:form_conversion/blockingot_to_chunkgt/	R	gt6ce:tool_shapeless	-	-	36	one@1/2x2	block ingot in odd slot
+209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	9	one@4/3x3	3x3 center slot
+209	prefix:form_conversion/blockingot_to_chunkgt/	R	gt6ce:tool_shapeless	-	-	36	one@3/3x3	3x3 odd slot
+209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	-	reject@0,1/2x2	extra occupied slot rejected
+209	prefix:form_conversion/blockgem_to_gem/	R	gt6ce:tool_shapeless	-	-	9	one@1/2x2	single-variant gem form matches any slot
+209	prefix:form_conversion/blockplate_to_plate/	R	gt6ce:tool_shapeless	-	-	9	one@3/2x2	single-variant plate form matches any slot
