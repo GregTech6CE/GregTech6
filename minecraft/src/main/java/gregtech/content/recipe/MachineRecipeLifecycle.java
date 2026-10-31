@@ -37,6 +37,16 @@ public final class MachineRecipeLifecycle {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;
         MachineRecipeOverlay.apply(server.getRecipeManager());
+        prebuild(server);
+    }
+
+    /**
+     * Builds the lookup indexes once the overlay rows are final. Runs on the server task queue so
+     * the build is charged to the next tick instead of the reload tick, which already carries the
+     * overlay producers and can approach the server watchdog limit on large worlds.
+     */
+    private static void prebuild(MinecraftServer server) {
+        server.execute(gregtech.engine.recipe.RecipeMap::prebuildLookupIndexes);
     }
 
     /**
@@ -50,5 +60,6 @@ public final class MachineRecipeLifecycle {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void started(ServerStartedEvent event) {
         MachineRecipeOverlay.apply(event.getServer().getRecipeManager());
+        prebuild(event.getServer());
     }
 }

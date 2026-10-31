@@ -22,6 +22,11 @@ public final class MachineContextRecipes {
         resolver = java.util.Objects.requireNonNull(value);
     }
 
+    /** Whether a bound resolver can answer maps beyond the USB printer/replicator branches. */
+    public static boolean hasBoundResolver() {
+        return resolver != null;
+    }
+
     public static Recipe find(
             BasicMachineBlockEntity host, RecipeMap map, List<ItemStack> items, List<FluidStack> fluids) {
         if (map == MachineRecipeMaps.Printer || map == MachineRecipeMaps.Replicator) {

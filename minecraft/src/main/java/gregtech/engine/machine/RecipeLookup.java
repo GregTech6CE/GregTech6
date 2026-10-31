@@ -24,6 +24,19 @@ public final class RecipeLookup {
     /** A match and the fluid side it was found on; output-tank matches drain output tanks. */
     public record Match(Recipe recipe, boolean outputTanks) {}
 
+    /**
+     * Whether a null {@link #find} answer is final while the inputs and the map's lookup revision
+     * stay unchanged. Dynamic, contextual, USB-reading and live-predicate maps are never final.
+     */
+    public static boolean staticAnswerFinal(RecipeMap map) {
+        if (map == null || !map.hasOnlyStaticLookup() || map.hasLiveItemPredicates()) return false;
+        if (map == MachineRecipeMaps.Printer || map == MachineRecipeMaps.Replicator) return false;
+//? if >=1.21.1 {
+        /*if (gregtech.content.recipe.MachineContextRecipes.hasBoundResolver()) return false;
+*///?}
+        return true;
+    }
+
     @Nullable
     public static Match find(BlockEntity owner, RecipeMap map, MachineInventory inventory,
                              ItemStack autocraftingProgram, boolean searchOutputTanks) {

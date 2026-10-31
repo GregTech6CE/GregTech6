@@ -118,6 +118,9 @@ public final class RecipeProcessor {
     private @Nullable Evaluation cached;
     private long cachedAt = Long.MIN_VALUE;
     private boolean dirty = true;
+    private final RecipeLookupCache lookupCache = new RecipeLookupCache();
+    /** Bumped by {@link #invalidate()}; a negative lookup is only reused under the same version. */
+    private long stateVersion;
 
     public RecipeProcessor(Config config, IO io, Gate gate) {
         this.config = config;
@@ -161,9 +164,11 @@ public final class RecipeProcessor {
 
     /** Drops the cached evaluation; call whenever inputs or machine settings change. */
     public void invalidate() {
+        stateVersion++;
         dirty = true;
         cached = null;
         cachedAt = Long.MIN_VALUE;
+        lookupCache.invalidate();
     }
 
     /** The evaluation used by both the work-possible probe and the job start; cached per tick. */
@@ -172,26 +177,47 @@ public final class RecipeProcessor {
         Level level = io.level();
         long now = level == null ? Long.MIN_VALUE : level.getGameTime();
         if (dirty || cachedAt != now) {
-            cached = computeEvaluation();
+            long version = stateVersion;
+            cached = computeEvaluation(now);
             cachedAt = now;
-            dirty = false;
+            // An invalidation during the computation must leave the result dirty, not clear it.
+            if (version == stateVersion) dirty = false;
         }
         return cached;
     }
 
     @Nullable
-    private Evaluation computeEvaluation() {
+    private Evaluation computeEvaluation(long now) {
         RecipeMap map = config.recipeMap();
         MachineInventory inventory = io.inventory();
         if (map == null || inventory == null) return null;
+        if (lookupCache.hit(map, now, stateVersion)) return null;
+        long version = stateVersion;
+        RecipeLookupCache.countLookup();
         var match = RecipeLookup.find(io.owner(), map, inventory, io.autocraftingProgram(), config.searchOutputTanks());
-        if (match == null || !exclusivePairOrPlain(match.recipe())) return null;
+        if (match == null) {
+            // Only a static no-answer may be reused. A found row refused by cost, parallel or
+            // output capacity returns null too, and a row that needs empty outputs is skipped
+            // while outputs are occupied: both must be re-evaluated at their usual cadence.
+            boolean stable = version == stateVersion;
+            boolean outputRefusal = map.mNeedsOutputs && map.hasEmptyOutputRows() && inventory.hasItemOutput();
+            lookupCache.record(map, now, version,
+                    stable && !outputRefusal && RecipeLookup.staticAnswerFinal(map), recheckSeed());
+            return null;
+        }
+        if (!exclusivePairOrPlain(match.recipe())) return null;
         var fluids = match.outputTanks() ? inventory.outputTankFluids() : inventory.inputFluids();
         int parallel = computeParallel(match.recipe(), fluids);
         var cost = MachineWorkCost.calculate(match.recipe().mEUt, match.recipe().mDuration, parallel,
                 config.parallelScalesDuration(), config.efficiency(), config.inputMinimum(), config.inputMaximum(),
                 config.cheapOverclocking(), config.usesTimeEnergy());
         return new Evaluation(match.recipe(), match.outputTanks(), parallel, cost);
+    }
+
+    /** Stable per-machine offset so idle machines do not all recheck the same tick. */
+    private long recheckSeed() {
+        BlockEntity owner = io.owner();
+        return owner == null ? 0L : owner.getBlockPos().asLong();
     }
 
     public enum StartResult { REFUSED, NO_RECIPE, NO_COST, STARTED }
@@ -251,11 +277,16 @@ public final class RecipeProcessor {
         return true;
     }
 
-    /** No recipe matched: the original path cleared the work total and let the host clear startup. */
+    /**
+     * No recipe matched: the original path cleared the work total and let the host clear startup.
+     * The static negative answer for unchanged inputs stays valid; only the job is dropped.
+     */
     public void abandon() {
         totalWork = 0;
         recipeDetails = null;
-        invalidate();
+        cached = null;
+        cachedAt = Long.MIN_VALUE;
+        dirty = true;
     }
 
     /** Advances the job by the supplied energy; true when it reached its total work. */

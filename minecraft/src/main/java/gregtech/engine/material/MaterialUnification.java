@@ -124,6 +124,7 @@ public final class MaterialUnification {
         return target != null && target != stack.getItem();
     }
 
+    /** Its item mappings are requirement keys in {@code RecipeInputs.requireKeys}; change both together. */
     public static ItemStack canonical(ItemStack stack) {
 //? if >=1.21.1 {
         /*if (stack == null || stack.isEmpty() || !stack.getComponentsPatch().isEmpty() || stack.isDamaged()) return stack;

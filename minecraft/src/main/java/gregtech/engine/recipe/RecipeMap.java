@@ -53,7 +53,11 @@ public class RecipeMap {
                 List<ItemStack> items, List<FluidStack> fluids);
     }
     private ContextRecipes mContextRecipes;
-    public RecipeMap contextualRecipes(ContextRecipes provider) { mContextRecipes = provider; return this; }
+    public RecipeMap contextualRecipes(ContextRecipes provider) {
+        mContextRecipes = provider;
+        lookupTable.invalidate();
+        return this;
+    }
 
 
     /**
@@ -63,6 +67,7 @@ public class RecipeMap {
      */
     public RecipeMap dynamicRecipes(DynamicRecipes provider) {
         mDynamicRecipes = provider;
+        lookupTable.invalidate();
         return this;
     }
 
@@ -76,6 +81,7 @@ public class RecipeMap {
         var next = Arrays.copyOf(mAddonDynamicRecipes, mAddonDynamicRecipes.length + 1);
         next[mAddonDynamicRecipes.length] = provider;
         mAddonDynamicRecipes = next;
+        lookupTable.invalidate();
         return this;
     }
 
@@ -268,7 +274,7 @@ public class RecipeMap {
                      int aMinimalInputs,
                      boolean aNeedsOutputs, boolean aCombinePower,
                      boolean aUseBucketSizeIn, boolean aUseBucketSizeOut) {
-        lookupTable = new RecipeLookupTable((aRecipeList != null) ? aRecipeList : new HashSet<>());
+        lookupTable = new RecipeLookupTable((aRecipeList != null) ? aRecipeList : new HashSet<>(), aNameInternal);
         mRecipeList = lookupTable;
         mNameInternal = aNameInternal;
         mNameLocal = aNameLocal;
@@ -999,6 +1005,33 @@ public class RecipeMap {
     /** Call after mutating the ingredients of an already registered row in place. */
     public void invalidateLookup() { lookupTable.invalidate(); }
 
+    /** Whether a null {@link #findRecipe} answer can only come from the static row table. */
+    public boolean hasOnlyStaticLookup() {
+        return mDynamicRecipes == null && mAddonDynamicRecipes.length == 0 && mContextRecipes == null;
+    }
+
+    /** Whether any published row answers through a live item guard or predicate; unknown means true. */
+    public boolean hasLiveItemPredicates() { return lookupTable.hasLiveItemPredicates(); }
+
+    /** Whether any published row is skipped while output slots are occupied; unknown means true. */
+    public boolean hasEmptyOutputRows() { return lookupTable.hasEmptyOutputRows(); }
+
+    /** Increments on every lookup invalidation; caches keyed on recipe state must compare it. */
+    public long lookupRevision() { return lookupTable.revision(); }
+
+    /** Builds the candidate index for every map at a registration or reload boundary. */
+    public static void prebuildLookupIndexes() {
+        for (var map : RECIPE_MAP_LIST) map.lookupTable.rebuildNow();
+    }
+
+    /**
+     * Ordered rows whose item inputs may accept {@code stack}, or null when no usable index is
+     * published yet. Callers must still apply their original admission test to each row; the
+     * lookup only narrows the candidates and never builds an index on the caller's thread.
+     */
+    @javax.annotation.Nullable
+    public List<Recipe> admissionCandidates(ItemStack stack) { return lookupTable.admissionCandidates(stack); }
+
     @javax.annotation.Nullable
     private Recipe firstDynamicRecipe(List<ItemStack> inputItems, List<FluidStack> inputFluids) {
         if (mDynamicRecipes != null) {
@@ -1037,11 +1070,22 @@ public class RecipeMap {
         if (stack == null || stack.isEmpty()) return false;
         var recipes = mRecipeItemMap.get(stack.getItem());
         if (recipes != null && recipes.stream().anyMatch(r -> containsInput(r, stack, true))) return true;
-        if (mRecipeList.stream().anyMatch(r -> containsInput(r, stack, false))) return true;
+        boolean found = mRecipeList.stream().anyMatch(r -> containsInput(r, stack, false));
+        if (RecipeLookupTable.verifying()) verifyAdmissionCandidates(stack, found);
+        if (found) return true;
         // Only a rule family with a published enumeration answers an item it has not indexed yet.
         if (mDynamicEnumeration == null) return false;
         Recipe generated = firstDynamicRecipe(List.of(stack), List.of());
         return generated != null && generated.mEnabled && !generated.mFakeRecipe;
+    }
+
+    /** Development check only: the full-scan answer above stays authoritative. */
+    private void verifyAdmissionCandidates(ItemStack stack, boolean expected) {
+        List<Recipe> candidates = lookupTable.admissionCandidates(stack);
+        if (candidates == null) return;
+        boolean indexed = false;
+        for (Recipe recipe : candidates) if (containsInput(recipe, stack, false)) { indexed = true; break; }
+        if (indexed != expected) RecipeLookupTable.admissionMismatch(mNameInternal, expected, indexed);
     }
 
     private static boolean containsInput(Recipe recipe, ItemStack stack, boolean indexed) {

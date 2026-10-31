@@ -41,6 +41,26 @@ public final class MaterialEquivalence {
         String alternate=MaterialTagAliases.alternatePath(path);
         return (!alias.equals(path)&&tagged(candidate,alias))||(alternate!=null&&tagged(candidate,alternate));
     }
+    /**
+     * Tags {@link #hasForgeTag(ItemStack, String)} may test for this form. The recipe lookup index
+     * uses these as requirement keys; change this together with {@code hasForgeTag}.
+     */
+    public static void addTagKeys(Form form, Set<Object> out) {
+        String path = tagPath(form);
+        if (path == null) return;
+        addTagKey(out, path);
+        String alias = path.replace("/aluminium", "/aluminum").replace("/quartz", "/nether_quartz")
+                .replace("/sulfur", "/sulphur");
+        if (!alias.equals(path)) addTagKey(out, alias);
+        String alternate = MaterialTagAliases.alternatePath(path);
+        if (alternate != null) addTagKey(out, alternate);
+    }
+
+    private static void addTagKey(Set<Object> out, String path) {
+        out.add(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", path)));
+        out.add(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", path)));
+    }
+
     private static boolean tagged(ItemStack candidate, String path) {
 //? if >=1.21.1 {
         /*return candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge",path))) || candidate.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c",path)));
@@ -58,6 +78,7 @@ public final class MaterialEquivalence {
                 || item == net.minecraft.world.item.Items.RAW_IRON_BLOCK
                 || item == net.minecraft.world.item.Items.RAW_GOLD_BLOCK;
     }
+    /** Every accepting branch here must have a matching key in {@code RecipeInputs.requireKeys}. */
     public static boolean matches(ItemStack required,ItemStack available) {
         // Common raw_materials tags do not erase the distinct ore/raw and block quantities.
         if (required.getItem() != available.getItem() && (vanillaRaw(required) || vanillaRaw(available))) return false;

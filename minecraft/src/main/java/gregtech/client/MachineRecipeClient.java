@@ -55,6 +55,8 @@ public final class MachineRecipeClient {
         // Integrated server and client share the static maps. The server pass already applied them.
         if (ServerLifecycleHooks.getCurrentServer() != null) return;
         MachineRecipeOverlay.apply(recipes);
+        // The row set is final now; build on the task queue so the sync thread is not blocked.
+        Minecraft.getInstance().execute(gregtech.engine.recipe.RecipeMap::prebuildLookupIndexes);
         refresh("jei", "gregtech.compat.jei.GregTechJEIPlugin");
         refresh("emi", "gregtech.compat.emi.GregTechEMIPlugin");
     }

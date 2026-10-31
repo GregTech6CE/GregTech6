@@ -110,6 +110,37 @@ public final class RecipeInputs {
 //?}
     }
 
+    /**
+     * Keys shared by a required stack and every stack {@link #matches(ItemStack, ItemStack)}
+     * accepts for it. The recipe lookup index is only complete while these keys mirror every
+     * accepting branch of that method, of {@code MaterialEquivalence.matches}, of
+     * {@code MaterialUnification.canonical} and of the legacy colour aliases; change them together.
+     */
+    static void requireKeys(ItemStack required, Set<Object> out) {
+        out.add(required.getItem());
+        out.add(gregtech.engine.material.MaterialUnification.canonical(required).getItem());
+        var form = gregtech.engine.material.MaterialEquivalence.form(required);
+        if (form != null) {
+            out.add(form);
+            gregtech.engine.material.MaterialEquivalence.addTagKeys(form, out);
+        }
+        for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required))
+            requireKeys(color, out);
+    }
+
+    /** Counterpart of {@link #requireKeys(ItemStack, Set)} for the offered stack. */
+    static void offerKeys(ItemStack available, Set<Object> out) {
+        if (available == null || available.isEmpty()) return;
+        out.add(available.getItem());
+        out.add(gregtech.engine.material.MaterialUnification.canonical(available).getItem());
+        var form = gregtech.engine.material.MaterialEquivalence.form(available);
+        // The tag branch is only reached when the offered stack has no material form.
+        if (form != null) out.add(form);
+        else available.getTags().forEach(out::add);
+        var legacy = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(available);
+        if (legacy != available) offerKeys(legacy, out);
+    }
+
     public static boolean matches(ItemStack required, ItemStack available) {
         if(available.isEmpty())return false;
         // Legacy palette items and their fixed-color replacements denote the same input.

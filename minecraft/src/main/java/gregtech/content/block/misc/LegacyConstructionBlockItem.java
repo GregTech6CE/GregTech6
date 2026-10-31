@@ -10,7 +10,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class LegacyConstructionBlockItem extends BlockItem {
     protected LegacyConstructionBlockItem(Block block, Properties properties) { super(block, properties); }
 
-    /** A bare legacy ingredient used to accept every color of the same palette block. */
+    /**
+     * A bare legacy ingredient used to accept every color of the same palette block.
+     * The recipe lookup index expands these variants as requirement keys; change both together.
+     */
     public static java.util.List<ItemStack> ingredientAlternatives(ItemStack stack) {
         if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof LegacyConstructionBlockItem legacy)
                 || !gregtech.content.registry.GTConstructionVariants.legacy(legacy.getBlock())) return java.util.List.of();
@@ -25,6 +28,7 @@ public abstract class LegacyConstructionBlockItem extends BlockItem {
         return result;
     }
 
+    /** Normalized offered identity; {@code RecipeInputs.offerKeys} mirrors this normalization. */
     public static ItemStack canonical(ItemStack stack) {
         if (stack.isEmpty() || !(stack.getItem() instanceof LegacyConstructionBlockItem legacy)
                 || !gregtech.content.registry.GTConstructionVariants.legacy(legacy.getBlock())) return stack;
