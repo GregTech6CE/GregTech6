@@ -46,10 +46,11 @@ final class MachineRecipeSchema {
             .functionNames("special")
             .optional(0L)
             .alwaysWrite();
-    static final RecipeKey<gregtech.api.addon.recipe.MaterialUnitIngredient> MATERIAL_INPUT = MachineMaterialInputComponent.INSTANCE
-            .otherKey("material_input")
-            .functionNames("materialInput")
-            .optional((gregtech.api.addon.recipe.MaterialUnitIngredient) null);
+    static final RecipeKey<gregtech.api.addon.recipe.MaterialUnitIngredient> MATERIAL_INPUT =
+            MachineMaterialInputComponent.INSTANCE
+                    .otherKey("material_input")
+                    .functionNames("materialInput")
+                    .optional((gregtech.api.addon.recipe.MaterialUnitIngredient) null);
     static final RecipeSchema SCHEMA = new RecipeSchema(
                     MAP, ITEM_INPUTS, FLUID_INPUTS, ITEM_OUTPUTS, FLUID_OUTPUTS, EU, DURATION, SPECIAL, MATERIAL_INPUT)
             .factory(new KubeRecipeFactory(

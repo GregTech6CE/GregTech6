@@ -47,10 +47,11 @@ final class MachineRecipeSchema {
             .preferred("special")
             .optional(0L)
             .alwaysWrite();
-    static final RecipeKey<gregtech.api.addon.recipe.MaterialUnitIngredient> MATERIAL_INPUT = MachineMaterialInputComponent.INSTANCE
-            .key("material_input")
-            .preferred("materialInput")
-            .optional((gregtech.api.addon.recipe.MaterialUnitIngredient) null);
+    static final RecipeKey<gregtech.api.addon.recipe.MaterialUnitIngredient> MATERIAL_INPUT =
+            MachineMaterialInputComponent.INSTANCE
+                    .key("material_input")
+                    .preferred("materialInput")
+                    .optional((gregtech.api.addon.recipe.MaterialUnitIngredient) null);
     static final RecipeSchema SCHEMA = new RecipeSchema(
                     MachineRecipeJS.class,
                     MachineRecipeJS::new,
