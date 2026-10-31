@@ -1,6 +1,6 @@
 # 验证与结果表述
 
-验证随修改范围递进。本文给出项目现有任务与建议场景，不声称这些场景已有自动化覆盖。
+验证随修改范围递进。本文给出项目现有任务与建议场景；已自动化的定向回归见[测试](testing.md)，其余场景仍需按表执行。
 
 | 修改范围 | 最小合理验证 | 还需关注 |
 | --- | --- | --- |
@@ -11,12 +11,13 @@
 | 资源、元数据、构建打包 | 一个相关节点的 Forge `distributionJar` 或 NeoForge `jar`，按需检查 SDK | API 类恰好一份、缺资源、错误版本路径、混入临时文件 |
 | 平台专属修改 | 对应节点必要的编译或定向检查 | 跨平台差异通过源码核对，未验证平台明确说明 |
 | 机器、配方、流体、能源、存储 | 上述构建加游戏内复现 | tick、边界数量、模拟/实际转移、重载与存档 |
+| 已有 GameTest 案例的工作台配方 | 对应节点的 `runGameTestServer` | 案例表覆盖、槽位/模式、两平台结果 |
 | 客户端、GUI、网络、Mixin | 客户端与专用服务端验证 | 同步、交互权限、类加载、Mixin 目标 |
 | 可选集成 | 无该模组与安装目标模组两组启动 | 依赖版本、配方显示/行为、未安装时加载隔离 |
 
-CI 位于 [build.yml](../../.github/workflows/build.yml)，使用 Java 17/21 工具链，对两个节点分别运行 `build` 并收集模组、公共 API 和平台 SDK JAR。根 `check` 依赖 api、core 与两个节点的 `check`，不作为默认定向检查；未经明确要求，不运行双平台全量验证。
+CI 位于 [build.yml](../../.github/workflows/build.yml)，使用 Java 17/21 工具链，对两个节点分别运行 `build` 并收集模组、公共 API 和平台 SDK JAR。根 `check` 依赖 api、core 与两个节点的 `check`，不作为默认定向检查；未经明确要求，不运行双平台全量验证。GameTest 通过两个节点的 `runGameTestServer` 运行。
 
-公共库的 `apiContracts` 从 API JAR 编译并运行测试，不借用 main 输出或 core；core 的 `centrifugeContracts` 检查已有离心配方场景。两者接入各自 `check`，平台 `check` 依赖这两项。它们不能替代附属 SPI 发现、客户端与专用服务端启动验证。
+公共库的 `apiContracts` 从 API JAR 编译并运行测试，不借用 main 输出或 core；core 的 JUnit 回归通过 `./gradlew :core:test` 运行；针对性 GameTest 通过两个节点的 `runGameTestServer` 运行。它们不能替代附属 SPI 发现、客户端与专用服务端启动验证。
 
 ## 游戏内验证记录
 

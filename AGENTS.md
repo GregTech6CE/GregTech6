@@ -45,7 +45,7 @@
 | 内容 | 位置 |
 | --- | --- |
 | 生产 Java 与实际打包资源 | 对应模块的 `src/main/java`、`src/main/resources` |
-| 可重复运行的自动测试 | 对应模块实际接入构建的 `src/test/`；先确认测试框架与任务 |
+| 可重复运行的自动测试 | 先确认测试框架与任务，再根据[文件与产物归属](docs/development/repository-layout.md)确定对应模块实际接入构建的 `src/test/` |
 | 一次性脚本、上游导入/再生成脚本、下载、反编译、原始日志、截图、探针结果、个人计划 | `work/<任务名>/`，已忽略；系统临时数据也可放 `/tmp/` |
 | 可复用且随代码演进的开发/检查脚本 | `tools/<scope>/`，脚本、自带数据与该目录 `README.md` 同放，README 注明输入、依赖、输出与运行方式 |
 | 长期开发指南 | `docs/development/` |
@@ -64,6 +64,7 @@
 - `core` 逻辑：按改动运行 `./gradlew :core:check`，必要时补充有意义的回归测试。
 - 共享 Minecraft 逻辑：先 `./gradlew compileBothPlatforms`；涉及资源或打包时使用 `./gradlew assembleBothPlatforms`。
 - 完整检查使用 `./gradlew check`；CI 对两个节点分别执行 `build`，详见[验证指南](docs/development/validation.md)。
+- GameTest：按需运行 `./gradlew :minecraft:<node>:runGameTestServer`，见[测试指南](docs/development/testing.md)。
 - 世界、机器 tick、交互、渲染、Mixin、网络或可选集成还需对应游戏内验证，记录未覆盖的平台与场景。
 - 新增命令/参数/注册步骤同步对应文档，新增包职责同步包索引。
 - 结束时报告改动、验证命令与结果、未验证事项。受环境阻塞时报告具体原因，不宣称成功。

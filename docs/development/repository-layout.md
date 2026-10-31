@@ -8,8 +8,11 @@
 | `api/common/src/main/java/` | Java 17 公共协议、模型、声明与宿主服务接口 | core 实现、内容目录、游戏类型、任务报告 |
 | `api/common/src/test/` | 仅依赖公共 API JAR 的消费者与契约回归 | 主模组实现和资源 |
 | `core/src/main/java/` | 平台无关内容定义、运行规则 | 游戏 API、加载器适配、任务报告 |
+| `core/src/test/` | 平台无关的定向 JUnit 回归：配方 JSON、目录表与生成行 | 游戏类型、运行时依赖、任务报告 |
 | `core/src/main/resources/` | 共用贴图、模型、声音、数据与分发许可 | 下载包、调试日志、文档草稿 |
 | `minecraft/src/main/` | 共享游戏实现及资源输入 | 构建生成副本、部署笔记 |
+| `minecraft/src/test/` | 共享 GameTest：测试 Java、案例 TSV、结构模板 | 生产实现、任务报告 |
+| `minecraft/versions/*/src/test/` | 仅 loader API 必需的版本专属测试 | 可共享场景、复制的模板 |
 | `api/minecraft/src/main/` | 内联 API 中经 Stonecutter 编译的游戏侧公开 API | core 或模组 main 实现依赖 |
 | `minecraft/versions/*/src/main/` | 版本专属实现、加载器元数据及资源 | 测试实例、原始证据 |
 | `gradle/`、各 `*.gradle*` | 构建定义、Wrapper 与平台任务配置 | 个人安装路径、凭据 |
@@ -28,7 +31,7 @@
 
 例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台行为结论放 `docs/integration/`；算法边界补到架构文档；若确实执行了实例更新，再写 `docs/operations/records/`。无需给每次小改动建立长期报告。
 
-开发用探针优先放 `work/`，不会自动参与生产编译；若要长期保留为自动测试，接入合适测试源码集及依赖，并记录运行命令。不要把探针改名成业务类混入 `src/main/java/`。
+开发用探针优先放 `work/`，不会自动参与生产编译；若要长期保留为自动测试，接入合适测试源码集及依赖，并记录运行命令；测试目录与案例表约定见[测试](testing.md)。不要把探针改名成业务类混入 `src/main/java/`。
 
 ## 文档、资源与生成物的区别
 

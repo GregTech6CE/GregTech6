@@ -2,7 +2,7 @@
 
 本仓库的自动测试是常驻回归；测试目录不使用 `.gitignore` 的 transient 规则。一次性验证放 `work/<任务名>/`（已忽略）或手动删除，不通过忽略测试目录来管理。
 
-测试分为 core JUnit 与 GameTest 两层：前者覆盖不需要 Minecraft 的静态数据，后者覆盖运行时加载与合成行为。下面的约定适用于两类测试。
+测试分为 core JUnit 与 GameTest 两层：前者覆盖不需要 Minecraft 的静态数据，后者覆盖运行时加载与合成行为。下面的约定适用于两类测试。GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTestServer` 运行。
 
 ## 分层与边界
 
@@ -33,7 +33,7 @@ core 测试不得引入 Minecraft、Forge、NeoForge 类型。GameTest 共享测
 ./gradlew :minecraft:1.21.1-neoforge:runGameTestServer
 ```
 
-GameTest 不接入 `check` 或 CI；`check` 只编译测试源集，不运行 GameTest。首次运行会下载游戏资源，失败时先区分环境问题与断言失败。EULA 由运行环境处理，不把 `eula.txt` 提交到仓库。
+GameTest 首次运行会下载游戏资源，失败时先区分环境问题与断言失败。EULA 由运行环境处理，不把 `eula.txt` 提交到仓库。
 
 ## 案例表
 
@@ -148,7 +148,7 @@ GameTest 只保留一份 canonical `minecraft/src/test/templates/test_empty.nbt`
 - 不新增 per-issue JavaExec 任务；不为每个 issue 建类、namespace 或 NBT。
 - 平台脚本只保留 `gameTestServer` 所需的最小接线，不改现有 mods 注入。
 - 生产 `jar`/`distributionJar` 不得包含测试类、NBT 或 TSV。
-- CI 不新增 GameTest job；core JUnit 随现有 `check` 生命周期执行。
+- core JUnit 随现有 `check` 生命周期执行。
 
 ## 故障排查
 

@@ -50,4 +50,4 @@ Forge 默认实例在节点内 `run/`，NeoForge 客户端/服务端在 `run-cli
 
 ## 常见排错顺序
 
-先看首个实际失败原因：工具链、代理、依赖解析、源码编译、Mixin 或运行期异常。保留失败命令及必要输出于 `work/<任务名>/`，修复共享输入后重跑受影响检查。不要先删全部缓存、反复全量 clean，或从生成副本修复问题。API 的 `apiContracts` 与 core 的 `centrifugeContracts` 使用 `src/test/` 中的定向回归并接入各自 `check`；不能把其他空测试任务当覆盖证明。
+先看首个实际失败原因：工具链、代理、依赖解析、源码编译、Mixin 或运行期异常。保留失败命令及必要输出于 `work/<任务名>/`，修复共享输入后重跑受影响检查。不要先删全部缓存、反复全量 clean，或从生成副本修复问题。API 的 `apiContracts` 与 core 的 JUnit 回归使用 `src/test/` 中的定向检查并接入各自 `check`；针对性 GameTest 使用 `minecraft/src/test`，通过两个节点的 `runGameTestServer` 运行。不能把其他空测试任务当覆盖证明。
