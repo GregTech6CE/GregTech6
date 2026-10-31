@@ -151,8 +151,12 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
             capacities[i] = exhaust.get(i).getCapacity();
         }
         boolean matched = false;
-        for (Recipe recipe : recipes.mRecipeList) {
-            var plan = FluidFuelBatch.plan(recipe, fuel.getFluid().copy(), outputs, capacities, room, declaration().efficiency());
+        FluidStack input = fuel.getFluid().copy();
+        var candidates = recipes.fluidInputCandidates(input);
+        Iterable<Recipe> rows = candidates != null ? candidates : recipes.mRecipeList;
+        int efficiency = declaration().efficiency();
+        for (Recipe recipe : rows) {
+            var plan = FluidFuelBatch.plan(recipe, input, outputs, capacities, room, efficiency);
             if (plan == null || plan.energy() <= 0 || plan.energy() > Long.MAX_VALUE - stored) continue;
             fuel.setFluid(plan.input());
             for (int i = 0; i < exhaust.size(); i++) exhaust.get(i).setFluid(plan.outputs().get(i));

@@ -5,6 +5,7 @@ import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.fluid.FluidPort;
 import gregtech.engine.multiblock.*;
 import gregtech.engine.recipe.FluidFuelBatch;
+import gregtech.engine.recipe.Recipe;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.AxialStructureTransform;
 import gregtech.content.data.*;
@@ -198,9 +199,15 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
             return;
         }
         if (fuelEnergy < grade().inputMaximum() && Arrays.stream(exhaust).allMatch(t -> t.getFluidAmount() < t.getCapacity() / 2)) {
-            for (var recipe : FuelRecipeMaps.Gas.mRecipeList) {
-                var plan = FluidFuelBatch.plan(recipe, fuel.getFluid(), Arrays.stream(exhaust).map(FluidTank::getFluid).toList(),
-                        Arrays.stream(exhaust).mapToInt(FluidTank::getCapacity).toArray(), grade().inputMaximum() - fuelEnergy, 10000);
+            FluidStack input = fuel.getFluid();
+            var candidates = FuelRecipeMaps.Gas.fluidInputCandidates(input);
+            Iterable<Recipe> rows = candidates != null ? candidates : FuelRecipeMaps.Gas.mRecipeList;
+            // The exhaust contents and capacities only change when a plan is applied.
+            var exhaustFluids = Arrays.stream(exhaust).map(FluidTank::getFluid).toList();
+            int[] exhaustCapacities = Arrays.stream(exhaust).mapToInt(FluidTank::getCapacity).toArray();
+            long needed = grade().inputMaximum() - fuelEnergy;
+            for (var recipe : rows) {
+                var plan = FluidFuelBatch.plan(recipe, input, exhaustFluids, exhaustCapacities, needed, 10000);
                 if (plan == null || plan.energy() > Long.MAX_VALUE - fuelEnergy) continue;
                 fuel.setFluid(plan.input());
                 for (int i = 0; i < exhaust.length; i++) exhaust[i].setFluid(plan.outputs().get(i));

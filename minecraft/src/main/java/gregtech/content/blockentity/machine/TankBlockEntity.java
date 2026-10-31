@@ -94,6 +94,17 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     /** Cached fermenter recipe of the sealed barrel, plus the fluid it was matched for. */
     private Recipe fermentRecipe;
     private Fluid fermentInput;
+    /**
+     * Last failed fermentation lookup. Enabled flags are public and can change without a recipe
+     * revision, so the entry expires after a bounded, position-staggered delay instead of lasting
+     * until the fluid or revision changes.
+     */
+    @Nullable private FluidStack fermentFailureInput;
+    private long fermentFailureRevision = Long.MIN_VALUE;
+    private long fermentFailureRetry;
+
+    private static final long FERMENTATION_RETRY_BASE = 20;
+    private static final long FERMENTATION_RETRY_SPREAD = 80;
 //? if >=1.21.1 {
     /*private boolean fluidAccessKnown;
     @Nullable private Direction blockedFluidSide;
@@ -189,9 +200,10 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 
             // GT6 TileEntityBase08Barrel#onTick2 — a sealed barrel ferments its content.
             if (softHammerState) tickFermentation(fluid);
-        } else if (softHammerState && sealedTime > 0) {
+        } else if (softHammerState) {
             // Discard cached fermentation work when the contents run dry.
-            resetSeal();
+            if (sealedTime > 0) resetSeal();
+            clearFermentationFailure();
         }
 
         setChanged();
@@ -237,6 +249,10 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     private void tickFermentation(FluidStack fluid) {
         if (fermentRecipe != null && fermentInput != fluid.getFluid()) resetSeal();
         if (fermentRecipe == null) {
+            if (fermentationRetryPending(fluid)) {
+                resetSeal();
+                return;
+            }
             fermentRecipe = findFermentationRecipe(fluid);
             fermentInput = fermentRecipe == null ? null : fluid.getFluid();
             // GT6 preserves saved work while rebuilding its transient recipe cache.
@@ -244,9 +260,11 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
             // of trusting persisted maximums. Explicit resealing/fluid changes still reset.
             maxSealedTime = 0;
             if (fermentRecipe == null) {
+                rememberFermentationFailure(fluid);
                 resetSeal();
                 return;
             }
+            clearFermentationFailure();
         }
         if (maxSealedTime <= 0) {
             maxSealedTime = sealedDuration(fermentRecipe, tank.getAmount());
@@ -272,6 +290,55 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         setChanged();
     }
 
+    /** Whether a recorded failure still suppresses a new search; clears the entry when it went stale. */
+    private boolean fermentationRetryPending(FluidStack fluid) {
+        if (fermentFailureInput == null || level == null) return false;
+        if (!gregtech.engine.recipe.RecipeInputs.sameFluid(fermentFailureInput, fluid)) {
+            clearFermentationFailure();
+            return false;
+        }
+        if (fermentFailureRevision != fermentationRevision()) {
+            clearFermentationFailure();
+            return false;
+        }
+        return level.getGameTime() < fermentFailureRetry;
+    }
+
+    /** Records a failed lookup for a bounded, position-staggered window; never for a custom provider. */
+    private void rememberFermentationFailure(FluidStack fluid) {
+        if (!fermentationNegativeCacheAllowed() || level == null) {
+            clearFermentationFailure();
+            return;
+        }
+        fermentFailureInput = fluid.copy();
+        fermentFailureRevision = fermentationRevision();
+        fermentFailureRetry = level.getGameTime() + FERMENTATION_RETRY_BASE
+                + Math.floorMod(worldPosition.hashCode(), (int) FERMENTATION_RETRY_SPREAD);
+    }
+
+    private void clearFermentationFailure() {
+        fermentFailureInput = null;
+        fermentFailureRevision = Long.MIN_VALUE;
+        fermentFailureRetry = 0;
+    }
+
+    private static long fermentationRevision() {
+//? if >=1.21.1 {
+        /*return FermentationAccess.recipeRevision();
+*///?} else {
+        return MachineRecipeMaps.Fermenter.lookupRevision();
+//?}
+    }
+
+    /** A custom provider may depend on state this cache cannot observe, so only the built-in table is memoized. */
+    private static boolean fermentationNegativeCacheAllowed() {
+//? if >=1.21.1 {
+        /*return FermentationAccess.negativeCacheAllowed();
+*///?} else {
+        return true;
+//?}
+    }
+
     /** GT6's {@code UT.Code.divup(max(1, |EUt * duration|) * max(1, amount), max(1, input))}. */
 //? if >=1.21.1 {
     /*public static long sealedDuration(Recipe recipe,long amount){return BarrelFermentationRules.duration(recipe.power(),recipe.duration(),amount,recipe.input().getAmount());}
@@ -291,12 +358,24 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //? if >=1.21.1 {
     /*public static Recipe findFermentationRecipe(FluidStack fluid){return FermentationAccess.find(fluid);}
 *///?} else {
-    public static Recipe findFermentationRecipe(FluidStack fluid) {
-        if (fluid.isEmpty()) return null;
+    /** Selector stack reused read-only; matching never mutates or exposes it. */
+    @Nullable private static ItemStack fermentationSelectorStack;
+
+    private static ItemStack fermentationSelector() {
+        ItemStack cached = fermentationSelectorStack;
+        if (cached != null) return cached;
         var selector = GTTechnological.selectorTag(0);
         if (selector == null) return null;
-        ItemStack itemInput = new ItemStack(selector);
-        for (Recipe recipe : MachineRecipeMaps.Fermenter.mRecipeList) {
+        return fermentationSelectorStack = new ItemStack(selector);
+    }
+
+    public static Recipe findFermentationRecipe(FluidStack fluid) {
+        if (fluid.isEmpty()) return null;
+        ItemStack itemInput = fermentationSelector();
+        if (itemInput == null) return null;
+        var candidates = MachineRecipeMaps.Fermenter.fluidInputCandidates(fluid);
+        Iterable<Recipe> rows = candidates != null ? candidates : MachineRecipeMaps.Fermenter.mRecipeList;
+        for (Recipe recipe : rows) {
             if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
             if (recipe.mInputs.length != 1) continue;
             if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
@@ -584,6 +663,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         maxSealedTime = tag.contains(NBT_MAX_SEALED_TIME) ? tag.getLong(NBT_MAX_SEALED_TIME) : 0;
         fermentRecipe = null;
         fermentInput = null;
+        clearFermentationFailure();
 //? if >=1.21.1 {
         /*if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"),lookup);
         fluidAccessKnown = false;
@@ -691,6 +771,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
             softHammerState = !softHammerState;
         }
         resetSeal();
+        clearFermentationFailure();
         setChanged();
     }
 }

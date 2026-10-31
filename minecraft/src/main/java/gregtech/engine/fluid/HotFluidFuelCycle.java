@@ -25,18 +25,21 @@ public final class HotFluidFuelCycle {
         var map = RecipeMap.RECIPE_MAPS.get(settings.fuelMap());
         if (hot.isEmpty() || map == null) return idleResult;
         Recipe fuelRecipe = map.mRecipeList.contains(lastRecipe) && matches(lastRecipe, hot) ? lastRecipe : null;
-        if (fuelRecipe == null)
-            for (var candidate : map.mRecipeList)
+        if (fuelRecipe == null) {
+            var candidates = map.fluidInputCandidates(hot.getFluidLong());
+            Iterable<Recipe> rows = candidates != null ? candidates : map.mRecipeList;
+            for (var candidate : rows)
                 if (matches(candidate, hot)) {
                     fuelRecipe = candidate;
                     break;
                 }
-        if (fuelRecipe == null) {
-            // A configurable map may contain presence-only rows. Reject without purging their fluid.
-            for (var candidate : map.mRecipeList)
-                if (matchesFluid(candidate, hot) && candidate.isPresenceFluidInput(0)) return idleResult;
-            hot.setEmpty();
-            return idleResult;
+            if (fuelRecipe == null) {
+                // A configurable map may contain presence-only rows. Reject without purging their fluid.
+                for (var candidate : rows)
+                    if (matchesFluid(candidate, hot) && candidate.isPresenceFluidInput(0)) return idleResult;
+                hot.setEmpty();
+                return idleResult;
+            }
         }
         var output = fuelRecipe.mFluidOutputs.length == 0 ? FluidStack.EMPTY : fuelRecipe.mFluidOutputs[0];
 //? if >=1.21.1 {

@@ -1032,6 +1032,14 @@ public class RecipeMap {
     @javax.annotation.Nullable
     public List<Recipe> admissionCandidates(ItemStack stack) { return lookupTable.admissionCandidates(stack); }
 
+    /**
+     * Ordered rows that declare {@code fluid} as an input, presence gates included, or null when no
+     * usable index is published yet. Callers must still apply their original fluid test to each row;
+     * the index narrows candidates by fluid identity only and never builds on the caller's thread.
+     */
+    @javax.annotation.Nullable
+    public List<Recipe> fluidInputCandidates(FluidStack fluid) { return lookupTable.fluidInputCandidates(fluid); }
+
     @javax.annotation.Nullable
     private Recipe firstDynamicRecipe(List<ItemStack> inputItems, List<FluidStack> inputFluids) {
         if (mDynamicRecipes != null) {
@@ -1068,15 +1076,34 @@ public class RecipeMap {
     /** Whether any registered recipe, including a rule family's generated row, accepts the item. */
     public boolean containsInput(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
+        // First stage: the legacy item index answers marked and unmarked rows by stack identity.
         var recipes = mRecipeItemMap.get(stack.getItem());
         if (recipes != null && recipes.stream().anyMatch(r -> containsInput(r, stack, true))) return true;
-        boolean found = mRecipeList.stream().anyMatch(r -> containsInput(r, stack, false));
-        if (RecipeLookupTable.verifying()) verifyAdmissionCandidates(stack, found);
+        // Second stage keeps the original per-row test; the admission index only narrows the rows.
+        List<Recipe> candidates = lookupTable.admissionCandidates(stack);
+        boolean found;
+        if (candidates == null) {
+            found = fullAdmissionScan(stack);
+        } else {
+            found = false;
+            for (int index = 0; index < candidates.size(); index++)
+                if (containsInput(candidates.get(index), stack, false)) { found = true; break; }
+        }
+        if (RecipeLookupTable.verifying()) {
+            boolean expected = fullAdmissionScan(stack);
+            verifyAdmissionCandidates(stack, expected);
+            found = expected;
+        }
         if (found) return true;
         // Only a rule family with a published enumeration answers an item it has not indexed yet.
         if (mDynamicEnumeration == null) return false;
         Recipe generated = firstDynamicRecipe(List.of(stack), List.of());
         return generated != null && generated.mEnabled && !generated.mFakeRecipe;
+    }
+
+    private boolean fullAdmissionScan(ItemStack stack) {
+        for (Recipe recipe : mRecipeList) if (containsInput(recipe, stack, false)) return true;
+        return false;
     }
 
     /** Development check only: the full-scan answer above stays authoritative. */

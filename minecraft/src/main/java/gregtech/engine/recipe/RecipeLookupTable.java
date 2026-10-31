@@ -121,11 +121,13 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         final Map<Object, int[]> alias;
         final int[] aliasFallback;
         final Map<Object, int[]> admission;
+        /** Every row that declares this fluid as an input, including presence gates. */
+        final Map<Fluid, int[]> fluidInputs;
 
         IndexState(Recipe[] snapshot, long composition, long revision, boolean indexed,
                    boolean livePredicates, boolean emptyOutputRows, Map<Item, int[]> exactItems,
                    Map<Fluid, int[]> exactFluids, int[] exactFallback, Map<Object, int[]> alias,
-                   int[] aliasFallback, Map<Object, int[]> admission) {
+                   int[] aliasFallback, Map<Object, int[]> admission, Map<Fluid, int[]> fluidInputs) {
             this.snapshot = snapshot;
             this.composition = composition;
             this.revision = revision;
@@ -138,6 +140,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             this.alias = alias;
             this.aliasFallback = aliasFallback;
             this.admission = admission;
+            this.fluidInputs = fluidInputs;
         }
 
         long entries() {
@@ -146,11 +149,13 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             for (int[] bucket : exactFluids.values()) total += bucket.length;
             for (int[] bucket : alias.values()) total += bucket.length;
             for (int[] bucket : admission.values()) total += bucket.length;
+            for (int[] bucket : fluidInputs.values()) total += bucket.length;
             return total;
         }
 
         long keys() {
-            return exactItems.size() + exactFluids.size() + alias.size() + admission.size();
+            return exactItems.size() + exactFluids.size() + alias.size() + admission.size()
+                    + fluidInputs.size();
         }
     }
 
@@ -181,19 +186,24 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
      */
     private void audit(IndexState current) {
         long started = System.nanoTime();
-        int exactMissing = 0, aliasMissing = 0;
+        int exactMissing = 0, aliasMissing = 0, fluidMissing = 0;
         for (int row = 0; row < current.snapshot.length; row++) {
             Recipe recipe = current.snapshot[row];
             List<ItemStack> items = Arrays.asList(recipe.mInputs);
             if (!reachesRow(exactArrays(current, items, Arrays.asList(recipe.mFluidInputs)), row)) exactMissing++;
             if (recipe.mInputs.length > 0 && !reachesRow(aliasArrays(current, items), row)) aliasMissing++;
+            for (FluidStack input : recipe.mFluidInputs) {
+                if (input == null || input.getFluid() == net.minecraft.world.level.material.Fluids.EMPTY) continue;
+                int[] bucket = current.fluidInputs.get(input.getFluid());
+                if (bucket == null || !reachesRow(new int[][] {bucket}, row)) fluidMissing++;
+            }
         }
         long millis = (System.nanoTime() - started) / 1_000_000L;
-        if (exactMissing == 0 && aliasMissing == 0) {
+        if (exactMissing == 0 && aliasMissing == 0 && fluidMissing == 0) {
             LOGGER.info("[{}] Recipe lookup audit: all {} rows reachable ({} ms)", name, current.snapshot.length, millis);
         } else {
-            LOGGER.error("[{}] Recipe lookup audit: {} rows missing from the exact index, {} from the alias index",
-                    name, exactMissing, aliasMissing);
+            LOGGER.error("[{}] Recipe lookup audit: {} rows missing from the exact index, {} from the alias index, {} fluid inputs from the fluid index",
+                    name, exactMissing, aliasMissing, fluidMissing);
         }
     }
 
@@ -312,7 +322,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         for (int i = 0; i < all.length; i++) all[i] = i;
         return new IndexState(snapshot, gregtech.engine.material.ItemMaterialRegistry.compositionRevision(),
                 revision.get(), false, livePredicates(snapshot), emptyOutputRows(snapshot),
-                Map.of(), Map.of(), all, Map.of(), all, Map.of());
+                Map.of(), Map.of(), all, Map.of(), all, Map.of(), Map.of());
     }
 
     /** Whether any row evaluates a live item guard or predicate; such maps never reuse a negative. */
@@ -413,10 +423,23 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             }
         }
 
+        // Every non-empty fluid input, presence representatives included: filtering by fluid identity
+        // only narrows the rows; amounts, components and presence flags stay with the original test.
+        Map<Fluid, IntList> fluidInputBuckets = new IdentityHashMap<>();
+        var rowFluids = java.util.Collections.newSetFromMap(new IdentityHashMap<Fluid, Boolean>());
+        for (int i = 0; i < n; i++) {
+            rowFluids.clear();
+            for (FluidStack required : snapshot[i].mFluidInputs) {
+                if (required == null || required.getFluid() == net.minecraft.world.level.material.Fluids.EMPTY) continue;
+                if (rowFluids.add(required.getFluid()))
+                    fluidInputBuckets.computeIfAbsent(required.getFluid(), k -> new IntList()).add(i);
+            }
+        }
+
         return new IndexState(snapshot, gregtech.engine.material.ItemMaterialRegistry.compositionRevision(),
                 revision.get(), true, livePredicates(snapshot), emptyOutputRows(snapshot),
                 freeze(itemBuckets), freeze(fluidBuckets), exactFallback.toArray(), freeze(aliasBuckets),
-                aliasFallback.toArray(), freeze(admissionBuckets));
+                aliasFallback.toArray(), freeze(admissionBuckets), freeze(fluidInputBuckets));
     }
 
     /** Exact and alias keys of one required stack; cached per plain item during one build. */
@@ -684,6 +707,29 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         var result = new ArrayList<Recipe>();
         for (int index; (index = cursor.next()) >= 0; ) result.add(current.snapshot[index]);
         return result;
+    }
+
+    /**
+     * Ordered rows declaring {@code fluid} as an input, presence gates included, or null when no
+     * usable index is published. The filter is by fluid identity only: tag/components, amounts,
+     * presence flags and output conditions stay with each caller's original test.
+     */
+    @javax.annotation.Nullable
+    List<Recipe> fluidInputCandidates(FluidStack fluid) {
+        if (fluid == null || fluid.getFluid() == net.minecraft.world.level.material.Fluids.EMPTY) return List.of();
+        IndexState current = publishedState();
+        if (current == null) return null;
+        int[] bucket = current.fluidInputs.get(fluid.getFluid());
+        if (bucket == null || bucket.length == 0) return List.of();
+        return rowsView(current, bucket);
+    }
+
+    /** Read-only view over one finished bucket; snapshot row identities are stable while published. */
+    private static List<Recipe> rowsView(IndexState state, int[] bucket) {
+        return new AbstractList<>() {
+            @Override public Recipe get(int index) { return state.snapshot[bucket[index]]; }
+            @Override public int size() { return bucket.length; }
+        };
     }
 
     private static boolean sameInputs(Candidates cached, List<ItemStack> items, List<FluidStack> fluids) {
