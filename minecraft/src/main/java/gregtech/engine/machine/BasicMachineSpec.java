@@ -66,9 +66,8 @@ public record BasicMachineSpec(
         /** Skips six-face item and fluid auto-input. Not inferred from an output cell. */
         boolean suppressSideAutoInput,
         /**
-         * Output tanks have no finite capacity. This matches {@code sourceUnlimitedOutputs}:
-         * the thirteen original controllers and the fusion reactor. Distillation towers stay false
-         * and keep their own tank cap.
+         * Additional layouts may inherit unbounded output storage. Built-in GT6 recipe multiblocks
+         * configure their original buffers separately, including the production backpressure gate.
          */
         boolean unlimitedOutputTanks,
         /** Second input. Null when the machine has none. */

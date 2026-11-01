@@ -121,6 +121,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public boolean exclusiveOutputs() { return usesExclusiveOutputs(); }
         public boolean requireEmptyOutputs() { return toolSettings.emptyOutputsOnly(); }
         public int parallelLimit() { return spec == null ? 1 : spec.parallelLimit(); }
+        public boolean limitFluidOutputAccumulation() { return usesOriginalFluidBuffers(); }
         public boolean parallelScalesDuration() { return BasicMachineBlockEntity.this.parallelScalesDuration(); }
         public boolean cheapOverclocking() { return BasicMachineBlockEntity.this.cheapOverclocking(); }
         public boolean usesTimeEnergy() { return BasicMachineBlockEntity.this.usesTimeEnergy(); }
@@ -272,12 +273,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         this.recipeMap = spec.recipeMap();
         processor.invalidate();
         this.faceConfig = spec.faceConfig();
-        this.inventory = new MachineInventory(recipeMap, this::inventoryChanged);
+        this.inventory = new MachineInventory(recipeMap, spec.parallelLimit(), usesOriginalFluidBuffers(), this::inventoryChanged);
         this.inventory.items().setEmptyInputsOnly(toolSettings::emptyInputsOnly);
         if (specDirty) sanitizeForSpec();
     }
 
     public BasicMachineSpec spec() { return spec; }
+    private boolean usesOriginalFluidBuffers() {
+        return spec != null && "gt6ce".equals(spec.namespace())
+                && this instanceof gregtech.engine.multiblock.tracking.TrackedMultiblock;
+    }
     public RecipeMap recipeMap() { return recipeMap; }
     public FaceConfig faceConfig() { return faceConfig; }
     public FluidTankGT[] getTanksInput() { return tanksInput(); }
@@ -1421,6 +1426,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private void sanitizeForSpec() {
         if (spec == null) { specDirty = true; return; }
         specDirty = false;
+        if (inventory != null) inventory.restoreConfiguredTankCapacities();
         energyPort.setStored(clamp(energyPort.stored(), 0, inputMaximum()));
         processor.sanitize();
         if (!processor.hasPendingOutputs() || processor.totalWork() <= 0) energyPort.clearStartup();

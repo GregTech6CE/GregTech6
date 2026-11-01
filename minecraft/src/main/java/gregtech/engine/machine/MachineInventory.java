@@ -23,20 +23,30 @@ public final class MachineInventory implements IFluidHandler {
     private final FluidTankGT[] tanksInput;
     private final FluidTankGT[] tanksOutput;
     private final int inputCount;
+    private final boolean originalFluidBuffers;
 
-    public MachineInventory(RecipeMap recipeMap, Runnable onChanged) {
+    public MachineInventory(RecipeMap recipeMap, int parallelLimit, boolean originalFluidBuffers, Runnable onChanged) {
+        this.originalFluidBuffers = originalFluidBuffers;
         this.inputCount = recipeMap.mInputItemsCount;
         this.items = new MachineItemHandler(inputCount + recipeMap.mOutputItemsCount, inputCount, onChanged);
         this.tanksInput = new FluidTankGT[recipeMap.mInputFluidCount];
         this.tanksOutput = new FluidTankGT[recipeMap.mOutputFluidCount];
         for (int i = 0; i < tanksInput.length; i++) {
-            tanksInput[i] = new FluidTankGT(8000)
-                    .setAdjustableCapacity(recipeMap.mMinInputTankSizes, 1)
+            tanksInput[i] = new FluidTankGT(originalFluidBuffers ? MachineFluidRules.INPUT_BASE_CAPACITY : 8000)
+                    .setAdjustableCapacity(recipeMap.mMinInputTankSizes,
+                            originalFluidBuffers ? MachineFluidRules.inputCapacityMultiplier(parallelLimit) : 1)
                     .setOnChanged(onChanged);
         }
         for (int i = 0; i < tanksOutput.length; i++) {
-            tanksOutput[i] = new FluidTankGT(8000).setOnChanged(onChanged);
+            tanksOutput[i] = new FluidTankGT(originalFluidBuffers ? Long.MAX_VALUE : 8000).setOnChanged(onChanged);
         }
+    }
+
+    /** Saved capacities are not machine settings. Keep excess contents available for extraction. */
+    public void restoreConfiguredTankCapacities() {
+        if (!originalFluidBuffers) return;
+        for (var tank : tanksInput) tank.setCapacityPreservingContents(MachineFluidRules.INPUT_BASE_CAPACITY);
+        for (var tank : tanksOutput) tank.setCapacityPreservingContents(Long.MAX_VALUE);
     }
 
     public MachineItemHandler items() { return items; }
