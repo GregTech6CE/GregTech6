@@ -1,5 +1,10 @@
 package gregtech.content.block.energy;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import gregtech.engine.GTWaterloggable;
 import gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,13 +19,14 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
 /** Standalone GT6 rod, 4 x 16 x 4 pixels; only a core performs neutron simulation. */
-public final class ReactorRodBlock extends Block implements EntityBlock {
+public final class ReactorRodBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
 //?}
     private static final VoxelShape SHAPE = box(6, 0, 6, 10, 16, 10);
-    public ReactorRodBlock() { super(Properties.of().strength(10,10).noOcclusion().sound(SoundType.METAL)); }
+    public ReactorRodBlock() { super(Properties.of().strength(10,10).noOcclusion().sound(SoundType.METAL));
+        registerDefaultState(defaultBlockState().setValue(GTWaterloggable.WATERLOGGED, false)); }
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return SHAPE; }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new PlacedReactorRodBlockEntity(pos, state); }
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
@@ -38,5 +44,28 @@ public final class ReactorRodBlock extends Block implements EntityBlock {
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         return level.getBlockEntity(pos) instanceof PlacedReactorRodBlockEntity rod ? rod.rod() : new ItemStack(this);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(GTWaterloggable.WATERLOGGED);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

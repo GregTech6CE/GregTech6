@@ -4,7 +4,6 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.world.InteractionResult;
@@ -25,7 +24,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -36,7 +34,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 energy-net node block (motor/dynamo/transformer/turbine/solar/storage). */
-public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget,
+public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
     private final EnergyNodeSpec spec;
@@ -56,8 +54,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
         this.spec = spec;
         BlockState initial = defaultBlockState().setValue(FACING,
                 spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
-        if (initial.hasProperty(GTWaterloggable.WATERLOGGED))
-            initial = initial.setValue(GTWaterloggable.WATERLOGGED, false);
         registerDefaultState(initial);
     }
 
@@ -80,8 +76,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
         this.spec = spec;
         BlockState initial = defaultBlockState().setValue(FACING,
                 spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
-        if (initial.hasProperty(GTWaterloggable.WATERLOGGED))
-            initial = initial.setValue(GTWaterloggable.WATERLOGGED, false);
         registerDefaultState(initial);
 *///?} else {
 //?}
@@ -91,7 +85,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, GTWaterloggable.WATERLOGGED);
+        builder.add(FACING);
     }
 
     @Override
@@ -103,14 +97,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                 : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection().getOpposite();
         if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
         BlockState placed = defaultBlockState().setValue(FACING, facing);
-        return placed.hasProperty(GTWaterloggable.WATERLOGGED)
-                ? GTWaterloggable.getStateForPlacement(placed, ctx) : placed;
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return state.hasProperty(GTWaterloggable.WATERLOGGED)
-                ? GTWaterloggable.getFluidState(state) : net.minecraft.world.level.material.Fluids.EMPTY.defaultFluidState();
+        return placed;
     }
 
     @Override
@@ -121,13 +108,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return spec.id().equals("rotation_transformer_wood") ? 150 : super.getFireSpreadSpeed(state, level, pos, face);
-    }
-
-    @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState,
-                                  LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        if (state.hasProperty(GTWaterloggable.WATERLOGGED)) GTWaterloggable.updateShape(state, level, pos);
-        return state;
     }
 
     @Nullable

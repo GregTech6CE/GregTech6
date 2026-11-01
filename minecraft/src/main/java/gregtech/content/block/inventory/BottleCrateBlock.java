@@ -1,5 +1,9 @@
 package gregtech.content.block.inventory;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.*;
 
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
@@ -27,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** GT6 bottle crate: nine X/Z cells, whole-stack interaction and inventory-preserving drops. */
-public class BottleCrateBlock extends HorizontalDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+public class BottleCrateBlock extends HorizontalDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget, SimpleWaterloggedBlock {
 
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
@@ -43,7 +47,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
         super(properties);
         this.material = material;
         this.woodTexture = woodTexture;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public boolean metal() { return material != null; }
@@ -64,12 +68,13 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(FACING);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()), context);
     }
 
     @Override
@@ -203,5 +208,17 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
 //?}
                                 TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.bottleCrate(tooltip);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

@@ -1,5 +1,8 @@
 package gregtech.content.block.energy;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import gregtech.engine.GTWaterloggable;
 //? if >=1.21.1 {
 /*import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractions;
@@ -41,7 +44,7 @@ import java.util.List;
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
 //? if >=1.21.1 {
 /*public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget,
-        gregtech.engine.tool.ScrewdriverUseTarget {
+        gregtech.engine.tool.ScrewdriverUseTarget, SimpleWaterloggedBlock {
 *///?} else {
 public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
 //?}
@@ -66,7 +69,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         this.insulated = insulated;
         var state = defaultBlockState().setValue(POWER, 0);
         for (var property : ElectricWireBlock.CONNECTIONS) state = state.setValue(property, false);
-        registerDefaultState(state);
+        registerDefaultState(state.setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public GTMaterial material() {
@@ -87,11 +90,12 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
 
     @Override
     public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
-        return defaultBlockState().setValue(ElectricWireBlock.propFor(context.getClickedFace().getOpposite()), true);
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(ElectricWireBlock.propFor(context.getClickedFace().getOpposite()), true), context);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(ElectricWireBlock.CONNECTIONS).add(POWER);
     }
 
@@ -309,5 +313,17 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getShape(state, level, pos, CollisionContext.empty());
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

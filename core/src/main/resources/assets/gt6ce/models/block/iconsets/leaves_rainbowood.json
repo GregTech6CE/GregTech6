@@ -3,5 +3,5 @@
   "textures": {
     "all": "gt6ce:block/iconsets/leaves_rainbowood"
   },
-  "render_type": "minecraft:cutout"
+  "render_type": "minecraft:cutout_mipped"
 }

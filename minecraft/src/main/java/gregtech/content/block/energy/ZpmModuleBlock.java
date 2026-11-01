@@ -1,4 +1,9 @@
 package gregtech.content.block.energy;
+
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import gregtech.engine.GTWaterloggable;
 import gregtech.content.energy.ZpmEnergy;
 import gregtech.content.blockentity.energy.ZpmModuleBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -9,15 +14,16 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.*;
 import net.minecraft.world.item.*;
-public final class ZpmModuleBlock extends Block implements EntityBlock {
+public final class ZpmModuleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final IntegerProperty CHARGE=IntegerProperty.create("charge",0,15);
     private static final VoxelShape SHAPE=Shapes.or(Block.box(4,0,4,12,4,12),Block.box(5,4,5,11,12,11));
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
 //?}
-    public ZpmModuleBlock(Properties properties){super(properties.noOcclusion().lightLevel(s->s.getValue(CHARGE)));registerDefaultState(defaultBlockState().setValue(CHARGE,0));}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){b.add(CHARGE);}
+    public ZpmModuleBlock(Properties properties){super(properties.noOcclusion().lightLevel(s->s.getValue(CHARGE)));registerDefaultState(defaultBlockState().setValue(CHARGE,0).setValue(GTWaterloggable.WATERLOGGED, false));}
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){
+        b.add(GTWaterloggable.WATERLOGGED);b.add(CHARGE);}
     @Override public VoxelShape getShape(BlockState s,BlockGetter w,BlockPos p,CollisionContext c){return SHAPE;}
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ZpmModuleBlockEntity(p,s);}
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if(e instanceof ZpmModuleBlockEntity z)z.updateLight();};}
@@ -33,5 +39,22 @@ public final class ZpmModuleBlock extends Block implements EntityBlock {
 //?}
         lines.add(gregtech.client.TooltipHelper.stat("gt6ce.zpm.charge",net.minecraft.ChatFormatting.GREEN,ZpmEnergy.stored(s),ZpmEnergy.CAPACITY));
         lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.non_rechargeable").withStyle(net.minecraft.ChatFormatting.GOLD));
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

@@ -1,1 +1,7 @@
-{"parent":"minecraft:block/leaves","textures":{"all":"gt6ce:block/iconsets/leaves_ebony"}}
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "gt6ce:block/iconsets/leaves_ebony"
+  },
+  "render_type": "minecraft:cutout_mipped"
+}

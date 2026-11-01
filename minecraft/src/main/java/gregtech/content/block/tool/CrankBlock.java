@@ -1,5 +1,9 @@
 package gregtech.content.block.tool;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.content.data.GregTechTags;
@@ -41,7 +45,7 @@ import java.util.List;
  *
  * <p>The original villager-operated idle crank is not implemented by this player-duration fix.</p>
  */
-public class CrankBlock extends DirectionalBlock {
+public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlock {
 
     /** Loader_MultiTileEntities 32111 uses ANY.Iron, whose appearance is MT.Fe. */
     public static int tintRgb() {
@@ -92,18 +96,19 @@ public class CrankBlock extends DirectionalBlock {
 //?}
     public CrankBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ACTIVE, false));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ACTIVE, false).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(FACING);
         builder.add(ACTIVE);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState().setValue(FACING, ctx.getClickedFace());
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, ctx.getClickedFace()), ctx);
     }
 
     @Override
@@ -245,5 +250,17 @@ public class CrankBlock extends DirectionalBlock {
 //?}
         tooltip.add(Component.translatable("gt.tooltip.crank.1"));
         tooltip.add(Component.translatable("gt.tooltip.crank.2"));
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

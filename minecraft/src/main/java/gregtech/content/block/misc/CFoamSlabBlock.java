@@ -1,5 +1,9 @@
 package gregtech.content.block.misc;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** GT6 BlockMetaType six directional half blocks, used by street edges and bridge parapets. */
-public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech.engine.block.FaceGridSlab {
+public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech.engine.block.FaceGridSlab , SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     private static final VoxelShape[] SHAPES = {
         Block.box(0,0,0,16,8,16), Block.box(0,8,0,16,16,16),
@@ -31,13 +35,14 @@ public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech
     };
     public CFoamSlabBlock(Properties properties) {
         super(properties.isValidSpawn((s, l, p, e) -> false), DyeColor.WHITE);
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN).setValue(GTWaterloggable.WATERLOGGED, false));
     }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         super.createBlockStateDefinition(builder); builder.add(FACING);
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, gregtech.util.GTPlacementCode.resolveSlabFace(context));
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, gregtech.util.GTPlacementCode.resolveSlabFace(context)), context);
     }
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPES[state.getValue(FACING).get3DDataValue()];
@@ -91,5 +96,17 @@ public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech
         if (family == null || !family.endsWith("_slab")) return null;
         return gregtech.content.registry.GTConstructionVariants.coloredBlock(
                 family.substring(0, family.length() - "_slab".length()), FixedConstructionColor.colorOf(state));
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

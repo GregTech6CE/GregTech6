@@ -1,5 +1,9 @@
 package gregtech.content.block.tool;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -27,7 +31,7 @@ import java.util.List;
  * GT6 Rope (MultiTileEntityRope): climbable wall strip; right-clicking with
  * more rope extends it downwards.
  */
-public class RopeBlock extends HorizontalDirectionalBlock {
+public class RopeBlock extends HorizontalDirectionalBlock implements SimpleWaterloggedBlock {
 
     /**
      * GT6 draws every rope with the same greyscale texture tinted by the rope's material
@@ -71,7 +75,7 @@ public class RopeBlock extends HorizontalDirectionalBlock {
     public RopeBlock(Properties properties, int tintRgb) {
         super(properties);
         this.tintRgb = tintRgb;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     /** The rope material's colour (GT6 tints the shared greyscale texture with it). */
@@ -81,6 +85,7 @@ public class RopeBlock extends HorizontalDirectionalBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(FACING);
     }
 
@@ -94,12 +99,12 @@ public class RopeBlock extends HorizontalDirectionalBlock {
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         if (ctx.getClickedFace().getAxis().isHorizontal()) {
             BlockState state = defaultBlockState().setValue(FACING, ctx.getClickedFace());
-            if (state.canSurvive(ctx.getLevel(), ctx.getClickedPos())) return state;
+            if (state.canSurvive(ctx.getLevel(), ctx.getClickedPos())) return GTWaterloggable.getStateForPlacement(state, ctx);
         }
         // fall back to any survivable orientation (e.g. hanging from a rope above)
         for (Direction dir : Direction.Plane.HORIZONTAL) {
             BlockState state = defaultBlockState().setValue(FACING, dir);
-            if (state.canSurvive(ctx.getLevel(), ctx.getClickedPos())) return state;
+            if (state.canSurvive(ctx.getLevel(), ctx.getClickedPos())) return GTWaterloggable.getStateForPlacement(state, ctx);
         }
         return null;
     }
@@ -116,6 +121,7 @@ public class RopeBlock extends HorizontalDirectionalBlock {
     @Override
     public BlockState updateShape(BlockState state, Direction dir, BlockState neighbor,
             net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
         if (!state.canSurvive(level, pos)) return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
         return super.updateShape(state, dir, neighbor, level, pos, neighborPos);
     }
@@ -137,7 +143,8 @@ public class RopeBlock extends HorizontalDirectionalBlock {
             cursor = cursor.below();
         }
         if (!level.getBlockState(cursor).canBeReplaced()) return InteractionResult.PASS;
-        BlockState placed = state.setValue(FACING, state.getValue(FACING));
+        BlockState placed = state.setValue(GTWaterloggable.WATERLOGGED,
+                GTWaterloggable.isWaterForLogging(level.getFluidState(cursor)));
         if (!placed.canSurvive(level, cursor)) return InteractionResult.PASS;
         if (!level.isClientSide) {
             level.setBlockAndUpdate(cursor, placed);
@@ -170,5 +177,10 @@ public class RopeBlock extends HorizontalDirectionalBlock {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}
         tooltip.add(Component.translatable("gt.tooltip.rope.1").withStyle(net.minecraft.ChatFormatting.GRAY));
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

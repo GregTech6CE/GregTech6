@@ -1,5 +1,8 @@
 package gregtech.content.block.energy;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.tool.*;
 import gregtech.content.data.GregTechTags;
@@ -15,7 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 
 /** Optical cable connections share the cutter interaction and overlay used by other connectors. */
-public final class LaserFiberBlock extends Block implements EntityBlock,ToolInteractionTarget {
+public final class LaserFiberBlock extends Block implements EntityBlock,ToolInteractionTarget, SimpleWaterloggedBlock {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     @Override protected ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:ItemInteractionResult.sidedSuccess(level.isClientSide);}
@@ -26,9 +29,10 @@ public final class LaserFiberBlock extends Block implements EntityBlock,ToolInte
         super(properties.noOcclusion());
         var state=defaultBlockState();
         for(var property:ElectricWireBlock.CONNECTIONS)state=state.setValue(property,false);
-        registerDefaultState(state);
+        registerDefaultState(state.setValue(GTWaterloggable.WATERLOGGED, false));
     }
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder){builder.add(ElectricWireBlock.CONNECTIONS);}
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder){
+        builder.add(GTWaterloggable.WATERLOGGED);builder.add(ElectricWireBlock.CONNECTIONS);}
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state){return new gregtech.content.blockentity.energy.LaserFiberBlockEntity(pos,state);}
     @Override public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level,BlockState state,net.minecraft.world.level.block.entity.BlockEntityType<T> type){
@@ -74,5 +78,22 @@ public final class LaserFiberBlock extends Block implements EntityBlock,ToolInte
     }
     @Override public VoxelShape getCollisionShape(BlockState state,BlockGetter world,BlockPos pos,CollisionContext context){
         return getShape(state,world,pos,CollisionContext.empty());
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

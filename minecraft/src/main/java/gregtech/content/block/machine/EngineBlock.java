@@ -2,7 +2,6 @@ package gregtech.content.block.machine;
 
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.machine.ElectricEngineSpec;
 import gregtech.engine.machine.EngineType;
@@ -38,7 +37,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -57,7 +55,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /** KU generator engine block. 6-directional facing (DirectionalBlock), no GUI. */
-public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock, ToolInteractionTarget,
+public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMachineBlock, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
@@ -114,7 +112,7 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
         this.machineSpec = machineSpec;
         this.engineSpec = engineSpec;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN).setValue(LIT, false)
-                .setValue(GTWaterloggable.WATERLOGGED, false));
+                );
     }
 
     public EngineType engineType() { return engineType; }
@@ -169,13 +167,13 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
 //?}
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT, GTWaterloggable.WATERLOGGED);
+        builder.add(FACING, LIT);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getNearestLookingDirection().getOpposite();
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, facing), context);
+        return defaultBlockState().setValue(FACING, facing);
     }
 
     @Override
@@ -197,18 +195,6 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
     }
 
     // ── Waterlogging ──────────────────────────────────────────────────────
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return GTWaterloggable.getFluidState(state);
-    }
-
-    @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState,
-                                  LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        GTWaterloggable.updateShape(state, level, pos);
-        return state;
-    }
 
     // ── BE ────────────────────────────────────────────────────────────────
 

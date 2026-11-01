@@ -1,5 +1,6 @@
 package gregtech.content.block.misc;
 
+import gregtech.engine.GTWaterloggable;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,10 +12,13 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
@@ -25,7 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * GT6 {@code BlockBaseBars}: four independent railing segments in one block.
  * The bits are north=1, south=2, west=4 and east=8, exactly as in GT6 metadata.
  */
-public class BarsBlock extends Block {
+public class BarsBlock extends Block implements SimpleWaterloggedBlock {
     public static final IntegerProperty MASK = IntegerProperty.create("mask", 0, 15);
     private static final VoxelShape[] COLLISION = new VoxelShape[16];
     private static final VoxelShape[] OUTLINE = new VoxelShape[16];
@@ -57,7 +61,7 @@ public class BarsBlock extends Block {
         this.materialName = materialName;
         this.tintRgb = tintRgb;
         this.harvestLevel = harvestLevel;
-        registerDefaultState(stateDefinition.any().setValue(MASK, 1));
+        registerDefaultState(stateDefinition.any().setValue(MASK, 1).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public String materialName() {
@@ -74,6 +78,7 @@ public class BarsBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(MASK);
     }
 
@@ -96,7 +101,8 @@ public class BarsBlock extends Block {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         double x = Mth.frac(context.getClickLocation().x);
         double z = Mth.frac(context.getClickLocation().z);
-        return defaultBlockState().setValue(MASK, placementBit(context.getClickedFace(), x, z));
+        return GTWaterloggable.getStateForPlacement(
+                defaultBlockState().setValue(MASK, placementBit(context.getClickedFace(), x, z)), context);
     }
 
     @Override
@@ -125,5 +131,22 @@ public class BarsBlock extends Block {
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return List.of(new ItemStack(this, gregtech.content.block.BarsRules.dropCount(state.getValue(MASK))));
+    }
+
+    @Override
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

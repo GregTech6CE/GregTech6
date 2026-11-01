@@ -85,7 +85,8 @@ public final class CoinItemExpireHandler {
             BlockPos target = origin.offset(offset);
             if (!level.isInWorldBounds(target) || !level.getWorldBorder().isWithinBounds(target)
                     || !PilePlacementChecks.canReplaceForExpiry(level.getBlockState(target)) || !placed.canSurvive(level, target)
-                    || !level.setBlock(target, placed, Block.UPDATE_ALL)) continue;
+                    || !level.setBlock(target, placed.setValue(gregtech.engine.GTWaterloggable.WATERLOGGED,
+                            gregtech.engine.GTWaterloggable.isWaterForLogging(level.getFluidState(target))), Block.UPDATE_ALL)) continue;
             if (level.getBlockEntity(target) instanceof CoinPileBlockEntity pile) {
                 int moved = pile.absorbDroppedCoins(coin.copyWithCount(remaining));
                 if (moved > 0) {

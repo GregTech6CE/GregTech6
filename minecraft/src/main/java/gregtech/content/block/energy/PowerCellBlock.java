@@ -1,5 +1,10 @@
 package gregtech.content.block.energy;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import gregtech.engine.GTWaterloggable;
 import gregtech.content.energy.PowerCellSpec;
 import gregtech.content.blockentity.energy.PowerCellBlockEntity;
 import gregtech.content.item.PowerCellItem;
@@ -17,7 +22,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
-public final class PowerCellBlock extends Block implements EntityBlock {
+public final class PowerCellBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final net.minecraft.world.level.block.state.properties.IntegerProperty CHARGE_LEVEL =
             net.minecraft.world.level.block.state.properties.IntegerProperty.create("charge", 0, 15);
     private final PowerCellSpec spec;
@@ -25,9 +30,10 @@ public final class PowerCellBlock extends Block implements EntityBlock {
     public PowerCellBlock(PowerCellSpec spec){
         super(Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(0.5f,1f).sound(SoundType.METAL).noOcclusion().lightLevel(state -> state.getValue(CHARGE_LEVEL)));
         this.spec=spec;shape=Block.box(spec.inset(),0,spec.inset(),16-spec.inset(),spec.height(),16-spec.inset());
-        registerDefaultState(defaultBlockState().setValue(CHARGE_LEVEL, spec.filled() ? 15 : 0));
+        registerDefaultState(defaultBlockState().setValue(CHARGE_LEVEL, spec.filled() ? 15 : 0).setValue(GTWaterloggable.WATERLOGGED, false));
     }
-    @Override protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) { builder.add(CHARGE_LEVEL); }
+    @Override protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED); builder.add(CHARGE_LEVEL); }
     public PowerCellSpec spec(){return spec;}
 //? if >=1.21.1 {
     /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,
@@ -74,5 +80,22 @@ public final class PowerCellBlock extends Block implements EntityBlock {
     @Override public ItemStack getCloneItemStack(BlockState s,HitResult target,BlockGetter l,BlockPos p,Player player){
 //?}
         return l.getBlockEntity(p) instanceof PowerCellBlockEntity be?be.asItem():new ItemStack(this);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

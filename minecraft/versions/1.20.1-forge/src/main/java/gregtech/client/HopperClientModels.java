@@ -83,10 +83,11 @@ public final class HopperClientModels {
 
             // Alias base model
             models.put(new ModelResourceLocation(blockId, ""), worldModel);
-            // Alias all 6 facing variants
-            for (Direction facing : Direction.values()) {
-                String variant = "facing=" + facing.getSerializedName();
-                models.put(new ModelResourceLocation(blockId, variant), worldModel);
+            // Cover every state, including waterlogged hoppers.
+            for (var state : block.getStateDefinition().getPossibleStates()) {
+                models.put(
+                        net.minecraft.client.renderer.block.BlockModelShaper.stateToModelLocation(blockId, state),
+                        worldModel);
             }
             // Alias item inventory
             ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());

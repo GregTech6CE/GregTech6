@@ -1,5 +1,10 @@
 package gregtech.content.block.plant;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.content.blockentity.BushBlockEntity;
 import gregtech.content.plant.GTBerryBushes;
 import net.minecraft.core.BlockPos;
@@ -43,7 +48,7 @@ import java.util.List;
  * {@link GTBerryBushes#stageColour} gives GT6's exact colour per stage, applied by the client colour
  * handler.
  */
-public class BushBlock extends Block implements EntityBlock {
+public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     /** GT6's {@code mStage}: 0 = bare bush, 1 = bloom, 2 = immature berries, 3 = ripe. */
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
 
@@ -71,7 +76,7 @@ public class BushBlock extends Block implements EntityBlock {
         super(properties);
         this.berryId=berryId;
 
-        registerDefaultState(stateDefinition.any().setValue(STAGE, 0).setValue(SUPPORT, 6));
+        registerDefaultState(stateDefinition.any().setValue(STAGE, 0).setValue(SUPPORT, 6).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override public net.minecraft.network.chat.MutableComponent getName() {
@@ -92,6 +97,7 @@ public class BushBlock extends Block implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(STAGE, SUPPORT);
     }
 
@@ -127,9 +133,9 @@ public class BushBlock extends Block implements EntityBlock {
             String planted = berryId.isEmpty() ? packedBerry(context.getItemInHand()) : berryId;
             if ((planted.isEmpty() || planted.equals(bush.berryId()))
                     && gregtech.content.registry.GTBushes.byBerry(bush.berryId())!=null)
-                return gregtech.content.registry.GTBushes.byBerry(bush.berryId()).defaultBlockState().setValue(SUPPORT, support.get3DDataValue());
+                return GTWaterloggable.getStateForPlacement(gregtech.content.registry.GTBushes.byBerry(bush.berryId()).defaultBlockState().setValue(SUPPORT, support.get3DDataValue()), context);
         }
-        return defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? defaultBlockState() : null;
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? defaultBlockState() : null, context);
     }
 
     private static String packedBerry(ItemStack stack) {
@@ -262,4 +268,16 @@ public class BushBlock extends Block implements EntityBlock {
     @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
 *///?} else {
 //?}
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
+    }
 }

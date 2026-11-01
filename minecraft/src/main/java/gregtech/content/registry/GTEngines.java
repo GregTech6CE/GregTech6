@@ -32,7 +32,9 @@ public final class GTEngines {
                 var props = BlockBehaviour.Properties.of().mapColor(wood ? MapColor.WOOD : MapColor.METAL)
                         .strength(itemSpec.hardness(), itemSpec.blastResistance()).requiresCorrectToolForDrops();
                 if (wood) props.sound(SoundType.WOOD);
-                var b = new EngineBlock(e.type(), itemSpec, e.spec(), props);
+                var b = e.type() == EngineType.ROTATION || e.type() == EngineType.DIESEL
+                        ? new EngineBlock(e.type(), itemSpec, e.spec(), props)
+                        : new gregtech.content.block.machine.WaterloggedEngineBlock(e.type(), itemSpec, e.spec(), props);
                 b.setBeTypeSupplier(typeRef::get);
                 return b;
             });

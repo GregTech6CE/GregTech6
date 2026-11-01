@@ -389,7 +389,9 @@ public final class MachineRegistry {
                     .strength(hardness, blastResistance)
                     .requiresCorrectToolForDrops();
             if (woodenRotation) properties.sound(SoundType.WOOD);
-            return new EngineBlock(type, itemSpec, engineSpec, properties);
+            return type == EngineType.ROTATION || type == EngineType.DIESEL
+                    ? new EngineBlock(type, itemSpec, engineSpec, properties)
+                    : new gregtech.content.block.machine.WaterloggedEngineBlock(type, itemSpec, engineSpec, properties);
         });
         ENGINE_BLOCKS.add(block);
         GTBlocks.BLOCK_ITEMS.register(

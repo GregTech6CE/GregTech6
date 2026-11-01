@@ -1,6 +1,5 @@
 package gregtech.content.block.inventory;
 
-import gregtech.engine.GTWaterloggable;
 //? if >=1.21.1 {
 /*import gregtech.engine.inventory.MassStorageFace;
 import gregtech.api.material.GTMaterial;
@@ -47,7 +46,6 @@ import net.minecraft.world.level.block.EntityBlock;
 //?} else {
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 //?}
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -73,14 +71,14 @@ import java.util.List;
 
 //? if >=1.21.1 {
 /*/^* Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. ^/
-public class MassStorageBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+public class MassStorageBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private final GTMaterial material;
     public MassStorageBlock(GTMaterial material, Properties properties) {
         super(properties); this.material = material;
 *///?} else {
 /** Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. */
-public class MassStorageBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
+public class MassStorageBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
     @Nullable
     private final gregtech.api.material.GTMaterial material;
@@ -93,14 +91,13 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
         super(properties);
         this.material = material;
 //?}
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 //? if >=1.21.1 {
     /*public GTMaterial material() { return material; }
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING, GTWaterloggable.WATERLOGGED); }
-    public BlockState getStateForPlacement(BlockPlaceContext context) { return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()), context); }
-    protected FluidState getFluidState(BlockState state) { return GTWaterloggable.getFluidState(state); }
-    protected BlockState updateShape(BlockState state, Direction side, BlockState neighbor, LevelAccessor level, BlockPos pos, BlockPos neighborPos) { GTWaterloggable.updateShape(state, level, pos); return state; }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
+    public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()); }
+
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new MassStorageBlockEntity(pos, state); }
     private ItemStack shell(BlockState state, MassStorageBlockEntity storage) {
         ItemStack shell = new ItemStack(this); CompoundTag tag = new CompoundTag();
@@ -146,24 +143,12 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
 *///?} else {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
-        builder.add(GTWaterloggable.WATERLOGGED);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         BlockState base = defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
-        return GTWaterloggable.getStateForPlacement(base, ctx);
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return GTWaterloggable.getFluidState(state);
-    }
-
-    @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        GTWaterloggable.updateShape(state, level, pos);
-        return state;
+        return base;
     }
 
     @Nullable

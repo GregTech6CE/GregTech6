@@ -96,6 +96,7 @@ public final class CoinItem extends MaterialItem {
 *///?} else {
         BlockState state = GTDecorBlocks.COIN_PILE.get().defaultBlockState();
 //?}
+        state = gregtech.engine.GTWaterloggable.getStateForPlacement(state, placement);
         if (!state.canSurvive(level, target)) return InteractionResult.FAIL;
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!level.setBlock(target, state, Block.UPDATE_ALL)) return InteractionResult.FAIL;

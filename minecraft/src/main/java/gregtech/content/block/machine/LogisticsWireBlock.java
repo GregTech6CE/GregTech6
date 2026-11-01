@@ -1,5 +1,9 @@
 package gregtech.content.block.machine;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.GTToolHelper;
 //? if >=1.21.1 {
 /*import gregtech.engine.tool.ToolInteractions;
@@ -39,7 +43,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 
 /** GT6 24901: six-way cuttable logistics connector, 6/16 block diameter. */
-public final class LogisticsWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
+public final class LogisticsWireBlock extends Block implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
 //? if >=1.21.1 {
     /*@Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
@@ -57,11 +61,12 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
 *///?} else {
         for (var property : ElectricWireBlock.CONNECTIONS) initial = initial.setValue(property, false);
 //?}
-        registerDefaultState(initial);
+        registerDefaultState(initial.setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
 //? if >=1.21.1 {
         /*builder.add(PipeConnections.CONNECTIONS);
 *///?} else {
@@ -72,9 +77,9 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
 //? if >=1.21.1 {
-        /*return defaultBlockState().setValue(PipeConnections.propFor(context.getClickedFace().getOpposite()), true);
+        /*return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(PipeConnections.propFor(context.getClickedFace().getOpposite()), true), context);
 *///?} else {
-        return defaultBlockState().setValue(ElectricWireBlock.propFor(context.getClickedFace().getOpposite()), true);
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(ElectricWireBlock.propFor(context.getClickedFace().getOpposite()), true), context);
 //?}
     }
 
@@ -258,5 +263,17 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
     @Override
     public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
         return getSignal(state, level, pos, side);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

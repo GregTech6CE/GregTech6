@@ -19,6 +19,7 @@ public final class GTWaterloggable {
 
     /** Return a placement state with WATERLOGGED set from the fluid at the clicked position. */
     public static BlockState getStateForPlacement(BlockState base, BlockPlaceContext ctx) {
+        if (base == null) return null;
         FluidState fluid = ctx.getLevel().getFluidState(ctx.getClickedPos());
         return base.setValue(WATERLOGGED, isWaterForLogging(fluid));
     }

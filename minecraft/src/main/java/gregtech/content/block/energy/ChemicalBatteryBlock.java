@@ -1,5 +1,10 @@
 package gregtech.content.block.energy;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import gregtech.engine.GTWaterloggable;
 import gregtech.content.energy.PortableBatterySpec;
 import gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity;
 import gregtech.content.item.ChemicalBatteryItem;
@@ -17,11 +22,12 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
-public final class ChemicalBatteryBlock extends Block implements EntityBlock {
+public final class ChemicalBatteryBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     private final PortableBatterySpec spec;
     private final VoxelShape shape;
     public ChemicalBatteryBlock(PortableBatterySpec spec){
         super(Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(0.5f,3f).sound(SoundType.METAL).noOcclusion());
+        registerDefaultState(defaultBlockState().setValue(GTWaterloggable.WATERLOGGED, false));
         this.spec=spec;shape=Block.box(spec.inset(),0,spec.inset(),16-spec.inset(),spec.height(),16-spec.inset());
     }
     public PortableBatterySpec spec(){return spec;}
@@ -75,5 +81,28 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock {
     @Override public ItemStack getCloneItemStack(BlockState s,HitResult target,BlockGetter l,BlockPos p,Player player){
 //?}
         return l.getBlockEntity(p) instanceof ChemicalBatteryBlockEntity be?be.asItem():new ItemStack(this);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(GTWaterloggable.WATERLOGGED);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

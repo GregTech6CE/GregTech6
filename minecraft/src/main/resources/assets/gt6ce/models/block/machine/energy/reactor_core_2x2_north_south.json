@@ -431,5 +431,8 @@
         }
       ]
     }
+  },
+  "textures": {
+    "particle": "gt6ce:block/machines/generators/reactor_core_2x2/colored/face1"
   }
 }

@@ -51,7 +51,9 @@ public class BushBlockEntity extends BlockEntity {
         var variant = gregtech.content.registry.GTBushes.byBerry(id);
         if (variant == null) return;
         var state = variant.defaultBlockState().setValue(BushBlock.STAGE, stage())
-                .setValue(BushBlock.SUPPORT, getBlockState().getValue(BushBlock.SUPPORT));
+                .setValue(BushBlock.SUPPORT, getBlockState().getValue(BushBlock.SUPPORT))
+                .setValue(gregtech.engine.GTWaterloggable.WATERLOGGED,
+                        getBlockState().getValue(gregtech.engine.GTWaterloggable.WATERLOGGED));
         if (level == null) {
             setBlockState(state);
             legacyBerry = "";

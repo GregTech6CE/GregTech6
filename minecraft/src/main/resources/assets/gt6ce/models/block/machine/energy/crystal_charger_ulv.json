@@ -215,5 +215,8 @@
       ],
       "render_type": "minecraft:cutout"
     }
+  },
+  "textures": {
+    "particle": "gt6ce:block/machines/energystorages/crystal_laser/colored/side"
   }
 }

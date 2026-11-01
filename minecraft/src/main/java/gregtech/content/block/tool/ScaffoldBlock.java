@@ -1,5 +1,10 @@
 package gregtech.content.block.tool;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.*;
 
 import net.minecraft.core.BlockPos;
@@ -28,7 +33,7 @@ import java.util.List;
  * vertically supported scaffold along its facing axis remains in place. Design 0 is the
  * two-pixel ledge, 1 the lower hatch, 2 the open upper segment, and 3 the solid top plate.
  */
-public final class ScaffoldBlock extends ShapedToolBlock {
+public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterloggedBlock {
     public static final IntegerProperty DESIGN = IntegerProperty.create("design", 0, 3);
     private static final VoxelShape LEDGE = Block.box(0, 14, 0, 16, 16, 16);
     private static final VoxelShape POSTS = Shapes.or(
@@ -50,7 +55,7 @@ public final class ScaffoldBlock extends ShapedToolBlock {
         // cache the no-entity shape during BlockState baking and reuse it for every player.
         super("scaffold", properties.dynamicShape());
         this.material = material;
-        registerDefaultState(defaultBlockState().setValue(DESIGN, 1));
+        registerDefaultState(defaultBlockState().setValue(DESIGN, 1).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public gregtech.api.material.GTMaterial material() {
@@ -77,10 +82,10 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     @Override
     public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
         if (context.getPlayer() == null || !context.getPlayer().isShiftKeyDown())
-            return super.getStateForPlacement(context);
+            return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
         Direction clicked = context.getClickedFace();
-        return defaultBlockState().setValue(FACING,
-                clicked.getAxis().isHorizontal() ? clicked : Direction.NORTH);
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING,
+                clicked.getAxis().isHorizontal() ? clicked : Direction.NORTH), context);
     }
 
     private static boolean isScaffold(BlockState state) {
@@ -89,6 +94,7 @@ public final class ScaffoldBlock extends ShapedToolBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         super.createBlockStateDefinition(builder);
         builder.add(DESIGN);
     }
@@ -110,6 +116,7 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
             net.minecraft.world.level.LevelAccessor level,
             BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
         // Also called by chunk postprocessing for naturally generated scaffolds.
         level.scheduleTick(pos, this, 1);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
@@ -190,5 +197,10 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return List.of(new ItemStack(this));
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

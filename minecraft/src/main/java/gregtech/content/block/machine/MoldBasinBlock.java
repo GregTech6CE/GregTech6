@@ -1,6 +1,5 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.GTMachineBlock;
 import gregtech.engine.tool.GTToolHelper;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -42,7 +40,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 /** Mold basin (GT6 {@code MultiTileEntityBasin}) — open-top basin producing solid cast blocks. */
-public class MoldBasinBlock extends Block implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock {
+public class MoldBasinBlock extends Block implements EntityBlock, GTMachineBlock {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
@@ -65,31 +63,10 @@ public class MoldBasinBlock extends Block implements EntityBlock, GTMachineBlock
     public MoldBasinBlock(CrucibleSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
-        registerDefaultState(stateDefinition.any().setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(stateDefinition.any());
     }
 
     public CrucibleSpec spec() { return spec; }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(GTWaterloggable.WATERLOGGED);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return GTWaterloggable.getStateForPlacement(defaultBlockState(), ctx);
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return GTWaterloggable.getFluidState(state);
-    }
-
-    @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        GTWaterloggable.updateShape(state, level, pos);
-        return state;
-    }
 
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return SHELL; }
     @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return COLLISION; }

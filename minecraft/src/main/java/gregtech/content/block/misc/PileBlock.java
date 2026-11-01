@@ -1,5 +1,11 @@
 package gregtech.content.block.misc;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.content.blockentity.misc.PileBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlockEntities;
@@ -69,7 +75,7 @@ import java.util.List;
  *       already had.</li>
  * </ul>
  */
-public class PileBlock extends Block implements EntityBlock {
+public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     /**
      * The stack size GT6 draws, as a block state.
      *
@@ -134,11 +140,12 @@ public class PileBlock extends Block implements EntityBlock {
     public PileBlock(Kind kind, Properties properties) {
         super(properties);
         this.kind = kind;
-        registerDefaultState(this.stateDefinition.any().setValue(STACK, 0));
+        registerDefaultState(this.stateDefinition.any().setValue(STACK, 0).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(STACK);
     }
 
@@ -296,5 +303,22 @@ public class PileBlock extends Block implements EntityBlock {
     /** The block entity type all three piles share. */
     public static net.minecraft.world.level.block.entity.BlockEntityType<?> blockEntityType() {
         return GTBlockEntities.PILE.get();
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

@@ -1,5 +1,12 @@
 package gregtech.content.block.tool;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.blockentity.tool.MaterialAnvilBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -17,11 +24,12 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /** Material identity belongs to registration; contents and wear belong to the placed anvil. */
-public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityBlock {
+public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityBlock, SimpleWaterloggedBlock {
     private final Supplier<GTMaterial> material;
     private final long durability;
     public MaterialAnvilBlock(Supplier<GTMaterial> material, long durability, Properties properties) {
-        super("anvil", properties); this.material = material; this.durability = durability;
+        super("anvil", properties);
+        registerDefaultState(defaultBlockState().setValue(GTWaterloggable.WATERLOGGED, false)); this.material = material; this.durability = durability;
     }
     public GTMaterial material() { return material.get(); }
     public long durability() { return durability; }
@@ -92,5 +100,28 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
         if (!state.is(next.getBlock()) && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof MaterialAnvilBlockEntity anvil) anvil.dropContents();
         super.onRemove(state, level, pos, next, moving);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(GTWaterloggable.WATERLOGGED);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

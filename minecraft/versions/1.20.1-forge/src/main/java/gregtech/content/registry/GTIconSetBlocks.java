@@ -269,6 +269,8 @@ public final class GTIconSetBlocks {
             return new gregtech.content.block.IconSetPlantBlock(
                     BlockBehaviour.Properties.of().instabreak().noCollission().sound(SoundType.GRASS), iconName);
         }
+        if (iconName.startsWith("leaves_"))
+            return new gregtech.content.block.wood.DecorativeLeavesBlock(propertiesFor(iconName));
         return new IconSetBlock(propertiesFor(iconName), iconName);
     }
 

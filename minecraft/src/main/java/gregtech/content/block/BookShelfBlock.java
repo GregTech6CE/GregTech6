@@ -1,5 +1,9 @@
 package gregtech.content.block;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
 import gregtech.content.book.GTBookList;
 import gregtech.content.book.BookShelfGeometry;
@@ -58,7 +62,7 @@ import java.util.List;
  * <p>The frame is a block model; synchronized inventory entries render as GT6 book cuboids
  * with the original spine and side textures.
  */
-public class BookShelfBlock extends HorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public class BookShelfBlock extends HorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
@@ -81,7 +85,7 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
     public BookShelfBlock(Properties properties, BookShelfVariants.Variant variant) {
         super(properties.noOcclusion());
         this.variant = java.util.Objects.requireNonNull(variant);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public BookShelfVariants.Variant variant() { return variant; }
@@ -93,12 +97,13 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(FACING);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()), context);
     }
 
     @Override
@@ -296,5 +301,17 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return variant.flammability();
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

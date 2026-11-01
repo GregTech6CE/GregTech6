@@ -1,1 +1,7 @@
-{"parent":"minecraft:block/leaves","textures":{"all":"gt6ce:block/iconsets/leaves_white_mahoe"}}
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "gt6ce:block/iconsets/leaves_white_mahoe"
+  },
+  "render_type": "minecraft:cutout_mipped"
+}

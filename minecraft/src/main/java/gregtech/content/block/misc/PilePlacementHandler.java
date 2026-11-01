@@ -53,7 +53,7 @@ public final class PilePlacementHandler {
         else return InteractionResult.PASS;
 
         BlockPlaceContext context = new BlockPlaceContext(level, player, hand, held, hit);
-        BlockState state = kind.block().defaultBlockState();
+        BlockState state = kind.block().getStateForPlacement(context);
         return GroundItemPlacement.place(context, state, (placedLevel, pos, placedState, stack) -> {
             if (!(placedLevel.getBlockEntity(pos) instanceof PileBlockEntity pile)) return 0;
             return pile.add(stack);

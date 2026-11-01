@@ -1,5 +1,9 @@
 package gregtech.content.block.tool;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
@@ -44,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** GT6's six-face advanced button with pulse, switch and indicator-lamp modes. */
-public final class AdvancedButtonBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public final class AdvancedButtonBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
@@ -74,17 +78,18 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
     public AdvancedButtonBlock(Properties properties) {
         super(properties.noOcclusion().noCollission());
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.SOUTH)
-        .setValue(ACTIVE, false).setValue(LIT, false));
+        .setValue(ACTIVE, false).setValue(LIT, false).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(FACING, ACTIVE, LIT);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getClickedFace());
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, context.getClickedFace()), context);
     }
 
     @Override
@@ -234,5 +239,17 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
             "soft_hammer", "magnifying_glass", "sneak"
         })
         tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

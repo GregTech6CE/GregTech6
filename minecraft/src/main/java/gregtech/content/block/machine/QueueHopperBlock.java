@@ -1,5 +1,9 @@
 package gregtech.content.block.machine;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.machine.HopperSpec;
@@ -43,7 +47,7 @@ import java.util.Map;
 
 /** GT6 queuehopper block ({@code MultiTileEntityQueueHopper}). FIFO queue inventory with 6-way facing output. */
 //? if >=1.21.1 {
-/*public class QueueHopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget, gregtech.engine.tool.ScrewdriverUseTarget {
+/*public class QueueHopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget, gregtech.engine.tool.ScrewdriverUseTarget, SimpleWaterloggedBlock {
 *///?} else {
 public class QueueHopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
 //?}
@@ -75,7 +79,7 @@ public class QueueHopperBlock extends DirectionalBlock implements EntityBlock, T
     public QueueHopperBlock(HopperSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public HopperSpec spec() { return spec; }
@@ -88,13 +92,14 @@ public class QueueHopperBlock extends DirectionalBlock implements EntityBlock, T
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(FACING);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getClickedFace().getOpposite();
-        return defaultBlockState().setValue(FACING, facing);
+        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, facing), context);
     }
 
     @Override
@@ -294,5 +299,17 @@ public class QueueHopperBlock extends DirectionalBlock implements EntityBlock, T
             return tool.getDestroySpeed(state) / hardness / 30.0F;
         }
         return super.getDestroyProgress(state, player, level, pos);
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
     }
 }

@@ -6,9 +6,6 @@ public final class IconPlantCatalog {
     public static final String[] ICON_NAMES = {
         "asphalt",
         "cfoam_fresh",
-        "cfoam_fresh_owned",
-        "cfoam_hardened",
-        "cfoam_hardened_owned",
         "clay_blue",
         "clay_brown",
         "clay_red",

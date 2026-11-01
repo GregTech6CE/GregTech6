@@ -1,5 +1,8 @@
 package gregtech.content.block.misc;
 
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
@@ -51,7 +54,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** Material and shape are registry identity; only mounting direction is block state. */
-public final class SpikeBlock extends Block implements ToolInteractionTarget {
+public final class SpikeBlock extends Block implements ToolInteractionTarget, SimpleWaterloggedBlock {
     public enum Family { METAL, STEEL, SHARP, FANCY, SUPER }
     public enum Mode implements StringRepresentable {
         WALL("wall"), OMNI("omni"), FALLING("falling");
@@ -81,7 +84,7 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget {
         this.family = family;
         this.mode = mode;
         this.secondary = secondary;
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.DOWN));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.DOWN).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public Family family() { return family; }
@@ -100,13 +103,14 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget {
     }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(GTWaterloggable.WATERLOGGED);
         builder.add(FACING);
     }
 
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
         // GT6 onBlockPlaced stores the opposite face: floor-mounted wall spikes point upwards.
-        return defaultBlockState()
-                .setValue(FACING, context.getClickedFace().getOpposite());
+        return GTWaterloggable.getStateForPlacement(defaultBlockState()
+                .setValue(FACING, context.getClickedFace().getOpposite()), context);
     }
 
 //? if >=1.21.1 {
@@ -148,6 +152,7 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget {
 
     @Override public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
                                             LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        GTWaterloggable.updateShape(state, level, pos);
         if (mode == Mode.FALLING) level.scheduleTick(pos, this, 2);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }
@@ -228,4 +233,9 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget {
                 ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
     }
 //?}
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return GTWaterloggable.getFluidState(state);
+    }
 }
