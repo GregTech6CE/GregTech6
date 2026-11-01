@@ -26,14 +26,11 @@ final class EmiCatalogRepair {
             if (!fluid.isEmpty()) representedFluids.add(fluid.getFluid());
         }
         var original = entries.stream()
-                // Replace a raw fluid only when its display item is actually visible. The wrapper
-                // retains that fluid's recipe identity, including Minecraft water and lava.
+                // Only replace GT fluids. Vanilla water/lava remain searchable beside their display items.
                 .filter(stack -> !(stack.getKey() instanceof net.minecraft.world.level.material.Fluid
                         && stack.getItemStack().isEmpty()
                         && representedFluids.contains(stack.getKey())
-                        && (stack.getId().getNamespace().equals("gt6ce")
-                            || stack.getKey() == net.minecraft.world.level.material.Fluids.WATER
-                            || stack.getKey() == net.minecraft.world.level.material.Fluids.LAVA)))
+                        && stack.getId().getNamespace().equals("gt6ce")))
                 .filter(stack -> !(stack.getItemStack().getItem() instanceof
                         gregtech.content.block.misc.LegacyConstructionBlockItem)).toList();
         var sorted = new ArrayList<EmiStack>();
