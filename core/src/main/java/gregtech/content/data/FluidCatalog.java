@@ -600,7 +600,6 @@ public class FluidCatalog {
             Cream_Chocolate = fluid("Cream_Chocolate", "chocolatecream").withFlags(FluidFlags.FOOD),
             Cream_Coconut = fluid("Cream_Coconut", "coconutcream").withFlags(FluidFlags.FOOD),
             Cream_Nutella = fluid("Cream_Nutella", "nutella").withFlags(FluidFlags.FOOD),
-            Nutbutter_Peanut = fluid("Nutbutter_Peanut", "peanutbutter").withFlags(FluidFlags.FOOD),
 
             // =======================================================================
             // Juices
@@ -817,11 +816,9 @@ public class FluidCatalog {
             // Mashes
             // =======================================================================
 
-            Mash_Rice = fluid("Mash_Rice", "ricewater").withFlags(FluidFlags.FOOD),
             Mash_Hops = fluid("Mash_Hops", "hopsmash").withFlags(FluidFlags.FOOD),
             Mash_WheatHops = fluid("Mash_WheatHops", "wheathopsmash").withFlags(FluidFlags.FOOD),
             Mash_Wheat = fluid("Mash_Wheat", "binnie.mashwheat").withFlags(FluidFlags.FOOD),
-            Mash_Corn = fluid("Mash_Corn", "binnie.mashcorn").withFlags(FluidFlags.FOOD),
             Mash_Rye = fluid("Mash_Rye", "binnie.mashrye").withFlags(FluidFlags.FOOD),
             Mash_Grain = fluid("Mash_Grain", "binnie.mashgrain").withFlags(FluidFlags.FOOD),
 
@@ -856,9 +853,6 @@ public class FluidCatalog {
                             .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.VINEGAR),
             Vinegar_Cane =
                     fluid("Vinegar_Cane", "canevinegar")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.VINEGAR),
-            Vinegar_Rice =
-                    fluid("Vinegar_Rice", "ricevinegar")
                             .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.VINEGAR),
 
             // =======================================================================
@@ -958,9 +952,6 @@ public class FluidCatalog {
             Whiskey_Rye =
                     fluid("Whiskey_Rye", "binnie.whiskeyrye")
                             .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WHISKEY),
-            Whiskey_Corn =
-                    fluid("Whiskey_Corn", "binnie.whiskeycorn")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WHISKEY),
             Whiskey_Scotch =
                     fluid("Whiskey_Scotch", "binnie.whiskeywheat")
                             .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WHISKEY),
@@ -1008,9 +999,6 @@ public class FluidCatalog {
                     fluid("Oil_Hemp", "hempoil").withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
             Oil_Fish =
                     fluid("Oil_Fish", "fishoil").withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
-            Oil_Whale =
-                    fluid("Oil_Whale", "whaleoil")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.COOKING_OIL | FluidFlags.BATH),
             Oil_Canola = fluid("Oil_Canola", "canolaoil"),
             Oil_Creosote = fluid("Oil_Creosote", "creosote").withFlags(FluidFlags.BATH),
             Oil_Soulsand = fluid("Oil_Soulsand", "soulsandoil").withDensity(650),
@@ -1063,7 +1051,6 @@ public class FluidCatalog {
             Tar = fluid("Tar", "tar"),
             Glass = fluid("Glass", "glass").withTemperature(1200),
             Sluice = fluid("Sluice", "sluicejuice"),
-            Indigo = fluid("Indigo", "indigo"),
 
             // =======================================================================
             // Molten salts / reactor fluids
@@ -1188,10 +1175,6 @@ public class FluidCatalog {
             Zinc = fluidMolten("Zinc", "molten.zinc", "Zinc"),
             Plastic = fluidMolten("Plastic", "molten.plastic", "Plastic").withTemperature(423),
             // EnderPearl molten already covered by Ender above — skip duplicate registry name
-            HSLA_Molten =
-                    fluidMolten("HSLA_Molten", "molten.hsla", "HSLA")
-                            .withLuminosity(5)
-                            .withTemperature(1873),
 
             // =======================================================================
             // Medicines
@@ -1685,10 +1668,6 @@ public class FluidCatalog {
             Molten_WaxBee = createMolten("WaxBee"),
             Molten_WaxParaffin = createMolten("WaxParaffin"),
             Molten_WaxPlant = createMolten("WaxPlant"),
-            Molten_WaxRefractory = createMolten("WaxRefractory"),
-            Molten_WaxMagic = createMolten("WaxMagic"),
-            Molten_WaxAmnesic = createMolten("WaxAmnesic"),
-            Molten_WaxSoulful = createMolten("WaxSoulful"),
             Molten_Al2O3 = createMolten("Al2O3");
 
     private static FluidEntry createMolten(String materialName) {
@@ -1766,21 +1745,12 @@ public class FluidCatalog {
             case 1740 -> "Naquadah";
             case 1741 -> "NaquadahEnriched";
             case 1742 -> "Naquadria";
-            case 1850 -> "Abyssalnite";
-            case 1860 -> "Coralium";
-            case 1870 -> "Dreadium";
-            case 1880 -> "Ethaxium";
-            case 2210 -> "Atlarus";
             case 8020 -> "PotassiumCarbonate";
             case 8026 -> "TungstenTrioxide";
             case 8030 -> "FerrousChloride";
             case 8034 -> "LithiumPerchlorate";
-            case 8244 -> "Tallow";
             case 8266 -> "Asphalt";
             case 8500 -> "Stone";
-            case 8512 -> "SpaceStone";
-            case 8513 -> "MoonStone";
-            case 8515 -> "MarsStone";
             case 9120 -> "Ilmenite";
             case 9192 -> "Rutile";
             default -> null;

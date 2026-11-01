@@ -25,11 +25,9 @@ public final class ItemPipeCatalog {
         new ItemPipeMat(
                 "sterling_silver", gregtech.content.material.generated.CompoundMaterials.SterlingSilver, 16384, 2),
         new ItemPipeMat("rose_gold", gregtech.content.material.generated.CompoundMaterials.RoseGold, 16384, 2),
-        new ItemPipeMat("angmallen", gregtech.content.material.generated.CompoundMaterials.Angmallen, 16384, 2),
         new ItemPipeMat("black_bronze", gregtech.content.material.generated.CompoundMaterials.BlackBronze, 16384, 2),
         new ItemPipeMat(
                 "aluminium_brass", gregtech.content.material.generated.CompoundMaterials.AluminiumBrass, 16384, 2),
-        new ItemPipeMat("manyullyn", gregtech.content.material.generated.CompoundMaterials.Manyullyn, 16384, 2),
         new ItemPipeMat("magnalium", gregtech.content.material.generated.CompoundMaterials.Magnalium, 16384, 2),
         new ItemPipeMat("platinum", gregtech.content.material.generated.ElementMaterials.Platinum, 8192, 4),
         new ItemPipeMat("osmium", gregtech.content.material.generated.ElementMaterials.OsmiumElemental, 4096, 8),

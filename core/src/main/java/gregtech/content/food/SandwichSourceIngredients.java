@@ -59,15 +59,15 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:red_pill", 42), // MultiItemFood.java:915
             new Entry("gt6ce:antidote", 42), // MultiItemFood.java:916
             new Entry("gt6ce:cure_all", 42), // MultiItemFood.java:921
-            new Entry("gt6ce:tofu_bar", 35), // MultiItemFood.java:925
+            // MultiItemFood.java:925
             new Entry("gt6ce:emerald_green_bar", 34), // MultiItemFood.java:926
             new Entry("gt6ce:raw_meat_bar", 29), // MultiItemFood.java:927
             new Entry("gt6ce:cooked_meat_bar", 30), // MultiItemFood.java:928
             new Entry("gt6ce:chocolate_bar", 21), // MultiItemFood.java:929
             new Entry("gt6ce:raw_fish_bar", 24), // MultiItemFood.java:931
             new Entry("gt6ce:cooked_fish_bar", 25), // MultiItemFood.java:932
-            new Entry("gt6ce:butter", 11), // MultiItemFood.java:933
-            new Entry("gt6ce:salted_butter", 11), // MultiItemFood.java:934
+            // MultiItemFood.java:933
+            // MultiItemFood.java:934
             new Entry("gt6ce:grape_vinegar", 10), // MultiItemBottles.java:58
             new Entry("gt6ce:cave_johnsons_grenade_juice", 11), // MultiItemBottles.java:75
             new Entry("gt6ce:chili_sauce", 1), // MultiItemBottles.java:106
@@ -84,14 +84,14 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:hemp_oil", 10), // MultiItemBottles.java:124
             new Entry("gt6ce:lin_oil", 10), // MultiItemBottles.java:125
             new Entry("gt6ce:fish_oil", 11), // MultiItemBottles.java:126
-            new Entry("gt6ce:whale_oil", 3), // MultiItemBottles.java:127
+            // MultiItemBottles.java:127
             new Entry("gt6ce:mayo", 15), // MultiItemBottles.java:134
             new Entry("gt6ce:dressing", 10), // MultiItemBottles.java:135
             new Entry("gt6ce:heavy_cream", 15), // MultiItemBottles.java:139
             new Entry("gt6ce:honey", 11), // MultiItemBottles.java:157
             new Entry("gt6ce:royal_jelly", 11), // MultiItemBottles.java:159
             new Entry("gt6ce:ambrosia", 5), // MultiItemBottles.java:160
-            new Entry("gt6ce:rice_vinegar", 10), // MultiItemBottles.java:192
+            // MultiItemBottles.java:192
             new Entry("gt6ce:chocolate_cream", 3), // MultiItemBottles.java:194
             new Entry("gt6ce:nutella", 3), // MultiItemBottles.java:195
             new Entry("gt6ce:green_slime_bottle", 10), // MultiItemBottles.java:204
@@ -99,7 +99,7 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:blue_slime_bottle", 4), // MultiItemBottles.java:208
             new Entry("gt6ce:tomato_ketchup", 1), // MultiItemBottles.java:257
             new Entry("gt6ce:maple_syrup", 3), // MultiItemBottles.java:266
-            new Entry("gt6ce:peanut_butter", 3), // MultiItemBottles.java:273
+            // MultiItemBottles.java:273
             new Entry("gt6ce:rainbow_sap", 40), // MultiItemBottles.java:275
             new Entry("gt6ce:coconut_cream", 15), // MultiItemBottles.java:337
             new Entry("gt6ce:bottle_of_poison", 5), // MultiItemBottles.java:358

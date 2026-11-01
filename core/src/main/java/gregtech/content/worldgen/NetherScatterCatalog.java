@@ -12,8 +12,8 @@ public final class NetherScatterCatalog {
             new Scatter("brick.quartz_or_debris", "AncientDebris", "", true), // case 3
             new Scatter("brick.glowstone_or_debris", "Glowstone", "", false), // case 4
             new Scatter("brick.obsidian_or_debris", "Obsidian", "", false), // case 5
-            new Scatter("soul.gloomstone", "Gloomstone", "", false), // case 6
-            new Scatter("soul.gloomstone2", "Gloomstone", "", false), // case 7
+            new Scatter("soul.empty", "", "", false), // case 6
+            new Scatter("soul.empty2", "", "", false), // case 7
             new Scatter("soul.quartz", "NetherQuartz", "", false), // case 8
             new Scatter("soul.quartz2", "NetherQuartz", "", false), // case 9
             new Scatter("soul.quartz3", "NetherQuartz", "", false), // case 10

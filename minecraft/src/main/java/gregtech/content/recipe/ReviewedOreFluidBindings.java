@@ -12,12 +12,9 @@ public final class ReviewedOreFluidBindings {
         new Binding(8245, "Petrotheum", "Petrotheum", "petrotheum", 250),
         new Binding(8235, "Wax", "GenMolten_Wax", "molten.wax", 144),
         new Binding(8236, "WaxBee", "GenMolten_WaxBee", "molten.waxbee", 144),
-        new Binding(8237, "WaxRefractory", "GenMolten_WaxRefractory", "molten.waxrefractory", 144),
         new Binding(8238, "WaxParaffin", "GenMolten_WaxParaffin", "molten.waxparaffin", 144),
         new Binding(8239, "WaxPlant", "GenMolten_WaxPlant", "molten.waxplant", 144),
-        new Binding(8240, "WaxMagic", "GenMolten_WaxMagic", "molten.waxmagic", 144),
-        new Binding(8280, "WaxAmnesic", "GenMolten_WaxAmnesic", "molten.waxamnesic", 144),
-        new Binding(8281, "WaxSoulful", "GenMolten_WaxSoulful", "molten.waxsoulful", 144)
+
     };
 
     private ReviewedOreFluidBindings() {}

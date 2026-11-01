@@ -46,7 +46,6 @@ public final class SourceChemicalWaterRows {
             "Electrolyzer|tag:1|m:WhiteVitriol:6000,w:3000",
             "Electrolyzer|tag:1|m:GrayVitriol:6000,w:3000",
             "Electrolyzer|tag:1|m:GreenVitriol:6000,w:3000",
-            "Electrolyzer|tag:1|m:MartianVitriol:6000,w:3000",
             "Electrolyzer|tag:1|m:VitriolOfClay:8500,w:4500",
             "Electrolyzer|tag:1|m:ChloroauricAcid:6000,w:4500",
             "Electrolyzer|tag:1|m:ChloroplatinicAcid:9000,w:6000",

@@ -44,8 +44,6 @@ public final class MaterialProcessingTargets {
             "Sand|Forging|Glass|648648000",
             "RedSand|Forging|Glass|648648000",
             "EndSandWhite|Forging|Glass|648648000",
-            "EndSandBlack|Forging|Glass|648648000",
-            "GildedIron|Forging|Fe|648648000",
             "IronMagnetic|Bending|Fe|648648000",
             "IronMagnetic|Compressing|Fe|648648000",
             "IronMagnetic|Smashing|Fe|648648000",

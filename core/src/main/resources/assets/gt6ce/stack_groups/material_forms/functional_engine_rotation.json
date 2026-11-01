@@ -8,13 +8,13 @@
     "item:gt6ce:engine_rotation_brass",
     "item:gt6ce:engine_rotation_bronze",
     "item:gt6ce:engine_rotation_iridium",
-    "item:gt6ce:engine_rotation_iritanium",
     "item:gt6ce:engine_rotation_steel",
     "item:gt6ce:engine_rotation_titanium",
     "item:gt6ce:engine_rotation_trinaquadalloy",
     "item:gt6ce:engine_rotation_trinitanium",
     "item:gt6ce:engine_rotation_tungsten_steel",
-    "item:gt6ce:engine_rotation_wood"
+    "item:gt6ce:engine_rotation_wood",
+    "item:gt6ce:engine_rotation_iritanium"
   ],
   "priority": 110
 }

@@ -126,43 +126,18 @@ public final class SourceOreMagneticRules {
         return new Output(new Material(id, name), prefix, count);
     }
 
-    private static final List<BlockRow> BLOCK_ROWS = List.of(
-            new BlockRow(
-                    new Material(8102, "SluiceSand"),
-                    1296,
-                    16,
-                    List.of(
-                            output(8500, "Stone", MaterialPrefix.dust, 9),
-                            output(260, "Iron", MaterialPrefix.dustTiny, 2),
-                            output(600, "Neodymium", MaterialPrefix.dustTiny, 1),
-                            output(280, "Nickel", MaterialPrefix.dustTiny, 1),
-                            output(270, "Cobalt", MaterialPrefix.dustTiny, 1),
-                            output(250, "Manganese", MaterialPrefix.dustTiny, 1)),
-                    List.of(9640L, 5832L, 5832L, 5832L, 5832L, 5832L)),
-            new BlockRow(
-                    new Material(8599, "Bedrock"),
-                    1296,
-                    64,
-                    List.of(
-                            output(9248, "Deepslate", MaterialPrefix.dust, 9),
-                            output(8784, "Adamantine", MaterialPrefix.dustTiny, 9),
-                            output(2210, "Atlarus", MaterialPrefix.dustTiny, 9),
-                            output(9100, "RareEarth", MaterialPrefix.dustTiny, 18),
-                            output(600, "Neodymium", MaterialPrefix.dustTiny, 27),
-                            output(8234, "VanadiumPentoxide", MaterialPrefix.dustTiny, 27)),
-                    List.of(7000L, 3000L, 3000L, 3000L, 3000L, 3000L)),
-            new BlockRow(
-                    new Material(8514, "MoonTurf"),
-                    1296,
-                    16,
-                    List.of(
-                            output(8505, "Basalt", MaterialPrefix.dust, 9),
-                            output(8649, "MeteoricIron", MaterialPrefix.dustTiny, 9),
-                            output(600, "Neodymium", MaterialPrefix.dustTiny, 1),
-                            output(280, "Nickel", MaterialPrefix.dustTiny, 1),
-                            output(270, "Cobalt", MaterialPrefix.dustTiny, 1),
-                            output(250, "Manganese", MaterialPrefix.dustTiny, 1)),
-                    List.of(3000L, 972L, 972L, 972L, 972L, 972L)));
+    private static final List<BlockRow> BLOCK_ROWS = List.of(new BlockRow(
+            new Material(8102, "SluiceSand"),
+            1296,
+            16,
+            List.of(
+                    output(8500, "Stone", MaterialPrefix.dust, 9),
+                    output(260, "Iron", MaterialPrefix.dustTiny, 2),
+                    output(600, "Neodymium", MaterialPrefix.dustTiny, 1),
+                    output(280, "Nickel", MaterialPrefix.dustTiny, 1),
+                    output(270, "Cobalt", MaterialPrefix.dustTiny, 1),
+                    output(250, "Manganese", MaterialPrefix.dustTiny, 1)),
+            List.of(9640L, 5832L, 5832L, 5832L, 5832L, 5832L)));
 
     public static List<BlockRow> blockRows() {
         return BLOCK_ROWS;

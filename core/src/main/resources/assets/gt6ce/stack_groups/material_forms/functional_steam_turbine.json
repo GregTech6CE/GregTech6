@@ -15,8 +15,7 @@
     "item:gt6ce:steam_turbine_steeleaf",
     "item:gt6ce:steam_turbine_thaumium",
     "item:gt6ce:steam_turbine_titanium",
-    "item:gt6ce:steam_turbine_trinitanium",
-    "item:gt6ce:steam_turbine_void_metal"
+    "item:gt6ce:steam_turbine_trinitanium"
   ],
   "priority": 110
 }

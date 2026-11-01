@@ -85,8 +85,6 @@ final class GTFoodGen {
         r("Mixer", 16, 144, null, sp("omd:Tea:1000"), sp("w:6750"), sp("f:Tea:6750"), NONE);
         r("Injector", 16, 16, null, sp("omd:Mg:1000"), sp("w:1000"), sp("f:MnWtr:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Ca:1000"), sp("w:1000"), sp("f:MnWtr:1000"), NONE);
-        r("Injector", 16, 16, null, sp("omd:Ambrosium:111"), sp("w:1000"), sp("f:Holywater:1000"), NONE);
-        r("Injector", 16, 16, null, sp("omd:Holystone:1000"), sp("w:1000"), sp("f:Holywater:1000"), NONE);
         r("Injector", 16, 16, null, NONE, sp("w:250", "m:CO2:250"), sp("f:Soda:250"), NONE);
         r("Injector", 16, 16, null, NONE, sp("f:MnWtr:250", "m:CO2:250"), sp("f:Mineralsoda:250"), NONE);
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Milk:50"), sp("f:Milk_Spoiled:50"), NONE);
@@ -96,7 +94,6 @@ final class GTFoodGen {
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Juice_Apple:50"), sp("f:Cider_Apple:25"), NONE);
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Juice_AppleGrC:50"), sp("f:Cider_Apple:25"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Cider_Apple:50"), sp("f:Vinegar_Apple:10"), NONE);
-        r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Mash_Rice:50"), sp("f:Sake:25"), NONE);
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Mash_Wheat:50"), sp("f:Whiskey_Scotch:25"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Whiskey_Scotch:50"), sp("f:Whiskey_GlenMcKenner:10"), NONE);
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Mash_WheatHops:50"), sp("f:Beer:25"), NONE);
@@ -105,7 +102,6 @@ final class GTFoodGen {
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Juice_Reed:50"), sp("f:Rum_White:25"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Rum_White:50"), sp("f:Vinegar_Cane:10"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Rum_Dark:50"), sp("f:Vinegar_Cane:10"), NONE);
-        r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Sake:50"), sp("f:Vinegar_Rice:10"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Wine_Grape_Red:50"), sp("f:Vinegar_Grape:10"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Wine_Grape_White:50"), sp("f:Vinegar_Grape:10"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Wine_Grape_Green:50"), sp("f:Vinegar_Grape:10"), NONE);
@@ -132,7 +128,6 @@ final class GTFoodGen {
         r("Coagulator", 0, 256, null, NONE, sp("f:Slime_Green:250"), NONE, sp("v:slime_ball:1"));
         r("Coagulator", 0, 1024, null, NONE, sp("f:Milk:1000"), NONE, sp("tech:food_cheese:1"));
         r("Coagulator", 0, 1024, null, NONE, sp("f:MilkGrC:1000"), NONE, sp("tech:food_cheese:1"));
-        r("Coagulator", 0, 1024, null, NONE, sp("f:MilkSoy:250"), NONE, sp("omd:Tofu:1000"));
         r("Melter", 16, 1, null, NONE, sp("f:Oil_Sunflower:1"), sp("f:Oil_Frying:1"), NONE);
         r("Melter", 16, 1, null, NONE, sp("f:Oil_Olive:1"), sp("f:Oil_Frying:1"), NONE);
         r("Melter", 16, 1, null, NONE, sp("f:Oil_Nut:1"), sp("f:Oil_Frying:1"), NONE);
@@ -140,7 +135,6 @@ final class GTFoodGen {
         r("Melter", 16, 1, null, NONE, sp("f:Oil_Lin:1"), sp("f:Oil_Frying:1"), NONE);
         r("Melter", 16, 1, null, NONE, sp("f:Oil_Seed:1"), sp("f:Oil_Frying:1"), NONE);
         r("Melter", 16, 1, null, NONE, sp("f:Oil_Fish:1"), sp("f:Oil_Frying:1"), NONE);
-        r("Melter", 16, 1, null, NONE, sp("f:Oil_Whale:1"), sp("f:Oil_Frying:1"), NONE);
         r("Melter", 16, 1, null, NONE, sp("f:Ice:1"), sp("w:1"), NONE);
         r("Smelter", 16, 1, null, NONE, sp("f:Oil_Sunflower:1"), sp("f:Oil_Frying:1"), NONE);
         r("Smelter", 16, 1, null, NONE, sp("f:Oil_Olive:1"), sp("f:Oil_Frying:1"), NONE);
@@ -149,9 +143,7 @@ final class GTFoodGen {
         r("Smelter", 16, 1, null, NONE, sp("f:Oil_Lin:1"), sp("f:Oil_Frying:1"), NONE);
         r("Smelter", 16, 1, null, NONE, sp("f:Oil_Seed:1"), sp("f:Oil_Frying:1"), NONE);
         r("Smelter", 16, 1, null, NONE, sp("f:Oil_Fish:1"), sp("f:Oil_Frying:1"), NONE);
-        r("Smelter", 16, 1, null, NONE, sp("f:Oil_Whale:1"), sp("f:Oil_Frying:1"), NONE);
         r("Smelter", 16, 1, null, NONE, sp("f:Ice:1"), sp("w:1"), NONE);
-        r("Mixer", 16, 16, null, sp("omd:OatAbyssal:1000"), sp("f:Juice_Hellderberry:100"), NONE, sp("tech:food_dough_abyssal:1"));
         r("Mixer", 16, 16, null, NONE, sp("f:Mash_Wheat:50", "f:Mash_Hops:50"), sp("f:Mash_WheatHops:100"), NONE);
         r("Mixer", 16, 144, null, sp("i:dust:NaCl:1", "tech:food_butter:9"), NONE, NONE, sp("tech:food_butter_salted:9"));
         r("Mixer", 16, 32, null, sp("i:dustSmall:NaCl:1", "tech:food_butter:2"), NONE, NONE, sp("tech:food_butter_salted:2"));
@@ -169,9 +161,6 @@ final class GTFoodGen {
         r("Mixer", 16, 48, null, sp("i:dust:Milk:1"), sp("fr:potion.darkcoffee:750"), sp("fr:potion.coffee:750"), NONE);
         r("Mixer", 16, 48, null, sp("i:dustSmall:Milk:4"), sp("fr:potion.darkcoffee:750"), sp("fr:potion.coffee:750"), NONE);
         r("Mixer", 16, 48, null, sp("i:dustTiny:Milk:9"), sp("fr:potion.darkcoffee:750"), sp("fr:potion.coffee:750"), NONE);
-        r("Mixer", 16, 64, null, sp("i:dust:Peanut:1"), sp("f:Cream:250"), sp("f:Nutbutter_Peanut:250"), NONE);
-        r("Mixer", 16, 64, null, sp("i:dustSmall:Peanut:4"), sp("f:Cream:250"), sp("f:Nutbutter_Peanut:250"), NONE);
-        r("Mixer", 16, 64, null, sp("i:dustTiny:Peanut:9"), sp("f:Cream:250"), sp("f:Nutbutter_Peanut:250"), NONE);
         r("Mixer", 16, 64, null, sp("i:dust:Hazelnut:1"), sp("f:Cream_Chocolate:250"), sp("f:Cream_Nutella:250"), NONE);
         r("Mixer", 16, 64, null, sp("i:dustSmall:Hazelnut:4"), sp("f:Cream_Chocolate:250"), sp("f:Cream_Nutella:250"), NONE);
         r("Mixer", 16, 64, null, sp("i:dustTiny:Hazelnut:9"), sp("f:Cream_Chocolate:250"), sp("f:Cream_Nutella:250"), NONE);

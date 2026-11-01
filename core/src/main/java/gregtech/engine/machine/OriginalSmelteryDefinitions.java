@@ -44,26 +44,11 @@ public final class OriginalSmelteryDefinitions {
         add("mold_basin_nether_brick", 1754, ImportedMaterialData.STONES.NetherBrick, 5.0F, 5.0F, false, 0L);
         add("crucible_crossing_nether_brick", 1854, ImportedMaterialData.STONES.NetherBrick, 5.0F, 5.0F, false, 0L);
         add("crucible_faucet_nether_brick", 1704, ImportedMaterialData.STONES.NetherBrick, 1.0F, 5.0F, false, 0L);
-        add("smelting_crucible_umber", 1006, ImportedMaterialData.STONES.Umber, 5.0F, 5.0F, false, 0L);
-        add("mold_umber", 1056, ImportedMaterialData.STONES.Umber, 1.0F, 5.0F, false, 0L);
-        add("mold_basin_umber", 1756, ImportedMaterialData.STONES.Umber, 5.0F, 5.0F, false, 0L);
-        add("crucible_crossing_umber", 1856, ImportedMaterialData.STONES.Umber, 5.0F, 5.0F, false, 0L);
-        add("crucible_faucet_umber", 1706, ImportedMaterialData.STONES.Umber, 1.0F, 5.0F, false, 0L);
         add("smelting_crucible_livingrock", 1007, ImportedMaterialData.STONES.Livingrock, 5.0F, 5.0F, false, 0L);
         add("mold_livingrock", 1057, ImportedMaterialData.STONES.Livingrock, 1.0F, 5.0F, false, 0L);
         add("mold_basin_livingrock", 1757, ImportedMaterialData.STONES.Livingrock, 5.0F, 5.0F, false, 0L);
         add("crucible_crossing_livingrock", 1857, ImportedMaterialData.STONES.Livingrock, 5.0F, 5.0F, false, 0L);
         add("crucible_faucet_livingrock", 1707, ImportedMaterialData.STONES.Livingrock, 1.0F, 5.0F, false, 0L);
-        add("smelting_crucible_holystone", 1008, ImportedMaterialData.STONES.Holystone, 5.0F, 5.0F, false, 0L);
-        add("mold_holystone", 1058, ImportedMaterialData.STONES.Holystone, 1.0F, 5.0F, false, 0L);
-        add("mold_basin_holystone", 1758, ImportedMaterialData.STONES.Holystone, 5.0F, 5.0F, false, 0L);
-        add("crucible_crossing_holystone", 1858, ImportedMaterialData.STONES.Holystone, 5.0F, 5.0F, false, 0L);
-        add("crucible_faucet_holystone", 1708, ImportedMaterialData.STONES.Holystone, 1.0F, 5.0F, false, 0L);
-        add("smelting_crucible_betweenstone", 1009, ImportedMaterialData.STONES.Betweenstone, 5.0F, 5.0F, false, 0L);
-        add("mold_betweenstone", 1059, ImportedMaterialData.STONES.Betweenstone, 1.0F, 5.0F, false, 0L);
-        add("mold_basin_betweenstone", 1759, ImportedMaterialData.STONES.Betweenstone, 5.0F, 5.0F, false, 0L);
-        add("crucible_crossing_betweenstone", 1859, ImportedMaterialData.STONES.Betweenstone, 5.0F, 5.0F, false, 0L);
-        add("crucible_faucet_betweenstone", 1709, ImportedMaterialData.STONES.Betweenstone, 1.0F, 5.0F, false, 0L);
         add("smelting_crucible_quartz", 1018, ImportedMaterialData.MilkyQuartz, 5.0F, 5.0F, false, 4540536000L);
         add("mold_quartz", 1068, ImportedMaterialData.MilkyQuartz, 1.0F, 5.0F, false, 3243240000L);
         add("mold_basin_quartz", 1768, ImportedMaterialData.MilkyQuartz, 5.0F, 5.0F, false, 3243240000L);
@@ -89,11 +74,6 @@ public final class OriginalSmelteryDefinitions {
         add("mold_basin_steel", 1772, ImportedMaterialData.Steel, 6.0F, 6.0F, false, 3243240000L);
         add("crucible_crossing_steel", 1872, ImportedMaterialData.Steel, 6.0F, 6.0F, false, 3243240000L);
         add("crucible_faucet_steel", 1722, ImportedMaterialData.Steel, 1.0F, 6.0F, false, 1945944000L);
-        add("smelting_crucible_hsla", 1041, ImportedMaterialData.HSLA, 6.0F, 6.0F, false, 4540536000L);
-        add("mold_hsla", 1091, ImportedMaterialData.HSLA, 1.0F, 6.0F, false, 3243240000L);
-        add("mold_basin_hsla", 1791, ImportedMaterialData.HSLA, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_crossing_hsla", 1891, ImportedMaterialData.HSLA, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_faucet_hsla", 1741, ImportedMaterialData.HSLA, 1.0F, 6.0F, false, 1945944000L);
         add("smelting_crucible_titanium", 1023, ImportedMaterialData.Ti, 9.0F, 9.0F, false, 4540536000L);
         add("mold_titanium", 1073, ImportedMaterialData.Ti, 1.0F, 6.0F, false, 3243240000L);
         add("mold_basin_titanium", 1773, ImportedMaterialData.Ti, 9.0F, 9.0F, false, 3243240000L);
@@ -130,11 +110,6 @@ public final class OriginalSmelteryDefinitions {
                 6.0F,
                 true,
                 1945944000L);
-        add("smelting_crucible_dark_iron", 1026, ImportedMaterialData.DarkIron, 6.0F, 6.0F, false, 4540536000L);
-        add("mold_dark_iron", 1076, ImportedMaterialData.DarkIron, 1.0F, 6.0F, false, 3243240000L);
-        add("mold_basin_dark_iron", 1776, ImportedMaterialData.DarkIron, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_crossing_dark_iron", 1876, ImportedMaterialData.DarkIron, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_faucet_dark_iron", 1726, ImportedMaterialData.DarkIron, 1.0F, 6.0F, false, 1945944000L);
         add("smelting_crucible_knightmetal", 1027, ImportedMaterialData.Knightmetal, 6.0F, 6.0F, false, 4540536000L);
         add("mold_knightmetal", 1077, ImportedMaterialData.Knightmetal, 1.0F, 6.0F, false, 3243240000L);
         add("mold_basin_knightmetal", 1777, ImportedMaterialData.Knightmetal, 6.0F, 6.0F, false, 3243240000L);
@@ -145,45 +120,12 @@ public final class OriginalSmelteryDefinitions {
         add("mold_basin_fiery_steel", 1778, ImportedMaterialData.FierySteel, 6.0F, 6.0F, false, 3243240000L);
         add("crucible_crossing_fiery_steel", 1878, ImportedMaterialData.FierySteel, 6.0F, 6.0F, false, 3243240000L);
         add("crucible_faucet_fiery_steel", 1728, ImportedMaterialData.FierySteel, 1.0F, 6.0F, false, 1945944000L);
-        add("smelting_crucible_octine", 1042, ImportedMaterialData.Octine, 6.0F, 6.0F, false, 4540536000L);
-        add("mold_octine", 1092, ImportedMaterialData.Octine, 1.0F, 6.0F, false, 3243240000L);
-        add("mold_basin_octine", 1792, ImportedMaterialData.Octine, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_crossing_octine", 1892, ImportedMaterialData.Octine, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_faucet_octine", 1742, ImportedMaterialData.Octine, 1.0F, 6.0F, false, 1945944000L);
         add("smelting_crucible_thaumium", 1029, ImportedMaterialData.Thaumium, 6.0F, 6.0F, true, 4540536000L);
         add("mold_thaumium", 1079, ImportedMaterialData.Thaumium, 1.0F, 6.0F, true, 3243240000L);
         add("mold_basin_thaumium", 1779, ImportedMaterialData.Thaumium, 6.0F, 6.0F, true, 3243240000L);
         add("crucible_crossing_thaumium", 1879, ImportedMaterialData.Thaumium, 6.0F, 6.0F, true, 3243240000L);
         add("crucible_faucet_thaumium", 1729, ImportedMaterialData.Thaumium, 1.0F, 6.0F, true, 1945944000L);
-        add("smelting_crucible_void_metal", 1030, ImportedMaterialData.VoidMetal, 10.0F, 10.0F, true, 4540536000L);
-        add("mold_void_metal", 1080, ImportedMaterialData.VoidMetal, 1.0F, 6.0F, true, 3243240000L);
-        add("mold_basin_void_metal", 1780, ImportedMaterialData.VoidMetal, 10.0F, 10.0F, true, 3243240000L);
-        add("crucible_crossing_void_metal", 1880, ImportedMaterialData.VoidMetal, 10.0F, 10.0F, true, 3243240000L);
-        add("crucible_faucet_void_metal", 1730, ImportedMaterialData.VoidMetal, 1.0F, 6.0F, true, 1945944000L);
-        add("smelting_crucible_meteoric_iron", 1031, ImportedMaterialData.MeteoricIron, 6.0F, 6.0F, false, 4540536000L);
-        add("mold_meteoric_iron", 1081, ImportedMaterialData.MeteoricIron, 1.0F, 6.0F, false, 3243240000L);
-        add("mold_basin_meteoric_iron", 1781, ImportedMaterialData.MeteoricIron, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_crossing_meteoric_iron", 1881, ImportedMaterialData.MeteoricIron, 6.0F, 6.0F, false, 3243240000L);
-        add("crucible_faucet_meteoric_iron", 1731, ImportedMaterialData.MeteoricIron, 1.0F, 6.0F, false, 1945944000L);
-        add(
-                "smelting_crucible_meteoric_steel",
-                1032,
-                ImportedMaterialData.MeteoricSteel,
-                6.0F,
-                6.0F,
-                false,
-                4540536000L);
-        add("mold_meteoric_steel", 1082, ImportedMaterialData.MeteoricSteel, 1.0F, 6.0F, false, 3243240000L);
-        add("mold_basin_meteoric_steel", 1782, ImportedMaterialData.MeteoricSteel, 6.0F, 6.0F, false, 3243240000L);
-        add(
-                "crucible_crossing_meteoric_steel",
-                1882,
-                ImportedMaterialData.MeteoricSteel,
-                6.0F,
-                6.0F,
-                false,
-                3243240000L);
-        add("crucible_faucet_meteoric_steel", 1732, ImportedMaterialData.MeteoricSteel, 1.0F, 6.0F, false, 1945944000L);
+
         add("smelting_crucible_chromium", 1033, ImportedMaterialData.Cr, 9.0F, 9.0F, true, 4540536000L);
         add("mold_chromium", 1083, ImportedMaterialData.Cr, 1.0F, 6.0F, true, 3243240000L);
         add("mold_basin_chromium", 1783, ImportedMaterialData.Cr, 9.0F, 9.0F, true, 3243240000L);
@@ -255,39 +197,7 @@ public final class OriginalSmelteryDefinitions {
         add("mold_basin_netherite", 1794, ImportedMaterialData.Netherite, 6.0F, 6.0F, true, 3243240000L);
         add("crucible_crossing_netherite", 1894, ImportedMaterialData.Netherite, 6.0F, 6.0F, true, 3243240000L);
         add("crucible_faucet_netherite", 1744, ImportedMaterialData.Netherite, 1.0F, 6.0F, true, 1945944000L);
-        add(
-                "smelting_crucible_bedrock_hsla_alloy",
-                1048,
-                ImportedMaterialData.Bedrock_HSLA_Alloy,
-                100.0F,
-                100.0F,
-                false,
-                4540536000L);
-        add("mold_bedrock_hsla_alloy", 1098, ImportedMaterialData.Bedrock_HSLA_Alloy, 1.0F, 6.0F, false, 3243240000L);
-        add(
-                "mold_basin_bedrock_hsla_alloy",
-                1798,
-                ImportedMaterialData.Bedrock_HSLA_Alloy,
-                100.0F,
-                100.0F,
-                false,
-                3243240000L);
-        add(
-                "crucible_crossing_bedrock_hsla_alloy",
-                1898,
-                ImportedMaterialData.Bedrock_HSLA_Alloy,
-                100.0F,
-                100.0F,
-                false,
-                3243240000L);
-        add(
-                "crucible_faucet_bedrock_hsla_alloy",
-                1748,
-                ImportedMaterialData.Bedrock_HSLA_Alloy,
-                1.0F,
-                6.0F,
-                false,
-                1945944000L);
+
         add("smelting_crucible_ad", 1049, ImportedMaterialData.Ad, 100.0F, 100.0F, true, 4540536000L);
         add("mold_ad", 1099, ImportedMaterialData.Ad, 1.0F, 6.0F, true, 3243240000L);
         add("mold_basin_ad", 1799, ImportedMaterialData.Ad, 100.0F, 100.0F, true, 3243240000L);

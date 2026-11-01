@@ -38,8 +38,7 @@ public final class BedrockFlowerProcessingRecipes extends OriginalRecipeBatch {
         ItemStack input = item("gt6ce:" + id, 1);
 
         String grind = flower.family() == 'A' && flower.meta() < 2 ? "Wheat"
-                : flower.family() == 'B' && flower.meta() < 2 ? "Acacia"
-                : flower.family() == 'B' && flower.meta() == 6 ? "Palm" : null;
+                : flower.family() == 'B' && flower.meta() < 2 ? "Acacia" : null;
         if (grind != null) {
             ItemStack dust = mat(MaterialPrefix.dust, grind, 1);
             add(id + "/mortar", MachineRecipeMaps.Mortar, 16, 16,

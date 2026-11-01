@@ -41,7 +41,6 @@ public final class OriginalFuelRecipeRows {
             new Row("burn", 16, 2, "Oil_Sunflower", 1, "CarbonDioxide", 1, null, 0),
             new Row("burn", 16, 2, "Oil_Seed", 1, "CarbonDioxide", 1, null, 0),
             new Row("burn", 16, 4, "Oil_Fish", 1, "CarbonDioxide", 1, null, 0),
-            new Row("burn", 16, 8, "Oil_Whale", 1, "CarbonDioxide", 1, null, 0),
             // GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later:
             // Loader_Fuels:191-213 and CS:216-234. Energy constants are per litre, not per bucket.
             new Row("hot", 16, 6, "Blaze", 1, null, 0, null, 0),

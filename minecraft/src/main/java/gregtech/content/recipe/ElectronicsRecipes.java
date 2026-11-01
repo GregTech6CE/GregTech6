@@ -40,15 +40,14 @@ public final class ElectronicsRecipes {
             } else engrave(wiring[i], conductors[i]);
             press(64,tech("circuit_plate_"+conductors[i].toLowerCase(Locale.ROOT),1),tech("circuit_plate",1),tech(wiring[i],1));
         }
-        for (String semiconductor : new String[]{"Silicon","Germanium","RedstoneAlloy"}) {
+        for (String semiconductor : new String[]{"Silicon","Germanium"}) {
             var crystal=mat(MaterialPrefix.plateGemTiny,semiconductor,1);
             press(16,tech("circuit_part_basic",1),mat(MaterialPrefix.wireFine,"Copper",1),mat(MaterialPrefix.dustTiny,"Redstone",1),crystal);
             press(16,tech("circuit_part_basic",9),mat(MaterialPrefix.wireFine,"Copper",9),mat(MaterialPrefix.dust,"Redstone",1),mat(MaterialPrefix.plateGemTiny,semiconductor,9));
             for (String redWire : new String[]{"Signalum","RedAlloy"})
                 press(16,tech("circuit_part_good",1),mat(MaterialPrefix.wireFine,"Copper",1),mat(MaterialPrefix.wireFine,redWire,1),crystal.copy());
-            boolean alloy=semiconductor.equals("RedstoneAlloy");
-            press(16,tech("circuit_part_"+(alloy?"elite":"advanced"),1),mat(MaterialPrefix.wireFine,"Gold",1),mat(MaterialPrefix.wireFine,"Signalum",1),crystal.copy());
-            press(16,tech("circuit_part_"+(alloy?"ultimate":"master"),1),mat(MaterialPrefix.wireFine,"Platinum",1),mat(MaterialPrefix.wireFine,"Signalum",1),crystal.copy());
+            press(16,tech("circuit_part_"+"advanced",1),mat(MaterialPrefix.wireFine,"Gold",1),mat(MaterialPrefix.wireFine,"Signalum",1),crystal.copy());
+            press(16,tech("circuit_part_"+"master",1),mat(MaterialPrefix.wireFine,"Platinum",1),mat(MaterialPrefix.wireFine,"Signalum",1),crystal.copy());
         }
         for (int metal=0;metal<3;metal++) for (int tier=0;tier<6;tier++) {
             int capped=Math.min(tier,metal*2+1);
@@ -59,7 +58,7 @@ public final class ElectronicsRecipes {
         for(int solder=0;solder<3;solder++) for(int tier=0;tier<6;tier++)
             add(MachineRecipeMaps.Bath,new Recipe(new ItemStack[]{tech("circuit_board_"+TIERS[tier],1)},new ItemStack[]{tech("circuit_"+TIERS[results[solder][tier]],1)},
                     null,null,new FluidStack[]{fluid("GenMolten_",solders[solder],72)},null,64,0,0));
-        for (String crystal : new String[]{"Silicon","Germanium","RedstoneAlloy","NikolineAlloy"})
+        for (String crystal : new String[]{"Silicon","Germanium","NikolineAlloy"})
             for (String gas : new String[]{"Helium","Neon","Argon","Krypton","Xenon","Radon"})
                 for (int batch : new int[]{1,9})
                     add(MachineRecipeMaps.CrystallisationCrucible,new Recipe(new ItemStack[]{mat(batch==1?MaterialPrefix.dustTiny:MaterialPrefix.dust,crystal,1)},
@@ -71,7 +70,7 @@ public final class ElectronicsRecipes {
         // GT6 MultiItemTechnological:571-698 + — the magical/enderium/signalum branch of the
         // circuit chain. The rows above cover GT6's copper/gold/platinum ladder; these were the items the
         // port registered with no way to make them (see docs/items-without-recipes.json).
-        String[] magicWires={"Thaumium","Manasteel","Mithril","Netherite"};
+        String[] magicWires={"Thaumium","Manasteel","Netherite"};
         for(String wire:magicWires) engrave("circuit_wire_magic",wire);
         engrave("circuit_wire_enderium","Enderium");
         engrave("circuit_wire_signalum","Signalum");
@@ -79,9 +78,8 @@ public final class ElectronicsRecipes {
         press(64,tech("circuit_plate_magic",1),tech("circuit_plate",1),tech("circuit_wire_magic",1));
         press(64,tech("circuit_plate_enderium",1),tech("circuit_plate",1),tech("circuit_wire_enderium",1));
         press(64,tech("circuit_plate_signalum",1),tech("circuit_plate",1),tech("circuit_wire_signalum",1));
-        press(64,tech("circuit_plate_hsla",1),mat(MaterialPrefix.plate,"HSLASteel",1),tech("circuit_wire_gold",1));
 
-        for(String semiconductor:new String[]{"Silicon","Germanium","RedstoneAlloy"}) {
+        for(String semiconductor:new String[]{"Silicon","Germanium"}) {
             var crystal=mat(MaterialPrefix.plateGemTiny,semiconductor,1);
             for(String wire:magicWires)
                 press(16,tech("circuit_part_magic",1),mat(MaterialPrefix.wireFine,wire,1),mat(MaterialPrefix.wireFine,"Signalum",1),crystal.copy());
@@ -93,8 +91,6 @@ public final class ElectronicsRecipes {
         press(64,tech("circuit_board_magic",1),tech("circuit_plate_magic",1),tech("circuit_part_magic",4));
         press(64,tech("circuit_board_enderium",1),tech("circuit_plate_enderium",1),tech("circuit_part_enderium",4));
         press(64,tech("circuit_board_signalum",1),tech("circuit_plate_signalum",1),tech("circuit_part_signalum",4));
-        press(64,tech("circuit_board_hsla_circuit",1),tech("circuit_plate_hsla",1),tech("circuit_part_enderpearl",4));
-        press(64,tech("circuit_board_power_module",1),tech("circuit_plate_hsla",1),tech("circuit_part_endereye",4));
 
         bath("circuit_board_magic","circuit_magic","SolderingAlloy");
         bath("circuit_board_enderium","circuit_enderium","SolderingAlloy");
@@ -106,9 +102,9 @@ public final class ElectronicsRecipes {
         // socket + circuit into a processor.
         // MT diamond/emerald/sapphire factories (208-210, 1358-1386) and ANY.init (97-99).
         // Keep explicit native factory members: not all port ANY groups carry their original registrations.
-        crystal("crystal_circuit_diamond", new String[]{"Diamond", "BlueDiamond", "GreenDiamond", "PurpleDiamond",
+        crystal("crystal_circuit_diamond", new String[]{"Diamond", "BlueDiamond", "GreenDiamond",
                 "RedDiamond", "YellowDiamond", "PinkDiamond", "DiamondIndustrial", "ManaDiamond",
-                "ElvenDragonstone", "Gravitite", "Diamantine"}, gregtech.content.data.MaterialGroups.Diamond);
+                "Diamantine"}, gregtech.content.data.MaterialGroups.Diamond);
         crystal("crystal_circuit_emerald", new String[]{"Emerald", "Aquamarine", "Morganite", "Heliodor",
                 "Goshenite", "Bixbite", "Maxixe", "Emeradic"}, gregtech.content.data.MaterialGroups.Emerald);
         crystal("crystal_circuit_sapphire", new String[]{"Sapphire", "BlueSapphire", "GreenSapphire",

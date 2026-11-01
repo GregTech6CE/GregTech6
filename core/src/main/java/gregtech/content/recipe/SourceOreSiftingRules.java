@@ -175,7 +175,7 @@ public final class SourceOreSiftingRules {
         certusPair(rows, CHARGED_CERTUS, true, 298);
         certusPair(rows, CERTUS, false, 300);
         quartzPair(rows, new Material(8346, "NetherQuartz"), 302);
-        quartzPair(rows, new Material(8457, "VoidQuartz"), 304);
+
         quartzPair(rows, new Material(8445, "MilkyQuartz"), 306);
         quartzPair(rows, new Material(8389, "Fluix"), 308);
         return List.copyOf(rows);

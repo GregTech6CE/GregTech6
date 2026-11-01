@@ -2,7 +2,6 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.functional_rock_ores",
   "contents": [
-    "item:gt6ce:block_ore_anthracite",
     "item:gt6ce:block_ore_bauxite",
     "item:gt6ce:block_ore_gypsum",
     "item:gt6ce:block_ore_lignite",

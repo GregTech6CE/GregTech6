@@ -95,8 +95,6 @@ public final class GTLootGen {
         "gt.misc|144|3|12|i:dust:Redstone:1",
         "gt.misc|144|3|12|i:rockGt:SkyStone:1",
         "gt.misc|144|1|2|i:dust:Zeolite:1",
-        "gt.misc|72|1|4|i:rockGt:MeteoricIron:1",
-        "gt.misc|72|1|1|i:oreRaw:MeteoricIron:1",
         "gt.misc|36|2|8|i:stick:Blizz:1",
         "gt.misc|36|2|8|i:stick:Blitz:1",
         "gt.misc|36|2|8|i:stick:Basalz:1",

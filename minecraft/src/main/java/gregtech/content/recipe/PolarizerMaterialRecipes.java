@@ -192,18 +192,8 @@ public final class PolarizerMaterialRecipes {
         if (registered) throw new IllegalStateException("Polarizer material recipes registered twice");
         registered = true;
         addMaterial(GTMaterialRegistry.get("Neodymium"), GTMaterialRegistry.get("NeodymiumMagnetic"), 128);
-        addGroup(
-                MaterialGroups.Fe,
-                "IronMagnetic",
-                "Iron",
-                "WroughtIron",
-                "IronCast",
-                "IronCompressed",
-                "PigIron",
-                "MeteoricIron",
-                "Meteorite",
-                "Enori");
-        addGroup(MaterialGroups.Steel, "SteelMagnetic", "Steel", "Knightmetal", "MeteoricSteel");
+        addGroup(MaterialGroups.Fe, "IronMagnetic", "Iron", "WroughtIron", "IronCast", "Enori");
+        addGroup(MaterialGroups.Steel, "SteelMagnetic", "Steel", "Knightmetal");
         return ENTRIES.stream().map(Entry::recipe).toList();
     }
 

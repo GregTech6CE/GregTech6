@@ -25,7 +25,6 @@ public final class PanelMaterialRules {
         String name = switch (suffix) {
             case "rubber" -> "WoodRubber";
             case "blue_mahoe" -> "BlueMahoe";
-            case "white_mahoe" -> "Mahoe";
             case "bluespruce" -> "BlueSpruce";
             case "cinnamon" -> "Cinnamonwood";
             case "coconut" -> "Coconutwood";

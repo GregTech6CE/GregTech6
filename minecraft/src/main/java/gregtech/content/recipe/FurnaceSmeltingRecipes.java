@@ -1,6 +1,5 @@
 package gregtech.content.recipe;
 
-
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
@@ -160,7 +159,7 @@ public final class FurnaceSmeltingRecipes {
 
     /** Explicit glass recycling listeners, not metal-smelting fallback (GT6 OreDict; Vanilla). */
     private static void glass() {
-        for (String name : List.of("Glass", "Sand", "RedSand", "EndSandWhite", "EndSandBlack")) {
+        for (String name : List.of("Glass", "Sand", "RedSand", "EndSandWhite")) {
             var material = GTMaterialRegistry.get(name);
             if (material == null || !material.isValid()) continue;
             glassRow("dust", material, GTItems.getStack(MaterialPrefix.dust, material, 1), new ItemStack(Items.GLASS_PANE));

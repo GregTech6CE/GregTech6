@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Original GT6 {@code Loader_Recipes_Alloys} (3703e403) fluid recipes.
  * Amounts are literal millibuckets, not material units; no 144 mB conversion applies.
- * The 52 source mix calls expand to 101 rows with the pinned Glowstone membership.
+ * Retained alloy rows use the built-in material and fluid catalog.
  */
 public final class SourceAlloyRecipes {
     private SourceAlloyRecipes() {}
@@ -55,13 +55,7 @@ public final class SourceAlloyRecipes {
             mix(rows, amount("molten.aluminiumbrass", 4), amount(copper, 1), amount("molten.aluminium", 3));
             mix(rows, amount("molten.redalloy", 1), amount(copper, 1), amount("molten.redstone", 4));
             mix(rows, amount("molten.sterlingsilver", 5), amount(copper, 1), amount("molten.silver", 4));
-            mix(
-                    rows,
-                    amount("molten.purplealloy", 2),
-                    amount(copper, 1),
-                    amount("molten.silver", 1),
-                    amount("molten.redstone", 4),
-                    amount("molten.nikolite", 4));
+
             mix(
                     rows,
                     amount("molten.signalum", 4),
@@ -80,12 +74,7 @@ public final class SourceAlloyRecipes {
                     amount(copper, 3),
                     amount("molten.silver", 1),
                     amount("molten.gold", 1));
-            mix(
-                    rows,
-                    amount("molten.hepatizon", 8),
-                    amount(copper, 3),
-                    amount("molten.tin", 1),
-                    amount("molten.gold", 4));
+
             mix(rows, amount("molten.blackbronze", 5), amount(copper, 3), amount("molten.electrum", 2));
             mix(rows, amount("molten.rosegold", 5), amount(copper, 1), amount("molten.gold", 4));
             mix(
@@ -101,7 +90,7 @@ public final class SourceAlloyRecipes {
                     amount("molten.zinc", 1),
                     amount("molten.bismuth", 1));
         }
-        for (String iron : List.of("molten.iron", "molten.wroughtiron", "molten.pigiron", "molten.meteoriciron")) {
+        for (String iron : List.of("molten.iron", "molten.wroughtiron")) {
             mix(rows, amount("molten.invar", 3), amount(iron, 2), amount("molten.nickel", 1));
             mix(
                     rows,
@@ -110,7 +99,7 @@ public final class SourceAlloyRecipes {
                     amount("molten.aluminium", 1),
                     amount("molten.chromium", 1));
             mix(rows, amount("molten.tinalloy", 2), amount(iron, 1), amount("molten.tin", 1));
-            mix(rows, amount("molten.angmallen", 2), amount(iron, 1), amount("molten.gold", 1));
+
             mix(
                     rows,
                     amount("molten.stainlesssteel", 9),
@@ -134,18 +123,11 @@ public final class SourceAlloyRecipes {
                     amount("molten.manganese", 4));
             mix(rows, amount("molten.electrotinealloy", 1), amount(iron, 1), amount("molten.nikolite", 8));
         }
-        for (String steel : List.of("molten.steel", "molten.meteoricsteel", "molten hsla", "molten.knightmetal")) {
+        for (String steel : List.of("molten.steel", "molten.knightmetal")) {
             mix(rows, amount("molten.tungstensteel", 2), amount(steel, 1), amount("molten.tungsten", 1));
         }
-        // Pinned ANY.Glowstone.mToThis membership, including the six non-base variants.
-        for (String glowstone : List.of(
-                "molten.glowstone",
-                "molten.glowstoneceres",
-                "molten.glowstoneio",
-                "molten.glowstoneenceladus",
-                "molten.glowstoneproteus",
-                "molten.glowstonepluto",
-                "molten.gloomstone")) {
+        // Retained glowstone member.
+        for (String glowstone : List.of("molten.glowstone")) {
             mix(
                     rows,
                     amount("molten.lumium", 4),
@@ -154,19 +136,16 @@ public final class SourceAlloyRecipes {
                     amount(glowstone, 4));
         }
         mix(rows, amount("molten.bluealloy", 1), amount("molten.nikolite", 4), amount("molten.silver", 1));
-        mix(rows, amount("molten.purplealloy", 1), amount("molten.redalloy", 1), amount("molten.bluealloy", 1));
-        mix(rows, amount("molten.redstonealloy", 1), amount("molten.silicon", 1), amount("molten.redstone", 1));
+
         mix(rows, amount("molten.nikolinealloy", 1), amount("molten.silicon", 1), amount("molten.nikolite", 1));
         mix(rows, amount("molten.nichrome", 5), amount("molten.chromium", 1), amount("molten.nickel", 4));
         mix(rows, amount("molten.netherite", 1), amount("molten.gold", 4), amount("molten.ancientdebris", 4));
-        mix(rows, amount("molten.titaniumgold", 4), amount("molten.gold", 1), amount("molten.titanium", 3));
-        mix(rows, amount("molten.hepatizon", 2), amount("molten.gold", 1), amount("molten.bronze", 1));
+
         mix(rows, amount("molten.electrum", 2), amount("molten.gold", 1), amount("molten.silver", 1));
-        mix(rows, amount("molten.goldinductive", 2), amount("molten.gold", 1), amount("molten.redstone", 1));
+
         mix(rows, amount("molten.solderingalloy", 10), amount("molten.tin", 9), amount("molten.antimony", 1));
         mix(rows, amount("molten.batteryalloy", 5), amount("molten.lead", 4), amount("molten.antimony", 1));
-        mix(rows, amount("molten.celenegil", 2), amount("molten.orichalcum", 1), amount("molten.platinum", 1));
-        mix(rows, amount("molten.manyullyn", 2), amount("molten.ardite", 1), amount("molten.cobalt", 1));
+
         mix(rows, amount("molten.magnalium", 3), amount("molten.magnesium", 1), amount("molten.aluminium", 2));
         mix(
                 rows,

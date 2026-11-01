@@ -27,13 +27,8 @@ public final class OriginalFluidBedFuelRows {
             new Fuel(8349, "CoalCoke", 3200, 8201, U / 9),
             new Fuel(8337, "Lignite", 800, 8201, U / 4),
             new Fuel(8365, "LigniteCoke", 1600, 8201, U / 9),
-            new Fuel(8362, "Anthracite", 4800, 8201, U / 2),
-            new Fuel(8363, "Prismane", 9600, 8201, U),
-            new Fuel(8364, "Lonsdaleite", 19200, 8201, U * 2),
             new Fuel(8390, "PetCoke", 6400, 8201, U / 9),
-            new Fuel(8360, "Peat", 2000, 8200, U / 2),
-            // Original PeatBituminous has the default zero-amount burning target.
-            new Fuel(8361, "PeatBituminous", 2400, 0, 0));
+            new Fuel(8360, "Peat", 2000, 8200, U / 2));
 
     public static final List<Form> FORMS = List.of(
             new Form("blockDust", U * 9, 648),

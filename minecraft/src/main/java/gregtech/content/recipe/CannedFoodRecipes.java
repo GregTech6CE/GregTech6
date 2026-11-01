@@ -35,7 +35,7 @@ public final class CannedFoodRecipes {
         if(!plate.isEmpty()&&MachineRecipeMaps.RollBender.addRecipe1(false,16,64,plate,can("empty_food_can",1))!=null) registered++;
         registered+=pack(new ItemStack(Items.ROTTEN_FLESH),"small_food_can_rotten","Canned Meat");
         registered+=pack(new ItemStack(Items.SPIDER_EYE),"tiny_food_can_rotten","Canned Meat");
-        String[][] families={{"FishCooked","tiny_food_can_fish","Canned Fish"},{"MeatCooked","tiny_food_can_meat","Canned Meat"},{"Tofu","tiny_food_can_vegetables","Canned Tofu"},{"SoylentGreen","tiny_food_can_vegetables","Canned Emerald Green"}};
+        String[][] families={{"FishCooked","tiny_food_can_fish","Canned Fish"},{"MeatCooked","tiny_food_can_meat","Canned Meat"},{"SoylentGreen","tiny_food_can_vegetables","Canned Emerald Green"}};
         String[] prefixes={"dustTiny","dustSmall","dust","nugget","chunkGt","billet","ingot"}; int[] counts={9,4,1,9,4,2,1};
         for(var family:families) for(int i=0;i<prefixes.length;i++) {
             var input=GTItems.getStack(PrefixRegistry.byName(prefixes[i]),GTMaterialRegistry.get(family[0]),counts[i]);

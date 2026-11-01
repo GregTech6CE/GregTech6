@@ -99,8 +99,8 @@ public final class AddonMaterials {
         return "wireFine".equals(name) && WIRES.contains(resolved);
     }
 
-    private static final Set<String> COAL = Set.of(
-            "Coal", "Charcoal", "CoalCoke", "Lignite", "LigniteCoke", "Anthracite", "HydratedCoal", "PetroleumCoke");
+    private static final Set<String> COAL =
+            Set.of("Coal", "Charcoal", "CoalCoke", "Lignite", "LigniteCoke", "HydratedCoal", "PetroleumCoke");
     private static final Set<String> MEAT = Set.of("MeatRaw", "MeatCooked", "MeatRotten");
 
     private record Submission(

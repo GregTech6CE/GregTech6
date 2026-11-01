@@ -191,7 +191,7 @@ public final class OriginalHandCraftingRows {
             Ingredient plank = spec.material().equals("Wood") ? Ingredient.of(ItemTags.PLANKS)
                     : powerCellForm(MaterialPrefix.plate, spec.material());
             Ingredient bands = spec.band().equals("MagicIron")
-                    ? Ingredient.of(java.util.stream.Stream.of("Manasteel", "Thaumium", "DarkThaumium", "SpectreIron", "FierySteel", "MeteoflameSteel")
+                    ? Ingredient.of(java.util.stream.Stream.of("Manasteel", "Thaumium",   "FierySteel")
                             .map(name -> GTItems.getStack(MaterialPrefix.stickLong, gregtech.engine.material.GTMaterialRegistry.get(name)))
                             .filter(stack -> !stack.isEmpty()))
                     : powerCellForm(MaterialPrefix.stickLong, spec.band());
@@ -236,7 +236,7 @@ public final class OriginalHandCraftingRows {
 
     /** GT6 Loader_Recipes_Handlers:418-419: an ingot or billet and a file produce one rod. */
     private static void rods(Map<ResourceLocation, byte[]> recipes) {
-        var coated = Set.of("WoodTreated", "WoodPolished", "GildedIron", "SteelGalvanized", "NetherizedDiamond");
+        var coated = Set.of("WoodTreated", "WoodPolished", "SteelGalvanized", "NetherizedDiamond");
         for (GTMaterial material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
             if (!material.isValid() || material.resolve() != material
                     || material.has(gregtech.api.material.MaterialProperty.ANTIMATTER)
@@ -322,8 +322,8 @@ public final class OriginalHandCraftingRows {
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
 
     private static int customGearboxes(Map<ResourceLocation, byte[]> recipes) {
-        if (GTGearboxes.allGearboxes().size() != 13)
-            throw new IllegalStateException("Expected 13 GT6 custom gearboxes; got "
+        if (GTGearboxes.allGearboxes().size() != gregtech.content.energy.GearboxCatalog.tiers().length)
+            throw new IllegalStateException("Missing catalog custom gearboxes; got "
                     + GTGearboxes.allGearboxes().size());
         int added = 0;
         for (var holder : GTGearboxes.allGearboxes()) {
@@ -352,13 +352,13 @@ public final class OriginalHandCraftingRows {
             added += requiredAxle(recipes, path, pattern, key,
                     new ItemStack(holder.get().asItem()), false);
         }
-        if (added != 13) throw new IllegalStateException("Expected 13 GT6 custom gearbox recipes; got " + added);
+        if (added != GTGearboxes.allGearboxes().size()) throw new IllegalStateException("Missing custom gearbox recipes; got " + added);
         return added;
     }
 
     private static int transformerGearboxes(Map<ResourceLocation, byte[]> recipes) {
-        if (GTGearboxes.allTransformers().size() != 13)
-            throw new IllegalStateException("Expected 13 GT6 transformer gearboxes; got "
+        if (GTGearboxes.allTransformers().size() != gregtech.content.energy.GearboxCatalog.tiers().length)
+            throw new IllegalStateException("Missing catalog transformer gearboxes; got "
                     + GTGearboxes.allTransformers().size());
         int added = 0;
         for (var holder : GTGearboxes.allTransformers()) {
@@ -385,7 +385,7 @@ public final class OriginalHandCraftingRows {
             added += requiredAxle(recipes, path, pattern, key,
                     new ItemStack(holder.get().asItem()), false);
         }
-        if (added != 13) throw new IllegalStateException("Expected 13 GT6 transformer gearbox recipes; got " + added);
+        if (added != GTGearboxes.allTransformers().size()) throw new IllegalStateException("Missing transformer gearbox recipes; got " + added);
         return added;
     }
 
@@ -401,8 +401,8 @@ public final class OriginalHandCraftingRows {
     // ── GT6's 13 RU → KU engines and four RU rotational pumps ──────────────
 
     private static int rotationEngines(Map<ResourceLocation, byte[]> recipes) {
-        if (rotationEngines().size() != 13)
-            throw new IllegalStateException("Expected 13 GT6 rotation engines; got "
+        if (rotationEngines().size() != gregtech.content.energy.EngineCatalog.all().stream().filter(entry -> entry.spec() instanceof RotationEngineSpec).count())
+            throw new IllegalStateException("Missing catalog rotation engines; got "
                     + rotationEngines().size());
         int added = 0;
         for (var holder : rotationEngines()) {
@@ -436,7 +436,7 @@ public final class OriginalHandCraftingRows {
             }
             added += requiredAxle(recipes, path, pattern, key, new ItemStack(holder.get().asItem()), false);
         }
-        if (added != 13) throw new IllegalStateException("Expected 13 GT6 rotation engine recipes; got " + added);
+        if (added != rotationEngines().size()) throw new IllegalStateException("Missing rotation engine recipes; got " + added);
         return added;
     }
 
@@ -506,7 +506,7 @@ public final class OriginalHandCraftingRows {
         // BottleItem returns the GT6 empty bottle from getCraftingRemainingItem.
         String[] names = early
                 ? new String[]{"lubricant_bottle", "olive_oil", "sunflower_oil", "nut_oil",
-                    "seed_oil", "hemp_oil", "lin_oil", "fish_oil", "whale_oil"}
+                    "seed_oil", "hemp_oil", "lin_oil", "fish_oil"}
                 : new String[]{"lubricant_bottle"};
         ItemStack[] bottles = new ItemStack[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -595,8 +595,7 @@ public final class OriginalHandCraftingRows {
                 {"bronze", Materials.Bronze, GTBars.get("bars_bronze")},
                 {"wrought_iron", Materials.WroughtIron, GTBars.get("bars_wrought_iron")},
                 {"stainless", Materials.StainlessSteel, GTBars.get("bars_stainless")},
-                {"tungsten_steel", Materials.Tungstensteel, GTBars.get("bars_tungsten_steel")},
-        };
+                {"tungsten_steel", Materials.Tungstensteel, GTBars.get("bars_tungsten_steel")}};
         for (Object[] entry : entries) {
             ItemStack rod = GTItems.getStack(MaterialPrefix.stick, (GTMaterial) entry[1], 1);
             if (rod.isEmpty()) continue;
@@ -744,7 +743,6 @@ public final class OriginalHandCraftingRows {
         var resolved = gregtech.engine.material.GTMaterialRegistry.get(material);
         return resolved == null ? ItemStack.EMPTY : GTItems.getStack(prefix, resolved, 1);
     }
-
 
     private static int storage(Map<ResourceLocation, byte[]> recipes) {
         int added = 0;
@@ -920,7 +918,7 @@ public final class OriginalHandCraftingRows {
     /** Full Loader_HandToolCraftingRecipes.axles patterns; same ids, forms and tool costs. */
     private static void addAxles(Map<ResourceLocation,byte[]> data) {
         var axles = gregtech.content.registry.GTAxles.all();
-        if (axles.size() != 52) throw new IllegalStateException("Expected 52 original axle variants");
+        if (axles.size() != gregtech.content.energy.AxleCatalog.specifications().size()) throw new IllegalStateException("Missing catalog axle variants");
         for (var holder : axles) {
             var spec = holder.get().spec();
             boolean wood = spec.material() == gregtech.content.material.generated.WoodMaterials.WoodTreated;

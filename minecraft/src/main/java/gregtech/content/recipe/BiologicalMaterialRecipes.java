@@ -75,15 +75,7 @@ public final class BiologicalMaterialRecipes extends OriginalRecipeBatch {
                 items(new ItemStack(Items.BLAZE_POWDER)),
                 null,
                 fluids(fluid("Slime_Green", 125)));
-        add(
-                "slimy_bone/recover",
-                MachineRecipeMaps.Centrifuge,
-                16,
-                16,
-                items(mat(MaterialPrefix.dust, "SlimyBone", 1)),
-                items(mat(MaterialPrefix.dust, "Bone", 1)),
-                null,
-                fluids(fluid("Slime_Green", 250)));
+
     }
 
     private void resin() {

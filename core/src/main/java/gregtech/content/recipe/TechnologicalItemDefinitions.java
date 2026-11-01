@@ -21,8 +21,6 @@ public final class TechnologicalItemDefinitions {
             // snake(IL field) ("Food_PotatoChips" -> food_potatochips) while the port registers
             // snake(display name) ("Potato Chips" -> potato_chips). Derived by
             // tools/derive_missing_tech_aliases.py from GT6's own registrations.
-            Map.entry("food_butter", "butter"),
-            Map.entry("food_butter_salted", "salted_butter"),
             Map.entry("food_cheese", "cheese"),
             Map.entry("food_dough", "dough"),
             Map.entry("food_dough_abyssal", "abyssal_dough"),
@@ -142,7 +140,6 @@ public final class TechnologicalItemDefinitions {
         put("circuit_plate_magic", "Circuit Plate (Magic)");
         put("circuit_plate_enderium", "Circuit Plate (Enderium)");
         put("circuit_plate_signalum", "Circuit Plate (Signalum)");
-        put("circuit_plate_hsla", "Circuit Plate (HSLA)");
         put("circuit_wire_enderium", "Circuit Wiring (Enderium)");
         put("circuit_wire_gold", "Circuit Wiring (Gold)");
         put("circuit_wire_magic", "Circuit Wiring (Magic)");
@@ -158,7 +155,6 @@ public final class TechnologicalItemDefinitions {
         put("circuit_board_magic", "Circuit Board (Magic)");
         put("circuit_board_enderium", "Circuit Board (Enderium)");
         put("circuit_board_signalum", "Circuit Board (Signalum)");
-        put("circuit_board_hsla_circuit", "Circuit Board (HSLA)");
         put("circuit_board_power_module", "Power Module Circuit Board");
         put("circuit_part_basic", "Circuit Part (Basic)");
         put("circuit_part_good", "Circuit Part (Good)");
@@ -420,7 +416,6 @@ public final class TechnologicalItemDefinitions {
         "circuit_plate_enderium",
         "circuit_wire_signalum",
         "circuit_plate_signalum",
-        "circuit_plate_hsla",
         "circuit_board_basic",
         "circuit_board_good",
         "circuit_board_advanced",
@@ -430,7 +425,6 @@ public final class TechnologicalItemDefinitions {
         "circuit_board_magic",
         "circuit_board_enderium",
         "circuit_board_signalum",
-        "circuit_board_hsla_circuit",
         "circuit_board_power_module",
         "circuit_part_basic",
         "circuit_part_good",

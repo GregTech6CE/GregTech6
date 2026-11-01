@@ -67,7 +67,6 @@ public final class OriginalMaterialFluidUnits {
                 "uraniumhexafluoride",
                 SOURCE_UNIT,
                 1000),
-        new Binding("WhaleOil", 9887, "liquid", "Oil_Whale", "whaleoil", SOURCE_UNIT, 1000)
     };
 
     private OriginalMaterialFluidUnits() {}

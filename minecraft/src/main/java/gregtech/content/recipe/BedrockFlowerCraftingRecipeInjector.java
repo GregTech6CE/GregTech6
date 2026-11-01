@@ -67,7 +67,7 @@ public final class BedrockFlowerCraftingRecipeInjector {
 //?}
                 added++;
             }
-            if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1 || flower.meta() == 6)) {
+            if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1)) {
                 ItemStack twoSticks = stick(flower, 2);
                 for (GTToolType tool : new GTToolType[]{GTToolType.SAW, GTToolType.KNIFE}) {
                     var toolItem = GTToolItems.get(tool);
@@ -98,7 +98,7 @@ public final class BedrockFlowerCraftingRecipeInjector {
     private static ItemStack shapelessOutput(BedrockFlowers.Flower flower) {
         if (flower.family() == 'A' && flower.meta() < A_DUST.length)
             return dust(A_DUST[flower.meta()]);
-        if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1 || flower.meta() == 6))
+        if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1))
             return stick(flower, 1);
         if (flower.family() == 'B' && flower.meta() >= 2 && flower.meta() <= 5)
             return dust(B_DUST[flower.meta() - 2]);
@@ -106,7 +106,7 @@ public final class BedrockFlowerCraftingRecipeInjector {
     }
 
     private static ItemStack stick(BedrockFlowers.Flower flower, int count) {
-        String material = flower.meta() == 6 ? "Palm" : "Acacia";
+        String material = "Acacia";
         ItemStack output = GTItems.getStack(MaterialPrefix.stick, GTMaterialRegistry.get(material), count);
         if (output.isEmpty()) throw new IllegalStateException("Missing GT6 flower stick form " + material);
         return output;

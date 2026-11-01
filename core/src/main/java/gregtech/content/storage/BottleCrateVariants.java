@@ -37,16 +37,12 @@ public final class BottleCrateVariants {
         for (WoodSpecies species : WoodSpecies.values()) {
             String texture = switch (species.id()) {
                 case "blue_mahoe" -> "bluemahoe";
-                case "white_mahoe" -> "wood";
                 default -> species.id();
             };
             result.add(new Wood(
                     species.id(),
                     "gt6ce:planks_" + species.id(),
                     switch (species.id()) {
-                        case "pine" -> "minecraft:block/spruce_planks";
-                        case "ebony" -> "minecraft:block/dark_oak_planks";
-                        case "white_mahoe" -> "minecraft:block/birch_planks";
                         default -> "gt6ce:block/iconsets/planks_" + texture;
                     }));
         }

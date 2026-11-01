@@ -31,7 +31,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("tech:food_potato_poisonous:1"), sp("f:DistW:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:red_mushroom:1"), sp("f:DistW:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:pufferfish:1"), sp("f:DistW:750"), sp("f:Potion_Poison_2:750"), NONE);
-        r("Distillery", 16, 16, null, sp("omd:WaxRefractory:1000"), sp("f:Potion_Awkward:250"), sp("f:Potion_FireResistance_1:250"), NONE);
         r("Distillery", 16, 48, null, sp("v:pufferfish:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_WaterBreathing_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:magma_cream:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_FireResistance_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:golden_carrot:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_NightVision_1:750"), NONE);

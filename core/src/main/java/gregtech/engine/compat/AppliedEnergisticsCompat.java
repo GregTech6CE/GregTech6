@@ -10,30 +10,14 @@ import java.util.List;
 public final class AppliedEnergisticsCompat {
     private static final String SOURCE = "Compat_Recipes_AppliedEnergistics.java";
     private static final String[] IRON_OR_STEEL = {
-        "Iron",
-        "WroughtIron",
-        "CastIron",
-        "IronCompressed",
-        "PigIron",
-        "MeteoricIron",
-        "Meteorite",
-        "Steel",
-        "Knightmetal",
-        "MeteoricSteel"
+        "Iron", "WroughtIron", "CastIron", "Steel", "Knightmetal",
     };
     private static final String[] COPPER = {"Copper", "AnnealedCopper"};
     private static final String[] OTHER_INGOTS = {
         "Tin", "Lead", "Silver", "Nickel", "Aluminium", "Brass", "Bronze", "Invar"
     };
     private static final String[] DIAMONDS = {
-        "Diamond",
-        "BlueDiamond",
-        "GreenDiamond",
-        "PurpleDiamond",
-        "RedDiamond",
-        "YellowDiamond",
-        "PinkDiamond",
-        "DiamondIndustrial"
+        "Diamond", "BlueDiamond", "GreenDiamond", "RedDiamond", "YellowDiamond", "PinkDiamond", "DiamondIndustrial"
     };
     private static final String[][] SMASH = {
         {"quartz_block", "CertusQuartz", "4"},

@@ -32,9 +32,7 @@ import java.util.Set;
  *
  * <p>GT6's "rock litter" generator: in temperate biomes every chunk marks two target columns and
  * gives each a 1-in-3 chance to place a small rock on the surface (the same lying-item block the
- * ore indicators use). Half of those rocks carry an item: usually flint, and about one in twelve of
- * the item rocks is meteoric iron — three quarters of those as a GT rock, one quarter as a raw ore
- * chunk.
+ * ore indicators use). Half of those rocks carry an item: flint.
  *
  * <p>The skeleton is GT6's {@code WorldgenOnSurface.generate}: mark {@code amount} target cells in
  * the 16x16 grid, roll {@code 1/probability} per marked cell, then cast a ray from
@@ -45,11 +43,6 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code new WorldgenRocks("overworld.rocks", T, 2, 3, …)}. */
     public static final int AMOUNT = 2;
     public static final int PROBABILITY = 3;
-    /** GT6's item roll: {@code aRandom.nextInt(mAmount) == 0} then {@code nextInt(12) == 0}. */
-    public static final int METEORIC_CHANCE = 12;
-    /** ... and of the meteoric iron rocks, {@code nextInt(4) == 0} are raw ore chunks. */
-    public static final int RAW_ORE_CHANCE = 4;
-    public static final String METEORIC_IRON = "MeteoricIron";
     public static final String FLINT = "minecraft:flint";
 
     /** What one rock carries (GT6's {@code ST.save(NBT_VALUE, …)}): an item and/or a material. */
@@ -136,11 +129,7 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
         return state.isAir() || state.is(BlockTags.REPLACEABLE) || state.is(Blocks.SNOW);
     }
 
-    /**
-     * GT6's NBT roll, verbatim:
-     * {@code nextInt(amount) == 0 ? (nextInt(12) == 0 ? (nextInt(4) == 0 ? oreRaw : rockGt).mat(MeteoricIron)
-     * : flint) : null}.
-     */
+    /** Selects the retained surface-litter contents. */
     public static Litter litterFor(RandomSource random) {
         var value=TerrainWorldgenRules.litter(random::nextInt);return new Litter(value.itemId(),value.material(),value.rawOre());}
 

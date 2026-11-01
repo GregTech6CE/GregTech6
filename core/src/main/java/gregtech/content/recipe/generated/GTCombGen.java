@@ -29,8 +29,6 @@ final class GTCombGen {
         // GT6 also yields IL.FR_Propolis.get(1) (another mod's item); dropped here.
         r(16, 64, ch(10000, 1000), sp("tech:honey_comb:1"), NONE, sp("f:Honey:100"), sp("i:dust:WaxBee:1"));
         r(16, 64, ch(10000, 1000), sp("tech:water_comb:1"), NONE, sp("w:1000"), sp("i:dust:WaxBee:1"));
-        r(16, 64, ch(10000, 1000), sp("tech:magic_comb:1"), NONE, sp("f:Ambrosia:100"), sp("i:dust:WaxMagic:1"));
-        r(16, 64, ch(10000, 1000), sp("tech:nether_comb:1"), NONE, sp("f:Blaze:144"), sp("i:dust:WaxRefractory:1"));
         // GT6 also yields IL.FR_Propolis_Pulsating.get(1), IL.EtFu_Chorus_Fruit.get(1) (another mod's item); dropped here.
         r(16, 64, ch(10000, 1000, 1000), sp("tech:end_comb:1"), NONE, sp("f:Dragon_Breath:125"), sp("i:dust:Endstone:1"));
         r(16, 64, ch(10000, 1000), sp("tech:rock_comb:1"), NONE, sp("f:Concrete:144"), sp("i:dust:Stone:1"));
@@ -44,8 +42,6 @@ final class GTCombGen {
         GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 64, ch(10000, 3000),
                 sp("tech:sticky_comb:1"), NONE, sp("f:Latex:144"), sp("i:dust:WaxBee:1", "copt:sticky_resin:1"));
         r(16, 64, ch(10000), sp("tech:royal_comb:1"), NONE, sp("f:Honey:50", "f:RoyalJelly:10"), sp("i:dust:WaxBee:1"));
-        r(16, 64, ch(10000, 9000), sp("tech:soul_comb:1"), NONE, sp("f:Oil_Soulsand:50"), sp("i:dust:WaxSoulful:1", "i:dust:SoulSand:1"));
-        r(16, 64, ch(10000, 1000), sp("tech:amnesic_comb:1"), NONE, sp("f:Lubricant:1000"), sp("i:dust:WaxAmnesic:1"));
         r(16, 64, ch(10000, 500, 500, 250), sp("tech:military_comb:1"), NONE, sp("f:Potion_Harm_1:50"), sp("sci:Bone:dust:1", "v:bone:1", "v:rotten_flesh:1", "v:spider_eye:1"));
         r(16, 64, ch(10000, 1000), sp("tech:pyro_comb:1"), NONE, sp("f:Blaze:72"), sp("sci:Blaze:dustTiny:1", "sci:Blaze:stick:1"));
         r(16, 64, ch(10000, 1000), sp("tech:cryo_comb:1"), NONE, sp("f:Ice:500"), sp("omdu:Blizz:72072000", "i:stick:Blizz:1"));

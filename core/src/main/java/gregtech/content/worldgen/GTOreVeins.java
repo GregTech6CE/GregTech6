@@ -572,7 +572,6 @@ public final class GTOreVeins {
             new SmallOre("zeolite", 1, 250, 1, gregtech.content.material.generated.OreMaterials.Zeolite),
             new SmallOre("coltan", 1, 250, 4, gregtech.content.material.generated.OreMaterials.Coltan),
             new SmallOre("niter", 10, 120, 32, Materials.Niter),
-            new SmallOre("efrine", 90, 120, 8, Materials.Efrine),
             new SmallOre("cinnabar", 5, 250, 16, gregtech.content.material.generated.OreMaterials.Cinnabar));
 
     /** GT6 small ores flagged {@code GEN_END} (incl. End-exclusive endium/sugilite/naquadah/trinium). */
@@ -606,7 +605,5 @@ public final class GTOreVeins {
             new SmallOre("sperrylite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Sperrylite),
             new SmallOre("cooperite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Cooperite),
             new SmallOre("naquadah", 10, 80, 6, Materials.Naquadah),
-            new SmallOre("trinium", 10, 80, 12, Materials.Trinium),
-            new SmallOre("endium", 10, 80, 32, Materials.Endium),
-            new SmallOre("sugilite", 10, 80, 16, Materials.Sugilite));
+            new SmallOre("trinium", 10, 80, 12, Materials.Trinium));
 }

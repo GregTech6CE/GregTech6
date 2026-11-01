@@ -16,7 +16,7 @@ public final class BedrockFlowers {
         }
     }
 
-    // Only five originals call OM.data; an indicator is not made of the ore it indicates.
+    // Only four retained flowers call OM.data; an indicator is not made of the ore it indicates.
     public static final List<Flower> ALL = List.of(
             a("flower_altered_andesite_buckwheat", 0, "gold", true, Materials.Wheat),
             a("flower_crosby_buckwheat", 1, "silver", true, Materials.Wheat),
@@ -34,7 +34,7 @@ public final class BedrockFlowers {
             b("flower_copper_plant", 3, "copper", true, null),
             b("flower_prince_s_plume", 4, "redstone", true, null),
             b("flower_thompsons_locoweed", 5, "uranium", true, null),
-            b("flower_pandanus_candelabrum", 6, "diamond", true, WoodMaterials.Palm),
+            b("flower_pandanus_candelabrum", 6, "diamond", true, null),
             b("flower_tungstus", 7, "tungsten", false, null));
     private static final Map<String, Flower> BY_ID = index();
 

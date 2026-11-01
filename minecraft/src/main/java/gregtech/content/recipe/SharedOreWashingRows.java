@@ -186,7 +186,7 @@ public final class SharedOreWashingRows {
     }
    }else{
     String[] reagents=tag==SourceOreWashingData.Tag.PERSULFATE?new String[]{"SodiumPersulfate","PotassiumPersulfate"}
-        :new String[]{"Firestone","Pyrotheum","Octine"};
+        :new String[]{"Pyrotheum"};
     for(String reagentName:reagents)for(BathShape shape:bathShapes()){
      String route="bath/"+tag+"/"+reagentName+"/"+shape;
      NativeForm reagent=s.direct(shape.reagent(),GTMaterialRegistry.get(reagentName),shape.reagentCount());

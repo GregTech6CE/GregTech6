@@ -96,11 +96,7 @@ public final class GTBedrockOres {
      * indicator flower — only surface rocks — so {@code flowerId} is null.
      */
     public static final List<BedrockOre> NETHER = List.of(
-            new BedrockOre("voidquartz", Materials.VoidQuartz, 4000, null),
             new BedrockOre("glowstone", Materials.Glowstone, 4000, null),
-            new BedrockOre("gloomstone", Materials.Gloomstone, 4000, null),
-            new BedrockOre("efrine", Materials.Efrine, 2000, null),
             new BedrockOre("netherquartz", Materials.NetherQuartz, 2000, null),
-            new BedrockOre("firestone", Materials.Firestone, 8000, null),
             new BedrockOre("ancientdebris", Materials.AncientDebris, 4000, null));
 }

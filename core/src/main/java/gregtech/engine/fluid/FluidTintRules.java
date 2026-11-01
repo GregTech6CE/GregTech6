@@ -11,7 +11,6 @@ public final class FluidTintRules {
             case "Iron" -> 0xFFFF4020;
             case "WroughtIron" -> 0xFFFF5028;
             case "Steel" -> 0xFFFF140A;
-            case "HSLASteel" -> 0xFFB4501E;
             case "Iridium" -> 0xFFFF80C8;
             case "Naquadah" -> 0xFF00FF00;
             case "NaquadahEnriched" -> 0xFF40FF40;

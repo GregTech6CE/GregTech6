@@ -405,12 +405,11 @@ public final class GTDungeonData {
             GT6Materials.Compounds.ClayBrown, GT6Materials.Compounds.ClayRed,
             GT6Materials.Compounds.Bentonite, GT6Materials.Compounds.Palygorskite,
             GT6Materials.Compounds.Kaolinite, GT6Materials.Ores.RareEarth, GT6Materials.Compounds.Sugar,
-            GT6Materials.Compounds.Cocoa, GT6Materials.Compounds.Coffee, GT6Materials.Compounds.Vanilla,
-            GT6Materials.Compounds.PepperBlack, GT6Materials.Compounds.Curry, GT6Materials.Compounds.Wheat,
-            GT6Materials.Compounds.Barley, GT6Materials.Compounds.Rye, GT6Materials.Compounds.Rice,
-            GT6Materials.Compounds.Oat, GT6Materials.Compounds.OatAbyssal, GT6Materials.Compounds.Corn,
+            GT6Materials.Compounds.Cocoa, GT6Materials.Compounds.Coffee,
+            GT6Materials.Compounds.Wheat,
+            GT6Materials.Compounds.Rye,
             GT6Materials.Compounds.Potato, GT6Materials.Compounds.WaxBee,
-            GT6Materials.Compounds.WaxRefractory, GT6Materials.Compounds.Blaze,
+            GT6Materials.Compounds.Blaze,
             GT6Materials.Compounds.Breeze, GT6Materials.Compounds.Blizz, GT6Materials.Compounds.Blitz,
             GT6Materials.Compounds.Basalz};
 
@@ -423,7 +422,7 @@ public final class GTDungeonData {
             GT6Materials.Woods.BlueMahoe, GT6Materials.Woods.Hazel, GT6Materials.Compounds.Cinnamon,
             GT6Materials.Woods.Coconut, GT6Materials.Woods.Rainbowood, GT6Materials.Woods.BlueSpruce,
             GT6Materials.Woods.Livingwood, GT6Materials.Woods.Greatwood, GT6Materials.Woods.Silverwood,
-            GT6Materials.Woods.WoodTreated, GT6Materials.Woods.Weedwood, GT6Materials.Woods.Skyroot};
+            GT6Materials.Woods.WoodTreated};
 
     /** GT6's {@code sGems}: 47 entries covering gems, crystals, coals and lapis. */
     public static final GTMaterial[] CRATE_GEMS = {
@@ -433,14 +432,14 @@ public final class GTDungeonData {
             GT6Materials.Compounds.Aquamarine, GT6Materials.Compounds.Ruby,
             GT6Materials.Compounds.GreenSapphire, GT6Materials.Compounds.BlueSapphire,
             GT6Materials.Compounds.Amethyst, GT6Materials.Compounds.Craponite, GT6Materials.Compounds.Amber,
-            GT6Materials.Compounds.VoidQuartz, GT6Materials.Compounds.NetherQuartz,
+            GT6Materials.Compounds.NetherQuartz,
             GT6Materials.Compounds.NetherQuartz, GT6Materials.Compounds.MilkyQuartz,
             GT6Materials.Compounds.MilkyQuartz, GT6Materials.Compounds.CertusQuartz,
             GT6Materials.Compounds.ChargedCertusQuartz, GT6Materials.Compounds.Lapis,
             GT6Materials.Compounds.Lapis, GT6Materials.Compounds.Lapis, GT6Materials.Compounds.Redstone,
             GT6Materials.Compounds.Redstone, GT6Materials.Compounds.Redstone,
             GT6Materials.Compounds.Glowstone, GT6Materials.Compounds.Glowstone,
-            GT6Materials.Compounds.Gloomstone, GT6Materials.Compounds.Apatite,
+            GT6Materials.Compounds.Apatite,
             GT6Materials.Compounds.Apatite, GT6Materials.Compounds.Apatite, GT6Materials.Compounds.Coal,
             GT6Materials.Compounds.Coal, GT6Materials.Compounds.Coal, GT6Materials.Compounds.Coal,
             GT6Materials.Compounds.Coal, GT6Materials.Compounds.Charcoal, GT6Materials.Compounds.Charcoal,

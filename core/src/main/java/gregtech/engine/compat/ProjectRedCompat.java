@@ -41,13 +41,6 @@ public final class ProjectRedCompat {
                         List.of(" X", "s "),
                         List.of(key("X", form("plateGem", "Silicon", 1)), key("s", item("gt6ce:tool_saw", 1))),
                         SOURCE + ":39",
-                        true),
-                new CompatSpecs.ShapedRow(
-                        "compat/projectred/infused_silicon",
-                        item("projectred_core:infused_silicon", 4),
-                        List.of(" X", "s "),
-                        List.of(key("X", form("plateGem", "RedstoneAlloy", 1)), key("s", item("gt6ce:tool_saw", 1))),
-                        SOURCE + ":40",
                         true));
         return new CompatSpecs.Module(
                 "projectred_core",

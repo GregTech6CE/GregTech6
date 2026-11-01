@@ -32,7 +32,7 @@ public final class IconColumnCatalog {
         list.add(new String[] {"log_sap_maple", "log_sap_maple", "log_top_maple"});
         list.add(new String[] {"log_sap_rainbowood", "log_sap_rainbowood", "log_top_rainbowood"});
         list.add(new String[] {"log_resin_rubber", "log_resin_rubber", "log_top_rubber"});
-        for (String crop : new String[] {"barley", "oat", "rice", "rye"}) {
+        for (String crop : new String[] {"rye"}) {
             list.add(new String[] {"bale_" + crop, crop + "_side", crop + "_top"});
         }
         list.add(new String[] {"bale_grass", "grass_side", "grass_top"});

@@ -8,13 +8,13 @@
     "item:gt6ce:rotation_transformer_brass",
     "item:gt6ce:rotation_transformer_bronze",
     "item:gt6ce:rotation_transformer_iridium",
-    "item:gt6ce:rotation_transformer_iritanium",
     "item:gt6ce:rotation_transformer_steel",
     "item:gt6ce:rotation_transformer_titanium",
     "item:gt6ce:rotation_transformer_trinaquadalloy",
     "item:gt6ce:rotation_transformer_trinitanium",
     "item:gt6ce:rotation_transformer_tungstensteel",
-    "item:gt6ce:rotation_transformer_wood"
+    "item:gt6ce:rotation_transformer_wood",
+    "item:gt6ce:rotation_transformer_iritanium"
   ],
   "priority": 110
 }

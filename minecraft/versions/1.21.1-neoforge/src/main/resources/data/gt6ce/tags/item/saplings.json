@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "gt6ce:sapling_blue_mahoe",
-    "gt6ce:sapling_ebony",
     "gt6ce:sapling_large_bluemahoe",
     "gt6ce:sapling_large_bluespruce",
     "gt6ce:sapling_large_cinnamon",
@@ -13,7 +11,6 @@
     "gt6ce:sapling_large_rubber",
     "gt6ce:sapling_large_willow",
     "gt6ce:sapling_maple",
-    "gt6ce:sapling_pine",
     "gt6ce:sapling_rainbowood",
     "gt6ce:sapling_rubber",
     "gt6ce:sapling_small_bluemahoe",
@@ -25,11 +22,11 @@
     "gt6ce:sapling_small_rainbowood",
     "gt6ce:sapling_small_rubber",
     "gt6ce:sapling_small_willow",
-    "gt6ce:sapling_white_mahoe",
     "gt6ce:sapling_willow",
     "gt6ce:sapling_hazel",
     "gt6ce:sapling_cinnamon",
     "gt6ce:sapling_coconut",
-    "gt6ce:sapling_bluespruce"
+    "gt6ce:sapling_bluespruce",
+    "gt6ce:sapling_blue_mahoe"
   ]
 }

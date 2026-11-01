@@ -238,7 +238,6 @@ final class GTVanillaGen {
         r("Bath", 0, 16, null, sp("v:melon:1"), sp("m:Au:888"), NONE, sp("v:glistering_melon_slice:1"));
         r("Mixer", 16, 16, null, sp("v:melon:1", "i:nugget:Au:8"), NONE, NONE, sp("v:glistering_melon_slice:1"));
         r("Mixer", 16, 16, null, NONE, sp("w:50", "f:Lava:1000"), NONE, sp("v:obsidian:1"));
-        r("Mixer", 16, 16, null, sp("omd:Redrock:1000"), sp("w:3000"), NONE, sp("tech:clay_ball_red:4"));
         r("Mixer", 16, 16, null, sp("omd:EnderPearl:1000", "omd:Blaze:111"), NONE, NONE, sp("omd:EnderEye:1000"));
         r("Mixer", 16, 144, null, sp("omd:EnderPearl:9000", "omd:Blaze:1000"), NONE, NONE, sp("omd:EnderEye:9000"));
         r("Mixer", 16, 16, null, sp("omd:Sugar:1000", "v:spider_eye:1", "v:brown_mushroom:1"), NONE, NONE, sp("v:fermented_spider_eye:1"));
@@ -249,7 +248,6 @@ final class GTVanillaGen {
         r("Mixer", 16, 16, null, sp("omd:LigniteCoke:1000", "omd:Blaze:111", "omd:Gunpowder:1000"), NONE, NONE, sp("v:fire_charge:3"));
         r("Electrolyzer", 64, 576, null, sp("tag:0", "v:sand:1"), NONE, NONE, sp("omd:SiO2:9000"));
         r("Electrolyzer", 64, 64, null, sp("tag:0", "omd:Sand:1000"), NONE, NONE, sp("omd:SiO2:1000"));
-        r("Centrifuge", 16, 16, null, sp("omd:SlimyBone:1000"), NONE, sp("f:Slime_Green:250"), sp("omd:Bone:1000"));
         r("Centrifuge", 16, 16, null, sp("v:magma_cream:1"), NONE, sp("f:Slime_Green:125"), sp("v:blaze_powder:1"));
     }
 }

@@ -15,61 +15,18 @@ public final class OriginalToolMaterials {
 
     private static final Map<String, String> HANDLES = Map.ofEntries(
             Map.entry("GaiaSpirit", "ElvenElementium"),
-            Map.entry("Endium", "Endstone"),
-            Map.entry("SpectreIron", "Obsidian"),
-            Map.entry("DarkMatter", "Diamond"),
-            Map.entry("RedMatter", "DarkMatter"),
-            Map.entry("Desh", "Desh"),
-            Map.entry("Ethaxium", "Ethaxium"),
             Map.entry("Vibranium", "VibraniumSteel"),
             Map.entry("VibraniumSteel", "VibraniumSteel"),
             Map.entry("VibraniumSilver", "VibraniumSteel"),
             Map.entry("Vibramantium", "Vibramantium"));
-    private static final Set<String> MAGIC_WOOD_HEADS = Set.of(
-            "Mauftrium",
-            "Elvorium",
-            "MuspelheimPower",
-            "NiflheimPower",
-            "ElvenElementium",
-            "ElvenDragonstone",
-            "Manasteel",
-            "Terrasteel",
-            "ManaDiamond",
-            "Thaumium");
-    private static final Set<String> BLAZE_HEADS = Set.of(
-            "FierySteel",
-            "Fireleaf",
-            "MeteoflameSteel",
-            "MeteoflameBlackSteel",
-            "MeteoflameBlueSteel",
-            "MeteoflameRedSteel",
-            "FlamascusSteel",
-            "Firestone");
-    private static final Set<String> IRON_HEADS = Set.of("AmethystEnder", "Meteorite", "Kreknorite", "Sugilite");
-    private static final Set<String> MAGIC_IRON_HEADS = Set.of(
-            "VoidMetal",
-            "InfusedAir",
-            "InfusedBalance",
-            "InfusedDull",
-            "InfusedEarth",
-            "InfusedEntropy",
-            "InfusedFire",
-            "InfusedOrder",
-            "InfusedWater",
-            "InfusedVis",
-            "DarkThaumium");
-    private static final Set<String> MAGIC_WOODS = Set.of(
-            "Greatwood",
-            "Silverwood",
-            "Livingwood",
-            "Dreamwood",
-            "Shimmerwood",
-            "Magicwood",
-            "WoodTainted",
-            "Witchwood",
-            "Rainbowood");
-    private static final Set<String> MAGIC_IRONS =
-            Set.of("Manasteel", "Thaumium", "DarkThaumium", "SpectreIron", "FierySteel", "MeteoflameSteel");
+    private static final Set<String> MAGIC_WOOD_HEADS =
+            Set.of("ElvenElementium", "Manasteel", "Terrasteel", "ManaDiamond", "Thaumium");
+    private static final Set<String> BLAZE_HEADS = Set.of("FierySteel", "Fireleaf", "FlamascusSteel");
+    private static final Set<String> IRON_HEADS = Set.of();
+    private static final Set<String> MAGIC_IRON_HEADS = Set.of();
+    private static final Set<String> MAGIC_WOODS =
+            Set.of("Greatwood", "Silverwood", "Livingwood", "Dreamwood", "Rainbowood");
+    private static final Set<String> MAGIC_IRONS = Set.of("Manasteel", "Thaumium", "FierySteel");
     /** Oil shale gains STONE for its placed block, but MT.oredustcent never adds it to ANY.Stone. */
     public static boolean earlyStone(GTMaterial material) {
         if (material == null || !material.has(MaterialProperty.STONE)) return false;
@@ -93,31 +50,16 @@ public final class OriginalToolMaterials {
         return switch (family) {
             case "WoodPlastic" ->
                 material.has(MaterialProperty.WOOD) || name.equals("PetrifiedWood") || inFamily(material, "Plastic");
-            case "Plastic" ->
-                Set.of("Plastic", "HardPlastic", "Polycarbonate", "PVC", "Teflon", "Bakelite")
-                        .contains(name);
+            case "Plastic" -> Set.of("Plastic", "PVC", "Teflon").contains(name);
             case "WoodMagical" ->
                 MAGIC_WOODS.contains(name)
                         || (material.has(MaterialProperty.WOOD) && material.has(MaterialProperty.MAGICAL));
             case "MagicIron" -> MAGIC_IRONS.contains(name);
             case "Rubber" -> material.getTextureSet() == MaterialTextureSet.RUBBER;
             case "Iron" ->
-                Set.of(
-                                "Iron",
-                                "WroughtIron",
-                                "IronMagnetic",
-                                "IronCast",
-                                "IronCompressed",
-                                "PigIron",
-                                "MeteoricIron",
-                                "Meteorite",
-                                "Enori",
-                                "Steel",
-                                "Knightmetal",
-                                "MeteoricSteel")
+                Set.of("Iron", "WroughtIron", "IronMagnetic", "IronCast", "Enori", "Steel", "Knightmetal")
                         .contains(name);
-            case "Steel" ->
-                Set.of("Steel", "SteelMagnetic", "Knightmetal", "MeteoricSteel").contains(name);
+            case "Steel" -> Set.of("Steel", "SteelMagnetic", "Knightmetal").contains(name);
             default -> false;
         };
     }
@@ -209,7 +151,7 @@ public final class OriginalToolMaterials {
                             SOFT_HAMMER -> true;
                     default -> false;
                 }
-                && Set.of("WoodTreated", "WoodPolished", "GildedIron", "SteelGalvanized", "NetherizedDiamond")
+                && Set.of("WoodTreated", "WoodPolished", "SteelGalvanized", "NetherizedDiamond")
                         .contains(name(material))) return false;
         // All MT rubber/plastic families carry EXTRUDER; shaped soft heads require EXTRUDER.NOT.
         if (type == ToolDefinition.SOFT_HAMMER) return material.has(MaterialProperty.WOOD);

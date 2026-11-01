@@ -29,12 +29,8 @@ public final class OreFluidBindingAdapter {
   String nativePath=switch(b.field()) {
    case "GenMolten_Wax" -> "molten_wax";
    case "GenMolten_WaxBee" -> "molten_waxbee";
-   case "GenMolten_WaxRefractory" -> "molten_waxrefractory";
    case "GenMolten_WaxParaffin" -> "molten_waxparaffin";
    case "GenMolten_WaxPlant" -> "molten_waxplant";
-   case "GenMolten_WaxMagic" -> "molten_waxmagic";
-   case "GenMolten_WaxAmnesic" -> "molten_waxamnesic";
-   case "GenMolten_WaxSoulful" -> "molten_waxsoulful";
    case "GenLiquid_Mercury" -> "mercury";
    case "Cryotheum" -> "cryotheum";
    case "Petrotheum" -> "petrotheum";

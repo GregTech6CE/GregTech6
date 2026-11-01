@@ -47,9 +47,6 @@ public final class OriginalSingleItemCatalog {
             Map.entry("moldy_grass", 50),
             Map.entry("rotten_grass", 50),
             Map.entry("rye", 50),
-            Map.entry("oats", 50),
-            Map.entry("barley", 50),
-            Map.entry("rice", 50),
             Map.entry("rubber_resin", 100),
             Map.entry("plant_remains", 50),
             Map.entry("fruit_remains", 50),
@@ -64,10 +61,8 @@ public final class OriginalSingleItemCatalog {
             Map.entry("bale_grass_dry", 900),
             Map.entry("bale_grass_moldy", 450),
             Map.entry("bale_grass_rotten", 450),
-            Map.entry("bale_rye", 450),
-            Map.entry("bale_oat", 450),
-            Map.entry("bale_barley", 450),
-            Map.entry("bale_rice", 450));
+            Map.entry("bale_rye", 450));
+
     /** Null means the original gives this item no explicit override. */
     public static Integer burnTime(String namespace, String path) {
         if (namespace.equals("minecraft") && path.equals("hay_block")) return 450;

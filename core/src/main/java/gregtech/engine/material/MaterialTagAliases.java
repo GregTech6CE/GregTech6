@@ -15,7 +15,6 @@ public final class MaterialTagAliases {
     public static final Map<String, String> ALTERNATE_SPELLINGS = Map.of(
             "osmium_elemental", "osmium",
             "adamantium", "ad",
-            "bedrock_hslaalloy", "bedrock_hsla_alloy",
             "aluminium", "aluminum",
             "quartz", "nether_quartz",
             "sulfur", "sulphur",

@@ -67,7 +67,6 @@ public final class SandwichLayerCatalog {
         layer(32, "ripeye_raw", 1, 3, "raw_rib_eye_steak");
         layer(33, "ripeye", 1, 3, "grilled_rib_eye_steak");
         layer(34, "soylent", 1, 2, "emerald_green_bar");
-        layer(35, "tofu", 1, 2, "tofu_bar");
         layer(36, "tomato", 14, 1, "tomato_slice");
         layer(37, "bacon_raw", 1, 1, "raw_bacon");
         layer(38, "bacon", 1, 1, "grilled_bacon");
@@ -106,8 +105,6 @@ public final class SandwichLayerCatalog {
         register("gt6ce:mayo", 15);
         register("gt6ce:dressing", 15);
         register("gt6ce:tomato_ketchup", 1);
-        register("gt6ce:butter", 11);
-        register("gt6ce:salted_butter", 11);
         register("gt6ce:chili_sauce", 1);
         register("gt6ce:hot_sauce", 1);
         register("gt6ce:barbecue_sauce", 3);

@@ -220,7 +220,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
     private void chum() {
         // Loader_Recipes_Food:392-398: vanilla fallback of the original scrap-meat recipe.
         for (String rotten : List.of("MeatRotten", "FishRotten")) {
-            for (String oil : List.of("Oil_Fish", "Oil_Whale")) {
+            for (String oil : List.of("Oil_Fish")) {
                 add(
                         "chum/" + rotten + "/" + oil,
                         MachineRecipeMaps.Mixer,
@@ -234,7 +234,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                                 new ItemStack(Items.POISONOUS_POTATO),
                                 new ItemStack(Items.RED_MUSHROOM)),
                         items(own("chum", 8)),
-                        fluids(fluid("Purple_Drink", 1000), fluid(oil, oil.equals("Oil_Whale") ? 500 : 1000)),
+                        fluids(fluid("Purple_Drink", 1000), fluid(oil, 1000)),
                         fluids(fluid("Sludge", 1000)));
             }
         }

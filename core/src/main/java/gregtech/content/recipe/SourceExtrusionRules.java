@@ -166,8 +166,6 @@ public final class SourceExtrusionRules {
             1160|Livermorium|000||648648000
             1170|Farnsium|000||648648000
             1180|Oganesson|000||648648000
-            1190|Ununennium|000||648648000
-            1200|Unbinilium|000||648648000
             1250|TritaniumElemental|101||648648000
             1260|Trinium|101||648648000
             1450|DuraniumElemental|111||648648000
@@ -175,21 +173,13 @@ public final class SourceExtrusionRules {
             1740|Naquadah|101||648648000
             1741|NaquadahEnriched|101||648648000
             1742|Naquadria|101||648648000
-            1850|Abyssalnite|101||648648000
-            1860|Coralium|101||648648000
-            1870|Dreadium|101||648648000
-            1880|Ethaxium|101||648648000
-            2210|Atlarus|101||648648000
             2220|Adamantium|101||648648000
-            2390|MacGuffium|000||648648000
             3720|Gravitonium|000||648648000
             4000|Magic|000||648648000
             8000|SiliconDioxide|000||648648000
             8001|Glass|110||648648000
             8002|Flint|000||648648000
             8003|Carborundum|101||648648000
-            8004|LithiumOxide|000||648648000
-            8005|Ferrite|101||648648000
             8006|Datolite|000||648648000
             8007|HydrogenBorate|000||648648000
             8008|Alumina|000||648648000
@@ -229,15 +219,10 @@ public final class SourceExtrusionRules {
             8102|SluiceSand|000||648648000
             8103|PlatinumGroupSludge|000||648648000
             8104|RedSand|000||648648000
-            8105|WhiteEndSand|000||648648000
-            8106|BlackEndSand|000||648648000
             8196|Teflon|110||648648000
             8197|PVC|110||648648000
-            8198|Bakelite|110||648648000
-            8199|HardPlastic|110||648648000
             8200|Ashes|000||648648000
             8201|DarkAshes|000||648648000
-            8202|VolcanicAshes|000||648648000
             8203|Sylvite|000||648648000
             8204|Salt|000||648648000
             8205|PotassiumNitrate|000||648648000
@@ -261,8 +246,6 @@ public final class SourceExtrusionRules {
             8224|WoodRubber|000||648648000
             8225|Ceramic|000||648648000
             8226|Phosphorite|000||648648000
-            8227|PeanutWood|000||648648000
-            8228|Indigo|000||648648000
             8229|CobaltHexahydrate|000||648648000
             8230|SodiumBisulfate|000||648648000
             8231|SodiumPyrosulfate|000||648648000
@@ -271,34 +254,30 @@ public final class SourceExtrusionRules {
             8234|VanadiumPentoxide|000||648648000
             8235|Wax|110||648648000
             8236|WaxBee|110||648648000
-            8237|WaxRefractory|110||648648000
             8238|WaxParaffin|110||648648000
             8239|WaxPlant|110||648648000
-            8240|WaxMagic|110||648648000
             8241|Leather|000||648648000
             8242|IodineSalt|000||648648000
-            8243|SilverIodide|000||648648000
-            8244|Tallow|000||648648000
             8246|Aerotheum|000||648648000
             8247|Basalz|000||648648000
             8248|Blitz|000||648648000
             8249|Dynamite|000||648648000
-            8250|Black|000||648648000
-            8251|Red|000||648648000
-            8252|Green|000||648648000
-            8253|Brown|000||648648000
-            8254|Blue|000||648648000
-            8255|Purple|000||648648000
-            8256|Cyan|000||648648000
-            8257|LightGray|000||648648000
-            8258|Gray|000||648648000
-            8259|Pink|000||648648000
-            8260|Lime|000||648648000
-            8261|Yellow|000||648648000
-            8262|LightBlue|000||648648000
-            8263|Magenta|000||648648000
-            8264|Orange|000||648648000
-            8265|White|000||648648000
+            8250|DyeBlack|000||648648000
+            8251|DyeRed|000||648648000
+            8252|DyeGreen|000||648648000
+            8253|DyeBrown|000||648648000
+            8254|DyeBlue|000||648648000
+            8255|DyePurple|000||648648000
+            8256|DyeCyan|000||648648000
+            8257|DyeLightGray|000||648648000
+            8258|DyeGray|000||648648000
+            8259|DyePink|000||648648000
+            8260|DyeLime|000||648648000
+            8261|DyeYellow|000||648648000
+            8262|DyeLightBlue|000||648648000
+            8263|DyeMagenta|000||648648000
+            8264|DyeOrange|000||648648000
+            8265|DyeWhite|000||648648000
             8266|Asphalt|110||648648000
             8267|WoodPolished|000||648648000
             8268|SodiumHydroxide|000||648648000
@@ -312,23 +291,8 @@ public final class SourceExtrusionRules {
             8276|ClayBrown|000||648648000
             8277|PetrifiedWood|000||648648000
             8278|ManaDiamond|000||648648000
-            8279|ElvenDragonstone|000||648648000
-            8280|WaxAmnesic|110||648648000
-            8281|WaxSoulful|110||648648000
-            8282|CrimsonMiddle|000||648648000
-            8283|GreenMiddle|000||648648000
-            8284|AquaMiddle|000||648648000
-            8285|Valonite|000||648648000
-            8286|Weedwood|000||648648000
-            8287|SlimyBone|000||648648000
-            8288|Scabyst|000||648648000
             8289|Livingwood|000||648648000
             8290|Dreamwood|000||648648000
-            8291|Skyroot|000||648648000
-            8292|Zanite|000||648648000
-            8293|Ambrosium|000||648648000
-            8294|Gravitite|000||648648000
-            8295|Continuum|000||648648000
             8296|Greatwood|000||648648000
             8297|Silverwood|000||648648000
             8298|EnergiumRed|000||648648000
@@ -349,7 +313,6 @@ public final class SourceExtrusionRules {
             8313|Amethyst|000||648648000
             8314|OrangeSapphire|000||648648000
             8315|YellowSapphire|000||648648000
-            8317|Dilithium|000||648648000
             8318|EnderPearl|000||648648000
             8319|EnderEye|000||648648000
             8320|NetherStar|000||648648000
@@ -360,7 +323,6 @@ public final class SourceExtrusionRules {
             8325|Dioptase|000||648648000
             8326|Spinel|000||648648000
             8328|BlueSapphire|000||648648000
-            8329|AmethystEnder|000||648648000
             8330|Lazurite|000||648648000
             8331|Sodalite|000||648648000
             8332|Lapis|000||648648000
@@ -372,52 +334,20 @@ public final class SourceExtrusionRules {
             8338|Monazite|000||648648000
             8340|Nikolite|000||648648000
             8341|Glowstone|000||648648000
-            8342|Firestone|000||648648000
-            8343|Force|000||648648000
-            8344|Forcicium|000||648648000
-            8345|Forcillium|000||648648000
             8346|NetherQuartz|000||648648000
             8347|CertusQuartz|000||648648000
             8348|ChargedCertusQuartz|000||648648000
             8349|CoalCoke|000||648648000
-            8350|InfusedDull|000||648648000
-            8351|InfusedVis|000||648648000
-            8352|InfusedAir|000||648648000
-            8353|InfusedFire|000||648648000
-            8354|InfusedEarth|000||648648000
-            8355|InfusedWater|000||648648000
-            8356|InfusedEntropy|000||648648000
-            8357|InfusedOrder|000||648648000
-            8358|InfusedBalance|000||648648000
             8360|Peat|000||648648000
-            8361|PeatBituminous|000||648648000
-            8362|Anthracite|000||648648000
-            8363|Prismane|000||648648000
-            8364|Lonsdaleite|000||648648000
             8365|LigniteCoke|000||648648000
-            8366|ArcaneCompound|000||648648000
-            8367|ArcaneAshes|000||648648000
-            8368|GlowstoneCeres|000||648648000
-            8369|GlowstoneIo|000||648648000
-            8370|GlowstoneEnceladus|000||648648000
-            8371|GlowstoneProteus|000||648648000
-            8372|GlowstonePluto|000||648648000
-            8373|Ectoplasm|000||648648000
-            8374|QuartzBlack|000||648648000
-            8381|DarkMatter|000||648648000
-            8382|RedMatter|000||648648000
             8383|PurpleSapphire|000||648648000
             8384|Heliodor|000||648648000
             8385|Goshenite|000||648648000
             8386|Bixbite|000||648648000
             8387|Maxixe|000||648648000
-            8388|Alexandrite|000||648648000
             8389|Fluix|000||648648000
             8390|PetroleumCoke|000||648648000
-            8391|Frezarite|000||648648000
-            8392|RedMeteor|000||648648000
             8393|SunnyQuartz|000||648648000
-            8394|LavenderQuartz|000||648648000
             8395|RedQuartz|000||648648000
             8396|BlazeQuartz|000||648648000
             8397|SmokeyQuartz|000||648648000
@@ -434,10 +364,8 @@ public final class SourceExtrusionRules {
             8408|CyanVitriol|000||648648000
             8409|WhiteVitriol|000||648648000
             8410|GrayVitriol|000||648648000
-            8411|MartianVitriol|000||648648000
             8412|VitriolOfClay|000||648648000
             8413|TitaniumTetrachloride|000||648648000
-            8414|Shimmerwood|000||648648000
             8415|OnyxRed|000||648648000
             8416|OnyxBlack|000||648648000
             8417|Amazonite|000||648648000
@@ -475,22 +403,16 @@ public final class SourceExtrusionRules {
             8449|BlackAventurine|000||648648000
             8450|BlueAventurine|000||648648000
             8451|RedAventurine|000||648648000
-            8454|Chimerite|000||648648000
             8455|ClayRed|000||648648000
-            8456|Gloomstone|000||648648000
-            8457|VoidQuartz|000||648648000
             8458|BluePhosphorus|000||648648000
             8459|RedPhosphorus|000||648648000
             8460|WhitePhosphorus|000||648648000
             8461|NiobiumPentoxide|000||648648000
             8462|TantalumPentoxide|000||648648000
-            8463|Sugilite|000||648648000
             8464|BlueDiamond|000||648648000
             8465|GreenDiamond|000||648648000
-            8466|PurpleDiamond|000||648648000
             8467|RedDiamond|000||648648000
             8468|YellowDiamond|000||648648000
-            8469|GoldenAmber|000||648648000
             8470|Carminite|000||648648000
             8471|Breeze|000||648648000
             8500|Stone|110||648648000
@@ -502,37 +424,19 @@ public final class SourceExtrusionRules {
             8506|Marble|110||648648000
             8507|GraniteRed|110||648648000
             8508|GraniteBlack|110||648648000
-            8509|Redrock|110||648648000
             8511|Diorite|110||648648000
-            8512|SpaceStone|110||648648000
-            8513|MoonStone|110||648648000
-            8514|MoonTurf|110||648648000
-            8515|MarsStone|110||648648000
             8516|MarsSand|110||648648000
-            8517|Umber|110||648648000
             8518|Granite|110||648648000
-            8519|Betweenstone|110||648648000
-            8520|Pitstone|110||648648000
             8521|Livingrock|110||648648000
-            8522|Holystone|110||648648000
-            8523|Deadrock|110||648648000
-            8524|Cragrock|110||648648000
-            8525|Templerock|110||648648000
-            8526|Mazestone|110||648648000
-            8527|Castlerock|110||648648000
             8528|SkyStone|110||648648000
             8599|Bedrock|000||648648000
             8600|Electrum|101||648648000
             8601|SterlingSilver|101||648648000
             8602|RoseGold|101||648648000
-            8603|Angmallen|101||648648000
-            8604|GoldInductive|101||648648000
             8605|CdInAgAlloy|101||648648000
-            8606|GildedIron|101|Fe|648648000
             8610|Bronze|111||648648000
             8611|BlackBronze|101||648648000
             8612|BismuthBronze|111||648648000
-            8613|Hepatizon|101||648648000
             8614|ArsenicCopper|111||648648000
             8615|ArsenicBronze|111||648648000
             8620|Brass|111||648648000
@@ -545,25 +449,15 @@ public final class SourceExtrusionRules {
             8634|DamascusSteel|101||648648000
             8635|Tungstensteel|101||648648000
             8636|StainlessSteel|101||648648000
-            8637|HSLASteel|101||648648000
             8638|TungstenCarbide|101||648648000
-            8639|HSLASpringSteel|101||648648000
             8640|AnnealedCopper|111||648648000
-            8641|DeepIron|101||648648000
-            8642|PigIron|101||648648000
             8643|WroughtIron|101||648648000
-            8644|IronCompressed|101||648648000
             8645|IronMagnetic|101|Fe|648648000
             8646|SteelMagnetic|101|Steel|648648000
             8647|NeodymiumMagnetic|101|Nd|648648000
-            8648|DarkIron|101||648648000
-            8649|MeteoricIron|101||648648000
-            8650|MeteoricSteel|101||648648000
             8651|SteelGalvanized|101|Steel|648648000
             8652|TungstenSintered|101||648648000
             8653|VanadiumSteel|101||648648000
-            8654|TitaniumGold|101||648648000
-            8657|PurpleAlloy|111||648648000
             8658|ElectrotineAlloy|111||648648000
             8659|BlueAlloy|111||648648000
             8660|RedAlloy|111||648648000
@@ -576,122 +470,49 @@ public final class SourceExtrusionRules {
             8667|TinAlloy|111||648648000
             8668|BatteryAlloy|111||648648000
             8669|SolderingAlloy|111||648648000
-            8670|ShadowIron|101||648648000
-            8671|ShadowSteel|101||648648000
             8672|Ironwood|111||648648000
             8673|Steeleaf|101||648648000
             8674|Knightmetal|101||648648000
             8675|FierySteel|101||648648000
-            8676|AstralSilver|101||648648000
-            8677|Midasium|101||648648000
-            8678|Mithril|101||648648000
             8679|Thaumium|101||648648000
-            8680|DarkThaumium|101||648648000
-            8681|VoidMetal|101||648648000
             8682|Osmiridium|101||648648000
-            8683|Sunnarium|101||648648000
             8684|Trinaquadalloy|101||648648000
             8685|ChromiumDioxide|101||648648000
             8686|VanadiumGallium|101||648648000
             8687|YttriumBariumCuprate|101||648648000
-            8688|NiobiumNitride|101||648648000
             8689|NiobiumTitanium|101||648648000
-            8690|MeteoricBlackSteel|101||648648000
-            8691|MeteoricBlueSteel|101||648648000
-            8692|MeteoricRedSteel|101||648648000
-            8693|MeteoflameSteel|101||648648000
-            8694|MeteoflameBlackSteel|101||648648000
-            8695|MeteoflameBlueSteel|101||648648000
-            8696|MeteoflameRedSteel|101||648648000
             8697|FlamascusSteel|101||648648000
             8698|Fireleaf|101||648648000
             8700|AluminiumBrass|111||648648000
-            8701|Aredrite|101||648648000
             8702|Alumite|101||648648000
-            8703|Manyullyn|101||648648000
             8704|VibraniumSteel|101||648648000
             8705|VibraniumSilver|101||648648000
             8706|Vibramantium|101||648648000
-            8707|Ardite|101||648648000
             8708|Signalum|111||648648000
             8709|Lumium|111||648648000
             8710|Enderium|101||648648000
-            8711|ElectrumFlux|101||648648000
-            8713|GlowstoneRefined|101|Glowstone|648648000
-            8714|ObsidianRefined|101|Obsidian|648648000
-            8715|Yellorium|101||648648000
-            8716|Blutonium|101||648648000
             8717|Cyanite|101||648648000
-            8718|BedrockHSLAAlloy|101||648648000
             8720|Manasteel|101||648648000
             8721|Terrasteel|101||648648000
             8722|ElvenElementium|101||648648000
-            8723|Ludicrite|101||648648000
-            8724|Yellorite|000||648648000
-            8725|PulsatingIron|101||648648000
             8726|VibrantAlloy|101||648648000
             8727|ConductiveIron|101||648648000
-            8728|EnergeticAlloy|101||648648000
             8729|EnderiumBase|101||648648000
             8730|ElectricalSteel|101||648648000
-            8731|ObsidianSteel|101||648648000
             8732|Soularium|101||648648000
-            8733|RedstoneAlloy|101||648648000
-            8734|SpectreIron|101||648648000
             8735|GaiaSpirit|101||648648000
-            8736|Endium|101||648648000
             8737|NikolineAlloy|101||648648000
-            8739|Mauftrium|101||648648000
-            8740|Elvorium|101||648648000
-            8741|NiflheimPower|101||648648000
-            8742|MuspelheimPower|101||648648000
-            8743|Iffesal|000||648648000
             8744|AncientDebris|101||648648000
             8745|Netherite|101||648648000
             8746|NetherizedDiamond|101||648648000
-            8747|Efrine|101||648648000
-            8750|Desh|101||648648000
             8751|Duranium|101||648648000
             8752|Tritanium|101||648648000
-            8753|Dolamide|000||648648000
-            8754|Oriharukon|101||648648000
-            8755|Adamantite|101||648648000
             8756|Duralumin|101||648648000
-            8757|Meteorite|101||648648000
-            8758|FrozenIron|101|Fe|648648000
-            8759|Kreknorite|101||648648000
-            8760|Alduorite|101||648648000
-            8761|Infuscolium|101||648648000
-            8762|Rubracium|101||648648000
-            8763|Meutoite|101||648648000
-            8764|Lemurite|101||648648000
-            8765|Ceruclase|101||648648000
-            8766|HSLATungstenAlloy|101||648648000
-            8767|Oureclase|101||648648000
-            8768|Kalendrite|101||648648000
-            8769|Orichalcum|101||648648000
-            8770|Carmot|101||648648000
-            8771|Sanguinite|101||648648000
-            8772|Vyroxeres|101||648648000
-            8773|Eximite|101||648648000
-            8774|Prometheum|101||648648000
-            8775|Ignatius|101||648648000
-            8776|Vulcanite|101||648648000
-            8777|Inolashite|101||648648000
-            8778|Haderoth|101||648648000
-            8779|Celenegil|101||648648000
-            8780|WorkersAlloy|101||648648000
-            8781|Desichalkos|101||648648000
-            8782|Tartarite|101||648648000
-            8783|Amordrine|101||648648000
             8784|Adamantine|101||648648000
-            8785|Syrmorite|101||648648000
-            8786|Octine|101||648648000
             8790|Trinitanium|101||648648000
             8791|Draconium|101||648648000
             8792|DraconiumAwakened|101||648648000
             8793|TitaniumIridium|101||648648000
-            8794|TitaniumAluminide|101||648648000
             8795|Bedrockium|101||648648000
             8796|HSSG|101||648648000
             8797|HSSE|101||648648000
@@ -701,15 +522,7 @@ public final class SourceExtrusionRules {
             8801|Infinity|101||648648000
             8802|TantalumHafniumCarbide|101||648648000
             8803|CastIron|101||648648000
-            8804|Mingrade|111||648648000
             8805|Unstable|101||648648000
-            8806|ClayCompound|101||648648000
-            8807|EndSteel|101||648648000
-            8808|EnergeticSilver|101||648648000
-            8809|MelodicAlloy|101||648648000
-            8810|StellarAlloy|101||648648000
-            8811|VividAlloy|101||648648000
-            8812|CrystallineAlloy|101||648648000
             8813|CrystallinePinkSlime|101||648648000
             9000|Pumice|110||648648000
             9001|Diatomite|000||648648000
@@ -791,18 +604,12 @@ public final class SourceExtrusionRules {
             9169|Talc|000||648648000
             9170|Gneiss|110||648648000
             9171|Greenschist|110||648648000
-            9172|Greenstone|110||648648000
-            9173|Greywacke|110||648648000
             9174|Graphite|000||648648000
             9175|Graphene|000||648648000
             9176|Gabbro|110||648648000
             9177|Komatiite|110||648648000
-            9178|Siltstone|110||648648000
             9179|Rhyolite|110||648648000
             9180|Quartzite|110||648648000
-            9181|Migmatite|110||648648000
-            9182|Epidote|110||648648000
-            9183|Emery|000||648648000
             9184|Blueschist|110||648648000
             9185|Bluestone|110||648648000
             9186|Chert|110||648648000
@@ -810,7 +617,6 @@ public final class SourceExtrusionRules {
             9188|Andesite|110||648648000
             9189|Limestone|110||648648000
             9190|Shale|110||648648000
-            9191|Eclogite|110||648648000
             9192|Rutile|000||648648000
             9193|Stolzite|000||648648000
             9194|Ferberite|000||648648000
@@ -844,33 +650,11 @@ public final class SourceExtrusionRules {
             9222|Slate|110||648648000
             9223|Blackstone|110||648648000
             9243|ClayBrick|000||648648000
-            9244|Grayschist|110||648648000
-            9245|Pinkschist|110||648648000
             9246|Columbite|000||648648000
             9247|Coltan|000||648648000
             9248|Deepslate|110||648648000
-            9249|PhobosRock|110||648648000
-            9250|DeimosRock|110||648648000
-            9251|VenusRock|110||648648000
             9252|MercuryRock|110||648648000
-            9253|CeresRock|110||648648000
-            9254|JupiterRock|110||648648000
-            9255|IoRock|110||648648000
-            9256|EuropaRock|110||648648000
-            9257|GanymedeRock|110||648648000
-            9258|CallistoRock|110||648648000
-            9259|SaturnRock|110||648648000
-            9260|RheaRock|110||648648000
             9261|TitanRock|110||648648000
-            9262|OberonRock|110||648648000
-            9263|IapetusRock|110||648648000
-            9264|UranusRock|110||648648000
-            9265|TitaniaRock|110||648648000
-            9266|NeptuneRock|110||648648000
-            9267|TritonRock|110||648648000
-            9268|PlutoRock|110||648648000
-            9269|ErisRock|110||648648000
-            9270|Kepler22bRock|110||648648000
             9271|Quicklime|000||648648000
             9300|Oak|000||648648000
             9301|Birch|000||648648000
@@ -892,117 +676,19 @@ public final class SourceExtrusionRules {
             9317|Cinnamonwood|000||648648000
             9318|Coconutwood|000||648648000
             9319|Rainbowood|000||648648000
-            9320|Towerwood|000||648648000
-            9321|Witchwood|000||648648000
-            9322|Ogrewood|000||648648000
-            9323|Wyvernwood|000||648648000
-            9324|Aspen|000||648648000
-            9325|DouglasFir|000||648648000
-            9326|Sycamore|000||648648000
-            9327|WhiteCedar|000||648648000
-            9328|WhiteElm|000||648648000
-            9329|Thorntree|000||648648000
-            9330|SilverPine|000||648648000
-            9331|Alder|000||648648000
-            9332|Hawthorn|000||648648000
-            9333|Rowan|000||648648000
-            9334|Autumnwood|000||648648000
-            9335|Pine|000||648648000
-            9336|Cypress|000||648648000
-            9337|Fir|000||648648000
-            9338|JapaneseMaple|000||648648000
-            9339|RainbowEucalyptus|000||648648000
-            9340|Redwood|000||648648000
-            9341|Sakura|000||648648000
-            9342|Balsa|000||648648000
-            9343|Baobab|000||648648000
             9344|Cherrywood|000||648648000
-            9345|Chestnutwood|000||648648000
-            9346|Citruswood|000||648648000
-            9347|Cocobolowood|000||648648000
-            9348|Ebony|000||648648000
-            9349|Giganteumwood|000||648648000
-            9350|Greenheart|000||648648000
-            9351|Ipe|000||648648000
-            9352|Kapok|000||648648000
-            9353|Larch|000||648648000
-            9354|Limewood|000||648648000
-            9355|Mahoe|000||648648000
-            9356|Mahogany|000||648648000
-            9357|Padauk|000||648648000
-            9358|Palm|000||648648000
-            9359|Papayawood|000||648648000
-            9360|Plumwood|000||648648000
-            9361|Poplar|000||648648000
-            9362|Sequoia|000||648648000
-            9363|Teak|000||648648000
-            9364|Walnutwood|000||648648000
-            9365|Wenge|000||648648000
-            9366|Zebrawood|000||648648000
-            9367|Darkwood|000||648648000
-            9368|Etherealwood|000||648648000
-            9369|Goldwood|000||648648000
-            9370|Hellbark|000||648648000
-            9371|Jacaranda|000||648648000
             9372|Mangrove|000||648648000
-            9373|SacredOak|000||648648000
-            9374|Magicwood|000||648648000
-            9375|Applewood|000||648648000
-            9376|Ashwood|000||648648000
-            9377|Beech|000||648648000
-            9378|Boxwood|000||648648000
-            9379|Brazilwood|000||648648000
-            9380|Butternutwood|000||648648000
-            9381|Cedar|000||648648000
-            9382|Elderwood|000||648648000
-            9383|Elm|000||648648000
-            9384|Eucalyptus|000||648648000
-            9385|Figwood|000||648648000
-            9386|Gingko|000||648648000
-            9387|Hemlock|000||648648000
-            9388|Hickory|000||648648000
-            9389|Holly|000||648648000
-            9390|Hornbeam|000||648648000
-            9391|Iroko|000||648648000
-            9392|Locust|000||648648000
-            9393|Logwood|000||648648000
-            9394|Maclura|000||648648000
-            9395|Olivewood|000||648648000
-            9396|Pearwood|000||648648000
-            9397|PinkIvory|000||648648000
-            9398|Purpleheart|000||648648000
-            9399|Rosewood|000||648648000
-            9400|Sweetgum|000||648648000
-            9401|Syzgium|000||648648000
-            9402|Whitebeam|000||648648000
-            9403|Yew|000||648648000
-            9404|WoodScorched|000||648648000
-            9405|WoodVarnished|000||648648000
-            9406|WoodTainted|000||648648000
-            9407|WoodBleached|000||648648000
-            9408|Foxfirewood|000||648648000
             9409|BlueSpruce|000||648648000
             9700|MeatRaw|110|MeatCooked|648648000
             9701|MeatCooked|110||648648000
             9702|Wheat|000||648648000
             9703|Sugar|000||648648000
-            9704|Barley|000||648648000
             9705|Rye|000||648648000
-            9706|Rice|000||648648000
-            9707|Oat|000||648648000
-            9708|Corn|000||648648000
             9709|Potato|000||648648000
             9710|MeatRotten|110||648648000
             9711|FishCooked|110||648648000
             9712|FishRaw|110|FishCooked|648648000
             9713|FishRotten|110||648648000
-            9714|Almond|000||648648000
-            9715|Marshmallow|000||648648000
-            9716|PEZ|000||648648000
-            9717|Licorice|000||648648000
-            9718|Nougat|000||648648000
-            9719|AbyssalOat|000||648648000
-            9778|Tofu|110||648648000
             9779|SoylentGreen|110||648648000
             9780|Cheese|110||648648000
             9781|Chili|000||648648000
@@ -1010,20 +696,12 @@ public final class SourceExtrusionRules {
             9783|Chocolate|110||648648000
             9784|Coffee|000||648648000
             9785|Cinnamon|000||648648000
-            9786|Nutmeg|000||648648000
-            9787|Vanilla|000||648648000
-            9788|PepperBlack|000||648648000
-            9789|Curry|000||648648000
             9790|Milk|000||648648000
             9791|Honey|000||648648000
             9792|Tea|000||648648000
             9793|Honeydew|000||648648000
             9794|Mint|000||648648000
-            9795|Peanut|000||648648000
             9796|Hazelnut|000||648648000
-            9797|Pistachio|000||648648000
-            9798|Butter|000||648648000
-            9799|SaltedButter|000||648648000
             9800|Water|000||648648000
             9801|Snow|000||648648000
             9802|Ice|000||648648000
@@ -1093,7 +771,6 @@ public final class SourceExtrusionRules {
             9884|UUAmplifier|000||648648000
             9885|UUMatter|000||648648000
             9886|Latex|000||648648000
-            9887|WhaleOil|000||648648000
             """;
 
     static {

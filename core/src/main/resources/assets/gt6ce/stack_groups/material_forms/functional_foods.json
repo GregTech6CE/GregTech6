@@ -5,8 +5,7 @@
     "item:gt6ce:carrot_slice",
     "item:gt6ce:chocolate_bar",
     "item:gt6ce:cinnamon_bark",
-    "item:gt6ce:emerald_green_bar",
-    "item:gt6ce:tofu_bar"
+    "item:gt6ce:emerald_green_bar"
   ],
   "priority": 120
 }

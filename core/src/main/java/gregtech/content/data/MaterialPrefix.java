@@ -287,8 +287,7 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> FORCED_GEM_FLAWED = sourceMaterial(9802, "Ice")
             .or(sourceMaterial(8204, "Salt"))
             .or(sourceMaterial(8203, "Sylvite"))
-            .or(sourceMaterial(8242, "IodineSalt"))
-            .or(sourceMaterial(8342, "Firestone"));
+            .or(sourceMaterial(8242, "IodineSalt"));
 
     private static final Predicate<GTMaterial> FORCED_GEM_CHIPPED = FORCED_GEM_FLAWED.or(sourceMaterial(9703, "Sugar"));
     private static final Predicate<GTMaterial> FORCED_GEM = FORCED_GEM_FLAWED.or(REFERENCE_TANTALUM_GEM);

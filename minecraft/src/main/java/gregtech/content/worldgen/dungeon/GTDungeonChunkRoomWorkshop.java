@@ -22,8 +22,6 @@ import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTFluids;
 
-
-
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.registry.GTMachines;
@@ -379,7 +377,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         return Blocks.ANVIL.defaultBlockState();
     }
 
-    /** GT6's mass storage ({@code 6011},) as the port's own container block. */
+    /** GT6's mass storage ({@code 6011}) as the port's own container block. */
     private static BlockState storage(Direction facing) {
 //? if >=1.21.1 {
         /*return DungeonBindings.block("mass_storage_stainless_steel").defaultBlockState()

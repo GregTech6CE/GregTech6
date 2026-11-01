@@ -35,7 +35,6 @@ public final class SourceMaterialToolStats {
             new Row(4000, "Magic", new Stats(3, 10F, 5120L, 5)), // MT539
             new Row(8210, "Blizz", new Stats(1, 2F, 16L, 1)), // MT1274
             new Row(8211, "Blaze", new Stats(1, 2F, 16L, 1)), // MT1275
-            new Row(8227, "PeanutWood", new Stats(1, 2F, 16L, 0)), // MT1256
             new Row(8247, "Basalz", new Stats(1, 2F, 16L, 1)), // MT1272
             new Row(8248, "Blitz", new Stats(1, 2F, 16L, 1)), // MT1273
             new Row(8300, "Diamond", new Stats(3, 8F, 1280L, 3)), // MT1358
@@ -76,25 +75,17 @@ public final class SourceMaterialToolStats {
             new Row(8451, "RedAventurine", new Stats(3, 7F, 256L, 2)), // MT1422
             new Row(8464, "BlueDiamond", new Stats(3, 8F, 1280L, 3)), // MT1359
             new Row(8465, "GreenDiamond", new Stats(3, 8F, 1280L, 3)), // MT1360
-            new Row(8466, "PurpleDiamond", new Stats(3, 8F, 1280L, 3)), // MT1361
             new Row(8467, "RedDiamond", new Stats(3, 8F, 1280L, 3)), // MT1362
             new Row(8468, "YellowDiamond", new Stats(3, 8F, 1280L, 3)), // MT1363
             new Row(8471, "Breeze", new Stats(1, 2F, 16L, 1)), // MT1276
             new Row(8622, "AluminiumAlloy", new Stats(2, 10F, 128L, 2)), // MT1702
-            new Row(8637, "HSLASteel", new Stats(3, 6F, 512L, 2)), // MT1721
-            new Row(8639, "HSLASpringSteel", new Stats(3, 6F, 512L, 2)), // MT1722
             new Row(8640, "AnnealedCopper", new Stats(2, 4F, 64L, 0)), // MT1656
-            new Row(8644, "IronCompressed", new Stats(3, 6F, 256L, 2)), // MT1725
             new Row(8645, "IronMagnetic", new Stats(3, 6F, 256L, 2)), // MT1727
             new Row(8646, "SteelMagnetic", new Stats(3, 6F, 512L, 2)), // MT1728
             new Row(8647, "NeodymiumMagnetic", new Stats(3, 6F, 512L, 3)), // MT1729
-            new Row(8725, "PulsatingIron", new Stats(3, 6F, 384L, 2)), // MT1806
             new Row(8726, "VibrantAlloy", new Stats(3, 12.5F, 64L, 2)), // MT1808
             new Row(8727, "ConductiveIron", new Stats(3, 6F, 384L, 2)), // MT1752
-            new Row(8728, "EnergeticAlloy", new Stats(3, 12.5F, 64L, 2)), // MT1807
             new Row(8730, "ElectricalSteel", new Stats(3, 6F, 512L, 2)), // MT1809
-            new Row(8731, "ObsidianSteel", new Stats(3, 6F, 512L, 2)), // MT1805
-            new Row(8758, "FrozenIron", new Stats(3, 6F, 256L, 2)), // MT1847
             new Row(8803, "CastIron", new Stats(3, 6F, 256L, 2)), // MT1726
             new Row(9101, "Almandine", new Stats(3, 7F, 128L, 2)), // MT1393
             new Row(9102, "Andradite", new Stats(3, 7F, 128L, 2)), // MT1397

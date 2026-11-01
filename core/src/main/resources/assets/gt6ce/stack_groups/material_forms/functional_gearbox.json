@@ -8,13 +8,13 @@
     "item:gt6ce:gearbox_brass",
     "item:gt6ce:gearbox_bronze",
     "item:gt6ce:gearbox_iridium",
-    "item:gt6ce:gearbox_iritanium",
     "item:gt6ce:gearbox_steel",
     "item:gt6ce:gearbox_titanium",
     "item:gt6ce:gearbox_trinaquadalloy",
     "item:gt6ce:gearbox_trinitanium",
     "item:gt6ce:gearbox_tungstensteel",
-    "item:gt6ce:gearbox_wood"
+    "item:gt6ce:gearbox_wood",
+    "item:gt6ce:gearbox_iritanium"
   ],
   "priority": 110
 }

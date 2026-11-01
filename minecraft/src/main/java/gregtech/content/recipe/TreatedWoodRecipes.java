@@ -41,7 +41,7 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
         "Oil_Seed", "Oil_Lin", "Oil_Hemp", "Oil_Nut", "Oil_Olive", "Oil_Sunflower", "Oil_Creosote"
     };
     /** Loader_Recipes_Handlers:668-669 with their per-unit amounts. */
-    private static final String[] POLISHED_OILS = {"Oil_Fish", "Oil_Whale"};
+    private static final String[] POLISHED_OILS = {"Oil_Fish"};
 
     private static final int[] POLISHED_UNIT_MB = {1000, 500};
     private static final long TREATED_UNIT_MB = 100;
@@ -106,7 +106,7 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
         "pipeNonuple"
     };
     /** Wood-property materials that GT6's {@code ANY.WoodUntreated} does not contain. */
-    private static final Set<String> NOT_UNTREATED_WOOD = Set.of("Marshmallow", "PetrifiedWood");
+    private static final Set<String> NOT_UNTREATED_WOOD = Set.of("PetrifiedWood");
 
     private TreatedWoodRecipes() {}
 

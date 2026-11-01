@@ -107,27 +107,20 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
 
     private void conversions() {
         for (GTMaterial material : group(MaterialGroups.Fe, "Enori")) {
-            convert(material, "GildedIron", "molten.gold", 16);
-            if (!material.getName().equals("MeteoricSteel")) fiery(material, "FierySteel");
+
+            fiery(material, "FierySteel");
         }
         for (GTMaterial material : group(MaterialGroups.Steel)) {
             convert(material, "SteelGalvanized", "molten.zinc", 16);
-            if (!material.getName().equals("MeteoricSteel")) fiery(material, "FierySteel");
+            fiery(material, "FierySteel");
         }
         for (GTMaterial material : group(MaterialGroups.Diamond))
             convert(material, "NetherizedDiamond", "molten.netherite", 36);
 
         fiery("Steeleaf", "Fireleaf");
-        fiery("MeteoricSteel", "MeteoflameSteel");
-        fiery("MeteoricBlackSteel", "MeteoflameBlackSteel");
-        fiery("MeteoricBlueSteel", "MeteoflameBlueSteel");
-        fiery("MeteoricRedSteel", "MeteoflameRedSteel");
+
         fiery("DamascusSteel", "FlamascusSteel");
 
-        convert("Lead", "Gold", "molten.midasium", 18);
-        convert("Oak", "Skyroot", "holywater", 50);
-        convert("Amber", "GoldenAmber", "holywater", 250);
-        convert("Tanzanite", "Zanite", "holywater", 250);
     }
 
     /**

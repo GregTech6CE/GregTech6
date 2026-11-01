@@ -100,17 +100,6 @@
       "flammability": 150
     },
     {
-      "path": "bookshelf_blue_mahoe",
-      "gt6_id": 7038,
-      "kind": "wood",
-      "material": "Wood",
-      "display": "BlueMahoe",
-      "texture": "gt6ce:block/iconsets/planks_bluemahoe",
-      "hardness": 2.0,
-      "resistance": 2.0,
-      "flammability": 150
-    },
-    {
       "path": "bookshelf_hazel",
       "gt6_id": 7039,
       "kind": "wood",
@@ -287,17 +276,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_ardite",
-      "gt6_id": 7138,
-      "kind": "metal",
-      "material": "Ardite",
-      "display": "Ardite",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 2.0,
-      "resistance": 2.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_arsenic_bronze",
       "gt6_id": 7158,
       "kind": "metal",
@@ -353,17 +331,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_h_s_l_a_steel",
-      "gt6_id": 7118,
-      "kind": "metal",
-      "material": "HSLASteel",
-      "display": "HSLASteel",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 6.0,
-      "resistance": 6.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_gold",
       "gt6_id": 7102,
       "kind": "metal",
@@ -394,17 +361,6 @@
       "texture": "gt6ce:block/material_icons/dull/casingmachine",
       "hardness": 6.0,
       "resistance": 6.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_manyullyn",
-      "gt6_id": 7139,
-      "kind": "metal",
-      "material": "Manyullyn",
-      "display": "Manyullyn",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 4.0,
-      "resistance": 4.0,
       "flammability": 0
     },
     {
@@ -441,39 +397,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_meteorite",
-      "gt6_id": 7143,
-      "kind": "metal",
-      "material": "Meteorite",
-      "display": "Meteorite",
-      "texture": "gt6ce:block/material_icons/space/casingmachine",
-      "hardness": 7.0,
-      "resistance": 7.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_meteoric_steel",
-      "gt6_id": 7124,
-      "kind": "metal",
-      "material": "MeteoricSteel",
-      "display": "MeteoricSteel",
-      "texture": "gt6ce:block/material_icons/space/casingmachine",
-      "hardness": 8.0,
-      "resistance": 8.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_gilded_iron",
-      "gt6_id": 7120,
-      "kind": "metal",
-      "material": "GildedIron",
-      "display": "GildedIron",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 6.0,
-      "resistance": 6.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_molybdenum",
       "gt6_id": 7149,
       "kind": "metal",
@@ -482,17 +405,6 @@
       "texture": "gt6ce:block/material_icons/copper/casingmachine",
       "hardness": 6.0,
       "resistance": 6.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_syrmorite",
-      "gt6_id": 7144,
-      "kind": "metal",
-      "material": "Syrmorite",
-      "display": "Syrmorite",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
-      "hardness": 4.0,
-      "resistance": 4.0,
       "flammability": 0
     },
     {
@@ -540,28 +452,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_efrine",
-      "gt6_id": 7153,
-      "kind": "metal",
-      "material": "Efrine",
-      "display": "Efrine",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 8.0,
-      "resistance": 8.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_h_s_l_a_tungsten_alloy",
-      "gt6_id": 7152,
-      "kind": "metal",
-      "material": "HSLATungstenAlloy",
-      "display": "HSLATungstenAlloy",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 8.0,
-      "resistance": 8.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_titanium",
       "gt6_id": 7112,
       "kind": "metal",
@@ -603,28 +493,6 @@
       "texture": "gt6ce:block/material_icons/shiny/casingmachine",
       "hardness": 2.0,
       "resistance": 2.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_octine",
-      "gt6_id": 7145,
-      "kind": "metal",
-      "material": "Octine",
-      "display": "Octine",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 8.0,
-      "resistance": 8.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_desh",
-      "gt6_id": 7130,
-      "kind": "metal",
-      "material": "Desh",
-      "display": "Desh",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
-      "hardness": 15.0,
-      "resistance": 15.0,
       "flammability": 0
     },
     {
@@ -694,17 +562,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_workers_alloy",
-      "gt6_id": 7155,
-      "kind": "metal",
-      "material": "WorkersAlloy",
-      "display": "WorkersAlloy",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 15.0,
-      "resistance": 15.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_tungsten",
       "gt6_id": 7126,
       "kind": "metal",
@@ -749,17 +606,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_void_metal",
-      "gt6_id": 7128,
-      "kind": "metal",
-      "material": "VoidMetal",
-      "display": "VoidMetal",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 30.0,
-      "resistance": 30.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_elven_elementium",
       "gt6_id": 7141,
       "kind": "metal",
@@ -793,17 +639,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_bedrock_h_s_l_a_alloy",
-      "gt6_id": 7134,
-      "kind": "metal",
-      "material": "BedrockHSLAAlloy",
-      "display": "BedrockHSLAAlloy",
-      "texture": "gt6ce:block/material_icons/brick/casingmachine",
-      "hardness": 100.0,
-      "resistance": 100.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_draconium_awakened",
       "gt6_id": 7136,
       "kind": "metal",
@@ -824,6 +659,17 @@
       "hardness": 100.0,
       "resistance": 100.0,
       "flammability": 0
+    },
+    {
+      "path": "bookshelf_blue_mahoe",
+      "gt6_id": 7038,
+      "kind": "wood",
+      "material": "Wood",
+      "display": "BlueMahoe",
+      "texture": "gt6ce:block/iconsets/planks_bluemahoe",
+      "hardness": 2.0,
+      "resistance": 2.0,
+      "flammability": 150
     }
   ]
 }

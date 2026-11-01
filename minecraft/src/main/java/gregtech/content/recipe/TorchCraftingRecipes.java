@@ -31,7 +31,7 @@ public final class TorchCraftingRecipes {
             forms(rows, phosphorus, 6, BASE);
         forms(rows, "Blaze", 2, List.of("dustTiny"));
         forms(rows, "Peat", 4, FULL);
-        forms(rows, "PeatBituminous", 8, FULL);
+
         direct(rows, "resin", "gt6ce:rubber_resin", 4);
         direct(rows, "dry_grass", "gt6ce:dry_grass", 1);
         // External solid tar, torchberries and Netherlicious shroomlight belong to their compatibility loaders.
@@ -46,7 +46,7 @@ public final class TorchCraftingRecipes {
             forms(rows, "Charcoal", 4, List.of("oreRaw", "ingot", "gem", "dust"));
             forms(rows, "Coal", 4, FULL);
             forms(rows, "CoalCoke", 8, FULL);
-            forms(rows, "Anthracite", 8, FULL);
+
             forms(rows, "Lignite", 2, FULL);
             forms(rows, "LigniteCoke", 4, FULL);
             forms(rows, "OilShale", 4, FULL);

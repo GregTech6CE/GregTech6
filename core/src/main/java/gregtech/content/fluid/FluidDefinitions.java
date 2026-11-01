@@ -36,12 +36,6 @@ public final class FluidDefinitions {
         for (var material : java.util.List.of(
                 Materials.Nikolite,
                 Materials.Glowstone,
-                Materials.GlowstoneCeres,
-                Materials.GlowstoneIo,
-                Materials.GlowstoneEnceladus,
-                Materials.GlowstoneProteus,
-                Materials.GlowstonePluto,
-                Materials.Gloomstone,
                 gregtech.content.material.generated.OreMaterials.VanadiumMagnetite))
             material.put(gregtech.api.material.MaterialProperty.MOLTEN);
 
@@ -75,7 +69,6 @@ public final class FluidDefinitions {
             "PinkVitriol",
             "RedVitriol",
             "WhiteVitriol",
-            "MartianVitriol",
             "VitriolOfClay"
         }) {
             var material = GTMaterialRegistry.get(name);
@@ -174,8 +167,7 @@ public final class FluidDefinitions {
      */
     private static void bindMaterialFluids() {
         // Mod-compat molten metals (original GT6 Loader_Fluids lines 161-189)
-        bindMolten("ardite.molten", "Ardite");
-        bindMolten("manyullyn.molten", "Manyullyn");
+
         bindMolten("aluminumbrass.molten", "AluminiumBrass");
         bindMolten("bronze.molten", "Bronze");
         bindMolten("steel.molten", "Steel");
@@ -185,8 +177,7 @@ public final class FluidDefinitions {
         bindMolten("lumium.molten", "Lumium");
         bindMolten("signalum.molten", "Signalum");
         bindMolten("enderium.molten", "Enderium");
-        bindMolten("mithril.molten", "Mithril");
-        bindMolten("pigiron.molten", "PigIron");
+
         bindMolten("molten.aluminum", "Al");
         bindMolten("aluminium.molten", "Al");
         bindMolten("aluminum.molten", "Al");
@@ -216,7 +207,6 @@ public final class FluidDefinitions {
         bindMolten("concrete", "Concrete");
         bindMolten("molten.latex", "Latex");
         bindMolten("latex", "Latex");
-        bindMolten("molten.hsla", "HSLA");
 
         // Additional material bindings from static entries
         bindMolten("molten.brass", "Brass");
@@ -232,10 +222,7 @@ public final class FluidDefinitions {
         bindMolten("molten.waxbee", "WaxBee");
         bindMolten("molten.waxparaffin", "WaxParaffin");
         bindMolten("molten.waxplant", "WaxPlant");
-        bindMolten("molten.waxrefractory", "WaxRefractory");
-        bindMolten("molten.waxmagic", "WaxMagic");
-        bindMolten("molten.waxamnesic", "WaxAmnesic");
-        bindMolten("molten.waxsoulful", "WaxSoulful");
+
         bindMolten("molten.al2o3", "Al2O3");
     }
 

@@ -12,14 +12,11 @@ public final class ImplosionRecipeRows {
             new Gem("Diamond", "DiamondIndustrial"),
             new Gem("Blue Diamond", "DiamondIndustrial"),
             new Gem("Green Diamond", "DiamondIndustrial"),
-            new Gem("Purple Diamond", "DiamondIndustrial"),
             new Gem("Red Diamond", "DiamondIndustrial"),
             new Gem("Yellow Diamond", "DiamondIndustrial"),
             new Gem("Pink Diamond", "DiamondIndustrial"),
             new Gem("DiamondIndustrial", "DiamondIndustrial"),
             new Gem("Mana Diamond", "DiamondIndustrial"),
-            new Gem("Elven Dragonstone", "DiamondIndustrial"),
-            new Gem("Gravitite", "DiamondIndustrial"),
             new Gem("Emerald", "Emerald"),
             new Gem("Aquamarine", "Emerald"),
             new Gem("Morganite", "Emerald"),
@@ -60,6 +57,5 @@ public final class ImplosionRecipeRows {
             new Gem("Red Aventurine", "Red Aventurine"),
             new Gem("Diamantine", "DiamondIndustrial"),
             new Gem("Emeradic", "Emerald"),
-            new Gem("Amethyst", "Amethyst"),
-            new Gem("AmethystEnder", "AmethystEnder"));
+            new Gem("Amethyst", "Amethyst"));
 }

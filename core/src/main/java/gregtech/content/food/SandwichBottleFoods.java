@@ -212,19 +212,6 @@ public final class SandwichBottleFoods {
                     false,
                     false), // Loader_Fluids.java:586; MultiItemBottles.java:126
             new Food(
-                    "whale_oil",
-                    2,
-                    0.2f,
-                    0,
-                    0,
-                    20,
-                    0,
-                    20,
-                    0,
-                    false,
-                    false,
-                    false), // Loader_Fluids.java:587; MultiItemBottles.java:127
-            new Food(
                     "mayo", 3, 0.5f, 0, 0, 10, 0, 20, 0, false, false,
                     false), // Loader_Fluids.java:590; MultiItemBottles.java:134
             new Food(
@@ -282,19 +269,7 @@ public final class SandwichBottleFoods {
                     true,
                     false,
                     false), // Loader_Fluids.java:576; MultiItemBottles.java:160
-            new Food(
-                    "rice_vinegar",
-                    2,
-                    0.2f,
-                    30,
-                    0,
-                    0,
-                    10,
-                    0,
-                    0,
-                    false,
-                    false,
-                    false), // Loader_Fluids.java:562; MultiItemBottles.java:192
+            // Loader_Fluids.java:562; MultiItemBottles.java:192
             new Food(
                     "chocolate_cream",
                     4,
@@ -376,19 +351,7 @@ public final class SandwichBottleFoods {
                     false,
                     false,
                     false), // Loader_Fluids.java:599; MultiItemBottles.java:266
-            new Food(
-                    "peanut_butter",
-                    8,
-                    0.4f,
-                    0,
-                    0,
-                    0,
-                    20,
-                    30,
-                    0,
-                    false,
-                    false,
-                    false), // Loader_Fluids.java:598; MultiItemBottles.java:273
+            // Loader_Fluids.java:598; MultiItemBottles.java:273
             new Food(
                     "rainbow_sap",
                     5,

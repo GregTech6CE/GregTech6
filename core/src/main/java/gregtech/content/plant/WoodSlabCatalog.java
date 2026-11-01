@@ -6,7 +6,6 @@ public final class WoodSlabCatalog {
     public static String material(String wood) {
         return switch (wood) {
             case "blue_mahoe", "bluemahoe" -> "BlueMahoe";
-            case "white_mahoe" -> "Mahoe";
             case "bluespruce" -> "BlueSpruce";
             case "cinnamon" -> "Cinnamonwood";
             case "coconut" -> "Coconutwood";
@@ -27,24 +26,21 @@ public final class WoodSlabCatalog {
     }
 
     public static final java.util.List<String> WOODS = java.util.List.of(
-            "blue_mahoe",
             "bluemahoe",
+            "blue_mahoe",
             "bluespruce",
             "cinnamon",
             "coconut",
             "compressed",
             "dry",
-            "ebony",
             "frozen",
             "hazel",
             "maple",
             "mossy",
-            "pine",
             "rainbowood",
             "rotten",
             "rubber",
             "treated",
-            "white_mahoe",
             "willow",
             "wood");
 }

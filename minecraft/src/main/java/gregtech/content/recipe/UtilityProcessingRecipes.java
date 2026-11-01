@@ -55,9 +55,8 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
                 fluids(fluid("Latex", 144), fluid("Dye_Chemical_White", 144)),
                 null);
         var pelletInputs = new java.util.LinkedHashMap<Integer, java.util.List<ItemStack>>();
-        for (String wood : new String[] {
-            "Wood", "Bark", "LiveRoot", "Livingwood", "Greatwood", "Dreamwood", "Shimmerwood", "Silverwood"
-        }) {
+        for (String wood :
+                new String[] {"Wood", "Bark", "LiveRoot", "Livingwood", "Greatwood", "Dreamwood", "Silverwood"}) {
             var powder =
                     GTItems.getStack(MaterialPrefix.dust, gregtech.engine.material.GTMaterialRegistry.get(wood), 1);
             if (powder.isEmpty()) {
@@ -66,7 +65,7 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
             }
             int count = java.util.Set.of("LiveRoot", "Livingwood", "Greatwood").contains(wood)
                     ? 2
-                    : java.util.Set.of("Dreamwood", "Shimmerwood", "Silverwood").contains(wood) ? 4 : 1;
+                    : java.util.Set.of("Dreamwood", "Silverwood").contains(wood) ? 4 : 1;
             pelletInputs
                     .computeIfAbsent(count, ignored -> new java.util.ArrayList<>())
                     .add(powder);

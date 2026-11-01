@@ -28,17 +28,14 @@ public final class ModMaterialUnification {
      */
     public static final List<ItemForm> ITEM_FORMS = List.of(
             new ItemForm("botania:mana_diamond", "gem", "ManaDiamond"),
-            new ItemForm("botania:dragonstone", "gem", "ElvenDragonstone"),
             new ItemForm("botania:gaia_ingot", "ingot", "GaiaSpirit"),
             new ItemForm("botania:livingwood_twig", "stick", "Livingwood"),
             new ItemForm("botania:dreamwood_twig", "stick", "Dreamwood"),
             new ItemForm("botania:livingwood_planks", "plate", "Livingwood"),
             new ItemForm("botania:dreamwood_planks", "plate", "Dreamwood"),
-            new ItemForm("botania:shimmerwood_planks", "plate", "Shimmerwood"),
             new ItemForm("botania:dark_quartz", "gem", "SmokeyQuartz"),
             new ItemForm("botania:mana_quartz", "gem", "ManaQuartz"),
             new ItemForm("botania:blaze_quartz", "gem", "BlazeQuartz"),
-            new ItemForm("botania:lavender_quartz", "gem", "LavenderQuartz"),
             new ItemForm("botania:red_quartz", "gem", "RedQuartz"),
             new ItemForm("botania:elf_quartz", "gem", "ElvenQuartz"),
             new ItemForm("botania:sunny_quartz", "gem", "SunnyQuartz"));
@@ -57,8 +54,7 @@ public final class ModMaterialUnification {
             new Binding("botania", "elementium_ingots", "ingot", null, "ElvenElementium"),
             new Binding("botania", "elementium_nuggets", "nugget", null, "ElvenElementium"),
             new Binding("botania", "elementium_blocks", null, "blockIngot", "ElvenElementium"),
-            new Binding("botania", "mana_diamond_gems", "gem", null, "ManaDiamond"),
-            new Binding("botania", "dragonstone_gems", "gem", null, "ElvenDragonstone"));
+            new Binding("botania", "mana_diamond_gems", "gem", null, "ManaDiamond"));
 
     /** Tag files are only published into a mod's namespace when that mod is present. */
     public static boolean isModLoaded(String namespace) {

@@ -110,10 +110,7 @@ public final class GTRemainingIconBlocks {
                 "maple",
                 "rainbowood",
                 "willow",
-                "pine",
                 "blue_mahoe",
-                "ebony",
-                "white_mahoe",
                 // GT6's remaining trees (hazel/cinnamon/coconut/blue spruce) became real species too
                 "hazel",
                 "cinnamon",

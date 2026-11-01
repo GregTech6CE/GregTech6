@@ -169,7 +169,6 @@ final class SourceThermalNativeAdapter {
    case 8318->declared("Ender","molten.enderpearl",FluidCatalog.Ender);
    case 8333->declared("Redstone","molten.redstone",FluidCatalog.Redstone);
    case 8620->declared("Brass","molten.brass",FluidCatalog.Brass);
-   case 8637->declared("HSLA_Molten","molten.hsla",FluidCatalog.HSLA_Molten);
    case 9107->declared("Calcite","molten.calcite",FluidCatalog.Calcite);
    case 9800->declared("Water","water",FluidCatalog.Water);
    case 9810->declared("Lava","lava",FluidCatalog.Lava);
@@ -177,12 +176,8 @@ final class SourceThermalNativeAdapter {
    case 8217->finalized("Rubber",FluidCatalog.Molten_Rubber);
    case 8235->finalized("Wax",FluidCatalog.Molten_Wax);
    case 8236->finalized("WaxBee",FluidCatalog.Molten_WaxBee);
-   case 8237->finalized("WaxRefractory",FluidCatalog.Molten_WaxRefractory);
    case 8238->finalized("WaxParaffin",FluidCatalog.Molten_WaxParaffin);
    case 8239->finalized("WaxPlant",FluidCatalog.Molten_WaxPlant);
-   case 8240->finalized("WaxMagic",FluidCatalog.Molten_WaxMagic);
-   case 8280->finalized("WaxAmnesic",FluidCatalog.Molten_WaxAmnesic);
-   case 8281->finalized("WaxSoulful",FluidCatalog.Molten_WaxSoulful);
    case 9703->finalized("Sugar",FluidCatalog.Molten_Sugar);
    case 9780->finalized("Cheese",FluidCatalog.Molten_Cheese);
    case 9783->finalized("Chocolate",FluidCatalog.Molten_Chocolate);

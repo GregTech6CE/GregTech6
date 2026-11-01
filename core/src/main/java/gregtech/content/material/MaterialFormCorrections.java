@@ -82,7 +82,6 @@ final class MaterialFormCorrections {
             "Cyan Vitriol",
             "White Vitriol",
             "Gray Vitriol",
-            "Martian Vitriol",
             "Vitriol Of Clay",
             "Aqua Regia"
         }) {
@@ -119,7 +118,7 @@ final class MaterialFormCorrections {
                     MaterialProperty.GENERATE_WIRE);
         }
         // OP.bouleGt.forceItemGeneration; crystal plates do not imply ordinary gems.
-        for (String name : new String[] {"Silicon", "Germanium", "RedstoneAlloy", "NikolineAlloy"}) {
+        for (String name : new String[] {"Silicon", "Germanium", "NikolineAlloy"}) {
             var material = gregtech.engine.material.GTMaterialRegistry.get(name);
             if (!material.isValid()) throw new IllegalStateException("Missing semiconductor: " + name);
             material.put(
@@ -211,5 +210,5 @@ final class MaterialFormCorrections {
      * dust form ({@code MT.java}: metalmachnd 8655/8656, alloymachnd 8644/8803).
      */
     private static final java.util.Set<String> NO_DUST_MATERIALS =
-            java.util.Set.of("WroughtIron", "AnnealedCopper", "IronCompressed", "CastIron");
+            java.util.Set.of("WroughtIron", "AnnealedCopper", "CastIron");
 }

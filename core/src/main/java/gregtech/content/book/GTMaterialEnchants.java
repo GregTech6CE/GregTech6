@@ -28,9 +28,8 @@ public final class GTMaterialEnchants {
 
     /** GT6 field name -> port material name, for the rows neither a field nor a registry name. */
     private static final Map<String, String> ALIASES = Map.ofEntries(
-            Map.entry("Ad", "Adamantium"),
-            Map.entry("Atl", "Atlarus"),
             Map.entry("Au", "Gold"),
+            Map.entry("Ad", "Adamantium"),
             Map.entry("Bi", "Bismuth"),
             Map.entry("Fe", "Iron"),
             Map.entry("Ke", "Trinium"),

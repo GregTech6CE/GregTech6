@@ -5,18 +5,8 @@ public final class ConstructionRules {
 
     public static final double ASPHALT_SPEED = 1.3;
     public static final int FOAM_GRACE = 100, FOAM_DRY_CHANCE = 5900;
-    public static final java.util.Set<String> IRON_FAMILY = java.util.Set.of(
-            "Iron",
-            "WroughtIron",
-            "IronCast",
-            "IronCompressed",
-            "PigIron",
-            "MeteoricIron",
-            "Meteorite",
-            "Enori",
-            "Steel",
-            "Knightmetal",
-            "MeteoricSteel");
+    public static final java.util.Set<String> IRON_FAMILY =
+            java.util.Set.of("Iron", "WroughtIron", "IronCast", "Enori", "Steel", "Knightmetal");
 
     public static int tint(String dye) {
         return switch (dye) {

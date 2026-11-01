@@ -312,8 +312,6 @@ public final class GTMaterialRegistry {
             {"NetherBrick", "Netherrack"},
             {"WroughtIron", "Fe"},
             {"AnnealedCopper", "Cu"},
-            {"PigIron", "Fe"},
-            {"IronCompressed", "Fe"},
             {"CastIron", "Fe"},
             {"IronMagnetic", "Fe"},
             {"SteelMagnetic", "Steel"},

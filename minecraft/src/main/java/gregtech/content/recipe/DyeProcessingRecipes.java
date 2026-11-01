@@ -190,7 +190,7 @@ public final class DyeProcessingRecipes {
         switch(index){
             case 0 -> fluids.add(new String[]{"InkSquid","144"});
             case 1 -> fluids.add(new String[]{"Juice_Cranberry","250"});
-            case 4 -> {fluids.add(new String[]{"Indigo","144"});fluids.add(new String[]{"Juice_Blueberry","250"});}
+            case 4 -> {fluids.add(new String[]{"Juice_Blueberry","250"});}
             default -> {}
         }
         return fluids;
@@ -217,25 +217,24 @@ public final class DyeProcessingRecipes {
     /** GT6's rock-to-foam-colour partition; an empty first entry means the foam stays undyed. */
     private static final String[][] FOAM_ROCKS_BY_DYE={
             {"","Stone","Concrete","Asbestos","Dolomite","Talc","Gneiss","Rhyolite","Chert","Shale","OilShale"},
-            {"White","Diorite","Marble","Chalk","Calcite","Endstone","Livingrock","Holystone","Castlerock"},
+            {"White","Diorite","Marble","Chalk","Calcite","Endstone","Livingrock"},
             {"Black","Basalt","Gabbro","GraniteBlack","Deepslate"},
-            {"Gray","Migmatite","Eclogite","SpaceStone","Slate","Cragrock"},
-            {"LightGray","Andesite","Dacite","Deadrock","Greywacke","MoonStone","MoonTurf"},
+            {"Gray","Slate"},
+            {"LightGray","Andesite","Dacite"},
             {"LightBlue","Blueschist"},
-            {"Lime","Greenschist","Betweenstone","Prismarine"},
-            {"Green","Pitstone","PrismarineDark","Mazestone"},
-            {"Red","Redrock","MarsStone","MarsSand","Netherrack","GraniteRed","Granite"},
-            {"Yellow","Komatiite","Templerock"},
+            {"Lime","Greenschist","Prismarine"},
+            {"Green","PrismarineDark"},
+            {"Red","MarsSand","Netherrack","GraniteRed","Granite"},
+            {"Yellow","Komatiite"},
             {"Orange","Limestone"},
-            {"Pink","Quartzite","Siltstone"},
-            {"Brown","Umber","Kimberlite"}};
+            {"Pink","Quartzite"},
+            {"Brown","Kimberlite"}};
 
     /** GT6 {@code ANY.SiO2.mToThis}, in the order the source group registers them. */
     private static final String[] FOAM_SANDS={
-            "SiliconDioxide","Glass","Flint","Sand","RedSand","WhiteEndSand","BlackEndSand",
-            "NetherQuartz","CertusQuartz","ChargedCertusQuartz","QuartzBlack","Fluix","SunnyQuartz",
-            "LavenderQuartz","RedQuartz","BlazeQuartz","SmokeyQuartz","ManaQuartz","ElvenQuartz",
-            "MilkyQuartz","VoidQuartz","Quartzite"};
+            "SiliconDioxide","Glass","Flint","Sand","RedSand","NetherQuartz","CertusQuartz","ChargedCertusQuartz","Fluix","SunnyQuartz",
+            "RedQuartz","BlazeQuartz","SmokeyQuartz","ManaQuartz","ElvenQuartz",
+            "MilkyQuartz","Quartzite"};
 
     /** GT6 {@code ANY.Clay.mToThis}. */
     private static final String[] FOAM_CLAYS={"Clay","ClayBrown","ClayRed","Bentonite","Palygorskite","Kaolinite"};

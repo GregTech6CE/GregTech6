@@ -436,8 +436,6 @@ public final class SourceLatheMaterialProfiles {
             1160|Livermorium|0000
             1170|Farnsium|0000
             1180|Oganesson|0000
-            1190|Ununennium|0000
-            1200|Unbinilium|0000
             1250|TritaniumElemental|0000
             1260|Trinium|0000
             1450|DuraniumElemental|0000
@@ -445,21 +443,13 @@ public final class SourceLatheMaterialProfiles {
             1740|Naquadah|0000
             1741|NaquadahEnriched|0000
             1742|Naquadria|0000
-            1850|Abyssalnite|0000
-            1860|Coralium|0000
-            1870|Dreadium|0000
-            1880|Ethaxium|0000
-            2210|Atlarus|0000
             2220|Adamantium|0000
-            2390|MacGuffium|0000
             3720|Gravitonium|0000
             4000|Magic|0000
             8000|SiliconDioxide|0010
             8001|Glass|0011
             8002|Flint|0000
             8003|Carborundum|0000
-            8004|LithiumOxide|0000
-            8005|Ferrite|0000
             8006|Datolite|0000
             8007|HydrogenBorate|0000
             8008|Alumina|0000
@@ -499,15 +489,10 @@ public final class SourceLatheMaterialProfiles {
             8102|SluiceSand|0000
             8103|PlatinumGroupSludge|0000
             8104|RedSand|0010
-            8105|WhiteEndSand|0010
-            8106|BlackEndSand|0010
             8196|Teflon|0010
             8197|PVC|0010
-            8198|Bakelite|0010
-            8199|HardPlastic|0010
             8200|Ashes|0000
             8201|DarkAshes|0000
-            8202|VolcanicAshes|0000
             8203|Sylvite|0000
             8204|Salt|0000
             8205|PotassiumNitrate|0000
@@ -531,8 +516,6 @@ public final class SourceLatheMaterialProfiles {
             8224|WoodRubber|0000
             8225|Ceramic|0000
             8226|Phosphorite|0000
-            8227|PeanutWood|0000
-            8228|Indigo|0000
             8229|CobaltHexahydrate|0000
             8230|SodiumBisulfate|0000
             8231|SodiumPyrosulfate|0000
@@ -541,34 +524,30 @@ public final class SourceLatheMaterialProfiles {
             8234|VanadiumPentoxide|0000
             8235|Wax|0010
             8236|WaxBee|0010
-            8237|WaxRefractory|0010
             8238|WaxParaffin|0010
             8239|WaxPlant|0010
-            8240|WaxMagic|0010
             8241|Leather|0000
             8242|IodineSalt|0000
-            8243|SilverIodide|0000
-            8244|Tallow|0000
             8246|Aerotheum|0000
             8247|Basalz|0000
             8248|Blitz|0000
             8249|Dynamite|0000
-            8250|Black|0000
-            8251|Red|0000
-            8252|Green|0000
-            8253|Brown|0000
-            8254|Blue|0000
-            8255|Purple|0000
-            8256|Cyan|0000
-            8257|LightGray|0000
-            8258|Gray|0000
-            8259|Pink|0000
-            8260|Lime|0000
-            8261|Yellow|0000
-            8262|LightBlue|0000
-            8263|Magenta|0000
-            8264|Orange|0000
-            8265|White|0000
+            8250|DyeBlack|0000
+            8251|DyeRed|0000
+            8252|DyeGreen|0000
+            8253|DyeBrown|0000
+            8254|DyeBlue|0000
+            8255|DyePurple|0000
+            8256|DyeCyan|0000
+            8257|DyeLightGray|0000
+            8258|DyeGray|0000
+            8259|DyePink|0000
+            8260|DyeLime|0000
+            8261|DyeYellow|0000
+            8262|DyeLightBlue|0000
+            8263|DyeMagenta|0000
+            8264|DyeOrange|0000
+            8265|DyeWhite|0000
             8266|Asphalt|0010
             8267|WoodPolished|1000
             8268|SodiumHydroxide|0000
@@ -582,23 +561,8 @@ public final class SourceLatheMaterialProfiles {
             8276|ClayBrown|0000
             8277|PetrifiedWood|0000
             8278|ManaDiamond|0001
-            8279|ElvenDragonstone|0001
-            8280|WaxAmnesic|0010
-            8281|WaxSoulful|0010
-            8282|CrimsonMiddle|0001
-            8283|GreenMiddle|0001
-            8284|AquaMiddle|0001
-            8285|Valonite|0001
-            8286|Weedwood|0000
-            8287|SlimyBone|0000
-            8288|Scabyst|0001
             8289|Livingwood|0000
             8290|Dreamwood|0000
-            8291|Skyroot|0000
-            8292|Zanite|0001
-            8293|Ambrosium|0001
-            8294|Gravitite|0001
-            8295|Continuum|0001
             8296|Greatwood|0000
             8297|Silverwood|0000
             8298|EnergiumRed|0001
@@ -619,7 +583,6 @@ public final class SourceLatheMaterialProfiles {
             8313|Amethyst|0001
             8314|OrangeSapphire|0001
             8315|YellowSapphire|0001
-            8317|Dilithium|0001
             8318|EnderPearl|0001
             8319|EnderEye|0001
             8320|NetherStar|0001
@@ -630,7 +593,6 @@ public final class SourceLatheMaterialProfiles {
             8325|Dioptase|0001
             8326|Spinel|0001
             8328|BlueSapphire|0001
-            8329|AmethystEnder|0001
             8330|Lazurite|0000
             8331|Sodalite|0000
             8332|Lapis|0000
@@ -642,52 +604,20 @@ public final class SourceLatheMaterialProfiles {
             8338|Monazite|0000
             8340|Nikolite|0001
             8341|Glowstone|0001
-            8342|Firestone|0000
-            8343|Force|0000
-            8344|Forcicium|0000
-            8345|Forcillium|0000
             8346|NetherQuartz|0000
             8347|CertusQuartz|0000
             8348|ChargedCertusQuartz|0000
             8349|CoalCoke|0000
-            8350|InfusedDull|0001
-            8351|InfusedVis|0001
-            8352|InfusedAir|0001
-            8353|InfusedFire|0001
-            8354|InfusedEarth|0001
-            8355|InfusedWater|0001
-            8356|InfusedEntropy|0001
-            8357|InfusedOrder|0001
-            8358|InfusedBalance|0001
             8360|Peat|0000
-            8361|PeatBituminous|0000
-            8362|Anthracite|0000
-            8363|Prismane|0000
-            8364|Lonsdaleite|0000
             8365|LigniteCoke|0000
-            8366|ArcaneCompound|0010
-            8367|ArcaneAshes|0000
-            8368|GlowstoneCeres|0001
-            8369|GlowstoneIo|0001
-            8370|GlowstoneEnceladus|0001
-            8371|GlowstoneProteus|0001
-            8372|GlowstonePluto|0001
-            8373|Ectoplasm|0000
-            8374|QuartzBlack|0000
-            8381|DarkMatter|0000
-            8382|RedMatter|0000
             8383|PurpleSapphire|0001
             8384|Heliodor|0001
             8385|Goshenite|0001
             8386|Bixbite|0001
             8387|Maxixe|0001
-            8388|Alexandrite|0001
             8389|Fluix|0000
             8390|PetroleumCoke|0000
-            8391|Frezarite|0000
-            8392|RedMeteor|0000
             8393|SunnyQuartz|0000
-            8394|LavenderQuartz|0000
             8395|RedQuartz|0000
             8396|BlazeQuartz|0000
             8397|SmokeyQuartz|0000
@@ -704,10 +634,8 @@ public final class SourceLatheMaterialProfiles {
             8408|CyanVitriol|0000
             8409|WhiteVitriol|0000
             8410|GrayVitriol|0000
-            8411|MartianVitriol|0000
             8412|VitriolOfClay|0000
             8413|TitaniumTetrachloride|0000
-            8414|Shimmerwood|0000
             8415|OnyxRed|0001
             8416|OnyxBlack|0001
             8417|Amazonite|0001
@@ -745,22 +673,16 @@ public final class SourceLatheMaterialProfiles {
             8449|BlackAventurine|0001
             8450|BlueAventurine|0001
             8451|RedAventurine|0001
-            8454|Chimerite|0000
             8455|ClayRed|0000
-            8456|Gloomstone|0001
-            8457|VoidQuartz|0000
             8458|BluePhosphorus|0000
             8459|RedPhosphorus|0000
             8460|WhitePhosphorus|0000
             8461|NiobiumPentoxide|0000
             8462|TantalumPentoxide|0000
-            8463|Sugilite|0001
             8464|BlueDiamond|0001
             8465|GreenDiamond|0001
-            8466|PurpleDiamond|0001
             8467|RedDiamond|0001
             8468|YellowDiamond|0001
-            8469|GoldenAmber|0001
             8470|Carminite|0001
             8471|Breeze|0000
             8500|Stone|0010
@@ -772,34 +694,19 @@ public final class SourceLatheMaterialProfiles {
             8506|Marble|0010
             8507|GraniteRed|0010
             8508|GraniteBlack|0010
-            8509|Redrock|0010
             8511|Diorite|0010
-            8512|SpaceStone|0010
-            8513|MoonStone|0010
-            8514|MoonTurf|0010
-            8515|MarsStone|0010
             8516|MarsSand|0010
-            8517|Umber|0010
             8518|Granite|0010
-            8519|Betweenstone|0010
-            8520|Pitstone|0010
             8521|Livingrock|0010
-            8522|Holystone|0010
-            8523|Deadrock|0010
-            8524|Cragrock|0010
             8528|SkyStone|0010
             8599|Bedrock|0000
             8600|Electrum|0010
             8601|SterlingSilver|0010
             8602|RoseGold|0010
-            8603|Angmallen|0000
-            8604|GoldInductive|0010
             8605|CdInAgAlloy|0000
-            8606|GildedIron|1000
             8610|Bronze|0010
             8611|BlackBronze|0010
             8612|BismuthBronze|0010
-            8613|Hepatizon|0000
             8614|ArsenicCopper|0010
             8615|ArsenicBronze|0010
             8620|Brass|0010
@@ -812,25 +719,15 @@ public final class SourceLatheMaterialProfiles {
             8634|DamascusSteel|0000
             8635|Tungstensteel|0000
             8636|StainlessSteel|0000
-            8637|HSLASteel|0000
             8638|TungstenCarbide|0000
-            8639|HSLASpringSteel|0000
             8640|AnnealedCopper|0010
-            8641|DeepIron|0000
-            8642|PigIron|0000
             8643|WroughtIron|0000
-            8644|IronCompressed|0000
             8645|IronMagnetic|0100
             8646|SteelMagnetic|0100
             8647|NeodymiumMagnetic|0100
-            8648|DarkIron|0000
-            8649|MeteoricIron|0000
-            8650|MeteoricSteel|0000
             8651|SteelGalvanized|1000
             8652|TungstenSintered|0000
             8653|VanadiumSteel|0000
-            8654|TitaniumGold|0000
-            8657|PurpleAlloy|0010
             8658|ElectrotineAlloy|0010
             8659|BlueAlloy|0010
             8660|RedAlloy|0010
@@ -843,122 +740,49 @@ public final class SourceLatheMaterialProfiles {
             8667|TinAlloy|0010
             8668|BatteryAlloy|0010
             8669|SolderingAlloy|0010
-            8670|ShadowIron|0000
-            8671|ShadowSteel|0000
             8672|Ironwood|0010
             8673|Steeleaf|0010
             8674|Knightmetal|0000
             8675|FierySteel|0000
-            8676|AstralSilver|0000
-            8677|Midasium|0000
-            8678|Mithril|0000
             8679|Thaumium|0000
-            8680|DarkThaumium|0000
-            8681|VoidMetal|0000
             8682|Osmiridium|0000
-            8683|Sunnarium|0000
             8684|Trinaquadalloy|0000
             8685|ChromiumDioxide|0000
             8686|VanadiumGallium|0000
             8687|YttriumBariumCuprate|0100
-            8688|NiobiumNitride|0000
             8689|NiobiumTitanium|0000
-            8690|MeteoricBlackSteel|0000
-            8691|MeteoricBlueSteel|0000
-            8692|MeteoricRedSteel|0000
-            8693|MeteoflameSteel|0000
-            8694|MeteoflameBlackSteel|0000
-            8695|MeteoflameBlueSteel|0000
-            8696|MeteoflameRedSteel|0000
             8697|FlamascusSteel|0000
             8698|Fireleaf|0010
             8700|AluminiumBrass|0010
-            8701|Aredrite|0000
             8702|Alumite|0000
-            8703|Manyullyn|0000
             8704|VibraniumSteel|0000
             8705|VibraniumSilver|0000
             8706|Vibramantium|0000
-            8707|Ardite|0000
             8708|Signalum|0010
             8709|Lumium|0010
             8710|Enderium|0000
-            8711|ElectrumFlux|0010
-            8713|GlowstoneRefined|0000
-            8714|ObsidianRefined|0000
-            8715|Yellorium|0000
-            8716|Blutonium|0000
             8717|Cyanite|0000
-            8718|BedrockHSLAAlloy|0000
             8720|Manasteel|0000
             8721|Terrasteel|0000
             8722|ElvenElementium|0000
-            8723|Ludicrite|0000
-            8724|Yellorite|0000
-            8725|PulsatingIron|0000
             8726|VibrantAlloy|0000
             8727|ConductiveIron|0000
-            8728|EnergeticAlloy|0000
             8729|EnderiumBase|0000
             8730|ElectricalSteel|0000
-            8731|ObsidianSteel|0000
             8732|Soularium|0000
-            8733|RedstoneAlloy|0000
-            8734|SpectreIron|0000
             8735|GaiaSpirit|0000
-            8736|Endium|0000
             8737|NikolineAlloy|0000
-            8739|Mauftrium|0000
-            8740|Elvorium|0000
-            8741|NiflheimPower|0000
-            8742|MuspelheimPower|0000
-            8743|Iffesal|0000
             8744|AncientDebris|0000
             8745|Netherite|0000
             8746|NetherizedDiamond|1000
-            8747|Efrine|0000
-            8750|Desh|0000
             8751|Duranium|0000
             8752|Tritanium|0000
-            8753|Dolamide|0000
-            8754|Oriharukon|0000
-            8755|Adamantite|0000
             8756|Duralumin|0000
-            8757|Meteorite|0000
-            8758|FrozenIron|0000
-            8759|Kreknorite|0000
-            8760|Alduorite|0000
-            8761|Infuscolium|0000
-            8762|Rubracium|0000
-            8763|Meutoite|0000
-            8764|Lemurite|0000
-            8765|Ceruclase|0000
-            8766|HSLATungstenAlloy|0000
-            8767|Oureclase|0000
-            8768|Kalendrite|0000
-            8769|Orichalcum|0000
-            8770|Carmot|0010
-            8771|Sanguinite|0000
-            8772|Vyroxeres|0000
-            8773|Eximite|0000
-            8774|Prometheum|0010
-            8775|Ignatius|0000
-            8776|Vulcanite|0000
-            8777|Inolashite|0000
-            8778|Haderoth|0000
-            8779|Celenegil|0000
-            8780|WorkersAlloy|0000
-            8781|Desichalkos|0000
-            8782|Tartarite|0000
-            8783|Amordrine|0000
             8784|Adamantine|0000
-            8785|Syrmorite|0010
-            8786|Octine|0000
             8790|Trinitanium|0000
             8791|Draconium|0000
             8792|DraconiumAwakened|0000
             8793|TitaniumIridium|0000
-            8794|TitaniumAluminide|0000
             8795|Bedrockium|0000
             8796|HSSG|0000
             8797|HSSE|0000
@@ -968,15 +792,7 @@ public final class SourceLatheMaterialProfiles {
             8801|Infinity|0000
             8802|TantalumHafniumCarbide|0000
             8803|CastIron|0000
-            8804|Mingrade|0010
             8805|Unstable|0000
-            8806|ClayCompound|0000
-            8807|EndSteel|0000
-            8808|EnergeticSilver|0010
-            8809|MelodicAlloy|0000
-            8810|StellarAlloy|0000
-            8811|VividAlloy|0000
-            8812|CrystallineAlloy|0000
             8813|CrystallinePinkSlime|0000
             9000|Pumice|0010
             9001|Diatomite|0000
@@ -1058,18 +874,12 @@ public final class SourceLatheMaterialProfiles {
             9169|Talc|0000
             9170|Gneiss|0010
             9171|Greenschist|0010
-            9172|Greenstone|0010
-            9173|Greywacke|0010
             9174|Graphite|0000
             9175|Graphene|0000
             9176|Gabbro|0010
             9177|Komatiite|0010
-            9178|Siltstone|0010
             9179|Rhyolite|0010
             9180|Quartzite|0010
-            9181|Migmatite|0010
-            9182|Epidote|0010
-            9183|Emery|0000
             9184|Blueschist|0010
             9185|Bluestone|0010
             9186|Chert|0010
@@ -1077,7 +887,6 @@ public final class SourceLatheMaterialProfiles {
             9188|Andesite|0010
             9189|Limestone|0010
             9190|Shale|0010
-            9191|Eclogite|0010
             9192|Rutile|0000
             9193|Stolzite|0000
             9194|Ferberite|0000
@@ -1111,33 +920,11 @@ public final class SourceLatheMaterialProfiles {
             9222|Slate|0010
             9223|Blackstone|0010
             9243|ClayBrick|0000
-            9244|Grayschist|0010
-            9245|Pinkschist|0010
             9246|Columbite|0000
             9247|Coltan|0000
             9248|Deepslate|0010
-            9249|PhobosRock|0010
-            9250|DeimosRock|0010
-            9251|VenusRock|0010
             9252|MercuryRock|0010
-            9253|CeresRock|0010
-            9254|JupiterRock|0010
-            9255|IoRock|0010
-            9256|EuropaRock|0010
-            9257|GanymedeRock|0010
-            9258|CallistoRock|0010
-            9259|SaturnRock|0010
-            9260|RheaRock|0010
             9261|TitanRock|0010
-            9262|OberonRock|0010
-            9263|IapetusRock|0010
-            9264|UranusRock|0010
-            9265|TitaniaRock|0010
-            9266|NeptuneRock|0010
-            9267|TritonRock|0010
-            9268|PlutoRock|0010
-            9269|ErisRock|0010
-            9270|Kepler22bRock|0010
             9271|Quicklime|0000
             9300|Oak|0000
             9301|Birch|0000
@@ -1159,117 +946,19 @@ public final class SourceLatheMaterialProfiles {
             9317|Cinnamonwood|0000
             9318|Coconutwood|0000
             9319|Rainbowood|0000
-            9320|Towerwood|0000
-            9321|Witchwood|0000
-            9322|Ogrewood|0000
-            9323|Wyvernwood|0000
-            9324|Aspen|0000
-            9325|DouglasFir|0000
-            9326|Sycamore|0000
-            9327|WhiteCedar|0000
-            9328|WhiteElm|0000
-            9329|Thorntree|0000
-            9330|SilverPine|0000
-            9331|Alder|0000
-            9332|Hawthorn|0000
-            9333|Rowan|0000
-            9334|Autumnwood|0000
-            9335|Pine|0000
-            9336|Cypress|0000
-            9337|Fir|0000
-            9338|JapaneseMaple|0000
-            9339|RainbowEucalyptus|0000
-            9340|Redwood|0000
-            9341|Sakura|0000
-            9342|Balsa|0000
-            9343|Baobab|0000
             9344|Cherrywood|0000
-            9345|Chestnutwood|0000
-            9346|Citruswood|0000
-            9347|Cocobolowood|0000
-            9348|Ebony|0000
-            9349|Giganteumwood|0000
-            9350|Greenheart|0000
-            9351|Ipe|0000
-            9352|Kapok|0000
-            9353|Larch|0000
-            9354|Limewood|0000
-            9355|Mahoe|0000
-            9356|Mahogany|0000
-            9357|Padauk|0000
-            9358|Palm|0000
-            9359|Papayawood|0000
-            9360|Plumwood|0000
-            9361|Poplar|0000
-            9362|Sequoia|0000
-            9363|Teak|0000
-            9364|Walnutwood|0000
-            9365|Wenge|0000
-            9366|Zebrawood|0000
-            9367|Darkwood|0000
-            9368|Etherealwood|0000
-            9369|Goldwood|0000
-            9370|Hellbark|0000
-            9371|Jacaranda|0000
             9372|Mangrove|0000
-            9373|SacredOak|0000
-            9374|Magicwood|0000
-            9375|Applewood|0000
-            9376|Ashwood|0000
-            9377|Beech|0000
-            9378|Boxwood|0000
-            9379|Brazilwood|0000
-            9380|Butternutwood|0000
-            9381|Cedar|0000
-            9382|Elderwood|0000
-            9383|Elm|0000
-            9384|Eucalyptus|0000
-            9385|Figwood|0000
-            9386|Gingko|0000
-            9387|Hemlock|0000
-            9388|Hickory|0000
-            9389|Holly|0000
-            9390|Hornbeam|0000
-            9391|Iroko|0000
-            9392|Locust|0000
-            9393|Logwood|0000
-            9394|Maclura|0000
-            9395|Olivewood|0000
-            9396|Pearwood|0000
-            9397|PinkIvory|0000
-            9398|Purpleheart|0000
-            9399|Rosewood|0000
-            9400|Sweetgum|0000
-            9401|Syzgium|0000
-            9402|Whitebeam|0000
-            9403|Yew|0000
-            9404|WoodScorched|0000
-            9405|WoodVarnished|0000
-            9406|WoodTainted|0000
-            9407|WoodBleached|0000
-            9408|Foxfirewood|0000
             9409|BlueSpruce|0000
             9700|MeatRaw|0010
             9701|MeatCooked|0000
             9702|Wheat|0000
             9703|Sugar|0010
-            9704|Barley|0000
             9705|Rye|0000
-            9706|Rice|0000
-            9707|Oat|0000
-            9708|Corn|0000
             9709|Potato|0000
             9710|MeatRotten|0000
             9711|FishCooked|0000
             9712|FishRaw|0010
             9713|FishRotten|0000
-            9714|Almond|0000
-            9715|Marshmallow|0000
-            9716|PEZ|0000
-            9717|Licorice|0000
-            9718|Nougat|0000
-            9719|AbyssalOat|0000
-            9778|Tofu|0000
             9779|SoylentGreen|0000
             9780|Cheese|0010
             9781|Chili|0000
@@ -1277,20 +966,12 @@ public final class SourceLatheMaterialProfiles {
             9783|Chocolate|0010
             9784|Coffee|0000
             9785|Cinnamon|0000
-            9786|Nutmeg|0000
-            9787|Vanilla|0000
-            9788|PepperBlack|0000
-            9789|Curry|0000
             9790|Milk|0000
             9791|Honey|0000
             9792|Tea|0000
             9793|Honeydew|0000
             9794|Mint|0000
-            9795|Peanut|0000
             9796|Hazelnut|0000
-            9797|Pistachio|0000
-            9798|Butter|0000
-            9799|SaltedButter|0000
             9800|Water|0000
             9801|Snow|0000
             9802|Ice|0001
@@ -1360,6 +1041,5 @@ public final class SourceLatheMaterialProfiles {
             9884|UUAmplifier|0000
             9885|UUMatter|0000
             9886|Latex|0000
-            9887|WhaleOil|0000
             """;
 }

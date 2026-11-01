@@ -41,7 +41,6 @@ public final class GTStoneLayersGen {
     }
 
     static {
-        layer(null, "block_ore_anthracite", "Coal", true);
         layer(null, "block_ore_lignite", "Lignite", true);
         layer(null, "block_ore_salt", "NaCl", true);
         layer(null, "block_ore_rocksalt", "KCl", true);
@@ -63,9 +62,7 @@ public final class GTStoneLayersGen {
         layer(null, null, "Chert", false);
         layer(null, null, "Chert", false);
         layer(null, null, "Pumice", false);
-        layer(null, null, "Eclogite", false);
-        layer(null, null, "Greywacke", false);
-        layer(null, null, "Migmatite", false);
+
         layer(null, null, "Stone", false, ore("Peridot", true, 64, 32, 64));
         layer(null, null, "Dacite", false);
         layer(null, null, "Dacite", false, ore("Nikolite", true, 32, 0, 20));
@@ -301,8 +298,7 @@ public final class GTStoneLayersGen {
         layer("GNEISS", null, "Gneiss", false);
         layer("GNEISS", null, "Gneiss", false);
         layer("GNEISS", null, "Gneiss", false, ore("Graphite", true, 8, 0, 64), ore("Asbestos", true, 8, 0, 48));
-        layer(null, null, "Pinkschist", false);
-        layer(null, null, "Grayschist", false);
+
         layer("GREENSCHIST", null, "Greenschist", false);
         layer("GREENSCHIST", null, "Greenschist", false);
         layer(null, null, "Stone", false, ore("Andradite", true, 32, 8, 40), ore("Almandine", true, 32, 16, 48));
@@ -328,8 +324,6 @@ public final class GTStoneLayersGen {
         layer("QUARTZITE", null, "RedSand", false, ore("Niter", true, 6, 40, 70));
         layer("QUARTZITE", null, "Sand", false, ore("Niter", true, 6, 40, 70));
         layer("QUARTZITE", null, "Sand", false, ore("Niter", true, 6, 40, 70));
-        layer("QUARTZITE", null, "Siltstone", false);
-        layer("QUARTZITE", null, "Siltstone", false);
         layer("QUARTZITE", null, "Quartzite", false);
         layer("QUARTZITE", null, "Quartzite", false);
         layer(

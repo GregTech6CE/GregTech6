@@ -199,7 +199,7 @@ public final class SharedPurifiedCentrifugeRows {
  private static final List<NoPhaseBinding> DEFAULT_NONE=List.of(
   new NoPhaseBinding(1120,"Copernicium","liquid",150,357),
   new NoPhaseBinding(1180,"Oganesson","gas",258,263),
-  new NoPhaseBinding(1190,"Ununennium","liquid",290,903),
+
   new NoPhaseBinding(9110,"Celestine","liquid",275,455),
   new NoPhaseBinding(9199,"DuraniumHexafluoride","liquid",216,428),
   new NoPhaseBinding(9801,"Snow","liquid",273,373),

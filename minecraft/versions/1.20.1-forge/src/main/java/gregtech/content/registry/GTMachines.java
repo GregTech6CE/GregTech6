@@ -971,21 +971,9 @@ public final class GTMachines {
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.InitialSmelteryDefinitions.ceramicCrucible());
 
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_UMBER =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_umber"));
-
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_LIVINGROCK =
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_livingrock"));
-
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_HOLYSTONE =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_holystone"));
-
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_BETWEENSTONE =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_betweenstone"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_QUARTZ =
             MachineRegistry.registerSmeltingCrucible(
@@ -1007,10 +995,6 @@ public final class GTMachines {
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_steel"));
 
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_HSLA =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_hsla"));
-
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_TITANIUM =
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_titanium"));
@@ -1023,10 +1007,6 @@ public final class GTMachines {
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_stainless_steel"));
 
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_DARK_IRON =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_dark_iron"));
-
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_KNIGHTMETAL =
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_knightmetal"));
@@ -1035,25 +1015,9 @@ public final class GTMachines {
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_fiery_steel"));
 
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_OCTINE =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_octine"));
-
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_THAUMIUM =
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_thaumium"));
-
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_VOID_METAL =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_void_metal"));
-
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_METEORIC_IRON =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_meteoric_iron"));
-
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_METEORIC_STEEL =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_meteoric_steel"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_CHROMIUM =
             MachineRegistry.registerSmeltingCrucible(
@@ -1095,10 +1059,6 @@ public final class GTMachines {
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_netherite"));
 
-    public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_BEDROCK_HSLA_ALLOY =
-            MachineRegistry.registerSmeltingCrucible(
-                    gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_bedrock_hsla_alloy"));
-
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_AD =
             MachineRegistry.registerSmeltingCrucible(
                     gregtech.engine.machine.OriginalCrucibleDefinitions.get("smelting_crucible_ad"));
@@ -1131,8 +1091,6 @@ public final class GTMachines {
             hopper("hopper_tin_alloy", gregtech.content.material.generated.CompoundMaterials.TinAlloy, 4, 3.0F, 3.0F);
     public static final RegistryObject<HopperBlock> HOPPER_COBALT =
             hopper("hopper_cobalt", gregtech.content.material.generated.ElementMaterials.Cobalt, 4, 4.0F, 4.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_ARDITE =
-            hopper("hopper_ardite", gregtech.content.material.generated.CompoundMaterials.Ardite, 4, 2.0F, 2.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ARSENIC_BRONZE = hopper(
             "hopper_arsenic_bronze",
             gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
@@ -1151,16 +1109,12 @@ public final class GTMachines {
             hopper("hopper_invar", gregtech.content.material.generated.CompoundMaterials.Invar, 5, 4.0F, 4.0F);
     public static final RegistryObject<HopperBlock> HOPPER_STEEL =
             hopper("hopper_steel", gregtech.content.material.generated.CompoundMaterials.Steel, 5, 6.0F, 6.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_HSLA =
-            hopper("hopper_hsla", gregtech.content.material.generated.CompoundMaterials.HSLASteel, 6, 6.0F, 6.0F);
     public static final RegistryObject<HopperBlock> HOPPER_GOLD =
             hopper("hopper_gold", gregtech.content.material.generated.ElementMaterials.Gold, 6, 3.0F, 3.0F);
     public static final RegistryObject<HopperBlock> HOPPER_SILVER =
             hopper("hopper_silver", gregtech.content.material.generated.ElementMaterials.Silver, 6, 3.0F, 3.0F);
     public static final RegistryObject<HopperBlock> HOPPER_MANGANESE =
             hopper("hopper_manganese", gregtech.content.material.generated.ElementMaterials.Manganese, 6, 6.0F, 6.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_MANYULLYN =
-            hopper("hopper_manyullyn", gregtech.content.material.generated.CompoundMaterials.Manyullyn, 6, 4.0F, 4.0F);
     public static final RegistryObject<HopperBlock> HOPPER_LUMIUM =
             hopper("hopper_lumium", gregtech.content.material.generated.CompoundMaterials.Lumium, 6, 2.0F, 2.0F);
     public static final RegistryObject<HopperBlock> HOPPER_KNIGHTMETAL = hopper(
@@ -1171,20 +1125,8 @@ public final class GTMachines {
             7,
             6.0F,
             6.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_METEORITE =
-            hopper("hopper_meteorite", gregtech.content.material.generated.CompoundMaterials.Meteorite, 7, 7.0F, 7.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_METEORIC_STEEL = hopper(
-            "hopper_meteoric_steel",
-            gregtech.content.material.generated.CompoundMaterials.MeteoricSteel,
-            8,
-            8.0F,
-            8.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_GILDED_IRON = hopper(
-            "hopper_gilded_iron", gregtech.content.material.generated.CompoundMaterials.GildedIron, 8, 6.0F, 6.0F);
     public static final RegistryObject<HopperBlock> HOPPER_MOLYBDENUM =
             hopper("hopper_molybdenum", gregtech.content.material.generated.ElementMaterials.Molybdenum, 8, 6.0F, 6.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_SYRMORITE =
-            hopper("hopper_syrmorite", gregtech.content.material.generated.CompoundMaterials.Syrmorite, 9, 4.0F, 4.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ELECTRUM =
             hopper("hopper_electrum", gregtech.content.material.generated.CompoundMaterials.Electrum, 9, 3.0F, 3.0F);
     public static final RegistryObject<HopperBlock> HOPPER_STAINLESS_STEEL = hopper(
@@ -1197,14 +1139,6 @@ public final class GTMachines {
             hopper("hopper_thaumium", gregtech.content.material.generated.CompoundMaterials.Thaumium, 9, 9.0F, 9.0F);
     public static final RegistryObject<HopperBlock> HOPPER_MANASTEEL =
             hopper("hopper_manasteel", gregtech.content.material.generated.CompoundMaterials.Manasteel, 9, 9.0F, 9.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_EFRINE =
-            hopper("hopper_efrine", gregtech.content.material.generated.CompoundMaterials.Efrine, 9, 8.0F, 8.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_TUNGSTEN_ALLOY = hopper(
-            "hopper_tungsten_alloy",
-            gregtech.content.material.generated.CompoundMaterials.HSLATungstenAlloy,
-            12,
-            8.0F,
-            8.0F);
     public static final RegistryObject<HopperBlock> HOPPER_TITANIUM =
             hopper("hopper_titanium", gregtech.content.material.generated.ElementMaterials.Titanium, 12, 9.0F, 9.0F);
     public static final RegistryObject<HopperBlock> HOPPER_NETHERITE = hopper(
@@ -1213,10 +1147,6 @@ public final class GTMachines {
             hopper("hopper_chromium", gregtech.content.material.generated.ElementMaterials.Chromium, 14, 4.0F, 4.0F);
     public static final RegistryObject<HopperBlock> HOPPER_PLATINUM =
             hopper("hopper_platinum", gregtech.content.material.generated.ElementMaterials.Platinum, 18, 2.0F, 2.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_OCTINE =
-            hopper("hopper_octine", gregtech.content.material.generated.CompoundMaterials.Octine, 18, 8.0F, 8.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_DESH =
-            hopper("hopper_desh", gregtech.content.material.generated.CompoundMaterials.Desh, 18, 15.0F, 15.0F);
     public static final RegistryObject<HopperBlock> HOPPER_TERRASTEEL = hopper(
             "hopper_terrasteel", gregtech.content.material.generated.CompoundMaterials.Terrasteel, 18, 15.0F, 15.0F);
     public static final RegistryObject<HopperBlock> HOPPER_TUNGSTENSTEEL = hopper(
@@ -1237,8 +1167,6 @@ public final class GTMachines {
             "hopper_draconium", gregtech.content.material.generated.CompoundMaterials.Draconium, 27, 50.0F, 50.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ULTIMET =
             hopper("hopper_ultimet", gregtech.content.material.generated.CompoundMaterials.Ultimet, 27, 12.5F, 12.5F);
-    public static final RegistryObject<HopperBlock> HOPPER_DESH_ALLOY = hopper(
-            "hopper_desh_alloy", gregtech.content.material.generated.CompoundMaterials.WorkersAlloy, 27, 15.0F, 15.0F);
     public static final RegistryObject<HopperBlock> HOPPER_TUNGSTEN =
             hopper("hopper_tungsten", gregtech.content.material.generated.ElementMaterials.Tungsten, 36, 10.0F, 10.0F);
     public static final RegistryObject<HopperBlock> HOPPER_PALLADIUM = hopper(
@@ -1247,8 +1175,6 @@ public final class GTMachines {
             hopper("hopper_iridium", gregtech.content.material.generated.ElementMaterials.Iridium, 36, 15.0F, 15.0F);
     public static final RegistryObject<HopperBlock> HOPPER_OSMIUM = hopper(
             "hopper_osmium", gregtech.content.material.generated.ElementMaterials.OsmiumElemental, 36, 9.0F, 9.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_VOID_METAL = hopper(
-            "hopper_void_metal", gregtech.content.material.generated.CompoundMaterials.VoidMetal, 36, 30.0F, 30.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ELVEN_ELEMENTIUM = hopper(
             "hopper_elven_elementium",
             gregtech.content.material.generated.CompoundMaterials.ElvenElementium,
@@ -1259,12 +1185,6 @@ public final class GTMachines {
             "hopper_tritanium", gregtech.content.material.generated.CompoundMaterials.Tritanium, 36, 30.0F, 30.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ADAMANTIUM = hopper(
             "hopper_adamantium", gregtech.content.material.generated.ElementMaterials.Adamantium, 36, 100.0F, 100.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_BEDROCK_HSLA = hopper(
-            "hopper_bedrock_hsla",
-            gregtech.content.material.generated.CompoundMaterials.BedrockHSLAAlloy,
-            36,
-            100.0F,
-            100.0F);
     public static final RegistryObject<HopperBlock> HOPPER_DRACONIUM_AWAKENED = hopper(
             "hopper_draconium_awakened",
             gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened,
@@ -1302,8 +1222,6 @@ public final class GTMachines {
             "queue_hopper_tin_alloy", gregtech.content.material.generated.CompoundMaterials.TinAlloy, 4, 3.0F, 3.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_COBALT = queueHopper(
             "queue_hopper_cobalt", gregtech.content.material.generated.ElementMaterials.Cobalt, 4, 4.0F, 4.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ARDITE = queueHopper(
-            "queue_hopper_ardite", gregtech.content.material.generated.CompoundMaterials.Ardite, 4, 2.0F, 2.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ARSENIC_BRONZE = queueHopper(
             "queue_hopper_arsenic_bronze",
             gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
@@ -1322,16 +1240,12 @@ public final class GTMachines {
             "queue_hopper_invar", gregtech.content.material.generated.CompoundMaterials.Invar, 5, 4.0F, 4.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_STEEL = queueHopper(
             "queue_hopper_steel", gregtech.content.material.generated.CompoundMaterials.Steel, 5, 6.0F, 6.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_HSLA = queueHopper(
-            "queue_hopper_hsla", gregtech.content.material.generated.CompoundMaterials.HSLASteel, 6, 6.0F, 6.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_GOLD =
             queueHopper("queue_hopper_gold", gregtech.content.material.generated.ElementMaterials.Gold, 6, 3.0F, 3.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_SILVER = queueHopper(
             "queue_hopper_silver", gregtech.content.material.generated.ElementMaterials.Silver, 6, 3.0F, 3.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_MANGANESE = queueHopper(
             "queue_hopper_manganese", gregtech.content.material.generated.ElementMaterials.Manganese, 6, 6.0F, 6.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_MANYULLYN = queueHopper(
-            "queue_hopper_manyullyn", gregtech.content.material.generated.CompoundMaterials.Manyullyn, 6, 4.0F, 4.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_LUMIUM = queueHopper(
             "queue_hopper_lumium", gregtech.content.material.generated.CompoundMaterials.Lumium, 6, 2.0F, 2.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_KNIGHTMETAL = queueHopper(
@@ -1346,24 +1260,8 @@ public final class GTMachines {
             7,
             6.0F,
             6.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_METEORITE = queueHopper(
-            "queue_hopper_meteorite", gregtech.content.material.generated.CompoundMaterials.Meteorite, 7, 7.0F, 7.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_METEORIC_STEEL = queueHopper(
-            "queue_hopper_meteoric_steel",
-            gregtech.content.material.generated.CompoundMaterials.MeteoricSteel,
-            8,
-            8.0F,
-            8.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_GILDED_IRON = queueHopper(
-            "queue_hopper_gilded_iron",
-            gregtech.content.material.generated.CompoundMaterials.GildedIron,
-            8,
-            6.0F,
-            6.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_MOLYBDENUM = queueHopper(
             "queue_hopper_molybdenum", gregtech.content.material.generated.ElementMaterials.Molybdenum, 8, 6.0F, 6.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_SYRMORITE = queueHopper(
-            "queue_hopper_syrmorite", gregtech.content.material.generated.CompoundMaterials.Syrmorite, 9, 4.0F, 4.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ELECTRUM = queueHopper(
             "queue_hopper_electrum", gregtech.content.material.generated.CompoundMaterials.Electrum, 9, 3.0F, 3.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_STAINLESS_STEEL = queueHopper(
@@ -1376,14 +1274,6 @@ public final class GTMachines {
             "queue_hopper_thaumium", gregtech.content.material.generated.CompoundMaterials.Thaumium, 9, 9.0F, 9.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_MANASTEEL = queueHopper(
             "queue_hopper_manasteel", gregtech.content.material.generated.CompoundMaterials.Manasteel, 9, 9.0F, 9.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_EFRINE = queueHopper(
-            "queue_hopper_efrine", gregtech.content.material.generated.CompoundMaterials.Efrine, 9, 8.0F, 8.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_TUNGSTEN_ALLOY = queueHopper(
-            "queue_hopper_tungsten_alloy",
-            gregtech.content.material.generated.CompoundMaterials.HSLATungstenAlloy,
-            12,
-            8.0F,
-            8.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_TITANIUM = queueHopper(
             "queue_hopper_titanium", gregtech.content.material.generated.ElementMaterials.Titanium, 12, 9.0F, 9.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_NETHERITE = queueHopper(
@@ -1396,10 +1286,6 @@ public final class GTMachines {
             "queue_hopper_chromium", gregtech.content.material.generated.ElementMaterials.Chromium, 14, 4.0F, 4.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_PLATINUM = queueHopper(
             "queue_hopper_platinum", gregtech.content.material.generated.ElementMaterials.Platinum, 18, 2.0F, 2.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_OCTINE = queueHopper(
-            "queue_hopper_octine", gregtech.content.material.generated.CompoundMaterials.Octine, 18, 8.0F, 8.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_DESH = queueHopper(
-            "queue_hopper_desh", gregtech.content.material.generated.CompoundMaterials.Desh, 18, 15.0F, 15.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_TERRASTEEL = queueHopper(
             "queue_hopper_terrasteel",
             gregtech.content.material.generated.CompoundMaterials.Terrasteel,
@@ -1428,12 +1314,6 @@ public final class GTMachines {
             50.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ULTIMET = queueHopper(
             "queue_hopper_ultimet", gregtech.content.material.generated.CompoundMaterials.Ultimet, 27, 12.5F, 12.5F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_DESH_ALLOY = queueHopper(
-            "queue_hopper_desh_alloy",
-            gregtech.content.material.generated.CompoundMaterials.WorkersAlloy,
-            27,
-            15.0F,
-            15.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_TUNGSTEN = queueHopper(
             "queue_hopper_tungsten", gregtech.content.material.generated.ElementMaterials.Tungsten, 36, 10.0F, 10.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_PALLADIUM = queueHopper(
@@ -1446,12 +1326,6 @@ public final class GTMachines {
             36,
             9.0F,
             9.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_VOID_METAL = queueHopper(
-            "queue_hopper_void_metal",
-            gregtech.content.material.generated.CompoundMaterials.VoidMetal,
-            36,
-            30.0F,
-            30.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ELVEN_ELEMENTIUM = queueHopper(
             "queue_hopper_elven_elementium",
             gregtech.content.material.generated.CompoundMaterials.ElvenElementium,
@@ -1467,12 +1341,6 @@ public final class GTMachines {
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ADAMANTIUM = queueHopper(
             "queue_hopper_adamantium",
             gregtech.content.material.generated.ElementMaterials.Adamantium,
-            36,
-            100.0F,
-            100.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_BEDROCK_HSLA = queueHopper(
-            "queue_hopper_bedrock_hsla",
-            gregtech.content.material.generated.CompoundMaterials.BedrockHSLAAlloy,
             36,
             100.0F,
             100.0F);

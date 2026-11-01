@@ -28,7 +28,7 @@ public final class WireCatalog {
         new WireDef("constantan", Materials.Constantan, 128L, 4, 4, 3, true, true), // MT.Constantan
         new WireDef("copper", Materials.Copper, 256L, 1, 2, 1, true, true), // MT.Cu
         new WireDef("annealed_copper", Materials.AnnealedCopper, 384L, 1, 2, 1, true, true), // MT.AnnealedCopper
-        new WireDef("efrine", Materials.Efrine, 256L, 1, 2, 1, true, true), // MT.Efrine
+        // MT.Efrine
         new WireDef("kanthal", Materials.Kanthal, 512L, 4, 4, 3, true, true), // MT.Kanthal
         new WireDef("silver", Materials.Silver, 1536L, 1, 2, 1, true, true), // MT.Ag
         new WireDef("gold", Materials.Gold, 512L, 3, 2, 1, true, true), // MT.Au
@@ -37,7 +37,7 @@ public final class WireCatalog {
         new WireDef("electrotine_alloy", Materials.ElectrotineAlloy, 1024L, 3, 2, 1, true, true), // MT.ElectrotineAlloy
         new WireDef("nichrome", Materials.Nichrome, 2048L, 4, 4, 3, true, true), // MT.Nichrome
         new WireDef("steel", Materials.Steel, 2048L, 2, 3, 2, true, true), // MT.Steel
-        new WireDef("hsla", Materials.HSLASteel, 2048L, 3, 3, 2, true, true), // MT.HSLA
+        // MT.HSLA
         new WireDef("aluminium", Materials.Aluminium, 2048L, 1, 2, 1, true, true), // MT.Al
         new WireDef("tungsten_steel", Materials.Tungstensteel, 4096L, 4, 3, 2, true, true), // MT.TungstenSteel
         new WireDef("tungsten", Materials.Tungsten, 6144L, 8, 3, 2, true, true), // MT.W

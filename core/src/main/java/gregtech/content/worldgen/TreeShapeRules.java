@@ -109,9 +109,6 @@ public final class TreeShapeRules {
             // Not GT6 tree species (GT6 gets these from Forestry/Binnie/HaC/Tropicraft via the wood
             // dictionary): PINE = conifer -> blue spruce, EBONY = broadleaf -> maple,
             // WHITE_MAHOE = tropical broadleaf -> blue mahoe.
-            case PINE -> Shape.BLUE_SPRUCE;
-            case EBONY -> Shape.MAPLE;
-            case WHITE_MAHOE -> Shape.BLUE_MAHOE;
         };
     }
 

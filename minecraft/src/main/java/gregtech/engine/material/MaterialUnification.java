@@ -68,7 +68,6 @@ public final class MaterialUnification {
             // GT6 stores these food materials' ingot as the matching multi-item food bar.
             case "ingot/Cheese" -> gtItem("cheese_bar");
             case "ingot/Chocolate" -> gtItem("chocolate_bar");
-            case "ingot/Tofu" -> gtItem("tofu_bar");
             case "ingot/SoylentGreen" -> gtItem("emerald_green_bar");
             case "ingot/MeatRaw" -> gtItem("raw_meat_bar");
             case "ingot/MeatCooked" -> gtItem("cooked_meat_bar");

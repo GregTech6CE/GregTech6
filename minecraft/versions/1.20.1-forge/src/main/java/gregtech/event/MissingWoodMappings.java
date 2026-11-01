@@ -49,8 +49,6 @@ public final class MissingWoodMappings {
                     "coconut",
                     "rainbowood",
                     "bluespruce",
-                    "pine",
-                    "ebony",
                     "white_mahoe" -> id("stripped_log_" + wood);
             default -> null;
         };

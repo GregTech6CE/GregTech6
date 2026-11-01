@@ -285,10 +285,7 @@ public final class MaterialFormConversionRecipes {
      */
     private static void fireproofCrate(ItemStack empty, ItemStack fireproof) {
         if (empty.isEmpty() || fireproof.isEmpty()) return;
-        addLaminator("plate WaxRefractory 1 + crate -> crate_fireproof",
-                GTItems.getStack(MaterialPrefix.plate, Materials.WaxRefractory, 1), empty, fireproof);
-        addLaminator("foil WaxRefractory 4 + crate -> crate_fireproof",
-                GTItems.getStack(MaterialPrefix.foil, Materials.WaxRefractory, 4), empty, fireproof);
+
         var potion = DyeProcessingRecipes.fluid("Potion_FireResistance_1L", 20);
         Recipe recipe = MachineRecipeMaps.Bath.addRecipe1(false, 0, 32,
                 item(empty, 1), potion, null, fireproof.copy());

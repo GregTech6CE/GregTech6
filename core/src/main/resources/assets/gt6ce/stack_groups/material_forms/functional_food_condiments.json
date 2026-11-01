@@ -23,8 +23,7 @@
     "item:gt6ce:royal_jelly",
     "item:gt6ce:seed_oil",
     "item:gt6ce:sunflower_oil",
-    "item:gt6ce:there_is_no_cow_sauce",
-    "item:gt6ce:whale_oil"
+    "item:gt6ce:there_is_no_cow_sauce"
   ],
   "priority": 120
 }

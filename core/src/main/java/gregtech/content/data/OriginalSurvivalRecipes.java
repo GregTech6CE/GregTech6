@@ -94,18 +94,6 @@ public final class OriginalSurvivalRecipes {
                             'y',
                             "item:gt6ce:tool_chisel")),
             new Row(
-                    "crucible_faucet_umber",
-                    1,
-                    ImportedMaterialData.STONES.Umber,
-                    "h y|B B| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_umber_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
                     "crucible_faucet_livingrock",
                     1,
                     ImportedMaterialData.STONES.Livingrock,
@@ -113,30 +101,6 @@ public final class OriginalSurvivalRecipes {
                     Map.of(
                             'B',
                             "item:gt6ce:stone_livingrock_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_faucet_holystone",
-                    1,
-                    ImportedMaterialData.STONES.Holystone,
-                    "h y|B B| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_holystone_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_faucet_betweenstone",
-                    1,
-                    ImportedMaterialData.STONES.Betweenstone,
-                    "h y|B B| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_betweenstone_stone",
                             'h',
                             "item:gt6ce:tool_hammer",
                             'y',
@@ -172,33 +136,9 @@ public final class OriginalSurvivalRecipes {
                     "h y|P P| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
-                    "crucible_faucet_hsla",
-                    1,
-                    ImportedMaterialData.HSLA,
-                    "h y|P P| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
                     "crucible_faucet_stainless_steel",
                     1,
                     ImportedMaterialData.StainlessSteel,
-                    "h y|P P| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_faucet_dark_iron",
-                    1,
-                    ImportedMaterialData.DarkIron,
-                    "h y|P P| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_faucet_meteoric_iron",
-                    1,
-                    ImportedMaterialData.MeteoricIron,
-                    "h y|P P| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_faucet_meteoric_steel",
-                    1,
-                    ImportedMaterialData.MeteoricSteel,
                     "h y|P P| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -217,12 +157,6 @@ public final class OriginalSurvivalRecipes {
                     "crucible_faucet_fiery_steel",
                     1,
                     ImportedMaterialData.FierySteel,
-                    "h y|P P| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_faucet_octine",
-                    1,
-                    ImportedMaterialData.Octine,
                     "h y|P P| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -298,18 +232,6 @@ public final class OriginalSurvivalRecipes {
                     "h y|P P| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
-                    "crucible_faucet_void_metal",
-                    1,
-                    ImportedMaterialData.VoidMetal,
-                    "h y|P P| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_faucet_bedrock_hsla_alloy",
-                    1,
-                    ImportedMaterialData.Bedrock_HSLA_Alloy,
-                    "h y|P P| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
                     "crucible_faucet_ad",
                     1,
                     ImportedMaterialData.Ad,
@@ -370,18 +292,6 @@ public final class OriginalSurvivalRecipes {
                             'y',
                             "item:gt6ce:tool_chisel")),
             new Row(
-                    "mold_umber",
-                    1,
-                    ImportedMaterialData.STONES.Umber,
-                    "h y|B B|BBB",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_umber_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
                     "mold_livingrock",
                     1,
                     ImportedMaterialData.STONES.Livingrock,
@@ -389,30 +299,6 @@ public final class OriginalSurvivalRecipes {
                     Map.of(
                             'B',
                             "item:gt6ce:stone_livingrock_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_holystone",
-                    1,
-                    ImportedMaterialData.STONES.Holystone,
-                    "h y|B B|BBB",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_holystone_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_betweenstone",
-                    1,
-                    ImportedMaterialData.STONES.Betweenstone,
-                    "h y|B B|BBB",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_betweenstone_stone",
                             'h',
                             "item:gt6ce:tool_hammer",
                             'y',
@@ -448,33 +334,9 @@ public final class OriginalSurvivalRecipes {
                     "h y|P P|PPP",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
-                    "mold_hsla",
-                    1,
-                    ImportedMaterialData.HSLA,
-                    "h y|P P|PPP",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
                     "mold_stainless_steel",
                     1,
                     ImportedMaterialData.StainlessSteel,
-                    "h y|P P|PPP",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_dark_iron",
-                    1,
-                    ImportedMaterialData.DarkIron,
-                    "h y|P P|PPP",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_meteoric_iron",
-                    1,
-                    ImportedMaterialData.MeteoricIron,
-                    "h y|P P|PPP",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_meteoric_steel",
-                    1,
-                    ImportedMaterialData.MeteoricSteel,
                     "h y|P P|PPP",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -493,12 +355,6 @@ public final class OriginalSurvivalRecipes {
                     "mold_fiery_steel",
                     1,
                     ImportedMaterialData.FierySteel,
-                    "h y|P P|PPP",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_octine",
-                    1,
-                    ImportedMaterialData.Octine,
                     "h y|P P|PPP",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -574,18 +430,6 @@ public final class OriginalSurvivalRecipes {
                     "h y|P P|PPP",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
-                    "mold_void_metal",
-                    1,
-                    ImportedMaterialData.VoidMetal,
-                    "h y|P P|PPP",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_bedrock_hsla_alloy",
-                    1,
-                    ImportedMaterialData.Bedrock_HSLA_Alloy,
-                    "h y|P P|PPP",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
                     "mold_ad",
                     1,
                     ImportedMaterialData.Ad,
@@ -646,18 +490,6 @@ public final class OriginalSurvivalRecipes {
                             'y',
                             "item:gt6ce:tool_chisel")),
             new Row(
-                    "mold_basin_umber",
-                    1,
-                    ImportedMaterialData.STONES.Umber,
-                    "BhB|ByB| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_umber_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
                     "mold_basin_livingrock",
                     1,
                     ImportedMaterialData.STONES.Livingrock,
@@ -665,30 +497,6 @@ public final class OriginalSurvivalRecipes {
                     Map.of(
                             'B',
                             "item:gt6ce:stone_livingrock_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_basin_holystone",
-                    1,
-                    ImportedMaterialData.STONES.Holystone,
-                    "BhB|ByB| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_holystone_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_basin_betweenstone",
-                    1,
-                    ImportedMaterialData.STONES.Betweenstone,
-                    "BhB|ByB| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_betweenstone_stone",
                             'h',
                             "item:gt6ce:tool_hammer",
                             'y',
@@ -724,33 +532,9 @@ public final class OriginalSurvivalRecipes {
                     "PhP|PyP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
-                    "mold_basin_hsla",
-                    1,
-                    ImportedMaterialData.HSLA,
-                    "PhP|PyP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
                     "mold_basin_stainless_steel",
                     1,
                     ImportedMaterialData.StainlessSteel,
-                    "PhP|PyP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_basin_dark_iron",
-                    1,
-                    ImportedMaterialData.DarkIron,
-                    "PhP|PyP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_basin_meteoric_iron",
-                    1,
-                    ImportedMaterialData.MeteoricIron,
-                    "PhP|PyP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_basin_meteoric_steel",
-                    1,
-                    ImportedMaterialData.MeteoricSteel,
                     "PhP|PyP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -769,12 +553,6 @@ public final class OriginalSurvivalRecipes {
                     "mold_basin_fiery_steel",
                     1,
                     ImportedMaterialData.FierySteel,
-                    "PhP|PyP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_basin_octine",
-                    1,
-                    ImportedMaterialData.Octine,
                     "PhP|PyP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -850,18 +628,6 @@ public final class OriginalSurvivalRecipes {
                     "PhP|PyP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
-                    "mold_basin_void_metal",
-                    1,
-                    ImportedMaterialData.VoidMetal,
-                    "PhP|PyP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "mold_basin_bedrock_hsla_alloy",
-                    1,
-                    ImportedMaterialData.Bedrock_HSLA_Alloy,
-                    "PhP|PyP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
                     "mold_basin_ad",
                     1,
                     ImportedMaterialData.Ad,
@@ -922,18 +688,6 @@ public final class OriginalSurvivalRecipes {
                             'y',
                             "item:gt6ce:tool_chisel")),
             new Row(
-                    "crucible_crossing_umber",
-                    1,
-                    ImportedMaterialData.STONES.Umber,
-                    "hBy|BBB| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_umber_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
                     "crucible_crossing_livingrock",
                     1,
                     ImportedMaterialData.STONES.Livingrock,
@@ -941,30 +695,6 @@ public final class OriginalSurvivalRecipes {
                     Map.of(
                             'B',
                             "item:gt6ce:stone_livingrock_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_holystone",
-                    1,
-                    ImportedMaterialData.STONES.Holystone,
-                    "hBy|BBB| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_holystone_stone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_betweenstone",
-                    1,
-                    ImportedMaterialData.STONES.Betweenstone,
-                    "hBy|BBB| B ",
-                    Map.of(
-                            'B',
-                            "item:gt6ce:stone_betweenstone_stone",
                             'h',
                             "item:gt6ce:tool_hammer",
                             'y',
@@ -1000,33 +730,9 @@ public final class OriginalSurvivalRecipes {
                     "hPy|PPP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
-                    "crucible_crossing_hsla",
-                    1,
-                    ImportedMaterialData.HSLA,
-                    "hPy|PPP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
                     "crucible_crossing_stainless_steel",
                     1,
                     ImportedMaterialData.StainlessSteel,
-                    "hPy|PPP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_dark_iron",
-                    1,
-                    ImportedMaterialData.DarkIron,
-                    "hPy|PPP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_meteoric_iron",
-                    1,
-                    ImportedMaterialData.MeteoricIron,
-                    "hPy|PPP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_meteoric_steel",
-                    1,
-                    ImportedMaterialData.MeteoricSteel,
                     "hPy|PPP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -1045,12 +751,6 @@ public final class OriginalSurvivalRecipes {
                     "crucible_crossing_fiery_steel",
                     1,
                     ImportedMaterialData.FierySteel,
-                    "hPy|PPP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_octine",
-                    1,
-                    ImportedMaterialData.Octine,
                     "hPy|PPP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(
@@ -1123,18 +823,6 @@ public final class OriginalSurvivalRecipes {
                     "crucible_crossing_ta4hfc5",
                     1,
                     ImportedMaterialData.Ta4HfC5,
-                    "hPy|PPP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_void_metal",
-                    1,
-                    ImportedMaterialData.VoidMetal,
-                    "hPy|PPP| P ",
-                    Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
-            new Row(
-                    "crucible_crossing_bedrock_hsla_alloy",
-                    1,
-                    ImportedMaterialData.Bedrock_HSLA_Alloy,
                     "hPy|PPP| P ",
                     Map.of('P', "mat:plate", 'h', "item:gt6ce:tool_hammer", 'y', "item:gt6ce:tool_chisel")),
             new Row(

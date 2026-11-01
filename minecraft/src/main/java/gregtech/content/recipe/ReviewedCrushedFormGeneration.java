@@ -30,7 +30,6 @@ public final class ReviewedCrushedFormGeneration {
             case 90 -> "Fluorine";
             case 730 -> "Tantalum";
             case 410 -> "Niobium";
-            case 8317 -> "Dilithium";
             default -> null;
         };
         return expected != null && expected.equals(material.getName());

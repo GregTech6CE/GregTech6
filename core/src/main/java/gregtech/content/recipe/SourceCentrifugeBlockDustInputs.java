@@ -27,12 +27,7 @@ public final class SourceCentrifugeBlockDustInputs {
     private static final List<Binding> BINDINGS = List.of(
             new Binding("Bedrock", "Bedrock", 8599),
             new Binding("Netherrack", "Netherrack", 8502),
-            new Binding("Endstone", "Endstone", 8504),
-            new Binding("EndSandWhite", "WhiteEndSand", 8105),
-            new Binding("EndSandBlack", "BlackEndSand", 8106),
-            new Binding("SpaceRock", "SpaceStone", 8512),
-            new Binding("MoonTurf", "MoonTurf", 8514),
-            new Binding("MoonRock", "MoonStone", 8513));
+            new Binding("Endstone", "Endstone", 8504));
 
     public static List<Binding> bindings() {
         return BINDINGS;

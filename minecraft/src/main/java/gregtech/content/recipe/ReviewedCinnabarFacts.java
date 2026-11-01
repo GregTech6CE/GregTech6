@@ -133,15 +133,6 @@ public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts 
     }
 
     public static List<GTMaterial> sourceWaxes() {
-        int[] ids = {8235, 8236, 8237, 8238, 8239, 8240, 8280, 8281};
-        String[] names = {
-            "Wax", "WaxBee", "WaxRefractory", "WaxParaffin", "WaxPlant", "WaxMagic", "WaxAmnesic", "WaxSoulful"
-        };
-        var result = new ArrayList<GTMaterial>();
-        for (int i = 0; i < ids.length; i++) {
-            var m = GTMaterialRegistry.get(names[i]);
-            if (identity(m, new Identity(ids[i], names[i]))) result.add(m);
-        }
-        return List.copyOf(result);
+        return SourceWaxMaterials.materials();
     }
 }

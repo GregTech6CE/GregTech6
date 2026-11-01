@@ -10,7 +10,6 @@ import static gregtech.engine.material.MaterialFactories.*;
 public final class OreMaterials {
     private OreMaterials() {}
 
-    public static final GTMaterial SilverIodide            = ore(8243, "Silver Iodide",            0xF0C864).setTextureSet(MaterialTextureSet.CUBE).setStats(831, 1779, 7.7155F).setTooltipChemical("AgI");
     public static final GTMaterial SiliconDioxide          = ore(8000, "Silicon Dioxide",          0xC8C8C8).setTextureSet(MaterialTextureSet.QUARTZ).setStats(1986, 3220, 0.777486F).setTooltipChemical("SiO₂");
     public static final GTMaterial Datolite                = ore(8006, "Datolite",                 0xDEFFDE).setTextureSet(MaterialTextureSet.ROUGH).setStats(603, 1107, 0.690759431F).setTooltipChemical("H₂Ca₂B₂Si₂O₁₀");
     public static final GTMaterial VanadiumPentoxide       = ore(8234, "Vanadium Pentoxide",       0x323232).setTextureSet(MaterialTextureSet.FINE).setStats(662, 1115, 1.746735F).setTooltipChemical("V₂O₅");
@@ -46,7 +45,6 @@ public final class OreMaterials {
     public static final GTMaterial Pyrite                  = ore(9125, "Pyrite",                   0xFFE650).setTextureSet(MaterialTextureSet.SHINY).setStats(862, 1522, 4.00266667F).setTooltipChemical("FeS₂").setToolQuality(0);
     public static final GTMaterial PotassiumFeldspar       = ore(9140, "Potassium Feldspar",       0x782828).setTextureSet(MaterialTextureSet.FINE).setStats(1853, 2937, 0.812325538F).setTooltipChemical("K₂Al2O3₅SiO2₁₈O");
     public static final GTMaterial Biotite                 = ore(9141, "Biotite",                  0x141E14).setTextureSet(MaterialTextureSet.METALLIC).setStats(1718, 2606, 0.941208733F).setTooltipChemical("K₂Mg₆Al2O3₁₅F₄SiO2₁₈");
-    public static final GTMaterial Emery                   = ore(9183, "Emery",                    0x808080).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F);
     public static final GTMaterial Clay                    = ore(8215, "Clay",                     0xC8C8DC).setTextureSet(MaterialTextureSet.ROUGH).setStats(2000, 4000, 1.31833994F).setTooltipChemical("Ceramic₂H2O");
     public static final GTMaterial Graphite                = ore(9174, "Graphite",                 0x808080).setTextureSet(MaterialTextureSet.DULL).setStats(1700, 4300, 2.267F).setTooltipChemical("C").setToolStats(1, 5F, 32, 2);
     public static final GTMaterial Niter                   = ore(8206, "Niter",                    0xFFC8C8).setTextureSet(MaterialTextureSet.FLINT).setLocalName("Nitre").setStats(607, 1214, 0.18440752F).setTooltipChemical("KNO3NaNO3");
@@ -55,9 +53,6 @@ public final class OreMaterials {
     public static final GTMaterial PlatinumGroupSludge     = ore(8103, "Platinum Group Sludge",    0x323250).setTextureSet(MaterialTextureSet.SAND).setStats(1000, 3000, 21.46F);
     public static final GTMaterial RareEarth               = ore(9100, "Rare Earth",               0x808064).setTextureSet(MaterialTextureSet.FINE).setStats(1000, 3000, 7.007F);
     public static final GTMaterial OilShale                = ore(9853, "Oil Shale",                0x32323C).setTextureSet(MaterialTextureSet.STONE).setLocalName("Oilshale").setStats(500, 1000, 0.905085186F).setTooltipChemical("CaCO3₂MilkyQuartzClay");
-    public static final GTMaterial Yellorite               = ore(8724, "Yellorite",                0x968C28).setTextureSet(MaterialTextureSet.METALLIC).setStats(369, 1060, 1.002858F).setTooltipChemical("YelloriumO₂");
-    public static final GTMaterial Iffesal                 = ore(8743, "Iffesal",                  0x0E19AB).setTextureSet(MaterialTextureSet.SHINY).setStats(1000, 3000, 1.0F);
-    public static final GTMaterial Dolamide                = ore(8753, "Dolamide",                 0xBC647A).setTextureSet(MaterialTextureSet.METALLIC).setStats(1000, 3000, 1.0F);
     public static final GTMaterial Cassiterite             = ore(9108, "Cassiterite",              0xDCDCDC).setTextureSet(MaterialTextureSet.METALLIC).setLocalName("CassiteriteSand").setStats(757, 1514, 7.289858F).setTooltipChemical("SnO₂");
     public static final GTMaterial Garnierite              = ore(9118, "Garnierite",               0x32C846).setTextureSet(MaterialTextureSet.METALLIC).setStats(891, 1638, 8.913429F).setTooltipChemical("NiO").setToolQuality(0);
     public static final GTMaterial Uraninite               = ore(9134, "Uraninite",                0x232323).setTextureSet(MaterialTextureSet.DULL).setStats(504, 1528, 18.952858F).setTooltipChemical("UO₂");

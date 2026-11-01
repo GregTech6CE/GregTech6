@@ -45,7 +45,6 @@ public final class CanvasRecipes {
                     canvas, "Dye_"+category+"_"+suffix, 144);
             if (variant.dye().equals("black")) bath(white, canvas, "InkSquid", 144);
             if (variant.dye().equals("blue")) {
-                bath(white, canvas, "Indigo", 144);
                 bath(white, canvas, "Juice_Blueberry", 250);
             }
             MachineRecipeMaps.ScannerVisuals.addFakeRecipe(false, new ItemStack[]{canvas, usb.copy()}, new ItemStack[]{scannedUsb.copy(), canvas.copy()}, null, null, null, 64, 16, 0);

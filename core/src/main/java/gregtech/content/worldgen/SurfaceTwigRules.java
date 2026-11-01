@@ -13,13 +13,8 @@ public final class SurfaceTwigRules {
         {"rainforest", ""},
         {"firefly", ""},
         {"dark forest", "WoodTowerwood"},
-        {"silver pine", "WoodSilverPine"},
-        {"redwood", "WoodRedwood"},
-        {"cypress", "WoodCypress"},
         {"maple", "WoodMaple"},
         {"tropic", "WoodCoconut"},
-        {"aspen", "WoodAspen"},
-        {"autumn", "WoodAutumn"},
         {"spruce", "WoodSpruce"},
         {"taiga", "WoodSpruce"},
         {"boreal", "WoodSpruce"},
@@ -30,10 +25,6 @@ public final class SurfaceTwigRules {
         {"dark oak", "WoodDarkOak"},
         {"oak", "WoodOak"},
         {"alpine", "!WoodFrozen"},
-        {"pine", "WoodPine"},
-        {"fire", "!WoodScorched"},
-        {"fir", "WoodFir"},
-        {"volcan", "!WoodScorched"},
         {"glacier", "!WoodFrozen"},
         {"ice", "!WoodFrozen"},
         {"cold", "!WoodFrozen"},
@@ -63,11 +54,8 @@ public final class SurfaceTwigRules {
 
     private static String[] outcomes(String dimension, String biome) {
         String dim = dimension.toLowerCase(Locale.ROOT);
-        if (dim.startsWith("aether:")) return weighted("Skyroot", "WoodDead", 3);
         if (dim.startsWith("erebus:")) return weighted("WoodDead", "PetrifiedWood", 8);
-        if (dim.startsWith("thebetweenlands:")) return weighted("Weedwood", "WoodRotten", 3);
         if (dim.startsWith("atum:")) return weighted("WoodCoconut", "WoodDead", 4);
-        if (dim.startsWith("tropicraft:")) return weighted("WoodCoconut", "WoodMahogany", 2);
         if (dim.startsWith("alfheim:")) return weighted("Livingwood", "Dreamwood", 8);
         String name = biome.toLowerCase(Locale.ROOT).replace('_', ' ');
         if (name.equals("minecraft:dark forest")) name = "roofed forest";

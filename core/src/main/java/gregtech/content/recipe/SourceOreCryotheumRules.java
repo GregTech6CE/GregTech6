@@ -25,15 +25,8 @@ public final class SourceOreCryotheumRules {
     public record Shape(Input input, int inputCount, MaterialPrefix output, int outputCount, int cryotheumMb) {}
 
     private static final List<Binding> BINDINGS = List.of(
-            new Binding(8469, "GoldenAmber"),
             new Binding(8422, "DominicanAmber"),
             new Binding(8341, "Glowstone"),
-            new Binding(8368, "GlowstoneCeres"),
-            new Binding(8369, "GlowstoneIo"),
-            new Binding(8370, "GlowstoneEnceladus"),
-            new Binding(8371, "GlowstoneProteus"),
-            new Binding(8372, "GlowstonePluto"),
-            new Binding(8456, "Gloomstone"),
             new Binding(8470, "Carminite"),
             new Binding(8340, "Nikolite"),
             new Binding(8333, "Redstone"),

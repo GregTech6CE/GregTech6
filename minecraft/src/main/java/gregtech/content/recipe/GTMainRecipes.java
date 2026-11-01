@@ -50,8 +50,7 @@ public final class GTMainRecipes {
 
     private static final List<Row> ROWS = List.of(
             // ---- real recipes (the machine consumes them) ----
-            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
-                    "f:Indigo:144", "", "MultiItemRandomTools:436-437"),
+
             new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
                     "f:Dye_Water_Blue:144", "", "MultiItemRandomTools:436-437"),
             new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
@@ -139,7 +138,7 @@ public final class GTMainRecipes {
             new Row("Unboxinator", true, 16, 16, "tech:seed_pouch:1",
                     "v:wheat_seeds:1;v:pumpkin_seeds:1;v:melon_seeds:1", "", "", "GT6_Main:391"),
             new Row("Unboxinator", true, 16, 16, "tech:loot_pouch:1",
-                    "tech:dynamite:1;tech:modeled_porcelain_cup:1;i:rockGt:MeteoricIron:1;"
+                    "tech:dynamite:1;tech:modeled_porcelain_cup:1;"
                             + "i:dust:Zeolite:1",
                     "", "", "GT6_Main:393"),
             new Row("Unboxinator", true, 16, 16, "g:loot_crate:1",

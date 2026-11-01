@@ -38,7 +38,6 @@ public final class OriginalSteamTurbines {
             variant("fiery_steel", 1531, Materials.Titanium, Materials.FierySteel, 768, 256, "Fiery Steel"),
             variant("aluminium", 1535, Materials.Titanium, Materials.Aluminium, 1152, 384, "Aluminium"),
             variant("magnalium", 1538, Materials.Titanium, Materials.Magnalium, 1536, 512, "Magnalium"),
-            variant("void_metal", 1540, Materials.Tungstensteel, Materials.VoidMetal, 2304, 768, "Void Metal"),
             variant("trinitanium", 1545, Materials.Tungstensteel, Materials.Trinitanium, 3072, 1024, "Trinitanium"),
             variant("graphene", 1548, Materials.Tungstensteel, Materials.Graphene, 6144, 2048, "Graphene"));
 

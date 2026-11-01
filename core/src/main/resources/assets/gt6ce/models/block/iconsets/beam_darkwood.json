@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "gt6ce:block/iconsets/beam_top_darkwood",
-    "side": "gt6ce:block/iconsets/beam_side_darkwood"
-  }
-}

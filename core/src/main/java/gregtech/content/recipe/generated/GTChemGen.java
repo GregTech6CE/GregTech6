@@ -66,7 +66,6 @@ final class GTChemGen {
         r("Electrolyzer", 64, 64, null, sp("tag:1"), sp("m:WhiteVitriol:6000", "w:3000"), sp("m:H2SO4:7000", "m:O:1000"), sp("omd:Zn:1000"));
         r("Electrolyzer", 64, 64, null, sp("tag:1"), sp("m:GrayVitriol:6000", "w:3000"), sp("m:H2SO4:7000", "m:O:1000"), sp("omd:Mn:1000"));
         r("Electrolyzer", 64, 64, null, sp("tag:1"), sp("m:GreenVitriol:6000", "w:3000"), sp("m:H2SO4:7000", "m:O:1000"), sp("omd:Fe:1000"));
-        r("Electrolyzer", 64, 96, null, sp("tag:1"), sp("m:MartianVitriol:6000", "w:3000"), sp("m:H2SO4:7000", "m:O:1000"), sp("omd:MeteoricIron:666"));
         r("Electrolyzer", 64, 96, null, sp("tag:1"), sp("m:VitriolOfClay:8500", "w:4500"), sp("m:H2SO4:10500"), sp("omd:Al2O3:2500"));
         r("Electrolyzer", 64, 64, null, sp("tag:1"), sp("m:ChloroauricAcid:6000", "w:4500"), sp("m:HCl:8000", "m:O:1500"), sp("omd:Au:1000"));
         r("Electrolyzer", 64, 96, null, sp("tag:1"), sp("m:ChloroplatinicAcid:9000", "w:6000"), sp("m:HCl:12000", "m:O:2000"), sp("omd:Pt:1000"));
@@ -267,7 +266,6 @@ final class GTChemGen {
         r("Injector", 64, 288, null, sp("i:dustSmall:Th:1"), sp("m:LiCl:36000"), sp("f:Thorium_Salt:5184"), NONE);
         r("Injector", 64, 128, null, sp("i:dustTiny:Th:1"), sp("m:LiCl:16000"), sp("f:Thorium_Salt:2304"), NONE);
         r("Injector", 64, 16, null, sp("i:dustDiv72:Th:1"), sp("m:LiCl:2000"), sp("f:Thorium_Salt:288"), NONE);
-        r("Injector", 16, 256, null, sp("omd:Desh:1000"), sp("m:Hg:1000", "f:Fuel:400"), NONE, sp("omd:DeshAlloy:1000"));
         r("Roasting", 16, 16, null, sp("omd:C:1000"), sp("m:CO2:3000"), sp("m:CO:4000"), NONE);
         r("Roasting", 16, 16, null, sp("omd:Charcoal:1000"), sp("m:CO2:3000"), sp("m:CO:4000"), NONE);
         r("Roasting", 16, 16, null, sp("omd:Coal:1000"), sp("m:CO2:6000"), sp("m:CO:8000"), NONE);
@@ -287,7 +285,6 @@ final class GTChemGen {
         r("Roasting", 16, 512, null, sp("omd:Tetrahedrite:1000"), sp("f:Oxygen:938"), sp("m:SO2:1125"), sp("omd:Cu:375", "omd:Sb:125", "omd:Fe2O3:310"));
         r("Roasting", 16, 512, null, sp("omd:Stannite:1000"), sp("f:Oxygen:1188"), sp("m:SO2:1500"), sp("omd:Cu:250", "omd:Sn:125", "omd:Fe2O3:310"));
         r("Roasting", 16, 512, null, sp("omd:Kesterite:1000"), sp("f:Oxygen:1000"), sp("m:SO2:1500"), sp("omd:Cu:250", "omd:Zn:125", "omd:Sn:125"));
-        r("Roasting", 16, 128, null, sp("omd:Li:1000"), sp("f:Oxygen:500"), NONE, sp("omd:Li2O:1500"));
         r("Roasting", 16, 128, null, sp("omd:V:1000"), sp("f:Oxygen:2500"), NONE, sp("omd:V2O5:3500"));
         r("Roasting", 16, 128, null, sp("omd:Nb:1000"), sp("f:Oxygen:2500"), NONE, sp("omd:Nb2O5:3500"));
         r("Roasting", 16, 128, null, sp("omd:Ta:1000"), sp("f:Oxygen:2500"), NONE, sp("omd:Ta2O5:3500"));

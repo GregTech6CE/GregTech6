@@ -26,19 +26,14 @@
     "item:gt6ce:mint_chocolate_chip_ice_cream",
     "item:gt6ce:mint_ice_cream",
     "item:gt6ce:mocha_ice_cream",
-    "item:gt6ce:neapolitan_ice_cream",
     "item:gt6ce:nutella_ice_cream",
-    "item:gt6ce:peanut_butter_ice_cream",
-    "item:gt6ce:pistachio_ice_cream",
     "item:gt6ce:rainbow_ice_cream",
     "item:gt6ce:raisin_ice_cream",
     "item:gt6ce:raspberry_ice_cream",
     "item:gt6ce:spumoni_chocolate_ice_cream",
-    "item:gt6ce:spumoni_vanilla_ice_cream",
     "item:gt6ce:stracciatella_ice_cream",
     "item:gt6ce:strawberry_ice_cream",
-    "item:gt6ce:superman_ice_cream",
-    "item:gt6ce:vanilla_ice_cream"
+    "item:gt6ce:superman_ice_cream"
   ],
   "priority": 120
 }

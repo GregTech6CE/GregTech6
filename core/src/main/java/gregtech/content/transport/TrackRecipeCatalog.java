@@ -19,7 +19,6 @@ public final class TrackRecipeCatalog {
             new Activator("Bronze", 1),
             new Activator("Iron", 2),
             new Activator("Steel", 3),
-            new Activator("HSLASteel", 3),
             new Activator("StainlessSteel", 4),
             new Activator("Titanium", 6),
             new Activator("Tungsten", 6),

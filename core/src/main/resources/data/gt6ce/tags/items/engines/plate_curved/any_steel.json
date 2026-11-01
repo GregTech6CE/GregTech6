@@ -8,10 +8,6 @@
     {
       "id": "#gt6ce:plate_curved/knightmetal",
       "required": false
-    },
-    {
-      "id": "#gt6ce:plate_curved/meteoric_steel",
-      "required": false
     }
   ]
 }

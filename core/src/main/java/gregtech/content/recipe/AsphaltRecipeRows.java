@@ -8,7 +8,7 @@ public final class AsphaltRecipeRows {
 
     public static final Map<String, List<String>> STONES = Map.ofEntries(
             Map.entry(
-                    "Gray",
+                    "DyeGray",
                     List.of(
                             "Stone",
                             "Concrete",
@@ -19,26 +19,8 @@ public final class AsphaltRecipeRows {
                             "Oilshale",
                             "Dolomite",
                             "Chert")),
-            Map.entry(
-                    "White",
-                    List.of(
-                            "Diorite",
-                            "Marble",
-                            "Chalk",
-                            "CaCO3",
-                            "Endstone",
-                            "Livingrock",
-                            "Holystone",
-                            "Castlerock")),
-            Map.entry("Black", List.of("Basalt", "Gabbro", "GraniteBlack", "Deepslate")),
-            Map.entry("Gray2", List.of("Migmatite", "Eclogite", "SpaceRock", "Slate", "Cragrock")),
-            Map.entry("LightGray", List.of("Andesite", "Dacite", "Deadrock", "Greywacke", "MoonRock", "MoonTurf")),
-            Map.entry("LightBlue", List.of("Blueschist")),
-            Map.entry("Lime", List.of("Greenschist", "Betweenstone", "PrismarineLight")),
-            Map.entry("Green", List.of("Pitstone", "PrismarineDark", "Mazestone")),
-            Map.entry("Red", List.of("Redrock", "MarsRock", "MarsSand", "Netherrack", "GraniteRed", "Granite")),
-            Map.entry("Yellow", List.of("Komatiite", "Templerock")),
-            Map.entry("Orange", List.of("Limestone")),
-            Map.entry("Pink", List.of("Quartzite", "Siltstone")),
-            Map.entry("Brown", List.of("Umber", "Kimberlite")));
+            Map.entry("DyeBlack", List.of("Basalt", "Gabbro", "GraniteBlack", "Deepslate")),
+            Map.entry("DyeLightBlue", List.of("Blueschist")),
+            Map.entry("DyeOrange", List.of("Limestone")),
+            Map.entry("DyeBrown", List.of("Kimberlite")));
 }

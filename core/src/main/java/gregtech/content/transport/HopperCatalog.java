@@ -96,14 +96,6 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
-                            "hopper_ardite",
-                            gregtech.content.material.generated.CompoundMaterials.Ardite,
-                            4,
-                            2.0F,
-                            2.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
                             "hopper_arsenic_bronze",
                             gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
                             5,
@@ -144,14 +136,6 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
-                            "hopper_hsla",
-                            gregtech.content.material.generated.CompoundMaterials.HSLASteel,
-                            6,
-                            6.0F,
-                            6.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
                             "hopper_gold", gregtech.content.material.generated.ElementMaterials.Gold, 6, 3.0F, 3.0F)),
             new Entry(
                     false,
@@ -169,14 +153,6 @@ public final class HopperCatalog {
                             6,
                             6.0F,
                             6.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_manyullyn",
-                            gregtech.content.material.generated.CompoundMaterials.Manyullyn,
-                            6,
-                            4.0F,
-                            4.0F)),
             new Entry(
                     false,
                     HopperSpec.of(
@@ -204,43 +180,11 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
-                            "hopper_meteorite",
-                            gregtech.content.material.generated.CompoundMaterials.Meteorite,
-                            7,
-                            7.0F,
-                            7.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_meteoric_steel",
-                            gregtech.content.material.generated.CompoundMaterials.MeteoricSteel,
-                            8,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_gilded_iron",
-                            gregtech.content.material.generated.CompoundMaterials.GildedIron,
-                            8,
-                            6.0F,
-                            6.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
                             "hopper_molybdenum",
                             gregtech.content.material.generated.ElementMaterials.Molybdenum,
                             8,
                             6.0F,
                             6.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_syrmorite",
-                            gregtech.content.material.generated.CompoundMaterials.Syrmorite,
-                            9,
-                            4.0F,
-                            4.0F)),
             new Entry(
                     false,
                     HopperSpec.of(
@@ -276,22 +220,6 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
-                            "hopper_efrine",
-                            gregtech.content.material.generated.CompoundMaterials.Efrine,
-                            9,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_tungsten_alloy",
-                            gregtech.content.material.generated.CompoundMaterials.HSLATungstenAlloy,
-                            12,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
                             "hopper_titanium",
                             gregtech.content.material.generated.ElementMaterials.Titanium,
                             12,
@@ -321,22 +249,6 @@ public final class HopperCatalog {
                             18,
                             2.0F,
                             2.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_octine",
-                            gregtech.content.material.generated.CompoundMaterials.Octine,
-                            18,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_desh",
-                            gregtech.content.material.generated.CompoundMaterials.Desh,
-                            18,
-                            15.0F,
-                            15.0F)),
             new Entry(
                     false,
                     HopperSpec.of(
@@ -388,14 +300,6 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
-                            "hopper_desh_alloy",
-                            gregtech.content.material.generated.CompoundMaterials.WorkersAlloy,
-                            27,
-                            15.0F,
-                            15.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
                             "hopper_tungsten",
                             gregtech.content.material.generated.ElementMaterials.Tungsten,
                             36,
@@ -428,14 +332,6 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
-                            "hopper_void_metal",
-                            gregtech.content.material.generated.CompoundMaterials.VoidMetal,
-                            36,
-                            30.0F,
-                            30.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
                             "hopper_elven_elementium",
                             gregtech.content.material.generated.CompoundMaterials.ElvenElementium,
                             36,
@@ -454,14 +350,6 @@ public final class HopperCatalog {
                     HopperSpec.of(
                             "hopper_adamantium",
                             gregtech.content.material.generated.ElementMaterials.Adamantium,
-                            36,
-                            100.0F,
-                            100.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_bedrock_hsla",
-                            gregtech.content.material.generated.CompoundMaterials.BedrockHSLAAlloy,
                             36,
                             100.0F,
                             100.0F)),
@@ -572,14 +460,6 @@ public final class HopperCatalog {
             new Entry(
                     true,
                     HopperSpec.of(
-                            "queue_hopper_ardite",
-                            gregtech.content.material.generated.CompoundMaterials.Ardite,
-                            4,
-                            2.0F,
-                            2.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
                             "queue_hopper_arsenic_bronze",
                             gregtech.content.material.generated.CompoundMaterials.ArsenicBronze,
                             5,
@@ -620,14 +500,6 @@ public final class HopperCatalog {
             new Entry(
                     true,
                     HopperSpec.of(
-                            "queue_hopper_hsla",
-                            gregtech.content.material.generated.CompoundMaterials.HSLASteel,
-                            6,
-                            6.0F,
-                            6.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
                             "queue_hopper_gold",
                             gregtech.content.material.generated.ElementMaterials.Gold,
                             6,
@@ -649,14 +521,6 @@ public final class HopperCatalog {
                             6,
                             6.0F,
                             6.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_manyullyn",
-                            gregtech.content.material.generated.CompoundMaterials.Manyullyn,
-                            6,
-                            4.0F,
-                            4.0F)),
             new Entry(
                     true,
                     HopperSpec.of(
@@ -684,43 +548,11 @@ public final class HopperCatalog {
             new Entry(
                     true,
                     HopperSpec.of(
-                            "queue_hopper_meteorite",
-                            gregtech.content.material.generated.CompoundMaterials.Meteorite,
-                            7,
-                            7.0F,
-                            7.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_meteoric_steel",
-                            gregtech.content.material.generated.CompoundMaterials.MeteoricSteel,
-                            8,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_gilded_iron",
-                            gregtech.content.material.generated.CompoundMaterials.GildedIron,
-                            8,
-                            6.0F,
-                            6.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
                             "queue_hopper_molybdenum",
                             gregtech.content.material.generated.ElementMaterials.Molybdenum,
                             8,
                             6.0F,
                             6.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_syrmorite",
-                            gregtech.content.material.generated.CompoundMaterials.Syrmorite,
-                            9,
-                            4.0F,
-                            4.0F)),
             new Entry(
                     true,
                     HopperSpec.of(
@@ -756,22 +588,6 @@ public final class HopperCatalog {
             new Entry(
                     true,
                     HopperSpec.of(
-                            "queue_hopper_efrine",
-                            gregtech.content.material.generated.CompoundMaterials.Efrine,
-                            9,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_tungsten_alloy",
-                            gregtech.content.material.generated.CompoundMaterials.HSLATungstenAlloy,
-                            12,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
                             "queue_hopper_titanium",
                             gregtech.content.material.generated.ElementMaterials.Titanium,
                             12,
@@ -801,22 +617,6 @@ public final class HopperCatalog {
                             18,
                             2.0F,
                             2.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_octine",
-                            gregtech.content.material.generated.CompoundMaterials.Octine,
-                            18,
-                            8.0F,
-                            8.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_desh",
-                            gregtech.content.material.generated.CompoundMaterials.Desh,
-                            18,
-                            15.0F,
-                            15.0F)),
             new Entry(
                     true,
                     HopperSpec.of(
@@ -868,14 +668,6 @@ public final class HopperCatalog {
             new Entry(
                     true,
                     HopperSpec.of(
-                            "queue_hopper_desh_alloy",
-                            gregtech.content.material.generated.CompoundMaterials.WorkersAlloy,
-                            27,
-                            15.0F,
-                            15.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
                             "queue_hopper_tungsten",
                             gregtech.content.material.generated.ElementMaterials.Tungsten,
                             36,
@@ -908,14 +700,6 @@ public final class HopperCatalog {
             new Entry(
                     true,
                     HopperSpec.of(
-                            "queue_hopper_void_metal",
-                            gregtech.content.material.generated.CompoundMaterials.VoidMetal,
-                            36,
-                            30.0F,
-                            30.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
                             "queue_hopper_elven_elementium",
                             gregtech.content.material.generated.CompoundMaterials.ElvenElementium,
                             36,
@@ -934,14 +718,6 @@ public final class HopperCatalog {
                     HopperSpec.of(
                             "queue_hopper_adamantium",
                             gregtech.content.material.generated.ElementMaterials.Adamantium,
-                            36,
-                            100.0F,
-                            100.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_bedrock_hsla",
-                            gregtech.content.material.generated.CompoundMaterials.BedrockHSLAAlloy,
                             36,
                             100.0F,
                             100.0F)),

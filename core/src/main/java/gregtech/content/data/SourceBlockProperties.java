@@ -872,11 +872,7 @@ public final class SourceBlockProperties {
         BLOCKS.put("mold_basin_steel", new Params(1772, "pickaxe", ImportedMaterialData.Steel, -1, false));
         BLOCKS.put("crucible_crossing_steel", new Params(1872, "pickaxe", ImportedMaterialData.Steel, -1, false));
         BLOCKS.put("crucible_faucet_steel", new Params(1722, "pickaxe", ImportedMaterialData.Steel, -1, true));
-        BLOCKS.put("smelting_crucible_hsla", new Params(1041, "pickaxe", ImportedMaterialData.HSLA, -1, false));
-        BLOCKS.put("mold_hsla", new Params(1091, "pickaxe", ImportedMaterialData.HSLA, -1, true));
-        BLOCKS.put("mold_basin_hsla", new Params(1791, "pickaxe", ImportedMaterialData.HSLA, -1, false));
-        BLOCKS.put("crucible_crossing_hsla", new Params(1891, "pickaxe", ImportedMaterialData.HSLA, -1, false));
-        BLOCKS.put("crucible_faucet_hsla", new Params(1741, "pickaxe", ImportedMaterialData.HSLA, -1, true));
+
         BLOCKS.put("smelting_crucible_titanium", new Params(1023, "pickaxe", ImportedMaterialData.Ti, -1, false));
         BLOCKS.put("mold_titanium", new Params(1073, "pickaxe", ImportedMaterialData.Ti, -1, true));
         BLOCKS.put("mold_basin_titanium", new Params(1773, "pickaxe", ImportedMaterialData.Ti, -1, false));
@@ -900,13 +896,7 @@ public final class SourceBlockProperties {
         BLOCKS.put(
                 "crucible_faucet_stainless_steel",
                 new Params(1725, "pickaxe", ImportedMaterialData.StainlessSteel, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_dark_iron", new Params(1026, "pickaxe", ImportedMaterialData.DarkIron, -1, false));
-        BLOCKS.put("mold_dark_iron", new Params(1076, "pickaxe", ImportedMaterialData.DarkIron, -1, true));
-        BLOCKS.put("mold_basin_dark_iron", new Params(1776, "pickaxe", ImportedMaterialData.DarkIron, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_dark_iron", new Params(1876, "pickaxe", ImportedMaterialData.DarkIron, -1, false));
-        BLOCKS.put("crucible_faucet_dark_iron", new Params(1726, "pickaxe", ImportedMaterialData.DarkIron, -1, true));
+
         BLOCKS.put(
                 "smelting_crucible_knightmetal",
                 new Params(1027, "pickaxe", ImportedMaterialData.Knightmetal, -1, false));
@@ -927,48 +917,13 @@ public final class SourceBlockProperties {
                 new Params(1878, "pickaxe", ImportedMaterialData.FierySteel, -1, false));
         BLOCKS.put(
                 "crucible_faucet_fiery_steel", new Params(1728, "pickaxe", ImportedMaterialData.FierySteel, -1, true));
-        BLOCKS.put("smelting_crucible_octine", new Params(1042, "pickaxe", ImportedMaterialData.Octine, -1, false));
-        BLOCKS.put("mold_octine", new Params(1092, "pickaxe", ImportedMaterialData.Octine, -1, true));
-        BLOCKS.put("mold_basin_octine", new Params(1792, "pickaxe", ImportedMaterialData.Octine, -1, false));
-        BLOCKS.put("crucible_crossing_octine", new Params(1892, "pickaxe", ImportedMaterialData.Octine, -1, false));
-        BLOCKS.put("crucible_faucet_octine", new Params(1742, "pickaxe", ImportedMaterialData.Octine, -1, true));
+
         BLOCKS.put("smelting_crucible_thaumium", new Params(1029, "pickaxe", ImportedMaterialData.Thaumium, -1, false));
         BLOCKS.put("mold_thaumium", new Params(1079, "pickaxe", ImportedMaterialData.Thaumium, -1, true));
         BLOCKS.put("mold_basin_thaumium", new Params(1779, "pickaxe", ImportedMaterialData.Thaumium, -1, false));
         BLOCKS.put("crucible_crossing_thaumium", new Params(1879, "pickaxe", ImportedMaterialData.Thaumium, -1, false));
         BLOCKS.put("crucible_faucet_thaumium", new Params(1729, "pickaxe", ImportedMaterialData.Thaumium, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_void_metal", new Params(1030, "pickaxe", ImportedMaterialData.VoidMetal, -1, false));
-        BLOCKS.put("mold_void_metal", new Params(1080, "pickaxe", ImportedMaterialData.VoidMetal, -1, true));
-        BLOCKS.put("mold_basin_void_metal", new Params(1780, "pickaxe", ImportedMaterialData.VoidMetal, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_void_metal", new Params(1880, "pickaxe", ImportedMaterialData.VoidMetal, -1, false));
-        BLOCKS.put("crucible_faucet_void_metal", new Params(1730, "pickaxe", ImportedMaterialData.VoidMetal, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_meteoric_iron",
-                new Params(1031, "pickaxe", ImportedMaterialData.MeteoricIron, -1, false));
-        BLOCKS.put("mold_meteoric_iron", new Params(1081, "pickaxe", ImportedMaterialData.MeteoricIron, -1, true));
-        BLOCKS.put(
-                "mold_basin_meteoric_iron", new Params(1781, "pickaxe", ImportedMaterialData.MeteoricIron, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_meteoric_iron",
-                new Params(1881, "pickaxe", ImportedMaterialData.MeteoricIron, -1, false));
-        BLOCKS.put(
-                "crucible_faucet_meteoric_iron",
-                new Params(1731, "pickaxe", ImportedMaterialData.MeteoricIron, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_meteoric_steel",
-                new Params(1032, "pickaxe", ImportedMaterialData.MeteoricSteel, -1, false));
-        BLOCKS.put("mold_meteoric_steel", new Params(1082, "pickaxe", ImportedMaterialData.MeteoricSteel, -1, true));
-        BLOCKS.put(
-                "mold_basin_meteoric_steel",
-                new Params(1782, "pickaxe", ImportedMaterialData.MeteoricSteel, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_meteoric_steel",
-                new Params(1882, "pickaxe", ImportedMaterialData.MeteoricSteel, -1, false));
-        BLOCKS.put(
-                "crucible_faucet_meteoric_steel",
-                new Params(1732, "pickaxe", ImportedMaterialData.MeteoricSteel, -1, true));
+
         BLOCKS.put("smelting_crucible_chromium", new Params(1033, "pickaxe", ImportedMaterialData.Cr, -1, false));
         BLOCKS.put("mold_chromium", new Params(1083, "pickaxe", ImportedMaterialData.Cr, -1, true));
         BLOCKS.put("mold_basin_chromium", new Params(1783, "pickaxe", ImportedMaterialData.Cr, -1, false));
@@ -1030,21 +985,7 @@ public final class SourceBlockProperties {
         BLOCKS.put(
                 "crucible_crossing_netherite", new Params(1894, "pickaxe", ImportedMaterialData.Netherite, -1, false));
         BLOCKS.put("crucible_faucet_netherite", new Params(1744, "pickaxe", ImportedMaterialData.Netherite, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_bedrock_hsla_alloy",
-                new Params(1048, "pickaxe", ImportedMaterialData.Bedrock_HSLA_Alloy, -1, false));
-        BLOCKS.put(
-                "mold_bedrock_hsla_alloy",
-                new Params(1098, "pickaxe", ImportedMaterialData.Bedrock_HSLA_Alloy, -1, true));
-        BLOCKS.put(
-                "mold_basin_bedrock_hsla_alloy",
-                new Params(1798, "pickaxe", ImportedMaterialData.Bedrock_HSLA_Alloy, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_bedrock_hsla_alloy",
-                new Params(1898, "pickaxe", ImportedMaterialData.Bedrock_HSLA_Alloy, -1, false));
-        BLOCKS.put(
-                "crucible_faucet_bedrock_hsla_alloy",
-                new Params(1748, "pickaxe", ImportedMaterialData.Bedrock_HSLA_Alloy, -1, true));
+
         BLOCKS.put("smelting_crucible_ad", new Params(1049, "pickaxe", ImportedMaterialData.Ad, -1, false));
         BLOCKS.put("mold_ad", new Params(1099, "pickaxe", ImportedMaterialData.Ad, -1, true));
         BLOCKS.put("mold_basin_ad", new Params(1799, "pickaxe", ImportedMaterialData.Ad, -1, false));
@@ -1095,13 +1036,7 @@ public final class SourceBlockProperties {
         BLOCKS.put(
                 "crucible_faucet_nether_brick",
                 new Params(1704, "pickaxe", ImportedMaterialData.STONES.NetherBrick, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_umber", new Params(1006, "pickaxe", ImportedMaterialData.STONES.Umber, -1, false));
-        BLOCKS.put("mold_umber", new Params(1056, "pickaxe", ImportedMaterialData.STONES.Umber, -1, true));
-        BLOCKS.put("mold_basin_umber", new Params(1756, "pickaxe", ImportedMaterialData.STONES.Umber, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_umber", new Params(1856, "pickaxe", ImportedMaterialData.STONES.Umber, -1, false));
-        BLOCKS.put("crucible_faucet_umber", new Params(1706, "pickaxe", ImportedMaterialData.STONES.Umber, -1, true));
+
         BLOCKS.put(
                 "smelting_crucible_livingrock",
                 new Params(1007, "pickaxe", ImportedMaterialData.STONES.Livingrock, -1, false));
@@ -1115,32 +1050,7 @@ public final class SourceBlockProperties {
         BLOCKS.put(
                 "crucible_faucet_livingrock",
                 new Params(1707, "pickaxe", ImportedMaterialData.STONES.Livingrock, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_holystone",
-                new Params(1008, "pickaxe", ImportedMaterialData.STONES.Holystone, -1, false));
-        BLOCKS.put("mold_holystone", new Params(1058, "pickaxe", ImportedMaterialData.STONES.Holystone, -1, true));
-        BLOCKS.put(
-                "mold_basin_holystone", new Params(1758, "pickaxe", ImportedMaterialData.STONES.Holystone, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_holystone",
-                new Params(1858, "pickaxe", ImportedMaterialData.STONES.Holystone, -1, false));
-        BLOCKS.put(
-                "crucible_faucet_holystone",
-                new Params(1708, "pickaxe", ImportedMaterialData.STONES.Holystone, -1, true));
-        BLOCKS.put(
-                "smelting_crucible_betweenstone",
-                new Params(1009, "pickaxe", ImportedMaterialData.STONES.Betweenstone, -1, false));
-        BLOCKS.put(
-                "mold_betweenstone", new Params(1059, "pickaxe", ImportedMaterialData.STONES.Betweenstone, -1, true));
-        BLOCKS.put(
-                "mold_basin_betweenstone",
-                new Params(1759, "pickaxe", ImportedMaterialData.STONES.Betweenstone, -1, false));
-        BLOCKS.put(
-                "crucible_crossing_betweenstone",
-                new Params(1859, "pickaxe", ImportedMaterialData.STONES.Betweenstone, -1, false));
-        BLOCKS.put(
-                "crucible_faucet_betweenstone",
-                new Params(1709, "pickaxe", ImportedMaterialData.STONES.Betweenstone, -1, true));
+
         BLOCKS.put("energy_storage_xv", new Params(10099, "wrench", ImportedMaterialData.Trinaquadalloy, -1, false));
     }
 

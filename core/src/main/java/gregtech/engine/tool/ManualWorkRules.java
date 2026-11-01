@@ -20,7 +20,7 @@ public final class ManualWorkRules {
 
     public static int abrasiveUses(String material) {
         return switch (material) {
-            case "SoulSand", "EndSandWhite", "EndSandBlack" -> 16;
+            case "SoulSand", "EndSandWhite" -> 16;
             case "RedSand" -> 8;
             case "Sand" -> 4;
             default -> 0;

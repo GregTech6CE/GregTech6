@@ -115,7 +115,7 @@ public class GTNetherScatterFeature extends Feature<NoneFeatureConfiguration> {
             }
         } else if (ground.is(Blocks.SOUL_SAND) || ground.is(Blocks.SOUL_SOIL)) {
             material = switch (choice) {
-                case 6, 7 -> "Gloomstone";
+                case 6, 7 -> "";
                 default -> "NetherQuartz";
             };
             rawOre = false;
@@ -130,6 +130,7 @@ public class GTNetherScatterFeature extends Feature<NoneFeatureConfiguration> {
             ItemStack gem = mat(MaterialPrefix.gem, "Glowstone");
             itemId = gem.isEmpty() ? "" : key(gem);
         }
+        if (itemId.isEmpty() && material.isEmpty()) return false;
         return place(level, pos, material, itemId, rawOre);
     }
 

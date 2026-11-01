@@ -15,11 +15,9 @@ public final class TreeSpeciesRules {
         return switch (species) {
             case RUBBER -> 2; // AB meta 0
             case WILLOW, COCONUT -> 4; // AB metas 2 and 6
-            case BLUE_SPRUCE, PINE -> 6; // CD meta 0 (the conifer's wide skirt)
+            case BLUE_SPRUCE -> 6; // CD meta 0 (the conifer's wide skirt)
             case MAPLE, BLUE_MAHOE, HAZEL, CINNAMON, RAINBOWOOD -> 3;
             // The wood-dictionary species borrow their shape's ranges.
-            case EBONY -> 3;
-            case WHITE_MAHOE -> 3;
         };
     }
 
@@ -28,7 +26,6 @@ public final class TreeSpeciesRules {
             case BLUE_MAHOE -> 4; // AB meta 3
             case CINNAMON, RAINBOWOOD -> 3; // AB metas 5 and 7
             case COCONUT -> 1; // AB meta 6
-            case WHITE_MAHOE -> 4; // borrows the blue mahoe shape
             default -> 2; // rubber, maple, willow, hazel, spruce, pine, ebony
         };
     }

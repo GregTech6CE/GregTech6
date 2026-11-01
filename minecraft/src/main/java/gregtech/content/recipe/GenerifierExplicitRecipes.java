@@ -23,7 +23,6 @@ public final class GenerifierExplicitRecipes {
         "gem", "Malachite", "dust", "Green",
         "gem", "Lazurite", "dust", "Cyan",
         "dust", "Ashes", "dust", "LightGray",
-        "dust", "VolcanicAshes", "dust", "Black",
         "dust", "DarkAshes", "dust", "Gray",
     };
 

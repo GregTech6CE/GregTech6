@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class DungeonBottleSupplies {
     private static final Direction[] FACING={Direction.NORTH,Direction.SOUTH,Direction.WEST,Direction.EAST};
     private static final String[] CHEMICALS={"mercury_bottle","mercury_bottle","mercury_bottle",
-            "glue_bottle","lubricant_bottle","ink_bottle","purple_drink","holy_water","bottled_indigo_dye"};
+            "glue_bottle","lubricant_bottle","ink_bottle","purple_drink","holy_water"};
     private DungeonBottleSupplies() {}
 
     public static void chemicals(GTDungeonData data,int x,int y,int z) { place(data,x,y,z,null); }

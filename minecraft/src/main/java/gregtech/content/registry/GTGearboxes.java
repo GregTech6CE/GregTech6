@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** The 13 original GT6 custom gearboxes and RU rotation transformers. */
+/** Material variants of GT6 custom gearboxes and RU rotation transformers. */
 public final class GTGearboxes {
 //? if >=1.21.1 {
     /*private static final List<DeferredHolder<Block, GearboxBlock>> ALL_GEARBOXES = new ArrayList<>();
@@ -132,8 +132,8 @@ public final class GTGearboxes {
     }
 
     public static void bootstrap() {
-        if (ALL_GEARBOXES.size() != 13 || ALL_TRANSFORMERS.size() != 13)
-            throw new IllegalStateException("GTGearboxes must register the original 13+13 variants");
+        if (TIERS.length == 0 || ALL_GEARBOXES.size() != TIERS.length || ALL_TRANSFORMERS.size() != TIERS.length)
+            throw new IllegalStateException("GTGearboxes must register every catalog tier exactly once");
     }
 
     private static BlockBehaviour.Properties machineProperties(boolean wooden) {

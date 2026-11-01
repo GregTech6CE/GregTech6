@@ -18,16 +18,14 @@ public final class CrucibleReactions {
         recipe(Elements.WroughtIron, 1, new Part(Elements.Fe, 1));
         recipe(Compounds.AnnealedCopper, 1, new Part(Elements.Cu, 1));
         recipe(Compounds.Steel, 1, new Part(Elements.WroughtIron, 1), new Part(Compounds.Air, 1));
-        recipe(Compounds.MeteoricSteel, 1, new Part(Compounds.MeteoricIron, 1), new Part(Compounds.Air, 1));
+
         recipe(Elements.Fe, 2, new Part(Ores.Fe2O3, 5), new Part(Elements.C, 1), new Part(Ores.CaCO3, 1));
         recipe(Elements.Fe, 6, new Part(Ores.Magnetite, 14), new Part(Elements.C, 3));
         recipe(Elements.Fe, 6, new Part(Ores.BasalticMineralSand, 14), new Part(Elements.C, 3));
         recipe(Elements.Fe, 6, new Part(Ores.GraniticMineralSand, 14), new Part(Elements.C, 3));
         recipe(Elements.Fe, 6, new Part(Ores.Ferrovanadium, 28), new Part(Elements.C, 3));
         recipe(Elements.Si, 1, new Part(Ores.SiO2, 3), new Part(Elements.C, 1));
-        recipe(Elements.Fe, 2, new Part(Compounds.ShadowIron, 1), new Part(Compounds.Ignatius, 1));
-        recipe(Elements.Fe, 2, new Part(Compounds.DeepIron, 1), new Part(Compounds.Prometheum, 1));
-        recipe(Compounds.BlackSteel, 2, new Part(Compounds.DeepIron, 1), new Part(Compounds.Infuscolium, 1));
+
         recipe(
                 Compounds.Ultimet,
                 36,
@@ -42,36 +40,16 @@ public final class CrucibleReactions {
                 new Part(Compounds.Nichrome, 5),
                 new Part(Elements.Cr, 3),
                 new Part(Elements.Mn, 4));
-        recipe(Compounds.TungstenSteel, 2, new Part(Compounds.MeteoricSteel, 1), new Part(Elements.W, 1));
-        recipe(
-                Compounds.TungstenSteel,
-                2,
-                new Part(Compounds.MeteoricSteel, 1),
-                new Part(Compounds.TungstenSintered, 1));
+
         recipe(Compounds.TungstenSteel, 2, new Part(Compounds.Steel, 1), new Part(Compounds.TungstenSintered, 1));
-        recipe(Compounds.VanadiumSteel, 5, new Part(Compounds.MeteoricSteel, 4), new Part(Elements.V, 1));
-        recipe(Compounds.ElectricalSteel, 1, new Part(Compounds.MeteoricSteel, 1), new Part(Elements.Si, 1));
-        recipe(Compounds.ObsidianSteel, 1, new Part(Compounds.MeteoricSteel, 1), new Part(Compounds.Lava, 9));
-        recipe(Compounds.ObsidianSteel, 1, new Part(Compounds.Steel, 1), new Part(Compounds.Lava, 9));
-        recipe(
-                Compounds.EndSteel,
-                1,
-                new Part(Compounds.ObsidianSteel, 1),
-                new Part(Stones.Endstone, 1),
-                new Part(Compounds.Lava, 9));
+
         recipe(
                 Compounds.Alumite,
                 5,
                 new Part(Elements.Al, 5),
                 new Part(Elements.WroughtIron, 2),
                 new Part(Compounds.Lava, 18));
-        recipe(
-                Compounds.Hepatizon,
-                24,
-                new Part(Compounds.Bronze, 8),
-                new Part(Elements.Sn, 1),
-                new Part(Compounds.RoseGold, 15));
-        recipe(Compounds.RedAlloy, 1, new Part(Compounds.Mingrade, 2), new Part(Compounds.Redstone, 3));
+
         recipe(Compounds.RedAlloy, 1, new Part(Compounds.AnnealedCopper, 1), new Part(Compounds.Redstone, 4));
         recipe(Compounds.RoseGold, 5, new Part(Compounds.AnnealedCopper, 1), new Part(Elements.Au, 4));
         recipe(Compounds.SterlingSilver, 5, new Part(Compounds.AnnealedCopper, 1), new Part(Elements.Ag, 4));
@@ -136,7 +114,6 @@ public final class CrucibleReactions {
                 new Part(Elements.Cu, 3),
                 new Part(Elements.Ba, 2),
                 new Part(Elements.Y, 1));
-        recipe(Compounds.Li2Fe2O4, 8, new Part(Ores.Fe2O3, 5), new Part(Compounds.Li2O, 3));
     }
 
     private static void recipe(GTMaterial out, long yield, Part... parts) {
