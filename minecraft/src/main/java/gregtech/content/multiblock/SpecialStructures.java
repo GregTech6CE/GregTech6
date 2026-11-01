@@ -13,7 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 
-/** Card 55 geometry. Compiled cells are also the sole source of each family's watch footprint. */
+/** World predicates and material variants over shared character layers; watches use the compiled cells. */
 public final class SpecialStructures {
     public static final String BEDROCK_FLOOR = "bedrockfloor";
     public static final String FIXED_BLOCK = "fixedblock#";
@@ -34,17 +34,12 @@ public final class SpecialStructures {
 
     /** Shared by the tank definition and the JEI/EMI preview. */
     public static List<CompiledPattern.FixedCell> tankCells(int size, Block wall, Direction front) {
-        int radius = size / 2;
-        BlockPos centre = BlockPos.ZERO.relative(front.getOpposite(), radius);
         var cells = new ArrayList<CompiledPattern.FixedCell>();
-        for (int x = -radius; x <= radius; x++)
-            for (int y = -radius; y <= radius; y++)
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos offset = centre.offset(x, y, z);
-                    if (offset.equals(BlockPos.ZERO)) continue;
-                    boolean shell = Math.abs(x) == radius || Math.abs(y) == radius || Math.abs(z) == radius;
-                    add(cells, offset, shell ? literal(wall, Role.FLUID_IO) : part(0, Role.AIR));
-                }
+        for (var cell : SharedTankStructure.layout(size).cells()) {
+            var role = Role.valueOf(cell.role().name());
+            var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.right(), cell.up(), cell.back());
+            add(cells, offset, role == Role.AIR ? part(0, Role.AIR) : literal(wall, role));
+        }
         return cells;
     }
 
@@ -118,21 +113,13 @@ public final class SpecialStructures {
     /** Shared by the drill definition and the JEI/EMI preview. */
     public static List<CompiledPattern.FixedCell> drillCells() {
         var cells = new ArrayList<CompiledPattern.FixedCell>();
-        for (int x = -1; x <= 1; x++)
-            for (int z = -1; z <= 1; z++) {
-                add(
-                        cells,
-                        new BlockPos(x, -5, z),
-                        new LargeMachineLayouts.Cell(0, 0, 0, 0, Role.CASING, BEDROCK_FLOOR));
-                for (int y = -4; y <= 0; y++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    // Part matchers additionally require the native port entity, just like the full scan.
-                    add(
-                            cells,
-                            new BlockPos(x, y, z),
-                            part(y == -4 ? 18103 : 18026, BedrockDrillControllerBlockEntity.role(x, y, z)));
-                }
-            }
+        for (var cell : SharedDrillStructure.LAYOUT.cells()) {
+            var role = Role.valueOf(cell.role().name());
+            var spec = cell.up() == -5
+                    ? new LargeMachineLayouts.Cell(0, 0, 0, 0, role, BEDROCK_FLOOR)
+                    : part(cell.up() == -4 ? 18103 : 18026, role);
+            add(cells, new BlockPos(cell.right(), cell.up(), cell.back()), spec);
+        }
         return cells;
     }
 
@@ -147,24 +134,33 @@ public final class SpecialStructures {
 
     /** Shared by the lightning-rod definition and the JEI/EMI preview. */
     public static LargeMachineLayouts.Layout lightningLayout(boolean original) {
-        var cells = new ArrayList<LargeMachineLayouts.Cell>();
-        for (int y = 0; y < 5; y++)
-            for (int x = -1; x <= 1; x++)
-                for (int z = -1; z <= 1; z++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    Block block = original
-                            ? LargeMachineParts.block(y % 2 == 0 ? 18004 : 18041)
-                            : y % 2 == 0
-                                    ? GTMultiblocks.TUNGSTEN_WALL.get()
-                                    : GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get();
-                    // Symmetric base: local right/back coordinates give the same world cube.
-                    cells.add(new LargeMachineLayouts.Cell(
-                            x, y, z, 0, Role.CASING, FIXED_BLOCK + BuiltInRegistries.BLOCK.getKey(block)));
-                }
-        Block rod = original ? LargeMachineParts.block(18104) : GTMultiblocks.LIGHTNING_ROD.get();
-        return new LargeMachineLayouts.Layout(
-                List.copyOf(cells),
-                List.of(new LargeMachineLayouts.Repeat("rod", 5, 0, -1, 1, 1, List.of(literal(rod, Role.CASING)))));
+        var layout = SharedLightningStructure.LAYOUT;
+        var fixed =
+                layout.cells().stream().map(SpecialStructures::lightningCell).toList();
+        var repeats = layout.repeats().stream()
+                .map(repeat -> new LargeMachineLayouts.Repeat(
+                        repeat.key(),
+                        repeat.up(),
+                        repeat.min(),
+                        repeat.max(),
+                        repeat.step(),
+                        repeat.height(),
+                        repeat.cells().stream()
+                                .map(SpecialStructures::lightningCell)
+                                .toList()))
+                .toList();
+        return new LargeMachineLayouts.Layout(fixed, repeats);
+    }
+
+    private static LargeMachineLayouts.Cell lightningCell(SharedLargeMachineLayouts.Cell cell) {
+        // Lightning rods accept the block itself, without requiring a structural-port entity.
+        return new LargeMachineLayouts.Cell(
+                cell.right(),
+                cell.up(),
+                cell.back(),
+                0,
+                Role.valueOf(cell.role().name()),
+                FIXED_BLOCK + BuiltInRegistries.BLOCK.getKey(LargeMachineParts.block(cell.part())));
     }
 
     public static StructureDefinition.Declarative lightning(LightningRodControllerBlockEntity machine) {

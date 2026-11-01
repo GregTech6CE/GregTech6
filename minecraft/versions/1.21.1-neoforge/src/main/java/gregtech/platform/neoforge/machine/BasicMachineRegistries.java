@@ -78,7 +78,8 @@ public final class BasicMachineRegistries {
                 created.register(bus);
                 return created;
             });
-            var block = blockReg.register(
+            var block = gregtech.content.registry.MultiblockRegistration.register(
+                    namespace,
                     spec.id(),
                     () -> spec.controllerKind() == gregtech.api.machine.MachineControllerKind.DISTILLATION
                             ? new gregtech.content.block.machine.MultiblockControllerBlock(
@@ -92,7 +93,8 @@ public final class BasicMachineRegistries {
                                     BlockBehaviour.Properties.of()
                                             .mapColor(MapColor.METAL)
                                             .strength(spec.hardness(), spec.blastResistance())
-                                            .requiresCorrectToolForDrops()));
+                                            .requiresCorrectToolForDrops()),
+                    blockReg::register);
             MACHINES.add(block);
             itemReg.register(spec.id(), () -> new BasicMachineItem(block.get(), new Item.Properties().stacksTo(16)));
             var type = entityReg.register("be_" + spec.id(), () -> {

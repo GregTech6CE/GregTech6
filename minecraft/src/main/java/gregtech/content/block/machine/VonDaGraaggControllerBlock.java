@@ -18,8 +18,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/** The original GT6 17996 spawn inhibitor controller, not a passive structure port. */
-public final class VonDaGraaggControllerBlock extends Block implements EntityBlock {
+/**
+ * The original GT6 17996 spawn inhibitor controller. Its front is fixed downward,
+ * so placement and wrench use must not introduce a rotatable facing state.
+ */
+public final class VonDaGraaggControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
 
     public VonDaGraaggControllerBlock(Properties properties) {
         super(properties);

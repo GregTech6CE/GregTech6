@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 numeric ID 17998: the controller occupies the bottom-center tungsten wall. */
-public final class OriginalLightningRodControllerBlock extends Block implements EntityBlock {
+public final class OriginalLightningRodControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {

@@ -28,6 +28,13 @@ public final class LayoutStructures {
         return new LayoutDefinition(machine, machine::trackedLayout, true);
     }
 
+    public static StructureDefinition fuel(gregtech.content.blockentity.machine.FuelTurbineBlockEntity machine) {
+        return new LayoutDefinition(
+                machine,
+                () -> LargeMachineLayouts.layout(machine.declaration().casing().machineType()),
+                false);
+    }
+
     public static Footprint of(
             LargeMachineLayouts.Layout layout, BlockPos origin, Direction front, int layers, boolean frontier) {
         if (layout == null) return new Footprint.Builder().addController(origin).build();
@@ -141,23 +148,6 @@ public final class LayoutStructures {
             return StructureDefinition.ClaimPolicy.ATOMIC;
         }
 
-        /**
-         * Card 53 migrates the four Layout families that have no per-scan matching state of their own.
-         * Large oven coil sameness and the remaining large-recipe families stay on the full scan until
-         * cards 54 and 55.
-         */
-        @Override
-        public boolean incremental() {
-            if (machine instanceof BehaviorMachineBlockEntity) return true;
-            if (!(machine instanceof LargeRecipeMachineBlockEntity recipe)) return false;
-            var spec = recipe.spec();
-            if (spec == null) return false;
-            return switch (spec.machineName()) {
-                case "distillationtower", "cryodistillationtower", "cokeoven", "largemassfab" -> true;
-                default -> false;
-            };
-        }
-
         @Override
         public CompiledPattern compile(net.minecraft.core.Direction front) {
             return CompiledPattern.compile(machine, layout.get(), front, aggregates());
@@ -189,11 +179,15 @@ public final class LayoutStructures {
                 return recipe.spec() == null ? null : recipe.spec().machineName();
             if (machine instanceof gregtech.content.blockentity.machine.BehaviorMachineBlockEntity behavior)
                 return behavior.declaration().casing().machineType();
+            if (machine instanceof gregtech.content.blockentity.machine.FuelTurbineBlockEntity fuel)
+                return fuel.declaration().casing().machineType();
             return null;
         }
 
         private static boolean tags(java.util.List<LargeMachineLayouts.Cell> cells) {
             for (LargeMachineLayouts.Cell cell : cells) {
+                for (var choice : cell.alternatives())
+                    if (choice.plain() != null && choice.plain().contains("#")) return true;
                 String plain = cell.plain();
                 if (plain == null) continue;
                 if (plain.startsWith("#")) return true;

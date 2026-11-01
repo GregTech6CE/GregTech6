@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import javax.annotation.Nullable;
 
-public class LargeGasTurbineControllerBlock extends DirectionalBlock implements EntityBlock {
+public class LargeGasTurbineControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource {
     private final gregtech.content.multiblock.GasTurbineDefinitions.Grade grade;
     public gregtech.content.multiblock.GasTurbineDefinitions.Grade grade() { return grade; }
     public LargeGasTurbineControllerBlock(Properties properties) {

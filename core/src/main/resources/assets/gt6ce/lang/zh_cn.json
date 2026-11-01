@@ -28412,7 +28412,7 @@
   "jade.gt6ce.multiblock.fluid": "%s：%s / %s mB",
   "jade.gt6ce.multiblock.formed": "结构：已成型",
   "jade.gt6ce.multiblock.incomplete": "结构：不完整／不可用",
-  "jade.gt6ce.multiblock.jei": "JEI：查看控制器配方以了解组装方式",
+  "jade.gt6ce.multiblock.jei": "JEI / EMI：查看主控用途中的多方块结构页",
   "jade.gt6ce.multiblock.progress": "进度：%s%%",
   "jade.gt6ce.omni.abrasive": "磨料剩余使用次数：%s",
   "jade.gt6ce.omni.anvil_big": "大端（弯曲）",
@@ -104469,5 +104469,7 @@
   "fluid_type.gt6ce.molten_stone": "熔融石头",
   "fluid_type.gt6ce.molten_trinium": "熔融特林金属",
   "fluid_type.gt6ce.molten_tungstentrioxide": "熔融三氧化钨",
-  "fluid_type.gt6ce.molten_vanadiummagnetite": "熔融钒磁铁"
+  "fluid_type.gt6ce.molten_vanadiummagnetite": "熔融钒磁铁",
+  "jade.gt6ce.multiblock.controller": "主控：%s（%s，%s，%s）",
+  "jade.gt6ce.multiblock.unbound": "结构：未成型（未关联主控）"
 }

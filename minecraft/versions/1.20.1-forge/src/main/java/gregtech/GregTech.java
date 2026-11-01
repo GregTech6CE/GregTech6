@@ -83,6 +83,7 @@ public class GregTech {
                     new gregtech.api.addon.GregTechAddon.Context("forge", "1.20.1"));
             gregtech.engine.addon.ExclusiveOutputMaps.audit();
             gregtech.content.multiblock.PlainStructureBlocks.resolve();
+            gregtech.content.registry.MultiblockRegistration.validate();
             LOGGER.info(
                     "GT addon API {} ready: {}",
                     gregtech.api.addon.GregTechAddons.API_VERSION,

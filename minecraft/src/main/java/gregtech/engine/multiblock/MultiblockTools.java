@@ -71,28 +71,21 @@ public final class MultiblockTools {
                         instanceof gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition))
             return 0;
         var origin = machine.trackedEntity().getBlockPos();
-        var pattern = definition.compile(
-                gregtech.engine.multiblock.tracking.LayoutStructures.facing(machine.trackedEntity()));
+        var pattern = gregtech.engine.multiblock.tracking.StructurePlan.compile(machine);
         if (pattern == null) return 0;
         boolean wholeStructure = buildsWholeStructure(context, origin);
-        for (int i = 0; i < pattern.fixedCount(); i++) {
-            if (pattern.air(i)) continue;
-            var pos = origin.offset(pattern.dx(i), pattern.dy(i), pattern.dz(i));
-            if (pos.equals(origin)) continue;
-            buildCell(context, pos, pattern.cell(i, 0), wholeStructure);
-        }
-        // Repeat groups build their minimum valid size, as the structure preview shows.
-        for (int group = 0; group < pattern.groupCount(); group++) {
-            int copies = pattern.groupMinimum(group);
-            int first = pattern.groupFirstCell(group);
-            int count = pattern.groupCellCount(group);
-            for (int copy = 0; copy < copies; copy++)
-                for (int i = first; i < first + count; i++) {
-                    if (pattern.repeatAir(i)) continue;
-                    var pos = origin.offset(pattern.repeatDx(i), pattern.repeatDy(i, copy), pattern.repeatDz(i));
-                    if (pos.equals(origin)) continue;
-                    buildCell(context, pos, pattern.repeatCell(i, 0), wholeStructure);
-                }
+        for (var cell : gregtech.engine.multiblock.tracking.StructurePlan.minimum(pattern)) {
+            var pos = origin.offset(cell.offset());
+            if (pos.equals(origin) || !context.getLevel().hasChunkAt(pos)) continue;
+            // Preserve every accepted alternative, including replaceable terrain or fluids.
+            if (cell.matcher() != null
+                    && cell.matcher()
+                                    .match(
+                                            context.getLevel(),
+                                            pos,
+                                            context.getLevel().getBlockState(pos))
+                            != gregtech.engine.multiblock.tracking.CompiledPattern.FAILED) continue;
+            buildCell(context, pos, cell.specification(), wholeStructure);
         }
         gregtech.engine.multiblock.tracking.StructureTracking.invalidate(machine);
         return MultiblockToolRules.BUILDER_COST;

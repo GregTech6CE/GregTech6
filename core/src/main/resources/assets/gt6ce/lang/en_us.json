@@ -11510,7 +11510,7 @@
   "jade.gt6ce.multiblock.fluid": "%s: %s / %s mB",
   "jade.gt6ce.multiblock.formed": "Structure: formed",
   "jade.gt6ce.multiblock.incomplete": "Structure: incomplete / unavailable",
-  "jade.gt6ce.multiblock.jei": "JEI: check controller recipes for assembly",
+  "jade.gt6ce.multiblock.jei": "JEI / EMI: view the controller uses for the structure page",
   "jade.gt6ce.multiblock.progress": "Progress: %s%%",
   "jade.gt6ce.reactor.fluid": "%s: %s mB",
   "jade.gt6ce.reactor.heat": "Stored heat: %s",
@@ -14419,5 +14419,7 @@
   "fluid_type.gt6ce.molten_stone": "Molten Stone",
   "fluid_type.gt6ce.molten_trinium": "Molten Trinium",
   "fluid_type.gt6ce.molten_tungstentrioxide": "Molten Tungsten Trioxide",
-  "fluid_type.gt6ce.molten_vanadiummagnetite": "Molten Vanadium Magnetite"
+  "fluid_type.gt6ce.molten_vanadiummagnetite": "Molten Vanadium Magnetite",
+  "jade.gt6ce.multiblock.controller": "Controller: %s (%s, %s, %s)",
+  "jade.gt6ce.multiblock.unbound": "Structure: unformed (no linked controller)"
 }

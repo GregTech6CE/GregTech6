@@ -70,7 +70,7 @@ public final class StructureWatchIndex {
             var machine = tracker.machine();
             if (!(machine.structureDefinition() instanceof StructureDefinition.Declarative definition)
                     || !definition.declaredFootprint(machine).contains(pos)) continue;
-            CompiledPattern pattern = definition.compile(LayoutStructures.facing(entity));
+            CompiledPattern pattern = StructurePlan.compile(machine);
             if (pattern == null) continue;
             BlockPos offset = pos.subtract(entity.getBlockPos());
             boolean[] matches = {false};

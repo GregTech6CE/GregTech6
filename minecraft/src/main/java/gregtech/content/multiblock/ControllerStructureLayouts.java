@@ -1,99 +1,50 @@
 package gregtech.content.multiblock;
 
-import gregtech.content.registry.GTMultiblocks;
+import gregtech.engine.multiblock.tracking.*;
+import java.util.*;
 import net.minecraft.core.*;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import java.util.*;
 
-/** Controller preview geometry; validation and tool building belong to each controller implementation. */
+/** Detached, world-free projections of the real controller definitions. No second geometry table. */
 public final class ControllerStructureLayouts {
     private ControllerStructureLayouts() {}
-    private static final class Registered {
-        static final Map<Block,Map<BlockPos,Block>> LAYOUTS=create();
-    }
-    public static Map<Block,Map<BlockPos,Block>> all(){return Registered.LAYOUTS;}
-    public static Map<BlockPos,Block> cells(Block controller){return all().get(controller);}
-    public static boolean matches(BlockEntity controller){
-        var level=controller.getLevel();if(level==null)return false;
-        var state=controller.getBlockState();var cells=cells(state.getBlock());if(cells==null)return false;
-        var front=state.hasProperty(DirectionalBlock.FACING)?state.getValue(DirectionalBlock.FACING)
-                :state.hasProperty(HorizontalDirectionalBlock.FACING)?state.getValue(HorizontalDirectionalBlock.FACING):Direction.NORTH;
-        for(var entry:cells.entrySet()){
-            var local=entry.getKey();
-            BlockPos pos;
-            if (state.getBlock() instanceof gregtech.content.block.machine.AxialGeneratorBlock)
-                pos=AxialStructureTransform.at(controller.getBlockPos(),front,local.getX(),local.getY(),local.getZ());
-            else if (state.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock tank
-                    && tank.valveSpec()!=null) {
-                int radius=tank.size()/2;
-                pos=controller.getBlockPos().relative(front.getOpposite(),radius)
-                        .offset(local.getX(),local.getY(),local.getZ()-radius);
-            } else pos=controller.getBlockPos().relative(front.getClockWise(),local.getX())
-                    .above(local.getY()).relative(front.getOpposite(),local.getZ());
-            if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(entry.getValue()))return false;
-        }
-        return true;
-    }
-    private static Map<Block,Map<BlockPos,Block>> create(){
-        var result=new LinkedHashMap<Block,Map<BlockPos,Block>>();
-        var coke=new LinkedHashMap<BlockPos,Block>();
-        for(var cell:LargeMachineLayouts.fromShared(OriginalCokeOvenRules.cells())) coke.put(new BlockPos(cell.right(),cell.up(),cell.back()),cell.block());
-        result.put(GTMultiblocks.COKE_OVEN_MAIN.get(),Map.copyOf(coke));
-        for (var valve : TankValveSpec.all())
-            result.put(LargeMachineParts.block(valve.originalId()), tank(valve));
-        for (var boiler : OriginalLargeBoilerSpecs.all())
-            result.put(LargeMachineParts.block(boiler.originalId()), boiler.previewCells());
-        result.put(GTMultiblocks.findPart(17302).get(),crucible(GTMultiblocks.FIRE_BRICKS.get()));
-        for (var variant : LargeCrucibleSpecs.all())
-            result.put(LargeMachineParts.block(variant.originalId()), crucible(variant.wall()));
-        result.put(LargeMachineParts.block(17996), vonDaGraagg());
-        result.put(LargeMachineParts.block(17998), OriginalHighTechControllerLayouts.lightningRod());
-        result.put(LargeMachineParts.block(17999), OriginalHighTechControllerLayouts.bedrockDrill());
 
-        for(boolean steam:new boolean[]{true,false})for(var entry:AxialGeneratorDefinitions.blocks(steam))
-            result.put(entry.get(),AxialGeneratorDefinitions.grade(entry.get()).cells());
-        for (int grade = 0; grade < 4; grade++) {
-            var originalSteam = LargeMachineParts.block(17211 + grade);
-            var originalDynamo = LargeMachineParts.block(17221 + grade);
-            result.put(originalSteam, AxialGeneratorDefinitions.grade(originalSteam).cells());
-            result.put(originalDynamo, AxialGeneratorDefinitions.grade(originalDynamo).cells());
-        }
-        var tower=new LinkedHashMap<BlockPos,Block>();
-        for(var cell:SharedDistillationTowerStructure.CELLS)tower.put(new BlockPos(cell.right(),cell.up(),cell.back()),cell.part()==18101?GTMultiblocks.HEAT_TRANSMITTER.get():GTMultiblocks.DISTILLATION_TOWER_PART.get());
-//? if >=1.21.1 {
-        /*result.put(gregtech.compat.jei.RecipeMachines.machine("distillation_tower_main"),Map.copyOf(tower));
-*///?} else {
-        result.put(GTMultiblocks.DISTILLATION_TOWER_MAIN.get(),Map.copyOf(tower));
-//?}
-        result.put(GTMultiblocks.CRYO_DISTILLATION_MAIN.get(),Map.copyOf(tower));
-        return Collections.unmodifiableMap(result);
-    }
-    private static Map<BlockPos,Block> hollow(Block wall,int radius,int minY,int maxY){
-        var cells=new LinkedHashMap<BlockPos,Block>();
-        for(var cell:SharedHollowControllerGeometry.cells(radius,minY,maxY))cells.put(new BlockPos(cell.x(),cell.y(),cell.z()),wall);
-        return Map.copyOf(cells);
-    }
-    /** Exact GT6 170xx hollow vessel: the same cells its runtime definition compiles. */
-    private static Map<BlockPos,Block> tank(TankValveSpec valve) {
-        var cells = new LinkedHashMap<BlockPos,Block>();
-        for (var cell : SpecialStructures.tankCells(valve.size(), valve.wall(), Direction.NORTH))
-            cells.put(new BlockPos(cell.dx(), cell.dy(), cell.dz()), SpecialStructures.previewBlock(cell.cell()));
-        return Map.copyOf(cells);
-    }
-    /** GT6 MultiTileEntityCrucible: the same cells its runtime definition compiles. */
-    private static Map<BlockPos,Block> crucible(Block wall) {
-        var cells = new LinkedHashMap<BlockPos,Block>();
-        for (var cell : SharedLargeCrucibleStructure.CELLS)
-            cells.put(new BlockPos(cell.x(), cell.y(), cell.z()), cell.air() ? Blocks.AIR : wall);
-        return Map.copyOf(cells);
+    private static int epoch = -1;
+    private static Map<Block, List<StructurePlan.Cell>> plans = Map.of();
+
+    public static void invalidate() {
+        epoch = -1;
+        plans = Map.of();
     }
 
-    /** GT6 17996: 41 base walls, a five-coil pole and the dense steel crown. */
-    private static Map<BlockPos,Block> vonDaGraagg() {
-        var cells = new LinkedHashMap<BlockPos,Block>();
-        for (var cell : VonDaGraaggRules.layout())
-            cells.put(new BlockPos(cell.x(), cell.y(), cell.z()), LargeMachineParts.block(cell.partId()));
-        return Map.copyOf(cells);
+    public static Map<Block, List<StructurePlan.Cell>> plans() {
+        if (epoch == StructureEpoch.get()) return plans;
+        var next = new LinkedHashMap<Block, List<StructurePlan.Cell>>();
+        for (var entry :
+                gregtech.content.registry.MultiblockRegistration.controllers().entrySet()) {
+            Block block = entry.getKey();
+            var tracked = entry.getValue();
+            var definition = tracked.structureDefinition();
+            if (definition.formsImmediately() || !(definition instanceof StructureDefinition.Declarative declarative))
+                continue;
+            var pattern = declarative.compile(Direction.NORTH);
+            if (pattern == null) continue;
+            // Do not retain detached controllers/inventories through the matchers in a client cache.
+            var cells = StructurePlan.minimum(pattern).stream()
+                    .map(cell -> new StructurePlan.Cell(cell.offset(), cell.specification(), null))
+                    .toList();
+            if (!cells.isEmpty()) next.put(block, cells);
+        }
+        plans = Collections.unmodifiableMap(next);
+        epoch = StructureEpoch.get();
+        return plans;
+    }
+
+    public static Map<BlockPos, Block> cells(Block controller) {
+        var plan = plans().get(controller);
+        if (plan == null) return null;
+        var cells = new LinkedHashMap<BlockPos, Block>();
+        for (var cell : plan) cells.put(cell.offset(), cell.specification().block());
+        return Collections.unmodifiableMap(cells);
     }
 }

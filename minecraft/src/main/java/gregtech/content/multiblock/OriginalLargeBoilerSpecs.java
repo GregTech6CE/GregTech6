@@ -1,13 +1,8 @@
 package gregtech.content.multiblock;
 
-import gregtech.content.registry.GTMultiblocks;
 import gregtech.engine.multiblock.MultiblockLayout;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 
 /** The five large steam boilers from GT6 Loader_MultiTileEntities 17201–17205. */
 public final class OriginalLargeBoilerSpecs {
@@ -27,22 +22,6 @@ public final class OriginalLargeBoilerSpecs {
 
         public long heatInputRecommended() {
             return steamOutput / 2;
-        }
-
-        public Map<BlockPos, Block> previewCells() {
-            var result = new LinkedHashMap<BlockPos, Block>();
-            for (var cell : LAYOUT.cells()) {
-                BlockPos local = new BlockPos(cell.right(), cell.up(), cell.back());
-                if (local.equals(BlockPos.ZERO)) continue;
-                result.put(
-                        local,
-                        switch (cell.role()) {
-                            case HEAT_INPUT -> GTMultiblocks.HEAT_TRANSMITTER.get();
-                            case AIR -> Blocks.AIR;
-                            default -> wall();
-                        });
-            }
-            return Map.copyOf(result);
         }
     }
 

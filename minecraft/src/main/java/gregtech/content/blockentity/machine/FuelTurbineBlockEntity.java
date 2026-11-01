@@ -25,7 +25,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         gregtech.engine.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
-            gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
+            gregtech.engine.multiblock.tracking.LayoutStructures.fuel(this);
 
     public FuelTurbineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -47,17 +47,6 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
         return definition;
     }
-    private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
-        var layout = trackedCells();
-        if (layout == null) return List.of();
-        var cells = new ArrayList<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell>(layout.size());
-        for (var cell : layout) {
-            var offset = cell.at(BlockPos.ZERO, front);
-            cells.add(new gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell(
-                    offset.getX(), offset.getY(), offset.getZ(), cell));
-        }
-        return cells;
-    }
     @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
         var layout = trackedCells();
         if (level == null || isRemoved() || layout == null) {
@@ -70,12 +59,20 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock())
                 parts.put(fixed.pos(), cell.role());
         }
+        for (var repeated : match.repeatPlaced()) {
+            var cell = repeated.cell();
+            if (cell.role() != MultiblockLayout.Role.AIR && !cell.plainBlock()) parts.put(repeated.pos(), cell.role());
+        }
         var claimed = gregtech.engine.multiblock.tracking.StructureClaims.update(this, bindings, parts,
                 pos -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
         if (claimed == gregtech.engine.multiblock.tracking.StructureClaims.Result.APPLIED)
-            gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front(), layout);
+            {
+                var placed = new ArrayList<LargeMachineLayouts.Placed>(match.repeatPlaced());
+                for (var fixed : match.fixedCells()) placed.add(new LargeMachineLayouts.Placed(fixed.cell(), fixed.pos()));
+                gregtech.content.multiblock.StructureDesigns.apply(level, placed);
+            }
         return claimed != gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED;
     }
     /** Placed housing parts stay bound while the machine is incomplete so a wand click keeps building. */

@@ -4,7 +4,6 @@ import gregtech.engine.multiblock.MultiblockLayout.Role;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.content.multiblock.ControllerStructureLayouts;
 //?}
 import gregtech.content.multiblock.LargeMachineLayouts;
 import net.minecraft.core.BlockPos;

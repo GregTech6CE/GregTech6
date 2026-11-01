@@ -57,6 +57,9 @@ public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRe
         }
     }
 
+    /** Starts validated horizontal character layers anchored at the controller. */
+    public static StructurePattern pattern(String name) { return StructurePattern.builder(name); }
+
     public static Builder builder(String name) { return new Builder(name); }
 
     public static final class Builder {

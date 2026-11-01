@@ -64,6 +64,7 @@ public final class ApiContracts {
         checkMaterialContracts();
         checkMachineFaceMaskContracts();
         checkStructureLayoutContracts();
+        StructurePatternContracts.check();
         checkWorldgenContracts();
         checkModDataContracts();
         checkLocaleContracts();
