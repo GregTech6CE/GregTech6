@@ -119,16 +119,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/activator_rail.json"
   },
-  "air": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "allay_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "amethyst_block": {
     "components": {
       "Amethyst": 5837832000
@@ -234,11 +224,6 @@
     },
     "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
-  },
-  "axolotl_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "baked_potato": {
     "components": {
@@ -384,22 +369,12 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/barrel.json"
   },
-  "barrier": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "basalt": {
     "components": {
       "Basalt": 5837832000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "bat_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "beacon": {
     "components": {
@@ -409,16 +384,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2525"
-  },
-  "bedrock": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "bee_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "beef": {
     "components": {
@@ -659,11 +624,6 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "blaze_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "blue_candle": {
     "components": {
@@ -969,11 +929,6 @@
     "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
-  "camel_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "campfire": {
     "components": {
       "Coal": 648648000,
@@ -997,11 +952,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cartography_table.json"
   },
-  "cat_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "cauldron": {
     "components": {
       "Iron": 4540536000
@@ -1009,22 +959,12 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2509"
   },
-  "cave_spider_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "chain": {
     "components": {
       "Iron": 792792000
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chain.json"
-  },
-  "chain_command_block": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "chainmail_boots": {
     "components": {
@@ -1223,11 +1163,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2591"
   },
-  "chicken_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "chipped_anvil": {
     "components": {
       "Iron": 16216200000
@@ -1420,21 +1355,6 @@
     "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
-  "cod_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "command_block": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "command_block_minecart": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "comparator": {
     "components": {
       "NetherQuartz": 648648000,
@@ -1552,11 +1472,6 @@
     "recoverable": true,
     "source": "1.20.1 material family"
   },
-  "cow_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "cracked_deepslate_bricks": {
     "components": {
       "Deepslate": 5837832000
@@ -1612,11 +1527,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "creeper_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "crimson_button": {
     "components": {
@@ -2070,11 +1980,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "debug_stick": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "decorated_pot": {
     "components": {
       "Brick": 2594592000
@@ -2378,16 +2283,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2587"
   },
-  "dolphin_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "donkey_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "dragon_breath": {
     "components": {
       "Glass": 648648000
@@ -2410,22 +2305,12 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2588"
   },
-  "drowned_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "dune_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "elder_guardian_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "emerald": {
     "components": {
@@ -2471,11 +2356,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2526"
   },
-  "end_portal_frame": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "end_stone": {
     "components": {
       "Endstone": 5837832000
@@ -2519,11 +2399,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2527"
   },
-  "ender_dragon_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "ender_eye": {
     "components": {
       "EnderEye": 648648000
@@ -2537,21 +2412,6 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "enderman_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "endermite_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "evoker_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "experience_bottle": {
     "components": {
@@ -2683,22 +2543,12 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2480"
   },
-  "fox_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "friend_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "frog_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "furnace": {
     "components": {
@@ -2714,11 +2564,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/furnace_minecart.json"
-  },
-  "ghast_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "gilded_blackstone": {
     "components": {
@@ -2762,11 +2607,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "glow_squid_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "glowstone": {
     "components": {
       "Glowstone": 2594592000
@@ -2780,11 +2620,6 @@
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "goat_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "gold_block": {
     "components": {
@@ -3073,11 +2908,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/grindstone.json"
   },
-  "guardian_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "gunpowder": {
     "components": {
       "Gunpowder": 648648000
@@ -3112,11 +2942,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2512"
-  },
-  "hoglin_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "honey_block": {
     "components": {
@@ -3183,11 +3008,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "horse_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "host_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
@@ -3201,11 +3021,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "husk_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "ice": {
     "components": {
@@ -3320,11 +3135,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/iron_door.json"
   },
-  "iron_golem_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "iron_helmet": {
     "components": {
       "Iron": 3243240000
@@ -3427,11 +3237,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2575"
-  },
-  "jigsaw": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "jukebox": {
     "components": {
@@ -3551,11 +3356,6 @@
     },
     "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
-  },
-  "knowledge_book": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "ladder": {
     "components": {
@@ -3691,11 +3491,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2529"
-  },
-  "light": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "light_blue_candle": {
     "components": {
@@ -3873,11 +3668,6 @@
     "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
-  "llama_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "loom": {
     "components": {
       "Wood": 1297296000
@@ -3933,11 +3723,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
-  },
-  "magma_cube_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "mangrove_boat": {
     "components": {
@@ -4099,11 +3884,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "mooshroom_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "mossy_cobblestone": {
     "components": {
       "Stone": 5837832000
@@ -4166,11 +3946,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "mule_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "mushroom_stem": {
     "components": {
@@ -4532,11 +4307,6 @@
     "recoverable": true,
     "source": "1.20.1 material family"
   },
-  "ocelot_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "orange_candle": {
     "components": {
       "WaxBee": 648648000
@@ -4628,22 +4398,12 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2574"
   },
-  "panda_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "paper": {
     "components": {
       "Paper": 648648000
     },
     "recoverable": true,
     "source": "1.20.1 material family"
-  },
-  "parrot_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "petrified_oak_slab": {
     "components": {
@@ -4659,16 +4419,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "phantom_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "pig_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "piglin_banner_pattern": {
     "components": {
       "Paper": 648648000
@@ -4676,27 +4426,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "piglin_brute_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "piglin_head": {
     "components": {
       "Bone": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "piglin_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "pillager_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "pink_candle": {
     "components": {
@@ -4775,11 +4510,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "polar_bear_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "polished_andesite": {
     "components": {
@@ -5073,11 +4803,6 @@
     "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
-  "pufferfish_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "purple_candle": {
     "components": {
       "WaxBee": 648648000
@@ -5191,11 +4916,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "rabbit_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "rail": {
     "components": {
       "Iron": 243243000,
@@ -5210,11 +4930,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "ravager_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "raw_copper": {
     "components": {
@@ -5395,11 +5110,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/repeater.json"
   },
-  "repeating_command_block": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "respawn_anchor": {
     "components": {
       "Glowstone": 7783776000,
@@ -5446,11 +5156,6 @@
     },
     "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
-  },
-  "salmon_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "sand": {
     "components": {
@@ -5550,11 +5255,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2459"
   },
-  "sheep_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "shelter_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
@@ -5570,11 +5270,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/shield.json"
   },
-  "shulker_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "silence_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
@@ -5582,27 +5277,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "silverfish_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "skeleton_horse_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "skeleton_skull": {
     "components": {
       "Bone": 5837832000
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2473"
-  },
-  "skeleton_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "skull_banner_pattern": {
     "components": {
@@ -5624,11 +5304,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "slime_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "small_amethyst_bud": {
     "components": {
@@ -5737,11 +5412,6 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2537"
   },
-  "sniffer_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "snort_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
@@ -5769,11 +5439,6 @@
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2468"
-  },
-  "snow_golem_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "snowball": {
     "components": {
@@ -5817,11 +5482,6 @@
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "spider_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "spire_armor_trim_smithing_template": {
     "components": {
@@ -5956,11 +5616,6 @@
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/spyglass.json"
   },
-  "squid_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "stick": {
     "components": {
       "Wood": 324324000
@@ -6086,16 +5741,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/stonecutter.json"
-  },
-  "stray_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "strider_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "stripped_acacia_log": {
     "components": {
@@ -6244,16 +5889,6 @@
     "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
-  "structure_block": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "structure_void": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "sugar": {
     "components": {
       "Sugar": 648648000
@@ -6282,11 +5917,6 @@
     "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
-  "tadpole_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "target": {
     "components": {
       "Redstone": 2594592000,
@@ -6294,11 +5924,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/target.json"
-  },
-  "template_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "terracotta": {
     "components": {
@@ -6338,11 +5963,6 @@
     },
     "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/tnt_minecart.json"
-  },
-  "trader_llama_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "trapped_chest": {
     "components": {
@@ -6384,11 +6004,6 @@
     "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
-  "tropical_fish_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "tube_coral": {
     "components": {
       "CaCO3": 648648000
@@ -6417,11 +6032,6 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "turtle_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "vex_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
@@ -6429,37 +6039,12 @@
     "recoverable": false,
     "source": "1.20.1 material family"
   },
-  "vex_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "villager_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "vindicator_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "wandering_trader_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "ward_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "warden_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "warped_button": {
     "components": {
@@ -6793,32 +6378,12 @@
     "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
-  "witch_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "wither_skeleton_skull": {
     "components": {
       "Bone": 5837832000
     },
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2472"
-  },
-  "wither_skeleton_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "wither_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "wolf_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   },
   "wooden_axe": {
     "components": {
@@ -6918,36 +6483,11 @@
     "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
-  "zoglin_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
   "zombie_head": {
     "components": {
       "Bone": 648648000
     },
     "recoverable": false,
     "source": "1.20.1 material family"
-  },
-  "zombie_horse_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "zombie_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "zombie_villager_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
-  },
-  "zombified_piglin_spawn_egg": {
-    "components": {},
-    "recoverable": false,
-    "source": "Minecraft technical/entity item: no recoverable bulk material"
   }
 }
