@@ -106,7 +106,7 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.fill", data.getInt(NBT_FILL)));
         }
         if (data.getBoolean(NBT_WARNING)) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.warning"));
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.warning").withStyle(net.minecraft.ChatFormatting.RED));
         }
         for (var entry : data.getList(NBT_CONTENT, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             var row = (CompoundTag) entry;

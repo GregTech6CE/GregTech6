@@ -8,8 +8,8 @@
         "up": "gt6ce:block/machines/generators/burning_gas/colored/top",
         "north": "gt6ce:block/machines/generators/burning_gas/colored/left",
         "south": "gt6ce:block/machines/generators/burning_gas/colored/right",
-        "west": "gt6ce:block/machines/generators/burning_gas/colored/front",
-        "east": "gt6ce:block/machines/generators/burning_gas/colored/back"
+        "west": "gt6ce:block/machines/generators/burning_gas/colored/back",
+        "east": "gt6ce:block/machines/generators/burning_gas/colored/front"
       },
       "elements": [
         {
@@ -66,8 +66,8 @@
         "up": "gt6ce:block/machines/generators/burning_gas/overlay/top",
         "north": "gt6ce:block/machines/generators/burning_gas/overlay/left",
         "south": "gt6ce:block/machines/generators/burning_gas/overlay/right",
-        "west": "gt6ce:block/machines/generators/burning_gas/overlay/front",
-        "east": "gt6ce:block/machines/generators/burning_gas/overlay/back"
+        "west": "gt6ce:block/machines/generators/burning_gas/overlay/back",
+        "east": "gt6ce:block/machines/generators/burning_gas/overlay/front"
       },
       "elements": [
         {

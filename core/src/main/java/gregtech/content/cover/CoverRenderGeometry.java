@@ -26,6 +26,16 @@ public final class CoverRenderGeometry {
                 box.minX() + x, box.minY() + y, box.minZ() + z, box.maxX() - x, box.maxY() - y, box.maxZ() - z);
     }
 
+    /** A four-pixel pipe can share all four lateral planes with a valve; inset only the rendered knob. */
+    public static CoverPlateGeometry.Box valve(int side) {
+        var box = CoverPlateGeometry.valve(side);
+        double x = side >= 4 ? 0 : HOLDER_INSET;
+        double y = side < 2 ? 0 : HOLDER_INSET;
+        double z = side >= 2 && side < 4 ? 0 : HOLDER_INSET;
+        return new CoverPlateGeometry.Box(
+                box.minX() + x, box.minY() + y, box.minZ() + z, box.maxX() - x, box.maxY() - y, box.maxZ() - z);
+    }
+
     /** Give shared edge/corner volume to the lower side ordinal, without changing physical boxes.
      * Outward art is still full-sized; this only partitions the independently drawn backing cuboids.
      */

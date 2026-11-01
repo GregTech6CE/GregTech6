@@ -25,7 +25,8 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         gregtech.content.logistics.LogisticsCoverHost,
         gregtech.engine.machine.ITileEntityCrucible,
         gregtech.engine.multiblock.BoundMachinePort,
-        gregtech.engine.fluid.FluidToolTarget, MultiblockToolTarget {
+        gregtech.engine.fluid.FluidToolTarget, MultiblockToolTarget,
+        gregtech.api.platform.machine.MachineControl.Provider {
     private final gregtech.content.logistics.LogisticsCovers covers =
             new gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;
@@ -62,6 +63,15 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         if(isRemoved() || level==null || ownerPos==null || !level.hasChunkAt(ownerPos)) return null;
         var entity = level.getBlockEntity(ownerPos);
         return entity instanceof MultiblockPortOwner owner && !entity.isRemoved() ? owner : null;
+    }
+    public boolean hasFormedController() {
+        var target = owner();
+        return target != null && target.isStructureOk();
+    }
+    @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
+        var target = owner();
+        return target instanceof net.minecraft.world.level.block.entity.BlockEntity entity && target.isStructureOk()
+                ? gregtech.api.platform.machine.MachineControl.find(entity, side) : null;
     }
     /** Original SensorTE reads the cached controller directly, preserving the measured side.
      * This does not expose an item/fluid transport capability or bypass its role restrictions. */
@@ -166,6 +176,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         try {
             if (level instanceof ServerLevel server && !WorldStructureClaims.claim(server, worldPosition, owner)) return;
             this.controller=owner.immutable(); this.role=role;
+            gregtech.engine.multiblock.tracking.ClientFormedSync.send(this);
 //? if >=1.21.1 {
             /*updateCrucibleVisual(owner() instanceof gregtech.engine.multiblock.CrucibleStructureOwner);
 *///?} else {
@@ -208,6 +219,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             try {
                 controller = null;
                 role = null;
+                gregtech.engine.multiblock.tracking.ClientFormedSync.send(this);
                 updateCrucibleVisual(false);
                 restoreStructureDesign();
             } finally {
@@ -286,6 +298,13 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     }
 
     private void loadDesign(net.minecraft.nbt.CompoundTag tag) {
+        // Client preview only; server ownership is always rebuilt from structure claims.
+        if ((level == null || level.isClientSide) && tag.contains("gt.port_sync")) {
+            controller = tag.contains("gt.port_controller") ? BlockPos.of(tag.getLong("gt.port_controller")) : null;
+            role = null;
+            for (var candidate : MultiblockLayout.Role.values())
+                if (candidate.name().equals(tag.getString("gt.port_role"))) role = candidate;
+        }
         design = tag.contains("gt.design") ? tag.getByte("gt.design") & 255 : 0;
         designHeld = tag.getBoolean("gt.design_held");
         designSaved = designHeld && tag.contains("gt.design_saved") ? tag.getByte("gt.design_saved") & 255 : 0;
@@ -352,7 +371,12 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     @Override public long doInject(GregTechTags.Tag t,Direction side,long size,long amount,boolean execute) {var o=owner();return o!=null&&o.isStructureOk()?o.injectPortEnergy(role,t,size,amount,execute):0;}
 
 //? if >=1.21.1 {
-/*    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+/*    @Override public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+        var tag = super.getUpdateTag(lookup);
+        writeClientBinding(tag);
+        return tag;
+    }
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
     @Override public void onDataPacket(net.minecraft.network.Connection net,
@@ -365,6 +389,11 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                 .with(DESIGN, design).build();
     }
 *///?} else {
+    @Override public net.minecraft.nbt.CompoundTag getUpdateTag() {
+        var tag = super.getUpdateTag();
+        writeClientBinding(tag);
+        return tag;
+    }
     @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
@@ -377,4 +406,12 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                 .with(DESIGN, design).build();
     }
 //?}
+    private void writeClientBinding(net.minecraft.nbt.CompoundTag tag) {
+        tag.putBoolean("gt.port_sync", true);
+        if (controller != null && role != null) {
+            tag.putLong("gt.port_controller", controller.asLong());
+            tag.putString("gt.port_role", role.name());
+        }
+    }
+
 }

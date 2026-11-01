@@ -8,8 +8,8 @@
         "up": "gt6ce:block/machines/generators/burning_fluidbed/colored/top",
         "north": "gt6ce:block/machines/generators/burning_fluidbed/colored/right",
         "south": "gt6ce:block/machines/generators/burning_fluidbed/colored/left",
-        "west": "gt6ce:block/machines/generators/burning_fluidbed/colored/back",
-        "east": "gt6ce:block/machines/generators/burning_fluidbed/colored/front"
+        "west": "gt6ce:block/machines/generators/burning_fluidbed/colored/front",
+        "east": "gt6ce:block/machines/generators/burning_fluidbed/colored/back"
       },
       "elements": [
         {
@@ -66,8 +66,8 @@
         "up": "gt6ce:block/machines/generators/burning_fluidbed/overlay/top",
         "north": "gt6ce:block/machines/generators/burning_fluidbed/overlay/right",
         "south": "gt6ce:block/machines/generators/burning_fluidbed/overlay/left",
-        "west": "gt6ce:block/machines/generators/burning_fluidbed/overlay/back",
-        "east": "gt6ce:block/machines/generators/burning_fluidbed/overlay/front"
+        "west": "gt6ce:block/machines/generators/burning_fluidbed/overlay/front",
+        "east": "gt6ce:block/machines/generators/burning_fluidbed/overlay/back"
       },
       "elements": [
         {

@@ -209,6 +209,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
             level.setBlock(worldPosition,state.setValue(BasicMachineBlock.RUNNING,active).setValue(BasicMachineBlock.LIT,running),3);
     }
     @Override public boolean isRunning(){return running;}
+    @Override public double getProgressFraction(){return duration>0?Math.max(0,Math.min(1,(double)progress/duration)):0;}
     @Override public int getProgressPercent(){return duration>0?(int)Math.min(100,100.0*progress/duration):0;}
     public long chargeRemaining(){return chargeRemaining;}
     public long outputEU(){return outputEU;}

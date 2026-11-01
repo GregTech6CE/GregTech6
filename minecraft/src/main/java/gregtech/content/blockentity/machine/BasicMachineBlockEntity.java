@@ -1340,10 +1340,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) loadCovers(pkt.getTag(),lookup);
+        if (pkt.getTag() != null) handleUpdateTag(pkt.getTag(),lookup);
 *///?} else {
                              net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) loadCovers(pkt.getTag());
+        if (pkt.getTag() != null) handleUpdateTag(pkt.getTag());
 //?}
 
     }

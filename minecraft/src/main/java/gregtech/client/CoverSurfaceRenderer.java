@@ -94,7 +94,7 @@ final class CoverSurfaceRenderer {
      *  face and the side texture on the lateral faces. The face toward the host interior stays open. */
     static void valve(PoseStack pose, VertexConsumer vertices, Direction side,
                       TextureAtlasSprite front, TextureAtlasSprite body, int light) {
-        var box = gregtech.content.cover.CoverPlateGeometry.valve(side.ordinal());
+        var box = gregtech.content.cover.CoverRenderGeometry.valve(side.ordinal());
         for (Direction face : Direction.values()) {
             if (face == side.getOpposite()) continue;
             boolean outward = face == side;

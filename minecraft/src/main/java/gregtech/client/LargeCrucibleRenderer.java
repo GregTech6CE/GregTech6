@@ -26,7 +26,7 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
                     CrucibleContentIcons.surfaceTint(material, appearance, be.getLevel(), surface),
                     top, -0.999F, -0.999F, 1.999F, 1.999F, light);
         } else {
-            SmeltingCrucibleRenderer.drawTop(pose, buffers, CrucibleContentIcons.SOLID_GRAY_BASE,
+            SmeltingCrucibleRenderer.drawFluidTop(pose, buffers, CrucibleContentIcons.SOLID_GRAY_BASE,
                     CrucibleContentIcons.solidGrayTint(), top,
                     -0.999F, -0.999F, 1.999F, 1.999F, packedLight);
         }
