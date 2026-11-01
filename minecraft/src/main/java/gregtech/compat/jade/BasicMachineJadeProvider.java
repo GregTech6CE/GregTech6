@@ -168,7 +168,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                 tooltip.add(Component.translatable("jade.gt6ce.machine.recipe_outputs").withStyle(net.minecraft.ChatFormatting.GRAY));
             renderItems(tooltip, accessor, data.getList(role + "Items", 10));
             if (role.equals("pending") && data.getInt("more") > 0) line(tooltip, "more_pending", data.getInt("more"));
-            renderFluids(tooltip, accessor, data.getList(role + "Fluids", 10));
+            renderFluids(tooltip, accessor, data.getList(role + "Fluids", 10), role.equals("pending"));
             if (role.equals("pending") && (!data.getList("pendingItems", 10).isEmpty()
                     || !data.getList("pendingFluids", 10).isEmpty()))
                 tooltip.add(snownee.jade.api.ui.IElementHelper.get().spacer(0, 9));
@@ -237,7 +237,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         summary.render(tooltip);
     }
 
-    private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, ListTag fluids) {
+    private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, ListTag fluids, boolean predicted) {
         if (fluids.isEmpty()) return;
         for (int i = 0; i < fluids.size(); i++) {
             var row = fluids.getCompound(i);
@@ -247,6 +247,15 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             var fluid = FluidStack.loadFluidStackFromNBT(row.getCompound("stack"));
 //?}
             if (fluid.isEmpty()) continue;
+            if (predicted) {
+                var helper = snownee.jade.api.ui.IElementHelper.get();
+                tooltip.add(helper.fluid(JadeFluidObject.of(fluid.getFluid(), row.getLong("amount")))
+                        .size(new net.minecraft.world.phys.Vec2(10, 10)));
+                tooltip.append(helper.spacer(3, 0));
+                tooltip.append(Component.literal(row.getLong("amount") + gregtech.engine.fluid.FluidUnits.unit() + " "
+                        + fluid.getDisplayName().getString()).withStyle(net.minecraft.ChatFormatting.GRAY));
+                continue;
+            }
             var view = JadeBars.readFluid(FluidView.writeDefault(
                     JadeFluidObject.of(fluid.getFluid(), row.getLong("amount")), row.getLong("capacity")));
             if (view != null) tooltip.add(JadeBars.fluid(view, view.overrideText != null ? view.overrideText
