@@ -41,6 +41,13 @@ public final class MoltenMaterialUnits {
         public int millibuckets(long units) {
             return units <= 0 ? 0 : (int) Math.min(Integer.MAX_VALUE, units / unitsPerMillibucket());
         }
+
+        /** A complete casting charge consumes the next whole mB, as in GT6's mold fill. */
+        public long castingMillibuckets(long units) {
+            if (units <= 0) return 0;
+            long scale = unitsPerMillibucket();
+            return units / scale + (units % scale == 0 ? 0 : 1);
+        }
     }
 
     /** Direct material APIs represent the canonical primary molten phase. */
