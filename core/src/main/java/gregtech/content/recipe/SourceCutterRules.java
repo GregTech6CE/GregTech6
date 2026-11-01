@@ -27,8 +27,8 @@ public final class SourceCutterRules {
 
     public record Decision(boolean allowed, long ticks, int fluidAmount, boolean sourceProfile) {}
     // Spectral dew is retired; the remaining entries follow the source loop order.
-    private static final List<Coolant> COOLANTS = List.of(
-            new Coolant("Water", 4), new Coolant("DistW", 3), new Coolant("Lubricant", 1));
+    private static final List<Coolant> COOLANTS =
+            List.of(new Coolant("Water", 4), new Coolant("DistW", 3), new Coolant("Lubricant", 1));
 
     public static List<Coolant> sourceCoolants() {
         return COOLANTS;
