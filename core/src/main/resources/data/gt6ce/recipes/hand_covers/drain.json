@@ -8,7 +8,7 @@
   ],
   "key": {
     "R": {
-      "tag": "forge:rods/iron"
+      "tag": "gt6ce:technology/any_iron_rod"
     },
     "w": {
       "item": "gt6ce:tool_wrench"

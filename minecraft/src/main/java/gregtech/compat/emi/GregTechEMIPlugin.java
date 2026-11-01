@@ -70,6 +70,10 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                     dev.emi.emi.api.stack.Comparison.compareData(
                             stack -> gregtech.engine.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));
         var candidates = new EmiItemCandidates();
+        // Cans of the same size/food share recipes even when packing gives them a flavour name.
+        for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM)
+            if (item instanceof gregtech.content.item.CannedFoodItem)
+                registry.setDefaultComparison(item, dev.emi.emi.api.stack.Comparison.compareData(stack -> ""));
         ToolAssemblyEmiRecipe.register(registry, candidates);
         MoldChiselEmiRecipe.register(registry);
         LootEmiRecipe.register(registry);

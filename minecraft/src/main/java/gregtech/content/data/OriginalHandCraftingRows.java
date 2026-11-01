@@ -35,6 +35,7 @@ public final class OriginalHandCraftingRows {
         crystalChargersAndItemBarrels(data);
         rods(data);
         finishRawToolHeads(data);
+        circularSawBlades(data);
         machineCasings(data);
         woodenBuckets(data);
         woodenClubs(data);
@@ -144,6 +145,27 @@ public final class OriginalHandCraftingRows {
                 register(recipes, "raw_tool_heads/" + raw.getRegistryName() + "/"
                                 + MaterialEquivalence.materialName(material),
                         new String[]{"X ", " f"}, Map.of('X', gregtech.content.recipe.CraftingMaterialForms.ingredient(input), 'f', file), output);
+            }
+        }
+    }
+
+    /** Four plates or curved plates, worked with wrench, hammer, file and wire cutters. */
+    private static void circularSawBlades(Map<ResourceLocation, byte[]> recipes) {
+        var coated = Set.of("WoodTreated", "WoodPolished", "GildedIron", "SteelGalvanized", "NetherizedDiamond");
+        for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
+            if (!material.isValid() || material.resolve() != material
+                    || material.has(gregtech.api.material.MaterialProperty.ANTIMATTER)
+                    || coated.contains(material.getName().replace(" ", ""))) continue;
+            var output = GTItems.getStack(MaterialPrefix.toolHeadBuzzSaw, material, 1);
+            if (output.isEmpty()) continue;
+            for (var prefix : List.of(MaterialPrefix.plate, MaterialPrefix.plateCurved)) {
+                var plate = GTItems.getStack(prefix, material, 1);
+                if (plate.isEmpty()) continue;
+                register(recipes, "buzzsaw/" + prefix.getRegistryName() + "/" + MaterialEquivalence.materialName(material),
+                        new String[]{"wPh", "P P", "fPx"},
+                        Map.of('P', gregtech.content.recipe.CraftingMaterialForms.ingredient(plate),
+                                'w', requiredTool(GTToolType.WRENCH), 'h', requiredTool(GTToolType.HARD_HAMMER),
+                                'f', requiredTool(GTToolType.FILE), 'x', requiredTool(GTToolType.WIRE_CUTTER)), output);
             }
         }
     }

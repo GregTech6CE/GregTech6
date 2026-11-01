@@ -96,9 +96,9 @@ public final class MortarGrindingRecipes {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
             // small rocks only require ANTIMATTER.NOT, not MORTAR.
             grind(material, "rockGt");
-            if (!MaterialWorkability.isMortarGrindable(material)) continue;
+            if (!gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material)) continue;
             for (String row : PLAIN_ROWS) grind(material, row);
-            boolean brittleOrFood = MaterialWorkability.isBrittle(material) || MaterialWorkability.isFood(material);
+            boolean brittleOrFood = gregtech.content.material.MaterialProcessingProperties.isBrittle(material) || MaterialWorkability.isFood(material);
             for (String[] row : GEM_ROWS) {
                 if (brittleOrFood || GTItems.getStack(prefixOf(row[1]), material, 1).isEmpty()) grind(material, row[0]);
             }

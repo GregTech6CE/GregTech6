@@ -22,6 +22,7 @@ public final class TechnologyIngredients {
             new Family("any_steel_bolt", MaterialPrefix.bolt, MaterialGroups.Steel),
             new Family("any_iron_gear", MaterialPrefix.gearGt, MaterialGroups.Iron),
             new Family("any_iron_rod", MaterialPrefix.stick, MaterialGroups.Iron),
+            new Family("any_iron_rotor", MaterialPrefix.rotor, MaterialGroups.Iron),
             new Family("any_iron_long_rod", MaterialPrefix.stickLong, MaterialGroups.Iron),
             new Family("any_iron_plate", MaterialPrefix.plate, MaterialGroups.Iron),
             new Family("any_iron_double_plate", MaterialPrefix.plateDouble, MaterialGroups.Iron),
@@ -43,6 +44,46 @@ public final class TechnologyIngredients {
             new Family("any_wood_bolt", MaterialPrefix.bolt, MaterialGroups.Wood),
             new Family("any_phosphorus_dust", MaterialPrefix.dust, MaterialGroups.Phosphorus),
             new Family("any_phosphorus_dust_small", MaterialPrefix.dustSmall, MaterialGroups.Phosphorus));
+    private static final java.util.Set<String> PISTON_METALS = java.util.Set.of(
+            "Alumite",
+            "Aluminium",
+            "AluminiumAlloy",
+            "Bronze",
+            "Nickel",
+            "Invar",
+            "Titanium",
+            "Tungsten",
+            "Thaumium",
+            "VoidMetal",
+            "HSLASpringSteel",
+            "IronWood",
+            "Magnalium",
+            "Ultimet",
+            "Manasteel",
+            "Terrasteel",
+            "Elvorium",
+            "Mauftrium",
+            "Duranium",
+            "Tritanium",
+            "Syrmorite");
+
+    public static boolean pistonIngot(MaterialPrefix prefix, GTMaterial material) {
+        if (prefix != MaterialPrefix.ingot) return false;
+        for (var group : List.of(MaterialGroups.Fe, MaterialGroups._Steel, MaterialGroups._Bronze))
+            if (group.getReRegistrations().stream().anyMatch(m -> m.resolve() == material.resolve())) return true;
+        return PISTON_METALS.stream()
+                .map(gregtech.content.recipe.generated.GTMaterialFields::materialOf)
+                .filter(java.util.Objects::nonNull)
+                .anyMatch(name -> name.equals(material.resolve().getName()));
+    }
+
+    public static boolean craftingRedstone(MaterialPrefix prefix, GTMaterial material) {
+        String name = material.resolve().getName(), form = prefix.getName();
+        if (name.equals("Redstone") && (form.equals("oreRaw") || form.equals("gemFlawless"))) return true;
+        return (name.equals("Redstone") || name.equals("Redstonia"))
+                && java.util.Set.of("gem", "dust", "plate", "plateGem").contains(form);
+    }
+
     /** MultiItemTechnological:791-806 / LoaderOreDictReRegistrations:348-365: high USB tiers pay lower tiers. */
     public static List<String> usbTags(String id) {
         var tags = new java.util.ArrayList<String>();

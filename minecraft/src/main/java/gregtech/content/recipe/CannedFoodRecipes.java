@@ -62,9 +62,9 @@ public final class CannedFoodRecipes {
     }
     private static int pack(ItemStack input,String id,String name) {
 //? if >=1.21.1 {
-        /*var output=can(id,1); output.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,Component.literal(name));
+        /*var output=can(id,1); output.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,Component.translatable("item.gt6ce." + name.toLowerCase(java.util.Locale.ROOT).replace(" ", "_")));
 *///?} else {
-        var output=can(id,1); output.setHoverName(Component.literal(name));
+        var output=can(id,1); output.setHoverName(Component.translatable("item.gt6ce." + name.toLowerCase(java.util.Locale.ROOT).replace(" ", "_")));
 //?}
         return MachineRecipeMaps.Canner.addRecipe2(false,16,16,input,can("empty_food_can",1),output)!=null?1:0;
     }

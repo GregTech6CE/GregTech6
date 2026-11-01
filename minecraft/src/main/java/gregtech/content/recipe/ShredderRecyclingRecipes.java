@@ -59,7 +59,14 @@ public final class ShredderRecyclingRecipes {
         for (String name : RecyclablePrefixes.NAMES) {
             MaterialPrefix prefix = PrefixRegistry.byName(name);
             if (prefix == null) {
-                missing.add(name);
+                var blockPrefix = java.util.Optional.ofNullable(gregtech.content.data.MaterialPrefixes.all().get(name))
+                        .map(gregtech.content.data.MaterialPrefixes.Entry::getBlockDelegate).orElse(null);
+                if (blockPrefix == null) missing.add(name);
+                else for (var material : GTMaterialRegistry.allMaterials()) {
+                    if (material.has(MaterialProperty.ANTIMATTER)) continue;
+                    var input = gregtech.content.registry.GTBlocks.getStack(blockPrefix, material);
+                    recycle(material, name, blockPrefix.getMaterialWeight(), input);
+                }
                 continue;
             }
             for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
@@ -85,17 +92,20 @@ public final class ShredderRecyclingRecipes {
 
     private static void recycle(GTMaterial material, MaterialPrefix prefix) {
         ItemStack input = GTItems.getStack(prefix, material, 1);
+        recycle(material, prefix.getName(), prefix.getMaterialWeight(), input);
+    }
+
+    private static void recycle(GTMaterial material, String name, long units, ItemStack input) {
         if (input.isEmpty()) return;
-        long units = prefix.getMaterialWeight();
         ItemStack output = MortarGrindingRecipes.pulverize(material, units);
         if (output.isEmpty()) return;                                       // GT6's no-dust family is a no-op
         // Two GT6 passes: multiplier 256 for hard materials, 16 for MORTAR grindable ones.
-        long multiplier = MaterialWorkability.isMortarGrindable(material) ? 16 : 256;
+        long multiplier = gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material) ? 16 : 256;
         long duration = Math.max(1, (units * multiplier * (material.getToolQuality() + 1)
                 + GTValues.U - 1) / GTValues.U);
         Recipe recipe = MachineRecipeMaps.Shredder.addRecipe1(true, 16, duration, input, output);
         if (recipe != null) {
-            ENTRIES.add(new Entry(prefix.getName(), recipe));
+            ENTRIES.add(new Entry(name, recipe));
         }
     }
 }

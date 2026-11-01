@@ -8,10 +8,10 @@
   ],
   "key": {
     "R": {
-      "tag": "forge:rods/iron"
+      "tag": "gt6ce:technology/any_iron_rod"
     },
     "X": {
-      "item": "gt6ce:rotor_iron"
+      "tag": "gt6ce:technology/any_iron_rotor"
     }
   },
   "result": {

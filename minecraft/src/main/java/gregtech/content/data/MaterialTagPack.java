@@ -83,6 +83,8 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
         add(tags,"gt6ce","items","ammunition/sticks_wood","minecraft:stick");
 //?}
+        add(tags,"gt6ce","items","technology/piston_ingots","minecraft:iron_ingot");
+        add(tags,"gt6ce","items","technology/redstone","minecraft:redstone");
         // Vanilla sticks are the source Wood stick even before material-link bootstrap finishes.
         add(tags,"gt6ce","items","molds/forms/stick/anywoodplastic","minecraft:stick");
         add(tags,"forge","items","clay_balls","minecraft:clay_ball");
@@ -121,6 +123,10 @@ public final class MaterialTagPack extends AbstractPackResources {
                 add(tags,"minecraft","items","music_discs",id.toString());
             var form=registeredForm(item);
             if(form!=null) {
+                if (gregtech.content.recipe.TechnologyIngredients.pistonIngot(form.prefix(), form.material()))
+                    add(tags,"gt6ce","items","technology/piston_ingots",id.toString());
+                if (gregtech.content.recipe.TechnologyIngredients.craftingRedstone(form.prefix(), form.material()))
+                    add(tags,"gt6ce","items","technology/redstone",id.toString());
                 for(var moldForm:moldForms.getOrDefault(form.prefix().getName(),java.util.List.of()))
                     if(moldForm.accepts(form.prefix(),form.material()))
                         add(tags,"gt6ce","items",moldForm.tag(),id.toString());
@@ -549,10 +555,10 @@ public final class MaterialTagPack extends AbstractPackResources {
         });
         var gson=new com.google.gson.Gson(); var result=new HashMap<ResourceLocation,byte[]>();
 //? if >=1.21.1 {
-        /*tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,compatibleValues(path,values,aliases)))).getBytes(StandardCharsets.UTF_8)));
+        /*tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,preferredIron(path,compatibleValues(path,values,aliases))))).getBytes(StandardCharsets.UTF_8)));
         result.put(ResourceLocation.parse("gt6ce:tags/item/ammunition/feathers.json"),gson.toJson(Map.of(
 *///?} else {
-        tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,values))).getBytes(StandardCharsets.UTF_8)));
+        tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,preferredIron(path,values)))).getBytes(StandardCharsets.UTF_8)));
         result.put(ResourceLocation.parse("gt6ce:tags/items/ammunition/feathers.json"),gson.toJson(Map.of(
 //?}
                 "replace",false,"values",List.of("minecraft:feather",
@@ -581,6 +587,15 @@ public final class MaterialTagPack extends AbstractPackResources {
         return result;
 *///?} else {
 //?}
+    }
+
+    private static Collection<?> preferredIron(String path, Collection<?> values) {
+        if (!path.contains("/technology/any_iron_") && !path.contains("/technology/any_fe_")
+                && !path.contains("/any_iron_or_steel.json")) return values;
+        return values.stream().sorted(Comparator.comparingInt(value -> {
+            String id = value.toString();
+            return id.endsWith("_iron") || id.equals("minecraft:iron_ingot") || id.endsWith("/iron") ? 0 : 1;
+        })).toList();
     }
 
     /** GT6 {@code ANY.Iron} members for the gem-tipped pickaxe rows, Enori included. */

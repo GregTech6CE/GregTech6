@@ -37,6 +37,15 @@ public final class VanillaCraftingReplacements {
         // Keep vanilla fuels, but accept the same wooden rod family as other GT hand recipes.
         shaped(rows, "torch", 4, "C/S", "C=tag:minecraft:coals", "S=tag:gt6ce:ammunition/sticks_wood");
         shaped(rows, "furnace", 1, "XXX/XFX/XXX", "X=tag:minecraft:stone_crafting_materials", "F=firestarter");
+        shaped(
+                rows,
+                "piston",
+                1,
+                "WWW/CBC/CRC",
+                "W=tag:minecraft:planks",
+                "C=tag:minecraft:stone_crafting_materials",
+                "B=tag:gt6ce:technology/piston_ingots",
+                "R=tag:gt6ce:technology/redstone");
         shaped(rows, "paper", 1, "XXX", "X=item:minecraft:sugar_cane");
         rows.add(new Row(
                 "minecraft:book",

@@ -84,7 +84,7 @@ public final class AnvilShreddingRecipes {
     }
 
     private static void grind(GTMaterial material, Row row) {
-        if (row.mortar() && !MaterialWorkability.isMortarGrindable(material)) return;
+        if (row.mortar() && !gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material)) return;
         if (row.selfCrush() && material.getTargetCrushingMaterial() != material) return;
         ItemStack input = GTItems.getStack(row.input(), material, 1);
         GTMaterial target = material.getTargetPulverMaterial().resolve();
