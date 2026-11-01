@@ -112,7 +112,7 @@ public final class RecipeInputGroups {
         if (coolants == null) coolants = List.of(
                 new Coolant("Water", 4, fluids("ordinary_water", "Water", "SpDew", "MnWtr")),
                 new Coolant("DistW", 3, fluids("distilled_water", "DistW")),
-                new Coolant("Lubricant", 1, fluids("lubricants", "Lubricant", "LubRoCant")));
+                new Coolant("Lubricant", 1, fluids("lubricants", "Lubricant", "Lubricant")));
         return food ? coolants.subList(0, 2) : coolants;
     }
 }

@@ -15,8 +15,6 @@ public final class BottleFillingRows {
             new Family("soy_milk", "MilkSoy", "MultiItemBottles:151-154"),
             new Family("honey", "Honey", "MultiItemBottles:164-167"),
             new Family("green_slime_bottle", "Slime_Green", "MultiItemBottles:211-214"),
-            new Family("pink_slime_bottle", "Slime_Pink", "MultiItemBottles:216-219"),
-            new Family("blue_slime_bottle", "Slime_Blue", "MultiItemBottles:221-224"),
             new Family("juice", "Juice", "MultiItemBottles:232-235"),
             new Family("maple_sap", "Sap_Maple", "MultiItemBottles:268-271"),
             new Family("rainbow_sap", "Sap_Rainbow", "MultiItemBottles:277-280"));

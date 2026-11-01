@@ -74,23 +74,6 @@ public final class CoverAttachmentBehaviors {
         // Both branches are evaluated independently: they run on different periods.
         if (tickCounter % DRAIN_PERIOD == DRAIN_PHASE) acted = drainFluidBlock(level, machinePos, side, sink);
         if (tickCounter % RAIN_PERIOD == RAIN_PHASE) acted |= collectRain(level, machinePos, side, sink);
-        if (tickCounter % 100 == 50) acted |= collectExperience(level,machinePos,side,sink);
-        return acted;
-    }
-
-    /** Collect complete XP-orb groups, accounting for modern merged-orb counts. */
-    private static boolean collectExperience(Level level,BlockPos pos,Direction side,IFluidHandler sink){
-        var registered=GTFluids.still("XP");boolean mob=false;
-        if(registered==null){registered=GTFluids.still("Mob");mob=true;}
-        if(registered==null)return false;
-        boolean acted=false;var center=pos.relative(side,2);
-        for(var orb:level.getEntitiesOfClass(net.minecraft.world.entity.ExperienceOrb.class,new net.minecraft.world.phys.AABB(center).inflate(1))){
-            long points=(long)orb.getValue()*Math.max(1,((gregtech.mixin.ExperienceOrbCountAccessor)orb).gregtech$count());
-            if(points<=0||points>Integer.MAX_VALUE/200)continue;
-            int amount=(int)(mob?points*200/3:points*20);var stack=new FluidStack(registered.get(),amount);
-            if(sink.fill(stack,IFluidHandler.FluidAction.SIMULATE)<amount)continue;
-            if(sink.fill(stack,IFluidHandler.FluidAction.EXECUTE)==amount){orb.discard();acted=true;}
-        }
         return acted;
     }
 
@@ -100,7 +83,6 @@ public final class CoverAttachmentBehaviors {
         if(entity instanceof net.minecraft.world.entity.animal.Squid)field="InkSquid";
         else if(entity instanceof net.minecraft.world.entity.monster.MagmaCube slime){field="Blaze";amount=Math.max(1,slime.getSize());}
         else if(entity instanceof net.minecraft.world.entity.monster.Slime slime){field="Slime_Green";amount=Math.max(1,slime.getSize());}
-        else if(entity instanceof net.minecraft.world.entity.animal.Animal animal&&!animal.isBaby()){field="Sewage";amount=Math.max(1,(int)(20*entity.getBbWidth()*entity.getBbWidth()*entity.getBbHeight()));}
         if(field!=null){var fluid=GTFluids.still(field);if(fluid!=null)sink.fill(new FluidStack(fluid.get(),amount),IFluidHandler.FluidAction.EXECUTE);}
     }
 

@@ -35,6 +35,7 @@ class MaterialCatalogTest {
         GTMaterialRegistry.init();
         GTMaterialRegistry.postInit();
         FluidDefinitions.prepare();
+        verifyCanonicalFluids();
         // Building the thermal facts also verifies every phase binding and target has an identity.
         assertTrue(!SourceRecyclingFacts.all().isEmpty());
         assertNotNull(SourceRecyclingFacts.find(260, "Iron"));
@@ -89,5 +90,62 @@ class MaterialCatalogTest {
         }
         for (var anvil : AnvilVariantCatalog.ALL)
             assertTrue(GTMaterialRegistry.get(anvil.material()).isValid(), anvil.id());
+    }
+
+    private static void verifyCanonicalFluids() {
+        var catalog = gregtech.content.data.FluidCatalog.all();
+        for (String name : java.util.List.of("Brass", "Zinc", "Calcite")) {
+            var molten = gregtech.content.data.FluidCatalog.get("GenMolten_" + name);
+            assertNotNull(molten, name);
+            assertEquals(GTMaterialRegistry.get(name).getMeltingPoint(), molten.temperature(), name);
+            assertEquals(10, molten.luminosity(), name);
+            assertEquals(
+                    1L,
+                    catalog.values().stream()
+                            .filter(fluid ->
+                                    fluid.registryName().equals("molten." + name.toLowerCase(java.util.Locale.ROOT)))
+                            .count(),
+                    name);
+        }
+        for (var pair : java.util.Map.of("WaterDistilled", "DistW", "Ethanol", "BioEthanol", "OliveOil", "Oil_Olive")
+                .entrySet()) {
+            assertEquals(
+                    gregtech.content.data.FluidCatalog.get(pair.getValue()),
+                    gregtech.content.data.FluidCatalog.get("GenLiquid_" + pair.getKey()));
+            assertEquals(
+                    gregtech.content.data.FluidCatalog.get(pair.getValue()),
+                    gregtech.content.data.FluidCatalog.get("GenGas_" + pair.getKey()));
+        }
+        for (String id : java.util.List.of(
+                "ic2uumatter",
+                "uuamplifier",
+                "waterdistilled",
+                "ethanol",
+                "oliveoil",
+                "for.honey",
+                "grc.honey",
+                "ic2biomass",
+                "volcanic_lava_fluid",
+                "swampwater",
+                "stagnantwater",
+                "molten.lava",
+                "pyrotheum",
+                "cryotheum",
+                "petrotheum",
+                "aerotheum",
+                "mana")) {
+            assertTrue(
+                    catalog.values().stream()
+                            .noneMatch(fluid -> fluid.registryName().equals(id)),
+                    id);
+        }
+        assertTrue(gregtech.content.data.FluidCatalog.get("Lava").usesVanillaFluid());
+        assertEquals(
+                gregtech.content.data.FluidCatalog.FluidTextureMode.DEDICATED,
+                gregtech.content.data.FluidCatalog.get("Lava_Pahoehoe").textureMode());
+        assertNotNull(gregtech.content.data.FluidCatalog.get("MatterNeutral"));
+        assertNotNull(gregtech.content.data.FluidCatalog.get("MatterCharged"));
+        assertTrue(!GTMaterialRegistry.get(9884).isValid());
+        assertTrue(!GTMaterialRegistry.get(9885).isValid());
     }
 }

@@ -333,8 +333,6 @@ public final class GT6Materials {
         public static final GTMaterial Glue                 = gregtech.content.material.generated.CompoundMaterials.Glue;
         public static final GTMaterial Lubricant            = gregtech.content.material.generated.CompoundMaterials.Lubricant;
         public static final GTMaterial ConstructionFoam     = gregtech.content.material.generated.CompoundMaterials.ConstructionFoam;
-        public static final GTMaterial UUAmplifier          = gregtech.content.material.generated.CompoundMaterials.UUAmplifier;
-        public static final GTMaterial UUMatter             = gregtech.content.material.generated.CompoundMaterials.UUMatter;
         public static final GTMaterial Latex                = gregtech.content.material.generated.CompoundMaterials.Latex;
         public static final GTMaterial Ash                  = gregtech.content.material.generated.CompoundMaterials.Ashes;
         public static final GTMaterial DarkAsh              = gregtech.content.material.generated.CompoundMaterials.DarkAshes;

@@ -342,8 +342,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("Glue", "Glue");
         BY_FIELD.put("Lubricant", "Lubricant");
         BY_FIELD.put("ConstructionFoam", "Construction Foam");
-        BY_FIELD.put("UUAmplifier", "UU-Amplifier");
-        BY_FIELD.put("UUMatter", "UU-Matter");
         BY_FIELD.put("Latex", "Latex");
         BY_FIELD.put("Ash", "Ashes");
         BY_FIELD.put("DarkAsh", "Dark Ashes");

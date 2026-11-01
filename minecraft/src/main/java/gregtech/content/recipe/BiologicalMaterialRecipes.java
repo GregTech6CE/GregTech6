@@ -36,7 +36,7 @@ public final class BiologicalMaterialRecipes extends OriginalRecipeBatch {
                 null,
                 null,
                 fluids(fluid("Slime_Green", 125)));
-        for (String slime : new String[] {"Slime_Green", "Slime_Blue", "Slime_Pink"}) {
+        for (String slime : new String[] {"Slime_Green"}) {
             addSource(
                     true,
                     slime + "/latex_glue",
@@ -75,7 +75,6 @@ public final class BiologicalMaterialRecipes extends OriginalRecipeBatch {
                 items(new ItemStack(Items.BLAZE_POWDER)),
                 null,
                 fluids(fluid("Slime_Green", 125)));
-
     }
 
     private void resin() {

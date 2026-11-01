@@ -80,7 +80,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("i:dustTiny:Basalz:1"), sp("f:DistW:750"), sp("f:Potion_Thick:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Basalz:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_Jump_1:750"), NONE);
         r("Distillery", 16, 16, null, sp("i:dustTiny:Basalz:1"), sp("f:Potion_Mundane:250"), sp("f:Potion_Jump_2:250"), NONE);
-        r("Distillery", 16, 48, null, sp("v:spider_eye:1"), sp("f:DistW:750"), sp("f:Potion_Mundane:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:spider_eye:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 16, null, sp("v:spider_eye:1"), sp("f:Potion_Thick:250"), sp("f:Potion_Poison_2:250"), NONE);
         r("Distillery", 16, 48, null, sp("tech:food_potato_poisonous:1"), sp("f:DistW:750"), sp("f:Potion_Mundane:750"), NONE);
@@ -147,7 +146,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Poison_1L:750"), sp("f:Potion_Harm_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Poison_1LS:750"), sp("f:Potion_Harm_1S:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Poison_1LD:750"), sp("f:Potion_Harm_1D:750"), NONE);
-        r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Poison:750"), sp("f:Potion_Harm_2:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Poison_2:750"), sp("f:Potion_Harm_2:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Poison_2S:750"), sp("f:Potion_Harm_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Poison_2D:750"), sp("f:Potion_Harm_2D:750"), NONE);
@@ -207,7 +205,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("i:dust:Redstone:1"), sp("f:Potion_Speed_2:750"), sp("f:Potion_Speed_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Redstone:1"), sp("f:Potion_Strength_2:750"), sp("f:Potion_Strength_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Redstone:1"), sp("f:Potion_Regen_2:750"), sp("f:Potion_Regen_1:750"), NONE);
-        r("Distillery", 16, 48, null, sp("i:dust:Redstone:1"), sp("f:Poison:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Redstone:1"), sp("f:Potion_Poison_2:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Redstone:1"), sp("f:Potion_Harm_2S:750"), sp("f:Potion_Harm_1S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Redstone:1"), sp("f:Potion_Heal_2S:750"), sp("f:Potion_Heal_1S:750"), NONE);
@@ -260,7 +257,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("i:dustSmall:Redstone:4"), sp("f:Potion_Speed_2:750"), sp("f:Potion_Speed_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Redstone:4"), sp("f:Potion_Strength_2:750"), sp("f:Potion_Strength_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Redstone:4"), sp("f:Potion_Regen_2:750"), sp("f:Potion_Regen_1:750"), NONE);
-        r("Distillery", 16, 48, null, sp("i:dustSmall:Redstone:4"), sp("f:Poison:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Redstone:4"), sp("f:Potion_Poison_2:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Redstone:4"), sp("f:Potion_Harm_2S:750"), sp("f:Potion_Harm_1S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Redstone:4"), sp("f:Potion_Heal_2S:750"), sp("f:Potion_Heal_1S:750"), NONE);
@@ -313,7 +309,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("i:dustTiny:Redstone:9"), sp("f:Potion_Speed_2:750"), sp("f:Potion_Speed_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Redstone:9"), sp("f:Potion_Strength_2:750"), sp("f:Potion_Strength_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Redstone:9"), sp("f:Potion_Regen_2:750"), sp("f:Potion_Regen_1:750"), NONE);
-        r("Distillery", 16, 48, null, sp("i:dustTiny:Redstone:9"), sp("f:Poison:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Redstone:9"), sp("f:Potion_Poison_2:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Redstone:9"), sp("f:Potion_Harm_2S:750"), sp("f:Potion_Harm_1S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Redstone:9"), sp("f:Potion_Heal_2S:750"), sp("f:Potion_Heal_1S:750"), NONE);
@@ -348,7 +343,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("i:dust:Gunpowder:1"), sp("f:Potion_Speed_2:750"), sp("f:Potion_Speed_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Gunpowder:1"), sp("f:Potion_Strength_2:750"), sp("f:Potion_Strength_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Gunpowder:1"), sp("f:Potion_Regen_2:750"), sp("f:Potion_Regen_2S:750"), NONE);
-        r("Distillery", 16, 48, null, sp("i:dust:Gunpowder:1"), sp("f:Poison:750"), sp("f:Potion_Poison_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Gunpowder:1"), sp("f:Potion_Poison_2:750"), sp("f:Potion_Poison_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Gunpowder:1"), sp("f:Potion_Speed_1L:750"), sp("f:Potion_Speed_1LS:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dust:Gunpowder:1"), sp("f:Potion_Strength_1L:750"), sp("f:Potion_Strength_1LS:750"), NONE);
@@ -379,7 +373,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("i:dustSmall:Gunpowder:4"), sp("f:Potion_Speed_2:750"), sp("f:Potion_Speed_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Gunpowder:4"), sp("f:Potion_Strength_2:750"), sp("f:Potion_Strength_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Gunpowder:4"), sp("f:Potion_Regen_2:750"), sp("f:Potion_Regen_2S:750"), NONE);
-        r("Distillery", 16, 48, null, sp("i:dustSmall:Gunpowder:4"), sp("f:Poison:750"), sp("f:Potion_Poison_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Gunpowder:4"), sp("f:Potion_Poison_2:750"), sp("f:Potion_Poison_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Gunpowder:4"), sp("f:Potion_Speed_1L:750"), sp("f:Potion_Speed_1LS:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustSmall:Gunpowder:4"), sp("f:Potion_Strength_1L:750"), sp("f:Potion_Strength_1LS:750"), NONE);
@@ -410,7 +403,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("i:dustTiny:Gunpowder:9"), sp("f:Potion_Speed_2:750"), sp("f:Potion_Speed_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Gunpowder:9"), sp("f:Potion_Strength_2:750"), sp("f:Potion_Strength_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Gunpowder:9"), sp("f:Potion_Regen_2:750"), sp("f:Potion_Regen_2S:750"), NONE);
-        r("Distillery", 16, 48, null, sp("i:dustTiny:Gunpowder:9"), sp("f:Poison:750"), sp("f:Potion_Poison_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Gunpowder:9"), sp("f:Potion_Poison_2:750"), sp("f:Potion_Poison_2S:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Gunpowder:9"), sp("f:Potion_Speed_1L:750"), sp("f:Potion_Speed_1LS:750"), NONE);
         r("Distillery", 16, 48, null, sp("i:dustTiny:Gunpowder:9"), sp("f:Potion_Strength_1L:750"), sp("f:Potion_Strength_1LS:750"), NONE);
@@ -497,7 +489,6 @@ final class GTPotionGen {
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Potion_Poison_1:50"), sp("f:Potion_Harm_1:25"), NONE);
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Potion_Poison_1S:50"), sp("f:Potion_Harm_1S:25"), NONE);
         r("Fermenter", 16, 64, null, sp("tag:0"), sp("f:Potion_Poison_1D:50"), sp("f:Potion_Harm_1D:25"), NONE);
-        r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Poison:50"), sp("f:Potion_Harm_2:10"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Potion_Poison_2:50"), sp("f:Potion_Harm_2:10"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Potion_Poison_2S:50"), sp("f:Potion_Harm_2S:10"), NONE);
         r("Fermenter", 16, 128, null, sp("tag:0"), sp("f:Potion_Poison_2D:50"), sp("f:Potion_Harm_2D:10"), NONE);

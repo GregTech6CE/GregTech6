@@ -1009,8 +1009,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("TungstenTrioxide", "Tungsten Trioxide");
         GTMaterialRegistry.setDisplayName("Tungstensteel", "Tungstensteel");
         GTMaterialRegistry.setDisplayName("TungsticAcid", "Tungstic Acid");
-        GTMaterialRegistry.setDisplayName("UUAmplifier", "UU-Amplifier");
-        GTMaterialRegistry.setDisplayName("UUMatter", "UU-Matter");
         GTMaterialRegistry.setDisplayName("Ultimet", "Ultimet");
         GTMaterialRegistry.setDisplayName("Unstable", "Unstable");
         GTMaterialRegistry.setDisplayName("Uraninite", "Uraninite");

@@ -96,7 +96,7 @@ public final class BedrockFlowerProcessingRecipes extends OriginalRecipeBatch {
     private void biomass(String id, ItemStack flower, String field, int inputMb,
                          int outputMb, int ticks, Set<String> seenFluids) {
         FluidStack liquid = GTFluids.stack(field, inputMb);
-        FluidStack result = GTFluids.stack("BiomassIC2", outputMb);
+        FluidStack result = GTFluids.stack("Biomass", outputMb);
         if (liquid == null || result == null)
             throw new IllegalStateException("Missing GT6 bedrock flower fluid " + field);
 //? if >=1.21.1 {

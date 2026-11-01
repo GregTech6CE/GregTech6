@@ -84,25 +84,19 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:hemp_oil", 10), // MultiItemBottles.java:124
             new Entry("gt6ce:lin_oil", 10), // MultiItemBottles.java:125
             new Entry("gt6ce:fish_oil", 11), // MultiItemBottles.java:126
-            // MultiItemBottles.java:127
             new Entry("gt6ce:mayo", 15), // MultiItemBottles.java:134
             new Entry("gt6ce:dressing", 10), // MultiItemBottles.java:135
             new Entry("gt6ce:heavy_cream", 15), // MultiItemBottles.java:139
             new Entry("gt6ce:honey", 11), // MultiItemBottles.java:157
             new Entry("gt6ce:royal_jelly", 11), // MultiItemBottles.java:159
             new Entry("gt6ce:ambrosia", 5), // MultiItemBottles.java:160
-            // MultiItemBottles.java:192
             new Entry("gt6ce:chocolate_cream", 3), // MultiItemBottles.java:194
             new Entry("gt6ce:nutella", 3), // MultiItemBottles.java:195
             new Entry("gt6ce:green_slime_bottle", 10), // MultiItemBottles.java:204
-            new Entry("gt6ce:pink_slime_bottle", 9), // MultiItemBottles.java:206
-            new Entry("gt6ce:blue_slime_bottle", 4), // MultiItemBottles.java:208
             new Entry("gt6ce:tomato_ketchup", 1), // MultiItemBottles.java:257
             new Entry("gt6ce:maple_syrup", 3), // MultiItemBottles.java:266
-            // MultiItemBottles.java:273
             new Entry("gt6ce:rainbow_sap", 40), // MultiItemBottles.java:275
             new Entry("gt6ce:coconut_cream", 15), // MultiItemBottles.java:337
-            new Entry("gt6ce:bottle_of_poison", 5), // MultiItemBottles.java:358
-            new Entry("gt6ce:bottle_oblood", 1) // MultiItemBottles.java:381
+            new Entry("gt6ce:bottle_of_poison", 5) // MultiItemBottles.java:358
             );
 }

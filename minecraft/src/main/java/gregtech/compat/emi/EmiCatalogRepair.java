@@ -12,7 +12,28 @@ final class EmiCatalogRepair {
         try {
         // EMI publishes only its API at compile time. Keep this version-specific index bridge isolated.
         var field = Class.forName("dev.emi.emi.registry.EmiStackList").getField("stacks");
-        var original = ((java.util.List<EmiStack>) field.get(null)).stream()
+        var entries = (java.util.List<EmiStack>) field.get(null);
+        var representedFluids = new java.util.HashSet<net.minecraft.world.level.material.Fluid>();
+        for (var stack : entries) {
+            var item = stack.getItemStack();
+//? if >=1.21.1 {
+            /*if (!(item.getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem)) continue;
+            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
+*///?} else {
+            if (!(item.getItem() instanceof gregtech.content.item.FluidItem)) continue;
+            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(item);
+//?}
+            if (!fluid.isEmpty()) representedFluids.add(fluid.getFluid());
+        }
+        var original = entries.stream()
+                // Replace a raw fluid only when its display item is actually visible. The wrapper
+                // retains that fluid's recipe identity, including Minecraft water and lava.
+                .filter(stack -> !(stack.getKey() instanceof net.minecraft.world.level.material.Fluid
+                        && stack.getItemStack().isEmpty()
+                        && representedFluids.contains(stack.getKey())
+                        && (stack.getId().getNamespace().equals("gt6ce")
+                            || stack.getKey() == net.minecraft.world.level.material.Fluids.WATER
+                            || stack.getKey() == net.minecraft.world.level.material.Fluids.LAVA)))
                 .filter(stack -> !(stack.getItemStack().getItem() instanceof
                         gregtech.content.block.misc.LegacyConstructionBlockItem)).toList();
         var sorted = new ArrayList<EmiStack>();

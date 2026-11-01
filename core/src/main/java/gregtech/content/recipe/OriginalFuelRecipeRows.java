@@ -33,7 +33,6 @@ public final class OriginalFuelRecipeRows {
             new Row("burn", 16, 18, "Oil_Soulsand", 1, "CarbonDioxide", 1, null, 0),
             new Row("burn", 16, 2, "Oil_Creosote", 1, "CarbonDioxide", 1, null, 0),
             new Row("burn", 16, 2, "Biomass", 1, "CarbonDioxide", 1, null, 0),
-            new Row("burn", 16, 2, "BiomassIC2", 1, "CarbonDioxide", 1, null, 0),
             new Row("burn", 16, 4, "Oil_Nut", 1, "CarbonDioxide", 1, null, 0),
             new Row("burn", 16, 4, "Oil_Olive", 1, "CarbonDioxide", 1, null, 0),
             new Row("burn", 16, 2, "Oil_Lin", 1, "CarbonDioxide", 1, null, 0),
@@ -45,10 +44,6 @@ public final class OriginalFuelRecipeRows {
             // Loader_Fuels:191-213 and CS:216-234. Energy constants are per litre, not per bucket.
             new Row("hot", 16, 6, "Blaze", 1, null, 0, null, 0),
             new Row("hot", 16, 5, "Lava", 1, "Lava_Pahoehoe", 1, null, 0),
-            new Row("hot", 16, 80, "Lava_Volcanic", 1, "Lava_Pahoehoe", 1, null, 0),
-            new Row("hot", 2, 1, "Hot_Water", 1, "water", 1, null, 0),
-            new Row("hot", 2, 1, "Water_Hot", 1, "water", 1, null, 0),
-            new Row("hot", 2, 1, "Water_Boiling", 1, "water", 1, null, 0),
             new Row("hot", 16, 4, "Water_Geothermal", 1, "MnWtr", 1, null, 0),
             new Row("hot", 1, 20, "Coolant_IC2_Hot", 1, "Coolant_IC2", 1, null, 0),
             new Row("hot", 1, 30, "Hot_Molten_Sodium", 1, "GenMolten_Sodium", 1, null, 0),

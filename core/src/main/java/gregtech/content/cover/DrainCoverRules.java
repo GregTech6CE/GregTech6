@@ -30,7 +30,7 @@ public final class DrainCoverRules {
         return switch (worldFluid) {
             case "riverwater" -> "Water";
             case "seawater" -> "Ocean";
-            case "swampwater" -> "Dirty_Water";
+            case "waterdirty" -> "Dirty_Water";
             default -> null;
         };
     }

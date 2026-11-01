@@ -299,32 +299,8 @@ public final class SandwichBottleFoods {
                     false,
                     false,
                     false), // Loader_Fluids.java:633; MultiItemBottles.java:204
-            new Food(
-                    "pink_slime_bottle",
-                    4,
-                    0.5f,
-                    0,
-                    0,
-                    0,
-                    20,
-                    0,
-                    0,
-                    false,
-                    false,
-                    false), // Loader_Fluids.java:632; MultiItemBottles.java:206
-            new Food(
-                    "blue_slime_bottle",
-                    2,
-                    0.5f,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    false,
-                    false,
-                    false), // Loader_Fluids.java:631; MultiItemBottles.java:208
+            // Loader_Fluids.java:632; MultiItemBottles.java:206
+            // Loader_Fluids.java:631; MultiItemBottles.java:208
             new Food(
                     "tomato_ketchup",
                     4,

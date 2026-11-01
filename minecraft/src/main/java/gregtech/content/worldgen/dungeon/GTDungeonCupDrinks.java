@@ -13,7 +13,7 @@ final class GTDungeonCupDrinks {
         "Purple_Drink",
         "Vodka",
         "Mead",
-        "Whiskey_GlenMcKenner",
+        "Rum_Dark",
         "Wine_Grape_Purple"
     };
     private static final String[] BARRACKS = {
@@ -28,7 +28,7 @@ final class GTDungeonCupDrinks {
         "Leninade",
         "Mead",
         "BAWLS",
-        "Whiskey_GlenMcKenner",
+        "Rum_Dark",
         "Wine_Grape_Purple"
     };
 

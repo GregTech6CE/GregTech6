@@ -768,8 +768,6 @@ public final class SourceExtrusionRules {
             9881|Glue|000||648648000
             9882|Lubricant|000||648648000
             9883|ConstructionFoam|000||648648000
-            9884|UUAmplifier|000||648648000
-            9885|UUMatter|000||648648000
             9886|Latex|000||648648000
             """;
 

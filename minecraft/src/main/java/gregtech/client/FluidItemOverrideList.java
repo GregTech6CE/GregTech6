@@ -74,6 +74,11 @@ public final class FluidItemOverrideList extends ItemOverrides {
 
     @Nullable
     private static ResourceLocation resolveTextureKey(RegisteredFluids.FluidEntry flEntry) {
+        // Vanilla carriers are GT items, but their textures belong to the vanilla fluid types.
+        if (flEntry.isVanillaWater())
+            return IClientFluidTypeExtensions.of(net.minecraft.world.level.material.Fluids.WATER).getStillTexture();
+        if (flEntry.isVanillaLava())
+            return IClientFluidTypeExtensions.of(net.minecraft.world.level.material.Fluids.LAVA).getStillTexture();
         // sanitizePath also converts '.' -> '_' — molten fluids register as
         // "molten_copper", not "molten.copper"; the old lookup missed them all
         // (purple-black missing texture on every molten fluid item).

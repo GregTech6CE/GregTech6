@@ -51,7 +51,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
         /** {@code WorldgenRiver("river.riverwater")} — {@code BIOMES_RIVER} without {@code BIOMES_OCEAN}. */
         RIVER("river.riverwater", "gt6ce:riverwater"),
         /** {@code WorldgenSwamp("swamp.dirtywater")} — {@code BIOMES_SWAMP}. */
-        SWAMP("swamp.dirtywater", "gt6ce:swampwater");
+        SWAMP("swamp.dirtywater", "gt6ce:waterdirty");
 
         private final String name;
         private final String blockId;
@@ -172,7 +172,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
 //?}
         if (id == null || !id.getNamespace().equals("gt6ce")) return false;
         return id.getPath().equals("seawater") || id.getPath().equals("riverwater")
-                || id.getPath().equals("swampwater");
+                || id.getPath().equals("waterdirty");
     }
 
     private static BlockState blockState(String id) {

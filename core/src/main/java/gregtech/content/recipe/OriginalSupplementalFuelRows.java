@@ -33,14 +33,7 @@ public final class OriginalSupplementalFuelRows {
         var rows = new ArrayList<Row>();
         rows.add(burn(4, 1, "glue"));
         rows.add(burn(16, 4, "coconutmilk"));
-        rows.add(burn(16, 2, "canolaoil"));
-        rows.add(burn(16, 1, "plantoil"));
-        rows.add(burn(16, 36, "heavyoil"));
-        rows.add(burn(16, 24, "hotcrude"));
-        rows.add(burn(16, 18, "lightoil"));
-        rows.add(burn(16, 4, "tar", "tarfluid"));
 
-        rows.add(burn(128, 9, "rc jet fuel"));
         rows.add(burn(64, 5, "kerosine", "kerosene"));
         rows.add(burn(64, 5, "petrol", "gasoline"));
         rows.add(burn(64, 5, "diesel"));
@@ -51,9 +44,7 @@ public final class OriginalSupplementalFuelRows {
         rows.add(category(FluidFlags.VINEGAR));
         rows.add(burn(16, 6, "binnie.vodka", "potion.vodka", "vodka"));
         rows.add(burn(16, 12, "potion.dragonblood", "potion.goldencider", "potion.notchesbrew"));
-        rows.add(burn(16, 9, "bioethanol", "ethanol"));
-        rows.add(burn(16, 9, "rc ethanol"));
-        rows.add(burn(64, 6, "biodiesel"));
+        rows.add(burn(16, 9, "bioethanol"));
         rows.add(burn(64, 9, "biofuel"));
         rows.add(burn(16, 5, "hootch"));
         rows.add(burn(32, 9, "fire_water"));
@@ -65,7 +56,6 @@ public final class OriginalSupplementalFuelRows {
         paired(rows, 64, 24, 30, 5, "Water", 6, "CarbonDioxide", 3, "methane");
         paired(rows, 64, 24, 30, 5, "Water", 6, "CarbonDioxide", 3, "gas_natural_gas", "naturalgas", "gas.natural");
         paired(rows, 64, 24, 30, 20, "Water", 6, "CarbonDioxide", 3, "ic2biogas");
-        rows.add(new Row("burn", 64, 42, 7, 0, List.of("lpg"), "Water", 7, "CarbonDioxide", 6));
         paired(rows, 64, 42, 56, 7, "Water", 7, "CarbonDioxide", 6, "butane");
         paired(rows, 64, 30, 40, 5, "Water", 5, "CarbonDioxide", 4, "propane");
         paired(rows, 64, 4, 5, 1, "Water", 1, "CarbonDioxide", 1, "ethylene");

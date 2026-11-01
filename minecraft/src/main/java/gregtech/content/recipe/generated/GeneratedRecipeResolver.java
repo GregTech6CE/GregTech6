@@ -114,21 +114,6 @@ public final class GeneratedRecipeResolver {
     /** Loader_Recipes_Other:424-433: modern blocks replace legacy metadata variants. */
     private static void registerOtherSource(boolean optimize, String map, long eut, long ticks, long[] chances,
             String[] in, String[] fluidIn, String[] fluidOut, String[] out) {
-        if (map.equals("Bath") && java.util.Arrays.equals(fluidIn, new String[]{"f:Mana_TE:1"})
-                && in.length == 1 && out.length == 1) {
-            String input = in[0], output = out[0];
-            if (input.equals("v:dirt:1") && output.equals("v:dirt:1")) {
-                in = new String[]{"v:coarse_dirt:1"}; out = new String[]{"v:podzol:1"};
-            } else if (input.equals("tech:etfu_dirt:1") && output.equals("v:dirt:1")) {
-                out = new String[]{"v:podzol:1"};
-            } else if (input.equals("v:dirt:1") && output.equals("v:mycelium:1")) {
-                in = new String[]{"v:podzol:1"};
-            } else if (input.equals("v:stone_bricks:1") && output.equals("v:stone_bricks:1")) {
-                out = new String[]{"v:mossy_stone_bricks:1"};
-            } else if (input.equals("v:stone:1") && output.equals("v:stone_bricks:1")) {
-                out = new String[]{"v:chiseled_stone_bricks:1"};
-            }
-        }
         registerSource(optimize, map, eut, ticks, chances, in, fluidIn, fluidOut, out);
     }
 
@@ -152,7 +137,7 @@ public final class GeneratedRecipeResolver {
             registerSource(true, "Distillery", 16, 16, null, new String[]{"tag:0"},
                     new String[]{"f:" + oils[i] + ":25"}, new String[]{fluids[0], fluids[6]}, none);
         }
-        for (String biomass : new String[]{"Biomass", "BiomassIC2"}) {
+        for (String biomass : new String[]{"Biomass"}) {
             registerSource(false, "DistillationTower", 64, 16, new long[]{500,500,500}, none,
                     new String[]{"f:" + biomass + ":80"},
                     new String[]{"f:BioEthanol:20", "m:Glycerol:20", "f:Methane:4", "f:DistW:50"}, none);

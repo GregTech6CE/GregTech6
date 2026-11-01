@@ -39,29 +39,16 @@ public final class WoodenBucketCatalog {
                     "water",
                     "Water",
                     1,
-                    List.of(
-                            "Water",
-                            "DistW",
-                            "River_Water",
-                            "MnWtr",
-                            "Mineralsoda",
-                            "Soda",
-                            "Water_Hot",
-                            "Water_Boiling",
-                            "Water_Geothermal")),
-            new Content("milk", "Milk (you cannot drink out of Buckets!)", 2, List.of("Milk", "MilkGrC")),
+                    List.of("Water", "DistW", "River_Water", "MnWtr", "Mineralsoda", "Soda", "Water_Geothermal")),
+            new Content("milk", "Milk (you cannot drink out of Buckets!)", 2, List.of("Milk")),
             new Content("latex", "Latex", 3, List.of("Latex")),
             new Content("creosote", "Creosote Oil", 4, List.of("Oil_Creosote")),
-            new Content(
-                    "sea_water",
-                    "Sea Water (you cannot place this!)",
-                    5,
-                    List.of("Ocean", "OceanGrC", "Tropics_Water")),
+            new Content("sea_water", "Sea Water (you cannot place this!)", 5, List.of("Ocean", "Saltwater")),
             new Content("rubber_sap", "Rubber Tree Sap", 6, List.of("Resin_Rubber")),
             new Content("spruce_resin", "Spruce Tree Resin", 7, List.of("Resin_Spruce")),
-            new Content("honey", "Honey", 8, List.of("Honey", "HoneyGrC", "HoneyBoP")),
+            new Content("honey", "Honey", 8, List.of("Honey")),
             new Content("dirty_water", "Dirty Water (you cannot place this!)", 9, List.of("Dirty_Water")),
-            new Content("lubricant", "Lubricant", 10, List.of("LubRoCant", "Lubricant")),
+            new Content("lubricant", "Lubricant", 10, List.of("Lubricant")),
             new Content("spoiled_milk", "Milk (you cannot drink out of Buckets!)", 11, List.of("Milk_Spoiled")),
             new Content("maple_sap", "Maple Sap", 12, List.of("Sap_Maple")),
             new Content("rainbow_sap", "Rainbow Sap", 13, List.of("Sap_Rainbow")),
@@ -73,7 +60,7 @@ public final class WoodenBucketCatalog {
                     "Seed Oil",
                     17,
                     List.of("Oil_Seed", "Oil_Lin", "Oil_Hemp", "Oil_Olive", "Oil_Sunflower", "Oil_Nut")),
-            new Content("poison", "Poison", 18, List.of("Poison", "Potion_Poison_2")));
+            new Content("poison", "Potion_Poison_2", 18, List.of("Potion_Poison_2")));
 
     public static String itemId(Band band, Content content) {
         return "wooden_bucket_" + band.id() + (content.empty() ? "" : "_" + content.id());

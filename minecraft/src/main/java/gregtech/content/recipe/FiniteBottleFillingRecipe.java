@@ -109,7 +109,7 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
             Fluid wanted = gregtech.content.food.GTDrinks.fluidForField(fluidKey);
             if (wanted != null && fluid == wanted) return true;
             if (!"Lubricant".equals(fluidKey)) return false;
-            var holder = gregtech.content.registry.GTFluids.still("LubRoCant");
+            var holder = gregtech.content.registry.GTFluids.still("Lubricant");
             return holder != null && holder.isBound() && fluid == holder.get();
         }
 
@@ -304,7 +304,7 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
             if (expected != null && fluid == expected) return true;
             if (!"Lubricant".equals(fluidKey)) return false;
             // GT6's lubricant bottle lists both FL.Lubricant and FL.LubRoCant.
-            var rotary = GTFluids.still("LubRoCant");
+            var rotary = GTFluids.still("Lubricant");
             return rotary != null && rotary.isPresent() && fluid == rotary.get();
         }
 
@@ -362,7 +362,7 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
     private static net.minecraft.world.level.material.Fluid[] acceptedFluids(String fluidKey) {
         var primary = gregtech.content.food.GTDrinks.fluidForField(fluidKey);
         if (!"Lubricant".equals(fluidKey)) return new net.minecraft.world.level.material.Fluid[]{primary};
-        var alternate = gregtech.content.registry.GTFluids.still("LubRoCant");
+        var alternate = gregtech.content.registry.GTFluids.still("Lubricant");
 //? if >=1.21.1 {
         /*var rotary = alternate != null && alternate.isBound() ? alternate.get() : null;
 *///?} else {

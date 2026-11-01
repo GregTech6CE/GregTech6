@@ -240,13 +240,10 @@ public final class FoodItemRecipes {
     private static final String[][] MIXER_FLUIDS = {
             {"ice_cream", "Juice_Lemon", "50", "lemon_ice_cream", "MultiItemFood.java:852"},
             {"ice_cream", "Juice_Banana", "50", "banana_ice_cream", "MultiItemFood.java:853"},
-            {"ice_cream", "Juice_Grape_Red", "50", "grape_ice_cream", "MultiItemFood.java:854"},
-            {"ice_cream", "Juice_Grape_White", "50", "grape_ice_cream", "MultiItemFood.java:855"},
             {"ice_cream", "Juice_Grape_Green", "50", "grape_ice_cream", "MultiItemFood.java:856"},
             {"ice_cream", "Juice_Grape_Purple", "50", "grape_ice_cream", "MultiItemFood.java:857"},
             {"ice_cream", "Juice_Apple", "50", "apple_ice_cream", "MultiItemFood.java:858"},
             {"ice_cream", "Juice_Ananas", "50", "ananas_ice_cream", "MultiItemFood.java:860"},
-            {"ice_cream", "Juice_Cherry", "50", "cherry_ice_cream", "MultiItemFood.java:861"},
             {"ice_cream", "Juice_Cranberry", "50", "cranberry_ice_cream", "MultiItemFood.java:862"},
             {"ice_cream", "Juice_Strawberry", "50", "strawberry_ice_cream", "MultiItemFood.java:863"},
             {"ice_cream", "Juice_Kiwi", "50", "kiwi_ice_cream", "MultiItemFood.java:864"},
@@ -294,7 +291,6 @@ public final class FoodItemRecipes {
         }
         // MultiItemFood.java:510-511 use lemon / lime juice directly instead of a vinegar.
         mayonnaise("Oil_Seed", "Juice_Lemon", "MultiItemFood.java:510");
-        mayonnaise("Oil_Seed", "Juice_Lime", "MultiItemFood.java:511");
         // MultiItemFood.java:852-879 — GT6's flavoured ice creams.
         for (String[] row : MIXER_FLUIDS) {
             ItemStack input = food(row[0], 1);

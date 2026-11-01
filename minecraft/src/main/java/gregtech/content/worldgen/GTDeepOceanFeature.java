@@ -145,7 +145,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
 //?}
         return id != null && id.getNamespace().equals("gt6ce")
                 && (id.getPath().equals("seawater") || id.getPath().equals("riverwater")
-                    || id.getPath().equals("swampwater"));
+                    || id.getPath().equals("waterdirty"));
     }
 
     /** The GT stone block of a stone type: stone blocks are registered as {@code <type>_<variant>}. */

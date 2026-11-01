@@ -62,7 +62,7 @@ public final class GTWaterParity {
     /** Fluid registry path of GT6's river water ({@code WorldgenRiver}, {@code FL.River_Water}). */
     public static final String RIVERWATER = "riverwater";
     /** Fluid registry path of GT6's swamp water ({@code WorldgenSwamp}, {@code FL.Swampwater}). */
-    public static final String SWAMPWATER = "swampwater";
+    public static final String SWAMPWATER = "waterdirty";
 
     /**
      * The three world waters. The same six ids (each plus its {@code _flowing} variant) are the
@@ -88,7 +88,7 @@ public final class GTWaterParity {
 
     /**
      * True for GT6's three world waters, keyed by fluid registry name: {@code "seawater"},
-     * {@code "riverwater"}, {@code "swampwater"} <em>and</em> their {@code _flowing} variants. Uses
+     * {@code "riverwater"}, {@code "waterdirty"} <em>and</em> their {@code _flowing} variants. Uses
      * {@link RegisteredFluids#sanitizePath} so it accepts the raw GT6 name as well.
      *
      * <p>The flowing variants have to be accepted: {@link GTWaterParity#WORLD_WATER_PATHS} names the

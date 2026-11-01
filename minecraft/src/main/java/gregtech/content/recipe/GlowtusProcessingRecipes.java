@@ -64,7 +64,7 @@ public final class GlowtusProcessingRecipes extends OriginalRecipeBatch {
     private void biomass(String colour, ItemStack glowtus, String fluid, int inputMb,
                          int outputMb, int ticks, Set<String> seenFluids) {
         FluidStack input = GTFluids.stack(fluid, inputMb);
-        FluidStack output = GTFluids.stack("BiomassIC2", outputMb);
+        FluidStack output = GTFluids.stack("Biomass", outputMb);
         if (input == null || output == null) throw new IllegalStateException("Missing Glowtus fluid " + fluid);
 //? if >=1.21.1 {
         /*String fluidId = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(input.getFluid()).toString();

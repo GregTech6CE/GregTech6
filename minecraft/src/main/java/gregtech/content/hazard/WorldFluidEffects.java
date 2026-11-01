@@ -113,7 +113,7 @@ public final class WorldFluidEffects {
     public static final String LIGHT_OIL = "liquid_light_oil";
     public static final String NATURAL_GAS = "gas_natural_gas";
     public static final String GEOTHERMAL_WATER = "watergeothermal";
-    public static final String SWAMP_WATER = "swampwater";
+    public static final String SWAMP_WATER = "waterdirty";
 
     /** GT6 {@code BlockBaseFluid:414} / {@code BlockWaterlike:229}: {@code SERVER_TIME % 20 == 0}. */
     public static final int DROWN_INTERVAL = 20;

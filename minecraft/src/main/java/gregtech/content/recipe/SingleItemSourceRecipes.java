@@ -204,7 +204,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         if (input == null || input.isEmpty()) throw new IllegalStateException("Missing source biomass fluid " + field);
         String key = BuiltInRegistries.FLUID.getKey(input.getFluid()).toString();
         if (!seen.add(key)) return;
-        var result = GTFluids.stack("BiomassIC2", output);
+        var result = GTFluids.stack("Biomass", output);
         if (result == null || result.isEmpty()) throw new IllegalStateException("Missing source biomass output");
         add(
                 id + "/biomass/" + field,
@@ -235,7 +235,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                                 new ItemStack(Items.RED_MUSHROOM)),
                         items(own("chum", 8)),
                         fluids(fluid("Purple_Drink", 1000), fluid(oil, 1000)),
-                        fluids(fluid("Sludge", 1000)));
+                        fluids());
             }
         }
     }

@@ -71,9 +71,7 @@ public final class SharedOreWashingRows {
   var out=new ArrayList<Definition>();
    for(var material:selected){
     GTMaterial m=material.resolve();
-    petrotheum(m,snapshot,out); // Handlers forms are independent of the Ores whole+tiny gate.
     ores(m,snapshot,out);
-    cryotheum(m,snapshot,out); // Three direct shapes, independent of ordinary washing eligibility.
    }
   return List.copyOf(out);
  }
@@ -131,26 +129,7 @@ public final class SharedOreWashingRows {
   return true;
  }
  private static final String[] WATERS={"Water","MnWtr","DistW","SpDew"};
- private static void petrotheum(GTMaterial m,Snapshot s,List<Definition> out){
-  GTMaterial sand=GTMaterialRegistry.get("SluiceSand");
-  for(Size size:Size.values()){
-   String route="petrotheum/"+size;
-   NativeForm input=s.direct(size.input(),m,1);
-   Availability gate=petroEligibility(m.isValid(),m.has(MaterialProperty.ANTIMATTER),input.availability());
-   if(!s.ready(m,route,gate))continue;
-   NativeForm main=s.direct(size.purified(),m,2),fine=s.direct(MaterialPrefix.crushedPurifiedTiny,m,size.byproductCount());
-   // RecipeMapHandlerPrefix validates each output-prefix form; its extra OM sand is optional.
-   if(!s.ready(m,route,requireAll(main.availability(),fine.availability())))continue;
-   NativeForm tail=s.sand(size,sand);
-   if(tail.availability()==Availability.UNKNOWN){s.defer(m,route,"unknown-sand-form");continue;}
-   ItemStack[] outputs=tail.availability()==Availability.PRESENT
-       ?new ItemStack[]{main.stack(),fine.stack(),tail.stack()}:new ItemStack[]{main.stack(),fine.stack()};
-   FluidStack fluid=s.fluid("Petrotheum",size.petrotheumMb());if(!s.fluidReady(m,route,fluid))continue;
-   out.add(new Definition(MachineRecipeMaps.Sluice,PETROTHEUM_OPTIMIZE,new ItemStack[]{input.stack()},
-       outputs,PETROTHEUM_CHANCES.stream().mapToLong(Long::longValue).toArray(),
-       new FluidStack[]{fluid},new FluidStack[0],size.ticks(),SLUICE_POWER));
-  }
- }
+
  private static void ores(GTMaterial m,Snapshot s,List<Definition> out){
   NativeForm dust=s.direct(MaterialPrefix.dust,m,1),whole=s.input(MaterialPrefix.crushed,m,1),tiny=s.input(MaterialPrefix.crushedTiny,m,1);
   Availability gate=oresEligibility(m.isValid(),m.has(MaterialProperty.ANTIMATTER),m==GTMaterialRegistry.get("Bedrock"),
@@ -226,24 +205,7 @@ public final class SharedOreWashingRows {
   }
   return outputs;
  }
- private static void cryotheum(GTMaterial m,Snapshot s,List<Definition> out){
-  if(SourceOreCryotheumRules.binding(m.getId(),m.getName())==null||!m.isValid()
-      ||!GTMaterialRegistry.isCoreMaterial(m)||AddonMaterials.owns(m))return;
-  for(var shape:SourceOreCryotheumRules.shapes()){
-   String route="cryotheum/"+shape;
-   NativeForm input=switch(shape.input()){
-    case BLOCK_DUST -> s.blockDust(m,shape.inputCount());
-    case CRUSHED -> s.direct(MaterialPrefix.crushed,m,shape.inputCount());
-    case CRUSHED_TINY -> s.direct(MaterialPrefix.crushedTiny,m,shape.inputCount());
-   };
-   NativeForm output=s.direct(shape.output(),m,shape.outputCount());
-   if(!s.ready(m,route,requireAll(input.availability(),output.availability())))continue;
-   var fluid=s.fluid("Cryotheum",shape.cryotheumMb());if(!s.fluidReady(m,route,fluid))continue;
-   out.add(new Definition(MachineRecipeMaps.Bath,SourceOreCryotheumRules.OPTIMIZE,new ItemStack[]{input.stack()},
-       new ItemStack[]{output.stack()},new long[0],new FluidStack[]{fluid},new FluidStack[0],
-       SourceOreCryotheumRules.TICKS,SourceOreCryotheumRules.POWER));
-  }
- }
+
  private static ItemStack[] copies(ItemStack[] values){return Arrays.stream(values).map(ItemStack::copy).toArray(ItemStack[]::new);}
  private static FluidStack[] copies(FluidStack[] values){return Arrays.stream(values).map(FluidStack::copy).toArray(FluidStack[]::new);}
  record NativeForm(Availability availability,ItemStack stack){
@@ -344,15 +306,14 @@ public final class SharedOreWashingRows {
   var entry=definitions.get(field);if(entry==null)return FluidStack.EMPTY;
   var builtin=switch(field){case "Water"->FluidCatalog.Water;case "MnWtr"->FluidCatalog.MnWtr;
    case "DistW"->FluidCatalog.DistW;case "SpDew"->FluidCatalog.SpDew;case "Sluice"->FluidCatalog.Sluice;
-   case "Steam"->FluidCatalog.Steam;case "Petrotheum"->FluidCatalog.Petrotheum;case "Cryotheum"->FluidCatalog.Cryotheum;default->null;};
+   case "Steam"->FluidCatalog.Steam;default->null;};
   if(field.equals("GenLiquid_Mercury")){
    if(!ReviewedOreGeneratedFluids.mercury(entry))return FluidStack.EMPTY;
   }else if(entry!=builtin||!FluidCatalog.isBuiltInDefinition(entry))return FluidStack.EMPTY;
   // Reviewed original material identities determine unit conversion; names alone do not establish it.
   var binding=switch(field){case "GenLiquid_Mercury"->ReviewedOreFluidBindings.liquid(800,"Mercury");
-   case "Petrotheum"->ReviewedOreFluidBindings.liquid(8245,"Petrotheum");
-   case "Cryotheum"->ReviewedOreFluidBindings.liquid(8213,"Cryotheum");default->null;};
-  boolean materialLiquid=field.equals("GenLiquid_Mercury")||field.equals("Petrotheum")||field.equals("Cryotheum");
+default->null;};
+  boolean materialLiquid=field.equals("GenLiquid_Mercury");
   if(materialLiquid&&(binding==null||!binding.field().equals(field)
       ||!binding.registryPath().equals(entry.registryName())))return FluidStack.EMPTY;
   var stack=lookup.apply(field,amount);if(stack==null||stack.isEmpty()||stack.getAmount()!=amount)return FluidStack.EMPTY;

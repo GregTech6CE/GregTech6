@@ -160,16 +160,16 @@ final class SourceThermalNativeAdapter {
  /** Explicit native spellings are bindings, not newly registered aliases or material-name guesses. */
  static NativeBinding nativeBinding(GTMaterial target,Binding source){
   NativeBinding special=switch(target.getId()){
-   case 300->declared("Zinc","molten.zinc",FluidCatalog.Zinc);
+
    case 8001->declared("Glass","glass",FluidCatalog.Glass);
    case 8211->declared("Blaze","blaze",FluidCatalog.Blaze);
-   case 8213->declared("Cryotheum","cryotheum",FluidCatalog.Cryotheum);
+
    case 8218->declared("Plastic","molten.plastic",FluidCatalog.Plastic);
-   case 8246->declared("Aerotheum","aerotheum",FluidCatalog.Aerotheum);
+
    case 8318->declared("Ender","molten.enderpearl",FluidCatalog.Ender);
    case 8333->declared("Redstone","molten.redstone",FluidCatalog.Redstone);
-   case 8620->declared("Brass","molten.brass",FluidCatalog.Brass);
-   case 9107->declared("Calcite","molten.calcite",FluidCatalog.Calcite);
+
+
    case 9800->declared("Water","water",FluidCatalog.Water);
    case 9810->declared("Lava","lava",FluidCatalog.Lava);
    case 9883->declared("CFoam","ic2constructionfoam",FluidCatalog.CFoam);
@@ -306,8 +306,8 @@ final class SourceThermalNativeAdapter {
     if(defaultMolten(material,source,field,entry))continue;
     // Loader_Fluids145-153: redstone's optional liquid is superseded by molten.redstone;
     // glowstone's optional entry is gas-only. These unchanged directory aliases are not overrides.
-    if(material.getId()==8333&&field.equals("Redstone_TE")&&entry==FluidCatalog.Redstone_TE
-        ||material.getId()==8341&&field.equals("Glowstone_TE")&&entry==FluidCatalog.Glowstone_TE)continue;
+    if(material.getId()==8333&&field.equals("Redstone")&&entry==FluidCatalog.Redstone
+        ||material.getId()==8341&&field.equals("GenMolten_Glowstone")&&entry==FluidCatalog.get("GenMolten_Glowstone"))continue;
     // The immutable short-name Alumina compatibility declaration is not its source phase choice.
     if(material.getId()==8008&&field.equals("GenMolten_Al2O3")&&entry==FluidCatalog.get(field)
         &&entry.equals(FluidCatalog.Molten_Al2O3.withTemperature(material.getMeltingPoint()).withLuminosity(10)))continue;

@@ -1038,8 +1038,6 @@ public final class SourceLatheMaterialProfiles {
             9881|Glue|0000
             9882|Lubricant|0000
             9883|ConstructionFoam|0000
-            9884|UUAmplifier|0000
-            9885|UUMatter|0000
             9886|Latex|0000
             """;
 }

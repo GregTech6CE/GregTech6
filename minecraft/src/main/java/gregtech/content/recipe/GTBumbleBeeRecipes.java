@@ -112,7 +112,7 @@ public final class GTBumbleBeeRecipes {
      * ({@code FluidsGT.HONEY}, the three {@code FL.java:139-141} entries) plus honeydew
      * ({@code MultiItemBumbles:584-585}).
      */
-    private static final String[] DISPLAY_FLUIDS = {"Honey", "HoneyGrC", "HoneyBoP", "Honeydew"};
+    private static final String[] DISPLAY_FLUIDS = {"Honey", "Honeydew"};
 
     private static boolean registered;
     private static final List<Recipe> DISPLAY_ROWS = new ArrayList<>();

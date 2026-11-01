@@ -706,8 +706,6 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
             U238F6 = GT6Materials.Compounds.U238F6,
             UF4 = GT6Materials.Compounds.UF4,
             UF6 = GT6Materials.Compounds.UF6,
-            UUAmplifier = GT6Materials.Compounds.UUAmplifier,
-            UUMatter = GT6Materials.Compounds.UUMatter,
             U_233 = GT6Materials.Elements.U_233,
             U_235 = GT6Materials.Elements.U_235,
             U_238 = GT6Materials.Elements.U_238,

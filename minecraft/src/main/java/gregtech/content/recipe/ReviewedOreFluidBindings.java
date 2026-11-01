@@ -8,13 +8,10 @@ public final class ReviewedOreFluidBindings {
 
     private static final Binding[] VALUES = {
         new Binding(800, "Mercury", "GenLiquid_Mercury", "mercury", 144),
-        new Binding(8213, "Cryotheum", "Cryotheum", "cryotheum", 250),
-        new Binding(8245, "Petrotheum", "Petrotheum", "petrotheum", 250),
         new Binding(8235, "Wax", "GenMolten_Wax", "molten.wax", 144),
         new Binding(8236, "WaxBee", "GenMolten_WaxBee", "molten.waxbee", 144),
         new Binding(8238, "WaxParaffin", "GenMolten_WaxParaffin", "molten.waxparaffin", 144),
         new Binding(8239, "WaxPlant", "GenMolten_WaxPlant", "molten.waxplant", 144),
-
     };
 
     private ReviewedOreFluidBindings() {}

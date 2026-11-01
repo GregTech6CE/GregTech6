@@ -11,13 +11,13 @@ public final class MatterConversionCatalog {
             String material, String form, int circuit, long duration, String outputFluid, int outputAmount) {}
 
     public static final List<Conversion> SPECIAL_CONVERSIONS = List.of(
-            new Conversion("AncientDebris", "dustDiv72", 1, 144L, "Ender_TE", 250),
-            new Conversion("AncientDebris", "dustTiny", 1, 1152L, "Ender_TE", 2000),
-            new Conversion("AncientDebris", "dustSmall", 1, 2592L, "Ender_TE", 4500),
-            new Conversion("AncientDebris", "dust", 1, 10368L, "Ender_TE", 18000),
-            new Conversion("AncientDebris", "ingot", 1, 10368L, "Ender_TE", 18000),
-            new Conversion("AncientDebris", "blockDust", 1, 93312L, "Ender_TE", 162000),
-            new Conversion("AncientDebris", "blockIngot", 1, 93312L, "Ender_TE", 162000),
+            new Conversion("AncientDebris", "dustDiv72", 1, 144L, "Ender", 250),
+            new Conversion("AncientDebris", "dustTiny", 1, 1152L, "Ender", 2000),
+            new Conversion("AncientDebris", "dustSmall", 1, 2592L, "Ender", 4500),
+            new Conversion("AncientDebris", "dust", 1, 10368L, "Ender", 18000),
+            new Conversion("AncientDebris", "ingot", 1, 10368L, "Ender", 18000),
+            new Conversion("AncientDebris", "blockDust", 1, 93312L, "Ender", 162000),
+            new Conversion("AncientDebris", "blockIngot", 1, 93312L, "Ender", 162000),
             new Conversion("AncientDebris", "dustDiv72", 0, 144L, "Ender", 144),
             new Conversion("AncientDebris", "dustTiny", 0, 1152L, "Ender", 1152),
             new Conversion("AncientDebris", "dustSmall", 0, 2592L, "Ender", 2592),

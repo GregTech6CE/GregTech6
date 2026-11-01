@@ -18,7 +18,6 @@ public final class OriginalEngineFuelRows {
     }
 
     public static final List<Row> ROWS = List.of(
-            names(128, 12, "rc jet fuel"),
             names(64, 7, "kerosine", "kerosene"),
             names(64, 7, "petrol", "gasoline"),
             names(64, 7, "diesel"),
@@ -29,9 +28,7 @@ public final class OriginalEngineFuelRows {
             new Row(16, 9, FluidFlags.VINEGAR, List.of()),
             names(16, 9, "binnie.vodka", "potion.vodka", "vodka"),
             names(16, 18, "potion.dragonblood", "potion.goldencider", "potion.notchesbrew"),
-            names(16, 12, "bioethanol", "ethanol"),
-            names(16, 12, "rc ethanol"),
-            names(64, 8, "biodiesel"),
+            names(16, 12, "bioethanol"),
             names(64, 12, "biofuel"),
             names(16, 6, "hootch"),
             names(32, 10, "fire_water"),

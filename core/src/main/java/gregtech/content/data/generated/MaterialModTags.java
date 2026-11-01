@@ -309,8 +309,6 @@ public final class MaterialModTags {
         ImportedMaterialData.TungstenCarbide.mod(ModReferences.ReC);
         ImportedMaterialData.TungstenSintered.mod(ModReferences.RoC);
         ImportedMaterialData.TungstenSteel.mod(ModReferences.GT);
-        ImportedMaterialData.UUAmplifier.mod(ModReferences.GT);
-        ImportedMaterialData.UUMatter.mod(ModReferences.IC2);
         ImportedMaterialData.U_235.mod(ModReferences.IC2);
         ImportedMaterialData.U_238.mod(ModReferences.IC2);
         ImportedMaterialData.Ultimet.mod(ModReferences.GT);

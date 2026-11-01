@@ -112,7 +112,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("apprentice_bumblebee_scanned_drone", new Entry("equipment", 990));
         ITEMS.put("apprentice_bumblebee_scanned_princess", new Entry("equipment", 991));
         ITEMS.put("apprentice_bumblebee_scanned_queen", new Entry("equipment", 992));
-        ITEMS.put("apricot_juice", new Entry("bottles", 283));
         ITEMS.put("apricot_smoothie", new Entry("bottles", 284));
         ITEMS.put("arsenic_bronze_compound", new Entry("equipment", 4));
         ITEMS.put("arsenic_copper_compound", new Entry("equipment", 3));
@@ -156,7 +155,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("bear_ice_cream", new Entry("nature_foods", 525));
         ITEMS.put("bedrock_mining_drill_controller", new Entry("multiblocks", 680));
         ITEMS.put("bedrock_mining_drill_head", new Entry("multiblocks", 597));
-        ITEMS.put("beer", new Entry("bottles", 188));
         ITEMS.put("beet_juice", new Entry("bottles", 303));
         ITEMS.put("bismuth_bronze_compound", new Entry("equipment", 2));
         ITEMS.put("black_currants", new Entry("nature_foods", 345));
@@ -191,7 +189,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("blizzful_bumblebee_scanned_queen", new Entry("equipment", 1232));
         ITEMS.put("blue_clay", new Entry("nature_foods", 477));
         ITEMS.put("blue_pill", new Entry("nature_foods", 558));
-        ITEMS.put("blue_slime_bottle", new Entry("bottles", 237));
         ITEMS.put("blueberry", new Entry("nature_foods", 341));
         ITEMS.put("blueberry_ice_cream", new Entry("nature_foods", 505));
         ITEMS.put("blueberry_juice", new Entry("bottles", 249));
@@ -203,7 +200,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("bookshelf_variant", new Entry("storage", 11));
         ITEMS.put("boomstick", new Entry("tool_blocks", 1278));
         ITEMS.put("bottle_crate", new Entry("storage", 38));
-        ITEMS.put("bottle_oblood", new Entry("bottles", 311));
         ITEMS.put("bottle_of_poison", new Entry("bottles", 308));
         ITEMS.put("braintech_aerospace_advanced_reinforced_duct_tape_fal_84", new Entry("equipment", 129));
         ITEMS.put("braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2", new Entry("equipment", 130));
@@ -423,7 +419,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("cheese_sandwich", new Entry("nature_foods", 433));
         ITEMS.put("cheese_slice", new Entry("nature_foods", 369));
         ITEMS.put("cherry_ice_cream", new Entry("nature_foods", 504));
-        ITEMS.put("cherry_juice", new Entry("bottles", 264));
         ITEMS.put("cherry_smoothie", new Entry("bottles", 265));
         ITEMS.put("chest_adamantium", new Entry("chests", 0));
         ITEMS.put("chest_aluminium", new Entry("chests", 0));
@@ -779,7 +774,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("egg_dough", new Entry("nature_foods", 565));
         ITEMS.put("egg_white", new Entry("nature_foods", 377));
         ITEMS.put("egg_yolk", new Entry("nature_foods", 376));
-        ITEMS.put("elderberry_juice", new Entry("bottles", 275));
         ITEMS.put("elderberry_smoothie", new Entry("bottles", 276));
         ITEMS.put("electrolyzer_part", new Entry("multiblocks", 594));
         ITEMS.put("electrometer", new Entry("equipment", 118));
@@ -946,7 +940,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("general_bumblemond_scanned_drone", new Entry("equipment", 1210));
         ITEMS.put("general_bumblemond_scanned_princess", new Entry("equipment", 1211));
         ITEMS.put("general_bumblemond_scanned_queen", new Entry("equipment", 1212));
-        ITEMS.put("glen_mckenner", new Entry("bottles", 186));
         ITEMS.put("glue_bottle", new Entry("bottles", 314));
         ITEMS.put("gold_key", new Entry("equipment", 136));
         ITEMS.put("golden_apple_juice", new Entry("bottles", 219));
@@ -957,8 +950,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("gooseberry_juice", new Entry("bottles", 253));
         ITEMS.put("gooseberry_smoothie", new Entry("bottles", 254));
         ITEMS.put("grape_ice_cream", new Entry("nature_foods", 519));
-        ITEMS.put("grape_juice", new Entry("bottles", 154));
-        ITEMS.put("grape_juice_2", new Entry("bottles", 157));
         ITEMS.put("grape_juice_3", new Entry("bottles", 163));
         ITEMS.put("grape_juice_4", new Entry("bottles", 164));
         ITEMS.put("grape_smoothie", new Entry("bottles", 159));
@@ -966,7 +957,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("grape_smoothie_3", new Entry("bottles", 161));
         ITEMS.put("grape_smoothie_4", new Entry("bottles", 162));
         ITEMS.put("grape_vinegar", new Entry("bottles", 156));
-        ITEMS.put("grapefruit_juice", new Entry("bottles", 277));
         ITEMS.put("grapefruit_smoothie", new Entry("bottles", 278));
         ITEMS.put("graphene_gas_turbine_main_housing", new Entry("multiblocks", 667));
         ITEMS.put("graphene_steam_turbine_main_housing", new Entry("multiblocks", 659));
@@ -1253,7 +1243,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("lighter_full", new Entry("equipment", 62));
         ITEMS.put("lightning_rod", new Entry("multiblocks", 598));
         ITEMS.put("lightning_rod_electric_output", new Entry("multiblocks", 679));
-        ITEMS.put("lime_juice", new Entry("bottles", 279));
         ITEMS.put("lime_smoothie", new Entry("bottles", 280));
         ITEMS.put("limoncello", new Entry("bottles", 169));
         ITEMS.put("lin_oil", new Entry("bottles", 204));
@@ -1597,7 +1586,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("olive_oil", new Entry("bottles", 199));
         ITEMS.put("onion", new Entry("nature_foods", 320));
         ITEMS.put("onion_slice", new Entry("nature_foods", 321));
-        ITEMS.put("orange_juice", new Entry("bottles", 281));
         ITEMS.put("orange_smoothie", new Entry("bottles", 282));
         ITEMS.put("oven_invar", new Entry("basic_machines", 681));
         ITEMS.put("oven_steel", new Entry("basic_machines", 681));
@@ -1615,9 +1603,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("paint_removal_spray_2", new Entry("equipment", 50));
         ITEMS.put("papaya_juice", new Entry("bottles", 298));
         ITEMS.put("papaya_smoothie", new Entry("bottles", 299));
-        ITEMS.put("peach_juice", new Entry("bottles", 273));
         ITEMS.put("peach_smoothie", new Entry("bottles", 274));
-        ITEMS.put("pear_juice", new Entry("bottles", 285));
         ITEMS.put("pear_smoothie", new Entry("bottles", 286));
         ITEMS.put("peppermint", new Entry("nature_foods", 557));
         ITEMS.put("persimmon_juice", new Entry("bottles", 288));
@@ -1625,7 +1611,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("pi_a_colada", new Entry("bottles", 180));
         ITEMS.put("pickle", new Entry("nature_foods", 324));
         ITEMS.put("pickle_slice", new Entry("nature_foods", 325));
-        ITEMS.put("pink_slime_bottle", new Entry("bottles", 236));
         ITEMS.put("pirate_brew", new Entry("bottles", 178));
         ITEMS.put("pizza_hawaii", new Entry("nature_foods", 417));
         ITEMS.put("pizza_margherita", new Entry("nature_foods", 411));
@@ -1637,7 +1622,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("plastic_lighter_empty", new Entry("equipment", 66));
         ITEMS.put("plastic_lighter_full", new Entry("equipment", 68));
         ITEMS.put("platinum_key", new Entry("equipment", 142));
-        ITEMS.put("plum_juice", new Entry("bottles", 271));
         ITEMS.put("plum_smoothie", new Entry("bottles", 272));
         ITEMS.put("polarizer_aluminium", new Entry("basic_machines", 767));
         ITEMS.put("polarizer_chromium", new Entry("basic_machines", 767));
@@ -1809,7 +1793,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("red_grapes", new Entry("nature_foods", 331));
         ITEMS.put("red_pill", new Entry("nature_foods", 559));
         ITEMS.put("red_raisins", new Entry("nature_foods", 332));
-        ITEMS.put("red_wine", new Entry("bottles", 158));
         ITEMS.put("reedwater", new Entry("bottles", 176));
         ITEMS.put("reinforced_wood_chest_adamantium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_aluminium", new Entry("chests", 0));
@@ -2048,7 +2031,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("scaffold_tungsten_carbide", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_tungstensteel", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_ultimet", new Entry("scaffolds", 15));
-        ITEMS.put("scotch", new Entry("bottles", 185));
         ITEMS.put("scrambled_egg", new Entry("nature_foods", 374));
         ITEMS.put("scrap_meat", new Entry("nature_foods", 399));
         ITEMS.put("sea_water", new Entry("bottles", 146));
@@ -2161,7 +2143,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("squeezer_steel", new Entry("basic_machines", 705));
         ITEMS.put("squeezer_titanium", new Entry("basic_machines", 705));
         ITEMS.put("squeezer_tungsten_steel", new Entry("basic_machines", 705));
-        ITEMS.put("stagnant_water", new Entry("bottles", 152));
         ITEMS.put("stainless_steel_boiler_main_barometer", new Entry("multiblocks", 652));
         ITEMS.put("stainless_steel_dynamo_main_housing", new Entry("multiblocks", 661));
         ITEMS.put("stainless_steel_wall", new Entry("multiblocks", 569));
@@ -2246,7 +2227,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("surfing_bumblebee_scanned_drone", new Entry("equipment", 974));
         ITEMS.put("surfing_bumblebee_scanned_princess", new Entry("equipment", 975));
         ITEMS.put("surfing_bumblebee_scanned_queen", new Entry("equipment", 976));
-        ITEMS.put("swampwater", new Entry("bottles", 151));
         ITEMS.put("swimming_bumblebee_dead", new Entry("equipment", 661));
         ITEMS.put("swimming_bumblebee_drone", new Entry("equipment", 658));
         ITEMS.put("swimming_bumblebee_princess", new Entry("equipment", 659));
@@ -2280,7 +2260,6 @@ public final class SourceCreativeCatalog {
     }
 
     private static void init6() {
-        ITEMS.put("tar_bottle", new Entry("bottles", 310));
         ITEMS.put("tera_bumble_dead", new Entry("equipment", 957));
         ITEMS.put("tera_bumble_drone", new Entry("equipment", 954));
         ITEMS.put("tera_bumble_princess", new Entry("equipment", 955));
@@ -2344,13 +2323,10 @@ public final class SourceCreativeCatalog {
         ITEMS.put("void_bumblebee_scanned_queen", new Entry("equipment", 1028));
         ITEMS.put("von_da_graagg_generator", new Entry("multiblocks", 677));
         ITEMS.put("water_comb", new Entry("nature_foods", 536));
-        ITEMS.put("wheaty_hops_mash", new Entry("bottles", 187));
-        ITEMS.put("wheaty_mash", new Entry("bottles", 184));
         ITEMS.put("white_clay", new Entry("nature_foods", 478));
         ITEMS.put("white_currants", new Entry("nature_foods", 346));
         ITEMS.put("white_grapes", new Entry("nature_foods", 329));
         ITEMS.put("white_raisins", new Entry("nature_foods", 330));
-        ITEMS.put("white_wine", new Entry("bottles", 155));
         ITEMS.put("wide_food_can_bread", new Entry("equipment", 608));
         ITEMS.put("wide_food_can_chum", new Entry("equipment", 626));
         ITEMS.put("wide_food_can_cookies", new Entry("equipment", 632));

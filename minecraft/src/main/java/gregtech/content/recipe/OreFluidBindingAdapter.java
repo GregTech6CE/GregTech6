@@ -32,8 +32,6 @@ public final class OreFluidBindingAdapter {
    case "GenMolten_WaxParaffin" -> "molten_waxparaffin";
    case "GenMolten_WaxPlant" -> "molten_waxplant";
    case "GenLiquid_Mercury" -> "mercury";
-   case "Cryotheum" -> "cryotheum";
-   case "Petrotheum" -> "petrotheum";
    default -> throw new IllegalStateException("No reviewed native identity: "+b.field());
   };
   var entry=gregtech.content.data.RegisteredFluids.get(b.field());

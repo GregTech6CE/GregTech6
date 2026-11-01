@@ -164,7 +164,7 @@ public final class SharedPurifiedCentrifugeRows {
   new PhaseBinding(21,"Helium3","gas","GenGas_Helium3","gt6ce:helium3",1000,1,4),
   new PhaseBinding(90,"Fluorine","gas","GenGas_Fluorine","gt6ce:fluorine",1000,53,85),
   new PhaseBinding(800,"Mercury","liquid","GenLiquid_Mercury","gt6ce:mercury",144,234,629),
-  new PhaseBinding(9791,"Honey","liquid","Honey","gt6ce:for_honey",1000,273,373),
+  new PhaseBinding(9791,"Honey","liquid","Honey","gt6ce:honey",1000,273,373),
   new PhaseBinding(9793,"Honeydew","liquid","Honeydew","gt6ce:honeydew",1000,273,373),
   new PhaseBinding(9802,"Ice","liquid","Ice","gt6ce:ice",1000,273,373));
  private static PhaseBinding binding(GTMaterial m,String phase){for(var b:PHASES)if(b.id==m.getId()&&b.name.equals(m.getName())&&(phase==null||b.phase.equals(phase)))return b;return null;}

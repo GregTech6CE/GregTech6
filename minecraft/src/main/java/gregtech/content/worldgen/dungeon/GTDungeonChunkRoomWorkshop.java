@@ -86,7 +86,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
      * draws from GT6's global RNG, not the dungeon room's RNG.
      */
     private static final String[] DRINKS = {"Purple_Drink", "Purple_Drink", "Purple_Drink",
-            "Vodka", "Mead", "Whiskey_GlenMcKenner", "Wine_Grape_Purple"};
+            "Vodka", "Mead", "Rum_Dark", "Wine_Grape_Purple"};
 
     /**
      * GT6's {@code ALL_SIDES_HORIZONTAL} ({@code CS:682}, {@code {2, 3, 4, 5}} = north, south, west,

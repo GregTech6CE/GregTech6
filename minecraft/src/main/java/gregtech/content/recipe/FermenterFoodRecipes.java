@@ -54,8 +54,6 @@ public final class FermenterFoodRecipes {
     /** Registers the chain and returns how many recipes were added. */
     public static int register() {
         MISSING.clear();
-        List<String> wines = flagged(RegisteredFluids.FluidFlags.WINE);
-        List<String> fruitJuices = flagged(RegisteredFluids.FluidFlags.FRUIT_JUICE);
 
         int count = 0;
         for (String[] entry : RECIPES) {
@@ -64,18 +62,6 @@ public final class FermenterFoodRecipes {
             if (add(entry[0], entry[1], INPUT_MB, outMb, duration)) count++;
         }
 
-        // GT6 Loader_Recipes_Food:646-649 — every wine can be fortified and every fruit juice
-        // becomes "Wine_Fruit". GT6 drives those two groups from FluidsGT.WINE / FRUIT_JUICE,
-        // which in this port are the WINE / FRUIT_JUICE fluid flags, and uses the same 50 mB
-        // input, so the map's collision check drops the group recipe wherever GT6 already has a
-        // dedicated one for that fluid (juice → cider, wine → vinegar).
-        for (String wine : wines) {
-            if (isFluid(wine, "Wine_Fortified")) continue;
-            if (add(wine, "Wine_Fortified", INPUT_MB, SLOW_OUTPUT_MB, 128)) count++;
-        }
-        for (String juice : fruitJuices) {
-            if (add(juice, "Wine_Fruit", INPUT_MB, OUTPUT_MB, 64)) count++;
-        }
         return count;
     }
 

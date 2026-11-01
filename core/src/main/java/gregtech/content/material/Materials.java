@@ -569,8 +569,6 @@ public final class Materials {
     public static final GTMaterial TungstenTrioxide = OreMaterials.TungstenTrioxide;
     public static final GTMaterial Tungstensteel = CompoundMaterials.Tungstensteel;
     public static final GTMaterial TungsticAcid = CompoundMaterials.TungsticAcid;
-    public static final GTMaterial UUAmplifier = CompoundMaterials.UUAmplifier;
-    public static final GTMaterial UUMatter = CompoundMaterials.UUMatter;
     public static final GTMaterial Ultimet = CompoundMaterials.Ultimet;
     public static final GTMaterial Unstable = ElementMaterials.Unstable;
     public static final GTMaterial Uranium = ElementMaterials.Uranium;
