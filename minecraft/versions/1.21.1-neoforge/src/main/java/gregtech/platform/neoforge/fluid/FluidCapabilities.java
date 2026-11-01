@@ -16,6 +16,12 @@ public final class FluidCapabilities {
     public static void register(RegisterCapabilitiesEvent event) {
         event.registerItem(
                 Capabilities.FluidHandler.ITEM,
+                (stack, context) -> new gregtech.engine.fluid.PortableTankHandler(stack),
+                net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
+                        .filter(gregtech.engine.fluid.PortableTankHandler::accepts)
+                        .toArray(net.minecraft.world.item.Item[]::new));
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
                 (stack, context) -> new gregtech.engine.fluid.PotionBottleHandler(stack),
                 net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
                         .filter(gregtech.engine.fluid.PotionBottleHandler::acceptsItem)

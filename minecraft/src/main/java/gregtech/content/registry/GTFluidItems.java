@@ -60,6 +60,12 @@ public final class GTFluidItems {
 
     public static void bindFluidItem(String field, RegistryObject<FluidItem> ro) {
         BY_FIELD.put(field, ro);
+        var entry = RegisteredFluids.get(field);
+        if (entry != null && entry.usesVanillaFluid()) {
+            String path = entry.isVanillaWater() ? "water" : "lava";
+            BY_FLUID.put(ResourceLocation.parse("minecraft:" + path), ro);
+            BY_FLUID.put(ResourceLocation.parse("minecraft:flowing_" + path), ro);
+        }
         var still=GTFluids.still(field); var flowing=GTFluids.flowing(field);
         if(still!=null) BY_FLUID.put(still.getId(),ro);
         if(flowing!=null) BY_FLUID.put(flowing.getId(),ro);

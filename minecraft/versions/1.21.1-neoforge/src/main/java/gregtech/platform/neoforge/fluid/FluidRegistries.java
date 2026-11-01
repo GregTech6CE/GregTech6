@@ -57,7 +57,13 @@ public final class FluidRegistries {
         for (var definition : RegisteredFluids.all().entrySet()) {
             String field = definition.getKey();
             var entry = definition.getValue();
-            if (entry.usesVanillaFluid()) continue;
+            if (entry.usesVanillaFluid()) {
+                String displayPath = RegisteredFluids.sanitizePath(entry.registryName());
+                if (paths.add(displayPath))
+                    ITEMS.register(
+                            "fluid_item_" + displayPath, () -> new FluidDisplayItem(entry, new Item.Properties()));
+                continue;
+            }
             String path = RegisteredFluids.sanitizePath(entry.registryName());
             if (!paths.add(path)) continue;
             String namespace = GTFluids.namespace(entry);

@@ -73,6 +73,12 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
             RegisteredFluids.FluidEntry flEntry = entry.getValue();
 
             if (flEntry.usesVanillaFluid()) {
+                String displayPath = RegisteredFluids.sanitizePath(flEntry.registryName());
+                if (seenItemPaths.add("fluid_item_" + displayPath))
+                    GTFluidItems.bindFluidItem(
+                            field,
+                            GTFluidItems.ITEMS.register(
+                                    "fluid_item_" + displayPath, () -> new FluidItem(flEntry, new Item.Properties())));
                 continue;
             }
 

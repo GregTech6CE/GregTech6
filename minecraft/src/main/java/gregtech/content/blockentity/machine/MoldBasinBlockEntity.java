@@ -171,8 +171,8 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         if (contentMaterial == null || contentAmount < getMoldRequiredMaterialUnits()) return;
 
         // Basin always produces OP.blockSolid (full block) — cools gradually
-        GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
-        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial));
+        GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial);
+        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(gregtech.engine.machine.crucible.CastingMaterials.block(BlockMaterialPrefix.blockSolid, solidMaterial));
         // An unavailable output must never erase the stored material.
         if (output.isEmpty()) return;
         long castingTemperature = temperature;
@@ -202,7 +202,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
                 || contentAmount < getMoldRequiredMaterialUnits()) return ItemStack.EMPTY;
         if (level.getBlockEntity(worldPosition.above()) instanceof MoldBlockEntity) return ItemStack.EMPTY;
         return gregtech.engine.material.MaterialUnification.canonical(
-                GTBlocks.getStack(BlockMaterialPrefix.blockSolid, getSolidifyingMaterial(contentMaterial)));
+                gregtech.engine.machine.crucible.CastingMaterials.block(BlockMaterialPrefix.blockSolid, gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial)));
     }
 
     @Override public ItemStack extractAutomaticOutput(int count, boolean simulate) {
@@ -259,11 +259,6 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         return SmelteryBlockEntityHelper.environmentTemperature(level, worldPosition);
     }
 
-    private GTMaterial getSolidifyingMaterial(GTMaterial molten) {
-        // In a full implementation, this would look up mTargetSolidifying
-        return molten;
-    }
-
     /**
      * Toggle auto-input for a specific horizontal direction.
      */
@@ -294,8 +289,8 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         if (contentMaterial == null || contentAmount < getMoldRequiredMaterialUnits()) return false;
         if (temperature >= contentMaterial.getMeltingPoint()) return false;
 
-        GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
-        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial));
+        GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial);
+        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(gregtech.engine.machine.crucible.CastingMaterials.block(BlockMaterialPrefix.blockSolid, solidMaterial));
         if (output.isEmpty()) return false;
 
         if (!usingPincers) {
@@ -318,8 +313,8 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
             solidOutput = ItemStack.EMPTY;
         }
         if (level == null || contentMaterial == null || contentAmount <= 0) return;
-        GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
-        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial));
+        GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial);
+        ItemStack output = gregtech.engine.material.MaterialUnification.canonical(gregtech.engine.machine.crucible.CastingMaterials.block(BlockMaterialPrefix.blockSolid, solidMaterial));
         if (!output.isEmpty() && contentAmount >= getMoldRequiredMaterialUnits()) {
             spawnOutputItem(output);
             contentAmount -= getMoldRequiredMaterialUnits();
@@ -416,7 +411,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         if (!isMoldInputSide(side)) return 0;
         // GT6: acid melts reject non-acid-proof basins
         if (!spec().acidProof() && material.has(gregtech.api.material.MaterialProperty.ACID)) return 0;
-        if (GTBlocks.getStack(BlockMaterialPrefix.blockSolid, getSolidifyingMaterial(material)).isEmpty()) return 0;
+        if (gregtech.engine.machine.crucible.CastingMaterials.block(BlockMaterialPrefix.blockSolid, gregtech.engine.machine.crucible.CastingMaterials.solidifying(material)).isEmpty()) return 0;
 
         long required = getMoldRequiredMaterialUnits();
         if (required <= 0) return 0;

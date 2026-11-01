@@ -44,7 +44,7 @@ import org.jetbrains.annotations.Nullable;
  * Supports: chisel shape selection (5x5 grid), auto-input from crucibles, redstone control,
  * soft hammer reset, and pincers item pickup.
  */
-public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Access, gregtech.api.sensor.TemperatureSource {
+public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockEntity implements MoldAutomation.Access, gregtech.api.sensor.TemperatureSource {
 
     private final CrucibleSpec spec;
 
@@ -247,9 +247,9 @@ public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Acces
 
     private ItemStack castingOutput(GTMaterial molten) {
         Object prefix = getMoldRecipePrefix();
-        GTMaterial material = getSolidifyingMaterial(molten);
+        GTMaterial material = gregtech.engine.machine.crucible.CastingMaterials.solidifying(molten);
         if (material == null) return ItemStack.EMPTY;
-        ItemStack result = prefix instanceof BlockMaterialPrefix block ? GTBlocks.getStack(block, material)
+        ItemStack result = prefix instanceof BlockMaterialPrefix block ? gregtech.engine.machine.crucible.CastingMaterials.block(block, material)
                 : prefix instanceof MaterialPrefix item ? GTItems.getStack(item, material) : ItemStack.EMPTY;
         if (!result.isEmpty() && isNuggetFallback()) result.setCount(Integer.bitCount(moldShape));
         return gregtech.engine.material.MaterialUnification.canonical(result);
@@ -320,12 +320,7 @@ public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Acces
 
     private boolean hasRedstoneIncoming() {
         if (level == null) return false;
-        for (Direction side : Direction.values()) {
-            if (level.hasSignal(worldPosition, side)) {
-                return true;
-            }
-        }
-        return false;
+        return level.hasNeighborSignal(worldPosition);
     }
 
     private long environmentTemperature() {
@@ -340,12 +335,6 @@ public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Acces
 
     private boolean isNuggetFallback() {
         return MoldShapes.isNuggetFallback(moldShape);
-    }
-
-    private GTMaterial getSolidifyingMaterial(GTMaterial molten) {
-        // In a full implementation, this would look up mTargetSolidifying
-        // For now, return the same material (it won't solidify until we implement that)
-        return molten;
     }
 
     /**
@@ -462,12 +451,12 @@ public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Acces
 
         if (contentMaterial != null && contentAmount > 0 && contentSolidified) {
             if (temperature >= contentMaterial.getMeltingPoint()) return false;
-            GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
+            GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial);
             Object prefix = getMoldRecipePrefix();
             if (prefix != null && solidMaterial != null) {
                 ItemStack output;
                 if (prefix instanceof BlockMaterialPrefix blockPrefix) {
-                    output = GTBlocks.getStack(blockPrefix, solidMaterial);
+                    output = gregtech.engine.machine.crucible.CastingMaterials.block(blockPrefix, solidMaterial);
                 } else if (prefix instanceof MaterialPrefix materialPrefix) {
                     output = GTItems.getStack(materialPrefix, solidMaterial);
                     if (isNuggetFallback()) {
@@ -514,13 +503,13 @@ public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Acces
                 basin.getMoldContentAmount(), required) == 0) return false;
         if (basin.getTemperature() >= basinMat.getMeltingPoint()) return false;
 
-        GTMaterial solidMaterial = getSolidifyingMaterial(basinMat);
+        GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(basinMat);
         Object prefix = getMoldRecipePrefix();
         if (prefix == null || solidMaterial == null) return false;
 
         ItemStack output;
         if (prefix instanceof BlockMaterialPrefix blockPrefix) {
-            output = GTBlocks.getStack(blockPrefix, solidMaterial);
+            output = gregtech.engine.machine.crucible.CastingMaterials.block(blockPrefix, solidMaterial);
         } else if (prefix instanceof MaterialPrefix materialPrefix) {
             output = GTItems.getStack(materialPrefix, solidMaterial);
             if (isNuggetFallback()) {
@@ -552,12 +541,12 @@ public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Acces
             solidOutput = ItemStack.EMPTY;
         }
         if (level == null || contentMaterial == null || contentAmount <= 0) return;
-        GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
+        GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial);
         Object prefix = getMoldRecipePrefix();
         if (prefix == null || solidMaterial == null) return;
         ItemStack output;
         if (prefix instanceof BlockMaterialPrefix blockPrefix) {
-            output = GTBlocks.getStack(blockPrefix, solidMaterial);
+            output = gregtech.engine.machine.crucible.CastingMaterials.block(blockPrefix, solidMaterial);
         } else if (prefix instanceof MaterialPrefix materialPrefix) {
             output = GTItems.getStack(materialPrefix, solidMaterial);
             if (isNuggetFallback()) {
@@ -795,8 +784,36 @@ public class MoldBlockEntity extends BlockEntity implements MoldAutomation.Acces
         }
     }
 
-    private void syncToClient() {
+    @Override protected void syncToClient() {
         SmelteryBlockEntityHelper.syncToClient(this);
+    }
+
+    @Override public boolean isEnergyType(gregtech.content.data.GregTechTags.Tag type, Direction side, boolean emitting) {
+        return !emitting && type == gregtech.content.data.GregTechTags.Energy.CU;
+    }
+
+    @Override public java.util.Collection<gregtech.content.data.GregTechTags.Tag> getEnergyTypes(Direction side) {
+        return java.util.List.of(gregtech.content.data.GregTechTags.Energy.CU);
+    }
+
+    @Override public long getEnergySizeInputMin(gregtech.content.data.GregTechTags.Tag type, Direction side) { return 16; }
+    @Override public long getEnergySizeInputRecommended(gregtech.content.data.GregTechTags.Tag type, Direction side) { return 2048; }
+    @Override public long getEnergySizeInputMax(gregtech.content.data.GregTechTags.Tag type, Direction side) { return Long.MAX_VALUE; }
+    @Override public long getEnergySizeOutputRecommended(gregtech.content.data.GregTechTags.Tag type, Direction side) { return 0; }
+    @Override public long getEnergyOffered(gregtech.content.data.GregTechTags.Tag type, Direction side, long size) { return 0; }
+    @Override public long getEnergyDemanded(gregtech.content.data.GregTechTags.Tag type, Direction side, long size) {
+        return isEnergyType(type, side, false) ? Math.max(0, temperature - 200) : 0;
+    }
+
+    @Override public long doInject(gregtech.content.data.GregTechTags.Tag type, Direction side, long size, long amount, boolean execute) {
+        if (!isEnergyType(type, side, false) || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
+        if (execute) {
+            long packet = Math.abs(size);
+            long cooling = amount > Long.MAX_VALUE / packet ? Long.MAX_VALUE : packet * amount;
+            temperature = Math.max(1, temperature - Math.min(temperature, cooling));
+            setChanged();
+        }
+        return amount;
     }
 
     /** GT6's workshop chooses each prepared mould from the registered casting recipes. */

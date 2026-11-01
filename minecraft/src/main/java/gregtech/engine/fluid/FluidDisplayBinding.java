@@ -43,7 +43,8 @@ public final class FluidDisplayBinding {
         if (fluid.isEmpty()) return ItemStack.EMPTY;
         var fluidId = BuiltInRegistries.FLUID.getKey(fluid.getFluid());
         net.minecraft.world.item.Item carrierItem = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(
-                fluidId.getNamespace(), "fluid_item_" + fluidId.getPath()));
+                fluid.getFluid() == net.minecraft.world.level.material.Fluids.WATER || fluid.getFluid() == net.minecraft.world.level.material.Fluids.LAVA
+                        ? "gt6ce" : fluidId.getNamespace(), "fluid_item_" + fluidId.getPath()));
         if (!(carrierItem instanceof FluidDisplayItem))
             for (var handle : gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
                 if (!(handle.get() instanceof FluidDisplayItem)) continue;
@@ -61,6 +62,8 @@ public final class FluidDisplayBinding {
     public static FluidStack resolve(HolderLookup.Provider lookup, ItemStack stack) {
         if (!(stack.getItem() instanceof FluidDisplayItem carrierItem)) return FluidStack.EMPTY;
         if (hasPayload(stack)) return FluidStack.parseOptional(lookup, gregtech.content.data.UsbDataMedia.tag(stack).getCompound(TAG));
+        if (carrierItem.fluidEntry().isVanillaWater()) return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000);
+        if (carrierItem.fluidEntry().isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, 1000);
         var itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
         var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),
                 RegisteredFluids.sanitizePath(carrierItem.fluidEntry().registryName()));
@@ -106,6 +109,8 @@ public final class FluidDisplayBinding {
     public static FluidStack resolve(ItemStack stack) {
         if (!(stack.getItem() instanceof FluidItem carrierItem)) return FluidStack.EMPTY;
         if (hasPayload(stack)) return FluidStack.loadFluidStackFromNBT(stack.getTag().getCompound(TAG));
+        if (carrierItem.fluidEntry().isVanillaWater()) return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000);
+        if (carrierItem.fluidEntry().isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, 1000);
         var itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
         var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),
                 RegisteredFluids.sanitizePath(carrierItem.fluidEntry().registryName()));

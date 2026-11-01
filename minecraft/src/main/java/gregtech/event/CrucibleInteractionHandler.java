@@ -38,11 +38,17 @@ public final class CrucibleInteractionHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (event.getEntity().isSpectator()) return;
-        if (event.getHitVec().getDirection() != Direction.UP) {
-            return;
-        }
         BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
         boolean container = gregtech.engine.machine.crucible.CrucibleContainerInteraction.handles(event.getItemStack());
+        if (event.getHitVec().getDirection() != Direction.UP) {
+            if (container && (blockEntity instanceof gregtech.engine.fluid.MoltenMaterialStorage
+                    || blockEntity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port
+                    && port.crucibleController() != null)) {
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.FAIL);
+            }
+            return;
+        }
         if (event.getLevel().isClientSide()) {
             var state = event.getLevel().getBlockState(event.getPos());
             var formed = gregtech.content.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
