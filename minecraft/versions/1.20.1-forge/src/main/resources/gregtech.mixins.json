@@ -57,6 +57,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "GeneratedTagLanguageMixin",
     "OreTerrainParticleMixin",
     "PacketFrameDecoderMixin",
     "FormConversionGhostPlaceMixin",

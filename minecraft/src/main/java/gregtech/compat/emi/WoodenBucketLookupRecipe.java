@@ -37,7 +37,7 @@ final class WoodenBucketLookupRecipe implements EmiRecipe {
         }
     }
     @Override public EmiRecipeCategory getCategory() { return VanillaEmiRecipeCategories.CRAFTING; }
-    @Override public ResourceLocation getId() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "wooden_bucket_lookup/" + ((WoodenBucketItem)output.getItem()).band().id()); }
+    @Override public ResourceLocation getId() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "/wooden_bucket_lookup/" + ((WoodenBucketItem)output.getItem()).band().id()); }
     @Override public List<EmiIngredient> getInputs() { return inputs; }
     @Override public List<EmiStack> getOutputs() { return outputs; }
     @Override public int getDisplayWidth() { return 118; }

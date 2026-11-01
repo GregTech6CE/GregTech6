@@ -12,6 +12,9 @@ public final class StructureLayoutClient {
     private StructureLayoutClient() {}
 
     public static void accept(PacketSyncStructureLayouts packet) {
+        // Login also sends an empty/unchanged overlay. Rebuilding every recipe for that packet
+        // duplicates EMI's normal recipe/tag synchronization and allocates another working index.
+        if (StructureLayoutOverlayRuntime.documents().equals(packet.layouts())) return;
         StructureLayoutOverlayRuntime.applySynced(packet.layouts());
         refresh();
     }
