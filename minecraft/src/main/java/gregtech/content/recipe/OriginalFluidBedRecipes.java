@@ -20,6 +20,11 @@ final class OriginalFluidBedRecipes {
     private OriginalFluidBedRecipes() {}
 
     static void register() {
+        var calcite = GTFluids.stack("GenMolten_Calcite", 1);
+        if (calcite == null || calcite.isEmpty()) {
+            LogUtils.getLogger().warn("[gregtech] Fluidized-bed fuels unavailable: molten calcite is not registered");
+            return;
+        }
         int added = 0;
         int skipped = 0;
         int rejected = 0;
@@ -27,8 +32,7 @@ final class OriginalFluidBedRecipes {
             GTMaterial material = GTMaterialRegistry.get(fuel.materialId());
             for (var form : OriginalFluidBedFuelRows.FORMS) {
                 ItemStack input = input(material, form.prefix());
-                var calcite = GTFluids.stack("Calcite", form.calcite());
-                if (input.isEmpty() || calcite == null || calcite.isEmpty()) {
+                if (input.isEmpty()) {
                     skipped++;
                     continue;
                 }
@@ -41,8 +45,10 @@ final class OriginalFluidBedRecipes {
                     skipped++;
                     continue;
                 }
+                var calciteInput = calcite.copy();
+                calciteInput.setAmount(form.calcite());
                 var recipe = FuelRecipeMaps.FluidBed.addRecipe1(
-                        true, -1, OriginalFluidBedFuelRows.heatUnits(fuel, form), input, calcite, null, ash);
+                        true, -1, OriginalFluidBedFuelRows.heatUnits(fuel, form), input, calciteInput, null, ash);
                 if (recipe == null) rejected++;
                 else added++;
             }
