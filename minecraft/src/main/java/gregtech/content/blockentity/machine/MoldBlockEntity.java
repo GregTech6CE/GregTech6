@@ -210,6 +210,11 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
 
     private void solidify() {
         if (contentMaterial == null || contentAmount <= 0) return;
+        // GT6 converts the stored material as it freezes, not only the extracted item.
+        // Also normalize older saves whose solidified flag still carries the liquid source.
+        GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial);
+        if (contentSolidified && contentMaterial == solidMaterial) return;
+        contentMaterial = solidMaterial;
         // Mark as solidified — content stays visible in mold at 2px height, cools gradually
         contentSolidified = true;
         syncToClient();
@@ -296,7 +301,7 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
 
         // Produce shaped output from basin content + mold shape — cools gradually
         if (contentMaterial == null) {
-            contentMaterial = basinMat;
+            contentMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(basinMat);
             contentAmount = required;
             contentSolidified = true;
             temperature = basin.getTemperature();

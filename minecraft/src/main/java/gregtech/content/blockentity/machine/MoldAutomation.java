@@ -58,9 +58,11 @@ public final class MoldAutomation implements IFluidHandler, IItemHandler {
         var ratio = MoltenFluidHandler.ratio(material, fluid);
         long available = MoltenFluidPlans.toUnits(fluid.getAmount(), ratio);
         long accepted = mold.fillMold(material, available, temperature, side, false);
-        int amount = MoltenFluidPlans.millibuckets(accepted, ratio);
-        // Never create fractional-mB material or mutate a mold on a capability simulation.
-        if (amount <= 0 || amount > fluid.getAmount() || MoltenFluidPlans.toUnits(amount, ratio) != accepted) return 0;
+        long charge = ratio.castingMillibuckets(accepted);
+        // Lava's 9 U/bucket does not divide into whole mB per plate. GT6 rounds the
+        // consumed charge up: never mint material, and never mutate on simulation.
+        if (charge <= 0 || charge > fluid.getAmount()) return 0;
+        int amount = (int) charge;
         if (action.execute() && mold.fillMold(material, accepted, temperature, side, true) != accepted)
             throw new IllegalStateException("Casting input changed during fluid transfer");
         return amount;
