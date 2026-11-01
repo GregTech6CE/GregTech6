@@ -12,7 +12,7 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 /** Shared presentation colours for energy names and units, independent of the tooltip provider. */
 public final class EnergyText {
     private static final Pattern UNIT = Pattern.compile(
-            "(?<![\\p{L}_])(SU|MJ|RF|AU|QU|MU|LU|HU|CU|KU|RU|EU|NU|TU|Ordo|Aer|Aqua|Terra|Ignis|Perditio)(?![\\p{L}\\p{N}_])");
+            "(?<![\\p{L}_])(?:SU|MJ|RF|AU|QU|MU|LU|HU|CU|KU|RU|EU|NU|TU|(?:Ordo|Aer|Aqua|Terra|Ignis|Perditio)(?=\\s*/\\s*t\\b))(?![\\p{L}\\p{N}_])");
 
     private EnergyText() {}
 
@@ -41,6 +41,8 @@ public final class EnergyText {
 
     /** Called at display time: retain inherited styles/events, colour only energy spans. */
     public static Component format(Component source) {
+        // Aspect names are also ordinary words, such as Aqua in Aqua Regia.
+        // Bare aspect units are styled by their energy translation key or unit().
         Component named = names(source);
         MutableComponent result = Component.empty();
         boolean[] changed = {false};
