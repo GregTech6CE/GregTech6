@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Explicit modern vanilla compositions, applied after the imported item-data table. */
-final class VanillaMaterialCorrections {
+public final class VanillaMaterialCorrections {
     private static final long U = GTValues.U;
     private VanillaMaterialCorrections() {}
 
-    static void register() {
+    public static void register() {
         family("Stone", new String[]{"stone", "smooth_stone", "cobblestone", "mossy_cobblestone",
                 "stone_bricks", "mossy_stone_bricks", "cracked_stone_bricks", "chiseled_stone_bricks"}, 9 * U);
         family("Stone", new String[]{"stone_slab", "smooth_stone_slab", "cobblestone_slab",

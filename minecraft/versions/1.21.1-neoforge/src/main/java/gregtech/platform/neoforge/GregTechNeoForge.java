@@ -156,6 +156,9 @@ public final class GregTechNeoForge {
         VanillaUnificationLoader.register();
         gregtech.content.material.ModMaterialUnificationLoader.register();
         VanillaCompositionLoader.register();
+        gregtech.content.material.VanillaMaterialCorrections.register();
+        gregtech.content.registry.GTBars.registerCompositions();
+        gregtech.content.recipe.VanillaWoodProcessingRecipes.registerMaterials();
         gregtech.content.recipe.PanelMaterialRegistration.register();
         gregtech.content.recipe.TransportMaterialRegistration.register();
         gregtech.content.data.MachineRecipeMaps.bootstrap();
