@@ -299,7 +299,6 @@ final class GTChemGen {
         r("Centrifuge", 64, 64, null, NONE, sp("w:100000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
         r("Centrifuge", 64, 64, null, NONE, sp("f:MnWtr:100000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
         r("Centrifuge", 64, 64, null, NONE, sp("f:DistW:100000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
-        r("Centrifuge", 64, 64, null, NONE, sp("f:SpDew:100000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
         r("Centrifuge", 64, 64, null, NONE, sp("f:Water_Geothermal:50000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
         source(true, "Centrifuge", 64, 64, null, NONE, sp("mu:HDO:liquid:648648000:up"), sp("mu:D2O:liquid:64864800:down", "mu:T2O:liquid:6486480:down"), NONE);
         source(true, "Centrifuge", 64, 64, null, NONE, sp("mu:D2O:liquid:648648000:up"), sp("mu:T2O:liquid:64864800:down"), NONE);
@@ -343,11 +342,9 @@ final class GTChemGen {
         r("Drying", 16, 1000, null, sp("v:snowball:1"), NONE, sp("f:DistW:250"), NONE);
         r("Drying", 16, 4000, null, sp("v:snow:1"), NONE, sp("f:DistW:1000"), NONE);
         r("Drying", 16, 16, null, NONE, sp("w:10"), sp("f:DistW:8"), NONE);
-        r("Drying", 16, 16, null, NONE, sp("f:SpDew:10"), sp("f:DistW:8"), NONE);
         r("Drying", 16, 16, null, NONE, sp("f:MnWtr:10"), sp("f:DistW:8"), NONE);
         r("Drying", 16, 16, null, NONE, sp("f:Water_Geothermal:25"), sp("f:DistW:20"), NONE);
         r("Distillery", 16, 16, null, sp("tag:0"), sp("w:10"), sp("f:DistW:8"), NONE);
-        r("Distillery", 16, 16, null, sp("tag:0"), sp("f:SpDew:10"), sp("f:DistW:8"), NONE);
         r("Distillery", 16, 16, null, sp("tag:0"), sp("f:MnWtr:10"), sp("f:DistW:8"), NONE);
         r("Distillery", 16, 16, null, sp("tag:0"), sp("f:Water_Geothermal:25"), sp("f:DistW:20"), NONE);
         r("Drying", 16, 11200, null, NONE, sp("f:Saltwater:7000"), sp("f:DistW:6750"), sp("omd:NaCl:250"));

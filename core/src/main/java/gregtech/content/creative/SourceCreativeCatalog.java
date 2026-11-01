@@ -2131,7 +2131,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("soul_comb", new Entry("nature_foods", 548));
         ITEMS.put("soy_milk", new Entry("bottles", 212));
         ITEMS.put("soylent_burger", new Entry("nature_foods", 427));
-        ITEMS.put("spectral_dew", new Entry("bottles", 153));
         ITEMS.put("spumoni_chocolate_ice_cream", new Entry("nature_foods", 527));
         ITEMS.put("squeezer_bronze", new Entry("basic_machines", 705));
         ITEMS.put("squeezer_steel", new Entry("basic_machines", 705));

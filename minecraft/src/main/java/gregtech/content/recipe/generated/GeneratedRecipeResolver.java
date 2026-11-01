@@ -154,9 +154,9 @@ public final class GeneratedRecipeResolver {
         registerSource(optimize, mapName, eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);
         if (!SourceChemicalWaterRows.matches(mapName, itemIn, fluidIn)) return;
         waterLoopRows++;
-        // Original FL.waters: vanilla water, mineral water, distilled water, spectral dew.
-        // The ordinary-water row above keeps established explicit-row collision precedence.
-        for (String water : new String[]{"MnWtr", "DistW", "SpDew"}) {
+        // Original FL.waters includes vanilla water, mineral water, distilled water and spectral dew;
+        // the port retires spectral dew as a type-D residual and keeps the other three.
+        for (String water : new String[]{"MnWtr", "DistW"}) {
             String[] variant = fluidIn.clone();
             for (int i = 0; i < variant.length; i++)
                 if (variant[i].startsWith("w:")) variant[i] = "f:" + water + ":" + variant[i].substring(2);

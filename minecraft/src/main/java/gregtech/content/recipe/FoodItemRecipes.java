@@ -98,7 +98,7 @@ public final class FoodItemRecipes {
         for (var material : gregtech.content.data.MaterialGroups.Flour.getReRegistrations()) {
             var flour = GTItems.getStack(MaterialPrefix.dust, material.resolve());
             if (flour.isEmpty() || dough.isEmpty()) continue;
-            for (String water : new String[] {"Water", "MnWtr", "DistW", "SpDew"}) {
+            for (String water : new String[] {"Water", "MnWtr", "DistW"}) {
                 var liquid = water.equals("Water")
                         ? new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 250) : fluid(water, 250);
                 if (!liquid.isEmpty() && MachineRecipeMaps.Mixer.addRecipe1(false, 16, 16,

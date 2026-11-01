@@ -28,7 +28,7 @@ public final class SurvivalUtilityRecipes extends OriginalRecipeBatch {
                     items(item("minecraft:" + color.getName() + "_wool", 1), new ItemStack(Items.STICK, 8)), items(new ItemStack(Items.PAINTING)), null, null);
     }
     private void supplies() {
-        for (String water : new String[]{"Water", "MnWtr", "DistW", "SpDew"})
+        for (String water : new String[]{"Water", "MnWtr", "DistW"})
             add("obsidian/" + water, MachineRecipeMaps.Mixer, 16, 16, null, items(new ItemStack(Items.OBSIDIAN)),
                     fluids(fluid(water, 50), new FluidStack(Fluids.LAVA, 1000)), null);
         add("enchanted_apple", MachineRecipeMaps.Bath, 128, 0, items(new ItemStack(Items.GOLDEN_APPLE)), items(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE)),

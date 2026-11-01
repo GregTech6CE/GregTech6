@@ -532,9 +532,6 @@ public class FluidCatalog {
                             .withFlags(FluidFlags.LIQUID | FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH),
             River_Water =
                     fluid("River_Water", "riverwater").withFlags(FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH),
-            SpDew =
-                    fluid("SpDew", "spectral_dew")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH | FluidFlags.INFINITE),
             Water_Geothermal =
                     fluid("Water_Geothermal", "watergeothermal")
                             .withFlags(FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH | FluidFlags.THERMOS),

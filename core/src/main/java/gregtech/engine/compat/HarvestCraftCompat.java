@@ -10,7 +10,7 @@ import java.util.List;
 public final class HarvestCraftCompat {
     private static final String SOURCE = "Compat_Recipes_HarvestCraft.java";
     private static final String MOD = "pamhc2foodcore";
-    private static final String[] WATERS = {"Water", "MnWtr", "DistW", "SpDew"};
+    private static final String[] WATERS = {"Water", "MnWtr", "DistW"};
 
     private HarvestCraftCompat() {}
 

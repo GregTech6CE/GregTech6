@@ -38,8 +38,6 @@ final class GTOresGen {
         r("Mixer", 16, 16, null, sp("omd:SluiceSand:1000"), sp("f:MnWtr:900"), sp("f:Sluice:900"), NONE);
         r("Mixer", 16, 16, null, sp("omdu:SluiceSand:72072000"), sp("f:DistW:100"), sp("f:Sluice:100"), NONE);
         r("Mixer", 16, 16, null, sp("omd:SluiceSand:1000"), sp("f:DistW:900"), sp("f:Sluice:900"), NONE);
-        r("Mixer", 16, 16, null, sp("omdu:SluiceSand:72072000"), sp("f:SpDew:100"), sp("f:Sluice:100"), NONE);
-        r("Mixer", 16, 16, null, sp("omd:SluiceSand:1000"), sp("f:SpDew:900"), sp("f:Sluice:900"), NONE);
         r("Drying", 16, 100, null, NONE, sp("f:Sluice:100"), sp("f:DistW:50"), sp("omdu:SluiceSand:72072000"));
         r("Centrifuge", 64, 16, ch(9640, 100, 100, 100, 100, 100), NONE, sp("f:Sluice:100"), sp("w:50"), sp("i:dustTiny:Stone:1", "i:dustTiny:Cu:2", "i:dustTiny:Sn:1", "i:dustTiny:Zn:1", "i:dustTiny:Sb:1", "i:dustTiny:Cr:1"));
         r("MagneticSeparator", 16, 16, ch(9640, 72, 72, 72, 72, 72), sp("i:dustTiny:SluiceSand:1"), NONE, NONE, sp("i:dustTiny:Stone:1", "i:dustTiny:Fe:2", "i:dustTiny:Nd:1", "i:dustTiny:Ni:1", "i:dustTiny:Co:1", "i:dustTiny:Mn:1"));

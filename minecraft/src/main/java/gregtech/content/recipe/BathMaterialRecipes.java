@@ -85,7 +85,7 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
             GTMaterial material = GTMaterialRegistry.get(name);
             if (material.isValid()) sources.add(material);
         }
-        var waters = RecipeInputGroups.fluids("ordinary_water", "Water", "SpDew", "MnWtr");
+        var waters = RecipeInputGroups.fluids("ordinary_water", "Water", "MnWtr");
         for (int form = 0; form < DUST_FORMS.length; form++) {
             MaterialPrefix prefix = PrefixRegistry.byName(DUST_FORMS[form]);
             if (prefix == null) continue;

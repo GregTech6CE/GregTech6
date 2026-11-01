@@ -110,7 +110,7 @@ public final class RecipeInputGroups {
     private static List<Coolant> coolants;
     public static synchronized List<Coolant> coolants(boolean food) {
         if (coolants == null) coolants = List.of(
-                new Coolant("Water", 4, fluids("ordinary_water", "Water", "SpDew", "MnWtr")),
+                new Coolant("Water", 4, fluids("ordinary_water", "Water", "MnWtr")),
                 new Coolant("DistW", 3, fluids("distilled_water", "DistW")),
                 new Coolant("Lubricant", 1, fluids("lubricants", "Lubricant", "Lubricant")));
         return food ? coolants.subList(0, 2) : coolants;

@@ -294,7 +294,6 @@ public final class GTDrinksGen {
             new DrinkNutritionRows.Row("sluicejuice", 0, 0.0f, 0, 0, 0, 0, 0, 0, true, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.moveSlowdown.id", 2000, 3, 100), new DrinkNutritionRows.Effect("Potion.poison.id", 100, 1, 100))),
             new DrinkNutritionRows.Row("soda", 1, 0.1f, 0, 0, 0, 0, 0, 0, false, false, "drink", false, true, false, List.of()),
             new DrinkNutritionRows.Row("soymilk", 0, 0.0f, 0, 0, 0, 10, 0, 0, true, false, "drink", true, false, false, List.of()),
-            new DrinkNutritionRows.Row("spectral_dew", 0, 0.0f, 0, 0, 0, 0, 0, 0, true, false, "drink", false, true, false, List.of()),
             new DrinkNutritionRows.Row("spoiledmilk", 0, 0.0f, 0, 0, 0, 0, 0, 0, true, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 100))),
             new DrinkNutritionRows.Row("starfruitjuice", 3, 0.4f, 0, 0, 0, 20, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 20))),
             new DrinkNutritionRows.Row("starfruitsmoothie", 2, 0.2f, 0, 0, 0, 20, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 20))),

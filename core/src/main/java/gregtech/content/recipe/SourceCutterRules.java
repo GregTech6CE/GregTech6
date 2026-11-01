@@ -26,9 +26,9 @@ public final class SourceCutterRules {
     public record Coolant(String field, int multiplier) {}
 
     public record Decision(boolean allowed, long ticks, int fluidAmount, boolean sourceProfile) {}
-    // The source array has five entries but its loop is i < 4: no LubRoCant or mineral water.
+    // Spectral dew is retired; the remaining entries follow the source loop order.
     private static final List<Coolant> COOLANTS = List.of(
-            new Coolant("Water", 4), new Coolant("SpDew", 4), new Coolant("DistW", 3), new Coolant("Lubricant", 1));
+            new Coolant("Water", 4), new Coolant("DistW", 3), new Coolant("Lubricant", 1));
 
     public static List<Coolant> sourceCoolants() {
         return COOLANTS;

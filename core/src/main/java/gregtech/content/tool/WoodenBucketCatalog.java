@@ -54,7 +54,6 @@ public final class WoodenBucketCatalog {
             new Content("rainbow_sap", "Rainbow Sap", 13, List.of("Sap_Rainbow")),
             new Content("soy_milk", "Soy Milk", 14, List.of("MilkSoy")),
             new Content("glue", "Glue", 15, List.of("Glue")),
-            new Content("spectral_dew", "Spectral Dew", 16, List.of("SpDew")),
             new Content(
                     "seed_oil",
                     "Seed Oil",

@@ -9,3 +9,4 @@
 | 赞助证书 | 删除 `supporter_certificate` 及关联实现。 | 原版赞助体系未沿用。 |
 | 重复钥匙 | 删除 `key_*` 旧项及贴图，保留 `brass_key` 等 `*_key`。 | 同一把钥匙只保留一套身份。 |
 | 重复主控 | 旧 `large_crucible_main/large_boiler_main/bedrock_drill_main/lightning_rod_main` 入口移除，使用对应原版型号。 | 去掉移植期重复主控。 |
+| 光谱露物品 | 删除 `spectral_dew` 瓶、`wooden_bucket_*_spectral_dew` 木桶（9 种）及对应模型、贴图、堆组和语言键。 | 对应流体 `spectral_dew` 停注，见[流体移除](fluid-removal.md)。 |

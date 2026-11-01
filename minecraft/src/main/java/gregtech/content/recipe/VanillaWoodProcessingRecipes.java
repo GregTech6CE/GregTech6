@@ -65,7 +65,7 @@ public final class VanillaWoodProcessingRecipes extends OriginalRecipeBatch {
             MachineRecipeMaps.pulverizing(
                     mc(raw, 1), RegisteredWoodSurvivalRecipes.pulp(wood, 6 * GTValues.U), bark, 50);
             RegisteredWoodSurvivalRecipes.pulverize(mc(stripped, 1), wood, 7 * GTValues.U);
-            for (String water : new String[] {"Water", "DistW", "SpDew", "MnWtr"})
+            for (String water : new String[] {"Water", "DistW", "MnWtr"})
                 add(
                         "debark/" + raw + "/" + water,
                         MachineRecipeMaps.PressureWasher,

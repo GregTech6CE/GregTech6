@@ -40,7 +40,7 @@ public final class DyeProcessingRecipes {
         for(String color:RegisteredFluids.DYE_OREDICTS_POST){
             String vanilla=color.replace("LightBlue","light_blue").replace("LightGray","light_gray").toLowerCase(Locale.ROOT);
             var dye=item("minecraft:"+vanilla+"_dye",1);
-            var waters=RecipeInputGroups.fluids("water","Water","MnWtr","DistW","SpDew");
+            var waters=RecipeInputGroups.fluids("water","Water","MnWtr","DistW");
             add(MachineRecipeMaps.Mixer,waters.apply(new Recipe(new ItemStack[]{dye.copy()},null,null,null,
                     new FluidStack[]{waters.stack(144)},new FluidStack[]{fluid("Dye_Water_"+color,216)},16,16,0),0));
             var naturalDyes=RecipeInputGroups.fluids("dyes/"+vanilla+"/natural","Dye_Water_"+color,"Dye_Flower_"+color);
@@ -150,7 +150,7 @@ public final class DyeProcessingRecipes {
             items.accept(materialTag("clay_dusts").getPath(),dust(clay,1));
             items.accept(materialTag("small_clay_dusts").getPath(),GTItems.getStack(MaterialPrefix.dustSmall,GTMaterialRegistry.get(clay),1));
         }
-        for(String water:new String[]{"Water","MnWtr","DistW","SpDew"}) fluids.accept(materialTag("water").getPath(),fluid(water,1));
+        for(String water:new String[]{"Water","MnWtr","DistW"}) fluids.accept(materialTag("water").getPath(),fluid(water,1));
     }
 
     /**

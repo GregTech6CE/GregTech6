@@ -21,7 +21,6 @@ public final class GTBottlesGen {
         "mineral_soda", "Mineral Soda", "Mineralsoda",
         "ice_water", "Ice Water", "Ice",
         "dirty_water", "Dirty Water", "Dirty_Water",
-        "spectral_dew", "Spectral Dew", "SpDew",
         "grape_vinegar", "Grape Vinegar", "Vinegar_Grape",
         "grape_smoothie", "Grape Smoothie", "Smoothie_Grape_White",
         "grape_smoothie_2", "Grape Smoothie", "Smoothie_Grape_Red",

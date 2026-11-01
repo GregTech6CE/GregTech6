@@ -26,15 +26,12 @@ final class GTTemporaryGen {
         r("Extruder", 512, 512, null, sp("i:dust:Graphite:1", "tech:extruder_shape_rod:1"), NONE, NONE, sp("i:stick:Graphite:1"));
         r("Extruder", 512, 512, null, sp("i:dust:Graphite:2", "tech:extruder_shape_longrod:1"), NONE, NONE, sp("i:stickLong:Graphite:1"));
         r("Injector", 16, 16, null, sp("omd:Lapis:1000"), sp("f:DistW:1000"), sp("f:Coolant_IC2:1000"), NONE);
-        r("Injector", 16, 16, null, sp("omd:Lapis:2000"), sp("f:SpDew:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Lapis:2000"), sp("f:MnWtr:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Lapis:2000"), sp("w:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Lazurite:1000"), sp("f:DistW:1000"), sp("f:Coolant_IC2:1000"), NONE);
-        r("Injector", 16, 16, null, sp("omd:Lazurite:2000"), sp("f:SpDew:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Lazurite:2000"), sp("f:MnWtr:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Lazurite:2000"), sp("w:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Sodalite:1000"), sp("f:DistW:1000"), sp("f:Coolant_IC2:1000"), NONE);
-        r("Injector", 16, 16, null, sp("omd:Sodalite:2000"), sp("f:SpDew:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Sodalite:2000"), sp("f:MnWtr:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Injector", 16, 16, null, sp("omd:Sodalite:2000"), sp("w:1000"), sp("f:Coolant_IC2:1000"), NONE);
         r("Bath", 0, 16, null, sp("tech:neli_reed:1"), sp("w:250"), NONE, sp("v:paper:1"));

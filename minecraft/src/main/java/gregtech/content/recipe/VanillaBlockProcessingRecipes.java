@@ -181,7 +181,7 @@ public final class VanillaBlockProcessingRecipes extends OriginalRecipeBatch {
     private void washing() {
         for (String[] pair :
                 new String[][] {{"mossy_cobblestone", "cobblestone"}, {"mossy_stone_bricks", "stone_bricks"}})
-            for (String water : new String[] {"Water", "DistW", "SpDew", "MnWtr"})
+            for (String water : new String[] {"Water", "DistW", "MnWtr"})
                 add(
                         "wash/" + pair[0] + "/" + water,
                         MachineRecipeMaps.PressureWasher,

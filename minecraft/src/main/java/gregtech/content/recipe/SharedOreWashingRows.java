@@ -128,7 +128,7 @@ public final class SharedOreWashingRows {
   for(int i=0;i<a.length;i++)if(a[i].getFluid()!=b[i].getFluid()||a[i].getAmount()!=b[i].getAmount())return false;
   return true;
  }
- private static final String[] WATERS={"Water","MnWtr","DistW","SpDew"};
+ private static final String[] WATERS={"Water","MnWtr","DistW"};
 
  private static void ores(GTMaterial m,Snapshot s,List<Definition> out){
   NativeForm dust=s.direct(MaterialPrefix.dust,m,1),whole=s.input(MaterialPrefix.crushed,m,1),tiny=s.input(MaterialPrefix.crushedTiny,m,1);
@@ -305,7 +305,7 @@ public final class SharedOreWashingRows {
   if(amount<=0||!FluidCatalog.canonicalField(field).equals(field))return FluidStack.EMPTY;
   var entry=definitions.get(field);if(entry==null)return FluidStack.EMPTY;
   var builtin=switch(field){case "Water"->FluidCatalog.Water;case "MnWtr"->FluidCatalog.MnWtr;
-   case "DistW"->FluidCatalog.DistW;case "SpDew"->FluidCatalog.SpDew;case "Sluice"->FluidCatalog.Sluice;
+   case "DistW"->FluidCatalog.DistW;case "Sluice"->FluidCatalog.Sluice;
    case "Steam"->FluidCatalog.Steam;default->null;};
   if(field.equals("GenLiquid_Mercury")){
    if(!ReviewedOreGeneratedFluids.mercury(entry))return FluidStack.EMPTY;

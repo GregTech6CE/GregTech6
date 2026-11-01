@@ -26,5 +26,5 @@
 | 旁观者界面 | 旁观者可只读查看已接入的机器及储存界面，不能取放或操作。 | 适配现代 MC 旁观模式，方便检查。 |
 | 染色材料身份 | 原版 GT6 的 `Black`…`White`（8250–8265）改名 `DyeBlack`…`DyeWhite`；移植期另建的 9500–9515 `Dye*` 重复材料停注。 | 同一颜色只保留一套身份，数值 ID 沿用原版染色材料。 |
 | 作物与食品物品 | 删除 `barley`、`oats`、`rice`、`peanut`、`butter`、`salted_butter`、`tofu_bar`、`tofu_burger`、`vanilla_ice_cream`、`peanut_butter_ice_cream`、`pistachio_ice_cream`、`neapolitan_ice_cream`、`spumoni_vanilla_ice_cream` 食品条目。 | 对应作物材料停注，见[材料移除](material-removal.md)；本端未移植这些作物与食品加工。 |
-| 瓶装流体物品 | 删除 `bottled_indigo_dye`、`peanut_butter`、`whale_oil`、`rice_water`、`rice_vinegar`。 | 对应材料与流体停注，流体登记见[流体移除](fluid-removal.md)。 |
+| 瓶装流体物品 | 删除 `bottled_indigo_dye`、`peanut_butter`、`whale_oil`、`rice_water`、`rice_vinegar`、`spectral_dew`。 | 对应材料与流体停注，流体登记见[流体移除](fluid-removal.md)。 |
 | 反应堆燃料棒 | 删除 `reactor_rod_9229`、`reactor_rod_9239`、`reactor_rod_9249` 与乏燃料 `reactor_rod_9329`、`reactor_rod_9339`、`reactor_rod_9349`（Yellorium、Blutonium、Ludicrite）。 | 对应材料停注，见[材料移除](material-removal.md)。 |

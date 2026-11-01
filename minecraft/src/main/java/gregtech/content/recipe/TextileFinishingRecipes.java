@@ -40,7 +40,7 @@ public final class TextileFinishingRecipes extends OriginalRecipeBatch {
             bleach(name + "_stained_glass", "glass", 50);
             bleach(name + "_stained_glass_pane", "glass_pane", 20);
         }
-        for (String water : new String[]{"Water", "MnWtr", "DistW", "SpDew"})
+        for (String water : new String[]{"Water", "MnWtr", "DistW"})
             bath("paper/" + water, "sugar_cane", "paper", fluid(water, water.equals("DistW") ? 100 : 125));
     }
     private void bleach(String input, String output, int amount) {

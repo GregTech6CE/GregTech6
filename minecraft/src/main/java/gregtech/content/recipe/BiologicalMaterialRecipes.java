@@ -105,7 +105,7 @@ public final class BiologicalMaterialRecipes extends OriginalRecipeBatch {
                 null,
                 null,
                 fluids(fluid("Latex", 144), fluid("Glue", 250)));
-        for (String water : new String[] {"Water", "MnWtr", "DistW", "SpDew"})
+        for (String water : new String[] {"Water", "MnWtr", "DistW"})
             add(
                     "resin/glue/" + water,
                     MachineRecipeMaps.Mixer,

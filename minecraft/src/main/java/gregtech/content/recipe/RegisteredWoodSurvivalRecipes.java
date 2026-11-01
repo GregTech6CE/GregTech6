@@ -149,7 +149,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
         saw("gt_stripped/" + s.id(), stripped, new ItemStack(GTWoods.planks(s), 7), mat(MaterialPrefix.dust, name, 1));
         MachineRecipeMaps.pulverizing(log, pulp(s.id(), 6 * GTValues.U), bark, 50);
         pulverize(stripped, s.id(), 7 * GTValues.U);
-        for (String water : new String[] {"Water", "DistW", "SpDew", "MnWtr"})
+        for (String water : new String[] {"Water", "DistW", "MnWtr"})
             add(
                     "debark/" + s.id() + "/" + water,
                     MachineRecipeMaps.PressureWasher,
