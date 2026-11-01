@@ -67,4 +67,5 @@
 - GameTest：按需运行 `./gradlew :minecraft:<node>:runGameTestServer`，见[测试指南](docs/development/testing.md)。
 - 世界、机器 tick、交互、渲染、Mixin、网络或可选集成还需对应游戏内验证，记录未覆盖的平台与场景。
 - 新增命令/参数/注册步骤同步对应文档，新增包职责同步包索引。
+- 如果你的改动修改了原版 GT6 的实现，或者删除了原版 GT6 的物品、流体、材料，则需要在 `docs/decisions/parity` 中合适位置按格式记录你的改动。
 - 结束时报告改动、验证命令与结果、未验证事项。受环境阻塞时报告具体原因，不宣称成功。
