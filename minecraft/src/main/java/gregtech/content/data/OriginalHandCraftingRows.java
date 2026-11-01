@@ -151,7 +151,7 @@ public final class OriginalHandCraftingRows {
 
     /** Four plates or curved plates, worked with wrench, hammer, file and wire cutters. */
     private static void circularSawBlades(Map<ResourceLocation, byte[]> recipes) {
-        var coated = Set.of("WoodTreated", "WoodPolished", "GildedIron", "SteelGalvanized", "NetherizedDiamond");
+        var coated = Set.of("WoodTreated", "WoodPolished", "SteelGalvanized", "NetherizedDiamond");
         for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
             if (!material.isValid() || material.resolve() != material
                     || material.has(gregtech.api.material.MaterialProperty.ANTIMATTER)

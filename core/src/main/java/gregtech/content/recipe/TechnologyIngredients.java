@@ -54,18 +54,13 @@ public final class TechnologyIngredients {
             "Titanium",
             "Tungsten",
             "Thaumium",
-            "VoidMetal",
-            "HSLASpringSteel",
             "IronWood",
             "Magnalium",
             "Ultimet",
             "Manasteel",
             "Terrasteel",
-            "Elvorium",
-            "Mauftrium",
             "Duranium",
-            "Tritanium",
-            "Syrmorite");
+            "Tritanium");
 
     public static boolean pistonIngot(MaterialPrefix prefix, GTMaterial material) {
         if (prefix != MaterialPrefix.ingot) return false;
