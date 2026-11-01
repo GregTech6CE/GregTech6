@@ -287,7 +287,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
             var rule = StoneLayerOreRules.rule(def);
             var block = rule.blockId().isEmpty() ? null : net.minecraft.resources.ResourceLocation.parse(rule.blockId());
             out.add(new Ore(material.resolve(), Math.max(1, def.chanceDiv()),
-                    GTWorldgenScale.remapY(def.minY()), GTWorldgenScale.remapY(def.maxY()), rule, block));
+                    GTWorldgenScale.stoneLayerOreMinY(def), GTWorldgenScale.remapY(def.maxY()), rule, block));
         }
         return List.copyOf(out);
     }

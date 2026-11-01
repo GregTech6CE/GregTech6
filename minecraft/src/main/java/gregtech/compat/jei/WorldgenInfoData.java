@@ -128,7 +128,7 @@ public class WorldgenInfoData {
             GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(def.material());
             if (material == null || !material.resolve().isValid()) continue;
             material = material.resolve();
-            int min = Math.max(GTWorldgenScale.WORLD_FLOOR + 1, GTWorldgenScale.remapY(def.minY()));
+            int min = Math.max(GTWorldgenScale.WORLD_FLOOR + 1, GTWorldgenScale.stoneLayerOreMinY(def));
             if (noDeep) min = Math.max(min, GTWorldgenScale.remapY(24));
             int max = Math.min(GTWorldgenScale.BAND_TOP - 1, GTWorldgenScale.remapY(def.maxY()));
             if (min > max) continue;

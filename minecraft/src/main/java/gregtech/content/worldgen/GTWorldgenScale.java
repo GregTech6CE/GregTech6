@@ -25,6 +25,12 @@ public final class GTWorldgenScale {
         return (int) Math.round(WORLD_FLOOR + (HEIGHT_ANCHOR_Y - WORLD_FLOOR) * Math.pow(fraction, 1.5));
     }
 
+    /** Current-world lower bound shared by stratum generation and recipe viewers. */
+    public static int stoneLayerOreMinY(GTStoneLayersGen.OreDef ore) {
+        // Extend chromite below sea level without rescaling the imported GT6 ore table.
+        return ore.material().equals("Chromite") ? -16 : remapY(ore.minY());
+    }
+
     /**
      * Dimension-aware variant: only the Overworld got the 1.18 depth extension —
      * the Nether (0..128) and the End (0..) keep the original GT6 Y values.
