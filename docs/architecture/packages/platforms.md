@@ -24,6 +24,19 @@ Forge 的大量原生实现当前仍位于节点的 `bootstrap`、`content`、`e
 
 需要核心规则时调用 core/共享 Minecraft 层。需要外部可调用桥接时，考虑现有 `api.addon.platform` 契约及 `engine.addon` 绑定，不为一个局部差异扩张巨大万能门面。
 
-## 验证
+## 验收
 
-检查两个节点相同功能的初始化时机、注册 ID、能力方向、模拟/实际资源转移、序列化与客户端隔离。共享契约改动进行双平台编译；平台运行期行为分别验证并记录证据。代码结构相似不等于行为一致，结论归档到 [integration](../../integration/README.md)。
+- 检查两个节点相同功能的初始化时机、注册 ID、能力方向、模拟/实际资源转移、序列化与客户端隔离。
+- 共享契约改动进行双平台编译；平台运行期行为分别验证并记录证据。代码结构相似不等于行为一致。
+- Forge 使用 `distributionJar`，中间 `jar` 不用于部署；`runData` 会写生产资源，运行后审查差异。
+- NeoForge 使用 `jar`；1.21.1 的数据包路径不能与 1.20.1 互拷；客户端初始化不得进入专用服务端路径。
+- 版本元数据与 Mixin 配置按节点检查；只验证一个节点时，明确写出未覆盖节点。
+- 结论归档到 [integration](../../integration/README.md)。
+
+## 自动化测试范围
+
+- JUnit
+  - 平台 API 契约由 `api/minecraft/src/test` 覆盖；节点当前没有独立 JUnit 用例。
+- GameTest
+  - Forge 与 NeoForge 节点当前没有测试用例；仅加载器 API 差异才在 `minecraft/versions/<node>/src/test` 增加节点专属 GameTest。
+  - 平台能力、运输、客户端启动等节点专属行为为待补范围。

@@ -24,7 +24,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-/** Targeted static regressions for fixed crafting-table issues; see docs/development/testing.md. */
+/** Targeted static regressions for fixed crafting-table issues; see docs/development/validation/checks/junit.md. */
 final class CraftingIssueStaticTests {
     private static final Path RECIPE_ROOT = recipeRoot();
 

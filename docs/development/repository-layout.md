@@ -4,7 +4,7 @@
 
 | 目录 | 应当放什么 | 不应放什么 |
 | --- | --- | --- |
-| `api/` | 内联的 GregTech6API 源码（锁定 a9c879176，API 0.3.0），由 `:api`、`:api-platform` 直接编译 | 未更新 API 版本记录、未说明来源基线的 API 改动 |
+| `api/` | 内联的 GregTech6API 源码（锁定 a9c879176，API 1.2.0），由 `:api`、`:api-platform` 直接编译 | 未更新 API 版本记录、未说明来源基线的 API 改动 |
 | `api/common/src/main/java/` | Java 17 公共协议、模型、声明与宿主服务接口 | core 实现、内容目录、游戏类型、任务报告 |
 | `api/common/src/test/` | 仅依赖公共 API JAR 的消费者与契约回归 | 主模组实现和资源 |
 | `core/src/main/java/` | 平台无关内容定义、运行规则 | 游戏 API、加载器适配、任务报告 |
@@ -17,6 +17,7 @@
 | `minecraft/versions/*/src/main/` | 版本专属实现、加载器元数据及资源 | 测试实例、原始证据 |
 | `gradle/`、各 `*.gradle*` | 构建定义、Wrapper 与平台任务配置 | 个人安装路径、凭据 |
 | `docs/` | 经整理的长期指南、验证结论和记录 | 完整日志、随手计划、下载 |
+| `docs/development/validation/` | 验证规则、检查文档、命令与路由表；验收章节在 `docs/architecture/packages/` | 一次性计划、未提炼的日志、与规则无关的执行记录 |
 | `tools/<scope>/` | 按 scope 分组、随代码演进的检查/验证脚本、其数据文件与 `README.md` | 一次性实验、上游导入/再生成脚本；散放在 `tools/` 根目录的文件 |
 | `examples/` | 将来可维护、可独立使用的附属/脚本示例 | 临时探针或未验证伪示例 |
 | `work/<任务名>/` | 当前任务原始材料与私有执行参数，Git 忽略 | 唯一一份尚未提炼的长期结论 |
@@ -31,7 +32,7 @@
 
 例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台行为结论放 `docs/integration/`；算法边界补到架构文档；若确实执行了实例更新，再写 `docs/operations/records/`。无需给每次小改动建立长期报告。
 
-开发用探针优先放 `work/`，不会自动参与生产编译；若要长期保留为自动测试，接入合适测试源码集及依赖，并记录运行命令；测试目录与案例表约定见[测试](testing.md)。不要把探针改名成业务类混入 `src/main/java/`。
+开发用探针优先放 `work/`，不会自动参与生产编译；若要长期保留为自动测试，接入合适测试源码集及依赖，并记录运行命令；测试目录与案例表约定见[验证与验收](validation/README.md)。不要把探针改名成业务类混入 `src/main/java/`。
 
 ## 文档、资源与生成物的区别
 

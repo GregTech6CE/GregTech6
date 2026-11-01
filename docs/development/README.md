@@ -6,17 +6,17 @@
 
 1. [上手](getting-started.md)
 2. [文件归属](repository-layout.md)
-3. [验证](validation.md)
+3. [验证与验收](validation/README.md)
 4. [架构](../architecture/README.md)
 
 ## 次要主题
 
-- [自动化测试](testing.md)
 - [碎片贴图与机器 GUI 模板](gui-templates.md)
 - [Issue 分类与标签](github-issue-tags.md)
 
 ## 其他主题
 
+- 验证规则按 package 与检查拆分在 [validation](validation/README.md)；验收章节写在 `architecture/packages/*`，命令写在对应的检查文档中。
 - 集成与验证结论放在 [integration](../integration/README.md)。
 - 真实执行记录放在 [operations](../operations/README.md)。
 - 长期决策放在 [decisions](../decisions/README.md)。

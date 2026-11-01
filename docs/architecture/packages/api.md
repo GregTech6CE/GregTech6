@@ -4,7 +4,7 @@
 
 ## 独立公共 API
 
-源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，内联自 [GregTech6API](https://github.com/GregTech6CE/GregTech6API)（a9c879176，API 0.3.0）。`common/` 接为 `:api`。模块使用 Java 17，仅依赖 JDK；core 和游戏侧 API 单向依赖它。以下表内路径相对于 `gregtech`。
+源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，内联自 [GregTech6API](https://github.com/GregTech6CE/GregTech6API)（a9c879176，API 1.2.0）。`common/` 接为 `:api`。模块使用 Java 17，仅依赖 JDK；core 和游戏侧 API 单向依赖它。以下表内路径相对于 `gregtech`。
 
 | 包 | 应当承担 | 代表入口/关注点 |
 | --- | --- | --- |
@@ -39,8 +39,24 @@
 | `api.machine` | 游戏中的机器控制接口 | 当前有 `MachineControl`，与 core 同包但不同源码层 |
 | `api.transport` | 游戏世界中管道的连接契约 | `FluidPipeConnectable`、`ItemPipeConnectable`；避免公开整个内部网络 |
 
-## 修改顺序与验证
+## 修改顺序
 
 先确认外部消费者需要什么，再定义最小契约；由 engine 提供执行，bootstrap/platform 绑定，content 消费。接口新增字段、方法或默认行为时，检查两个加载器的实现与附属生命周期，说明二进制、源码和数据兼容影响。
 
-公共库和平台 SDK 均由库内 `:api` 与 `:api-platform` 项目构建，平台 SDK 在 POM 中依赖公共库。主库直接消费这些 Gradle 项目，并导出兼容的 SDK 任务。主模组携带唯一一份 API，附属仅作编译依赖，详见[附属 API 说明](../../ADDON_API.zh-CN.md)。优先运行 `./gradlew :api:check :api:assemble`，再按改动选择一个相关平台编译、SDK 与最终 JAR 检查；不默认运行双平台全量验证。
+## 验收
+
+- 公共契约只定义可消费的协议，不放注册执行、世界访问、客户端渲染或内部缓存。
+- `api/common` 使用 Java 17，仅依赖 JDK；`api/minecraft` 含游戏类型，由 `:api-platform:<node>` 分别编译，不依赖 core 或模组 main。
+- 修改公开签名、默认方法、异常或生命周期声明时，说明二进制、源码与数据兼容影响；`public` 不自动意味着长期兼容。
+- 扩展输入在进入运行时前验证身份、范围、冲突与引用。
+- 修改后运行 JUnit 与 `apiContracts`；修改 `api/minecraft` 的共享游戏侧 API 时编译两个平台。`api/common` 仅依赖 JDK，不需要平台编译。
+- `:api` 与 `:api-platform` 尚未接入 Spotless，格式检查不能把这两层解读为已覆盖。
+
+## 自动化测试范围
+
+- JUnit
+  - `api/common/src/test`：公共契约、能源、机器、材料、多方块与附属声明，现有 18 个测试类、87 个方法。
+  - `api/minecraft/src/test`：平台 API 契约与附属平台服务桥接，现有 3 个测试类、8 个方法。
+  - `apiContracts` 用打包后的 API JAR 运行外部消费者，检查签名闭包、能源契约与宿主未绑定时的失败行为；它不属于 JUnit，但属于公共 API 的自动检查。
+- GameTest
+  - 公共契约层不使用 GameTest；平台运行期行为由 platforms 的验收覆盖。

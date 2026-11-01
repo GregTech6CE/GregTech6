@@ -2,14 +2,14 @@
 
 本项目的可交付物是模组 JAR，不存在本文隐含的生产发布服务。这里维护可重复执行的构建/更新流程；真正操作实例需在用户授权范围内进行。
 
-阅读顺序：[构建与验证](../development/getting-started.md) → 本页 → [执行记录目录](records/README.md)及[模板](records/TEMPLATE.md)。
+阅读顺序：[验证与验收](../development/validation/README.md) → 本页 → [执行记录目录](records/README.md)及[模板](records/TEMPLATE.md)。
 
 ## 准备产物
 
 1. 记录源码状态；正式可追踪构建使用提交号，有本地改动或无初始提交时如实标注，不能伪造版本来源。
 2. 从仓库根按目标构建：Forge 用 `./gradlew :minecraft:1.20.1-forge:distributionJar`，NeoForge 用 `./gradlew :minecraft:1.21.1-neoforge:jar`，两边组装用 `assembleBothPlatforms`。
 3. 从对应节点 `build/libs/` 选取最终模组 JAR，核对平台、版本和 JAR 内容；记录 SHA-256（如 `sha256sum <实际文件>`）。SDK 与源码/Javadoc 包不是模组。
-4. 按[验证指南](../development/validation.md)完成相关检查，明确编译、打包、启动和玩法验证各自的状态。
+4. 按[验证与验收](../development/validation/README.md)完成相关检查，明确编译、打包、启动和玩法验证各自的状态。
 
 ## 更新隔离实例
 

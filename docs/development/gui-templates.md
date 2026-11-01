@@ -135,7 +135,7 @@ GuiTemplates.background(graphics, ResourceLocation.parse("example:textures/gui/c
 
 旧路径别名由 `GuiTemplates` 解析，不会给 Minecraft 的所有 PNG 请求添加全局重定向。外部 Screen 如果直接 `graphics.blit` 已移除的 `recipes/*.png`，应改用这个模板入口，或使用保留的 `machines/*.png` 路径。
 
-`GuiTemplates`、`GuiTemplate`、`GuiSprite` 属于客户端实现层，不要在公共静态注册、服务端或公共 API 类里引用它们。这里没有改动 API 0.3.0 的公共签名。已有 `BehaviorMachine`/`LayoutPart` 的特殊能量、长流体槽、开关仍沿用它们原有的 GUI sheet UV 契约；新模板可替换其背景，不自动替代这些动态控件。
+`GuiTemplates`、`GuiTemplate`、`GuiSprite` 属于客户端实现层，不要在公共静态注册、服务端或公共 API 类里引用它们。这里没有改动 API 1.2.0 的公共签名。已有 `BehaviorMachine`/`LayoutPart` 的特殊能量、长流体槽、开关仍沿用它们原有的 GUI sheet UV 契约；新模板可替换其背景，不自动替代这些动态控件。
 
 ## JEI / EMI
 
@@ -148,11 +148,6 @@ GuiTemplates.background(graphics, ResourceLocation.parse("example:textures/gui/c
 
 ## 预览、重载与验证
 
-```powershell
-python tools/gui/preview.py --output work/gui-preview
-python tools/gui/preview.py --assets core/src/main/resources/assets --assets tools/gui/examples/assets --template example:machines/washer --machine-slots 1 1 1 0 --progress 0.5 --output work/gui-example
-```
+静态预览命令、资源包重载与游戏内验收清单见[验证与验收](validation/README.md)。
 
-游戏中用 `F3+T` 重载素材与布局缓存。槽位坐标的服务器定义没有被重载；改变自定义 Menu 后需要按原开发流程重编译。
-
-修改共享渲染代码后执行 `compileBothPlatforms`；改变资源后执行 `assembleBothPlatforms`。静态预览与编译不能证明游戏内效果，验收时还需检查：有/无流体、进度重置、标题宽度、不同 GUI 缩放、JEI/EMI 悬停和快捷键、资源包重载，以及两个加载器。预览工具不会覆盖用户整理目录或生成新的整机 PNG 到生产资源中。
+GUI 预览不执行注册、不修改配方、不启动服务器；自定义 Menu、物品、标题、流体内容、交互和动画插值仍需游戏内验证。预览工具不会覆盖用户整理目录或生成新的整机 PNG 到生产资源中。

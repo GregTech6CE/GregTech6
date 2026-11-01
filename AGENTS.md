@@ -5,14 +5,15 @@
 ## 渐进阅读
 
 1. [文档入口](docs/README.md)：按任务选路线，无需一次读完。
-2. [开发上手](docs/development/getting-started.md)：环境、构建与验证命令。
-3. [目录与产物归属](docs/development/repository-layout.md)：决定文件放哪里。
-4. [架构入口](docs/architecture/README.md) → [包职责索引](docs/architecture/packages/README.md)：决定代码属于哪一层。
+2. [开发上手](docs/development/getting-started.md)：环境与构建。
+3. [验证与验收](docs/development/validation/README.md)：按改动读取对应的 package 与检查。
+4. [目录与产物归属](docs/development/repository-layout.md)：决定文件放哪里。
+5. [架构入口](docs/architecture/README.md) → [包职责索引](docs/architecture/packages/README.md)：决定代码属于哪一层。
 
 ## 项目事实
 
 - GT6CE 是现代 Minecraft 的 GregTech 6 移植工程。模组 ID 与命名以现有 `GregTechIdentity` 和加载器元数据为准，不要顺手改名。
-- `api/`：内联自 GregTech6API 的源码（锁定 a9c879176，API 0.3.0）；`common/` 提供 Java 17 公共契约，`minecraft/` 提供按版本编译的游戏 API。修改公共签名时直接在本仓库 `api/` 内更新，并在提交信息中记录 API 版本变化。
+- `api/`：内联自 GregTech6API 的源码（锁定 a9c879176，API 1.2.0）；`common/` 提供 Java 17 公共契约，`minecraft/` 提供按版本编译的游戏 API。修改公共签名时直接在本仓库 `api/` 内更新，并在提交信息中记录 API 版本变化。
 - `core/`：Java 17 的平台无关内容定义、计算和共享资源，依赖公共 API；不得引入 Minecraft、Forge、NeoForge、客户端或可选模组类型。
 - `minecraft/src/`：两版本共享的 Minecraft 代码与 Stonecutter 输入。
 - `minecraft/versions/1.20.1-forge/src/`：Forge 版本源码及资源，Java 17。
@@ -60,12 +61,9 @@
 
 ## 验证与交付
 
-- 文档/忽略规则：检查相对链接、命令与配置一致性，用 `git check-ignore` 验证规则；无需启动游戏或全量构建。
-- `core` 逻辑：按改动运行 `./gradlew :core:check`，必要时补充有意义的回归测试。
-- 共享 Minecraft 逻辑：先 `./gradlew compileBothPlatforms`；涉及资源或打包时使用 `./gradlew assembleBothPlatforms`。
-- 完整检查使用 `./gradlew check`；CI 先由 verify job 运行 `:api:check`、`:core:check` 与 `:minecraft:spotlessCheck`，再对两个节点分别执行 `assemble`，详见[验证指南](docs/development/validation.md)。
-- GameTest：按需运行 `./gradlew :minecraft:<node>:runGameTestServer`，见[测试指南](docs/development/testing.md)。
-- 世界、机器 tick、交互、渲染、Mixin、网络或可选集成还需对应游戏内验证，记录未覆盖的平台与场景。
-- 新增命令/参数/注册步骤同步对应文档，新增包职责同步包索引。
-- 如果你的改动修改了原版 GT6 的实现，或者删除了原版 GT6 的物品、流体、材料，则需要在 `docs/decisions/parity` 中合适位置按格式记录你的改动。
-- 结束时报告改动、验证命令与结果、未验证事项。受环境阻塞时报告具体原因，不宣称成功。
+针对修改的内容和范围，读取对应的编码规范和验收所需的步骤和命令。入口见[验证与验收](docs/development/validation/README.md)，其中给出改动路径到 package 与检查集的映射，检查文档给出注意事项与运行命令。格式检查由 `format` 强制覆盖，不把格式问题留到 CI。
+
+- 结束时分别报告“执行且通过”“执行但失败或阻塞”“尚未执行”，写明未覆盖的平台与场景。
+- 新增命令、参数、注册步骤或包职责时，同步验证文档、检查文档与包索引。
+- 如果改动修改了原版 GT6 的实现，或者删除了原版 GT6 的物品、流体、材料，则在 `docs/decisions/parity` 中按格式记录。
+- 受环境阻塞时报告具体原因，不宣称成功。

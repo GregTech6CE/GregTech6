@@ -84,7 +84,7 @@ GT6CE **正在持续开发中**。移植尚未完成，配方、交互、渲染�
 | 文档 | 内容 |
 | --- | --- |
 | [开发文档入口](docs/README.md) · [Agent 指南](AGENTS.md) | 渐进阅读路线、工作规则与文件归属 |
-| [开发上手](docs/development/getting-started.md) · [验证](docs/development/validation.md) | 环境、构建、运行与检查 |
+| [开发上手](docs/development/getting-started.md) · [验证](docs/development/validation/README.md) | 环境、构建、运行与检查 |
 | [架构与包职责](docs/architecture/README.md) | core、Minecraft、平台适配及各包分工 |
 | [Addon API 与 KubeJS](docs/ADDON_API.zh-CN.md) | 扩展入口、SDK 边界与示例状态 |
 | [发布与部署记录](docs/operations/README.md) | 产物检查、实例更新和脱敏执行记录 |

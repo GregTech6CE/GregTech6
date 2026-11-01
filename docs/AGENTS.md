@@ -2,7 +2,7 @@
 
 遵守[根指南](../AGENTS.md)，从[文档导航](README.md)进入。`docs/` 只收录有持续用途、可审查的文档。
 
-- 新人步骤放 `development/`，包职责和系统原理放 `architecture/`，跨项目集成与验证结论放 `integration/`。
+- 新人步骤放 `development/`，验证规则放 `development/validation/` 并按 packages、checks 组织，验收章节写在 `architecture/packages/*`，命令写在对应的 checks 文档中；包职责和系统原理放 `architecture/`，跨项目集成与验证结论放 `integration/`。
 - 发布/部署流程放 `operations/`，执行记录放 `operations/records/`，长期决策放 `decisions/`。
 - 临时计划、逐条工作日志、完整输出、私有部署参数和截图原件放根目录 `work/<任务名>/`，不塞进本目录或 `src/`。
 - 新文档从所属目录 README 链接；新专题写清入口、范围、阅读顺序和排除项。包文档先讲职责，再讲入口、边界和验证，避免逐类抄源码。

@@ -1,0 +1,113 @@
+# 改动路径到验收 package 与检查的路由表。
+# package 值与 docs/architecture/packages/<value>.md 一一对应。
+version: 1
+
+dimensions:
+  packages: [api, content, engine, runtime, platforms]
+  overrides: []
+
+routes:
+  # API 模块
+  - paths: ["api/common/src/**"]
+    packages: [api]
+    checks: [junit, api-contracts, format]
+  - paths: ["api/minecraft/src/**"]
+    packages: [api]
+    checks: [junit, compile, format]
+
+  # core：内容、执行与启动
+  - paths:
+      - "core/src/main/java/gregtech/content/**"
+      - "core/src/test/java/gregtech/content/**"
+      - "core/src/test/resources/**"
+    packages: [content]
+    checks: [junit, format]
+  - paths: ["core/src/main/resources/**"]
+    packages: [content]
+    checks: [junit, assemble, format]
+  - paths:
+      - "core/src/main/java/gregtech/engine/**"
+      - "core/src/test/java/gregtech/engine/**"
+    packages: [engine]
+    checks: [junit, format]
+  - paths:
+      - "core/src/main/java/gregtech/bootstrap/**"
+      - "core/src/main/java/gregtech/util/**"
+    packages: [runtime]
+    checks: [junit, format]
+
+  # minecraft 共享输入
+  - paths: ["minecraft/src/main/java/gregtech/content/**"]
+    packages: [content]
+    checks: [compile, format]
+  - paths:
+      - "minecraft/src/main/java/gregtech/engine/**"
+      - "minecraft/src/main/java/gregtech/util/**"
+    packages: [engine]
+    checks: [compile, format]
+  - paths: ["minecraft/src/main/java/gregtech/platform/**"]
+    packages: [platforms]
+    checks: [compile, format]
+  - paths:
+      - "minecraft/src/main/java/gregtech/bootstrap/**"
+      - "minecraft/src/main/java/gregtech/client/**"
+      - "minecraft/src/main/java/gregtech/compat/**"
+      - "minecraft/src/main/java/gregtech/event/**"
+      - "minecraft/src/main/java/gregtech/mixin/**"
+      - "minecraft/src/main/java/gregtech/network/**"
+      - "minecraft/src/main/java/gregtech/GregTechConfig.java"
+      - "minecraft/src/main/java/gregtech/ConfigFileFormatting.java"
+    packages: [runtime]
+    checks: [compile, format]
+  - paths: ["minecraft/src/main/resources/**"]
+    packages: [content]
+    checks: [assemble, format]
+  - paths: ["minecraft/src/test/**"]
+    packages: [content, engine]
+    checks: [gametest, format]
+
+  # 版本节点：基础编译、组装与格式检查
+  - paths: ["minecraft/versions/*/src/main/**"]
+    packages: [platforms]
+    checks: [compile, assemble, format]
+  - paths:
+      - "minecraft/versions/*/src/main/java/gregtech/content/**"
+      - "minecraft/versions/*/src/main/resources/**"
+    packages: [content]
+  - paths: ["minecraft/versions/*/src/main/java/gregtech/engine/**"]
+    packages: [engine]
+  - paths:
+      - "minecraft/versions/*/src/main/java/gregtech/bootstrap/**"
+      - "minecraft/versions/*/src/main/java/gregtech/client/**"
+      - "minecraft/versions/*/src/main/java/gregtech/compat/**"
+      - "minecraft/versions/*/src/main/java/gregtech/event/**"
+      - "minecraft/versions/*/src/main/java/gregtech/mixin/**"
+      - "minecraft/versions/*/src/main/java/gregtech/network/**"
+      - "minecraft/versions/*/src/main/java/gregtech/GregTech.java"
+    packages: [runtime]
+
+  # 配方改动追加 GameTest
+  - paths:
+      - "core/src/main/java/gregtech/content/recipe/**"
+      - "core/src/main/java/gregtech/engine/recipe/**"
+      - "core/src/main/resources/data/gt6ce/recipes/**"
+      - "minecraft/src/main/java/gregtech/content/recipe/**"
+      - "minecraft/src/main/java/gregtech/engine/recipe/**"
+      - "minecraft/versions/*/src/main/java/gregtech/content/recipe/**"
+      - "minecraft/versions/*/src/main/resources/data/gt6ce/recipe/**"
+      - "minecraft/versions/*/src/main/resources/data/gt6ce/recipes/**"
+    packages: [content]
+    checks: [gametest]
+
+  # 客户端、网络、Mixin 与可选集成需要游戏内确认
+  - paths:
+      - "minecraft/src/main/java/gregtech/client/**"
+      - "minecraft/src/main/java/gregtech/compat/**"
+      - "minecraft/src/main/java/gregtech/mixin/**"
+      - "minecraft/src/main/java/gregtech/network/**"
+      - "minecraft/versions/*/src/main/java/gregtech/client/**"
+      - "minecraft/versions/*/src/main/java/gregtech/compat/**"
+      - "minecraft/versions/*/src/main/java/gregtech/mixin/**"
+      - "minecraft/versions/*/src/main/java/gregtech/network/**"
+    packages: [runtime]
+    checks: [manual-ingame]

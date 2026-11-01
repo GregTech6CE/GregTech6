@@ -35,7 +35,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 //?}
 
-/** Data-driven smoke regressions for fixed crafting-table issues; see docs/development/testing.md. */
+/** Data-driven smoke regressions for fixed crafting-table issues; see docs/development/validation/checks/gametest.md. */
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CraftingRecipeIssueSmokeTests {

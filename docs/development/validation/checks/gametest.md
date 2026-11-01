@@ -1,66 +1,32 @@
-# 测试与验证
+# gametest：GameTest 运行时测试
 
-本仓库的自动测试是常驻回归；测试目录不使用 `.gitignore` 的 transient 规则。一次性验证放 `work/<任务名>/`（已忽略）或手动删除，不通过忽略测试目录来管理。
+## 验证方式
 
-测试分为 core JUnit 与 GameTest 两层：前者覆盖不需要 Minecraft 的静态数据，后者覆盖运行时加载与合成行为。下面的约定适用于两类测试。GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTestServer` 运行。
+GameTest 在真实 Minecraft 世界中验证运行时行为：配方加载、`RecipeManager` 查找、合成网格匹配与产出、tag 成员、`RecipeMap` 注册与删除、机器 tick 与状态、多方块成形等。它补足 JUnit 无法覆盖的游戏对象、注册表与资源加载。
 
-## 分层与边界
+GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTestServer` 运行。修改配方加载、匹配、产出与重载，方块实体、机器 tick、输入消耗、输出阻塞与能量状态，多方块成形与结构追踪，或注册表存在性、tag 成员与基础方块交互时执行。
 
-| 层 | 位置 | 负责 |
-| --- | --- | --- |
-| core JUnit | `core/src/test` | 不需要 Minecraft 的静态回归：随 jar 发布的配方 JSON、core 目录表与生成行 |
-| GameTest | `minecraft/src/test` | 运行时回归：配方加载、`RecipeManager` 查找、合成网格匹配与产出、tag 成员 |
+## 验证原理
 
-core 测试不得引入 Minecraft、Forge、NeoForge 类型。GameTest 共享测试放 `minecraft/src/test`；只有 loader API 差异才放 `minecraft/versions/<node>/src/test`。
+### 位置
 
-## 运行
+- 共享测试：`minecraft/src/test`，由 Stonecutter 生成到两个节点的 `test` source set。
+- 版本专属测试：`minecraft/versions/<node>/src/test`，仅用于加载器 API 差异；目录当前为空或尚未创建。
+- 测试类：`gregtech.gametest.CraftingRecipeIssueSmokeTests`（4 个 `@GameTest`）与 `gregtech.gametest.RecipeMapRegistrationTests`（8 个 `@GameTest`）。
+- 案例表：`minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`。
+- 结构模板：`minecraft/src/test/templates/test_empty.nbt`。
 
-### core JUnit
+### 配方回归案例表
 
-```bash
-./gradlew :core:test
-./gradlew :core:check        # test + spotless
-```
+针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威；core 静态子集由 JUnit 检查维护。
 
-测试结果在 `core/build/test-results/test/*.xml`。配方根目录由 `core/build.gradle` 的 `gt6ce.recipeRoot` 系统属性提供；从 IDE 直接运行时回退到 `core/src/main/resources/data/gt6ce/recipes`。
+引擎契约不属于某个配方 issue，例如 `RecipeMap` 的注册、删除与碰撞判定，直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。
 
-### GameTest
+#### 全量表
 
-以下命令在对应节点可用；案例表和模板按下方位置维护。
+`minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`。每行一个 issue 回归案例，同一 issue 可以有多行；`level` 列决定该行的断言方式。单输入形态转换中，单 variant 在任意槽匹配；多 variant 按完整网格的槽位序号（从 0 开始，行优先）取模选择输出（见 `setup`）；多放物品的网格不匹配。多物品配方由 pattern/相对位置区分输出，不适用这条规则。
 
-```bash
-./gradlew :minecraft:1.20.1-forge:runGameTestServer
-./gradlew :minecraft:1.21.1-neoforge:runGameTestServer
-```
-
-GameTest 首次运行会下载游戏资源，失败时先区分环境问题与断言失败。EULA 由运行环境处理，不把 `eula.txt` 提交到仓库。
-
-## 案例表
-
-针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威，core 表是静态子集。
-
-引擎契约不属于某个配方 issue，不写进上面的案例表，例如 `RecipeMap` 的注册、删除与碰撞判定：这类约定直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。
-
-### core 静态子集
-
-`core/src/test/resources/gregtech/crafting-issue-static-cases.tsv`，5 列：
-
-```text
-issue  source  kind  target  expected
-```
-
-- `source`：`json`、`vanilla`、`form`、`mold`。
-- `kind`：JSON 用 `shaped`/`shapeless`/`custom`；vanilla 用 `row`；form 用 `conversion`；mold 用 `form`。
-- `target`：JSON 相对路径、vanilla row id、`input->output` 或 `prefix/family`。
-- `expected`：分号分隔的 `key=value`，例如 `type=...;pattern=...;key:B=tag:...;result=...;count=...`。测试会拒绝未知键，并检查该 kind 的必需键。
-
-新增案例只改表；不要在 Java 里散落逐条断言，也不要扫描整个配方目录。
-
-### GameTest 全量表
-
-GameTest 案例表路径为 `minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`。每行一个 issue 回归案例，同一 issue 可以有多行；`level` 列决定该行的断言方式。单输入形态转换中，单 variant 在任意槽匹配；多 variant 按完整网格的槽位序号（从 0 开始，行优先）取模选择输出（见 `setup`）；多放物品的网格不匹配。多物品配方由 pattern/相对位置区分输出，不适用这条规则。
-
-表头如下：
+表头：
 
 | 列 | 用途 |
 | --- | --- |
@@ -137,25 +103,37 @@ shapeless 配方的形状留空。R/T/P 行留空。
 
 自由文本，记录该行针对的 issue 行为；测试不读取。
 
-## 结构模板
+### 结构模板
 
-GameTest 只保留一份 canonical `minecraft/src/test/templates/test_empty.nbt`，由 `minecraft/build.gradle` 的 `processTestResources` 按节点映射到 `data/gt6ce/structures`（1.20.1）或 `data/gt6ce/structure`（1.21.1）。
+GameTest 只保留一份 canonical 模板 `minecraft/src/test/templates/test_empty.nbt`，由 `minecraft/build.gradle` 的 `processTestResources` 按节点映射到 `data/gt6ce/structures`（1.20.1）或 `data/gt6ce/structure`（1.21.1）。
 
-不要把 NBT 放进 `gradle/`、`src/main/resources` 或每个版本节点各复制一份；单 namespace `gt6ce` 配单模板即可。
+不要把 NBT 放进 `gradle/`、`src/main/resources` 或每个版本节点各复制一份；单 namespace `gt6ce` 配单模板即可。复杂结构可以在测试代码中用 `setBlock` 和 helper 搭建，只有确实需要复用的复杂布局才增加模板。
 
-## 维护规则
+### 维护规则
 
 - 所有 `src/test` 默认常驻；不要恢复测试目录的 ignore 规则。
-- GameTest 单 namespace `gt6ce`、单结构模板、单测试文件；用例用数据表扩展。
+- GameTest 保持单 namespace `gt6ce`、单结构模板；测试类保持少量，用例优先用数据表扩展。
 - 不新增 per-issue JavaExec 任务；不为每个 issue 建类、namespace 或 NBT。
 - 平台脚本只保留 `gameTestServer` 所需的最小接线，不改现有 mods 注入。
 - 生产 `jar`/`distributionJar` 不得包含测试类、NBT 或 TSV。
-- core JUnit 随现有 `check` 生命周期执行。
+- 共享测试放 `minecraft/src/test`；只有 loader API 差异才放版本节点。
 
-## 故障排查
+## 注意事项
 
-- Spotless 失败：`./gradlew :core:spotlessApply` 后重跑 `:core:check`。
-- core 测试找不到配方：确认 `gt6ce.recipeRoot` 已设置，或从 `core` 目录运行。
-- GameTest 找不到模板：确认测试类使用 `@GameTestHolder("gt6ce")`、`@PrefixGameTestTemplate(false)`，并检查 NBT 输出路径是 `structures`（1.20.1）还是 `structure`（1.21.1）。
-- GameTest 没有运行：确认 `runGameTestServer` 任务存在、`forge.enabledGameTestNamespaces`/`neoforge.enabledGameTestNamespaces` 为 `gt6ce`。
-- EULA、代理、资源下载失败：先检查运行环境，不要通过放宽断言绕过。
+- 两个节点分别运行；只运行一个节点时，明确写出未覆盖节点。
+- 首次运行会下载游戏资源；EULA 由运行环境处理，不把 `eula.txt` 提交到仓库。
+- 不放宽断言或跳过用例来绕过失败。
+- 运行目录与堆参数按需指定，完整输出放 `work/<任务名>/`。
+
+## 运行命令
+
+```bash
+./gradlew :minecraft:1.20.1-forge:runGameTestServer
+./gradlew :minecraft:1.21.1-neoforge:runGameTestServer
+
+# 指定堆与运行目录
+./gradlew :minecraft:1.20.1-forge:runGameTestServer -PgameTestHeap=4g -PgameTestDirectory=../../../work/gametest-forge
+./gradlew :minecraft:1.21.1-neoforge:runGameTestServer -PgameTestHeap=4g -PgameTestDirectory=../../../work/gametest-neoforge
+```
+
+`-PgameTestDirectory` 由 Gradle 按节点项目目录解析；要放到仓库根 `work/` 时使用上面的 `../../../work/...`。

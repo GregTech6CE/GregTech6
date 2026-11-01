@@ -84,7 +84,7 @@ Final mod JARs are written to `minecraft/versions/<version-loader>/build/libs/`.
 | Resource | Purpose |
 | --- | --- |
 | [Developer documentation](docs/README.md) · [Agent guide](AGENTS.md) | Progressive guides, working rules, and file placement (Chinese) |
-| [Getting started](docs/development/getting-started.md) · [Validation](docs/development/validation.md) | Environment, builds, development runs, and checks (Chinese) |
+| [Getting started](docs/development/getting-started.md) · [Validation](docs/development/validation/README.md) | Environment, builds, development runs, and checks (Chinese) |
 | [Architecture and packages](docs/architecture/README.md) | Core, Minecraft, platform adapters, and package responsibilities (Chinese) |
 | [Addon API and KubeJS](docs/ADDON_API.zh-CN.md) | Extension points, SDK boundaries, and sample availability (Chinese) |
 | [Release and deployment records](docs/operations/README.md) | Artifact checks, instance updates, and sanitized records (Chinese) |

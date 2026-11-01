@@ -23,11 +23,11 @@
 
 ## 数据生成与打包
 
-Forge `runData` 的 `--output` 当前直接指向 `minecraft/versions/1.20.1-forge/src/main/resources/`，见 [Forge 配置](../../gradle/platform-forge.gradle)。它会写生产输入，不能把整个运行结果无审查提交，也不能当成仅读取的验证命令。运行工作目录 `run-data/` 本身仍被忽略。
+Forge `runData` 的 `--output` 当前直接指向 `minecraft/versions/1.20.1-forge/src/main/resources/`，见 [Forge 配置](../../gradle/platform-forge.gradle)。它会写生产输入，不能把整个运行结果无审查提交，也不能当成仅读取的验证命令；运行后的审查与检查要求见 [content 包](packages/content.md)。运行工作目录 `run-data/` 本身仍被忽略。
 
-[增量资源脚本](../../gradle/incremental-resources.gradle)负责资源同步，共享资源体积较大。不要为了排查而随意复制整个目录、改 ZIP64、取消重复项失败检查或每次清缓存。新增资源后先检查来源，再检查两节点 `processResources`/发行 JAR。
+[增量资源脚本](../../gradle/incremental-resources.gradle)负责资源同步，共享资源体积较大。不要为了排查而随意复制整个目录、改 ZIP64、取消重复项失败检查或每次清缓存。新增资源后先检查来源，再按 [content 包](packages/content.md) 的资源规则检查两节点 `processResources` 与发行 JAR。
 
-资源验证至少覆盖：路径大小写、有效格式、目标版本路径、资源引用存在、没有私有资料/临时文件混入发行包。贴图/模型还需要游戏内观察。只在明确用途下保留必要的精简示例或文档插图，原始截图留 `work/`。
+资源路径与游戏内观察见 [content 包](packages/content.md)。只在明确用途下保留必要的精简示例或文档插图，原始截图留 `work/`。
 
 ## 许可与来源
 
