@@ -2,7 +2,6 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
 import gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
@@ -21,7 +20,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-/** Only proven, single-metal 144 mB/U conversions are folded; chemical and mixed recovery rows remain intact. */
+/** Fold proven 144 mB/U recoveries, retaining each physical item's composition guard and batch. */
 final class MoltenMetalUnitRecipes {
     private record Key(GTMaterial material, Fluid fluid, long power) {}
     private record Input(ItemStack item, long units, long ticks, int fluidAmount, Predicate<ItemStack> guard) {}
@@ -51,7 +50,7 @@ final class MoltenMetalUnitRecipes {
         if (!collecting) return false;
         var material = inputMaterial(input, output);
         if (material == null) return false;
-        long units = ItemMaterialRegistry.get(input).orElseThrow().amount();
+        long units = inputUnits(input, material);
         var key = new Key(material, output.getFluid(), power);
         GROUPS.computeIfAbsent(key, ignored -> new LinkedHashMap<>()).putIfAbsent(input.getItem(),
                 new Input(input.copy(), units, ticks, output.getAmount(), proof));
@@ -61,15 +60,28 @@ final class MoltenMetalUnitRecipes {
     static GTMaterial inputMaterial(ItemStack input, FluidStack output) {
         if (input.isEmpty() || output.isEmpty() || MaterialUnitInputTags.isBullet(input)) return null;
         var composition = ItemMaterialRegistry.get(input).orElse(null);
-        if (composition == null || composition.components().size() != 1 || composition.amount() <= 0) return null;
-        GTMaterial material = composition.material().resolve();
+        if (composition == null || composition.components().isEmpty()) return null;
         var fluid = gregtech.content.registry.GTFluids.entryForFluid(output.getFluid());
-        if (!material.has(MaterialProperty.METAL) || fluid == null || !fluid.registryName().startsWith("molten.")) return null;
-        long units = composition.amount();
+        if (fluid == null || !fluid.registryName().startsWith("molten.")) return null;
+        String key = fluid.materialKey() != null ? fluid.materialKey()
+                : gregtech.content.data.RegisteredFluids.boundMaterial(fluid.registryName());
+        if (key == null) return null;
+        GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(key).resolve();
+        // A crate's wood and an arrow's shaft are not recovered as metal. Only count
+        // the component actually represented by the already-admitted fluid output.
+        long units = inputUnits(input, material);
+        if (!material.isValid() || units <= 0) return null;
         if (java.math.BigInteger.valueOf(units).multiply(java.math.BigInteger.valueOf(input.getCount())).multiply(java.math.BigInteger.valueOf(144))
                 .compareTo(java.math.BigInteger.valueOf(output.getAmount()).multiply(java.math.BigInteger.valueOf(GTValues.U))) != 0) return null;
         if (GTItems.getStack(MaterialPrefix.unit, material, 1).isEmpty()) return null;
         return material;
+    }
+
+    private static long inputUnits(ItemStack input, GTMaterial material) {
+        var composition = ItemMaterialRegistry.get(input).orElse(null);
+        if (composition == null) return 0;
+        return composition.components().stream().filter(component -> component.material().resolve() == material)
+                .mapToLong(component -> component.amount()).sum();
     }
 
     static void finish() {
