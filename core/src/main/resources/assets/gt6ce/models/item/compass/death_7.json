@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gt6ce:item/randomtools/compass_death",
+    "layer1": "gt6ce:item/iconsets/compass_sse"
+  }
+}

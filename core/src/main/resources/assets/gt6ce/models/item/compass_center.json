@@ -1,6 +1,99 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "gt6ce:item/randomtools/compass_center"
-  }
+    "layer0": "gt6ce:item/randomtools/compass_center",
+    "layer1": "gt6ce:item/iconsets/compass_n"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 1
+      },
+      "model": "gt6ce:item/compass/center_1"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 2
+      },
+      "model": "gt6ce:item/compass/center_2"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 3
+      },
+      "model": "gt6ce:item/compass/center_3"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 4
+      },
+      "model": "gt6ce:item/compass/center_4"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 5
+      },
+      "model": "gt6ce:item/compass/center_5"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 6
+      },
+      "model": "gt6ce:item/compass/center_6"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 7
+      },
+      "model": "gt6ce:item/compass/center_7"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 8
+      },
+      "model": "gt6ce:item/compass/center_8"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 9
+      },
+      "model": "gt6ce:item/compass/center_9"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 10
+      },
+      "model": "gt6ce:item/compass/center_10"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 11
+      },
+      "model": "gt6ce:item/compass/center_11"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 12
+      },
+      "model": "gt6ce:item/compass/center_12"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 13
+      },
+      "model": "gt6ce:item/compass/center_13"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 14
+      },
+      "model": "gt6ce:item/compass/center_14"
+    },
+    {
+      "predicate": {
+        "gt6ce:compass_frame": 15
+      },
+      "model": "gt6ce:item/compass/center_15"
+    }
+  ]
 }
