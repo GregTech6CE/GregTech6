@@ -153,6 +153,14 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
             return;
         }
 
+        // Even a partial charge, or one beneath a mold, becomes the solid material on cooling.
+        if (contentMaterial != null && contentAmount > 0 && temperature < contentMaterial.getMeltingPoint()) {
+            GTMaterial solidMaterial = gregtech.engine.machine.crucible.CastingMaterials.solidifying(contentMaterial);
+            if (solidMaterial != contentMaterial) {
+                contentMaterial = solidMaterial;
+                syncToClient();
+            }
+        }
         // Check for solidification (only if no mold is above — mold handles shaped output)
         boolean hasMoldAbove = level != null && level.getBlockEntity(worldPosition.above()) instanceof MoldBlockEntity;
         if (!hasMoldAbove && contentMaterial != null && temperature < contentMaterial.getMeltingPoint() && contentAmount > 0) {
