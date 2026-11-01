@@ -92,6 +92,13 @@ public class RockBlock extends Block implements EntityBlock {
         return level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP);
     }
 
+    @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbour,
+            net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighbourPos) {
+        return !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState()
+                : super.updateShape(state, side, neighbour, level, pos, neighbourPos);
+    }
+
     /** Right-click picks the rock up (rockGt item, or only raw ore when marking a bedrock deposit). */
     @Override
 //? if >=1.21.1 {

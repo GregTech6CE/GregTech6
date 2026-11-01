@@ -15,7 +15,9 @@ public final class MaterialPresentation {
     public static Component formName(String prefix, GTMaterial material, Component legacyFallback) {
         // Server-produced Jade components must not depend on the server's active language.
         if ("rockGt".equals(prefix) && material.resolve().has(MaterialProperty.STONE))
-            return Component.translatable("item.gt6ce.rock_gt_stone", name(material));
+            return material.resolve().getName().equals("Stone")
+                    ? Component.translatable("item.gt6ce.pebble_stone")
+                    : Component.translatable("item.gt6ce.rock_gt_stone", name(material));
         String key = gregtech.engine.prefix.PrefixRegistry.sourceTranslationKey(prefix, material.getName());
         if (net.minecraft.locale.Language.getInstance().has(key)) return Component.translatable(key);
         // Preserve translated prefix/material fallbacks where the original whole-name key is absent.
