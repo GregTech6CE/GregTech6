@@ -1,6 +1,6 @@
 # comments
 
-检查代码注释的可读性与改动范围。对应根 [AGENTS.md](../../AGENTS.md) 的注释规则：本仓库引用不写行号，上游 GT6 行号相对固定提交 `3703e40308c8c030763fd6297dea8b210d2a77b1`。
+检查代码注释的可读性与改动范围。这些是按需运行的临时排查脚本，不属于 [`docs/development/validation`](../../docs/development/validation/README.md) 的验收门禁，也不在 CI 中执行。对应根 [AGENTS.md](../../AGENTS.md) 的注释规则：本仓库引用不写行号，上游 GT6 行号相对固定提交 `3703e40308c8c030763fd6297dea8b210d2a77b1`。
 
 ## check_comment_refs.py
 
@@ -17,7 +17,7 @@
 python tools/comments/check_comment_refs.py [--upstream PATH] [--json] [--strict]
 ```
 
-`--upstream` 指向固定提交的 GT6 检出目录，启用后按文件长度校验上游行号。发现项会以退出码 1 结束；生成源码的发现只列出、不判失败，因为对应生成器不一定在本仓库。
+`--upstream` 指向固定提交的 GT6 检出目录，启用后按文件长度校验上游行号。发现项会以退出码 1 结束；生成源码的发现只列出、不判失败，因为对应生成器不一定在本仓库。结果供人工判断，不作为验收门禁。
 
 ## verify_comments_only.py
 

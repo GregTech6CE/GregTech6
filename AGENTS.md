@@ -39,7 +39,7 @@
 - 本仓库代码引用用 `{@link Foo}`、`{@link #member}`（JavaDoc）或类名、方法名（`//`），不写行号。
 - 上游 GT6 引用不带裸 `:123`：写 `{@code Foo.java:123-145}`、`{@code ClassName:123}`（GT6 一类一文件）或 `{@code Foo.bar(...)}`。所有行号相对固定提交 `3703e40308c8c030763fd6297dea8b210d2a77b1`（2026-06-15）；换版本只改这一处，并单独核对受影响的引用。
 - 纯数据表（一行一条的配方/物品行）可保留逐行上游行号；“只写出处”的单行注释应改写成含义或删除。
-- 检查：`python tools/comments/check_comment_refs.py`；`python tools/comments/verify_comments_only.py` 可证明一次改动只碰了注释。
+- `tools/comments/` 下的脚本是按需运行的临时排查工具，不属于验收门禁。
 
 ## 文件必须放对地方
 
