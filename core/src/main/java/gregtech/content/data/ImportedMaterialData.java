@@ -28,7 +28,45 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
         fuel(CoalCoke, GregTechConstants.TICKS_PER_SMELT * 16L, DarkAsh, GregTechConstants.U9);
         fuel(LigniteCoke, GregTechConstants.TICKS_PER_SMELT * 8L, DarkAsh, GregTechConstants.U9);
         fuel(PetCoke, GregTechConstants.TICKS_PER_SMELT * 32L, DarkAsh, GregTechConstants.U9);
-        fuel(Charcoal, GregTechConstants.TICKS_PER_SMELT * 8L, DarkAsh, GregTechConstants.U4);
+        fuel(Charcoal, GregTechConstants.TICKS_PER_SMELT * 8L, Ash, GregTechConstants.U4);
+
+        // MT.java fuel rows outside the coal-family table. Keep the original flags instead of
+        // reusing fuel(), which would add FLAMMABLE and MELTING to every entry.
+        fuelOnly(
+                Lignite,
+                GregTechConstants.TICKS_PER_SMELT * 4L,
+                DarkAsh,
+                GregTechConstants.U4,
+                MaterialProperty.FLAMMABLE);
+        fuelOnly(Peat, GregTechConstants.TICKS_PER_SMELT * 10L, Ash, GregTechConstants.U2, MaterialProperty.FLAMMABLE);
+        fuelOnly(Blaze, GregTechConstants.TICKS_PER_SMELT * 24L, null, 0, MaterialProperty.MELTING);
+        fuelOnly(PetrifiedWood, GregTechConstants.TICKS_PER_SMELT / 4L, null, 0, MaterialProperty.FLAMMABLE);
+        fuelOnly(GT6Materials.Ores.Oilsands, GregTechConstants.TICKS_PER_SMELT * 30L, null, 0);
+        fuelOnly(CrudeOil, GregTechConstants.TICKS_PER_SMELT * 60L, null, 0);
+        fuelOnly(
+                GT6Materials.Ores.Oilshale,
+                GregTechConstants.TICKS_PER_SMELT * 2L,
+                STONES.Stone,
+                GregTechConstants.U2,
+                MaterialProperty.FLAMMABLE);
+
+        // MT.java:385-404 elemental fuels.
+        fuelOnly(Li, GregTechConstants.TICKS_PER_SMELT * 10L, null, 0);
+        fuelOnly(Li_6, GregTechConstants.TICKS_PER_SMELT * 10L, null, 0);
+        fuelOnly(C, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
+        fuelOnly(C_13, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
+        fuelOnly(C_14, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
+        fuelOnly(Na, GregTechConstants.TICKS_PER_SMELT * 20L, null, 0);
+        fuelOnly(Mg, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
+        fuelOnly(
+                P,
+                GregTechConstants.TICKS_PER_SMELT * 5L,
+                null,
+                0,
+                MaterialProperty.FLAMMABLE,
+                MaterialProperty.EXPLOSIVE);
+        fuelOnly(S, GregTechConstants.TICKS_PER_SMELT * 5L, null, 0, MaterialProperty.FLAMMABLE);
+
         applyAcidFlags();
     }
 
@@ -84,6 +122,15 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
         material.put(MaterialProperty.FLAMMABLE, MaterialProperty.MELTING)
                 .setFurnaceBurnTime(burnTime)
                 .setBurning(ash, ashAmount);
+    }
+
+    /** Fuel rows whose original flags are not the coal-family FLAMMABLE+MELTING pair. */
+    private static void fuelOnly(
+            GTMaterial material, long burnTime, GTMaterial ash, long ashAmount, MaterialProperty... flags) {
+        if (!material.isValid()) {
+            return;
+        }
+        material.put(flags).setFurnaceBurnTime(burnTime).setBurning(ash, ashAmount);
     }
 
     // --- special / sentinel materials ---
