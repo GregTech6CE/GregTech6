@@ -1,6 +1,7 @@
 plugins {
     id 'base'
     id 'com.diffplug.spotless' version '8.10.4' apply false
+    id 'net.neoforged.moddev' version '2.0.142' apply false
 }
 
 version = mod_version
@@ -51,6 +52,23 @@ tasks.register('format') {
 }
 
 apply from: 'gradle/stonecutter-native.gradle'
+
+if (System.getProperty('idea.sync.active') == 'true') {
+    gradle.projectsEvaluated {
+        // Stonecutter 0.7.11 tags subproject directories as build roots in IDE sync requests.
+        def buildRoot = rootProject.projectDir
+        def taskRequests = gradle.startParameter.taskRequests.collect { request ->
+            def requestRoot = request.rootDir
+            if (request.projectPath && requestRoot && requestRoot != buildRoot
+                    && requestRoot.toPath().startsWith(buildRoot.toPath())) {
+                return new org.gradle.internal.DefaultTaskExecutionRequest(
+                        request.args, request.projectPath, buildRoot)
+            }
+            request
+        }
+        gradle.startParameter.setTaskRequests(taskRequests)
+    }
+}
 
 tasks.named('check').configure {
     dependsOn ':api:check', ':core:check', ':minecraft:1.20.1-forge:check', ':minecraft:1.21.1-neoforge:check'

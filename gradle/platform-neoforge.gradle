@@ -19,7 +19,12 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
+repositories.clear() //neoforged plugin adds maven.neoforged.net by default, and may try to reconnect many times if it fails to connect.
 repositories {
+    maven { url = 'https://libraries.minecraft.net/' }
+    maven { url = 'https://neoforged.forgecdn.net/releases' }
+    maven { url = 'https://neoforged.forgecdn.net/mojang-meta' }
+    mavenCentral()
     maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
     maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
     maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
