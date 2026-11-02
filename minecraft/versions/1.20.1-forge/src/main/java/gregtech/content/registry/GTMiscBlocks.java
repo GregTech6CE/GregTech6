@@ -75,9 +75,9 @@ public final class GTMiscBlocks {
     public static RegistryObject<AutoIgniterBlock> AUTO_IGNITER_TUNGSTEN;
     public static RegistryObject<AutoIgniterBlock> AUTO_IGNITER_ULTIMET;
     public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_STEEL;
-    public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_ALUMINIUM;
+    public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_BRONZE;
     public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_TITANIUM;
-    public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_TUNGSTEN;
+    public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_TUNGSTEN_STEEL;
 
     // N5: Long Distance Transport (7)
     public static RegistryObject<LongDistPipeBlock> LONG_DIST_PIPE;
@@ -109,9 +109,9 @@ public final class GTMiscBlocks {
                 AUTO_IGNITER_TUNGSTEN,
                 AUTO_IGNITER_ULTIMET,
                 AUTO_HAMMER_STEEL,
-                AUTO_HAMMER_ALUMINIUM,
+                AUTO_HAMMER_BRONZE,
                 AUTO_HAMMER_TITANIUM,
-                AUTO_HAMMER_TUNGSTEN);
+                AUTO_HAMMER_TUNGSTEN_STEEL);
     }
 
     private static <T extends Block> RegistryObject<T> reg(String id, Supplier<T> blockSupplier) {
@@ -292,16 +292,16 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_steel")
                                 .quality()));
-        AUTO_HAMMER_ALUMINIUM = reg(
-                "auto_hammer_aluminium",
+        AUTO_HAMMER_BRONZE = reg(
+                "auto_hammer_bronze",
                 () -> new AutoHammerBlock(
                         props(
                                 MapColor.METAL,
-                                gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_aluminium")
+                                gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
                                         .hardness()),
-                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_aluminium")
+                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
                                 .input(),
-                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_aluminium")
+                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
                                 .quality()));
         AUTO_HAMMER_TITANIUM = reg(
                 "auto_hammer_titanium",
@@ -314,16 +314,16 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium")
                                 .quality()));
-        AUTO_HAMMER_TUNGSTEN = reg(
-                "auto_hammer_tungsten",
+        AUTO_HAMMER_TUNGSTEN_STEEL = reg(
+                "auto_hammer_tungsten_steel",
                 () -> new AutoHammerBlock(
                         props(
                                 MapColor.METAL,
-                                gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten")
+                                gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten_steel")
                                         .hardness()),
-                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten")
+                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten_steel")
                                 .input(),
-                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten")
+                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten_steel")
                                 .quality()));
 
         // The common catalog owns every original line and endpoint.
