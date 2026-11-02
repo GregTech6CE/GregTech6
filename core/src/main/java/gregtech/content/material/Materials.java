@@ -555,6 +555,8 @@ public final class Materials {
     public static final GTMaterial Trinaquadalloy = CompoundMaterials.Trinaquadalloy;
     public static final GTMaterial Trinitanium = CompoundMaterials.Trinitanium;
     public static final GTMaterial Trinium = ElementMaterials.Trinium;
+    public static final GTMaterial Tritanium = CompoundMaterials.Tritanium;
+    public static final GTMaterial TritaniumElemental = ElementMaterials.TritaniumElemental;
     public static final GTMaterial TritiatedWater = CompoundMaterials.TritiatedWater;
     public static final GTMaterial Tritium = ElementMaterials.Tritium;
     public static final GTMaterial Tungsten = ElementMaterials.Tungsten;

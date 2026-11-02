@@ -107,6 +107,7 @@ public final class SourceDecompositionData {
         new Profile(8737, "NikolineAlloy", new Binding("molten.nikolinealloy", SOURCE_U, 144), null, false),
         new Profile(8745, "Netherite", new Binding("molten.netherite", SOURCE_U, 144), null, false),
         new Profile(8751, "Duranium", null, null, false),
+        new Profile(8752, "Tritanium", new Binding("molten_tritanium", SOURCE_U, 144), null, false),
         new Profile(8790, "Trinitanium", null, null, false),
         new Profile(8793, "TitaniumIridium", null, null, false),
         new Profile(8796, "HSSG", new Binding("molten.hssg", SOURCE_U, 144), null, false),

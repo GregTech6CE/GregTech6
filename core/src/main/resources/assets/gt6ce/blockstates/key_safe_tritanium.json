@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=north,open=false": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked",
+      "y": 0
+    },
+    "facing=north,open=true": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked_open",
+      "y": 0
+    },
+    "facing=east,open=false": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked",
+      "y": 90
+    },
+    "facing=east,open=true": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked_open",
+      "y": 90
+    },
+    "facing=south,open=false": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked",
+      "y": 180
+    },
+    "facing=south,open=true": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked_open",
+      "y": 180
+    },
+    "facing=west,open=false": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked",
+      "y": 270
+    },
+    "facing=west,open=true": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked_open",
+      "y": 270
+    },
+    "facing=up,open=false": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked",
+      "y": 0,
+      "x": 270
+    },
+    "facing=up,open=true": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked_open",
+      "y": 0,
+      "x": 270
+    },
+    "facing=down,open=false": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked",
+      "y": 0,
+      "x": 90
+    },
+    "facing=down,open=true": {
+      "model": "gt6ce:block/machine/storage/safe_keylocked_open",
+      "y": 0,
+      "x": 90
+    }
+  }
+}

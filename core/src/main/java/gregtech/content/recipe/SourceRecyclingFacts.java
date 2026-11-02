@@ -137,12 +137,12 @@ public final class SourceRecyclingFacts {
             8638, 8640, 8643, 8645, 8646, 8647, 8651, 8652, 8653, 8658, 8659, 8660, 8661, 8662, 8663, 8664, 8665, 8666,
             8667, 8668, 8669, 8672, 8673, 8674, 8675, 8679, 8682, 8684, 8685, 8686, 8687, 8689, 8697, 8698, 8700, 8702,
             8704, 8705, 8706, 8708, 8709, 8710, 8717, 8720, 8721, 8722, 8726, 8727, 8729, 8730, 8732, 8735, 8737, 8744,
-            8745, 8746, 8751, 8756, 8784, 8790, 8791, 8792, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8801, 8802, 8803,
-            8805, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
+            8745, 8746, 8751, 8752, 8756, 8784, 8790, 8791, 8792, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8801, 8802,
+            8803, 8805, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
     // Loader_Fluids135-189 optional external receivers. Default-positive bindings still require native proof.
     private static final Set<Integer> OPTIONAL_EXTERNAL = Set.of(
             120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600, 8610, 8630,
-            8661, 8700, 8702, 8708, 8709, 8710);
+            8661, 8700, 8702, 8708, 8709, 8710, 8752);
 
     private static final Map<Integer, Facts> BY_ID = createFacts();
     private static final List<Facts> ALL = List.copyOf(BY_ID.values());
@@ -390,6 +390,7 @@ public final class SourceRecyclingFacts {
         row(rows, 1160, "Livermorium", 0, 1160, U, 516);
         row(rows, 1170, "Farnsium", 0, 1170, U, 517);
         row(rows, 1180, "Oganesson", 0, 1180, U, 518);
+        row(rows, 1250, "TritaniumElemental", M, 1250, U, 695);
         row(rows, 1260, "Trinium", M, 1260, U, 696);
         row(rows, 1450, "DuraniumElemental", M, 1450, U, 715);
         row(rows, 1520, "Vibranium", 0, 1520, U, 722);
@@ -746,6 +747,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8745, "Netherite", M, 8745, U, 1833);
         row(rows, 8746, "NetherizedDiamond", M, 8746, U, 1834);
         row(rows, 8751, "Duranium", M, 8751, U, 1840);
+        row(rows, 8752, "Tritanium", M, 8752, U, 1841);
         row(rows, 8756, "Duralumin", M, 8756, U, 1845);
         row(rows, 8784, "Adamantine", M, 8784, U, 1675);
         row(rows, 8790, "Trinitanium", M, 8790, U, 1872);
@@ -865,6 +867,12 @@ public final class SourceRecyclingFacts {
         row(rows, 9201, "DuraniumHexabromide", B, 9201, U, 3783);
         row(rows, 9202, "DuraniumHexaiodide", B, 9202, U, 3784);
         row(rows, 9203, "DuraniumHexaastatide", B, 9203, U, 3785);
+        row(rows, 9204, "TritaniumDioxide", B, 9204, U, 3786);
+        row(rows, 9205, "TritaniumHexafluoride", B, 9205, U, 3787);
+        row(rows, 9206, "TritaniumHexachloride", B, 9206, U, 3788);
+        row(rows, 9207, "TritaniumHexabromide", B, 9207, U, 3789);
+        row(rows, 9208, "TritaniumHexaiodide", B, 9208, U, 3790);
+        row(rows, 9209, "TritaniumHexaastatide", B, 9209, U, 3791);
         row(rows, 9210, "Bromargyrite", M | B, 470, U / 3, 3756);
         row(rows, 9211, "Smithsonite", M | B, 300, U / 6, 3757);
         row(rows, 9212, "Sperrylite", M | B, 780, U / 4, 3758);
@@ -1030,6 +1038,7 @@ public final class SourceRecyclingFacts {
         bind(result, 880, "molten.radium", Accessor.LIQUID, 144, U, 659);
         bind(result, 920, "molten.uranium", Accessor.LIQUID, 144, U, 659);
         bind(result, 921, "molten.uranium235", Accessor.LIQUID, 144, U, 659);
+        bind(result, 1250, "molten.tritaniumelemental", Accessor.LIQUID, 144, U, 659);
         bind(result, 1260, "molten.trinium", Accessor.LIQUID, 144, U, 659);
         bind(result, 1450, "molten.duraniumelemental", Accessor.LIQUID, 144, U, 659);
         bind(result, 1740, "molten.naquadah", Accessor.LIQUID, 144, U, 659);

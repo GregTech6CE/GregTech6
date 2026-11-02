@@ -166,6 +166,7 @@ public final class SourceExtrusionRules {
             1160|Livermorium|000||648648000
             1170|Farnsium|000||648648000
             1180|Oganesson|000||648648000
+            1250|TritaniumElemental|101||648648000
             1260|Trinium|101||648648000
             1450|DuraniumElemental|111||648648000
             1520|Vibranium|000||648648000
@@ -503,6 +504,7 @@ public final class SourceExtrusionRules {
             8745|Netherite|101||648648000
             8746|NetherizedDiamond|101||648648000
             8751|Duranium|101||648648000
+            8752|Tritanium|101||648648000
             8756|Duralumin|101||648648000
             8784|Adamantine|101||648648000
             8790|Trinitanium|101||648648000
@@ -622,6 +624,12 @@ public final class SourceExtrusionRules {
             9201|DuraniumHexabromide|000||648648000
             9202|DuraniumHexaiodide|000||648648000
             9203|DuraniumHexaastatide|000||648648000
+            9204|TritaniumDioxide|000||648648000
+            9205|TritaniumHexafluoride|000||648648000
+            9206|TritaniumHexachloride|000||648648000
+            9207|TritaniumHexabromide|000||648648000
+            9208|TritaniumHexaiodide|000||648648000
+            9209|TritaniumHexaastatide|000||648648000
             9210|Bromargyrite|000||648648000
             9211|Smithsonite|000||648648000
             9212|Sperrylite|000||648648000

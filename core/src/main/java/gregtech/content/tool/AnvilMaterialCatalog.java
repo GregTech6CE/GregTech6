@@ -177,6 +177,7 @@ public final class AnvilMaterialCatalog {
             "TitaniumIridium",
             "Trinaquadalloy",
             "Trinitanium",
+            "Tritanium",
             "Tungsten",
             "TungstenCarbide",
             "Tungstensteel",

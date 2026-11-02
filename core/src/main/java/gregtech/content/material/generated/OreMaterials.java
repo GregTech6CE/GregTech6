@@ -124,4 +124,10 @@ public final class OreMaterials {
     public static final GTMaterial DuraniumHexabromide     = ore(9201, "Duranium Hexabromide",     0x2D7DAF).setTextureSet(MaterialTextureSet.DULL).setStats(398, 640, 5.53314286F).setTooltipChemical("DnBr₆").setToolQuality(4);
     public static final GTMaterial DuraniumHexaiodide      = ore(9202, "Duranium Hexaiodide",      0x4B7DAF).setTextureSet(MaterialTextureSet.DULL).setStats(502, 747, 7.08285714F).setTooltipChemical("DnI₆").setToolQuality(4);
     public static final GTMaterial DuraniumHexaastatide    = ore(9203, "Duranium Hexaastatide",    0x1991AF).setTextureSet(MaterialTextureSet.DULL).setStats(664, 878, 8.85714286F).setTooltipChemical("DnAt₆").setToolQuality(4);
+    public static final GTMaterial TritaniumDioxide        = ore(9204, "Tritanium Dioxide",        0x19B97D).setTextureSet(MaterialTextureSet.DULL).setStats(702, 1106, 8.334286F).setTooltipChemical("TnO₂").setToolQuality(4);
+    public static final GTMaterial TritaniumHexafluoride   = ore(9205, "Tritanium Hexafluoride",   0x557D7D).setTextureSet(MaterialTextureSet.DULL).setStats(331, 521, 3.57288229F).setTooltipChemical("TnF₆").setToolQuality(4);
+    public static final GTMaterial TritaniumHexachloride   = ore(9206, "Tritanium Hexachloride",   0x37B99B).setTextureSet(MaterialTextureSet.DULL).setStats(432, 653, 3.57418343F).setTooltipChemical("TnCl₆").setToolQuality(4);
+    public static final GTMaterial TritaniumHexabromide    = ore(9207, "Tritanium Hexabromide",    0x377D9B).setTextureSet(MaterialTextureSet.DULL).setStats(512, 732, 6.24742857F).setTooltipChemical("TnBr₆").setToolQuality(4);
+    public static final GTMaterial TritaniumHexaiodide     = ore(9208, "Tritanium Hexaiodide",     0x55B9B9).setTextureSet(MaterialTextureSet.DULL).setStats(616, 840, 7.79714286F).setTooltipChemical("TnI₆").setToolQuality(4);
+    public static final GTMaterial TritaniumHexaastatide   = ore(9209, "Tritanium Hexaastatide",   0x197DB9).setTextureSet(MaterialTextureSet.DULL).setStats(778, 971, 9.57142857F).setTooltipChemical("TnAt₆").setToolQuality(4);
 }

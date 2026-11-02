@@ -306,6 +306,8 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.registerAlias("TigerEyeYellow", "TigerEye");
         GTMaterialRegistry.registerAlias("Tl", "Thallium");
         GTMaterialRegistry.registerAlias("Tm", "Thulium");
+        GTMaterialRegistry.registerAlias("Tn", "TritaniumElemental");
+        GTMaterialRegistry.registerAlias("TritaniumAlloy", "Tritanium");
         GTMaterialRegistry.registerAlias("TungstenSteel", "Tungstensteel");
         GTMaterialRegistry.registerAlias("U235F4", "Uranium235Tetrafluoride");
         GTMaterialRegistry.registerAlias("U235F6", "Uranium235Hexafluoride");
@@ -985,6 +987,14 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Trinaquadalloy", "Trinaquadalloy");
         GTMaterialRegistry.setDisplayName("Trinitanium", "Trinitanium");
         GTMaterialRegistry.setDisplayName("Trinium", "Trinium");
+        GTMaterialRegistry.setDisplayName("Tritanium", "Tritanium");
+        GTMaterialRegistry.setDisplayName("TritaniumDioxide", "Tritanium Dioxide");
+        GTMaterialRegistry.setDisplayName("TritaniumElemental", "TritaniumElemental");
+        GTMaterialRegistry.setDisplayName("TritaniumHexaastatide", "Tritanium Hexaastatide");
+        GTMaterialRegistry.setDisplayName("TritaniumHexabromide", "Tritanium Hexabromide");
+        GTMaterialRegistry.setDisplayName("TritaniumHexachloride", "Tritanium Hexachloride");
+        GTMaterialRegistry.setDisplayName("TritaniumHexafluoride", "Tritanium Hexafluoride");
+        GTMaterialRegistry.setDisplayName("TritaniumHexaiodide", "Tritanium Hexaiodide");
         GTMaterialRegistry.setDisplayName("TritiatedWater", "Tritiated Water");
         GTMaterialRegistry.setDisplayName("Tritium", "Tritium");
         GTMaterialRegistry.setDisplayName("Trona", "Trona");

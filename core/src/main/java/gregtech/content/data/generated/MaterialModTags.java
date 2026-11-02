@@ -298,8 +298,10 @@ public final class MaterialModTags {
         ImportedMaterialData.Ti.mod(ModReferences.MaCu);
         ImportedMaterialData.TiO2.mod(ModReferences.MaCu);
         ImportedMaterialData.TinAlloy.mod(ModReferences.RC);
+        ImportedMaterialData.Tn.mod(ModReferences.MO);
         ImportedMaterialData.Topaz.mod(ModReferences.BoP);
         ImportedMaterialData.Trinitanium.mod(ModReferences.GT);
+        ImportedMaterialData.TritaniumAlloy.mod(ModReferences.MO);
         ImportedMaterialData.TungstenCarbide.mod(ModReferences.ReC);
         ImportedMaterialData.TungstenSintered.mod(ModReferences.RoC);
         ImportedMaterialData.TungstenSteel.mod(ModReferences.GT);

@@ -464,6 +464,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("chest_thaumium", new Entry("chests", 0));
         ITEMS.put("chest_tin_alloy", new Entry("chests", 0));
         ITEMS.put("chest_titanium", new Entry("chests", 0));
+        ITEMS.put("chest_tritanium", new Entry("chests", 0));
         ITEMS.put("chest_tungsten", new Entry("chests", 0));
         ITEMS.put("chest_tungsten_carbide", new Entry("chests", 0));
         ITEMS.put("chest_tungstensteel", new Entry("chests", 0));
@@ -1046,6 +1047,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("hopper_thaumium", new Entry("hoppers", 13));
         ITEMS.put("hopper_tin_alloy", new Entry("hoppers", 13));
         ITEMS.put("hopper_titanium", new Entry("hoppers", 13));
+        ITEMS.put("hopper_tritanium", new Entry("hoppers", 13));
         ITEMS.put("hopper_tungsten", new Entry("hoppers", 13));
         ITEMS.put("hopper_tungsten_carbide", new Entry("hoppers", 13));
         ITEMS.put("hopper_tungstensteel", new Entry("hoppers", 13));
@@ -1167,6 +1169,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("key_safe_thaumium", new Entry("safes", 3));
         ITEMS.put("key_safe_tin_alloy", new Entry("safes", 3));
         ITEMS.put("key_safe_titanium", new Entry("safes", 3));
+        ITEMS.put("key_safe_tritanium", new Entry("safes", 3));
         ITEMS.put("key_safe_tungsten", new Entry("safes", 3));
         ITEMS.put("key_safe_tungsten_carbide", new Entry("safes", 3));
         ITEMS.put("key_safe_tungstensteel", new Entry("safes", 3));
@@ -1288,6 +1291,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("logistics_mass_storage_thaumium", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_tin_alloy", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_titanium", new Entry("logistics", 10));
+        ITEMS.put("logistics_mass_storage_tritanium", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_tungsten", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_tungsten_carbide", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_tungstensteel", new Entry("logistics", 10));
@@ -1422,6 +1426,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("mass_storage_thaumium", new Entry("storage", 9));
         ITEMS.put("mass_storage_tin_alloy", new Entry("storage", 9));
         ITEMS.put("mass_storage_titanium", new Entry("storage", 9));
+        ITEMS.put("mass_storage_tritanium", new Entry("storage", 9));
         ITEMS.put("mass_storage_tungsten", new Entry("storage", 9));
         ITEMS.put("mass_storage_tungsten_carbide", new Entry("storage", 9));
         ITEMS.put("mass_storage_tungstensteel", new Entry("storage", 9));
@@ -1716,6 +1721,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("queue_hopper_thaumium", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_tin_alloy", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_titanium", new Entry("hoppers", 13));
+        ITEMS.put("queue_hopper_tritanium", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_tungsten", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_tungsten_carbide", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_tungstensteel", new Entry("hoppers", 13));
@@ -1823,6 +1829,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("reinforced_wood_chest_thaumium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_tin_alloy", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_titanium", new Entry("chests", 0));
+        ITEMS.put("reinforced_wood_chest_tritanium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_tungsten", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_tungsten_carbide", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_tungstensteel", new Entry("chests", 0));
@@ -1933,6 +1940,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("safe_thaumium", new Entry("safes", 2));
         ITEMS.put("safe_tin_alloy", new Entry("safes", 2));
         ITEMS.put("safe_titanium", new Entry("safes", 2));
+        ITEMS.put("safe_tritanium", new Entry("safes", 2));
         ITEMS.put("safe_tungsten", new Entry("safes", 2));
         ITEMS.put("safe_tungsten_carbide", new Entry("safes", 2));
         ITEMS.put("safe_tungstensteel", new Entry("safes", 2));
@@ -2012,6 +2020,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("scaffold_thaumium", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_tin_alloy", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_titanium", new Entry("scaffolds", 15));
+        ITEMS.put("scaffold_tritanium", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_tungsten", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_tungsten_carbide", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_tungstensteel", new Entry("scaffolds", 15));

@@ -74,6 +74,7 @@ public final class GTStorageMetals {
                     gregtech.content.material.generated.CompoundMaterials.ElvenElementium,
                     30.0F,
                     30.0F),
+            new Spec("tritanium", gregtech.content.material.generated.CompoundMaterials.Tritanium, 30.0F, 30.0F),
             new Spec("adamantium", gregtech.content.material.generated.ElementMaterials.Adamantium, 100.0F, 100.0F),
             new Spec(
                     "draconium_awakened",

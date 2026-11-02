@@ -1181,6 +1181,8 @@ public final class GTMachines {
             36,
             30.0F,
             30.0F);
+    public static final RegistryObject<HopperBlock> HOPPER_TRITANIUM = hopper(
+            "hopper_tritanium", gregtech.content.material.generated.CompoundMaterials.Tritanium, 36, 30.0F, 30.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ADAMANTIUM = hopper(
             "hopper_adamantium", gregtech.content.material.generated.ElementMaterials.Adamantium, 36, 100.0F, 100.0F);
     public static final RegistryObject<HopperBlock> HOPPER_DRACONIUM_AWAKENED = hopper(
@@ -1327,6 +1329,12 @@ public final class GTMachines {
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ELVEN_ELEMENTIUM = queueHopper(
             "queue_hopper_elven_elementium",
             gregtech.content.material.generated.CompoundMaterials.ElvenElementium,
+            36,
+            30.0F,
+            30.0F);
+    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_TRITANIUM = queueHopper(
+            "queue_hopper_tritanium",
+            gregtech.content.material.generated.CompoundMaterials.Tritanium,
             36,
             30.0F,
             30.0F);

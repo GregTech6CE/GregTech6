@@ -32,8 +32,7 @@
 | 外部作品熔融流体 | 停注 `molten.adamantite`、`molten.carmot`、`molten.mithril`、`molten.orichalcum`、`molten.oriharukon`。 | 名称取自《星际迷航》、托尔金作品与神话，相关模组未接入本端。 |
 | 现实名称化合物熔融流体 | 停注 `molten.ferrite`、`molten.niobiumnitride`。 | 本端未保留对应配方与物品形态，停注。 |
 | 无来源/无消费端材料熔融流体 | 停注 `molten.bedrockium`、`molten.crystallinepinkslime`、`molten.unstable`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
-| Tritanium 材料链流体 | 停注 `molten.tritanium`、`molten.tritaniumelemental`。 | 对应 Tritanium 合金与元素材料停注，见[材料移除](material-removal.md)。 |
 
-随材料停注不再生成的流体共 116 条，包括 113 条 `molten.*`、`ectoplasm`、`martianvitriol` 和 `uumatter`。[类型C](https://github.com/GregTech6CE/GregTech6/issues/251) 的 `molten.brass`、`molten.zinc`、`molten.calcite` 静态声明已删除，但材料生成器以同一 ID 重建，不属于流体移除；属性改由材料熔点与亮度 10 决定。
+随材料停注不再生成的流体共 114 条，包括 111 条 `molten.*`、`ectoplasm`、`martianvitriol` 和 `uumatter`。[类型C](https://github.com/GregTech6CE/GregTech6/issues/251) 的 `molten.brass`、`molten.zinc`、`molten.calcite` 静态声明已删除，但材料生成器以同一 ID 重建，不属于流体移除；属性改由材料熔点与亮度 10 决定。
 
-另清理不再对应任何已注册流体的 `fluid_type.gt6ce.molten_*` 语言键：英文 826 条、中文 828 条。通用回退键 `fluid_type.gt6ce.molten_material` 保留，供没有专用显示名的熔融流体使用。
+另清理不再对应任何已注册流体的 `fluid_type.gt6ce.molten_*` 语言键：英文 824 条、中文 826 条。通用回退键 `fluid_type.gt6ce.molten_material` 保留，供没有专用显示名的熔融流体使用。

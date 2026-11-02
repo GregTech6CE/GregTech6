@@ -265,6 +265,7 @@ public final class MaterialDecompositionData {
         bind(8745, "Netherite", DECOMPOSABLE, CENTRIFUGE);
         bind(8746, "NetherizedDiamond", DECOMPOSABLE);
         bind(8751, "Duranium", DECOMPOSABLE, CENTRIFUGE);
+        bind(8752, "Tritanium", DECOMPOSABLE, CENTRIFUGE);
         bind(8756, "Duralumin", DECOMPOSABLE);
         bind(8784, "Adamantine", DECOMPOSABLE);
         bind(8790, "Trinitanium", DECOMPOSABLE, CENTRIFUGE);
@@ -371,6 +372,12 @@ public final class MaterialDecompositionData {
         bind(9201, "DuraniumHexabromide", DECOMPOSABLE, ELECTROLYSER);
         bind(9202, "DuraniumHexaiodide", DECOMPOSABLE, ELECTROLYSER);
         bind(9203, "DuraniumHexaastatide", DECOMPOSABLE, ELECTROLYSER);
+        bind(9204, "TritaniumDioxide", DECOMPOSABLE, ELECTROLYSER);
+        bind(9205, "TritaniumHexafluoride", DECOMPOSABLE, ELECTROLYSER);
+        bind(9206, "TritaniumHexachloride", DECOMPOSABLE, ELECTROLYSER);
+        bind(9207, "TritaniumHexabromide", DECOMPOSABLE, ELECTROLYSER);
+        bind(9208, "TritaniumHexaiodide", DECOMPOSABLE, ELECTROLYSER);
+        bind(9209, "TritaniumHexaastatide", DECOMPOSABLE, ELECTROLYSER);
         bind(9210, "Bromargyrite", DECOMPOSABLE, ELECTROLYSER);
         bind(9211, "Smithsonite", DECOMPOSABLE, ELECTROLYSER);
         bind(9212, "Sperrylite", DECOMPOSABLE, ELECTROLYSER);

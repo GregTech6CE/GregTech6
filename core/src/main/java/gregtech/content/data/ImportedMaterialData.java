@@ -688,9 +688,11 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
             TinAlloy = GT6Materials.Compounds.TinAlloy,
             Tl = GT6Materials.Elements.Tl,
             Tm = GT6Materials.Elements.Tm,
+            Tn = GT6Materials.Elements.Tn,
             Topaz = GT6Materials.Compounds.Topaz,
             Trinaquadalloy = GT6Materials.Compounds.Trinaquadalloy,
             Trinitanium = GT6Materials.Compounds.Trinitanium,
+            TritaniumAlloy = GT6Materials.Compounds.TritaniumAlloy,
             TungstenCarbide = GT6Materials.Compounds.TungstenCarbide,
             TungstenSintered = GT6Materials.Compounds.TungstenSintered,
             TungstenSteel = GT6Materials.Compounds.TungstenSteel,
@@ -809,7 +811,13 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
                 DuraniumHexachloride = GT6Materials.Ores.DuraniumHexachloride,
                 DuraniumHexabromide = GT6Materials.Ores.DuraniumHexabromide,
                 DuraniumHexaiodide = GT6Materials.Ores.DuraniumHexaiodide,
-                DuraniumHexaastatide = GT6Materials.Ores.DuraniumHexaastatide;
+                DuraniumHexaastatide = GT6Materials.Ores.DuraniumHexaastatide,
+                TritaniumDioxide = GT6Materials.Ores.TritaniumDioxide,
+                TritaniumHexafluoride = GT6Materials.Ores.TritaniumHexafluoride,
+                TritaniumHexachloride = GT6Materials.Ores.TritaniumHexachloride,
+                TritaniumHexabromide = GT6Materials.Ores.TritaniumHexabromide,
+                TritaniumHexaiodide = GT6Materials.Ores.TritaniumHexaiodide,
+                TritaniumHexaastatide = GT6Materials.Ores.TritaniumHexaastatide;
     }
 
     /** Stone variants moved out of the main list for readability (GT6 {@code MT.STONES}). */

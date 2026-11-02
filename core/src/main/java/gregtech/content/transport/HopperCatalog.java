@@ -340,6 +340,14 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
+                            "hopper_tritanium",
+                            gregtech.content.material.generated.CompoundMaterials.Tritanium,
+                            36,
+                            30.0F,
+                            30.0F)),
+            new Entry(
+                    false,
+                    HopperSpec.of(
                             "hopper_adamantium",
                             gregtech.content.material.generated.ElementMaterials.Adamantium,
                             36,
@@ -694,6 +702,14 @@ public final class HopperCatalog {
                     HopperSpec.of(
                             "queue_hopper_elven_elementium",
                             gregtech.content.material.generated.CompoundMaterials.ElvenElementium,
+                            36,
+                            30.0F,
+                            30.0F)),
+            new Entry(
+                    true,
+                    HopperSpec.of(
+                            "queue_hopper_tritanium",
+                            gregtech.content.material.generated.CompoundMaterials.Tritanium,
                             36,
                             30.0F,
                             30.0F)),

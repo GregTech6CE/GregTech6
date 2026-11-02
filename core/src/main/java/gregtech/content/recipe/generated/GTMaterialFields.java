@@ -159,6 +159,7 @@ public final class GTMaterialFields {
         BY_FIELD.put("Lv", "Livermorium");
         BY_FIELD.put("Fa", "Farnsium");
         BY_FIELD.put("Og", "Oganesson");
+        BY_FIELD.put("Tn", "TritaniumElemental");
         BY_FIELD.put("Ke", "Trinium");
         BY_FIELD.put("Dn", "DuraniumElemental");
         BY_FIELD.put("Vb", "Vibranium");
@@ -650,6 +651,7 @@ public final class GTMaterialFields {
         BY_FIELD.put("Netherite", "Netherite");
         BY_FIELD.put("NetherizedDiamond", "Netherized Diamond");
         BY_FIELD.put("DuraniumAlloy", "Duranium");
+        BY_FIELD.put("TritaniumAlloy", "Tritanium");
         BY_FIELD.put("Duralumin", "Duralumin");
         BY_FIELD.put("HSSG", "HSS-G");
         BY_FIELD.put("HSSE", "HSS-E");
@@ -733,6 +735,12 @@ public final class GTMaterialFields {
         BY_FIELD.put("DuraniumHexabromide", "Duranium Hexabromide");
         BY_FIELD.put("DuraniumHexaiodide", "Duranium Hexaiodide");
         BY_FIELD.put("DuraniumHexaastatide", "Duranium Hexaastatide");
+        BY_FIELD.put("TritaniumDioxide", "Tritanium Dioxide");
+        BY_FIELD.put("TritaniumHexafluoride", "Tritanium Hexafluoride");
+        BY_FIELD.put("TritaniumHexachloride", "Tritanium Hexachloride");
+        BY_FIELD.put("TritaniumHexabromide", "Tritanium Hexabromide");
+        BY_FIELD.put("TritaniumHexaiodide", "Tritanium Hexaiodide");
+        BY_FIELD.put("TritaniumHexaastatide", "Tritanium Hexaastatide");
         BY_FIELD.put("MarsSand", "Mars Sand");
         BY_FIELD.put("SkyStone", "Sky Stone");
         BY_FIELD.put("Livingrock", "Livingrock");

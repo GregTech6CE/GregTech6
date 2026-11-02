@@ -41,4 +41,5 @@
 | 现实名称宝石 | 停注 `Alexandrite`(8388)、`Sugilite`(8463)。 | 本端未保留对应宝石物品与配方，停注。 |
 | 作物、调味料与食品 | 停注 `AbyssalOat`(9719)、`Almond`(9714)、`Barley`(9704)、`Butter`(9798)、`Corn`(9708)、`Curry`(9789)、`Oat`(9707)、`Rice`(9706)、`Tofu`(9778)、`Licorice`(9717)、`Nougat`(9718)、`PEZ`(9716)、`Nutmeg`(9786)、`Peanut`(9795)、`PepperBlack`(9788)、`Pistachio`(9797)、`SaltedButter`(9799)、`Vanilla`(9787)、`Marshmallow`(9715，CandyCraft)。 | 本端未移植对应作物、调味料与糖果加工，材料没有物品来源。 |
 | 无来源/无消费端材料（2026-11-02 审计） | 停注 `Aerotheum`(8246)、`Bedrockium`(8795)、`CrystallinePinkSlime`(8813)、`Cryotheum`(8213)、`Unstable`(8805)。 | 本端没有保留对应的物品来源或消费端；`Cryotheum` 原有 CryoMixer 粉尘产出已随材料停注，`Aerotheum` 的流体此前已停注。 |
-| 含 Tritanium 的材料链（2026-11-02 审计） | 停注 `TritaniumElemental`(1250)、`Tritanium`(8752)、`TritaniumDioxide`(9204)、`TritaniumHexafluoride`(9205)、`TritaniumHexachloride`(9206)、`TritaniumHexabromide`(9207)、`TritaniumHexaiodide`(9208)、`TritaniumHexaastatide`(9209)，以及由这些材料构成的料斗、箱子、保险箱、书架、脚手架等物品与配方。 | 这组材料除通用工具/自锻材料组外没有专属的链外消费端；相关通用条目已随材料删除。保留的 `Duranium`、`Trinium` 与 `Naquadah` 产出不依赖 Tn。 |
+
+2026-11-03 复核：`Tritanium` 链（`TritaniumElemental`、`Tritanium`、二氧化物与五种卤化物及其连通物品）因末地硅岩矿副产物恢复注册，不再列入本表，见 [issue #273](https://github.com/GregTech6CE/GregTech6/issues/273)。
