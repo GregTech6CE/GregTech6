@@ -16,15 +16,15 @@ public final class AutomaticToolRules {
             new Profile("auto_igniter_titanium", true, 9, 512, 3),
             new Profile("auto_igniter_tungsten", true, 12, 2048, 4),
             new Profile("auto_igniter_ultimet", true, 14, 8192, 5),
-            new Profile("auto_hammer_steel", false, 6, 8, 1),
-            new Profile("auto_hammer_aluminium", false, 4, 32, 2),
+            new Profile("auto_hammer_bronze", false, 6, 8, 1),
+            new Profile("auto_hammer_steel", false, 4, 32, 2),
             new Profile("auto_hammer_titanium", false, 9, 128, 3),
-            new Profile("auto_hammer_tungsten", false, 12, 512, 4));
+            new Profile("auto_hammer_tungsten_steel", false, 12, 512, 4));
 
     public static Profile profile(String id) {
         return ALL.stream().filter(p -> p.id().equals(id)).findFirst().orElseThrow();
     }
-    /** Loader_MultiTileEntities 15001..15004 / 15010..15015; retained port IDs are not material names. */
+    /** Loader_MultiTileEntities 15001..15004 / 15010..15015. */
     public static gregtech.api.material.GTMaterial material(Profile profile) {
         String[] names = profile.igniter()
                 ? new String[] {"TinAlloy", "SteelGalvanized", "Aluminium", "StainlessSteel", "Chromium", "Titanium"}

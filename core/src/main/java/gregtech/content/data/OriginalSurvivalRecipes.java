@@ -1292,7 +1292,7 @@ public final class OriginalSurvivalRecipes {
                             'W',
                             "cabletier:5")),
             new Row(
-                    "auto_hammer_steel",
+                    "auto_hammer_bronze",
                     1,
                     ImportedMaterialData.Bronze,
                     "wR|MS|hH",
@@ -1310,7 +1310,7 @@ public final class OriginalSurvivalRecipes {
                             'w',
                             "item:gt6ce:tool_wrench")),
             new Row(
-                    "auto_hammer_aluminium",
+                    "auto_hammer_steel",
                     1,
                     ImportedMaterialData.Steel,
                     "wR|MS|hH",
@@ -1346,7 +1346,7 @@ public final class OriginalSurvivalRecipes {
                             'w',
                             "item:gt6ce:tool_wrench")),
             new Row(
-                    "auto_hammer_tungsten",
+                    "auto_hammer_tungsten_steel",
                     1,
                     ImportedMaterialData.TungstenSteel,
                     "wR|MS|hH",
