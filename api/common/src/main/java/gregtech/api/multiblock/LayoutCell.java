@@ -18,6 +18,12 @@ public record LayoutCell(int right, int up, int back, CellMatch match, Structure
                          StructurePorts ports) {
     public static final int MAX_DESIGN = 255;
 
+    /**
+     * Retained for existing callers; uses the default role permissions.
+     * @deprecated Use {@link #at} / {@link #relative} with {@link #withDesign} and {@link #withPorts},
+     * or the constructor accepting ports explicitly.
+     */
+    @Deprecated(since = "1.3.0", forRemoval = false)
     public LayoutCell(int right, int up, int back, CellMatch match, StructureRole role, int design) {
         this(right, up, back, match, role, design, StructurePorts.DEFAULT);
     }
@@ -49,12 +55,12 @@ public record LayoutCell(int right, int up, int back, CellMatch match, Structure
         if (role == null) throw new IllegalArgumentException("Missing structure role");
         if (right == 0 && up == 0 && back == 0)
             throw new IllegalArgumentException("Structure cell cannot be the origin");
-        return new LayoutCell(right, up, back, match, role, -1);
+        return new LayoutCell(right, up, back, match, role, -1, StructurePorts.DEFAULT);
     }
 
     /** A cell whose coordinates are relative to a repeat anchor. The origin check runs on the absolute position. */
     public static LayoutCell relative(int right, int up, int back, CellMatch match, StructureRole role) {
-        return new LayoutCell(right, up, back, match, role, -1);
+        return new LayoutCell(right, up, back, match, role, -1, StructurePorts.DEFAULT);
     }
 
     /** A block id, block tag, or one of the block predicates. A group is plain when any member is. */

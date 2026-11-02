@@ -166,7 +166,7 @@ public final class AddonMachines {
                         contributor.addonId(),
                         contributor.recipeTables(),
                         contributor.addonMachines(),
-                        contributor.structureLayouts(),
+                        legacyStructureLayouts(contributor),
                         contributor.layoutParts(),
                         contributor.fluidPipes(),
                         contributor.itemPipes(),
@@ -178,6 +178,12 @@ public final class AddonMachines {
                         failure);
             }
         }
+    }
+
+    /** Existing addons still supply this list; it enters the same normalization as explicit bindings. */
+    @SuppressWarnings("deprecation")
+    private static List<StructureLayout> legacyStructureLayouts(AddonMachineContributor contributor) {
+        return contributor.structureLayouts();
     }
 
     private static boolean hasIoTarget(BasicMachineParameters parameters) {

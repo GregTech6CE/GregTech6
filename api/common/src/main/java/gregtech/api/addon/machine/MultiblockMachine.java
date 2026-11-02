@@ -9,7 +9,8 @@ import java.util.Objects;
 /**
  * A controller and its required structure, submitted together through
  * {@link AddonMachineContributor#addonMachines()}. The layout may be reused by several
- * machine types; its name need not equal the controller's machine type.
+ * machine types; its name need not equal the controller's machine type. The host registers each
+ * bound copy under the controller's machine type, not under the reusable layout name.
  */
 public record MultiblockMachine(AddonMachine controller, StructureLayout structure) implements AddonMachine {
     public MultiblockMachine {

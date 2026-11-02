@@ -41,6 +41,8 @@ public final class KubeJsMachineDeclarations {
         machines.add(Objects.requireNonNull(machine, "machine"));
     }
 
+    /** @deprecated Add {@code controller.withStructure(layout)} through {@link #addMachine(AddonMachine)}. */
+    @Deprecated(since = "1.3.0", forRemoval = false)
     public void addLayout(StructureLayout layout) {
         open();
         layouts.add(Objects.requireNonNull(layout, "layout"));
@@ -67,6 +69,8 @@ public final class KubeJsMachineDeclarations {
         return List.copyOf(machines);
     }
 
+    /** @deprecated Compatibility input from separate layout declarations; new bindings are in {@link #machines()}. */
+    @Deprecated(since = "1.3.0", forRemoval = false)
     public List<StructureLayout> layouts() {
         return List.copyOf(layouts);
     }

@@ -31,8 +31,10 @@ public interface AddonMachineContributor {
      * Legacy layouts bound by the controller {@code machineType}.
      * Prefer {@link AddonMachine#withStructure(StructureLayout)} so the association is explicit.
      * The host normalizes this compatibility input to the same declarations and validation.
+     * This remains an active compatibility entry point for existing contributors.
+     * @deprecated Submit controllers with explicit structures through {@link #addonMachines()}.
      */
-    @Deprecated
+    @Deprecated(since = "1.3.0", forRemoval = false)
     default List<StructureLayout> structureLayouts() { return List.of(); }
 
     /**

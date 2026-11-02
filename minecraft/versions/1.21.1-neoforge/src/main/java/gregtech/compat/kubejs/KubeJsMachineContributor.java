@@ -30,6 +30,8 @@ public final class KubeJsMachineContributor implements AddonMachineContributor {
         return loaded().machines();
     }
 
+    /** @deprecated Retains separate layouts from old scripts; new bindings belong in {@link #addonMachines()}. */
+    @Deprecated(since = "1.3.0", forRemoval = false)
     @Override
     public List<StructureLayout> structureLayouts() {
         return loaded().layouts();

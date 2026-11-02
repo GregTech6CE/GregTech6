@@ -24,16 +24,22 @@
 
 在 `AddonMachineContributor.addonMachines()` 中提交 `controller.withStructure(layout)`。配方机、行为机和燃料发电机使用同一个 `MultiblockMachine` 声明；配方主控仍需指定 `largeRecipe()`，燃料主控仍需指定 `multi()`。结构的名称可以独立于机器类型，多个主控可复用同一份 `StructureLayout`。字符层图、固定单元与重复层继续使用既有布局 API。
 
+这里的独立名称标识可复用模板，不是另一套运行时注册键。宿主为每个绑定生成以主控 `machineType` 命名的布局副本，后续注册和布局查找使用该键；原模板对象及其名称不会改变，也不会额外注册模板名称别名。例如，同一个 `shared_tower` 模板绑定两种主控后，会按各自的 `machineType` 注册。
+
 ```java
 return List.of(recipeController.withStructure(sharedLayout),
                behaviorController.withStructure(sharedLayout));
 ```
 
-此片段中的主控和布局需由调用方先构建。旧 `structureLayouts()` 已弃用但保留兼容，宿主会将其与显式声明归一化；同一主控类型绑定不同结构、缺少必需结构、重复布局均会报错。
+此片段中的主控和布局需由调用方先构建。旧 `structureLayouts()` 从 API 1.3.0 起标记 `@Deprecated(forRemoval = false)`，仍是受支持的兼容入口，宿主会读取旧列表并将其与显式声明归一化；旧列表的布局名称必须等于主控 `machineType`。同一主控类型绑定不同结构、缺少必需结构、重复布局均会报错。
+
+KubeJS 的 `addLayout()` 和对应 `structureLayouts()` 桥接同样保留并标记弃用，继续支持现有脚本。新脚本使用 `event.addMachine(controller.withStructure(layout))`，不再单独提交布局列表。
 
 世界中的额外约束写入同一份布局，用 `require(StructureConstraint.exactly(match, count))` 限制实际选中的部件数量，用 `require(StructureConstraint.sameBlock(match))` 要求一组单元使用相同方块。`StructurePattern.count('A', min, max)` 只校验字符层图展开后的字符数量，两者不能互相代替。约束可以按匹配条件、角色或两者共同选择单元；标签选择的是由该标签声明匹配成功的单元，不会额外扫描其他单元的标签。
 
-`StructureLayout` 保留原来的三参数构造器，新增四参数构造器携带约束。旧构造器产生无约束布局，`equals` 包含约束，显式绑定归一化时保留约束。布局 JSON 可使用 `constraints` 数组，元素类型为 `count` 或 `same_block`，`match`、`role` 为可选选择器，数量规则还必须给出 `min`、`max`；`max=-1` 表示无上限。数据包是完整布局替换，约束随布局序列化并同步客户端；省略数组表示无约束。未使用的选择器、非法范围、与布局候选数量明显不相容的约束会提前报错，但不对任意多条约束执行完整可满足性求解。
+`StructureLayout` 的三参数构造器和 `LayoutCell` 的六参数构造器从 API 1.3.0 起标记 `@Deprecated(forRemoval = false)`，保留现有调用的源码和二进制兼容。新声明使用布局 builder、`LayoutCell.at` / `relative` 配合 `withDesign` / `withPorts`，或显式携带约束、端口的完整构造器。旧构造器分别产生无约束布局和无附加端口限制的单元；`equals` 包含约束，显式绑定归一化时保留约束。
+
+布局 JSON 可使用 `constraints` 数组，元素类型为 `count` 或 `same_block`，`match`、`role` 为可选选择器，数量规则还必须给出 `min`、`max`；`max=-1` 表示无上限。数据包是完整布局替换，约束随布局序列化并同步客户端；省略数组表示无约束。未使用的选择器、非法范围、与布局候选数量明显不相容的约束会提前报错，但不对任意多条约束执行完整可满足性求解。
 
 行为机通过 `context.structure().cells()` 读取最近成功匹配的完整单元快照：世界坐标、角色和方块状态，包含普通壁板、普通方块、空气与重复层；未成型时为空。原来的 `parts()` 仍只提供附属功能部件的操作接口。快照不会因读取而重新扫描世界，也不授予外部占用其他机器部件的权限。
 

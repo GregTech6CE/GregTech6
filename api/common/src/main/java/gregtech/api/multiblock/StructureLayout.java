@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * A named, reusable multiblock layout. Bind it explicitly with
- * {@code AddonMachine.withStructure(layout)}. The legacy contributor layout list requires
- * the name to equal the controller's {@code machineType}.
+ * {@code AddonMachine.withStructure(layout)}. The host registers a normalized copy under the
+ * controller's {@code machineType}; the reusable name is not a separate runtime registry key.
+ * The legacy contributor layout list requires the name to equal that {@code machineType}.
  *
  * @param name the layout name
  * @param cells fixed cells
@@ -19,7 +20,11 @@ import java.util.List;
  */
 public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRepeat> repeats,
                               List<StructureConstraint> constraints) {
-    /** Retained for existing callers; a layout without aggregate constraints. */
+    /**
+     * Retained for existing callers; a layout without aggregate constraints.
+     * @deprecated Use {@link #builder(String)} or the constructor accepting constraints.
+     */
+    @Deprecated(since = "1.3.0", forRemoval = false)
     public StructureLayout(String name, List<LayoutCell> cells, List<LayoutRepeat> repeats) {
         this(name, cells, repeats, List.of());
     }

@@ -15,12 +15,14 @@ import java.util.Map;
  * world blocks selected from an alternative matcher. Use {@link #require} for world-match constraints.
  *
  * <pre>{@code
- * StructureLayout.pattern("example_tower") // same name as the controller machineType
+ * var layout = StructureLayout.pattern("shared_tower") // reusable shape name
  *     .layer(0, "CSC", "CCC")             // rows go front to back, S is the origin
  *     .where('C', CellMatch.part("example_wall"), StructureRole.ITEM_FLUID_IO)
  *     .repeat("walls", 1, 2, 4, "CCC", "CCC")
  *     .count('C', 17, 29)
- *     .build(); // return from AddonMachineContributor.structureLayouts()
+ *     .build();
+ * // Given an already built AddonMachine controller, return from addonMachines():
+ * return List.of(controller.withStructure(layout));
  * }</pre>
  */
 public final class StructurePattern {

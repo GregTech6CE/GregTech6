@@ -16,6 +16,10 @@ public final class AddonMachineDeclarations {
         }
     }
 
+    /**
+     * Registry keys remain controller machine types. Explicit layout names identify reusable shapes;
+     * normalizing a bound copy does not mutate the caller's template or create another registry alias.
+     */
     public static Resolved resolve(List<AddonMachine> declarations, List<StructureLayout> legacyLayouts) {
         var layouts = new LinkedHashMap<String, StructureLayout>();
         for (var layout : legacyLayouts)
