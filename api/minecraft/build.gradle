@@ -29,6 +29,10 @@ if (!forge) { //maven.neoforged.net is unavailable in some regions, so we need t
         maven {
             url = "https://neoforged.forgecdn.net/mojang-meta"
         }
+        // Official fallback; reached only when the mirrors do not provide an artifact.
+        maven {
+            url = "https://maven.neoforged.net/releases/"
+        }
     }
 }
 
