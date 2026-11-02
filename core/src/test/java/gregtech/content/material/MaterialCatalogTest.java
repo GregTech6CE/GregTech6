@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import gregtech.api.mod.ModData;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.recipe.ClayMoldCatalog;
 import gregtech.content.recipe.EquipmentCraftingCatalog;
@@ -32,9 +31,7 @@ class MaterialCatalogTest {
 
     @Test
     void standaloneMaterialsAndDeviceCatalogsResolveWithoutLegacyMods() {
-        ModData.bindPresence(id -> false);
-        GTMaterialRegistry.init();
-        GTMaterialRegistry.postInit();
+        MaterialTestFixture.ensureInitialized();
         FluidDefinitions.prepare();
         verifyCanonicalFluids();
         // Building the thermal facts also verifies every phase binding and target has an identity.
