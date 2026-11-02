@@ -11,6 +11,7 @@ import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.transport.ItemPipeNetwork;
+import gregtech.content.transport.ItemPipeNetwork.Membership;
 import gregtech.content.transport.ItemPipeNetworkTransfer;
 import gregtech.content.transport.ItemPipeNetworks;
 import net.minecraft.core.BlockPos;
@@ -72,10 +73,11 @@ public class ItemPipeBlockEntity extends BlockEntity
     /** Stacks carried in window {@link #transferWindow}; see {@link #syncTransferWindow}. */
     private long transferredThisSecond;
     private long transferWindow = Long.MIN_VALUE;
-    /** Last snapshot {@link ItemPipeNetworks} put this pipe in; stale once invalid. Not persisted. */
-    private @Nullable ItemPipeNetwork network;
-    /** Faces that had an inventory when the snapshot was built, to notice when one appears or goes. */
-    private int endpointMask;
+    /**
+     * The membership cell of the snapshot {@link ItemPipeNetworks} last put this pipe in. Invalidating
+     * the snapshot empties the cell, so this pipe needs no visit. Not persisted.
+     */
+    private @Nullable Membership membership;
     private byte disabledInputs;
     private byte disabledOutputs;
     /** Faces the wrench disconnected; auto-connect leaves them alone. Persisted so a reload keeps them. */
@@ -189,24 +191,31 @@ public class ItemPipeBlockEntity extends BlockEntity
         super.onChunkUnloaded();
     }
 
-    /** Connections live in the block state, so any state change may change the network's layout. */
+    /** Only the six connection properties are layout; waterlogging and the like are not. */
     @Override
     @SuppressWarnings("deprecation")
     public void setBlockState(BlockState state) {
+        int before = connectionMask(getBlockState());
         super.setBlockState(state);
-        if (level != null && !level.isClientSide) ItemPipeNetworks.invalidate(this);
+        if (level != null && !level.isClientSide && connectionMask(state) != before) ItemPipeNetworks.invalidate(this);
     }
 
-    /** From {@link ItemPipeBlock#neighborChanged}: only an inventory appearing or going changes the layout. */
-    public void neighborChanged(Direction side) {
-        if (level == null || level.isClientSide) return;
-        boolean had = (endpointMask & (1 << side.ordinal())) != 0;
-        if (had != hasInventoryAt(side)) ItemPipeNetworks.invalidate(this);
+    private static int connectionMask(BlockState state) {
+        int mask = 0;
+        for (Direction face : Direction.values()) {
+            var property = ItemPipeBlock.propFor(face);
+            if (state.hasProperty(property) && state.getValue(property)) mask |= 1 << face.ordinal();
+        }
+        return mask;
     }
 
-    public @Nullable ItemPipeNetwork network() { return network; }
-    public void network(@Nullable ItemPipeNetwork network) { this.network = network; }
-    public void endpointMask(int mask) { endpointMask = mask; }
+    public @Nullable ItemPipeNetwork network() {
+        return membership == null ? null : membership.network();
+    }
+
+    public void membership(@Nullable Membership membership) {
+        this.membership = membership;
+    }
 
     // ── Covers: host API (GT6's item pipe as a cover host) ───────────────────
 
@@ -240,7 +249,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     public void attached(Direction side, ItemStack stack) {
         invalidateFaceHandler(side);
         syncCovers();
-        ItemPipeNetworks.coversChanged(this);
+        ItemPipeNetworks.coversChanged(this, CoverUtilityBehaviors.RETRIEVER_ITEM.equals(CoverItems.behavior(stack)));
     }
 
     /** The signals a pipe face can emit are the panel ones; {@code afterTick} publishes them. */
@@ -249,7 +258,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         invalidateFaceHandler(side);
         panels().afterTick();
         syncCovers();
-        ItemPipeNetworks.coversChanged(this);
+        ItemPipeNetworks.coversChanged(this, CoverUtilityBehaviors.RETRIEVER_ITEM.equals(CoverItems.behavior(stack)));
     }
 
     @Override
@@ -468,14 +477,6 @@ public class ItemPipeBlockEntity extends BlockEntity
         return (disabledInputs & (1 << face.ordinal())) == 0 && !coverBlocksItemTraffic(face);
     }
 
-    /** Whether a non-pipe block entity across {@code face} offers an item inventory on that side. */
-    public boolean hasInventoryAt(Direction face) {
-        BlockPos target = worldPosition.relative(face);
-        if (level == null || !level.hasChunkAt(target)) return false;
-        BlockEntity entity = level.getBlockEntity(target);
-        return entity != null && !(entity instanceof ItemPipeBlockEntity) && itemHandler(entity, face.getOpposite()) != null;
-    }
-
     /**
      * Move one of {@code source}'s stacks into the inventory across {@code face} of this pipe, the
      * exit. Checks everything the snapshot does not: shutters and cover modes, a hopper or dispenser
@@ -484,7 +485,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     public boolean sendTo(Direction face, ItemPipeBlockEntity source) {
         if (level == null || isRemoved() || source.isRemoved() || !connected(face) || !canEmitTo(face)) return false;
         ItemPipeNetwork route = source.network();
-        if (route == null || !route.valid() || network != route) return false;
+        if (route == null || !route.valid() || network() != route) return false;
         BlockPos targetPos = worldPosition.relative(face);
         if (!level.hasChunkAt(targetPos)) return false;
         BlockEntity target = level.getBlockEntity(targetPos);
@@ -495,7 +496,7 @@ public class ItemPipeBlockEntity extends BlockEntity
             if (stack.isEmpty() || source.cameFrom(slot, targetPos) || !coverPermitsItemTraffic(face, stack)) continue;
             int accepted = gregtech.content.transport.ItemPipeTransferAdapter.transfer(
                     stack.copyWithCount(Math.min(stack.getCount(), Math.min(STACK_LIMIT, stack.getMaxStackSize()))),
-                    () -> route.valid() && network == route && source.network() == route
+                    () -> route.valid() && network() == route && source.network() == route
                             ? itemHandlerAt(targetPos, face.getOpposite()) : null).accepted();
             if (accepted <= 0) continue;
             stack.shrink(accepted);

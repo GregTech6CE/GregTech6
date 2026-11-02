@@ -12,7 +12,7 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 - 共享测试：`minecraft/src/test`，由 Stonecutter 生成到两个节点的 `test` source set。
 - 版本专属测试：`minecraft/versions/<node>/src/test`，仅用于加载器 API 差异；目录当前为空或尚未创建。
-- 测试类：`gregtech.gametest.CraftingRecipeIssueSmokeTests`（4 个 `@GameTest`）与 `gregtech.gametest.RecipeMapRegistrationTests`（8 个 `@GameTest`）。
+- 测试类：`gregtech.gametest.CraftingRecipeIssueSmokeTests`（4 个 `@GameTest`）、`gregtech.gametest.RecipeMapRegistrationTests`（8 个 `@GameTest`）与 `gregtech.gametest.ItemPipeRoutingTests`（7 个 `@GameTest`）。
 - 案例表：`minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`。
 - 结构模板：`minecraft/src/test/templates/test_empty.nbt`。
 
@@ -21,6 +21,8 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威；core 静态子集由 JUnit 检查维护。
 
 引擎契约不属于某个配方 issue，例如 `RecipeMap` 的注册、删除与碰撞判定，直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。
+
+物品管道的 `ItemPipeRoutingTests` 覆盖最近出口饱和后续搜、逐路径带宽、库存更换与提前唤醒、含水状态和普通盖板不重建、取回器与 I/O 失效、拆管恢复及卸载回调保护。夹具使用竖直柱避免相邻测试互相连接；卸载用例只验证回调使快照失效，真实跨区块卸载与重新加载仍需游戏内确认。
 
 #### 全量表
 

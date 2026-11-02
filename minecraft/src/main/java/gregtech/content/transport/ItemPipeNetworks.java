@@ -36,9 +36,14 @@ public final class ItemPipeNetworks {
     private ItemPipeNetworks() {}
 
     private static final class Waiting {
+        final ItemPipeBlockEntity pipe;
         long due = Long.MIN_VALUE;
         int backoff;
         long wakeVersion;
+
+        Waiting(ItemPipeBlockEntity pipe) {
+            this.pipe = pipe;
+        }
     }
 
     private static final class State {
@@ -46,16 +51,43 @@ public final class ItemPipeNetworks {
         final Set<ItemPipeBlockEntity> joined = new LinkedHashSet<>();
         final Set<ItemPipeBlockEntity> covered = new LinkedHashSet<>();
         final Map<ItemPipeBlockEntity, Waiting> waiting = new LinkedHashMap<>();
+        final TreeMap<Long, Set<Waiting>> buckets = new TreeMap<>();
+        long drained = Long.MIN_VALUE;
 
         State(Level level) {
             this.level = level;
         }
 
         void wake(ItemPipeBlockEntity pipe) {
-            Waiting entry = waiting.computeIfAbsent(pipe, key -> new Waiting());
-            entry.due = Math.min(entry.due, level.getGameTime());
+            Waiting entry = waiting.computeIfAbsent(pipe, Waiting::new);
             entry.backoff = 0;
             entry.wakeVersion++;
+            long soonest = Math.max(level.getGameTime(), drained + 1);
+            if (entry.due == Long.MIN_VALUE || entry.due > soonest) schedule(entry, soonest);
+        }
+
+        void unschedule(Waiting entry) {
+            Set<Waiting> bucket = buckets.get(entry.due);
+            if (bucket != null) {
+                bucket.remove(entry);
+                if (bucket.isEmpty()) buckets.remove(entry.due);
+            }
+            entry.due = Long.MIN_VALUE;
+        }
+
+        void schedule(Waiting entry, long tick) {
+            // A callback during delivery can wake this or another source. Deferring it also keeps
+            // the current bucket stable and prevents a same-tick wake/delivery loop.
+            long due = Math.max(tick, drained + 1);
+            if (entry.due == due) return;
+            unschedule(entry);
+            entry.due = due;
+            buckets.computeIfAbsent(due, key -> new LinkedHashSet<>()).add(entry);
+        }
+
+        void forget(ItemPipeBlockEntity pipe) {
+            Waiting entry = waiting.remove(pipe);
+            if (entry != null) unschedule(entry);
         }
     }
 
@@ -78,7 +110,7 @@ public final class ItemPipeNetworks {
         if (state == null) return;
         state.joined.remove(pipe);
         state.covered.remove(pipe);
-        state.waiting.remove(pipe);
+        state.forget(pipe);
     }
 
     /** The layout around {@code pipe} changed: its network snapshot is stale. */
@@ -103,9 +135,10 @@ public final class ItemPipeNetworks {
         if (state != null) state.wake(pipe);
     }
 
-    /** Covers were attached or removed: they may change links, and covered pipes need their cover tick. */
-    public static void coversChanged(ItemPipeBlockEntity pipe) {
-        invalidate(pipe);
+    /** Only retrievers change the cached layout; all other cover rules are checked at delivery. */
+    public static void coversChanged(ItemPipeBlockEntity pipe, boolean layoutChanged) {
+        if (layoutChanged) invalidate(pipe);
+        else inventoryUpdated(pipe);
         State state = state(pipe.getLevel());
         if (state == null) return;
         if (pipe.hasCovers()) state.covered.add(pipe);
@@ -153,7 +186,7 @@ public final class ItemPipeNetworks {
                 else if (level.shouldTickBlocksAt(pipe.getBlockPos())) pipe.tickCovers();
             }
         }
-        if (!state.waiting.isEmpty()) deliverDue(state);
+        deliverDue(state);
     }
 
     /**
@@ -175,32 +208,43 @@ public final class ItemPipeNetworks {
 
     private static void deliverDue(State state) {
         long now = state.level.getGameTime();
-        for (var entry : new ArrayList<>(state.waiting.entrySet())) {
-            ItemPipeBlockEntity pipe = entry.getKey();
-            Waiting waiting = entry.getValue();
-            if (waiting.due > now) continue;
-            if (!loaded(state, pipe) || !pipe.hasStoredItems()) {
-                state.waiting.remove(pipe);
-                continue;
+        state.drained = now;
+        while (!state.buckets.isEmpty() && state.buckets.firstKey() <= now) {
+            var bucket = state.buckets.pollFirstEntry();
+            for (Waiting waiting : bucket.getValue()) {
+                if (state.waiting.get(waiting.pipe) != waiting || waiting.due != bucket.getKey()) continue;
+                waiting.due = Long.MIN_VALUE;
+                deliver(state, waiting, now);
             }
-            if (!state.level.shouldTickBlocksAt(pipe.getBlockPos())) continue;
-            long wakeVersion = waiting.wakeVersion;
-            ItemPipeNetwork network = networkOf(pipe);
-            int moved = network == null ? 0 : pipe.deliverThrough(network);
-            if (!pipe.hasStoredItems()) {
-                state.waiting.remove(pipe);
-                continue;
-            }
-            // A target callback may invalidate the snapshot or supply items while this pass runs.
-            // Preserve that wake instead of replacing it with the failure backoff.
-            if (waiting.wakeVersion != wakeVersion) continue;
-            if (!pipe.pipeCapacityCheck()) {
-                waiting.backoff = 0;
-                waiting.due = pipe.nextBandwidthWindow();
-            } else {
-                waiting.backoff = moved > 0 ? 0 : waiting.backoff == 0 ? MIN_RETRY : Math.min(MAX_RETRY, waiting.backoff * 2);
-                waiting.due = now + Math.max(MIN_RETRY, waiting.backoff);
-            }
+        }
+    }
+
+    private static void deliver(State state, Waiting waiting, long now) {
+        ItemPipeBlockEntity pipe = waiting.pipe;
+        if (!loaded(state, pipe) || !pipe.hasStoredItems()) {
+            state.forget(pipe);
+            return;
+        }
+        if (!state.level.shouldTickBlocksAt(pipe.getBlockPos())) {
+            state.schedule(waiting, now + MIN_RETRY);
+            return;
+        }
+        long wakeVersion = waiting.wakeVersion;
+        ItemPipeNetwork network = networkOf(pipe);
+        int moved = network == null ? 0 : pipe.deliverThrough(network);
+        // A target callback can remove or re-register the source. Never alter its new schedule.
+        if (state.waiting.get(pipe) != waiting) return;
+        if (!pipe.hasStoredItems()) {
+            state.forget(pipe);
+            return;
+        }
+        if (waiting.wakeVersion != wakeVersion) return;
+        if (!pipe.pipeCapacityCheck()) {
+            waiting.backoff = 0;
+            state.schedule(waiting, pipe.nextBandwidthWindow());
+        } else {
+            waiting.backoff = moved > 0 ? 0 : waiting.backoff == 0 ? MIN_RETRY : Math.min(MAX_RETRY, waiting.backoff * 2);
+            state.schedule(waiting, now + Math.max(MIN_RETRY, waiting.backoff));
         }
     }
 }

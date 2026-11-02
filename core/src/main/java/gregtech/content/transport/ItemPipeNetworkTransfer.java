@@ -1,15 +1,15 @@
 package gregtech.content.transport;
 
-import gregtech.content.transport.WeightedItemPipeRoutes.Exit;
-import gregtech.content.transport.WeightedItemPipeRoutes.Routes;
+import gregtech.content.transport.WeightedItemPipeRoutes.Search;
 
 /**
- * Delivers a source pipe's stored stacks along its cached {@link Routes}: straight into the nearest
- * exit that takes them, never resting in the pipes between.
+ * Delivers a source pipe's stored stacks along its {@link Search}: straight into the nearest exit
+ * that takes them, never resting in the pipes between. The search is extended only while nearer
+ * exits refuse.
  *
  * <p>Bandwidth is counted in stacks: every stack moved charges one transfer to each pipe on its
  * path, source and exit pipe included. An exit is skipped while any pipe on its path has spent its
- * allowance or a link on it is closed, and the next-nearest exit is tried instead. Only the cached
+ * allowance or a link on it is closed, and the next-nearest exit is tried instead. Only the
  * shortest path is considered; another path to the same exit is not searched for.</p>
  */
 public final class ItemPipeNetworkTransfer {
@@ -30,27 +30,26 @@ public final class ItemPipeNetworkTransfer {
         }
 
         /** Move one stack out through {@code exit}; per-stack rules such as filters apply here. */
-        boolean send(Exit exit);
+        boolean send(int exit);
     }
 
     /** @return the number of stacks moved */
-    public static int deliver(Routes routes, Channel channel) {
+    public static int deliver(Search search, Channel channel) {
         int moved = 0;
-        int[] previous = routes.previous();
-        for (Exit exit : routes.exits()) {
-            if (!channel.hasItems() || !channel.hasCapacity(routes.source())) break;
-            while (channel.hasItems() && open(exit.pipe(), previous, channel) && channel.send(exit)) {
+        for (int i = 0; channel.hasItems() && channel.hasCapacity(search.source()) && search.hasExit(i); i++) {
+            int pipe = search.exitPipe(i);
+            while (channel.hasItems() && open(pipe, search, channel) && channel.send(search.exit(i))) {
                 moved++;
-                for (int pipe = exit.pipe(); pipe >= 0; pipe = previous[pipe]) channel.charge(pipe);
+                for (int at = pipe; at >= 0; at = search.previous(at)) channel.charge(at);
             }
         }
         return moved;
     }
 
-    private static boolean open(int pipe, int[] previous, Channel channel) {
+    private static boolean open(int pipe, Search search, Channel channel) {
         for (int at = pipe; ; ) {
             if (!channel.hasCapacity(at)) return false;
-            int before = previous[at];
+            int before = search.previous(at);
             if (before < 0) return true;
             if (!channel.linkOpen(before, at)) return false;
             at = before;

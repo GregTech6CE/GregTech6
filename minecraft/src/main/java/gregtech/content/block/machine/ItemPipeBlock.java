@@ -283,7 +283,6 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
                 neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
         if (side != null && level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
             pipe.tryConnectTo(side);
-            pipe.neighborChanged(side);
         }
     }
 
