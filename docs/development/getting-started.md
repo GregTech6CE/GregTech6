@@ -5,7 +5,7 @@
 ## 环境与首次检查
 
 1. 阅读[根工作规则](../../AGENTS.md)，运行 `git status --short`，确认已有变更。
-   API 源码已内联在 `api/`（GregTech6API a9c879176，API 1.2.0），普通 `git clone` 即可，不需要子模块初始化。
+   API 源码已内联在 `api/`（GregTech6API a9c879176，基线 API 1.2.0；当前 API 1.3.0），普通 `git clone` 即可，不需要子模块初始化。
 2. 准备 JDK 17 与 21。`core` 和 Forge 节点使用 17，NeoForge 节点使用 21；`JAVA_HOME` 决定启动 Gradle 的 JVM，`JAVA17_HOME`、`JAVA21_HOME` 被项目配置用于发现工具链。
 3. 使用仓库 Wrapper：Linux/macOS 为 `./gradlew`，Windows PowerShell 为 `.\gradlew.bat`。当前 Wrapper 指向 Gradle 8.8，Stonecutter 为 0.7.11，以配置文件为准。
 4. 初次运行需要下载 Gradle、插件及游戏依赖。先执行 `./gradlew --version`，再按需查询 `./gradlew projects` 和目标节点的 `tasks --all`。

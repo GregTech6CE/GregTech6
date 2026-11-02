@@ -55,7 +55,7 @@
 | `content.recipe`、`content.recipe.generated` | 将定义行转成游戏配方、注入/重载与生成规格解析；如 `MachineRecipeBootstrap`、`GeneratedRecipeResolver` |
 | `content.data`、`content.data.generated` | 内容数据的原生适配和既有兼容数据；新代码优先放明确领域 |
 | `content.machine` | 基础机器定义在游戏侧的物化和调参，如 `BasicMachineDefinitions` |
-| `content.multiblock` | 具体控制器结构、世界结构布局与设备规格，如 `ControllerStructureLayouts` |
+| `content.multiblock` | `ControllerDeclarations` 绑定具体主控，`ControllerStructureLayouts` 从相同声明产生预览；布局与设备规格 |
 | `content.material` | 原版物品成分与材料统一的加载 |
 | `content.energy` | 能源设备的具体游戏接入；节点的 `content.fluid` 承担原生流体对象 |
 | `content.transport`、`content.transport.fluid` | 管道定义物化、物品转移适配及流体 tick 阶段 |

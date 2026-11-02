@@ -46,8 +46,8 @@
 | `engine.machine`、`engine.machine.crucible` | 机器基类、配方状态机（`RecipeProcessor`、`RecipeLookup`）、相邻能力缓存、控制和坩埚物品输入 |
 | `engine.stack` | 两节点物品/流体栈与 NBT 的序列化、同一性助手（`StackCompat`、`NbtCompat`），供组件代码消去版本分支 |
 | `engine.material` | ItemStack 的材料归属、等价、统一和表现绑定 |
-| `engine.multiblock` | 世界结构、端口归属、工具目标和机器连接 |
-| `engine.multiblock.tracking` | 结构模式编译、足迹、世界变化跟踪、聚合及客户端成形同步 |
+| `engine.multiblock` | `ControllerDeclaration` / `ControllerBinding` 关联主控、实体类型与结构；端口归属、工具目标和机器连接 |
+| `engine.multiblock.tracking` | 结构模式编译、足迹、世界变化跟踪、聚合及客户端成形同步；`StructureConstraints` 把公共约束编译为缓存检查 |
 | `engine.recipe` | 游戏配方对象、输入匹配、查询表、产出与 GUI 布局 |
 | `engine.sensor` | 将游戏物品质量、机器进度等转为传感器源 |
 | `engine.tool` | 游戏工具类型、附魔、交互目标与实际操作适配 |
@@ -59,6 +59,12 @@
 纯算法接收明确数值/值对象，说明单位、上下限、溢出和模拟/实际执行语义；不要把能源包、流体量、材料量都用无说明的“数量”混用。库存或资源转移需验证失败路径和守恒，世界网络需考虑邻接变化与区块卸载。
 
 新增跨 tick 状态时明确谁持有、谁保存、何时失效；避免不受控静态集合持有世界或实体。具体内容场景见 content 的验收，本节补充执行、状态与算法规则。
+
+结构数量与同类方块规则从公共 `StructureConstraint` 进入统一匹配缓存，不再由具体主控重复扫描世界。`SameBlock` 还要求监视方块身份变化，即使旧、新方块同属一个标签也不能沿用先前结果。行为机的结构快照和状态回调由宿主维护；区块卸载造成的失效不是物品掉落事件。
+
+成型后的部件外观由声明的 `design` 进入 `StructureTracker` 持有的 `StructureDesigns` 缓存。主控只在工作状态改变时调用 `StructureTracking.refreshDesigns`，不为动画重新认领或扫描整座结构；GT6 的方向和工作状态编号由 `OriginalMultiblockDesigns` 解释。结构失效时恢复部件原有外观，即使该部件仍保留工具路由；区块卸载期间不发送外观更新以避免意外加载区块。部件通过现有 `gt.design` 更新包同步，客户端同时更新模型数据、渲染层和区块网格。
+
+`StructurePortHandlers` 将公开 `StructurePorts` 转为代理壁板的侧面、槽位和资源过滤。`StructureTracker` 只保存成功匹配单元的附加规则，规则不写入 NBT；能力视图每次重新读取当前主控和规则。`MultiblockPortOwner.portFluidTank` 必须对应聚合 handler 的同一物理槽，不能把“只允许槽 2”降级成任意槽填充。无法提供精确槽的主控在加载声明时拒绝这类限制。注册及数据包重载都提前验证规则，而不是留待管道第一次传输才发现错误。
 
 ## 验收
 
@@ -76,3 +82,9 @@
   - `core/src/test` 覆盖配方、机器、能源、物流、流体与材料等规则；其余为待补范围。
 - GameTest
   - 机器 tick、配方执行、多方块、能源传输等运行时场景由 content 的 GameTest 覆盖；本包不重复建用例。
+
+`StructureOutputs` 执行主动输出，复用单元端口限制与实时邻居能力；`StructureOutput` 区分有效部件出口和 GT6 原有缓存排空出口。内置目标与分层分配位于 content 的 `OriginalMultiblockOutputRules`，执行器不按机器名分支。转换器仍负责能量扣减和原版耗散。
+
+`StructureDiagnostic` 按同一编译定义进行按需只读扫描，产出公开的 `StructureProblem`。`AddonStructures` 和行为机 `StructureAccess` 通过宿主桥接提供给附属；放大镜复用同一结果和本地化格式。诊断不得触发 claim、成型回调或加载未知区块。
+
+`MultiblockMenus` 将已成型结构部件的普通右键交给主控现有菜单；库存、流体和菜单同步仍属于主控。`StructureWatchIndex.formedController` 读取成功匹配的非空气单元，包含普通方块和实际匹配的重复层，不重新扫描结构；没有唯一归属的共享普通壁板不自动选主控。`MultiblockMenuAccess` 为每次开窗保存点击位置，距离按该部件计算，并持续检查主控身份、结构成型和部件归属。覆盖板、工具、液体容器和潜行交互优先；没有 GUI 的主控不生成新菜单。

@@ -4,7 +4,7 @@
 
 | 目录 | 应当放什么 | 不应放什么 |
 | --- | --- | --- |
-| `api/` | 内联的 GregTech6API 源码（锁定 a9c879176，API 1.2.0），由 `:api`、`:api-platform` 直接编译 | 未更新 API 版本记录、未说明来源基线的 API 改动 |
+| `api/` | 内联的 GregTech6API 源码（锁定 a9c879176，基线 API 1.2.0；当前 API 1.3.0），由 `:api`、`:api-platform` 直接编译 | 未更新 API 版本记录、未说明来源基线的 API 改动 |
 | `api/common/src/main/java/` | Java 17 公共协议、模型、声明与宿主服务接口 | core 实现、内容目录、游戏类型、任务报告 |
 | `api/common/src/test/` | 仅依赖公共 API JAR 的消费者与契约回归 | 主模组实现和资源 |
 | `core/src/main/java/` | 平台无关内容定义、运行规则 | 游戏 API、加载器适配、任务报告 |

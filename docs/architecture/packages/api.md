@@ -4,21 +4,21 @@
 
 ## 独立公共 API
 
-源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，内联自 [GregTech6API](https://github.com/GregTech6CE/GregTech6API)（a9c879176，API 1.2.0）。`common/` 接为 `:api`。模块使用 Java 17，仅依赖 JDK；core 和游戏侧 API 单向依赖它。以下表内路径相对于 `gregtech`。
+源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，内联基线来自 [GregTech6API](https://github.com/GregTech6CE/GregTech6API)（a9c879176，API 1.2.0），当前分支扩展为 1.3.0。`common/` 接为 `:api`。模块使用 Java 17；core 和游戏侧 API 单向依赖它。以下表内路径相对于 `gregtech`。
 
 | 包 | 应当承担 | 代表入口/关注点 |
 | --- | --- | --- |
 | `api` | API 包的总体契约说明 | `package-info.java` |
 | `api.addon` | 附属发现、身份、生命周期、命名限制与 SPI | `GregTechAddon`、`GregTechAddons`、`AddonRuntime`；声明失败应有上下文 |
 | `api.addon.material` | 材料、前缀、成分、形态与熔炼声明 | `MaterialDeclaration`、`MaterialComposition`、`GregTechMaterials` |
-| `api.addon.machine` | 机器、行为、部件、布局及参数声明 | `BehaviorMachine`、`LayoutPart`、`AddonMachineContributor`、`PartSlots` |
+| `api.addon.machine` | 机器、行为、部件、布局及参数声明 | `AddonMachine.withStructure` 显式绑定；`MultiblockMachine`、`BehaviorMachine`、`LayoutPart`、`AddonMachineContributor` |
 | `api.addon.recipe` | 配方表、坩埚反应、模具、保留输入与概率声明 | `RecipeMachine`、`CrucibleReactionDeclaration`、`RecipeOutputChances` |
 | `api.addon.pipe` | 附属物品/流体管道的定义 | `ItemPipeDeclaration`、`FluidPipeDeclaration` |
 | `api.addon.worldgen` | 矿脉与小矿生成声明及命名规则 | `OreVeinDeclaration`、`SmallOreDeclaration` |
 | `api.material` | 材料公共模型、成分、性质、原子属性和数量常量 | `GTMaterial`、`MaterialComponent`、`GTValues`；不可引入物品栈 |
 | `api.energy` | 能源类型、输入输出与转移契约 | `EnergyType`、`EnergyInput`、`EnergyOutput`、`GTVoltageTiers` |
 | `api.machine` | 机器面、方向掩码、基础参数、热处理等协议 | `MachineFace`、`MachineFaceMasks`、`BasicMachineParameters` |
-| `api.multiblock` | 布局、单元、角色、重复段与匹配结果 | `StructureLayout`、`LayoutCell`、`StructureRole`、`CellMatch`；不直接查询世界 |
+| `api.multiblock` | 布局、单元、角色、重复段、匹配约束和位置端口规则 | `StructureLayout`、`StructurePattern`、`StructureConstraint`、`CellMatch`、`StructurePorts`；不直接查询世界 |
 | `api.recipe` | 配方包入口说明 | 仅 `package-info.java`；`RecipeMapSpec` 属于宿主 `gregtech.content.recipe` |
 | `api.sensor` | 压力、温度、重量和进度等观测源 | `TemperatureSource`、`ProgressSensorSource` |
 | `api.signal` | GT 信号的发送、接收和承载契约 | `GtSignalSource`、`GtSignalReceiver`、`GtSignalCarrier` |
@@ -35,7 +35,7 @@
 
 | 包 | 应当承担 | 边界 |
 | --- | --- | --- |
-| `api.addon.platform` | 附属使用的物品、流体、能源、加载器、平台服务桥接 | 允许游戏类型；具体绑定由 `engine.addon` 和平台实现完成 |
+| `api.addon.platform` | 附属使用的物品、流体、能源、加载器、平台服务桥接 | `StructureAccess.cells()` 提供成功匹配快照，`MachineBehavior` 提供结构状态回调；允许游戏类型，由宿主绑定 |
 | `api.machine` | 游戏中的机器控制接口 | 当前有 `MachineControl`，与 core 同包但不同源码层 |
 | `api.transport` | 游戏世界中管道的连接契约 | `FluidPipeConnectable`、`ItemPipeConnectable`；避免公开整个内部网络 |
 
@@ -55,8 +55,10 @@
 ## 自动化测试范围
 
 - JUnit
-  - `api/common/src/test`：公共契约、能源、机器、材料、多方块与附属声明。
+  - `api/common/src/test`：公共契约、能源、机器、材料、多方块与附属声明；包含显式结构绑定、数量与同类方块约束的失败校验。
   - `api/minecraft/src/test`：平台 API 契约与附属平台服务桥接。
   - `apiContracts` 用打包后的 API JAR 运行外部消费者，检查签名闭包、能源契约与宿主未绑定时的失败行为；它不属于 JUnit，但属于公共 API 的自动检查。
 - GameTest
-  - 公共契约层不使用 GameTest；平台运行期行为由 platforms 的验收覆盖。
+  - 公共契约层不使用 GameTest；平台运行期由 `MultiblockDeclarationTests` 检查原版主控声明、实体工厂与预览一致性，由 `MultiblockBehaviorApiTests` 检查仅调用公共 API 的附属注册、数量约束、同类方块、重复层及结构回调，`MultiblockPortApiTests` 检查真实能力调用、四向旋转、槽位/资源过滤、模拟守恒和失效后的缓存视图。
+
+`StructureAccess.diagnose()` 供行为回调按需查询；`AddonStructures.diagnose(level, pos)` 供独立工具查询内置/附属主控及已关联部件。公开的 `StructureProblem` 保存不可变诊断字段，`AddonStructures.describe` 返回可翻译文本。新增宿主桥接采用默认抛出不支持的方式，旧实现不会被误当作诊断成功；既有注册 ID 与 NBT 不变。多方块的 `EnergyAccess.emitTo` 现要求目标接收面对应已成型主控或有效输出部件，不能绕过单元面限制；单方块远程输出维持原契约。
