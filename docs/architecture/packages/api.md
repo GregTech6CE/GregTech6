@@ -55,8 +55,8 @@
 ## 自动化测试范围
 
 - JUnit
-  - `api/common/src/test`：公共契约、能源、机器、材料、多方块与附属声明，现有 18 个测试类、87 个方法。
-  - `api/minecraft/src/test`：平台 API 契约与附属平台服务桥接，现有 3 个测试类、8 个方法。
+  - `api/common/src/test`：公共契约、能源、机器、材料、多方块与附属声明。
+  - `api/minecraft/src/test`：平台 API 契约与附属平台服务桥接。
   - `apiContracts` 用打包后的 API JAR 运行外部消费者，检查签名闭包、能源契约与宿主未绑定时的失败行为；它不属于 JUnit，但属于公共 API 的自动检查。
 - GameTest
   - 公共契约层不使用 GameTest；平台运行期行为由 platforms 的验收覆盖。
