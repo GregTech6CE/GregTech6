@@ -131,7 +131,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
                     .withStyle(net.minecraft.ChatFormatting.GRAY));
             return;
         }
-        if (data.contains("controller")) {
+        if (data.contains("controller") && accessor.showDetails()) {
             var id = ResourceLocation.tryParse(data.getString("controller"));
             if (id != null) {
                 var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(id);
@@ -172,7 +172,8 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
             JadeText.add(tooltip, gregtech.engine.fluid.FluidUnits.text("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(),
                     row.contains("amount") ? row.getLong("amount") : fluid.getAmount(), row.getLong("capacity")));
         }
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.jei"));
+        if (!data.getBoolean("formed"))
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.multiblock.jei"));
     }
 
     @Override
