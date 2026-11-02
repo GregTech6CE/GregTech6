@@ -31,6 +31,16 @@ final class FluidSlotPresentation {
         return result;
     }
 
+    /** Recipe output buffers stop production by recipe rules, not by their storage sentinel. */
+    static List<Component> outputTooltip(FluidStack fluid, long amount, long capacity) {
+        if (capacity != Long.MAX_VALUE) return tooltip(fluid, amount, capacity);
+        var result = new ArrayList<Component>();
+        result.add(Component.translatable("gui.gt6ce.fluid.output_buffer"));
+        if (fluid.isEmpty()) result.add(Component.translatable("gui.gt6ce.empty"));
+        else result.addAll(tooltip(fluid, amount, -1));
+        return result;
+    }
+
     static void amount(GuiGraphics graphics, Font font, long liters, int x, int y, int width, int height) {
         String text = gregtech.engine.fluid.FluidUnits.compact(liters);
         if (text.isEmpty()) return;

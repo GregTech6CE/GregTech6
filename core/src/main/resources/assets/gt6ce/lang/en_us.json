@@ -6928,6 +6928,7 @@
   "gui.gt6ce.fluid.amount_unlimited": "Amount: %s L / Unlimited",
   "gui.gt6ce.fluid.capacity": "Maximum capacity: %sL",
   "gui.gt6ce.fluid.amount_capacity": "Amount: %sL/%sL",
+  "gui.gt6ce.fluid.output_buffer": "Fluid output buffer",
   "gui.gt6ce.behavior.tank": "%s / %s mB",
   "gui.gt6ce.data_switch.slot": "Slot %s",
   "gui.gt6ce.drawer.page": "%s — Page %s",
