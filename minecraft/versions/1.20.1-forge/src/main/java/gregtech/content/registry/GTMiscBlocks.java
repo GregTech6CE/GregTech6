@@ -74,8 +74,8 @@ public final class GTMiscBlocks {
     public static RegistryObject<AutoIgniterBlock> AUTO_IGNITER_TITANIUM;
     public static RegistryObject<AutoIgniterBlock> AUTO_IGNITER_TUNGSTEN;
     public static RegistryObject<AutoIgniterBlock> AUTO_IGNITER_ULTIMET;
-    public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_BRONZE;
     public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_STEEL;
+    public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_BRONZE;
     public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_TITANIUM;
     public static RegistryObject<AutoHammerBlock> AUTO_HAMMER_TUNGSTEN_STEEL;
 
@@ -108,8 +108,8 @@ public final class GTMiscBlocks {
                 AUTO_IGNITER_TITANIUM,
                 AUTO_IGNITER_TUNGSTEN,
                 AUTO_IGNITER_ULTIMET,
-                AUTO_HAMMER_BRONZE,
                 AUTO_HAMMER_STEEL,
+                AUTO_HAMMER_BRONZE,
                 AUTO_HAMMER_TITANIUM,
                 AUTO_HAMMER_TUNGSTEN_STEEL);
     }
@@ -281,17 +281,6 @@ public final class GTMiscBlocks {
                                 .quality()));
 
         // N8: Auto Hammers (4 tiers)
-        AUTO_HAMMER_BRONZE = reg(
-                "auto_hammer_bronze",
-                () -> new AutoHammerBlock(
-                        props(
-                                MapColor.METAL,
-                                gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
-                                        .hardness()),
-                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
-                                .input(),
-                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
-                                .quality()));
         AUTO_HAMMER_STEEL = reg(
                 "auto_hammer_steel",
                 () -> new AutoHammerBlock(
@@ -302,6 +291,17 @@ public final class GTMiscBlocks {
                         gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_steel")
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_steel")
+                                .quality()));
+        AUTO_HAMMER_BRONZE = reg(
+                "auto_hammer_bronze",
+                () -> new AutoHammerBlock(
+                        props(
+                                MapColor.METAL,
+                                gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
+                                        .hardness()),
+                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
+                                .input(),
+                        gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
                                 .quality()));
         AUTO_HAMMER_TITANIUM = reg(
                 "auto_hammer_titanium",
