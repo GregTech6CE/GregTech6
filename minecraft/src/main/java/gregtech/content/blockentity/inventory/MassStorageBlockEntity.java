@@ -278,10 +278,17 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
             return 1;
         }
 
+        /**
+         * Reports the whole bulk amount, as the original's content slot does. AE2's storage bus and
+         * other oversized-stack handlers read the slot count; {@link #extractItem} still hands out
+         * at most one ordinary stack per call.
+         */
         @Override
         public ItemStack getStackInSlot(int slot) {
             checkSlot(slot);
-            return extract(Integer.MAX_VALUE, true);
+            ItemStack key = template();
+            long amount = Math.min(stored(), Integer.MAX_VALUE);
+            return key.isEmpty() || amount <= 0 ? ItemStack.EMPTY : key.copyWithCount((int) amount);
         }
 
         @Override
@@ -349,7 +356,10 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         BlockEntity neighbor = level.getBlockEntity(below);
         IItemHandler target = neighbor == null ? null : neighbor.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
 //?}
-        if (target == null) return;
+        if (target == null) {
+            ejectIntoSpaceBelow(below);
+            return;
+        }
         do {
             int amount = (int) Math.min(64, autoOutput() ? stored() : stored() - baseCapacity());
             ItemStack offered = extract(amount, true);
@@ -370,6 +380,22 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
             if (!returned.isEmpty()) insert(returned, false);
             if (returned.getCount() >= accepted || autoOutput()) return;
         } while (stored() > baseCapacity());
+    }
+
+    /**
+     * GT6 {@code ST.put} on the bottom face: with no inventory there, one stack lands in the centre
+     * of the block below unless that block has a collision shape. Lava and fire are not special-cased;
+     * the dropped entity burns like any other.
+     */
+    private void ejectIntoSpaceBelow(BlockPos below) {
+        if (!level.getBlockState(below).getCollisionShape(level, below).isEmpty()) return;
+        do {
+            int amount = (int) Math.min(64, autoOutput() ? stored() : stored() - baseCapacity());
+            ItemStack stack = extract(amount, false);
+            if (stack.isEmpty()) return;
+            gregtech.util.GTItemDrops.dropItemStack(
+                    level, below.getX() + 0.5, below.getY() + 0.5, below.getZ() + 0.5, stack);
+        } while (!autoOutput() && stored() > baseCapacity());
     }
 
 //? if >=1.21.1 {
