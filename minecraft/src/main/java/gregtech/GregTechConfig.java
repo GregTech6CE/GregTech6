@@ -102,10 +102,14 @@ public final class GregTechConfig {
             "True: display fluids in mB/B/kB/MB/GB/TB/PB/EB. False: use L/KL/ML/GL/TL/PL/EL. Display only; stored amounts do not change.");
     private static final BooleanSupplier FLUID_IDLE_SCHEDULING = option(COMMON,
             "performance.fluid_idle_scheduling", true,
-            "Skip the pipe tick for fluid pipes that are completely idle. Disable to restore one tick per pipe for comparison and diagnosis.");
+            "Skip the server tick for fluid pipes that are completely idle: no stored fluid, no backflow mask, no covers and no residual heat. Distribution math and timing are unchanged; disable to tick every loaded pipe for comparison and diagnosis.");
     private static final java.util.function.Supplier<FluidDistribution> FLUID_DISTRIBUTION = enumOption(COMMON,
-            "fluid.distribution", FluidDistribution.LOCAL,
-            "LOCAL keeps original GT6 local diffusion. BALANCED and SHARED change gameplay and are off by default; see the parity notes.");
+            "fluid.distribution", FluidDistribution.BALANCED,
+            "How fluid moves between the pipes of one component.",
+            "LOCAL: original GT6 per-tick six-neighbour diffusion. Each pipe moves fluid one hop toward its local target level and pressure share.",
+            "BALANCED (default): every 10 ticks, level the component per fluid edge by edge. Filters, shutters and either blocked pump direction cut the component; pressure valve, drain and air vent hosts are excluded. Machine and cauldron pushes stay per tick, and pressureShare is not used.",
+            "SHARED: endpoint fill/drain acts on the whole component while each pipe tank remains the only storage. Local diffusion stays for machine pushes. Pressure valve hosts are excluded.",
+            "Changing this mode affects runtime distribution only; stored fluids are not migrated.");
 
     public enum Rule {
         STREETS("worldgen.center.streets", false),
@@ -347,7 +351,7 @@ public final class GregTechConfig {
     private static java.util.function.Supplier<FluidDistribution> enumOption(ForgeConfigSpec.Builder builder,
 //?}
                                                                               String key, FluidDistribution initial,
-                                                                              String description) {
+                                                                              String... description) {
         var value = builder.comment(description).defineEnum(key, initial);
         return () -> {
             try {

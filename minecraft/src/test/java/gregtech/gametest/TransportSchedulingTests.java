@@ -106,7 +106,8 @@ public final class TransportSchedulingTests {
                     "external fill is accepted");
             helper.assertFalse(lower.isIdle(), "the filled pipe leaves idle state");
         });
-        helper.runAfterDelay(8, () -> {
+        // Long enough for BALANCED's 10-tick component pass; LOCAL distributes sooner.
+        helper.runAfterDelay(15, () -> {
             helper.assertTrue(upper.gibblValue(null) > 0, "the woken pipe distributes into the network");
             finish(helper);
         });

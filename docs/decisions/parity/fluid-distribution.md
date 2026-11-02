@@ -1,14 +1,14 @@
 # 流体管道分布模式
 
-`fluid.distribution` 选择同一流体组件内部的分配方式，默认 `LOCAL`。`BALANCED` 与 `SHARED` 都是本移植新增、改变玩法的模式，默认关闭；`LOCAL` 与原版 GT6 的六邻居本地扩散一致。
+`fluid.distribution` 选择同一流体组件内部的分配方式，默认 `BALANCED`。`LOCAL` 与原版 GT6 的六邻居本地扩散一致；`BALANCED` 是默认启用的新分配方式；`SHARED` 是本移植新增、默认关闭的端点共享池。
 
 | 值 | 行为 | 与原版 GT6 的关系 |
 | --- | --- | --- |
 | `LOCAL` | 每 tick 六邻居本地扩散；`distributionLevel` 与 `pressureShare` | 一致 |
-| `BALANCED` | 每 10 tick 按组件、按流体把管道液位拉平，逐边整数移动 | 新行为，默认关闭 |
+| `BALANCED` | 每 10 tick 按组件、按流体把管道液位拉平，逐边整数移动 | 新行为，默认 |
 | `SHARED` | 同一组件内同一流体的管道 tank 作为派生共享池，端点 fill/drain 作用于整池 | 新行为，默认关闭 |
 
-`performance.fluid_idle_scheduling`（默认开）只跳过完全空闲管道的 `serverTick`，不改变 `LOCAL` 的分配数学、节拍或吞吐；关闭后恢复每根已加载管道每 tick 执行一次，用于对照和排障。
+`performance.fluid_idle_scheduling`（默认开）只跳过完全空闲管道的 `serverTick`，不改变当前模式的分配数学、节拍或吞吐；关闭后恢复每根已加载管道每 tick 执行一次，用于对照和排障。
 
 ## BALANCED
 
