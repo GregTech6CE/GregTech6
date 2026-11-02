@@ -51,7 +51,7 @@ public enum PortableFluidContainerSpec {
     CELL_TUNGSTEN("cell_tungsten", "Tungsten", 50, 0, true, true, false),
     CELL_PALLADIUM("cell_palladium", "Palladium", 50, 0, false, true, false),
     CELL_TANTALUM_HAFNIUM_CARBIDE("cell_tantalum_hafnium_carbide", "TantalumHafniumCarbide", 50, 0, false, true, false),
-    CELL_KREKNORITE("cell_kreknorite", "Trinium", 50, 0, false, true, false),
+    CELL_TRINIUM("cell_trinium", "Trinium", 50, 0, false, true, false),
     CELL_TRINITANIUM("cell_trinitanium", "Trinitanium", 50, 0, false, true, true),
     CELL_ADAMANTIUM("cell_adamantium", "Adamantium", 50, 0, true, true, true),
     CELL_THAUMIUM("cell_thaumium", "Thaumium", 50, 0, true, true, false),
