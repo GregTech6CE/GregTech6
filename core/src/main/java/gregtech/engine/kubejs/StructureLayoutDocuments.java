@@ -39,7 +39,11 @@ public final class StructureLayoutDocuments {
     public record RepeatSpec(String key, int up, int min, int max, int step, List<CellSpec> cells) {}
 
     public static StructureLayout parse(String machine, String json) {
-        var root = JsonMaps.object(json);
+        return parse(machine, JsonMaps.object(json));
+    }
+
+    /** Scripts and data packs share validation; neither adapter may silently discard new fields. */
+    public static StructureLayout parse(String machine, Map<String, Object> root) {
         for (var key : root.keySet())
             if (!key.startsWith("_") && !ROOT.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
         return layout(machine, cells(root), repeats(root), constraints(root));

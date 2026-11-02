@@ -61,8 +61,8 @@ public final class StructurePattern {
 
     public StructurePattern where(char symbol, CellMatch match, StructureRole role, int design, StructurePorts ports) {
         var validated = LayoutCell.relative(0, 0, 0, match, role).withPorts(ports);
-        if (design != -1) validated.withDesign(design);
-        if (symbols.putIfAbsent(symbol, new Symbol(match, role, design, ports)) != null)
+        if (design != -1) validated = validated.withDesign(design);
+        if (symbols.putIfAbsent(symbol, new Symbol(validated.match(), validated.role(), validated.design(), validated.ports())) != null)
             throw new IllegalArgumentException("Duplicate symbol: " + symbol);
         return this;
     }

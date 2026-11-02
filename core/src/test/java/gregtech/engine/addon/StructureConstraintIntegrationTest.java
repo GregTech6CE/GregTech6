@@ -44,6 +44,10 @@ class StructureConstraintIntegrationTest {
         assertEquals("controller", resolved.name());
         var restored = StructureLayoutDocuments.parse(resolved.name(), StructureLayoutDocuments.canonical(resolved));
         assertEquals(resolved, restored);
+        var script = gregtech.engine.recipe.data.JsonMaps.object(StructureLayoutDocuments.canonical(resolved));
+        assertEquals(resolved, StructureLayoutDocuments.parse(resolved.name(), script));
+        script.put("unknown_layout_option", true);
+        assertThrows(IllegalArgumentException.class, () -> StructureLayoutDocuments.parse(resolved.name(), script));
         var host = AddonMachines.sharedLayout("test", restored);
         assertEquals(source.constraints(), host.constraints());
         assertEquals(ports, host.cells().get(0).ports());

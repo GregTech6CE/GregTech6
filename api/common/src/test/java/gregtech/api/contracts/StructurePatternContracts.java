@@ -22,6 +22,11 @@ final class StructurePatternContracts {
         if (tower.repeats().get(0).absoluteUp(tower.repeats().get(0).cells().get(0), 3) != 4)
             throw new AssertionError("Repeat anchor");
         var wall = CellMatch.part("wall");
+        var designed = StructureLayout.pattern("designed").layer(0, "SW")
+                .where('W', wall, StructureRole.CASING, 7).build();
+        if (designed.cells().get(0).design() != 7) throw new AssertionError("Symbol design was discarded");
+        fails(() -> StructureLayout.pattern("bad").where('W', wall, StructureRole.CASING, 256));
+        fails(() -> StructureLayout.pattern("bad").where('W', wall, StructureRole.CASING, -2));
         var portCell = LayoutCell.at(1, 0, 0, wall, StructureRole.FLUID_IO).withPorts(
                 StructurePorts.builder().fluidInput(PortRule.faces(gregtech.api.machine.MachineFace.TOP).slots(0)).build());
         if (portCell.ports().rule(PortChannel.FLUID_INPUT).allowsFace(null))
