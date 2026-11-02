@@ -34,6 +34,7 @@ class MaterialCatalogTest {
         MaterialTestFixture.ensureInitialized();
         FluidDefinitions.prepare();
         verifyCanonicalFluids();
+        verifyAlloyMeltingAndMoltenTemperature();
         // Building the thermal facts also verifies every phase binding and target has an identity.
         assertTrue(!SourceRecyclingFacts.all().isEmpty());
         assertNotNull(SourceRecyclingFacts.find(260, "Iron"));
@@ -99,6 +100,18 @@ class MaterialCatalogTest {
         }
         for (var anvil : AnvilVariantCatalog.ALL)
             assertTrue(GTMaterialRegistry.get(anvil.material()).isValid(), anvil.id());
+    }
+
+    /** Generated molten fluids carry the material's final melting point, including clamped alloys. */
+    private static void verifyAlloyMeltingAndMoltenTemperature() {
+        for (var expected : java.util.Map.of("ArsenicBronze", 1357, "ArsenicCopper", 1070, "HSSE", 2367)
+                .entrySet()) {
+            var material = GTMaterialRegistry.get(expected.getKey());
+            assertEquals(expected.getValue(), material.getMeltingPoint(), expected.getKey());
+            var molten = gregtech.content.data.FluidCatalog.get("GenMolten_" + expected.getKey());
+            assertNotNull(molten, expected.getKey());
+            assertEquals(expected.getValue(), molten.temperature(), expected.getKey());
+        }
     }
 
     private static void verifyCanonicalFluids() {
