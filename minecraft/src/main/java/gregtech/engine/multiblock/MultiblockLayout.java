@@ -23,7 +23,11 @@ public final class MultiblockLayout {
         ENERGY_INPUT,
         ITEM_FLUID_ENERGY_INPUT,
         ITEM_FLUID_ENERGY,
-        ENERGY_OUTPUT
+        ENERGY_OUTPUT;
+
+        public boolean allows(gregtech.api.multiblock.PortChannel channel) {
+            return gregtech.api.multiblock.StructureRole.valueOf(name()).allows(channel);
+        }
     }
 
     public record Cell(int right, int up, int back, Role role) {

@@ -21,6 +21,20 @@ final class StructurePatternContracts {
                 .repeat("shaft", 1, 2, 4, "B").count('B', 2, 4).build();
         if (tower.repeats().get(0).absoluteUp(tower.repeats().get(0).cells().get(0), 3) != 4)
             throw new AssertionError("Repeat anchor");
+        var wall = CellMatch.part("wall");
+        var portCell = LayoutCell.at(1, 0, 0, wall, StructureRole.FLUID_IO).withPorts(
+                StructurePorts.builder().fluidInput(PortRule.faces(gregtech.api.machine.MachineFace.TOP).slots(0)).build());
+        if (portCell.ports().rule(PortChannel.FLUID_INPUT).allowsFace(null))
+            throw new AssertionError("Unsided access bypassed a face restriction");
+        var selection = CellMatch.oneOf(wall, CellMatch.part("alternative_wall"));
+        var constrained = StructureLayout.pattern("constrained").layer(0, "SAA")
+                .where('A', selection, StructureRole.CASING)
+                .require(StructureConstraint.exactly(wall, 2))
+                .require(StructureConstraint.sameBlock(selection)).build();
+        if (constrained.constraints().size() != 2)
+            throw new AssertionError("Packaged API lost matched-cell constraints");
+        if (!new StructureLayout(constrained.name(), constrained.cells(), constrained.repeats()).constraints().isEmpty())
+            throw new AssertionError("Legacy constructor must remain unconstrained");
         var open = StructureLayout.pattern("open").layer(0, "S.B")
                 .ignore('.').where('B', CellMatch.part("wall"), StructureRole.CASING)
                 .repeat("optional", 1, 0, 3, "..B").build();

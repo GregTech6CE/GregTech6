@@ -320,12 +320,12 @@ public final class MachineRegistry {
     public static RegistryObject<BasicMachineBlock> registerBasicMachine(
             BasicMachineSpec spec, java.util.function.Function<BlockBehaviour.Properties, BasicMachineBlock> factory) {
         RegistryObject<BasicMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
-                spec.namespace(),
-                spec.id(),
-                () -> factory.apply(BlockBehaviour.Properties.of()
-                        .mapColor(MapColor.METAL)
-                        .strength(spec.hardness(), spec.blastResistance())
-                        .requiresCorrectToolForDrops()),
+                gregtech.content.multiblock.ControllerDeclarations.recipe(
+                        spec,
+                        () -> factory.apply(BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.METAL)
+                                .strength(spec.hardness(), spec.blastResistance())
+                                .requiresCorrectToolForDrops())),
                 GTBlocks.BLOCKS::register);
         BASIC_MACHINES.add(block);
         BASIC_MACHINE_BLOCKS.add(block);

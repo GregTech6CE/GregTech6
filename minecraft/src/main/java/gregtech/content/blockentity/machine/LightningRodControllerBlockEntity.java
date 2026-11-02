@@ -57,7 +57,7 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
         super.onChunkUnloaded();
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return gregtech.content.multiblock.SpecialStructures.lightning(this);
     }
     @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
@@ -118,11 +118,9 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
             return;
         }
         if (machine.energy >= PACKET) {
-            long sent = 0;
-            var below = pos.below();
-            IEnergyBlock target = level.hasChunkAt(below) ? EnergyBlockViews.view(level.getBlockEntity(below)) : null;
-            if (target != null) sent = target.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, PACKET, Math.min(16, machine.energy / PACKET),
-                    true);
+            long sent = gregtech.engine.multiblock.StructureOutputs.energy(machine,
+                    gregtech.content.multiblock.OriginalMultiblockOutputRules.LIGHTNING_ENERGY,
+                    GregTechTags.Energy.EU, PACKET, Math.min(16, machine.energy / PACKET));
             machine.energy -= gregtech.engine.multiblock.AdvancedControllerRules.lightningDrain(machine.energy, sent);
             machine.setChanged();
             return;

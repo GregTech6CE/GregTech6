@@ -14,7 +14,9 @@ public interface TrackedMultiblock {
         throw new UnsupportedOperationException(getClass().getName() + " has no full structure scan");
     }
 
-    StructureDefinition structureDefinition();
+    default StructureDefinition structureDefinition() {
+        return gregtech.content.registry.MultiblockRegistration.definition(this);
+    }
 
     default BlockEntity trackedEntity() {
         return (BlockEntity) this;
@@ -28,6 +30,11 @@ public interface TrackedMultiblock {
 
     /** The formed bit just fell: drop the caches built in {@link #onStructureFormed()}. */
     default void onStructureBroken() {}
+
+    /** Resolves a declared part design without rescanning or changing the structure's ports. */
+    default int structureDesign(LargeMachineLayouts.Cell cell, net.minecraft.core.BlockPos pos) {
+        return cell.design();
+    }
 
     /** Part acceptance beyond block identity, as the full scan body applies it. */
     default boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, Block expected, Block actual) {

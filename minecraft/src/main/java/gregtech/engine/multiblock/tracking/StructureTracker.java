@@ -33,6 +33,41 @@ public final class StructureTracker {
     private int patternEpoch = -1;
     private boolean fullEval;
     private String claimError;
+    private java.util.Map<BlockPos, gregtech.api.multiblock.StructurePorts> ports = java.util.Map.of();
+    private java.util.List<BlockPos> energyOutputs = java.util.List.of();
+    private final gregtech.content.multiblock.StructureDesigns designs =
+            new gregtech.content.multiblock.StructureDesigns();
+
+    gregtech.content.multiblock.StructureDesigns designs() {
+        return designs;
+    }
+
+    public java.util.List<BlockPos> energyOutputs() {
+        return formed ? energyOutputs : java.util.List.of();
+    }
+
+    public gregtech.api.multiblock.StructurePorts ports(BlockPos part) {
+        return ports.getOrDefault(part, gregtech.api.multiblock.StructurePorts.DEFAULT);
+    }
+
+    void ports(PatternMatch match) {
+        var next = new java.util.HashMap<BlockPos, gregtech.api.multiblock.StructurePorts>();
+        var outputs = new java.util.ArrayList<BlockPos>();
+        for (var cell : match.fixedCells()) {
+            if (!cell.cell().ports().rules().isEmpty())
+                next.put(cell.pos().immutable(), cell.cell().ports());
+            if (cell.cell().role().allows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT))
+                outputs.add(cell.pos().immutable());
+        }
+        for (var cell : match.repeatPlaced()) {
+            if (!cell.cell().ports().rules().isEmpty())
+                next.put(cell.pos().immutable(), cell.cell().ports());
+            if (cell.cell().role().allows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT))
+                outputs.add(cell.pos().immutable());
+        }
+        ports = java.util.Map.copyOf(next);
+        energyOutputs = java.util.List.copyOf(outputs);
+    }
 
     public String claimError() {
         return claimError;
@@ -247,6 +282,8 @@ public final class StructureTracker {
 
     /** Returns true when the formed bit fell. */
     boolean markBroken(int currentEpoch) {
+        ports = java.util.Map.of();
+        energyOutputs = java.util.List.of();
         boolean was = formed;
         formed = false;
         state = State.BROKEN;

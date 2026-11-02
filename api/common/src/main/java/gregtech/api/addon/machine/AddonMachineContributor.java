@@ -27,7 +27,12 @@ public interface AddonMachineContributor {
      */
     default List<AddonMachine> addonMachines() { return List.of(); }
 
-    /** Layouts bound by the controller {@code machineType}. */
+    /**
+     * Legacy layouts bound by the controller {@code machineType}.
+     * Prefer {@link AddonMachine#withStructure(StructureLayout)} so the association is explicit.
+     * The host normalizes this compatibility input to the same declarations and validation.
+     */
+    @Deprecated
     default List<StructureLayout> structureLayouts() { return List.of(); }
 
     /**

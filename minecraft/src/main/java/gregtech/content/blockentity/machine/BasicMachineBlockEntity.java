@@ -412,6 +412,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             state = state.setValue(GTFacingMachineBlock.LIT, active);
         }
         level.setBlock(worldPosition, state, 3);
+        if (this instanceof gregtech.engine.multiblock.tracking.TrackedMultiblock tracked)
+            gregtech.engine.multiblock.tracking.StructureTracking.refreshDesigns(tracked);
     }
 
     private void pollEnergy(Level level, BlockPos pos, long size) {

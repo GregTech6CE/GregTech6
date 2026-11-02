@@ -2,12 +2,8 @@ package gregtech.content.blockentity.machine;
 
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.multiblock.*;
-import gregtech.engine.multiblock.tracking.Aggregate;
-import gregtech.engine.multiblock.tracking.CompiledPattern;
-import gregtech.engine.multiblock.tracking.FixedStructures;
 import gregtech.engine.multiblock.tracking.PatternMatch;
 import gregtech.engine.multiblock.tracking.StructureClaims;
-import gregtech.engine.multiblock.tracking.StructureDefinition;
 import gregtech.engine.multiblock.tracking.StructureTracking;
 import gregtech.engine.recipe.*;
 import gregtech.content.block.machine.*;
@@ -28,12 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 /** Dedicated GT6 fusion executor: input reservation, LU startup, timed EU output and retained products. */
 public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockEntity {
-    private static final List<Aggregate> AGGREGATES=List.of(
-            Aggregate.Count.exactly(Aggregate.part(18200),3),
-            Aggregate.Count.exactly(Aggregate.part(18201),12),
-            Aggregate.Count.exactly(Aggregate.part(18202),12));
     private final PartBindings<BlockPos,MultiblockLayout.Role> fusionBindings=new PartBindings<>();
-    private final StructureDefinition definition=FixedStructures.declarative(this,this::structureCells,AGGREGATES);
     private long chargeRemaining,chargeTotal,progress,duration,outputEU;
     private MachineWorkOutputs products;
     @Override public java.util.List<ItemStack> inspectionPendingItems() {
@@ -54,26 +45,6 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         super(GTBlockEntities.FUSION_REACTOR.get(),pos,state);
 //?}
         setSpec(((BasicMachineBlock)state.getBlock()).basicSpec());
-    }
-    @Override public StructureDefinition structureDefinition() { return definition; }
-    @Override protected java.util.List<LargeMachineLayouts.Cell> structureCells() {
-        return FusionStructure.CELLS;
-    }
-    /** CPU positions accept any processor type; the aggregates enforce the 3/12/12 split. */
-    private java.util.List<CompiledPattern.FixedCell> structureCells(Direction front) {
-        var cells=new java.util.ArrayList<CompiledPattern.FixedCell>(FusionStructure.CELLS.size());
-        for(var cell:FusionStructure.CELLS) {
-            var spec=cell.part()>=18200&&cell.part()<=18202?processorCell(cell):cell;
-            var offset=cell.at(BlockPos.ZERO,front);
-            cells.add(new CompiledPattern.FixedCell(offset.getX(),offset.getY(),offset.getZ(),spec));
-        }
-        return cells;
-    }
-    private static LargeMachineLayouts.Cell processorCell(LargeMachineLayouts.Cell cell) {
-        var alternatives=java.util.stream.IntStream.rangeClosed(18200,18202)
-                .filter(id -> id != cell.part()).mapToObj(id -> new SharedLargeMachineLayouts.Choice(id,null)).toList();
-        return new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),cell.part(),cell.role(),cell.plain(),
-                cell.design(),alternatives);
     }
     @Override public boolean applyStructure(PatternMatch match) {
         if(level==null||isRemoved())return false;
@@ -196,16 +167,17 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
     private void emitFusionEnergy() {
         var center=worldPosition.relative(getBlockState().getValue(BasicMachineBlock.FACING).getOpposite(),2);
         for(var direction:Direction.Plane.HORIZONTAL) {
-            var target=center.relative(direction,10);
-            if(!level.hasChunkAt(target))continue;
-            var receiver=level.getBlockEntity(target);
-            if(receiver!=null&&EnergyTransfer.insertEnergyInto(GregTechTags.Energy.EU,direction.getOpposite(),outputEU,1,this,receiver)>0)break;
+            var port=center.relative(direction,9);
+            if(gregtech.engine.multiblock.StructurePortHandlers.emitEnergy(
+                    this,port,direction,GregTechTags.Energy.EU,outputEU,1)>0)break;
         }
     }
     private void updateActivity() {
         var state=getBlockState();boolean active=products!=null;
-        if(state.getValue(BasicMachineBlock.RUNNING)!=active||state.getValue(BasicMachineBlock.LIT)!=running)
+        if(state.getValue(BasicMachineBlock.RUNNING)!=active||state.getValue(BasicMachineBlock.LIT)!=running) {
             level.setBlock(worldPosition,state.setValue(BasicMachineBlock.RUNNING,active).setValue(BasicMachineBlock.LIT,running),3);
+            StructureTracking.refreshDesigns(this);
+        }
     }
     @Override public boolean isRunning(){return running;}
     @Override public double getProgressFraction(){return duration>0?Math.max(0,Math.min(1,(double)progress/duration)):0;}

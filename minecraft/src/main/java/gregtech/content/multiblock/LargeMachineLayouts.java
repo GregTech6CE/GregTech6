@@ -17,7 +17,29 @@ public final class LargeMachineLayouts {
             Role role,
             String plain,
             int design,
-            List<SharedLargeMachineLayouts.Choice> alternatives) {
+            List<SharedLargeMachineLayouts.Choice> alternatives,
+            gregtech.api.multiblock.StructurePorts ports) {
+        public Cell(
+                int right,
+                int up,
+                int back,
+                int part,
+                Role role,
+                String plain,
+                int design,
+                List<SharedLargeMachineLayouts.Choice> alternatives) {
+            this(
+                    right,
+                    up,
+                    back,
+                    part,
+                    role,
+                    plain,
+                    design,
+                    alternatives,
+                    gregtech.api.multiblock.StructurePorts.DEFAULT);
+        }
+
         public Cell(int right, int up, int back, int part, Role role) {
             this(right, up, back, part, role, null, -1, java.util.List.of());
         }
@@ -74,7 +96,18 @@ public final class LargeMachineLayouts {
         }
     }
     /** Fixed cells plus repeat groups. */
-    public record Layout(List<Cell> cells, List<Repeat> repeats) {}
+    public record Layout(
+            List<Cell> cells, List<Repeat> repeats, List<gregtech.api.multiblock.StructureConstraint> constraints) {
+        public Layout(List<Cell> cells, List<Repeat> repeats) {
+            this(cells, repeats, List.of());
+        }
+
+        public Layout {
+            cells = List.copyOf(cells);
+            repeats = List.copyOf(repeats);
+            constraints = List.copyOf(constraints);
+        }
+    }
     /** One cell resolved to a world position. */
     public record Placed(Cell cell, BlockPos pos) {}
     /** Upper bound for an unbounded repeat; the world height still caps the walk. Same cap as {@link LayoutRepeat#MAX_COPIES}. */
@@ -134,7 +167,8 @@ public final class LargeMachineLayouts {
                                 Role.valueOf(cell.role().name()),
                                 cell.plain(),
                                 cell.design(),
-                                cell.alternatives()))
+                                cell.alternatives(),
+                                cell.ports()))
                         .toList();
     }
     /** Matches a plain block choice without resolving a part id. */
@@ -175,7 +209,7 @@ public final class LargeMachineLayouts {
                     repeat.step(),
                     repeat.height(),
                     fromShared(repeat.cells())));
-        var converted = new Layout(fromShared(shared.cells()), List.copyOf(repeats));
+        var converted = new Layout(fromShared(shared.cells()), List.copyOf(repeats), shared.constraints());
         LAYOUTS.put(machine, converted);
         return converted;
     }

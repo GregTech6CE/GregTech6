@@ -112,6 +112,14 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
     }
 
     @Override
+    public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank) {
+        if (role == null || tank < 0 || tank >= getTanks()) return null;
+        return new gregtech.engine.fluid.FluidPort(tank == 0 ? steam : water,
+                tank == 0 && role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT),
+                tank > 0 && role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT));
+    }
+
+    @Override
     public int getTanks() {
         return 2;
     }

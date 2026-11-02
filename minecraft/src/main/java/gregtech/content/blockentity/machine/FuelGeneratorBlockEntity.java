@@ -175,16 +175,20 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         long packet = declaration().output().perTick();
         if (packet < 1 || stored < packet || energyType() == null) return;
         long packets = Math.min(declaration().amperes(), stored / packet);
-        FuelOutput output = declaration().output();
-        long sent = output.behind() > 0 ? injectBehind(packet, packets)
-                : output.front()
-                ? EnergyTransfer.emitEnergyToSide(energyType(), front(), packet, packets, this)
-                : EnergyTransfer.emitEnergyToSide(energyType(), front().getOpposite(), packet, packets, this);
+        long sent = emitGeneratedEnergy(packet, packets);
         if (sent > 0) {
             stored -= packet * sent;
             emitted = true;
             setChanged();
         }
+    }
+
+    protected long emitGeneratedEnergy(long packet, long packets) {
+        FuelOutput output = declaration().output();
+        return output.behind() > 0 ? injectBehind(packet, packets)
+                : output.front()
+                ? EnergyTransfer.emitEnergyToSide(energyType(), front(), packet, packets, this)
+                : EnergyTransfer.emitEnergyToSide(energyType(), front().getOpposite(), packet, packets, this);
     }
 
     private long injectBehind(long packet, long packets) {
@@ -214,7 +218,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 
 *///?} else {
 //?}
-    private GregTechTags.Tag energyType() {
+    protected GregTechTags.Tag energyType() {
         if (energy != null) return energy;
         String name = declaration().output().type().name();
         energy = GregTechTags.Energy.ALL.stream().filter(tag -> tag.getShortName().equalsIgnoreCase(name)).findFirst().orElse(null);
@@ -261,6 +265,11 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
     }
 
     @Override public int getTanks() { return 1 + exhaust.size(); }
+    protected IFluidHandler portFuelTank(int tank, boolean input, boolean output) {
+        if (tank < 0 || tank >= getTanks()) return null;
+        return new gregtech.engine.fluid.FluidPort(tank == 0 ? fuel : exhaust.get(tank - 1),
+                tank == 0 && input, tank > 0 && output);
+    }
     @Override public FluidStack getFluidInTank(int tank) {
         if (tank == 0) return fuel.getFluid().copy();
         return tank > 0 && tank <= exhaust.size() ? exhaust.get(tank - 1).getFluid().copy() : FluidStack.EMPTY;

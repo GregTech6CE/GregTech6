@@ -14421,5 +14421,18 @@
   "fluid_type.gt6ce.molten_tungstentrioxide": "Molten Tungsten Trioxide",
   "fluid_type.gt6ce.molten_vanadiummagnetite": "Molten Vanadium Magnetite",
   "jade.gt6ce.multiblock.controller": "Controller: %s (%s, %s, %s)",
-  "jade.gt6ce.multiblock.unbound": "Structure: unformed (no linked controller)"
+  "jade.gt6ce.multiblock.unbound": "Structure: unformed (no linked controller)",
+  "gt6ce.structure.diagnostic.block": "Wrong block at %s: expected %s, found %s",
+  "gt6ce.structure.diagnostic.unloaded": "Chunk not loaded at %s; structure cannot be verified",
+  "gt6ce.structure.diagnostic.layers": "Repeat group %s: %s / %s layers; missing %s",
+  "gt6ce.structure.diagnostic.count_short": "%s: found %s, requires at least %s; missing %s",
+  "gt6ce.structure.diagnostic.count_excess": "%s: found %s, allows at most %s; excess %s",
+  "gt6ce.structure.diagnostic.same_block": "Material mismatch at %s: %s; must match %s (%s)",
+  "gt6ce.structure.diagnostic.occupied": "Part at %s is owned by controller at %s",
+  "gt6ce.structure.diagnostic.rejected": "Part or controller condition not satisfied at %s",
+  "gt6ce.structure.diagnostic.unavailable": "No supported multiblock controller available at %s",
+  "gt6ce.structure.diagnostic.predicate.air": "air",
+  "gt6ce.structure.diagnostic.predicate.anyopaque": "an opaque block",
+  "gt6ce.structure.diagnostic.predicate.anyfluid": "a fluid block",
+  "gt6ce.structure.diagnostic.predicate.bedrockfloor": "bedrock or a bedrock ore"
 }

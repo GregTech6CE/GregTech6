@@ -13,7 +13,13 @@ public final class MultiblockPatterns {
 
     public static List<SharedLargeMachineLayouts.Cell> cells(StructureLayout layout) {
         if (!layout.repeats().isEmpty()) throw new IllegalArgumentException("Use a repeated layout: " + layout.name());
+        if (!layout.constraints().isEmpty())
+            throw new IllegalArgumentException("Use a constrained layout: " + layout.name());
         return layout.cells().stream().map(MultiblockPatterns::cell).toList();
+    }
+
+    public static SharedLargeMachineLayouts.Layout layout(StructurePattern pattern) {
+        return layout(pattern.build());
     }
 
     public static SharedLargeMachineLayouts.Layout layout(StructureLayout layout) {
@@ -30,28 +36,41 @@ public final class MultiblockPatterns {
                                 repeat.cells().stream()
                                         .map(MultiblockPatterns::cell)
                                         .toList()))
-                        .toList());
+                        .toList(),
+                layout.constraints());
     }
 
     private static SharedLargeMachineLayouts.Cell cell(LayoutCell cell) {
-        int part = 0;
-        String plain = null;
-        if (cell.match() instanceof CellMatch.Part named) {
-            part = OriginalMultiblockPartData.ALL.stream()
-                    .filter(p -> p.path().equals(named.name()))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Unknown part: " + named.name()))
-                    .originalId();
-        } else if (!(cell.match() instanceof CellMatch.Air)) {
-            plain = cell.match().toString();
-        }
+        var matches = cell.match() instanceof CellMatch.OneOf one ? one.members() : List.of(cell.match());
+        var choices = matches.stream().map(MultiblockPatterns::choice).toList();
+        var primary = choices.get(0);
         return new SharedLargeMachineLayouts.Cell(
-                cell.right(), cell.up(), cell.back(), part, cell.role(), plain, cell.design());
+                cell.right(),
+                cell.up(),
+                cell.back(),
+                primary.part(),
+                cell.role(),
+                primary.plain(),
+                cell.design(),
+                choices.subList(1, choices.size()),
+                cell.ports());
+    }
+
+    private static SharedLargeMachineLayouts.Choice choice(CellMatch match) {
+        if (match instanceof CellMatch.Part part) {
+            int id = SharedLargeMachineParts.builtinId(part.name());
+            if (id < 0) throw new IllegalArgumentException("Unknown built-in part: " + part.name());
+            return new SharedLargeMachineLayouts.Choice(id, null);
+        }
+        return new SharedLargeMachineLayouts.Choice(0, match instanceof CellMatch.Air ? null : match.toString());
     }
 
     /** Role-only templates are materialized with each controller variant's wall/coil choice. */
     public static StructureGrid grid(StructurePattern pattern) {
-        return new StructureGrid(pattern.build().cells().stream()
+        var layout = pattern.build();
+        if (layout.cells().stream().anyMatch(cell -> !cell.ports().rules().isEmpty()))
+            throw new IllegalArgumentException("Use a full layout for per-cell ports: " + layout.name());
+        return new StructureGrid(layout.cells().stream()
                 .map(cell -> new StructureGrid.Cell(cell.right(), cell.up(), cell.back(), cell.role()))
                 .toList());
     }

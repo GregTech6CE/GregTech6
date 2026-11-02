@@ -1,7 +1,13 @@
 package gregtech.engine.kubejs;
 
+import gregtech.api.machine.MachineFace;
 import gregtech.api.multiblock.CellMatch;
+import gregtech.api.multiblock.LayoutCell;
+import gregtech.api.multiblock.PortChannel;
+import gregtech.api.multiblock.PortRule;
+import gregtech.api.multiblock.StructureConstraint;
 import gregtech.api.multiblock.StructureLayout;
+import gregtech.api.multiblock.StructurePorts;
 import gregtech.api.multiblock.StructureRole;
 import gregtech.engine.recipe.data.JsonMaps;
 import java.util.ArrayList;
@@ -13,14 +19,21 @@ import java.util.Set;
 
 /** Reads and writes {@code data/<namespace>/gt6ce_layouts/<machineType>.json}. */
 public final class StructureLayoutDocuments {
-    private static final Set<String> ROOT = Set.of("cells", "repeats");
-    private static final Set<String> CELL = Set.of("right", "up", "back", "match", "role", "design");
+    private static final Set<String> ROOT = Set.of("cells", "repeats", "constraints");
+    private static final Set<String> CELL = Set.of("right", "up", "back", "match", "role", "design", "ports");
     private static final Set<String> REPEAT = Set.of("key", "up", "min", "max", "step", "cells");
+    private static final Set<String> COUNT = Set.of("type", "match", "role", "min", "max");
+    private static final Set<String> SAME_BLOCK = Set.of("type", "match", "role");
 
     private StructureLayoutDocuments() {}
 
     /** One cell before it is checked against {@link StructureLayout}. {@code matches} has one entry or an alternative group. */
-    public record CellSpec(int right, int up, int back, List<String> matches, String role, int design) {}
+    public record CellSpec(
+            int right, int up, int back, List<String> matches, String role, int design, StructurePorts ports) {
+        public CellSpec(int right, int up, int back, List<String> matches, String role, int design) {
+            this(right, up, back, matches, role, design, StructurePorts.DEFAULT);
+        }
+    }
 
     /** One repeat group. Its cells use {@code up} relative to the anchor. */
     public record RepeatSpec(String key, int up, int min, int max, int step, List<CellSpec> cells) {}
@@ -29,7 +42,7 @@ public final class StructureLayoutDocuments {
         var root = JsonMaps.object(json);
         for (var key : root.keySet())
             if (!key.startsWith("_") && !ROOT.contains(key)) throw new IllegalArgumentException("Unknown field " + key);
-        return layout(machine, cells(root), repeats(root));
+        return layout(machine, cells(root), repeats(root), constraints(root));
     }
 
     public static StructureLayout layout(String machine, List<CellSpec> cells) {
@@ -37,12 +50,17 @@ public final class StructureLayoutDocuments {
     }
 
     public static StructureLayout layout(String machine, List<CellSpec> cells, List<RepeatSpec> repeats) {
+        return layout(machine, cells, repeats, List.of());
+    }
+
+    private static StructureLayout layout(
+            String machine, List<CellSpec> cells, List<RepeatSpec> repeats, List<StructureConstraint> constraints) {
         var builder = StructureLayout.builder(machine);
         for (CellSpec cell : cells) {
             var match = match(cell.matches());
             var part = role(cell.role());
-            if (cell.design() < 0) builder.cell(cell.right(), cell.up(), cell.back(), match, part);
-            else builder.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
+            builder.cell(
+                    new LayoutCell(cell.right(), cell.up(), cell.back(), match, part, cell.design(), cell.ports()));
         }
         for (RepeatSpec repeat : repeats) {
             var group =
@@ -51,11 +69,12 @@ public final class StructureLayoutDocuments {
             for (CellSpec cell : repeat.cells()) {
                 var match = match(cell.matches());
                 var part = role(cell.role());
-                if (cell.design() < 0) group.cell(cell.right(), cell.up(), cell.back(), match, part);
-                else group.cell(cell.right(), cell.up(), cell.back(), match, part, cell.design());
+                group.cell(
+                        new LayoutCell(cell.right(), cell.up(), cell.back(), match, part, cell.design(), cell.ports()));
             }
             builder.repeat(group.build());
         }
+        constraints.forEach(builder::require);
         return builder.build();
     }
 
@@ -84,7 +103,58 @@ public final class StructureLayoutDocuments {
             }
             json.append(']');
         }
+        if (!layout.constraints().isEmpty()) {
+            json.append(",\"constraints\":[");
+            for (int i = 0; i < layout.constraints().size(); i++) {
+                if (i > 0) json.append(',');
+                var constraint = layout.constraints().get(i);
+                json.append("{\"type\":");
+                string(json, constraint instanceof StructureConstraint.Count ? "count" : "same_block");
+                var selection = constraint.selection();
+                if (selection.match() != null) {
+                    json.append(",\"match\":");
+                    matchText(json, selection.match());
+                }
+                if (selection.role() != null) {
+                    json.append(",\"role\":");
+                    string(json, selection.role().name().toLowerCase(Locale.ROOT));
+                }
+                if (constraint instanceof StructureConstraint.Count count)
+                    json.append(",\"min\":")
+                            .append(count.min())
+                            .append(",\"max\":")
+                            .append(count.max());
+                json.append('}');
+            }
+            json.append(']');
+        }
         return json.append('}').toString();
+    }
+
+    private static List<StructureConstraint> constraints(Map<String, Object> root) {
+        if (!root.containsKey("constraints")) return List.of();
+        if (!(root.get("constraints") instanceof List<?> list))
+            throw new IllegalArgumentException("constraints must be an array");
+        var rules = new ArrayList<StructureConstraint>();
+        for (var element : list) {
+            var rule = object(element, "constraints entries must be objects");
+            String type = required(rule, "type");
+            var keys = switch (type) {
+                case "count" -> COUNT;
+                case "same_block" -> SAME_BLOCK;
+                default -> throw new IllegalArgumentException("Unknown constraint type: " + type);
+            };
+            for (String key : rule.keySet())
+                if (!keys.contains(key)) throw new IllegalArgumentException("Unknown constraint field " + key);
+            var selection = new StructureConstraint.Selection(
+                    rule.containsKey("match") ? match(matches(rule.get("match"))) : null,
+                    rule.containsKey("role") ? role(required(rule, "role")) : null);
+            rules.add(
+                    type.equals("count")
+                            ? new StructureConstraint.Count(selection, integer(rule, "min"), integer(rule, "max"))
+                            : new StructureConstraint.SameBlock(selection));
+        }
+        return List.copyOf(rules);
     }
 
     private static void cells(StringBuilder json, List<gregtech.api.multiblock.LayoutCell> cells) {
@@ -102,6 +172,7 @@ public final class StructureLayoutDocuments {
             json.append(",\"role\":");
             string(json, cell.role().name().toLowerCase(Locale.ROOT));
             if (cell.design() >= 0) json.append(",\"design\":").append(cell.design());
+            ports(json, cell.ports());
             json.append('}');
         }
     }
@@ -151,7 +222,8 @@ public final class StructureLayoutDocuments {
                     integer(cell, "back"),
                     matches(cell.get("match")),
                     required(cell, "role"),
-                    design(cell)));
+                    design(cell),
+                    ports(cell)));
         }
         return out;
     }
@@ -164,6 +236,69 @@ public final class StructureLayoutDocuments {
             out.put(name, entry.getValue());
         }
         return out;
+    }
+
+    private static StructurePorts ports(Map<String, Object> cell) {
+        if (!cell.containsKey("ports")) return StructurePorts.DEFAULT;
+        var builder = StructurePorts.builder();
+        var rules = object(cell.get("ports"), "ports must be an object");
+        for (var entry : rules.entrySet()) {
+            PortChannel channel = PortChannel.valueOf(entry.getKey().toUpperCase(Locale.ROOT));
+            var rule = object(entry.getValue(), "port rule must be an object");
+            for (String key : rule.keySet())
+                if (!Set.of("faces", "slots", "filters").contains(key))
+                    throw new IllegalArgumentException("Unknown port rule field " + key);
+            var faces = rule.containsKey("faces")
+                    ? strings(rule.get("faces")).stream()
+                            .map(s -> MachineFace.valueOf(s.toUpperCase(Locale.ROOT)))
+                            .toList()
+                    : MachineFace.all();
+            var slots = new ArrayList<Integer>();
+            if (rule.containsKey("slots")) {
+                if (!(rule.get("slots") instanceof List<?> list))
+                    throw new IllegalArgumentException("slots must be an array");
+                for (var slot : list) slots.add(integer(Map.of("slot", slot), "slot"));
+            }
+            builder.restrict(
+                    channel,
+                    new PortRule(faces, slots, rule.containsKey("filters") ? strings(rule.get("filters")) : List.of()));
+        }
+        return builder.build();
+    }
+
+    private static List<String> strings(Object value) {
+        if (!(value instanceof List<?> list)) throw new IllegalArgumentException("Expected string array");
+        var result = new ArrayList<String>();
+        for (var entry : list) {
+            if (!(entry instanceof String text)) throw new IllegalArgumentException("Expected string array");
+            result.add(text);
+        }
+        return result;
+    }
+
+    private static void ports(StringBuilder json, StructurePorts ports) {
+        if (ports.rules().isEmpty()) return;
+        json.append(",\"ports\":{");
+        boolean comma = false;
+        for (var channel : PortChannel.values()) {
+            var rule = ports.rules().get(channel);
+            if (rule == null) continue;
+            if (comma) json.append(',');
+            comma = true;
+            string(json, channel.name().toLowerCase(Locale.ROOT));
+            json.append(":{\"faces\":[");
+            for (int i = 0; i < rule.faces().size(); i++) {
+                if (i > 0) json.append(',');
+                string(json, rule.faces().get(i).name().toLowerCase(Locale.ROOT));
+            }
+            json.append("],\"slots\":").append(rule.slots()).append(",\"filters\":[");
+            for (int i = 0; i < rule.filters().size(); i++) {
+                if (i > 0) json.append(',');
+                string(json, rule.filters().get(i));
+            }
+            json.append("]}");
+        }
+        json.append('}');
     }
 
     private static int step(Map<String, Object> json) {

@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-/** Footprints derived from a {@link LargeMachineLayouts.Layout}. The scan itself stays in the controller. */
+/** Footprints and cached matching compiled from the same declared layout. */
 public final class LayoutStructures {
     private LayoutStructures() {}
 
@@ -20,19 +20,17 @@ public final class LayoutStructures {
         boolean matches(LargeMachineLayouts.Cell cell, Block expected, Block actual);
     }
 
-    public static StructureDefinition recipe(LargeRecipeMachineBlockEntity machine) {
-        return new LayoutDefinition(machine, machine::trackedLayout, false);
+    public static StructureDefinition.Declarative recipe(LargeRecipeMachineBlockEntity machine) {
+        return new LayoutDefinition(machine, machine::trackedLayout);
     }
 
-    public static StructureDefinition behavior(BehaviorMachineBlockEntity machine) {
-        return new LayoutDefinition(machine, machine::trackedLayout, true);
+    public static StructureDefinition.Declarative behavior(BehaviorMachineBlockEntity machine) {
+        return new LayoutDefinition(machine, machine::trackedLayout);
     }
 
-    public static StructureDefinition fuel(gregtech.content.blockentity.machine.FuelTurbineBlockEntity machine) {
-        return new LayoutDefinition(
-                machine,
-                () -> LargeMachineLayouts.layout(machine.declaration().casing().machineType()),
-                false);
+    public static StructureDefinition.Declarative fuel(
+            gregtech.content.blockentity.machine.FuelTurbineBlockEntity machine) {
+        return new LayoutDefinition(machine, () -> gregtech.content.registry.MultiblockRegistration.layout(machine));
     }
 
     public static Footprint of(
@@ -48,8 +46,10 @@ public final class LayoutStructures {
             LargeMachineLayouts.Layout layout, BlockPos origin, Direction front, int[] matched, boolean frontier) {
         Footprint.Builder builder = new Footprint.Builder().addController(origin);
         if (layout == null || front == null) return builder.build();
+        boolean identity = layout.constraints().stream()
+                .anyMatch(rule -> rule instanceof gregtech.api.multiblock.StructureConstraint.SameBlock);
         for (LargeMachineLayouts.Cell cell : layout.cells()) {
-            builder.add(cell.at(origin, front), projection(cell));
+            builder.add(cell.at(origin, front), projection(cell, identity));
         }
         for (int group = 0; group < layout.repeats().size(); group++) {
             LargeMachineLayouts.Repeat repeat = layout.repeats().get(group);
@@ -59,7 +59,7 @@ public final class LayoutStructures {
             int count = Math.max(0, Math.min(limit, cap));
             for (int copy = 0; copy < count; copy++) {
                 for (LargeMachineLayouts.Cell cell : repeat.cells())
-                    builder.add(cell.at(origin, front, repeat.absoluteUp(cell, copy)), projection(cell));
+                    builder.add(cell.at(origin, front, repeat.absoluteUp(cell, copy)), projection(cell, identity));
             }
         }
         return builder.build();
@@ -72,6 +72,12 @@ public final class LayoutStructures {
                 ? LargeMachineLayouts.MAX_REPEATS
                 : entity.getLevel().getHeight();
         return of(layout, entity.getBlockPos(), front, height, false);
+    }
+
+    private static Projection projection(LargeMachineLayouts.Cell cell, boolean identity) {
+        var membership = projection(cell);
+        // Equal tag/predicate membership does not imply equal block identity for a SameBlock rule.
+        return identity ? Projection.and(Projection.BLOCK, membership) : membership;
     }
 
     static Projection projection(LargeMachineLayouts.Cell cell) {
@@ -117,9 +123,6 @@ public final class LayoutStructures {
         if (plain != null) return gregtech.content.multiblock.PlainStructureBlocks.matches(level, pos, plain, state);
         net.minecraft.world.level.block.Block block = state.getBlock();
         net.minecraft.world.level.block.Block expected = gregtech.content.multiblock.LargeMachineParts.block(part);
-        if (part == 18042) {
-            return block == expected || block == gregtech.content.multiblock.LargeMachineParts.block(18043);
-        }
         return block == expected;
     }
 
@@ -134,13 +137,10 @@ public final class LayoutStructures {
     private static final class LayoutDefinition implements StructureDefinition.Declarative {
         private final TrackedMultiblock machine;
         private final Supplier<LargeMachineLayouts.Layout> layout;
-        private final boolean formWithoutLayout;
 
-        private LayoutDefinition(
-                TrackedMultiblock machine, Supplier<LargeMachineLayouts.Layout> layout, boolean formWithoutLayout) {
+        private LayoutDefinition(TrackedMultiblock machine, Supplier<LargeMachineLayouts.Layout> layout) {
             this.machine = machine;
             this.layout = layout;
-            this.formWithoutLayout = formWithoutLayout;
         }
 
         @Override
@@ -154,8 +154,9 @@ public final class LayoutStructures {
         }
 
         @Override
-        public boolean formsImmediately() {
-            return formWithoutLayout && layout.get() == null;
+        public java.util.List<Aggregate> aggregates() {
+            var value = layout.get();
+            return value == null ? java.util.List.of() : StructureConstraints.compile(value.constraints());
         }
 
         @Override

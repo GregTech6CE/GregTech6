@@ -40,7 +40,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     private HeatExchangerRules.Settings settings = HeatExchangerRules.DEFAULTS;
     private Recipe lastRecipe;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final FluidTankGT hot = new FluidTankGT(settings.inputCapacity()).setOnChanged(this::setChanged);
     private final FluidTankGT cold = new FluidTankGT().setOnChanged(this::setChanged);
@@ -204,7 +204,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         super(GTBlockEntities.LARGE_HEAT_EXCHANGER.get(), pos, state);
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
@@ -324,13 +324,8 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         if (perOutlet > 0) {
             heat -= perOutlet * 8;
             var emitted = settings.energyType();
-            for (int x = -1; x <= 1; x++)
-                for (int z = -1; z <= 1; z++)
-                    if (x != 0 || z != 0) {
-                        var target = worldPosition.offset(x, 2, z);
-                        if (emitted != null && level.hasChunkAt(target))
-                            EnergyTransfer.insertEnergyInto(emitted, Direction.DOWN, 1, perOutlet, this, level.getBlockEntity(target));
-                    }
+            if (emitted != null) for (var output : gregtech.content.multiblock.OriginalMultiblockOutputRules.HEAT_EXCHANGER_ENERGY)
+                gregtech.engine.multiblock.StructureOutputs.energy(this, output, emitted, 1, perOutlet);
             setChanged();
         }
         if (heat < settings.bufferTarget()) {
@@ -340,22 +335,8 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         if (heat < 8) heat = 0;
         activityHistory = (activityHistory << 1) | (active ? 1 : 0);
         if (previousHeat != heat || previousHistory != activityHistory || previousActive != active) setChanged();
-        var below = worldPosition.below();
-        if (!cold.isEmpty() && level.hasChunkAt(below) && level.getBlockEntity(below) != null) {
-//? if >=1.21.1 {
-            /*var target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, below, Direction.UP);
-            if (target != null) {
-*///?} else {
-            level.getBlockEntity(below).getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.UP).ifPresent(target -> {
-//?}
-                int accepted = target.fill(cold.getFluid().copy(), FluidAction.EXECUTE);
-                if (accepted > 0) cold.drain(accepted, FluidAction.EXECUTE);
-//? if >=1.21.1 {
-            /*}
-*///?} else {
-            });
-//?}
-        }
+        gregtech.engine.multiblock.StructureOutputs.fluid(this,
+                gregtech.content.multiblock.OriginalMultiblockOutputRules.HEAT_EXCHANGER_FLUID, 1, cold, Integer.MAX_VALUE);
     }
 
     private void burnFuel() {
@@ -369,6 +350,14 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     @Override
     public IFluidHandler portFluids(MultiblockLayout.Role role) {
         return role == MultiblockLayout.Role.FLUID_INPUT ? input : null;
+    }
+
+    @Override
+    public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank) {
+        if (role == null || tank < 0 || tank >= getTanks()) return null;
+        return new gregtech.engine.fluid.FluidPort(tank == 0 ? hot : cold,
+                tank == 0 && role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT),
+                tank > 0 && role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT));
     }
 
     @Override

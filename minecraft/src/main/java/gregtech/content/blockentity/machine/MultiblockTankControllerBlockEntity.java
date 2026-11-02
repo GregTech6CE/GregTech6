@@ -105,7 +105,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     }
 
     public int trackedSize() { return size; }
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return gregtech.content.multiblock.SpecialStructures.tank(this);
     }
     @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
@@ -249,24 +249,9 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         var type = fluid.getFluid().getFluidType();
         if (!gregtech.content.multiblock.TankFlowRules.canAutoOutput(face,
                 gregtech.content.registry.GTFluids.isGas(fluid), type.getDensity(fluid))) return;
-        var next = worldPosition.relative(face);
-        if (!level.hasChunkAt(next)) return;
-        var target = level.getBlockEntity(next);
-        if (target == null) return;
-//? if >=1.21.1 {
-        /*var handler = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, next, face.getOpposite());
-        if (handler != null) {
-*///?} else {
-        target.getCapability(ForgeCapabilities.FLUID_HANDLER, face.getOpposite()).ifPresent(handler -> {
-//?}
-            var offered = tank.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-            int moved = handler.fill(offered, IFluidHandler.FluidAction.EXECUTE);
-            if (moved > 0) tank.drain(moved, IFluidHandler.FluidAction.EXECUTE);
-//? if >=1.21.1 {
-        /*}
-*///?} else {
-        });
-//?}
+        var output = gregtech.engine.multiblock.StructureOutputs.at(this,
+                gregtech.api.multiblock.PortChannel.FLUID_OUTPUT, worldPosition.relative(face), face.getOpposite(), false);
+        gregtech.engine.multiblock.StructureOutputs.fluid(this, output, 0, tank, Integer.MAX_VALUE);
     }
 
     // ── Energy (tank uses none) ──────────────────────────────────────────────

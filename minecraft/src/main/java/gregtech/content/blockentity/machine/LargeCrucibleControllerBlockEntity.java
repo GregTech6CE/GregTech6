@@ -50,7 +50,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
     public static final long MAX_AMOUNT = gregtech.content.multiblock.OriginalLargeCrucibleParameters.CAPACITY_UNITS;
     private final LargeCrucibleSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final IFluidHandler fluids = new MoltenPort();
     private final IItemHandler itemInput = new IItemHandler() {
@@ -119,7 +119,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         return state.hasProperty(property) && state.getValue(property);
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {

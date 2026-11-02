@@ -5,4 +5,6 @@ public final class FusionStructure {
 
     public static final java.util.List<LargeMachineLayouts.Cell> CELLS =
             LargeMachineLayouts.fromShared(SharedFusionStructure.CELLS);
+    public static final LargeMachineLayouts.Layout LAYOUT =
+            new LargeMachineLayouts.Layout(CELLS, java.util.List.of(), SharedFusionStructure.STRUCTURE.constraints());
 }

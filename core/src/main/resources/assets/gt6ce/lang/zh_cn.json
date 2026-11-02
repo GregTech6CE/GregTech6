@@ -104471,5 +104471,18 @@
   "fluid_type.gt6ce.molten_tungstentrioxide": "熔融三氧化钨",
   "fluid_type.gt6ce.molten_vanadiummagnetite": "熔融钒磁铁",
   "jade.gt6ce.multiblock.controller": "主控：%s（%s，%s，%s）",
-  "jade.gt6ce.multiblock.unbound": "结构：未成型（未关联主控）"
+  "jade.gt6ce.multiblock.unbound": "结构：未成型（未关联主控）",
+  "gt6ce.structure.diagnostic.block": "坐标 %s 的方块错误：需要 %s，实际为 %s",
+  "gt6ce.structure.diagnostic.unloaded": "坐标 %s 所在区块未加载，无法确认结构",
+  "gt6ce.structure.diagnostic.layers": "重复层组 %s：已有 %s 层，至少需要 %s 层，还缺 %s 层",
+  "gt6ce.structure.diagnostic.count_short": "%s：已有 %s 个，至少需要 %s 个，还缺 %s 个",
+  "gt6ce.structure.diagnostic.count_excess": "%s：已有 %s 个，最多允许 %s 个，超出 %s 个",
+  "gt6ce.structure.diagnostic.same_block": "坐标 %s 材料不一致：实际为 %s，须与 %s 的 %s 相同",
+  "gt6ce.structure.diagnostic.occupied": "坐标 %s 的部件已被 %s 的主控占用",
+  "gt6ce.structure.diagnostic.rejected": "坐标 %s 的部件类型或主控附加条件不满足",
+  "gt6ce.structure.diagnostic.unavailable": "坐标 %s 处没有可诊断的多方块主控",
+  "gt6ce.structure.diagnostic.predicate.air": "空气",
+  "gt6ce.structure.diagnostic.predicate.anyopaque": "不透明方块",
+  "gt6ce.structure.diagnostic.predicate.anyfluid": "流体方块",
+  "gt6ce.structure.diagnostic.predicate.bedrockfloor": "基岩或基岩矿石"
 }

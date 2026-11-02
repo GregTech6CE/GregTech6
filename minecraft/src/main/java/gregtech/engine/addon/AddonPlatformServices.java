@@ -45,6 +45,40 @@ public final class AddonPlatformServices {
 
     private static final class Services implements AddonPlatform.Services {
         @Override
+        public java.util.List<gregtech.api.addon.platform.StructureProblem> diagnoseStructure(
+                Level level, BlockPos pos) {
+            if (!(level instanceof ServerLevel server))
+                return java.util.List.of(new gregtech.api.addon.platform.StructureProblem.Unavailable(pos));
+            if (!server.getServer().isSameThread())
+                throw new IllegalStateException("Structure diagnosis requires the server thread");
+            if (!level.hasChunkAt(pos))
+                return java.util.List.of(new gregtech.api.addon.platform.StructureProblem.Unloaded(pos));
+            var entity = level.getBlockEntity(pos);
+            if (!(entity instanceof gregtech.engine.multiblock.tracking.TrackedMultiblock)) {
+                var owner = gregtech.engine.multiblock.tracking.WorldStructureClaims.owner(server, pos);
+                if (owner == null) {
+                    var reserved = gregtech.engine.multiblock.tracking.WorldStructureClaims.table(server)
+                            .reservedOwner(pos.asLong());
+                    if (reserved != null) owner = BlockPos.of(reserved);
+                }
+                if (owner != null) {
+                    if (!level.hasChunkAt(owner))
+                        return java.util.List.of(new gregtech.api.addon.platform.StructureProblem.Unloaded(owner));
+                    entity = level.getBlockEntity(owner);
+                }
+            }
+            return entity instanceof gregtech.engine.multiblock.tracking.TrackedMultiblock machine
+                    ? gregtech.engine.multiblock.tracking.StructureDiagnostic.inspect(machine)
+                    : java.util.List.of(new gregtech.api.addon.platform.StructureProblem.Unavailable(pos));
+        }
+
+        @Override
+        public net.minecraft.network.chat.Component describeStructureProblem(
+                gregtech.api.addon.platform.StructureProblem problem) {
+            return gregtech.engine.multiblock.tracking.StructureDiagnostic.describe(problem);
+        }
+
+        @Override
         public void structureChanged(Level level, BlockPos pos) {
             java.util.Objects.requireNonNull(level, "level");
             java.util.Objects.requireNonNull(pos, "pos");

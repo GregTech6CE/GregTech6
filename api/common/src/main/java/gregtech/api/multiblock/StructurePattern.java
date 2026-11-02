@@ -12,7 +12,7 @@ import java.util.Map;
  * Columns run right, rows run back, and layer numbers run up relative to the controller.
  * Every character, including a space, must be explicitly bound or ignored. The controller occurs once at up=0.
  * Counts constrain declared symbol occurrences over ALL allowed repeat sizes, not the number of
- * world blocks selected from an alternative matcher. World-dependent constraints belong to the host.
+ * world blocks selected from an alternative matcher. Use {@link #require} for world-match constraints.
  *
  * <pre>{@code
  * StructureLayout.pattern("example_tower") // same name as the controller machineType
@@ -24,7 +24,7 @@ import java.util.Map;
  * }</pre>
  */
 public final class StructurePattern {
-    private record Symbol(CellMatch match, StructureRole role, int design) {}
+    private record Symbol(CellMatch match, StructureRole role, int design, StructurePorts ports) {}
     private record Layer(int up, List<String> rows) {}
     private record Repeat(String key, int up, int min, int max, int step, List<List<String>> layers) {}
     private record Limit(long min, long max) {}
@@ -35,6 +35,7 @@ public final class StructurePattern {
     private final List<Repeat> repeats = new ArrayList<>();
     private final Map<Character, Symbol> symbols = new LinkedHashMap<>();
     private final Map<Character, Limit> limits = new LinkedHashMap<>();
+    private final List<StructureConstraint> constraints = new ArrayList<>();
     private final java.util.Set<Character> ignored = new java.util.HashSet<>();
     private int width = -1, depth = -1;
 
@@ -51,9 +52,17 @@ public final class StructurePattern {
     }
 
     public StructurePattern where(char symbol, CellMatch match, StructureRole role, int design) {
-        var validated = LayoutCell.relative(0, 0, 0, match, role);
+        return where(symbol, match, role, design, StructurePorts.DEFAULT);
+    }
+
+    public StructurePattern where(char symbol, CellMatch match, StructureRole role, StructurePorts ports) {
+        return where(symbol, match, role, -1, ports);
+    }
+
+    public StructurePattern where(char symbol, CellMatch match, StructureRole role, int design, StructurePorts ports) {
+        var validated = LayoutCell.relative(0, 0, 0, match, role).withPorts(ports);
         if (design != -1) validated.withDesign(design);
-        if (symbols.putIfAbsent(symbol, new Symbol(match, role, design)) != null)
+        if (symbols.putIfAbsent(symbol, new Symbol(match, role, design, ports)) != null)
             throw new IllegalArgumentException("Duplicate symbol: " + symbol);
         return this;
     }
@@ -82,6 +91,12 @@ public final class StructurePattern {
         if (min < 0 || max != -1 && max < min) throw new IllegalArgumentException("Invalid symbol count");
         if (limits.putIfAbsent(symbol, new Limit(min, max)) != null)
             throw new IllegalArgumentException("Duplicate count constraint: " + symbol);
+        return this;
+    }
+
+    /** Adds a rule over actual matched choices, including complete repeat copies. */
+    public StructurePattern require(StructureConstraint constraint) {
+        constraints.add(java.util.Objects.requireNonNull(constraint, "constraint"));
         return this;
     }
 
@@ -142,13 +157,14 @@ public final class StructurePattern {
                 throw new IllegalArgumentException("Symbol '" + symbol + "' expands to " + min + ".." + max
                         + ", outside " + limit.min + ".." + limit.max);
         });
+        constraints.forEach(result::require);
         return result.build();
     }
 
     private LayoutCell cell(char character, int right, int up, int back) {
         var symbol = symbols.get(character);
         if (symbol == null) throw new IllegalArgumentException("Undefined structure symbol: '" + character + "'");
-        var cell = LayoutCell.relative(right, up, back, symbol.match, symbol.role);
+        var cell = LayoutCell.relative(right, up, back, symbol.match, symbol.role).withPorts(symbol.ports);
         return symbol.design == -1 ? cell : cell.withDesign(symbol.design);
     }
 

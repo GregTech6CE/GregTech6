@@ -16,7 +16,11 @@ public final class SharedHeatExchangerStructure {
         return MultiblockPatterns.cells(StructureLayout.pattern("heatexchanger")
                 .layer(0, "AAA", "ASA", "AAA")
                 .layer(1, "BBB", "BCB", "BBB")
-                .where('A', CellMatch.part("dense_tungsten_wall"), StructureRole.FLUID_INPUT)
+                .where(
+                        'A',
+                        CellMatch.part("dense_tungsten_wall"),
+                        StructureRole.FLUID_INPUT,
+                        OriginalMultiblockPortRules.HOT_FLUID)
                 .where('B', CellMatch.part("heat_transmitter"), StructureRole.CASING)
                 .where('C', CellMatch.part("dense_tungsten_wall"), StructureRole.CASING));
     }

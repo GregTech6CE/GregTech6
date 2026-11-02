@@ -52,14 +52,14 @@ public final class BehaviorMachineRegistration {
         for (AddonMachines.AcceptedBehavior accepted : machines) {
             DeferredHolder<Block, BehaviorMachineBlock> block =
                     gregtech.content.registry.MultiblockRegistration.register(
-                            namespace,
-                            accepted.declaration().casing().id(),
-                            () -> new BehaviorMachineBlock(
+                            gregtech.content.multiblock.ControllerDeclarations.behavior(
                                     accepted,
-                                    BlockBehaviour.Properties.of()
-                                            .mapColor(MapColor.METAL)
-                                            .strength(5.0F, 5.0F)
-                                            .requiresCorrectToolForDrops()),
+                                    () -> new BehaviorMachineBlock(
+                                            accepted,
+                                            BlockBehaviour.Properties.of()
+                                                    .mapColor(MapColor.METAL)
+                                                    .strength(5.0F, 5.0F)
+                                                    .requiresCorrectToolForDrops())),
                             blocks::register);
             holders.add(block);
             BLOCKS.add(block);

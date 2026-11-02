@@ -1,10 +1,8 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.content.data.GregTechTags;
-import gregtech.content.multiblock.*;
 import gregtech.engine.multiblock.MultiblockLayout.Role;
 import net.minecraft.core.*;
-import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -22,29 +20,6 @@ public final class MatterFabricatorBlockEntity extends LargeRecipeMachineBlockEn
     @Override
     public long portEnergyInputRecommended(Role role, GregTechTags.Tag type) {
         return getEnergySizeInputRecommended(type, null);
-    }
-
-    @Override
-    protected boolean validStructureParts() {
-        int control = 0, conversion = 0;
-        var front = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        for (var cell : MatterFabricatorStructure.CELLS)
-            if (cell.part() == 18202 || cell.part() == 18204) {
-                var pos = cell.at(worldPosition, front);
-                if (!level.hasChunkAt(pos)) return false;
-                var block = level.getBlockState(pos).getBlock();
-                if (block == LargeMachineParts.block(18202)) control++;
-                else if (block == LargeMachineParts.block(18204)) conversion++;
-                else return false;
-            }
-        return control == 4 && conversion == 4;
-    }
-
-    @Override
-    protected boolean matchesPart(LargeMachineLayouts.Cell cell, Block expected, Block actual) {
-        return cell.part() == 18202 || cell.part() == 18204
-                ? actual == LargeMachineParts.block(18202) || actual == LargeMachineParts.block(18204)
-                : actual == expected;
     }
 
     @Override

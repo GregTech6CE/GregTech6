@@ -24,7 +24,7 @@ import java.util.List;
 public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements MultiblockPortOwner,
         gregtech.engine.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.LayoutStructures.fuel(this);
 
     public FuelTurbineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -44,7 +44,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         return LargeMachineLayouts.cells(declaration().casing().machineType());
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
@@ -67,12 +67,6 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
                 pos -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((gregtech.content.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
-        if (claimed == gregtech.engine.multiblock.tracking.StructureClaims.Result.APPLIED)
-            {
-                var placed = new ArrayList<LargeMachineLayouts.Placed>(match.repeatPlaced());
-                for (var fixed : match.fixedCells()) placed.add(new LargeMachineLayouts.Placed(fixed.cell(), fixed.pos()));
-                gregtech.content.multiblock.StructureDesigns.apply(level, placed);
-            }
         return claimed != gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED;
     }
     /** Placed housing parts stay bound while the machine is incomplete so a wand click keeps building. */
@@ -147,14 +141,36 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     }
 
     private static boolean input(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.FLUID_INPUT || role == MultiblockLayout.Role.FLUID_IO
-                || role == MultiblockLayout.Role.ITEM_FLUID_IO || role == MultiblockLayout.Role.ITEM_FLUID_INPUT
-                || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT);
     }
 
     private static boolean output(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.FLUID_OUTPUT || role == MultiblockLayout.Role.FLUID_IO
-                || role == MultiblockLayout.Role.ITEM_FLUID_IO || role == MultiblockLayout.Role.ITEM_FLUID_OUTPUT
-                || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT);
+    }
+    @Override public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank) {
+        return portFuelTank(tank, input(role), output(role));
+    }
+
+    @Override public java.util.Collection<gregtech.content.data.GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role) {
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT) && energyType() != null
+                ? List.of(energyType()) : List.of();
+    }
+    @Override public boolean emitsPortEnergy(MultiblockLayout.Role role, gregtech.content.data.GregTechTags.Tag type) {
+        return portEnergyTypes(role).contains(type);
+    }
+    @Override public long portEnergyOutputSize(MultiblockLayout.Role role, gregtech.content.data.GregTechTags.Tag type) {
+        return emitsPortEnergy(role, type) ? declaration().output().perTick() : 0;
+    }
+    @Override protected long emitGeneratedEnergy(long packet, long packets) {
+        var tracker = gregtech.engine.multiblock.tracking.StructureTracking.tracker(this);
+        // Legacy layouts without output parts retain their declared controller/offset output.
+        if (tracker != null && !tracker.energyOutputs().isEmpty())
+            return gregtech.engine.multiblock.StructurePortHandlers.emitEnergy(this, energyType(), packet, packets);
+        var output = declaration().output();
+        Direction outward = output.front() && output.behind() == 0 ? front() : front().getOpposite();
+        var target = worldPosition.relative(outward, Math.max(1, output.behind()));
+        return gregtech.engine.multiblock.StructureOutputs.energy(this,
+                gregtech.engine.multiblock.StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT,
+                        target, outward.getOpposite(), false), energyType(), packet, packets);
     }
 }

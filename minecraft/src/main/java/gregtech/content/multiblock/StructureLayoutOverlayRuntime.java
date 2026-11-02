@@ -77,13 +77,7 @@ public final class StructureLayoutOverlayRuntime {
                 warn(entry.getKey() + " " + failure.getMessage());
             }
         }
-        var cells = new LinkedHashMap<String, List<SharedLargeMachineLayouts.Cell>>();
-        var repeats = new LinkedHashMap<String, List<SharedLargeMachineLayouts.Repeat>>();
-        for (var entry : layouts.entrySet()) {
-            cells.put(entry.getKey(), entry.getValue().cells());
-            if (!entry.getValue().repeats().isEmpty()) repeats.put(entry.getKey(), entry.getValue().repeats());
-        }
-        SharedLargeMachineLayouts.overlay(cells, repeats);
+        SharedLargeMachineLayouts.overlayLayouts(layouts);
         documents = Map.copyOf(accepted);
         previous.addAll(accepted.keySet());
         lastAffected = java.util.Set.copyOf(previous);
@@ -101,7 +95,8 @@ public final class StructureLayoutOverlayRuntime {
                 return false;
             }
         }
-        AddonMachines.sharedCells(source, layout);
+        gregtech.content.registry.MultiblockRegistration.validatePorts(
+                layout.name(), AddonMachines.sharedLayout(source, layout));
         return true;
     }
 

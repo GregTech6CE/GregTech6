@@ -12,13 +12,20 @@ package gregtech.api.multiblock;
  * @param match what the cell matches
  * @param role the structure role
  * @param design the design index, or -1 when this cell does not write one
+ * @param ports additional controller-backed transport restrictions; defaults preserve legacy role permissions
  */
-public record LayoutCell(int right, int up, int back, CellMatch match, StructureRole role, int design) {
+public record LayoutCell(int right, int up, int back, CellMatch match, StructureRole role, int design,
+                         StructurePorts ports) {
     public static final int MAX_DESIGN = 255;
+
+    public LayoutCell(int right, int up, int back, CellMatch match, StructureRole role, int design) {
+        this(right, up, back, match, role, design, StructurePorts.DEFAULT);
+    }
 
     public LayoutCell {
         if (match == null) throw new IllegalArgumentException("Missing structure part");
         if (role == null) throw new IllegalArgumentException("Missing structure role");
+        java.util.Objects.requireNonNull(ports, "ports").validate(role);
         if (isPlainBlock(match) && role != StructureRole.CASING)
             throw new IllegalArgumentException("Plain block '" + match + "' requires the casing role");
     }
@@ -30,7 +37,11 @@ public record LayoutCell(int right, int up, int back, CellMatch match, Structure
     public LayoutCell withDesign(int design) {
         if (design < 0 || design > MAX_DESIGN)
             throw new IllegalArgumentException("Structure design must be 0 to " + MAX_DESIGN + ": " + design);
-        return new LayoutCell(right, up, back, match, role, design);
+        return new LayoutCell(right, up, back, match, role, design, ports);
+    }
+
+    public LayoutCell withPorts(StructurePorts ports) {
+        return new LayoutCell(right, up, back, match, role, design, ports);
     }
 
     public static LayoutCell at(int right, int up, int back, CellMatch match, StructureRole role) {

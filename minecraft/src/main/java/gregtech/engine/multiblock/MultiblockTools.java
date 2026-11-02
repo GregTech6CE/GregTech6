@@ -130,7 +130,7 @@ public final class MultiblockTools {
     public static void appendDiagnosis(
             gregtech.engine.multiblock.tracking.TrackedMultiblock machine, List<Component> messages) {
         for (var problem : gregtech.engine.multiblock.tracking.StructureDiagnostic.inspect(machine))
-            messages.add(Component.literal(problem.describe()));
+            messages.add(gregtech.engine.multiblock.tracking.StructureDiagnostic.describe(problem));
     }
 
     /** Original FluidTankGT.content; preserve full long amounts and translatable native names. */

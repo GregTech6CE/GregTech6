@@ -34,7 +34,7 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
         gregtech.engine.multiblock.tracking.TrackedMultiblock {
     public static final long CAPACITY = VonDaGraaggRules.CAPACITY;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private long energy;
     private int range;
@@ -71,7 +71,7 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
         return 1000L * progressMaximum(side);
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {

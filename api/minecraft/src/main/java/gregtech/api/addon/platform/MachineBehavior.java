@@ -26,6 +26,20 @@ public interface MachineBehavior {
     void tick(MachineBehaviorContext context);
 
     /**
+     * Server callback after a declared multiblock becomes formed and its parts/cells are bound.
+     * Called once per transition, including reconstruction after a chunk reload, not every tick.
+     * Single-block machines do not receive structural callbacks. Do not change the structure here.
+     */
+    default void onStructureFormed(MachineBehaviorContext context) {}
+
+    /**
+     * Server callback after a formed multiblock becomes unavailable: failed match, invalidation,
+     * chunk unload or controller removal. The context already reports unformed with empty bindings.
+     * This is not a destruction event: it must not drop/refund items on temporary chunk unloads.
+     */
+    default void onStructureBroken(MachineBehaviorContext context) {}
+
+    /**
      * Items a player or a pipe may put in this slot. Output slots never call this.
      * This is the machine-wide policy; implement it even when {@link #canInsert(MachineBehaviorContext,
      * int, ItemStack, MachineFace)} is overridden for face-specific rules.

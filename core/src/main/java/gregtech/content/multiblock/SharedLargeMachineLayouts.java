@@ -2,6 +2,7 @@ package gregtech.content.multiblock;
 
 import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.LayoutRepeat;
+import gregtech.api.multiblock.StructureConstraint;
 import gregtech.api.multiblock.StructureLayout;
 import gregtech.api.multiblock.StructureRole;
 import java.util.*;
@@ -26,7 +27,29 @@ public final class SharedLargeMachineLayouts {
             StructureRole role,
             String plain,
             int design,
-            List<Choice> alternatives) {
+            List<Choice> alternatives,
+            gregtech.api.multiblock.StructurePorts ports) {
+        public Cell(
+                int right,
+                int up,
+                int back,
+                int part,
+                StructureRole role,
+                String plain,
+                int design,
+                List<Choice> alternatives) {
+            this(
+                    right,
+                    up,
+                    back,
+                    part,
+                    role,
+                    plain,
+                    design,
+                    alternatives,
+                    gregtech.api.multiblock.StructurePorts.DEFAULT);
+        }
+
         public Cell(int right, int up, int back, int part, StructureRole role) {
             this(right, up, back, part, role, null, -1, List.of());
         }
@@ -65,20 +88,23 @@ public final class SharedLargeMachineLayouts {
         }
     }
 
-    public record Layout(List<Cell> cells, List<Repeat> repeats) {
+    public record Layout(List<Cell> cells, List<Repeat> repeats, List<StructureConstraint> constraints) {
+        public Layout(List<Cell> cells, List<Repeat> repeats) {
+            this(cells, repeats, List.of());
+        }
+
         public Layout {
             cells = cells == null ? List.of() : List.copyOf(cells);
             repeats = repeats == null ? List.of() : List.copyOf(repeats);
+            constraints = List.copyOf(constraints);
         }
     }
 
-    private static final Map<String, List<Cell>> DEFINITIONS = new LinkedHashMap<>(create());
-    private static final Map<String, List<Repeat>> REPEATS = new LinkedHashMap<>();
+    private static final Map<String, Layout> DEFINITIONS = new LinkedHashMap<>(create());
     /** Names present before any addon layout is added. Those layouts are not replaceable. */
     private static final Set<String> BUILTIN = Set.copyOf(DEFINITIONS.keySet());
 
-    private static Map<String, List<Cell>> overlay = Map.of();
-    private static Map<String, List<Repeat>> overlayRepeats = Map.of();
+    private static Map<String, Layout> overlay = Map.of();
     private static boolean frozen;
     /** Fixed cells plus every repeat group expanded to its minimum count, for previews. */
     public static List<Cell> cells(String machine) {
@@ -97,27 +123,29 @@ public final class SharedLargeMachineLayouts {
                             cell.part(),
                             cell.role(),
                             cell.plain(),
-                            cell.design()));
+                            cell.design(),
+                            cell.alternatives(),
+                            cell.ports()));
         return List.copyOf(out);
     }
     /** Fixed cells without expanding repeats. */
     public static List<Cell> baseCells(String machine) {
-        var replaced = overlay.get(machine);
-        return replaced != null ? replaced : DEFINITIONS.get(machine);
+        var layout = layout(machine);
+        return layout == null ? null : layout.cells();
     }
 
     public static List<Repeat> repeats(String machine) {
-        var replaced = overlayRepeats.get(machine);
-        return replaced != null ? replaced : REPEATS.getOrDefault(machine, List.of());
+        var layout = layout(machine);
+        return layout == null ? List.of() : layout.repeats();
     }
     /** The layout a structure check reads. Null when the machine has no layout. */
     public static Layout layout(String machine) {
-        var base = baseCells(machine);
-        return base == null ? null : new Layout(base, repeats(machine));
+        return overlay.getOrDefault(machine, DEFINITIONS.get(machine));
     }
     /** The layout stored at startup, ignoring a datapack replacement. */
     public static List<Cell> baseline(String machine) {
-        return DEFINITIONS.get(machine);
+        var layout = DEFINITIONS.get(machine);
+        return layout == null ? null : layout.cells();
     }
 
     public static boolean builtIn(String machine) {
@@ -140,21 +168,28 @@ public final class SharedLargeMachineLayouts {
     }
     /** Replaces addon and script layouts, including their repeat groups. An empty pair restores every baseline. */
     public static void overlay(Map<String, List<Cell>> replacements, Map<String, List<Repeat>> repeated) {
-        if (!frozen) throw new IllegalStateException("Large machine layouts are not ready");
-        var next = new LinkedHashMap<String, List<Cell>>();
-        var nextRepeats = new LinkedHashMap<String, List<Repeat>>();
+        var layouts = new LinkedHashMap<String, Layout>();
         if (replacements != null)
             for (var entry : replacements.entrySet()) {
-                if (!replaceable(entry.getKey()))
-                    throw new IllegalArgumentException("Layout cannot be replaced: " + entry.getKey());
                 var groups = repeated == null ? List.<Repeat>of() : repeated.getOrDefault(entry.getKey(), List.of());
-                if ((entry.getValue() == null || entry.getValue().isEmpty()) && groups.isEmpty())
-                    throw new IllegalArgumentException("Large machine layout '" + entry.getKey() + "' is empty");
-                next.put(entry.getKey(), entry.getValue() == null ? List.of() : List.copyOf(entry.getValue()));
-                if (!groups.isEmpty()) nextRepeats.put(entry.getKey(), List.copyOf(groups));
+                layouts.put(entry.getKey(), new Layout(entry.getValue(), groups));
             }
+        overlayLayouts(layouts);
+    }
+
+    /** Complete declarations keep rules attached through server reload and client synchronization. */
+    public static void overlayLayouts(Map<String, Layout> replacements) {
+        if (!frozen) throw new IllegalStateException("Large machine layouts are not ready");
+        var next = new LinkedHashMap<String, Layout>();
+        for (var entry : replacements.entrySet()) {
+            if (!replaceable(entry.getKey()))
+                throw new IllegalArgumentException("Layout cannot be replaced: " + entry.getKey());
+            var layout = entry.getValue();
+            if (layout.cells().isEmpty() && layout.repeats().isEmpty())
+                throw new IllegalArgumentException("Large machine layout '" + entry.getKey() + "' is empty");
+            next.put(entry.getKey(), layout);
+        }
         overlay = Map.copyOf(next);
-        overlayRepeats = Map.copyOf(nextRepeats);
     }
 
     public static Set<String> machines() {
@@ -167,72 +202,83 @@ public final class SharedLargeMachineLayouts {
 
     public static void add(String machine, Layout layout) {
         if (layout == null) throw new IllegalArgumentException("Missing large machine layout");
-        add(machine, layout.cells(), layout.repeats());
-    }
-
-    public static void add(String machine, List<Cell> cells, List<Repeat> repeats) {
         if (frozen) throw new IllegalStateException("Large machine layouts are frozen");
         if (machine == null || !machine.matches("[a-z0-9_]+"))
             throw new IllegalArgumentException("Invalid large machine layout: " + machine);
-        if ((cells == null || cells.isEmpty()) && (repeats == null || repeats.isEmpty()))
+        if (layout.cells().isEmpty() && layout.repeats().isEmpty())
             throw new IllegalArgumentException("Large machine layout '" + machine + "' is empty");
         if (DEFINITIONS.containsKey(machine))
             throw new IllegalStateException("Duplicate large machine layout: " + machine);
-        DEFINITIONS.put(machine, cells == null ? List.of() : List.copyOf(cells));
-        if (repeats != null && !repeats.isEmpty()) REPEATS.put(machine, List.copyOf(repeats));
+        DEFINITIONS.put(machine, layout);
+    }
+
+    public static void add(String machine, List<Cell> cells, List<Repeat> repeats) {
+        add(machine, new Layout(cells, repeats));
     }
 
     public static void freeze() {
         frozen = true;
     }
 
-    private static Map<String, List<Cell>> create() {
-        var definitions = new LinkedHashMap<String, List<Cell>>();
+    private static CellMatch ovenCoils() {
+        return CellMatch.oneOf(CellMatch.part("large_nichrome_coil"), CellMatch.part("large_carborundum_coil"));
+    }
+
+    private static Map<String, Layout> create() {
+        var definitions = new LinkedHashMap<String, Layout>();
         definitions.put(
                 "largemixer",
-                MultiblockPatterns.cells(StructureLayout.pattern("largemixer")
+                MultiblockPatterns.layout(StructureLayout.pattern("largemixer")
                         .layer(0, "ASA", "ABA", "AAA")
                         .layer(1, "CCC", "CBC", "CCC")
                         .where('A', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_OUTPUT)
-                        .where('B', CellMatch.part("tank_wall"), StructureRole.ENERGY_INPUT)
+                        .where('B', CellMatch.part("tank_wall"), StructureRole.ENERGY_INPUT, 3)
                         .where('C', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_INPUT)));
         definitions.put(
                 "largebath",
-                MultiblockPatterns.cells(StructureLayout.pattern("largebath")
+                MultiblockPatterns.layout(StructureLayout.pattern("largebath")
                         .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
                         .layer(1, "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
                         .where('A', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO)));
         definitions.put(
                 "largecentrifuge",
-                MultiblockPatterns.cells(StructureLayout.pattern("largecentrifuge")
-                        .layer(0, "ASA", "ABA", "AAA")
-                        .layer(1, "AAA", "ABA", "AAA")
-                        .where('A', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO)
-                        .where('B', CellMatch.part("centrifuge_part"), StructureRole.ENERGY_INPUT)));
+                MultiblockPatterns.layout(StructureLayout.pattern("largecentrifuge")
+                        .layer(0, "BSD", "EJF", "GHI")
+                        .layer(1, "BCD", "EJF", "GHI")
+                        .where('B', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 1)
+                        .where('C', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 2)
+                        .where('D', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 3)
+                        .where('E', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 4)
+                        .where('F', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 5)
+                        .where('G', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 6)
+                        .where('H', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 7)
+                        .where('I', CellMatch.part("centrifuge_part"), StructureRole.ITEM_FLUID_IO, 8)
+                        .where('J', CellMatch.part("centrifuge_part"), StructureRole.ENERGY_INPUT, 0)));
         definitions.put(
                 "largecoagulator",
-                MultiblockPatterns.cells(StructureLayout.pattern("largecoagulator")
+                MultiblockPatterns.layout(StructureLayout.pattern("largecoagulator")
                         .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
                         .layer(1, "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
                         .where('A', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO)));
         definitions.put(
                 "largeelectrolyzer",
-                MultiblockPatterns.cells(StructureLayout.pattern("largeelectrolyzer")
+                MultiblockPatterns.layout(StructureLayout.pattern("largeelectrolyzer")
                         .layer(0, "ASA", "AAA", "AAA")
                         .layer(1, "BBB", "BBB", "BBB")
-                        .where('A', CellMatch.part("electrolyzer_part"), StructureRole.ITEM_FLUID_ENERGY_INPUT)
-                        .where('B', CellMatch.part("electrolyzer_part"), StructureRole.ITEM_FLUID_OUTPUT)));
+                        .where('A', CellMatch.part("electrolyzer_part"), StructureRole.ITEM_FLUID_ENERGY_INPUT, 1)
+                        .where('B', CellMatch.part("electrolyzer_part"), StructureRole.ITEM_FLUID_OUTPUT, 0)));
         definitions.put(
                 "largefermenter",
-                MultiblockPatterns.cells(StructureLayout.pattern("largefermenter")
+                MultiblockPatterns.layout(StructureLayout.pattern("largefermenter")
                         .layer(-1, "AAAAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
-                        .layer(0, "BBSBB", "BBBBB", "BBBBB", "BBBBB", "BBBBB")
-                        .layer(1, "BBBBB", "BBBBB", "BBBBB", "BBBBB", "BBBBB")
+                        .layer(0, "BBSBB", "BBBBB", "BBBBB", "BBBBB", "BBCBB")
+                        .layer(1, "BBBBB", "BBBBB", "BBBBB", "BBBBB", "BBCBB")
                         .where('A', CellMatch.part("heat_transmitter"), StructureRole.ENERGY_INPUT)
-                        .where('B', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO)));
+                        .where('B', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO)
+                        .where('C', CellMatch.part("tank_wall"), StructureRole.ITEM_FLUID_IO, 7)));
         definitions.put(
                 "largeautoclave",
-                MultiblockPatterns.cells(StructureLayout.pattern("largeautoclave")
+                MultiblockPatterns.layout(StructureLayout.pattern("largeautoclave")
                         .layer(0, "ASA", "AAA", "AAA")
                         .layer(1, "AAA", "A A", "AAA")
                         .layer(2, "AAA", "AAA", "AAA")
@@ -240,29 +286,29 @@ public final class SharedLargeMachineLayouts {
                         .where(' ', CellMatch.air(), StructureRole.AIR)));
         definitions.put(
                 "largecrusher",
-                MultiblockPatterns.cells(StructureLayout.pattern("largecrusher")
+                MultiblockPatterns.layout(StructureLayout.pattern("largecrusher")
                         .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
                         .layer(1, "BBBBB", "BCCCB", "DCCCD", "BCCCB", "BBBBB")
                         .layer(2, "BBBBB", "BEEEB", "BEEEB", "BEEEB", "BBBBB")
                         .where('A', CellMatch.part("tungstensteel_wall"), StructureRole.ITEM_FLUID_OUTPUT)
                         .where('B', CellMatch.part("tungstensteel_wall"), StructureRole.CASING)
-                        .where('C', CellMatch.part("crusher_wheels"), StructureRole.CASING)
-                        .where('D', CellMatch.part("tungstensteel_wall"), StructureRole.ENERGY_INPUT)
-                        .where('E', CellMatch.part("crusher_wheels"), StructureRole.ITEM_FLUID_INPUT)));
+                        .where('C', CellMatch.part("crusher_wheels"), StructureRole.CASING, 0)
+                        .where('D', CellMatch.part("tungstensteel_wall"), StructureRole.ENERGY_INPUT, 3)
+                        .where('E', CellMatch.part("crusher_wheels"), StructureRole.ITEM_FLUID_INPUT, 0)));
         definitions.put(
                 "largeshredder",
-                MultiblockPatterns.cells(StructureLayout.pattern("largeshredder")
+                MultiblockPatterns.layout(StructureLayout.pattern("largeshredder")
                         .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
                         .layer(1, "BBBBB", "BCCCB", "DCCCD", "BCCCB", "BBBBB")
                         .layer(2, "BBBBB", "BEEEB", "BEEEB", "BEEEB", "BBBBB")
                         .where('A', CellMatch.part("tungstensteel_wall"), StructureRole.ITEM_FLUID_OUTPUT)
                         .where('B', CellMatch.part("tungstensteel_wall"), StructureRole.CASING)
-                        .where('C', CellMatch.part("shredder_blades"), StructureRole.CASING)
-                        .where('D', CellMatch.part("tungstensteel_wall"), StructureRole.ENERGY_INPUT)
-                        .where('E', CellMatch.part("shredder_blades"), StructureRole.ITEM_FLUID_INPUT)));
+                        .where('C', CellMatch.part("shredder_blades"), StructureRole.CASING, 0)
+                        .where('D', CellMatch.part("tungstensteel_wall"), StructureRole.ENERGY_INPUT, 3)
+                        .where('E', CellMatch.part("shredder_blades"), StructureRole.ITEM_FLUID_INPUT, 0)));
         definitions.put(
                 "largesqueezer",
-                MultiblockPatterns.cells(StructureLayout.pattern("largesqueezer")
+                MultiblockPatterns.layout(StructureLayout.pattern("largesqueezer")
                         .layer(0, "AASAA", "AAAAA", "AAAAA", "AAAAA", "AAAAA")
                         .layer(1, "BBBBB", "B   B", "C   C", "B   B", "BBBBB")
                         .layer(2, "DDDDD", "DDDDD", "DDDDD", "DDDDD", "DDDDD")
@@ -273,25 +319,26 @@ public final class SharedLargeMachineLayouts {
                         .where(' ', CellMatch.air(), StructureRole.AIR)));
         definitions.put(
                 "largeoven",
-                MultiblockPatterns.cells(StructureLayout.pattern("largeoven")
+                MultiblockPatterns.layout(StructureLayout.pattern("largeoven")
                         .layer(0, "ASA", "AAA", "AAA")
                         .layer(1, "BBB", "B B", "BBB")
                         .layer(2, "AAA", "AAA", "AAA")
                         .where('A', CellMatch.part("invar_wall"), StructureRole.ITEM_FLUID_ENERGY)
-                        .where('B', CellMatch.part("large_nichrome_coil"), StructureRole.CASING)
+                        .where('B', ovenCoils(), StructureRole.CASING)
+                        .require(StructureConstraint.sameBlock(ovenCoils()))
                         .where(' ', CellMatch.air(), StructureRole.AIR)));
         definitions.put(
                 "largesluice",
-                MultiblockPatterns.cells(StructureLayout.pattern("largesluice")
+                MultiblockPatterns.layout(StructureLayout.pattern("largesluice")
                         .layer(0, "ASA", "BBB", "BBB", "BBB", "BBB", "BBB", "BBB")
                         .layer(1, "BBB", "BBB", "BBB", "BBB", "BBB", "CBC", "BBB")
                         .layer(2, "DDD", "DDD", "DDD", "DDD", "DDD", "DDD", "EEE")
-                        .where('A', CellMatch.part("titanium_wall"), StructureRole.ITEM_FLUID_OUTPUT)
+                        .where('A', CellMatch.part("titanium_wall"), StructureRole.ITEM_FLUID_OUTPUT, 1)
                         .where('B', CellMatch.part("titanium_wall"), StructureRole.CASING)
-                        .where('C', CellMatch.part("titanium_wall"), StructureRole.ENERGY_INPUT)
-                        .where('D', CellMatch.part("sluice_part"), StructureRole.CASING)
-                        .where('E', CellMatch.part("sluice_part"), StructureRole.ITEM_FLUID_INPUT)));
-        definitions.put("largemassfab", SharedMatterFabricatorStructure.CELLS);
+                        .where('C', CellMatch.part("titanium_wall"), StructureRole.ENERGY_INPUT, 3)
+                        .where('D', CellMatch.part("sluice_part"), StructureRole.CASING, 0)
+                        .where('E', CellMatch.part("sluice_part"), StructureRole.ITEM_FLUID_INPUT, 0)));
+        definitions.put("largemassfab", SharedMatterFabricatorStructure.LAYOUT);
         return definitions;
     }
 }

@@ -93,19 +93,7 @@ public final class SpecialStructures {
 
             @Override
             public List<Aggregate> aggregates() {
-                var constraints = new ArrayList<Aggregate>();
-                for (int id : new int[] {
-                    LogisticsCoreStructure.LOGIC,
-                    LogisticsCoreStructure.CONTROL,
-                    LogisticsCoreStructure.STORAGE,
-                    LogisticsCoreStructure.CONVERSION
-                }) {
-                    constraints.add(Aggregate.Count.atLeast(
-                            (candidate, plain, role) -> role == Role.CASING
-                                    && (candidate == LogisticsCoreStructure.VERSATILE || candidate == id),
-                            1));
-                }
-                return List.copyOf(constraints);
+                return StructureConstraints.compile(gregtech.content.logistics.LogisticsCoreLayout.CONSTRAINTS);
             }
         };
     }
@@ -117,7 +105,8 @@ public final class SpecialStructures {
             var role = Role.valueOf(cell.role().name());
             var spec = cell.up() == -5
                     ? new LargeMachineLayouts.Cell(0, 0, 0, 0, role, BEDROCK_FLOOR)
-                    : part(cell.up() == -4 ? 18103 : 18026, role);
+                    : new LargeMachineLayouts.Cell(
+                            0, 0, 0, cell.up() == -4 ? 18103 : 18026, role, null, role == Role.ENERGY_INPUT ? 3 : -1);
             add(cells, new BlockPos(cell.right(), cell.up(), cell.back()), spec);
         }
         return cells;
@@ -216,52 +205,6 @@ public final class SpecialStructures {
         }
         if (cell.role() == Role.AIR || cell.part() <= 0) return net.minecraft.world.level.block.Blocks.AIR;
         return LargeMachineParts.block(cell.part());
-    }
-
-    /** Wrap the existing layout footprint while enabling oven candidates and their same-block constraint. */
-    public static StructureDefinition.Declarative oven(LargeRecipeMachineBlockEntity machine) {
-        var delegate = LayoutStructures.recipe(machine);
-        return new StructureDefinition.Declarative() {
-            @Override
-            public StructureDefinition.ClaimPolicy claimPolicy() {
-                return delegate.claimPolicy();
-            }
-
-            @Override
-            public List<Aggregate> aggregates() {
-                return List.of(new Aggregate.SameBlock((part, plain, role) -> part == 18042));
-            }
-
-            @Override
-            public CompiledPattern compile(Direction front) {
-                return CompiledPattern.compile(machine, machine.trackedLayout(), front, aggregates());
-            }
-
-            @Override
-            public boolean tightenWatch() {
-                return delegate.tightenWatch();
-            }
-
-            @Override
-            public boolean usesTags() {
-                return delegate.usesTags();
-            }
-
-            @Override
-            public String overlayMachine() {
-                return delegate.overlayMachine();
-            }
-
-            @Override
-            public Footprint watchFootprint(TrackedMultiblock ignored) {
-                return delegate.watchFootprint(machine);
-            }
-
-            @Override
-            public Footprint declaredFootprint(TrackedMultiblock ignored) {
-                return delegate.declaredFootprint(machine);
-            }
-        };
     }
 
     private abstract static class Fixed implements StructureDefinition.Declarative {

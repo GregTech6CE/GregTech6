@@ -48,7 +48,11 @@ public sealed interface Aggregate permits Aggregate.Count, Aggregate.SameBlock {
     }
 
     /** A count of selected matched cells, bounded inclusively. {@code max < 0} means no upper bound. */
-    record Count(CellSelector selector, int min, int max) implements Aggregate {
+    record Count(CellSelector selector, int min, int max, String description) implements Aggregate {
+        public Count(CellSelector selector, int min, int max) {
+            this(selector, min, max, "");
+        }
+
         public Count {
             if (selector == null) selector = all();
             if (min < 0) throw new IllegalArgumentException("Aggregate minimum must be zero or positive");
@@ -79,7 +83,11 @@ public sealed interface Aggregate permits Aggregate.Count, Aggregate.SameBlock {
     }
 
     /** Every selected matched cell must agree on one block identity. */
-    record SameBlock(CellSelector selector) implements Aggregate {
+    record SameBlock(CellSelector selector, String description) implements Aggregate {
+        public SameBlock(CellSelector selector) {
+            this(selector, "");
+        }
+
         public SameBlock {
             if (selector == null) selector = all();
         }
