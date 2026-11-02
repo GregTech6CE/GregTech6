@@ -16,6 +16,22 @@ java {
     withSourcesJar()
     withJavadocJar()
 }
+
+if (!forge) { //maven.neoforged.net is unavailable in some regions, so we need to use the mirror instead.
+    repositories.clear() //neoforged plugin adds maven.neoforged.net by default, and may try to reconnect many times if it fails to connect.
+    repositories {
+        maven {
+            url = "https://libraries.minecraft.net/"
+        }
+        maven {
+            url = "https://neoforged.forgecdn.net/releases"
+        }
+        maven {
+            url = "https://neoforged.forgecdn.net/mojang-meta"
+        }
+    }
+}
+
 repositories {
     mavenCentral()
 }
