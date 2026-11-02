@@ -63,8 +63,15 @@ public final class MultiblockBehaviorApiTests {
                         player.setItemInHand(hand, net.minecraft.world.item.ItemStack.EMPTY);
                         helper.assertTrue(gregtech.engine.multiblock.MultiblockMenus.use(player, hand, part).consumesAction(), "Part menu did not reopen");
                         var menu = player.containerMenu;
-                        player.setPos(part.getX() + 30, part.getY(), part.getZ());
-                        helper.assertTrue(!menu.stillValid(player), "Part menu ignored distance");
+                        player.setPos(part.getX() + 8.5, part.getY() + 0.5, part.getZ() + 0.5);
+                        helper.assertTrue(menu.stillValid(player), "Part menu closed inside the eight-block range");
+                        player.setPos(part.getX() + 8.51, part.getY() + 0.5, part.getZ() + 0.5);
+                        helper.assertTrue(!menu.stillValid(player), "Part menu stayed open beyond eight blocks");
+                        var direct = new gregtech.engine.inventory.MultiblockMenuAccess(machine);
+                        player.setPos(origin.getX() + 8.5, origin.getY() + 0.5, origin.getZ() + 0.5);
+                        helper.assertTrue(direct.stillValid(player), "Controller menu range changed");
+                        player.setPos(origin.getX() + 8.51, origin.getY() + 0.5, origin.getZ() + 0.5);
+                        helper.assertTrue(!direct.stillValid(player), "Controller menu ignored the eight-block boundary");
                         player.setPos(part.getX() + 0.5, part.getY() + 1, part.getZ() + 0.5);
                         level.setBlockAndUpdate(origin.east(3).above(), Blocks.AIR.defaultBlockState());
                         helper.assertTrue(!menu.stillValid(player), "Part menu survived a broken structure");

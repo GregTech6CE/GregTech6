@@ -27,6 +27,15 @@ public final class StructurePlan {
 
     /** Minimum valid repeat counts; optional extensions are left to the player. */
     public static List<Cell> minimum(CompiledPattern pattern) {
+        return expand(pattern, false);
+    }
+
+    /** Include one example of optional extensions, such as a lightning rod, in the viewer and bill of materials. */
+    public static List<Cell> preview(CompiledPattern pattern) {
+        return expand(pattern, true);
+    }
+
+    private static List<Cell> expand(CompiledPattern pattern, boolean optionalExample) {
         if (pattern == null) return List.of();
         var cells = new ArrayList<Cell>();
         for (int i = 0; i < pattern.fixedCount(); i++)
@@ -36,7 +45,8 @@ public final class StructurePlan {
                     pattern.air(i) ? null : pattern.matcher(i)));
         for (int group = 0; group < pattern.groupCount(); group++) {
             int first = pattern.groupFirstCell(group);
-            for (int copy = 0; copy < pattern.groupMinimum(group); copy++)
+            int copies = Math.max(optionalExample ? 1 : 0, pattern.groupMinimum(group));
+            for (int copy = 0; copy < copies; copy++)
                 for (int i = first; i < first + pattern.groupCellCount(group); i++)
                     cells.add(new Cell(
                             new BlockPos(pattern.repeatDx(i), pattern.repeatDy(i, copy), pattern.repeatDz(i)),

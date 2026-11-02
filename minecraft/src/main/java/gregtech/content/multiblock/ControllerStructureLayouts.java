@@ -30,7 +30,7 @@ public final class ControllerStructureLayouts {
             var pattern = declarative.compile(Direction.NORTH);
             if (pattern == null) continue;
             // Do not retain detached controllers/inventories through the matchers in a client cache.
-            var cells = StructurePlan.minimum(pattern).stream()
+            var cells = StructurePlan.preview(pattern).stream()
                     .map(cell -> new StructurePlan.Cell(cell.offset(), cell.specification(), null))
                     .toList();
             if (!cells.isEmpty()) next.put(block, cells);

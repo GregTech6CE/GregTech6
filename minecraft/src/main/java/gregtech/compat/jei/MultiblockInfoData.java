@@ -12,19 +12,17 @@ public class MultiblockInfoData {
 
     public record Info(
             ItemStack controller,
-            ItemStack wall,
-            ItemStack base,
             Map<BlockPos, MultiblockLayout.Role> cells,
             boolean boiler,
-            ItemStack extra,
             Map<BlockPos, ItemStack> blocks) {}
 
     public static List<Info> recipes() {
-        var result = new ArrayList<Info>();
+        var result = new LinkedHashMap<net.minecraft.world.item.Item, Info>();
         ControllerStructureLayouts.plans().forEach((block, plan) -> {
+            var controller = new ItemStack(block);
+            if (controller.isEmpty() || result.containsKey(controller.getItem())) return;
             var roles = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
             var blocks = new LinkedHashMap<BlockPos, ItemStack>();
-            var counts = new LinkedHashMap<net.minecraft.world.item.Item, Integer>();
             roles.put(BlockPos.ZERO, MultiblockLayout.Role.CASING);
             blocks.put(BlockPos.ZERO, new ItemStack(block));
             for (var cell : plan) {
@@ -33,21 +31,16 @@ public class MultiblockInfoData {
                 if (cell.specification().role() == MultiblockLayout.Role.AIR) continue;
                 var stack = new ItemStack(cell.specification().block());
                 blocks.put(cell.offset(), stack);
-                if (!stack.isEmpty()) counts.merge(stack.getItem(), 1, Integer::sum);
             }
-            var parts = counts.entrySet().stream()
-                    .map(e -> new ItemStack(e.getKey(), e.getValue()))
-                    .toList();
-            result.add(new Info(
-                    new ItemStack(block),
-                    parts.isEmpty() ? ItemStack.EMPTY : parts.get(0),
-                    parts.size() < 2 ? ItemStack.EMPTY : parts.get(1),
-                    Collections.unmodifiableMap(roles),
-                    block instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock,
-                    ItemStack.EMPTY,
-                    Collections.unmodifiableMap(blocks)));
+            result.put(
+                    controller.getItem(),
+                    new Info(
+                            controller,
+                            Collections.unmodifiableMap(roles),
+                            block instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock,
+                            Collections.unmodifiableMap(blocks)));
         });
-        return List.copyOf(result);
+        return List.copyOf(result.values());
     }
 
     public static ItemStack expectedPart(Info info, BlockPos pos) {
