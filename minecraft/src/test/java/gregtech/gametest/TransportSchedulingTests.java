@@ -1,5 +1,6 @@
 package gregtech.gametest;
 
+import gregtech.GregTechConfig;
 import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.misc.ChargingCraftingTableBlockEntity;
@@ -113,8 +114,52 @@ public final class TransportSchedulingTests {
         });
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)
+    public static void balancedFluidPipesLevelAcrossTheComponent(GameTestHelper helper) {
+        GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.BALANCED);
+        int length = 5;
+        FluidPipeBlockEntity[] pipes = new FluidPipeBlockEntity[length];
+        for (int i = 0; i < length; i++) pipes[i] = placeHorizontalPipe(helper, i, 2, length);
+        long capacity = pipes[0].spec().capacity();
+        int filled = pipes[0].fill(new FluidStack(Fluids.WATER, (int) Math.min(Integer.MAX_VALUE, capacity)),
+                IFluidHandler.FluidAction.EXECUTE);
+        helper.assertTrue(filled > 0, "the first pipe accepts the sample fluid");
+        helper.runAfterDelay(30, () -> {
+            long min = Long.MAX_VALUE;
+            long max = 0;
+            for (FluidPipeBlockEntity pipe : pipes) {
+                long amount = pipe.gibblValue(null);
+                min = Math.min(min, amount);
+                max = Math.max(max, amount);
+            }
+            try {
+                helper.assertTrue(min > 0, "the far end of the line receives fluid");
+                helper.assertTrue(max - min <= 1, "the whole line levels within one unit");
+            } finally {
+                GregTechConfig.overrideFluidDistributionForTesting(null);
+            }
+            finish(helper);
+        });
+    }
+
     private static BlockPos at(GameTestHelper helper, int height) {
         return helper.absolutePos(new BlockPos(0, height, 0));
+    }
+
+    private static FluidPipeBlockEntity placeHorizontalPipe(GameTestHelper helper, int x, int y, int length) {
+        BlockPos pos = helper.absolutePos(new BlockPos(x, y, 0));
+        var state = fluidPipeBlock().defaultBlockState();
+        if (x > 0) state = state.setValue(FluidPipeBlock.WEST, true);
+        if (x < length - 1) state = state.setValue(FluidPipeBlock.EAST, true);
+        helper.getLevel().setBlockAndUpdate(pos, state);
+        return (FluidPipeBlockEntity) helper.getLevel().getBlockEntity(pos);
+    }
+
+    private static FluidPipeBlock fluidPipeBlock() {
+        return (FluidPipeBlock) BuiltInRegistries.BLOCK.stream()
+                .filter(candidate -> candidate instanceof FluidPipeBlock)
+                .findFirst()
+                .orElseThrow();
     }
 
     private static ResourceLocation id(String path) {
@@ -152,11 +197,7 @@ public final class TransportSchedulingTests {
     }
 
     private static FluidPipeBlockEntity placePipe(GameTestHelper helper, int height) {
-        FluidPipeBlock block = (FluidPipeBlock) BuiltInRegistries.BLOCK.stream()
-                .filter(candidate -> candidate instanceof FluidPipeBlock)
-                .findFirst()
-                .orElseThrow();
-        var state = block.defaultBlockState()
+        var state = fluidPipeBlock().defaultBlockState()
                 .setValue(FluidPipeBlock.UP, true)
                 .setValue(FluidPipeBlock.DOWN, true);
         helper.getLevel().setBlockAndUpdate(at(helper, height), state);

@@ -47,7 +47,7 @@ public final class GregTechConfig {
     public enum FluidDistribution {
         /** Original per-tick local diffusion; unchanged behaviour. */
         LOCAL,
-        /** Even each component's per-channel fill level by moving fluid edge by edge. */
+        /** Level each component's per-channel fill over a spanning tree. */
         BALANCED,
         /** Treat each component's per-channel tanks as one virtual pool for endpoint fill/drain. */
         SHARED
@@ -104,12 +104,15 @@ public final class GregTechConfig {
             "performance.fluid_idle_scheduling", true,
             "Skip the server tick for fluid pipes that are completely idle: no stored fluid, no backflow mask, no covers and no residual heat. Distribution math and timing are unchanged; disable to tick every loaded pipe for comparison and diagnosis.");
     private static final java.util.function.Supplier<FluidDistribution> FLUID_DISTRIBUTION = enumOption(COMMON,
-            "fluid.distribution", FluidDistribution.BALANCED,
+            "fluid.distribution", FluidDistribution.LOCAL,
             "How fluid moves between the pipes of one component.",
-            "LOCAL: original GT6 per-tick six-neighbour diffusion. Each pipe moves fluid one hop toward its local target level and pressure share.",
-            "BALANCED (default): every 10 ticks, level the component per fluid edge by edge. Filters, shutters and either blocked pump direction cut the component; pressure valve, drain and air vent hosts are excluded. Machine and cauldron pushes stay per tick, and pressureShare is not used.",
+            "LOCAL (default): original GT6 per-tick six-neighbour diffusion. Each pipe moves fluid one hop toward its local target level and pressure share.",
+            "BALANCED: every 10 ticks, level the component per fluid over a spanning tree. Filters, shutters and either blocked pump direction cut the component; pressure valve, drain and air vent hosts are excluded. Machine and cauldron pushes stay per tick, and pressureShare is not used.",
             "SHARED: endpoint fill/drain acts on the whole component while each pipe tank remains the only storage. Local diffusion stays for machine pushes. Pressure valve hosts are excluded.",
             "Changing this mode affects runtime distribution only; stored fluids are not migrated.");
+
+    /** Set only by runtime tests that need a mode different from the loaded config file. */
+    private static FluidDistribution fluidDistributionOverride;
 
     public enum Rule {
         STREETS("worldgen.center.streets", false),
@@ -367,7 +370,13 @@ public final class GregTechConfig {
     }
 
     public static FluidDistribution fluidDistribution() {
-        return FLUID_DISTRIBUTION.get();
+        FluidDistribution override = fluidDistributionOverride;
+        return override != null ? override : FLUID_DISTRIBUTION.get();
+    }
+
+    /** Runtime tests only: pin the mode without rewriting the config file; {@code null} clears it. */
+    public static void overrideFluidDistributionForTesting(FluidDistribution mode) {
+        fluidDistributionOverride = mode;
     }
 
     public static boolean explodeByOverload() {

@@ -673,8 +673,13 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 FluidTankGT target = neighbor.tanks[targetChannel];
                 if (target.getAmount() >= tank.getAmount()) continue;
                 // Original GT6 marks eligible channels before distribution, even if capacity blocks the push.
-                if (!balanced) neighbor.lastReceivedFrom[targetChannel] |= (byte) (1 << incoming.ordinal());
-                pipes.add(level.random.nextInt(pipes.size() + 1), target);
+                if (!balanced) {
+                    neighbor.lastReceivedFrom[targetChannel] |= (byte) (1 << incoming.ordinal());
+                    pipes.add(level.random.nextInt(pipes.size() + 1), target);
+                } else {
+                    // Balanced mode only needs the amounts here; the order is never used.
+                    pipes.add(target);
+                }
             } else {
 //? if >=1.21.1 {
                 /*IFluidHandler handler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, side.getOpposite());
@@ -772,7 +777,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             capacity[i] = tank.capacity(fluid);
         }
 
-        java.util.List<int[]> edges = new java.util.ArrayList<>();
+        java.util.List<java.util.List<Integer>> adjacency = new java.util.ArrayList<>(size);
+        for (int i = 0; i < size; i++) adjacency.add(new java.util.ArrayList<>());
         for (int i = 0; i < size; i++) {
             if (channel[i] < 0) continue;
             FluidPipeBlockEntity pipe = component.get(i);
@@ -782,43 +788,133 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 if (!level.hasChunkAt(next) || !(level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor)) continue;
                 Integer other = index.get(neighbor);
                 if (other == null || other <= i || channel[other] < 0 || !neighbor.connected(side.getOpposite())) continue;
-                if (balanceEdgeOpen(pipe, side, neighbor, fluid)) edges.add(new int[] {i, other});
+                if (!balanceEdgeOpen(pipe, side, neighbor, fluid)) continue;
+                adjacency.get(i).add(other);
+                adjacency.get(other).add(i);
             }
         }
 
+        boolean[] visited = new boolean[size];
         int[] parent = new int[size];
-        for (int i = 0; i < size; i++) parent[i] = i;
-        for (int[] edge : edges) union(parent, edge[0], edge[1]);
-        java.util.Map<Integer, java.util.List<Integer>> groups = new java.util.LinkedHashMap<>();
-        for (int i = 0; i < size; i++) {
-            if (channel[i] >= 0) groups.computeIfAbsent(find(parent, i), key -> new java.util.ArrayList<>()).add(i);
-        }
-
-        long[] surplus = new long[size];
-        for (java.util.List<Integer> group : groups.values()) {
-            if (group.size() < 2) continue;
-            long total = 0;
-            for (int i : group) total += amount[i];
-            if (total == 0) continue;
-            long target = (total + group.size() - 1) / group.size();
-            for (int i : group) surplus[i] = amount[i] - Math.min(target, capacity[i]);
-            for (int[] edge : edges) {
-                if (find(parent, edge[0]) != find(parent, edge[1]) || find(parent, edge[0]) != find(parent, group.get(0))) continue;
-                moveToward(component, channel, surplus, edge[0], edge[1]);
-                moveToward(component, channel, surplus, edge[1], edge[0]);
+        long[] balance = new long[size];
+        java.util.List<Integer> order = new java.util.ArrayList<>();
+        java.util.ArrayDeque<Integer> stack = new java.util.ArrayDeque<>();
+        for (int root = 0; root < size; root++) {
+            if (channel[root] < 0 || visited[root]) continue;
+            order.clear();
+            visited[root] = true;
+            parent[root] = -1;
+            stack.push(root);
+            while (!stack.isEmpty()) {
+                int node = stack.pop();
+                order.add(node);
+                for (int next : adjacency.get(node)) {
+                    if (visited[next]) continue;
+                    visited[next] = true;
+                    parent[next] = node;
+                    stack.push(next);
+                }
+            }
+            if (order.size() > 1) {
+                balanceTree(component, channel, fluid, amount, capacity, order, parent, balance);
             }
         }
     }
 
-    /** Move only the amount the receiver is short of the component target. */
-    private static void moveToward(java.util.List<FluidPipeBlockEntity> component, int[] channel,
-                                   long[] surplus, int from, int to) {
-        if (surplus[from] <= BALANCE_DEADBAND || surplus[to] >= -BALANCE_DEADBAND) return;
-        long requested = Math.min(surplus[from], -surplus[to]);
-        long moved = component.get(from).transferToPipe(
-                component.get(from).tanks[channel[from]], component.get(to).tanks[channel[to]], requested);
-        surplus[from] -= moved;
-        surplus[to] += moved;
+    /**
+     * Levels one connected group along a spanning tree. A tree edge carries its subtree's surplus:
+     * leaves first push their excess toward the root, then the root's side pushes fluid back down
+     * into each deficit subtree. A pipe at its target with a deficit branch behind it therefore
+     * forwards fluid instead of stopping it. Each edge moves at most one source tank per pass, so a
+     * pass never empties a pipe into its neighbour; the targets are capacity-aware and sum to the
+     * stored total exactly.
+     */
+    private void balanceTree(java.util.List<FluidPipeBlockEntity> component, int[] channel,
+                             FluidStack fluid, long[] amount, long[] capacity,
+                             java.util.List<Integer> order, int[] parent, long[] balance) {
+        long total = 0;
+        long totalCapacity = 0;
+        for (int node : order) {
+            total += amount[node];
+            totalCapacity += capacity[node];
+        }
+        if (total <= 0 || total >= totalCapacity) return;
+
+        long[] target = new long[capacity.length];
+        levelTargets(order, capacity, total, target);
+
+        // Leaves to root: each subtree sheds its excess into its parent.
+        for (int k = order.size() - 1; k > 0; k--) {
+            int node = order.get(k);
+            long surplus = amountOf(component, channel, node) - target[node];
+            if (surplus <= BALANCE_DEADBAND) continue;
+            moveEdge(component, channel, fluid, node, parent[node], surplus);
+        }
+        // Subtree surplus or deficit after the upward pass is what the downward pass moves.
+        for (int node : order) balance[node] = amountOf(component, channel, node) - target[node];
+        for (int k = order.size() - 1; k > 0; k--) {
+            int node = order.get(k);
+            balance[parent[node]] += balance[node];
+        }
+        // Root to leaves: each deficit subtree pulls fluid down from its parent.
+        for (int k = 1; k < order.size(); k++) {
+            int node = order.get(k);
+            if (balance[node] >= -BALANCE_DEADBAND) continue;
+            moveEdge(component, channel, fluid, parent[node], node, -balance[node]);
+        }
+    }
+
+    private static long amountOf(java.util.List<FluidPipeBlockEntity> component, int[] channel, int node) {
+        FluidTankGT tank = component.get(node).tanks[channel[node]];
+        return tank.isEmpty() ? 0 : tank.getAmount();
+    }
+
+    /** One edge moves no more than the source tank's capacity for this fluid in a single pass. */
+    private static long moveEdge(java.util.List<FluidPipeBlockEntity> component, int[] channel,
+                                 FluidStack fluid, int from, int to, long requested) {
+        FluidPipeBlockEntity source = component.get(from);
+        FluidPipeBlockEntity sink = component.get(to);
+        long limit = Math.min(requested, source.tanks[channel[from]].capacity(fluid));
+        return source.transferToPipe(source.tanks[channel[from]], sink.tanks[channel[to]], limit);
+    }
+
+    /**
+     * Water-fills the group's total into its tanks: the highest level the total can reach, with the
+     * remainder handed out one unit at a time so the targets sum to the stored total exactly.
+     */
+    private static void levelTargets(java.util.List<Integer> order, long[] capacity,
+                                     long total, long[] target) {
+        long high = 0;
+        for (int node : order) high = Math.max(high, capacity[node]);
+        long low = 0;
+        while (low < high) {
+            long middle = low + (high - low) / 2 + ((high - low) & 1);
+            if (fillsAtMost(order, capacity, middle, total)) low = middle;
+            else high = middle - 1;
+        }
+        long remaining = total;
+        for (int node : order) {
+            target[node] = Math.min(low, capacity[node]);
+            remaining -= target[node];
+        }
+        for (int node : order) {
+            if (remaining <= 0) return;
+            if (capacity[node] > low) {
+                target[node]++;
+                remaining--;
+            }
+        }
+    }
+
+    private static boolean fillsAtMost(java.util.List<Integer> order, long[] capacity,
+                                       long level, long total) {
+        long sum = 0;
+        for (int node : order) {
+            long share = Math.min(level, capacity[node]);
+            if (share > total - sum) return false;
+            sum += share;
+        }
+        return true;
     }
 
     /**
@@ -847,19 +943,6 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                     || CoverAttachmentBehaviors.AIR_VENT.equals(id)) return true;
         }
         return false;
-    }
-
-    private static int find(int[] parent, int value) {
-        while (parent[value] != value) {
-            parent[value] = parent[parent[value]];
-            value = parent[value];
-        }
-        return value;
-    }
-
-    private static void union(int[] parent, int left, int right) {
-        int a = find(parent, left), b = find(parent, right);
-        if (a != b) parent[a] = b;
     }
 
     private void fillCauldrons(BlockState state, FluidTankGT tank) {
