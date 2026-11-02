@@ -1,6 +1,8 @@
 plugins {
     id 'base'
     id 'com.diffplug.spotless' version '8.10.4' apply false
+    // Both Stonecutter trees must share idea-ext classes when configuring the root IDEA model.
+    id 'net.neoforged.moddev' version '2.0.142' apply false
 }
 
 version = mod_version

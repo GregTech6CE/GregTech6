@@ -1,4 +1,24 @@
+import org.gradle.internal.DefaultTaskExecutionRequest
+
 // Root entry points for the complete Stonecutter build.
+
+// Stonecutter 0.7.11 uses a node's directory as the build root in IDEA sync requests.
+// These nodes belong to this build; retain their task arguments and project paths.
+if (Boolean.getBoolean('idea.sync.active')) {
+    gradle.projectsEvaluated {
+        gradle.startParameter.setTaskRequests(gradle.startParameter.taskRequests.collect { request ->
+            def requestedProject = request.projectPath == null ? null : rootProject.findProject(request.projectPath)
+            if (requestedProject != null && request.rootDir == requestedProject.projectDir
+                    && request.rootDir != rootProject.rootDir
+                    && request.args.every { it.tokenize(':').last().startsWith('stonecutter') }) {
+                return new DefaultTaskExecutionRequest(
+                        request.args, request.projectPath, rootProject.rootDir)
+            }
+            return request
+        })
+    }
+}
+
 tasks.register('compileBothPlatforms') {
     group = 'build'
     description = 'Generate all Stonecutter main sources and compile both native platforms.'
