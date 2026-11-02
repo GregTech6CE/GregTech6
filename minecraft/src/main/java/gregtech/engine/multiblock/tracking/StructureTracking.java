@@ -36,6 +36,13 @@ public final class StructureTracking {
 
     /** One edge notification: the stored mirror plus the controller's formed/broken hooks. */
     static void formedChanged(TrackedMultiblock machine, boolean formed) {
+        if (!formed) {
+            var tracker = tracker(machine.trackedEntity());
+            // A suspended chunk keeps its saved appearance until the owner can validate it again.
+            // Sending block updates during unload can query a controller that is no longer loaded.
+            if (tracker != null && !tracker.unloading() && tracker.state() != StructureTracker.State.SUSPENDED)
+                tracker.designs().clear(machine);
+        }
         machine.structureFormedChanged(formed);
         if (formed) machine.onStructureFormed();
         else machine.onStructureBroken();
@@ -81,6 +88,7 @@ public final class StructureTracking {
         BlockEntity entity = machine.trackedEntity();
         if (entity.getLevel() == null || entity.getLevel().isClientSide) return;
         StructureTracker tracker = StructureWatchIndex.tracker(entity);
+        if (tracker != null && tracker.markBroken(StructureEpoch.get())) formedChanged(machine, false);
         if (entity.getLevel() instanceof ServerLevel server && (tracker == null || !tracker.unloading()))
             WorldStructureClaims.releaseController(server, entity.getBlockPos());
         if (tracker != null) {
@@ -92,6 +100,12 @@ public final class StructureTracking {
 
     public static StructureTracker tracker(BlockEntity entity) {
         return entity == null ? null : StructureWatchIndex.tracker(entity);
+    }
+
+    /** Work-state changes update only the formed match's design cells, never its claims or validity. */
+    public static void refreshDesigns(TrackedMultiblock machine) {
+        var tracker = tracker(machine.trackedEntity());
+        if (tracker != null && tracker.formed()) tracker.designs().refresh(machine);
     }
 
     /** Called by a scan body with the layer counts it matched, in layout repeat order. */
@@ -142,6 +156,7 @@ public final class StructureTracking {
             // External chunk editors can remove a BE without calling setRemoved. Its stale
             // tracker must never claim parts again while the deferred orphan check is pending.
             tracker.discard();
+            if (tracker.markBroken(StructureEpoch.get())) formedChanged(machine, false);
             StructureWatchIndex.remove(tracker);
             return;
         }
@@ -261,7 +276,14 @@ public final class StructureTracking {
             matched = state.complete() && machine.structurePartsValid();
             // Claims and design writes only happen on an edge or for the cells that changed.
             if (matched) {
-                if (!wasFormed || touched) matched = machine.applyStructure(state.match(entity.getBlockPos()));
+                if (!wasFormed || touched) {
+                    var match = state.match(entity.getBlockPos());
+                    matched = machine.applyStructure(match);
+                    if (matched) {
+                        tracker.ports(match);
+                        tracker.designs().apply(machine, match);
+                    }
+                }
             } else if (wasFormed || touched) {
                 machine.applyIncompleteStructure(state.match(entity.getBlockPos()));
             }

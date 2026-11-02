@@ -95,9 +95,14 @@ public class FluidTankGT implements IFluidHandler {
         return maxTemperature;
     }
 
-    // Current capacity key is a fluid-type ID, not necessarily the recipe fluid ID.
+    // RecipeMap indexes capacities by fluid registry ID; several fluids may share one FluidType.
     private String key() {
-        return fluid.isEmpty() ? null : fluid.getFluid().getFluidType().toString();
+        return fluidKey(fluid);
+    }
+
+    private static String fluidKey(FluidStack value) {
+        return value == null || value.isEmpty()
+                ? null : value.getFluid().builtInRegistryHolder().key().location().toString();
     }
 
     public long add(long offered) {
@@ -165,8 +170,7 @@ public class FluidTankGT implements IFluidHandler {
     }
 
     public long capacity(FluidStack value) {
-        return storage.capacity(value == null || value.isEmpty()
-                ? null : value.getFluid().getFluidType().toString());
+        return storage.capacity(fluidKey(value));
     }
 
     public long capacity(String key) {
@@ -179,6 +183,11 @@ public class FluidTankGT implements IFluidHandler {
 
     public void setCapacity(long value) {
         storage.setCapacity(value);
+    }
+
+    /** Reapply a machine's configured limit without discarding fluid from an older save. */
+    public void setCapacityPreservingContents(long value) {
+        storage.restore(storage.amount(), Math.max(0, value));
     }
 
     public long getAmount() {

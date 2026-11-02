@@ -32,10 +32,12 @@ public record LayoutRepeat(String key, int up, int min, int max, int step, List<
     public LayoutRepeat {
         if (!AddonNames.matches(AddonNames.LOWER_PATH, key))
             throw new IllegalArgumentException("Structure repeat key is invalid: " + key);
-        if (min < 1)
-            throw new IllegalArgumentException("Structure repeat '" + key + "' needs min >= 1");
-        if (max != -1 && max < min)
+        if (min < 0)
+            throw new IllegalArgumentException("Structure repeat '" + key + "' needs min >= 0");
+        if (max != -1 && (max < min || max == 0))
             throw new IllegalArgumentException("Structure repeat '" + key + "' needs max >= min or -1");
+        if (min > MAX_COPIES || step != 1 && step != -1)
+            throw new IllegalArgumentException("Invalid repeat minimum or direction: " + key);
         if (max > MAX_COPIES)
             throw new IllegalArgumentException("Structure repeat '" + key + "' max is too large: " + max);
         if (cells == null) throw new IllegalArgumentException("Missing structure repeat cells");

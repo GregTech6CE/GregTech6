@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 numeric ID 17999: real top-center drilling controller, output on its upper side. */
-public final class OriginalBedrockDrillControllerBlock extends Block implements EntityBlock {
+public final class OriginalBedrockDrillControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
 //? if >=1.21.1 {
     /*@Override
     public com.mojang.serialization.MapCodec<? extends Block> codec() {

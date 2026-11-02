@@ -135,7 +135,7 @@ GuiTemplates.background(graphics, ResourceLocation.parse("example:textures/gui/c
 
 旧路径别名由 `GuiTemplates` 解析，不会给 Minecraft 的所有 PNG 请求添加全局重定向。外部 Screen 如果直接 `graphics.blit` 已移除的 `recipes/*.png`，应改用这个模板入口，或使用保留的 `machines/*.png` 路径。
 
-`GuiTemplates`、`GuiTemplate`、`GuiSprite` 属于客户端实现层，不要在公共静态注册、服务端或公共 API 类里引用它们。这里没有改动 API 1.2.0 的公共签名。已有 `BehaviorMachine`/`LayoutPart` 的特殊能量、长流体槽、开关仍沿用它们原有的 GUI sheet UV 契约；新模板可替换其背景，不自动替代这些动态控件。
+`GuiTemplates`、`GuiTemplate`、`GuiSprite` 属于客户端实现层，不要在公共静态注册、服务端或公共 API 类里引用它们。GUI 模板不是公共 API；平台 API 的现行版本和接口边界见[附属 API](../ADDON_API.zh-CN.md)。已有 `BehaviorMachine`/`LayoutPart` 的特殊能量、长流体槽、开关仍沿用它们原有的 GUI sheet UV 契约；新模板可替换其背景，不自动替代这些动态控件。
 
 ## JEI / EMI
 

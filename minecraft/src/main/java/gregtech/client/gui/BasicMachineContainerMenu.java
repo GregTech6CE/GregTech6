@@ -39,10 +39,11 @@ import net.minecraftforge.network.PacketDistributor;
 
 
 /** Container for basic machine GUI — creates slot layout from RecipeMap counts. */
-public class BasicMachineContainerMenu extends AbstractContainerMenu {
+public class BasicMachineContainerMenu extends AbstractContainerMenu implements gregtech.engine.inventory.MultiblockMenuAccess.Host {
     // One vanilla signed-short menu field, with enough precision for sub-pixel arrow clipping.
     private static final int PROGRESS_SCALE = 30000;
     private final BasicMachineBlockEntity blockEntity;
+    private final gregtech.engine.inventory.MultiblockMenuAccess menuAccess;
     private final Player viewer;
     private final String machineName;
     private final RecipeMap recipeMap;
@@ -54,6 +55,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
     public BasicMachineContainerMenu(int containerId, Inventory playerInv, BasicMachineBlockEntity blockEntity) {
         super(GTMenuTypes.BASIC_MACHINE.get(), containerId);
         this.blockEntity = blockEntity;
+        this.menuAccess = new gregtech.engine.inventory.MultiblockMenuAccess(blockEntity);
         this.viewer = playerInv.player;
         this.machineName = blockEntity != null && blockEntity.spec() != null
                 ? blockEntity.spec().machineName() : "default";
@@ -87,6 +89,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 
         super(GTMenuTypes.BASIC_MACHINE.get(), containerId);
         this.blockEntity = null;
+        this.menuAccess = new gregtech.engine.inventory.MultiblockMenuAccess(null);
         this.viewer = playerInv.player;
         this.machineName = buf != null ? buf.readUtf() : "default";
         this.recipeMap = gregtech.engine.addon.RegisteredMachineIndex.recipeMap(machineName);
@@ -241,12 +244,10 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return blockEntity == null || !blockEntity.isRemoved()
-                && blockEntity.getLevel() == player.level()
-                && player.distanceToSqr(blockEntity.getBlockPos().getCenter()) <= 64
-                && player.level().hasChunkAt(blockEntity.getBlockPos())
-                && player.level().getBlockEntity(blockEntity.getBlockPos()) == blockEntity;
+        return menuAccess.stillValid(player);
     }
+
+    @Override public gregtech.engine.inventory.MultiblockMenuAccess multiblockMenuAccess() { return menuAccess; }
 
     // ── Fluid sync ──────────────────────────────────────────────────────
 

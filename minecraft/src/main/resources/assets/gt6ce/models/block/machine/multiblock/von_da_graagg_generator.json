@@ -10,8 +10,8 @@
       "render_type": "minecraft:cutout",
       "textures": {
         "up": "gt6ce:block/machines/multiblockmains/vondagraagg/colored/top",
-        "down": "gt6ce:block/machines/multiblockmains/vondagraagg/colored/bottom",
-        "north": "gt6ce:block/machines/multiblockmains/vondagraagg/colored_front/side",
+        "down": "gt6ce:block/machines/multiblockmains/vondagraagg/colored_front/bottom",
+        "north": "gt6ce:block/machines/multiblockmains/vondagraagg/colored/side",
         "south": "gt6ce:block/machines/multiblockmains/vondagraagg/colored/side",
         "west": "gt6ce:block/machines/multiblockmains/vondagraagg/colored/side",
         "east": "gt6ce:block/machines/multiblockmains/vondagraagg/colored/side"
@@ -68,8 +68,8 @@
       "render_type": "minecraft:cutout",
       "textures": {
         "up": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay/top",
-        "down": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay/bottom",
-        "north": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay_front/side",
+        "down": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay_front/bottom",
+        "north": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay/side",
         "south": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay/side",
         "west": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay/side",
         "east": "gt6ce:block/machines/multiblockmains/vondagraagg/overlay/side"

@@ -41,4 +41,18 @@ public final class PartDesignBakedModel extends BakedModelWrapper<BakedModel> {
     @Override public TextureAtlasSprite getParticleIcon(ModelData data) {
         return choose(data).getParticleIcon(data);
     }
+
+    @Override public ModelData getModelData(net.minecraft.world.level.BlockAndTintGetter level,
+            net.minecraft.core.BlockPos pos, BlockState state, ModelData data) {
+        return choose(data).getModelData(level, pos, state, data);
+    }
+
+//? if >=1.21.1 {
+    /*@Override public net.neoforged.neoforge.client.ChunkRenderTypeSet getRenderTypes(
+*///?} else {
+    @Override public net.minecraftforge.client.ChunkRenderTypeSet getRenderTypes(
+//?}
+            BlockState state, RandomSource random, ModelData data) {
+        return choose(data).getRenderTypes(state, random, data);
+    }
 }

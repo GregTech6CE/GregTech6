@@ -47,7 +47,7 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     protected boolean structureOk() {
         return structureFormed;
     }
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
 
     protected AxialGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -117,7 +117,7 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
 
     public java.util.Set<BlockPos> trackedCells() { return grade().cells().keySet(); }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
@@ -129,7 +129,10 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
             int part = coil ? 18040 : grade().materials().wallId();
             var role = AxialStructureTransform.role(front, cell.getX(), cell.getY(), cell.getZ(), grade().steam());
             var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
-                    cell.getX(), cell.getY(), cell.getZ(), part, role);
+                    cell.getX(), cell.getY(), cell.getZ(), part, role, null,
+                    role == MultiblockLayout.Role.ENERGY_OUTPUT ? (grade().steam() ? 3 : 2) : -1, java.util.List.of(),
+                    grade().steam() ? gregtech.content.multiblock.OriginalMultiblockPortRules.turbine(
+                            gregtech.api.multiblock.StructureRole.valueOf(role.name()), false) : gregtech.api.multiblock.StructurePorts.DEFAULT);
             var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.getX(), cell.getY(), cell.getZ());
             cells.add(new gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell(
                     offset.getX(), offset.getY(), offset.getZ(), spec));
@@ -198,9 +201,8 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
         }
         if (output >= grade().output() / 2) {
             converting = true;
-            var target = worldPosition.relative(front().getOpposite(), 4);
-            IEnergyBlock receiver = level.hasChunkAt(target) ? EnergyBlockViews.view(level.getBlockEntity(target)) : null;
-            if (receiver != null) emitted = receiver.doEnergyInjection(outputType(), front(), output, 1, true) > 0;
+            emitted = gregtech.engine.multiblock.StructureOutputs.energy(this,
+                    gregtech.content.multiblock.OriginalMultiblockOutputRules.SHAFT, outputType(), output, 1) > 0;
         }
         energy = Math.max(0, energy - grade().inputMaximum());
         setChanged();

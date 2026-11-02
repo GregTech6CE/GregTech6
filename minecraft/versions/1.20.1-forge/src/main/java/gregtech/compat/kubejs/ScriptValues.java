@@ -27,58 +27,26 @@ final class ScriptValues {
                 fluids(json.get("fluidOutputs"), json.get("fluid_outputs")));
     }
 
-    static List<StructureLayoutDocuments.CellSpec> cells(Object spec) {
-        var out = new ArrayList<StructureLayoutDocuments.CellSpec>();
-        for (Object element : list(cellList(spec))) {
-            var cell = object(element);
-            out.add(new StructureLayoutDocuments.CellSpec(
-                    number(cell.get("right")),
-                    number(cell.get("up")),
-                    number(cell.get("back")),
-                    matches(cell.get("match")),
-                    text(cell.get("role")),
-                    cell.containsKey("design") ? number(cell.get("design")) : -1));
+    static gregtech.api.multiblock.StructureLayout layout(String machine, Object spec) {
+        Object value = layoutValue(spec);
+        var root = value instanceof Map<?, ?> ? object(value) : Map.of("cells", value);
+        return StructureLayoutDocuments.parse(machine, root);
+    }
+
+    /** Unwrap Rhino containers recursively before entering the common JSON validator. */
+    private static Object layoutValue(Object value) {
+        Object plain = unwrap(value);
+        if (plain instanceof Map<?, ?>) {
+            var out = new LinkedHashMap<String, Object>();
+            object(plain).forEach((key, entry) -> out.put(key, layoutValue(entry)));
+            return out;
         }
-        return out;
-    }
-
-    /** One match string, or a list of alternatives. */
-    private static List<String> matches(Object value) {
-        Object unwrapped = unwrap(value);
-        if (unwrapped instanceof CharSequence text && !text.isEmpty()) return List.of(text.toString());
-        if (unwrapped instanceof List<?> list && !list.isEmpty()) {
-            var out = new ArrayList<String>();
-            for (Object element : list) out.add(text(element));
-            return List.copyOf(out);
-        }
-        throw new IllegalArgumentException("expected text or a list of text");
-    }
-
-    static List<StructureLayoutDocuments.RepeatSpec> repeats(Object spec) {
-        var json = layoutObject(spec);
-        if (json == null || !json.containsKey("repeats")) return List.of();
-        var out = new ArrayList<StructureLayoutDocuments.RepeatSpec>();
-        for (Object element : list(json.get("repeats"))) {
-            var repeat = object(element);
-            out.add(new StructureLayoutDocuments.RepeatSpec(
-                    text(repeat.get("key")),
-                    number(repeat.get("up")),
-                    number(repeat.get("min")),
-                    number(repeat.get("max")),
-                    repeat.containsKey("step") ? number(repeat.get("step")) : 1,
-                    cells(repeat.get("cells"))));
-        }
-        return out;
-    }
-
-    /** A list of cells, or the {@code cells} list of a layout object. */
-    private static Object cellList(Object spec) {
-        var json = layoutObject(spec);
-        return json == null ? spec : json.get("cells");
-    }
-
-    private static Map<String, Object> layoutObject(Object spec) {
-        return unwrap(spec) instanceof Map<?, ?> ? object(spec) : null;
+        if (plain instanceof List<?> || plain instanceof Object[])
+            return list(plain).stream().map(ScriptValues::layoutValue).toList();
+        if (plain instanceof CharSequence text) return text.toString();
+        if (plain instanceof Number || plain instanceof Boolean || plain == null) return plain;
+        throw new IllegalArgumentException(
+                "Unsupported layout value: " + plain.getClass().getName());
     }
 
     private static List<ItemComponent> items(Object camel, Object snake, int count) {

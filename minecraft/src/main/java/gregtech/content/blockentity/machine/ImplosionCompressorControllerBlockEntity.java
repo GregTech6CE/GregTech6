@@ -23,7 +23,7 @@ import java.util.*;
 public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner,
         gregtech.engine.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition=
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition=
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this,this::structureCells,List.of());
     public static final MultiblockLayout LAYOUT=MultiblockLayout.fromShared(gregtech.content.multiblock.SharedImplosionStructure.LAYOUT);
 //? if >=1.21.1 {
@@ -43,7 +43,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
         return structureFormed;
     }
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {

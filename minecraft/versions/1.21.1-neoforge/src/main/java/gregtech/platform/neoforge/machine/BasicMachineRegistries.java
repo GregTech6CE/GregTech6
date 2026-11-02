@@ -78,21 +78,23 @@ public final class BasicMachineRegistries {
                 created.register(bus);
                 return created;
             });
-            var block = blockReg.register(
-                    spec.id(),
-                    () -> spec.controllerKind() == gregtech.api.machine.MachineControllerKind.DISTILLATION
-                            ? new gregtech.content.block.machine.MultiblockControllerBlock(
-                                    spec,
-                                    BlockBehaviour.Properties.of()
-                                            .mapColor(MapColor.METAL)
-                                            .strength(spec.hardness(), spec.blastResistance())
-                                            .requiresCorrectToolForDrops())
-                            : new BasicMachineBlock(
-                                    spec,
-                                    BlockBehaviour.Properties.of()
-                                            .mapColor(MapColor.METAL)
-                                            .strength(spec.hardness(), spec.blastResistance())
-                                            .requiresCorrectToolForDrops()));
+            var block = gregtech.content.registry.MultiblockRegistration.register(
+                    gregtech.content.multiblock.ControllerDeclarations.recipe(
+                            spec,
+                            () -> spec.controllerKind() == gregtech.api.machine.MachineControllerKind.DISTILLATION
+                                    ? new gregtech.content.block.machine.MultiblockControllerBlock(
+                                            spec,
+                                            BlockBehaviour.Properties.of()
+                                                    .mapColor(MapColor.METAL)
+                                                    .strength(spec.hardness(), spec.blastResistance())
+                                                    .requiresCorrectToolForDrops())
+                                    : new BasicMachineBlock(
+                                            spec,
+                                            BlockBehaviour.Properties.of()
+                                                    .mapColor(MapColor.METAL)
+                                                    .strength(spec.hardness(), spec.blastResistance())
+                                                    .requiresCorrectToolForDrops())),
+                    blockReg::register);
             MACHINES.add(block);
             itemReg.register(spec.id(), () -> new BasicMachineItem(block.get(), new Item.Properties().stacksTo(16)));
             var type = entityReg.register("be_" + spec.id(), () -> {

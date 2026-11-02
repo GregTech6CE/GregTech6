@@ -1,6 +1,10 @@
 package gregtech.content.logistics;
 
-import java.util.ArrayList;
+import gregtech.api.multiblock.CellMatch;
+import gregtech.api.multiblock.StructureConstraint;
+import gregtech.api.multiblock.StructureLayout;
+import gregtech.api.multiblock.StructureRole;
+import gregtech.content.multiblock.MultiblockPatterns;
 import java.util.List;
 
 /** Original GT6 core geometry, CPU limits and energy economics. */
@@ -18,6 +22,20 @@ public final class LogisticsCoreLayout {
 
     /** The original scans {@code tX+i, tY+j, tZ+k} for {@code i,j,k} in {@code [-2,2]}. */
     public static final int RADIUS = 2;
+
+    /** Versatile CPUs contribute to all four functions; a specialized CPU contributes to its own. */
+    public static final List<StructureConstraint> CONSTRAINTS = java.util.stream.Stream.of(
+                    "logic_processor_unit",
+                    "control_processor_unit",
+                    "storage_quadcore_processor_unit",
+                    "conversion_processor_unit")
+            .<StructureConstraint>map(name -> new StructureConstraint.Count(
+                    new StructureConstraint.Selection(
+                            CellMatch.oneOf(CellMatch.part("versatile_processor_unit"), CellMatch.part(name)),
+                            StructureRole.CASING),
+                    1,
+                    -1))
+            .toList();
 
     /** The three structural classes of. */
     public enum Kind {
@@ -71,21 +89,21 @@ public final class LogisticsCoreLayout {
     }
 
     private static List<Cell> create() {
-        var cells = new ArrayList<Cell>();
-        for (int right = -RADIUS; right <= RADIUS; right++) {
-            for (int up = -RADIUS; up <= RADIUS; up++) {
-                for (int back = 0; back <= 2 * RADIUS; back++) {
-                    if (right == 0 && up == 0 && back == 0) continue; // the controller itself
-                    int depthFromCenter = back - RADIUS; // squared distance from the centre
-                    int distanceSquared = right * right + up * up + depthFromCenter * depthFromCenter;
-                    cells.add(new Cell(
-                            right,
-                            up,
-                            back,
-                            distanceSquared < 4 ? Kind.CPU : distanceSquared > 6 ? Kind.WALL : Kind.VENT));
-                }
-            }
-        }
-        return List.copyOf(cells);
+        return MultiblockPatterns.cells(StructureLayout.pattern("logisticscore")
+                        .layer(-2, "AAAAA", "ABBBA", "ABBBA", "ABBBA", "AAAAA")
+                        .layer(-1, "ABBBA", "BCCCB", "BCCCB", "BCCCB", "ABBBA")
+                        .layer(0, "ABSBA", "BCCCB", "BCCCB", "BCCCB", "ABBBA")
+                        .layer(1, "ABBBA", "BCCCB", "BCCCB", "BCCCB", "ABBBA")
+                        .layer(2, "AAAAA", "ABBBA", "ABBBA", "ABBBA", "AAAAA")
+                        .where('A', CellMatch.part("galvanized_steel_wall"), StructureRole.ENERGY_INPUT)
+                        .where('B', CellMatch.part("fusion_ventilation_unit"), StructureRole.LOGISTICS)
+                        .where('C', CellMatch.part("versatile_processor_unit"), StructureRole.CASING))
+                .stream()
+                .map(c -> new Cell(
+                        c.right(),
+                        c.up(),
+                        c.back(),
+                        c.part() == VERSATILE ? Kind.CPU : c.part() == WALL ? Kind.WALL : Kind.VENT))
+                .toList();
     }
 }

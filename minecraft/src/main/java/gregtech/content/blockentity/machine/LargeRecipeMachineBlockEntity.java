@@ -109,30 +109,16 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
 //?}
     }
     private void pushItems(BlockPos pos, Direction face) {
-        var target = itemsAt(pos, face);
-        if (target == null) return;
-        for (int slot = inputSlots(); slot < inventory().getSlots(); slot++) {
-            var offer = inventory().getStackInSlot(slot);
-            if (offer.isEmpty()) continue;
-            var result = gregtech.content.transport.ItemPipeTransferAdapter.transfer(offer.copy(), () -> target);
-            if (result.accepted() > 0) inventory().extractItem(slot, result.accepted(), false);
-        }
+        StructureOutputs.items(this, StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ITEM_OUTPUT,
+                pos, face, originalProcessingController()), inventory(), inputSlots());
     }
     private void pushFluids(BlockPos pos, Direction face) {
-        var target = fluidsAt(pos, face);
         var tanks = getTanksOutput();
-        if (target == null || tanks == null) return;
-        for (var tank : tanks) {
-            var offer = tank.getFluid();
-            if (offer.isEmpty()) continue;
-            int simulated = target.fill(offer.copy(), IFluidHandler.FluidAction.SIMULATE);
-            if (simulated <= 0) continue;
-            offer.setAmount(Math.min(simulated, offer.getAmount()));
-            int accepted = target.fill(offer.copy(), IFluidHandler.FluidAction.EXECUTE);
-            if (accepted < 0 || accepted > offer.getAmount())
-                throw new IllegalStateException("Invalid original controller fluid receiver amount: " + accepted);
-            if (accepted > 0) tank.remove(accepted);
-        }
+        if (tanks == null) return;
+        var output = StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.FLUID_OUTPUT,
+                pos, face, originalProcessingController());
+        for (int tank = 0; tank < tanks.length; tank++)
+            StructureOutputs.fluid(this, output, getTanksInput().length + tank, tanks[tank], Integer.MAX_VALUE);
     }
     private void pullItems(BlockPos pos, Direction face) {
         var source = itemsAt(pos, face);
@@ -239,11 +225,24 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     @Override protected void autoOutputFluids(net.minecraft.world.level.Level level,BlockPos pos,int side) {
         if (fluidOutput() != null) return; // Already moved before work, including while stopped/unformed.
-        super.autoOutputFluids(level,pos,side);
+        Direction outward = relativeToAbsolute(side);
+        var output = StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.FLUID_OUTPUT,
+                pos.relative(outward), outward.getOpposite(), originalProcessingController());
+        var tanks = getTanksOutput();
+        // Face auto-output keeps the basic machine's one-fluid, 1000 L per tick limit.
+        for (int tank = 0; tank < tanks.length; tank++) if (!tanks[tank].isEmpty()) {
+            StructureOutputs.fluid(this, output, getTanksInput().length + tank, tanks[tank], 1000);
+            break;
+        }
     }
     @Override protected void autoOutputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
         var output = itemOutput();
-        if (output == null) { super.autoOutputItems(level,pos,side); return; }
+        if (output == null) {
+            Direction outward = relativeToAbsolute(side);
+            StructureOutputs.items(this, StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ITEM_OUTPUT,
+                    pos.relative(outward), outward.getOpposite(), originalProcessingController()).withAirDrop(), inventory(), inputSlots());
+            return;
+        }
         pushItems(output.pos(), output.face());
     }
 
@@ -267,6 +266,20 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         return structureFormed;
     }
     @Override public void structureFormedChanged(boolean formed) { structureFormed = formed; }
+    @Override public int structureDesign(LargeMachineLayouts.Cell cell, BlockPos pos) {
+        if (spec() == null || level == null
+                || gregtech.content.multiblock.SharedLargeMachineLayouts.overlaid().contains(spec().machineName()))
+            return cell.design();
+        var state = getBlockState();
+        return gregtech.content.multiblock.OriginalMultiblockDesigns.resolve(spec().machineName(),
+                cell.part(), cell.design(), cell.right(), cell.back(),
+                gregtech.api.machine.BlockFace.of(LayoutStructures.facing(this).ordinal()),
+                state.hasProperty(gregtech.content.block.machine.BasicMachineBlock.RUNNING)
+                        && state.getValue(gregtech.content.block.machine.BasicMachineBlock.RUNNING),
+                state.hasProperty(gregtech.content.block.machine.BasicMachineBlock.LIT)
+                        && state.getValue(gregtech.content.block.machine.BasicMachineBlock.LIT),
+                bound -> level.random.nextInt(bound));
+    }
     /** Only the edge rebuilds this list; a formed tick never walks the shell. */
     @Override public void onStructureFormed() {
         java.util.ArrayList<AddonEnergyPartBlockEntity> found = new java.util.ArrayList<>();
@@ -275,28 +288,20 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         conditionParts = java.util.List.copyOf(found);
     }
     @Override public void onStructureBroken() { conditionParts = java.util.List.of(); }
-    /** The layout a structure check reads. Controllers with hand-built cells override {@link #structureCells()}. */
+    /** The declaration owns the layout; no machine-name fallback is allowed here. */
     protected LargeMachineLayouts.Layout structureLayout() {
-        var layout=LargeMachineLayouts.layout(spec().machineName());
-        if(layout!=null)return layout;
-        var cells=structureCells();
-        return cells==null?null:new LargeMachineLayouts.Layout(cells,java.util.List.of());
+        return gregtech.content.registry.MultiblockRegistration.layout(this);
     }
-    /** Hand-built cells for a controller without a shared layout. Read on every check. */
-    protected java.util.List<LargeMachineLayouts.Cell> structureCells() { return null; }
-    protected boolean validStructureParts() {return true;}
-    protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return (actual == expected);}
+    protected boolean validStructureParts() { return true; }
+    protected boolean matchesPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected,
+                                  net.minecraft.world.level.block.Block actual) { return actual == expected; }
     public LargeMachineLayouts.Layout trackedLayout() { return structureLayout(); }
     @Override public boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected, net.minecraft.world.level.block.Block actual) {
-        if (cell.part() == 18042 && spec() != null && "largeoven".equals(spec().machineName()))
-            return (actual == expected || actual == gregtech.content.multiblock.LargeMachineParts.block(18043))
-                    && matchesPart(cell, actual, actual);
         return matchesPart(cell, expected, actual);
     }
     @Override public boolean structurePartsValid() { return validStructureParts(); }
-    @Override public StructureDefinition structureDefinition() {
-        return spec() != null && "largeoven".equals(spec().machineName())
-                ? gregtech.content.multiblock.SpecialStructures.oven(this) : LayoutStructures.recipe(this);
+    public StructureDefinition.Declarative createStructureDefinition() {
+        return LayoutStructures.recipe(this);
     }
     @Override public boolean isStructureOk() { return StructureTracking.query(this); }
     @Override public boolean containsToolPosition(BlockPos pos) {
@@ -306,17 +311,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if (level == null || level.isClientSide || isRemoved() || spec() == null
                 || !containsToolPosition(context.getClickedPos())) return 0;
         if (GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.BUILDER_WAND)) {
-            var layout = structureLayout();
-            if (layout == null) return 0;
-            var front = LayoutStructures.facing(this);
-            boolean wholeStructure = MultiblockTools.buildsWholeStructure(context, worldPosition);
-            for (var cell : layout.cells()) buildCell(context, cell, cell.at(worldPosition, front), wholeStructure);
-            // Repeat layouts build their minimum valid size, as shown in the structure preview.
-            for (var repeat : layout.repeats()) for (int copy = 0; copy < repeat.min(); copy++)
-                for (var cell : repeat.cells())
-                    buildCell(context, cell, cell.at(worldPosition, front, repeat.absoluteUp(cell, copy)), wholeStructure);
-            StructureTracking.invalidate(this);
-            return MultiblockToolRules.BUILDER_COST;
+            return gregtech.engine.multiblock.MultiblockTools.buildTracked(context, this);
         }
         if (GTToolHelper.matchesTool(context.getItemInHand(), GTToolType.MAGNIFYING_GLASS)) {
             appendMachineInspection(messages);
@@ -325,57 +320,6 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             return MultiblockToolRules.MAGNIFIER_COST;
         }
         return 0;
-    }
-    private void buildCell(
-            UseOnContext context, LargeMachineLayouts.Cell cell, BlockPos pos, boolean wholeStructure) {
-        // GT6 builds registered structure parts, not required air, fluids or arbitrary terrain.
-        if (pos.equals(worldPosition)) return;
-        MultiblockTools.buildCell(context, pos, cell, wholeStructure);
-    }
-    @Override public boolean scanStructure() {
-        if(level==null||spec()==null||isRemoved()) return false;
-        var layout=structureLayout();if(layout==null)return false;
-        int[] matchedLayers=new int[layout.repeats().size()];
-        try {
-            boolean complete = validStructureParts();
-            var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-            var matchedCells=new java.util.ArrayList<LargeMachineLayouts.Cell>();
-            var matchedParts=new java.util.ArrayList<LargeMachineLayouts.Placed>();
-            for(var cell:layout.cells()) {
-                var pos=cell.at(worldPosition,front);
-                var matched=matchingCell(cell,pos);
-                if(matched==null) {complete=false;continue;}
-                matchedCells.add(matched);
-                matchedParts.add(new LargeMachineLayouts.Placed(matched,pos));
-            }
-            var repeatPlaced=new java.util.ArrayList<LargeMachineLayouts.Placed>();
-            for(int group=0;group<layout.repeats().size();group++) {
-                var repeat=layout.repeats().get(group);
-                var matches=new java.util.HashMap<BlockPos,LargeMachineLayouts.Cell>();
-                int[] found=new int[1];
-                var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,(cell,pos)->{
-                    var matched=matchingCell(cell,pos);
-                    if(matched==null)return false;
-                    matches.put(pos,matched);
-                    return true;
-                },found);
-                matchedLayers[group]=found[0];
-                if(placed==null){complete=false;continue;}
-                // Only complete repeat copies are committed, not the matched prefix of a failed copy.
-                for(var cell:placed) {
-                    var matched=matches.get(cell.pos());
-                    repeatPlaced.add(new LargeMachineLayouts.Placed(matched,cell.pos()));
-                }
-            }
-            // The retained full scan checks the whole coil group explicitly; matchers have no scan-local state.
-            if ("largeoven".equals(spec().machineName()) && !ovenCoilsAgree(front, matchedCells, repeatPlaced)) {
-                complete = false;
-            }
-            matchedParts.addAll(repeatPlaced);
-            return updateStructureBindings(matchedParts, complete);
-        } finally {
-            StructureTracking.noteMatchedLayers(this, matchedLayers);
-        }
     }
     /** Claims a match the incremental evaluator already built, without reading the layout again. */
     @Override public boolean applyStructure(PatternMatch match) {
@@ -396,13 +340,11 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     private boolean updateStructureBindings(List<LargeMachineLayouts.Placed> matched, boolean complete) {
         if (level == null || spec() == null || isRemoved()) return false;
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        var designs = new ArrayList<LargeMachineLayouts.Placed>();
         for (var placed : matched) {
             var cell = placed.cell();
             if (cell.role() == MultiblockLayout.Role.AIR || cell.plainBlock()) continue;
             if (level.getBlockEntity(placed.pos()) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition)) {
                 parts.put(placed.pos(), cell.role());
-                designs.add(placed);
             } else complete = false;
         }
         var claimed = StructureClaims.update(this, bindings, parts,
@@ -410,7 +352,6 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
         if (claimed == StructureClaims.Result.FAILED) return false;
-        if (claimed == StructureClaims.Result.APPLIED) gregtech.content.multiblock.StructureDesigns.apply(level, designs);
         return complete;
     }
 
@@ -419,36 +360,6 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         StructureClaims.cleared(this);
     }
 
-    private boolean ovenCoilsAgree(Direction front, List<LargeMachineLayouts.Cell> fixed, List<LargeMachineLayouts.Placed> repeated) {
-        return java.util.stream.Stream.concat(
-                fixed.stream().filter(cell -> cell.part() == 18042).map(cell -> cell.at(worldPosition, front)),
-                repeated.stream().filter(placed -> placed.cell().part() == 18042).map(LargeMachineLayouts.Placed::pos))
-                .map(pos -> level.getBlockState(pos).getBlock()).distinct().limit(2).count() <= 1;
-    }
-    private LargeMachineLayouts.Cell matchingCell(LargeMachineLayouts.Cell cell,BlockPos pos) {
-        StructureScanProbe.matcher();
-        if(!level.hasChunkAt(pos))return null;
-        if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos)?cell:null;
-        if(matchesChoice(cell,cell.part(),cell.plain(),pos))return cell;
-        for(var alternative:cell.alternatives()) {
-            var choice = new LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),alternative.part(),
-                    cell.role(),alternative.plain(),cell.design(),java.util.List.of());
-            if(matchesChoice(choice,alternative.part(),alternative.plain(),pos))return choice;
-        }
-        return null;
-    }
-    private boolean matchesChoice(LargeMachineLayouts.Cell cell,int part,String plain,BlockPos pos) {
-        if(plain!=null)return LargeMachineLayouts.matchesPlain(level,pos,plain);
-        var expected=gregtech.content.multiblock.LargeMachineParts.block(part);
-        if(part==18042 && "largeoven".equals(spec().machineName())) {
-            var actual = level.getBlockState(pos).getBlock();
-            return (actual == expected || actual == gregtech.content.multiblock.LargeMachineParts.block(18043))
-                    && matchesPart(cell, actual, actual)
-                    && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity;
-        }
-        return matchesPart(cell,expected,level.getBlockState(pos).getBlock())
-                && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity;
-    }
     /** Bound condition parts must all be satisfied. A structure with none works as before. */
     private boolean conditionPartsMet() {
         if (level == null) return true;
@@ -469,41 +380,50 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         StructureTracking.onRemoved(this);
         super.setRemoved();
     }
-    private static boolean input(MultiblockLayout.Role role) { return role==MultiblockLayout.Role.ITEM_FLUID_IO||role==MultiblockLayout.Role.ITEM_FLUID_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY; }
-    private static boolean output(MultiblockLayout.Role role) { return role==MultiblockLayout.Role.FLUID_OUTPUT||role==MultiblockLayout.Role.ITEM_FLUID_IO||role==MultiblockLayout.Role.ITEM_FLUID_OUTPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY; }
-    private static boolean energy(MultiblockLayout.Role role) {return role==MultiblockLayout.Role.ENERGY_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT||role==MultiblockLayout.Role.ITEM_FLUID_ENERGY;}
     private final Map<MultiblockLayout.Role,IItemHandler> itemPorts=new EnumMap<>(MultiblockLayout.Role.class);
     private final Map<MultiblockLayout.Role,IFluidHandler> fluidPorts=new EnumMap<>(MultiblockLayout.Role.class);
     @Override public IItemHandler portItems(MultiblockLayout.Role role) {
-        return role==MultiblockLayout.Role.FLUID_OUTPUT||(!input(role)&&!output(role))?null:itemPorts.computeIfAbsent(role,this::createItemPort);
+        if (role == null) return null;
+        return !role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT) && !role.allows(gregtech.api.multiblock.PortChannel.ITEM_OUTPUT)
+                ? null : itemPorts.computeIfAbsent(role,this::createItemPort);
     }
     private IItemHandler createItemPort(MultiblockLayout.Role role) {
         return new IItemHandler() {
             public int getSlots() {return inventory().getSlots();}
             public ItemStack getStackInSlot(int slot) {return inventory().getStackInSlot(slot);}
-            public ItemStack insertItem(int slot,ItemStack stack,boolean simulate) {return input(role)?inventory().insertItem(slot,stack,simulate):stack;}
-            public ItemStack extractItem(int slot,int amount,boolean simulate) {return output(role)&&slot>=inputSlots()?inventory().extractItem(slot,amount,simulate):ItemStack.EMPTY;}
+            public ItemStack insertItem(int slot,ItemStack stack,boolean simulate) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT)&&slot>=0&&slot<inputSlots()?inventory().insertItem(slot,stack,simulate):stack;}
+            public ItemStack extractItem(int slot,int amount,boolean simulate) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_OUTPUT)&&slot>=inputSlots()?inventory().extractItem(slot,amount,simulate):ItemStack.EMPTY;}
             public int getSlotLimit(int slot) {return inventory().getSlotLimit(slot);}
-            public boolean isItemValid(int slot,ItemStack stack) {return input(role)&&slot<inputSlots();}
+            public boolean isItemValid(int slot,ItemStack stack) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT)&&slot>=0&&slot<inputSlots()&&inventory().isItemValid(slot,stack);}
         };
     }
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role) {
-        return !input(role)&&!output(role)?null:fluidPorts.computeIfAbsent(role,this::createFluidPort);
+        if (role == null) return null;
+        return !role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT)&&!role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT)?null:fluidPorts.computeIfAbsent(role,this::createFluidPort);
     }
     private IFluidHandler createFluidPort(MultiblockLayout.Role role) {
         return new IFluidHandler() {
             public int getTanks(){return LargeRecipeMachineBlockEntity.this.getTanks();}
             public FluidStack getFluidInTank(int tank){return LargeRecipeMachineBlockEntity.this.getFluidInTank(tank);}
             public int getTankCapacity(int tank){return LargeRecipeMachineBlockEntity.this.getTankCapacity(tank);}
-            public boolean isFluidValid(int tank,FluidStack stack){return input(role)&&LargeRecipeMachineBlockEntity.this.isFluidValid(tank,stack);}
-            public int fill(FluidStack stack,FluidAction action){return input(role)?LargeRecipeMachineBlockEntity.this.fill(stack,action):0;}
-            public FluidStack drain(FluidStack stack,FluidAction action){return output(role)?LargeRecipeMachineBlockEntity.this.drain(stack,action):FluidStack.EMPTY;}
-            public FluidStack drain(int amount,FluidAction action){return output(role)?LargeRecipeMachineBlockEntity.this.drain(amount,action):FluidStack.EMPTY;}
+            public boolean isFluidValid(int tank,FluidStack stack){return role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT)&&tank>=0&&tank<getTanks()&&LargeRecipeMachineBlockEntity.this.isFluidValid(tank,stack);}
+            public int fill(FluidStack stack,FluidAction action){return role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT)?LargeRecipeMachineBlockEntity.this.fill(stack,action):0;}
+            public FluidStack drain(FluidStack stack,FluidAction action){return role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT)?LargeRecipeMachineBlockEntity.this.drain(stack,action):FluidStack.EMPTY;}
+            public FluidStack drain(int amount,FluidAction action){return role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT)?LargeRecipeMachineBlockEntity.this.drain(amount,action):FluidStack.EMPTY;}
         };
+    }
+    @Override public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank) {
+        if (role == null || tank < 0 || tank >= getTanks()) return null;
+        var inputs = getTanksInput();
+        boolean input = tank < inputs.length;
+        var storage = input ? inputs[tank] : getTanksOutput()[tank - inputs.length];
+        return new gregtech.engine.fluid.FluidPort(storage,
+                input && role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT),
+                !input && role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT));
     }
     @Override public long portEnergyInputMin(MultiblockLayout.Role role,GregTechTags.Tag type) {return inputMinimum();}
     @Override public long portEnergyInputMax(MultiblockLayout.Role role,GregTechTags.Tag type) {return inputMaximum();}
-    @Override public Collection<GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role){return !usesTimeEnergy()&&energy(role)?List.of(spec().energyTag()):List.of();}
+    @Override public Collection<GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role){return role!=null&&!usesTimeEnergy()&&role.allows(gregtech.api.multiblock.PortChannel.ENERGY_INPUT)?List.of(spec().energyTag()):List.of();}
     @Override public long portEnergyStored(MultiblockLayout.Role role,GregTechTags.Tag type){return portEnergyTypes(role).contains(type)?getEnergyTick():0;}
     @Override public long portEnergyCapacity(MultiblockLayout.Role role,GregTechTags.Tag type){return portEnergyTypes(role).contains(type)?inputMaximum():0;}
     @Override public long injectPortEnergy(MultiblockLayout.Role role,GregTechTags.Tag type,long size,long amount,boolean execute){return portEnergyTypes(role).contains(type)&&isStructureOk()?doEnergyInjection(type,null,size,amount,execute):0;}

@@ -55,7 +55,7 @@
 | `content.recipe`、`content.recipe.generated` | 将定义行转成游戏配方、注入/重载与生成规格解析；如 `MachineRecipeBootstrap`、`GeneratedRecipeResolver` |
 | `content.data`、`content.data.generated` | 内容数据的原生适配和既有兼容数据；新代码优先放明确领域 |
 | `content.machine` | 基础机器定义在游戏侧的物化和调参，如 `BasicMachineDefinitions` |
-| `content.multiblock` | 具体控制器结构、世界结构布局与设备规格，如 `ControllerStructureLayouts` |
+| `content.multiblock` | `ControllerDeclarations` 绑定具体主控，`ControllerStructureLayouts` 从相同声明产生预览；布局与设备规格 |
 | `content.material` | 原版物品成分与材料统一的加载 |
 | `content.energy` | 能源设备的具体游戏接入；节点的 `content.fluid` 承担原生流体对象 |
 | `content.transport`、`content.transport.fluid` | 管道定义物化、物品转移适配及流体 tick 阶段 |
@@ -99,6 +99,6 @@
   - 线缆、管道、轴、电池、覆盖板与储罐的实际传输、断开与方向变化。
   - 材料物品/方块注册与统一化；矿脉或结构的注册存在性。
 - 现有测试集
-- core 静态 TSV 16 行、GameTest TSV 26 行；三个 GameTest 类共 19 个方法，含物品管道路由与调度回归。
+- core 静态 TSV 与 GameTest TSV 由对应 JUnit/GameTest 维护；用例覆盖物品管道路由与调度回归。
   - `core/src/test` 的材料目录、标签名翻译、熔融浇筑与配方引擎测试；`api/common` 的材料、机器、能源模型测试。
   - 机器 tick、多方块、能源网络、物流、世界生成完整流程等仍是待补范围。

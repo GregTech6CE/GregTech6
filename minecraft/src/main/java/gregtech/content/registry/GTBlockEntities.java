@@ -64,19 +64,19 @@ public final class GTBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.MultiblockPortBlockEntity>> MULTIBLOCK_PORT=BLOCK_ENTITIES.register("multiblock_port",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.MultiblockPortBlockEntity::new,GTMultiblocks.portBlocks()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.AddonEnergyPartBlockEntity>> ADDON_ENERGY_PART=BLOCK_ENTITIES.register("addon_energy_part",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.AddonEnergyPartBlockEntity::new,GTMultiblocks.energyPartBlocks()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.AddonFunctionalPartBlockEntity>> ADDON_FUNCTIONAL_PART=BLOCK_ENTITIES.register("addon_functional_part",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.AddonFunctionalPartBlockEntity::new,GTMultiblocks.functionalPartBlocks()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN=BLOCK_ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity::new,GTMultiblocks.COKE_OVEN_MAIN.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity>> CRYO_DISTILLATION=BLOCK_ENTITIES.register("cryo_distillation",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity::new,GTMultiblocks.CRYO_DISTILLATION_MAIN.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity>> MULTIBLOCK_TANK=BLOCK_ENTITIES.register("multiblock_tank",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity::new,GTMultiblocks.tanks().stream().map(gregtech.content.registry.RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity>> ORIGINAL_LARGE_BOILER=BLOCK_ENTITIES.register("original_large_boiler",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity::new,GTMultiblocks.boilers().stream().map(gregtech.content.registry.RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity>> LARGE_TURBINE=BLOCK_ENTITIES.register("large_turbine",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity::new,gregtech.content.multiblock.AxialGeneratorDefinitions.registeredBlocks(true)).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity>> LARGE_DYNAMO=BLOCK_ENTITIES.register("large_dynamo",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity::new,gregtech.content.multiblock.AxialGeneratorDefinitions.registeredBlocks(false)).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity>> LARGE_GAS_TURBINE=BLOCK_ENTITIES.register("large_gas_turbine",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity::new,gregtech.content.multiblock.GasTurbineDefinitions.registeredBlocks()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN=BLOCK_ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>entityFactory("gt6ce", "coke_oven"), MultiblockRegistration.blocksForEntityType("gt6ce", "coke_oven")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity>> CRYO_DISTILLATION=BLOCK_ENTITIES.register("cryo_distillation",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity>entityFactory("gt6ce", "cryo_distillation"), MultiblockRegistration.blocksForEntityType("gt6ce", "cryo_distillation")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity>> MULTIBLOCK_TANK=BLOCK_ENTITIES.register("multiblock_tank",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity>entityFactory("gt6ce", "multiblock_tank"), MultiblockRegistration.blocksForEntityType("gt6ce", "multiblock_tank")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity>> ORIGINAL_LARGE_BOILER=BLOCK_ENTITIES.register("original_large_boiler",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity>entityFactory("gt6ce", "original_large_boiler"), MultiblockRegistration.blocksForEntityType("gt6ce", "original_large_boiler")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity>> LARGE_TURBINE=BLOCK_ENTITIES.register("large_turbine",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity>entityFactory("gt6ce", "large_turbine"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_turbine")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity>> LARGE_DYNAMO=BLOCK_ENTITIES.register("large_dynamo",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity>entityFactory("gt6ce", "large_dynamo"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_dynamo")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity>> LARGE_GAS_TURBINE=BLOCK_ENTITIES.register("large_gas_turbine",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity>entityFactory("gt6ce", "large_gas_turbine"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_gas_turbine")).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.HeatExchangerBlockEntity>> HEAT_EXCHANGER=BLOCK_ENTITIES.register("heat_exchanger",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.HeatExchangerBlockEntity::new,GTHeatExchangers.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity>> LARGE_HEAT_EXCHANGER=BLOCK_ENTITIES.register("large_heat_exchanger",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity::new,GTMultiblocks.HEAT_EXCHANGER_MAIN.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity>> LARGE_CRUCIBLE=BLOCK_ENTITIES.register("large_crucible",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity::new,GTMultiblocks.crucibles().stream().map(gregtech.content.registry.RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>> LOGISTICS_CORE=BLOCK_ENTITIES.register("logistics_core",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity::new,GTMultiblocks.LOGISTICS_CORE.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>> BEDROCK_DRILL=BLOCK_ENTITIES.register("bedrock_drill",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity::new,GTMultiblocks.findPart(17999).get(),GTMultiblocks.findPart(17999).get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LightningRodControllerBlockEntity>> LIGHTNING_ROD=BLOCK_ENTITIES.register("lightning_rod",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LightningRodControllerBlockEntity::new,GTMultiblocks.findPart(17998).get(),GTMultiblocks.findPart(17998).get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity>> LARGE_HEAT_EXCHANGER=BLOCK_ENTITIES.register("large_heat_exchanger",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity>entityFactory("gt6ce", "large_heat_exchanger"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_heat_exchanger")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity>> LARGE_CRUCIBLE=BLOCK_ENTITIES.register("large_crucible",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity>entityFactory("gt6ce", "large_crucible"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_crucible")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>> LOGISTICS_CORE=BLOCK_ENTITIES.register("logistics_core",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>entityFactory("gt6ce", "logistics_core"), MultiblockRegistration.blocksForEntityType("gt6ce", "logistics_core")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>> BEDROCK_DRILL=BLOCK_ENTITIES.register("bedrock_drill",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>entityFactory("gt6ce", "bedrock_drill"), MultiblockRegistration.blocksForEntityType("gt6ce", "bedrock_drill")).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LightningRodControllerBlockEntity>> LIGHTNING_ROD=BLOCK_ENTITIES.register("lightning_rod",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LightningRodControllerBlockEntity>entityFactory("gt6ce", "lightning_rod"), MultiblockRegistration.blocksForEntityType("gt6ce", "lightning_rod")).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.platform.neoforge.smeltery.MoldEntity>> MOLD=gregtech.platform.neoforge.smeltery.SmelteryRegistries.MOLD;
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.MoldBasinBlockEntity>> MOLD_BASIN=BLOCK_ENTITIES.register("mold_basin",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.MoldBasinBlockEntity::new,gregtech.platform.neoforge.smeltery.SmelteryRegistries.basins().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity>> CRUCIBLE_FAUCET=BLOCK_ENTITIES.register("crucible_faucet",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity::new,gregtech.platform.neoforge.smeltery.SmelteryRegistries.faucets().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
@@ -124,7 +124,7 @@ public final class GTBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.SandwichBlockEntity>> SANDWICH_BLOCK=BLOCK_ENTITIES.register("sandwich_block",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.SandwichBlockEntity::new,GTSandwich.SANDWICH_BLOCK.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.PumpBlockEntity>> PUMP=BLOCK_ENTITIES.register("pump",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.PumpBlockEntity::new,GTPumps.all().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.LogisticsTankBlockEntity>> LOGISTICS_TANK=BLOCK_ENTITIES.register("logistics_tank",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LogisticsTankBlockEntity::new,GTLogisticsTank.BLOCK.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity>> VON_DA_GRAAGG=BLOCK_ENTITIES.register("von_da_graagg",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity::new,gregtech.content.multiblock.LargeMachineParts.block(17996)).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity>> VON_DA_GRAAGG=BLOCK_ENTITIES.register("von_da_graagg",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity>entityFactory("gt6ce", "von_da_graagg"), MultiblockRegistration.blocksForEntityType("gt6ce", "von_da_graagg")).build(null));
 *///?} else {
 //?}
     private GTBlockEntities() {}
@@ -273,16 +273,10 @@ public final class GTBlockEntities {
 
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity>> ORIGINAL_LARGE_BOILER =
-            BLOCK_ENTITY_TYPES.register("original_large_boiler", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity::new,
-                    gregtech.content.multiblock.OriginalLargeBoilerSpecs.all().stream()
-                            .map(variant -> gregtech.content.multiblock.LargeMachineParts.block(variant.originalId()))
-                            .toArray(Block[]::new)).build(null));
+            BLOCK_ENTITY_TYPES.register("original_large_boiler", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity>entityFactory("gt6ce", "original_large_boiler"), MultiblockRegistration.blocksForEntityType("gt6ce", "original_large_boiler")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity>> LARGE_TURBINE =
-            BLOCK_ENTITY_TYPES.register("large_turbine", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity::new,
-                    gregtech.content.multiblock.AxialGeneratorDefinitions.registeredBlocks(true)).build(null));
+            BLOCK_ENTITY_TYPES.register("large_turbine", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity>entityFactory("gt6ce", "large_turbine"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_turbine")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity>> PLACED_REACTOR_ROD =
             BLOCK_ENTITY_TYPES.register("placed_reactor_rod", () -> BlockEntityType.Builder.of(
@@ -315,9 +309,7 @@ public final class GTBlockEntities {
                     GTMultiblocks.functionalPartBlocks()).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity>> VON_DA_GRAAGG =
-            BLOCK_ENTITY_TYPES.register("von_da_graagg", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity::new,
-                    gregtech.content.multiblock.LargeMachineParts.block(17996)).build(null));
+            BLOCK_ENTITY_TYPES.register("von_da_graagg", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity>entityFactory("gt6ce", "von_da_graagg"), MultiblockRegistration.blocksForEntityType("gt6ce", "von_da_graagg")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.ProcessingToolBlockEntity>> PROCESSING_TOOL =
             BLOCK_ENTITY_TYPES.register("processing_tool", () -> BlockEntityType.Builder.of(
@@ -566,77 +558,43 @@ public final class GTBlockEntities {
                             GTDecorBlocks.allHives()).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN =
-            BLOCK_ENTITY_TYPES.register("coke_oven", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity::new,
-                    GTMultiblocks.COKE_OVEN_MAIN.get()).build(null));
+            BLOCK_ENTITY_TYPES.register("coke_oven", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>entityFactory("gt6ce", "coke_oven"), MultiblockRegistration.blocksForEntityType("gt6ce", "coke_oven")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity>> MULTIBLOCK_TANK =
-            BLOCK_ENTITY_TYPES.register("multiblock_tank", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity::new,
-                    java.util.stream.Stream.concat(
-                            java.util.stream.Stream.of(GTMultiblocks.findPart(17002).get(), GTMultiblocks.findPart(17042).get()),
-                            gregtech.content.multiblock.TankValveSpec.all().stream().map(
-                                    spec -> gregtech.content.multiblock.LargeMachineParts.block(spec.originalId())))
-                            .toArray(Block[]::new)).build(null));
+            BLOCK_ENTITY_TYPES.register("multiblock_tank", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity>entityFactory("gt6ce", "multiblock_tank"), MultiblockRegistration.blocksForEntityType("gt6ce", "multiblock_tank")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity>> LARGE_CRUCIBLE =
-            BLOCK_ENTITY_TYPES.register("large_crucible", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity::new,
-                    java.util.stream.Stream.concat(
-                            java.util.stream.Stream.of(GTMultiblocks.findPart(17302).get()),
-                            gregtech.content.multiblock.LargeCrucibleSpecs.all().stream().map(
-                                    spec -> gregtech.content.multiblock.LargeMachineParts.block(spec.originalId())))
-                            .toArray(Block[]::new)).build(null));
+            BLOCK_ENTITY_TYPES.register("large_crucible", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity>entityFactory("gt6ce", "large_crucible"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_crucible")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity>> CRYO_DISTILLATION =
-            BLOCK_ENTITY_TYPES.register("cryo_distillation", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity::new,
-                    GTMultiblocks.CRYO_DISTILLATION_MAIN.get()).build(null));
+            BLOCK_ENTITY_TYPES.register("cryo_distillation", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity>entityFactory("gt6ce", "cryo_distillation"), MultiblockRegistration.blocksForEntityType("gt6ce", "cryo_distillation")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity>> LARGE_GAS_TURBINE =
-            BLOCK_ENTITY_TYPES.register("large_gas_turbine", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity::new,
-                    gregtech.content.multiblock.GasTurbineDefinitions.registeredBlocks()).build(null));
+            BLOCK_ENTITY_TYPES.register("large_gas_turbine", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity>entityFactory("gt6ce", "large_gas_turbine"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_gas_turbine")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity>> LARGE_DYNAMO =
-            BLOCK_ENTITY_TYPES.register("large_dynamo", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity::new,
-                    gregtech.content.multiblock.AxialGeneratorDefinitions.registeredBlocks(false)).build(null));
+            BLOCK_ENTITY_TYPES.register("large_dynamo", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity>entityFactory("gt6ce", "large_dynamo"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_dynamo")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.HeatExchangerBlockEntity>> HEAT_EXCHANGER=BLOCK_ENTITY_TYPES.register("heat_exchanger",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.HeatExchangerBlockEntity::new,GTHeatExchangers.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity>> LARGE_HEAT_EXCHANGER =
-            BLOCK_ENTITY_TYPES.register("large_heat_exchanger", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity::new,
-                    GTMultiblocks.HEAT_EXCHANGER_MAIN.get()).build(null));
+            BLOCK_ENTITY_TYPES.register("large_heat_exchanger", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity>entityFactory("gt6ce", "large_heat_exchanger"), MultiblockRegistration.blocksForEntityType("gt6ce", "large_heat_exchanger")).build(null));
 
     // Wave 49 BE types: F6.9-12 multiblocks
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>> BEDROCK_DRILL =
-            BLOCK_ENTITY_TYPES.register("bedrock_drill", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity::new,
-                    GTMultiblocks.findPart(17999).get(),
-                    gregtech.content.multiblock.LargeMachineParts.block(17999)).build(null));
+            BLOCK_ENTITY_TYPES.register("bedrock_drill", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>entityFactory("gt6ce", "bedrock_drill"), MultiblockRegistration.blocksForEntityType("gt6ce", "bedrock_drill")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LightningRodControllerBlockEntity>> LIGHTNING_ROD =
-            BLOCK_ENTITY_TYPES.register("lightning_rod", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LightningRodControllerBlockEntity::new,
-                    GTMultiblocks.findPart(17998).get(),
-                    gregtech.content.multiblock.LargeMachineParts.block(17998)).build(null));
+            BLOCK_ENTITY_TYPES.register("lightning_rod", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LightningRodControllerBlockEntity>entityFactory("gt6ce", "lightning_rod"), MultiblockRegistration.blocksForEntityType("gt6ce", "lightning_rod")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity>> IMPLOSION_COMPRESSOR =
-            BLOCK_ENTITY_TYPES.register("implosion_compressor", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity::new,
-                    GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get()).build(null));
+            BLOCK_ENTITY_TYPES.register("implosion_compressor", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity>entityFactory("gt6ce", "implosion_compressor"), MultiblockRegistration.blocksForEntityType("gt6ce", "implosion_compressor")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity>> FUSION_REACTOR =
-            BLOCK_ENTITY_TYPES.register("fusion_reactor", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity::new,
-                    GTMultiblocks.FUSION_REACTOR_MAIN.get()).build(null));
+            BLOCK_ENTITY_TYPES.register("fusion_reactor", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity>entityFactory("gt6ce", "fusion_reactor"), MultiblockRegistration.blocksForEntityType("gt6ce", "fusion_reactor")).build(null));
 
     /** GT6 17997: Logistics Core controller (the walls are existing multiblock port entities). */
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>> LOGISTICS_CORE =
-            BLOCK_ENTITY_TYPES.register("logistics_core", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity::new,
-                    GTLasers.LOGISTICS_CORE.get()).build(null));
+            BLOCK_ENTITY_TYPES.register("logistics_core", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>entityFactory("gt6ce", "logistics_core"), MultiblockRegistration.blocksForEntityType("gt6ce", "logistics_core")).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LogisticsWireBlockEntity>> LOGISTICS_WIRE =
             BLOCK_ENTITY_TYPES.register("logistics_wire", () -> BlockEntityType.Builder.of(

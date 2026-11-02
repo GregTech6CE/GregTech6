@@ -153,6 +153,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private boolean formed;
     private List<EnergyPart> energyParts = List.of();
     private List<BoundPart> boundParts = List.of();
+    private List<gregtech.api.addon.platform.StructureCell> structureCells = List.of();
     private Map<String, Integer> repeatCounts = Map.of();
     private int breaksLeft;
     private int itemsLeft;
@@ -500,8 +501,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         long sent = 0;
         for (MachineFace face : output.faces()) {
             if (left <= 0) break;
-            long used = gregtech.engine.energy.EnergyTransfer.emitEnergyToSide(
-                    energyOutTag, world(face), size, left, this);
+            Direction outward = world(face);
+            long used = structureDefinition().formsImmediately()
+                    ? gregtech.engine.energy.EnergyTransfer.emitEnergyToSide(energyOutTag, outward, size, left, this)
+                    : gregtech.engine.multiblock.StructureOutputs.energy(this,
+                            gregtech.engine.multiblock.StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT,
+                                    worldPosition.relative(outward), outward.getOpposite(), false), energyOutTag, size, left);
             sent += used;
             left -= used;
         }
@@ -527,8 +532,33 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         long magnitude = output.allowNegative() ? Math.abs(size) : size;
         long packets = Math.min(amount, Math.max(0, stored) / magnitude);
         if (packets <= 0) return 0;
-        long sent = gregtech.engine.energy.EnergyTransfer.insertEnergyInto(
-                energyOutTag, side, size, packets, this, receiver);
+        boolean single = structureDefinition().formsImmediately();
+        if (!single && side == null) return 0;
+        long sent = single ? gregtech.engine.energy.EnergyTransfer.insertEnergyInto(energyOutTag, side, size, packets, this, receiver)
+                : gregtech.engine.multiblock.StructureOutputs.energy(this,
+                        gregtech.engine.multiblock.StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT,
+                                target, side, false), energyOutTag, size, packets);
+        if (sent > 0) {
+            stored -= Math.multiplyExact(magnitude, sent);
+            setChanged();
+        }
+        return sent;
+    }
+
+    private long emitFromPorts(long size, long amount) {
+        EnergyTransfer.requestUnits(size, amount);
+        if (amount == 0) return 0;
+        EnergyOutput output = declaration.output();
+        if (output == null) {
+            BehaviorEnergyRules.requireEmit(size, amount, 0, 0);
+            return 0;
+        }
+        BehaviorEnergyRules.requireEmit(size, amount, output.minSize(), output.maxSize(), output.maxAmount(),
+                output.allowNegative());
+        if (energyOutTag == null || !isStructureOk()) return 0;
+        long magnitude = output.allowNegative() ? Math.abs(size) : size;
+        long packets = Math.min(amount, Math.max(0, stored) / magnitude);
+        long sent = gregtech.engine.multiblock.StructurePortHandlers.emitEnergy(this, energyOutTag, size, packets);
         if (sent > 0) {
             stored -= Math.multiplyExact(magnitude, sent);
             setChanged();
@@ -746,6 +776,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (auxiliaryAccepts(energy.name(), side)) return injectAuxiliary(energy.name(), side, size, amount, doInject);
         if (!hasInput() || !isEnergyAcceptingFrom(energy, side, false)
                 || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
+        return injectMain(energy, side, size, amount, doInject);
+    }
+
+    private long injectMain(EnergyType energy, Direction side, long size, long amount, boolean doInject) {
         var input = declaration.energy();
         boolean any = input.anyPacket();
         var decision = BehaviorEnergyRules.admitInput(stored, bufferCapacity(), size, amount,
@@ -1188,6 +1222,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 return EnergyTransfer.fromPackets(
                         packetSize, packetCount, Context.this.emitPacketsFromFaces(packetSize, packetCount));
             }
+            @Override public EnergyTransfer emitFromPorts(long packetSize, long packetCount) {
+                return EnergyTransfer.fromPackets(packetSize, packetCount,
+                        BehaviorMachineBlockEntity.this.emitFromPorts(packetSize, packetCount));
+            }
             @Override public EnergyTransfer emitTo(BlockPos target, Direction side, long packetSize, long packetCount) {
                 return EnergyTransfer.fromPackets(
                         packetSize, packetCount, Context.this.emitTo(target, side, packetSize, packetCount));
@@ -1206,7 +1244,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             @Override public List<EnergyPart> energyParts() { return Context.this.energyParts(); }
             @Override public int repeats(String key) { return structureRepeats(key); }
             @Override public List<BoundPart> parts() { return Context.this.parts(); }
+            @Override public List<gregtech.api.addon.platform.StructureCell> cells() {
+                return formed ? structureCells : List.of();
+            }
             @Override public boolean conditionsMet() { return Context.this.conditionsMet(); }
+            @Override public List<gregtech.api.addon.platform.StructureProblem> diagnose() {
+                return gregtech.engine.multiblock.tracking.StructureDiagnostic.inspect(BehaviorMachineBlockEntity.this);
+            }
         };
         private final MachinePanel panelView = new MachinePanel() {
             @Override public boolean toggle(int index) { return Context.this.toggle(index); }
@@ -1390,7 +1434,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     public LargeMachineLayouts.Layout trackedLayout() {
-        return LargeMachineLayouts.layout(declaration.casing().machineType());
+        return gregtech.content.registry.MultiblockRegistration.layout(this);
     }
 
     public boolean acceptsTrackedPart(LargeMachineLayouts.Cell cell, net.minecraft.world.level.block.Block expected,
@@ -1398,7 +1442,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return expected == actual;
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return gregtech.engine.multiblock.tracking.LayoutStructures.behavior(this);
     }
 
@@ -1411,9 +1455,18 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (!now) clearStructureCaches();
     }
 
+    @Override public void onStructureFormed() {
+        if (trackedLayout() != null) behavior.onStructureFormed(context);
+    }
+
+    @Override public void onStructureBroken() {
+        if (trackedLayout() != null) behavior.onStructureBroken(context);
+    }
+
     private void clearStructureCaches() {
         energyParts = List.of();
         boundParts = List.of();
+        structureCells = List.of();
         repeatCounts = Map.of();
     }
 
@@ -1433,10 +1486,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             return false;
         }
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        var cells = new ArrayList<LargeMachineLayouts.Cell>(matchedCells.size());
         for (var fixed : matchedCells) {
             var matched = fixed.cell();
-            cells.add(matched);
             if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
                 parts.put(fixed.pos(), matched.role());
         }
@@ -1450,10 +1501,6 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releaseStructure);
         if (claimed == gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED) return false;
-        if (claimed == gregtech.engine.multiblock.tracking.StructureClaims.Result.APPLIED) {
-            gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, cells);
-            gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
-        }
         var found = new ArrayList<EnergyPart>();
         var bound = new ArrayList<BoundPart>();
         for (BlockPos cellPos : parts.keySet()) {
@@ -1468,7 +1515,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         energyParts = List.copyOf(found);
         boundParts = List.copyOf(bound);
         repeatCounts = Map.copyOf(counts);
+        var snapshot = new ArrayList<gregtech.api.addon.platform.StructureCell>(matchedCells.size() + repeatPlaced.size());
+        for (var fixed : matchedCells) snapshot.add(structureCell(fixed.pos(), fixed.cell()));
+        for (var repeated : repeatPlaced) snapshot.add(structureCell(repeated.pos(), repeated.cell()));
+        structureCells = List.copyOf(snapshot);
         return true;
+    }
+
+    private gregtech.api.addon.platform.StructureCell structureCell(BlockPos pos, LargeMachineLayouts.Cell cell) {
+        return new gregtech.api.addon.platform.StructureCell(pos,
+                gregtech.api.multiblock.StructureRole.valueOf(cell.role().name()), level.getBlockState(pos));
     }
 
     /** Placed parts stay bound while the addon machine is incomplete so a wand click keeps building. */
@@ -1503,9 +1559,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (!gregtech.engine.multiblock.tracking.StructureTracking.unloading(this))
             structureBindings.clear(this::releaseStructure);
         gregtech.engine.multiblock.tracking.StructureTracking.onRemoved(this);
-        energyParts = List.of();
-        boundParts = List.of();
-        repeatCounts = Map.of();
+        clearStructureCaches();
         formed = false;
         super.setRemoved();
     }
@@ -1805,35 +1859,27 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     // ── Structure ports ──────────────────────────────────────────────────
 
     private static boolean itemInput(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.ITEM_IO || role == MultiblockLayout.Role.ITEM_FLUID_IO
-                || role == MultiblockLayout.Role.ITEM_FLUID_INPUT || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT
-                || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT);
     }
 
     private static boolean itemOutput(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.ITEM_IO || role == MultiblockLayout.Role.ITEM_FLUID_IO
-                || role == MultiblockLayout.Role.ITEM_FLUID_OUTPUT || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.ITEM_OUTPUT);
     }
 
     private static boolean fluidInput(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.FLUID_INPUT || role == MultiblockLayout.Role.FLUID_IO
-                || role == MultiblockLayout.Role.ITEM_FLUID_IO || role == MultiblockLayout.Role.ITEM_FLUID_INPUT
-                || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT);
     }
 
     private static boolean fluidOutput(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.FLUID_OUTPUT || role == MultiblockLayout.Role.FLUID_IO
-                || role == MultiblockLayout.Role.ITEM_FLUID_IO || role == MultiblockLayout.Role.ITEM_FLUID_OUTPUT
-                || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT);
     }
 
     private static boolean energyInput(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.ENERGY_INPUT || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY_INPUT
-                || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.ENERGY_INPUT);
     }
 
     private static boolean energyOutput(MultiblockLayout.Role role) {
-        return role == MultiblockLayout.Role.ENERGY_OUTPUT || role == MultiblockLayout.Role.ITEM_FLUID_ENERGY;
+        return role != null && role.allows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT);
     }
 
     private boolean itemSlotAllows(int slot, boolean input) {
@@ -1851,12 +1897,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     @Override public IItemHandler portItems(MultiblockLayout.Role role) {
+        return portItems(role, null);
+    }
+
+    @Override public IItemHandler portItems(MultiblockLayout.Role role, MachineFace face) {
         if (!itemInput(role) && !itemOutput(role)) return null;
         return new IItemHandler() {
             @Override public int getSlots() { return items.getSlots(); }
             @Override public ItemStack getStackInSlot(int slot) { return items.getStackInSlot(slot); }
             @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return itemInput(role) && itemSlotAllows(slot, true) ? items.insertItem(slot, stack, simulate) : stack;
+                return isItemValid(slot, stack) ? items.insertItem(slot, stack, simulate) : stack;
             }
             @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 return itemOutput(role) && itemSlotAllows(slot, false)
@@ -1864,27 +1914,36 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             }
             @Override public int getSlotLimit(int slot) { return items.getSlotLimit(slot); }
             @Override public boolean isItemValid(int slot, ItemStack stack) {
-                return itemInput(role) && itemSlotAllows(slot, true) && items.isItemValid(slot, stack);
+                return itemInput(role) && itemSlotAllows(slot, true) && items.isItemValid(slot, stack)
+                        && behavior.canInsert(context, slot, stack)
+                        && behavior.canInsert(context, slot, stack, face);
             }
         };
     }
 
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role) {
+        return portFluids(role, null);
+    }
+
+    @Override public IFluidHandler portFluids(MultiblockLayout.Role role, MachineFace face) {
         if ((!fluidInput(role) && !fluidOutput(role)) || tanks.length == 0) return null;
         return new IFluidHandler() {
             @Override public int getTanks() { return tanks.length; }
             @Override public FluidStack getFluidInTank(int tank) { return tanks[tank].copy(); }
             @Override public int getTankCapacity(int tank) { return tanks[tank].capacity; }
             @Override public boolean isFluidValid(int tank, FluidStack stack) {
-                return fluidInput(role) && tankAllows(tank, true) && tanks[tank].fill(stack, true) > 0;
+                return fluidInput(role) && tankAllows(tank, true) && behavior.canFill(context, tank, stack)
+                        && behavior.canFill(context, tank, stack, face);
             }
             @Override public int fill(FluidStack stack, FluidAction action) {
                 if (!fluidInput(role) || stack == null || stack.isEmpty()) return 0;
                 int remaining = stack.getAmount();
                 int filled = 0;
                 for (int tank = 0; tank < tanks.length && remaining > 0; tank++) {
-                    if (!tankAllows(tank, true)) continue;
-                    int taken = tanks[tank].fill(new FluidStack(stack.getFluid(), remaining), action.simulate());
+                    if (!isFluidValid(tank, stack)) continue;
+                    var offer = stack.copy();
+                    offer.setAmount(remaining);
+                    int taken = behavior.acceptFluid(context, tank, offer, action.simulate());
                     filled += taken;
                     remaining -= taken;
                 }
@@ -1904,13 +1963,41 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 for (int tank = 0; tank < tanks.length && remaining > 0; tank++) {
                     if (!tankAllows(tank, false)) continue;
                     if (fluid != null && tanks[tank].fluid != fluid) continue;
+                    if (!out.isEmpty() && tanks[tank].fluid != out.getFluid()) continue;
                     FluidStack got = tanks[tank].drain(remaining, simulate);
                     if (got.isEmpty()) continue;
                     if (out.isEmpty()) out = got.copy();
                     else out.grow(got.getAmount());
                     remaining -= got.getAmount();
                 }
+                if (!simulate && !out.isEmpty()) setChanged();
                 return out;
+            }
+        };
+    }
+
+    @Override public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank) {
+        return portFluidTank(role, tank, null);
+    }
+
+    @Override public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank, MachineFace face) {
+        if (tank < 0 || tank >= tanks.length) return null;
+        return new IFluidHandler() {
+            public int getTanks() { return 1; }
+            public FluidStack getFluidInTank(int index) { return index == 0 ? tanks[tank].copy() : FluidStack.EMPTY; }
+            public int getTankCapacity(int index) { return index == 0 ? tanks[tank].capacity : 0; }
+            public boolean isFluidValid(int index, FluidStack stack) {
+                return index == 0 && fluidInput(role) && tankAllows(tank, true) && behavior.canFill(context, tank, stack)
+                        && behavior.canFill(context, tank, stack, face);
+            }
+            public int fill(FluidStack stack, FluidAction action) {
+                return isFluidValid(0, stack) ? behavior.acceptFluid(context, tank, stack, action.simulate()) : 0;
+            }
+            public FluidStack drain(FluidStack stack, FluidAction action) {
+                return !stack.isEmpty() && stack.getFluid() == tanks[tank].fluid ? drain(stack.getAmount(), action) : FluidStack.EMPTY;
+            }
+            public FluidStack drain(int amount, FluidAction action) {
+                return fluidOutput(role) && tankAllows(tank, false) ? context.drain(tank, amount, action.simulate()) : FluidStack.EMPTY;
             }
         };
     }
@@ -1936,6 +2023,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override public boolean emitsPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type) {
         return energyOutput(role) && declaration.emitsEnergy() && type != null && type == energyOutTag;
+    }
+    @Override public boolean acceptsPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type) {
+        return energyInput(role) && type != null && (type == auxiliaryTag || mainAccepts(type.getShortName()));
     }
 
     @Override public long portEnergyOutputSize(MultiblockLayout.Role role, GregTechTags.Tag type) {
@@ -1985,9 +2075,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override public long injectPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type,
                                            long size, long amount, boolean execute) {
-        if (!formed || !energyInput(role) || type == null) return 0;
+        return injectPortEnergy(role, type, null, size, amount, execute);
+    }
+
+    @Override public long injectPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type, MachineFace face,
+                                           long size, long amount, boolean execute) {
+        if (!formed || !energyInput(role) || type == null || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
+        Direction side = face == null ? null : world(face);
         if (auxiliaryTag != null && type == auxiliaryTag)
-            return injectAuxiliary(type.getShortName(), null, size, amount, execute);
-        return doInject(EnergyType.of(type.getShortName()), null, size, amount, execute);
+            return injectAuxiliary(type.getShortName(), side, size, amount, execute);
+        return mainAccepts(type.getShortName())
+                ? injectMain(EnergyType.of(type.getShortName()), side, size, amount, execute) : 0;
     }
 }

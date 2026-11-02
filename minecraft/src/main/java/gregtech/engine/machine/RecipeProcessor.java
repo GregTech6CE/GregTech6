@@ -41,6 +41,8 @@ public final class RecipeProcessor {
 
         int parallelLimit();
 
+        default boolean limitFluidOutputAccumulation() { return false; }
+
         boolean parallelScalesDuration();
 
         boolean cheapOverclocking();
@@ -461,8 +463,8 @@ public final class RecipeProcessor {
     }
 
     /**
-     * GT6 {@code MultiTileEntityBasicMachine.canOutput}: a batch may not exceed the free space in
-     * the output slots and output tanks.
+     * Bound batches by free output space, and apply GT6's separate fluid accumulation gate for
+     * controllers using the original buffers.
      *
      * <p>Without this cap a batch whose products cannot be delivered is started anyway; the machine
      * then retries the flush every tick and stays at 100 % progress forever. That is reachable
@@ -487,10 +489,32 @@ public final class RecipeProcessor {
 
         // Fluids: free capacity of the output tanks, filled the same way flush() does.
         if (recipe.mFluidOutputs.length > 0 && inventory.tanksOutput().length > 0) {
+            if (config.limitFluidOutputAccumulation() && fluidOutputBackedUp(recipe)) return 0;
             maxParallel = Math.min(maxParallel,
                     FluidOutputs.of(recipe.mFluidOutputs).largestFitting(inventory.tanksOutput(), maxParallel));
         }
         return maxParallel;
+    }
+
+    private boolean fluidOutputBackedUp(Recipe recipe) {
+        var tanks = io.inventory().tanksOutput();
+        if (recipe.mNeedsEmptyOutput) {
+            for (var tank : tanks) if (!tank.isEmpty()) return true;
+        }
+        // Check matching tanks even when spare empty tanks remain. Otherwise an unlimited tank
+        // keeps accepting the same product and the original accumulation stop never takes effect.
+        for (var output : recipe.mFluidOutputs) {
+            if (output == null || output.isEmpty()) continue;
+            var entry = gregtech.content.registry.GTFluids.entryForFluid(output.getFluid());
+            if (entry != null && entry.hasFlag(gregtech.content.data.RegisteredFluids.FluidFlags.VOID_OVERFLOW)) continue;
+            long limit = MachineFluidRules.outputBackpressure(output.getAmount(), config.parallelLimit());
+            for (var tank : tanks) {
+                if (!tank.isEmpty() && StackCompat.sameFluid(tank.getFluid(), output)) {
+                    if (tank.getAmount() >= limit) return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

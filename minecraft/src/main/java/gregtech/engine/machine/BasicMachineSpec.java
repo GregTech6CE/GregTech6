@@ -11,7 +11,6 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.energy.OriginalAdjacentEnergyRules;
 import gregtech.content.machine.OriginalBasicMachineRules;
 import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
-import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.multiblock.LargeMachineProcessingRules;
 import gregtech.engine.recipe.RecipeMap;
@@ -66,9 +65,8 @@ public record BasicMachineSpec(
         /** Skips six-face item and fluid auto-input. Not inferred from an output cell. */
         boolean suppressSideAutoInput,
         /**
-         * Output tanks have no finite capacity. This matches {@code sourceUnlimitedOutputs}:
-         * the thirteen original controllers and the fusion reactor. Distillation towers stay false
-         * and keep their own tank cap.
+         * Additional layouts may inherit unbounded output storage. Built-in GT6 recipe multiblocks
+         * configure their original buffers separately, including the production backpressure gate.
          */
         boolean unlimitedOutputTanks,
         /** Second input. Null when the machine has none. */
@@ -82,15 +80,7 @@ public record BasicMachineSpec(
         boolean startupEnergy) {
     /** Special built-in controllers take precedence over a layout with the same name. */
     private static MachineControllerKind builtInController(String machineName) {
-        return switch (machineName) {
-            case "massfab" -> MachineControllerKind.COMPACT_MATTER;
-            case "largemassfab" -> MachineControllerKind.MATTER;
-            case "distillationtower" -> MachineControllerKind.DISTILLATION;
-            default ->
-                SharedLargeMachineLayouts.cells(machineName) != null
-                        ? MachineControllerKind.LARGE_RECIPE
-                        : MachineControllerKind.BASIC;
-        };
+        return gregtech.content.multiblock.RecipeControllerFamilies.kind(machineName);
     }
 
     public BasicMachineSpec {

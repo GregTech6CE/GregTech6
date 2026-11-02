@@ -143,6 +143,7 @@ public final class CompiledPattern {
     }
 
     private static Matcher matcher(TrackedMultiblock machine, LargeMachineLayouts.Cell cell) {
+        gregtech.engine.multiblock.StructurePortHandlers.validate(machine, cell);
         List<Candidate> candidates = new ArrayList<>(1 + cell.alternatives().size());
         candidates.add(new Candidate(machine, cell, cell.part(), cell.plain()));
         for (var alternative : cell.alternatives()) {
@@ -154,7 +155,9 @@ public final class CompiledPattern {
                     cell.role(),
                     alternative.plain(),
                     cell.design(),
-                    List.of());
+                    List.of(),
+                    cell.ports());
+            gregtech.engine.multiblock.StructurePortHandlers.validate(machine, choice);
             candidates.add(new Candidate(machine, choice, alternative.part(), alternative.plain()));
         }
         return new Matcher(candidates.toArray(Candidate[]::new));
@@ -179,6 +182,15 @@ public final class CompiledPattern {
 
     public int fixedCount() {
         return fixed.length;
+    }
+
+    /** Original declaration, including every buildable alternative. */
+    public LargeMachineLayouts.Cell declaredCell(int index) {
+        return fixed[index].cell;
+    }
+
+    public LargeMachineLayouts.Cell declaredRepeatCell(int index) {
+        return repeatCells[index].cell;
     }
 
     public int dx(int index) {

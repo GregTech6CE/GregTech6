@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Multiblock tank controller (3x3x3 or 5x5x5). Size is determined by the block variant. */
-public class TankControllerBlock extends DirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+public class TankControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     private final int size;
     @Nullable private final TankValveSpec valveSpec;
 

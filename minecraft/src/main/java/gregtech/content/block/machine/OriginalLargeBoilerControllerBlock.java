@@ -36,7 +36,7 @@ import java.util.List;
 
 /** Material-specific GT6 large boiler main barometer, original IDs 17201–17205. */
 public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectionalBlock
-        implements EntityBlock, ToolInteractionTarget {
+        implements gregtech.engine.multiblock.StructurePreviewSource, ToolInteractionTarget {
     private final OriginalLargeBoilerSpecs.Variant variant;
 
     public OriginalLargeBoilerControllerBlock(OriginalLargeBoilerSpecs.Variant variant, Properties properties) {

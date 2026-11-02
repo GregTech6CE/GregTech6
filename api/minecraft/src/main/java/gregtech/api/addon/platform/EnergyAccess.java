@@ -59,10 +59,24 @@ public interface EnergyAccess {
     EnergyTransfer emitFromFaces(long packetSize, long packetCount);
 
     /**
+     * Emits through the formed structure's controller-backed energy-output parts. Each part's
+     * role and per-cell output faces are checked; the controller block's output faces are not used.
+     * Uses the declared output type/packet limits and debits only packets accepted by neighbors.
+     * An unformed structure or one without such parts accepts zero. Parts with their own energy
+     * storage instead use {@link #transferToPart}. Hosts predating this entry point reject the call.
+     */
+    default EnergyTransfer emitFromPorts(long packetSize, long packetCount) {
+        throw new UnsupportedOperationException("Structure port emission is not bound by this host");
+    }
+
+    /**
      * Sends {@code packetCount} packets of {@code packetSize} to the block entity at {@code target},
      * entering it through {@code side}. It uses the declared output type and packet limits and
      * spends {@code abs(packetSize)} stored units for each packet the target accepts.
-     * The declared output faces are not used. A null {@code side} means no side.
+     * The declared controller output faces are not used. On a multiblock the structure must be
+     * formed and {@code side} must identify an adjacent owned output part (or the controller);
+     * that part's role and per-cell face rules still apply. On a single-block machine a null
+     * {@code side} means no side.
      * A target in an unloaded chunk, without a block entity, or with no energy receiver accepts
      * nothing. A request above the declared maximum throws.
      */

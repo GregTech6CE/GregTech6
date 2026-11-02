@@ -57,7 +57,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     }
 
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final FluidTank fuel = new FluidTank(grade().inputMaximum() * 4, stack -> FuelRecipeMaps.Gas.containsInput(stack)) {
 
@@ -114,7 +114,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         setChanged();
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private java.util.List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
@@ -123,7 +123,10 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         for (var cell : gregtech.content.multiblock.TurbineStructure.LAYOUT.cells()) {
             var role = AxialStructureTransform.role(front, cell.right(), cell.up(), cell.back(), true);
             var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
-                    cell.right(), cell.up(), cell.back(), grade().wallId(), role);
+                    cell.right(), cell.up(), cell.back(), grade().wallId(), role, null,
+                    role == MultiblockLayout.Role.ENERGY_OUTPUT ? 3 : -1, java.util.List.of(),
+                    gregtech.content.multiblock.OriginalMultiblockPortRules.turbine(
+                            gregtech.api.multiblock.StructureRole.valueOf(role.name()), true));
             var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.right(), cell.up(), cell.back());
             cells.add(new gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell(
                     offset.getX(), offset.getY(), offset.getZ(), spec));
@@ -234,10 +237,8 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
 
     private void pushOutput() {
         if (ruStored <= 0) return;
-        var side = front().getOpposite();
-        var pos = worldPosition.relative(side, 4);
-        IEnergyBlock receiver = level.hasChunkAt(pos) ? EnergyBlockViews.view(level.getBlockEntity(pos)) : null;
-        if (receiver != null && receiver.doEnergyInjection(GregTechTags.Energy.RU, side.getOpposite(), ruStored, 1, true) > 0) {
+        if (gregtech.engine.multiblock.StructureOutputs.energy(this,
+                gregtech.content.multiblock.OriginalMultiblockOutputRules.SHAFT, GregTechTags.Energy.RU, ruStored, 1) > 0) {
             emitted = true;
             ruStored = 0;
             setChanged();
@@ -267,6 +268,14 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     @Override
     public long portEnergyOutputSize(MultiblockLayout.Role role, GregTechTags.Tag type) {
         return emitsPortEnergy(role, type) ? grade().output() : 0;
+    }
+
+    @Override
+    public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank) {
+        if (role == null || tank < 0 || tank >= getTanks()) return null;
+        return new gregtech.engine.fluid.FluidPort(tank == 0 ? fuel : exhaust[tank - 1],
+                tank == 0 && role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT),
+                tank > 0 && role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT));
     }
 
     @Override

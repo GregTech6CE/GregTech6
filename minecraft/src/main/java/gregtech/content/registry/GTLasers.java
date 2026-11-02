@@ -147,7 +147,9 @@ public final class GTLasers {
         ZPM_DISCHARGER_ELITE = ZPM_DISCHARGER_BASIC;
 
         // F8: Logistics Core
-        LOGISTICS_CORE = reg("logistics_core", () -> new gregtech.content.block.machine.LogisticsCoreControllerBlock(laserProps()));
+        LOGISTICS_CORE = MultiblockRegistration.register(gregtech.engine.multiblock.ControllerDeclaration.multiblock("gt6ce", "logistics_core",
+                () -> new gregtech.content.block.machine.LogisticsCoreControllerBlock(laserProps()),
+                gregtech.content.multiblock.ControllerDeclarations.LOGISTICS), GTLasers::reg);
 //?}
     }
 

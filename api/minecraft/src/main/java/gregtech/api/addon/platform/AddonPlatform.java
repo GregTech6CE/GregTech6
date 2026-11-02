@@ -37,6 +37,14 @@ public final class AddonPlatform {
         /** Host bridge for AddonStructures; addons must not implement or call Services. */
         void structureChanged(Level level, BlockPos pos);
 
+        default java.util.List<StructureProblem> diagnoseStructure(Level level, BlockPos pos) {
+            throw new UnsupportedOperationException("This host does not expose structure diagnosis");
+        }
+
+        default net.minecraft.network.chat.Component describeStructureProblem(StructureProblem problem) {
+            throw new UnsupportedOperationException("This host does not expose structure diagnosis");
+        }
+
         ItemStack stack(String prefix, String material, int count);
 
         /** Integrated circuit {@code configuration}, or an empty stack when that item is not registered yet. */

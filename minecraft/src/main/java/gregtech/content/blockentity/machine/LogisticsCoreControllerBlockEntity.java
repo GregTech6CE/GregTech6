@@ -67,7 +67,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
         super(GTBlockEntities.LOGISTICS_CORE.get(), pos, state);
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return gregtech.content.multiblock.SpecialStructures.logistics(this);
     }
     @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {

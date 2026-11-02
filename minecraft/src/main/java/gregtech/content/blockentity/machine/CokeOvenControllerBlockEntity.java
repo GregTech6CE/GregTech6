@@ -46,7 +46,7 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
 //?}
     private int ignitionTicks;
     public boolean ignitionReady() { return ignitionTicks > 0; }
-    private BlockPos fluidOutputTarget;
+    private gregtech.engine.multiblock.StructureOutput fluidOutputTarget;
     public CokeOvenControllerBlockEntity(BlockPos pos,BlockState state) {
         super(gregtech.content.registry.GTBlockEntities.COKE_OVEN.get(),pos,state);
         setSpec(gregtech.content.block.machine.CokeOvenControllerBlock.makeSpec());
@@ -54,7 +54,6 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
     @Override public void setSpec(gregtech.engine.machine.BasicMachineSpec spec) {
         super.setSpec(spec);getTanksOutput()[0].setCapacity(Long.MAX_VALUE);
     }
-    @Override protected java.util.List<LargeMachineLayouts.Cell> structureCells() {return LargeMachineLayouts.fromShared(OriginalCokeOvenRules.cells());}
     @Override protected void beforeMachineTick() {ignitionTicks=OriginalCokeOvenRules.tickIgnition(ignitionTicks);}
     @Override protected boolean recipeStartAllowed() {return ignitionTicks>0;}
     @Override protected void onProcessFinished() {ignitionTicks=OriginalCokeOvenRules.IGNITION_TICKS;}
@@ -63,28 +62,22 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
         if(!level.isClientSide) {ignitionTicks=OriginalCokeOvenRules.IGNITION_TICKS;setChanged();}
         return 10000;
     }
-    @Override protected IFluidHandler automaticFluidOutputTarget(Level level,BlockPos pos,Direction absolute) {
-        var output=getTanksOutput()[0].getFluid();if(output.isEmpty())return null;
-        if(fluidOutputTarget!=null && level.hasChunkAt(fluidOutputTarget)) {
-            var cached=fluidHandler(fluidOutputTarget);
-            if(cached!=null && cached.fill(output.copy(),IFluidHandler.FluidAction.SIMULATE)>0)return cached;
-        }
+    @Override protected void autoOutputFluids(Level level,BlockPos pos,int side) {
+        var tank=getTanksOutput()[0];if(tank.isEmpty())return;
+        if(fluidOutputTarget!=null && gregtech.engine.multiblock.StructureOutputs.fluid(
+                this,fluidOutputTarget,getTanksInput().length,tank,Integer.MAX_VALUE)>0)return;
         fluidOutputTarget=null;
-        var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        for(var offset:OriginalCokeOvenRules.fluidTargets()) {
-            var target=pos.relative(front.getClockWise(),offset.x()).above(offset.y()).relative(front.getOpposite(),offset.z());
-            if(!level.hasChunkAt(target))continue;
-            var handler=fluidHandler(target);if(handler==null)continue;
-            if(handler.fill(output.copy(),IFluidHandler.FluidAction.SIMULATE)>0) {fluidOutputTarget=target;return handler;}
+        for(var target:OriginalMultiblockOutputRules.COKE_FLUIDS) {
+            if(gregtech.engine.multiblock.StructureOutputs.fluid(this,target,getTanksInput().length,tank,Integer.MAX_VALUE)>0) {
+                fluidOutputTarget=target;return;
+            }
         }
-        return null;
     }
+    @Override protected void autoOutputItems(Level level,BlockPos pos,int side) {} // GT6 has no automatic item outlet.
 //? if >=1.21.1 {
-    /*private IFluidHandler fluidHandler(BlockPos pos) {return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,pos,Direction.UP);}
-    @Override public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+    /*@Override public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);tag.putInt("gt.coke_ignition",ignitionTicks);
 *///?} else {
-    private IFluidHandler fluidHandler(BlockPos pos) {var entity=level.getBlockEntity(pos); return entity==null?null:entity.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,Direction.UP).resolve().orElse(null);}
     @Override public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);tag.putInt("gt.coke_ignition",ignitionTicks);
 //?}

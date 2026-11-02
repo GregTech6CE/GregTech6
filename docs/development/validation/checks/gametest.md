@@ -24,6 +24,12 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 物品管道的 `ItemPipeRoutingTests` 覆盖最近出口饱和后续搜、逐路径带宽、库存更换与提前唤醒、含水状态和普通盖板不重建、取回器与 I/O 失效、拆管恢复及卸载回调保护。夹具使用竖直柱避免相邻测试互相连接；卸载用例只验证回调使快照失效，真实跨区块卸载与重新加载仍需游戏内确认。
 
+多方块回归通过 `StructureApiTestAddon` 从公共 SPI 注册测试主控，不直接调用内部注册器；声明与行为实现只依赖公开 API。测试的 `gt6ce_api_test` 物品命名空间只存在于 test source set，GameTest 本身仍使用 `gt6ce` 命名空间。它验证实际候选数量、同一标签内换方块的失效检查、重复层快照，以及成型和拆除回调的顺序；不代替客户端预览或全部原版机器业务功能验收。
+
+上述生命周期用例还检查固定和重复层部件的 `design`：成型时应用，失效时恢复，修复及拆除后不残留；更新包必须携带同一编号。这只验证服务端状态和同步负载，实际贴图切换、渲染层及 Jade 的 Shift 展开仍需客户端验收。
+
+端口用例使用真实代理壁板的 Forge/NeoForge 能力调用，检查四个水平朝向、重复层、实际侧面回调、槽位选择、物品 ID/流体标签过滤、无方向调用限制、模拟不消耗、流体不混合，以及拆除和布局重载后缓存能力的权限变化。另检查所有通用配方主控对 `FLUID_INPUT`、`FLUID_IO`、`ITEM_IO` 的接入，验证越界槽位和未知资源配置会被拒绝，以及能源从结构输出口发出时的面限制、实际扣减与拒绝后守恒。
+
 #### 全量表
 
 `minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`。每行一个 issue 回归案例，同一 issue 可以有多行；`level` 列决定该行的断言方式。单输入形态转换中，单 variant 在任意槽匹配；多 variant 按完整网格的槽位序号（从 0 开始，行优先）取模选择输出（见 `setup`）；多放物品的网格不匹配。多物品配方由 pattern/相对位置区分输出，不适用这条规则。
@@ -107,7 +113,7 @@ shapeless 配方的形状留空。R/T/P 行留空。
 
 ### 结构模板
 
-GameTest 只保留一份 canonical 模板 `minecraft/src/test/templates/test_empty.nbt`，由 `minecraft/build.gradle` 的 `processTestResources` 按节点映射到 `data/gt6ce/structures`（1.20.1）或 `data/gt6ce/structure`（1.21.1）。
+GameTest 只保留一份 canonical 模板 `minecraft/src/test/templates/test_empty.nbt`，空场地范围为 6×5×5，供测试代码自行搭建方块。由 `minecraft/build.gradle` 的 `processTestResources` 按节点映射到 `data/gt6ce/structures`（1.20.1）或 `data/gt6ce/structure`（1.21.1）。
 
 不要把 NBT 放进 `gradle/`、`src/main/resources` 或每个版本节点各复制一份；单 namespace `gt6ce` 配单模板即可。复杂结构可以在测试代码中用 `setBlock` 和 helper 搭建，只有确实需要复用的复杂布局才增加模板。
 
@@ -125,6 +131,7 @@ GameTest 只保留一份 canonical 模板 `minecraft/src/test/templates/test_emp
 - 两个节点分别运行；只运行一个节点时，明确写出未覆盖节点。
 - 首次运行会下载游戏资源；EULA 由运行环境处理，不把 `eula.txt` 提交到仓库。
 - 不放宽断言或跳过用例来绕过失败。
+- 核对游戏日志中实际执行和通过的测试数；加载器在启动失败后也可能返回零退出码，不能只看 Gradle 的 `BUILD SUCCESSFUL`。
 - 运行目录与堆参数按需指定，完整输出放 `work/<任务名>/`。
 
 ## 运行命令
@@ -139,3 +146,9 @@ GameTest 只保留一份 canonical 模板 `minecraft/src/test/templates/test_emp
 ```
 
 `-PgameTestDirectory` 由 Gradle 按节点项目目录解析；要放到仓库根 `work/` 时使用上面的 `../../../work/...`。
+
+主动输出回归检查四朝向、槽位与过滤交集、模拟后实际扣减和拆除后的停传。诊断回归从公开入口检查数量差额、材料不一致、可选方块、重复层、占用主控和未加载区块，并确认查询不改变归属、不加载区块。客户端放大镜排版及全部内置机器生产行为仍需游戏内验收。
+
+`MultiblockBehaviorApiTests.partsOpenTheControllerMenuAndInvalidateWithTheStructure` 经真实服务端右键入口检查端口、普通方块和重复层部件开窗，以及潜行、液体容器、距离和拆除后的失效。大型结构还需确认距离超过主控八格时，部件开窗保持有效并使用主控真实库存；客户端画面和工具、覆盖板的完整操作链仍需游戏内验收。
+
+共享模板的 NBT `size` 为 6×5×5，为重复层与部件测试提供纵向空间；模板尺寸变化后须重跑所有既有 GameTest，而非只跑新增多方块用例。端口回归同时覆盖关闭闸门、面输出到空气的物品守恒，以及同流体多个输出槽的背压。菜单回归检查主方块和部件一致的 8 格边界。

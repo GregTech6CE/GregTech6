@@ -32,6 +32,23 @@ public interface StructureAccess {
     List<BoundPart> parts();
 
     /**
+     * Complete matched layout in declaration order (fixed cells, then repeat copies).
+     * Empty for unformed or single-block machines. Unlike {@link #parts()}, includes ordinary
+     * casings and plain world blocks. The host reuses this snapshot until it evaluates new cells.
+     */
+    default List<StructureCell> cells() { return List.of(); }
+
+    /**
+     * Explicit read-only scan using the host's compiled matching rules, including counts and ownership.
+     * Call when requested by a player or diagnostic tool, not every tick. Empty means no problem was
+     * found; it does not force formation, claim parts, or promise the world stays unchanged.
+     * Older hosts throw instead of presenting an unsupported scan as success.
+     */
+    default List<StructureProblem> diagnose() {
+        throw new UnsupportedOperationException("This host does not expose structure diagnosis");
+    }
+
+    /**
      * True when no bound part is a condition, or every bound condition part is satisfied.
      * An unformed structure has no bound parts, so this is true. The behavior tick still runs.
      */

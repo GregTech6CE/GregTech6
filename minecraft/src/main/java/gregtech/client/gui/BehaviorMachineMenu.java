@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -24,11 +23,11 @@ import net.minecraftforge.items.SlotItemHandler;
 //?}
 
 /** One menu for every behavior machine. Slot positions come from the declaration. */
-public class BehaviorMachineMenu extends AbstractContainerMenu implements BehaviorMachineMenuView {
+public class BehaviorMachineMenu extends AbstractContainerMenu implements BehaviorMachineMenuView, gregtech.engine.inventory.MultiblockMenuAccess.Host {
     private static final int PLAYER_SLOTS = 36;
     private final BehaviorMachineBlockEntity machine;
     private final ContainerData data;
-    private final ContainerLevelAccess access;
+    private final gregtech.engine.inventory.MultiblockMenuAccess menuAccess;
     private final int machineSlots;
 
     public BehaviorMachineMenu(int id, Inventory inventory, FriendlyByteBuf buffer) {
@@ -40,7 +39,7 @@ public class BehaviorMachineMenu extends AbstractContainerMenu implements Behavi
         this.machine = machine;
         int values = 7 + machine.tanks() * 2;
         this.data = inventory.player.level().isClientSide ? new SimpleContainerData(values) : machine.menuData();
-        this.access = ContainerLevelAccess.create(machine.getLevel(), machine.getBlockPos());
+        this.menuAccess = new gregtech.engine.inventory.MultiblockMenuAccess(machine);
         addDataSlots(new IntContainerData(data));
         BehaviorMachine declaration = machine.declaration();
         for (int slot = 0; slot < declaration.items().size(); slot++) {
@@ -119,10 +118,8 @@ public class BehaviorMachineMenu extends AbstractContainerMenu implements Behavi
 
     @Override
     public boolean stillValid(Player player) {
-        return !machine.isRemoved() && machine.getLevel() == player.level()
-                && player.level().hasChunkAt(machine.getBlockPos())
-                && player.level().getBlockEntity(machine.getBlockPos()) == machine
-                // Retain the loader's reach calculation (including Forge's reach attribute).
-                && stillValid(access, player, machine.getBlockState().getBlock());
+        return menuAccess.stillValid(player);
     }
+
+    @Override public gregtech.engine.inventory.MultiblockMenuAccess multiblockMenuAccess() { return menuAccess; }
 }

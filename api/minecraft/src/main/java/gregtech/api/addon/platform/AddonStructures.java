@@ -5,9 +5,29 @@ import java.util.Objects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-/** Notifications for addon-owned data used by a multiblock's matching rules. */
+/** Matching notifications and on-demand diagnostics shared by native and addon multiblocks. */
 public final class AddonStructures {
     private AddonStructures() {}
+
+    /**
+     * Inspects a controller, or the controller owning a claimed part, on the logical server thread.
+     * Never loads chunks, forces formation or claims parts. Returns immutable, detached details;
+     * an empty list means the current definition has no detected failures. An unloaded target yields
+     * {@link StructureProblem.Unloaded}; a non-controller or client world yields
+     * {@link StructureProblem.Unavailable}. This is a full scan intended for tools, not every tick.
+     * Older hosts throw {@link UnsupportedOperationException} rather than report false success.
+     */
+    public static java.util.List<StructureProblem> diagnose(Level level, BlockPos pos) {
+        Objects.requireNonNull(level, "level");
+        Objects.requireNonNull(pos, "pos");
+        if (level.isClientSide) return java.util.List.of(new StructureProblem.Unavailable(pos));
+        return java.util.List.copyOf(AddonPlatform.services().diagnoseStructure(level, pos.immutable()));
+    }
+
+    /** Localizable text used by the host magnifier; callers may also render the typed fields themselves. */
+    public static net.minecraft.network.chat.Component describe(StructureProblem problem) {
+        return AddonPlatform.services().describeStructureProblem(Objects.requireNonNull(problem, "problem"));
+    }
 
     /**
      * Notify after matching-relevant data at {@code pos} changes without a block-state change.

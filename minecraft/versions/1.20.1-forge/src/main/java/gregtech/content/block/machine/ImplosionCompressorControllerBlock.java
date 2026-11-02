@@ -1,13 +1,13 @@
 package gregtech.content.block.machine;
 
 import gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity;
+import gregtech.engine.multiblock.StructurePreviewSource;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 /** F6.11: Implosion Compressor multiblock controller. */
-public class ImplosionCompressorControllerBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class ImplosionCompressorControllerBlock extends HorizontalDirectionalBlock implements StructurePreviewSource {
     public ImplosionCompressorControllerBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));

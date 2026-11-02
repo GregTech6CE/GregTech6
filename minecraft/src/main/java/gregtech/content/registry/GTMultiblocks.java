@@ -36,7 +36,7 @@ public final class GTMultiblocks {
         if (!NAMED.isEmpty()) throw new IllegalStateException("Multiblocks registered twice");
         GTHeatExchangers.registerAll();
         for (var part : SharedLargeMachineParts.DEFINITIONS)
-            NAMED.put(part.originalId(), RegisteredBlock.register(part.name(), () -> MultiblockBlockFactory.create(part), GTMultiblocks::blockItem));
+            NAMED.put(part.originalId(), controller(MultiblockBlockFactory.declaration(part)));
         for (var part : OriginalMultiblockPartData.ALL)
             if (!NAMED.containsKey(part.originalId()))
                 NAMED.put(part.originalId(), RegisteredBlock.register(part.path(), () -> MultiblockBlockFactory.structural(part)));
@@ -46,16 +46,16 @@ public final class GTMultiblocks {
         IMPLOSION_COMPRESSOR_WALL = findPart(18023); LARGE_NIOBIUM_TITANIUM_COIL = findPart(18041);
         LARGE_COPPER_COIL = findPart(18040); LARGE_IRIDIUM_COIL = findPart(18045);
         DENSE_TITANIUM_WALL = findPart(18026); TUNGSTEN_WALL = findPart(18004); LIGHTNING_ROD = findPart(18104);
-        COKE_OVEN_MAIN = controller("coke_oven_main", () -> new CokeOvenControllerBlock(properties(6)));
-        CRYO_DISTILLATION_MAIN = controller("cryo_distillation_main", () -> new CryoDistillationControllerBlock(properties(6)));
-        HEAT_EXCHANGER_MAIN = controller("heat_exchanger_main", () -> new LargeHeatExchangerControllerBlock(properties(6)));
+        COKE_OVEN_MAIN = controller("coke_oven_main", () -> new CokeOvenControllerBlock(properties(6)), ControllerDeclarations.COKE_OVEN);
+        CRYO_DISTILLATION_MAIN = controller("cryo_distillation_main", () -> new CryoDistillationControllerBlock(properties(6)), ControllerDeclarations.CRYO_DISTILLATION);
+        HEAT_EXCHANGER_MAIN = controller("heat_exchanger_main", () -> new LargeHeatExchangerControllerBlock(properties(6)), ControllerDeclarations.HEAT_EXCHANGER);
         //? if >=1.21.1 {
-        /*LOGISTICS_CORE = controller("logistics_core", () -> new LogisticsCoreControllerBlock(properties(6)));
+        /*LOGISTICS_CORE = controller("logistics_core", () -> new LogisticsCoreControllerBlock(properties(6)), ControllerDeclarations.LOGISTICS);
         DISTILLATION_TOWER_MAIN = RegisteredBlock.reference("distillation_tower_main");
         *///?} else {
         LOGISTICS_CORE = RegisteredBlock.reference("logistics_core");
-        IMPLOSION_COMPRESSOR_MAIN = controller("implosion_compressor_main", () -> new ImplosionCompressorControllerBlock(properties(12.5f)));
-        FUSION_REACTOR_MAIN = controller("fusion_reactor_main", () -> new FusionReactorControllerBlock(properties(12.5f)));
+        IMPLOSION_COMPRESSOR_MAIN = controller("implosion_compressor_main", () -> new ImplosionCompressorControllerBlock(properties(12.5f)), ControllerDeclarations.IMPLOSION);
+        FUSION_REACTOR_MAIN = controller("fusion_reactor_main", () -> new FusionReactorControllerBlock(properties(12.5f)), ControllerDeclarations.FUSION);
         var original = OriginalMultiblockMachineParameters.distillationTower();
         var spec = new gregtech.engine.machine.BasicMachineSpec(original.id(), original.material(),
                 original.machineName(), original.energy().type().name(), original.energy().tier(), original.energy().energyIn(), original.energy().energyOut(),
@@ -125,8 +125,15 @@ public final class GTMultiblocks {
     private static BlockBehaviour.Properties properties(float hardness) {
         return BlockBehaviour.Properties.of().strength(hardness, hardness).requiresCorrectToolForDrops();
     }
-    private static RegisteredBlock<Block> controller(String id, java.util.function.Supplier<Block> factory) {
-        var block = RegisteredBlock.register(id, factory, GTMultiblocks::blockItem); CONTROLLERS.put(id, block); return block;
+    private static RegisteredBlock<Block> controller(String id, java.util.function.Supplier<Block> factory,
+            gregtech.engine.multiblock.ControllerBinding<?> structure) {
+        return controller(gregtech.engine.multiblock.ControllerDeclaration.multiblock("gt6ce", id, factory, structure));
+    }
+    private static RegisteredBlock<Block> controller(gregtech.engine.multiblock.ControllerDeclaration<Block> declaration) {
+        var block = MultiblockRegistration.register(declaration,
+                (path, create) -> RegisteredBlock.register(path, create, GTMultiblocks::blockItem));
+        CONTROLLERS.put(declaration.id().getPath(), block);
+        return block;
     }
     /** Structural parts stack to 64; controllers use the same limit as other machines. */
     private static BlockItem blockItem(Block block) {

@@ -56,6 +56,13 @@ public final class AddonMachines {
     private static List<AcceptedMachine> machines = List.of();
     private static List<AcceptedBehavior> behaviorMachines = List.of();
     private static List<AcceptedFuel> fuelGenerators = List.of();
+    private static java.util.Map<String, String> controllerStructures = java.util.Map.of();
+
+    /** Validated controller-to-layout association, keyed by the real block id rather than its display/type name. */
+    public static String structureName(String namespace, String blockId) {
+        return controllerStructures.get(namespace + ":" + blockId);
+    }
+
     private static List<AcceptedCompressedGas> compressedGasTanks = List.of();
     private static List<StructurePart> structureParts = List.of();
     private static java.util.Map<String, StructurePart> partsByName = java.util.Map.of();
@@ -155,25 +162,11 @@ public final class AddonMachines {
         Objects.requireNonNull(loader, "loader");
         for (AddonMachineContributor contributor : ServiceLoader.load(AddonMachineContributor.class, loader)) {
             try {
-                var recipes = new ArrayList<RecipeMapSpec>();
-                var fuels = new ArrayList<RecipeMapSpec>();
-                for (RecipeTable table : contributor.recipeTables()) (table.fuel() ? fuels : recipes).add(spec(table));
-                var machines = new ArrayList<AddonMachineDefinition>();
-                var behavior = new ArrayList<BehaviorMachine>();
-                var generators = new ArrayList<FuelGenerator>();
-                for (AddonMachine machine : contributor.addonMachines()) {
-                    if (machine instanceof RecipeMachine recipe) machines.add(definition(recipe));
-                    else if (machine instanceof BehaviorMachine behaviorMachine) behavior.add(behaviorMachine);
-                    else generators.add((FuelGenerator) machine);
-                }
-                enqueue(
+                enqueueContributor(
                         contributor.addonId(),
-                        recipes,
-                        machines,
+                        contributor.recipeTables(),
+                        contributor.addonMachines(),
                         contributor.structureLayouts(),
-                        behavior,
-                        fuels,
-                        generators,
                         contributor.layoutParts(),
                         contributor.fluidPipes(),
                         contributor.itemPipes(),
@@ -413,6 +406,21 @@ public final class AddonMachines {
             List<AddonMachine> machines,
             List<StructureLayout> layouts,
             List<LayoutPart> parts) {
+        enqueueContributor(addonId, tables, machines, layouts, parts, List.of(), List.of(), List.of());
+    }
+
+    /** Service loading and direct/script submissions must share structure normalization and validation. */
+    private static void enqueueContributor(
+            String addonId,
+            List<RecipeTable> tables,
+            List<AddonMachine> machines,
+            List<StructureLayout> layouts,
+            List<LayoutPart> parts,
+            List<FluidPipeDeclaration> fluidPipes,
+            List<ItemPipeDeclaration> itemPipes,
+            List<CompressedGasTankDeclaration> tanks) {
+        var declarations = AddonMachineDeclarations.resolve(
+                Objects.requireNonNull(machines, "machines"), Objects.requireNonNull(layouts, "layouts"));
         var recipes = new ArrayList<RecipeMapSpec>();
         var fuels = new ArrayList<RecipeMapSpec>();
         for (RecipeTable table : Objects.requireNonNull(tables, "tables"))
@@ -420,23 +428,26 @@ public final class AddonMachines {
         var definitions = new ArrayList<AddonMachineDefinition>();
         var behavior = new ArrayList<BehaviorMachine>();
         var generators = new ArrayList<FuelGenerator>();
-        for (AddonMachine machine : Objects.requireNonNull(machines, "machines")) {
+        for (AddonMachine machine : declarations.machines()) {
             if (machine instanceof RecipeMachine recipe) definitions.add(definition(recipe));
             else if (machine instanceof BehaviorMachine behaviorMachine) behavior.add(behaviorMachine);
-            else generators.add((FuelGenerator) machine);
+            else if (machine instanceof FuelGenerator generator) generators.add(generator);
+            else
+                throw new IllegalArgumentException(
+                        "Unsupported machine declaration: " + machine.getClass().getName());
         }
         enqueue(
                 addonId,
                 recipes,
                 definitions,
-                Objects.requireNonNull(layouts, "layouts"),
+                declarations.layouts(),
                 behavior,
                 fuels,
                 generators,
                 Objects.requireNonNull(parts, "parts"),
-                List.of(),
-                List.of(),
-                List.of());
+                fluidPipes,
+                itemPipes,
+                tanks);
     }
 
     /** Direct queue for {@link LayoutPart}, including parts that declare slots, a tick, a click or a field. */
@@ -748,6 +759,23 @@ public final class AddonMachines {
             generatorNames.add(generator.declaration().casing().machineType());
         var acceptedBehavior = behavior(
                 machineOwner, machineSignature, idOwner, reservedMachineNames, generatorNames, mapOwner, fuelOwner);
+        var bindings = new LinkedHashMap<String, String>();
+        for (var machine : acceptedMachines) {
+            var parameters = machine.definition().parameters();
+            if (machine.definition().kind() == MachineControllerKind.LARGE_RECIPE)
+                bindings.put(machine.addonId() + ":" + parameters.id(), parameters.machineName());
+        }
+        for (var generator : acceptedGenerators) {
+            var casing = generator.declaration().casing();
+            if (generator.declaration().multi())
+                bindings.put(generator.addonId() + ":" + casing.id(), casing.machineType());
+        }
+        for (var machine : acceptedBehavior) {
+            var casing = machine.declaration().casing();
+            if (layoutNames.contains(casing.machineType()))
+                bindings.put(machine.addonId() + ":" + casing.id(), casing.machineType());
+        }
+        controllerStructures = java.util.Map.copyOf(bindings);
         for (PreparedLayout layout : preparedLayouts) SharedLargeMachineLayouts.add(layout.machineName, layout.layout);
         SharedLargeMachineLayouts.freeze();
         recipeMaps = List.copyOf(acceptedMaps);
@@ -1087,7 +1115,19 @@ public final class AddonMachines {
             repeats.add(new SharedLargeMachineLayouts.Repeat(
                     repeat.key(), repeat.up(), repeat.min(), repeat.max(), repeat.step(), repeat.height(), group));
         }
-        return new SharedLargeMachineLayouts.Layout(List.copyOf(cells), List.copyOf(repeats));
+        for (var constraint : layout.constraints()) {
+            var match = constraint.selection().match();
+            if (match != null) validateConstraintMatch(source, layout.name(), match);
+        }
+        return new SharedLargeMachineLayouts.Layout(List.copyOf(cells), List.copyOf(repeats), layout.constraints());
+    }
+
+    private static void validateConstraintMatch(String source, String layout, CellMatch match) {
+        if (match instanceof CellMatch.Part part && SharedLargeMachineParts.idForName(part.name()) < 0)
+            throw new IllegalStateException(
+                    source + " layout '" + layout + "' constraint uses unknown part '" + part.name() + "'");
+        if (match instanceof CellMatch.OneOf one)
+            for (var member : one.members()) validateConstraintMatch(source, layout, member);
     }
 
     /** Fixed cells only. Use {@link #sharedLayout} when the layout may repeat. */
@@ -1107,7 +1147,8 @@ public final class AddonMachines {
                 role,
                 primary.plain(),
                 cell.design(),
-                choices.subList(1, choices.size()));
+                choices.subList(1, choices.size()),
+                cell.ports());
     }
 
     private static List<SharedLargeMachineLayouts.Choice> sharedChoices(

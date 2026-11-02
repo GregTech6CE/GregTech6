@@ -8,21 +8,30 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * A multiblock layout bound by name. The name equals the controller {@code machineType}.
- * Layouts are not inlined into a machine declaration.
+ * A named, reusable multiblock layout. Bind it explicitly with
+ * {@code AddonMachine.withStructure(layout)}. The legacy contributor layout list requires
+ * the name to equal the controller's {@code machineType}.
  *
  * @param name the layout name
  * @param cells fixed cells
  * @param repeats repeatable layer groups
+ * @param constraints rules over the matched world cells
  */
-public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRepeat> repeats) {
+public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRepeat> repeats,
+                              List<StructureConstraint> constraints) {
+    /** Retained for existing callers; a layout without aggregate constraints. */
+    public StructureLayout(String name, List<LayoutCell> cells, List<LayoutRepeat> repeats) {
+        this(name, cells, repeats, List.of());
+    }
+
     public StructureLayout {
         if (!AddonNames.matches(AddonNames.MACHINE_TYPE, name))
             throw new IllegalArgumentException("Invalid layout name: " + name);
-        if (cells == null || repeats == null)
+        if (cells == null || repeats == null || constraints == null)
             throw new IllegalArgumentException("Missing structure layout lists");
         cells = List.copyOf(cells);
         repeats = List.copyOf(repeats);
+        constraints = List.copyOf(constraints);
         if (cells.isEmpty() && repeats.isEmpty())
             throw new IllegalArgumentException("Layout '" + name + "' is empty");
         var seen = new HashSet<LayoutPosition>();
@@ -55,7 +64,11 @@ public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRe
                 }
             }
         }
+        StructureConstraint.validate(cells, repeats, constraints);
     }
+
+    /** Starts validated horizontal character layers anchored at the controller. */
+    public static StructurePattern pattern(String name) { return StructurePattern.builder(name); }
 
     public static Builder builder(String name) { return new Builder(name); }
 
@@ -63,6 +76,7 @@ public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRe
         private final String name;
         private final List<LayoutCell> cells = new ArrayList<>();
         private final List<LayoutRepeat> repeats = new ArrayList<>();
+        private final List<StructureConstraint> constraints = new ArrayList<>();
 
         private Builder(String name) { this.name = name; }
 
@@ -87,8 +101,14 @@ public record StructureLayout(String name, List<LayoutCell> cells, List<LayoutRe
             return this;
         }
 
+        /** Adds a rule evaluated against the actual world match. */
+        public Builder require(StructureConstraint constraint) {
+            constraints.add(java.util.Objects.requireNonNull(constraint, "constraint"));
+            return this;
+        }
+
         public StructureLayout build() {
-            return new StructureLayout(name, cells, repeats);
+            return new StructureLayout(name, cells, repeats, constraints);
         }
     }
 

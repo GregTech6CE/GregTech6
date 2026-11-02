@@ -1,5 +1,7 @@
 package gregtech.content.multiblock;
 
+import gregtech.api.multiblock.CellMatch;
+import gregtech.api.multiblock.StructureLayout;
 import gregtech.api.multiblock.StructureRole;
 import java.util.*;
 
@@ -12,23 +14,22 @@ public final class SharedLargeCrucibleStructure {
     public static final List<Cell> CELLS;
 
     static {
-        var cells = new ArrayList<Cell>();
-        for (int y = 0; y < 3; y++)
-            for (int x = -1; x <= 1; x++)
-                for (int z = -1; z <= 1; z++) {
-                    if (x == 0 && z == 0) {
-                        if (y > 0) cells.add(new Cell(x, y, z, StructureRole.CASING, true));
-                        continue;
-                    }
-                    cells.add(new Cell(
-                            x,
-                            y,
-                            z,
-                            y == 0
-                                    ? StructureRole.ENERGY_INPUT
-                                    : y == 1 ? StructureRole.CRUCIBLE : StructureRole.ITEM_FLUID_IO,
-                            false));
-                }
-        CELLS = List.copyOf(cells);
+        CELLS = MultiblockPatterns.grid(StructureLayout.pattern("largecrucible")
+                        .layer(0, "AAA", "ASA", "AAA")
+                        .layer(1, "BBB", "B B", "BBB")
+                        .layer(2, "CCC", "C C", "CCC")
+                        .where('A', CellMatch.part("wall"), StructureRole.ENERGY_INPUT)
+                        .where('B', CellMatch.part("wall"), StructureRole.CRUCIBLE)
+                        .where(' ', CellMatch.air(), StructureRole.AIR)
+                        .where('C', CellMatch.part("wall"), StructureRole.ITEM_FLUID_IO))
+                .cells()
+                .stream()
+                .map(c -> new Cell(
+                        c.right(),
+                        c.up(),
+                        c.back(),
+                        c.role() == StructureRole.AIR ? StructureRole.CASING : c.role(),
+                        c.role() == StructureRole.AIR))
+                .toList();
     }
 }

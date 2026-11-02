@@ -74,7 +74,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         return MultiblockLayout.Role.valueOf(gregtech.engine.multiblock.AdvancedControllerRules.drillRole(x, y, z).name());
     }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return gregtech.content.multiblock.SpecialStructures.drill(this);
     }
     @Override public boolean acceptsTrackedPart(gregtech.content.multiblock.LargeMachineLayouts.Cell cell,
@@ -127,22 +127,8 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         // Keep discovering/rebinding new shells even before they receive their first energy packet.
         boolean formed = structureOk();
         // GT6 exports already-mined stock before checking the shell for another drilling cycle.
-        if (!output.getStackInSlot(0).isEmpty() && level.hasChunkAt(worldPosition.above())) {
-//? if >=1.21.1 {
-            /*var target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, worldPosition.above(),
-                    Direction.DOWN);
-            if (target != null) {
-                var remaining = ItemHandlerHelper.insertItemStacked(target, output.getStackInSlot(0).copy(), false);
-                output.setStackInSlot(0, remaining);
-            }
-*///?} else {
-            var above = level.getBlockEntity(worldPosition.above());
-            if (above != null) above.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(target -> {
-                var remaining = ItemHandlerHelper.insertItemStacked(target, output.getStackInSlot(0).copy(), false);
-                output.setStackInSlot(0, remaining);
-            });
-//?}
-        }
+        gregtech.engine.multiblock.StructureOutputs.items(this,
+                gregtech.content.multiblock.OriginalMultiblockOutputRules.DRILL_ITEMS, output, 0);
         if (!formed || energy < WORK_ENERGY || !output.getStackInSlot(0).isEmpty()
                 || lubricant.getFluidAmount() < gregtech.engine.multiblock.AdvancedControllerRules.DRILL_LUBRICANT) return;
         ItemStack product = nextProduct();

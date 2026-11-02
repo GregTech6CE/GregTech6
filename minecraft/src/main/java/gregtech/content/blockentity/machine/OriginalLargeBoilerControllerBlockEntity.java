@@ -60,7 +60,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 
     private final OriginalLargeBoilerSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
-    private final gregtech.engine.multiblock.tracking.StructureDefinition definition =
+    private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
     private final FluidTankGT water = new FluidTankGT(WATER_CAPACITY).setOnChanged(this::setChanged);
     private final FluidTankGT steam;
@@ -133,7 +133,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     private Direction front() { return getBlockState().getValue(HorizontalDirectionalBlock.FACING); }
     private BlockPos bodyCentre() { return worldPosition.relative(front().getOpposite()); }
 
-    @Override public gregtech.engine.multiblock.tracking.StructureDefinition structureDefinition() {
+    public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
@@ -145,7 +145,13 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             int part = cell.role() == MultiblockLayout.Role.AIR ? 0
                     : cell.role() == MultiblockLayout.Role.HEAT_INPUT ? 18101 : variant.denseWallId();
             var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
-                    cell.right(), cell.up(), cell.back(), part, cell.role());
+                    cell.right(), cell.up(), cell.back(), part, cell.role(), null,
+                    cell.up() == 2 && cell.right() == 0 && cell.back() == 1
+                            || cell.up() == 1 && Math.abs(cell.right()) + Math.abs(cell.back() - 1) == 1 ? 1 : -1,
+                    java.util.List.of(),
+                    cell.role() == MultiblockLayout.Role.FLUID_INPUT ? gregtech.content.multiblock.OriginalMultiblockPortRules.BOILER_WATER
+                    : cell.role() == MultiblockLayout.Role.FLUID_OUTPUT ? gregtech.content.multiblock.OriginalMultiblockPortRules.BOILER_STEAM
+                    : gregtech.api.multiblock.StructurePorts.DEFAULT);
             var offset = spec.at(BlockPos.ZERO, front);
             cells.add(new gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell(
                     offset.getX(), offset.getY(), offset.getZ(), spec));
@@ -202,17 +208,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,List<Component> messages) {
         if(level==null||level.isClientSide||isRemoved()||!containsToolPosition(context.getClickedPos()))return 0;
         if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.BUILDER_WAND)) {
-            var centre=bodyCentre();
-            boolean wholeStructure=gregtech.engine.multiblock.MultiblockTools.buildsWholeStructure(context,worldPosition);
-            for(var cell:gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
-                var position=centre.offset(cell.x(),cell.y(),cell.z());
-                if(position.equals(worldPosition)||cell.role()==gregtech.api.multiblock.StructureRole.AIR)continue;
-                var block=cell.role()==gregtech.api.multiblock.StructureRole.HEAT_INPUT
-                        ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
-                gregtech.engine.multiblock.MultiblockTools.build(context,position,block,wholeStructure);
-            }
-            gregtech.engine.multiblock.tracking.StructureTracking.invalidate(this);
-            return gregtech.engine.multiblock.MultiblockToolRules.BUILDER_COST;
+            return gregtech.engine.multiblock.MultiblockTools.buildTracked(context, this);
         }
         if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.MAGNIFYING_GLASS)) {
             messages.addAll(magnifyingGlassMessages());
@@ -325,50 +321,25 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         long rate = excess > variant.steamCapacity() / 4
                 ? variant.steamOutput() * 2 : variant.steamOutput();
         long budget = Math.min(rate, excess);
-        BlockPos centre = bodyCentre();
-        var targets = new java.util.ArrayList<Output>();
-        addOutput(targets, centre.above(3), Direction.DOWN);
-        for (Direction side : Direction.Plane.HORIZONTAL)
-            addOutput(targets, centre.above().relative(side, 2), side.getOpposite());
+        var targets = gregtech.content.multiblock.OriginalMultiblockOutputRules.BOILER_STEAM.stream()
+                .filter(output -> gregtech.engine.multiblock.StructureOutputs.fluidTarget(this, output) != null).toList();
         if (targets.isEmpty()) return;
         // Divide evenly, then use spare allowance where a receiver fills less than its share.
         long remaining = budget;
         int count = targets.size();
-        for (Output target : targets) {
+        for (var target : targets) {
             int offer = (int) Math.min(Integer.MAX_VALUE, remaining / count);
             remaining -= moveSteam(target, offer);
             count--;
         }
-        if (remaining > 0) for (Output target : targets) {
+        if (remaining > 0) for (var target : targets) {
             int offer = (int) Math.min(Integer.MAX_VALUE, remaining);
             remaining -= moveSteam(target, offer);
             if (remaining <= 0) break;
         }
     }
-    private record Output(IFluidHandler handler) {}
-    private void addOutput(java.util.List<Output> outputs, BlockPos pos, Direction exposedFace) {
-        if (level == null || !level.hasChunkAt(pos)) return;
-        var entity = level.getBlockEntity(pos);
-        if (entity == null) return;
-//? if >=1.21.1 {
-        /*IFluidHandler handler = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,pos,exposedFace);
-*///?} else {
-        IFluidHandler handler = entity.getCapability(ForgeCapabilities.FLUID_HANDLER, exposedFace)
-                .resolve().orElse(null);
-//?}
-        if (handler != null) outputs.add(new Output(handler));
-    }
-    private int moveSteam(Output output, int offered) {
-        if (offered <= 0) return 0;
-        FluidStack stack = steam.drain(offered, IFluidHandler.FluidAction.SIMULATE);
-        if (stack.isEmpty()) return 0;
-        int possible = output.handler().fill(stack, IFluidHandler.FluidAction.SIMULATE);
-        if (possible <= 0) return 0;
-        stack.setAmount(Math.min(possible, stack.getAmount()));
-        int accepted = output.handler().fill(stack, IFluidHandler.FluidAction.EXECUTE);
-        int moved = Math.max(0, Math.min(accepted, stack.getAmount()));
-        steam.remove(moved);
-        return moved;
+    private int moveSteam(gregtech.engine.multiblock.StructureOutput output, int offered) {
+        return gregtech.engine.multiblock.StructureOutputs.fluid(this, output, 0, steam, offered);
     }
 
     /** No heat survives destruction. The source's pressure-dependent blast scales with steam. */

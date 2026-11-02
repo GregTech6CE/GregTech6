@@ -12,11 +12,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /*import net.neoforged.neoforge.fluids.*;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 //?}
 import java.util.*;
 
@@ -45,7 +47,8 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     private boolean designHeld;
 //? if >=1.21.1 {
 //?} else {
-    private LazyOptional<IFluidHandler> fluid=LazyOptional.empty();
+    private final List<LazyOptional<IFluidHandler>> fluidCaps = new ArrayList<>();
+    private final List<LazyOptional<IItemHandler>> itemCaps = new ArrayList<>();
 //?}
     public MultiblockPortBlockEntity(BlockPos pos, BlockState state) {
         this(gregtech.content.registry.GTBlockEntities.MULTIBLOCK_PORT.get(), pos, state);
@@ -191,6 +194,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         chunkUnloading = false;
         // Bindings are rebuilt by the controller; never keep a saved invisible orphan wall.
         updateCrucibleVisual(false);
+        if (level != null && !level.isClientSide) restoreStructureDesign();
     }
     @Override public void onChunkUnloaded() {
         chunkUnloading = true;
@@ -308,55 +312,84 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         design = tag.contains("gt.design") ? tag.getByte("gt.design") & 255 : 0;
         designHeld = tag.getBoolean("gt.design_held");
         designSaved = designHeld && tag.contains("gt.design_saved") ? tag.getByte("gt.design_saved") & 255 : 0;
-        if (level != null && level.isClientSide) requestModelDataUpdate();
+        if (level != null && level.isClientSide) {
+            requestModelDataUpdate();
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+        }
+    }
+    private final IItemHandler[] itemViews = new IItemHandler[7];
+    private final IFluidHandler[] fluidViews = new IFluidHandler[7];
+
+    private gregtech.api.multiblock.StructurePorts portRules(MultiblockPortOwner host) {
+        if (host instanceof net.minecraft.world.level.block.entity.BlockEntity entity) {
+            var tracker = gregtech.engine.multiblock.tracking.StructureTracking.tracker(entity);
+            if (tracker != null) return tracker.ports(worldPosition);
+        }
+        return gregtech.api.multiblock.StructurePorts.DEFAULT;
+    }
+    private gregtech.api.machine.MachineFace portFace(MultiblockPortOwner host, Direction side) {
+        if (side == null) return null;
+        Direction front = host instanceof net.minecraft.world.level.block.entity.BlockEntity entity
+                ? gregtech.engine.multiblock.tracking.LayoutStructures.facing(entity) : Direction.NORTH;
+        if (side == Direction.DOWN) return gregtech.api.machine.MachineFace.BOTTOM;
+        if (side == Direction.UP) return gregtech.api.machine.MachineFace.TOP;
+        if (!front.getAxis().isHorizontal()) front = Direction.NORTH;
+        if (side == front) return gregtech.api.machine.MachineFace.FRONT;
+        if (side == front.getOpposite()) return gregtech.api.machine.MachineFace.BACK;
+        return side == front.getClockWise() ? gregtech.api.machine.MachineFace.LEFT : gregtech.api.machine.MachineFace.RIGHT;
+    }
+    private StructurePortHandlers.View portView(Direction side) {
+        var host = owner();
+        return host == null || !host.isStructureOk() || role == null ? null
+                : new StructurePortHandlers.View(host, role, portRules(host), portFace(host, side));
+    }
+    private boolean portAllows(gregtech.api.multiblock.PortChannel channel, Direction side) {
+        var host = owner();
+        return host != null && portRules(host).rule(channel).allowsFace(portFace(host, side));
+    }
+    private static int sideIndex(Direction side) { return side == null ? 6 : side.ordinal(); }
+    private IItemHandler itemView(Direction side) {
+        int index = sideIndex(side);
+        if (itemViews[index] == null) itemViews[index] = StructurePortHandlers.items(() -> portView(side));
+        return itemViews[index];
+    }
+    private IFluidHandler fluidView(Direction side) {
+        int index = sideIndex(side);
+        if (fluidViews[index] == null) fluidViews[index] = StructurePortHandlers.fluids(() -> portView(side));
+        return fluidViews[index];
     }
 //? if >=1.21.1 {
-    /*private net.neoforged.neoforge.items.IItemHandler itemTarget() { var owner=owner(); return owner!=null&&owner.isStructureOk()?owner.portItems(role):null; }
-    private final net.neoforged.neoforge.items.IItemHandler itemRelay=new net.neoforged.neoforge.items.IItemHandler() {
+    /*public IItemHandler itemCapability(Direction side) { return isRemoved() ? null : itemView(side); }
+    public IFluidHandler fluidCapability(Direction side) { return isRemoved() ? null : fluidView(side); }
 *///?} else {
-    private LazyOptional<net.minecraftforge.items.IItemHandler> items=LazyOptional.empty();
-    private net.minecraftforge.items.IItemHandler itemTarget() { var owner=owner(); return owner!=null&&owner.isStructureOk()?owner.portItems(role):null; }
-    private final net.minecraftforge.items.IItemHandler itemRelay=new net.minecraftforge.items.IItemHandler() {
-//?}
-        public int getSlots() {var t=itemTarget();return t==null?0:t.getSlots();}
-        public net.minecraft.world.item.ItemStack getStackInSlot(int slot) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?net.minecraft.world.item.ItemStack.EMPTY:t.getStackInSlot(slot).copy();}
-        public net.minecraft.world.item.ItemStack insertItem(int slot,net.minecraft.world.item.ItemStack stack,boolean simulate) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?stack:t.insertItem(slot,stack,simulate);}
-        public net.minecraft.world.item.ItemStack extractItem(int slot,int amount,boolean simulate) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?net.minecraft.world.item.ItemStack.EMPTY:t.extractItem(slot,amount,simulate);}
-        public int getSlotLimit(int slot) {var t=itemTarget();return t==null||slot<0||slot>=t.getSlots()?0:t.getSlotLimit(slot);}
-        public boolean isItemValid(int slot,net.minecraft.world.item.ItemStack stack) {var t=itemTarget();return t!=null&&slot>=0&&slot<t.getSlots()&&t.isItemValid(slot,stack);}
-    };
-    private IFluidHandler target() { var owner=owner();return owner!=null&&owner.isStructureOk()?owner.portFluids(role):null; }
-    private final IFluidHandler relay=new IFluidHandler() {
-        public int getTanks() { var t=target();return t==null?0:t.getTanks(); }
-        public FluidStack getFluidInTank(int tank) { var t=target();return t==null?FluidStack.EMPTY:t.getFluidInTank(tank).copy(); }
-        public int getTankCapacity(int tank) { var t=target();return t==null?0:t.getTankCapacity(tank); }
-        public boolean isFluidValid(int tank,FluidStack stack) { var t=target();return t!=null&&t.isFluidValid(tank,stack); }
-        public int fill(FluidStack stack,FluidAction action) { var t=target();return t==null?0:t.fill(stack,action); }
-        public FluidStack drain(int amount,FluidAction action) { var t=target();return t==null?FluidStack.EMPTY:t.drain(amount,action); }
-        public FluidStack drain(FluidStack stack,FluidAction action) { var t=target();return t==null?FluidStack.EMPTY:t.drain(stack,action); }
-    };
-//? if >=1.21.1 {
-    /*public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side){return isRemoved()?null:itemRelay;}
-    public IFluidHandler fluidCapability(Direction side){return isRemoved()?null:relay;}
-*///?} else {
-    @Override public <T> LazyOptional<T> getCapability(Capability<T> cap,Direction side) {
-        if(cap==ForgeCapabilities.ITEM_HANDLER&&!isRemoved()) {
-            if(!items.isPresent()) items=LazyOptional.of(()->itemRelay);
-            return items.cast();
+    private void preparePortCaps() {
+        if (!fluidCaps.isEmpty()) return;
+        for (int i = 0; i < 7; i++) {
+            Direction side = i == 6 ? null : Direction.values()[i];
+            fluidCaps.add(LazyOptional.of(() -> fluidView(side)));
+            itemCaps.add(LazyOptional.of(() -> itemView(side)));
         }
-        if(cap==ForgeCapabilities.FLUID_HANDLER&&!isRemoved()) {
-            if(!fluid.isPresent()) fluid=LazyOptional.of(() -> relay);
-            return fluid.cast();
-        }
-        return super.getCapability(cap,side);
     }
-    @Override public void invalidateCaps() {super.invalidateCaps();fluid.invalidate();items.invalidate();}
-    @Override public void reviveCaps() {super.reviveCaps();items=LazyOptional.of(()->itemRelay);fluid=LazyOptional.of(() -> relay);}
+    @Override public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (!isRemoved() && (cap == ForgeCapabilities.ITEM_HANDLER || cap == ForgeCapabilities.FLUID_HANDLER)) {
+            preparePortCaps();
+            return cap == ForgeCapabilities.ITEM_HANDLER ? itemCaps.get(sideIndex(side)).cast() : fluidCaps.get(sideIndex(side)).cast();
+        }
+        return super.getCapability(cap, side);
+    }
+    @Override public void invalidateCaps() {
+        super.invalidateCaps();
+        fluidCaps.forEach(LazyOptional::invalidate); itemCaps.forEach(LazyOptional::invalidate);
+        fluidCaps.clear(); itemCaps.clear();
+    }
+    @Override public void reviveCaps() { super.reviveCaps(); }
 //?}
-    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side) {var o=owner();return o==null?List.of():o.portEnergyTypes(role);}
-    @Override public boolean isEnergyType(GregTechTags.Tag t,Direction side,boolean emitting) {var o=owner();return o!=null&&(emitting?o.emitsPortEnergy(role,t):getEnergyTypes(side).contains(t)&&!o.emitsPortEnergy(role,t));}
+    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side) {var o=owner();return o==null?List.of():o.portEnergyTypes(role).stream().filter(t ->
+            o.emitsPortEnergy(role,t)&&portAllows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT,side)
+            ||o.acceptsPortEnergy(role,t)&&portAllows(gregtech.api.multiblock.PortChannel.ENERGY_INPUT,side)).toList();}
+    @Override public boolean isEnergyType(GregTechTags.Tag t,Direction side,boolean emitting) {var o=owner();return o!=null&&(emitting?o.emitsPortEnergy(role,t)&&portAllows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT,side):o.acceptsPortEnergy(role,t)&&portAllows(gregtech.api.multiblock.PortChannel.ENERGY_INPUT,side));}
     @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag t,Direction side,boolean theoretical) {var o=owner();return isEnergyType(t,side,false)&&o!=null&&o.isStructureOk();}
-    @Override public boolean isEnergyEmittingTo(GregTechTags.Tag t,Direction side,boolean theoretical) {var o=owner();return o!=null&&o.emitsPortEnergy(role,t)&&o.isStructureOk();}
+    @Override public boolean isEnergyEmittingTo(GregTechTags.Tag t,Direction side,boolean theoretical) {var o=owner();return o!=null&&o.emitsPortEnergy(role,t)&&o.isStructureOk()&&portAllows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT,side);}
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag t,Direction side) {var o=owner();return o!=null&&isEnergyType(t,side,false)?o.portEnergyInputRecommended(role,t):0;}
     @Override public long getEnergySizeInputMin(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyInputMin(role,t);}
     @Override public long getEnergySizeInputMax(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyInputMax(role,t);}
@@ -368,7 +401,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     @Override public long getEnergyDemanded(GregTechTags.Tag t,Direction side,long size) {var o=owner();return o!=null&&isEnergyAcceptingFrom(t,side,false)?o.portEnergyDemanded(role,t,size):0;}
     @Override public long getEnergyStored(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyStored(role,t);}
     @Override public long getEnergyCapacity(GregTechTags.Tag t,Direction side) {var o=owner();return o==null?0:o.portEnergyCapacity(role,t);}
-    @Override public long doInject(GregTechTags.Tag t,Direction side,long size,long amount,boolean execute) {var o=owner();return o!=null&&o.isStructureOk()?o.injectPortEnergy(role,t,size,amount,execute):0;}
+    @Override public long doInject(GregTechTags.Tag t,Direction side,long size,long amount,boolean execute) {var o=owner();return o!=null&&o.isStructureOk()&&portAllows(gregtech.api.multiblock.PortChannel.ENERGY_INPUT,side)?o.injectPortEnergy(role,t,portFace(o,side),size,amount,execute):0;}
 
 //? if >=1.21.1 {
 /*    @Override public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
