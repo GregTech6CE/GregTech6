@@ -198,6 +198,9 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             reconnectPending = false;
             autoConnectOnPlace(null);
         }
+        long temperatureBefore = temperature;
+        boolean transferredBefore = transferredAmount != 0;
+        boolean receivedBefore = false;
         transferredAmount = 0;
         boolean firstFluid = true;
         for (int i = 0; i < tanks.length; i++) {
@@ -221,18 +224,25 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             }
             // GT6 processes safety and distribution channel by channel, then clears that channel's mask.
             if (!tanks[i].isEmpty()) distributeChannel(state, tanks[i], i);
+            receivedBefore |= lastReceivedFrom[i] != 0;
             lastReceivedFrom[i] = 0;
         }
-        if (firstFluid) temperature = FluidPipeSafety.emptyTemperature(temperature,
-//? if >=1.21.1 {
-                /*FluidTransportEnvironment.environmentTemperature(level, worldPosition));
-*///?} else {
-                SmelteryBlockEntityHelper.environmentTemperature(level, worldPosition));
-//?}
+        if (firstFluid) temperature = FluidPipeSafety.emptyTemperature(temperature, environmentTemperature());
         // Zero cost when unused: `hasCovers` is false for every coverless pipe, so this is a single
         // field read and returns — no face is walked, nothing is allocated, nothing is dispatched.
         if (coverStore.hasCovers()) tickCovers();
-        setChanged();
+        // Every tank mutation already marks the pipe through its change callback. Marking an idle pipe
+        // every tick would dirty its chunk and run the comparator neighbour update for nothing, so only
+        // the state this method derives itself is checked here.
+        if (temperature != temperatureBefore || transferredAmount != 0 || transferredBefore || receivedBefore) setChanged();
+    }
+
+    private long environmentTemperature() {
+//? if >=1.21.1 {
+            /*return FluidTransportEnvironment.environmentTemperature(level, worldPosition);
+*///?} else {
+        return SmelteryBlockEntityHelper.environmentTemperature(level, worldPosition);
+//?}
     }
 
     // ── Covers: host API (GT6's fluid pipe as a cover host) ──────────────────

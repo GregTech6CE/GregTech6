@@ -10,7 +10,6 @@ import gregtech.engine.tool.GTToolType;
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.PanelCoverInteraction;
-import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -27,8 +26,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -152,13 +149,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         return new ItemPipeBlockEntity(pos, state);
     }
 
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != GTBlockEntities.ITEM_PIPE.get()) return null;
-        return (BlockEntityTicker<T>) (BlockEntityTicker<ItemPipeBlockEntity>) ItemPipeBlockEntity::serverTick;
-    }
+    // No ticker: ItemPipeNetworks schedules covered pipes and pipes holding items.
 
     /**
      * GT6's right-click order on a tile that can carry covers, mirrored from
@@ -292,6 +283,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
                 neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
         if (side != null && level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
             pipe.tryConnectTo(side);
+            pipe.neighborChanged(side);
         }
     }
 

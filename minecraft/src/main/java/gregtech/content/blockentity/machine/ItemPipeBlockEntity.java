@@ -10,11 +10,15 @@ import gregtech.content.cover.MachineCoverSpec;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.transport.ItemPipeNetwork;
+import gregtech.content.transport.ItemPipeNetworkTransfer;
+import gregtech.content.transport.ItemPipeNetworks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.ContainerHelper;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,9 +38,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 /**
- * Native item inventory, weighted routing adapter and lazily allocated cover host.
- * Routing currently forwards through neighbour inventories every four world ticks;
- * it is not GT6's direct source-to-exit transfer through the scanned network.
+ * Native item inventory, network routing endpoint and lazily allocated cover host.
+ *
+ * <p>The pipe does not tick. {@link ItemPipeNetworks} schedules it: a pipe holding items is a
+ * source and delivers whole stacks straight into the nearest inventory beside its network that
+ * takes them, along a route cached per network layout ({@link ItemPipeNetwork}). Items only rest in
+ * the pipe they entered. The pipe has {@code invSize} slots of one stack each and carries
+ * {@code invSize} stacks per second; every pipe on a delivery's path pays that bandwidth. A stack is
+ * never delivered back into its recorded origin block or the other half of a vanilla double chest.</p>
  *
  * <p>Face handlers apply insertion/extraction cover rules. An item filter cannot
  * be attached facing another item pipe: attachCover disconnects that face and
@@ -47,20 +56,35 @@ import java.util.*;
  */
 public class ItemPipeBlockEntity extends BlockEntity
         implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PanelCoverHost, CoverStore.Hooks {
+    /** Bandwidth window: transfer counters restart every 20 ticks. */
+    private static final int BANDWIDTH_WINDOW = 20;
+    /** Each slot holds one ordinary stack. */
+    private static final int STACK_LIMIT = 64;
+    private static final byte NO_ORIGIN = -1;
+
     private final ItemPipeSpec spec;
     private final NonNullList<ItemStack> inventory;
+    /**
+     * Per slot, the face its stack entered through ({@link #NO_ORIGIN} for an unsided insert). The
+     * inventory across that face is never a delivery target for that stack.
+     */
+    private final byte[] slotOrigins;
+    /** Stacks carried in window {@link #transferWindow}; see {@link #syncTransferWindow}. */
     private long transferredThisSecond;
-    private int ticksUntilReset;
-    private byte lastReceivedFrom = -1;
+    private long transferWindow = Long.MIN_VALUE;
+    /** Last snapshot {@link ItemPipeNetworks} put this pipe in; stale once invalid. Not persisted. */
+    private @Nullable ItemPipeNetwork network;
+    /** Faces that had an inventory when the snapshot was built, to notice when one appears or goes. */
+    private int endpointMask;
     private byte disabledInputs;
     private byte disabledOutputs;
     /** Faces the wrench disconnected; auto-connect leaves them alone. Persisted so a reload keeps them. */
     private int manualDisconnects;
-    /** Set on load; the next server tick repairs half-connections that the load order hid. */
-    private boolean reconnectPending = true;
 
     private static final String NBT_ITEMS = "gt.items";
+    /** Read only, to give stacks in older saves the single input side the pipe used to track. */
     private static final String NBT_LAST_RECEIVED = "gt.last_received";
+    private static final String NBT_SLOT_ORIGINS = "gt.slot_origins";
     private static final String NBT_DISABLED_INPUTS = "gt.disabled_inputs";
     private static final String NBT_DISABLED_OUTPUTS = "gt.disabled_outputs";
     private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
@@ -73,10 +97,10 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     // ── Cover state: zero cost when unused ───────────────────────────────────
     //
-    // An item pipe is the hottest host the port has: serverTick runs for every pipe of every loaded
-    // chunk, and the routing below only runs on every fourth tick. CoverStore keeps the face array
-    // null and the panel runtime uncreated until the first cover is attached, so a coverless pipe
-    // pays one boolean read on the tick path and never walks a face:
+    // An item pipe is the most numerous host the port has. It does not tick; ItemPipeNetworks ticks
+    // only the pipes that carry covers. CoverStore keeps the face array null and the panel runtime
+    // uncreated until the first cover is attached, so a coverless pipe pays one boolean read on the
+    // transfer path and never walks a face:
     //   * `faceHandlers` is null until a face actually carries an item filter or a retriever;
     //   * the retriever's pending flags are six bits of one byte rather than the machine's
     //     `boolean[6]` — see `retrieverPending`.
@@ -120,7 +144,10 @@ public class ItemPipeBlockEntity extends BlockEntity
     public ItemPipeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.spec = specFromState(state);
-        this.inventory = NonNullList.withSize(1, ItemStack.EMPTY);
+        int slots = Math.max(1, spec.invSize());
+        this.inventory = NonNullList.withSize(slots, ItemStack.EMPTY);
+        this.slotOrigins = new byte[slots];
+        java.util.Arrays.fill(slotOrigins, NO_ORIGIN);
     }
 
     public ItemPipeBlockEntity(BlockPos pos, BlockState state) {
@@ -134,52 +161,52 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     public ItemPipeSpec spec() { return spec; }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, ItemPipeBlockEntity be) {
-        if (!level.isClientSide) be.tickServer(state);
-    }
+    // ── Scheduling hooks: the pipe has no ticker ─────────────────────────────
 
-    private void tickServer(BlockState state) {
+    @Override
+    public void onLoad() {
+        super.onLoad();
         if (level == null) return;
-        if (reconnectPending) {
-            reconnectPending = false;
-            autoConnectOnPlace(null);
-        }
-
-        // Covers first, ahead of every early return below. Two reasons, both GT6's:
-        //   * a cover ticks in `onTickPre` (CoverRetrieverItem:60), i.e. before the tile's own tick
-        //     body, so a cover is never skipped because the host had nothing to route;
-        //   * coverTicks is the retriever's clock and GT6's clock is the global one
-        //     (`SERVER_TIME % 20 == 15`, CoverRetrieverItem:61), so it must advance once per server
-        //     tick and must NOT sit behind the `% 4` routing gate further down (which would make the
-        //     retriever fire every 80 ticks instead of every 20).
-        // Zero cost when unused: `hasCovers` is false for every coverless pipe, so this is a single
-        // field read and returns — no face is walked, nothing is allocated, nothing is dispatched.
-        if (coverStore.hasCovers()) tickCovers();
-
-        // Reset throughput counter every 20 ticks
-        if (--ticksUntilReset <= 0) {
-            ticksUntilReset = 20;
-            transferredThisSecond = 0;
-        }
-
-        // Route items every 4 ticks
-        if (level.getGameTime() % 4 != 0) return;
-        if (isEmpty()) {
-            lastReceivedFrom = -1;
-            return;
-        }
-
-        // Try direct push to adjacent non-pipe inventory first
-        if (tryPushToAdjacent()) {
-            setChanged();
-            return;
-        }
-
-        // No direct target — forward items to the best adjacent pipe toward an exit
-        if (forwardToBestPipe(state)) {
-            setChanged();
+        if (level.isClientSide) {
+            requestModelDataUpdate();
+            gregtech.engine.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+        } else {
+            // Connection repair and snapshot invalidation wait for the end of the tick, when the
+            // neighbours loaded together with this pipe are in place.
+            ItemPipeNetworks.joined(this);
         }
     }
+
+    @Override
+    public void setRemoved() {
+        if (level != null && !level.isClientSide) ItemPipeNetworks.left(this);
+        super.setRemoved();
+    }
+
+    @Override
+    public void onChunkUnloaded() {
+        if (level != null && !level.isClientSide) ItemPipeNetworks.left(this);
+        super.onChunkUnloaded();
+    }
+
+    /** Connections live in the block state, so any state change may change the network's layout. */
+    @Override
+    @SuppressWarnings("deprecation")
+    public void setBlockState(BlockState state) {
+        super.setBlockState(state);
+        if (level != null && !level.isClientSide) ItemPipeNetworks.invalidate(this);
+    }
+
+    /** From {@link ItemPipeBlock#neighborChanged}: only an inventory appearing or going changes the layout. */
+    public void neighborChanged(Direction side) {
+        if (level == null || level.isClientSide) return;
+        boolean had = (endpointMask & (1 << side.ordinal())) != 0;
+        if (had != hasInventoryAt(side)) ItemPipeNetworks.invalidate(this);
+    }
+
+    public @Nullable ItemPipeNetwork network() { return network; }
+    public void network(@Nullable ItemPipeNetwork network) { this.network = network; }
+    public void endpointMask(int mask) { endpointMask = mask; }
 
     // ── Covers: host API (GT6's item pipe as a cover host) ───────────────────
 
@@ -213,6 +240,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     public void attached(Direction side, ItemStack stack) {
         invalidateFaceHandler(side);
         syncCovers();
+        ItemPipeNetworks.coversChanged(this);
     }
 
     /** The signals a pipe face can emit are the panel ones; {@code afterTick} publishes them. */
@@ -221,6 +249,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         invalidateFaceHandler(side);
         panels().afterTick();
         syncCovers();
+        ItemPipeNetworks.coversChanged(this);
     }
 
     @Override
@@ -258,8 +287,12 @@ public class ItemPipeBlockEntity extends BlockEntity
         else retrieverPending &= (byte) ~(1 << face);
     }
 
-    /** Dispatch inventory covers against this pipe; controller pause gates transfer operations. */
-    private void tickCovers() {
+    /**
+     * Dispatch inventory covers against this pipe; controller pause gates transfer operations. Called
+     * every server tick by {@link ItemPipeNetworks} while the pipe carries covers.
+     */
+    public void tickCovers() {
+        if (level == null) return;
         PanelCoverRuntime runtime = panels();
         coverTicks++;
         runtime.beforeTick();
@@ -383,7 +416,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * ({@code CoverFilterItem:115-127}, {@code CoverRetrieverItem:138-139}) and the port composes them
      * here for the same reason {@code BasicMachineBlockEntity} keeps them as two methods and calls
      * both — this is the one place they are combined, and it is the only predicate
-     * {@link #tickServer}'s push sites, the capability view and the retriever's own face consult.
+     * {@link #sendTo}, the capability view and the retriever's own face consult.
      *
      * <p>A pipe without covers answers {@code true} on the first line, so the whole cover system costs
      * one boolean read on the transfer path.</p>
@@ -394,55 +427,110 @@ public class ItemPipeBlockEntity extends BlockEntity
         return coverFilterPermits(side, candidate);
     }
 
+    // ── Network endpoint ─────────────────────────────────────────────────────
+
     /**
-     * Forward items to the best adjacent pipe that leads to a non-pipe inventory.
-     * Avoids sending back to the side items were received from.
+     * One delivery pass as a source, then wake whatever fed the pipe so it can push again.
+     *
+     * @return the number of stacks moved
      */
-    private boolean forwardToBestPipe(BlockState state) {
-        ItemStack offered = inventory.get(0);
-        if (offered.isEmpty()) return false;
-        // Find the adjacent pipe with the best (lowest step-distance) path to an exit
-        java.util.Map<ItemPipeBlockEntity, Direction> candidates = new java.util.LinkedHashMap<>();
-
-        for (Direction side : Direction.values()) {
-            if (!canEmitTo(side)) continue;
-            if (lastReceivedFrom >= 0 && lastReceivedFrom == side.ordinal()) continue;
-            if (!state.getValue(ItemPipeBlock.propFor(side)) || !coverPermitsItemTraffic(side, offered)) continue;
-
-            BlockPos neighborPos = worldPosition.relative(side);
-            if (!level.hasChunkAt(neighborPos)) continue;
-            BlockEntity be = level.getBlockEntity(neighborPos);
-            if (!(be instanceof ItemPipeBlockEntity neighborPipe)) continue;
-            if (!neighborPipe.canAcceptFrom(side.getOpposite())
-                    || !neighborPipe.getBlockState().getValue(ItemPipeBlock.propFor(side.getOpposite()))
-                    || !neighborPipe.coverPermitsItemTraffic(side.getOpposite(),offered)) continue;
-
-            candidates.put(neighborPipe, side);
+    public int deliverThrough(ItemPipeNetwork network) {
+        int origins = 0;
+        for (int slot = 0; slot < inventory.size(); slot++) {
+            if (!inventory.get(slot).isEmpty() && slotOrigins[slot] >= 0) origins |= 1 << slotOrigins[slot];
         }
-        var exit = findBestExit(candidates.keySet(), offered);
-        return exit != null && pushItemsToPipe(exit.firstHop(), candidates.get(exit.firstHop()));
+        int moved = network.deliverFrom(this);
+        if (moved > 0) {
+            setChanged();
+            for (Direction side : Direction.values()) {
+                if ((origins & (1 << side.ordinal())) == 0) continue;
+                BlockPos neighbor = worldPosition.relative(side);
+                if (level.hasChunkAt(neighbor)
+                        && level.getBlockEntity(neighbor) instanceof ITileEntityAdjacentInventoryUpdatable updatable) {
+                    updatable.adjacentInventoryUpdated(side.getOpposite(), worldPosition);
+                }
+            }
+        }
+        return moved;
     }
 
-    /** Shared minimum-weight search over currently loaded pipes and accepting inventory faces. */
-    private gregtech.content.transport.WeightedItemPipeRoutes.Exit<ItemPipeBlockEntity> findBestExit(
-            Iterable<ItemPipeBlockEntity> starts, ItemStack offered) {
-        return gregtech.content.transport.WeightedItemPipeRoutes.bestExit(starts,
-                pipe -> pipe.spec.stepSize(), pipe -> {
-                    java.util.List<ItemPipeBlockEntity> adjacent = new java.util.ArrayList<>();
-                    BlockState current = pipe.getBlockState();
-                    for (Direction face : Direction.values()) {
-                        if (!current.getValue(ItemPipeBlock.propFor(face)) || !pipe.canEmitTo(face)
-                                || !pipe.coverPermitsItemTraffic(face,offered)) continue;
-                        BlockPos next = pipe.worldPosition.relative(face);
-                        if (!level.hasChunkAt(next)) continue;
-                        if (level.getBlockEntity(next) instanceof ItemPipeBlockEntity neighbor && neighbor != this
-                                && neighbor.getBlockState().getValue(ItemPipeBlock.propFor(face.getOpposite()))
-                                && neighbor.canAcceptFrom(face.getOpposite())
-                                && neighbor.coverPermitsItemTraffic(face.getOpposite(),offered)) adjacent.add(neighbor);
-                    }
-                    return adjacent;
-                }, pipe -> pipe.hasAdjacentNonPipeTarget(offered),
-                gregtech.content.transport.WeightedItemPipeRoutes.MAX_VISITED_PIPES);
+    public boolean connected(Direction face) {
+        return getBlockState().getValue(ItemPipeBlock.propFor(face));
+    }
+
+    /** Layout half of {@link #canEmitTo}: the wrench setting and a retriever, both rebuild the snapshot. */
+    public boolean linksOut(Direction face) {
+        return (disabledOutputs & (1 << face.ordinal())) == 0 && !coverBlocksItemTraffic(face);
+    }
+
+    /** Layout half of {@link #canLinkIn}. */
+    public boolean linksIn(Direction face) {
+        return (disabledInputs & (1 << face.ordinal())) == 0 && !coverBlocksItemTraffic(face);
+    }
+
+    /** Whether a non-pipe block entity across {@code face} offers an item inventory on that side. */
+    public boolean hasInventoryAt(Direction face) {
+        BlockPos target = worldPosition.relative(face);
+        if (level == null || !level.hasChunkAt(target)) return false;
+        BlockEntity entity = level.getBlockEntity(target);
+        return entity != null && !(entity instanceof ItemPipeBlockEntity) && itemHandler(entity, face.getOpposite()) != null;
+    }
+
+    /**
+     * Move one of {@code source}'s stacks into the inventory across {@code face} of this pipe, the
+     * exit. Checks everything the snapshot does not: shutters and cover modes, a hopper or dispenser
+     * now facing the pipe, the exit face's filter per stack, and each stack's origin.
+     */
+    public boolean sendTo(Direction face, ItemPipeBlockEntity source) {
+        if (level == null || isRemoved() || source.isRemoved() || !connected(face) || !canEmitTo(face)) return false;
+        ItemPipeNetwork route = source.network();
+        if (route == null || !route.valid() || network != route) return false;
+        BlockPos targetPos = worldPosition.relative(face);
+        if (!level.hasChunkAt(targetPos)) return false;
+        BlockEntity target = level.getBlockEntity(targetPos);
+        if (target == null || target instanceof ItemPipeBlockEntity) return false;
+        if (outputsInto(level.getBlockState(targetPos), face.getOpposite())) return false;
+        for (int slot = 0; slot < source.inventory.size(); slot++) {
+            ItemStack stack = source.inventory.get(slot);
+            if (stack.isEmpty() || source.cameFrom(slot, targetPos) || !coverPermitsItemTraffic(face, stack)) continue;
+            int accepted = gregtech.content.transport.ItemPipeTransferAdapter.transfer(
+                    stack.copyWithCount(Math.min(stack.getCount(), Math.min(STACK_LIMIT, stack.getMaxStackSize()))),
+                    () -> route.valid() && network == route && source.network() == route
+                            ? itemHandlerAt(targetPos, face.getOpposite()) : null).accepted();
+            if (accepted <= 0) continue;
+            stack.shrink(accepted);
+            if (stack.isEmpty()) {
+                source.inventory.set(slot, ItemStack.EMPTY);
+                source.slotOrigins[slot] = NO_ORIGIN;
+            }
+            source.setChanged();
+            return true;
+        }
+        return false;
+    }
+
+    /** Whether the stack in {@code slot} entered from the inventory at {@code pos}. */
+    private boolean cameFrom(int slot, BlockPos pos) {
+        byte origin = slotOrigins[slot];
+        if (origin < 0) return false;
+        BlockPos originPos = worldPosition.relative(Direction.from3DDataValue(origin));
+        if (originPos.equals(pos)) return true;
+        BlockState target = level.getBlockState(pos);
+        return target.getBlock() instanceof net.minecraft.world.level.block.ChestBlock
+                && target.getValue(net.minecraft.world.level.block.ChestBlock.TYPE)
+                        != net.minecraft.world.level.block.state.properties.ChestType.SINGLE
+                && pos.relative(net.minecraft.world.level.block.ChestBlock.getConnectedDirection(target)).equals(originPos);
+    }
+
+    /** A vanilla hopper or dispenser facing the pipe would hand the stack straight back. */
+    private static boolean outputsInto(BlockState target, Direction towardPipe) {
+        if (target.getBlock() instanceof net.minecraft.world.level.block.HopperBlock) {
+            return target.getValue(net.minecraft.world.level.block.HopperBlock.FACING) == towardPipe;
+        }
+        if (target.getBlock() instanceof net.minecraft.world.level.block.DispenserBlock) {
+            return target.getValue(net.minecraft.world.level.block.DispenserBlock.FACING) == towardPipe;
+        }
+        return false;
     }
 
     private IItemHandler itemHandler(BlockEntity entity,Direction face) {
@@ -458,113 +546,49 @@ public class ItemPipeBlockEntity extends BlockEntity
         return level != null && level.hasChunkAt(pos) ? itemHandler(level.getBlockEntity(pos),face) : null;
     }
 
-    /** Presence alone is insufficient: a full or filtered endpoint is not a usable exit. */
-    private boolean hasAdjacentNonPipeTarget(ItemStack offered) {
-        BlockState state = getBlockState();
-        for (Direction side : Direction.values()) {
-            if (!canEmitTo(side) || lastReceivedFrom == side.ordinal()
-                    || !state.getValue(ItemPipeBlock.propFor(side))
-                    || !coverPermitsItemTraffic(side,offered)) continue;
-            BlockPos next = worldPosition.relative(side);
-            if (!level.hasChunkAt(next)) continue;
-            BlockEntity entity = level.getBlockEntity(next);
-            if (entity instanceof ItemPipeBlockEntity) continue;
-            if (gregtech.content.transport.ItemPipeTransferAdapter.canAccept(offered,
-                    () -> itemHandlerAt(next, side.getOpposite()))) return true;
+    // ── Bandwidth: invSize stacks per second ─────────────────────────────────
+
+    /**
+     * Counters belong to a world-time window rather than to this pipe, so a charge made by another
+     * pipe's delivery is never lost to a reset, whichever runs first.
+     */
+    private void syncTransferWindow() {
+        if (level == null || level.isClientSide) return;
+        long window = level.getGameTime() / BANDWIDTH_WINDOW;
+        if (window != transferWindow) {
+            transferWindow = window;
+            transferredThisSecond = 0;
         }
-        return false;
     }
 
-    /** Push items from this pipe's inventory into an adjacent pipe. */
-    private boolean pushItemsToPipe(ItemPipeBlockEntity target, Direction side) {
-        IItemHandler receiving = itemHandler(target,side.getOpposite());
-        if (receiving == null) return false;
-        for (int slot = 0; slot < inventory.size(); slot++) {
-            ItemStack stack = inventory.get(slot);
-            if (stack.isEmpty()) continue;
-
-            ItemStack toSend = stack.copy();
-            // The cover on the face the items leave through gates them exactly like the receiver's own
-            // capability does on the other side. Without this the sender's filter would only stop
-            // arrivals and never departures.
-            if (!coverPermitsItemTraffic(side, toSend)) continue;
-            int accepted = gregtech.content.transport.ItemPipeTransferAdapter.transfer(toSend,
-                    () -> itemHandlerAt(target.worldPosition,side.getOpposite())).accepted();
-            if (accepted <= 0) continue;
-            stack.shrink(accepted);
-            transferredThisSecond += accepted;
-            if (stack.isEmpty()) {
-                inventory.set(slot, ItemStack.EMPTY);
-            }
-            return true;
-        }
-        return false;
+    public boolean pipeCapacityCheck() {
+        syncTransferWindow();
+        return ItemPipeNetworkTransfer.hasCapacity(transferredThisSecond, spec.invSize());
     }
 
-    /** Try to push one item stack from this pipe's inventory to an adjacent non-pipe inventory. */
-    boolean tryPushToAdjacent() {
-        if (level == null) return false;
-
-        // Random start offset for round-robin distribution
-        int start = level.random.nextInt(6);
-        for (int i = 0; i < 6; i++) {
-            Direction side = Direction.values()[(start + i) % 6];
-            if (!canEmitTo(side) || !getBlockState().getValue(ItemPipeBlock.propFor(side))) continue;
-            // Don't push back to where items came from
-            if (lastReceivedFrom >= 0 && lastReceivedFrom == side.ordinal()) continue;
-
-            // Don't push to other item pipes (handled by forwardToBestPipe)
-            BlockPos targetPos = worldPosition.relative(side);
-            if (!level.hasChunkAt(targetPos)) continue;
-            BlockEntity be = level.getBlockEntity(targetPos);
-            if (be instanceof ItemPipeBlockEntity) continue;
-
-            if (be == null) continue;
-//? if >=1.21.1 {
-            /*IItemHandler cap=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,be.getBlockPos(),side.getOpposite());
-            if (cap==null) continue;
-            IItemHandler target=cap;
-*///?} else {
-            LazyOptional<IItemHandler> cap = be.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite());
-            if (!cap.isPresent()) continue;
-            IItemHandler target = cap.orElse(null);
-//?}
-            if (target == null) continue;
-
-            // Try to move one item stack from inventory to target
-            for (int slot = 0; slot < inventory.size(); slot++) {
-                ItemStack stack = inventory.get(slot);
-                if (stack.isEmpty()) continue;
-
-                // Simulate first
-                ItemStack toSend = stack.copy();
-                // The same sending-face rule as `pushItemsToPipe`: the face's own cover decides what
-                // leaves through it. Only a filter can differ per stack, so the test sits inside the
-                // slot loop and the loop keeps trying the other slots.
-                if (!coverPermitsItemTraffic(side, toSend)) continue;
-                int accepted = gregtech.content.transport.ItemPipeTransferAdapter.transfer(toSend,
-                        () -> itemHandlerAt(targetPos,side.getOpposite())).accepted();
-                if (accepted <= 0) continue;
-                stack.shrink(accepted);
-                transferredThisSecond += accepted;
-                if (stack.isEmpty()) {
-                    inventory.set(slot, ItemStack.EMPTY);
-                }
-                return true;
-            }
-        }
-        return false;
+    public void chargeTransfer() {
+        syncTransferWindow();
+        transferredThisSecond++;
     }
 
-    private boolean canEmitTo(Direction side) {
+    /** The game time at which this pipe's bandwidth is restored. */
+    public long nextBandwidthWindow() {
+        return level == null ? 0 : (level.getGameTime() / BANDWIDTH_WINDOW + 1) * BANDWIDTH_WINDOW;
+    }
+
+    /** Whether items may leave through {@code side} right now. */
+    public boolean canEmitTo(Direction side) {
         return !coverStore.shuttered(side) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) && (disabledOutputs & (1 << side.ordinal())) == 0;
     }
 
-    private boolean canAcceptFrom(Direction side) {
-        return !coverStore.shuttered(side) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0
-                && (lastReceivedFrom < 0 || lastReceivedFrom == side.ordinal());
+    /** Whether items may enter through {@code side} right now. */
+    public boolean canLinkIn(Direction side) {
+        return !coverStore.shuttered(side) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0;
     }
 
+    public boolean hasStoredItems() {
+        return !isEmpty();
+    }
     private boolean isEmpty() {
         for (ItemStack s : inventory) if (!s.isEmpty()) return false;
         return true;
@@ -735,6 +759,7 @@ public class ItemPipeBlockEntity extends BlockEntity
             disabledInputs &= ~(1 << side.ordinal());
         }
         setChanged();
+        ItemPipeNetworks.invalidate(this);
     }
 
     // === IItemHandler ===
@@ -748,44 +773,25 @@ public class ItemPipeBlockEntity extends BlockEntity
         return slot >= 0 && slot < inventory.size() ? inventory.get(slot) : ItemStack.EMPTY;
     }
 
+    /**
+     * A stack goes only into the requested slot while it is empty, up to one ordinary stack; a partly
+     * filled slot is not topped up. The unsided view records no origin; {@link SideAwareItemHandler}
+     * records the face. Any insert wakes the pipe as a source.
+     */
     @NotNull
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         if (stack.isEmpty()) return ItemStack.EMPTY;
-        // Find first empty or matching slot
-        int targetSlot = -1;
-        for (int i = 0; i < inventory.size(); i++) {
-            ItemStack existing = inventory.get(i);
-            if (existing.isEmpty()) {
-                if (targetSlot < 0) targetSlot = i;
-            } else if (gregtech.engine.stack.StackCompat.mergeable(existing, stack)) {
-                targetSlot = i;
-                break;
-            }
-        }
-        if (targetSlot < 0) return stack;
-
-        ItemStack existing = inventory.get(targetSlot);
-        int slotLimit = getSlotLimit(targetSlot);
-        int limit = Math.min(slotLimit, existing.isEmpty() ? slotLimit : existing.getMaxStackSize());
-        int insertable = Math.min(stack.getCount(), limit - existing.getCount());
+        if (slot < 0 || slot >= inventory.size() || !inventory.get(slot).isEmpty()) return stack;
+        int insertable = Math.min(stack.getCount(), Math.min(getSlotLimit(slot), stack.getMaxStackSize()));
         if (insertable <= 0) return stack;
-
         if (!simulate) {
-            if (existing.isEmpty()) {
-                ItemStack toInsert = stack.copy();
-                toInsert.setCount(insertable);
-                inventory.set(targetSlot, toInsert);
-            } else {
-                existing.grow(insertable);
-            }
+            inventory.set(slot, stack.copyWithCount(insertable));
+            slotOrigins[slot] = NO_ORIGIN;
             setChanged();
+            if (level != null && !level.isClientSide) ItemPipeNetworks.wake(this);
         }
-
-        if (insertable >= stack.getCount()) return ItemStack.EMPTY;
-        ItemStack remainder = stack.copy();
-        remainder.shrink(insertable);
-        return remainder;
+        return insertable >= stack.getCount() ? ItemStack.EMPTY : stack.copyWithCount(stack.getCount() - insertable);
     }
 
     @NotNull
@@ -799,14 +805,17 @@ public class ItemPipeBlockEntity extends BlockEntity
         result.setCount(toExtract);
         if (!simulate) {
             stack.shrink(toExtract);
-            if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
+            if (stack.isEmpty()) {
+                inventory.set(slot, ItemStack.EMPTY);
+                slotOrigins[slot] = NO_ORIGIN;
+            }
             setChanged();
         }
         return result;
     }
 
     @Override
-    public int getSlotLimit(int slot) { return spec.invSize(); }
+    public int getSlotLimit(int slot) { return STACK_LIMIT; }
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) { return true; }
@@ -921,10 +930,9 @@ public class ItemPipeBlockEntity extends BlockEntity
 //?}
     }
 
-    /** Wraps this pipe's IItemHandler to record which side items entered from on insertItem.
-     *  Forge's IItemHandler.insertItem() doesn't provide direction info, so external callers
-     *  (hoppers, other inventories pushing into pipes) can't set lastReceivedFrom.
-     *  This wrapper intercepts insertItem to call setReceivedFrom before delegating. */
+    /** Wraps this pipe's IItemHandler to record the face each inserted stack came through.
+     *  IItemHandler.insertItem() carries no direction, so the sided view supplies it; the origin
+     *  keeps that stack from being delivered back into the inventory it came from. */
     @Override public IItemHandler componentItems(Direction side) { return new SideAwareItemHandler(side); }
 
     private class SideAwareItemHandler implements IItemHandler {
@@ -946,9 +954,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
             if ((disabledInputs & (1 << sideOrdinal)) != 0) return stack;
             ItemStack result = ItemPipeBlockEntity.this.insertItem(slot, stack, simulate);
-            if (!simulate && result.getCount() < stack.getCount()) {
-                setReceivedFrom(sideOrdinal);
-            }
+            if (!simulate && result.getCount() < stack.getCount()) slotOrigins[slot] = sideOrdinal;
             return result;
         }
 
@@ -1000,7 +1006,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      *
      * <p>Everything except the two intercepts delegates straight through, by inheritance: that is the
      * pipe's own answer for {@code getSlots}, {@code getStackInSlot}, {@code getSlotLimit} and
-     * {@code isItemValid} <em>and</em> the pre-existing {@code lastReceivedFrom} bookkeeping on
+     * {@code isItemValid} <em>and</em> the per-slot origin bookkeeping on
      * insert, so a mod that queries a covered face still sees exactly the pipe it saw before, with one
      * rule added. GT6 has no interception hook for item validity either — only
      * {@code interceptItemInsert} and {@code interceptItemExtract} — so {@code isItemValid} is left
@@ -1050,23 +1056,67 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     // === NBT ===
 
+    /** Integer slot indices preserve inventories larger than ContainerHelper's 256-slot format. */
 //? if >=1.21.1 {
-    /*/^* 1.21's ordinary stack codec accepts count <=99; large GT pipe buffers retain an explicit count. ^/
-    private void saveInventory(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        NonNullList<ItemStack> encoded=NonNullList.withSize(inventory.size(),ItemStack.EMPTY);
-        for(int i=0;i<inventory.size();i++){var stack=inventory.get(i);encoded.set(i,stack.getCount()>99?stack.copyWithCount(1):stack);}
-        ContainerHelper.saveAllItems(tag,encoded,lookup);
-        var items=tag.getList("Items",net.minecraft.nbt.Tag.TAG_COMPOUND);
-        for(int i=0;i<items.size();i++){var row=items.getCompound(i);int slot=row.getByte("Slot")&255;if(slot<inventory.size()&&inventory.get(slot).getCount()>99)row.putInt("gt.pipe_count",inventory.get(slot).getCount());}
-    }
-    private void loadInventory(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        ContainerHelper.loadAllItems(tag,inventory,lookup);
-        var items=tag.getList("Items",net.minecraft.nbt.Tag.TAG_COMPOUND);
-        for(int i=0;i<items.size();i++){var row=items.getCompound(i);int slot=row.getByte("Slot")&255;if(slot<inventory.size()&&row.contains("gt.pipe_count")&&!inventory.get(slot).isEmpty())inventory.get(slot).setCount(Math.max(1,Math.min(spec.invSize(),row.getInt("gt.pipe_count"))));}
+    /*private void saveInventory(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+*///?} else {
+    private void saveInventory(CompoundTag tag) {
+//?}
+        ListTag items = new ListTag();
+        for (int slot = 0; slot < inventory.size(); slot++) {
+            ItemStack stack = inventory.get(slot);
+            if (stack.isEmpty()) continue;
+            ItemStack encoded = stack.getCount() > 99 ? stack.copyWithCount(1) : stack;
+//? if >=1.21.1 {
+            /*CompoundTag row = (CompoundTag) encoded.save(lookup);
+*///?} else {
+            CompoundTag row = encoded.save(new CompoundTag());
+//?}
+            row.putInt("Slot", slot);
+            if (stack.getCount() > 99) row.putInt("gt.pipe_count", stack.getCount());
+            items.add(row);
+        }
+        tag.put("Items", items);
     }
 
+//? if >=1.21.1 {
+    /*private void loadInventory(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {
+    private void loadInventory(CompoundTag tag) {
 //?}
+        inventory.clear();
+        ListTag items = tag.getList("Items", Tag.TAG_COMPOUND);
+        for (int i = 0; i < items.size(); i++) {
+            CompoundTag row = items.getCompound(i);
+            int slot = row.contains("Slot", Tag.TAG_BYTE) ? row.getByte("Slot") & 255 : row.getInt("Slot");
+            if (slot < 0 || slot >= inventory.size()) continue;
+//? if >=1.21.1 {
+            /*ItemStack stack = ItemStack.parseOptional(lookup, row);
+*///?} else {
+            ItemStack stack = ItemStack.of(row);
+//?}
+            if (!stack.isEmpty() && row.contains("gt.pipe_count")) {
+                stack.setCount(Math.max(1, row.getInt("gt.pipe_count")));
+            }
+            inventory.set(slot, stack);
+        }
+    }
+
+    /** Split legacy single-slot buffers without discarding items or their input face. */
+    private void splitLegacyStacks() {
+        int empty = 0;
+        for (int slot = 0; slot < inventory.size(); slot++) {
+            ItemStack stack = inventory.get(slot);
+            int limit = Math.min(STACK_LIMIT, stack.getMaxStackSize());
+            while (!stack.isEmpty() && stack.getCount() > limit) {
+                while (empty < inventory.size() && !inventory.get(empty).isEmpty()) empty++;
+                // Keep any overflow in its existing slot if an addon reduced the pipe's capacity.
+                if (empty == inventory.size()) return;
+                inventory.set(empty, stack.split(limit));
+                slotOrigins[empty] = slotOrigins[slot];
+            }
+        }
+    }
     @Override
 //? if >=1.21.1 {
     /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
@@ -1075,7 +1125,6 @@ public class ItemPipeBlockEntity extends BlockEntity
     public void load(CompoundTag tag) {
         super.load(tag);
 //?}
-        lastReceivedFrom = tag.contains(NBT_LAST_RECEIVED) ? tag.getByte(NBT_LAST_RECEIVED) : -1;
         disabledInputs = tag.contains(NBT_DISABLED_INPUTS) ? tag.getByte(NBT_DISABLED_INPUTS) : 0;
         disabledOutputs = tag.contains(NBT_DISABLED_OUTPUTS) ? tag.getByte(NBT_DISABLED_OUTPUTS) : 0;
         manualDisconnects = tag.contains(NBT_MANUAL_DISCONNECTS) ? tag.getByte(NBT_MANUAL_DISCONNECTS) & 0x3F : 0;
@@ -1084,14 +1133,34 @@ public class ItemPipeBlockEntity extends BlockEntity
 //? if >=1.21.1 {
             /*loadInventory(tag.getCompound(NBT_ITEMS),lookup);
 *///?} else {
-            ContainerHelper.loadAllItems(tag.getCompound(NBT_ITEMS), inventory);
+            loadInventory(tag.getCompound(NBT_ITEMS));
 //?}
         }
+        loadOrigins(tag);
+        splitLegacyStacks();
 //? if >=1.21.1 {
         /*loadCovers(tag,lookup);
 *///?} else {
         loadCovers(tag);
 //?}
+        // /data and structure tools can replace an already-loaded pipe's inventory or covers.
+        if (level != null && !level.isClientSide) ItemPipeNetworks.joined(this);
+    }
+
+    private void loadOrigins(CompoundTag tag) {
+        java.util.Arrays.fill(slotOrigins, NO_ORIGIN);
+        if (tag.contains(NBT_SLOT_ORIGINS)) {
+            byte[] saved = tag.getByteArray(NBT_SLOT_ORIGINS);
+            System.arraycopy(saved, 0, slotOrigins, 0, Math.min(saved.length, slotOrigins.length));
+        } else if (tag.contains(NBT_LAST_RECEIVED)) {
+            byte side = tag.getByte(NBT_LAST_RECEIVED);
+            for (int slot = 0; slot < inventory.size(); slot++) {
+                if (!inventory.get(slot).isEmpty()) slotOrigins[slot] = side;
+            }
+        }
+        for (int slot = 0; slot < slotOrigins.length; slot++) {
+            if (slotOrigins[slot] < NO_ORIGIN || slotOrigins[slot] > 5) slotOrigins[slot] = NO_ORIGIN;
+        }
     }
 
     /**
@@ -1126,7 +1195,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
 //?}
-        tag.putByte(NBT_LAST_RECEIVED, lastReceivedFrom);
+        tag.putByteArray(NBT_SLOT_ORIGINS, slotOrigins.clone());
         tag.putByte(NBT_DISABLED_INPUTS, disabledInputs);
         tag.putByte(NBT_DISABLED_OUTPUTS, disabledOutputs);
         tag.putByte(NBT_MANUAL_DISCONNECTS, (byte) manualDisconnects);
@@ -1135,7 +1204,7 @@ public class ItemPipeBlockEntity extends BlockEntity
 //? if >=1.21.1 {
         /*saveInventory(itemsTag,lookup);
 *///?} else {
-        ContainerHelper.saveAllItems(itemsTag, inventory);
+        saveInventory(itemsTag);
 //?}
         tag.put(NBT_ITEMS, itemsTag);
 //? if >=1.21.1 {
@@ -1153,14 +1222,13 @@ public class ItemPipeBlockEntity extends BlockEntity
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
 //?}
-        tag.putByte(NBT_LAST_RECEIVED, lastReceivedFrom);
         tag.putByte(NBT_DISABLED_INPUTS, disabledInputs);
         tag.putByte(NBT_DISABLED_OUTPUTS, disabledOutputs);
         CompoundTag itemsTag = new CompoundTag();
 //? if >=1.21.1 {
         /*saveInventory(itemsTag,lookup);
 *///?} else {
-        ContainerHelper.saveAllItems(itemsTag, inventory);
+        saveInventory(itemsTag);
 //?}
         tag.put(NBT_ITEMS, itemsTag);
 //? if >=1.21.1 {
@@ -1200,7 +1268,6 @@ public class ItemPipeBlockEntity extends BlockEntity
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
 //?}
-        if (tag.contains(NBT_LAST_RECEIVED)) lastReceivedFrom = tag.getByte(NBT_LAST_RECEIVED);
         if (tag.contains(NBT_DISABLED_INPUTS)) disabledInputs = tag.getByte(NBT_DISABLED_INPUTS);
         if (tag.contains(NBT_DISABLED_OUTPUTS)) disabledOutputs = tag.getByte(NBT_DISABLED_OUTPUTS);
         if (tag.contains(NBT_TRANSFERRED)) transferredThisSecond = tag.getLong(NBT_TRANSFERRED);
@@ -1208,7 +1275,7 @@ public class ItemPipeBlockEntity extends BlockEntity
 //? if >=1.21.1 {
             /*loadInventory(tag.getCompound(NBT_ITEMS),lookup);
 *///?} else {
-            ContainerHelper.loadAllItems(tag.getCompound(NBT_ITEMS), inventory);
+            loadInventory(tag.getCompound(NBT_ITEMS));
 //?}
         }
 //? if >=1.21.1 {
@@ -1218,23 +1285,17 @@ public class ItemPipeBlockEntity extends BlockEntity
 //?}
     }
 
-    public long getTransferredThisSecond() { return transferredThisSecond; }
+    public long getTransferredThisSecond() {
+        syncTransferWindow();
+        return transferredThisSecond;
+    }
     public byte getDisabledInputs() { return disabledInputs; }
     public byte getDisabledOutputs() { return disabledOutputs; }
 
-    /** Record which side items were received from (called externally after insert). */
-    public void setReceivedFrom(byte side) {
-        this.lastReceivedFrom = side;
-    }
-
-    public void setReceivedFrom(@Nullable Direction side) {
-        this.lastReceivedFrom = side == null ? -1 : (byte) side.ordinal();
-    }
-
     @Override
     public void adjacentInventoryUpdated(Direction side, BlockPos sourcePos) {
-        // GT6: wake up the pipe when an adjacent inventory changes
-        setChanged();
+        // An inventory beside the network may have room now: sources waiting on it retry.
+        if (level != null && !level.isClientSide) ItemPipeNetworks.inventoryUpdated(this);
     }
     // ── Client model data (dynamic pipe model neighbor sizes) ───────────────
 
@@ -1260,13 +1321,5 @@ public class ItemPipeBlockEntity extends BlockEntity
                 .build();
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (level != null && level.isClientSide) {
-            requestModelDataUpdate();
-            gregtech.engine.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
-        }
-    }
 
 }
