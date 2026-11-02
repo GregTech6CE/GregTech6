@@ -35,6 +35,7 @@ public final class StructureTracker {
     private String claimError;
     private java.util.Map<BlockPos, gregtech.api.multiblock.StructurePorts> ports = java.util.Map.of();
     private java.util.List<BlockPos> energyOutputs = java.util.List.of();
+    private Set<BlockPos> interactionParts = Set.of();
     private final gregtech.content.multiblock.StructureDesigns designs =
             new gregtech.content.multiblock.StructureDesigns();
 
@@ -50,16 +51,26 @@ public final class StructureTracker {
         return ports.getOrDefault(part, gregtech.api.multiblock.StructurePorts.DEFAULT);
     }
 
+    /** Only cells in the actual match, excluding air and unused copies of a repeating layer. */
+    public boolean containsFormedPart(BlockPos part) {
+        return formed && interactionParts.contains(part);
+    }
+
     void ports(PatternMatch match) {
         var next = new java.util.HashMap<BlockPos, gregtech.api.multiblock.StructurePorts>();
         var outputs = new java.util.ArrayList<BlockPos>();
+        var parts = new HashSet<BlockPos>();
         for (var cell : match.fixedCells()) {
+            if (cell.cell().role() != gregtech.engine.multiblock.MultiblockLayout.Role.AIR)
+                parts.add(cell.pos().immutable());
             if (!cell.cell().ports().rules().isEmpty())
                 next.put(cell.pos().immutable(), cell.cell().ports());
             if (cell.cell().role().allows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT))
                 outputs.add(cell.pos().immutable());
         }
         for (var cell : match.repeatPlaced()) {
+            if (cell.cell().role() != gregtech.engine.multiblock.MultiblockLayout.Role.AIR)
+                parts.add(cell.pos().immutable());
             if (!cell.cell().ports().rules().isEmpty())
                 next.put(cell.pos().immutable(), cell.cell().ports());
             if (cell.cell().role().allows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT))
@@ -67,6 +78,7 @@ public final class StructureTracker {
         }
         ports = java.util.Map.copyOf(next);
         energyOutputs = java.util.List.copyOf(outputs);
+        interactionParts = Set.copyOf(parts);
     }
 
     public String claimError() {
@@ -284,6 +296,7 @@ public final class StructureTracker {
     boolean markBroken(int currentEpoch) {
         ports = java.util.Map.of();
         energyOutputs = java.util.List.of();
+        interactionParts = Set.of();
         boolean was = formed;
         formed = false;
         state = State.BROKEN;

@@ -25,6 +25,83 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class MultiblockBehaviorApiTests {
     @GameTest(template = "test_empty", timeoutTicks = 180)
+    public static void partsOpenTheControllerMenuAndInvalidateWithTheStructure(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var origin = helper.absolutePos(new BlockPos(1, 1, 1));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce_api_test", "structure_api_test"));
+        level.setBlockAndUpdate(origin, block.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
+        var machine = (BehaviorMachineBlockEntity) level.getBlockEntity(origin);
+        for (int y = 0; y < 2; y++) {
+            level.setBlockAndUpdate(origin.offset(1, y, 0), LargeMachineParts.block(18009).defaultBlockState());
+            level.setBlockAndUpdate(origin.offset(2, y, 0), Blocks.STONE.defaultBlockState());
+            level.setBlockAndUpdate(origin.offset(3, y, 0), Blocks.OAK_LOG.defaultBlockState());
+        }
+        helper.startSequence()
+                .thenWaitUntil(() -> helper.assertTrue(machine.isStructureOk(), "Menu fixture did not form"))
+                .thenExecute(() -> {
+                    var player = menuPlayer(helper);
+                    try {
+                        var hand = net.minecraft.world.InteractionHand.MAIN_HAND;
+                        for (var part : java.util.List.of(origin.east(), origin.east(2), origin.east(3).above())) {
+                            player.setPos(part.getX() + 0.5, part.getY() + 1, part.getZ() + 0.5);
+                            var hit = new net.minecraft.world.phys.BlockHitResult(part.getCenter(), Direction.UP, part, false);
+                            var result = player.gameMode.useItemOn(player, level, net.minecraft.world.item.ItemStack.EMPTY, hand, hit);
+                            helper.assertTrue(result.consumesAction(), "Part click was not handled: " + part);
+                            helper.assertTrue(player.containerMenu instanceof gregtech.client.gui.BehaviorMachineMenu menu
+                                    && menu.machine() == machine && menu.stillValid(player), "Part opened the wrong menu or closed it immediately");
+                            player.closeContainer();
+                        }
+                        var part = origin.east();
+                        player.setPos(part.getX() + 0.5, part.getY() + 1, part.getZ() + 0.5);
+                        player.setShiftKeyDown(true);
+                        helper.assertTrue(gregtech.engine.multiblock.MultiblockMenus.use(player, hand, part)
+                                == net.minecraft.world.InteractionResult.PASS, "Sneaking was intercepted");
+                        player.setShiftKeyDown(false);
+                        player.setItemInHand(hand, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
+                        helper.assertTrue(gregtech.engine.multiblock.MultiblockMenus.use(player, hand, part)
+                                == net.minecraft.world.InteractionResult.PASS, "Fluid container interaction was intercepted");
+                        player.setItemInHand(hand, net.minecraft.world.item.ItemStack.EMPTY);
+                        helper.assertTrue(gregtech.engine.multiblock.MultiblockMenus.use(player, hand, part).consumesAction(), "Part menu did not reopen");
+                        var menu = player.containerMenu;
+                        player.setPos(part.getX() + 30, part.getY(), part.getZ());
+                        helper.assertTrue(!menu.stillValid(player), "Part menu ignored distance");
+                        player.setPos(part.getX() + 0.5, part.getY() + 1, part.getZ() + 0.5);
+                        level.setBlockAndUpdate(origin.east(3).above(), Blocks.AIR.defaultBlockState());
+                        helper.assertTrue(!menu.stillValid(player), "Part menu survived a broken structure");
+                        player.closeContainer();
+                        helper.assertTrue(gregtech.engine.multiblock.MultiblockMenus.use(player, hand, part)
+                                == net.minecraft.world.InteractionResult.PASS, "Incomplete structure opened a menu through its retained binding");
+                    } finally {
+                        player.closeContainer();
+                        player.discard();
+                    }
+                })
+                .thenSucceed();
+    }
+
+    /** A real server menu/session without pretending to complete optional mods' client handshakes. */
+    public static net.minecraft.server.level.ServerPlayer menuPlayer(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var profile = new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "menu-test");
+        var connection = new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND);
+        new io.netty.channel.embedded.EmbeddedChannel(connection);
+//? if >=1.21.1 {
+        /*var player = new net.minecraft.server.level.ServerPlayer(level.getServer(), level, profile,
+                net.minecraft.server.level.ClientInformation.createDefault());
+        player.connection = new net.minecraft.server.network.ServerGamePacketListenerImpl(level.getServer(), connection, player,
+                net.minecraft.server.network.CommonListenerCookie.createInitial(profile, false)) {
+*///?} else {
+        var player = new net.minecraft.server.level.ServerPlayer(level.getServer(), level, profile);
+        player.connection = new net.minecraft.server.network.ServerGamePacketListenerImpl(level.getServer(), connection, player) {
+//?}
+            @Override public void send(net.minecraft.network.protocol.Packet<?> packet) {}
+            @Override public void send(net.minecraft.network.protocol.Packet<?> packet, net.minecraft.network.PacketSendListener listener) {}
+        };
+        player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+        return player;
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 180)
     public static void addonRulesCellsAndLifecycleUseTheHostMatcher(GameTestHelper helper) {
         var level = helper.getLevel();
         var origin = helper.absolutePos(new BlockPos(1, 1, 1));

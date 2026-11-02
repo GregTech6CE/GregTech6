@@ -86,6 +86,30 @@ public final class StructureWatchIndex {
         return result;
     }
 
+    /** Resolves formed parts, including ordinary blocks with no port entity, without a world scan. */
+    public static BlockEntity formedController(ServerLevel level, BlockPos pos) {
+        WorldData data = existing(level);
+        if (data == null || !level.hasChunkAt(pos) || level.getBlockState(pos).isAir()) return null;
+        BlockPos claimed = WorldStructureClaims.owner(level, pos);
+        BlockEntity result = null;
+        for (StructureTracker tracker : data.sections.getOrDefault(sectionKey(pos), List.of())) {
+            BlockEntity entity = tracker.entity();
+            if (tracker.unloading()
+                    || entity.isRemoved()
+                    || !tracker.containsFormedPart(pos)
+                    || !level.hasChunkAt(entity.getBlockPos())
+                    || level.getBlockEntity(entity.getBlockPos()) != entity) continue;
+            if (claimed != null) {
+                if (claimed.equals(entity.getBlockPos())) return entity;
+                continue;
+            }
+            // A shared ordinary wall has no exclusive owner; never choose by iteration order.
+            if (result != null && result != entity) return null;
+            result = entity;
+        }
+        return result;
+    }
+
     static void unloadWorld(ServerLevel level) {
         WorldData data = existing(level);
         if (data == null) return;
