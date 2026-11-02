@@ -120,6 +120,12 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     private int manualDisconnects;
     /** Set on load; the next server tick repairs half-connections that the load order hid. */
     private boolean reconnectPending = true;
+    /** Next tick at which the component may run a balanced-distribution pass. */
+    private long balanceDue;
+    private static final int BALANCE_PERIOD = 10;
+    private static final long BALANCE_DEADBAND = 1;
+    /** Shared-pool snapshot membership; null until the first pool operation. */
+    private gregtech.content.transport.fluid.FluidPipeNetwork.Membership membership;
 
     private static final String NBT_TEMPERATURE = "gt.temperature";
     private static final String NBT_TRANSFERRED = "gt.transferred";
@@ -164,7 +170,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         this.tanks = new FluidTankGT[count];
         for (int i = 0; i < count; i++) {
             this.tanks[i] = new FluidTankGT(spec.capacity())
-                    .setOnChanged(this::setChanged)
+                    .setOnChanged(this::onTankChanged)
                     .setGasProof(spec.gasProof())
                     .setAcidProof(spec.acidProof())
                     .setPlasmaProof(spec.plasmaProof())
@@ -188,6 +194,14 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     public PipeSpec spec() { return spec; }
+
+    public gregtech.content.transport.fluid.FluidPipeNetwork network() {
+        return membership == null ? null : membership.network();
+    }
+
+    public void membership(gregtech.content.transport.fluid.FluidPipeNetwork.Membership membership) {
+        this.membership = membership;
+    }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FluidPipeBlockEntity be) {
         if (!level.isClientSide) be.tickServer(state);
@@ -231,10 +245,30 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         // Zero cost when unused: `hasCovers` is false for every coverless pipe, so this is a single
         // field read and returns — no face is walked, nothing is allocated, nothing is dispatched.
         if (coverStore.hasCovers()) tickCovers();
+        if (gregtech.GregTechConfig.fluidDistribution() == gregtech.GregTechConfig.FluidDistribution.BALANCED
+                && level.getGameTime() >= balanceDue) {
+            balanceComponent();
+        }
         // Every tank mutation already marks the pipe through its change callback. Marking an idle pipe
         // every tick would dirty its chunk and run the comparator neighbour update for nothing, so only
         // the state this method derives itself is checked here.
         if (temperature != temperatureBefore || transferredAmount != 0 || transferredBefore || receivedBefore) setChanged();
+    }
+
+    /** Stored fluid, backflow state, covers, reconnect and residual heat all keep a pipe awake. */
+    public boolean isIdle() {
+        if (reconnectPending || coverStore.hasCovers()) return false;
+        for (int i = 0; i < tanks.length; i++) {
+            if (!tanks[i].isEmpty() || lastReceivedFrom[i] != 0) return false;
+        }
+        return temperature == environmentTemperature();
+    }
+
+    private void onTankChanged() {
+        setChanged();
+        // Waking this pipe is enough: its next pass distributes, which wakes the neighbours that
+        // actually receive fluid. Avoiding a six-face walk per tank mutation keeps bulk moves cheap.
+        gregtech.content.transport.fluid.FluidPipeTickPhases.wake(this);
     }
 
     private long environmentTemperature() {
@@ -287,6 +321,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     public void attached(Direction side, ItemStack stack) {
         invalidateFaceHandler(side);
         syncCovers();
+        gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
     }
 
     /** The signals a pipe face can emit are the panel ones; {@code afterTick} publishes them. */
@@ -295,6 +330,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         invalidateFaceHandler(side);
         panels().afterTick();
         syncCovers();
+        gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
     }
 
     @Override
@@ -411,6 +447,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (softHammer) CoverUtilityBehaviors.clearFilter(stack);
         else CoverUtilityBehaviors.toggleFilterMode(stack);
         syncCovers();
+        gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
         return true;
     }
 
@@ -606,6 +643,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (next != manualDisconnects) {
             manualDisconnects = next;
             setChanged();
+            gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
         }
     }
 
@@ -613,6 +651,9 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         // Vanilla cauldrons have no block entity. They take priority over ordinary targets.
         fillCauldrons(state, tank);
         if (tank.isEmpty()) return;
+        // BALANCED replaces inter-pipe diffusion with its own pass; SHARED keeps the ambient
+        // diffusion and adds the component-wide pool for endpoint fill/drain.
+        boolean balanced = gregtech.GregTechConfig.fluidDistribution() == gregtech.GregTechConfig.FluidDistribution.BALANCED;
         java.util.List<FluidTankGT> pipes = new java.util.ArrayList<>();
         java.util.List<IFluidHandler> machines = new java.util.ArrayList<>();
         FluidStack fluid = tank.getFluid();
@@ -632,7 +673,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 FluidTankGT target = neighbor.tanks[targetChannel];
                 if (target.getAmount() >= tank.getAmount()) continue;
                 // Original GT6 marks eligible channels before distribution, even if capacity blocks the push.
-                neighbor.lastReceivedFrom[targetChannel] |= (byte) (1 << incoming.ordinal());
+                if (!balanced) neighbor.lastReceivedFrom[targetChannel] |= (byte) (1 << incoming.ordinal());
                 pipes.add(level.random.nextInt(pipes.size() + 1), target);
             } else {
 //? if >=1.21.1 {
@@ -653,24 +694,172 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         long[] amounts = new long[pipes.size()];
         for (int i = 0; i < amounts.length; i++) amounts[i] = pipes.get(i).getAmount();
         long targetLevel = FluidPipeChannels.distributionLevel(tank.getAmount(), amounts, machines.size());
-        for (FluidTankGT target : pipes) transferToPipe(tank, target, targetLevel - target.getAmount());
+        if (!balanced) for (FluidTankGT target : pipes) transferToPipe(tank, target, targetLevel - target.getAmount());
         for (IFluidHandler target : machines) {
             if (tank.isEmpty()) break;
             FluidStack offered = tank.drain(FluidTankGT.bindInt(targetLevel), FluidAction.SIMULATE);
             int accepted = target.fill(offered, FluidAction.EXECUTE);
             transferredAmount += tank.remove(accepted);
         }
-        long pressure = FluidPipeChannels.pressureShare(tank.getAmount(), spec.capacity(), pipes.size());
-        if (pressure > 0) for (FluidTankGT target : pipes) transferToPipe(tank, target, pressure);
+        if (!balanced) {
+            long pressure = FluidPipeChannels.pressureShare(tank.getAmount(), spec.capacity(), pipes.size());
+            if (pressure > 0) for (FluidTankGT target : pipes) transferToPipe(tank, target, pressure);
+        }
     }
 
     /** Selected channels already match full fluid identity; keep internal pipe amounts as longs. */
-    private void transferToPipe(FluidTankGT source, FluidTankGT target, long requested) {
+    private long transferToPipe(FluidTankGT source, FluidTankGT target, long requested) {
         long amount = Math.min(Math.min(requested, source.getAmount()), target.capacity() - target.getAmount());
-        if (amount <= 0) return;
+        if (amount <= 0) return 0;
         if (target.isEmpty()) target.setFluid(source.getFluidLong(), amount);
         else target.add(amount);
         transferredAmount += source.remove(amount);
+        return amount;
+    }
+
+    // ── Balanced distribution: per-component, per-fluid levelling ────────────
+
+    /**
+     * One pass every {@link #BALANCE_PERIOD} ticks. The component is split along every edge a
+     * filter, shutter or pump blocks in either direction, and along pipes whose own covers act on
+     * their tank directly (pressure valve, drain, air vent), so balancing never bypasses them.
+     */
+    private void balanceComponent() {
+        long now = level.getGameTime();
+        java.util.List<FluidPipeBlockEntity> component = new java.util.ArrayList<>();
+        java.util.Map<FluidPipeBlockEntity, Integer> index = new java.util.IdentityHashMap<>();
+        java.util.Set<BlockPos> seen = new HashSet<>();
+        java.util.ArrayDeque<FluidPipeBlockEntity> queue = new java.util.ArrayDeque<>();
+        seen.add(worldPosition);
+        queue.add(this);
+        while (!queue.isEmpty()) {
+            FluidPipeBlockEntity pipe = queue.poll();
+            index.put(pipe, component.size());
+            component.add(pipe);
+            for (Direction side : Direction.values()) {
+                if (!pipe.connected(side)) continue;
+                BlockPos next = pipe.getBlockPos().relative(side);
+                if (!level.hasChunkAt(next) || !seen.add(next)) continue;
+                if (level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor
+                        && neighbor.connected(side.getOpposite())) {
+                    queue.add(neighbor);
+                }
+            }
+        }
+        for (FluidPipeBlockEntity pipe : component) pipe.balanceDue = now + BALANCE_PERIOD;
+
+        java.util.Map<Fluid, FluidStack> fluids = new java.util.LinkedHashMap<>();
+        for (FluidPipeBlockEntity pipe : component) {
+            for (FluidTankGT tank : pipe.tanks) {
+                if (!tank.isEmpty()) fluids.putIfAbsent(tank.getFluid().getFluid(), tank.getFluid());
+            }
+        }
+        for (FluidStack fluid : fluids.values()) balanceFluid(component, index, fluid);
+    }
+
+    private void balanceFluid(java.util.List<FluidPipeBlockEntity> component,
+                              java.util.Map<FluidPipeBlockEntity, Integer> index, FluidStack fluid) {
+        int size = component.size();
+        int[] channel = new int[size];
+        long[] amount = new long[size];
+        long[] capacity = new long[size];
+        for (int i = 0; i < size; i++) {
+            FluidPipeBlockEntity pipe = component.get(i);
+            channel[i] = pipe.isBalanceExcluded() ? -1 : pipe.fillableChannel(fluid);
+            if (channel[i] < 0) continue;
+            FluidTankGT tank = pipe.tanks[channel[i]];
+            amount[i] = tank.isEmpty() ? 0 : tank.getAmount();
+            capacity[i] = tank.capacity(fluid);
+        }
+
+        java.util.List<int[]> edges = new java.util.ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            if (channel[i] < 0) continue;
+            FluidPipeBlockEntity pipe = component.get(i);
+            for (Direction side : Direction.values()) {
+                if (!pipe.connected(side)) continue;
+                BlockPos next = pipe.getBlockPos().relative(side);
+                if (!level.hasChunkAt(next) || !(level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor)) continue;
+                Integer other = index.get(neighbor);
+                if (other == null || other <= i || channel[other] < 0 || !neighbor.connected(side.getOpposite())) continue;
+                if (balanceEdgeOpen(pipe, side, neighbor, fluid)) edges.add(new int[] {i, other});
+            }
+        }
+
+        int[] parent = new int[size];
+        for (int i = 0; i < size; i++) parent[i] = i;
+        for (int[] edge : edges) union(parent, edge[0], edge[1]);
+        java.util.Map<Integer, java.util.List<Integer>> groups = new java.util.LinkedHashMap<>();
+        for (int i = 0; i < size; i++) {
+            if (channel[i] >= 0) groups.computeIfAbsent(find(parent, i), key -> new java.util.ArrayList<>()).add(i);
+        }
+
+        long[] surplus = new long[size];
+        for (java.util.List<Integer> group : groups.values()) {
+            if (group.size() < 2) continue;
+            long total = 0;
+            for (int i : group) total += amount[i];
+            if (total == 0) continue;
+            long target = (total + group.size() - 1) / group.size();
+            for (int i : group) surplus[i] = amount[i] - Math.min(target, capacity[i]);
+            for (int[] edge : edges) {
+                if (find(parent, edge[0]) != find(parent, edge[1]) || find(parent, edge[0]) != find(parent, group.get(0))) continue;
+                moveToward(component, channel, surplus, edge[0], edge[1]);
+                moveToward(component, channel, surplus, edge[1], edge[0]);
+            }
+        }
+    }
+
+    /** Move only the amount the receiver is short of the component target. */
+    private static void moveToward(java.util.List<FluidPipeBlockEntity> component, int[] channel,
+                                   long[] surplus, int from, int to) {
+        if (surplus[from] <= BALANCE_DEADBAND || surplus[to] >= -BALANCE_DEADBAND) return;
+        long requested = Math.min(surplus[from], -surplus[to]);
+        long moved = component.get(from).transferToPipe(
+                component.get(from).tanks[channel[from]], component.get(to).tanks[channel[to]], requested);
+        surplus[from] -= moved;
+        surplus[to] += moved;
+    }
+
+    /**
+     * A balancing edge must pass both ways: a shutter closes it entirely and a pump's direction
+     * would be bypassed by averaging across it. Filters are checked for the fluid being levelled.
+     */
+    private static boolean balanceEdgeOpen(FluidPipeBlockEntity from, Direction side,
+                                           FluidPipeBlockEntity to, FluidStack fluid) {
+        Direction back = side.getOpposite();
+        var fromCover = from.getCover(side);
+        var toCover = to.getCover(back);
+        return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(fromCover, false)
+                && gregtech.content.cover.ComponentCoverRuntime.allowsFluid(fromCover, true)
+                && gregtech.content.cover.ComponentCoverRuntime.allowsFluid(toCover, false)
+                && gregtech.content.cover.ComponentCoverRuntime.allowsFluid(toCover, true)
+                && from.coverFluidFilterPermits(side, fluid)
+                && to.coverFluidFilterPermits(back, fluid);
+    }
+
+    /** Covers that act on this pipe's own tank leave it out of levelling entirely. */
+    private boolean isBalanceExcluded() {
+        for (Direction side : Direction.values()) {
+            String id = coverIdOf(side);
+            if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(id)
+                    || CoverAttachmentBehaviors.DRAIN.equals(id)
+                    || CoverAttachmentBehaviors.AIR_VENT.equals(id)) return true;
+        }
+        return false;
+    }
+
+    private static int find(int[] parent, int value) {
+        while (parent[value] != value) {
+            parent[value] = parent[parent[value]];
+            value = parent[value];
+        }
+        return value;
+    }
+
+    private static void union(int[] parent, int left, int right) {
+        int a = find(parent, left), b = find(parent, right);
+        if (a != b) parent[a] = b;
     }
 
     private void fillCauldrons(BlockState state, FluidTankGT tank) {
@@ -844,8 +1033,49 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
         if (resource.isEmpty()) return 0;
+        if (poolMode()) return fillPool(resource, action);
         int channel = fillableChannel(resource);
         return channel < 0 ? 0 : tanks[channel].fill(resource, action);
+    }
+
+    private boolean poolMode() {
+        return gregtech.GregTechConfig.fluidDistribution() == gregtech.GregTechConfig.FluidDistribution.SHARED;
+    }
+
+    /**
+     * Shared mode keeps every tank as the only storage and treats the component as one derived
+     * pool. Filling walks the snapshot from this pipe, so the receiving pipe is deterministic.
+     */
+    private int fillPool(FluidStack resource, IFluidHandler.FluidAction action) {
+        gregtech.content.transport.fluid.FluidPipeNetwork network =
+                gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
+        if (network == null || isPoolExcluded()) {
+            int channel = fillableChannel(resource);
+            return channel < 0 ? 0 : tanks[channel].fill(resource, action);
+        }
+        network.beginPass();
+        int accepted = 0;
+        FluidStack remaining = resource.copy();
+        for (int i = 0; i < network.size() && remaining.getAmount() > 0; i++) {
+            if (!network.live(i)) break;
+            FluidPipeBlockEntity pipe = network.pipe(i);
+            if (pipe.isPoolExcluded()) continue;
+            int channel = pipe.fillableChannel(remaining);
+            if (channel < 0) continue;
+            int filled = pipe.tanks[channel].fill(remaining, action);
+            if (filled <= 0) continue;
+            accepted += filled;
+            remaining.setAmount(remaining.getAmount() - filled);
+        }
+        return accepted;
+    }
+
+    /** Pressure valves act on one tank directly; keep their host out of the pool. */
+    private boolean isPoolExcluded() {
+        for (Direction side : Direction.values()) {
+            if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(coverIdOf(side))) return true;
+        }
+        return false;
     }
 
     /** GT6 and the wolfram port both reserve an existing fluid channel before any empty one. */
@@ -865,28 +1095,93 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
         if (resource.isEmpty()) return FluidStack.EMPTY;
-        for (FluidTankGT tank : tanks) {
-            FluidStack existing = tank.getFluid();
-//? if >=1.21.1 {
-            /*if (!existing.isEmpty() && FluidStack.isSameFluidSameComponents(existing, resource)) {
-*///?} else {
-            if (!existing.isEmpty() && existing.isFluidEqual(resource)) {
-//?}
-                return tank.drain(resource, action);
-            }
-        }
-        return FluidStack.EMPTY;
+        if (poolMode()) return drainPool(resource, action);
+        return drainLocal(resource, action);
     }
 
     @NotNull
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
+        if (poolMode()) return drainPool(maxDrain, action);
+        return drainLocal(maxDrain, action);
+    }
+
+    private FluidStack drainLocal(FluidStack resource, FluidAction action) {
         for (FluidTankGT tank : tanks) {
-            if (!tank.isEmpty()) {
-                return tank.drain(maxDrain, action);
-            }
+            FluidStack existing = tank.getFluid();
+            if (!existing.isEmpty() && sameFluid(existing, resource)) return tank.drain(resource, action);
         }
         return FluidStack.EMPTY;
+    }
+
+    private FluidStack drainLocal(int maxDrain, FluidAction action) {
+        for (FluidTankGT tank : tanks) {
+            if (!tank.isEmpty()) return tank.drain(maxDrain, action);
+        }
+        return FluidStack.EMPTY;
+    }
+
+    private FluidStack drainPool(FluidStack resource, IFluidHandler.FluidAction action) {
+        gregtech.content.transport.fluid.FluidPipeNetwork network =
+                gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
+        if (network == null || isPoolExcluded()) return drainLocal(resource, action);
+        network.beginPass();
+        FluidStack result = FluidStack.EMPTY;
+        long remaining = resource.getAmount();
+        for (int i = 0; i < network.size() && remaining > 0; i++) {
+            if (!network.live(i)) break;
+            FluidPipeBlockEntity pipe = network.pipe(i);
+            if (pipe.isPoolExcluded()) continue;
+            for (FluidTankGT tank : pipe.tanks) {
+                FluidStack existing = tank.getFluid();
+                if (existing.isEmpty() || !sameFluid(existing, resource)) continue;
+                FluidStack request = resource.copy();
+                request.setAmount(FluidTankGT.bindInt(remaining));
+                FluidStack drained = tank.drain(request, action);
+                if (drained.isEmpty()) continue;
+                result = merge(result, drained);
+                remaining -= drained.getAmount();
+                if (remaining <= 0) break;
+            }
+        }
+        return result;
+    }
+
+    private FluidStack drainPool(int maxDrain, IFluidHandler.FluidAction action) {
+        gregtech.content.transport.fluid.FluidPipeNetwork network =
+                gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
+        if (network == null || isPoolExcluded()) return drainLocal(maxDrain, action);
+        network.beginPass();
+        FluidStack result = FluidStack.EMPTY;
+        int remaining = maxDrain;
+        for (int i = 0; i < network.size() && remaining > 0; i++) {
+            if (!network.live(i)) break;
+            FluidPipeBlockEntity pipe = network.pipe(i);
+            if (pipe.isPoolExcluded()) continue;
+            for (FluidTankGT tank : pipe.tanks) {
+                if (tank.isEmpty()) continue;
+                FluidStack drained = tank.drain(remaining, action);
+                if (drained.isEmpty()) continue;
+                result = merge(result, drained);
+                remaining -= drained.getAmount();
+                if (remaining <= 0) break;
+            }
+        }
+        return result;
+    }
+
+    private static boolean sameFluid(FluidStack left, FluidStack right) {
+//? if >=1.21.1 {
+        /*return FluidStack.isSameFluidSameComponents(left, right);
+*///?} else {
+        return left.isFluidEqual(right);
+//?}
+    }
+
+    private static FluidStack merge(FluidStack total, FluidStack part) {
+        if (total.isEmpty()) return part.copy();
+        total.grow(part.getAmount());
+        return total;
     }
 
     // === Capability ===
@@ -1181,10 +1476,52 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     @Override
     public void onLoad() {
         super.onLoad();
-        if (level != null && level.isClientSide) {
+        if (level == null) return;
+        if (level.isClientSide) {
             requestModelDataUpdate();
             gregtech.engine.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+        } else {
+            balanceDue = 0;
+            gregtech.content.transport.fluid.FluidPipeTickPhases.joined(this);
         }
+    }
+
+    @Override
+    public void setRemoved() {
+        if (level != null && !level.isClientSide) {
+            gregtech.content.transport.fluid.FluidPipeTickPhases.left(this);
+            gregtech.content.transport.fluid.FluidPipeNetworks.left(this);
+        }
+        super.setRemoved();
+    }
+
+    @Override
+    public void onChunkUnloaded() {
+        if (level != null && !level.isClientSide) {
+            gregtech.content.transport.fluid.FluidPipeTickPhases.left(this);
+            gregtech.content.transport.fluid.FluidPipeNetworks.left(this);
+        }
+        super.onChunkUnloaded();
+    }
+
+    /** Connection changes are a wake-up source, not a stored layout. */
+    @Override
+    @SuppressWarnings("deprecation")
+    public void setBlockState(BlockState state) {
+        int before = connectionMask(getBlockState());
+        super.setBlockState(state);
+        if (level != null && !level.isClientSide && connectionMask(state) != before) {
+            gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
+            gregtech.content.transport.fluid.FluidPipeNetworks.invalidate(this);
+        }
+    }
+
+    private static int connectionMask(BlockState state) {
+        int mask = 0;
+        for (Direction face : Direction.values()) {
+            if (state.getValue(FluidPipeBlock.propFor(face))) mask |= 1 << face.ordinal();
+        }
+        return mask;
     }
 
     // ── The face-aware view a fluid filter needs ─────────────────────────────
@@ -1225,9 +1562,12 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         public int fill(FluidStack resource, FluidAction action) {
             if (!internal && (!gregtech.content.cover.ComponentCoverRuntime.allowsFluid(pipe.getCover(side),true) || !pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource))) return 0;
             int channel = pipe.fillableChannel(resource);
-            if (channel < 0) return 0;
-            int accepted = pipe.tanks[channel].fill(resource, action);
-            if (accepted > 0 && action.execute()) pipe.lastReceivedFrom[channel] |= (byte) (1 << side.ordinal());
+            long before = channel < 0 ? 0 : pipe.tanks[channel].getAmount();
+            int accepted = pipe.fill(resource, action);
+            // Mark only the entry channel, so a shared-pool fill through another pipe does not
+            // invent a backflow mask on this face.
+            if (accepted > 0 && action.execute() && channel >= 0 && pipe.tanks[channel].getAmount() > before)
+                pipe.lastReceivedFrom[channel] |= (byte) (1 << side.ordinal());
             return accepted;
         }
 
@@ -1252,6 +1592,21 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 
     /** The fluid {@link #drain(int, FluidAction)} would take, without draining it. */
     private FluidStack firstDrainCandidate() {
+        if (poolMode()) {
+            gregtech.content.transport.fluid.FluidPipeNetwork network =
+                    gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
+            if (network != null && !isPoolExcluded()) {
+                network.beginPass();
+                for (int i = 0; i < network.size(); i++) {
+                    if (!network.live(i)) break;
+                    FluidPipeBlockEntity pipe = network.pipe(i);
+                    if (pipe.isPoolExcluded()) continue;
+                    for (FluidTankGT tank : pipe.tanks) {
+                        if (!tank.isEmpty()) return tank.getFluid();
+                    }
+                }
+            }
+        }
         for (FluidTankGT tank : tanks) {
             if (!tank.isEmpty()) return tank.getFluid();
         }

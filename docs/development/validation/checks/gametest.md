@@ -12,7 +12,7 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 - 共享测试：`minecraft/src/test`，由 Stonecutter 生成到两个节点的 `test` source set。
 - 版本专属测试：`minecraft/versions/<node>/src/test`，仅用于加载器 API 差异；目录当前为空或尚未创建。
-- 测试类：`gregtech.gametest.CraftingRecipeIssueSmokeTests`（4 个 `@GameTest`）、`gregtech.gametest.RecipeMapRegistrationTests`（8 个 `@GameTest`）与 `gregtech.gametest.ItemPipeRoutingTests`（7 个 `@GameTest`）。
+- 测试类：`gregtech.gametest.CraftingRecipeIssueSmokeTests`（4 个 `@GameTest`）、`gregtech.gametest.RecipeMapRegistrationTests`（8 个 `@GameTest`）、`gregtech.gametest.ItemPipeRoutingTests`（7 个 `@GameTest`）与 `gregtech.gametest.TransportSchedulingTests`（4 个 `@GameTest`）。
 - 案例表：`minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`。
 - 结构模板：`minecraft/src/test/templates/test_empty.nbt`。
 

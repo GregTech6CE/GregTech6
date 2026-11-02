@@ -37,6 +37,17 @@ Block 处理放置、形状和交互分发；BlockEntity 保存实例状态、�
 
 持久数据与网络展示数据分别考虑：变更 NBT/数据组件要检查读旧数据、缺字段、范围与版本差异；变更包协议要检查方向、解码上限、执行线程、目标实体是否有效及请求者是否有权限。
 
+## 运输网络的快照与调度
+
+`ItemPipeNetwork`/`ItemPipeNetworks`、`ElectricNetwork`/`ElectricNetworks` 与 `FluidPipeTickPhases` 共用一套骨架：
+
+- 组件快照按“双向连接 + `hasChunkAt` + `isRemoved`”建立；成员共享一个 `Membership`，`invalidate()` 为 O(1)，下一次需要时重建。
+- 每 level 一个 `State`（`WeakHashMap`）加 `LevelTickEvent`；这些方块实体不注册逐方块 ticker。
+- 快照记录 chunk liveness，遍历或投递前按 chunk 检查一次；chunk 消失即整体失效。
+- 生命周期挂点固定：`onLoad` → `joined`，`setRemoved`/`onChunkUnloaded` → `left`，连接位变化 → `invalidate`/唤醒。
+
+电网的 `lastWattage`、`transferredAmperes` 与烧毁冷却按 level tick 窗口惰性推导，读取时计算且不持久化；烧毁由 `ElectricNetworks` 的每 tick 队列执行。流体管道空闲调度只决定是否执行 `serverTick`，保留 `FluidPipeTickPhases` 的 `PENDING` 顺序与两相位。新增放置、破坏、扳手、覆盖板或区块加载路径时，必须接到对应的失效或唤醒钩子；漏接会表现为陈旧投递或休眠管道不分配。
+
 ## 客户端与可选集成
 
 公用入口不能在专用服务端加载 `net.minecraft.client` 类型。模型、Screen 和渲染初始化要沿已有客户端入口接入；不要把视觉修正顺手改成服务端规则。
@@ -55,6 +66,7 @@ Block 处理放置、形状和交互分发；BlockEntity 保存实例状态、�
 - 客户端只负责展示与交互入口；真实槽位、库存、权限与配方由服务端 Menu 和服务端状态决定。修改 GUI 模板后先做静态预览，再在客户端与专用服务端分别确认。
 - 网络包检查方向、解码上限、执行线程、目标实体有效性与请求者权限；Mixin 检查两个节点的配置、目标签名、注入点与未命中行为。
 - 可选集成沿配置与现有入口条件加载；分别验证未安装目标模组与安装匹配版本。
+- 运输网络快照只在布局变化时失效，空闲电线/管道不执行 tick；外部 fill/drain、覆盖板、扳手、邻居变化和区块加载都必须接到失效或唤醒钩子。
 - 共享 Minecraft 输入遵循 Stonecutter 条件与版本资源路径；渲染、GUI、网络与 Mixin 的结论不能用单平台结果推出另一平台。
 
 ## 自动化测试范围

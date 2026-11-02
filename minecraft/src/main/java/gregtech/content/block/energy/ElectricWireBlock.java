@@ -172,16 +172,12 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
         return new ElectricWireBlockEntity(pos, state);
     }
 
+    /** Wires are driven by {@code ElectricNetworks}; no per-wire block entity tick exists. */
     @Nullable
     @Override
     public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
-//? if >=1.21.1 {
-        /*if (level.isClientSide || type != gregtech.content.registry.GTWires.ELECTRIC_WIRE.get()) return null;
-*///?} else {
-        if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.ELECTRIC_WIRE.get()) return null;
-//?}
-        return (world, pos, blockState, entity) -> ((ElectricWireBlockEntity) entity).serverTick();
+        return null;
     }
 
     @Override

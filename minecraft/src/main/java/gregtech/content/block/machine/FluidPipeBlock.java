@@ -322,6 +322,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                 }
                 if (!CoverItems.isCover(held)
                         && coverHost.clickFilterCover(hit.getDirection(), held)) {
+                    if (!level.isClientSide) gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(coverHost);
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
@@ -395,6 +396,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                 neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
         if (side != null && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity pipe) {
             pipe.tryConnectTo(side);
+            gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(pipe);
+            gregtech.content.transport.fluid.FluidPipeNetworks.invalidate(pipe);
         }
     }
 
@@ -420,6 +423,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             if (be instanceof FluidPipeBlockEntity pipe) {
                 pipe.dumpFluidsToAdjacent();
                 pipe.dropCovers();
+                gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(pipe);
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);

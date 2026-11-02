@@ -2,13 +2,15 @@ package gregtech.content.blockentity.energy;
 
 import gregtech.api.machine.BlockFace;
 
-import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.energy.IEnergyConductor;
+import gregtech.engine.energy.WirePacketRules;
 import gregtech.engine.energy.WireSpec;
 import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
+import gregtech.content.transport.energy.ElectricNetwork;
+import gregtech.content.transport.energy.ElectricNetworks;
 //? if >=1.21.1 {
 /*import gregtech.content.registry.GTWires;
 import net.minecraft.core.HolderLookup;
@@ -23,20 +25,21 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /** GT6 electric wire block entity (EU cable, pipe-style connection grid). */
 public class ElectricWireBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
     // Sample the existing transfer accumulator between entity ticks; never substitute energy.
     @Override public long progressValue(BlockFace side) { return transferredAmperes(); }
     @Override public long progressMaximum(BlockFace side) { return amperage(); }
-    // GT6 runtime-only wire counters: aggregate transfers between entity ticks.
+    // GT6 runtime-only wire counters: aggregate transfers between level ticks without a per-wire tick.
+    private long counterWindow = Long.MIN_VALUE;
+    private long windowAmperes;
+    private long windowWattage;
     private long lastWattage;
-    private long transferredWattage;
-    private long transferredAmperes;
-    private long timer;
     private int burnCounter;
+    private long timerBase;
+    private long decayedSteps;
+    private ElectricNetwork.Membership membership;
 
     public ElectricWireBlockEntity(BlockPos pos, BlockState state) {
 //? if >=1.21.1 {
@@ -60,10 +63,58 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
     @Override
     public void onLoad() {
         super.onLoad();
-        if (level != null && level.isClientSide) {
+        if (level == null) return;
+        if (level.isClientSide) {
             requestModelDataUpdate();
             gregtech.engine.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
+        } else {
+            // Counters and the burn cooldown are runtime-only and restart with the block entity.
+            counterWindow = Long.MIN_VALUE;
+            windowAmperes = 0;
+            windowWattage = 0;
+            lastWattage = 0;
+            burnCounter = 0;
+            timerBase = level.getGameTime();
+            decayedSteps = 0;
+            ElectricNetworks.joined(this);
         }
+    }
+
+    @Override
+    public void setRemoved() {
+        if (level != null && !level.isClientSide) ElectricNetworks.left(this);
+        super.setRemoved();
+    }
+
+    @Override
+    public void onChunkUnloaded() {
+        if (level != null && !level.isClientSide) ElectricNetworks.left(this);
+        super.onChunkUnloaded();
+    }
+
+    /** Only the six connection properties are layout; waterlogging and the like are not. */
+    @Override
+    @SuppressWarnings("deprecation")
+    public void setBlockState(BlockState state) {
+        int before = connectionMask(getBlockState());
+        super.setBlockState(state);
+        if (level != null && !level.isClientSide && connectionMask(state) != before) ElectricNetworks.invalidate(this);
+    }
+
+    private static int connectionMask(BlockState state) {
+        int mask = 0;
+        for (Direction face : Direction.values()) {
+            if (state.getValue(ElectricWireBlock.propFor(face))) mask |= 1 << face.ordinal();
+        }
+        return mask;
+    }
+
+    public ElectricNetwork network() {
+        return membership == null ? null : membership.network();
+    }
+
+    public void membership(ElectricNetwork.Membership membership) {
+        this.membership = membership;
     }
 
     /**
@@ -169,7 +220,7 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
                 || !isEnergyAcceptingFrom(energyType,side,false)) return 0;
         // GT6's simulation reports local connection acceptance, not a reservation of downstream space.
         if (!doInject) return amount;
-        return transferElectricity(side, size, amount, new HashSet<>());
+        return ElectricNetworks.inject(this, side, size, amount);
     }
 
     @Override
@@ -201,77 +252,57 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
     @Override
     public long getEnergySizeOutputMax(GregTechTags.Tag energyType, @Nullable Direction side) { return voltage(); }
 
+    /**
+     * Publish the previous level tick's totals and apply the burn cooldown that the per-wire tick
+     * used to advance. Reads derive everything from the current window, so an idle wire needs no tick.
+     */
+    private void rollCounters(long now) {
+        if (counterWindow == now) return;
+        lastWattage = counterWindow == now - 1 ? windowWattage : 0;
+        counterWindow = now;
+        windowAmperes = 0;
+        windowWattage = 0;
+        long elapsed = now - timerBase;
+        long due = elapsed < 2 ? 0 : (elapsed - 2) / 512 + 1;
+        if (due > decayedSteps) {
+            long steps = due - decayedSteps;
+            burnCounter = steps >= burnCounter ? 0 : burnCounter - (int) steps;
+            decayedSteps = due;
+        }
+    }
+
+    private void rollIfServer() {
+        if (level != null && !level.isClientSide) rollCounters(level.getGameTime());
+    }
+
     public boolean isConducting() {
+        rollIfServer();
         return level != null && !isRemoved() && lastWattage > 0;
     }
 
     /** GT6 mWattageLast: actual post-loss wattage accumulated during the previous tick. */
-    public long lastWattage() { return lastWattage; }
-    public long transferredAmperes() { return transferredAmperes; }
-    public int burnCounter() { return burnCounter; }
-
-    public void serverTick() {
-        if (level == null || level.isClientSide || isRemoved()) return;
-        timer++;
-        if (burnCounter >= 16) {
-            // GT6 setToFire replaces the wire, without dropping a recoverable cable.
-            level.setBlockAndUpdate(worldPosition, net.minecraft.world.level.block.Blocks.FIRE.defaultBlockState());
-            return;
-        }
-        if (timer % 512 == 2 && burnCounter > 0) burnCounter--;
-        lastWattage = transferredWattage;
-        transferredWattage = 0;
-        transferredAmperes = 0;
-    }
+    public long lastWattage() { rollIfServer(); return lastWattage; }
+    public long transferredAmperes() { rollIfServer(); return windowAmperes; }
+    public int burnCounter() { rollIfServer(); return burnCounter; }
 
     /** False means an overload consumed the remaining offered packets, as in GT6. */
     public boolean addToEnergyTransferred(long packetVoltage, long packetAmperage) {
         if (packetAmperage <= 0 || packetVoltage == Long.MIN_VALUE || packetVoltage == 0) return true;
+        rollIfServer();
         long magnitude = Math.abs(packetVoltage);
-        transferredAmperes = saturatedAdd(transferredAmperes, packetAmperage);
-        long watts = gregtech.engine.energy.WirePacketRules.wattage(magnitude,packetAmperage);
-        transferredWattage = saturatedAdd(transferredWattage, watts);
-        if (magnitude > voltage() || transferredAmperes > amperage()) {
+        windowAmperes = saturatedAdd(windowAmperes, packetAmperage);
+        long watts = WirePacketRules.wattage(magnitude,packetAmperage);
+        windowWattage = saturatedAdd(windowWattage, watts);
+        if (magnitude > voltage() || windowAmperes > amperage()) {
             if (burnCounter < 16) burnCounter++;
+            if (burnCounter >= 16) ElectricNetworks.scheduleBurn(this);
             return false;
         }
         return true;
     }
 
     private static long saturatedAdd(long left, long right) {
-        return gregtech.engine.energy.WirePacketRules.saturatedAdd(left,right);
-    }
-
-    /** Recursive energy transfer along wire network. */
-    public long transferElectricity(Direction fromSide, long packetVoltage, long packetAmperage, Set<BlockPos> visited) {
-        if (level == null || level.isClientSide || isRemoved() || !gregtech.engine.energy.WirePacketRules.canTransfer(packetVoltage,packetAmperage,lossPerBlock())) return 0;
-        if (!visited.add(getBlockPos())) return 0;
-
-        packetVoltage=gregtech.engine.energy.WirePacketRules.afterLoss(packetVoltage,lossPerBlock());
-
-        long usedAmperes = 0;
-        for (Direction side : Direction.values()) {
-            if (side == fromSide) continue;
-            if (usedAmperes >= packetAmperage) break;
-            if (!getBlockState().getValue(ElectricWireBlock.propFor(side))) continue;
-
-            BlockPos nbPos = worldPosition.relative(side);
-            if (visited.contains(nbPos)) continue;
-
-            long remaining = packetAmperage - usedAmperes;
-            if (!level.hasChunkAt(nbPos)) continue;
-            BlockEntity neighbor = level.getBlockEntity(nbPos);
-            if (neighbor instanceof ElectricWireBlockEntity wire) {
-                // The called wire marks itself. Pre-marking it here used to abort every second segment.
-                if (wire.isEnergyAcceptingFrom(GregTechTags.Energy.EU,side.getOpposite(),false))
-                    usedAmperes += wire.transferElectricity(side.getOpposite(), packetVoltage, remaining, visited);
-            } else {
-                visited.add(nbPos);
-                usedAmperes += EnergyTransfer.insertEnergyInto(
-                        GregTechTags.Energy.EU, side.getOpposite(), packetVoltage, remaining, this, neighbor);
-            }
-        }
-        return usedAmperes > 0 ? (addToEnergyTransferred(packetVoltage, usedAmperes) ? usedAmperes : packetAmperage) : 0;
+        return WirePacketRules.saturatedAdd(left,right);
     }
 
     // --- IEnergyConductor ---

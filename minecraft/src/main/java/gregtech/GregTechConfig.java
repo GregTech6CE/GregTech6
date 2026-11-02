@@ -43,6 +43,16 @@ public final class GregTechConfig {
     private static final ForgeConfigSpec.Builder CLIENT = new ForgeConfigSpec.Builder();
 //?}
 
+    /** How fluid moves between the pipes of one component. */
+    public enum FluidDistribution {
+        /** Original per-tick local diffusion; unchanged behaviour. */
+        LOCAL,
+        /** Even each component's per-channel fill level by moving fluid edge by edge. */
+        BALANCED,
+        /** Treat each component's per-channel tanks as one virtual pool for endpoint fill/drain. */
+        SHARED
+    }
+
     public enum Worldgen {
         NEXUS("nexus", false, "Generate the Nexus."),
         GEOLOGY("geology", true, "Generate geological layers, their ores, regular veins, small ores and ocean mineral pillars. Bedrock ores are separate."),
@@ -90,6 +100,12 @@ public final class GregTechConfig {
     private static final BooleanSupplier FLUID_MILLIBUCKETS = option(CLIENT,
             "display.fluid_in_mB", true,
             "True: display fluids in mB/B/kB/MB/GB/TB/PB/EB. False: use L/KL/ML/GL/TL/PL/EL. Display only; stored amounts do not change.");
+    private static final BooleanSupplier FLUID_IDLE_SCHEDULING = option(COMMON,
+            "performance.fluid_idle_scheduling", true,
+            "Skip the pipe tick for fluid pipes that are completely idle. Disable to restore one tick per pipe for comparison and diagnosis.");
+    private static final java.util.function.Supplier<FluidDistribution> FLUID_DISTRIBUTION = enumOption(COMMON,
+            "fluid.distribution", FluidDistribution.LOCAL,
+            "LOCAL keeps original GT6 local diffusion. BALANCED and SHARED change gameplay and are off by default; see the parity notes.");
 
     public enum Rule {
         STREETS("worldgen.center.streets", false),
@@ -323,6 +339,31 @@ public final class GregTechConfig {
                 return defaultValue;
             }
         };
+    }
+
+//? if >=1.21.1 {
+    /*private static java.util.function.Supplier<FluidDistribution> enumOption(ModConfigSpec.Builder builder,
+*///?} else {
+    private static java.util.function.Supplier<FluidDistribution> enumOption(ForgeConfigSpec.Builder builder,
+//?}
+                                                                              String key, FluidDistribution initial,
+                                                                              String description) {
+        var value = builder.comment(description).defineEnum(key, initial);
+        return () -> {
+            try {
+                return value.get();
+            } catch (IllegalStateException notLoaded) {
+                return initial;
+            }
+        };
+    }
+
+    public static boolean fluidIdleScheduling() {
+        return FLUID_IDLE_SCHEDULING.getAsBoolean();
+    }
+
+    public static FluidDistribution fluidDistribution() {
+        return FLUID_DISTRIBUTION.get();
     }
 
     public static boolean explodeByOverload() {
