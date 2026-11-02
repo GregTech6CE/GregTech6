@@ -115,18 +115,17 @@ public final class MachineAutoIO {
                 if (!host.autoIOAllowsItemTraffic(absolute, offered, false)) continue;
                 ItemStack extracted = inventory.items().extractItem(i, offered.getCount(), false);
                 if (extracted.isEmpty()) continue;
-                double x = adj.getX() + 0.5;
-                double y = adj.getY() + 0.5;
-                double z = adj.getZ() + 0.5;
-                double vx = absolute.getStepX() * 0.15;
-                double vy = 0.1;
-                double vz = absolute.getStepZ() * 0.15;
-                ItemEntity entity = new ItemEntity(level, x, y, z, extracted);
-                entity.setDeltaMovement(vx, vy, vz);
-                entity.setPickUpDelay(10);
-                level.addFreshEntity(entity);
+                dropOutput(level, adj, absolute, extracted);
             }
         }
+    }
+
+    /** The caller has already checked the outlet and removed these items from its inventory. */
+    public static void dropOutput(Level level, BlockPos target, Direction outward, ItemStack extracted) {
+        ItemEntity entity = new ItemEntity(level, target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5, extracted);
+        entity.setDeltaMovement(outward.getStepX() * 0.15, 0.1, outward.getStepZ() * 0.15);
+        entity.setPickUpDelay(10);
+        level.addFreshEntity(entity);
     }
 
     public void inputFluids(Level level, BlockPos pos, int relDir) {

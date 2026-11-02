@@ -226,11 +226,23 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override protected void autoOutputFluids(net.minecraft.world.level.Level level,BlockPos pos,int side) {
         if (fluidOutput() != null) return; // Already moved before work, including while stopped/unformed.
         Direction outward = relativeToAbsolute(side);
-        pushFluids(pos.relative(outward), outward.getOpposite());
+        var output = StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.FLUID_OUTPUT,
+                pos.relative(outward), outward.getOpposite(), originalProcessingController());
+        var tanks = getTanksOutput();
+        // Face auto-output keeps the basic machine's one-fluid, 1000 L per tick limit.
+        for (int tank = 0; tank < tanks.length; tank++) if (!tanks[tank].isEmpty()) {
+            StructureOutputs.fluid(this, output, getTanksInput().length + tank, tanks[tank], 1000);
+            break;
+        }
     }
     @Override protected void autoOutputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
         var output = itemOutput();
-        if (output == null) { Direction outward = relativeToAbsolute(side); pushItems(pos.relative(outward), outward.getOpposite()); return; }
+        if (output == null) {
+            Direction outward = relativeToAbsolute(side);
+            StructureOutputs.items(this, StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ITEM_OUTPUT,
+                    pos.relative(outward), outward.getOpposite(), originalProcessingController()).withAirDrop(), inventory(), inputSlots());
+            return;
+        }
         pushItems(output.pos(), output.face());
     }
 

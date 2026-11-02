@@ -511,7 +511,6 @@ public final class RecipeProcessor {
             for (var tank : tanks) {
                 if (!tank.isEmpty() && StackCompat.sameFluid(tank.getFluid(), output)) {
                     if (tank.getAmount() >= limit) return true;
-                    break;
                 }
             }
         }

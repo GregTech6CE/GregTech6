@@ -38,6 +38,65 @@ import net.minecraftforge.items.IItemHandler;
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MultiblockPortApiTests {
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void fluidBackpressureChecksEveryMatchingOutputTank(GameTestHelper helper) {
+        var map = new gregtech.engine.recipe.RecipeMap(null, "gt6ce_test_backpressure", "Test", "textures/gui/test",
+                1, 0, 1, 0, 2, 0, 0, false, false, false, false);
+        try {
+            var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[] {new ItemStack(Items.IRON_INGOT)},
+                    new ItemStack[0], null, null, new FluidStack[0], new FluidStack[] {new FluidStack(Fluids.WATER, 100)}, 20, 16, 0);
+            helper.assertTrue(map.addRecipe(recipe) != null, "Backpressure fixture recipe was rejected");
+            var inventory = new gregtech.engine.machine.MachineInventory(map, 1, true, () -> {});
+            inventory.items().setStackInSlot(0, new ItemStack(Items.IRON_INGOT, 2));
+            inventory.tanksOutput()[0].setFluid(new FluidStack(Fluids.WATER, 100));
+            inventory.tanksOutput()[1].setFluid(new FluidStack(Fluids.WATER, 16000));
+            var owner = new net.minecraft.world.level.block.entity.FurnaceBlockEntity(helper.absolutePos(BlockPos.ZERO), Blocks.FURNACE.defaultBlockState());
+            owner.setLevel(helper.getLevel());
+            var config = new gregtech.engine.machine.RecipeProcessor.Config() {
+                public gregtech.engine.recipe.RecipeMap recipeMap() { return map; }
+                public boolean searchOutputTanks() { return false; }
+                public boolean exclusiveOutputs() { return false; }
+                public int parallelLimit() { return 1; }
+                public boolean limitFluidOutputAccumulation() { return true; }
+                public boolean parallelScalesDuration() { return false; }
+                public boolean cheapOverclocking() { return false; }
+                public boolean usesTimeEnergy() { return false; }
+                public int efficiency() { return 10000; }
+                public long inputMinimum() { return 1; }
+                public long inputMaximum() { return 32; }
+                public long nominalEnergyInput() { return 16; }
+                public long startupEnergyFor(gregtech.engine.recipe.Recipe row) { return 0; }
+            };
+            var io = new gregtech.engine.machine.RecipeProcessor.IO() {
+                public gregtech.engine.machine.MachineInventory inventory() { return inventory; }
+                public net.minecraft.world.level.Level level() { return helper.getLevel(); }
+                public net.minecraft.world.level.block.entity.BlockEntity owner() { return owner; }
+                public ItemStack autocraftingProgram() { return ItemStack.EMPTY; }
+                public void setStartupEnergy(long value) {}
+                public void clearStartupEnergy() {}
+                public void markJobStarted() {}
+            };
+            var gate = new gregtech.engine.machine.RecipeProcessor.Gate() {
+                public boolean structureComplete() { return true; }
+                public boolean switchesAllowRunning() { return true; }
+                public boolean recipeStartAllowed() { return true; }
+                public boolean lightAllowsStart() { return true; }
+            };
+            var processor = new gregtech.engine.machine.RecipeProcessor(config, io, gate);
+            helper.assertTrue(processor.startJob() != gregtech.engine.machine.RecipeProcessor.StartResult.STARTED
+                    && inventory.items().getStackInSlot(0).getCount() == 2,
+                    "A full later tank was ignored or blocked work consumed inputs");
+            inventory.tanksOutput()[1].drain(1, IFluidHandler.FluidAction.EXECUTE);
+            processor.invalidate();
+            helper.assertTrue(processor.startJob() == gregtech.engine.machine.RecipeProcessor.StartResult.STARTED
+                    && inventory.items().getStackInSlot(0).getCount() == 1,
+                    "Draining below the backpressure limit did not resume processing");
+            helper.succeed();
+        } finally {
+            gregtech.engine.recipe.RecipeMap.unregister(map);
+        }
+    }
+
     @GameTest(template = "test_empty", timeoutTicks = 160)
     public static void activeItemAndFluidOutputsUseTheSamePortPolicies(GameTestHelper helper) {
         var level = helper.getLevel();
@@ -64,13 +123,23 @@ public final class MultiblockPortApiTests {
                         var itemOut = gregtech.engine.multiblock.StructureOutputs.at(machine[0], PortChannel.ITEM_OUTPUT, target, front, false);
                         var wrong = gregtech.engine.multiblock.StructureOutputs.at(machine[0], PortChannel.ITEM_OUTPUT, blocked, front.getOpposite(), false);
                         var source = machine[0].portItems(Role.ITEM_IO);
+                        var coverHost = (gregtech.content.cover.PanelCoverHost) level.getBlockEntity(part);
+                        var shutter = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "shutter_cover")));
+                        gregtech.content.cover.CoverStackData.putBoolean(shutter, "gt.cover.inverted", true);
+                        helper.assertTrue(coverHost.attachCover(front.getOpposite(), shutter)
+                                && coverHost.panels().shuttered(front.getOpposite()), "Could not close the output face");
+                        var fluidOut = gregtech.engine.multiblock.StructureOutputs.at(machine[0], PortChannel.FLUID_OUTPUT, target, front, false);
+                        helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.items(machine[0], itemOut, source, 0) == 0,
+                                "Active items bypassed the source shutter");
+                        helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.fluid(machine[0], fluidOut, 3,
+                                machine[0].portFluidTank(Role.FLUID_OUTPUT, 3), 250) == 0, "Active fluid bypassed the source shutter");
+                        coverHost.removeCover(front.getOpposite());
                         helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.items(machine[0], wrong, source, 0) == 0, "Active items ignored face rule");
                         helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.items(machine[0], itemOut.restrict(PortRule.ALL.filter("minecraft:iron_ingot")), source, 0) == 0,
                                 "Route and cell filters were combined as OR");
                         helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.items(machine[0], itemOut, source, 0) == 4
                                 && source.getStackInSlot(2).getCount() == 2, "Active item slot/filter selection failed");
                         helper.assertTrue(items(level, target, front).getStackInSlot(0).getCount() == 4, "Active items were lost");
-                        var fluidOut = gregtech.engine.multiblock.StructureOutputs.at(machine[0], PortChannel.FLUID_OUTPUT, target, front, false);
                         helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.fluid(machine[0], fluidOut, 2,
                                 machine[0].portFluidTank(Role.FLUID_OUTPUT, 2), 250) == 0, "Active fluid ignored tank selection");
                         helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.fluid(machine[0], fluidOut, 3,
@@ -78,6 +147,23 @@ public final class MultiblockPortApiTests {
                         helper.assertTrue(fluids(level, target, front).getFluidInTank(0).getAmount() == 250
                                 && machine[0].portFluids(Role.FLUID_OUTPUT).getFluidInTank(3).getAmount() == 150,
                                 "Active fluid transfer duplicated or lost contents");
+                        level.setBlockAndUpdate(target, Blocks.AIR.defaultBlockState());
+//? if >=1.21.1 {
+                        /*var eject = new net.neoforged.neoforge.items.ItemStackHandler(4);
+*///?} else {
+                        var eject = new net.minecraftforge.items.ItemStackHandler(4);
+//?}
+                        eject.setStackInSlot(3, new ItemStack(Items.COAL, 4));
+                        helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.items(machine[0], itemOut, eject, 0) == 0,
+                                "A remote port unexpectedly dropped items into air");
+                        var bounds = new net.minecraft.world.phys.AABB(target).inflate(0.1);
+                        int before = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, bounds).stream()
+                                .mapToInt(entity -> entity.getItem().getCount()).sum();
+                        helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.items(machine[0], itemOut.withAirDrop(), eject, 0) == 4
+                                && eject.getStackInSlot(3).isEmpty(), "Face ejection failed or duplicated inventory");
+                        int after = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, bounds).stream()
+                                .mapToInt(entity -> entity.getItem().getCount()).sum();
+                        helper.assertTrue(after - before == 4, "Face ejection lost items");
                         level.setBlockAndUpdate(part, Blocks.AIR.defaultBlockState());
                         helper.assertTrue(gregtech.engine.multiblock.StructureOutputs.fluid(machine[0], fluidOut, 3,
                                 machine[0].portFluidTank(Role.FLUID_OUTPUT, 3), 250) == 0, "Broken port still actively emitted fluid");

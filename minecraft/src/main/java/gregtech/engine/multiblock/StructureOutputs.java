@@ -7,6 +7,9 @@ import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.transport.ItemPipeTransferAdapter;
+import gregtech.content.cover.ComponentCoverAccess;
+import gregtech.content.cover.PanelCoverHost;
+import gregtech.engine.machine.MachineAutoIO;
 import gregtech.engine.multiblock.tracking.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -80,6 +83,12 @@ public final class StructureOutputs {
         if (!level.hasChunkAt(source) || !level.hasChunkAt(target)) return null;
         BlockEntity neighbor = level.getBlockEntity(target);
         if (neighbor == entity || neighbor instanceof BoundMachinePort part && part.isBoundTo(entity.getBlockPos())) return null;
+        var sourceEntity = level.getBlockEntity(source);
+        if (output.channel() == PortChannel.ITEM_OUTPUT || output.channel() == PortChannel.FLUID_OUTPUT) {
+            Direction side = receiver.getOpposite();
+            if (sourceEntity instanceof MachineAutoIO.Host host && host.autoIOShutters(side)) return null;
+            if (sourceEntity instanceof PanelCoverHost host && host.panels().shuttered(side)) return null;
+        }
         var cell = cellAt(machine, source);
         if (output.requiresPort() && !source.equals(entity.getBlockPos())) {
             if (cell == null || !cell.role().allows(output.channel())
@@ -126,6 +135,9 @@ public final class StructureOutputs {
         if (output.channel() != PortChannel.FLUID_OUTPUT) throw new IllegalArgumentException("Not a fluid outlet");
         Outlet outlet = resolve(machine, output);
         if (outlet == null || maximum <= 0 || !outlet.slot(tankIndex)) return 0;
+        var source = machine.trackedEntity().getLevel().getBlockEntity(outlet.target().relative(outlet.receiver()));
+        if (source instanceof PanelCoverHost host)
+            tank = ComponentCoverAccess.fluids(host, outlet.receiver().getOpposite(), tank);
         FluidStack offered = tank.drain(maximum, IFluidHandler.FluidAction.SIMULATE);
         if (!StructurePortHandlers.matches(outlet.rule(), offered) || !StructurePortHandlers.matches(outlet.cellRule(), offered)) return 0;
         var target = fluids(machine, outlet);
@@ -147,14 +159,26 @@ public final class StructureOutputs {
         if (output.channel() != PortChannel.ITEM_OUTPUT) throw new IllegalArgumentException("Not an item outlet");
         Outlet outlet = resolve(machine, output);
         if (outlet == null) return 0;
+        var level = machine.trackedEntity().getLevel();
+        var sourceEntity = level.getBlockEntity(outlet.target().relative(outlet.receiver()));
+        Direction side = outlet.receiver().getOpposite();
+        if (sourceEntity instanceof PanelCoverHost host) source = ComponentCoverAccess.items(host, side, source);
         int moved = 0;
         for (int slot = firstSlot; slot < source.getSlots(); slot++) {
             if (!outlet.slot(slot)) continue;
             var offer = source.extractItem(slot, Integer.MAX_VALUE, true);
             if (!StructurePortHandlers.matches(outlet.rule(), offer) || !StructurePortHandlers.matches(outlet.cellRule(), offer)) continue;
+            if (sourceEntity instanceof MachineAutoIO.Host host && !host.autoIOAllowsItemTraffic(side, offer, false)) continue;
+            if (output.dropIntoAir() && level.isEmptyBlock(outlet.target())) {
+                var extracted = source.extractItem(slot, offer.getCount(), false);
+                if (!extracted.isEmpty()) {
+                    MachineAutoIO.dropOutput(level, outlet.target(), side, extracted);
+                    moved += extracted.getCount();
+                }
+                continue;
+            }
             var result = ItemPipeTransferAdapter.transfer(offer, () -> {
                 if (resolve(machine, output) == null) return null;
-                var level = machine.trackedEntity().getLevel();
 //? if >=1.21.1 {
                 /*return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
                         outlet.target(), outlet.receiver());

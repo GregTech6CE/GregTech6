@@ -7,7 +7,17 @@ import java.util.Objects;
 
 /** An active outlet. Passive access to a casing is still governed by its layout role. */
 public record StructureOutput(
-        PortChannel channel, IoTarget target, PortRule rule, boolean requiresFormed, boolean requiresPort) {
+        PortChannel channel,
+        IoTarget target,
+        PortRule rule,
+        boolean requiresFormed,
+        boolean requiresPort,
+        boolean dropIntoAir) {
+    public StructureOutput(
+            PortChannel channel, IoTarget target, PortRule rule, boolean requiresFormed, boolean requiresPort) {
+        this(channel, target, rule, requiresFormed, requiresPort, false);
+    }
+
     public StructureOutput {
         Objects.requireNonNull(channel);
         Objects.requireNonNull(target);
@@ -18,6 +28,8 @@ public record StructureOutput(
             throw new IllegalArgumentException("Not an output channel: " + channel);
         if (requiresPort && !requiresFormed)
             throw new IllegalArgumentException("A live structure port requires a formed structure");
+        if (dropIntoAir && channel != PortChannel.ITEM_OUTPUT)
+            throw new IllegalArgumentException("Only items can drop into air");
     }
 
     /** Original GT6 controllers may empty already buffered products even after their shell breaks. */
@@ -30,6 +42,11 @@ public record StructureOutput(
     }
 
     public StructureOutput restrict(PortRule rule) {
-        return new StructureOutput(channel, target, rule, requiresFormed, requiresPort);
+        return new StructureOutput(channel, target, rule, requiresFormed, requiresPort, dropIntoAir);
+    }
+
+    /** Preserve face auto-output ejection without making every remote outlet drop items. */
+    public StructureOutput withAirDrop() {
+        return new StructureOutput(channel, target, rule, requiresFormed, requiresPort, true);
     }
 }
