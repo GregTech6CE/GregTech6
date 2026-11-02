@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Finite source facts for native ore Crusher/Hammer planning, not global material metadata.
  * Pinned GT6 3703e40308c8c030763fd6297dea8b210d2a77b1: Crushing 50-140, MT 470/1540/3709,
- * OP 653-714. Existing recycling facts supply only the 1,002 exact input identities, never their
+ * OP 653-714. Existing recycling facts supply only the 669 exact input identities, never their
  * thermal flags/targets/default fingerprints. The five special Hexorium identities are separately
  * proven by MT 203/1596-1611. Caller must independently prove native material, item and host/mode.
  *

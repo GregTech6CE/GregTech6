@@ -848,21 +848,11 @@ public final class MaterialCompositionData {
                 MaterialComponent.of(GTMaterialRegistry.get("Obsidian"), GTValues.U * 9),
                 MaterialComponent.of(GTMaterialRegistry.get("Redstone"), GTValues.U * 9),
                 MaterialComponent.of(GTMaterialRegistry.get("Basalz"), GTValues.U * 1));
-        bind("Aerotheum", 18,
-                MaterialComponent.of(GTMaterialRegistry.get("Sand"), GTValues.U * 9),
-                MaterialComponent.of(GTMaterialRegistry.get("KNO3"), GTValues.U * 9),
-                MaterialComponent.of(GTMaterialRegistry.get("Redstone"), GTValues.U * 9),
-                MaterialComponent.of(GTMaterialRegistry.get("Blitz"), GTValues.U * 1));
         bind("Pyrotheum", 18,
                 MaterialComponent.of(GTMaterialRegistry.get("Coal"), GTValues.U * 9),
                 MaterialComponent.of(GTMaterialRegistry.get("S"), GTValues.U * 9),
                 MaterialComponent.of(GTMaterialRegistry.get("Redstone"), GTValues.U * 9),
                 MaterialComponent.of(GTMaterialRegistry.get("Blaze"), GTValues.U * 1));
-        bind("Cryotheum", 18,
-                MaterialComponent.of(GTMaterialRegistry.get("Snow"), GTValues.U * 2),
-                MaterialComponent.of(GTMaterialRegistry.get("KNO3"), GTValues.U * 9),
-                MaterialComponent.of(GTMaterialRegistry.get("Redstone"), GTValues.U * 9),
-                MaterialComponent.of(GTMaterialRegistry.get("Blizz"), GTValues.U * 1));
         bind("WroughtIron", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("Fe"), GTValues.U * 1));
         bind("AnnealedCopper", 0,
@@ -1120,9 +1110,6 @@ public final class MaterialCompositionData {
         bind("DuraniumAlloy", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("Dn"), GTValues.U * 7),
                 MaterialComponent.of(GTMaterialRegistry.get("Mg"), GTValues.U * 1));
-        bind("TritaniumAlloy", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Tn"), GTValues.U * 3),
-                MaterialComponent.of(GTMaterialRegistry.get("Dn"), GTValues.U * 1));
         bind("Duralumin", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("Al"), GTValues.U * 1),
                 MaterialComponent.of(GTMaterialRegistry.get("Cu"), GTValues.U * 1));
@@ -1435,24 +1422,6 @@ public final class MaterialCompositionData {
                 MaterialComponent.of(GTMaterialRegistry.get("I"), GTValues.U * 6));
         bind("DuraniumHexaastatide", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("Dn"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("At"), GTValues.U * 6));
-        bind("TritaniumDioxide", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Tn"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("O"), GTValues.U * 2));
-        bind("TritaniumHexafluoride", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Tn"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("F"), GTValues.U * 6));
-        bind("TritaniumHexachloride", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Tn"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("Cl"), GTValues.U * 6));
-        bind("TritaniumHexabromide", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Tn"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("Br"), GTValues.U * 6));
-        bind("TritaniumHexaiodide", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Tn"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("I"), GTValues.U * 6));
-        bind("TritaniumHexaastatide", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Tn"), GTValues.U * 1),
                 MaterialComponent.of(GTMaterialRegistry.get("At"), GTValues.U * 6));
 
         bind("Shale", 0,

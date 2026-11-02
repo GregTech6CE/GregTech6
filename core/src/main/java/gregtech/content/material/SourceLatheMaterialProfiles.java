@@ -268,7 +268,7 @@ public final class SourceLatheMaterialProfiles {
     }
 
     // Complete SMITHABLE closure of the same 1,070 MT identities at 3703e403:
-    // 309 positives; absence means false ONLY inside the captured source table, never for addons.
+    // 307 positives; absence means false ONLY inside the captured source table, never for addons.
     // Direct/factory puts count; qual, steal and re-registration do not inherit tags.
     private static final Set<Integer> SOURCE_SMITHABLE = Set.of(
             30, 31, 40, 41, 42, 50, 51, 110, 120, 130, 140, 190, 200, 210, 220, 230, 240, 250, 260, 270, 278, 280, 290,
@@ -276,18 +276,18 @@ public final class SourceLatheMaterialProfiles {
             560, 570, 580, 590, 600, 610, 620, 630, 640, 650, 660, 670, 680, 690, 700, 710, 720, 730, 740, 750, 760,
             770, 780, 790, 791, 800, 810, 820, 830, 840, 850, 870, 880, 890, 900, 910, 920, 921, 922, 930, 940, 942,
             943, 945, 946, 947, 950, 951, 952, 960, 970, 980, 990, 1000, 1010, 1020, 1030, 1040, 1050, 1060, 1070, 1080,
-            1120, 1140, 1148, 1250, 1260, 1450, 1740, 1741, 1742, 1850, 1860, 1870, 1880, 2210, 2220, 8003, 8005, 8643,
-            8640, 8760, 8761, 8762, 8763, 8764, 8701, 8765, 8767, 8768, 8770, 8771, 8772, 8773, 8775, 8641, 8670, 8784,
-            8774, 8776, 8769, 8676, 8677, 8678, 8779, 8671, 8777, 8778, 8781, 8782, 8783, 8600, 8601, 8602, 8603, 8604,
-            8605, 8606, 8620, 8621, 8622, 8610, 8611, 8612, 8613, 8614, 8615, 8630, 8631, 8632, 8633, 8634, 8653, 8635,
-            8638, 8637, 8639, 8766, 8642, 8644, 8803, 8645, 8646, 8647, 8648, 8651, 8652, 8654, 8802, 8649, 8650, 8690,
-            8691, 8692, 8660, 8659, 8657, 8804, 8733, 8737, 8658, 8711, 8727, 8808, 8661, 8662, 8663, 8664, 8665, 8636,
-            8666, 8667, 8668, 8669, 8672, 8673, 8674, 8675, 8698, 8693, 8694, 8695, 8696, 8697, 8679, 8680, 8681, 8682,
-            8683, 8685, 8686, 8687, 8688, 8689, 8700, 8707, 8702, 8703, 8704, 8705, 8706, 8708, 8709, 8729, 8710, 8713,
-            8714, 8715, 8716, 8717, 8723, 8718, 8731, 8725, 8728, 8726, 8730, 8732, 8806, 8807, 8809, 8810, 8811, 8812,
-            8813, 8734, 8720, 8721, 8722, 8735, 8736, 8739, 8740, 8741, 8742, 8744, 8745, 8746, 8747, 8750, 8780, 8751,
-            8752, 8754, 8755, 8756, 8757, 8758, 8759, 8785, 8786, 8796, 8797, 8798, 8795, 8791, 8792, 8799, 8800, 8801,
-            8805, 8684, 8790, 8793, 8794);
+            1120, 1140, 1148, 1260, 1450, 1740, 1741, 1742, 1850, 1860, 1870, 1880, 2210, 2220, 8003, 8005, 8643, 8640,
+            8760, 8761, 8762, 8763, 8764, 8701, 8765, 8767, 8768, 8770, 8771, 8772, 8773, 8775, 8641, 8670, 8784, 8774,
+            8776, 8769, 8676, 8677, 8678, 8779, 8671, 8777, 8778, 8781, 8782, 8783, 8600, 8601, 8602, 8603, 8604, 8605,
+            8606, 8620, 8621, 8622, 8610, 8611, 8612, 8613, 8614, 8615, 8630, 8631, 8632, 8633, 8634, 8653, 8635, 8638,
+            8637, 8639, 8766, 8642, 8644, 8803, 8645, 8646, 8647, 8648, 8651, 8652, 8654, 8802, 8649, 8650, 8690, 8691,
+            8692, 8660, 8659, 8657, 8804, 8733, 8737, 8658, 8711, 8727, 8808, 8661, 8662, 8663, 8664, 8665, 8636, 8666,
+            8667, 8668, 8669, 8672, 8673, 8674, 8675, 8698, 8693, 8694, 8695, 8696, 8697, 8679, 8680, 8681, 8682, 8683,
+            8685, 8686, 8687, 8688, 8689, 8700, 8707, 8702, 8703, 8704, 8705, 8706, 8708, 8709, 8729, 8710, 8713, 8714,
+            8715, 8716, 8717, 8723, 8718, 8731, 8725, 8728, 8726, 8730, 8732, 8806, 8807, 8809, 8810, 8811, 8812, 8813,
+            8734, 8720, 8721, 8722, 8735, 8736, 8739, 8740, 8741, 8742, 8744, 8745, 8746, 8747, 8750, 8780, 8751, 8754,
+            8755, 8756, 8757, 8758, 8759, 8785, 8786, 8796, 8797, 8798, 8795, 8791, 8792, 8799, 8800, 8801, 8805, 8684,
+            8790, 8793, 8794);
 
     // id | canonical native name | COATED,LAYERED,FURNACE-or-SOFT,lens-generation
     private static final String SOURCE = """
@@ -436,7 +436,6 @@ public final class SourceLatheMaterialProfiles {
             1160|Livermorium|0000
             1170|Farnsium|0000
             1180|Oganesson|0000
-            1250|TritaniumElemental|0000
             1260|Trinium|0000
             1450|DuraniumElemental|0000
             1520|Vibranium|0001
@@ -502,7 +501,6 @@ public final class SourceLatheMaterialProfiles {
             8209|Apatite|0000
             8210|Blizz|0000
             8211|Blaze|0000
-            8213|Cryotheum|0000
             8214|Obsidian|0000
             8215|Clay|0000
             8216|Paper|0000
@@ -528,7 +526,6 @@ public final class SourceLatheMaterialProfiles {
             8239|WaxPlant|0010
             8241|Leather|0000
             8242|IodineSalt|0000
-            8246|Aerotheum|0000
             8247|Basalz|0000
             8248|Blitz|0000
             8249|Dynamite|0000
@@ -776,14 +773,12 @@ public final class SourceLatheMaterialProfiles {
             8745|Netherite|0000
             8746|NetherizedDiamond|1000
             8751|Duranium|0000
-            8752|Tritanium|0000
             8756|Duralumin|0000
             8784|Adamantine|0000
             8790|Trinitanium|0000
             8791|Draconium|0000
             8792|DraconiumAwakened|0000
             8793|TitaniumIridium|0000
-            8795|Bedrockium|0000
             8796|HSSG|0000
             8797|HSSE|0000
             8798|HSSS|0000
@@ -792,8 +787,6 @@ public final class SourceLatheMaterialProfiles {
             8801|Infinity|0000
             8802|TantalumHafniumCarbide|0000
             8803|CastIron|0000
-            8805|Unstable|0000
-            8813|CrystallinePinkSlime|0000
             9000|Pumice|0010
             9001|Diatomite|0000
             9003|BasalticMineralSand|0000
@@ -899,12 +892,6 @@ public final class SourceLatheMaterialProfiles {
             9201|DuraniumHexabromide|0000
             9202|DuraniumHexaiodide|0000
             9203|DuraniumHexaastatide|0000
-            9204|TritaniumDioxide|0000
-            9205|TritaniumHexafluoride|0000
-            9206|TritaniumHexachloride|0000
-            9207|TritaniumHexabromide|0000
-            9208|TritaniumHexaiodide|0000
-            9209|TritaniumHexaastatide|0000
             9210|Bromargyrite|0000
             9211|Smithsonite|0000
             9212|Sperrylite|0000

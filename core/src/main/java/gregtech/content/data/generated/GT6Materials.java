@@ -171,7 +171,6 @@ public final class GT6Materials {
         public static final GTMaterial Lv            = gregtech.content.material.generated.ElementMaterials.Livermorium;
         public static final GTMaterial Fa            = gregtech.content.material.generated.ElementMaterials.Farnsium;
         public static final GTMaterial Og            = gregtech.content.material.generated.ElementMaterials.Oganesson;
-        public static final GTMaterial Tn            = gregtech.content.material.generated.ElementMaterials.TritaniumElemental;
         public static final GTMaterial Ke            = gregtech.content.material.generated.ElementMaterials.Trinium;
         public static final GTMaterial Dn            = gregtech.content.material.generated.ElementMaterials.DuraniumElemental;
         public static final GTMaterial Vb            = gregtech.content.material.generated.ElementMaterials.Vibranium;
@@ -190,7 +189,6 @@ public final class GT6Materials {
         public static final GTMaterial Creosote      = gregtech.content.material.generated.ElementMaterials.Creosote;
         public static final GTMaterial WroughtIron   = gregtech.content.material.generated.ElementMaterials.WroughtIron;
         public static final GTMaterial AncientDebris = gregtech.content.material.generated.ElementMaterials.AncientDebris;
-        public static final GTMaterial Unstable      = gregtech.content.material.generated.ElementMaterials.Unstable;
     }
 
     public static final class Compounds {
@@ -492,8 +490,6 @@ public final class GT6Materials {
         public static final GTMaterial Monazite             = gregtech.content.material.generated.CompoundMaterials.Monazite;
         public static final GTMaterial Obsidian             = gregtech.content.material.generated.CompoundMaterials.Obsidian;
         public static final GTMaterial Bedrock              = gregtech.content.material.generated.CompoundMaterials.Bedrock;
-        public static final GTMaterial Aerotheum            = gregtech.content.material.generated.CompoundMaterials.Aerotheum;
-        public static final GTMaterial Cryotheum            = gregtech.content.material.generated.CompoundMaterials.Cryotheum;
         public static final GTMaterial AnnealedCopper       = gregtech.content.material.generated.CompoundMaterials.AnnealedCopper;
         public static final GTMaterial Adamantine           = gregtech.content.material.generated.CompoundMaterials.Adamantine;
         public static final GTMaterial Electrum             = gregtech.content.material.generated.CompoundMaterials.Electrum;
@@ -567,7 +563,6 @@ public final class GT6Materials {
         public static final GTMaterial VibrantAlloy         = gregtech.content.material.generated.CompoundMaterials.VibrantAlloy;
         public static final GTMaterial ElectricalSteel      = gregtech.content.material.generated.CompoundMaterials.ElectricalSteel;
         public static final GTMaterial Soularium            = gregtech.content.material.generated.CompoundMaterials.Soularium;
-        public static final GTMaterial CrystallinePinkSlime = gregtech.content.material.generated.CompoundMaterials.CrystallinePinkSlime;
         public static final GTMaterial Manasteel            = gregtech.content.material.generated.CompoundMaterials.Manasteel;
         public static final GTMaterial Terrasteel           = gregtech.content.material.generated.CompoundMaterials.Terrasteel;
         public static final GTMaterial ElvenElementium      = gregtech.content.material.generated.CompoundMaterials.ElvenElementium;
@@ -575,12 +570,10 @@ public final class GT6Materials {
         public static final GTMaterial Netherite            = gregtech.content.material.generated.CompoundMaterials.Netherite;
         public static final GTMaterial NetherizedDiamond    = gregtech.content.material.generated.CompoundMaterials.NetherizedDiamond;
         public static final GTMaterial DuraniumAlloy        = gregtech.content.material.generated.CompoundMaterials.Duranium;
-        public static final GTMaterial TritaniumAlloy       = gregtech.content.material.generated.CompoundMaterials.Tritanium;
         public static final GTMaterial Duralumin            = gregtech.content.material.generated.CompoundMaterials.Duralumin;
         public static final GTMaterial HSSG                 = gregtech.content.material.generated.CompoundMaterials.HSSG;
         public static final GTMaterial HSSE                 = gregtech.content.material.generated.CompoundMaterials.HSSE;
         public static final GTMaterial HSSS                 = gregtech.content.material.generated.CompoundMaterials.HSSS;
-        public static final GTMaterial Bedrockium           = gregtech.content.material.generated.CompoundMaterials.Bedrockium;
         public static final GTMaterial Draconium            = gregtech.content.material.generated.CompoundMaterials.Draconium;
         public static final GTMaterial DraconiumAwakened    = gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened;
         public static final GTMaterial CrystalMatrix        = gregtech.content.material.generated.CompoundMaterials.CrystalMatrix;
@@ -710,12 +703,6 @@ public final class GT6Materials {
         public static final GTMaterial DuraniumHexabromide   = gregtech.content.material.generated.OreMaterials.DuraniumHexabromide;
         public static final GTMaterial DuraniumHexaiodide    = gregtech.content.material.generated.OreMaterials.DuraniumHexaiodide;
         public static final GTMaterial DuraniumHexaastatide  = gregtech.content.material.generated.OreMaterials.DuraniumHexaastatide;
-        public static final GTMaterial TritaniumDioxide      = gregtech.content.material.generated.OreMaterials.TritaniumDioxide;
-        public static final GTMaterial TritaniumHexafluoride = gregtech.content.material.generated.OreMaterials.TritaniumHexafluoride;
-        public static final GTMaterial TritaniumHexachloride = gregtech.content.material.generated.OreMaterials.TritaniumHexachloride;
-        public static final GTMaterial TritaniumHexabromide  = gregtech.content.material.generated.OreMaterials.TritaniumHexabromide;
-        public static final GTMaterial TritaniumHexaiodide   = gregtech.content.material.generated.OreMaterials.TritaniumHexaiodide;
-        public static final GTMaterial TritaniumHexaastatide = gregtech.content.material.generated.OreMaterials.TritaniumHexaastatide;
     }
 
     public static final class Stones {

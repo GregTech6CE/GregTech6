@@ -1565,7 +1565,6 @@ public class FluidCatalog {
         if (!gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(material)) return false;
         String name = switch (material.getId()) {
             case 62 -> "Carbon14";
-            case 1250 -> "TritaniumElemental";
             case 1260 -> "Trinium";
             case 1450 -> "DuraniumElemental";
             case 1740 -> "Naquadah";

@@ -59,8 +59,7 @@ public final class TechnologyIngredients {
             "Ultimet",
             "Manasteel",
             "Terrasteel",
-            "Duranium",
-            "Tritanium");
+            "Duranium");
 
     public static boolean pistonIngot(MaterialPrefix prefix, GTMaterial material) {
         if (prefix != MaterialPrefix.ingot) return false;

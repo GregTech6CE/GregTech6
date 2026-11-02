@@ -11,7 +11,6 @@ public final class MaterialModTags {
         ImportedMaterialData.WOODS.Cinnamon.mod(ModReferences.HaC);
         ImportedMaterialData.Ad.mod(ModReferences.GT);
         ImportedMaterialData.Adamantine.mod(ModReferences.MET);
-        ImportedMaterialData.Aerotheum.mod(ModReferences.TE);
         ImportedMaterialData.Ag.mod(ModReferences.RP);
         ImportedMaterialData.Al.mod(ModReferences.TiC);
         ImportedMaterialData.Al2O3.mod(ModReferences.GT);
@@ -35,7 +34,6 @@ public final class MaterialModTags {
         ImportedMaterialData.BatteryAlloy.mod(ModReferences.GT);
         ImportedMaterialData.Be.mod(ModReferences.GT);
         ImportedMaterialData.Bedrock.mod(ModReferences.MC);
-        ImportedMaterialData.Bedrockium.mod(ModReferences.ExU);
         ImportedMaterialData.Bentonite.mod(ModReferences.PFAA);
         ImportedMaterialData.Bi.mod(ModReferences.TFC);
         ImportedMaterialData.BioFuel.mod(ModReferences.FR);
@@ -82,9 +80,7 @@ public final class MaterialModTags {
         ImportedMaterialData.CosmicNeutronium.mod(ModReferences.AV);
         ImportedMaterialData.Craponite.mod(ModReferences.GT);
         ImportedMaterialData.Creosote.mod(ModReferences.RC);
-        ImportedMaterialData.Cryotheum.mod(ModReferences.TE);
         ImportedMaterialData.CrystalMatrix.mod(ModReferences.AV);
-        ImportedMaterialData.CrystallinePinkSlime.mod(ModReferences.EIO);
         ImportedMaterialData.Cu.mod(ModReferences.MC);
         ImportedMaterialData.Cyan.mod(ModReferences.MC);
         ImportedMaterialData.Cyanite.mod(ModReferences.BR);
@@ -302,17 +298,14 @@ public final class MaterialModTags {
         ImportedMaterialData.Ti.mod(ModReferences.MaCu);
         ImportedMaterialData.TiO2.mod(ModReferences.MaCu);
         ImportedMaterialData.TinAlloy.mod(ModReferences.RC);
-        ImportedMaterialData.Tn.mod(ModReferences.MO);
         ImportedMaterialData.Topaz.mod(ModReferences.BoP);
         ImportedMaterialData.Trinitanium.mod(ModReferences.GT);
-        ImportedMaterialData.TritaniumAlloy.mod(ModReferences.MO);
         ImportedMaterialData.TungstenCarbide.mod(ModReferences.ReC);
         ImportedMaterialData.TungstenSintered.mod(ModReferences.RoC);
         ImportedMaterialData.TungstenSteel.mod(ModReferences.GT);
         ImportedMaterialData.U_235.mod(ModReferences.IC2);
         ImportedMaterialData.U_238.mod(ModReferences.IC2);
         ImportedMaterialData.Ultimet.mod(ModReferences.GT);
-        ImportedMaterialData.Unstable.mod(ModReferences.ExU);
         ImportedMaterialData.VanadiumGallium.mod(ModReferences.GT);
         ImportedMaterialData.Vb.mod(ModReferences.GT);
         ImportedMaterialData.Vibramantium.mod(ModReferences.GT);

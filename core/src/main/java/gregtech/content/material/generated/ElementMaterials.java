@@ -150,7 +150,6 @@ public final class ElementMaterials {
     public static final GTMaterial Livermorium        = element(1160, "Livermorium",        "Lv",     116, 177,  708,  1085,  12.9F,    0x74B102).setTextureSet(MaterialTextureSet.DULL).setLocalName("Lv");
     public static final GTMaterial Farnsium           = element(1170, "Farnsium",           "Fa",     117, 177,  673,  823,   7.2F,     0x3C4650).setTextureSet(MaterialTextureSet.DULL).setLocalName("Fa").setTooltipChemical("Fa");
     public static final GTMaterial Oganesson          = element(1180, "Oganesson",          "Og",     118, 176,  258,  263,   5.0F,     0x76B002).setTextureSet(MaterialTextureSet.DULL).setLocalName("Og");
-    public static final GTMaterial TritaniumElemental = element(1250, "TritaniumElemental", "Tn",     125, 198,  2000, 3138,  25.0F,    0x379B9B).setTextureSet(MaterialTextureSet.DULL).setLocalName("Tn").setTooltipChemical("Tn");
     public static final GTMaterial Trinium            = element(1260, "Trinium",            "Ke",     126, 192,  2645, 4523,  1.06874F, 0xEAEAEA).setTextureSet(MaterialTextureSet.COPPER).setLocalName("Ke").setTooltipChemical("Ke").setToolStats(3, 12F, 2560, 4);
     public static final GTMaterial DuraniumElemental  = element(1450, "DuraniumElemental",  "Dn",     145, 190,  1200, 2491,  20.0F,    0x4BAFAF).setTextureSet(MaterialTextureSet.DULL).setLocalName("Dn").setTooltipChemical("Dn");
     public static final GTMaterial Vibranium          = element(1520, "Vibranium",          "Vb",     152, 266,  4852, 9415,  3.23978365F, 0xC880FF).setTextureSet(MaterialTextureSet.EMERALD).setLocalName("Vb").setTooltipChemical("Vb").setToolStats(3, 1000F, 512, 15);
@@ -169,5 +168,4 @@ public final class ElementMaterials {
     public static final GTMaterial Creosote           = gas(9870, "Creosote",        0x804000).setTextureSet(MaterialTextureSet.FINE).setLocalName("Creosote Oil").setStats(100, 400, 1.0F);
     public static final GTMaterial WroughtIron        = metal(8643, "Wrought Iron",    "WrougtIron",    0,   0,   2011, 3134, 7.874F,   0xC8B4B4).setTextureSet(MaterialTextureSet.METALLIC).setLocalName("WrougtIron").setTooltipChemical("Fe").setToolStats(3, 6F, 384, 2);
     public static final GTMaterial AncientDebris      = metal(8744, "Ancient Debris",  "Ancient",       0,   0,   2011, 3334, 1.0F,     0x6E505A).setTextureSet(MaterialTextureSet.SPACE).setLocalName("Ancient").setToolStats(0, 1F, 16, 3);
-    public static final GTMaterial Unstable           = metal(8805, "Unstable",        "Unstableingot", 0,   0,   1000, 3000, 1.0F,     0xFFFFFF).setTextureSet(MaterialTextureSet.METALLIC).setLocalName("Unstableingot");
 }

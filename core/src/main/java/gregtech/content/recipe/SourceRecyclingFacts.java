@@ -20,8 +20,8 @@ import java.util.Set;
  * <p>Positive setSmelting adds MELTING. Element FURNACE uses the factory's original melting argument,
  * not later heat/native flags. Non-element metal/alloy does not imply MOLTEN. The all-MELTING fluid
  * loop at Loader_Fluids 216-224 is commented out. Explicit bindings precede the final LIQUID/MOLTEN
- * loop at 657-662; Aerotheum alone uses gas. Source density is not inferred here: the planner consumes
- * valid runtime density, target melting and actual fluid temperature without claiming imported-stat parity.
+ * loop at 657-662. Source density is not inferred here: the planner consumes valid runtime density,
+ * target melting and actual fluid temperature without claiming imported-stat parity.
  */
 public final class SourceRecyclingFacts {
     private SourceRecyclingFacts() {}
@@ -137,12 +137,12 @@ public final class SourceRecyclingFacts {
             8638, 8640, 8643, 8645, 8646, 8647, 8651, 8652, 8653, 8658, 8659, 8660, 8661, 8662, 8663, 8664, 8665, 8666,
             8667, 8668, 8669, 8672, 8673, 8674, 8675, 8679, 8682, 8684, 8685, 8686, 8687, 8689, 8697, 8698, 8700, 8702,
             8704, 8705, 8706, 8708, 8709, 8710, 8717, 8720, 8721, 8722, 8726, 8727, 8729, 8730, 8732, 8735, 8737, 8744,
-            8745, 8746, 8751, 8752, 8756, 8784, 8790, 8791, 8792, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8801, 8802,
-            8803, 8805, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
+            8745, 8746, 8751, 8756, 8784, 8790, 8791, 8792, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8801, 8802, 8803,
+            8805, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
     // Loader_Fluids135-189 optional external receivers. Default-positive bindings still require native proof.
     private static final Set<Integer> OPTIONAL_EXTERNAL = Set.of(
             120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600, 8610, 8630,
-            8661, 8700, 8702, 8708, 8709, 8710, 8752);
+            8661, 8700, 8702, 8708, 8709, 8710);
 
     private static final Map<Integer, Facts> BY_ID = createFacts();
     private static final List<Facts> ALL = List.copyOf(BY_ID.values());
@@ -390,7 +390,6 @@ public final class SourceRecyclingFacts {
         row(rows, 1160, "Livermorium", 0, 1160, U, 516);
         row(rows, 1170, "Farnsium", 0, 1170, U, 517);
         row(rows, 1180, "Oganesson", 0, 1180, U, 518);
-        row(rows, 1250, "TritaniumElemental", M, 1250, U, 695);
         row(rows, 1260, "Trinium", M, 1260, U, 696);
         row(rows, 1450, "DuraniumElemental", M, 1450, U, 715);
         row(rows, 1520, "Vibranium", 0, 1520, U, 722);
@@ -456,7 +455,6 @@ public final class SourceRecyclingFacts {
         row(rows, 8209, "Apatite", 0, 8209, U, 1298);
         row(rows, 8210, "Blizz", 0, 8210, U, 1274);
         row(rows, 8211, "Blaze", M, 8211, U, 1275);
-        row(rows, 8213, "Cryotheum", M, 8213, U, 1652);
         row(rows, 8214, "Obsidian", M, 9810, U, 1636);
         row(rows, 8215, "Clay", M, 8225, U, 1281);
         row(rows, 8216, "Paper", 0, 8216, U, 1300);
@@ -482,7 +480,6 @@ public final class SourceRecyclingFacts {
         row(rows, 8239, "WaxPlant", M | F, 8239, U, 1266);
         row(rows, 8241, "Leather", M, 8200, U / 9, 1313);
         row(rows, 8242, "IodineSalt", 0, 8242, U, 1146);
-        row(rows, 8246, "Aerotheum", M, 8246, U, 1650);
         row(rows, 8247, "Basalz", 0, 8247, U, 1272);
         row(rows, 8248, "Blitz", 0, 8248, U, 1273);
         row(rows, 8249, "Dynamite", 0, 8249, U, 1310);
@@ -749,14 +746,12 @@ public final class SourceRecyclingFacts {
         row(rows, 8745, "Netherite", M, 8745, U, 1833);
         row(rows, 8746, "NetherizedDiamond", M, 8746, U, 1834);
         row(rows, 8751, "Duranium", M, 8751, U, 1840);
-        row(rows, 8752, "Tritanium", M, 8752, U, 1841);
         row(rows, 8756, "Duralumin", M, 8756, U, 1845);
         row(rows, 8784, "Adamantine", M, 8784, U, 1675);
         row(rows, 8790, "Trinitanium", M, 8790, U, 1872);
         row(rows, 8791, "Draconium", M, 8791, U, 1861);
         row(rows, 8792, "DraconiumAwakened", M, 8792, U, 1862);
         row(rows, 8793, "TitaniumIridium", M, 8793, U, 1875);
-        row(rows, 8795, "Bedrockium", M, 8795, U, 1858);
         row(rows, 8796, "HSSG", M, 8796, U, 1853);
         row(rows, 8797, "HSSE", M, 8797, U, 1854);
         row(rows, 8798, "HSSS", M, 8798, U, 1855);
@@ -765,8 +760,6 @@ public final class SourceRecyclingFacts {
         row(rows, 8801, "Infinity", M, 8801, U, 1867);
         row(rows, 8802, "TantalumHafniumCarbide", M, 8802, U, 1734);
         row(rows, 8803, "CastIron", M, 8803, U, 1726);
-        row(rows, 8805, "Unstable", M, 8805, U, 1868);
-        row(rows, 8813, "CrystallinePinkSlime", M, 8813, U, 1817);
         row(rows, 9000, "Pumice", F, 9000, U, 3817);
         row(rows, 9001, "Diatomite", B, 9001, U, 3766);
         row(rows, 9003, "BasalticMineralSand", M, 9003, U, 3705);
@@ -872,12 +865,6 @@ public final class SourceRecyclingFacts {
         row(rows, 9201, "DuraniumHexabromide", B, 9201, U, 3783);
         row(rows, 9202, "DuraniumHexaiodide", B, 9202, U, 3784);
         row(rows, 9203, "DuraniumHexaastatide", B, 9203, U, 3785);
-        row(rows, 9204, "TritaniumDioxide", B, 9204, U, 3786);
-        row(rows, 9205, "TritaniumHexafluoride", B, 9205, U, 3787);
-        row(rows, 9206, "TritaniumHexachloride", B, 9206, U, 3788);
-        row(rows, 9207, "TritaniumHexabromide", B, 9207, U, 3789);
-        row(rows, 9208, "TritaniumHexaiodide", B, 9208, U, 3790);
-        row(rows, 9209, "TritaniumHexaastatide", B, 9209, U, 3791);
         row(rows, 9210, "Bromargyrite", M | B, 470, U / 3, 3756);
         row(rows, 9211, "Smithsonite", M | B, 300, U / 6, 3757);
         row(rows, 9212, "Sperrylite", M | B, 780, U / 4, 3758);
@@ -1043,7 +1030,6 @@ public final class SourceRecyclingFacts {
         bind(result, 880, "molten.radium", Accessor.LIQUID, 144, U, 659);
         bind(result, 920, "molten.uranium", Accessor.LIQUID, 144, U, 659);
         bind(result, 921, "molten.uranium235", Accessor.LIQUID, 144, U, 659);
-        bind(result, 1250, "molten.tritaniumelemental", Accessor.LIQUID, 144, U, 659);
         bind(result, 1260, "molten.trinium", Accessor.LIQUID, 144, U, 659);
         bind(result, 1450, "molten.duraniumelemental", Accessor.LIQUID, 144, U, 659);
         bind(result, 1740, "molten.naquadah", Accessor.LIQUID, 144, U, 659);
@@ -1138,14 +1124,12 @@ public final class SourceRecyclingFacts {
         bind(result, 8008, "molten.alumina", Accessor.LIQUID, 504, U, 214);
         bind(result, 8011, "hexafluorosilicicacid", Accessor.LIQUID, 1000, U, 658);
         bind(result, 8211, "blaze", Accessor.LIQUID, 1296, U, 195);
-        bind(result, 8213, "cryotheum", Accessor.LIQUID, 250, U, 131);
         bind(result, 8217, "molten.rubber", Accessor.LIQUID, 144, U, 204);
         bind(result, 8218, "plastic", Accessor.LIQUID, 1000, U, 191);
         bind(result, 8235, "molten.wax", Accessor.LIQUID, 144, U, 205);
         bind(result, 8236, "molten.waxbee", Accessor.LIQUID, 144, U, 206);
         bind(result, 8238, "molten.waxparaffin", Accessor.LIQUID, 144, U, 207);
         bind(result, 8239, "molten.waxplant", Accessor.LIQUID, 144, U, 208);
-        bind(result, 8246, "aerotheum", Accessor.GAS, 250, U, 133);
         bind(result, 8318, "molten.enderpearl", Accessor.LIQUID, 144, U, 193);
         bind(result, 8333, "molten.redstone", Accessor.LIQUID, 144, U, 194);
         bind(result, 8400, "chloroauricacid", Accessor.LIQUID, 1000, U, 658);

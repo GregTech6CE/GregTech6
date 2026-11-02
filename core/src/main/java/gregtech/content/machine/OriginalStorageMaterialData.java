@@ -69,7 +69,6 @@ public final class OriginalStorageMaterialData {
         metalset("osmium", 29, ImportedMaterialData.Os, "bookshelf_metal_osmium_elemental");
 
         metalset("elven_elementium", 41, ImportedMaterialData.ElvenElementium, "bookshelf_metal_elven_elementium");
-        metalset("tritanium", 32, ImportedMaterialData.TritaniumAlloy, "bookshelf_metal_tritanium");
         metalset("adamantium", 33, ImportedMaterialData.Ad, "bookshelf_metal_adamantium");
 
         metalset(

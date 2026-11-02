@@ -4,8 +4,6 @@ package gregtech.content.recipe.generated;
  * GT6 ore processing recipes transpiled from {@code Loader_Recipes_Ores} (the port's own ore chains are registered earlier and win every collision)
  * (138 of 280 RM calls translated into 144 recipes; the rest
  * reference cross-mod content or untranslatable expressions).
- * Six lossy Cryotheum loop representatives are deliberately omitted;
- * SourceOreCryotheumRules and the native washing producer own those exact rows.
  * Three Magnetic Separator blockDust calls are owned by SourceOreMagneticRules
  * and its physical-block native producer, avoiding the generic dust-nine projection.
  * Eighteen fixed purified Sifter calls are owned by SourceOreSiftingRules and

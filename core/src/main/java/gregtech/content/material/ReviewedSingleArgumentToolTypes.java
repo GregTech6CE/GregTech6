@@ -50,12 +50,6 @@ public final class ReviewedSingleArgumentToolTypes {
             case 9201 -> m.getName().equals("DuraniumHexabromide");
             case 9202 -> m.getName().equals("DuraniumHexaiodide");
             case 9203 -> m.getName().equals("DuraniumHexaastatide");
-            case 9204 -> m.getName().equals("TritaniumDioxide");
-            case 9205 -> m.getName().equals("TritaniumHexafluoride");
-            case 9206 -> m.getName().equals("TritaniumHexachloride");
-            case 9207 -> m.getName().equals("TritaniumHexabromide");
-            case 9208 -> m.getName().equals("TritaniumHexaiodide");
-            case 9209 -> m.getName().equals("TritaniumHexaastatide");
             case 9216 -> m.getName().equals("Arsenopyrite");
             case 9217 -> m.getName().equals("Wolframite");
             default -> false;

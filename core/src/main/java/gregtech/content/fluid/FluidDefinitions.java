@@ -195,9 +195,6 @@ public final class FluidDefinitions {
         bindMolten("platinum.molten", "Pt");
         bindMolten("cobalt.molten", "Co");
 
-        // Special material bindings (original lines 135-158)
-        bindMolten("molten_tritanium", "TritaniumAlloy");
-
         // Non-auto-generated molten materials (lines 191-199)
         bindMolten("plastic", "Plastic");
         bindMolten("glass", "Glass");

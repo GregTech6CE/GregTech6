@@ -617,17 +617,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_tritanium",
-      "gt6_id": 7132,
-      "kind": "metal",
-      "material": "Tritanium",
-      "display": "Tritanium",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 30.0,
-      "resistance": 30.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_adamantium",
       "gt6_id": 7133,
       "kind": "metal",

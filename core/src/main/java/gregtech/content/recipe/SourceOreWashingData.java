@@ -176,8 +176,6 @@ public final class SourceOreWashingData {
             row(9201, "DuraniumHexabromide", 3783),
             row(9202, "DuraniumHexaiodide", 3784),
             row(9203, "DuraniumHexaastatide", 3785),
-            row(9204, "TritaniumDioxide", 3786),
-            row(9207, "TritaniumHexabromide", 3789),
             row(9213, "Kesterite", 3720),
             row(9214, "Stannite", 3721),
             row(9216, "Arsenopyrite", 3715));

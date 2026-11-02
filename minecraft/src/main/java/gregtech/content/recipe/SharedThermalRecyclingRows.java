@@ -58,8 +58,8 @@ import static gregtech.content.recipe.SourceRecyclingFacts.*;
  * <ul>
  *   <li>recyclable prefixes outside that audited group (pipes, wires, plants, ammunition,
  *       composite tool heads, machinery, storage blocks);</li>
- *   <li>multi-component compositions, where the listener converts every material stack, keeps the
- *       single one that has a liquid (Aerotheum: gas) phase, and proves the item mass for timing;</li>
+ *   <li>multi-component compositions, where the listener converts every material stack, chooses
+ *       one phase for the output, and proves the item mass for timing;</li>
  *   <li>null-prefix item data (block items, machine casings, transports, unified vanilla items).</li>
  * </ul>
  *

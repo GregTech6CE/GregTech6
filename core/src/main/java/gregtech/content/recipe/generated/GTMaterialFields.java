@@ -159,7 +159,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("Lv", "Livermorium");
         BY_FIELD.put("Fa", "Farnsium");
         BY_FIELD.put("Og", "Oganesson");
-        BY_FIELD.put("Tn", "TritaniumElemental");
         BY_FIELD.put("Ke", "Trinium");
         BY_FIELD.put("Dn", "DuraniumElemental");
         BY_FIELD.put("Vb", "Vibranium");
@@ -572,9 +571,7 @@ public final class GTMaterialFields {
         BY_FIELD.put("Bluestone", "Bluestone");
         BY_FIELD.put("Oilshale", "Oil Shale");
         BY_FIELD.put("Petrotheum", "Petrotheum");
-        BY_FIELD.put("Aerotheum", "Aerotheum");
         BY_FIELD.put("Pyrotheum", "Pyrotheum");
-        BY_FIELD.put("Cryotheum", "Cryotheum");
         BY_FIELD.put("WroughtIron", "Wrought Iron");
         BY_FIELD.put("AnnealedCopper", "Annealed Copper");
         BY_FIELD.put("Adamantine", "Adamantine");
@@ -645,7 +642,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("VibrantAlloy", "Vibrant Alloy");
         BY_FIELD.put("ElectricalSteel", "Electrical Steel");
         BY_FIELD.put("Soularium", "Soularium");
-        BY_FIELD.put("CrystallinePinkSlime", "Crystalline Pink Slime");
         BY_FIELD.put("Manasteel", "Manasteel");
         BY_FIELD.put("Terrasteel", "Terrasteel");
         BY_FIELD.put("ElvenElementium", "Elven Elementium");
@@ -654,18 +650,15 @@ public final class GTMaterialFields {
         BY_FIELD.put("Netherite", "Netherite");
         BY_FIELD.put("NetherizedDiamond", "Netherized Diamond");
         BY_FIELD.put("DuraniumAlloy", "Duranium");
-        BY_FIELD.put("TritaniumAlloy", "Tritanium");
         BY_FIELD.put("Duralumin", "Duralumin");
         BY_FIELD.put("HSSG", "HSS-G");
         BY_FIELD.put("HSSE", "HSS-E");
         BY_FIELD.put("HSSS", "HSS-S");
-        BY_FIELD.put("Bedrockium", "Bedrockium");
         BY_FIELD.put("Draconium", "Draconium");
         BY_FIELD.put("DraconiumAwakened", "DraconiumAwakened");
         BY_FIELD.put("CrystalMatrix", "Crystal Matrix");
         BY_FIELD.put("CosmicNeutronium", "Cosmic Neutronium");
         BY_FIELD.put("Infinity", "Infinity");
-        BY_FIELD.put("Unstable", "Unstable");
         BY_FIELD.put("Trinaquadalloy", "Trinaquadalloy");
         BY_FIELD.put("Trinitanium", "Trinitanium");
         BY_FIELD.put("Iritanium", "Titanium Iridium");
@@ -740,12 +733,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("DuraniumHexabromide", "Duranium Hexabromide");
         BY_FIELD.put("DuraniumHexaiodide", "Duranium Hexaiodide");
         BY_FIELD.put("DuraniumHexaastatide", "Duranium Hexaastatide");
-        BY_FIELD.put("TritaniumDioxide", "Tritanium Dioxide");
-        BY_FIELD.put("TritaniumHexafluoride", "Tritanium Hexafluoride");
-        BY_FIELD.put("TritaniumHexachloride", "Tritanium Hexachloride");
-        BY_FIELD.put("TritaniumHexabromide", "Tritanium Hexabromide");
-        BY_FIELD.put("TritaniumHexaiodide", "Tritanium Hexaiodide");
-        BY_FIELD.put("TritaniumHexaastatide", "Tritanium Hexaastatide");
         BY_FIELD.put("MarsSand", "Mars Sand");
         BY_FIELD.put("SkyStone", "Sky Stone");
         BY_FIELD.put("Livingrock", "Livingrock");

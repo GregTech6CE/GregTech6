@@ -306,8 +306,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.registerAlias("TigerEyeYellow", "TigerEye");
         GTMaterialRegistry.registerAlias("Tl", "Thallium");
         GTMaterialRegistry.registerAlias("Tm", "Thulium");
-        GTMaterialRegistry.registerAlias("Tn", "TritaniumElemental");
-        GTMaterialRegistry.registerAlias("TritaniumAlloy", "Tritanium");
         GTMaterialRegistry.registerAlias("TungstenSteel", "Tungstensteel");
         GTMaterialRegistry.registerAlias("U235F4", "Uranium235Tetrafluoride");
         GTMaterialRegistry.registerAlias("U235F6", "Uranium235Hexafluoride");
@@ -333,7 +331,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Actinium", "Actinium");
         GTMaterialRegistry.setDisplayName("Adamantine", "Adamantine");
         GTMaterialRegistry.setDisplayName("Adamantium", "Adamantium");
-        GTMaterialRegistry.setDisplayName("Aerotheum", "Aerotheum");
         GTMaterialRegistry.setDisplayName("Air", "Air");
         GTMaterialRegistry.setDisplayName("Almandine", "Almandine");
         GTMaterialRegistry.setDisplayName("Alumina", "Alumina");
@@ -389,7 +386,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("BatteryAlloy", "Battery Alloy");
         GTMaterialRegistry.setDisplayName("Bauxite", "Bauxite");
         GTMaterialRegistry.setDisplayName("Bedrock", "Bedrock");
-        GTMaterialRegistry.setDisplayName("Bedrockium", "Bedrockium");
         GTMaterialRegistry.setDisplayName("Bentonite", "Bentonite");
         GTMaterialRegistry.setDisplayName("Berkelium", "Berkelium");
         GTMaterialRegistry.setDisplayName("Beryllium", "Beryllium");
@@ -512,9 +508,7 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Crimsonwood", "Crimsonwood");
         GTMaterialRegistry.setDisplayName("CrudeOil", "Crude Oil");
         GTMaterialRegistry.setDisplayName("Cryolite", "Cryolite");
-        GTMaterialRegistry.setDisplayName("Cryotheum", "Cryotheum");
         GTMaterialRegistry.setDisplayName("CrystalMatrix", "Crystal Matrix");
-        GTMaterialRegistry.setDisplayName("CrystallinePinkSlime", "Crystalline Pink Slime");
         GTMaterialRegistry.setDisplayName("Curium", "Curium");
         GTMaterialRegistry.setDisplayName("DyeCyan", "DyeCyan");
         GTMaterialRegistry.setDisplayName("CyanVitriol", "Cyan Vitriol");
@@ -991,14 +985,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Trinaquadalloy", "Trinaquadalloy");
         GTMaterialRegistry.setDisplayName("Trinitanium", "Trinitanium");
         GTMaterialRegistry.setDisplayName("Trinium", "Trinium");
-        GTMaterialRegistry.setDisplayName("Tritanium", "Tritanium");
-        GTMaterialRegistry.setDisplayName("TritaniumDioxide", "Tritanium Dioxide");
-        GTMaterialRegistry.setDisplayName("TritaniumElemental", "TritaniumElemental");
-        GTMaterialRegistry.setDisplayName("TritaniumHexaastatide", "Tritanium Hexaastatide");
-        GTMaterialRegistry.setDisplayName("TritaniumHexabromide", "Tritanium Hexabromide");
-        GTMaterialRegistry.setDisplayName("TritaniumHexachloride", "Tritanium Hexachloride");
-        GTMaterialRegistry.setDisplayName("TritaniumHexafluoride", "Tritanium Hexafluoride");
-        GTMaterialRegistry.setDisplayName("TritaniumHexaiodide", "Tritanium Hexaiodide");
         GTMaterialRegistry.setDisplayName("TritiatedWater", "Tritiated Water");
         GTMaterialRegistry.setDisplayName("Tritium", "Tritium");
         GTMaterialRegistry.setDisplayName("Trona", "Trona");
@@ -1010,7 +996,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Tungstensteel", "Tungstensteel");
         GTMaterialRegistry.setDisplayName("TungsticAcid", "Tungstic Acid");
         GTMaterialRegistry.setDisplayName("Ultimet", "Ultimet");
-        GTMaterialRegistry.setDisplayName("Unstable", "Unstable");
         GTMaterialRegistry.setDisplayName("Uraninite", "Uraninite");
         GTMaterialRegistry.setDisplayName("Uranium", "Uranium");
         GTMaterialRegistry.setDisplayName("Uranium233", "Uranium-233");

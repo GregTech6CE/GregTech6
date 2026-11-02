@@ -23,7 +23,6 @@ public final class Materials {
     public static final GTMaterial Actinium = ElementMaterials.Actinium;
     public static final GTMaterial Adamantine = CompoundMaterials.Adamantine;
     public static final GTMaterial Adamantium = ElementMaterials.Adamantium;
-    public static final GTMaterial Aerotheum = CompoundMaterials.Aerotheum;
     public static final GTMaterial Air = CompoundMaterials.Air;
     public static final GTMaterial Almandine = CompoundMaterials.Almandine;
     public static final GTMaterial Alumina = OreMaterials.Alumina;
@@ -62,7 +61,6 @@ public final class Materials {
     public static final GTMaterial Basalz = CompoundMaterials.Basalz;
     public static final GTMaterial BatteryAlloy = CompoundMaterials.BatteryAlloy;
     public static final GTMaterial Bedrock = CompoundMaterials.Bedrock;
-    public static final GTMaterial Bedrockium = CompoundMaterials.Bedrockium;
     public static final GTMaterial Bentonite = CompoundMaterials.Bentonite;
     public static final GTMaterial Berkelium = ElementMaterials.Berkelium;
     public static final GTMaterial Beryllium = ElementMaterials.Beryllium;
@@ -162,9 +160,7 @@ public final class Materials {
     public static final GTMaterial Creosote = ElementMaterials.Creosote;
     public static final GTMaterial CrudeOil = OreMaterials.CrudeOil;
     public static final GTMaterial Cryolite = OreMaterials.Cryolite;
-    public static final GTMaterial Cryotheum = CompoundMaterials.Cryotheum;
     public static final GTMaterial CrystalMatrix = CompoundMaterials.CrystalMatrix;
-    public static final GTMaterial CrystallinePinkSlime = CompoundMaterials.CrystallinePinkSlime;
     public static final GTMaterial Curium = ElementMaterials.Curium;
     public static final GTMaterial Cyan = CompoundMaterials.Cyan;
     public static final GTMaterial CyanVitriol = CompoundMaterials.CyanVitriol;
@@ -559,8 +555,6 @@ public final class Materials {
     public static final GTMaterial Trinaquadalloy = CompoundMaterials.Trinaquadalloy;
     public static final GTMaterial Trinitanium = CompoundMaterials.Trinitanium;
     public static final GTMaterial Trinium = ElementMaterials.Trinium;
-    public static final GTMaterial Tritanium = CompoundMaterials.Tritanium;
-    public static final GTMaterial TritaniumElemental = ElementMaterials.TritaniumElemental;
     public static final GTMaterial TritiatedWater = CompoundMaterials.TritiatedWater;
     public static final GTMaterial Tritium = ElementMaterials.Tritium;
     public static final GTMaterial Tungsten = ElementMaterials.Tungsten;
@@ -570,7 +564,6 @@ public final class Materials {
     public static final GTMaterial Tungstensteel = CompoundMaterials.Tungstensteel;
     public static final GTMaterial TungsticAcid = CompoundMaterials.TungsticAcid;
     public static final GTMaterial Ultimet = CompoundMaterials.Ultimet;
-    public static final GTMaterial Unstable = ElementMaterials.Unstable;
     public static final GTMaterial Uranium = ElementMaterials.Uranium;
     public static final GTMaterial Uranium233 = ElementMaterials.Uranium233;
     public static final GTMaterial Uranium235 = ElementMaterials.Uranium235;

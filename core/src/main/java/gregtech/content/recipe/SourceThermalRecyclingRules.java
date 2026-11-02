@@ -56,8 +56,8 @@ public final class SourceThermalRecyclingRules {
      * Imported float precision/source-stat parity is a separate, explicitly incomplete audit.
      */
     public record Stats(double inputDensity, long targetMelting) {}
-    /** A verified phase may be liquid or the source Aerotheum gas exception. Path/accessor,
-     * native identity, temperature provenance and external overrides are checked by the adapter.
+    /** A verified phase may be liquid. Path/accessor, native identity, temperature provenance
+     * and external overrides are checked by the adapter.
      * PROVEN_NO_DEFAULT_PHASE is only valid when no unknown external phase override is present.
      */
     public record Phase(

@@ -73,7 +73,6 @@ public final class ReviewedOreInputProfile {
             case 8651 -> name.equals("SteelGalvanized") ? Evidence.NO : Evidence.UNKNOWN;
             case 8646 -> name.equals("SteelMagnetic") ? Evidence.NO : Evidence.UNKNOWN;
             case 8196 -> name.equals("Teflon") ? Evidence.NO : Evidence.UNKNOWN;
-            case 8752 -> name.equals("Tritanium") ? Evidence.NO : Evidence.UNKNOWN;
             case 8027 -> name.equals("TungsticAcid") ? Evidence.NO : Evidence.UNKNOWN;
             case 8221 -> name.equals("Wood") ? Evidence.NO : Evidence.UNKNOWN;
             case 8224 -> name.equals("WoodRubber") ? Evidence.NO : Evidence.UNKNOWN;
