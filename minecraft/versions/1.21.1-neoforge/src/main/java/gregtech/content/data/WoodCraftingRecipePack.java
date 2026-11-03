@@ -88,6 +88,8 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
     }
 
     private static Map<String, Object> ingredient(String spec) {
+        if (spec.startsWith("tag:"))
+            return Map.of("tag", ResourceLocation.parse(spec.substring(4)).toString());
         var stack = resolve(spec);
         if (stack.isEmpty()) throw new IllegalStateException("Unresolved original wood ingredient " + spec);
         return Map.of("item", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());

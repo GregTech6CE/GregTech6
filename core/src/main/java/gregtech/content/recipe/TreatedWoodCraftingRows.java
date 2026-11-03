@@ -8,7 +8,7 @@ public final class TreatedWoodCraftingRows {
     public static final String[] SMALL_GEAR_PATTERN = {"P ", " s"};
     public static final String[] GEAR_PATTERN = {"BPB", "PsP", "BPB"};
     public static final String[] ROWS = {
-        "treated/wood_bolt|shaped|nomirror|s / S|s=tool:saw;S=item:minecraft:stick|material:bolt:Wood*2|Loader_OreProcessing.java:194",
+        "treated/wood_bolt|shaped|nomirror|s / S|s=tool:saw;S=tag:gt6ce:ammunition/sticks_wood|material:bolt:Wood*2|Loader_OreProcessing.java:194",
         "treated/small_gear|shaped|nomirror|P / s|P=material:plate:WoodTreated;s=tool:saw|material:gearGtSmall:WoodTreated*1|Loader_Recipes_Woods.java:217",
         "treated/gear|shaped|nomirror|BPB/PsP/BPB|B=material:bolt:WoodTreated;P=material:plate:WoodTreated;s=tool:saw|material:gearGt:WoodTreated*1|Loader_Recipes_Woods.java:218"
     };

@@ -25,6 +25,7 @@ import gregtech.content.registry.GTToolItems;
 import gregtech.content.registry.GTWoods;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 //?}
 import net.minecraft.world.item.ItemStack;
 /** Original material/tool/wood spec resolver for the native reloadable recipe pack. */
@@ -150,7 +151,8 @@ public final class WoodCraftingRecipeInjector {
                 GTMaterialRegistry.get("WoodTreated"), 1), "treated gear");
 
         addTreated(recipes, "wood_bolt", gregtech.content.recipe.TreatedWoodCraftingRows.BOLT_PATTERN,
-                Map.of('s', Ingredient.of(saw), 'S', Ingredient.of(net.minecraft.world.item.Items.STICK)), woodBolt);
+                Map.of('s', Ingredient.of(saw), 'S', Ingredient.of(ItemTags.create(
+                        ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "ammunition/sticks_wood")))), woodBolt);
         addTreated(recipes, "small_gear", gregtech.content.recipe.TreatedWoodCraftingRows.SMALL_GEAR_PATTERN,
                 Map.of('P', Ingredient.of(plank), 's', Ingredient.of(saw)), smallGear);
         addTreated(recipes, "gear", gregtech.content.recipe.TreatedWoodCraftingRows.GEAR_PATTERN,
