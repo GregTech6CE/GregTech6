@@ -264,7 +264,8 @@ public final class ElectricNetwork {
                 int endpoint = endpointLinks[wireIndex][ordinal];
                 if (endpoint < 0 || endpointStamp[endpoint] == stamp) continue;
                 endpointStamp[endpoint] = stamp;
-                if (!liveChunk(endpointChunks[endpoint])) break;
+                // Unloaded endpoint chunks only skip their own face; the snapshot stays valid.
+                if (!chunkLoaded(endpointChunks[endpoint])) continue;
                 BlockEntity neighbor = level.getBlockEntity(endpointPositions[endpoint]);
                 if (neighbor instanceof ElectricWireBlockEntity) {
                     // The face became a wire after this snapshot was built; never inject it as an endpoint.
@@ -317,9 +318,17 @@ public final class ElectricNetwork {
 
     private boolean liveChunk(int chunk) {
         if (!valid) return false;
-        // Chunk availability can disappear before the unload hooks run. Check once per touched chunk.
-        if (checkedChunks[chunk] != availabilityEpoch && !level.hasChunkAt(chunkPositions[chunk])) {
+        // Chunk availability can disappear before the unload hooks run.
+        if (!chunkLoaded(chunk)) {
             invalidate();
+            return false;
+        }
+        return true;
+    }
+
+    /** Availability of one touched chunk, cached for the current injection. */
+    private boolean chunkLoaded(int chunk) {
+        if (checkedChunks[chunk] != availabilityEpoch && !level.hasChunkAt(chunkPositions[chunk])) {
             return false;
         }
         checkedChunks[chunk] = availabilityEpoch;
