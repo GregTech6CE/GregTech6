@@ -6,7 +6,9 @@ import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.misc.ChargingCraftingTableBlockEntity;
 import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.blockentity.tool.ManualToolBlockEntity;
 import gregtech.content.data.GregTechTags;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.energy.ChemicalBatterySpec;
 import gregtech.content.registry.GTChemicalBatteries;
 import gregtech.content.transport.energy.ElectricNetwork;
@@ -17,7 +19,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
@@ -26,14 +31,16 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.items.IItemHandler;
 //?}
 
-/** Wire snapshots, lazy overload counters and the idle fluid-pipe wake path. */
+/** Wire snapshots, lazy overload counters, the idle fluid-pipe wake path and the sifting table's automation handler. */
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class TransportSchedulingTests {
@@ -140,6 +147,111 @@ public final class TransportSchedulingTests {
             }
             finish(helper);
         });
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 120)
+    public static void siftingTableAcceptsAutomationInputAndOutput(GameTestHelper helper) {
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 1, 2));
+        helper.getLevel().setBlockAndUpdate(pos,
+                BuiltInRegistries.BLOCK.get(id("sifting_table")).defaultBlockState());
+        if (!(helper.getLevel().getBlockEntity(pos) instanceof ManualToolBlockEntity table)) {
+            helper.fail("sifting table block entity missing");
+            return;
+        }
+        IItemHandler handler = itemHandler(helper, pos, Direction.UP);
+        if (handler == null) {
+            helper.fail("sifting table exposes no item handler");
+            return;
+        }
+
+        ItemStack input = deterministicSiftingInput();
+        helper.assertFalse(input.isEmpty(), "a deterministic sifting row exists");
+        helper.assertTrue(handler.insertItem(0, new ItemStack(Items.STICK), false).getCount() == 1,
+                "a non-siftable item is rejected");
+        helper.assertTrue(handler.insertItem(0, input.copyWithCount(3), false).getCount() == 2,
+                "the input slot holds one item");
+        helper.assertTrue(handler.getStackInSlot(0).is(input.getItem())
+                        && handler.getStackInSlot(0).getCount() == 1,
+                "the input slot received the sifting input");
+        helper.assertTrue(handler.insertItem(0, input.copyWithCount(1), false).getCount() == 1,
+                "an occupied input slot rejects further insertion");
+        helper.assertTrue(handler.extractItem(0, 1, false).isEmpty(), "the input slot is not extractable");
+        helper.assertTrue(handler.insertItem(1, input.copyWithCount(1), false).getCount() == 1,
+                "output slots are not insertable");
+
+        ServerPlayer player = placeSiftingPlayer(helper, pos);
+        helper.runAfterDelay(2, () -> table.interact(player, InteractionHand.MAIN_HAND, Direction.UP));
+        helper.runAfterDelay(60, () -> {
+            ItemStack output = ItemStack.EMPTY;
+            for (int slot = 1; slot < handler.getSlots() && output.isEmpty(); slot++) {
+                output = handler.extractItem(slot, 64, false);
+            }
+            helper.assertFalse(output.isEmpty(), "sifting produced an extractable output");
+            helper.assertTrue(handler.getStackInSlot(0).isEmpty(), "the input was consumed");
+            helper.assertTrue(handler.insertItem(0, input.copyWithCount(1), false).isEmpty(),
+                    "the next input is accepted once the output is drained");
+        });
+        helper.runAfterDelay(110, () -> {
+            ItemStack output = ItemStack.EMPTY;
+            for (int slot = 1; slot < handler.getSlots() && output.isEmpty(); slot++) {
+                output = handler.extractItem(slot, 64, false);
+            }
+            helper.assertFalse(output.isEmpty(), "the standing player resumed sifting for the next input");
+            helper.getLevel().getServer().getPlayerList().remove(player);
+            finish(helper);
+        });
+    }
+
+    /** A real server player in the player list; the 1.20.1 helper's bare connection has no channel. */
+    private static ServerPlayer placeSiftingPlayer(GameTestHelper helper, BlockPos pos) {
+        var level = helper.getLevel();
+        var profile = new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "sifting-test");
+        var connection = new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND);
+        new io.netty.channel.embedded.EmbeddedChannel(connection);
+//? if >=1.21.1 {
+        /*var player = new ServerPlayer(level.getServer(), level, profile,
+                net.minecraft.server.level.ClientInformation.createDefault());
+*///?} else {
+        var player = new ServerPlayer(level.getServer(), level, profile);
+//?}
+        try {
+//? if >=1.21.1 {
+            /*level.getServer().getPlayerList().placeNewPlayer(connection, player,
+                    net.minecraft.server.network.CommonListenerCookie.createInitial(profile, false));
+*///?} else {
+            level.getServer().getPlayerList().placeNewPlayer(connection, player);
+//?}
+        } catch (UnsupportedOperationException unsentLoginPayload) {
+            // The embedded connection has no negotiated client channels; the player is registered already.
+        }
+        player.moveTo(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 0, 90);
+        return player;
+    }
+
+    private static IItemHandler itemHandler(GameTestHelper helper, BlockPos pos, Direction side) {
+//? if >=1.21.1 {
+        /*return helper.getLevel().getCapability(
+                net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, pos, side);
+*///?} else {
+        return helper.getLevel().getBlockEntity(pos)
+                .getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER, side)
+                .orElse(null);
+//?}
+    }
+
+    /** The first row whose first output is guaranteed, so the sifting result is not random. */
+    private static ItemStack deterministicSiftingInput() {
+        for (var row : MachineRecipeMaps.Sifting.mRecipeList) {
+            if (!row.mEnabled || row.mFakeRecipe || row.mInputs.length != 1 || row.mInputs[0].isEmpty()
+                    || row.mInputs[0].getCount() != 1 || row.getOutputChance(0) < 10000
+                    || row.mOutputs.length == 0 || row.mOutputs[0].isEmpty()) continue;
+            ItemStack candidate = row.mInputs[0].copyWithCount(1);
+            var match = MachineRecipeMaps.Sifting.findRecipe(
+                    java.util.List.of(candidate), java.util.List.of(), false, 1, 12);
+            if (match != null && match.getOutputChance(0) >= 10000 && match.mOutputs.length > 0
+                    && !match.mOutputs[0].isEmpty()) return candidate;
+        }
+        return ItemStack.EMPTY;
     }
 
     private static BlockPos at(GameTestHelper helper, int height) {
