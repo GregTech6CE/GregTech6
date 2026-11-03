@@ -21,7 +21,8 @@ public final class PotionBrewingRoutes {
 
     public static List<Route> all() {
         var routes = new ArrayList<Route>();
-        for (var prefix : new MaterialPrefix[] {MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny}) {
+        for (var prefix :
+                new MaterialPrefix[] {MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny}) {
             add(routes, Materials.Arsenic, prefix, WATER, "harming");
             add(routes, Materials.Arsenic, prefix, MUNDANE, "harming");
             add(routes, Materials.Arsenic, prefix, AWKWARD, "poison");

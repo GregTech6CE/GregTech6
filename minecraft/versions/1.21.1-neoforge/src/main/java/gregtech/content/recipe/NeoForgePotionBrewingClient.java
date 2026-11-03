@@ -9,7 +9,6 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 /** Client-side probe after the connection has built its brewing table. */
 @EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
-        bus = EventBusSubscriber.Bus.GAME,
         value = Dist.CLIENT)
 public final class NeoForgePotionBrewingClient {
     private NeoForgePotionBrewingClient() {}

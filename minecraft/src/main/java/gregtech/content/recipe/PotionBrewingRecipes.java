@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import com.mojang.logging.LogUtils;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.stack.StackCompat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,32 +27,53 @@ public final class PotionBrewingRecipes {
         GENERATED.clear();
         var seen = new ArrayList<Row>();
         for (Row row : rows) {
-            if (row.potion().isEmpty() || row.ingredient().isEmpty() || row.output().isEmpty()) continue;
-            if (duplicate(seen, row)) continue;
-            seen.add(row);
+            if (row.potion().isEmpty()
+                    || row.ingredient().isEmpty()
+                    || row.output().isEmpty()) continue;
+            if (covered(seen, row)) continue;
             var recipe = new Recipe(
-                    new ItemStack[] {row.ingredient().copyWithCount(1), row.potion().copyWithCount(1)},
-                    new ItemStack[] {row.output().copy()}, null, null, null, null, DURATION, EU, 0);
+                    new ItemStack[] {
+                        row.ingredient().copyWithCount(1), row.potion().copyWithCount(1)
+                    },
+                    new ItemStack[] {row.output().copy()},
+                    null,
+                    null,
+                    null,
+                    null,
+                    DURATION,
+                    EU,
+                    0);
             recipe.mExactItemInputs = true;
             var added = map.addRecipe(recipe, false, false, false);
-            if (added != null) GENERATED.add(added);
+            if (added == null) continue;
+            seen.add(row);
+            GENERATED.add(added);
         }
         LOGGER.info("[gregtech] Fermenter potion rows: {}", GENERATED.size());
     }
 
-    private static boolean duplicate(List<Row> seen, Row row) {
-        for (var other : seen)
-            if (same(other.potion(), row.potion())
-                    && same(other.ingredient(), row.ingredient())
-                    && same(other.output(), row.output())) return true;
-        return false;
+    /** Removes duplicate stacks and normalizes the count to one. */
+    public static List<ItemStack> distinct(Collection<ItemStack> stacks) {
+        var result = new ArrayList<ItemStack>();
+        for (ItemStack stack : stacks) {
+            if (stack.isEmpty()) continue;
+            boolean duplicate = false;
+            for (ItemStack existing : result) {
+                if (StackCompat.sameItem(existing, stack)) {
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (!duplicate) result.add(stack.copyWithCount(1));
+        }
+        return result;
     }
 
-    private static boolean same(ItemStack left, ItemStack right) {
-//? if >=1.21.1 {
-        /*return ItemStack.isSameItemSameComponents(left, right);
-*///?} else {
-        return ItemStack.isSameItemSameTags(left, right);
-//?}
+    private static boolean covered(List<Row> seen, Row row) {
+        // The brewing stand returns the first matching mix; keep one row per input pair.
+        for (var other : seen)
+            if (StackCompat.sameItem(other.potion(), row.potion())
+                    && StackCompat.sameItem(other.ingredient(), row.ingredient())) return true;
+        return false;
     }
 }
