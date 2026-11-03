@@ -95,9 +95,7 @@ public class BasicMachineScreen extends MachineContainerScreen<BasicMachineConta
             int y = topPos + slot.y;
             if (mouseX < x || mouseX >= x + 16 || mouseY < y || mouseY >= y + 16) continue;
 
-            List<Component> tooltip = sf.isInput()
-                    ? FluidSlotPresentation.tooltip(fluid, sf.amount(), sf.capacity())
-                    : FluidSlotPresentation.outputTooltip(fluid, sf.amount(), sf.capacity());
+            List<Component> tooltip = FluidSlotPresentation.tooltip(fluid, sf.amount(), sf.capacity());
             graphics.renderTooltip(font, tooltip, Optional.empty(), mouseX, mouseY);
             break;
         }

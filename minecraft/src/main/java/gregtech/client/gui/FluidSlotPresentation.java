@@ -4,6 +4,7 @@ import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluidType;
 import gregtech.content.registry.GTFluids;
 import gregtech.engine.fluid.FluidSlotAmountOverlay;
+import gregtech.engine.fluid.FluidUnits;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.gui.Font;
@@ -20,24 +21,13 @@ final class FluidSlotPresentation {
     private FluidSlotPresentation() {}
 
     static List<Component> tooltip(FluidStack fluid, long amount, long capacity) {
-        if (fluid.isEmpty()) return List.of(capacity == Long.MAX_VALUE
-                ? Component.translatable("gui.gt6ce.fluid.capacity_unlimited")
-                : gregtech.engine.fluid.FluidUnits.text("gui.gt6ce.fluid.capacity", capacity));
+        if (fluid.isEmpty()) return List.of(Component.translatable("gui.gt6ce.empty")
+                .append("/" + (capacity == Long.MAX_VALUE ? "∞" : Long.toString(capacity)) + FluidUnits.unit()));
         var result = new ArrayList<Component>();
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         result.add(entry == null ? fluid.getDisplayName()
                 : GTFluidType.describe(entry, RegisteredFluids.sanitizePath(entry.registryName())));
         result.addAll(GTFluidType.describeTooltip(fluid, amount, capacity, false));
-        return result;
-    }
-
-    /** Recipe output buffers stop production by recipe rules, not by their storage sentinel. */
-    static List<Component> outputTooltip(FluidStack fluid, long amount, long capacity) {
-        if (capacity != Long.MAX_VALUE) return tooltip(fluid, amount, capacity);
-        var result = new ArrayList<Component>();
-        result.add(Component.translatable("gui.gt6ce.fluid.output_buffer"));
-        if (fluid.isEmpty()) result.add(Component.translatable("gui.gt6ce.empty"));
-        else result.addAll(tooltip(fluid, amount, -1));
         return result;
     }
 
