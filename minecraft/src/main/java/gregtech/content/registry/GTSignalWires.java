@@ -1,8 +1,10 @@
 package gregtech.content.registry;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.GTValues;
 import gregtech.content.block.energy.SignalWireBlock;
 import gregtech.content.material.Materials;
+import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 //? if >=1.21.1 {
@@ -69,6 +71,15 @@ public final class GTSignalWires {
 *///?} else {
             GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
 //?}
+        }
+    }
+
+    /** Registers each signal wire's composition; call after item registration. */
+    public static void registerCompositions() {
+        for (var holder : ALL) {
+            SignalWireBlock block = holder.get();
+            if (block.material() == null || !block.material().isValid()) continue;
+            ItemMaterialRegistry.register(block.asItem(), null, block.material(), GTValues.U / 2);
         }
     }
 }

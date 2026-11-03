@@ -158,6 +158,8 @@ public final class GregTechNeoForge {
         VanillaCompositionLoader.register();
         gregtech.content.material.VanillaMaterialCorrections.register();
         gregtech.content.registry.GTBars.registerCompositions();
+        gregtech.content.registry.GTWires.registerCompositions();
+        gregtech.content.registry.GTSignalWires.registerCompositions();
         gregtech.content.recipe.VanillaWoodProcessingRecipes.registerMaterials();
         gregtech.content.recipe.PanelMaterialRegistration.register();
         gregtech.content.recipe.TransportMaterialRegistration.register();

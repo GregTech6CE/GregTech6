@@ -3,7 +3,6 @@ package gregtech.content.registry;
 import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.*;
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.material.ItemMaterialRegistry;
@@ -38,21 +37,9 @@ public final class GTMaterialRegistration {
                 gregtech.content.data.MaterialPrefix.plate,
                 gregtech.content.material.generated.WoodMaterials.WoodTreated);
         count++;
-        for (var entry : GTSignalWires.all()) {
-            ItemMaterialRegistry.register(
-                    entry.get().asItem(), null, entry.get().material(), GTValues.U / 2);
-            count++;
-        }
-
-        // Wires & cables — use exact materialAmount from WireSpec
-        for (RegistryObject<ElectricWireBlock> entry : GTWires.all()) {
-            if (!entry.isPresent()) continue;
-            ElectricWireBlock block = entry.get();
-            if (block.spec() == null || block.spec().material() == null) continue;
-            count++;
-            ItemMaterialRegistry.register(
-                    block.asItem(), null, block.spec().material(), block.spec().materialAmount());
-        }
+        // Wires, cables and signal wires use the same composition rules on both platforms.
+        GTWires.registerCompositions();
+        GTSignalWires.registerCompositions();
 
         // Source pipe associations and ordinary barrel REV data, shared with NeoForge.
         count += gregtech.content.recipe.TransportMaterialRegistration.register();

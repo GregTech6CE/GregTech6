@@ -3,6 +3,7 @@ package gregtech.content.registry;
 import gregtech.engine.energy.WireSpec;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -134,5 +135,15 @@ public final class GTWires {
 
     public static void bootstrap() {
         if (ALL_WIRES.isEmpty()) throw new IllegalStateException("GTWires failed to initialize");
+    }
+
+    /** Registers each wire and cable item's composition; call after item registration. */
+    public static void registerCompositions() {
+        for (var holder : ALL) {
+            ElectricWireBlock block = holder.get();
+            WireSpec spec = block.spec();
+            if (spec.material() == null || !spec.material().isValid()) continue;
+            ItemMaterialRegistry.register(block.asItem(), null, spec.material(), spec.materialAmount());
+        }
     }
 }
