@@ -85,7 +85,7 @@ public final class PanelCoverRenderer {
                     side,
                     ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", path + "side")),
                     ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", path + "front")),
-                    light);
+                    lit ? LightTexture.FULL_BRIGHT : light);
             return true;
         }
         if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(behavior)) {

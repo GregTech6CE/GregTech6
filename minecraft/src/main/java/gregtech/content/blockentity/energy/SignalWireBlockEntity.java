@@ -139,21 +139,60 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
                 && !other.isRemoved() && other.connected(side.getOpposite()) ? other : null;
     }
 
+    private record Link(SignalWireBlockEntity wire, Direction outgoing, Direction incoming, boolean conductor) {
+    }
+
+    private static boolean receiver(BlockState state) {
+        return state.getBlock() instanceof DispenserBlock || state.getBlock() instanceof HopperBlock
+                || state.getBlock() instanceof PistonBaseBlock || state.getBlock() instanceof TntBlock
+                || state.getBlock() instanceof NoteBlock || state.getBlock() instanceof TrapDoorBlock
+                || state.getBlock() instanceof DoorBlock || state.getBlock() instanceof PoweredRailBlock
+                || state.getBlock() instanceof RedstoneLampBlock || state.is(RECEIVERS);
+    }
+
+    private List<Link> links() {
+        var links = new ArrayList<Link>();
+        for (var side : Direction.values()) {
+            if (!connected(side)) continue;
+            var other = neighbor(side);
+            if (other != null) {
+                links.add(new Link(other, side, side.getOpposite(), false));
+                continue;
+            }
+            var pos = worldPosition.relative(side);
+            if (!level.hasChunkAt(pos)) continue;
+            var state = level.getBlockState(pos);
+            if (receiver(state) || !state.isRedstoneConductor(level, pos)) continue;
+            if (level.getBlockEntity(pos) instanceof GtSignalReceiver) continue;
+            // Solve wires on both sides of one vanilla conductor together. Sampling the old
+            // wire output here either loses strong power or feeds a disconnected loop back into itself.
+            for (var face : Direction.values()) {
+                var adjacent = pos.relative(face);
+                if (!level.hasChunkAt(adjacent)) continue;
+                if (level.getBlockEntity(adjacent) instanceof SignalWireBlockEntity target
+                        && target != this && !target.isRemoved() && target.connected(face.getOpposite()))
+                    links.add(new Link(target, side, face.getOpposite(), true));
+            }
+        }
+        return links;
+    }
+
     private record Wave(SignalWireBlockEntity wire, long value) {
     }
 
     public void tickNetwork() {
         if (level == null || level.isClientSide || isRemoved() || solvedTick == level.getGameTime()) return;
         var component = new LinkedHashSet<SignalWireBlockEntity>();
+        var links = new HashMap<SignalWireBlockEntity, List<Link>>();
         var queuedWires = new ArrayDeque<SignalWireBlockEntity>();
         component.add(this);
         queuedWires.add(this);
         while (!queuedWires.isEmpty()) {
             var wire = queuedWires.remove();
-            for (var side : Direction.values()) {
-                var other = wire.neighbor(side);
-                if (other != null && component.add(other)) queuedWires.add(other);
-            }
+            var neighbors = wire.links();
+            links.put(wire, neighbors);
+            for (var link : neighbors)
+                if (component.add(link.wire())) queuedWires.add(link.wire());
         }
         var values = new HashMap<SignalWireBlockEntity, Long>();
         var inputSides = new HashMap<SignalWireBlockEntity, Direction>();
@@ -167,12 +206,7 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
                     if (!level.hasChunkAt(pos)) continue;
                     var state = level.getBlockState(pos);
                     // Vanilla consumers are not sources, even when strongly powered through their solid body.
-                    if (state.getBlock() instanceof SignalWireBlock || state.getBlock() instanceof DispenserBlock
-                            || state.getBlock() instanceof HopperBlock || state.getBlock() instanceof PistonBaseBlock
-                            || state.getBlock() instanceof TntBlock || state.getBlock() instanceof NoteBlock
-                            || state.getBlock() instanceof TrapDoorBlock || state.getBlock() instanceof DoorBlock
-                            || state.getBlock() instanceof PoweredRailBlock || state.getBlock() instanceof RedstoneLampBlock) continue;
-                    if (state.is(RECEIVERS)) continue;
+                    if (state.getBlock() instanceof SignalWireBlock || receiver(state)) continue;
                     long emitted;
                     if (state.hasBlockEntity()) {
                         var entity = level.getBlockEntity(pos);
@@ -195,13 +229,17 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
         while (!propagationQueue.isEmpty()) {
             var wave = propagationQueue.remove();
             if (wave.value() != values.get(wave.wire())) continue;
-            long next = wave.value() - wave.wire().loss();
-            if (next <= 0) continue;
-            for (var side : Direction.values()) {
-                var other = wave.wire().neighbor(side);
-                if (other != null && next > values.get(other)) {
+            for (var link : links.get(wave.wire())) {
+                if (link.conductor() && link.outgoing() == inputSides.get(wave.wire())) continue;
+                var other = link.wire();
+                // GT6 rounds up to vanilla power, loses one level in a solid block, then
+                // applies the receiving wire's loss (MultiTileEntityWireRedstoneInsulated).
+                long next = link.conductor()
+                        ? gregtech.content.energy.SignalWireRules.vanillaOutput(wave.value(), true) * UNIT - other.loss()
+                        : wave.value() - wave.wire().loss();
+                if (next > values.get(other)) {
                     values.put(other, next);
-                    inputSides.put(other, side.getOpposite());
+                    inputSides.put(other, link.incoming());
                     propagationQueue.add(new Wave(other, next));
                 }
             }

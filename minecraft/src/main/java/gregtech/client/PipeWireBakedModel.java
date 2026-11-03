@@ -98,7 +98,7 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,
                                     RandomSource rand, ModelData data, @Nullable RenderType renderType) {
-        if (state != null) return buildQuads(state, side, data, renderType);
+        if (state != null) return SignalWireGlowModel.apply(state, buildQuads(state, side, data, renderType));
         int pass = renderType == null ? 0 : renderType == RenderType.solid() ? 1
                 : renderType == RenderType.cutoutMipped() ? 2 : 3;
         int key = (side == null ? 6 : side.ordinal()) * 4 + pass;
@@ -354,6 +354,20 @@ public final class PipeWireBakedModel implements IDynamicBakedModel {
 
     @Override
     public boolean useAmbientOcclusion() { return true; }
+
+//? if >=1.21.1 {
+    /*@Override
+    public net.neoforged.neoforge.common.util.TriState useAmbientOcclusion(
+            BlockState state, ModelData data, RenderType renderType) {
+        return SignalWireGlowModel.lit(state) ? net.neoforged.neoforge.common.util.TriState.FALSE
+                : net.neoforged.neoforge.common.util.TriState.DEFAULT;
+    }
+*///?} else {
+    @Override
+    public boolean useAmbientOcclusion(BlockState state, RenderType renderType) {
+        return !SignalWireGlowModel.lit(state);
+    }
+//?}
 
     @Override
     public boolean isGui3d() { return true; }
