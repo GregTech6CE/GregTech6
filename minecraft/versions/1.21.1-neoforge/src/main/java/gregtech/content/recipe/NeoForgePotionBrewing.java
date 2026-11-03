@@ -43,17 +43,22 @@ public final class NeoForgePotionBrewing {
                     ResourceLocation.fromNamespaceAndPath("minecraft", route.resultPotion()));
             if (base.isEmpty() || result.isEmpty() || route.ingredient().isEmpty()) continue;
             event.getBuilder().addRecipe(new IBrewingRecipe() {
-                @Override public boolean isInput(ItemStack input) {
+                @Override
+                public boolean isInput(ItemStack input) {
                     if (!(input.getItem() instanceof PotionItem)) return false;
-                    return input.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion()
-                            .map(holder -> holder.value() == base.get().value()).orElse(false);
+                    return input.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
+                            .potion()
+                            .map(holder -> holder.value() == base.get().value())
+                            .orElse(false);
                 }
 
-                @Override public boolean isIngredient(ItemStack ingredient) {
+                @Override
+                public boolean isIngredient(ItemStack ingredient) {
                     return ItemStack.isSameItemSameComponents(ingredient, route.ingredient());
                 }
 
-                @Override public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
+                @Override
+                public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
                     if (!isInput(input) || !isIngredient(ingredient)) return ItemStack.EMPTY;
                     return PotionContents.createItemStack(input.getItem(), result.get());
                 }
@@ -87,8 +92,7 @@ public final class NeoForgePotionBrewing {
         var accessor = (PotionBrewingAccessor) brewing;
         var stacks = new ArrayList<ItemStack>();
         for (Ingredient ingredient : accessor.gregtech$containers())
-            for (ItemStack stack : ingredient.getItems())
-                if (stack.getItem() instanceof PotionItem) stacks.add(stack);
+            for (ItemStack stack : ingredient.getItems()) if (stack.getItem() instanceof PotionItem) stacks.add(stack);
         var distinct = PotionBrewingRecipes.distinct(stacks);
         if (!distinct.isEmpty()) return distinct;
         var fallback = new ArrayList<ItemStack>();
@@ -100,11 +104,11 @@ public final class NeoForgePotionBrewing {
         var accessor = (PotionBrewingAccessor) brewing;
         var stacks = new ArrayList<ItemStack>();
         for (Object mix : accessor.gregtech$potionMixes())
-            for (ItemStack stack : ((PotionBrewingMixAccessor) mix).gregtech$ingredient().getItems())
-                stacks.add(stack);
+            for (ItemStack stack :
+                    ((PotionBrewingMixAccessor) mix).gregtech$ingredient().getItems()) stacks.add(stack);
         for (Object mix : accessor.gregtech$containerMixes())
-            for (ItemStack stack : ((PotionBrewingMixAccessor) mix).gregtech$ingredient().getItems())
-                stacks.add(stack);
+            for (ItemStack stack :
+                    ((PotionBrewingMixAccessor) mix).gregtech$ingredient().getItems()) stacks.add(stack);
         for (IBrewingRecipe recipe : brewing.getRecipes())
             if (recipe instanceof BrewingRecipe custom)
                 for (ItemStack stack : custom.getIngredient().getItems()) stacks.add(stack);

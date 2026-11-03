@@ -34,15 +34,18 @@ public final class ForgePotionBrewing {
             Potion result = ForgeRegistries.POTIONS.getValue(new ResourceLocation("minecraft", route.resultPotion()));
             if (base == null || result == null || route.ingredient().isEmpty()) continue;
             BrewingRecipeRegistry.addRecipe(new IBrewingRecipe() {
-                @Override public boolean isInput(ItemStack input) {
+                @Override
+                public boolean isInput(ItemStack input) {
                     return input.getItem() instanceof PotionItem && PotionUtils.getPotion(input) == base;
                 }
 
-                @Override public boolean isIngredient(ItemStack ingredient) {
+                @Override
+                public boolean isIngredient(ItemStack ingredient) {
                     return ItemStack.isSameItemSameTags(ingredient, route.ingredient());
                 }
 
-                @Override public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
+                @Override
+                public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
                     if (!isInput(input) || !isIngredient(ingredient)) return ItemStack.EMPTY;
                     return PotionUtils.setPotion(new ItemStack(input.getItem()), result);
                 }
@@ -70,8 +73,7 @@ public final class ForgePotionBrewing {
     private static List<ItemStack> containers() {
         var stacks = new ArrayList<ItemStack>();
         for (Ingredient ingredient : PotionBrewingAccessor.gregtech$allowedContainers())
-            for (ItemStack stack : ingredient.getItems())
-                if (stack.getItem() instanceof PotionItem) stacks.add(stack);
+            for (ItemStack stack : ingredient.getItems()) if (stack.getItem() instanceof PotionItem) stacks.add(stack);
         var distinct = PotionBrewingRecipes.distinct(stacks);
         if (!distinct.isEmpty()) return distinct;
         var fallback = new ArrayList<ItemStack>();
