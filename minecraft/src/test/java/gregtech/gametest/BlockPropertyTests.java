@@ -1,9 +1,14 @@
 package gregtech.gametest;
 
+import gregtech.api.material.GTValues;
 import gregtech.content.block.BlackSandDefinitions;
 import gregtech.content.material.Materials;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTDungeonBlocks;
+import gregtech.content.registry.GTSignalWires;
+import gregtech.content.registry.GTWires;
+import gregtech.engine.machine.crucible.CrucibleItemInput;
+import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import java.util.List;
@@ -17,7 +22,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-/** Block-property regressions that only need a loaded registry. */
+/** Block and item registry regressions that only need a loaded registry. */
 //? if >=1.21.1 {
 /*@net.neoforged.neoforge.gametest.GameTestHolder("gt6ce")
 @net.neoforged.neoforge.gametest.PrefixGameTestTemplate(false)
@@ -62,5 +67,32 @@ public final class BlockPropertyTests {
             helper.assertTrue(state.is(BlockTags.MINEABLE_WITH_SHOVEL), id + " is missing mineable/shovel");
         }
         helper.succeed();
+    }
+
+    // Cables and wires carry their metal composition so the crucible can recover them.
+    @GameTest(template = "test_empty", batch = "block_properties", timeoutTicks = 600)
+    public static void wireItemsCarryMaterialComposition(GameTestHelper helper) {
+        for (var holder : GTWires.all()) {
+            var block = holder.get();
+            var stack = block.asItem().getDefaultInstance();
+            var data = ItemMaterialRegistry.get(stack);
+            helper.assertTrue(data.isPresent(), "missing composition " + blockId(block));
+            helper.assertTrue(data.get().amount() == block.spec().materialAmount(),
+                    "wrong amount " + blockId(block));
+            helper.assertTrue(CrucibleItemInput.isValid(stack), "crucible rejects " + blockId(block));
+        }
+        for (var holder : GTSignalWires.all()) {
+            var block = holder.get();
+            var stack = block.asItem().getDefaultInstance();
+            var data = ItemMaterialRegistry.get(stack);
+            helper.assertTrue(data.isPresent(), "missing composition " + blockId(block));
+            helper.assertTrue(data.get().amount() == GTValues.U / 2, "wrong amount " + blockId(block));
+            helper.assertTrue(CrucibleItemInput.isValid(stack), "crucible rejects " + blockId(block));
+        }
+        helper.succeed();
+    }
+
+    private static ResourceLocation blockId(Block block) {
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 }
