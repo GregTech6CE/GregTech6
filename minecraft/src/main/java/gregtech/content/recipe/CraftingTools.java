@@ -23,8 +23,7 @@ public final class CraftingTools {
     }
     public static boolean matches(ItemStack stack, gregtech.engine.tool.GTToolType kind) {
         return CraftingToolDefinitions.matches(id(stack),kind.id())
-            || gregtech.engine.tool.GTToolHelper.matchesTool(stack,kind)
-            || stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","tools/"+kind.id())));
+            || gregtech.engine.tool.GTToolHelper.matchesTool(stack,kind);
     }
     public static boolean infinite(ItemStack stack) { return CraftingToolDefinitions.infinite(id(stack)); }
     private static boolean hasToolItem(com.google.gson.JsonElement json) {
@@ -36,30 +35,51 @@ public final class CraftingTools {
         }
         return false;
     }
+    /** The kind of a {@code forge:tools/<kind>} tag ingredient, or null for any other ingredient. */
+    private static String forgeToolKind(com.google.gson.JsonElement json) {
+        if (!json.isJsonObject()) return null;
+        var object = json.getAsJsonObject();
+        if (!object.has("tag")) return null;
+        String tag = object.get("tag").getAsString();
+        return tag.startsWith("forge:tools/") ? tag.substring("forge:tools/".length()) : null;
+    }
+    private static boolean isGtItem(net.minecraft.world.item.Item item) {
+        var key = BuiltInRegistries.ITEM.getKey(item);
+        return key != null && key.getNamespace().equals("gt6ce");
+    }
     public static Ingredient expand(Ingredient ingredient) {
 //? if >=1.21.1 {
         /*if(ingredient.getCustomIngredient() != null) return ingredient;
+        var json = Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,ingredient).getOrThrow();
 *///?} else {
         if(ingredient.getClass() != Ingredient.class) return ingredient;
+        var json = ingredient.toJson();
 //?}
+        // GT6 recipes consume GT tools through their own wear rules. Other mods' tools carrying the
+        // same forge identity would be matched and then consumed by vanilla, so expand tool tags to
+        // GT items only; machine interaction keeps the full forge tag.
+        String toolTag = forgeToolKind(json);
+        if (toolTag != null) {
+            var stacks = new ArrayList<ItemStack>();
+            for (var holder : BuiltInRegistries.ITEM.getTagOrEmpty(
+                    ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "tools/" + toolTag)))) {
+                var item = holder.value();
+                if (isGtItem(item)) stacks.add(new ItemStack(item));
+            }
+            return stacks.isEmpty() ? ingredient : Ingredient.of(stacks.stream());
+        }
         // Tag ingredients already contain crafting-only tools; do not enumerate large material tags.
-//? if >=1.21.1 {
-        /*if(!hasToolItem(Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,ingredient).getOrThrow())) return ingredient;
-*///?} else {
-        if(!hasToolItem(ingredient.toJson())) return ingredient;
-//?}
+        if(!hasToolItem(json)) return ingredient;
         var kinds = new HashSet<String>();
         for(var stack : ingredient.getItems())
             if(stack.getItem() instanceof GTToolItem tool) kinds.add(tool.toolType().id());
         if(kinds.isEmpty()) return ingredient;
         var stacks = new ArrayList<ItemStack>(Arrays.asList(ingredient.getItems()));
-        // GT6 matches the OreDict tool name: accept every item carrying that identity, including
-        // other mods' tools, not just the port's own item for one tool type.
         for(var kind : kinds) {
             var tag = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","tools/"+kind));
             for(var holder : BuiltInRegistries.ITEM.getTagOrEmpty(tag)) {
                 var item = holder.value();
-                if(stacks.stream().noneMatch(s -> s.is(item))) stacks.add(new ItemStack(item));
+                if(isGtItem(item) && stacks.stream().noneMatch(s -> s.is(item))) stacks.add(new ItemStack(item));
             }
         }
         for(var tool : CraftingToolDefinitions.ALL) {
