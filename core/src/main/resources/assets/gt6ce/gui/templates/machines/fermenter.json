@@ -12,6 +12,11 @@
       "y": 24
     },
     {
+      "sprite": "gt6ce:slot/potion",
+      "x": 53,
+      "y": 25
+    },
+    {
       "sprite": "gt6ce:slot/item",
       "x": 106,
       "y": 24
