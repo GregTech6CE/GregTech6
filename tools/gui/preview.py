@@ -9,6 +9,40 @@ import struct
 
 
 class Resources:
+    INPUT_ROW_STARTS = (
+        (), (2,), (1,), (0,), (1, 1), (0, 1), (0, 0), (0, 0, 0),
+        (0, 0, 0), (0, 0, 0), (0, 0, 0, 2), (0, 0, 0, 1), (0, 0, 0, 0),
+    )
+    OUTPUT_ROW_STARTS = (
+        (), (0,), (0,), (0,), (0, 0), (0, 0), (0, 0), (0, 0, 0),
+        (0, 0, 0), (0, 0, 0), (0, 0, 0, 2), (0, 0, 0, 1), (0, 0, 0, 0),
+    )
+    ITEM_ROW_SIZES = (
+        (), (1,), (2,), (3,), (2, 2), (3, 2), (3, 3), (3, 3, 1),
+        (3, 3, 2), (3, 3, 3), (3, 3, 3, 1), (3, 3, 3, 2), (3, 3, 3, 3),
+    )
+
+    @classmethod
+    def item_point(cls, input_side, index, count, fluid_count):
+        starts_table = cls.INPUT_ROW_STARTS if input_side else cls.OUTPUT_ROW_STARTS
+        starts = starts_table[count] if count < len(starts_table) else starts_table[12]
+        sizes = cls.ITEM_ROW_SIZES[count] if count < len(cls.ITEM_ROW_SIZES) else cls.ITEM_ROW_SIZES[12]
+        row, column = 0, index
+        while row < len(sizes) and column >= sizes[row]:
+            column -= sizes[row]
+            row += 1
+        if row >= len(sizes):
+            row, column = index // 3, index % 3
+        start = starts[min(row, len(starts) - 1)]
+        x = (17 if input_side else 107) + (start + column) * 18
+        if count <= 3:
+            y = 7 if fluid_count > 6 else 25
+        elif count <= 6:
+            y = (7 if fluid_count > 3 else 16) + row * 18
+        else:
+            y = 7 + row * 18
+        return x, y
+
     def __init__(self, roots):
         self.roots = roots
         self.catalogs = {}
@@ -142,9 +176,7 @@ class Resources:
             ins, outs, fluid_ins, fluid_outs = machine_slots
             for input_side, count, fluid_count in [(True, ins, fluid_ins), (False, outs, fluid_outs)]:
                 for i in range(count):
-                    x = 53-i%3*18 if input_side else 107+i%3*18
-                    y = (7 if fluid_count > 3 else 25) if count <= 3 else (
-                        (7 if fluid_count > 3 else 16)+i//3*18 if count <= 6 else 7+i//3*18)
+                    x, y = self.item_point(input_side, i, count, fluid_count)
                     image.alpha_composite(self.image("slot/item"), (x-1, y-1))
                 for i in range(fluid_count):
                     x = 53-i%3*18 if input_side else 107+i%3*18
