@@ -85,9 +85,15 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
                     ToolInteractionSpec.ConnectionKind.ITEM) : null;
     }
 
+    /**
+     * The clicked face is the one the pipe links on placement. Only the server consumes it
+     * ({@link #setPlacedBy}), so only the server writes it: in single player the client's
+     * placement prediction shares this block instance, and a client write would otherwise decide
+     * the face the server connects.
+     */
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        placementFace = ctx.getClickedFace();
+        if (!ctx.getLevel().isClientSide) placementFace = ctx.getClickedFace();
         return GTWaterloggable.getStateForPlacement(defaultBlockState(), ctx);
     }
 
