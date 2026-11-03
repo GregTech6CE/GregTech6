@@ -53,6 +53,14 @@ public enum BurningBoxJadeProvider implements IBlockComponentProvider, IServerDa
         if (!data.contains(NBT_HEAT, CompoundTag.TAG_LONG)) {
             return;
         }
+        // The fuel and ash rows below are the authoritative storage view.
+//? if >=1.21.1 {
+        /*tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_ITEM_STORAGE);
+        tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE);
+*///?} else {
+        tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_ITEM_STORAGE);
+        tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE);
+//?}
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.burning_box.heat", format(data.getLong(NBT_HEAT))));
         if (data.contains(NBT_FUEL, CompoundTag.TAG_COMPOUND)) {
 //? if >=1.21.1 {
@@ -77,6 +85,12 @@ public enum BurningBoxJadeProvider implements IBlockComponentProvider, IServerDa
     @Override
     public ResourceLocation getUid() {
         return UID;
+    }
+
+    /** Must run after Jade's universal storage so the duplicate rows can be removed. */
+    @Override
+    public int getDefaultPriority() {
+        return 1002;
     }
 
     private static String format(long value) {

@@ -4,21 +4,18 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
-//? if >=1.21.1 {
-/*import static snownee.jade.api.JadeIds.UNIVERSAL_ITEM_STORAGE;
-import static snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE;
-*///?} else {
-import static snownee.jade.api.Identifiers.UNIVERSAL_ITEM_STORAGE;
-import static snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE;
-//?}
 
 /** Complements the existing detailed providers with the remaining GT6 OmniOcular observations. */
 public enum OmniJadeProvider implements IServerDataProvider<BlockAccessor>, IBlockComponentProvider {
     INSTANCE;
 
-    @Override public ResourceLocation getUid() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "omni_details"); }
+    @Override
+    public ResourceLocation getUid() {
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", "omni_details");
+    }
 
-    @Override public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
+    @Override
+    public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         var entity = accessor.getBlockEntity();
         if (entity == null) return;
         var info = new JadeInspection(accessor);
@@ -34,13 +31,13 @@ public enum OmniJadeProvider implements IServerDataProvider<BlockAccessor>, IBlo
         info.write(tag);
     }
 
-    @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-        if (accessor.getServerData().getBoolean("gt_omni_inventory")) {
-            tooltip.remove(UNIVERSAL_ITEM_STORAGE);
-            tooltip.remove(UNIVERSAL_FLUID_STORAGE);
-        }
+    @Override
+    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         JadeInspection.render(tooltip, accessor);
     }
 
-    @Override public int getDefaultPriority() { return 1002; }
+    @Override
+    public int getDefaultPriority() {
+        return 1002;
+    }
 }

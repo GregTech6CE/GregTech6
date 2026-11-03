@@ -72,6 +72,8 @@ final class OmniMachineInfo {
             for (int i = 0; i < heat.getTanks(); i++)
                 info.fluid(i == 0 ? "input" : "output", 0, heat.getFluidInTank(i), heat.tankAmount(i), heat.getTankCapacity(i));
         } else if (entity instanceof BurningBoxBlockEntity box) {
+            // Fuel/ash rows below replace Jade's unclassified item and fluid storage sections.
+            info.groupedInventory();
             info.state(true, box.isBurning());
             info.line("fuel_energy", box.remainingFuelEnergy());
             long rate = box.spec().outputRate();
@@ -83,6 +85,8 @@ final class OmniMachineInfo {
             var tank = box.fuelTankForInspection();
             if (tank != null) info.fluid("fuel", 0, tank.getFluid(), tank.getAmount(), tank.capacity());
         } else if (entity instanceof SolidBurningBoxBlockEntity box) {
+            // BurningBoxJadeProvider renders the fuel and ash slots for this block.
+            info.groupedInventory();
             info.state(true, box.isBurning());
             long rate = box.getEnergySizeOutputRecommended(gregtech.content.data.GregTechTags.Energy.HU, Direction.UP);
             if (rate > 0) info.line("fuel_ticks", box.getStoredHeat() / rate);

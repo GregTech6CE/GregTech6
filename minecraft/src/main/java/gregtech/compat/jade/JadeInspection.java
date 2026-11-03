@@ -29,6 +29,8 @@ final class JadeInspection {
     private final String dataKey;
     private final ListTag rows = new ListTag();
     private boolean groupedInventory;
+    private boolean rendersItems;
+    private boolean rendersFluids;
     record Label(String key) {}
 
     JadeInspection(BlockAccessor accessor) { this(accessor, "gt_omni"); }
@@ -84,6 +86,7 @@ final class JadeInspection {
         var row = line("item", label(role), slot + 1, item, item.getCount());
         group(row, "items", role);
         if (row != null && perSlot) row.putBoolean("slot", true);
+        rendersItems = true;
     }
 
     void fluid(String role, int slot, FluidStack fluid, long amount, long capacity) {
@@ -91,6 +94,7 @@ final class JadeInspection {
         var row = "pending".equals(role) ? line("pending_fluid", slot + 1, fluid, amount)
                 : line("fluid", label(role), slot + 1, fluid, amount, capacity);
         group(row, "fluids", role);
+        rendersFluids = true;
     }
 
     private static void group(CompoundTag row, String kind, String role) {
@@ -119,7 +123,9 @@ final class JadeInspection {
     void flag(String suffix, boolean value) { line(suffix, label(value ? "yes" : "no")); }
     void write(CompoundTag tag) {
         if (!rows.isEmpty()) tag.put(dataKey, rows);
-        if (groupedInventory) tag.putBoolean(dataKey + "_inventory", true);
+        // Our own rows replace Jade's unclassified storage view instead of stacking beside it.
+        if (rendersItems || groupedInventory) tag.putBoolean(dataKey + "_items", true);
+        if (rendersFluids || groupedInventory) tag.putBoolean(dataKey + "_fluids", true);
     }
 
     static void render(ITooltip tooltip, BlockAccessor accessor) {
@@ -127,16 +133,23 @@ final class JadeInspection {
     }
 
     static void render(ITooltip tooltip, BlockAccessor accessor, String dataKey) {
-        if (accessor.getServerData().getBoolean(dataKey + "_inventory")) {
+        var server = accessor.getServerData();
+        boolean legacy = server.getBoolean(dataKey + "_inventory");
+        if (legacy || server.getBoolean(dataKey + "_items")) {
 //? if >=1.21.1 {
             /*tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_ITEM_STORAGE);
-            tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE);
 *///?} else {
             tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_ITEM_STORAGE);
+//?}
+        }
+        if (legacy || server.getBoolean(dataKey + "_fluids")) {
+//? if >=1.21.1 {
+            /*tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE);
+*///?} else {
             tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE);
 //?}
         }
-        var rows = accessor.getServerData().getList(dataKey, 10);
+        var rows = server.getList(dataKey, 10);
         var groups = new LinkedHashMap<String, List<CompoundTag>>();
         for (int i = 0; i < Math.min(MAX_ROWS, rows.size()); i++) {
             var row = rows.getCompound(i);
