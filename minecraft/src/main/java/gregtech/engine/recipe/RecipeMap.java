@@ -173,6 +173,8 @@ public class RecipeMap {
 
     // ── Slot / tank counts (set by constructor, immutable) ──────────────
     public final int mInputItemsCount, mOutputItemsCount;
+    /** Dedicated potion input slots; {@link MachineInventory} keeps them beside the item slots. */
+    public int mInputPotionCount;
     public final int mInputFluidCount, mOutputFluidCount;
     public final int mMinimalInputItems, mMinimalInputFluids, mMinimalInputs;
 
@@ -210,6 +212,11 @@ public class RecipeMap {
     public boolean mViewerAllowed=true, mShowVoltageAmperage=true;
     public RecipeMap viewer(boolean allowed,boolean showVoltageAmperage) {
         mViewerAllowed=allowed;mShowVoltageAmperage=showVoltageAmperage;return this;
+    }
+
+    public RecipeMap potions(int count) {
+        mInputPotionCount = Math.max(0, count);
+        return this;
     }
     public final boolean mNeedsOutputs;
     public final boolean mCombinePower;
@@ -742,7 +749,7 @@ public class RecipeMap {
             if (aRecipe.mInputs.length      < mMinimalInputItems)  {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input ItemStacks!", mNameInternal); tFailed = true;}
             if (aRecipe.mFluidInputs.length < mMinimalInputFluids) {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input FluidStacks!", mNameInternal); tFailed = true;}
             if (aRecipe.mInputs.length + aRecipe.mFluidInputs.length < mMinimalInputs) {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of general Inputs!", mNameInternal); tFailed = true;}
-            if (aRecipe.mInputs.length      > mInputItemsCount)    {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input ItemStacks!", mNameInternal); tFailed = true;}
+            if (aRecipe.mInputs.length      > mInputItemsCount + mInputPotionCount) {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input ItemStacks!", mNameInternal); tFailed = true;}
             if (aRecipe.mFluidInputs.length > mInputFluidCount)    {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input FluidStacks!", mNameInternal); tFailed = true;}
         }
         return !tFailed;

@@ -856,7 +856,8 @@ public final class MachineRecipeMapDefinitions {
                     false,
                     true,
                     true)
-            .viewer(true, true);
+            .viewer(true, true)
+            .potionInputs(1);
     public static final RecipeMapSpec Melter = new RecipeMapSpec(
                     null, "gt.recipe.melter", "Melter", GUI + "Melter", 1, 1, 0, 1, 1, 0, 1, false, false, true, true)
             .viewer(true, true);

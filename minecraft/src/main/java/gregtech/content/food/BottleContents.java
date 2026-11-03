@@ -26,13 +26,15 @@ public final class BottleContents {
         // Preserve third-party fluid stack tags/components for texture and tint extensions.
         var contained = FluidUtil.getFluidContained(stack);
         if (contained.isPresent()) return contained.get();
-        String field = stack.is(Items.EXPERIENCE_BOTTLE) ? "Potion_Jump_1"
-                : stack.is(Items.HONEY_BOTTLE) ? "Honey"
+        String field = stack.is(Items.HONEY_BOTTLE) ? "Honey"
                 : stack.is(Items.DRAGON_BREATH) ? "Dragon_Breath" : null;
         if (field != null) {
             var fluid = GTDrinks.fluidForField(field);
             return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, BottleItem.BOTTLE_AMOUNT);
         }
+        // Experience bottles keep a liquid inset; the crate renderer supplies the original green.
+        if (stack.is(Items.EXPERIENCE_BOTTLE))
+            return new FluidStack(Fluids.WATER, BottleItem.BOTTLE_AMOUNT);
         // Vanilla normal/splash/lingering potions intentionally use water plus their potion tint.
         return stack.getItem() instanceof PotionItem
                 ? new FluidStack(Fluids.WATER, BottleItem.BOTTLE_AMOUNT) : FluidStack.EMPTY;

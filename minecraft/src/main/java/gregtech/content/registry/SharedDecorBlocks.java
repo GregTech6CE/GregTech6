@@ -13,7 +13,6 @@ public final class SharedDecorBlocks {
     private SharedDecorBlocks() {}
 
     public static RegisteredBlock<Block> CRATE;
-    public static RegisteredBlock<Block> CRATE_FIREPROOF;
     public static RegisteredBlock<LootCrateBlock> LOOT_CRATE;
     public static RegisteredBlock<RoadStripeRailBlock> RAILROAD;
     public static RegisteredBlock<GregLanternBlock> GREG_LANTERN;
@@ -27,13 +26,6 @@ public final class SharedDecorBlocks {
                         .strength(1, 3)
                         .sound(SoundType.WOOD)
                         .ignitedByLava()));
-        // The fireproof crate is the same treated crate without flammability.
-        CRATE_FIREPROOF = RegisteredBlock.register(
-                "crate_fireproof",
-                () -> new gregtech.content.block.CrateBlock(BlockBehaviour.Properties.of()
-                        .mapColor(MapColor.WOOD)
-                        .strength(1, 3)
-                        .sound(SoundType.WOOD)));
         LOOT_CRATE = RegisteredBlock.register(
                 "loot_crate",
                 () -> new LootCrateBlock(BlockBehaviour.Properties.of()
@@ -58,6 +50,6 @@ public final class SharedDecorBlocks {
     }
 
     public static List<RegisteredBlock<? extends Block>> all() {
-        return List.of(CRATE, CRATE_FIREPROOF, LOOT_CRATE, RAILROAD, GREG_LANTERN);
+        return List.of(CRATE, LOOT_CRATE, RAILROAD, GREG_LANTERN);
     }
 }

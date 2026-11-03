@@ -64,11 +64,21 @@ public final class MachineAutoIO {
         IItemHandler source = adjacentItems.get(be, absolute.getOpposite());
         if (source == null) return;
         int inputCount = inventory.items().inputCount();
-        if (inputCount <= 0) return;
+        if (inputCount <= 0 && inventory.potionInput() == null) return;
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
             if (stack.isEmpty()) continue;
             if (!host.autoIOAcceptsInput(stack) || !host.autoIOAllowsItemTraffic(absolute, stack, true)) continue;
+            if (inventory.potionInput() != null && inventory.potionInput().isItemValid(0, stack)) {
+                ItemStack remaining = inventory.potionInput().insertItem(0, stack.copy(), true);
+                int toTake = stack.getCount() - remaining.getCount();
+                if (toTake > 0) {
+                    ItemStack extracted = source.extractItem(srcSlot, toTake, false);
+                    if (!extracted.isEmpty())
+                        returnOrDrop(inventory.potionInput().insertItem(0, extracted, false), source);
+                }
+                continue;
+            }
             for (int i = 0; i < inputCount; i++) {
                 if (!host.autoIOAllowsItemTraffic(absolute, stack, true)) break;
                 ItemStack remaining = inventory.items().insertItem(i, stack.copy(), true);

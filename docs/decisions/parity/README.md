@@ -9,6 +9,7 @@
 - [原版优先](prefer-origin.md)：以原版 MC 物品、流体或方块替代 GT 自有实现。
 - [幻觉物品](illusion.md)：重构期凭空产生、原 GT6 不存在的注册项及其清理。
 - [流体管道分布模式](fluid-distribution.md)：新增的 `BALANCED`/`SHARED` 配置与空闲调度开关。
+- [药水系统移除](potion-removal.md)：移除整套药水系统的决策，含流体、配方表、饮用条目与下游联动；已执行，清理项并入[流体移除](fluid-removal.md)与[物品移除](item-removal.md)。
 - [其他差异](#其他差异)：交互、配置、新增内容与注册身份调整等无法归类的条目。
 
 ## 其他差异

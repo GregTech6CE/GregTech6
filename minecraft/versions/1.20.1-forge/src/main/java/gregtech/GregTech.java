@@ -55,6 +55,7 @@ public class GregTech {
                 new DeferredRegistrySubmission(modEventBus));
 
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::loadComplete);
 
         GregTechConfig.prepareDirectory(net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get());
         context.registerConfig(ModConfig.Type.COMMON, GregTechConfig.SPEC, GregTechConfig.COMMON_FILE);
@@ -78,6 +79,7 @@ public class GregTech {
             gregtech.content.registry.GTProjectiles.registerDispensers();
             gregtech.content.registry.GTDungeonBlocks.registerPotPlants();
             initialize("material linking", new MaterialLinkBootstrap(), new MaterialItemRegistration());
+            gregtech.content.recipe.ForgePotionBrewing.registerExtraIngredients();
             gregtech.content.recipe.MachineRecipeBootstrap.load();
             gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
                     new gregtech.api.addon.GregTechAddon.Context("forge", "1.20.1"));
@@ -117,5 +119,9 @@ public class GregTech {
 
     public static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(NAMESPACE, path.toLowerCase());
+    }
+
+    private void loadComplete(final net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent event) {
+        gregtech.content.recipe.ForgePotionBrewing.probe();
     }
 }

@@ -38,6 +38,9 @@ import net.minecraftforge.fluids.FluidUtil;
 
 /** GT6's fluid inset and bottle shell/cap textures, with full-block UVs for the 3×3 sprite layout. */
 public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrateBlockEntity> {
+    /** Original jumping-potion tint retained after the potion fluids were removed. */
+    private static final int EXPERIENCE_BOTTLE_TINT = 0xFF06FF44;
+
     public BottleCrateRenderer(BlockEntityRendererProvider.Context context) {}
 
     @Override public void render(BottleCrateBlockEntity crate,float partial,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
@@ -49,9 +52,11 @@ public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrat
             var texture=properties.getStillTexture(fluid); if(texture==null) continue;
             var sprite=CrucibleRenderSprites.resolve(texture);
 //? if >=1.21.1 {
-            /*int color=stack.getItem() instanceof PotionItem ? stack.getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS,net.minecraft.world.item.alchemy.PotionContents.EMPTY).getColor()
+            /*int color=stack.is(Items.EXPERIENCE_BOTTLE) ? EXPERIENCE_BOTTLE_TINT
+                    : stack.getItem() instanceof PotionItem ? stack.getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS,net.minecraft.world.item.alchemy.PotionContents.EMPTY).getColor()
 *///?} else {
-            int color=stack.getItem() instanceof PotionItem ? PotionUtils.getColor(stack)
+            int color=stack.is(Items.EXPERIENCE_BOTTLE) ? EXPERIENCE_BOTTLE_TINT
+                    : stack.getItem() instanceof PotionItem ? PotionUtils.getColor(stack)
 //?}
                     : properties.getTintColor(fluid);
             surface(pose.last(),out,BottleCrateGeometry.bounds(slot,0),sprite.getU0(),sprite.getU1(),sprite.getV0(),sprite.getV1(),color,light,false,true);

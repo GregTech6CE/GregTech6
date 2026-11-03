@@ -5,15 +5,6 @@ import gregtech.api.machine.BlockFace;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.TankSpec;
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FermentationAccess;
-import gregtech.content.transport.fluid.FermentationAccess.Recipe;
-import gregtech.engine.fluid.BarrelFermentationRules;
-
-*///?} else {
-import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeInputs;
-//?}
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.TankBlock;
 import gregtech.content.data.GregTechConstants;
@@ -87,24 +78,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     private boolean autoOutput;
     /** GT6 {@code mMode & B[1]}: the barrel is sealed, which makes it ferment its contents. */
     private boolean softHammerState;
-    /** GT6 {@code mSealedTime}: ticks the sealed barrel has been fermenting. */
-    private long sealedTime;
-    /** GT6 {@code mMaxSealedTime}: ticks a full fermentation takes for the current fill level. */
-    private long maxSealedTime;
-    /** Cached fermenter recipe of the sealed barrel, plus the fluid it was matched for. */
-    private Recipe fermentRecipe;
-    private Fluid fermentInput;
-    /**
-     * Last failed fermentation lookup. Enabled flags are public and can change without a recipe
-     * revision, so the entry expires after a bounded, position-staggered delay instead of lasting
-     * until the fluid or revision changes.
-     */
-    @Nullable private FluidStack fermentFailureInput;
-    private long fermentFailureRevision = Long.MIN_VALUE;
-    private long fermentFailureRetry;
-
-    private static final long FERMENTATION_RETRY_BASE = 20;
-    private static final long FERMENTATION_RETRY_SPREAD = 80;
 //? if >=1.21.1 {
     /*private boolean fluidAccessKnown;
     @Nullable private Direction blockedFluidSide;
@@ -113,8 +86,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     private static final String NBT_TEMPERATURE = "gt.temperature";
     private static final String NBT_AUTO_OUTPUT = "gt.auto_output";
     private static final String NBT_SOFT_HAMMER = "gt.soft_hammer";
-    private static final String NBT_SEALED_TIME = "gt.sealed_time";
-    private static final String NBT_MAX_SEALED_TIME = "gt.max_sealed_time";
 
     
 //? if >=1.21.1 {
@@ -198,12 +169,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
                 autoOutputFluid(fluid);
             }
 
-            // GT6 TileEntityBase08Barrel#onTick2 — a sealed barrel ferments its content.
-            if (softHammerState) tickFermentation(fluid);
-        } else if (softHammerState) {
-            // Discard cached fermentation work when the contents run dry.
-            if (sealedTime > 0) resetSeal();
-            clearFermentationFailure();
         }
 
         setChanged();
@@ -232,187 +197,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         setChanged();
     }
 
-    // ── Barrel fermentation (GT6 TileEntityBase08Barrel) ─────────────────────
-
-    /**
-     * Ticks the sealed-barrel fermentation.
-     * <p>
-     * Original: the barrel looks {@code RM.Fermenter} up with {@code ST.tag(0)} as its sole
-     * item input and no power
-     * and only accepts recipes whose input and output are both non-gaseous — a barrel cannot hold
-     * pressure. The duration is GT6's
-     * {@code ceil(|EU/t * duration| * max(1, tank) / max(1, recipeInput))}, and on completion the
-     * whole tank is replaced by the recipe's first fluid output scaled by the same ratio
-     * ({@code FL.mul(output, tank, input)}).
-     * </p>
-     */
-    private void tickFermentation(FluidStack fluid) {
-        if (fermentRecipe != null && fermentInput != fluid.getFluid()) resetSeal();
-        if (fermentRecipe == null) {
-            if (fermentationRetryPending(fluid)) {
-                resetSeal();
-                return;
-            }
-            fermentRecipe = findFermentationRecipe(fluid);
-            fermentInput = fermentRecipe == null ? null : fluid.getFluid();
-            // GT6 preserves saved work while rebuilding its transient recipe cache.
-            // Recompute the maximum from the current valid recipe and fluid amount instead
-            // of trusting persisted maximums. Explicit resealing/fluid changes still reset.
-            maxSealedTime = 0;
-            if (fermentRecipe == null) {
-                rememberFermentationFailure(fluid);
-                resetSeal();
-                return;
-            }
-            clearFermentationFailure();
-        }
-        if (maxSealedTime <= 0) {
-            maxSealedTime = sealedDuration(fermentRecipe, tank.getAmount());
-            if (maxSealedTime <= 0) return;
-        }
-        if (sealedTime < maxSealedTime) {
-            sealedTime++;
-            setChanged();
-            return;
-        }
-
-//? if >=1.21.1 {
-        /*FluidStack in = fermentRecipe.input();
-        FluidStack out = fermentRecipe.output();
-        long produced = BarrelFermentationRules.output(out.getAmount(),tank.getAmount(),in.getAmount());
-*///?} else {
-        FluidStack in = fermentRecipe.mFluidInputs[0];
-        FluidStack out = fermentRecipe.mFluidOutputs[0];
-        long produced = gregtech.engine.fluid.BarrelFermentationRules.output(out.getAmount(),tank.getAmount(),in.getAmount());
-//?}
-        tank.setFluid(out, Math.min(Math.max(1, produced), tank.capacity()));
-        resetSeal();
-        setChanged();
-    }
-
-    /** Whether a recorded failure still suppresses a new search; clears the entry when it went stale. */
-    private boolean fermentationRetryPending(FluidStack fluid) {
-        if (fermentFailureInput == null || level == null) return false;
-        if (!gregtech.engine.recipe.RecipeInputs.sameFluid(fermentFailureInput, fluid)) {
-            clearFermentationFailure();
-            return false;
-        }
-        if (fermentFailureRevision != fermentationRevision()) {
-            clearFermentationFailure();
-            return false;
-        }
-        return level.getGameTime() < fermentFailureRetry;
-    }
-
-    /** Records a failed lookup for a bounded, position-staggered window; never for a custom provider. */
-    private void rememberFermentationFailure(FluidStack fluid) {
-        if (!fermentationNegativeCacheAllowed() || level == null) {
-            clearFermentationFailure();
-            return;
-        }
-        fermentFailureInput = fluid.copy();
-        fermentFailureRevision = fermentationRevision();
-        fermentFailureRetry = level.getGameTime() + FERMENTATION_RETRY_BASE
-                + Math.floorMod(worldPosition.hashCode(), (int) FERMENTATION_RETRY_SPREAD);
-    }
-
-    private void clearFermentationFailure() {
-        fermentFailureInput = null;
-        fermentFailureRevision = Long.MIN_VALUE;
-        fermentFailureRetry = 0;
-    }
-
-    private static long fermentationRevision() {
-//? if >=1.21.1 {
-        /*return FermentationAccess.recipeRevision();
-*///?} else {
-        return MachineRecipeMaps.Fermenter.lookupRevision();
-//?}
-    }
-
-    /** A custom provider may depend on state this cache cannot observe, so only the built-in table is memoized. */
-    private static boolean fermentationNegativeCacheAllowed() {
-//? if >=1.21.1 {
-        /*return FermentationAccess.negativeCacheAllowed();
-*///?} else {
-        return true;
-//?}
-    }
-
-    /** GT6's {@code UT.Code.divup(max(1, |EUt * duration|) * max(1, amount), max(1, input))}. */
-//? if >=1.21.1 {
-    /*public static long sealedDuration(Recipe recipe,long amount){return BarrelFermentationRules.duration(recipe.power(),recipe.duration(),amount,recipe.input().getAmount());}
-*///?} else {
-    public static long sealedDuration(Recipe recipe, long amount) {
-        return gregtech.engine.fluid.BarrelFermentationRules.duration(recipe.mEUt,recipe.mDuration,amount,recipe.mFluidInputs[0].getAmount());
-    }
-//?}
-
-    /**
-     * The barrel's fermenter recipe for a fluid: matches on fluid type and scales the amount,
-     * but cannot satisfy recipes that require a flower or other item. GT6 passes its virtual
-     * {@code ST.tag(0)} as the sole item input to RM.Fermenter.findRecipe; the preceding
-     * {@code NI} argument is the unused special slot, not the item inputs. Gaseous inputs and
-     * outputs are rejected.
-     */
-//? if >=1.21.1 {
-    /*public static Recipe findFermentationRecipe(FluidStack fluid){return FermentationAccess.find(fluid);}
-*///?} else {
-    /** Selector stack reused read-only; matching never mutates or exposes it. */
-    @Nullable private static ItemStack fermentationSelectorStack;
-
-    private static ItemStack fermentationSelector() {
-        ItemStack cached = fermentationSelectorStack;
-        if (cached != null) return cached;
-        var selector = GTTechnological.selectorTag(0);
-        if (selector == null) return null;
-        return fermentationSelectorStack = new ItemStack(selector);
-    }
-
-    public static Recipe findFermentationRecipe(FluidStack fluid) {
-        if (fluid.isEmpty()) return null;
-        ItemStack itemInput = fermentationSelector();
-        if (itemInput == null) return null;
-        var candidates = MachineRecipeMaps.Fermenter.fluidInputCandidates(fluid);
-        Iterable<Recipe> rows = candidates != null ? candidates : MachineRecipeMaps.Fermenter.mRecipeList;
-        for (Recipe recipe : rows) {
-            if (!recipe.mEnabled || recipe.mFakeRecipe) continue;
-            if (recipe.mInputs.length != 1) continue;
-            if (recipe.mFluidInputs.length != 1 || recipe.mFluidOutputs.length == 0) continue;
-            // Barrel conversion replaces the whole fluid; presence-only rows belong to ordinary fermenters.
-            if (recipe.isPresenceFluidInput(0)) continue;
-            FluidStack input = recipe.mFluidInputs[0];
-            FluidStack output = recipe.mFluidOutputs[0];
-            if (input == null || output == null || !recipe.matchesFluidInput(0, fluid)) continue;
-            // Reject unrelated fluids before material/tag matching; keep recipe order and live flags.
-            if (!recipe.matchesItemInput(0, itemInput)) continue;
-            if (GTFluids.isGas(fluid) || GTFluids.isGas(output)) continue;
-            return recipe;
-        }
-        return null;
-    }
-//?}
-
-    private void resetSeal() {
-        sealedTime = 0;
-        maxSealedTime = 0;
-        fermentRecipe = null;
-        fermentInput = null;
-    }
-
-    @Override public long progressValue(BlockFace side) { return sealedTime; }
-    @Override public long progressMaximum(BlockFace side) { return maxSealedTime; }
-    public long getSealedTime() { return sealedTime; }
-    public long getMaxSealedTime() { return maxSealedTime; }
-    public FluidStack getFermentationOutput() {
-//? if >=1.21.1 {
-        /*return fermentRecipe == null
-                ? FluidStack.EMPTY : fermentRecipe.output();
-*///?} else {
-        return fermentRecipe == null || fermentRecipe.mFluidOutputs.length == 0
-                ? FluidStack.EMPTY : fermentRecipe.mFluidOutputs[0];
-//?}
-    }
+    @Override public long progressValue(BlockFace side) { return 0; }
+    @Override public long progressMaximum(BlockFace side) { return 0; }
 
     private void autoOutputFluid(FluidStack fluid) {
         // Gases rise: a lighter-than-air fluid leaves through the top, everything else falls out
@@ -538,6 +324,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
+        // Sealed vessels reject both directions, matching the original barrel's lock.
+        if (softHammerState) return 0;
         // Enforce the current validation policy here as well: callers need not consult
         // isFluidValid before invoking fill. Original block/item policies differ (see above).
         if (resource.isEmpty() || !isFluidValid(0, resource)) return 0;
@@ -546,11 +334,15 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 
     @NotNull
     @Override
-    public FluidStack drain(FluidStack resource, FluidAction action) { return tank.drain(resource, action); }
+    public FluidStack drain(FluidStack resource, FluidAction action) {
+        return softHammerState ? FluidStack.EMPTY : tank.drain(resource, action);
+    }
 
     @NotNull
     @Override
-    public FluidStack drain(int maxDrain, FluidAction action) { return tank.drain(maxDrain, action); }
+    public FluidStack drain(int maxDrain, FluidAction action) {
+        return softHammerState ? FluidStack.EMPTY : tank.drain(maxDrain, action);
+    }
 
     // === Capability ===
 
@@ -626,8 +418,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         if (temperature == GregTechConstants.DEF_ENV_TEMP) tag.remove(NBT_TEMPERATURE);
         if (!autoOutput) tag.remove(NBT_AUTO_OUTPUT);
         if (!softHammerState) tag.remove(NBT_SOFT_HAMMER);
-        if (sealedTime == 0) tag.remove(NBT_SEALED_TIME);
-        if (maxSealedTime == 0) tag.remove(NBT_MAX_SEALED_TIME);
         if (tag.contains("gt.painted", net.minecraft.nbt.Tag.TAG_BYTE) && !tag.getBoolean("gt.painted"))
             tag.remove("gt.painted");
         if (tank.getFluidLong().isEmpty() && tank.getAmount() == 0
@@ -659,11 +449,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         autoOutput = tag.contains(NBT_AUTO_OUTPUT) && tag.getBoolean(NBT_AUTO_OUTPUT);
         softHammerState = tag.contains(NBT_SOFT_HAMMER) && tag.getBoolean(NBT_SOFT_HAMMER);
-        sealedTime = tag.contains(NBT_SEALED_TIME) ? tag.getLong(NBT_SEALED_TIME) : 0;
-        maxSealedTime = tag.contains(NBT_MAX_SEALED_TIME) ? tag.getLong(NBT_MAX_SEALED_TIME) : 0;
-        fermentRecipe = null;
-        fermentInput = null;
-        clearFermentationFailure();
 //? if >=1.21.1 {
         /*if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"),lookup);
         fluidAccessKnown = false;
@@ -685,8 +470,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);
         tag.putBoolean(NBT_SOFT_HAMMER, softHammerState);
-        tag.putLong(NBT_SEALED_TIME, sealedTime);
-        tag.putLong(NBT_MAX_SEALED_TIME, maxSealedTime);
         CompoundTag tankTag = new CompoundTag();
 //? if >=1.21.1 {
         /*tank.writeToNBT(tankTag,lookup);
@@ -707,8 +490,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);
         tag.putBoolean(NBT_SOFT_HAMMER, softHammerState);
-        tag.putLong(NBT_SEALED_TIME, sealedTime);
-        tag.putLong(NBT_MAX_SEALED_TIME, maxSealedTime);
         CompoundTag tankTag = new CompoundTag();
 //? if >=1.21.1 {
         /*tank.writeToNBT(tankTag,lookup);
@@ -737,8 +518,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_AUTO_OUTPUT)) autoOutput = tag.getBoolean(NBT_AUTO_OUTPUT);
         if (tag.contains(NBT_SOFT_HAMMER)) softHammerState = tag.getBoolean(NBT_SOFT_HAMMER);
-        if (tag.contains(NBT_SEALED_TIME)) sealedTime = tag.getLong(NBT_SEALED_TIME);
-        if (tag.contains(NBT_MAX_SEALED_TIME)) maxSealedTime = tag.getLong(NBT_MAX_SEALED_TIME);
 //? if >=1.21.1 {
         /*if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"),lookup);
 *///?} else {
@@ -760,18 +539,13 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //?}
     }
 
-    /**
-     * Current soft-hammer action: unseal an empty barrel or toggle a filled one,
-     * and discard fermentation work. GT6's empty-barrel mode-bit update differs.
-     */
+    /** Current soft-hammer action: unseal an empty barrel or toggle a filled one. */
     public void toggleSoftHammerState() {
         if (tank.isEmpty()) {
             softHammerState = false;
         } else {
             softHammerState = !softHammerState;
         }
-        resetSeal();
-        clearFermentationFailure();
         setChanged();
     }
 }

@@ -107,6 +107,20 @@ public final class RecipeGuiLayout {
         throw new IllegalArgumentException("No visible recipe slot " + input + "/" + fluid + "/" + index);
     }
 
+    private MachineGuiLayout.Point machinePoint(Slot slot) {
+        if (slot.fluid()) return MachineGuiLayout.fluid(slot.input(), slot.index());
+        if (slot.input() && map.mInputPotionCount > 0) {
+            // The potion slot keeps the vanilla position; ordinary inputs shift left to make room.
+            if (slot.index() >= map.mInputItemsCount) return new MachineGuiLayout.Point(53, 25);
+            return new MachineGuiLayout.Point(35 - slot.index() * 18, 25);
+        }
+        return MachineGuiLayout.item(
+                slot.input(),
+                slot.index(),
+                slot.input() ? map.mInputItemsCount : map.mOutputItemsCount,
+                slot.input() ? map.mInputFluidCount : map.mOutputFluidCount);
+    }
+
     public void draw(GuiGraphics graphics) {
         // Recipe viewers own the surrounding panel; only compose the recipe contents here.
         RenderSystem.enableBlend();
@@ -114,13 +128,7 @@ public final class RecipeGuiLayout {
         for (var slot : slots) {
             GuiTemplates.sprite(slot.fluid() ? "slot/fluid" : "slot/item").draw(graphics, slot.x() - 1, slot.y() - 1);
             if (template == null || slot.index() < 0) continue;
-            var original = slot.fluid()
-                    ? MachineGuiLayout.fluid(slot.input(), slot.index())
-                    : MachineGuiLayout.item(
-                            slot.input(),
-                            slot.index(),
-                            slot.input() ? map.mInputItemsCount : map.mOutputItemsCount,
-                            slot.input() ? map.mInputFluidCount : map.mOutputFluidCount);
+            var original = machinePoint(slot);
             for (var element : template.elements())
                 if (element.x() == original.x()
                         && element.y() == original.y()

@@ -353,20 +353,7 @@ public final class SandwichBottleFoods {
                     0,
                     false,
                     false,
-                    false), // Loader_Fluids.java:593; MultiItemBottles.java:337
-            new Food(
-                    "bottle_of_poison",
-                    0,
-                    0.0f,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    false,
-                    false,
-                    false) // Loader_Fluids.java:629; MultiItemBottles.java:358
+                    false) // Loader_Fluids.java:593; MultiItemBottles.java:337
             );
 
     public static Food forItem(String item) {

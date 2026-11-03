@@ -96,7 +96,6 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:tomato_ketchup", 1), // MultiItemBottles.java:257
             new Entry("gt6ce:maple_syrup", 3), // MultiItemBottles.java:266
             new Entry("gt6ce:rainbow_sap", 40), // MultiItemBottles.java:275
-            new Entry("gt6ce:coconut_cream", 15), // MultiItemBottles.java:337
-            new Entry("gt6ce:bottle_of_poison", 5) // MultiItemBottles.java:358
+            new Entry("gt6ce:coconut_cream", 15) // MultiItemBottles.java:337
             );
 }

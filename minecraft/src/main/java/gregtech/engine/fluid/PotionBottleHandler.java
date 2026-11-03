@@ -1,13 +1,12 @@
 package gregtech.engine.fluid;
 
 import gregtech.content.fluid.VanillaPotionBottling;
-import gregtech.content.food.GTDrinks;
-import gregtech.content.registry.GTFluids;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.minecraft.core.component.DataComponents;
@@ -40,27 +39,21 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
 *///?} else {
         if (!fluid.isFluidEqual(plain)) return ItemStack.EMPTY;
 //?}
-        if (fluid.getFluid() == Fluids.WATER) return bottle(new VanillaPotionBottling.Bottle("water", "potion"));
+        if (fluid.getFluid() == Fluids.WATER) return waterBottle();
         var bottles = gregtech.content.data.generated.GTBottlesGen.ENTRIES;
         for (int i = 0; i < bottles.length; i += 3) {
             var item = gregtech.content.food.GTFoodItems.itemOrNull(bottles[i]);
             if (item instanceof gregtech.content.item.BottleItem bottle && bottle.fluid() == fluid.getFluid())
                 return new ItemStack(item);
         }
-        var entry = GTFluids.entryForFluid(fluid.getFluid());
-        return entry == null ? ItemStack.EMPTY : bottle(VanillaPotionBottling.bottle(entry.registryName()));
+        return ItemStack.EMPTY;
     }
 
-    private static ItemStack bottle(VanillaPotionBottling.Bottle definition) {
-        if (definition == null) return ItemStack.EMPTY;
-        var id = ResourceLocation.fromNamespaceAndPath("minecraft", definition.potion());
-        var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("minecraft", definition.item()));
+    private static ItemStack waterBottle() {
 //? if >=1.21.1 {
-        /*var potion = BuiltInRegistries.POTION.getHolder(id);
-        return potion.isEmpty() ? ItemStack.EMPTY : PotionContents.createItemStack(item, potion.get());
+        /*return PotionContents.createItemStack(Items.POTION, Potions.WATER);
 *///?} else {
-        var potion = BuiltInRegistries.POTION.getOptional(id);
-        return potion.isEmpty() ? ItemStack.EMPTY : PotionUtils.setPotion(new ItemStack(item), potion.get());
+        return PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
 //?}
     }
 
@@ -70,28 +63,14 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
             var fluid = bottle.fluid();
             return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, VanillaPotionBottling.AMOUNT);
         }
-        if (!stack.is(Items.POTION) && !stack.is(Items.SPLASH_POTION) && !stack.is(Items.LINGERING_POTION))
-            return FluidStack.EMPTY;
+        if (!stack.is(Items.POTION)) return FluidStack.EMPTY;
 //? if >=1.21.1 {
         /*var potion = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion();
-        if (potion.isEmpty()) return FluidStack.EMPTY;
-        var id = BuiltInRegistries.POTION.getKey(potion.get().value());
+        if (potion.isEmpty() || potion.get().value() != Potions.WATER) return FluidStack.EMPTY;
 *///?} else {
-        var id = BuiltInRegistries.POTION.getKey(PotionUtils.getPotion(stack));
+        if (PotionUtils.getPotion(stack) != Potions.WATER) return FluidStack.EMPTY;
 //?}
-        if (id == null || !id.getNamespace().equals("minecraft")) return FluidStack.EMPTY;
-        String item = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
-        var canonical = bottle(new VanillaPotionBottling.Bottle(id.getPath(), item));
-//? if >=1.21.1 {
-        /*if (!ItemStack.isSameItemSameComponents(stack, canonical)) return FluidStack.EMPTY;
-*///?} else {
-        if (!ItemStack.isSameItemSameTags(stack, canonical)) return FluidStack.EMPTY;
-//?}
-        if (id.getPath().equals("water") && item.equals("potion"))
-            return new FluidStack(Fluids.WATER, VanillaPotionBottling.AMOUNT);
-        String name = VanillaPotionBottling.fluid(id.getPath(), item);
-        var fluid = name == null ? null : GTDrinks.fluidForField(name);
-        return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, VanillaPotionBottling.AMOUNT);
+        return new FluidStack(Fluids.WATER, VanillaPotionBottling.AMOUNT);
     }
 
     @Override public ItemStack getContainer() { return container; }

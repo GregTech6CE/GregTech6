@@ -106,6 +106,7 @@ public final class MachineRecipeMaps {
                 spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
         map.viewer(spec.mViewerAllowed,spec.mShowVoltageAmperage);
         map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
+        map.potions(spec.mInputPotionCount);
         if(spec.mInstantRecipes)map.instantRecipes();return map;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
@@ -610,6 +611,7 @@ public class MachineRecipeMaps {
                 spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
         map.viewer(spec.mViewerAllowed,spec.mShowVoltageAmperage);
         map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
+        map.potions(spec.mInputPotionCount);
         if(spec.mInstantRecipes)map.instantRecipes();return map;
     }
 //?}

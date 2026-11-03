@@ -110,7 +110,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     private void pushItems(BlockPos pos, Direction face) {
         StructureOutputs.items(this, StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ITEM_OUTPUT,
-                pos, face, originalProcessingController()), inventory(), inputSlots());
+                pos, face, originalProcessingController()), itemView(), visibleInputSlots());
     }
     private void pushFluids(BlockPos pos, Direction face) {
         var tanks = getTanksOutput();
@@ -123,18 +123,18 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     private void pullItems(BlockPos pos, Direction face) {
         var source = itemsAt(pos, face);
         if (source == null) return;
-        int inputCount = inputSlots();
+        int inputCount = visibleInputSlots();
         if (inputCount <= 0) return;
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
             if (stack.isEmpty() || !acceptsAutomaticInput(stack)) continue;
             for (int i = 0; i < inputCount; i++) {
-                ItemStack remaining = inventory().insertItem(i, stack.copy(), true);
+                ItemStack remaining = itemView().insertItem(i, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
                 if (toTake <= 0) continue;
                 ItemStack extracted = source.extractItem(srcSlot, toTake, false);
                 if (!extracted.isEmpty()) {
-                    ItemStack leftover = inventory().insertItem(i, extracted, false);
+                    ItemStack leftover = itemView().insertItem(i, extracted, false);
                     returnOrDrop(leftover, source);
                     if (source.getStackInSlot(srcSlot).isEmpty()) break;
                     stack = source.getStackInSlot(srcSlot);
@@ -240,7 +240,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if (output == null) {
             Direction outward = relativeToAbsolute(side);
             StructureOutputs.items(this, StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ITEM_OUTPUT,
-                    pos.relative(outward), outward.getOpposite(), originalProcessingController()).withAirDrop(), inventory(), inputSlots());
+                    pos.relative(outward), outward.getOpposite(), originalProcessingController()).withAirDrop(), itemView(), visibleInputSlots());
             return;
         }
         pushItems(output.pos(), output.face());
@@ -389,12 +389,12 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     private IItemHandler createItemPort(MultiblockLayout.Role role) {
         return new IItemHandler() {
-            public int getSlots() {return inventory().getSlots();}
-            public ItemStack getStackInSlot(int slot) {return inventory().getStackInSlot(slot);}
-            public ItemStack insertItem(int slot,ItemStack stack,boolean simulate) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT)&&slot>=0&&slot<inputSlots()?inventory().insertItem(slot,stack,simulate):stack;}
-            public ItemStack extractItem(int slot,int amount,boolean simulate) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_OUTPUT)&&slot>=inputSlots()?inventory().extractItem(slot,amount,simulate):ItemStack.EMPTY;}
-            public int getSlotLimit(int slot) {return inventory().getSlotLimit(slot);}
-            public boolean isItemValid(int slot,ItemStack stack) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT)&&slot>=0&&slot<inputSlots()&&inventory().isItemValid(slot,stack);}
+            public int getSlots() {return itemView().getSlots();}
+            public ItemStack getStackInSlot(int slot) {return itemView().getStackInSlot(slot);}
+            public ItemStack insertItem(int slot,ItemStack stack,boolean simulate) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT)&&slot>=0&&slot<visibleInputSlots()?itemView().insertItem(slot,stack,simulate):stack;}
+            public ItemStack extractItem(int slot,int amount,boolean simulate) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_OUTPUT)&&slot>=visibleInputSlots()?itemView().extractItem(slot,amount,simulate):ItemStack.EMPTY;}
+            public int getSlotLimit(int slot) {return itemView().getSlotLimit(slot);}
+            public boolean isItemValid(int slot,ItemStack stack) {return role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT)&&slot>=0&&slot<visibleInputSlots()&&itemView().isItemValid(slot,stack);}
         };
     }
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role) {

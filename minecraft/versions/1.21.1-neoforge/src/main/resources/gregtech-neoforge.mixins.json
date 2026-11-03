@@ -50,7 +50,9 @@
     "CoverWalkMixin",
     "CoverCollisionMixin",
     "CoverSignalMixin",
-    "BucketContentAccessor"
+    "BucketContentAccessor",
+    "PotionBrewingAccessor",
+    "PotionBrewingMixAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

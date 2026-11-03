@@ -51,7 +51,8 @@
     "CoverSignalMixin",
     "PacketFrameEncoderMixin",
     "LoginQueryPayloadMixin",
-    "CustomPayloadLimitMixin"
+    "CustomPayloadLimitMixin",
+    "PotionBrewingAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

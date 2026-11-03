@@ -57,8 +57,7 @@ public final class WoodenBucketCatalog {
                     "seed_oil",
                     "Seed Oil",
                     17,
-                    List.of("Oil_Seed", "Oil_Lin", "Oil_Hemp", "Oil_Olive", "Oil_Sunflower", "Oil_Nut")),
-            new Content("poison", "Potion_Poison_2", 18, List.of("Potion_Poison_2")));
+                    List.of("Oil_Seed", "Oil_Lin", "Oil_Hemp", "Oil_Olive", "Oil_Sunflower", "Oil_Nut")));
 
     public static String itemId(Band band, Content content) {
         return "wooden_bucket_" + band.id() + (content.empty() ? "" : "_" + content.id());

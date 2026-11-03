@@ -23,7 +23,7 @@ public final class TankTooltips {
     // === Tank Tooltips ===
 
     public static void appendTank(TankSpec spec, List<Component> tooltip) {
-        appendTankState(spec, new gregtech.engine.fluid.FluidTankGT(spec.capacity()), false, 0, tooltip);
+        appendTankState(spec, new gregtech.engine.fluid.FluidTankGT(spec.capacity()), false, tooltip);
     }
 
 //? if >=1.21.1 {
@@ -42,12 +42,11 @@ public final class TankTooltips {
 *///?} else {
         if (data != null && data.contains("gt.tank")) tank.readFromNBT(data.getCompound("gt.tank"));
 //?}
-        appendTankState(spec, tank, data != null && data.getBoolean("gt.soft_hammer"),
-                data == null ? 0 : data.getLong("gt.sealed_time"), tooltip);
+        appendTankState(spec, tank, data != null && data.getBoolean("gt.soft_hammer"), tooltip);
     }
 
     private static void appendTankState(TankSpec spec, gregtech.engine.fluid.FluidTankGT tank,
-                                        boolean sealed, long sealedTime, List<Component> tooltip) {
+                                        boolean sealed, List<Component> tooltip) {
         GTMaterial mat = spec.material();
 
         var fluid = tank.getFluidLong();
@@ -61,9 +60,6 @@ public final class TankTooltips {
                             ? "Gaseous" : "Liquid") + "); Max: " + formatLargeNumber(tank.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit() + ")"))
                     .withStyle(ChatFormatting.AQUA));
         }
-        if (tank.getAmount() > 0 && sealed) tooltip.add(Component.translatable("tooltip.gt6ce.ui.sealed_time", sealedTime)
-                .withStyle(ChatFormatting.AQUA));
-
         // TileEntityBase08Barrel includes these for wooden barrels as well.
         tooltip.add(Component.translatable("gt.lang.nogui.funnel.tap.tank").withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.translatable("gt.lang.no.powerconducting.fluids").withStyle(ChatFormatting.GOLD));
@@ -291,22 +287,13 @@ public final class TankTooltips {
 //?}
                 .withStyle(autoOutput ? ChatFormatting.GREEN : ChatFormatting.WHITE));
 
-        // Soft hammer state — GT6 calls this "Sealed" and uses it for barrel fermentation.
+        // Soft hammer state — GT6 calls this "Sealed"; the lock is kept without fermentation.
         if (!someState) {
             player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.normal")
                     .withStyle(ChatFormatting.GRAY));
-        } else if (tank.getMaxSealedTime() > 0) {
-            player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.sealed_progress", tank.getSealedTime(), tank.getMaxSealedTime())
-                    .withStyle(ChatFormatting.GREEN));
         } else {
             player.sendSystemMessage(Component.translatable("tooltip.gt6ce.ui.sealed")
                     .withStyle(ChatFormatting.GREEN));
-        }
-        if (someState && !fluid.isEmpty()) {
-            var output = tank.getFermentationOutput();
-            player.sendSystemMessage((output.isEmpty() ? Component.translatable("tooltip.gt6ce.ui.not_fermenting")
-                            : Component.translatable("tooltip.gt6ce.ui.fermenting", output.getDisplayName()))
-                    .withStyle(output.isEmpty() ? ChatFormatting.GRAY : ChatFormatting.AQUA));
         }
 
         if (fluid.isEmpty()) {

@@ -53,12 +53,6 @@ import java.util.List;
  * (on the block, nugget and crushed rows) is not linked to any material property, so the port applies
  * those rows to every non-antimatter material. No built-in material carries that property, so the
  * registered set matches; an addon that does would gain rows the original excludes.</p>
- *
- * <p>{@code IL.Crate_Fireproof} is the fireproof twin of the treated crate in GT6
- * ({@code Loader_Woods}). The port registers it as its own block, so the fireproof boxinator rows
- * ({@code Loader_Recipes_Handlers:511-525}) consume it exactly like the ordinary empty crate.
- * Unboxing still returns the ordinary empty crate: GT6's unboxinator handlers name
- * {@code IL.Crate} regardless of which crate filled the box.</p>
  * <p>
  * Duration/EU rules are GT6's: every handler runs at 16 EU/t. {@code RecipeMapHandlerPrefix} uses a
  * fixed duration when the handler passes one (the packing/unpacking handlers all pass 16 ticks) and
@@ -211,9 +205,6 @@ public final class MaterialFormConversionRecipes {
             skippedOnce("boxinator", "all crate rows", "gt6ce:crate is not registered");
             return;
         }
-        ItemStack fireproof = LootCrateBlock.crateStack("crate_fireproof");
-        if (fireproof.isEmpty())
-            skippedOnce("boxinator", "fireproof crate rows", "gt6ce:crate_fireproof is not registered");
         // Fixed form order, so a material whose gem and dust blocks canonicalize to the same stack
         // (Redstone: both are minecraft:redstone_block) keeps the dust row, matching the existing
         // blockGem/blockDust unbox order instead of letting registry order decide.
@@ -254,10 +245,7 @@ public final class MaterialFormConversionRecipes {
             unboxItems(prefix.getName() + " 1 -> " + content.getName() + " " + amount + " + crate",
                     crateStack, contents, item(empty, 1));
             packingRows(prefix, full, form, content, material, packed, crateStack, empty);
-            if (!fireproof.isEmpty())
-                packingRows(prefix, full, form, content, material, packed, crateStack, fireproof);
         }
-        fireproofCrate(empty, fireproof);
     }
 
     /** Boxinator rows that fill {@code empty} into this crate prefix ({@code Loader_Recipes_Handlers:495-525}). */
@@ -276,22 +264,6 @@ public final class MaterialFormConversionRecipes {
             packCrate(material, content, MaterialPrefix.chunkGt, 64, crate, empty);
             packCrate(material, content, MaterialPrefix.billet, 24, crate, empty);
         }
-    }
-
-    /**
-     * GT6's fireproofing rows for the crate metadata ({@code Loader_Recipes_Woods:86-96}, the
-     * crate pass of the plank family). The port has no fireproof plank family, but the crate itself
-     * exists, so its three source rows are registered; they are how the fireproof crate is obtained.
-     */
-    private static void fireproofCrate(ItemStack empty, ItemStack fireproof) {
-        if (empty.isEmpty() || fireproof.isEmpty()) return;
-
-        var potion = DyeProcessingRecipes.fluid("Potion_FireResistance_1L", 20);
-        Recipe recipe = MachineRecipeMaps.Bath.addRecipe1(false, 0, 32,
-                item(empty, 1), potion, null, fireproof.copy());
-        if (recipe != null)
-            ENTRIES.add(new Entry("bath", "crate + Potion_FireResistance_1L 20 -> crate_fireproof",
-                    MachineRecipeMaps.Bath, recipe));
     }
 
     private static void addLaminator(String route, ItemStack wax, ItemStack empty, ItemStack fireproof) {

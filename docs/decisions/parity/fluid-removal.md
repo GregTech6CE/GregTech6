@@ -32,6 +32,7 @@
 | 其他单条模组熔融流体 | 停注 `molten.darkiron`、`molten.endium`、`molten.goldinductive`、`molten.ironcompressed`、`molten.purplealloy`、`molten.spectreiron`、`molten.sunnarium`。 | 本端均未接入对应模组，材料没有物品来源。 |
 | 外部作品熔融流体 | 停注 `molten.adamantite`、`molten.carmot`、`molten.mithril`、`molten.orichalcum`、`molten.oriharukon`。 | 名称取自《星际迷航》、托尔金作品与神话，相关模组未接入本端。 |
 | 现实名称化合物熔融流体 | 停注 `molten.ferrite`、`molten.niobiumnitride`。 | 本端未保留对应配方与物品形态，停注。 |
+| 药水系统（整套移除） | 停注全部 94 条带药水标志的流体，含基底、即时效果、时长效果及喷溅/滞留形态；注册名与数量见[药水系统移除](potion-removal.md)附录A。 | 药水身份改由原版药水物品承载，流体侧保持单一体系；该标志没有运行期读取者。 |
 | 无来源/无消费端材料熔融流体 | 停注 `molten.bedrockium`、`molten.crystallinepinkslime`、`molten.unstable`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 
 随材料停注不再生成的流体共 113 条，包括 110 条 `molten.*`、`ectoplasm`、`martianvitriol` 和 `uumatter`。[类型C](https://github.com/GregTech6CE/GregTech6/issues/251) 的 `molten.brass`、`molten.zinc`、`molten.calcite` 静态声明已删除，但材料生成器以同一 ID 重建，不属于流体移除；属性改由材料熔点与亮度 10 决定。

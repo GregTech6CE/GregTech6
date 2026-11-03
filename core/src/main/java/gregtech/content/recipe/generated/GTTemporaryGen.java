@@ -39,15 +39,6 @@ final class GTTemporaryGen {
         r("Shredder", 16, 16, null, sp("tech:neli_reed:1"), NONE, NONE, sp("tech:remains_plant:1"));
         r("Mixer", 16, 16, null, sp("tech:neli_foxfire_lily:1", "i:dustTiny:Blaze:1"), NONE, NONE, sp("tech:neli_foxfire_powder:1"));
         r("Mixer", 16, 144, null, sp("tech:neli_foxfire_lily:9", "i:dust:Blaze:1"), NONE, NONE, sp("tech:neli_foxfire_powder:9"));
-        r("Distillery", 16, 32, null, sp("tech:neli_wart_crimson:1"), sp("f:DistW:500"), sp("f:Potion_Awkward:500"), NONE);
-        r("Distillery", 16, 32, null, sp("tech:neli_wart_warped:1"), sp("f:DistW:500"), sp("f:Potion_Thick:500"), NONE);
-        r("Distillery", 16, 32, null, sp("tech:neli_wart_warped:1"), sp("f:Potion_Awkward:500"), sp("f:Potion_NightVision_1:500"), NONE);
-        r("Distillery", 16, 32, null, sp("tech:neli_wart_soggy:1"), sp("f:DistW:500"), sp("f:Potion_Mundane:500"), NONE);
-        r("Distillery", 16, 32, null, sp("tech:neli_wart_soggy:1"), sp("f:Potion_Awkward:500"), sp("f:Potion_FireResistance_1:500"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:neli_wither_rose:1"), sp("f:Potion_Thick:750"), sp("f:Potion_Harm_2:750"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:neli_bone_rose:1"), sp("f:Potion_Mundane:750"), sp("f:Potion_Jump_1:750"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:neli_soul_rose:1"), sp("f:Potion_Awkward:250"), sp("f:Potion_Invisibility_1:250"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:neli_foxfire_powder:1"), sp("f:Potion_Mundane:750"), sp("f:Potion_Strength_2:750"), NONE);
         r("Sifting", 16, 200, ch(5000, 5000), sp("tech:rh_sand_olivine:1"), NONE, NONE, sp("i:gem:Peridot:1", "i:dust:Peridot:1"));
         r("Sifting", 16, 200, ch(9000, 1000), sp("tech:rh_sand_gypsum:1"), NONE, NONE, sp("i:dust:Gypsum:1", "i:dust:S:1"));
         r("Sifting", 16, 200, ch(9900, 500, 500), sp("tech:rh_sand_magnetite:1"), NONE, NONE, sp("i:dust:GraniticMineralSand:1", "i:rockGt:GraniteBlack:1", "i:nugget:Au:1"));
