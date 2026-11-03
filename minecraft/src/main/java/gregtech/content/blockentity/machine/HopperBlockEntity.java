@@ -58,7 +58,8 @@ import static net.minecraft.world.level.block.DirectionalBlock.FACING;
  * Parallel-slot inventory: all slots are equal peers. Items enter from top, exit toward facing side.
  * Screwdriver adjusts emission count (mMode 0-64). Monkey wrench toggles exact/divisible mode.
  */
-public class HopperBlockEntity extends BlockEntity implements IItemHandler, IItemHandlerModifiable, MenuProvider {
+public class HopperBlockEntity extends BlockEntity
+        implements IItemHandler, IItemHandlerModifiable, MenuProvider, gregtech.api.transport.ItemPipeConnectable {
     private static final String NBT_MODE = "gt.mode";
     private static final String NBT_EXACT = "gt.exact";
     private static final String NBT_CHECK = "gt.check";
@@ -583,18 +584,17 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
 //?}
     }
 
-    // ── Placement: auto-connect to adjacent item pipe ────────────────────
+    // ── Placement: the facing item pipe links to the output face ─────────
 
-    public void autoConnectOnPlace(@Nullable Direction placementFace) {
-        if (level == null || level.isClientSide) return;
-        Direction facing = getFacing();
-        if (facing.getAxis().isHorizontal()) {
-            BlockEntity neighbor = level.getBlockEntity(worldPosition.relative(facing));
-            if (neighbor instanceof ItemPipeBlockEntity) {
-                // The pipe will detect the hopper on its next tick via capability
-                setChanged();
-            }
-        }
+    /**
+     * GT6 {@code MultiTileEntityHopper.onPlaced}: a hopper set down with its nozzle on an item pipe
+     * connects that pipe to itself, so a hopper feeding a line needs no wrench. Only the output face
+     * opts in — the other faces still expose the inventory as an ordinary capability endpoint, which
+     * a pipe placed against them picks up on its own.
+     */
+    @Override
+    public boolean canConnectItemPipe(Direction side) {
+        return side == getFacing();
     }
 
     // ── Wrench / tool interaction ───────────────────────────────────────

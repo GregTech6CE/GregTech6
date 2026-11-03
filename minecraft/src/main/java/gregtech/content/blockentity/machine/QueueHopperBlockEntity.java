@@ -59,7 +59,8 @@ import static net.minecraft.world.level.block.DirectionalBlock.FACING;
  * Items cascade-shift internally toward the output end.
  * Screwdriver adjusts per-slot capacity (mMode 1-64).
  */
-public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler, IItemHandlerModifiable, MenuProvider {
+public class QueueHopperBlockEntity extends BlockEntity
+        implements IItemHandler, IItemHandlerModifiable, MenuProvider, gregtech.api.transport.ItemPipeConnectable {
     private static final String NBT_MODE = "gt.mode";
     private static final String NBT_CHECK = "gt.check";
     private static final String NBT_ITEMS = "gt.items";
@@ -102,6 +103,16 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
         BlockState state = getBlockState();
         if (state.hasProperty(FACING)) return state.getValue(FACING);
         return Direction.NORTH;
+    }
+
+    /**
+     * GT6 {@code MultiTileEntityQueueHopper.onPlaced}: a hopper set down with its nozzle on an item
+     * pipe connects that pipe to itself. Only the output face opts in; a pipe placed against any
+     * other face finds the inventory as an ordinary capability endpoint.
+     */
+    @Override
+    public boolean canConnectItemPipe(Direction side) {
+        return side == getFacing();
     }
 
     // ── Server tick ──────────────────────────────────────────────────────
