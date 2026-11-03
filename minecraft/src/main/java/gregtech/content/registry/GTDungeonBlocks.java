@@ -108,7 +108,6 @@ public final class GTDungeonBlocks {
                 .mapColor(MapColor.COLOR_BLACK)
                 .strength(hardness, resistance)
                 .sound(SoundType.GLASS)
-                .noCollission()
                 .noOcclusion()
                 .lightLevel(state -> state.getValue(DungeonPortalBlock.ACTIVE) ? 11 : 0);
     }
