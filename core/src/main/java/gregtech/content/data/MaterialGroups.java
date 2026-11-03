@@ -152,6 +152,9 @@ public class MaterialGroups {
                 GT6Materials.Compounds.Flint);
         Steel.addReRegistrationToThis(GT6Materials.Compounds.Steel, GT6Materials.Compounds.Knightmetal);
         W.addReRegistrationToThis(GT6Materials.Elements.W, GT6Materials.Compounds.TungstenSintered);
+        // GT6 reverses MT.Wood into ANY.Wood itself (ANY.java:156), so the generic wood material
+        // belongs to both the default and the broad wood families.
+        Wood.addReRegistrationToThis(GT6Materials.Woods.Wood);
         WoodDefault.addReRegistrationToThis(GT6Materials.Woods.Wood);
         WoodMagical.addReRegistrationToThis(
                 GT6Materials.Woods.Greatwood,
