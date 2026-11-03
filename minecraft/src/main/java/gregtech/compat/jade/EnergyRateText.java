@@ -12,4 +12,9 @@ final class EnergyRateText {
         return net.minecraft.network.chat.Component.translatable("jade.gt6ce.energy.max_packets", packets)
                         .getString() + " " + rate(rated, min, max, unit);
     }
+
+    /** Converter efficiencies are stored in hundredths of a percent. */
+    static String percent(int efficiency) {
+        return gregtech.content.machine.OriginalFunctionalTooltipData.efficiencyPercent(efficiency) + "%";
+    }
 }

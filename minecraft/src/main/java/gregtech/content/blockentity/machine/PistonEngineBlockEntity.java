@@ -57,7 +57,10 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
             return amount;
         }
         long accepted = pistonState.accept(size, amount, inputRate() * 2, execute);
-        if (execute && accepted > 0) setChanged();
+        if (execute && accepted > 0) {
+            recordInput(size, accepted);
+            setChanged();
+        }
         return accepted;
     }
     // A piston emits during its own tick. Extraction must not duplicate that emission.
@@ -121,9 +124,11 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
     }
     protected void tickPiston() {
         if (level == null || level.isClientSide) return;
+        rollMeasurements();
         boolean wasActive = pistonState.active();
         long packet = pistonState.tick(++engineTimer, inputRate(), outputRate());
         emitted=packet!=0&&EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.KU, facing(), packet, 1, this)>0;
+        if (emitted) recordOutput(packet);
         if (wasActive != pistonState.active()) {
             level.setBlockAndUpdate(worldPosition, getBlockState().setValue(EngineBlock.LIT, pistonState.active()));
             syncToClient();

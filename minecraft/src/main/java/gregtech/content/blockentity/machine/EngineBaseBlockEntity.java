@@ -19,6 +19,40 @@ import java.util.List;
 public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
     protected long kuEnergy;
     protected FaceConfig faceConfig;
+    /** Display-only input/output totals for the previous tick; conversion math stays untouched. */
+    private long measuredInput, measuredOutput;
+    private long lastMeasuredInput, lastMeasuredOutput;
+
+    public long lastMeasuredInput() { return lastMeasuredInput; }
+    public long lastMeasuredOutput() { return lastMeasuredOutput; }
+
+    protected void rollMeasurements() {
+        lastMeasuredInput = measuredInput;
+        lastMeasuredOutput = measuredOutput;
+        measuredInput = 0;
+        measuredOutput = 0;
+    }
+
+    protected void recordInput(long size, long packets) {
+        measuredInput = measureAdd(measuredInput, size, packets);
+    }
+
+    protected void recordOutput(long amount) {
+        measuredOutput = measureAdd(measuredOutput, amount, 1);
+    }
+
+    private static long measureAdd(long total, long size, long packets) {
+        long magnitude = size == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(size);
+        if (magnitude <= 0 || packets <= 0) return total;
+        long added;
+        try {
+            added = Math.multiplyExact(magnitude, packets);
+        } catch (ArithmeticException overflow) {
+            return Long.MAX_VALUE;
+        }
+        long sum = total + added;
+        return sum < total ? Long.MAX_VALUE : sum;
+    }
 
     protected EngineBaseBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -129,6 +163,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
         long toStore = Math.min(total, space);
         long accepted = toStore / size;
         if (doInject && accepted > 0) {
+            recordInput(size, accepted);
             kuEnergy += accepted * size;
             setChanged();
         }

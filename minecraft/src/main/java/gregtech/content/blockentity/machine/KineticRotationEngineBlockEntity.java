@@ -108,6 +108,7 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
             // when a single RU packet exceeds its input maximum. A simulated
             // transfer reports the same consumption without changing the tile.
             if (execute) {
+                recordInput(size, amount);
                 negativeInput = size < 0;
                 setChanged();
                 if (overvoltagePrevention < 100) {
@@ -121,6 +122,7 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
         }
         long accepted = Math.min(amount, Math.max(0, capacity - ruBuffer) / magnitude);
         if (execute && accepted > 0) {
+            recordInput(size, accepted);
             ruBuffer += accepted * magnitude;
             negativeInput = size < 0;
             setChanged();
@@ -202,6 +204,7 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
     public static void serverTick(
             Level level, BlockPos pos, BlockState state, KineticRotationEngineBlockEntity be) {
         if (be.spec == null) return;
+        be.rollMeasurements();
         be.pollRuFromNeighbors();
 
         // GT6 doBipolar calculates a size for *each* end from the input buffer.
@@ -211,8 +214,10 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
         boolean canRun = size >= Math.max(1, be.outputRate() / 2);
         if (canRun && size <= maxSize) {
             Direction positive = positiveOutputSide(be.facing(), be.conversionTicks);
-            EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.KU, positive, size, 1, be);
-            EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.KU, positive.getOpposite(), -size, 1, be);
+            long first = EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.KU, positive, size, 1, be);
+            long second = EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.KU, positive.getOpposite(), -size, 1, be);
+            if (first > 0) be.recordOutput(size);
+            if (second > 0) be.recordOutput(size);
         }
 
         // NBT_WASTE_ENERGY=T: even disconnected or undersupplied engines burn

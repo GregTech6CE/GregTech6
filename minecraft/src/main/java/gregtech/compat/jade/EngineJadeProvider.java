@@ -34,6 +34,8 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
     private static final String NBT_EFF       = "gt_eng_eff";
     private static final String NBT_ENABLED   = "gt_eng_enabled";
     private static final String NBT_SHUTDOWN  = "gt_eng_shutdown";
+    private static final String NBT_ACTUAL_IN = "gt_eng_actual_in";
+    private static final String NBT_ACTUAL_OUT = "gt_eng_actual_out";
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
@@ -49,6 +51,16 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 ? GregTechTags.Energy.RU : GregTechTags.Energy.KU, null));
         tag.putLong(NBT_OUT_RATE, ms.outputRate());
         tag.putInt(NBT_EFF, ms.efficiency());
+        tag.putLong(NBT_ACTUAL_IN, be.lastMeasuredInput());
+        tag.putLong(NBT_ACTUAL_OUT, be.lastMeasuredOutput());
+        if (be instanceof PistonEngineBlockEntity piston) {
+            var control = piston.machineControl(null);
+            tag.putBoolean("gt_eng_status_enabled", control.enabled());
+            tag.putBoolean("gt_eng_status_working", control.running());
+        } else if (be instanceof KineticRotationEngineBlockEntity rotation) {
+            tag.putBoolean("gt_eng_status_enabled", true);
+            tag.putBoolean("gt_eng_status_working", rotation.isActive());
+        }
 
         if (be instanceof KineticDieselEngineBlockEntity diesel) {
             tag.putBoolean(NBT_ENABLED, !diesel.isStopped());
@@ -151,16 +163,21 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                     : data.getBoolean("gt_diesel_emitting") ? "jade.gt6ce.engine.diesel.running" : "jade.gt6ce.engine.diesel.waiting"));
             return;
         }
+        tooltip.add(JadeText.status("jade.gt6ce.omni." + (data.contains("gt_eng_status_enabled") && !data.getBoolean("gt_eng_status_enabled")
+                ? "disabled" : data.getBoolean("gt_eng_status_working") ? "working" : "waiting")));
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.actual_output",
+                format(data.getLong(NBT_ACTUAL_OUT)), "KU"));
+        if (eff > 0) {
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.eff", formatEfficiency(eff)));
+        }
+        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.actual_input",
+                format(data.getLong(NBT_ACTUAL_IN)), Component.literal(inUnit)));
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
 
         int pct = capacity > 0 ? (int) Math.min(100, stored * 100 / capacity) : 0;
         boolean inputBuffer = "electric".equals(type) || "flux".equals(type);
         JadeText.add(tooltip, Component.translatable(inputBuffer ? "jade.gt6ce.engine.out_input_buffer" : "jade.gt6ce.engine.out",
                 format(outRate), format(stored), format(capacity), pct, inUnit));
-
-        if (eff > 0) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.eff", formatEfficiency(eff)));
-        }
 
     }
 

@@ -92,6 +92,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     private net.minecraft.world.item.ItemStack rotor = net.minecraft.world.item.ItemStack.EMPTY;
     private long turbinePending, steamRemainder;
     private boolean converterStopped;
+    /** Display-only totals for the previous tick; they never feed conversion or storage. */
+    private long measuredInput, measuredOutput, measuredAuxOutput;
+    private long lastMeasuredInput, lastMeasuredOutput, lastMeasuredAuxOutput;
     @Nullable
 //? if >=1.21.1 {
 //?} else {
@@ -154,6 +157,32 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     public boolean transformerInverted() { return inverted; }
     public long stored() { return isSolar() ? solarEnergy.energy() : isBatteryBox() ? batteryEnergy.buffer() : buffer; }
     public gregtech.content.energy.BatteryBoxEnergy batteryEnergy() { return batteryEnergy; }
+    public long lastMeasuredInput() { return lastMeasuredInput; }
+    public long lastMeasuredOutput() { return lastMeasuredOutput; }
+    public long lastMeasuredAuxOutput() { return lastMeasuredAuxOutput; }
+
+    private void rollMeasurement() {
+        lastMeasuredInput = measuredInput;
+        lastMeasuredOutput = measuredOutput;
+        lastMeasuredAuxOutput = measuredAuxOutput;
+        measuredInput = measuredOutput = measuredAuxOutput = 0;
+    }
+
+    private static long packetMagnitude(long size) {
+        return size == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(size);
+    }
+
+    private static long measuredAdd(long total, long size, long packets) {
+        if (size <= 0 || packets <= 0) return total;
+        long added;
+        try {
+            added = Math.multiplyExact(size, packets);
+        } catch (ArithmeticException overflow) {
+            return Long.MAX_VALUE;
+        }
+        long sum = total + added;
+        return sum < total ? Long.MAX_VALUE : sum;
+    }
 
     // ── Transformer step-up/step-down ───────────────────────────────────────
 
@@ -416,6 +445,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, EnergyNodeBlockEntity be) {
         if (be.spec == null) return;
+        be.rollMeasurement();
         if(!be.hasOriginalConverter()&&!be.isBatteryBox()&&!be.isSolar()&&!be.isElectricTransformer()&&!be.batteryCovers.isEmpty()) {
             be.panels().beforeTick();
             for(var side:Direction.values())gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());
@@ -580,17 +610,23 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         long before = buffer;
         var step = rotaryConverter.tick(buffer, converterStopped,
                 (size, amount) -> {
+                    long magnitude = packetMagnitude(size);
                     if (isMagnet()) {
                         long positive = EnergyTransfer.emitEnergyToSide(spec.outType(), facing(), size, amount, this);
                         long negative = EnergyTransfer.emitEnergyToSide(spec.outType(), facing().getOpposite(), -size, amount, this);
+                        measuredOutput = measuredAdd(measuredOutput, magnitude, positive + negative);
                         return positive + negative;
                     }
                     if (isOriginalThermalConverter() && gregtech.content.energy.OriginalThermalConverter.cooler(spec)) {
                         long cold = EnergyTransfer.emitEnergyToSide(spec.outType(), facing(), size, amount, this);
                         long heat = EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.HU, facing().getOpposite(), size, amount, this);
+                        measuredOutput = measuredAdd(measuredOutput, magnitude, cold);
+                        measuredAuxOutput = measuredAdd(measuredAuxOutput, magnitude, heat);
                         return cold > 0 || heat > 0 ? 1 : 0;
                     }
-                    return EnergyTransfer.emitEnergyToNetwork(spec.outType(), size, amount, this);
+                    long used = EnergyTransfer.emitEnergyToNetwork(spec.outType(), size, amount, this);
+                    measuredOutput = measuredAdd(measuredOutput, magnitude, used);
+                    return used;
                 });
         buffer = step.energy();
         if (step.overloaded()) rotaryOverload(before, spec.outType());
@@ -637,6 +673,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
                 isRotationTransformer() && rotationNegativeInput ? -outRate() : outRate(), packets, this);
         if (isRotationTransformer()) emitted = Math.min(packets, Math.max(0, emitted));
         if (emitted > 0) {
+            measuredOutput = measuredAdd(measuredOutput, outRate(), emitted);
             buffer -= emitted * costPerPacket();
             setChanged();
         }
@@ -658,7 +695,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             if(size>maximum)magnetOverload(size);
             else {
                 long used=EnergyTransfer.emitEnergyToNetwork(spec.outType(),size,packets,this);
-                if(used>0){buffer-=Math.min(packets,used)*size;emitted=true;}
+                if(used>0){measuredOutput=measuredAdd(measuredOutput,size,used);buffer-=Math.min(packets,used)*size;emitted=true;}
             }
         }
         transformerControl.tick(possible,emitted);
@@ -674,8 +711,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         long minimum = getEnergySizeOutputMin(spec.outType(), rotationOutputFace());
         long maximum = getEnergySizeOutputMax(spec.outType(), rotationOutputFace());
         if (size >= minimum && size <= maximum) {
-            EnergyTransfer.emitEnergyToSide(spec.outType(), rotationOutputFace(),
+            long used = EnergyTransfer.emitEnergyToSide(spec.outType(), rotationOutputFace(),
                     rotationNegativeInput ? -size : size, inverted ? 1 : 4, this);
+            measuredOutput = measuredAdd(measuredOutput, Math.abs(size), used);
         }
         // Both GT6 conversion modes have NBT_WASTE_ENERGY=T. Their capacitors
         // lose up to the active input maximum every tick, including when no
@@ -702,6 +740,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         for (int i = 0; i < 64 && buffer >= cost; i++) {
             if (storage.receiveEnergy(out, true) < out) break;
             storage.receiveEnergy(out, false);
+            measuredOutput = measuredAdd(measuredOutput, out, 1);
             buffer -= cost;
             setChanged();
         }
@@ -842,7 +881,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             if (doInject) {
                 buffer = step.energy();
                 if (step.overloaded()) rotaryOverload(Math.abs(size), energyType);
-                if (step.consumed() > 0) setChanged();
+                if (step.consumed() > 0) {
+                    measuredInput = measuredAdd(measuredInput, packetMagnitude(size), step.consumed());
+                    setChanged();
+                }
             }
             return step.consumed();
         }
@@ -854,7 +896,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
                 return amount;
             }
             long used=batteryEnergy.inject(packet,amount,doInject);
-            if(doInject&&used>0)setChanged();
+            if(doInject&&used>0){measuredInput=measuredAdd(measuredInput,packet,used);setChanged();}
             return used;
         }
         if (isSteamConverter()) {
@@ -870,7 +912,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         if (!acceptsEnergyInput() || energyType != spec.inType() || amount <= 0 || magnitude == 0) return 0;
         if ((isMagnet() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         if ((isMagnet() || isElectricTransformer()) && magnitude > getEnergySizeInputMax(energyType, side)) {
-            if (doInject) magnetOverload(magnitude);
+            if (doInject) {
+                measuredInput = measuredAdd(measuredInput, magnitude, amount);
+                magnetOverload(magnitude);
+            }
             return amount;
         }
         if ((isRotationTransformer() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
@@ -878,6 +923,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         long accepted = gregtech.engine.energy.EnergyPackets.fitting(amount, space, magnitude);
         if (doInject && accepted > 0) {
             if (isRotationTransformer()) rotationNegativeInput = size < 0;
+            measuredInput = measuredAdd(measuredInput, magnitude, accepted);
             buffer += accepted * magnitude;
             setChanged();
         }

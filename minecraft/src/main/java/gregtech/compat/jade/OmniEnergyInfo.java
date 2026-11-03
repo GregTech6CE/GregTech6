@@ -3,7 +3,10 @@ package gregtech.compat.jade;
 import gregtech.content.blockentity.energy.*;
 import gregtech.content.blockentity.machine.*;
 import gregtech.content.data.GregTechTags;
+import gregtech.content.energy.LaserSpec;
+import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.content.energy.OriginalThermalConverter;
+import gregtech.engine.energy.EnergyNodeSpec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -21,6 +24,7 @@ final class OmniEnergyInfo {
             if (!node.isSteamConverter()) {
                 info.state(control.enabled(), control.running());
                 if (!node.isSolar()) {
+                    appendConversion(info, node, spec);
                     info.line(
                             "energy_rate",
                             JadeInspection.label("input"),
@@ -72,7 +76,30 @@ final class OmniEnergyInfo {
             var control = converter.machineControl(null);
             info.state(control.enabled(), control.running());
             info.line("converter_input", converter.lastInput(), spec.inputType().getShortName());
-            info.line("transferred", converter.lastOutput(), spec.outputType().getShortName());
+            info.line(
+                    "converter_output",
+                    converter.lastOutput(),
+                    spec.outputType().getShortName());
+            long normalized = spec.kind() == LaserSpec.Kind.FLUX ? spec.input() / 4 : spec.input();
+            if (normalized > 0)
+                info.line("efficiency", EnergyRateText.percent((int)
+                        Math.min(10000, 10000L * spec.output() / normalized)));
+            info.line(
+                    "energy_rate",
+                    JadeInspection.label("input"),
+                    EnergyRateText.rate(
+                            spec.input(),
+                            spec.input() <= 16 ? 1 : spec.input() / 2,
+                            spec.input() * 2,
+                            spec.inputType().getShortName()));
+            info.line(
+                    "energy_rate",
+                    JadeInspection.label("output"),
+                    EnergyRateText.rate(
+                            spec.output(),
+                            spec.output() / 2,
+                            spec.output() * 2,
+                            spec.outputType().getShortName()));
         } else if (entity instanceof PumpBlockEntity pump) {
             info.line("stored", pump.storedPumpEnergy(), "RU");
             var tank = pump.tankForInspection();
@@ -103,5 +130,17 @@ final class OmniEnergyInfo {
             info.state(control.enabled(), control.running());
             info.flag("delivering", control.active());
         }
+    }
+
+    /** Shared last-tick power and rated efficiency for every pure energy converter. */
+    private static void appendConversion(JadeInspection info, EnergyNodeBlockEntity node, EnergyNodeSpec spec) {
+        if (!OriginalEnergyDeviceTooltipData.handles(spec)) return;
+        boolean cooler = node.isOriginalThermalConverter() && OriginalThermalConverter.cooler(spec);
+        info.line("converter_input", node.lastMeasuredInput(), spec.inType().getShortName());
+        info.line("converter_output", node.lastMeasuredOutput(), spec.outType().getShortName());
+        if (cooler) info.line("converter_output", node.lastMeasuredAuxOutput(), "HU");
+        int efficiency = OriginalEnergyDeviceTooltipData.profile(spec, node.transformerInverted())
+                .efficiency();
+        if (efficiency >= 0) info.line("efficiency", EnergyRateText.percent(efficiency));
     }
 }
