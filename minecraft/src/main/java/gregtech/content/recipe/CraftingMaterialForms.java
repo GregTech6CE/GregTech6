@@ -34,6 +34,7 @@ public final class CraftingMaterialForms {
     public static void rebuild() { rebuild(false); }
     /** Tag-backed aliases are indexed only after the server has bound this reload's tags. */
     public static synchronized void rebuild(boolean taggedItems) {
+        PLAIN_FORMS.clear();
         var materials = new HashMap<String, String>();
         for (var material : GTMaterialRegistry.allMaterials()) if (material.isValid()) {
             String name = material.resolve().getName();
@@ -136,12 +137,15 @@ public final class CraftingMaterialForms {
     }
     private static Form tagged(ItemStack stack) {
         // Prefer explicit GT prefix tags over common tags (dense ores can also be in ordinary ores tags).
-        var tags = stack.getTags().map(tag -> tag.location()).sorted(Comparator.comparing(id -> id.getNamespace().equals("gt6ce") ? 0 : 1)).toList();
-        for (var tag : tags) {
-            var form = formOf(tag);
-            if (form != null) return form;
+        Form common = null;
+        for (var iterator = stack.getTags().iterator(); iterator.hasNext(); ) {
+            var tag = iterator.next();
+            var form = formOf(tag.location());
+            if (form == null) continue;
+            if (tag.location().getNamespace().equals("gt6ce")) return form;
+            if (common == null) common = form;
         }
-        return null;
+        return common;
     }
 
     /** Every gregtech, forge or c form tag on this item. Callers use a single hit to reject ambiguous items. */
@@ -234,6 +238,52 @@ public final class CraftingMaterialForms {
         ensureInitialized(); return aliases.keySet().stream().anyMatch(form -> form.prefix().equals(prefix));
     }
 
+    /** Item-only forms for plain stacks, rebuilt with the tag-derived tables after every reload. */
+    private static final Map<Item, Optional<Form>> PLAIN_FORMS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** Form of the ingredient's first candidate without expanding its tags into item stacks. */
+    private static Form ingredientForm(Ingredient ingredient) {
+//? if >=1.21.1 {
+        /*if (ingredient.isCustom()) {
+            var expanded = ingredient.getItems();
+            return expanded.length == 0 ? null : plainForm(expanded[0]);
+        }
+        var values = ingredient.getValues();
+        if (values.length == 0) {
+            var expanded = ingredient.getItems();
+            return expanded.length == 0 ? null : plainForm(expanded[0]);
+        }
+        // Vanilla flattens values in order, so only the first value decides values[0].
+        // An empty tag contributes a barrier stack there, whose form is also null.
+        var first = values[0];
+        if (first instanceof Ingredient.ItemValue item) return plainForm(item.item());
+        if (first instanceof Ingredient.TagValue tag) {
+            var iterator = BuiltInRegistries.ITEM.getTagOrEmpty(tag.tag()).iterator();
+            return iterator.hasNext() ? plainForm(new ItemStack(iterator.next().value())) : null;
+        }
+        var expanded = ingredient.getItems();
+        return expanded.length == 0 ? null : plainForm(expanded[0]);
+*///?} else {
+        var values = ingredient.getItems();
+        return values.length == 0 ? null : plainForm(values[0]);
+//?}
+    }
+
+    private static Form plainForm(ItemStack stack) {
+        if (stack.isEmpty() || stack.isDamaged()) return form(stack);
+//? if >=1.21.1 {
+        /*if (!stack.getComponentsPatch().isEmpty()) return form(stack);
+*///?} else {
+        if (stack.hasTag()) return form(stack);
+//?}
+        var cached = PLAIN_FORMS.get(stack.getItem());
+        if (cached == null) {
+            cached = Optional.ofNullable(form(stack));
+            PLAIN_FORMS.put(stack.getItem(), cached);
+        }
+        return cached.orElse(null);
+    }
+
     public static boolean replaces(CraftingRecipe recipe, RegistryAccess access) {
         // Tool-aware serializers also wrap ordinary material rows. Only the selector
         // makes a single-input row position-sensitive; the marker alone must not keep
@@ -243,17 +293,20 @@ public final class CraftingMaterialForms {
                 && !(recipe instanceof ToolShapelessRecipe) && !(recipe instanceof ToolShapedRecipe)) return false;
         boolean shapeless = recipe instanceof ShapelessRecipe;
         if (!shapeless && !(recipe instanceof ShapedRecipe) && !(recipe instanceof ToolShapedRecipe)) return false;
+        // A conversion always needs a material-form result; skip the ingredient forms when the
+        // result cannot be one. Most generated tool and machine rows stop here.
+        var output = plainForm(recipe.getResultItem(access));
+        if (output == null) return false;
         var cells = new ArrayList<Form>();
         for (var ingredient : recipe.getIngredients()) {
             if (ingredient == Ingredient.EMPTY) { cells.add(null); continue; }
-            var values = ingredient.getItems();
-            var form = values.length == 0 ? null : form(values[0]);
+            var form = ingredientForm(ingredient);
             cells.add(form == null ? OriginalFormConversions.UNKNOWN : form);
         }
         int width = shapeless ? cells.size() : recipe instanceof ToolShapedRecipe tool
                 ? tool.getWidth() : ((ShapedRecipe) recipe).getWidth();
         int height = shapeless ? 1 : recipe instanceof ToolShapedRecipe tool
                 ? tool.getHeight() : ((ShapedRecipe) recipe).getHeight();
-        return OriginalFormConversions.replaces(cells, width, height, shapeless, false, form(recipe.getResultItem(access)));
+        return OriginalFormConversions.replaces(cells, width, height, shapeless, false, output);
     }
 }
