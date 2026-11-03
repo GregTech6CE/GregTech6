@@ -56,8 +56,8 @@ public final class RuntimeRecipeLifecycle {
         OvenRecipeBridge.apply(working, access);
         // Later injectors add rows that duplicate the generated wire/pipe families; dedup after all of them.
         var deduped = new ArrayList<Recipe<?>>(working.getRecipes());
-        int duplicates = FormConversionCraftingRecipeInjector.dedupGenerated(deduped, access,
-                entry -> ((Recipe<?>) entry).getId(), entry -> (Recipe<?>) entry);
+        int duplicates = FormConversionCraftingRecipeInjector.dedupGenerated(
+                deduped, access, entry -> ((Recipe<?>) entry).getId(), entry -> (Recipe<?>) entry);
         if (duplicates > 0) {
             working.replaceRecipes(deduped);
             GregTech.LOGGER.info("Removed {} duplicate source crafting rows", duplicates);
