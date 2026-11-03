@@ -16,8 +16,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandler;
 //?}
 
 import java.util.List;
@@ -54,8 +59,64 @@ public class ManualToolBlockEntity extends BlockEntity {
     private final Kind kind;
     private ItemStack work = ItemStack.EMPTY;
     private int progress;
+    private final IItemHandler automation = new AutomationHandler();
     public int workProgress() { return progress; }
     public java.util.List<ItemStack> outputSnapshot() { return outputs.stream().map(ItemStack::copy).toList(); }
+
+    /**
+     * GT6's sifting table inventory: slot 0 is the input, slots 1-12 hold one craft's outputs.
+     * Automation may only fill the input and drain the outputs; the manual path keeps its own
+     * stack-sized insertion.
+     */
+    private final class AutomationHandler implements IItemHandler {
+        @Override
+        public int getSlots() {
+            return 1 + outputs.size();
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            if (slot == 0) return work;
+            return slot > 0 && slot <= outputs.size() ? outputs.get(slot - 1) : ItemStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            if (kind != Kind.SIFTING || slot != 0 || stack.isEmpty() || !work.isEmpty() || recipe(stack) == null) {
+                return stack;
+            }
+            if (!simulate) {
+                work = stack.copyWithCount(1);
+                progress = 0;
+                markUpdated();
+            }
+            return stack.copyWithCount(stack.getCount() - 1);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if (slot < 1 || slot > outputs.size() || amount <= 0) return ItemStack.EMPTY;
+            ItemStack stored = outputs.get(slot - 1);
+            if (stored.isEmpty()) return ItemStack.EMPTY;
+            ItemStack taken = stored.copyWithCount(Math.min(amount, stored.getCount()));
+            if (!simulate) {
+                if (taken.getCount() >= stored.getCount()) outputs.set(slot - 1, ItemStack.EMPTY);
+                else stored.shrink(taken.getCount());
+                markUpdated();
+            }
+            return taken;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return slot == 0 && recipe(stack) != null;
+        }
+    }
 
     public ManualToolBlockEntity(BlockPos pos, BlockState state) {
         super(gregtech.content.registry.GTBlockEntities.MANUAL_TOOL.get(), pos, state);
@@ -66,6 +127,33 @@ public class ManualToolBlockEntity extends BlockEntity {
     public Kind kind() {
         return kind;
     }
+
+//? if >=1.21.1 {
+    /*public IItemHandler itemHandler() {
+        return kind == Kind.SIFTING && !isRemoved() ? automation : null;
+    }
+*///?} else {
+    private LazyOptional<IItemHandler> itemCapability = LazyOptional.of(() -> automation);
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.Direction side) {
+        return capability == ForgeCapabilities.ITEM_HANDLER && kind == Kind.SIFTING
+                ? itemCapability.cast() : super.getCapability(capability, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        itemCapability.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        itemCapability = LazyOptional.of(() -> automation);
+    }
+//?}
 
     public ItemStack work() {
         return work;
