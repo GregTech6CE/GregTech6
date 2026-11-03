@@ -58,7 +58,7 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
         }
         long accepted = pistonState.accept(size, amount, inputRate() * 2, execute);
         if (execute && accepted > 0) {
-            recordInput(size, accepted);
+            if (level != null) conversionMeter.input(level.getGameTime(), Math.abs(size) * accepted);
             setChanged();
         }
         return accepted;
@@ -124,11 +124,10 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
     }
     protected void tickPiston() {
         if (level == null || level.isClientSide) return;
-        rollMeasurements();
         boolean wasActive = pistonState.active();
         long packet = pistonState.tick(++engineTimer, inputRate(), outputRate());
         emitted=packet!=0&&EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.KU, facing(), packet, 1, this)>0;
-        if (emitted) recordOutput(packet);
+        if (emitted) conversionMeter.output(level.getGameTime(), packet, 1);
         if (wasActive != pistonState.active()) {
             level.setBlockAndUpdate(worldPosition, getBlockState().setValue(EngineBlock.LIT, pistonState.active()));
             syncToClient();

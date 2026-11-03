@@ -2,11 +2,8 @@ package gregtech.compat.jade;
 
 import gregtech.content.blockentity.energy.*;
 import gregtech.content.blockentity.machine.*;
-import gregtech.content.data.GregTechTags;
-import gregtech.content.energy.LaserSpec;
 import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.content.energy.OriginalThermalConverter;
-import gregtech.engine.energy.EnergyNodeSpec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -21,19 +18,26 @@ final class OmniEnergyInfo {
         } else if (entity instanceof EnergyNodeBlockEntity node && node.spec() != null && !node.isBatteryBox()) {
             var spec = node.spec();
             var control = node.machineControl(null);
-            if (!node.isSteamConverter()) {
+            if (!node.isSolar()) {
                 info.state(control.enabled(), control.running());
-                if (!node.isSolar()) {
-                    appendConversion(info, node, spec);
-                    info.line(
-                            "energy_rate",
-                            JadeInspection.label("input"),
-                            EnergyRateText.rate(
-                                    node.getEnergySizeInputRecommended(spec.inType(), null),
-                                    node.getEnergySizeInputMin(spec.inType(), null),
-                                    node.getEnergySizeInputMax(spec.inType(), null),
-                                    spec.inType().getShortName()));
-                }
+                long tick = entity.getLevel().getGameTime();
+                int efficiency = OriginalEnergyDeviceTooltipData.handles(spec)
+                        ? OriginalEnergyDeviceTooltipData.profile(spec, node.transformerInverted())
+                                .efficiency()
+                        : EnergyRateText.efficiency(spec.inputRate(), spec.outputRate(), spec.inType(), spec.outType());
+                EnergyRateText.conversion(
+                        info,
+                        node,
+                        spec.inType(),
+                        spec.outType(),
+                        node.conversionMeter().input(tick),
+                        node.conversionMeter().output(tick),
+                        efficiency);
+                long capacity = node.getEnergyCapacity(spec.inType(), null);
+                if (capacity > 0 && !node.isSteamConverter())
+                    info.detail("buffer", node.stored(), capacity, spec.inType().getShortName());
+            } else {
+                info.state(control.enabled(), control.running());
                 info.line(
                         "energy_rate",
                         JadeInspection.label("output"),
@@ -42,9 +46,6 @@ final class OmniEnergyInfo {
                                 node.getEnergySizeOutputMin(spec.outType(), null),
                                 node.getEnergySizeOutputMax(spec.outType(), null),
                                 spec.outType().getShortName()));
-                long capacity = node.getEnergyCapacity(spec.inType(), null);
-                if (capacity > 0)
-                    info.line("buffer", node.stored(), capacity, spec.inType().getShortName());
             }
             if (control.supportsMode()) info.line("mode", control.mode());
             if (node.isSolar()) {
@@ -67,7 +68,12 @@ final class OmniEnergyInfo {
                 }
             }
             if (node.isOriginalThermalConverter()) {
-                if (OriginalThermalConverter.cooler(spec)) info.line("rated_output", spec.outputRate(), "HU");
+                if (OriginalThermalConverter.cooler(spec))
+                    info.line(
+                            "energy_rate",
+                            JadeInspection.label("output"),
+                            EnergyRateText.rate(
+                                    node.lastMeasuredAuxOutput(), spec.outputRate() / 2, spec.outputRate() * 2, "HU"));
                 else if (node.getBlockState().getValue(gregtech.content.block.energy.RotaryConverterBlock.ACTIVITY) > 0)
                     info.line("contact_damage", OriginalThermalConverter.contactDamage(spec));
             }
@@ -75,31 +81,14 @@ final class OmniEnergyInfo {
             var spec = converter.spec();
             var control = converter.machineControl(null);
             info.state(control.enabled(), control.running());
-            info.line("converter_input", converter.lastInput(), spec.inputType().getShortName());
-            info.line(
-                    "converter_output",
+            EnergyRateText.conversion(
+                    info,
+                    converter,
+                    spec.inputType(),
+                    spec.outputType(),
+                    converter.lastInput(),
                     converter.lastOutput(),
-                    spec.outputType().getShortName());
-            long normalized = spec.kind() == LaserSpec.Kind.FLUX ? spec.input() / 4 : spec.input();
-            if (normalized > 0)
-                info.line("efficiency", EnergyRateText.percent((int)
-                        Math.min(10000, 10000L * spec.output() / normalized)));
-            info.line(
-                    "energy_rate",
-                    JadeInspection.label("input"),
-                    EnergyRateText.rate(
-                            spec.input(),
-                            spec.input() <= 16 ? 1 : spec.input() / 2,
-                            spec.input() * 2,
-                            spec.inputType().getShortName()));
-            info.line(
-                    "energy_rate",
-                    JadeInspection.label("output"),
-                    EnergyRateText.rate(
-                            spec.output(),
-                            spec.output() / 2,
-                            spec.output() * 2,
-                            spec.outputType().getShortName()));
+                    EnergyRateText.efficiency(spec.input(), spec.output(), spec.inputType(), spec.outputType()));
         } else if (entity instanceof PumpBlockEntity pump) {
             info.line("stored", pump.storedPumpEnergy(), "RU");
             var tank = pump.tankForInspection();
@@ -115,32 +104,53 @@ final class OmniEnergyInfo {
         } else if (entity instanceof AxialGeneratorBlockEntity axial) {
             var control = axial.machineControl(null);
             info.state(control.enabled(), control.running());
-            info.flag("delivering", control.active());
+            var grade = axial.grade();
+            long tick = entity.getLevel().getGameTime();
+            info.line(
+                    "energy_rate",
+                    JadeInspection.label("input"),
+                    EnergyRateText.rate(
+                            axial.conversionMeter().input(tick),
+                            grade.input() / 2,
+                            grade.inputMaximum(),
+                            grade.steam() ? "SU" : "RU"));
+            info.line(
+                    "energy_rate",
+                    JadeInspection.label("output"),
+                    EnergyRateText.rate(
+                            axial.conversionMeter().output(tick),
+                            grade.output() / 2,
+                            grade.outputMaximum(),
+                            grade.steam() ? "RU" : "EU"));
+            EnergyRateText.efficiency(info, (int) (10000L * grade.output() * (grade.steam() ? 2 : 1) / grade.input()));
         } else if (entity instanceof LargeGasTurbineControllerBlockEntity gas) {
             var control = gas.machineControl(null);
             info.state(control.enabled(), control.running());
-            info.flag("delivering", control.active());
-            info.line("rated_output", gas.getEnergySizeOutputRecommended(GregTechTags.Energy.RU, null), "RU");
+            var grade = gas.grade();
+            info.line(
+                    "energy_rate",
+                    JadeInspection.label("output"),
+                    EnergyRateText.rate(
+                            gas.conversionMeter().output(entity.getLevel().getGameTime()),
+                            grade.output() / 2,
+                            grade.outputMaximum(),
+                            "RU"));
+            EnergyRateText.efficiency(info, (int) (10000L * grade.output() / grade.input()));
         } else if (entity instanceof FuelGeneratorBlockEntity fuel) {
             var control = fuel.machineControl(null);
             info.state(control.enabled(), control.running());
+            var declaration = fuel.declaration();
+            long rated = declaration.output().perTick();
+            info.line(
+                    "energy_rate",
+                    JadeInspection.label("output"),
+                    EnergyRateText.rate(
+                            fuel.conversionMeter().output(entity.getLevel().getGameTime()),
+                            rated,
+                            rated,
+                            declaration.output().type().name()));
+            EnergyRateText.efficiency(info, declaration.efficiency());
             info.tanks("contents", fuel);
-        } else if (entity instanceof PistonEngineBlockEntity piston) {
-            var control = piston.machineControl(null);
-            info.state(control.enabled(), control.running());
-            info.flag("delivering", control.active());
         }
-    }
-
-    /** Shared last-tick power and rated efficiency for every pure energy converter. */
-    private static void appendConversion(JadeInspection info, EnergyNodeBlockEntity node, EnergyNodeSpec spec) {
-        if (!OriginalEnergyDeviceTooltipData.handles(spec)) return;
-        boolean cooler = node.isOriginalThermalConverter() && OriginalThermalConverter.cooler(spec);
-        info.line("converter_input", node.lastMeasuredInput(), spec.inType().getShortName());
-        info.line("converter_output", node.lastMeasuredOutput(), spec.outType().getShortName());
-        if (cooler) info.line("converter_output", node.lastMeasuredAuxOutput(), "HU");
-        int efficiency = OriginalEnergyDeviceTooltipData.profile(spec, node.transformerInverted())
-                .efficiency();
-        if (efficiency >= 0) info.line("efficiency", EnergyRateText.percent(efficiency));
     }
 }

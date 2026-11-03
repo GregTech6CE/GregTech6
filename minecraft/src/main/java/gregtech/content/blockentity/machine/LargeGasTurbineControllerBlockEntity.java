@@ -38,6 +38,9 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     }
 
     private long fuelEnergy, ruStored;
+    private final gregtech.engine.energy.EnergyConversionMeter conversionMeter = new gregtech.engine.energy.EnergyConversionMeter();
+
+    public gregtech.engine.energy.EnergyConversionMeter conversionMeter() { return conversionMeter; }
     private boolean stopped;
     private boolean converting, emitted;
     private boolean rotorFormed, rotorActive;
@@ -239,6 +242,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         if (ruStored <= 0) return;
         if (gregtech.engine.multiblock.StructureOutputs.energy(this,
                 gregtech.content.multiblock.OriginalMultiblockOutputRules.SHAFT, GregTechTags.Energy.RU, ruStored, 1) > 0) {
+            conversionMeter.output(level.getGameTime(), ruStored, 1);
             emitted = true;
             ruStored = 0;
             setChanged();

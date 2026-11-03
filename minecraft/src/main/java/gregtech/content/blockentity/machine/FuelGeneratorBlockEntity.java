@@ -56,6 +56,9 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
     protected boolean formed = true;
     private boolean emitted;
     private GregTechTags.Tag energy;
+    private final gregtech.engine.energy.EnergyConversionMeter conversionMeter = new gregtech.engine.energy.EnergyConversionMeter();
+
+    public gregtech.engine.energy.EnergyConversionMeter conversionMeter() { return conversionMeter; }
 //? if >=1.21.1 {
 /**///?} else {
     @Nullable private LazyOptional<IFluidHandler> fluids;
@@ -176,6 +179,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         if (packet < 1 || stored < packet || energyType() == null) return;
         long packets = Math.min(declaration().amperes(), stored / packet);
         long sent = emitGeneratedEnergy(packet, packets);
+        conversionMeter.output(level.getGameTime(), packet, sent);
         if (sent > 0) {
             stored -= packet * sent;
             emitted = true;

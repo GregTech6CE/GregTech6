@@ -304,6 +304,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
             long output=be.computeOutput();
             if(be.engineTicks%(32-be.engineState)==0)be.piston=(be.piston+1)&3;
             be.emitted=EnergyTransfer.emitEnergyToNetwork(GregTechTags.Energy.KU,be.piston>1?-output:output,1,be)>0;
+            if (be.emitted) be.conversionMeter.output(level.getGameTime(), output, 1);
             be.kuEnergy-=output;
         }
         if(be.kuEnergy>=cap){

@@ -56,10 +56,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
             data.putLong("fusionOutput", fusion.isRunning() ? fusion.outputEU() : 0);
         }
         if (entity instanceof gregtech.content.blockentity.machine.AxialGeneratorBlockEntity axial) {
-            data.putString("axialState", axial.isOverloaded() ? "overloaded" : axial.isStopped() ? "stopped" : "enabled");
-            data.putBoolean("axialSteam", axial.grade().steam());
-            data.putInt("axialInput", axial.grade().input());
-            data.putInt("axialOutput", axial.grade().output());
+            if (axial.isOverloaded()) data.putString("axialState", "overloaded");
         }
         if (!(entity instanceof BasicMachineBlockEntity)) {
             final var inspectedController = entity;
@@ -148,8 +145,6 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         }
         if (data.contains("axialState")) {
             JadeText.add(tooltip, Component.translatable("gt.axial.state." + data.getString("axialState")));
-            JadeText.add(tooltip, gregtech.engine.fluid.FluidUnits.text(data.getBoolean("axialSteam") ? "gt.tooltip.axial.steam" : "gt.tooltip.axial.dynamo",
-                    data.getInt("axialInput"), data.getInt("axialOutput")));
         }
         for (var value : data.getList("energy", 10)) {
             if (data.getBoolean("crucible") && !accessor.showDetails()) break;

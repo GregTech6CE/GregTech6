@@ -41,6 +41,11 @@ final class JadeInspection {
         return translated("jade.gt6ce.omni." + suffix, arguments);
     }
 
+    void detail(String suffix, Object... arguments) {
+        var row = line(suffix, arguments);
+        if (row != null) row.putBoolean("details", true);
+    }
+
     CompoundTag translated(String key, Object... arguments) {
         if (rows.size() >= MAX_ROWS) return null;
         var row = new CompoundTag();
@@ -153,6 +158,7 @@ final class JadeInspection {
         var groups = new LinkedHashMap<String, List<CompoundTag>>();
         for (int i = 0; i < Math.min(MAX_ROWS, rows.size()); i++) {
             var row = rows.getCompound(i);
+            if (row.getBoolean("details") && !accessor.showDetails()) continue;
             if (row.contains("kind")) {
                 groups.computeIfAbsent(row.getString("role") + "/" + row.getString("kind"), key -> new ArrayList<>()).add(row);
                 continue;

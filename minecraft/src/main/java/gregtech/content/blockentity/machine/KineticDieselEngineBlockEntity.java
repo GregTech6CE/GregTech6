@@ -117,8 +117,9 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         if (be.spec == null) return;
         long beforeEmission=be.kuEnergy;
         if(be.kuEnergy >= be.outputRate() && be.outputRate()>0) {
-            gregtech.engine.energy.EnergyTransfer.emitEnergyToNetwork(
+            long sent = gregtech.engine.energy.EnergyTransfer.emitEnergyToNetwork(
                     GregTechTags.Energy.RU,be.outputRate(),1,be);
+            be.conversionMeter.output(level.getGameTime(), be.outputRate(), sent);
             be.kuEnergy=gregtech.engine.machine.LiquidFuelCycle.afterEmission(be.kuEnergy,be.outputRate());
             be.setChanged();
         }

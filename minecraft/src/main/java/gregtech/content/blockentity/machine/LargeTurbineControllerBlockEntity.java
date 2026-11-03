@@ -141,7 +141,9 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
 
     @Override
     public int fill(FluidStack stack, FluidAction action) {
-        return isFluidValid(0, stack) ? steam.fill(stack, action) : 0;
+        int filled = isFluidValid(0, stack) ? steam.fill(stack, action) : 0;
+        if (action.execute() && level != null) conversionMeter.input(level.getGameTime(), filled);
+        return filled;
     }
 
     @Override

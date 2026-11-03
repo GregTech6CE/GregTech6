@@ -2,7 +2,6 @@ package gregtech.compat.jade;
 
 import gregtech.api.machine.*;
 import gregtech.engine.machine.*;
-import gregtech.engine.machine.*;
 import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.blockentity.machine.*;
 import gregtech.content.data.GregTechTags;
@@ -34,8 +33,6 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
     private static final String NBT_EFF       = "gt_eng_eff";
     private static final String NBT_ENABLED   = "gt_eng_enabled";
     private static final String NBT_SHUTDOWN  = "gt_eng_shutdown";
-    private static final String NBT_ACTUAL_IN = "gt_eng_actual_in";
-    private static final String NBT_ACTUAL_OUT = "gt_eng_actual_out";
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
@@ -51,33 +48,35 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 ? GregTechTags.Energy.RU : GregTechTags.Energy.KU, null));
         tag.putLong(NBT_OUT_RATE, ms.outputRate());
         tag.putInt(NBT_EFF, ms.efficiency());
-        tag.putLong(NBT_ACTUAL_IN, be.lastMeasuredInput());
-        tag.putLong(NBT_ACTUAL_OUT, be.lastMeasuredOutput());
-        if (be instanceof PistonEngineBlockEntity piston) {
-            var control = piston.machineControl(null);
-            tag.putBoolean("gt_eng_status_enabled", control.enabled());
-            tag.putBoolean("gt_eng_status_working", control.running());
-        } else if (be instanceof KineticRotationEngineBlockEntity rotation) {
-            tag.putBoolean("gt_eng_status_enabled", true);
-            tag.putBoolean("gt_eng_status_working", rotation.isActive());
+
+        if (be instanceof PistonEngineBlockEntity || be instanceof KineticRotationEngineBlockEntity) {
+            var info = new JadeInspection(accessor, "gt_engine_conversion");
+            if (be instanceof PistonEngineBlockEntity piston) {
+                var control = piston.machineControl(null);
+                info.state(control.enabled(), control.running());
+            } else info.state(true, ((KineticRotationEngineBlockEntity) be).isActive());
+            var input = type == EngineType.ELECTRIC ? GregTechTags.Energy.EU
+                    : type == EngineType.FLUX ? GregTechTags.Energy.RF : GregTechTags.Energy.RU;
+            long tick = accessor.getLevel().getGameTime();
+            EnergyRateText.conversion(info, be, input, GregTechTags.Energy.KU,
+                    be.conversionMeter().input(tick), be.conversionMeter().output(tick), ms.efficiency());
+            info.detail("buffer", be.getEnergyStored(input, null), be.getEnergyCapacity(input, null), input.getShortName());
+            info.write(tag);
+            return;
         }
 
         if (be instanceof KineticDieselEngineBlockEntity diesel) {
-            tag.putBoolean(NBT_ENABLED, !diesel.isStopped());
-            tag.putBoolean("gt_diesel_emitting", diesel.isEmitting());
-            tag.putLong("gt_diesel_fuel_capacity", diesel.fuelTank().capacity());
-            tag.putLong("gt_diesel_exhaust_capacity", diesel.exhaustTank().capacity());
-            tag.putString("gt_diesel_front", accessor.getBlockState().getValue(EngineBlock.FACING).getName());
-            tag.putString("gt_diesel_rear", accessor.getBlockState().getValue(EngineBlock.FACING).getOpposite().getName());
-            var fuel = diesel.fuelTank().getFluid();
-            var exhaust = diesel.exhaustTank().getFluid();
-//? if >=1.21.1 {
-            /*if (!fuel.isEmpty()) tag.put("gt_diesel_fuel", fuel.save(accessor.getLevel().registryAccess()));
-            if (!exhaust.isEmpty()) tag.put("gt_diesel_exhaust", exhaust.save(accessor.getLevel().registryAccess()));
-*///?} else {
-            if (!fuel.isEmpty()) tag.put("gt_diesel_fuel", fuel.writeToNBT(new CompoundTag()));
-            if (!exhaust.isEmpty()) tag.put("gt_diesel_exhaust", exhaust.writeToNBT(new CompoundTag()));
-//?}
+            var info = new JadeInspection(accessor, "gt_engine_conversion");
+            info.state(!diesel.isStopped(), diesel.isEmitting());
+            info.line("energy_rate", JadeInspection.label("output"), EnergyRateText.rate(
+                    diesel.conversionMeter().output(accessor.getLevel().getGameTime()),
+                    ms.outputRate(), ms.outputRate(), "RU"));
+            EnergyRateText.efficiency(info, ms.efficiency());
+            info.detail("stored", diesel.getEnergyStored(GregTechTags.Energy.RU, null), "RU");
+            info.fluid("input", 0, diesel.fuelTank().getFluid(), diesel.fuelTank().getAmount(), diesel.fuelTank().capacity());
+            info.fluid("output", 0, diesel.exhaustTank().getFluid(), diesel.exhaustTank().getAmount(), diesel.exhaustTank().capacity());
+            info.groupedInventory();
+            info.write(tag);
             return;
         }
 
@@ -103,8 +102,9 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                     tag.putBoolean("gt_eng_working", control.running());
                     tag.putBoolean("gt_eng_waiting_steam", se.isWaitingForSteam());
                     if (se.spec() != null) tag.putDouble("gt_eng_warmup_end", se.spec().minimumRunningFill());
-                    tag.putLong(NBT_OUT_RATE, control.running() && se.isEnabled() && !se.isShutdown() && se.spec() != null
-                            ? se.spec().outputRate() * (se.pressureState() + 1) / 16 : 0);
+                    tag.putLong(NBT_OUT_RATE, se.conversionMeter().output(accessor.getLevel().getGameTime()));
+                    tag.putLong("gt_eng_out_min", se.getEnergySizeOutputMin(GregTechTags.Energy.KU, null));
+                    tag.putLong("gt_eng_out_max", se.getEnergySizeOutputMax(GregTechTags.Energy.KU, null));
                     writeTank(tag, "steam", se.steamTank(), "Steam");
                 }
             }
@@ -115,19 +115,17 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                 tag.putLong(NBT_CAPACITY, ms.outputRate() * 2);
             }
         }
-        if (be instanceof PistonEngineBlockEntity piston) {
-            var inputType = type == EngineType.ELECTRIC ? GregTechTags.Energy.EU : GregTechTags.Energy.RF;
-            tag.putLong(NBT_IN_RATE, piston.operatingInput());
-            tag.putLong(NBT_OUT_RATE, piston.operatingOutput());
-            tag.putLong(NBT_STORED, piston.getEnergyStored(inputType, null));
-            tag.putLong(NBT_CAPACITY, piston.getEnergyCapacity(inputType, null));
-        }
     }
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         CompoundTag data = accessor.getServerData();
         if (!data.contains(NBT_TYPE, CompoundTag.TAG_STRING)) return;
+
+        if (data.contains("gt_engine_conversion")) {
+            JadeInspection.render(tooltip, accessor, "gt_engine_conversion");
+            return;
+        }
 
         String type = data.getString(NBT_TYPE);
         Component name = JadeText.translated(data, NBT_NAME + "_key", NBT_NAME);
@@ -143,41 +141,16 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
             return;
         }
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.title", name));
-        if ("diesel".equals(type)) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel.output", format(outRate),
-                    format(data.getBoolean("gt_diesel_emitting") ? outRate : 0), format(stored)));
-            for (String tank : new String[]{"fuel", "exhaust"}) {
-//? if >=1.21.1 {
-                /*var fluid = net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(), data.getCompound("gt_diesel_" + tank));
-*///?} else {
-                var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(data.getCompound("gt_diesel_" + tank));
-//?}
-                Component content = fluid.isEmpty() ? Component.translatable("jade.gt6ce.engine.diesel.empty")
-                        : fluid.getDisplayName().copy().append(" " + format(fluid.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit());
-                JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel." + tank, content,
-                        format(data.getLong("gt_diesel_" + tank + "_capacity"))));
-            }
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.diesel.faces",
-                    JadeText.direction(data.getString("gt_diesel_front")), JadeText.direction(data.getString("gt_diesel_rear"))));
-            JadeText.add(tooltip, Component.translatable(!data.getBoolean(NBT_ENABLED) ? "jade.gt6ce.engine.status.off"
-                    : data.getBoolean("gt_diesel_emitting") ? "jade.gt6ce.engine.diesel.running" : "jade.gt6ce.engine.diesel.waiting"));
-            return;
-        }
-        tooltip.add(JadeText.status("jade.gt6ce.omni." + (data.contains("gt_eng_status_enabled") && !data.getBoolean("gt_eng_status_enabled")
-                ? "disabled" : data.getBoolean("gt_eng_status_working") ? "working" : "waiting")));
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.actual_output",
-                format(data.getLong(NBT_ACTUAL_OUT)), "KU"));
-        if (eff > 0) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.eff", formatEfficiency(eff)));
-        }
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.actual_input",
-                format(data.getLong(NBT_ACTUAL_IN)), Component.literal(inUnit)));
         JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
 
         int pct = capacity > 0 ? (int) Math.min(100, stored * 100 / capacity) : 0;
         boolean inputBuffer = "electric".equals(type) || "flux".equals(type);
         JadeText.add(tooltip, Component.translatable(inputBuffer ? "jade.gt6ce.engine.out_input_buffer" : "jade.gt6ce.engine.out",
                 format(outRate), format(stored), format(capacity), pct, inUnit));
+
+        if (eff > 0 && accessor.showDetails()) {
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.eff", EnergyRateText.percent(eff)));
+        }
 
     }
 
@@ -197,8 +170,9 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
 *///?} else {
         tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE);
 //?}
-        JadeText.add(tooltip, Component.translatable("gt.lang.energy.output").append(": " + format(output) + " ")
-                .append(gregtech.client.EnergyText.unit("KU")).append("/t"));
+        JadeText.detail(tooltip, "jade.gt6ce.omni.energy_rate", Component.translatable("jade.gt6ce.omni.output"),
+                EnergyRateText.rate(output, data.getLong("gt_eng_out_min"), data.getLong("gt_eng_out_max"), "KU"));
+        if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.engine.eff", EnergyRateText.percent(data.getInt(NBT_EFF)));
         int percent = gregtech.content.energy.BoilerGauge.percent(stored, capacity);
         if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.engine.ku_storage",
                 format(stored), format(capacity), percent);
@@ -231,12 +205,4 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         return String.format(Locale.US, "%,d", value);
     }
 
-    private static String formatEfficiency(int efficiency) {
-        long value = Math.abs(efficiency);
-        long whole = value / 100;
-        long frac = value % 100;
-        if (frac > 9) return whole + "." + frac + "%";
-        if (frac > 0) return whole + ".0" + frac + "%";
-        return whole + ".00%";
-    }
 }

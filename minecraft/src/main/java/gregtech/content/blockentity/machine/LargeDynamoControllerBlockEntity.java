@@ -69,6 +69,7 @@ public class LargeDynamoControllerBlockEntity extends AxialGeneratorBlockEntity 
         long accepted = Math.min(amount, (grade().inputMaximum() - energy) / size);
         if (execute && accepted > 0) {
             energy += accepted * size;
+            if (level != null) conversionMeter.input(level.getGameTime(), accepted * size);
             setChanged();
         }
         return accepted;

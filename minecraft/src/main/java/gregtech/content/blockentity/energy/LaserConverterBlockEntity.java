@@ -26,9 +26,9 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     private long energy;
     private boolean stopped;
     private boolean emitted;
-    private long lastInput, lastOutput;
-    public long lastInput() { return lastInput; }
-    public long lastOutput() { return lastOutput; }
+    private final gregtech.engine.energy.EnergyConversionMeter conversionMeter = new gregtech.engine.energy.EnergyConversionMeter();
+    public long lastInput() { return level == null ? 0 : conversionMeter.input(level.getGameTime()); }
+    public long lastOutput() { return level == null ? 0 : conversionMeter.output(level.getGameTime()); }
     private final gregtech.api.platform.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,
             ()->!this.stopped,value->{this.stopped=!value;setChanged();},()->getBlockState().getValue(LaserConverterBlock.ACTIVE),()->emitted);
     @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
@@ -42,7 +42,11 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
         public int receiveEnergy(int amount,boolean simulate) {
             if(stopped || amount<=0)return 0;
             int accepted=(int)Math.min(amount, spec().input()*2-energy);
-            if(!simulate && accepted>0){energy+=accepted;setChanged();}
+            if(!simulate && accepted>0){
+                energy+=accepted;
+                if(level!=null)conversionMeter.input(level.getGameTime(),accepted);
+                setChanged();
+            }
             return accepted;
         }
         public int extractEnergy(int amount,boolean simulate){return 0;}
@@ -62,10 +66,9 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     public void tick(){
         if(level==null||level.isClientSide)return;
         long output=LaserWorkRules.converted(spec(),energy);
-        lastInput=energy;
         boolean active=LaserWorkRules.active(spec(),output,stopped);
         emitted=active&&EnergyTransfer.emitEnergyToSide(spec().outputType(),front(),output,1,this)>0;
-        lastOutput=emitted?output:0;
+        if(emitted)conversionMeter.output(level.getGameTime(),output,1);
         // These four GT6 converters waste their per-tick supply even if their output is disconnected.
         if(energy!=0){energy=0;setChanged();}
         if(getBlockState().getValue(LaserConverterBlock.ACTIVE)!=active)
@@ -82,7 +85,11 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     @Override public long doInject(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute){
         if(size<=0||amount<=0||size>spec().input()*2||!isEnergyAcceptingFrom(type,side,false))return 0;
         long accepted=LaserWorkRules.packets(spec(),energy,size,amount);
-        if(execute&&accepted>0){energy+=size*accepted;setChanged();}
+        if(execute&&accepted>0){
+            energy+=size*accepted;
+            if(level!=null)conversionMeter.input(level.getGameTime(),size*accepted);
+            setChanged();
+        }
         return accepted;
     }
     @Override public long getEnergyStored(GregTechTags.Tag type,Direction side){return type==spec().inputType()?energy:0;}

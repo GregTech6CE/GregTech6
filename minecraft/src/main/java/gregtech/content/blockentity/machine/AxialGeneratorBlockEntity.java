@@ -25,6 +25,8 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     protected long energy;
     protected boolean stopped, overloaded;
     private boolean converting, emitted;
+    protected final gregtech.engine.energy.EnergyConversionMeter conversionMeter = new gregtech.engine.energy.EnergyConversionMeter();
+    public gregtech.engine.energy.EnergyConversionMeter conversionMeter() { return conversionMeter; }
     private boolean rotorFormed, rotorActive;
     private final gregtech.api.platform.machine.MachineControl control =
             gregtech.engine.machine.MachineControls.switchable(this,
@@ -203,6 +205,7 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
             converting = true;
             emitted = gregtech.engine.multiblock.StructureOutputs.energy(this,
                     gregtech.content.multiblock.OriginalMultiblockOutputRules.SHAFT, outputType(), output, 1) > 0;
+            if (emitted) conversionMeter.output(level.getGameTime(), output, 1);
         }
         energy = Math.max(0, energy - grade().inputMaximum());
         setChanged();
