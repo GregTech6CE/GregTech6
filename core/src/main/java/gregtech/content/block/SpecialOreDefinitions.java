@@ -17,6 +17,7 @@ public final class SpecialOreDefinitions {
             int maxXp) {}
 
     private static final Map<String, RockSpec> ROCKS = Map.ofEntries(
+            Map.entry("ore_anthracite", new RockSpec("Coal", 0, 0.5F, true)),
             Map.entry("ore_lignite", new RockSpec("Lignite", 0, 0.5F, true)),
             Map.entry("ore_salt", new RockSpec("NaCl", 1, 1.0F, false)),
             Map.entry("ore_rocksalt", new RockSpec("KCl", 1, 1.0F, false)),
@@ -57,6 +58,7 @@ public final class SpecialOreDefinitions {
             "crystal_ore_tetrahedrite",
             "ore_amber",
             "ore_amethyst",
+            "ore_anthracite",
             "ore_apatite",
             "ore_bastnasite",
             "ore_bauxite",

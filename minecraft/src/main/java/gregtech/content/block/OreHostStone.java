@@ -57,16 +57,8 @@ public enum OreHostStone implements StringRepresentable {
     PRISMARINE_DARK("stone_prismarine_dark", "PrismarineDark"),
     SLATE("stone_slate", "Slate"),
     SHALE("stone_shale", "Shale"),
-    CHALK("stone_chalk", "Chalk"),
-    DOLOMITE("stone_dolomite", "Dolomite"),
-    GABBRO("stone_gabbro", "Gabbro"),
-    GNEISS("stone_gneiss", "Gneiss"),
     GYPSUM("stone_gypsum", "Gypsum"),
-    OILSHALE("stone_oilshale", "OilShale"),
-    RHYOLITE("stone_rhyolite", "Rhyolite"),
-    SALT("stone_salt", "Salt"),
-    SYLVITE("stone_sylvite", "Sylvite"),
-    TALC("stone_talc", "Talc");
+    SALT("stone_salt", "Salt");
 
     /** {@code id -> value}, for parsing an id (an old block entity's tag, a block state property value). */
     private static final Map<String, OreHostStone> BY_ID = new LinkedHashMap<>();
@@ -127,5 +119,18 @@ public enum OreHostStone implements StringRepresentable {
         }
         OreHostStone stone = BY_ID.get(id);
         return stone == null ? STONE : stone;
+    }
+
+    /** Decode retired ore backgrounds while keeping the ore block and every other state property. */
+    public static net.minecraft.world.level.block.state.properties.EnumProperty<OreHostStone> property() {
+        return new net.minecraft.world.level.block.state.properties.EnumProperty<>(
+                "stone", OreHostStone.class, java.util.List.of(values())) {
+            @Override
+            public java.util.Optional<OreHostStone> getValue(String name) {
+                return gregtech.content.block.stone.RetiredStoneIds.isHost(name)
+                        ? java.util.Optional.of(STONE)
+                        : super.getValue(name);
+            }
+        };
     }
 }

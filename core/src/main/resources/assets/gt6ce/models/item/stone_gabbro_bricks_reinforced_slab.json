@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.gabbro/bricks_reinforced",
-    "top": "gt6ce:block/stones/gt.stone.gabbro/bricks_reinforced",
-    "side": "gt6ce:block/stones/gt.stone.gabbro/bricks_reinforced"
-  }
-}

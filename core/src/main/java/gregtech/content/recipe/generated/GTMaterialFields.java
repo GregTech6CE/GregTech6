@@ -344,8 +344,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("Latex", "Latex");
         BY_FIELD.put("Ash", "Ashes");
         BY_FIELD.put("DarkAsh", "Dark Ashes");
-        BY_FIELD.put("Chalk", "Chalk");
-        BY_FIELD.put("Dolomite", "Dolomite");
         BY_FIELD.put("Asbestos", "Asbestos");
         BY_FIELD.put("Talc", "Talc");
         BY_FIELD.put("Pyrite", "Pyrite");
@@ -748,13 +746,11 @@ public final class GTMaterialFields {
         BY_FIELD.put("Shale", "Shale");
         BY_FIELD.put("Komatiite", "Komatiite");
         BY_FIELD.put("Pumice", "Pumice");
-        BY_FIELD.put("Gabbro", "Gabbro");
         BY_FIELD.put("Basalt", "Basalt");
         BY_FIELD.put("Marble", "Marble");
         BY_FIELD.put("Limestone", "Limestone");
         BY_FIELD.put("Greenschist", "Greenschist");
         BY_FIELD.put("Blueschist", "Blueschist");
-        BY_FIELD.put("Gneiss", "Gneiss");
         BY_FIELD.put("Kimberlite", "Kimberlite");
         BY_FIELD.put("Quartzite", "Quartzite");
         BY_FIELD.put("GraniteRed", "GraniteRed");
@@ -763,7 +759,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("Andesite", "Andesite");
         BY_FIELD.put("Diorite", "Diorite");
         BY_FIELD.put("Blackstone", "Blackstone");
-        BY_FIELD.put("Rhyolite", "Rhyolite");
         BY_FIELD.put("Chert", "Chert");
         BY_FIELD.put("Dacite", "Dacite");
         BY_FIELD.put("Slate", "Slate");

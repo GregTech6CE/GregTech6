@@ -255,7 +255,6 @@ public final class MaterialModTags {
         ImportedMaterialData.STONES.Deepslate.mod(ModReferences.EtFu);
         ImportedMaterialData.STONES.Diorite.mod(ModReferences.EtFu);
         ImportedMaterialData.STONES.Endstone.mod(ModReferences.MC);
-        ImportedMaterialData.STONES.Gneiss.mod(ModReferences.ERE);
         ImportedMaterialData.STONES.Livingrock.mod(ModReferences.BOTA);
         ImportedMaterialData.STONES.Marble.mod(ModReferences.RP);
         ImportedMaterialData.STONES.MarsSand.mod(ModReferences.GC);

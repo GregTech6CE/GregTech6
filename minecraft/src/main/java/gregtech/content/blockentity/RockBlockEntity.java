@@ -92,6 +92,7 @@ public class RockBlockEntity extends BlockEntity {
 
     public void setMaterial(String material) {
         if (material == null || material.isEmpty()) material = DEFAULT_MATERIAL;
+        material = gregtech.content.block.stone.RetiredStoneIds.material(material);
         if (this.material.equals(material)) return;
         this.material = material;
         setChanged();
@@ -109,10 +110,20 @@ public class RockBlockEntity extends BlockEntity {
         super.load(tag);
 //?}
         String s = tag.getString(TAG_MATERIAL);
+        boolean retired = gregtech.content.block.stone.RetiredStoneIds.isMaterial(s);
+        s = gregtech.content.block.stone.RetiredStoneIds.material(s);
         boolean changed = !s.isEmpty() && !s.equals(material) || rawOre != tag.getBoolean(TAG_RAW_ORE);
         if (!s.isEmpty()) material = s;
-        rawOre = tag.getBoolean(TAG_RAW_ORE);
+        rawOre = !retired && tag.getBoolean(TAG_RAW_ORE);
         itemId = tag.getString(TAG_ITEM);
+        if (retired) itemId = "";
+        else if (itemId.startsWith("gt6ce:")
+                && !gregtech.content.block.stone.RetiredStoneIds.materialPath(itemId).equals(itemId)) {
+            material = DEFAULT_MATERIAL;
+            rawOre = false;
+            itemId = "";
+            changed = true;
+        }
         count = tag.contains(TAG_COUNT) ? Math.max(1, Math.min(64, tag.getInt(TAG_COUNT))) : 1;
         if (changed && level != null && level.isClientSide) {
             requestModelDataUpdate();

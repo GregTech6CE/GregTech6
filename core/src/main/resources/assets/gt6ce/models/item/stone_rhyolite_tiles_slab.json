@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.rhyolite/tiles",
-    "top": "gt6ce:block/stones/gt.stone.rhyolite/tiles",
-    "side": "gt6ce:block/stones/gt.stone.rhyolite/tiles"
-  }
-}

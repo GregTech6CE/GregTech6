@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.sylvite/smooth",
-    "top": "gt6ce:block/stones/gt.stone.sylvite/smooth",
-    "side": "gt6ce:block/stones/gt.stone.sylvite/smooth"
-  }
-}

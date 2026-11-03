@@ -83,7 +83,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                                 WorldgenInfoData.veinMaterials(vein).stream()
                                         .map(material -> WorldgenInfoData.stratumStack(vein, material))
                                         .toList(),
-                                List.of(),
+                                WorldgenInfoData.stratumStones(vein),
                                 WorldgenInfoData.stratumCaptions(vein))
                         .withAliases(WorldgenInfoData.veinAliases(vein))
                         .withOutputTooltips(WorldgenInfoData.veinMaterials(vein).stream()

@@ -43,10 +43,6 @@ public final class MaterialOreProcessing {
         Compounds.FluoriteOrange.setSmelting(Compounds.CaF2, GregTechConstants.U);
         Compounds.FluoriteMagenta.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.FluoriteMagenta.setSmelting(Compounds.CaF2, GregTechConstants.U);
-        Ores.Chalk.put(MaterialProperty.GENERATE_ORE_PROCESSING);
-        Ores.Chalk.setSmelting(Ores.CaCO3, 2 * GregTechConstants.U3);
-        Ores.Dolomite.put(MaterialProperty.GENERATE_ORE_PROCESSING);
-        Ores.Dolomite.setSmelting(Ores.CaCO3, GregTechConstants.U2);
         Compounds.Bark.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.Bark.setSmelting(Compounds.Ash, GregTechConstants.U4);
         Woods.Wood.put(MaterialProperty.GENERATE_ORE_PROCESSING);

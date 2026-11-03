@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.rhyolite/windmill_tiles_b",
-    "top": "gt6ce:block/stones/gt.stone.rhyolite/windmill_tiles_b",
-    "side": "gt6ce:block/stones/gt.stone.rhyolite/windmill_tiles_b"
-  }
-}

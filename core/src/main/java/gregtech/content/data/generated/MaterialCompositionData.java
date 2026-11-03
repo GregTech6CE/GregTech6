@@ -429,11 +429,6 @@ public final class MaterialCompositionData {
                 MaterialComponent.of(GTMaterialRegistry.get("Glyceryl"), GTValues.U * 1),
                 MaterialComponent.of(GTMaterialRegistry.get("Fuel"), GTValues.U * 4));
 
-        bind("Chalk", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("CaCO3"), GTValues.U * 1));
-        bind("Dolomite", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("CaCO3"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("MgCO3"), GTValues.U * 1));
         bind("Asbestos", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("Mg"), GTValues.U * 3),
                 MaterialComponent.of(GTMaterialRegistry.get("SiO2"), GTValues.U * 6),
@@ -1457,11 +1452,6 @@ public final class MaterialCompositionData {
                 MaterialComponent.of(GTMaterialRegistry.get("MgCO3"), GTValues.U * 2),
                 MaterialComponent.of(GTMaterialRegistry.get("Flint"), GTValues.U * 4),
                 MaterialComponent.of(GTMaterialRegistry.get("DarkAsh"), GTValues.U * 2));
-        bind("Gabbro", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("Peridot"), GTValues.U * 1),
-                MaterialComponent.of(GTMaterialRegistry.get("CaCO3"), GTValues.U * 3),
-                MaterialComponent.of(GTMaterialRegistry.get("Flint"), GTValues.U * 8),
-                MaterialComponent.of(GTMaterialRegistry.get("DarkAsh"), GTValues.U * 4));
         bind("Basalt", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("Peridot"), GTValues.U * 1),
                 MaterialComponent.of(GTMaterialRegistry.get("CaCO3"), GTValues.U * 3),

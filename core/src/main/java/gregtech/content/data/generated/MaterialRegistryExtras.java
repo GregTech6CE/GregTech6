@@ -464,7 +464,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Cerium", "Cerium");
         GTMaterialRegistry.setDisplayName("CertusQuartz", "Certus Quartz");
         GTMaterialRegistry.setDisplayName("Chalcopyrite", "Chalcopyrite");
-        GTMaterialRegistry.setDisplayName("Chalk", "Chalk");
         GTMaterialRegistry.setDisplayName("Charcoal", "Charcoal");
         GTMaterialRegistry.setDisplayName("ChargedCertusQuartz", "Charged Certus Quartz");
         GTMaterialRegistry.setDisplayName("Cheese", "Cheese");
@@ -530,7 +529,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Dioptase", "Dioptase");
         GTMaterialRegistry.setDisplayName("Diorite", "Diorite");
         GTMaterialRegistry.setDisplayName("DisulfuricAcid", "Disulfuric Acid");
-        GTMaterialRegistry.setDisplayName("Dolomite", "Dolomite");
         GTMaterialRegistry.setDisplayName("DominicanAmber", "Dominican Amber");
         GTMaterialRegistry.setDisplayName("Draconium", "Draconium");
         GTMaterialRegistry.setDisplayName("DraconiumAwakened", "DraconiumAwakened");
@@ -591,7 +589,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("FreshWater", "Fresh Water");
         GTMaterialRegistry.setDisplayName("FryingOilHot", "FryingOilHot");
         GTMaterialRegistry.setDisplayName("Fuel", "Fuel");
-        GTMaterialRegistry.setDisplayName("Gabbro", "Gabbro");
         GTMaterialRegistry.setDisplayName("Gadolinium", "Gadolinium");
         GTMaterialRegistry.setDisplayName("GaiaSpirit", "Gaia Spirit");
         GTMaterialRegistry.setDisplayName("Galena", "Galena");
@@ -605,7 +602,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Glue", "Glue");
         GTMaterialRegistry.setDisplayName("Glycerol", "Glycerol");
         GTMaterialRegistry.setDisplayName("Glyceryl", "Glyceryl");
-        GTMaterialRegistry.setDisplayName("Gneiss", "Gneiss");
         GTMaterialRegistry.setDisplayName("Gold", "Gold");
         GTMaterialRegistry.setDisplayName("Gold198", "Gold-198");
         GTMaterialRegistry.setDisplayName("Goshenite", "Goshenite");
@@ -878,7 +874,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Redstone", "Redstone");
         GTMaterialRegistry.setDisplayName("Rhenium", "Rhenium");
         GTMaterialRegistry.setDisplayName("Rhodium", "Rhodium");
-        GTMaterialRegistry.setDisplayName("Rhyolite", "Rhyolite");
         GTMaterialRegistry.setDisplayName("Roentgenium", "Roentgenium");
         GTMaterialRegistry.setDisplayName("RoseGold", "Rose Gold");
         GTMaterialRegistry.setDisplayName("Rubber", "Rubber");

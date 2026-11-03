@@ -59,7 +59,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         private final IDrawable background, icon, slot;
 
         public VeinCategory(IGuiHelper gui) {
-            int maxOres = buildVeins().stream().mapToInt(vein -> veinMaterials(vein).size()).max().orElse(4);
+            int maxOres = buildVeins().stream().mapToInt(vein -> veinMaterials(vein).size() + stratumStones(vein).size()).max().orElse(4);
             this.background = gui.createBlankDrawable(176, 66 + ((maxOres + 7) / 8) * 18);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
@@ -74,12 +74,18 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public void setRecipe(IRecipeLayoutBuilder builder, VeinInfo vein, IFocusGroup focuses) {
             builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(veinAliases(vein));
             if (vein.layer() != null) {
+                var stones = stratumStones(vein);
+                for (int i = 0; i < stones.size(); i++) {
+                    builder.addSlot(RecipeIngredientRole.CATALYST, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
+                            .setBackground(slot, -1, -1).addItemStack(stones.get(i));
+                }
                 var materials = veinMaterials(vein);
                 for (int i = 0; i < materials.size(); i++) {
                     GTMaterial material = materials.get(i);
                     var captions = new ArrayList<>(stratumOreCaptions(vein, material));
                     captions.addAll(stratumCaptions(vein));
-                    builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
+                    int index = i + stones.size();
+                    builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (index % 8) * 18, 1 + (index / 8) * 18)
                             .setBackground(slot, -1, -1).addItemStack(stratumStack(vein, material))
                             .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
                 }
@@ -97,7 +103,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public void draw(VeinInfo vein, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
             if (vein.layer() != null) {
-                int y = 4 + ((veinMaterials(vein).size() + 7) / 8) * 18;
+                int y = 4 + ((veinMaterials(vein).size() + stratumStones(vein).size() + 7) / 8) * 18;
                 for (Component caption : stratumCaptions(vein)) {
                     g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
                     y += 10;

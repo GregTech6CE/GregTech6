@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.chalk/bricks_redstone",
-    "top": "gt6ce:block/stones/gt.stone.chalk/bricks_redstone",
-    "side": "gt6ce:block/stones/gt.stone.chalk/bricks_redstone"
-  }
-}

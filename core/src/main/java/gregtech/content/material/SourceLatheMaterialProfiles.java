@@ -815,7 +815,6 @@ public final class SourceLatheMaterialProfiles {
             9109|Realgar|0011
             9110|Celestine|0000
             9111|Chalcopyrite|0010
-            9112|Chalk|0010
             9113|Chromite|0000
             9114|Cinnabar|0001
             9115|Cobaltite|0000
@@ -863,19 +862,15 @@ public final class SourceLatheMaterialProfiles {
             9160|Barite|0000
             9161|Gypsum|0000
             9162|Alunite|0000
-            9163|Dolomite|0010
             9164|Wollastonite|0000
             9165|Zeolite|0000
             9166|Kyanite|0000
             9167|Kaolinite|0000
             9169|Talc|0000
-            9170|Gneiss|0010
             9171|Greenschist|0010
             9174|Graphite|0000
             9175|Graphene|0000
-            9176|Gabbro|0010
             9177|Komatiite|0010
-            9179|Rhyolite|0010
             9180|Quartzite|0010
             9184|Blueschist|0010
             9185|Bluestone|0010

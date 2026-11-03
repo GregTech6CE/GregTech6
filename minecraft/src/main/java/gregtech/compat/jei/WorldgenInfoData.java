@@ -92,7 +92,8 @@ public class WorldgenInfoData {
         if (gregtech.content.worldgen.GTWorldgenDefaults.STONE_LAYERS) {
             java.util.Set<String> seen = new java.util.HashSet<>();
             for (GTStoneLayersGen.LayerDef layer : GTStoneLayersGen.LAYERS) {
-                appendStratumOres(out, seen, layer.material(), null, false, layer.noDeep(), layer.ores());
+                appendStratumOres(out, seen, layer.material(), null, false, layer.noDeep(),
+                        List.of(layerStone(layer)), layer.ores());
             }
             // The generator concatenates all rules for the same directional contact.
             record Contact(String above, String below) {}
@@ -101,13 +102,44 @@ public class WorldgenInfoData {
                 contacts.computeIfAbsent(new Contact(contact.materialA(), contact.materialB()), key -> new ArrayList<>()).addAll(contact.ores());
                 if (contact.bothSides()) contacts.computeIfAbsent(new Contact(contact.materialB(), contact.materialA()), key -> new ArrayList<>()).addAll(contact.ores());
             }
-            contacts.forEach((contact, ores) -> appendStratumOres(out, seen, contact.above(), contact.below(), false, false, ores));
+            contacts.forEach((contact, ores) -> appendStratumOres(out, seen, contact.above(), contact.below(),
+                    false, false, contactStones(contact.above(), contact.below()), ores));
         }
         return out;
     }
 
     public record StratumOre(GTMaterial material, int minY, int maxY, int chanceDiv, gregtech.content.worldgen.StoneLayerOreRules.Rule rule) {}
-    public record StratumInfo(Component host, boolean contact, List<StratumOre> ores) {}
+    public record StratumInfo(Component host, boolean contact, List<ItemStack> stones, List<StratumOre> ores) {}
+
+    private static ItemStack layerStone(GTStoneLayersGen.LayerDef layer) {
+        if (layer.stoneType() != null) {
+            var type = gregtech.content.block.stone.StoneType.valueOf(layer.stoneType());
+            return new ItemStack(gregtech.content.registry.GTBlocks.getStoneState(type,
+                    gregtech.content.block.stone.StoneVariant.STONE).getBlock());
+        }
+        if (layer.blockId() != null) {
+            Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", layer.blockId()));
+            if (item != Items.AIR) return new ItemStack(item);
+        }
+        return new ItemStack(Items.STONE);
+    }
+
+    private static List<ItemStack> contactStones(String above, String below) {
+        var stones = new java.util.LinkedHashMap<Item, ItemStack>();
+        for (String material : List.of(above, below)) {
+            for (var layer : GTStoneLayersGen.LAYERS) {
+                if (!layer.material().equals(material)) continue;
+                ItemStack stone = layerStone(layer);
+                stones.putIfAbsent(stone.getItem(), stone);
+            }
+        }
+        return List.copyOf(stones.values());
+    }
+
+    public static List<ItemStack> stratumStones(VeinInfo vein) {
+        return vein.layer() == null ? List.of() : vein.layer().stones();
+    }
 
     private static Component materialName(String name) {
         GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(name);
@@ -117,6 +149,7 @@ public class WorldgenInfoData {
 
     private static void appendStratumOres(List<VeinInfo> out, java.util.Set<String> seen,
                                           String above, String below, boolean bothSides, boolean noDeep,
+                                          List<ItemStack> stones,
                                           List<GTStoneLayersGen.OreDef> definitions) {
         Component host = below == null ? materialName(above)
                 : Component.translatable("gt6ce.jei.info.contact_" + (bothSides ? "both" : "ordered"),
@@ -137,12 +170,12 @@ public class WorldgenInfoData {
         }
         if (ores.isEmpty()) return;
         // Preserve the entire ordered combination, including separate height bands for one mineral.
-        String key = above + "/" + below + "/" + bothSides + "/" + ores;
+        String key = above + "/" + below + "/" + bothSides + "/" + stones + "/" + ores;
         if (!seen.add(key)) return;
         int min = ores.stream().mapToInt(StratumOre::minY).min().orElseThrow();
         int max = ores.stream().mapToInt(StratumOre::maxY).max().orElseThrow();
         out.add(new VeinInfo(above, "minecraft:overworld", min, max, 0, 0,
-                null, null, null, null, false, new StratumInfo(host, below != null, List.copyOf(ores))));
+                null, null, null, null, false, new StratumInfo(host, below != null, stones, List.copyOf(ores))));
     }
 
     public static List<GTMaterial> veinMaterials(VeinInfo vein) {
@@ -159,7 +192,7 @@ public class WorldgenInfoData {
     }
 
     public static List<ItemStack> veinAliases(VeinInfo vein) {
-        List<ItemStack> aliases = new ArrayList<>();
+        List<ItemStack> aliases = new ArrayList<>(stratumStones(vein));
         for (GTMaterial material : veinMaterials(vein)) {
             var rule = vein.layer() == null ? null : vein.layer().ores().stream()
                     .filter(ore -> ore.material() == material).findFirst().orElseThrow().rule();
@@ -241,10 +274,7 @@ public class WorldgenInfoData {
         return List.of(
                 Component.translatable("gt6ce.jei.info.layer_stone", info.host()),
                 Component.translatable("gt6ce.jei.info.dimension", vein.dimension()),
-                Component.translatable("gt6ce.jei.info.height", vein.minY(), vein.maxY()),
-                Component.translatable("gt6ce.jei.info.stratum_hover"),
-                Component.translatable("gt6ce.jei.info.stratum_conditional"),
-                Component.translatable("gt6ce.jei.info." + (info.contact() ? "stratum_contact" : "stratum_interior")));
+                Component.translatable("gt6ce.jei.info.height", vein.minY(), vein.maxY()));
     }
 
     public static List<SmallOreInfo> buildSmallOres() {

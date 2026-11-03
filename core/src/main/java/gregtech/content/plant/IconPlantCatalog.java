@@ -110,6 +110,7 @@ public final class IconPlantCatalog {
         "mud",
         "ore_amber",
         "ore_amethyst",
+        "ore_anthracite",
         "ore_apatite",
         "ore_bastnasite",
         "ore_bauxite",

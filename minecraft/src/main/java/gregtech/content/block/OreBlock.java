@@ -81,7 +81,7 @@ import java.util.List;
  */
 public class OreBlock extends Block implements MaterialBlockLike {
     /** The host rock of this ore — {@link OreHostStone#STONE} unless worldgen placed it elsewhere. */
-    public static final EnumProperty<OreHostStone> STONE = EnumProperty.create("stone", OreHostStone.class);
+    public static final EnumProperty<OreHostStone> STONE = OreHostStone.property();
     /** GT6's broken-host ore (the bedrock drill product) without another block per material. */
     public static final BooleanProperty BROKEN = BooleanProperty.create("broken");
 

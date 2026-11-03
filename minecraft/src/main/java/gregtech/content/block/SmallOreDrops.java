@@ -18,7 +18,7 @@ public final class SmallOreDrops {
         fortune = Math.max(0, Math.min(255, fortune));
         int multiplier = Math.max(1, material.getOreMultiplier() * material.getOreProcessingMultiplier());
         var result = new ArrayList<ItemStack>();
-        if (material.getName().equals("Gneiss") || material.getName().equals("PetrifiedWood")) {
+        if (material.getName().equals("PetrifiedWood")) {
             var rock = GTItems.getStack(MaterialPrefix.rockGt, material);
             int count = Math.max(
                     1,

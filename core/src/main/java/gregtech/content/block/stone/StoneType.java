@@ -106,39 +106,9 @@ public enum StoneType {
             false),
     SLATE("slate", "gt.stone.slate", gregtech.content.material.generated.StoneMaterials.Slate, 0.75F, 0.50F, 1, false),
     SHALE("shale", "gt.stone.shale", gregtech.content.material.generated.StoneMaterials.Shale, 0.75F, 0.50F, 0, false),
-    // Stones from the GT6 worldgen config without shipped art (textures synthesized
-    // from the limestone set tinted with the material color, see tools/generate_stone_textures.py)
-    CHALK("chalk", "gt.stone.chalk", Materials.Chalk, 0.75F, 0.50F, 0, false),
-    DOLOMITE("dolomite", "gt.stone.dolomite", Materials.Dolomite, 0.75F, 0.50F, 0, false),
-    GABBRO(
-            "gabbro",
-            "gt.stone.gabbro",
-            gregtech.content.material.generated.StoneMaterials.Gabbro,
-            3.0F,
-            2.0F,
-            2,
-            false),
-    GNEISS(
-            "gneiss",
-            "gt.stone.gneiss",
-            gregtech.content.material.generated.StoneMaterials.Gneiss,
-            2.0F,
-            1.0F,
-            1,
-            false),
+    // These strata use material-tinted limestone textures.
     GYPSUM("gypsum", "gt.stone.gypsum", Materials.Gypsum, 0.75F, 0.50F, 0, false),
-    OILSHALE("oilshale", "gt.stone.oilshale", Materials.OilShale, 0.75F, 0.50F, 0, false),
-    RHYOLITE(
-            "rhyolite",
-            "gt.stone.rhyolite",
-            gregtech.content.material.generated.StoneMaterials.Rhyolite,
-            2.0F,
-            1.0F,
-            1,
-            false),
-    SALT("salt", "gt.stone.salt", Materials.Salt, 0.75F, 0.50F, 0, false),
-    SYLVITE("sylvite", "gt.stone.sylvite", Materials.Sylvite, 0.75F, 0.50F, 0, false),
-    TALC("talc", "gt.stone.talc", Materials.Talc, 0.75F, 0.50F, 0, false);
+    SALT("salt", "gt.stone.salt", Materials.Salt, 0.75F, 0.50F, 0, false);
 
     private final String id;
     private final String textureFolder;

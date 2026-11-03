@@ -545,7 +545,6 @@ public final class SourceExtrusionRules {
             9109|Realgar|000||648648000
             9110|Celestine|000||648648000
             9111|Chalcopyrite|000||648648000
-            9112|Chalk|000||648648000
             9113|Chromite|000||648648000
             9114|Cinnabar|000||648648000
             9115|Cobaltite|000||648648000
@@ -593,19 +592,15 @@ public final class SourceExtrusionRules {
             9160|Barite|000||648648000
             9161|Gypsum|000||648648000
             9162|Alunite|000||648648000
-            9163|Dolomite|000||648648000
             9164|Wollastonite|000||648648000
             9165|Zeolite|000||648648000
             9166|Kyanite|000||648648000
             9167|Kaolinite|000||648648000
             9169|Talc|000||648648000
-            9170|Gneiss|110||648648000
             9171|Greenschist|110||648648000
             9174|Graphite|000||648648000
             9175|Graphene|000||648648000
-            9176|Gabbro|110||648648000
             9177|Komatiite|110||648648000
-            9179|Rhyolite|110||648648000
             9180|Quartzite|110||648648000
             9184|Blueschist|110||648648000
             9185|Bluestone|110||648648000

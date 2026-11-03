@@ -126,7 +126,6 @@ public final class Materials {
     public static final GTMaterial Ceramic = CompoundMaterials.Ceramic;
     public static final GTMaterial Cerium = ElementMaterials.Cerium;
     public static final GTMaterial CertusQuartz = CompoundMaterials.CertusQuartz;
-    public static final GTMaterial Chalk = OreMaterials.Chalk;
     public static final GTMaterial Charcoal = CompoundMaterials.Charcoal;
     public static final GTMaterial ChargedCertusQuartz = CompoundMaterials.ChargedCertusQuartz;
     public static final GTMaterial Cheese = CompoundMaterials.Cheese;
@@ -175,7 +174,6 @@ public final class Materials {
     public static final GTMaterial Diesel = CompoundMaterials.Diesel;
     public static final GTMaterial Dioptase = CompoundMaterials.Dioptase;
     public static final GTMaterial DisulfuricAcid = CompoundMaterials.DisulfuricAcid;
-    public static final GTMaterial Dolomite = OreMaterials.Dolomite;
     public static final GTMaterial DominicanAmber = CompoundMaterials.DominicanAmber;
     public static final GTMaterial Draconium = CompoundMaterials.Draconium;
     public static final GTMaterial DraconiumAwakened = CompoundMaterials.DraconiumAwakened;

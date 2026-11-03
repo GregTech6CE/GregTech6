@@ -620,8 +620,6 @@ public final class GT6Materials {
         public static final GTMaterial KNO3                  = gregtech.content.material.generated.OreMaterials.PotassiumNitrate;
         public static final GTMaterial Oilsands              = gregtech.content.material.generated.OreMaterials.OilSand;
         public static final GTMaterial CrudeOil              = gregtech.content.material.generated.OreMaterials.CrudeOil;
-        public static final GTMaterial Chalk                 = gregtech.content.material.generated.OreMaterials.Chalk;
-        public static final GTMaterial Dolomite              = gregtech.content.material.generated.OreMaterials.Dolomite;
         public static final GTMaterial Asbestos              = gregtech.content.material.generated.OreMaterials.Asbestos;
         public static final GTMaterial Talc                  = gregtech.content.material.generated.OreMaterials.Talc;
         public static final GTMaterial Pyrite                = gregtech.content.material.generated.OreMaterials.Pyrite;
@@ -730,18 +728,15 @@ public final class GT6Materials {
         public static final GTMaterial Shale           = gregtech.content.material.generated.StoneMaterials.Shale;
         public static final GTMaterial Komatiite       = gregtech.content.material.generated.StoneMaterials.Komatiite;
         public static final GTMaterial Pumice          = gregtech.content.material.generated.StoneMaterials.Pumice;
-        public static final GTMaterial Gabbro          = gregtech.content.material.generated.StoneMaterials.Gabbro;
         public static final GTMaterial Basalt          = gregtech.content.material.generated.StoneMaterials.Basalt;
         public static final GTMaterial Marble          = gregtech.content.material.generated.StoneMaterials.Marble;
         public static final GTMaterial Limestone       = gregtech.content.material.generated.StoneMaterials.Limestone;
         public static final GTMaterial Greenschist     = gregtech.content.material.generated.StoneMaterials.Greenschist;
         public static final GTMaterial Blueschist      = gregtech.content.material.generated.StoneMaterials.Blueschist;
-        public static final GTMaterial Gneiss          = gregtech.content.material.generated.StoneMaterials.Gneiss;
         public static final GTMaterial Kimberlite      = gregtech.content.material.generated.StoneMaterials.Kimberlite;
         public static final GTMaterial Quartzite       = gregtech.content.material.generated.StoneMaterials.Quartzite;
         public static final GTMaterial Andesite        = gregtech.content.material.generated.StoneMaterials.Andesite;
         public static final GTMaterial Diorite         = gregtech.content.material.generated.StoneMaterials.Diorite;
-        public static final GTMaterial Rhyolite        = gregtech.content.material.generated.StoneMaterials.Rhyolite;
         public static final GTMaterial Chert           = gregtech.content.material.generated.StoneMaterials.Chert;
         public static final GTMaterial Dacite          = gregtech.content.material.generated.StoneMaterials.Dacite;
         public static final GTMaterial Slate           = gregtech.content.material.generated.StoneMaterials.Slate;

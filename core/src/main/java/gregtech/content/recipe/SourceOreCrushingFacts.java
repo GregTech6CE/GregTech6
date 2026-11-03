@@ -133,7 +133,6 @@ public final class SourceOreCrushingFacts {
         host(result, "oreSlate", 9222, "Slate", false, "stone_slate"); // OP697, MT3841
         host(result, "oreGreenschist", 9171, "Greenschist", false, "stone_greenschist"); // OP698, MT3822
         host(result, "oreBlueschist", 9184, "Blueschist", false, "stone_blueschist"); // OP699, MT3823
-        host(result, "oreGneiss", 9170, "Gneiss", false, "stone_gneiss"); // OP702, MT3826
         host(result, "oreLightprismarine", 9219, "Prismarine", false, "stone_prismarine_light"); // OP703, MT1639
         host(result, "oreDarkprismarine", 9220, "PrismarineDark", false, "stone_prismarine_dark"); // OP704, MT1640
         host(result, "oreKimberlite", 9218, "Kimberlite", false, "stone_kimberlite"); // OP705, MT3827
@@ -145,15 +144,8 @@ public final class SourceOreCrushingFacts {
         // (GT6's WD.setOre does not place ores in them), so the reference dump has no rows for them.
         // The port's block-state model does place ores in every StoneType, so each gets the same
         // 4U self-gangue profile as the reviewed hosts; the prefix names are port-local, not GT6.
-        portHost(result, "chalk", 9112, "Chalk");
-        portHost(result, "dolomite", 9163, "Dolomite");
-        portHost(result, "gabbro", 9176, "Gabbro");
         portHost(result, "gypsum", 9161, "Gypsum");
-        portHost(result, "oilshale", 9853, "OilShale");
-        portHost(result, "rhyolite", 9179, "Rhyolite");
         portHost(result, "salt", 8204, "Salt");
-        portHost(result, "sylvite", 8203, "Sylvite");
-        portHost(result, "talc", 9169, "Talc");
         return Map.copyOf(result);
     }
 

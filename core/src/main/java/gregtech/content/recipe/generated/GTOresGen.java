@@ -123,7 +123,7 @@ final class GTOresGen {
         // Pinned Loader_Recipes_Ores:314/317/320 (W:318/321/324). Exact own
         // BlocksGT.Sands metadata identities, NOT generic blockDust or optional PFAA/RH sands.
         GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 288, ch(7500, 5000, 2500, 2500, 2500), sp("tech:sand_magnetite:1"), NONE, NONE, sp("i:dust:Deepslate:6", "i:dust:RedSand:3", "i:dustTiny:V2O5:12", "i:dustTiny:Sn:6", "i:dustTiny:Zn:3"));
-        GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 288, ch(7500, 5000, 2500, 2500, 2500), sp("tech:sand_basalt_magnetite:1"), NONE, NONE, sp("i:dust:Gabbro:6", "i:dust:RedSand:3", "i:dustTiny:V2O5:12", "i:dustTiny:Cu:6", "i:dustTiny:Ni:3"));
+        GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 288, ch(7500, 5000, 2500, 2500, 2500), sp("tech:sand_basalt_magnetite:1"), NONE, NONE, sp("i:dust:Basalt:6", "i:dust:RedSand:3", "i:dustTiny:V2O5:12", "i:dustTiny:Cu:6", "i:dustTiny:Ni:3"));
         GeneratedRecipeSink.registerSource(true, "Centrifuge", 16, 288, ch(7500, 5000, 2500, 2500, 2500), sp("tech:sand_granite_magnetite:1"), NONE, NONE, sp("i:dust:GraniteBlack:6", "i:dust:RedSand:3", "i:dustTiny:V2O5:12", "i:dustTiny:Pb:6", "i:dustTiny:Co:3"));
 
         // Loader_Recipes_Ores:43 / W:47: two output slots; named TE > IE > FZ > Ash.

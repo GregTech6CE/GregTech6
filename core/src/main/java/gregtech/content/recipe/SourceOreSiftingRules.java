@@ -171,7 +171,6 @@ public final class SourceOreSiftingRules {
         gradePair(rows, new Material(500, "Tin"), new Material(8419, "Zircon"), 286);
         gradePair(rows, new Material(9108, "Cassiterite"), new Material(8419, "Zircon"), 288);
         fossilPair(rows, BONE, 292);
-        fossilPair(rows, new Material(9163, "Dolomite"), 294);
         certusPair(rows, CHARGED_CERTUS, true, 298);
         certusPair(rows, CERTUS, false, 300);
         quartzPair(rows, new Material(8346, "NetherQuartz"), 302);

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.talc/bricks_mossy",
-    "top": "gt6ce:block/stones/gt.stone.talc/bricks_mossy",
-    "side": "gt6ce:block/stones/gt.stone.talc/bricks_mossy"
-  }
-}

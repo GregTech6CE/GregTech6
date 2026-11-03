@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.oilshale/small_tiles",
-    "top": "gt6ce:block/stones/gt.stone.oilshale/small_tiles",
-    "side": "gt6ce:block/stones/gt.stone.oilshale/small_tiles"
-  }
-}

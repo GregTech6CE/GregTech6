@@ -785,7 +785,6 @@ public final class SourceRecyclingFacts {
         row(rows, 9109, "Realgar", M | F, 330, U / 3, 3708);
         row(rows, 9110, "Celestine", M | B, 380, U / 9, 3723);
         row(rows, 9111, "Chalcopyrite", M | F, 290, 2 * U / 9, 3714);
-        row(rows, 9112, "Chalk", M | F, 9107, 2 * U / 3, 1233);
     }
 
     private static void seeds7(List<Seed> rows) {
@@ -836,19 +835,15 @@ public final class SourceRecyclingFacts {
         row(rows, 9160, "Barite", M | B, 560, U / 9, 3722);
         row(rows, 9161, "Gypsum", 0, 9161, U, 1106);
         row(rows, 9162, "Alunite", B, 9162, U, 3775);
-        row(rows, 9163, "Dolomite", M | F, 9107, U / 2, 1234);
         row(rows, 9164, "Wollastonite", B, 9164, U, 3735);
         row(rows, 9165, "Zeolite", B, 9165, U, 3737);
         row(rows, 9166, "Kyanite", B, 9166, U, 3774);
         row(rows, 9167, "Kaolinite", M, 8225, U, 1286);
         row(rows, 9169, "Talc", 0, 9169, U, 1236);
-        row(rows, 9170, "Gneiss", F, 9170, U, 3826);
         row(rows, 9171, "Greenschist", F, 9171, U, 3822);
         row(rows, 9174, "Graphite", M | B, 60, U / 2, 1292);
         row(rows, 9175, "Graphene", M | B, 60, U / 2, 1535);
-        row(rows, 9176, "Gabbro", F, 9176, U, 3818);
         row(rows, 9177, "Komatiite", F, 9177, U, 3816);
-        row(rows, 9179, "Rhyolite", F, 9179, U, 3837);
         row(rows, 9180, "Quartzite", M | B | F, 8000, U, 3828);
         row(rows, 9184, "Blueschist", F, 9184, U, 3823);
         row(rows, 9185, "Bluestone", F, 9185, U, 1643);

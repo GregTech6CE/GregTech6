@@ -300,7 +300,6 @@ public final class MaterialDecompositionData {
         bind(9109, "Realgar", DECOMPOSABLE);
         bind(9110, "Celestine", DECOMPOSABLE, ELECTROLYSER);
         bind(9111, "Chalcopyrite", DECOMPOSABLE);
-        bind(9112, "Chalk", DECOMPOSABLE, ELECTROLYSER);
         bind(9113, "Chromite", DECOMPOSABLE, ELECTROLYSER);
         bind(9114, "Cinnabar", DECOMPOSABLE, CENTRIFUGE);
         bind(9115, "Cobaltite", DECOMPOSABLE);
@@ -348,7 +347,6 @@ public final class MaterialDecompositionData {
         bind(9160, "Barite", DECOMPOSABLE, ELECTROLYSER);
         bind(9161, "Gypsum", DECOMPOSABLE);
         bind(9162, "Alunite", DECOMPOSABLE, ELECTROLYSER);
-        bind(9163, "Dolomite", DECOMPOSABLE, CENTRIFUGE);
         bind(9164, "Wollastonite", DECOMPOSABLE, ELECTROLYSER);
         bind(9165, "Zeolite", DECOMPOSABLE, ELECTROLYSER);
         bind(9166, "Kyanite", DECOMPOSABLE, ELECTROLYSER);
@@ -356,7 +354,6 @@ public final class MaterialDecompositionData {
         bind(9169, "Talc", DECOMPOSABLE, ELECTROLYSER);
         bind(9174, "Graphite", DECOMPOSABLE);
         bind(9175, "Graphene", DECOMPOSABLE);
-        bind(9176, "Gabbro", DECOMPOSABLE, CENTRIFUGE);
         bind(9177, "Komatiite", DECOMPOSABLE, CENTRIFUGE);
         bind(9189, "Limestone", DECOMPOSABLE, CENTRIFUGE);
         bind(9190, "Shale", DECOMPOSABLE, CENTRIFUGE);

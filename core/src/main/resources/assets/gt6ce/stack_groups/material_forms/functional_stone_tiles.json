@@ -5,11 +5,7 @@
     "item:gt6ce:stone_andesite_tiles",
     "item:gt6ce:stone_basalt_tiles",
     "item:gt6ce:stone_blueschist_tiles",
-    "item:gt6ce:stone_chalk_tiles",
     "item:gt6ce:stone_diorite_tiles",
-    "item:gt6ce:stone_dolomite_tiles",
-    "item:gt6ce:stone_gabbro_tiles",
-    "item:gt6ce:stone_gneiss_tiles",
     "item:gt6ce:stone_granite_black_tiles",
     "item:gt6ce:stone_granite_red_tiles",
     "item:gt6ce:stone_granite_tiles",
@@ -19,16 +15,12 @@
     "item:gt6ce:stone_komatiite_tiles",
     "item:gt6ce:stone_limestone_tiles",
     "item:gt6ce:stone_marble_tiles",
-    "item:gt6ce:stone_oilshale_tiles",
     "item:gt6ce:stone_prismarine_dark_tiles",
     "item:gt6ce:stone_prismarine_light_tiles",
     "item:gt6ce:stone_quartzite_tiles",
-    "item:gt6ce:stone_rhyolite_tiles",
     "item:gt6ce:stone_salt_tiles",
     "item:gt6ce:stone_shale_tiles",
-    "item:gt6ce:stone_slate_tiles",
-    "item:gt6ce:stone_sylvite_tiles",
-    "item:gt6ce:stone_talc_tiles"
+    "item:gt6ce:stone_slate_tiles"
   ],
   "priority": 110
 }

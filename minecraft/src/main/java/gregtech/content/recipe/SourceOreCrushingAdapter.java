@@ -89,7 +89,7 @@ final class SourceOreCrushingAdapter {
         if (!s.identity(target) || s.overridden(target, List.of(MaterialPrefix.crushed, MaterialPrefix.dust,
                 MaterialPrefix.gem, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72)))
             return none(Action.LEGACY_UNSUPPORTED, "target-form-provenance");
-        if (target.getName().equals("Gneiss") || target.getName().equals("PetrifiedWood"))
+        if (target.getName().equals("PetrifiedWood"))
             return none(Action.LEGACY_UNSUPPORTED, "independent-source-special-target");
         var input = s.input(m, target);
         var rows = new ArrayList<Recipe>();

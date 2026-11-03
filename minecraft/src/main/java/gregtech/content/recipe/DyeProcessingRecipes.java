@@ -216,9 +216,9 @@ public final class DyeProcessingRecipes {
 
     /** GT6's rock-to-foam-colour partition; an empty first entry means the foam stays undyed. */
     private static final String[][] FOAM_ROCKS_BY_DYE={
-            {"","Stone","Concrete","Asbestos","Dolomite","Talc","Gneiss","Rhyolite","Chert","Shale","OilShale"},
-            {"White","Diorite","Marble","Chalk","Calcite","Endstone","Livingrock"},
-            {"Black","Basalt","Gabbro","GraniteBlack","Deepslate"},
+            {"","Stone","Concrete","Asbestos","Talc","Chert","Shale","OilShale"},
+            {"White","Diorite","Marble","Calcite","Endstone","Livingrock"},
+            {"Black","Basalt","GraniteBlack","Deepslate"},
             {"Gray","Slate"},
             {"LightGray","Andesite","Dacite"},
             {"LightBlue","Blueschist"},

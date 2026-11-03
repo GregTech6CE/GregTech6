@@ -124,8 +124,6 @@ public final class SourceDecompositionData {
         new Profile(9136, "Wulfenite", null, null, false),
         new Profile(9143, "VanadiumMagnetite", new Binding("molten.vanadiummagnetite", SOURCE_U, 144), null, false),
         new Profile(9155, "Pitchblende", null, null, false),
-        new Profile(9163, "Dolomite", null, null, false),
-        new Profile(9176, "Gabbro", null, null, false),
         new Profile(9177, "Komatiite", null, null, false),
         new Profile(9189, "Limestone", null, null, false),
         new Profile(9190, "Shale", null, null, false),

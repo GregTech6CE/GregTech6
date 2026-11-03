@@ -5,11 +5,7 @@
     "item:gt6ce:stone_andesite_stone",
     "item:gt6ce:stone_basalt_stone",
     "item:gt6ce:stone_blueschist_stone",
-    "item:gt6ce:stone_chalk_stone",
     "item:gt6ce:stone_diorite_stone",
-    "item:gt6ce:stone_dolomite_stone",
-    "item:gt6ce:stone_gabbro_stone",
-    "item:gt6ce:stone_gneiss_stone",
     "item:gt6ce:stone_granite_black_stone",
     "item:gt6ce:stone_granite_red_stone",
     "item:gt6ce:stone_granite_stone",
@@ -19,16 +15,12 @@
     "item:gt6ce:stone_komatiite_stone",
     "item:gt6ce:stone_limestone_stone",
     "item:gt6ce:stone_marble_stone",
-    "item:gt6ce:stone_oilshale_stone",
     "item:gt6ce:stone_prismarine_dark_stone",
     "item:gt6ce:stone_prismarine_light_stone",
     "item:gt6ce:stone_quartzite_stone",
-    "item:gt6ce:stone_rhyolite_stone",
     "item:gt6ce:stone_salt_stone",
     "item:gt6ce:stone_shale_stone",
-    "item:gt6ce:stone_slate_stone",
-    "item:gt6ce:stone_sylvite_stone",
-    "item:gt6ce:stone_talc_stone"
+    "item:gt6ce:stone_slate_stone"
   ],
   "priority": 110
 }

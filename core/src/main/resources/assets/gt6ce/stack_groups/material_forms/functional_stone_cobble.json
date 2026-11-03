@@ -5,11 +5,7 @@
     "item:gt6ce:stone_andesite_cobble",
     "item:gt6ce:stone_basalt_cobble",
     "item:gt6ce:stone_blueschist_cobble",
-    "item:gt6ce:stone_chalk_cobble",
     "item:gt6ce:stone_diorite_cobble",
-    "item:gt6ce:stone_dolomite_cobble",
-    "item:gt6ce:stone_gabbro_cobble",
-    "item:gt6ce:stone_gneiss_cobble",
     "item:gt6ce:stone_granite_black_cobble",
     "item:gt6ce:stone_granite_cobble",
     "item:gt6ce:stone_granite_red_cobble",
@@ -19,16 +15,12 @@
     "item:gt6ce:stone_komatiite_cobble",
     "item:gt6ce:stone_limestone_cobble",
     "item:gt6ce:stone_marble_cobble",
-    "item:gt6ce:stone_oilshale_cobble",
     "item:gt6ce:stone_prismarine_dark_cobble",
     "item:gt6ce:stone_prismarine_light_cobble",
     "item:gt6ce:stone_quartzite_cobble",
-    "item:gt6ce:stone_rhyolite_cobble",
     "item:gt6ce:stone_salt_cobble",
     "item:gt6ce:stone_shale_cobble",
-    "item:gt6ce:stone_slate_cobble",
-    "item:gt6ce:stone_sylvite_cobble",
-    "item:gt6ce:stone_talc_cobble"
+    "item:gt6ce:stone_slate_cobble"
   ],
   "priority": 110
 }

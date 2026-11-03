@@ -97,11 +97,7 @@ public class MaterialGroups {
         BlueSteel.addReRegistrationToThis(GT6Materials.Compounds.BlueSteel);
         C.addReRegistrationToThis(GT6Materials.Elements.C, GT6Materials.Ores.Graphite);
         Calcite.addReRegistrationToThis(
-                GT6Materials.Ores.CaCO3,
-                GT6Materials.Stones.Marble,
-                GT6Materials.Ores.Chalk,
-                GT6Materials.Stones.Limestone,
-                GT6Materials.Ores.Dolomite);
+                GT6Materials.Ores.CaCO3, GT6Materials.Stones.Marble, GT6Materials.Stones.Limestone);
         Clay.addReRegistrationToThis(GT6Materials.Ores.Clay);
         Coal.addReRegistrationToThis(
                 GT6Materials.Elements.C,

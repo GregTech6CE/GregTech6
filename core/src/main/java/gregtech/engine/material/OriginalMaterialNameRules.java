@@ -387,7 +387,6 @@ public final class OriginalMaterialNameRules {
             Map.entry("oreEris", new Prefix("oreEris", "Eris ", " Ore", Set.of("ORE"))),
             Map.entry("oreEuropa", new Prefix("oreEuropa", "Europa ", " Ore", Set.of("ORE"))),
             Map.entry("oreGanymede", new Prefix("oreGanymede", "Ganymede ", " Ore", Set.of("ORE"))),
-            Map.entry("oreGneiss", new Prefix("oreGneiss", "Gneiss ", " Ore", Set.of("ORE"))),
             Map.entry("oreGravel", new Prefix("oreGravel", "Gravel ", " Ore", Set.of("ORE"))),
             Map.entry("oreGrayschist", new Prefix("oreGrayschist", "Schist ", " Ore", Set.of("ORE"))),
             Map.entry("oreGreenschist", new Prefix("oreGreenschist", "Schist ", " Ore", Set.of("ORE"))),
