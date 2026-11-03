@@ -343,7 +343,8 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
     }
 
     /**
-     * GT6 chisel shape selection on the 5x5 top surface. Toggles cells on/off.
+     * GT6 chisel shape selection on the 5x5 top surface. Carves an untouched cell; an already
+     * carved cell is a no-op so the caller neither plays the sound nor damages the chisel.
      */
     public boolean trySelectShape(Player player, InteractionHand hand, double hitX, double hitZ) {
         if (contentMaterial != null) return false;
@@ -356,11 +357,10 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
         gridZ = Math.max(0, Math.min(4, gridZ));
 
         int bit = 1 << (gridZ * 5 + gridX);
-        // Set cavity bit (GT6: bit=1 = carved away, bit=0 = solid)
+        // GT6: bit=1 = carved away, bit=0 = solid. Re-chiseling a carved cell reports no change.
+        if ((moldShape & bit) != 0) return false;
         moldShape |= bit;
-        if (level != null) {
-            level.playSound(player, worldPosition, SoundEvents.METAL_BREAK, SoundSource.BLOCKS, 0.5F, 0.5F);
-        }
+        setChanged();
         syncToClient();
         return true;
     }
