@@ -80,7 +80,13 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
             }
 
             public boolean isItemValid(int slot, ItemStack stack) {
-                return items.isItemValid(slot, stack) && isRecipeInput(stack);
+                if (!items.isItemValid(slot, stack)) return false;
+                // Keep one input slot per ingredient, even when that slot is full. Otherwise
+                // a hopper fills every slot with the first ingredient and blocks mixed recipes.
+                for (int i = 0; i < recipes.mInputItemsCount; i++) {
+                    if (stack.is(items.getStackInSlot(i).getItem())) return i == slot;
+                }
+                return isRecipeInput(stack);
             }
 
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
@@ -266,10 +272,10 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
             }
         }
         if (juicer) {
-            if (!juiceHeld(player, hand)) FluidUtil.interactWithFluidHandler(player, hand, fluids);
+            if (!juiceHeld(player, hand)) FluidUtil.interactWithFluidHandler(player, hand, manualFluids);
             return;
         }
-        if (FluidUtil.interactWithFluidHandler(player, hand, fluids)) return;
+        if (FluidUtil.interactWithFluidHandler(player, hand, manualFluids)) return;
         if (side == Direction.UP && !player.isShiftKeyDown() && process(player)) return;
         if (collectOutputs(player)) return;
         if (!held.isEmpty()) {
@@ -335,7 +341,12 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         result.addAll(Arrays.asList(inputs));
         return result;
     }
-    private final IFluidHandler fluids = new IFluidHandler() {
+    private final IFluidHandler fluids = fluidAccess(false);
+    private final IFluidHandler manualFluids = fluidAccess(true);
+
+    /** Pipes take products only; held containers may also recover unprocessed ingredients. */
+    private IFluidHandler fluidAccess(boolean manual) {
+        return new IFluidHandler() {
 
         public int getTanks() {
             return inputs.length + outputs.length;
@@ -361,15 +372,22 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         }
 
         public FluidStack drain(FluidStack stack, FluidAction action) {
-            for (var tank : allTanks()) if (tank.getFluidInTank(0).isFluidEqual(stack)) return tank.drain(stack, action);
+            for (var tank : outputs) if (tank.getFluidInTank(0).isFluidEqual(stack)) return tank.drain(stack, action);
+            if (manual) for (var tank : inputs) if (tank.getFluidInTank(0).isFluidEqual(stack)) return tank.drain(stack, action);
             return FluidStack.EMPTY;
         }
 
         public FluidStack drain(int amount, FluidAction action) {
-            for (var tank : allTanks()) if (!tank.isEmpty()) return tank.drain(amount, action);
+            // GT6 rotates the first output once per second so one fluid cannot starve the others.
+            for (int i = 0; i < outputs.length; i++) {
+                int index = manual || level == null ? i : (int) ((level.getGameTime() / 20 + i) % outputs.length);
+                if (!outputs[index].isEmpty()) return outputs[index].drain(amount, action);
+            }
+            if (manual) for (var tank : inputs) if (!tank.isEmpty()) return tank.drain(amount, action);
             return FluidStack.EMPTY;
         }
-    };
+        };
+    }
 
     public FluidStack displayFluid() {
         for (var tank : allTanks()) if (!tank.isEmpty()) return tank.getFluidInTank(0).copy();

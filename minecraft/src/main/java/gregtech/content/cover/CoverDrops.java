@@ -86,6 +86,9 @@ public final class CoverDrops {
             if (empty) stack.removeTagKey("BlockEntityTag");
             else stack.addTagElement("BlockEntityTag", tag);
 //?}
+            // Engraving is part of the mold item; heat, contents and attached covers are not.
+            if (owner instanceof gregtech.content.blockentity.machine.MoldBlockEntity mold)
+                gregtech.content.block.machine.MoldItemData.withShape(stack, mold.getMoldShape());
         }
         return drops;
     }
