@@ -59,7 +59,12 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     }
 
     public static final long MAX_AMOUNT = 16L * GTValues.U;
-    private final List<CrucibleMaterialStack> content = new ArrayList<>();
+    private final List<CrucibleMaterialStack> content = new java.util.concurrent.CopyOnWriteArrayList<>();
+    /** Client-facing snapshot; renderers run on chunk-build threads and must not read {@code content}. */
+    private byte displayedHeight;
+
+    private int displayedMaterialId = -1;
+    private boolean displayedMolten;
     private final ItemStackHandler cache = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -138,6 +143,7 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     }
 
     protected void sync() {
+        updateDisplayState();
         setChanged();
         syncToClient();
     }
@@ -151,6 +157,7 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     /** GT6 {@code MultiTileEntitySmeltery.removedByPlayer}: a crucible at lava's melting point melts down. */
     public void meltDownOnBreak() {
         content.clear();
+        updateDisplayState();
         level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F);
         gregtech.content.blockentity.machine.SmelteryFireHelper.crucibleMeltdown(
                 level, worldPosition, hazardProfile(), getTemperature(), 1.0F);
@@ -227,38 +234,51 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     }
 
     public byte getDisplayedHeight() {
-        return (byte) CrucibleMath.scale(
-                content.stream()
-                        .filter(s -> s.material != Materials.Invalid && s.material != Materials.Air && s.amount > 0)
-                        .mapToLong(s -> s.amount)
-                        .sum(),
-                maxMaterialAmount(),
-                255,
-                false);
+        return displayedHeight;
     }
 
     public gregtech.api.material.GTMaterial getDisplayedMaterial() {
-        var solid = content.stream()
-                .filter(s -> s.material != Materials.Invalid
-                        && s.material != Materials.Air
-                        && s.amount > 0
-                        && getTemperature() < s.material.getMeltingPoint())
-                .min(java.util.Comparator.comparingDouble(s -> s.material.getDensity()));
-        return solid.or(() -> content.stream()
-                        .filter(s -> s.material != Materials.Invalid && s.material != Materials.Air && s.amount > 0)
-                        .min(java.util.Comparator.comparingDouble(s -> s.material.getDensity())))
-                .map(s -> s.material)
-                .orElse(null);
+        return displayedMaterialId > 0 ? gregtech.engine.material.GTMaterialRegistry.get(displayedMaterialId) : null;
     }
 
     public int getDisplayedMaterialId() {
-        var material = getDisplayedMaterial();
-        return material == null ? -1 : material.getId();
+        return displayedMaterialId;
     }
 
     public boolean isDisplayedMolten() {
-        var material = getDisplayedMaterial();
-        return material != null && getTemperature() >= material.getMeltingPoint();
+        return displayedMolten;
+    }
+
+    /** Recompute the render snapshot on the thread that owns {@code content}. */
+    private void updateDisplayState() {
+        CrucibleMaterialStack lightest = null;
+        CrucibleMaterialStack lightestSolid = null;
+        long totalAmount = 0;
+        for (CrucibleMaterialStack stack : content) {
+            if (stack == null
+                    || stack.material == Materials.Invalid
+                    || stack.material == Materials.Air
+                    || stack.amount <= 0) continue;
+            if (lightest == null || stack.material.getDensity() < lightest.material.getDensity()) lightest = stack;
+            if (getTemperature() < stack.material.getMeltingPoint()
+                    && (lightestSolid == null || stack.material.getDensity() < lightestSolid.material.getDensity()))
+                lightestSolid = stack;
+            totalAmount += stack.amount;
+        }
+        displayedHeight = (byte) CrucibleMath.scale(totalAmount, maxMaterialAmount(), 255, false);
+        if (totalAmount <= 0) {
+            displayedMaterialId = -1;
+            displayedMolten = false;
+        } else if (lightestSolid != null) {
+            displayedMaterialId = lightestSolid.material.getId();
+            displayedMolten = false;
+        } else if (lightest != null && getTemperature() >= lightest.material.getMeltingPoint()) {
+            displayedMaterialId = lightest.material.getId();
+            displayedMolten = true;
+        } else {
+            displayedMaterialId = -1;
+            displayedMolten = false;
+        }
     }
 
     public boolean isMeltDownWarning() {
@@ -495,8 +515,10 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
         }
         thermal = ThermalStep.advance(
                 thermal, environmentTemperature(), thermalMassKg() + CrucibleMaterialStack.weight(content));
+        updateDisplayState();
         if (getTemperature() > getMeltDownLimitK()) {
             content.clear();
+            updateDisplayState();
             meltdown();
             return;
         }
@@ -811,6 +833,7 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
             if (material.isValid() && amount > 0) content.add(CrucibleMaterialStack.of(material, amount));
         }
         if (tag.contains("gt.cache")) cache.deserializeNBT(lookup, tag.getCompound("gt.cache"));
+        updateDisplayState();
     }
 
     @Override

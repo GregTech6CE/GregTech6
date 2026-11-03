@@ -113,7 +113,9 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity
         }
     };
 
-    private final List<CrucibleMaterialStack> content = new ArrayList<>();
+    /** Copy-on-write: display/tooltip readers may iterate while the tick thread rewrites content. */
+    private final List<CrucibleMaterialStack> content = new java.util.concurrent.CopyOnWriteArrayList<>();
+
     private long energyBuffer;
     private long temperature = GregTechConstants.DEF_ENV_TEMP;
     private long previousTemperature = GregTechConstants.DEF_ENV_TEMP;
