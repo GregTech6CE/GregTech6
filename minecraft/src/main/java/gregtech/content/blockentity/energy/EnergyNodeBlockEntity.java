@@ -133,7 +133,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         rotaryConverter = gregtech.content.energy.OriginalRotaryConverter.handles(spec) || gregtech.content.energy.OriginalThermalConverter.handles(spec) || gregtech.content.energy.MagnetMachineDefinitions.handles(spec) || gregtech.content.energy.OriginalSteamTurbines.handles(spec)
                 ? new gregtech.content.energy.OriginalRotaryConverter.State(spec) : null;
         if (isSolar()) {
-            solarEnergy = new gregtech.engine.energy.SolarPanelEnergy(spec.outputRate());
+            solarEnergy = new gregtech.engine.energy.SolarPanelEnergy(spec.outputRate(), worldPosition.hashCode());
             if (!(batteryCovers instanceof java.util.EnumMap)) batteryCovers = new java.util.EnumMap<>(Direction.class);
         }
         if (isBatteryBox()) {

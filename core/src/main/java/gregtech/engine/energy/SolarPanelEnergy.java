@@ -9,19 +9,27 @@ public final class SolarPanelEnergy {
             boolean daytime, boolean raining, boolean thundering, boolean twilightForest, float rainfall) {}
 
     private final long output;
+    private final int skyCheckOffset;
     private long energy, timer;
     private boolean stopped, active, emitting, sky, check = true;
 
     public SolarPanelEnergy(long output) {
+        this(output, 0);
+    }
+
+    public SolarPanelEnergy(long output, int skyCheckOffset) {
         if (output < 8) throw new IllegalArgumentException("Solar output must be at least 8");
         this.output = output;
+        this.skyCheckOffset = Math.floorMod(skyCheckOffset, 20);
     }
 
     public void tick(BooleanSupplier skyCheck, Conditions conditions, LongUnaryOperator emit) {
         timer++;
         // The source leaves its energy and running flags untouched while switched off.
         if (stopped) return;
-        if (check || timer % 600 == 5) {
+        // Poll the cached world lighting once a second, staggered by position. Distant roof
+        // changes need no neighbour update; local updates can still request an immediate check.
+        if (check || (timer + skyCheckOffset) % 20 == 0) {
             check = false;
             sky = skyCheck.getAsBoolean();
         }
