@@ -103853,5 +103853,13 @@
   "fluid_type.gt6ce.molten_tritaniumelemental": "熔融三钛",
   "fluid_type.gt6ce.molten_tungstentrioxide": "熔融三氧化钨",
   "fluid_type.gt6ce.molten_vanadiummagnetite": "熔融钒磁铁",
-  "jade.gt6ce.crucible.break_meltdown": "被破坏时将会熔毁！"
+  "jade.gt6ce.crucible.break_meltdown": "被破坏时将会熔毁！",
+  "enchantment.gt6ce.disjunction": "分解",
+  "enchantment.gt6ce.dissolving": "溶解",
+  "enchantment.gt6ce.werebane": "狼人侵蚀",
+  "enchantment.gt6ce.radioactivity": "辐射",
+  "enchantment.gt6ce.butchery": "抢夺",
+  "enchantment.gt6ce.gt_haste": "效率",
+  "enchantment.gt6ce.sharpness_multi": "锋利",
+  "enchantment.gt6ce.smite_multi": "亡灵杀手"
 }

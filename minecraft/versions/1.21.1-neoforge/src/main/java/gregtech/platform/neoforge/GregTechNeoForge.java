@@ -29,6 +29,7 @@ public final class GregTechNeoForge {
     private static final gregtech.engine.mod.SetupOnce SHARED_SETUP = new gregtech.engine.mod.SetupOnce();
 
     public GregTechNeoForge(IEventBus modEventBus, net.neoforged.fml.ModContainer modContainer) {
+        gregtech.platform.neoforge.enchantment.GTEnchantmentEffectTypes.register(modEventBus);
         gregtech.engine.addon.AddonCoreServices.bind();
         gregtech.engine.addon.AddonPlatformServices.bind();
         gregtech.engine.addon.AddonLoaderServices.bind();

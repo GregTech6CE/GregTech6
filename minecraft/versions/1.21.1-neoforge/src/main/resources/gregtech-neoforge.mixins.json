@@ -52,7 +52,9 @@
     "CoverSignalMixin",
     "BucketContentAccessor",
     "PotionBrewingAccessor",
-    "PotionBrewingMixAccessor"
+    "PotionBrewingMixAccessor",
+    "MaterialArrowEnchantmentMixin",
+    "EndermanEnchantmentMixin"
   ],
   "injectors": {
     "defaultRequire": 1

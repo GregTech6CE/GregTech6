@@ -24,7 +24,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 /** 1.21 enchantments use the active data-pack registry, never detached holders. */
 public final class GTToolEnchantments {
     private GTToolEnchantments() {}
-    private static final String APPLIED = "gt.material_enchantments.v1";
+    private static final String APPLIED = "gt.material_enchantments.v2";
 //? if >=1.21.1 {
     /*private static volatile java.util.function.Supplier<HolderLookup.Provider> clientLookup = () -> null;
 
@@ -57,7 +57,9 @@ public final class GTToolEnchantments {
             var previous = entry.getKey();
             var key = previous.unwrapKey();
             if (key.isEmpty()) continue;
-            var current = registry.getOrThrow(key.get());
+            var currentKey = ResourceKey.<Enchantment>create(Registries.ENCHANTMENT,
+                    ResourceLocation.parse(MaterialToolEnchantments.id(key.get().location().toString())));
+            var current = registry.getOrThrow(currentKey);
             if (current == previous) continue;
             enchantments.removeIf(holder -> holder == previous);
             enchantments.upgrade(current, entry.getIntValue());
@@ -72,6 +74,14 @@ public final class GTToolEnchantments {
         if (stack.isEmpty() || !stack.hasTag() || !stack.getTag().contains(GTToolHelper.ROOT)
                 || stack.getTag().getBoolean(APPLIED)) return;
         var enchantments = EnchantmentHelper.getEnchantments(stack);
+        for (var entry : java.util.List.copyOf(enchantments.entrySet())) {
+            var id = BuiltInRegistries.ENCHANTMENT.getKey(entry.getKey());
+            var replacement = BuiltInRegistries.ENCHANTMENT.get(ResourceLocation.parse(MaterialToolEnchantments.id(id.toString())));
+            if (replacement != null && replacement != entry.getKey()) {
+                enchantments.remove(entry.getKey());
+                enchantments.merge(replacement, entry.getValue(), Math::max);
+            }
+        }
 //?}
         var material=GTToolHelper.getHead(stack);
         java.util.Map<String,Integer> applicable;
@@ -91,9 +101,10 @@ public final class GTToolEnchantments {
         }
 //? if >=1.21.1 {
         /*stack.set(DataComponents.ENCHANTMENTS, enchantments.toImmutable());
-        CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.putBoolean(APPLIED, true));
+        CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> { tag.remove("gt.material_enchantments.v1"); tag.putBoolean(APPLIED, true); });
 *///?} else {
         EnchantmentHelper.setEnchantments(enchantments, stack);
+        stack.getOrCreateTag().remove("gt.material_enchantments.v1");
         stack.getOrCreateTag().putBoolean(APPLIED, true);
 //?}
     }

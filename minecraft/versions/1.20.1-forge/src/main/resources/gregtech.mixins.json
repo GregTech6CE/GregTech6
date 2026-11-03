@@ -52,7 +52,9 @@
     "PacketFrameEncoderMixin",
     "LoginQueryPayloadMixin",
     "CustomPayloadLimitMixin",
-    "PotionBrewingAccessor"
+    "PotionBrewingAccessor",
+    "MaterialArrowEnchantmentMixin",
+    "EndermanEnchantmentMixin"
   ],
   "injectors": {
     "defaultRequire": 1

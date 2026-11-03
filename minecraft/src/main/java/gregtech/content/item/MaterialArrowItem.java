@@ -30,6 +30,13 @@ public final class MaterialArrowItem extends ArrowItem implements MaterialFormIt
     public MaterialPrefix getPrefix() { return prefix; }
     public GTMaterial getMaterial() { return material; }
 
+    @Override public boolean isFoil(ItemStack stack) { return false; }
+    @Override public boolean isBookEnchantable(ItemStack stack, ItemStack book) { return false; }
+    @Override public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, level, entity, slot, selected);
+        if (!level.isClientSide) gregtech.engine.tool.MaterialEnchantmentStacks.applyAmmo(stack, level);
+    }
+
     @Override
 //? if >=1.21.1 {
     /*public AbstractArrow createArrow(Level level, ItemStack ammo, LivingEntity shooter, @Nullable ItemStack weapon) {

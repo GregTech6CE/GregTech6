@@ -97,6 +97,7 @@ public class MaterialItem extends Item implements gregtech.engine.material.Mater
     /** PrefixItemProjectile:115-125 consumes ammunition used in a living-entity melee attack. */
     public static boolean consumeAmmoOnAttack(ItemStack stack, net.minecraft.world.entity.player.Player player,
                                               net.minecraft.world.entity.Entity target) {
+        if (!player.level().isClientSide) gregtech.engine.tool.MaterialEnchantmentStacks.applyAmmo(stack, player.level());
         if (!player.level().isClientSide && !player.getAbilities().instabuild
                 && target instanceof net.minecraft.world.entity.LivingEntity
                 && stack.getItem() instanceof gregtech.engine.material.MaterialFormItem form
@@ -109,6 +110,14 @@ public class MaterialItem extends Item implements gregtech.engine.material.Mater
                                      net.minecraft.world.entity.Entity target) {
         return consumeAmmoOnAttack(stack, player, target);
     }
+
+    @Override public void inventoryTick(ItemStack stack, net.minecraft.world.level.Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, level, entity, slot, selected);
+        if (!level.isClientSide && prefix.hasEmptyAmmunitionForm()) gregtech.engine.tool.MaterialEnchantmentStacks.applyAmmo(stack, level);
+    }
+
+    @Override public boolean isFoil(ItemStack stack) { return false; }
+    @Override public boolean isBookEnchantable(ItemStack stack, ItemStack book) { return false; }
 
     @Override
     public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext context) {

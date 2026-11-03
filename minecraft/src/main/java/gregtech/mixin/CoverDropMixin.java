@@ -1,6 +1,7 @@
 package gregtech.mixin;
 
 import gregtech.content.cover.CoverDrops;
+import gregtech.content.tool.EnchantmentHarvest;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -29,7 +30,11 @@ public abstract class CoverDropMixin {
             Entity entity,
             ItemStack tool,
             CallbackInfoReturnable<List<ItemStack>> cir) {
-        cir.setReturnValue(CoverDrops.capture(state, level, owner, cir.getReturnValue()));
+        // One return hook keeps material smelting and cover cleanup from canceling each other.
+        var drops = cir.getReturnValue();
+        if (entity instanceof net.minecraft.world.entity.player.Player)
+            drops = EnchantmentHarvest.smelt(level, tool, drops);
+        cir.setReturnValue(CoverDrops.capture(state, level, owner, drops));
     }
 
     @Inject(

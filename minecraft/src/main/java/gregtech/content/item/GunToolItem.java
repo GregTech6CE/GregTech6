@@ -86,22 +86,9 @@ public final class GunToolItem extends GTToolItem {
 *///?} else {
  private static int enchantment(ItemStack stack,String name,Level level){var enchant=net.minecraft.core.registries.BuiltInRegistries.ENCHANTMENT.get(ResourceLocation.parse(name.contains(":")?name:"minecraft:"+name));return enchant==null?0:net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(enchant,stack);}
 //?}
- private static int ammoMultiplier(ItemStack ammo){var prefix=((MaterialFormItem)ammo.getItem()).getPrefix();return prefix==MaterialPrefix.bulletGtLarge?3:prefix==MaterialPrefix.bulletGtMedium?2:1;}
  private static ItemStack enchantedAmmo(ItemStack ammo,Level level){
-//? if >=1.21.1 {
-  /*var values=new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(ammo.getOrDefault(net.minecraft.core.component.DataComponents.ENCHANTMENTS,net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY));
-  var registry=level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-  for(var entry:MaterialToolEnchantments.ammunition(((MaterialFormItem)ammo.getItem()).getMaterial()).entrySet())
-   registry.get(ResourceKey.create(Registries.ENCHANTMENT,ResourceLocation.parse(MaterialToolEnchantments.id(entry.getKey())))).ifPresent(e->values.upgrade(e,entry.getValue()*(entry.getKey().equals("looting")?ammoMultiplier(ammo):1)));
-  ammo.set(net.minecraft.core.component.DataComponents.ENCHANTMENTS,values.toImmutable());return ammo;
-*///?} else {
-  var values=new java.util.LinkedHashMap<>(net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(ammo));
-  for(var entry:MaterialToolEnchantments.ammunition(((MaterialFormItem)ammo.getItem()).getMaterial()).entrySet()){
-   var enchant=net.minecraft.core.registries.BuiltInRegistries.ENCHANTMENT.get(ResourceLocation.parse(MaterialToolEnchantments.id(entry.getKey())));
-   if(enchant!=null)values.merge(enchant,entry.getValue()*(entry.getKey().equals("looting")?ammoMultiplier(ammo):1),Math::max);
-  }
-  net.minecraft.world.item.enchantment.EnchantmentHelper.setEnchantments(values,ammo);return ammo;
-//?}
+  gregtech.engine.tool.MaterialEnchantmentStacks.applyAmmo(ammo,level);
+  return ammo;
  }
  public void shoot(ItemStack gun,ItemStack ammo,Player player){
   if(!(player.level() instanceof ServerLevel level)||!accepts(ammo))return;
@@ -153,17 +140,17 @@ public final class GunToolItem extends GTToolItem {
   if(looting>0&&level instanceof ServerLevel server&&!(target instanceof Player)){var fake=net.minecraftforge.common.util.FakePlayerFactory.get(server,new com.mojang.authlib.GameProfile(new java.util.UUID(0,0),shooter.getGameProfile().getName()));fake.setItemInHand(InteractionHand.MAIN_HAND,ammo);fake.moveTo(shooter.getX(),shooter.getY(),shooter.getZ());attacker=fake;}
 //?}
   var key=ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath("gt6ce",power>25000?"bullet_piercing":"bullet"));
-  var source=new net.minecraft.world.damagesource.DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key),shooter,attacker);
+  var source=new gregtech.content.damage.MaterialProjectileDamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key),shooter,attacker,ammo);
 //? if >=1.21.1 {
   /*if(fire>0)target.igniteForSeconds(4*fire);
   float magic=net.minecraft.world.item.enchantment.EnchantmentHelper.modifyDamage((ServerLevel)level,ammo,target,source,0);
 *///?} else {
   if(fire>0)target.setSecondsOnFire(4*fire);
-  float magic=target instanceof LivingEntity living?net.minecraft.world.item.enchantment.EnchantmentHelper.getDamageBonus(ammo,living.getMobType()):enchantment(ammo,"gt6ce:disjunction",level);
+  float magic=target instanceof LivingEntity living?net.minecraft.world.item.enchantment.EnchantmentHelper.getDamageBonus(ammo,living.getMobType()):0;
 //?}
   damage+=magic*(target instanceof Player?.5F:definition().magic());
   boolean struck=target.hurt(source,damage);
-  if(struck){int knock=enchantment(gun,"punch",level)+Math.max(enchantment(ammo,"knockback",level),MaterialToolEnchantments.ammunition(bullet).getOrDefault("knockback",0));if(knock>0)target.push(direction.x*knock*power/50000,.05,direction.z*knock*power/50000);if(target instanceof Creeper creeper&&fire>0)creeper.ignite();}
+  if(struck){gregtech.engine.tool.MaterialEnchantmentStacks.postAttack(ammo,target,source);int knock=enchantment(gun,"punch",level)+Math.max(enchantment(ammo,"knockback",level),MaterialToolEnchantments.ammunition(bullet).getOrDefault("knockback",0));if(knock>0)target.push(direction.x*knock*power/50000,.05,direction.z*knock*power/50000);if(target instanceof Creeper creeper&&fire>0)creeper.ignite();}
   return struck||target.invulnerableTime<=0;
  }
 //? if >=1.21.1 {

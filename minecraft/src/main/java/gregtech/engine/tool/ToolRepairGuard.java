@@ -29,7 +29,7 @@ public final class ToolRepairGuard {
 
     @SubscribeEvent
     public static void anvil(AnvilUpdateEvent event) {
-        if (!isGtTool(event.getLeft()) || !isGtTool(event.getRight())) return;
+        if (!isGtTool(event.getLeft()) || !(isGtTool(event.getRight()) || event.getRight().is(net.minecraft.world.item.Items.ENCHANTED_BOOK))) return;
         // Forge 1.20.1 leaves the previous result in the slot when the event is canceled.
         if (event.getPlayer() != null && event.getPlayer().containerMenu instanceof AnvilMenu menu) {
             menu.getSlot(2).set(ItemStack.EMPTY);
@@ -39,10 +39,11 @@ public final class ToolRepairGuard {
 
     @SubscribeEvent
     public static void grindstone(GrindstoneEvent.OnPlaceItem event) {
-        if (isGtTool(event.getTopItem()) && isGtTool(event.getBottomItem())) event.setCanceled(true);
+        // Material enchantments cannot be stripped for XP or restored on the next inventory tick.
+        if (isGtTool(event.getTopItem()) || isGtTool(event.getBottomItem())) event.setCanceled(true);
     }
 
     private static boolean isGtTool(ItemStack stack) {
-        return stack.getItem() instanceof GTToolItem;
+        return stack.getItem() instanceof GTToolItem || stack.getItem() instanceof gregtech.content.item.ElectricToolItem;
     }
 }

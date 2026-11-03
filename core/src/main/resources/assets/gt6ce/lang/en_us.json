@@ -13969,5 +13969,13 @@
   "fluid_type.gt6ce.molten_tritaniumelemental": "Molten TritaniumElemental",
   "fluid_type.gt6ce.molten_tungstentrioxide": "Molten Tungsten Trioxide",
   "fluid_type.gt6ce.molten_vanadiummagnetite": "Molten Vanadium Magnetite",
-  "jade.gt6ce.crucible.break_meltdown": "Breaking this crucible will cause a meltdown!"
+  "jade.gt6ce.crucible.break_meltdown": "Breaking this crucible will cause a meltdown!",
+  "enchantment.gt6ce.disjunction": "Disjunction",
+  "enchantment.gt6ce.dissolving": "Dissolving",
+  "enchantment.gt6ce.werebane": "Werebane",
+  "enchantment.gt6ce.radioactivity": "Radioactivity",
+  "enchantment.gt6ce.butchery": "Looting",
+  "enchantment.gt6ce.gt_haste": "Efficiency",
+  "enchantment.gt6ce.sharpness_multi": "Sharpness",
+  "enchantment.gt6ce.smite_multi": "Smite"
 }

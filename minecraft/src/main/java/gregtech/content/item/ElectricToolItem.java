@@ -26,6 +26,16 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     private final long energyPerUse;
     private final String toolName;
 
+    @Override public boolean isFoil(ItemStack stack) { return false; }
+    @Override public boolean isEnchantable(ItemStack stack) { return false; }
+    @Override public int getEnchantmentValue() { return 0; }
+    @Override public boolean isBookEnchantable(ItemStack stack, ItemStack book) { return false; }
+//? if >=1.21.1 {
+    /*@Override public boolean supportsEnchantment(ItemStack stack, net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> enchantment) { return false; }
+*///?} else {
+    @Override public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.world.item.enchantment.Enchantment enchantment) { return false; }
+//?}
+
     public ElectricToolItem(String toolName, Tier toolTier, long capacity, int tier, long energyPerUse, Properties properties) {
         super(toolTier, properties);
         this.toolName = toolName;

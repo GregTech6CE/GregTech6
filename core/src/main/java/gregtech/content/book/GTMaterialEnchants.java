@@ -49,6 +49,7 @@ public final class GTMaterialEnchants {
      * </p>
      */
     public static GTMaterial resolve(String row) {
+        if (row.startsWith("STONES.")) row = row.substring("STONES.".length());
         String mapped = GTMaterialFields.materialOf(row);
         GTMaterial material = GTMaterialRegistry.get(mapped != null ? mapped : row);
         if (material.isValid()) return material;
