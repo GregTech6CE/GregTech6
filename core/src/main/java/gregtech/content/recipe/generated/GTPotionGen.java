@@ -88,15 +88,6 @@ final class GTPotionGen {
         r("Distillery", 16, 48, null, sp("v:red_mushroom:1"), sp("f:DistW:750"), sp("f:Potion_Mundane:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:red_mushroom:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_Poison_1:750"), NONE);
         r("Distillery", 16, 16, null, sp("v:red_mushroom:1"), sp("f:Potion_Thick:250"), sp("f:Potion_Poison_2:250"), NONE);
-        r("Distillery", 16, 48, null, sp("i:plantGtWart:Glowstone:1"), sp("f:DistW:750"), sp("f:Potion_Mundane:750"), NONE);
-        r("Distillery", 16, 48, null, sp("i:plantGtWart:Glowstone:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_Jump_1:750"), NONE);
-        r("Distillery", 16, 16, null, sp("i:plantGtWart:Glowstone:1"), sp("f:Potion_Thick:250"), sp("f:Potion_Jump_2:250"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:etfu_rabbit_foot:1"), sp("f:DistW:750"), sp("f:Potion_Mundane:750"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:etfu_rabbit_foot:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_Jump_1:750"), NONE);
-        r("Distillery", 16, 16, null, sp("tech:etfu_rabbit_foot:1"), sp("f:Potion_Thick:250"), sp("f:Potion_Jump_2:250"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:tf_mushgloom:1"), sp("f:DistW:750"), sp("f:Potion_Mundane:750"), NONE);
-        r("Distillery", 16, 48, null, sp("tech:tf_mushgloom:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_Jump_1:750"), NONE);
-        r("Distillery", 16, 16, null, sp("tech:tf_mushgloom:1"), sp("f:Potion_Thick:250"), sp("f:Potion_Jump_2:250"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:DistW:750"), sp("f:Potion_Mundane:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Thick:750"), sp("f:Potion_Weakness_1:750"), NONE);
         r("Distillery", 16, 48, null, sp("v:fermented_spider_eye:1"), sp("f:Potion_Awkward:750"), sp("f:Potion_Weakness_1:750"), NONE);

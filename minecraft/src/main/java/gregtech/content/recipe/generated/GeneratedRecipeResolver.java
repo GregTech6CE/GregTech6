@@ -235,7 +235,9 @@ public final class GeneratedRecipeResolver {
             boolean catalyst = token.length == 4 && token[0].equals("i") && token[3].equals("0")
                     || token.length == 3 && token[0].equals("tech") && token[2].equals("0")
                     || token.length == 3 && token[0].equals("v") && token[2].equals("0")
-                    || token.length == 3 && token[0].equals("cell") && token[2].equals("0");
+                    || token.length == 3 && token[0].equals("cell") && token[2].equals("0")
+                    // The second part of a selector token is its circuit index, not a count.
+                    || token.length == 2 && token[0].equals("tag");
             if (catalyst) candidate.withCatalystInputs(index);
         }
         var recipe = map.addRecipe(candidate);
