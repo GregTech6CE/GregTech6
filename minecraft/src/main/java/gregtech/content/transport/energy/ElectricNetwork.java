@@ -343,6 +343,7 @@ public final class ElectricNetwork {
          * traversal is still running, and the nested traversal must not overwrite its marks.
          */
         int[] wireStamp;
+
         int[] endpointStamp;
         int stamp;
         int[] wires;
