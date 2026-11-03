@@ -218,6 +218,12 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     /** True when the chest still holds loot from its table (tests read it). */
     public boolean lootGenerated() { return lootGenerated; }
 
+    /** Ordinary crafted chests have no pending loot even before their first opening. */
+    public boolean hasPendingLoot() {
+        return !lootGenerated && (dungeonLoot != null
+                || getBlockState().getBlock() instanceof gregtech.content.block.inventory.LootChestBlock);
+    }
+
     @Override
     public Component getDisplayName() {
         return Component.translatable(getBlockState().getBlock().getDescriptionId());
@@ -226,6 +232,8 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInv, Player player) {
+        // Returning no menu also gives spectators Minecraft's standard unopened-loot message.
+        if (player.isSpectator() && hasPendingLoot()) return null;
         if (!player.isSpectator()) generateLootIfNeeded();
         return new ChestMenu(containerId, playerInv, this);
     }

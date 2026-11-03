@@ -11,7 +11,11 @@ final class OmniWorldInfo {
     private OmniWorldInfo() {}
 
     static void append(JadeInspection info, BlockEntity entity) {
-        if (entity instanceof gregtech.content.blockentity.inventory.MassStorageBlockEntity storage) {
+        if (entity instanceof gregtech.content.blockentity.inventory.MetalChestBlockEntity chest) {
+            if (chest.hasPendingLoot()) {
+                info.groupedInventory();
+            }
+        } else if (entity instanceof gregtech.content.blockentity.inventory.MassStorageBlockEntity storage) {
             info.groupedInventory();
             if (!storage.template().isEmpty())
                 info.line("stored_count", storage.template().copyWithCount(1), storage.stored());

@@ -60,6 +60,8 @@
     "defaultRequire": 1
   },
   "client": [
+    "SpectatorCrosshairMixin",
+    "SpectatorBlockOutlineMixin",
     "GeneratedTagLanguageMixin",
     "OreTerrainParticleMixin",
     "FormConversionGhostPlaceMixin",

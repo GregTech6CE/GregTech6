@@ -29,11 +29,31 @@ import net.minecraftforge.network.NetworkHooks;
 public final class SpectatorMenus {
     private SpectatorMenus() {}
 
-    public static boolean open(ServerPlayer player, Level level, BlockHitResult hit) {
-        if (!player.isSpectator()) return false;
+    /** The client highlight and server preview must agree about usable faces and menu hosts. */
+    public static boolean canOpen(Level level, BlockHitResult hit) {
         var pos = hit.getBlockPos();
         var state = level.getBlockState(pos);
         if (!BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals("gt6ce")) return false;
+        var entity = level.getBlockEntity(pos);
+        if (entity instanceof BasicMachineBlockEntity && state.getBlock() instanceof BasicMachineBlock
+                || entity instanceof BehaviorMachineBlockEntity) return true;
+        if (entity instanceof AdvancedCraftingTableBlockEntity) {
+            return hit.getDirection() == Direction.UP
+                    || hit.getDirection().getAxis() == state.getValue(AdvancedCraftingTableBlock.FACING).getAxis();
+        }
+        if (entity instanceof DrawerQuadBlockEntity) return hit.getDirection() == state.getValue(DrawerQuadBlock.FACING);
+        return entity instanceof SafeBlockEntity
+                || entity instanceof EnergyNodeBlockEntity node && node.isBatteryBox()
+                || entity instanceof FunctionalPartRuntime.Host host
+                        && host.function() != null && host.function().opensMenu()
+                || entity instanceof FilterBlockEntity
+                || entity instanceof MenuProvider;
+    }
+
+    public static boolean open(ServerPlayer player, Level level, BlockHitResult hit) {
+        if (!player.isSpectator() || !canOpen(level, hit)) return false;
+        var pos = hit.getBlockPos();
+        var state = level.getBlockState(pos);
         var entity = level.getBlockEntity(pos);
         Component title = state.getBlock().getName();
         if (entity instanceof BasicMachineBlockEntity machine && state.getBlock() instanceof BasicMachineBlock block) {
