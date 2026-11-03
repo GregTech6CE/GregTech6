@@ -50,6 +50,7 @@ public final class SmelteryCompanionTooltips {
         appendInteract(tooltip, false);
         appendHeat(spec, tooltip, false);
         add(tooltip, "gt.lang.use.monkey.wrench.to.toggle.auto.inputs", ChatFormatting.DARK_GRAY);
+        add(tooltip, "gt.lang.use.soft.hammer.to.reset", ChatFormatting.DARK_GRAY);
     }
     /** Crossing defines no specialized rows in the original. */
     public static void appendCrucibleCrossing(CrucibleSpec spec, List<Component> tooltip) {}

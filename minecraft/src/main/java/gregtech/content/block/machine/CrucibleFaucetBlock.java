@@ -12,6 +12,7 @@ import gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -72,6 +73,8 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
     public CrucibleSpec spec() { return spec; }
 
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        // GT6 MultiTileEntityFaucet reserves the monkey wrench for the crucible auto input; only a plain wrench turns it.
+        if (GTToolHelper.isMonkeyWrench(tool)) return null;
         return GTToolHelper.isMachineWrench(tool)
                 ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
     }
@@ -184,7 +187,42 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
         }
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
+        ItemStack held = player.getItemInHand(hand);
+        if (GTToolHelper.isMonkeyWrench(held)) {
+            if (!level.isClientSide) {
+                faucet.toggleAutoPull();
+                announceAutoInput(level, pos, player, hand, faucet, true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (GTToolHelper.isSoftHammer(held)) {
+            if (!level.isClientSide) {
+                faucet.setAutoPull(false);
+                announceAutoInput(level, pos, player, hand, faucet, false);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         return InteractionResult.PASS;
+    }
+
+    private static void announceAutoInput(Level level, BlockPos pos, Player player, InteractionHand hand,
+                                          CrucibleFaucetBlockEntity faucet, boolean wrenchSound) {
+        boolean automatic = faucet.isAutoPull();
+        player.displayClientMessage(Component.translatable("message.gt6ce.faucet.auto_input",
+                Component.translatable(automatic
+                        ? "message.gt6ce.faucet.auto_input.automatic"
+                        : "message.gt6ce.faucet.auto_input.redstone")), true);
+//? if >=1.21.1 {
+        /*var sound = wrenchSound
+                ? gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get()
+                : net.minecraft.sounds.SoundEvents.ANVIL_LAND;
+*///?} else {
+        var sound = wrenchSound
+                ? gregtech.content.registry.GTSounds.WRENCH.get()
+                : net.minecraft.sounds.SoundEvents.ANVIL_LAND;
+//?}
+        level.playSound(null, pos, sound, net.minecraft.sounds.SoundSource.BLOCKS, wrenchSound ? 1.0F : 0.1F, 1.0F);
+        GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
     }
 
     public static Properties defaultProperties(CrucibleSpec spec) {

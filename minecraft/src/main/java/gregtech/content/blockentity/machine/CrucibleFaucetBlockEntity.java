@@ -37,8 +37,9 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
     /** Facing direction (which side the input connects to). */
     private Direction facing = Direction.NORTH;
 
-    /** Auto-pull mode: continuously pull from crucible when redstone is active. */
+    /** GT6 auto-pull: {@code true} pours once a second, {@code false} pours on a redstone signal. */
     private boolean autoPull = false;
+    private boolean redstoneInput = false;
 
     private static final String NBT_FACING = "gt.faucet.facing";
     private static final String NBT_AUTO_PULL = "gt.faucet.auto_pull";
@@ -71,15 +72,17 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
         }
     }
 
+    private static final int AUTO_PULL_INTERVAL = 20;
+
     private void tickServer() {
-        // Auto-pull: every 20 ticks (1 second) when enabled and has redstone signal
-        // Or when autoPull is always-on (no redstone required)
+        boolean powered = hasRedstoneIncoming();
         if (autoPull) {
-            boolean shouldPull = !autoPull || hasRedstoneIncoming();
-            if (shouldPull) {
-                pullFromCrucible();
-            }
+            if (level != null && level.getGameTime() % AUTO_PULL_INTERVAL == 0) pullFromCrucible();
+        } else if (powered && !redstoneInput) {
+            // GT6 pours in redstone mode on a block update while powered; the rising edge avoids retrying every tick.
+            pullFromCrucible();
         }
+        redstoneInput = powered;
     }
 
     /**
@@ -101,9 +104,15 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
      * Toggle auto-pull mode (monkey wrench).
      */
     public boolean toggleAutoPull() {
-        autoPull = !autoPull;
-        syncToClient();
+        setAutoPull(!autoPull);
         return autoPull;
+    }
+
+    /** Force auto-pull mode (soft hammer resets to the redstone trigger). */
+    public void setAutoPull(boolean value) {
+        if (autoPull == value) return;
+        autoPull = value;
+        syncToClient();
     }
 
     /**
@@ -118,10 +127,7 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
 
     private boolean hasRedstoneIncoming() {
         if (level == null) return false;
-        return level.hasSignal(worldPosition, Direction.UP) ||
-               level.hasSignal(worldPosition, Direction.DOWN) ||
-               level.hasSignal(worldPosition, facing) ||
-               level.hasSignal(worldPosition, facing.getOpposite());
+        return level.hasNeighborSignal(worldPosition);
     }
 
     // === ITileEntityMold implementation ===
