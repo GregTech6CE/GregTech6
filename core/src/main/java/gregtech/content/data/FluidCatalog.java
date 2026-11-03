@@ -254,8 +254,6 @@ public class FluidCatalog {
             "BioEthanol",
             "OliveOil",
             "Oil_Olive",
-            "WaterDirty",
-            "Dirty_Water",
             "Water",
             "Water",
             "Lava",
@@ -547,7 +545,6 @@ public class FluidCatalog {
             // =======================================================================
 
             Ocean = fluid("Ocean", "seawater"),
-            Dirty_Water = fluid("Dirty_Water", "waterdirty"),
             Saltwater = fluid("Saltwater", "saltwater"),
             Holywater = fluid("Holywater", "holywater").withGlint().withFlags(FluidFlags.MAGIC),
 

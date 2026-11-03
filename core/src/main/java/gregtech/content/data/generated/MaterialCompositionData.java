@@ -42,9 +42,6 @@ public final class MaterialCompositionData {
         bind("SeaWater", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("H"), GTValues.U * 2),
                 MaterialComponent.of(GTMaterialRegistry.get("O"), GTValues.U * 1));
-        bind("DirtyWater", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("H"), GTValues.U * 2),
-                MaterialComponent.of(GTMaterialRegistry.get("O"), GTValues.U * 1));
         bind("DistWater", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("H"), GTValues.U * 2),
                 MaterialComponent.of(GTMaterialRegistry.get("O"), GTValues.U * 1));

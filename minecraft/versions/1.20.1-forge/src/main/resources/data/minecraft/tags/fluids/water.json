@@ -4,8 +4,6 @@
     "gt6ce:seawater",
     "gt6ce:seawater_flowing",
     "gt6ce:riverwater",
-    "gt6ce:riverwater_flowing",
-    "gt6ce:waterdirty",
-    "gt6ce:waterdirty_flowing"
+    "gt6ce:riverwater_flowing"
   ]
 }

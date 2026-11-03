@@ -32,6 +32,7 @@ public final class WireCatalog {
         new WireDef("kanthal", Materials.Kanthal, 512L, 4, 4, 3, true, true), // MT.Kanthal
         new WireDef("silver", Materials.Silver, 1536L, 1, 2, 1, true, true), // MT.Ag
         new WireDef("gold", Materials.Gold, 512L, 3, 2, 1, true, true), // MT.Au
+        new WireDef("efrine", Materials.Efrine, 256L, 1, 2, 1, true, true), // MT.Efrine
         new WireDef("electrum", Materials.Electrum, 1024L, 2, 2, 1, true, true), // MT.Electrum
         new WireDef("blue_alloy", Materials.BlueAlloy, 1536L, 2, 2, 1, true, true), // MT.BlueAlloy
         new WireDef("electrotine_alloy", Materials.ElectrotineAlloy, 1024L, 3, 2, 1, true, true), // MT.ElectrotineAlloy

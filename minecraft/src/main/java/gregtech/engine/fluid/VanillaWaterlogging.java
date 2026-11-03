@@ -6,7 +6,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
 /**
- * Makes GT6's three world waters fill vanilla's waterlogged blocks exactly where vanilla water
+ * Makes GT6's two world waters fill vanilla's waterlogged blocks exactly where vanilla water
  * would, and nowhere else.
  *
  * <p><b>The vanilla mechanism.</b> Vanilla's waterlogged-block contract is an <em>instance</em>

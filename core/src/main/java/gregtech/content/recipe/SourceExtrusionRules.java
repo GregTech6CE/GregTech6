@@ -332,6 +332,7 @@ public final class SourceExtrusionRules {
             8338|Monazite|000||648648000
             8340|Nikolite|000||648648000
             8341|Glowstone|000||648648000
+            8342|Firestone|000||648648000
             8346|NetherQuartz|000||648648000
             8347|CertusQuartz|000||648648000
             8348|ChargedCertusQuartz|000||648648000
@@ -503,6 +504,7 @@ public final class SourceExtrusionRules {
             8744|AncientDebris|101||648648000
             8745|Netherite|101||648648000
             8746|NetherizedDiamond|101||648648000
+            8747|Efrine|101||648648000
             8751|Duranium|101||648648000
             8752|Tritanium|101||648648000
             8756|Duralumin|101||648648000
@@ -704,7 +706,6 @@ public final class SourceExtrusionRules {
             9804|Saltwater|000||648648000
             9805|HolyWater|000||648648000
             9806|SeaWater|000||648648000
-            9807|WaterDirty|000||648648000
             9808|WaterDistilled|000||648648000
             9809|HydrogenPeroxide|000||648648000
             9810|Lava|000||648648000

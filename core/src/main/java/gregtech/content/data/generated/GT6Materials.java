@@ -220,7 +220,6 @@ public final class GT6Materials {
         public static final GTMaterial FreshWater           = gregtech.content.material.generated.CompoundMaterials.FreshWater;
         public static final GTMaterial HolyWater            = gregtech.content.material.generated.CompoundMaterials.HolyWater;
         public static final GTMaterial SeaWater             = gregtech.content.material.generated.CompoundMaterials.SeaWater;
-        public static final GTMaterial DirtyWater           = gregtech.content.material.generated.CompoundMaterials.WaterDirty;
         public static final GTMaterial DistWater            = gregtech.content.material.generated.CompoundMaterials.WaterDistilled;
         public static final GTMaterial H2O2                 = gregtech.content.material.generated.CompoundMaterials.HydrogenPeroxide;
         public static final GTMaterial HCl                  = gregtech.content.material.generated.CompoundMaterials.HydrochloricAcid;
@@ -493,6 +492,7 @@ public final class GT6Materials {
         public static final GTMaterial Bedrock              = gregtech.content.material.generated.CompoundMaterials.Bedrock;
         public static final GTMaterial AnnealedCopper       = gregtech.content.material.generated.CompoundMaterials.AnnealedCopper;
         public static final GTMaterial Adamantine           = gregtech.content.material.generated.CompoundMaterials.Adamantine;
+        public static final GTMaterial Efrine               = gregtech.content.material.generated.CompoundMaterials.Efrine;
         public static final GTMaterial Electrum             = gregtech.content.material.generated.CompoundMaterials.Electrum;
         public static final GTMaterial SterlingSilver       = gregtech.content.material.generated.CompoundMaterials.SterlingSilver;
         public static final GTMaterial RoseGold             = gregtech.content.material.generated.CompoundMaterials.RoseGold;
@@ -540,6 +540,7 @@ public final class GT6Materials {
         public static final GTMaterial Knightmetal          = gregtech.content.material.generated.CompoundMaterials.Knightmetal;
         public static final GTMaterial FierySteel           = gregtech.content.material.generated.CompoundMaterials.FierySteel;
         public static final GTMaterial Fireleaf             = gregtech.content.material.generated.CompoundMaterials.Fireleaf;
+        public static final GTMaterial Firestone            = gregtech.content.material.generated.CompoundMaterials.Firestone;
         public static final GTMaterial FlamascusSteel       = gregtech.content.material.generated.CompoundMaterials.FlamascusSteel;
         public static final GTMaterial Thaumium             = gregtech.content.material.generated.CompoundMaterials.Thaumium;
         public static final GTMaterial Osmiridium           = gregtech.content.material.generated.CompoundMaterials.Osmiridium;

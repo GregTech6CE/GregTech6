@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_02_efrine"
+    },
+    {
+      "item": "gt6ce:wire_02_efrine"
+    },
+    {
+      "item": "gt6ce:wire_02_efrine"
+    },
+    {
+      "item": "gt6ce:wire_02_efrine"
+    },
+    {
+      "item": "gt6ce:wire_02_efrine"
+    },
+    {
+      "item": "gt6ce:wire_02_efrine"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_12_efrine",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
+}

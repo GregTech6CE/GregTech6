@@ -5,6 +5,7 @@
 | 内容 | 差异 | 原因 |
 | --- | --- | --- |
 | 重复生成（[审计类型A](https://github.com/GregTech6CE/GregTech6/issues/249)） | 停注 `waterdistilled`。 | 材料 `WaterDistilled` 改为绑定 `DistW`（`ic2distilledwater`），蒸馏水只保留一个 ID。 |
+| 污水 | 删除 `waterdirty` 及其 `_flowing`、污水瓶与木桶、Drying 配方、沼泽水体生成和相关世界液体效果；沼泽列保留原版水。 | 整体删除污水，不再保留独立流体、材料 `WaterDirty` 与 `DirtyWater` 别名。 |
 | 概念重复（[审计类型B](https://github.com/GregTech6CE/GregTech6/issues/250)） | 停注 `swampwater`、`stagnantwater`、`rc oxygen`、`rc liquid oxygen`、`rc_heavy_water`、`ethanol`、`rc ethanol`、`ic2biomass`、`ender`、`redstone`、`glowstone`、`for.honey`、`grc.honey`、`grcmilk.milk`、`oliveoil`、`plantoil`、`lightoil`、`heavyoil`、`rc lubricant`、`brine`、`tropicswater`、`grccore.saltwater`、`volcanic_lava_fluid`。 | 同一物质或同一概念的多个 ID 只保留引用更多、属于 GT6 材料链或世界生成的 canonical ID；`ethanol`、`oliveoil` 是材料生成重复，分别改绑 `bioethanol`、`binnie.juiceolive`。 |
 | 联动残留（[审计类型D](https://github.com/GregTech6CE/GregTech6/issues/252)） | 停注 `binnie.juicelime`、`binnie.juiceorange`、`binnie.juiceplum`、`binnie.juicepeach`、`binnie.juiceelderberry`、`binnie.juicegrapefruit`、`binnie.juiceapricot`、`binnie.juicepear`、`binnie.juiceredgrape`、`binnie.juicewhitegrape`、`binnie.juicecherry`、`binnie.mashwheat`、`binnie.mashcorn`、`binnie.mashrye`、`binnie.mashgrain`、`binnie.juice`、`binnie.wineagave`、`binnie.wineapricot`、`binnie.winecherry`、`binnie.winecitrus`、`binnie.wineelderberry`、`binnie.wineplum`、`binnie.winesparkling`、`binnie.winefortified`、`binnie.winered`、`binnie.winewhite`、`binnie.ciderpear`、`binnie.ciderpeach`、`binnie.whiskey`、`binnie.whiskeyrye`、`binnie.whiskeycorn`、`cactusfruitjuice`、`datejuice`、`blood`、`slime.blue`、`pinkslime`、`sludge`、`tar`、`sewage`、`xpjuice`、`xp`、`mobessence`、`lpg`、`liquidnitrogen`、`liquidmethane`、`cold_water`、`hot_water`、`ic2hotwater`、`boilingwater`、`canolaoil`、`hotcrude`、`rc jet fuel`、`biodiesel`、`poison`、`pyrotheum`、`cryotheum`、`petrotheum`、`aerotheum`、`mana`。 | 原版只做 `exists()` 判断或端口没有生产链；Mana（Botania）与 `pyrotheum`、`cryotheum`、`petrotheum`、`aerotheum`（Thermal Foundation）由人工判断移除。 |
 | 光谱露（[审计类型D](https://github.com/GregTech6CE/GregTech6/issues/252) 漏项） | 停注 `spectral_dew`，并移除 `spectral_dew` 瓶、9 种 `wooden_bucket_*_spectral_dew` 木桶、对应模型、贴图、堆组和语言键；引用 `SpDew` 的水与冷却剂配方行一并移除或从候选列表删除。 | 原版 `FL.SpDew` 依附 Netherlicious/Thaumcraft 联动，端口没有来源；按类型D补删。 |
@@ -21,7 +22,7 @@
 | 太空类模组熔融流体 | 停注 `molten.desh`、`molten.frozeniron`、`molten.kreknorite`、`molten.marsstone`、`molten.moonstone`、`molten.spacestone`、`molten.glowstoneceres`、`molten.glowstoneenceladus`、`molten.glowstoneio`、`molten.glowstonepluto`、`molten.glowstoneproteus`。 | 本端没有对应天体、陨石与行星岩层，材料与方块没有来源。 |
 | AbyssalCraft 熔融流体 | 停注 `molten.abyssalnite`、`molten.coralium`、`molten.dreadium`、`molten.ethaxium`。 | 本端未接入该模组，材料没有物品来源。 |
 | Alfheim 熔融流体 | 停注 `molten.elvorium`、`molten.mauftrium`、`molten.muspelheimpower`、`molten.niflheimpower`。 | 本端未接入该模组，材料没有物品来源与配方。 |
-| Netherlicious 与 Enderlicious 熔融流体 | 停注 `molten.efrine`、`molten.gloomstone`、`molten.voidmetal`。 | 原模组是高版本下界与末地内容的回移植，本端改用现代 MC 原版内容。 |
+| Netherlicious 与 Enderlicious 熔融流体 | 停注 `molten.gloomstone`、`molten.voidmetal`。 | 原模组是高版本下界与末地内容的回移植，本端改用现代 MC 原版内容。 |
 | Big Reactors 熔融流体 | 停注 `molten.blutonium`、`molten.ludicrite`、`molten.yellorium`。 | 本端未接入该模组，材料没有物品来源；反应堆燃料棒一并停注。 |
 | Mekanism 熔融流体 | 停注 `molten.glowstonerefined`、`molten.obsidianrefined`。 | 机器配方仍接入该模组，但材料本身没有物品来源，停注。 |
 | Tinkers Construct 熔融流体 | 停注 `molten.ardite`、`molten.manyullyn`。 | 本端未接入该模组，材料没有物品来源。 |
@@ -33,6 +34,6 @@
 | 现实名称化合物熔融流体 | 停注 `molten.ferrite`、`molten.niobiumnitride`。 | 本端未保留对应配方与物品形态，停注。 |
 | 无来源/无消费端材料熔融流体 | 停注 `molten.bedrockium`、`molten.crystallinepinkslime`、`molten.unstable`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 
-随材料停注不再生成的流体共 114 条，包括 111 条 `molten.*`、`ectoplasm`、`martianvitriol` 和 `uumatter`。[类型C](https://github.com/GregTech6CE/GregTech6/issues/251) 的 `molten.brass`、`molten.zinc`、`molten.calcite` 静态声明已删除，但材料生成器以同一 ID 重建，不属于流体移除；属性改由材料熔点与亮度 10 决定。
+随材料停注不再生成的流体共 113 条，包括 110 条 `molten.*`、`ectoplasm`、`martianvitriol` 和 `uumatter`。[类型C](https://github.com/GregTech6CE/GregTech6/issues/251) 的 `molten.brass`、`molten.zinc`、`molten.calcite` 静态声明已删除，但材料生成器以同一 ID 重建，不属于流体移除；属性改由材料熔点与亮度 10 决定。
 
 另清理不再对应任何已注册流体的 `fluid_type.gt6ce.molten_*` 语言键：英文 824 条、中文 826 条。通用回退键 `fluid_type.gt6ce.molten_material` 保留，供没有专用显示名的熔融流体使用。

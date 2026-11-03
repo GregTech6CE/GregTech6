@@ -56,8 +56,8 @@ public final class FluidRenderLayers {
 
     /**
      * The layer the port registers for a GT6 fluid, keyed by fluid registry path
-     * ({@code "seawater"}, {@code "riverwater"}, {@code "swampwater"}, plus the {@code _flowing}
-     * variants - all six are world waters, see {@link GTWaterParity#isWorldWater}). They and the six
+     * ({@code "seawater"}, {@code "riverwater"}, plus the {@code _flowing}
+     * variants - all four are world waters, see {@link GTWaterParity#isWorldWater}). They and the four
      * spring families get GT6's translucent world layer; non-world fluids keep the default.
      */
     public static String select(String registryPath) {
@@ -74,7 +74,7 @@ public final class FluidRenderLayers {
      *
      * <p>{@code GregTechClient.clientSetup} iterates this map and calls
      * {@code ItemBlockRenderTypes.setRenderLayer(fluid, RenderType.translucent())} for each entry
-     * whose layer {@link #isTranslucent}; this subset stays six world waters, while
+     * whose layer {@link #isTranslucent}; this subset stays four world waters, while
      * {@link #worldFluidLayers()} adds the twelve spring entries for client registration.
      */
     public static Map<String, String> worldWaterLayers() {
@@ -85,7 +85,7 @@ public final class FluidRenderLayers {
         return layers;
     }
 
-    /** Source names used by world-block registration, including the three water replacements. */
+    /** Source names used by world-block registration, including the two water replacements. */
     public static Set<String> worldFluidPaths() {
         Set<String> paths = new LinkedHashSet<>(GTWaterParity.WORLD_WATER_PATHS);
         paths.addAll(WORLD_SPRINGS);

@@ -713,9 +713,17 @@ public final class MaterialOreProcessing {
         Stones.Endstone.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Stones.Endstone.ores(Elements.He_3, Elements.Be);
         Compounds.Glowstone.put(MaterialProperty.GENERATE_ORE_PROCESSING);
+        Compounds.Glowstone.ores(Compounds.Redstone, Elements.Au, Compounds.FluoriteYellow);
+        Compounds.Efrine.put(MaterialProperty.GENERATE_ORE_PROCESSING);
+        Compounds.Efrine.ores(Ores.SoulSand, Elements.Be, Ores.Pentlandite, Compounds.Zircon, Compounds.FluoriteGreen);
         Elements.AncientDebris.put(MaterialProperty.GENERATE_ORE_PROCESSING);
+        Elements.AncientDebris.ores(Ores.SoulSand, Compounds.Efrine, Ores.Huebnerite, Compounds.Firestone);
         Ores.SoulSand.put(MaterialProperty.GENERATE_ORE_PROCESSING);
+        Ores.SoulSand.ores(Compounds.Coal, Compounds.NetherQuartz, Ores.Niter);
         Compounds.NetherQuartz.put(MaterialProperty.GENERATE_ORE_PROCESSING);
+        Compounds.NetherQuartz.ores(Ores.Barite, Compounds.Efrine, Compounds.FluoriteWhite);
+        Compounds.Firestone.put(MaterialProperty.GENERATE_ORE_PROCESSING);
+        Compounds.Firestone.ores(Compounds.NetherQuartz, Compounds.PhosphorusRed, Compounds.FluoriteRed);
         Stones.Quartzite.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Stones.Quartzite.ores(Compounds.CertusQuartz, Ores.Barite, Ores.Fe2O3);
         Compounds.MilkyQuartz.put(MaterialProperty.GENERATE_ORE_PROCESSING);

@@ -6,12 +6,12 @@ import java.util.Set;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Vanilla-water parity facts for the three fluids GT6 puts into the world in place of vanilla water
+ * Vanilla-water parity facts for the two fluids GT6 puts into the world in place of vanilla water
  * ({@code Loader_Worldgen:576-578}: {@code WorldgenOcean("ocean.seawater")},
- * {@code WorldgenRiver("river.riverwater")}, {@code WorldgenSwamp("swamp.dirtywater")}).
+ * {@code WorldgenRiver("river.riverwater")}). Swamp water is not registered in this port.
  *
- * <p>The user report was that these three look darker than vanilla water. They are registered as
- * their own fluids (GT6 keeps three kinds, and the worldgen replaces vanilla water with them), so
+ * <p>The user report was that these waters look darker than vanilla water. They are registered as
+ * their own fluids (the worldgen replaces vanilla water with them), so
  * nothing made them inherit vanilla water's rendering or attributes: their {@code FluidType} said
  * {@code canSwim(false)} / {@code canDrown(false)} / {@code canConvertToSource(false)} /
  * {@code supportsBoating(false)} / {@code canHydrate(false)} / {@code canExtinguish(false)}, their
@@ -38,7 +38,7 @@ import net.minecraft.resources.ResourceLocation;
  * contract compares the fluid instance against {@code Fluids.WATER}
  * ({@code SimpleWaterloggedBlock.java}), and the chunk mesher looks the fluid up in
  * {@code ItemBlockRenderTypes.FLUID_RENDER_TYPES}. See {@code GTWorldWaterFluid},
- * {@link VanillaWaterlogging} and {@link FluidRenderLayers} for how the three world waters satisfy
+ * {@link VanillaWaterlogging} and {@link FluidRenderLayers} for how the two world waters satisfy
  * them while staying separate fluids.
  */
 public final class GTWaterParity {
@@ -61,23 +61,20 @@ public final class GTWaterParity {
     public static final String SEAWATER = "seawater";
     /** Fluid registry path of GT6's river water ({@code WorldgenRiver}, {@code FL.River_Water}). */
     public static final String RIVERWATER = "riverwater";
-    /** Fluid registry path of GT6's swamp water ({@code WorldgenSwamp}, {@code FL.Swampwater}). */
-    public static final String SWAMPWATER = "waterdirty";
 
     /**
-     * The three world waters. The same six ids (each plus its {@code _flowing} variant) are the
+     * The two world waters. The same four ids (each plus its {@code _flowing} variant) are the
      * contents written into {@code data/minecraft/tags/fluids/water.json}.
      */
-    public static final Set<String> WORLD_WATER_PATHS = Set.of(SEAWATER, RIVERWATER, SWAMPWATER);
+    public static final Set<String> WORLD_WATER_PATHS = Set.of(SEAWATER, RIVERWATER);
 
-    /** GT6's registration order, still before flowing, of the six world-water registry paths. */
+    /** GT6's registration order, still before flowing, of the four world-water registry paths. */
     public static final List<String> WORLD_WATER_REGISTRY_PATHS = List.of(
             SEAWATER, SEAWATER + "_flowing",
-            RIVERWATER, RIVERWATER + "_flowing",
-            SWAMPWATER, SWAMPWATER + "_flowing");
+            RIVERWATER, RIVERWATER + "_flowing");
 
     /**
-     * The same six paths as a set, so a lookup can ask "is this one of the world waters?" for the
+     * The same four paths as a set, so a lookup can ask "is this one of the world waters?" for the
      * flowing variant as well: a flowing world water is a registered fluid of its own
      * ({@code gt6ce:seawater_flowing}) and it is what most positions of a GT6 water body actually
      * hold, so anything keyed by fluid name has to cover it.
@@ -87,15 +84,15 @@ public final class GTWaterParity {
     private GTWaterParity() {}
 
     /**
-     * True for GT6's three world waters, keyed by fluid registry name: {@code "seawater"},
-     * {@code "riverwater"}, {@code "waterdirty"} <em>and</em> their {@code _flowing} variants. Uses
+     * True for GT6's two world waters, keyed by fluid registry name: {@code "seawater"},
+     * {@code "riverwater"} <em>and</em> their {@code _flowing} variants. Uses
      * {@link RegisteredFluids#sanitizePath} so it accepts the raw GT6 name as well.
      *
      * <p>The flowing variants have to be accepted: {@link GTWaterParity#WORLD_WATER_PATHS} names the
-     * three GT6 waters (which is what the fluid definitions and the {@code #minecraft:water} tag are
+     * two GT6 waters (which is what the fluid definitions and the {@code #minecraft:water} tag are
      * built from), but {@code gt6ce:seawater_flowing} and friends are separate registered fluids
      * and every flowing block in a GT6 water body reports one of them, so a predicate that only knew
-     * the three still names would answer "not a world water" for most of the water in the world.
+     * the two still names would answer "not a world water" for most of the water in the world.
      */
     public static boolean isWorldWater(String registryName) {
         return registryName != null && ALL_WORLD_WATER_PATHS.contains(RegisteredFluids.sanitizePath(registryName));

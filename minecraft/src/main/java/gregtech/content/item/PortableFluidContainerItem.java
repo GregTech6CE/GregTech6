@@ -78,7 +78,7 @@ public final class PortableFluidContainerItem extends BlockItem implements gregt
     public boolean accepts(FluidStack fluid) {
         if (fluid.isEmpty()) return false;
         var type = fluid.getFluid().getFluidType();
-        // entryForFluid, not the FluidType key: the three world waters report vanilla water's
+        // entryForFluid, not the FluidType key: the two world waters report vanilla water's
         // FluidType (see GTWorldWaterFluid), so the type key would lose their GT6 entry.
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         boolean gas = type.isLighterThanAir();

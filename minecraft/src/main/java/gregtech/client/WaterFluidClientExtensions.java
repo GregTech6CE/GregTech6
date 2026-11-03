@@ -14,7 +14,7 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 //?}
 
 /**
- * Client rendering of GT6's three world waters (sea, river and swamp water), copied value by value
+ * Client rendering of GT6's two world waters (sea and river water), copied value by value
  * from {@code ForgeMod.WATER_TYPE}'s client extension in Forge 1.20.1 so they are drawn exactly like
  * vanilla water instead of with GT6's darker dedicated sprites.
  *
@@ -25,7 +25,7 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
  * {@code LiquidBlockRenderer} asks for. The camera overlay is vanilla's
  * {@code textures/misc/underwater.png}.
  *
- * <p>This is the extension of the GT6 {@code FluidType} the port registers for those three fluids.
+ * <p>This is the extension of the GT6 {@code FluidType} the port registers for those two fluids.
  * The <em>fluids</em> themselves report {@code ForgeMod.WATER_TYPE} (see
  * {@code GTWorldWaterFluid}), so the world renderer actually asks vanilla's own extension for them
  * ({@code ForgeHooksClient.getFluidSprites} and {@code IClientFluidTypeExtensions.of(FluidState)}
@@ -39,7 +39,7 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
  * fluid registry.
  */
 public final class WaterFluidClientExtensions implements IClientFluidTypeExtensions {
-    /** Stateless, so one shared instance serves all three fluids. */
+    /** Stateless, so one shared instance serves both fluids. */
     public static final WaterFluidClientExtensions INSTANCE = new WaterFluidClientExtensions();
 
     private WaterFluidClientExtensions() {}

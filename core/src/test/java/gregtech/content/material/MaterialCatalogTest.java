@@ -52,7 +52,7 @@ class MaterialCatalogTest {
             9172, 9173, 9178, 9181, 9182, 9183, 9191, 9244, 9245, 9249, 9250, 9251, 9253, 9254, 9255, 9256, 9257, 9258,
             9259, 9260, 9262, 9263, 9264, 9265, 9266, 9267, 9268, 9269, 9270, 9320, 9324, 9325, 9326, 9327, 9328, 9331,
             9332, 9333, 9337, 9338, 9339, 9340, 9341, 9358, 9371, 9406, 9704, 9706, 9707, 9708, 9714, 9716, 9717, 9718,
-            9719, 9778, 9786, 9787, 9788, 9789, 9795, 9797, 9798, 9799, 9887
+            9719, 9778, 9786, 9787, 9788, 9789, 9795, 9797, 9798, 9799, 9807, 9887
         }) assertTrue(!GTMaterialRegistry.get(id).isValid(), "Retired material " + id);
         for (int i = 0; i < 16; i++) {
             var dye = gregtech.content.data.ImportedMaterialData.DATA.DYE_MATERIALS[i];
@@ -71,7 +71,9 @@ class MaterialCatalogTest {
                 "Trinium",
                 "Naquadah",
                 "TritaniumElemental",
-                "Tritanium")) assertTrue(GTMaterialRegistry.get(retained).isValid(), retained);
+                "Tritanium",
+                "Efrine",
+                "Firestone")) assertTrue(GTMaterialRegistry.get(retained).isValid(), retained);
         for (int id : new int[] {1250, 8752, 9204, 9205, 9206, 9207, 9208, 9209})
             assertTrue(GTMaterialRegistry.get(id).isValid(), "Restored Tritanium material " + id);
         assertSame(GTMaterialRegistry.get("Tn"), GTMaterialRegistry.get(1250), "Tn alias");
@@ -169,5 +171,22 @@ class MaterialCatalogTest {
         assertNotNull(gregtech.content.data.FluidCatalog.get("MatterCharged"));
         assertTrue(!GTMaterialRegistry.get(9884).isValid());
         assertTrue(!GTMaterialRegistry.get(9885).isValid());
+    }
+
+    @Test
+    void netherBedrockOresKeepOnlyTheRetainedMaterials() {
+        MaterialTestFixture.ensureInitialized();
+        var names = gregtech.content.worldgen.GTBedrockOres.NETHER.stream()
+                .map(gregtech.content.worldgen.GTBedrockOres.BedrockOre::name)
+                .toList();
+        assertEquals(java.util.List.of("glowstone", "netherquartz", "ancientdebris", "efrine", "firestone"), names);
+        assertSame(
+                Materials.Efrine,
+                gregtech.content.worldgen.GTBedrockOres.NETHER.get(3).material());
+        assertSame(
+                Materials.Firestone,
+                gregtech.content.worldgen.GTBedrockOres.NETHER.get(4).material());
+        assertTrue(!GTMaterialRegistry.get(8456).isValid());
+        assertTrue(!GTMaterialRegistry.get(8457).isValid());
     }
 }

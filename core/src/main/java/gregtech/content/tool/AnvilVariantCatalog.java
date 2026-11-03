@@ -2,7 +2,7 @@ package gregtech.content.tool;
 
 import java.util.List;
 
-/** Original material identity and persisted GT durability for all 35 anvils. */
+/** Original material identity and persisted GT durability for all 36 anvils. */
 public final class AnvilVariantCatalog {
     private AnvilVariantCatalog() {}
 
@@ -26,6 +26,7 @@ public final class AnvilVariantCatalog {
             new Variant("anvil_redsteel", "RedSteel", 50000000L),
             new Variant("anvil_vanadiumsteel", "VanadiumSteel", 70000000L),
             new Variant("anvil_fierysteel", "FierySteel", 90000000L),
+            new Variant("anvil_efrine", "Efrine", 20000000L),
             new Variant("anvil_titanium", "Titanium", 100000000L),
             new Variant("anvil_netherite", "Netherite", 150000000L),
             new Variant("anvil_terrasteel", "Terrasteel", 200000000L),

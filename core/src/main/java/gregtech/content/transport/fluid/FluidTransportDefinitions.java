@@ -369,6 +369,8 @@ public final class FluidTransportDefinitions {
         new DrumDef(
                 "drum_bronze", gregtech.content.material.generated.CompoundMaterials.Bronze, 64000, true, false, false),
         new DrumDef(
+                "drum_efrine", gregtech.content.material.generated.CompoundMaterials.Efrine, 64000, true, true, true),
+        new DrumDef(
                 "drum_invar", gregtech.content.material.generated.CompoundMaterials.Invar, 64000, true, false, false),
         new DrumDef(
                 "drum_steel", gregtech.content.material.generated.CompoundMaterials.Steel, 64000, true, false, false),

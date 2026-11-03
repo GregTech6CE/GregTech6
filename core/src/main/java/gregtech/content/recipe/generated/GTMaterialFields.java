@@ -194,7 +194,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("FreshWater", "Fresh Water");
         BY_FIELD.put("HolyWater", "Holy Water");
         BY_FIELD.put("SeaWater", "Sea Water");
-        BY_FIELD.put("DirtyWater", "WaterDirty");
         BY_FIELD.put("DistWater", "WaterDistilled");
         BY_FIELD.put("H2O2", "Hydrogen Peroxide");
         BY_FIELD.put("HCl", "Hydrochloric Acid");
@@ -576,6 +575,7 @@ public final class GTMaterialFields {
         BY_FIELD.put("WroughtIron", "Wrought Iron");
         BY_FIELD.put("AnnealedCopper", "Annealed Copper");
         BY_FIELD.put("Adamantine", "Adamantine");
+        BY_FIELD.put("Efrine", "Efrine");
         BY_FIELD.put("Electrum", "Electrum");
         BY_FIELD.put("SterlingSilver", "Sterling Silver");
         BY_FIELD.put("RoseGold", "Rose Gold");
@@ -623,6 +623,7 @@ public final class GTMaterialFields {
         BY_FIELD.put("Knightmetal", "Knightmetal");
         BY_FIELD.put("FierySteel", "Fiery Steel");
         BY_FIELD.put("Fireleaf", "Fireleaf");
+        BY_FIELD.put("Firestone", "Firestone");
         BY_FIELD.put("FlamascusSteel", "Flamascus Steel");
         BY_FIELD.put("Thaumium", "Thaumium");
         BY_FIELD.put("Osmiridium", "Osmiridium");

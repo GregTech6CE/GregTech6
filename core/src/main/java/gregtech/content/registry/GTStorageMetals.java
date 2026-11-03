@@ -30,6 +30,7 @@ public final class GTStorageMetals {
             new Spec("bismuth_bronze", gregtech.content.material.generated.CompoundMaterials.BismuthBronze, 8.0F, 8.0F),
             new Spec("germanium", gregtech.content.material.generated.ElementMaterials.Germanium, 4.0F, 4.0F),
             new Spec("invar", gregtech.content.material.generated.CompoundMaterials.Invar, 4.0F, 4.0F),
+            new Spec("efrine", gregtech.content.material.generated.CompoundMaterials.Efrine, 8.0F, 8.0F),
             new Spec("steel", gregtech.content.material.generated.CompoundMaterials.Steel, 6.0F, 6.0F),
             new Spec("gold", gregtech.content.material.generated.ElementMaterials.Gold, 3.0F, 3.0F),
             new Spec("silver", gregtech.content.material.generated.ElementMaterials.Silver, 3.0F, 3.0F),

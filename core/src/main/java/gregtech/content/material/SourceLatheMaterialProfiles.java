@@ -602,6 +602,7 @@ public final class SourceLatheMaterialProfiles {
             8338|Monazite|0000
             8340|Nikolite|0001
             8341|Glowstone|0001
+            8342|Firestone|0000
             8346|NetherQuartz|0000
             8347|CertusQuartz|0000
             8348|ChargedCertusQuartz|0000
@@ -773,6 +774,7 @@ public final class SourceLatheMaterialProfiles {
             8744|AncientDebris|0000
             8745|Netherite|0000
             8746|NetherizedDiamond|1000
+            8747|Efrine|0000
             8751|Duranium|0000
             8752|Tritanium|0000
             8756|Duralumin|0000
@@ -974,7 +976,6 @@ public final class SourceLatheMaterialProfiles {
             9804|Saltwater|0000
             9805|HolyWater|0000
             9806|SeaWater|0000
-            9807|WaterDirty|0000
             9808|WaterDistilled|0000
             9809|HydrogenPeroxide|0000
             9810|Lava|0000

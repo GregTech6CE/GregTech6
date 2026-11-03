@@ -18,12 +18,12 @@ public final class FluidVisualPolicy {
     public record Visual(ResourceLocation texture,int tint) {}
     private FluidVisualPolicy() {}
     public static Visual select(RegisteredFluids.FluidEntry entry,Predicate<ResourceLocation> exists){
-        // GT6's sea/river/swamp water are their own fluids, so they have to reproduce vanilla water's
+        // GT6's sea/river water are their own fluids, so they have to reproduce vanilla water's
         // look by hand: vanilla's own still sprite multiplied by vanilla's own water tint, decided
         // before the resource-pack view is consulted (no GT sprite may darken them again). Without
-        // this, seawater and swampwater fell through to the animated "molten" material template and
-        // riverwater was drawn precoloured with a white (no-op) tint, which is what made them look
-        // darker than vanilla water.
+        // this, seawater fell through to the animated "molten" material template and riverwater was
+        // drawn precoloured with a white (no-op) tint, which is what made them look darker than
+        // vanilla water.
         if(GTWaterParity.isWorldWater(entry.registryName()))
             return new Visual(GTWaterParity.VANILLA_WATER_STILL_TEXTURE,GTWaterParity.VANILLA_WATER_TINT);
         if(entry.textureMode()==RegisteredFluids.FluidTextureMode.VANILLA_WATER)

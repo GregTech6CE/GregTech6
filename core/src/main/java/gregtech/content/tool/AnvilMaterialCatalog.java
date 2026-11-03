@@ -8,6 +8,7 @@ public final class AnvilMaterialCatalog {
     public static final java.util.Set<String> SELF_FORGING = java.util.Set.of(
             "Actinium",
             "Adamantine",
+            "Efrine",
             "Aluminium",
             "AluminiumAlloy",
             "AluminiumBrass",

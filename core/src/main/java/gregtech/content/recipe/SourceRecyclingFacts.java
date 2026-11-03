@@ -559,6 +559,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8338, "Monazite", B, 8338, U, 1626);
         row(rows, 8340, "Nikolite", M, 8340, U, 1541);
         row(rows, 8341, "Glowstone", M, 8341, U, 1544);
+        row(rows, 8342, "Firestone", 0, 8342, U, 1537);
         row(rows, 8346, "NetherQuartz", M | B, 8000, U, 1554);
         row(rows, 8347, "CertusQuartz", M | B, 8000, U, 1564);
         row(rows, 8348, "ChargedCertusQuartz", M | B, 8000, U, 1565);
@@ -746,6 +747,7 @@ public final class SourceRecyclingFacts {
         row(rows, 8744, "AncientDebris", M, 8744, U, 1832);
         row(rows, 8745, "Netherite", M, 8745, U, 1833);
         row(rows, 8746, "NetherizedDiamond", M, 8746, U, 1834);
+        row(rows, 8747, "Efrine", M, 8747, U, 1835);
         row(rows, 8751, "Duranium", M, 8751, U, 1840);
         row(rows, 8752, "Tritanium", M, 8752, U, 1841);
         row(rows, 8756, "Duralumin", M, 8756, U, 1845);

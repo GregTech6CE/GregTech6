@@ -50,6 +50,7 @@ public final class ReviewedMagneticMaterials {
             java.util.Map.entry(8744, "AncientDebris"),
             java.util.Map.entry(8745, "Netherite"),
             java.util.Map.entry(8746, "NetherizedDiamond"),
+            java.util.Map.entry(8747, "Efrine"),
             java.util.Map.entry(8784, "Adamantine"),
             java.util.Map.entry(8801, "Infinity"),
             java.util.Map.entry(8803, "CastIron"),

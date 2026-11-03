@@ -290,7 +290,7 @@ public final class GTBumbleBeeRecipes {
      */
     private static boolean isHoney(@Nullable FluidStack stack) {
         if (stack == null || stack.isEmpty()) return false;
-        // entryForFluid, not the FluidType key: the three world waters report vanilla water's
+        // entryForFluid, not the FluidType key: the two world waters report vanilla water's
         // FluidType (see GTWorldWaterFluid), so the type key would lose their GT6 entry.
         RegisteredFluids.FluidEntry entry = GTFluids.entryForFluid(stack.getFluid());
         if (entry != null && entry.hasFlag(RegisteredFluids.FluidFlags.HONEY)) return true;

@@ -23,22 +23,19 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Port of GT6's three water-body passes ({@code Loader_Worldgen:576-578}):
- * {@code WorldgenOcean("ocean.seawater")}, {@code WorldgenRiver("river.riverwater")} and
- * {@code WorldgenSwamp("swamp.dirtywater")}.
+ * Port of GT6's ocean and river water-body passes ({@code Loader_Worldgen:576-578}):
+ * {@code WorldgenOcean("ocean.seawater")} and {@code WorldgenRiver("river.riverwater")}.
+ * {@code WorldgenSwamp("swamp.dirtywater")} is not ported because the port no longer registers
+ * dirty water; swamp columns keep vanilla water.
  *
  * <p>Each pass walks every column of a chunk from {@code waterLevel} down to bedrock: an opaque
- * block ends the column, every water block on the way down is replaced with GT6's own water fluid
- * block (so a whole ocean column becomes sea water, not just its surface). The pass only runs when
- * the chunk touches the matching biome: oceans, rivers (but not a chunk that also touches an ocean)
- * and swamps.
+ * block ends the column, every vanilla water block on the way down is replaced with GT6's own water
+ * fluid block (so a whole ocean column becomes sea water, not just its surface). The pass only runs
+ * when the chunk touches the matching biome: oceans, and rivers (but not a chunk that also touches
+ * an ocean).
  *
- * <p>GT6 registers the three in a fixed order — ocean, then river, then swamp — and says so in the
- * source ("IT IS IMPORTANT THAT OCEAN COMES BEFORE RIVER AND SWAMP"). The port keeps that by
- * running all three passes from one feature, in the same order, so a chunk that touches both a
- * river and a swamp converts vanilla water in both, but only overwrites GT water in swamp
- * columns. GT6 gates its {@code BlockWaterlike} branch on {@code aBiomes[tX][tZ]}; this
- * preserves sea/river water outside the swamp without changing fluid movement.
+ * <p>GT6 registers ocean before river ("IT IS IMPORTANT THAT OCEAN COMES BEFORE RIVER AND SWAMP").
+ * The port keeps that by running both passes from one feature, in the same order.
  */
 public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6's {@code mHeight = WD.waterLevel()} — the default overworld water level. */
@@ -49,9 +46,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
         /** {@code WorldgenOcean("ocean.seawater")} — {@code BIOMES_OCEAN}. */
         OCEAN("ocean.seawater", "gt6ce:seawater"),
         /** {@code WorldgenRiver("river.riverwater")} — {@code BIOMES_RIVER} without {@code BIOMES_OCEAN}. */
-        RIVER("river.riverwater", "gt6ce:riverwater"),
-        /** {@code WorldgenSwamp("swamp.dirtywater")} — {@code BIOMES_SWAMP}. */
-        SWAMP("swamp.dirtywater", "gt6ce:waterdirty");
+        RIVER("river.riverwater", "gt6ce:riverwater");
 
         private final String name;
         private final String blockId;
@@ -71,7 +66,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** GT6's registration order, which is also the order the passes must run in. */
-    public static final List<Kind> PASSES = List.of(Kind.OCEAN, Kind.RIVER, Kind.SWAMP);
+    public static final List<Kind> PASSES = List.of(Kind.OCEAN, Kind.RIVER);
 
     public GTWaterBodyFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -91,7 +86,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
             if (!matches(kind, biomes)) continue;
             BlockState fill = blockState(kind.blockId());
             if (fill == null) continue;
-            placed |= convertChunk(level, minX, minZ, switch (kind) { case OCEAN -> gregtech.GregTechConfig.Number.OCEAN_HEIGHT.value(); case RIVER -> gregtech.GregTechConfig.Number.RIVER_HEIGHT.value(); case SWAMP -> gregtech.GregTechConfig.Number.SWAMP_HEIGHT.value(); }, fill, kind == Kind.SWAMP);
+            placed |= convertChunk(level, minX, minZ, switch (kind) { case OCEAN -> gregtech.GregTechConfig.Number.OCEAN_HEIGHT.value(); case RIVER -> gregtech.GregTechConfig.Number.RIVER_HEIGHT.value(); }, fill);
         }
         return placed;
     }
@@ -102,11 +97,10 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
             case OCEAN -> GTWorldgenBiomes.anyOf(biomes, GTWorldgenBiomes.OCEAN);
             case RIVER -> GTWorldgenBiomes.anyOf(biomes, GTWorldgenBiomes.RIVER)
                     && !GTWorldgenBiomes.anyOf(biomes, GTWorldgenBiomes.OCEAN);
-            case SWAMP -> GTWorldgenBiomes.anyOf(biomes, GTWorldgenBiomes.SWAMP);
         };
     }
 
-    /** Last admitted chunk pass; individual columns can retain earlier GT water outside swamps. */
+    /** Last admitted chunk pass. */
     public static Kind resolve(Set<ResourceLocation> biomes) {
         Kind result = null;
         for (Kind kind : PASSES) {
@@ -115,16 +109,11 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
         return result;
     }
 
-    private static boolean convertChunk(WorldGenLevel level, int minX, int minZ, int top,
-                                        BlockState fill, boolean waterlike) {
+    private static boolean convertChunk(WorldGenLevel level, int minX, int minZ, int top, BlockState fill) {
         boolean placed = false;
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
-                // Source WorldgenSwamp: vanilla water is chunk-wide, but existing GT water
-                // is eligible only when this column belongs to a swamp biome.
-                ResourceLocation columnBiome = waterlike ? GTWorldgenBiomes.biomeId(level, minX + i, minZ + j) : null;
-                boolean columnWaterlike = columnBiome != null && GTWorldgenBiomes.SWAMP.contains(columnBiome);
-                placed |= convertColumn(level, minX + i, minZ + j, top, fill, columnWaterlike);
+                placed |= convertColumn(level, minX + i, minZ + j, top, fill);
             }
         }
         return placed;
@@ -133,11 +122,9 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     /**
      * GT6's per-column loop, split out so a prepared column can be driven directly.
      *
-     * @param waterlike true for the swamp pass, which also converts GT6's own water blocks
      * @return true when at least one block was replaced
      */
-    public static boolean convertColumn(WorldGenLevel level, int x, int z, int top,
-                                        BlockState fill, boolean waterlike) {
+    public static boolean convertColumn(WorldGenLevel level, int x, int z, int top, BlockState fill) {
         boolean placed = false;
         boolean firstWater = true;
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
@@ -146,7 +133,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
             BlockState state = level.getBlockState(cursor);
             // GT6: an opaque block ends the column, anything else that is not water is skipped.
             if (state.isSolidRender(level, cursor)) break;
-            if (!isWater(state, waterlike)) continue;
+            if (!state.is(Blocks.WATER)) continue;
             if (state.is(fill.getBlock())) continue;
             // GT6 writes metadata 0 for the first water block in a column, then swaps only the
             // block ID for deeper positions (ExtendedBlockStorage.func_150818_a), keeping each
@@ -159,20 +146,6 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
             firstWater = false;
         }
         return placed;
-    }
-
-    /** GT6's water test: vanilla water, plus GT6's own waterlike blocks in the swamp pass. */
-    private static boolean isWater(BlockState state, boolean waterlike) {
-        if (state.is(Blocks.WATER)) return true;
-        if (!waterlike) return false;
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-//?}
-        if (id == null || !id.getNamespace().equals("gt6ce")) return false;
-        return id.getPath().equals("seawater") || id.getPath().equals("riverwater")
-                || id.getPath().equals("waterdirty");
     }
 
     private static BlockState blockState(String id) {

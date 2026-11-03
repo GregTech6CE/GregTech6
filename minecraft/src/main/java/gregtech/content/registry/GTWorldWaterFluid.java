@@ -22,8 +22,8 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 //?}
 
 /**
- * The {@code FlowingFluid}s behind GT6's three world waters (sea, river and swamp water,
- * {@code Loader_Worldgen:576-578}). They stay separate fluids - separate registry entries, separate
+ * The {@code FlowingFluid}s behind GT6's two world waters (sea and river water,
+ * {@code Loader_Worldgen:576-577}). They stay separate fluids - separate registry entries, separate
  * world blocks, separate {@code #minecraft:water} members and separate GT6 items - but they present
  * themselves as vanilla water everywhere the engine identifies a fluid by its instance rather than
  * by {@code FluidTags.WATER}, which is what "the GT waters must be indistinguishable from vanilla
@@ -81,8 +81,8 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
  */
 
 /**
- * The {@code FlowingFluid}s behind GT6's three world waters (sea, river and swamp water,
- * {@code Loader_Worldgen:576-578}). They stay separate fluids - separate registry entries, separate
+ * The {@code FlowingFluid}s behind GT6's two world waters (sea and river water,
+ * {@code Loader_Worldgen:576-577}). They stay separate fluids - separate registry entries, separate
  * world blocks, separate {@code #minecraft:water} members and separate GT6 items - but they present
  * themselves as vanilla water everywhere the engine identifies a fluid by its instance rather than
  * by {@code FluidTags.WATER}, which is what "the GT waters must be indistinguishable from vanilla
@@ -173,7 +173,7 @@ public final class GTWorldWaterFluid {
      * this override every GT6 world water reported "a different fluid" both against the neighbouring world
      * waters and against vanilla water, and the port rendered/flowed with a seam at every such border.
      *
-     * <p>All six world-water ids are in {@code #minecraft:water} (see {@code GTWaterParity} and
+     * <p>All four world-water ids are in {@code #minecraft:water} (see {@code GTWaterParity} and
      * {@code data/minecraft/tags/fluids/water.json}). Our own six fluids and vanilla water are also
      * recognised directly, so a chunk rebuilt before the client receives a fluid-tag sync still
      * merges them. The tag keeps compatibility with other mods' tagged waters.

@@ -93,6 +93,8 @@ public final class GTEnchantmentTable {
         new Material("Au", List.of(new Entry("Damage", "smite", 3))),
 
         new Material("Electrum", List.of(new Entry("Damage", "smite", 3))),
+        new Material("Efrine", List.of(new Entry("Tools", "fortune", 2), new Entry("Weapons", "looting", 2), new Entry("Ammo", "looting", 4), new Entry("Ranged", "infinity", 2), new Entry("Fishing", "luck_of_the_sea", 2), new Entry("Armors", "fire_protection", 3))),
+        new Material("Firestone", List.of(new Entry("Tools", "fire_aspect", 3), new Entry("Damage", "fire_aspect", 3), new Entry("Ranged", "flame", 3))),
 
         new Material("RoseGold", List.of(new Entry("Damage", "smite", 4))),
 

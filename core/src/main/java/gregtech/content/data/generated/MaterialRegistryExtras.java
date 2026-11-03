@@ -98,7 +98,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.registerAlias("DiamondPink", "PinkDiamond");
         GTMaterialRegistry.registerAlias("DiamondRed", "RedDiamond");
         GTMaterialRegistry.registerAlias("DiamondYellow", "YellowDiamond");
-        GTMaterialRegistry.registerAlias("DirtyWater", "WaterDirty");
         GTMaterialRegistry.registerAlias("DistWater", "WaterDistilled");
         GTMaterialRegistry.registerAlias("Dn", "DuraniumElemental");
         GTMaterialRegistry.registerAlias("Ds", "Darmstadtium");
@@ -551,6 +550,7 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Einsteinium", "Einsteinium");
         GTMaterialRegistry.setDisplayName("ElectricalSteel", "Electrical Steel");
         GTMaterialRegistry.setDisplayName("ElectrotineAlloy", "Electrotine Alloy");
+        GTMaterialRegistry.setDisplayName("Efrine", "Efrine");
         GTMaterialRegistry.setDisplayName("Electrum", "Electrum");
         GTMaterialRegistry.setDisplayName("ElvenElementium", "Elven Elementium");
         GTMaterialRegistry.setDisplayName("ElvenQuartz", "Elven Quartz");
@@ -575,6 +575,7 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("FerrousChloride", "Ferrous Chloride");
         GTMaterialRegistry.setDisplayName("FierySteel", "Fiery Steel");
         GTMaterialRegistry.setDisplayName("Fireleaf", "Fireleaf");
+        GTMaterialRegistry.setDisplayName("Firestone", "Firestone");
         GTMaterialRegistry.setDisplayName("FishCooked", "FishCooked");
         GTMaterialRegistry.setDisplayName("FishOil", "Fish Oil");
         GTMaterialRegistry.setDisplayName("FishRaw", "FishRaw");
@@ -1031,7 +1032,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("VitriolOfClay", "Vitriol Of Clay");
         GTMaterialRegistry.setDisplayName("Warpedwood", "Warped Wood");
         GTMaterialRegistry.setDisplayName("Water", "Water");
-        GTMaterialRegistry.setDisplayName("WaterDirty", "WaterDirty");
         GTMaterialRegistry.setDisplayName("WaterDistilled", "WaterDistilled");
         GTMaterialRegistry.setDisplayName("Wax", "Wax");
         GTMaterialRegistry.setDisplayName("WaxBee", "WaxBee");

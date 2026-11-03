@@ -1129,6 +1129,8 @@ public final class GTMachines {
             hopper("hopper_molybdenum", gregtech.content.material.generated.ElementMaterials.Molybdenum, 8, 6.0F, 6.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ELECTRUM =
             hopper("hopper_electrum", gregtech.content.material.generated.CompoundMaterials.Electrum, 9, 3.0F, 3.0F);
+    public static final RegistryObject<HopperBlock> HOPPER_EFRINE =
+            hopper("hopper_efrine", gregtech.content.material.generated.CompoundMaterials.Efrine, 9, 8.0F, 8.0F);
     public static final RegistryObject<HopperBlock> HOPPER_STAINLESS_STEEL = hopper(
             "hopper_stainless_steel",
             gregtech.content.material.generated.CompoundMaterials.StainlessSteel,
@@ -1264,6 +1266,8 @@ public final class GTMachines {
             "queue_hopper_molybdenum", gregtech.content.material.generated.ElementMaterials.Molybdenum, 8, 6.0F, 6.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ELECTRUM = queueHopper(
             "queue_hopper_electrum", gregtech.content.material.generated.CompoundMaterials.Electrum, 9, 3.0F, 3.0F);
+    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_EFRINE = queueHopper(
+            "queue_hopper_efrine", gregtech.content.material.generated.CompoundMaterials.Efrine, 9, 8.0F, 8.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_STAINLESS_STEEL = queueHopper(
             "queue_hopper_stainless_steel",
             gregtech.content.material.generated.CompoundMaterials.StainlessSteel,

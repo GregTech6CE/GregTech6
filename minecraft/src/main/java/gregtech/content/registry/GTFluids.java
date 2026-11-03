@@ -173,10 +173,10 @@ public final class GTFluids {
     /**
      * Creates a GT6 {@link FluidType} with GT6-specific density, viscosity, luminosity, temperature, and client extensions.
      *
-     * <p>GT6's three world waters (sea, river and swamp water) are the exception: they get vanilla
+     * <p>GT6's two world waters (sea and river water) are the exception: they get vanilla
      * water's own attributes and client extensions (see {@link #waterProperties()} and
      * {@code WaterFluidClientExtensions}) so they behave and look exactly like {@code minecraft:water}
-     * while staying separate fluids. Note that the engine identifies those three as vanilla water
+     * while staying separate fluids. Note that the engine identifies those two as vanilla water
      * through {@link GTWorldWaterFluid#waterType()} rather than through this type; this type stays
      * registered as the GT6 metadata carrier for the port's own items, tanks and GUIs
      * ({@link #entryForFluid}).
@@ -287,7 +287,7 @@ public final class GTFluids {
                 .sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH);
     }
 
-    // The three world waters' FlowingFluid classes live in GTWorldWaterFluid: they override
+    // The two world waters' FlowingFluid classes live in GTWorldWaterFluid: they override
     // getFluidType() (vanilla water's FluidType, see that class) and the waterlogged-block spread
     // hooks, which is a different concern from this registry holder.
 

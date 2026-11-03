@@ -713,7 +713,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("desert_nova", new Entry("nature_foods", 464));
         ITEMS.put("diablo_sauce", new Entry("bottles", 192));
         ITEMS.put("diabolo_sauce", new Entry("bottles", 191));
-        ITEMS.put("dirty_water", new Entry("bottles", 150));
         ITEMS.put("distillation_tower_part", new Entry("multiblocks", 596));
         ITEMS.put("distillery_invar", new Entry("basic_machines", 755));
         ITEMS.put("distillery_steel", new Entry("basic_machines", 755));

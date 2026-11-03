@@ -21,7 +21,7 @@ public final class OriginalToolMaterials {
             Map.entry("Vibramantium", "Vibramantium"));
     private static final Set<String> MAGIC_WOOD_HEADS =
             Set.of("ElvenElementium", "Manasteel", "Terrasteel", "ManaDiamond", "Thaumium");
-    private static final Set<String> BLAZE_HEADS = Set.of("FierySteel", "Fireleaf", "FlamascusSteel");
+    private static final Set<String> BLAZE_HEADS = Set.of("FierySteel", "Fireleaf", "FlamascusSteel", "Firestone");
     private static final Set<String> IRON_HEADS = Set.of();
     private static final Set<String> MAGIC_IRON_HEADS = Set.of();
     private static final Set<String> MAGIC_WOODS =

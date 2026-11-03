@@ -114,7 +114,7 @@ public final class GTFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> DEEP_OCEAN =
             FEATURES.register("gt_deep_ocean", GTDeepOceanFeature::new);
 
-    /** GT6's ocean/river/swamp water (WorldgenOcean/River/Swamp, Loader_Worldgen:576-578). */
+    /** GT6's ocean and river water (WorldgenOcean/River, Loader_Worldgen:576-577). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> WATER_BODIES =
             FEATURES.register("gt_water_bodies", GTWaterBodyFeature::new);
 

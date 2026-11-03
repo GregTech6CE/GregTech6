@@ -352,8 +352,6 @@ final class GTChemGen {
         r("Drying", 16, 1600, null, NONE, sp("f:Saltwater:1000"), sp("f:DistW:750"), sp("omd:NaCl:250"));
         r("Drying", 16, 1600, null, NONE, sp("m:SaltWater:1000"), sp("f:DistW:750"), sp("omd:NaCl:250"));
         r("Drying", 16, 1600, null, NONE, sp("m:SaltedWater:1000"), sp("f:DistW:750"), sp("omd:KCl:250"));
-        r("Drying", 16, 16000, null, NONE, sp("f:Dirty_Water:8000"), sp("f:DistW:7000"), sp("v:dirt:1"));
-        r("Drying", 16, 16, null, NONE, sp("f:Dirty_Water:10"), sp("f:DistW:5"), NONE);
         r("Drying", 16, 60000, null, sp("i:dust:Mirabilite:7"), NONE, sp("f:DistW:30000"), sp("i:dust:Na2SO4:7"));
         r("Drying", 16, 18000, null, sp("i:dust:FeO3H3:14"), NONE, sp("f:DistW:9000"), sp("i:dust:Fe2O3:5"));
         r("Drying", 16, 18000, null, sp("i:dust:AlO3H3:14"), NONE, sp("f:DistW:9000"), sp("i:dust:Al2O3:5"));

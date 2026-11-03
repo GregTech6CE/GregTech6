@@ -189,6 +189,7 @@ public final class Materials {
     public static final GTMaterial Einsteinium = ElementMaterials.Einsteinium;
     public static final GTMaterial ElectricalSteel = CompoundMaterials.ElectricalSteel;
     public static final GTMaterial ElectrotineAlloy = CompoundMaterials.ElectrotineAlloy;
+    public static final GTMaterial Efrine = CompoundMaterials.Efrine;
     public static final GTMaterial Electrum = CompoundMaterials.Electrum;
     public static final GTMaterial ElvenElementium = CompoundMaterials.ElvenElementium;
     public static final GTMaterial ElvenQuartz = CompoundMaterials.ElvenQuartz;
@@ -210,6 +211,7 @@ public final class Materials {
     public static final GTMaterial FerrousChloride = CompoundMaterials.FerrousChloride;
     public static final GTMaterial FierySteel = CompoundMaterials.FierySteel;
     public static final GTMaterial Fireleaf = CompoundMaterials.Fireleaf;
+    public static final GTMaterial Firestone = CompoundMaterials.Firestone;
     public static final GTMaterial FishCooked = CompoundMaterials.FishCooked;
     public static final GTMaterial FishOil = CompoundMaterials.FishOil;
     public static final GTMaterial FishRaw = CompoundMaterials.FishRaw;
@@ -587,7 +589,6 @@ public final class Materials {
     public static final GTMaterial VibrantAlloy = CompoundMaterials.VibrantAlloy;
     public static final GTMaterial VitriolOfClay = CompoundMaterials.VitriolOfClay;
     public static final GTMaterial Water = CompoundMaterials.Water;
-    public static final GTMaterial WaterDirty = CompoundMaterials.WaterDirty;
     public static final GTMaterial WaterDistilled = CompoundMaterials.WaterDistilled;
     public static final GTMaterial Wax = CompoundMaterials.Wax;
     public static final GTMaterial WaxBee = CompoundMaterials.WaxBee;

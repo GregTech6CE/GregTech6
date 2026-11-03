@@ -5,4 +5,5 @@
 | 内容 | 差异 | 原因 |
 | --- | --- | --- |
 | 下界矿物生成 | 下界金矿、远古残骸独立开关，默认开启，不随禁用普通 MC 矿石一起关闭。 | 保留现代 MC 下界资源。 |
+| 下界基岩矿 | 保留 `glowstone`、`netherquartz`、`ancientdebris`、`efrine`、`firestone` 五种；`voidquartz`、`gloomstone` 停注，灵魂沙散矿的 Gloomstone 分支改为空。 | 停注材料后只恢复仍有独立来源的绿晶与火石，其余下界基岩矿不再生成。 |
 | 装饰石生成 | 默认禁用 MC 花岗岩、闪长岩、安山岩矿团，可用 `DisableVanillaDecorativeStone` 调整。 | 避免与 GT 地层生成重复。 |

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/machine/storage/advanced_crafting_table_north"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/storage/advanced_crafting_table_south"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/storage/advanced_crafting_table_west"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/storage/advanced_crafting_table_east"
+    }
+  }
+}

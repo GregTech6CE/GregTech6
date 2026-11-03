@@ -71,6 +71,7 @@ public final class OriginalStorageMaterialData {
         metalset("elven_elementium", 41, ImportedMaterialData.ElvenElementium, "bookshelf_metal_elven_elementium");
         metalset("tritanium", 32, ImportedMaterialData.TritaniumAlloy, "bookshelf_metal_tritanium");
         metalset("adamantium", 33, ImportedMaterialData.Ad, "bookshelf_metal_adamantium");
+        metalset("efrine", 53, ImportedMaterialData.Efrine, "bookshelf_metal_efrine");
 
         metalset(
                 "draconium_awakened", 36, ImportedMaterialData.DraconiumAwakened, "bookshelf_metal_draconium_awakened");

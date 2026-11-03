@@ -28,8 +28,8 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (GT6's sea,
- * river and swamp water, the oil/gas springs and geothermal water).
+ * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (GT6's sea
+ * and river water, the oil/gas springs and geothermal water).
  *
  * <p>Forge's {@code LiquidBlock(Supplier<? extends FlowingFluid>, Properties)} constructor - the one
  * a mod has to use, because the fluid needs the block to build its {@code createLegacyBlock} - leaves
@@ -48,8 +48,8 @@ import java.util.function.Supplier;
  */
 
 /**
- * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (GT6's sea,
- * river and swamp water, the oil/gas springs and geothermal water).
+ * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (GT6's sea
+ * and river water, the oil/gas springs and geothermal water).
  *
  * <p>Forge's {@code LiquidBlock(Supplier<? extends FlowingFluid>, Properties)} constructor - the one
  * a mod has to use, because the fluid needs the block to build its {@code createLegacyBlock} - leaves

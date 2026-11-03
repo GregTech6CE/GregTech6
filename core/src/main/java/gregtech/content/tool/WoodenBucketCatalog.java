@@ -18,7 +18,7 @@ public final class WoodenBucketCatalog {
         }
 
         public boolean discardOnly() {
-            return offset == 5 || offset == 9;
+            return offset == 5;
         }
     }
 
@@ -47,7 +47,6 @@ public final class WoodenBucketCatalog {
             new Content("rubber_sap", "Rubber Tree Sap", 6, List.of("Resin_Rubber")),
             new Content("spruce_resin", "Spruce Tree Resin", 7, List.of("Resin_Spruce")),
             new Content("honey", "Honey", 8, List.of("Honey")),
-            new Content("dirty_water", "Dirty Water (you cannot place this!)", 9, List.of("Dirty_Water")),
             new Content("lubricant", "Lubricant", 10, List.of("Lubricant")),
             new Content("spoiled_milk", "Milk (you cannot drink out of Buckets!)", 11, List.of("Milk_Spoiled")),
             new Content("maple_sap", "Maple Sap", 12, List.of("Sap_Maple")),

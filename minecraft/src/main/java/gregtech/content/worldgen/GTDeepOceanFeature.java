@@ -144,8 +144,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
 //?}
         return id != null && id.getNamespace().equals("gt6ce")
-                && (id.getPath().equals("seawater") || id.getPath().equals("riverwater")
-                    || id.getPath().equals("waterdirty"));
+                && (id.getPath().equals("seawater") || id.getPath().equals("riverwater"));
     }
 
     /** The GT stone block of a stone type: stone blocks are registered as {@code <type>_<variant>}. */

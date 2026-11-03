@@ -25,12 +25,12 @@ public final class GTWaterloggable {
     }
 
     /**
-     * True when {@code fluid} may waterlog a block: vanilla water <em>or</em> one of GT6's three world
+     * True when {@code fluid} may waterlog a block: vanilla water <em>or</em> one of GT6's two world
      * waters. Vanilla's own test is {@code fluid.getType() == Fluids.WATER}, which answers "no" for
-     * every GT6 water body, so a GT water logged block placed into sea/river/swamp water came out dry.
+     * every GT6 water body, so a GT water logged block placed into sea/river water came out dry.
      *
      * <p>The test is the {@code #minecraft:water} fluid tag: {@code data/minecraft/tags/fluids/water.json}
-     * adds all six world-water ids ({@code GTWaterParity.WORLD_WATER_REGISTRY_PATHS}) with
+     * adds all four world-water ids ({@code GTWaterParity.WORLD_WATER_REGISTRY_PATHS}) with
      * {@code "replace": false}, and vanilla water is in that tag already, so membership covers both
      * without hard-coding GT ids here.
      */

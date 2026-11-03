@@ -356,6 +356,14 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
+                            "hopper_efrine",
+                            gregtech.content.material.generated.CompoundMaterials.Efrine,
+                            9,
+                            8.0F,
+                            8.0F)),
+            new Entry(
+                    false,
+                    HopperSpec.of(
                             "hopper_draconium_awakened",
                             gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened,
                             36,
@@ -721,6 +729,14 @@ public final class HopperCatalog {
                             36,
                             100.0F,
                             100.0F)),
+            new Entry(
+                    true,
+                    HopperSpec.of(
+                            "queue_hopper_efrine",
+                            gregtech.content.material.generated.CompoundMaterials.Efrine,
+                            9,
+                            8.0F,
+                            8.0F)),
             new Entry(
                     true,
                     HopperSpec.of(

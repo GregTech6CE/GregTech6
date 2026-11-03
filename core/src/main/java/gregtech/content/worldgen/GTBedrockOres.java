@@ -92,11 +92,14 @@ public final class GTBedrockOres {
                     "flower_alpine_catchfly"));
 
     /**
-     * The seven Nether-specific rows ({@code Loader_Worldgen:758-764}), registered without an
-     * indicator flower — only surface rocks — so {@code flowerId} is null.
+     * The five retained Nether rows from {@code Loader_Worldgen:758-764}, registered without an
+     * indicator flower — only surface rocks — so {@code flowerId} is null. VoidQuartz and
+     * Gloomstone stay retired; see the parity notes.
      */
     public static final List<BedrockOre> NETHER = List.of(
             new BedrockOre("glowstone", Materials.Glowstone, 4000, null),
             new BedrockOre("netherquartz", Materials.NetherQuartz, 2000, null),
-            new BedrockOre("ancientdebris", Materials.AncientDebris, 4000, null));
+            new BedrockOre("ancientdebris", Materials.AncientDebris, 4000, null),
+            new BedrockOre("efrine", Materials.Efrine, 2000, null),
+            new BedrockOre("firestone", Materials.Firestone, 8000, null));
 }

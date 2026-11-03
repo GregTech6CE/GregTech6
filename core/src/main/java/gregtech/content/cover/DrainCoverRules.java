@@ -24,13 +24,12 @@ package gregtech.content.cover;
 public final class DrainCoverRules {
     private DrainCoverRules() {}
 
-    /** CoverDrain:136-143: river becomes ordinary water, swamp becomes dirty water. */
+    /** CoverDrain:136-143: river becomes ordinary water, sea becomes ocean water. */
     public static String bulkWaterField(String worldFluid) {
         if (worldFluid == null) return null;
         return switch (worldFluid) {
             case "riverwater" -> "Water";
             case "seawater" -> "Ocean";
-            case "waterdirty" -> "Dirty_Water";
             default -> null;
         };
     }

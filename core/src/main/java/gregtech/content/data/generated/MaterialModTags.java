@@ -98,6 +98,7 @@ public final class MaterialModTags {
         ImportedMaterialData.DuraniumAlloy.mod(ModReferences.GT);
         ImportedMaterialData.ElectricalSteel.mod(ModReferences.EIO);
         ImportedMaterialData.ElectrotineAlloy.mod(ModReferences.PR);
+        ImportedMaterialData.Efrine.mod(ModReferences.NeLi);
         ImportedMaterialData.Electrum.mod(ModReferences.TE);
         ImportedMaterialData.ElvenElementium.mod(ModReferences.BOTA);
         ImportedMaterialData.ElvenQuartz.mod(ModReferences.BOTA);
@@ -113,6 +114,7 @@ public final class MaterialModTags {
         ImportedMaterialData.Fe.mod(ModReferences.MC);
         ImportedMaterialData.FierySteel.mod(ModReferences.TF);
         ImportedMaterialData.Fireleaf.mod(ModReferences.TF);
+        ImportedMaterialData.Firestone.mod(ModReferences.RC);
         ImportedMaterialData.FishCooked.mod(ModReferences.MaCu);
         ImportedMaterialData.FishOil.mod(ModReferences.MaCu);
         ImportedMaterialData.FishRaw.mod(ModReferences.MaCu);

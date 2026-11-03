@@ -164,7 +164,6 @@ final class GTMultiItemsGen {
         "soda", "Soda", "bottles", "",
         "mineral_soda", "Mineral Soda", "bottles", "",
         "ice_water", "Ice Water", "bottles", "",
-        "dirty_water", "Dirty Water", "bottles", "",
         "grape_vinegar", "Grape Vinegar", "bottles", "",
         "grape_smoothie", "Grape Smoothie", "bottles", "",
         "grape_smoothie_2", "Grape Smoothie", "bottles", "",

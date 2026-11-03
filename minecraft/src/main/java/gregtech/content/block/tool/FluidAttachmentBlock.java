@@ -120,7 +120,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
     public boolean accepts(FluidStack fluid) {
         if (fluid.isEmpty()) return false;
         boolean gas = fluid.getFluid().getFluidType().isLighterThanAir(), acid = false;
-        // entryForFluid, not the FluidType key: the three world waters report vanilla water's
+        // entryForFluid, not the FluidType key: the two world waters report vanilla water's
         // FluidType (see GTWorldWaterFluid), so the type key would lose their GT6 entry.
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         if (entry != null) {
@@ -273,7 +273,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         if (sink == null) return false;
 //?}
         int limit = fluid.getFluid().isSame(net.minecraft.world.level.material.Fluids.LAVA) ? 1000 : 250;
-        // entryForFluid, not the FluidType key: GT6's three world waters report vanilla water's
+        // entryForFluid, not the FluidType key: GT6's two world waters report vanilla water's
         // FluidType (see GTWorldWaterFluid), so the type key would resolve them to minecraft:water.
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         if (!water && entry != null && gregtech.engine.fluid.FluidTexturePolicy.kind(

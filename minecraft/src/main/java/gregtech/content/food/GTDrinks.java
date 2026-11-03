@@ -102,7 +102,7 @@ public final class GTDrinks {
 
     /**
      * The registered still fluid of a GT6 fluid entry. Resolved through {@code GTFluids.entryForFluid} rather
-     * than by name, so the three world waters and every other renamed fluid resolve correctly.
+     * than by name, so the two world waters and every other renamed fluid resolve correctly.
      */
     public static Fluid fluidOf(RegisteredFluids.FluidEntry entry) {
         if (entry == null) {
