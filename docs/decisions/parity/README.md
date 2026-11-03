@@ -31,3 +31,5 @@
 | 作物与食品物品 | 删除 `barley`、`oats`、`rice`、`peanut`、`butter`、`salted_butter`、`tofu_bar`、`tofu_burger`、`vanilla_ice_cream`、`peanut_butter_ice_cream`、`pistachio_ice_cream`、`neapolitan_ice_cream`、`spumoni_vanilla_ice_cream` 食品条目。 | 对应作物材料停注，见[材料移除](material-removal.md)；本端未移植这些作物与食品加工。 |
 | 瓶装流体物品 | 删除 `bottled_indigo_dye`、`peanut_butter`、`whale_oil`、`rice_water`、`rice_vinegar`、`spectral_dew`。 | 对应材料与流体停注，流体登记见[流体移除](fluid-removal.md)。 |
 | 反应堆燃料棒 | 删除 `reactor_rod_9229`、`reactor_rod_9239`、`reactor_rod_9249` 与乏燃料 `reactor_rod_9329`、`reactor_rod_9339`、`reactor_rod_9349`（Yellorium、Blutonium、Ludicrite）。 | 对应材料停注，见[材料移除](material-removal.md)。 |
+| 储物桶封存读取 | 贴胶布后统一不向 `IItemHandler`/AE 存储总线暴露内容，拆封后恢复；原版存在“先读后贴仍可见但不可提取、先贴后读不可见”的时序差异。 | 统一为贴胶布时读不到，避免“可见但不可提取”的终态；内容仍保存在方块内。 |
+| 储物桶自动输出到空气 | 下方无容器且无碰撞时掉落一组物品；岩浆、火不特殊处理，抗火物品可在岩浆中存活。原版 `ST.put` 对岩浆、火和世界底部无效方块直接销毁。 | 保留现代物品实体的燃烧与拾取行为；铁轨因有碰撞形状实际不会掉落。 |

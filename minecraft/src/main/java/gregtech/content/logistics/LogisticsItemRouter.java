@@ -257,9 +257,9 @@ public final class LogisticsItemRouter {
                 continue;
             for (int destinationSlot = 0; destinationSlot < destination.items.getSlots(); destinationSlot++) {
                 ItemStack occupied = destination.items.getStackInSlot(destinationSlot);
-                // Bulk storage's visible stack is capped at one ordinary stack.
-                // Its simulated insert, not that visible count, determines room;
-                // it can also accept another GT6 form of the same material.
+                // Bulk storage reports its whole stored amount in the visible slot.
+                // Its simulated insert, not that count, determines room; it can also
+                // accept another GT6 form of the same material.
                 if (!destination.bulkStorage && !occupied.isEmpty()
 //? if >=1.21.1 {
                         /*&& !ItemStack.isSameItemSameComponents(occupied, available)) continue;
