@@ -4,8 +4,15 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.material.MaterialFormItem;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /** Recipe-local guard for reviewed source NO; does not unregister legacy items or alter target links.
@@ -20,6 +27,30 @@ public final class SourceOreInputForms {
     }
 
     private SourceOreInputForms() {}
+
+    private record ExternalForm(MaterialPrefix prefix, GTMaterial material) {}
+
+    /** Non-GT items exposing one material form, rebuilt when item compositions change. */
+    private static final Map<ExternalForm, List<Item>> EXTERNAL_FORMS = new HashMap<>();
+
+    private static long externalFormsRevision = -1;
+
+    private static synchronized List<Item> externalForms(MaterialPrefix prefix, GTMaterial material) {
+        long revision = ItemMaterialRegistry.compositionRevision();
+        if (revision != externalFormsRevision) {
+            EXTERNAL_FORMS.clear();
+            for (Item item : ItemMaterialRegistry.entries().keySet()) {
+                if (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) continue;
+                var form = MaterialEquivalence.form(new ItemStack(item, 1));
+                if (form == null) continue;
+                EXTERNAL_FORMS
+                        .computeIfAbsent(new ExternalForm(form.prefix(), form.material()), ignored -> new ArrayList<>())
+                        .add(item);
+            }
+            externalFormsRevision = revision;
+        }
+        return EXTERNAL_FORMS.getOrDefault(new ExternalForm(prefix, material), List.of());
+    }
 
     public static boolean allowGeneratedInput(
             GTMaterial material, MaterialPrefix prefix, ItemStack input, Evidence evidence) {
@@ -60,11 +91,8 @@ public final class SourceOreInputForms {
                         .equals("gt6ce")) return canonical;
         ItemStack external = ItemStack.EMPTY;
         boolean unsupportedFine = false;
-        for (var item : gregtech.engine.material.ItemMaterialRegistry.entries().keySet()) {
-            if (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) continue;
+        for (var item : externalForms(prefix, material)) {
             ItemStack stack = new ItemStack(item, count);
-            var form = gregtech.engine.material.MaterialEquivalence.form(stack);
-            if (form == null || form.prefix() != prefix || form.material() != material) continue;
             if (excluded && !usableFine(canonical, stack)) {
                 unsupportedFine = true;
                 continue;

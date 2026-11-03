@@ -93,6 +93,8 @@ public final class GTMaterial {
     }
 
     public static String sanitize(String name) {
+        // Most lookups already pass a registry name; avoid three allocations for the common case.
+        if (name.indexOf(' ') < 0 && name.indexOf('-') < 0 && name.indexOf('\'') < 0) return name;
         return name.replace(" ", "").replace("-", "").replace("'", "");
     }
 

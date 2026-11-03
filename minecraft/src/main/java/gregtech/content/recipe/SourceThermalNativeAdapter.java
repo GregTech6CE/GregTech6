@@ -195,9 +195,33 @@ final class SourceThermalNativeAdapter {
  static class Snapshot {
   final Map<String,FluidCatalog.FluidEntry> definitions;
   private final BiFunction<String,Integer,FluidStack> fluids;
+  private Map<GTMaterial,Map<String,FluidCatalog.FluidEntry>> boundDefinitions;
+  private Map<String,Map<String,FluidCatalog.FluidEntry>> registryDefinitions;
   Snapshot(){this(FluidCatalog.all(),GTFluids::stack);}
   Snapshot(Map<String,FluidCatalog.FluidEntry> definitions,BiFunction<String,Integer,FluidStack> fluids){
    this.definitions=Map.copyOf(definitions);this.fluids=fluids;
+  }
+  /** Fluid definitions looked up by the material they bind and by registry name, built once per snapshot. */
+  private void indexDefinitions(){
+   if(boundDefinitions!=null)return;
+   var byMaterial=new IdentityHashMap<GTMaterial,Map<String,FluidCatalog.FluidEntry>>();
+   var byRegistry=new HashMap<String,Map<String,FluidCatalog.FluidEntry>>();
+   for(var definition:definitions.entrySet()){
+    String field=definition.getKey();var entry=definition.getValue();
+    String key=entry.materialKey()!=null?entry.materialKey():FluidCatalog.boundMaterial(entry.registryName());
+    if(key!=null){
+     GTMaterial bound=GTMaterialRegistry.get(key);
+     if(bound.isValid())byMaterial.computeIfAbsent(bound.resolve(),ignored->new LinkedHashMap<>()).putIfAbsent(field,entry);
+    }
+    String registryName=entry.registryName();
+    if(registryName!=null)
+     byRegistry.computeIfAbsent(registryName,ignored->new LinkedHashMap<>()).putIfAbsent(field,entry);
+   }
+   boundDefinitions=byMaterial;registryDefinitions=byRegistry;
+  }
+  private void putDefinition(Map<String,FluidCatalog.FluidEntry> target,String field){
+   var entry=definitions.get(field);
+   if(entry!=null)target.putIfAbsent(field,entry);
   }
   FluidCatalog.FluidEntry definition(String field){return definitions.get(field);}
   FluidStack fluid(String field,int amount){return fluids.apply(field,amount);}
@@ -295,13 +319,18 @@ final class SourceThermalNativeAdapter {
    String name=material.getName(),lower=name.toLowerCase(Locale.ROOT);
    String moltenField="GenMolten_"+name,liquidField="GenLiquid_"+name,gasField="GenGas_"+name;
    String moltenName="molten."+lower;
-   for(var definition:definitions.entrySet()){
+   indexDefinitions();
+   var related=new LinkedHashMap<String,FluidCatalog.FluidEntry>();
+   var bound=boundDefinitions.get(material.resolve());
+   if(bound!=null)related.putAll(bound);
+   putDefinition(related,moltenField);putDefinition(related,liquidField);putDefinition(related,gasField);
+   var lowerEntries=registryDefinitions.get(lower);
+   if(lowerEntries!=null)related.putAll(lowerEntries);
+   var moltenEntries=registryDefinitions.get(moltenName);
+   if(moltenEntries!=null)related.putAll(moltenEntries);
+   for(var definition:related.entrySet()){
     String field=definition.getKey();var entry=definition.getValue();
-    String bound=entry.materialKey()!=null?entry.materialKey():FluidCatalog.boundMaterial(entry.registryName());
-    boolean related=bound!=null&&GTMaterialRegistry.get(bound).resolve()==material
-        ||field.equals(moltenField)||field.equals(liquidField)||field.equals(gasField)
-        ||entry.registryName().equals(lower)||entry.registryName().equals(moltenName);
-    if(!related||field.equals(selectedField))continue;
+    if(field.equals(selectedField))continue;
     // A proven source NO may coexist with the port's known over-broad molten factory artifact.
     if(defaultMolten(material,source,field,entry))continue;
     // Loader_Fluids145-153: redstone's optional liquid is superseded by molten.redstone;
