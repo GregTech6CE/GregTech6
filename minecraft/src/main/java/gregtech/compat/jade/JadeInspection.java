@@ -68,16 +68,22 @@ final class JadeInspection {
         return row;
     }
 
+    /** An explicitly named slot keeps its own row; only bulk inventories are merged by item. */
     void item(String role, int slot, ItemStack item) {
-        if (item == null || item.isEmpty()) return;
-        var row = line("item", label(role), slot + 1, item, item.getCount());
-        group(row, "items", role);
+        item(role, slot, item, true);
     }
 
     void inventory(String role, IItemHandler inventory, int first, int count) {
         if (inventory == null) return;
         for (int i = first; i < Math.min(inventory.getSlots(), first + count) && rows.size() < MAX_ROWS; i++)
-            item(role, i - first, inventory.getStackInSlot(i));
+            item(role, i - first, inventory.getStackInSlot(i), false);
+    }
+
+    private void item(String role, int slot, ItemStack item, boolean perSlot) {
+        if (item == null || item.isEmpty()) return;
+        var row = line("item", label(role), slot + 1, item, item.getCount());
+        group(row, "items", role);
+        if (row != null && perSlot) row.putBoolean("slot", true);
     }
 
     void fluid(String role, int slot, FluidStack fluid, long amount, long capacity) {
@@ -161,7 +167,7 @@ final class JadeInspection {
         };
         tooltip.add(Component.translatable("jade.gt6ce.omni.group_" + first.getString("kind"),
                 Component.translatable("jade.gt6ce.omni." + role)).withStyle(color));
-        if ("items".equals(first.getString("kind"))) {
+        if ("items".equals(first.getString("kind")) && !first.getBoolean("slot")) {
             var summary = new JadeItemSummary();
             for (var row : rows) {
                 var args = row.getList("args", 10);
