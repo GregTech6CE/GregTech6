@@ -40,13 +40,9 @@ public final class CrucibleInteractionHandler {
         if (event.getEntity().isSpectator()) return;
         BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
         boolean container = gregtech.engine.machine.crucible.CrucibleContainerInteraction.handles(event.getItemStack());
+        // Only the open top accepts containers. A side click must stay available for
+        // placing against the crucible; GT6 returns false from onBlockActivated3 there.
         if (event.getHitVec().getDirection() != Direction.UP) {
-            if (container && (blockEntity instanceof gregtech.engine.fluid.MoltenMaterialStorage
-                    || blockEntity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port
-                    && port.crucibleController() != null)) {
-                event.setCanceled(true);
-                event.setCancellationResult(InteractionResult.FAIL);
-            }
             return;
         }
         if (event.getLevel().isClientSide()) {
