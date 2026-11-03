@@ -100,8 +100,12 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
                 && !MachineRecipeMaps.AnvilBendSmall.containsInput(held)
                 && !MachineRecipeMaps.AnvilBendBig.containsInput(held)) return;
         int slot = half < .5 ? 0 : 1;
-        if (held.isEmpty()) { give(player, work[slot]); work[slot] = ItemStack.EMPTY; }
-        else if (work[slot].isEmpty()) {
+        if (held.isEmpty()) {
+            // Source falls through to the side split when the aimed half has nothing to take.
+            if (work[slot].isEmpty()) { splitWork(player); return; }
+            give(player, work[slot]);
+            work[slot] = ItemStack.EMPTY;
+        } else if (work[slot].isEmpty()) {
             work[slot] = held.copy();
             if (!player.getAbilities().instabuild) held.setCount(0);
 //? if >=1.21.1 {
