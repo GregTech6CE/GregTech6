@@ -129,6 +129,14 @@ public final class EnergyBridge {
                 : tFeSent / tPacketFe + (tFeSent % tPacketFe == 0 ? 0 : 1); // the divup bill, exact for an aligned send
     }
 
+    /** A positive piston stroke may be partly accepted; the engine still spends the whole stroke. */
+    public static long pushPistonStroke(IFEReceiver receiver, long packetFe, long count) {
+        if (receiver == null || packetFe <= 0 || count <= 0) return 0;
+        int requested = requestSize(count, packetFe);
+        int accepted = Math.max(0, Math.min(requested, receiver.receiveEnergy(requested, false)));
+        return accepted / packetFe + (accepted % packetFe == 0 ? 0 : 1);
+    }
+
     /**
      * The pull face: extracts whole GT packets out of an FE storage — the pull-side math (FE
      * is pull-first push-second, GT purely passive push) the converter machine drives per tick.

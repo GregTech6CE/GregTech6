@@ -25,13 +25,13 @@ public final class EngineCapabilities {
                 (be, side) -> be.fluidHandler(side));
         for (var h : GTEngines.all()) {
             var b = h.get();
+            if (b.engineType() != gregtech.engine.machine.EngineType.DIESEL) {
+                event.registerBlockEntity(
+                        Capabilities.EnergyStorage.BLOCK,
+                        (net.minecraft.world.level.block.entity.BlockEntityType<EngineBaseBlockEntity>) b.getBeType(),
+                        (be, side) -> be.energyHandler(side));
+            }
             switch (b.engineType()) {
-                case FLUX ->
-                    event.registerBlockEntity(
-                            Capabilities.EnergyStorage.BLOCK,
-                            (net.minecraft.world.level.block.entity.BlockEntityType<KineticFluxEngineBlockEntity>)
-                                    b.getBeType(),
-                            (be, side) -> be.energyHandler(side));
                 case STEAM ->
                     event.registerBlockEntity(
                             Capabilities.FluidHandler.BLOCK,

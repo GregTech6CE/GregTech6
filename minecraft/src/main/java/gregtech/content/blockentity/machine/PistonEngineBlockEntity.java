@@ -70,7 +70,7 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
     @Override public long getEnergyCapacity(GregTechTags.Tag type, Direction side) { return type == inputEnergyType() ? inputRate() * 2 : 0; }
 //? if >=1.21.1 {
     /*public net.neoforged.neoforge.energy.IEnergyStorage energyHandler(Direction side) {
-        if(inputEnergyType()!=GregTechTags.Energy.RF||side==null||side!=facing().getOpposite())return null;
+        if(inputEnergyType()!=GregTechTags.Energy.RF||side==null||side!=facing().getOpposite())return super.energyHandler(side);
         return fluxPorts.computeIfAbsent(side,face->new net.neoforged.neoforge.energy.IEnergyStorage(){
             public int receiveEnergy(int amount,boolean simulate){return (int)doInject(GregTechTags.Energy.RF,face,1,amount,!simulate);}
             public int extractEnergy(int amount,boolean simulate){return 0;}

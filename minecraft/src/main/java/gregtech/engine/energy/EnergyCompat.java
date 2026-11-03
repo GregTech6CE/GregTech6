@@ -25,9 +25,9 @@ public final class EnergyCompat {
 //?}
     }
     private static long fePacketSize(GregTechTags.Tag type, long size) {
-        if (size == 0 || size == Long.MIN_VALUE) return 0;
+        if (size == 0 || size == Long.MIN_VALUE || type == GregTechTags.Energy.KU && size < 0) return 0;
         long magnitude = Math.abs(size);
-        int factor = type == GregTechTags.Energy.EU ? GregTechConstants.RF_PER_EU
+        int factor = type == GregTechTags.Energy.EU || type == GregTechTags.Energy.KU ? GregTechConstants.RF_PER_EU
                 : type == GregTechTags.Energy.MJ ? GregTechConstants.RF_PER_MJ
                 : type == GregTechTags.Energy.RF ? 1 : 0;
         return factor == 0 || magnitude > Integer.MAX_VALUE / factor ? 0 : magnitude * factor;
@@ -37,7 +37,11 @@ public final class EnergyCompat {
         if (amount <= 0 || type == GregTechTags.Energy.EU && !gregtech.GregTechConfig.Rule.EU_AS_RF.enabled()) return 0;
         long packet = fePacketSize(type, size);
         IEnergyStorage storage = packet > 0 ? storage(receiver, side) : null;
-        return storage == null || !storage.canReceive() ? 0 : EnergyBridge.pushPacketTrain(storage::receiveEnergy, packet, amount);
+        if (storage == null || !storage.canReceive()) return 0;
+        // GT6 spends a complete piston stroke even when a receiver only accepts part of it.
+        return type == GregTechTags.Energy.KU
+                ? EnergyBridge.pushPistonStroke(storage::receiveEnergy, packet, amount)
+                : EnergyBridge.pushPacketTrain(storage::receiveEnergy, packet, amount);
     }
     public static long extractEnergyFrom(GregTechTags.Tag type, @Nullable Direction side, long size, long amount,
                                          BlockEntity receiver) {

@@ -23,6 +23,45 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
     public gregtech.engine.energy.EnergyConversionMeter conversionMeter() { return conversionMeter; }
     public long lastMeasuredInput() { return level == null ? 0 : conversionMeter.input(level.getGameTime()); }
     public long lastMeasuredOutput() { return level == null ? 0 : conversionMeter.output(level.getGameTime()); }
+//? if >=1.21.1 {
+    /*private final java.util.Map<Direction, net.neoforged.neoforge.energy.IEnergyStorage> feOutputs = new java.util.EnumMap<>(Direction.class);
+    public net.neoforged.neoforge.energy.IEnergyStorage energyHandler(@Nullable Direction side) {
+        if (side == null || !isEnergyEmittingTo(GregTechTags.Energy.KU, side, true)) return null;
+        return feOutputs.computeIfAbsent(side, this::createFeOutput);
+    }
+    private net.neoforged.neoforge.energy.IEnergyStorage createFeOutput(Direction side) {
+        return new net.neoforged.neoforge.energy.IEnergyStorage() {
+*///?} else {
+    private final java.util.Map<Direction, net.minecraftforge.common.util.LazyOptional<net.minecraftforge.energy.IEnergyStorage>> feOutputs = new java.util.EnumMap<>(Direction.class);
+    @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction side) {
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ENERGY && side != null
+                && isEnergyEmittingTo(GregTechTags.Energy.KU, side, true)) {
+            return feOutputs.computeIfAbsent(side,
+                    face -> net.minecraftforge.common.util.LazyOptional.of(() -> createFeOutput(face))).cast();
+        }
+        return super.getCapability(capability, side);
+    }
+    @Override public void invalidateCaps() {
+        super.invalidateCaps();
+        feOutputs.values().forEach(net.minecraftforge.common.util.LazyOptional::invalidate);
+        feOutputs.clear();
+    }
+    private net.minecraftforge.energy.IEnergyStorage createFeOutput(Direction side) {
+        return new net.minecraftforge.energy.IEnergyStorage() {
+//?}
+            // Advertise the output connection, as GT6's IEnergyHandler did. Only the engine tick
+            // spends a stroke: pulling here would bypass its pressure/phase gates or duplicate it.
+            public int receiveEnergy(int amount, boolean simulate) { return 0; }
+            public int extractEnergy(int amount, boolean simulate) { return 0; }
+            public int getEnergyStored() { return 0; }
+            public int getMaxEnergyStored() { return 0; }
+            public boolean canReceive() { return false; }
+            public boolean canExtract() {
+                return !isRemoved() && isEnergyEmittingTo(GregTechTags.Energy.KU, side, true);
+            }
+        };
+    }
 
     protected EngineBaseBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
