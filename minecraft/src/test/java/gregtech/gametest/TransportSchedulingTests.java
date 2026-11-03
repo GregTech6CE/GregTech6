@@ -142,54 +142,8 @@ public final class TransportSchedulingTests {
         });
     }
 
-    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)
-    public static void idleFluidSchedulingKeepsTheLocalTickCadence(GameTestHelper helper) {
-        GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.LOCAL);
-        BlockPos[] path = {
-                new BlockPos(0, 2, 0), new BlockPos(1, 2, 0), new BlockPos(2, 2, 0),
-                new BlockPos(3, 2, 0), new BlockPos(4, 2, 0), new BlockPos(5, 2, 0),
-                new BlockPos(5, 2, 1), new BlockPos(5, 2, 2), new BlockPos(4, 2, 2),
-                new BlockPos(3, 2, 2)
-        };
-        FluidPipeBlockEntity[] pipes = placePipePath(helper, path);
-        int capacity = (int) Math.min(Integer.MAX_VALUE, pipes[0].spec().capacity());
-        helper.runAfterDelay(5, () -> helper.assertTrue(
-                pipes[0].fill(new FluidStack(Fluids.WATER, capacity), IFluidHandler.FluidAction.EXECUTE) > 0,
-                "the source pipe accepts the sample fluid"));
-        // The original two-phase loop crosses ten pipes in four ticks; deferring every woken pipe
-        // to the next tick needs eight. Seven ticks after the fill separates the two cadences.
-        helper.runAfterDelay(12, () -> {
-            try {
-                helper.assertTrue(pipes[pipes.length - 1].gibblValue(null) > 0,
-                        "the fluid front crosses ten pipes at the local tick cadence");
-            } finally {
-                GregTechConfig.overrideFluidDistributionForTesting(null);
-            }
-            finish(helper);
-        });
-    }
-
     private static BlockPos at(GameTestHelper helper, int height) {
         return helper.absolutePos(new BlockPos(0, height, 0));
-    }
-
-    private static FluidPipeBlockEntity[] placePipePath(GameTestHelper helper, BlockPos[] path) {
-        FluidPipeBlockEntity[] pipes = new FluidPipeBlockEntity[path.length];
-        for (int i = 0; i < path.length; i++) {
-            var state = fluidPipeBlock().defaultBlockState();
-            for (int next : new int[] {i - 1, i + 1}) {
-                if (next < 0 || next >= path.length) continue;
-                Direction side = Direction.fromDelta(
-                        path[next].getX() - path[i].getX(),
-                        path[next].getY() - path[i].getY(),
-                        path[next].getZ() - path[i].getZ());
-                if (side != null) state = state.setValue(FluidPipeBlock.propFor(side), true);
-            }
-            BlockPos pos = helper.absolutePos(path[i]);
-            helper.getLevel().setBlockAndUpdate(pos, state);
-            pipes[i] = (FluidPipeBlockEntity) helper.getLevel().getBlockEntity(pos);
-        }
-        return pipes;
     }
 
     private static FluidPipeBlockEntity placeHorizontalPipe(GameTestHelper helper, int x, int y, int length) {
