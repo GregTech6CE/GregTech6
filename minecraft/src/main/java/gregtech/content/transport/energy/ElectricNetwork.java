@@ -50,9 +50,6 @@ public final class ElectricNetwork {
     private final BlockPos[] endpointPositions;
     private final int[] endpointChunks;
     private final Membership membership = new Membership();
-    private final int[] wireStamp;
-    private final int[] endpointStamp;
-    private int stampCounter;
     private Traversal traversal;
     private boolean valid = true;
 
@@ -76,8 +73,6 @@ public final class ElectricNetwork {
         this.wireChunks = wireChunks;
         this.chunkPositions = chunkPositions;
         this.checkedChunks = new long[chunkPositions.length];
-        this.wireStamp = new int[wires.length];
-        this.endpointStamp = new int[endpointPositions.length];
         membership.network = this;
     }
 
@@ -212,9 +207,9 @@ public final class ElectricNetwork {
         availabilityEpoch++;
         if (!live(entry)) return 0;
 
-        int stamp = nextStamp();
-        wireStamp[entry] = stamp;
         Traversal stack = acquire();
+        int stamp = stack.nextStamp();
+        stack.wireStamp[entry] = stamp;
         stack.depth = 1;
         stack.wires[0] = entry;
         stack.from[0] = fromSide.ordinal();
@@ -244,12 +239,12 @@ public final class ElectricNetwork {
                 }
                 int child = wireLinks[wireIndex][ordinal];
                 if (child >= 0) {
-                    if (wireStamp[child] == stamp) continue;
+                    if (stack.wireStamp[child] == stamp) continue;
                     long remaining = amperage - used;
                     ElectricWireBlockEntity childWire = wires[child];
                     if (!WirePacketRules.canTransfer(voltage, remaining, childWire.lossPerBlock())) continue;
                     if (!live(child)) break;
-                    wireStamp[child] = stamp;
+                    stack.wireStamp[child] = stamp;
                     if (stack.depth == stack.wires.length) stack.grow();
                     int at = stack.depth++;
                     stack.wires[at] = child;
@@ -262,8 +257,8 @@ public final class ElectricNetwork {
                     break;
                 }
                 int endpoint = endpointLinks[wireIndex][ordinal];
-                if (endpoint < 0 || endpointStamp[endpoint] == stamp) continue;
-                endpointStamp[endpoint] = stamp;
+                if (endpoint < 0 || stack.endpointStamp[endpoint] == stamp) continue;
+                stack.endpointStamp[endpoint] = stamp;
                 // Unloaded endpoint chunks only skip their own face; the snapshot stays valid.
                 if (!chunkLoaded(endpointChunks[endpoint])) continue;
                 BlockEntity neighbor = level.getBlockEntity(endpointPositions[endpoint]);
@@ -295,16 +290,6 @@ public final class ElectricNetwork {
         }
         release(stack);
         return result;
-    }
-
-    private int nextStamp() {
-        int stamp = ++stampCounter;
-        if (stamp == 0) {
-            java.util.Arrays.fill(wireStamp, 0);
-            java.util.Arrays.fill(endpointStamp, 0);
-            stamp = ++stampCounter;
-        }
-        return stamp;
     }
 
     private boolean live(int wire) {
@@ -342,7 +327,7 @@ public final class ElectricNetwork {
             stack.depth = 0;
             return stack;
         }
-        return new Traversal(wires.length + 1);
+        return new Traversal(wires.length + 1, wires.length, endpointPositions.length);
     }
 
     private void release(Traversal stack) {
@@ -353,6 +338,13 @@ public final class ElectricNetwork {
     }
 
     private static final class Traversal {
+        /**
+         * Visit marks are per traversal: a relay may inject into this same network while an outer
+         * traversal is still running, and the nested traversal must not overwrite its marks.
+         */
+        int[] wireStamp;
+        int[] endpointStamp;
+        int stamp;
         int[] wires;
         int[] from;
         long[] voltages;
@@ -361,13 +353,25 @@ public final class ElectricNetwork {
         int[] next;
         int depth;
 
-        Traversal(int capacity) {
+        Traversal(int capacity, int wireCount, int endpointCount) {
+            wireStamp = new int[wireCount];
+            endpointStamp = new int[endpointCount];
             wires = new int[capacity];
             from = new int[capacity];
             voltages = new long[capacity];
             amperages = new long[capacity];
             used = new long[capacity];
             next = new int[capacity];
+        }
+
+        int nextStamp() {
+            int next = ++stamp;
+            if (next == 0) {
+                java.util.Arrays.fill(wireStamp, 0);
+                java.util.Arrays.fill(endpointStamp, 0);
+                next = ++stamp;
+            }
+            return next;
         }
 
         void grow() {
