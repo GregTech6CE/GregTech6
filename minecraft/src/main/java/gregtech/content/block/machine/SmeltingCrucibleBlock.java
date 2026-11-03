@@ -197,7 +197,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
 *///?} else {
         if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible
 //?}
-                && hit.getDirection() == Direction.UP
+                && (hit.getDirection() == Direction.UP || VesselInnerFaces.isInnerFace(state, hit))
                 && crucible.canHandleUse(player, hand)) {
             // Client prediction only — authoritative logic runs in CrucibleInteractionHandler on server.
             return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.PASS;

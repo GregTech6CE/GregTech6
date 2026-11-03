@@ -251,6 +251,8 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
 //?}
     }
     public boolean isCrucibleUpperPort() { return role == MultiblockLayout.Role.ITEM_FLUID_IO && crucibleController() != null; }
+    /** Bound crucible wall: the controller whose hollow this wall face can open into. */
+    public BlockPos crucibleControllerPos() { return crucibleController() != null ? controllerPos() : null; }
     @Override public boolean fillMoldAtSide(gregtech.engine.machine.ITileEntityMold mold,
                                              int crucibleSide, int moldSide) {
         var crucible = crucibleController();

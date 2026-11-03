@@ -57,6 +57,7 @@ public final class SmelteryInteractionHandler {
         BlockPos pos = event.getPos();
         BlockEntity blockEntity = event.getLevel().getBlockEntity(pos);
         if (blockEntity == null) return;
+        net.minecraft.world.level.block.state.BlockState state = event.getLevel().getBlockState(pos);
 
         Player player = event.getEntity();
         ItemStack held = player.getItemInHand(event.getHand());
@@ -83,7 +84,7 @@ public final class SmelteryInteractionHandler {
         } else if (blockEntity instanceof MoldBasinBlockEntity basin) {
             if (event.getLevel().isClientSide()) {
                 player.swing(event.getHand());
-                if (hit.getDirection() == Direction.UP) {
+                if (topOrInnerFace(state, hit)) {
                     event.setCanceled(true);
                     event.setCancellationResult(InteractionResult.CONSUME);
                 }
@@ -231,7 +232,8 @@ public final class SmelteryInteractionHandler {
         if (held.getItem() instanceof net.minecraft.world.item.BlockItem) return InteractionResult.PASS;
         // Original basin activation accepts any held item on top; the monkey wrench
         // keeps its dedicated auto-input toggle instead of picking up or pouring.
-        if (hit.getDirection() == Direction.UP && !GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
+        if (topOrInnerFace(basin.getBlockState(), hit)
+                && !GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
             boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
             boolean pickedUp = basin.tryPickupWithPincers(player, usingPincers);
             if (pickedUp) {
@@ -257,6 +259,12 @@ public final class SmelteryInteractionHandler {
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
+    }
+
+    /** The open mouth and every inner wall face accept the vessel's own interaction. */
+    private static boolean topOrInnerFace(net.minecraft.world.level.block.state.BlockState state, BlockHitResult hit) {
+        return hit.getDirection() == Direction.UP
+                || gregtech.content.block.machine.VesselInnerFaces.isInnerFace(state, hit);
     }
 
     private static InteractionResult handleFaucetInteraction(CrucibleFaucetBlockEntity faucet, Player player,

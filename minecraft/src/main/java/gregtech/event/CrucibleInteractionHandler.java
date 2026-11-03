@@ -39,14 +39,17 @@ public final class CrucibleInteractionHandler {
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (event.getEntity().isSpectator()) return;
         BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
+        var state = event.getLevel().getBlockState(event.getPos());
         boolean container = gregtech.engine.machine.crucible.CrucibleContainerInteraction.handles(event.getItemStack());
-        // Only the open top accepts containers. A side click must stay available for
-        // placing against the crucible; GT6 returns false from onBlockActivated3 there.
-        if (event.getHitVec().getDirection() != Direction.UP) {
+        // Any face that opens into the vessel accepts containers: the mouth itself, the four inner
+        // walls, and the large crucible's wall parts. Outer faces stay free for block placement.
+        var hit = event.getHitVec();
+        if (hit.getDirection() != Direction.UP
+                && !gregtech.content.block.machine.VesselInnerFaces.isInnerFace(state, hit)
+                && !gregtech.content.block.machine.VesselInnerFaces.isLargeCrucibleInnerFace(blockEntity, hit)) {
             return;
         }
         if (event.getLevel().isClientSide()) {
-            var state = event.getLevel().getBlockState(event.getPos());
             var formed = gregtech.content.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
             if (container && (blockEntity instanceof gregtech.engine.fluid.MoltenMaterialStorage
                     || state.hasProperty(formed) && state.getValue(formed))) {
