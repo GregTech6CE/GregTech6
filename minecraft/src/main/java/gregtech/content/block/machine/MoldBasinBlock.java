@@ -50,6 +50,11 @@ public class MoldBasinBlock extends Block implements EntityBlock, GTMachineBlock
             15 / 16.0D, 1.0D, 15 / 16.0D);
     private static final VoxelShape SHELL = Shapes.join(Shapes.block(), INTERIOR, BooleanOp.ONLY_FIRST);
 
+    /** Open cavity: this block's interaction shape and the inner-wall probe of its wall faces. */
+    public static VoxelShape cavityShape() {
+        return INTERIOR;
+    }
+
     private static final double P = 1 / 16.0D;
     private static final VoxelShape COLLISION = Shapes.or(
             Shapes.box(14 * P, 1 * P, 1 * P, 15 * P, 15 * P, 15 * P),
@@ -69,6 +74,12 @@ public class MoldBasinBlock extends Block implements EntityBlock, GTMachineBlock
     public CrucibleSpec spec() { return spec; }
 
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return SHELL; }
+
+    /**
+     * Vanilla cauldron parity: raycast the open mouth, not the walls, so a click aimed at an inner
+     * wall reports the top face and places against the block above instead of the opposite side.
+     */
+    @Override public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) { return INTERIOR; }
     @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return COLLISION; }
     @Override public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return SHELL; }
     @Override public boolean isCollisionShapeFullBlock(BlockState state, BlockGetter level, BlockPos pos) { return false; }
