@@ -26,3 +26,4 @@
 209	prefix:form_conversion/blockgem_to_gem/	R	gt6ce:tool_shapeless	-	-	9	one@1/2x2	single-variant gem form matches any slot
 209	prefix:form_conversion/blockplate_to_plate/	R	gt6ce:tool_shapeless	-	-	9	one@3/2x2	single-variant plate form matches any slot
 286	gt6ce:technology/any_wood_bolt	T	-	-	gt6ce:bolt_wood	-	none	plain wood bolt accepted by AnyWood
+293	forge:glue	T	-	-	gt6ce:glue_bottle	-	none	glue bottle accepted by glue ingredients
