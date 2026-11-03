@@ -124,6 +124,9 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     private long balanceDue;
     private static final int BALANCE_PERIOD = 10;
     private static final long BALANCE_DEADBAND = 1;
+    /** Scheduler bookkeeping: generation and order of the block-entity pass that offered this pipe. */
+    private long schedulerGeneration = -1;
+    private long schedulerRank;
     /** Shared-pool snapshot membership; null until the first pool operation. */
     private gregtech.content.transport.fluid.FluidPipeNetwork.Membership membership;
 
@@ -262,6 +265,15 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             if (!tanks[i].isEmpty() || lastReceivedFrom[i] != 0) return false;
         }
         return temperature == environmentTemperature();
+    }
+
+    public long schedulerGeneration() { return schedulerGeneration; }
+
+    public long schedulerRank() { return schedulerRank; }
+
+    public void schedulerOffered(long generation, long rank) {
+        schedulerGeneration = generation;
+        schedulerRank = rank;
     }
 
     private void onTankChanged() {
