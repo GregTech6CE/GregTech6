@@ -21,10 +21,10 @@ public final class MaterialUnification {
             if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) return null;
             String name = block.material().resolve().getName();
             return switch (block.prefix().getName() + "/" + name) {
-                case "blockIngot/Iron", "blockSolid/Iron" -> Items.IRON_BLOCK;
-                case "blockIngot/Gold", "blockSolid/Gold" -> Items.GOLD_BLOCK;
-                case "blockIngot/Copper", "blockSolid/Copper" -> Items.COPPER_BLOCK;
-                case "blockIngot/Netherite", "blockSolid/Netherite" -> Items.NETHERITE_BLOCK;
+                case "blockIngot/Iron" -> Items.IRON_BLOCK;
+                case "blockIngot/Gold" -> Items.GOLD_BLOCK;
+                case "blockIngot/Copper" -> Items.COPPER_BLOCK;
+                case "blockIngot/Netherite" -> Items.NETHERITE_BLOCK;
                 case "blockGem/Diamond" -> Items.DIAMOND_BLOCK;
                 case "blockGem/Emerald" -> Items.EMERALD_BLOCK;
                 case "blockGem/Coal" -> Items.COAL_BLOCK;
