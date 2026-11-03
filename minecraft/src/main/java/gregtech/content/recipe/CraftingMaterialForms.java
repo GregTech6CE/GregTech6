@@ -285,6 +285,12 @@ public final class CraftingMaterialForms {
     }
 
     public static boolean replaces(CraftingRecipe recipe, RegistryAccess access) {
+        return replaces(recipe, access, false);
+    }
+
+    /** {@code gtOwned} keeps the loader's own generated rows out of the plain-recipe replacement pass. */
+    public static boolean replaces(CraftingRecipe recipe, RegistryAccess access, boolean gtOwned) {
+        if (gtOwned) return false;
         // Tool-aware serializers also wrap ordinary material rows. Only the selector
         // makes a single-input row position-sensitive; the marker alone must not keep
         // a legacy shapeless unpacking recipe ahead of the ordered replacement.
@@ -307,6 +313,6 @@ public final class CraftingMaterialForms {
                 ? tool.getWidth() : ((ShapedRecipe) recipe).getWidth();
         int height = shapeless ? 1 : recipe instanceof ToolShapedRecipe tool
                 ? tool.getHeight() : ((ShapedRecipe) recipe).getHeight();
-        return OriginalFormConversions.replaces(cells, width, height, shapeless, false, output);
+        return OriginalFormConversions.replaces(cells, width, height, shapeless, gtOwned, output);
     }
 }

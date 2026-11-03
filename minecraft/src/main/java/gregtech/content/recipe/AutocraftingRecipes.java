@@ -110,7 +110,7 @@ public final class AutocraftingRecipes {
         if (recipe instanceof AutocraftableCraftingRecipe gt && !gt.isAutocraftableByGT()) return false;
         if (!(recipe instanceof AutocraftableCraftingRecipe)
                 && !ConfiguredRecipeRules.keepVanillaStorageBlockRecipe(id)
-                && gregtech.content.recipe.FormConversionCraftingRecipeInjector.disallowsPlainRecipe(recipe,
+                && gregtech.content.recipe.FormConversionCraftingRecipeInjector.disallowsPlainRecipe(id, recipe,
                         level.registryAccess())) return false;
         return cache.permissions.computeIfAbsent(id, unused -> {
             if (level.getServer() == null) return true;

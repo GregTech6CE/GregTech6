@@ -43,6 +43,14 @@ public final class OvenRecipeLifecycle {
         if (applied != null && applied.size() == current.size() && applied.containsAll(current)) return;
         gregtech.content.recipe.FormConversionCraftingRecipeInjector.replacePlain(manager, server.registryAccess());
         OvenRecipeBridge.apply(manager, server.registryAccess());
+        // Later injectors add rows that duplicate the generated wire/pipe families; dedup after all of them.
+        var deduped = new ArrayList<RecipeHolder<?>>(manager.getRecipes());
+        int duplicates = FormConversionCraftingRecipeInjector.dedupGenerated(deduped, server.registryAccess(),
+                entry -> ((RecipeHolder<?>) entry).id(), entry -> ((RecipeHolder<?>) entry).value());
+        if (duplicates > 0) {
+            manager.replaceRecipes(deduped);
+            com.mojang.logging.LogUtils.getLogger().info("[gregtech] Removed {} duplicate source crafting rows", duplicates);
+        }
         Set<RecipeHolder<?>> snapshot = Collections.newSetFromMap(new IdentityHashMap<>());
         snapshot.addAll(manager.getRecipes());
         APPLIED.put(manager, snapshot);

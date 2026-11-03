@@ -45,6 +45,12 @@ public final class FormConversionCraftingRecipeInjector {
 
     private static final List<String> REGISTERED = new ArrayList<>();
     /** Source constructor replacement rules also guard plain recipes added after the reload lifecycle. */
+    public static boolean disallowsPlainRecipe(ResourceLocation id,
+                                               net.minecraft.world.item.crafting.CraftingRecipe recipe,
+                                               net.minecraft.core.RegistryAccess access) {
+        return CraftingMaterialForms.replaces(recipe, access, id != null && id.getNamespace().equals("gt6ce"));
+    }
+
     public static boolean disallowsPlainRecipe(net.minecraft.world.item.crafting.CraftingRecipe recipe,
                                                net.minecraft.core.RegistryAccess access) {
         return CraftingMaterialForms.replaces(recipe, access);
@@ -60,6 +66,79 @@ public final class FormConversionCraftingRecipeInjector {
                 "rawOreChunk (:553/:576): no external tagged item; GT6 registers no item for this Harder Ores prefix");
     }
 
+    /**
+     * Removes source rows that duplicate a generated row with the same result and first ingredient
+     * of every slot. Only the known source families are considered; unrelated recipes stay untouched.
+     */
+    static int dedupGenerated(List<?> recipes, net.minecraft.core.RegistryAccess access,
+                                      java.util.function.Function<Object, ResourceLocation> idOf,
+                                      java.util.function.Function<Object, Recipe<?>> valueOf) {
+        var targets = new java.util.HashSet<net.minecraft.world.item.Item>();
+        for (var entry : recipes) {
+            if (!isDedupSource(idOf.apply(entry))) continue;
+            if (!(valueOf.apply(entry) instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting)) continue;
+            var result = crafting.getResultItem(access);
+            if (!result.isEmpty()) targets.add(result.getItem());
+        }
+        if (targets.isEmpty()) return 0;
+        var groups = new java.util.HashMap<String, java.util.List<Object>>();
+        for (var entry : recipes) {
+            var id = idOf.apply(entry);
+            if (!isDedupSource(id) && !isCanonicalSource(id)) continue;
+            if (!(valueOf.apply(entry) instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting)) continue;
+            var result = crafting.getResultItem(access);
+            if (result.isEmpty() || !targets.contains(result.getItem())) continue;
+            var key = new StringBuilder();
+            key.append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(result.getItem()))
+                    .append('x').append(result.getCount()).append('|');
+            if (crafting instanceof net.minecraft.world.item.crafting.ShapedRecipe shaped)
+                key.append("shape:").append(shaped.getWidth()).append('x').append(shaped.getHeight()).append('|');
+            for (var ingredient : crafting.getIngredients()) {
+                var items = ingredient.getItems();
+                key.append(items.length == 0
+                        ? "[]"
+                        : net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(items[0].getItem()));
+                key.append('/');
+            }
+            groups.computeIfAbsent(key.toString(), unused -> new ArrayList<>()).add(entry);
+        }
+        var remove = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<Object, Boolean>());
+        for (var group : groups.values()) {
+            if (group.size() < 2) continue;
+            if (group.stream().noneMatch(entry -> isCanonicalSource(idOf.apply(entry)))) continue;
+            for (var entry : group) if (isDedupSource(idOf.apply(entry))) remove.add(entry);
+        }
+        if (remove.isEmpty()) return 0;
+        recipes.removeIf(remove::contains);
+        return remove.size();
+    }
+
+    private static boolean isDedupSource(ResourceLocation id) {
+        if (!id.getNamespace().equals("gt6ce")) return false;
+        String path = id.getPath();
+        return path.startsWith("wire_working/weave_")
+                || path.startsWith("wire_working/unpack_")
+                || path.startsWith("wire_working/insulate_")
+                || path.startsWith("axial/")
+                || path.startsWith("polymer_forming/")
+                || path.startsWith("hand/pipe/")
+                || path.startsWith("hand_material/rocks/")
+                || path.startsWith("machines/basic/massfab_")
+                || path.startsWith("machines/multiblock/");
+    }
+
+    private static boolean isCanonicalSource(ResourceLocation id) {
+        if (!id.getNamespace().equals("gt6ce")) return false;
+        String path = id.getPath();
+        return path.startsWith("form_conversion/")
+                || path.startsWith("wire_sizes/")
+                || path.startsWith("pipe_sizes/")
+                || path.startsWith("hand_material/shapeless/cable/")
+                || path.startsWith("stone/")
+                || path.startsWith("matter/")
+                || path.startsWith("fusion/");
+    }
+
 //? if >=1.21.1 {
     /*public static void add(Map<ResourceLocation, byte[]> recipes) {
         int before = recipes.size();
@@ -67,6 +146,7 @@ public final class FormConversionCraftingRecipeInjector {
     public static synchronized void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
         List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
 //?}
+        var previousGenerated = new java.util.HashSet<String>(REGISTERED);
         REGISTERED.clear();
 //? if >=1.21.1 {
         /*CraftingMaterialForms.rebuild();
@@ -75,8 +155,11 @@ public final class FormConversionCraftingRecipeInjector {
         int before = recipes.size();
         recipes.removeIf(recipe -> recipe instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
                 && !ConfiguredRecipeRules.keepVanillaStorageBlockRecipe(recipe.getId())
-                && disallowsPlainRecipe(crafting, access));
-        GregTech.LOGGER.info("Replaced {} plain source-equivalent crafting rows", before - recipes.size());
+                && disallowsPlainRecipe(recipe.getId(), crafting, access));
+        int removedPlain = before - recipes.size();
+        // Regenerate only the rows this injector owns; other GT rows must survive the pass above.
+        recipes.removeIf(recipe -> previousGenerated.contains(recipe.getId().toString()));
+        GregTech.LOGGER.info("Replaced {} plain source-equivalent crafting rows", removedPlain);
 //?}
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
@@ -117,7 +200,7 @@ public final class FormConversionCraftingRecipeInjector {
         int before = recipes.size();
         recipes.removeIf(holder -> holder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
                 && !ConfiguredRecipeRules.keepVanillaStorageBlockRecipe(holder.id())
-                && disallowsPlainRecipe(crafting, access));
+                && disallowsPlainRecipe(holder.id(), crafting, access));
         int removed = before - recipes.size();
         // Rebind existing generated rows too: their JSON ingredient aliases were indexed before
         // this reload's tags existed. Only this loader's own form-conversion rows are rebuilt.
