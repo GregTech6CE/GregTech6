@@ -26,7 +26,6 @@ public final class GTBlackSands {
                             () -> new BlackSandBlock(
                                     BlockBehaviour.Properties.of()
                                             .strength(.5f, .5f)
-                                            .requiresCorrectToolForDrops()
                                             .sound(SoundType.SAND),
                                     BlackSandBlock.spec(id)));
             GTBlocks.registerBlockItem(id, block);

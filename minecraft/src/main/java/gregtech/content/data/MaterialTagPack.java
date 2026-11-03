@@ -272,6 +272,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gt6ce",kind,"block_dust/"+name,id.toString());
                     add(tags,"forge",kind,"storage_blocks/"+name,id.toString());
                 }
+                add(tags,"minecraft","block","mineable/shovel",id.toString());
                 addMaterial(blocksByMaterial,sand.material(),id.toString());
 *///?} else {
 //?}
@@ -312,6 +313,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gt6ce",kind,"block_dust/"+name,id.toString());
                     add(tags,"forge",kind,"storage_blocks/"+name,id.toString());
                 }
+                add(tags,"minecraft","blocks","mineable/shovel",id.toString());
                 addMaterial(blocksByMaterial,sand.material(),id.toString());
             }
 //?}

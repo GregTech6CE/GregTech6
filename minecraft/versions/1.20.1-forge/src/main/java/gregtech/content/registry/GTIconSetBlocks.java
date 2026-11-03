@@ -321,7 +321,7 @@ public final class GTIconSetBlocks {
             return p.strength(0.6F).sound(SoundType.GRAVEL);
         }
         if (n.startsWith("sand_")) {
-            return p.strength(0.5F, 0.5F).requiresCorrectToolForDrops().sound(SoundType.SAND);
+            return p.strength(0.5F, 0.5F).sound(SoundType.SAND);
         }
         // Construction (GT6 BlockConcrete: very blast-resistant; reinforced even more)
         if (n.equals("concrete")) {
