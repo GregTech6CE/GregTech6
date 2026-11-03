@@ -81,6 +81,27 @@ public final class CraftingRecipeIssueSmokeTests {
         helper.succeed();
     }
 
+    // Checks that canonical wire/pipe rows survive and their source duplicates stay removed.
+    @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
+    public static void gtOwnedWireAndPipeRowsSurviveReplacement(GameTestHelper helper) {
+        var ids = allRecipes(helper).stream().map(found -> found.id().toString()).toList();
+        for (var id : List.of(
+                "gt6ce:wire_sizes/platinum_1_to_2",
+                "gt6ce:pipe_sizes/plastic_nonuple_to_9x_small",
+                "gt6ce:hand_material/shapeless/cable/1/platinum",
+                "gt6ce:form_conversion/blockplate_to_plate/vibramantium_1",
+                "gt6ce:form_conversion/nugget_to_ingot/plastic_9"))
+            helper.assertTrue(ids.contains(id), "missing " + id);
+        for (var id : List.of(
+                "gt6ce:wire_working/weave_01_02_platinum",
+                "gt6ce:wire_working/insulate_01_platinum",
+                "gt6ce:hand/pipe/unpack/pipe_nonuple_plastic",
+                "gt6ce:axial/unpack_vibramantium_plates",
+                "gt6ce:polymer_forming/pack_plastic"))
+            helper.assertFalse(ids.contains(id), "duplicate remains " + id);
+        helper.succeed();
+    }
+
     // Runs all rows of one level, collecting every failure before aborting the test.
     private static void runLevel(GameTestHelper helper, String level, RowCheck check) {
         var rows = loadRows();
