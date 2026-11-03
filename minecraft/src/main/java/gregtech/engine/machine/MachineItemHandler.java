@@ -13,9 +13,15 @@ public class MachineItemHandler extends ItemStackHandler {
     private final int inputCount;
     private final Runnable onChanged;
     private java.util.function.BooleanSupplier emptyInputsOnly = () -> false;
+    private java.util.function.Predicate<ItemStack> inputFilter = stack -> true;
 
     public void setEmptyInputsOnly(java.util.function.BooleanSupplier rule) {
         emptyInputsOnly = rule;
+    }
+
+    /** Restricts ordinary input slots, e.g. to keep potion items in their dedicated slot. */
+    public void setInputFilter(java.util.function.Predicate<ItemStack> filter) {
+        inputFilter = filter == null ? stack -> true : filter;
     }
 
     public MachineItemHandler(int totalSlots, int inputCount, Runnable onChanged) {
@@ -71,8 +77,14 @@ public class MachineItemHandler extends ItemStackHandler {
     @Override
     public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
         if (slot >= inputCount) return stack;
+        if (!inputFilter.test(stack)) return stack;
         if (emptyInputsOnly.getAsBoolean() && !getStackInSlot(slot).isEmpty()) return stack;
         return super.insertItem(slot, stack, simulate);
+    }
+
+    @Override
+    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+        return slot >= 0 && slot < inputCount && inputFilter.test(stack);
     }
 
     @Override

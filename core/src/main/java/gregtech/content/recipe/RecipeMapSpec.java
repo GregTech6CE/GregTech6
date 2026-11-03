@@ -22,6 +22,9 @@ public final class RecipeMapSpec {
     public long mSpecialValueMultiplier;
     public boolean mInstantRecipes;
 
+    /** Dedicated potion input slots; they hold potion items instead of ordinary ingredients. */
+    public int mInputPotionCount;
+
     /** Original NEI category eligibility and tier/amperage captions, used by both modern viewers. */
     public boolean mViewerAllowed = true, mShowVoltageAmperage = true;
 
@@ -113,6 +116,11 @@ public final class RecipeMapSpec {
 
     public RecipeMapSpec instantRecipes() {
         mInstantRecipes = true;
+        return this;
+    }
+
+    public RecipeMapSpec potionInputs(int count) {
+        mInputPotionCount = Math.max(0, count);
         return this;
     }
 }

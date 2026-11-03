@@ -257,7 +257,7 @@ public final class RecipeProcessor {
         totalWork = evaluation.cost().totalWork();
 
         var fluids = evaluation.outputTanks() ? inventory.outputTankFluids() : inventory.inputFluids();
-        var remaining = RecipeInputs.consume(evaluation.recipe(), inventory.inputItems(), fluids, evaluation.parallel());
+        var remaining = RecipeInputs.consume(evaluation.recipe(), inventory.matchingInputItems(), fluids, evaluation.parallel());
         if (remaining == null || evaluation.parallel() < 1) {
             totalWork = 0;
             recipeDetails = null;
@@ -267,7 +267,7 @@ public final class RecipeProcessor {
         }
         pendingOutputs = MachineWorkOutputs.roll(evaluation.recipe(), evaluation.parallel(),
                 io.level().random::nextInt, config.exclusiveOutputs());
-        for (int i = 0; i < remaining.items().size(); i++) inventory.items().setStackInSlot(i, remaining.items().get(i));
+        inventory.applyRemainingItems(remaining.items());
         var drained = evaluation.outputTanks() ? inventory.tanksOutput() : inventory.tanksInput();
         for (int i = 0; i < drained.length; i++) drained[i].setFluid(remaining.fluids().get(i));
         io.markJobStarted();
@@ -453,7 +453,7 @@ public final class RecipeProcessor {
         int high = ParallelFit.powerCap(config.parallelLimit(), config.nominalEnergyInput(), recipe.mEUt,
                 config.parallelScalesDuration(), config.usesTimeEnergy());
         for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) high = ParallelFit.amountCap(high, fluid.getAmount());
-        var items = io.inventory().inputItems();
+        var items = io.inventory().matchingInputItems();
         var matcher = new RecipeInputs.Matcher(items, fluids);
         while (low < high) {
             int mid = low + (high - low + 1) / 2;

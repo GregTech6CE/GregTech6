@@ -88,6 +88,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private RecipeMap recipeMap;
     private final MachineAutoIO autoIO;
     private MachineInventory inventory;
+    private IItemHandler machineItemView;
 
 
 //? if >=1.21.1 {
@@ -274,6 +275,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         processor.invalidate();
         this.faceConfig = spec.faceConfig();
         this.inventory = new MachineInventory(recipeMap, spec.parallelLimit(), usesOriginalFluidBuffers(), this::inventoryChanged);
+        this.machineItemView = new MachineItemView();
         this.inventory.items().setEmptyInputsOnly(toolSettings::emptyInputsOnly);
         if (specDirty) sanitizeForSpec();
     }
@@ -1129,10 +1131,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //? if >=1.21.1 {
 /*    public IItemHandler itemCapability(@Nullable Direction side) {
         if(inventory==null)return null;
-        if(side==null)return inventory.items();
+        if(side==null)return machineItemView;
         int rel=relativeDir(side);
         boolean in=FaceConfig.has(faceConfig.itemInputs(),rel),out=FaceConfig.has(faceConfig.itemOutputs(),rel);
-        return in||out?new SidedItemHandler(this,rel,inventory.items(),in,out):null;
+        return in||out?new SidedItemHandler(this,rel,machineItemView,in,out):null;
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
@@ -1179,7 +1181,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private LazyOptional<IItemHandler> getOrCreateItemCap(int rel, boolean canIn, boolean canOut) {
         if (itemCapsBySide[rel] == null) {
-            itemCapsBySide[rel] = LazyOptional.of(() -> new SidedItemHandler(this, rel, inventory.items(), canIn, canOut));
+            itemCapsBySide[rel] = LazyOptional.of(() -> new SidedItemHandler(this, rel, machineItemView, canIn, canOut));
         }
         return itemCapsBySide[rel];
     }
@@ -1242,6 +1244,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 /*            tag.put(NBT_INVENTORY, inventory.items().serializeNBT(lookup));
 *///?} else {
             tag.put(NBT_INVENTORY, inventory.items().serializeNBT());
+//?}
+
+        if (inventory.potionInput() != null)
+//? if >=1.21.1 {
+/*            tag.put("gt.potion_input", inventory.potionInput().serializeNBT(lookup));
+*///?} else {
+            tag.put("gt.potion_input", inventory.potionInput().serializeNBT());
 //?}
 
         if (recipeMap == MachineRecipeMaps.Autocrafter || !autocraftingProgram.getStackInSlot(0).isEmpty())
@@ -1401,6 +1410,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
         }
+        if (inventory != null && inventory.potionInput() != null && tag.contains("gt.potion_input")) {
+//? if >=1.21.1 {
+/*            inventory.potionInput().deserializeNBT(lookup, tag.getCompound("gt.potion_input"));
+*///?} else {
+            inventory.potionInput().deserializeNBT(tag.getCompound("gt.potion_input"));
+//?}
+        }
         if (inventory != null) {
             for (int i = 0; i < inventory.tanksInput().length; i++)
                 if (tag.contains(NBT_TANKS_IN + i))
@@ -1520,15 +1536,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public IItemHandler componentItems(Direction side) {
         if (inventory == null) return null;
         return new IItemHandler() {
-            public int getSlots() { return inventory.items().getSlots(); }
-            public ItemStack getStackInSlot(int slot) { return inventory.items().getStackInSlot(slot); }
-            public int getSlotLimit(int slot) { return inventory.items().getSlotLimit(slot); }
-            public boolean isItemValid(int slot, ItemStack stack) { return acceptsAutomaticInput(stack) && inventory.items().isItemValid(slot, stack); }
+            public int getSlots() { return machineItemView.getSlots(); }
+            public ItemStack getStackInSlot(int slot) { return machineItemView.getStackInSlot(slot); }
+            public int getSlotLimit(int slot) { return machineItemView.getSlotLimit(slot); }
+            public boolean isItemValid(int slot, ItemStack stack) { return acceptsAutomaticInput(stack) && machineItemView.isItemValid(slot, stack); }
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return acceptsAutomaticInput(stack) ? inventory.items().insertItem(slot, stack, simulate) : stack;
+                return acceptsAutomaticInput(stack) ? machineItemView.insertItem(slot, stack, simulate) : stack;
             }
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return slot < inputSlots() ? ItemStack.EMPTY : inventory.items().extractItem(slot, amount, simulate);
+                return machineItemView.extractItem(slot, amount, simulate);
             }
         };
     }
@@ -1540,12 +1556,49 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         mInventoryChanged = true;
         processor.invalidate();
     }
-    public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }
+    public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount + recipeMap.mInputPotionCount : 0; }
     public int outputSlots() { return recipeMap != null ? recipeMap.mOutputItemsCount : 0; }
+
+    /** Slot view: ordinary inputs, the dedicated potion inputs, then the ordinary outputs. */
+    private final class MachineItemView implements IItemHandler {
+        private int potionIndex() { return inventory.inputCount(); }
+        private boolean isPotionSlot(int slot) { return inventory.potionInput() != null && slot == potionIndex(); }
+        private int innerSlot(int slot) { return slot < inventory.inputCount() ? slot : slot - inventory.potionCount(); }
+
+        @Override public int getSlots() { return inventory.items().getSlots() + inventory.potionCount(); }
+
+        @Override public ItemStack getStackInSlot(int slot) {
+            return isPotionSlot(slot)
+                    ? inventory.potionInput().getStackInSlot(0)
+                    : inventory.items().getStackInSlot(innerSlot(slot));
+        }
+
+        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            if (isPotionSlot(slot)) return inventory.potionInput().insertItem(0, stack, simulate);
+            return slot < inventory.inputCount() ? inventory.items().insertItem(slot, stack, simulate) : stack;
+        }
+
+        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return slot < inputSlots() ? ItemStack.EMPTY : inventory.items().extractItem(innerSlot(slot), amount, simulate);
+        }
+
+        @Override public int getSlotLimit(int slot) {
+            return isPotionSlot(slot)
+                    ? inventory.potionInput().getSlotLimit(0)
+                    : inventory.items().getSlotLimit(innerSlot(slot));
+        }
+
+        @Override public boolean isItemValid(int slot, ItemStack stack) {
+            if (isPotionSlot(slot)) return inventory.potionInput().isItemValid(0, stack);
+            return slot < inventory.inputCount() && inventory.items().isItemValid(slot, stack);
+        }
+    }
 
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
         gregtech.engine.inventory.BlockContents.drop(this, itemHandler());
+        if (inventory != null && inventory.potionInput() != null)
+            gregtech.engine.inventory.BlockContents.drop(this, inventory.potionInput());
         gregtech.engine.inventory.BlockContents.drop(this, autocraftingProgram);
         coverStore.drop();
         setChanged();

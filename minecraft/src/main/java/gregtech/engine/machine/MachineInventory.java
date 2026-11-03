@@ -20,15 +20,21 @@ import java.util.List;
 /** Items, input tanks and output tanks of a basic machine, including the block-facing fluid contract. */
 public final class MachineInventory implements IFluidHandler {
     private final MachineItemHandler items;
+    private final MachineItemHandler potionInput;
     private final FluidTankGT[] tanksInput;
     private final FluidTankGT[] tanksOutput;
     private final int inputCount;
+    private final int potionCount;
     private final boolean originalFluidBuffers;
 
     public MachineInventory(RecipeMap recipeMap, int parallelLimit, boolean originalFluidBuffers, Runnable onChanged) {
         this.originalFluidBuffers = originalFluidBuffers;
         this.inputCount = recipeMap.mInputItemsCount;
+        this.potionCount = recipeMap.mInputPotionCount;
         this.items = new MachineItemHandler(inputCount + recipeMap.mOutputItemsCount, inputCount, onChanged);
+        this.potionInput = potionCount > 0 ? new PotionInput(onChanged) : null;
+        if (potionCount > 0)
+            this.items.setInputFilter(stack -> !(stack.getItem() instanceof net.minecraft.world.item.PotionItem));
         this.tanksInput = new FluidTankGT[recipeMap.mInputFluidCount];
         this.tanksOutput = new FluidTankGT[recipeMap.mOutputFluidCount];
         for (int i = 0; i < tanksInput.length; i++) {
@@ -50,11 +56,34 @@ public final class MachineInventory implements IFluidHandler {
     }
 
     public MachineItemHandler items() { return items; }
+    public MachineItemHandler potionInput() { return potionInput; }
     public FluidTankGT[] tanksInput() { return tanksInput; }
     public FluidTankGT[] tanksOutput() { return tanksOutput; }
     public int inputCount() { return inputCount; }
+    public int potionCount() { return potionCount; }
+
+    /** Ordinary input slots followed by the dedicated potion slots, in matching order. */
+    public List<ItemStack> matchingInputItems() {
+        var result = inputItems();
+        if (potionInput != null) result.add(potionInput.getStackInSlot(0));
+        return result;
+    }
+
+    /** Matching inputs followed by the output slots, used for the recipe lookup's empty-output test. */
+    public List<ItemStack> matchingSlots() {
+        var result = matchingInputItems();
+        for (int i = inputCount; i < items.getSlots(); i++) result.add(items.getStackInSlot(i));
+        return result;
+    }
+
+    /** Applies a consumption plan produced from {@link #matchingInputItems()}. */
+    public void applyRemainingItems(List<ItemStack> remaining) {
+        for (int i = 0; i < inputCount; i++) items.setStackInSlot(i, remaining.get(i));
+        if (potionInput != null) potionInput.setStackInSlot(0, remaining.get(inputCount));
+    }
 
     public boolean hasItemInputSpace() {
+        if (potionInput != null && potionInput.getStackInSlot(0).isEmpty()) return true;
         for (int i = 0; i < items.inputCount(); i++) {
             var stack = items.getStackInSlot(i);
             if (stack.isEmpty() || stack.getCount() < Math.min(stack.getMaxStackSize(), items.getSlotLimit(i))) return true;
@@ -152,5 +181,18 @@ public final class MachineInventory implements IFluidHandler {
             if (!drained.isEmpty()) return drained;
         }
         return FluidStack.EMPTY;
+    }
+
+    /** One-slot input that only accepts vanilla potion items. */
+    private static final class PotionInput extends MachineItemHandler {
+        PotionInput(Runnable onChanged) { super(1, 1, onChanged); }
+
+        @Override public boolean isItemValid(int slot, ItemStack stack) {
+            return slot == 0 && stack.getItem() instanceof net.minecraft.world.item.PotionItem;
+        }
+
+        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return isItemValid(slot, stack) ? super.insertItem(slot, stack, simulate) : stack;
+        }
     }
 }

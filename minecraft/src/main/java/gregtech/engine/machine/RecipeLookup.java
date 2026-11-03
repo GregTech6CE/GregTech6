@@ -41,13 +41,14 @@ public final class RecipeLookup {
     public static Match find(BlockEntity owner, RecipeMap map, MachineInventory inventory,
                              ItemStack autocraftingProgram, boolean searchOutputTanks) {
         if (map == null || inventory == null) return null;
-        var items = inventory.items().stacks();
+        var items = inventory.matchingSlots();
+        int inputSlots = map.mInputItemsCount + map.mInputPotionCount;
         Recipe direct = map.findRecipe(items, MachineInventory.contents(inventory.tanksInput()), map.mNeedsOutputs,
-                map.mInputItemsCount, map.mOutputItemsCount, owner.getLevel(), owner, autocraftingProgram);
+                inputSlots, map.mOutputItemsCount, owner.getLevel(), owner, autocraftingProgram);
         // Items stay on the input slots. Only the fluid list changes for the second search.
         if (direct == null && searchOutputTanks && inventory.tanksOutput().length > 0) {
             Recipe fromOutput = map.findRecipe(items, MachineInventory.contents(inventory.tanksOutput()), map.mNeedsOutputs,
-                    map.mInputItemsCount, map.mOutputItemsCount, owner.getLevel(), owner, autocraftingProgram);
+                    inputSlots, map.mOutputItemsCount, owner.getLevel(), owner, autocraftingProgram);
             if (fromOutput != null) return new Match(fromOutput, true);
         }
         if (direct != null) return new Match(direct, false);

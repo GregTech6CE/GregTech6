@@ -3,6 +3,11 @@
   "elements": [
     {
       "sprite": "gt6ce:slot/item",
+      "x": 34,
+      "y": 24
+    },
+    {
+      "sprite": "gt6ce:slot/item",
       "x": 52,
       "y": 24
     },
