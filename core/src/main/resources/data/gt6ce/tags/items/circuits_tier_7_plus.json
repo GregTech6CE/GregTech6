@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "gt6ce:crystal_processor_socket",
     "#gt6ce:circuits_tier_8_plus",
     {
       "id": "#gt:circuit7",

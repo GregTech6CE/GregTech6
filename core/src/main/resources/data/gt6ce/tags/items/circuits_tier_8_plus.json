@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
+    "gt6ce:crystal_processor_diamond",
+    "gt6ce:crystal_processor_emerald",
+    "gt6ce:crystal_processor_ruby",
+    "gt6ce:crystal_processor_sapphire",
     "#gt6ce:circuits_tier_9_plus",
     {
       "id": "#gt:circuit8",

@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
+    "gt6ce:logic_processor_unit",
+    "gt6ce:control_processor_unit",
+    "gt6ce:conversion_processor_unit",
+    "gt6ce:storage_quadcore_processor_unit",
+    "gt6ce:versatile_processor_unit",
     {
       "id": "#gt:circuit9",
       "required": false
