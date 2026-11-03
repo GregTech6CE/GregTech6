@@ -131,10 +131,11 @@ public final class CoverAttachmentBehaviors {
             return true;
         }
         if (!drainsAtGtFluid(side, fluid)) return false;
+        Fluid collected = gregtech.engine.fluid.ContainerFluidIdentity.source(fluid);
         int quanta = Math.max(1, fluidState.getAmount());
         int drained = 0;
         for (int i = 0; i < quanta; i++) {
-            FluidStack quantum = new FluidStack(fluid, QUANTUM_AMOUNT);
+            FluidStack quantum = new FluidStack(collected, QUANTUM_AMOUNT);
             if (sink.fill(quantum, IFluidHandler.FluidAction.SIMULATE) < QUANTUM_AMOUNT) break;
             if (sink.fill(quantum, IFluidHandler.FluidAction.EXECUTE) != QUANTUM_AMOUNT) break;
             drained++;

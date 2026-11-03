@@ -115,7 +115,7 @@ public class FluidTankGT implements IFluidHandler {
 
     public long add(long offered, FluidStack match) {
         return match == null || match.isEmpty() || fluid.isEmpty()
-                || match.getFluid() != fluid.getFluid() ? 0 : add(offered);
+                || ContainerFluidIdentity.source(match.getFluid()) != fluid.getFluid() ? 0 : add(offered);
     }
 
     private void clearSpentIdentity() {
@@ -139,6 +139,7 @@ public class FluidTankGT implements IFluidHandler {
     }
 
     public void setFluid(FluidStack value, long amount) {
+        value = ContainerFluidIdentity.canonical(value);
         if (getAmount() == amount && fluid.getAmount() == value.getAmount()
                 && (fluid.isEmpty() && value.isEmpty() || sameIdentity(value))) return;
         fluid = value.copy();
@@ -240,6 +241,7 @@ public class FluidTankGT implements IFluidHandler {
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
+        resource = ContainerFluidIdentity.canonical(resource);
         if (resource.isEmpty()) return 0;
         if (fluid.isEmpty()) {
             int accepted = bindInt(Math.min(resource.getAmount(), capacity(resource)));
@@ -268,6 +270,7 @@ public class FluidTankGT implements IFluidHandler {
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
+        resource = ContainerFluidIdentity.canonical(resource);
 //? if >=1.21.1 {
         /*if (resource.isEmpty() || fluid.isEmpty() || storage.preventsDraining() || !FluidStack.isSameFluidSameComponents(fluid, resource)) return FluidStack.EMPTY;
 *///?} else {
@@ -321,5 +324,6 @@ public class FluidTankGT implements IFluidHandler {
         else fluid = FluidStack.EMPTY;
         // A removed or unknown fluid must not leave an amount without a fluid behind.
         if (fluid.isEmpty()) storage.setAmount(0);
+        fluid = ContainerFluidIdentity.canonical(fluid);
     }
 }
