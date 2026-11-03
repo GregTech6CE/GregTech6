@@ -33,6 +33,17 @@ public final class CoverDrops {
         return tag;
     }
 
+    /**
+     * Machine items keep only block configuration that placement restores, never runtime contents.
+     * Add a key here only when the block's own drop path writes it and its load path reads it back.
+     */
+    private static final java.util.Set<String> MACHINE_ITEM_KEYS = java.util.Set.of("gt.mold.shape");
+
+    private static void keepMachineItemData(CompoundTag tag) {
+        for (String key : new ArrayList<>(tag.getAllKeys()))
+            if (!MACHINE_ITEM_KEYS.contains(key) && !key.equals("id")) tag.remove(key);
+    }
+
     /** Called on block replacement, not chunk unload; clearing slots makes native drop paths idempotent. */
     public static void dropAll(BlockEntity owner) {
         if (owner.getLevel() == null || owner.getLevel().isClientSide) return;
@@ -64,13 +75,15 @@ public final class CoverDrops {
 //?}
             // Preserve intentional contents of portable tanks, but never duplicate their covers.
             withoutCovers(tag);
+            // Machines drop empty shells; only their portable configuration survives.
+            if (machine) keepMachineItemData(tag);
             boolean empty = tag.isEmpty() || tag.size() == 1 && tag.contains("id");
 //? if >=1.21.1 {
-            /*if (machine || empty) stack.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+            /*if (empty) stack.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
             else stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
                     net.minecraft.world.item.component.CustomData.of(tag));
 *///?} else {
-            if (machine || empty) stack.removeTagKey("BlockEntityTag");
+            if (empty) stack.removeTagKey("BlockEntityTag");
             else stack.addTagElement("BlockEntityTag", tag);
 //?}
         }
