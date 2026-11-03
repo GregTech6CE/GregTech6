@@ -47,6 +47,7 @@ final class GTDungeonCupDrinks {
     static boolean library(GTDungeonData data, int x, int y, int z) {
         data.next1in2(); // Optional Hexorium block variant.
         data.next1in2(); // Optional Hexorium metadata.
-        return data.cup(x, y, z, "Potion_NightVision_1L");
+        data.next(2); // Keep the original layout roll; the night-vision cup is no longer granted.
+        return false;
     }
 }

@@ -90,7 +90,7 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
 
             if (data.next1in4()) data.coins(14, 2, 5);
             didNotGenerateZPM = potOrZpm(data, 14, 2, 6, didNotGenerateZPM);
-            data.cup(14, 2, 7 + data.next(2), "Potion_NightVision_1L");
+            data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 14, 2, 9, didNotGenerateZPM);
             if (data.next1in4()) data.coins(14, 2, 10);
         }
@@ -104,7 +104,7 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
 
             if (data.next1in4()) data.coins(1, 2, 5);
             didNotGenerateZPM = potOrZpm(data, 1, 2, 6, didNotGenerateZPM);
-            data.cup(1, 2, 7 + data.next(2), "Potion_NightVision_1L");
+            data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 1, 2, 9, didNotGenerateZPM);
             if (data.next1in4()) data.coins(1, 2, 10);
         }
@@ -118,7 +118,7 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
 
             if (data.next1in4()) data.coins(5, 2, 14);
             didNotGenerateZPM = potOrZpm(data, 6, 2, 14, didNotGenerateZPM);
-            data.cup(7 + data.next(2), 2, 14, "Potion_NightVision_1L");
+            data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 9, 2, 14, didNotGenerateZPM);
             if (data.next1in4()) data.coins(10, 2, 14);
         }
@@ -132,7 +132,7 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
 
             if (data.next1in4()) data.coins(5, 2, 1);
             didNotGenerateZPM = potOrZpm(data, 6, 2, 1, didNotGenerateZPM);
-            data.cup(7 + data.next(2), 2, 1, "Potion_NightVision_1L");
+            data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 9, 2, 1, didNotGenerateZPM);
             if (data.next1in4()) data.coins(10, 2, 1);
         }

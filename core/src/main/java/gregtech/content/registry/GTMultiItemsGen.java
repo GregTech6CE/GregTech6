@@ -293,7 +293,6 @@ final class GTMultiItemsGen {
         "medicine", "Medicine", "bottles", "",
         "laxative", "Laxative", "bottles", "",
         "ink_bottle", "Ink Bottle", "bottles", "T",
-        "bottle_of_poison", "Bottle of Poison", "bottles", "",
         "clouded_bottle", "Clouded Bottle", "bottles", "T",
         "lubricant_bottle", "Lubricant Bottle", "bottles", "",
         "mercury_bottle", "Mercury Bottle", "bottles", "T",

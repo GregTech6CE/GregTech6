@@ -31,8 +31,6 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
                     stored.getAmount()), stored.capacity()));
             data.putBoolean("auto", tank.isAutoOutput());
             data.putBoolean("sealed", tank.getSoftHammerState());
-            data.putLong("time", tank.getSealedTime());
-            data.putLong("duration", tank.getMaxSealedTime());
         } else if (accessor.getBlockEntity() instanceof FluidPipeBlockEntity pipe) {
             data.putString("kind", "pipe");
             var contents = new ListTag();
@@ -63,9 +61,6 @@ public enum FluidVesselJadeProvider implements IBlockComponentProvider, IServerD
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel.auto", Component.translatable(
                     "jade.gt6ce.vessel." + (data.getBoolean("auto") ? "enabled" : "disabled"))));
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.vessel." + (data.getBoolean("sealed") ? "sealed" : "unsealed")));
-            if (data.getBoolean("sealed") && data.getLong("duration") > 0) {
-                tooltip.add(JadeBars.time(data.getLong("time"), data.getLong("duration"), 1));
-            }
         } else {
             // Replace Jade's combined storage view so each physical tank has just one bar.
             tooltip.remove(UNIVERSAL_FLUID_STORAGE);

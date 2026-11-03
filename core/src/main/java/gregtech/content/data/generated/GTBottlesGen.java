@@ -149,7 +149,6 @@ public final class GTBottlesGen {
         "medicine", "Medicine", "Med_Heal",
         "laxative", "Laxative", "Med_Laxative",
         "ink_bottle", "Ink Bottle", "squidink",
-        "bottle_of_poison", "Bottle of Poison", "Potion_Poison_2",
         "lubricant_bottle", "Lubricant Bottle", "Lubricant",
         "mercury_bottle", "Mercury Bottle", "Hg",
         "glue_bottle", "Glue Bottle", "Glue",

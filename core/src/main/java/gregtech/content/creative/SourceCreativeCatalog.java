@@ -200,7 +200,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("bookshelf_variant", new Entry("storage", 11));
         ITEMS.put("boomstick", new Entry("tool_blocks", 1278));
         ITEMS.put("bottle_crate", new Entry("storage", 38));
-        ITEMS.put("bottle_of_poison", new Entry("bottles", 308));
         ITEMS.put("braintech_aerospace_advanced_reinforced_duct_tape_fal_84", new Entry("equipment", 129));
         ITEMS.put("braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2", new Entry("equipment", 130));
         ITEMS.put("brass_compound", new Entry("equipment", 1));
