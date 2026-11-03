@@ -50,6 +50,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     private final ContainerData progressData;
     private int firstPlayerSlot;
     private int programSlot = -1;
+    private int potionSlot = -1;
 
     /** Server-side constructor. */
     public BasicMachineContainerMenu(int containerId, Inventory playerInv, BasicMachineBlockEntity blockEntity) {
@@ -171,6 +172,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     private void addPotionSlot(net.minecraftforge.items.IItemHandler potion) {
 //?}
         if (recipeMap.mInputPotionCount <= 0 || potion == null) return;
+        potionSlot = slots.size();
         addSlot(new SlotInput(potion, 0, 53, 25, this::inventorySlotChanged));
     }
 
@@ -323,6 +325,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
                 return ItemStack.EMPTY;
         } else if (programSlot >= 0 && gregtech.content.recipe.AutocraftingRecipes.isProgram(stack)) {
             if (!moveItemStackTo(stack, programSlot, programSlot + 1, false)) return ItemStack.EMPTY;
+        } else if (potionSlot >= 0 && stack.getItem() instanceof net.minecraft.world.item.PotionItem) {
+            if (!moveItemStackTo(stack, potionSlot, potionSlot + 1, false)) return ItemStack.EMPTY;
         } else {
             // Player inventory → machine input slots (0..inputCount-1)
             int inputCount = recipeMap.mInputItemsCount;

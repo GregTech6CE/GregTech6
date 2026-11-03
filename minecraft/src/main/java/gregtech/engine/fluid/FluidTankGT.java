@@ -318,9 +318,8 @@ public class FluidTankGT implements IFluidHandler {
 *///?} else {
         if (tag.contains("Fluid")) fluid = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
 //?}
-        else {
-            fluid = FluidStack.EMPTY;
-            storage.setAmount(0);
-        }
+        else fluid = FluidStack.EMPTY;
+        // A removed or unknown fluid must not leave an amount without a fluid behind.
+        if (fluid.isEmpty()) storage.setAmount(0);
     }
 }

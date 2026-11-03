@@ -1478,7 +1478,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                     ? inner.insertItem(slot, stack, simulate) : stack;
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (slot < be.inputSlots()) return ItemStack.EMPTY;
+            if (slot < be.visibleInputSlots()) return ItemStack.EMPTY;
             Direction side = be.relativeToAbsolute(relativeSide);
             ItemStack existing = inner.getStackInSlot(slot);
             return canExtract && be.allowsItemTraffic(side, existing, false)
@@ -1556,8 +1556,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         mInventoryChanged = true;
         processor.invalidate();
     }
-    public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount + recipeMap.mInputPotionCount : 0; }
+    public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }
+    public int potionSlots() { return recipeMap != null ? recipeMap.mInputPotionCount : 0; }
+    /** Boundary of the composite item view: ordinary inputs first, then the dedicated potion inputs. */
+    public int visibleInputSlots() { return inputSlots() + potionSlots(); }
     public int outputSlots() { return recipeMap != null ? recipeMap.mOutputItemsCount : 0; }
+    /** Composite item view; its slot indices follow {@link #visibleInputSlots()}, not the raw handler. */
+    public IItemHandler itemView() { return machineItemView; }
 
     /** Slot view: ordinary inputs, the dedicated potion inputs, then the ordinary outputs. */
     private final class MachineItemView implements IItemHandler {
@@ -1579,7 +1584,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
 
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return slot < inputSlots() ? ItemStack.EMPTY : inventory.items().extractItem(innerSlot(slot), amount, simulate);
+            return slot < visibleInputSlots() ? ItemStack.EMPTY : inventory.items().extractItem(innerSlot(slot), amount, simulate);
         }
 
         @Override public int getSlotLimit(int slot) {

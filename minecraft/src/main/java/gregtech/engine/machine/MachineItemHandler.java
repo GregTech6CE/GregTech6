@@ -84,7 +84,9 @@ public class MachineItemHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        return slot >= 0 && slot < inputCount && inputFilter.test(stack);
+        // Keep the base handler's answer for outputs; only input slots gained a filter.
+        if (slot >= inputCount) return super.isItemValid(slot, stack);
+        return slot >= 0 && inputFilter.test(stack);
     }
 
     @Override

@@ -62,10 +62,10 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             data.putLong("basePower", details.power());
             data.putLong("baseDuration", details.duration());
         }
-        data.putInt("slots", machine.inputSlots());
+        data.putInt("slots", machine.visibleInputSlots());
         int occupied = 0;
-        for (int i = 0; i < machine.inputSlots(); i++)
-            if (!machine.inventory().getStackInSlot(i).isEmpty()) occupied++;
+        for (int i = 0; i < machine.visibleInputSlots(); i++)
+            if (!machine.itemView().getStackInSlot(i).isEmpty()) occupied++;
         data.putInt("occupied", occupied);
 
         var pending = new ListTag();
@@ -76,8 +76,8 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         for (var fluid : machine.inspectionPendingFluids())
             pendingFluids.add(saveFluid(fluid, fluid.getAmount(), fluid.getAmount(), accessor));
         data.put("pendingFluids", pendingFluids);
-        data.put("inputItems", items(machine.inventory(), 0, machine.inputSlots(), accessor));
-        data.put("outputItems", items(machine.inventory(), machine.inputSlots(), machine.outputSlots(), accessor));
+        data.put("inputItems", items(machine.itemView(), 0, machine.visibleInputSlots(), accessor));
+        data.put("outputItems", items(machine.itemView(), machine.visibleInputSlots(), machine.outputSlots(), accessor));
         data.put("programItems", items(machine.autocraftingProgram(), 0, 1, accessor));
         data.put("inputFluids", fluids(machine.getTanksInput(), accessor));
         data.put("outputFluids", fluids(machine.getTanksOutput(), accessor));
