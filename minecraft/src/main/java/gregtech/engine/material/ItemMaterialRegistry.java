@@ -81,12 +81,23 @@ public final class ItemMaterialRegistry {
         return data.isPresent() && data.get().recoverable() && canMelt(stack);
     }
     public static boolean hasStoredContents(ItemStack stack) {
+        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof gregtech.content.block.inventory.LootChestBlock) {
+//? if >=1.21.1 {
+            /*var loot = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+            if (loot == null || !loot.copyTag().getBoolean("GTLootGenerated")) return true;
+*///?} else {
+            var loot = stack.getTagElement("BlockEntityTag");
+            if (loot == null || !loot.getBoolean("GTLootGenerated")) return true;
+//?}
+        }
 //? if >=1.21.1 {
         /*var data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
         var tag = data == null ? null : data.copyTag();
-        if (tag != null && (tag.contains("BlockEntityTag") || tag.contains("Items")
+        if (tag != null && (hasStoredBlockEntityData(stack, tag.getCompound("BlockEntityTag")) || tag.contains("Items")
                 || tag.contains("EntityTag") || tag.contains("ChargedProjectiles"))) return true;
-        return stack.has(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA)
+        var blockData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        return (blockData != null && hasStoredBlockEntityData(stack, blockData.copyTag()))
                 || stack.has(net.minecraft.core.component.DataComponents.ENTITY_DATA)
                 || stack.has(net.minecraft.core.component.DataComponents.BUCKET_ENTITY_DATA)
                 || stack.has(net.minecraft.core.component.DataComponents.CONTAINER_LOOT)
@@ -96,7 +107,19 @@ public final class ItemMaterialRegistry {
                             net.minecraft.world.item.component.ItemContainerContents.EMPTY));
 *///?} else {
         var tag = stack.getTag();
-        return tag != null && (tag.contains("BlockEntityTag") || tag.contains("Items") || tag.contains("EntityTag") || tag.contains("ChargedProjectiles"));
+        return tag != null && (hasStoredBlockEntityData(stack, tag.getCompound("BlockEntityTag"))
+                || tag.contains("Items") || tag.contains("EntityTag") || tag.contains("ChargedProjectiles"));
 //?}
+    }
+
+    private static boolean hasStoredBlockEntityData(ItemStack stack, net.minecraft.nbt.CompoundTag tag) {
+        if (tag.isEmpty()) return false;
+        // Old empty chest drops carry loot bookkeeping even though their inventory drops separately.
+        // Only admit those known keys; inventories, pending loot, covers and unknown data stay protected.
+        if (!(stack.getItem() instanceof net.minecraft.world.item.BlockItem item)
+                || !(item.getBlock() instanceof gregtech.content.block.inventory.MetalChestBlock)) return true;
+        if (!Set.of("id", "GTLootGenerated", "GTDungeonLootSeed").containsAll(tag.getAllKeys())) return true;
+        return item.getBlock() instanceof gregtech.content.block.inventory.LootChestBlock
+                && !tag.getBoolean("GTLootGenerated");
     }
 }

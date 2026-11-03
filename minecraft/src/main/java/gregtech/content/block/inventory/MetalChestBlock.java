@@ -232,14 +232,15 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
         if (builder.getOptionalParameter(
                 net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof MetalChestBlockEntity chest) {
+            var data = chest.lootItemData();
+            if (data.isEmpty()) return java.util.List.of(result);
 //? if >=1.21.1 {
-            /*var data = chest.lootItemData();
-            data.putString("id", "gt6ce:metal_chest");
+            /*data.putString("id", "gt6ce:metal_chest");
             result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
                     net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
             net.minecraft.world.item.BlockItem.setBlockEntityData(result,
-                    gregtech.content.registry.GTBlockEntities.METAL_CHEST.get(), chest.lootItemData());
+                    gregtech.content.registry.GTBlockEntities.METAL_CHEST.get(), data);
 //?}
         }
         return java.util.List.of(result);

@@ -207,6 +207,8 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     /** Loot state carried by a dropped chest; inventory contents drop separately. */
     public CompoundTag lootItemData() {
         CompoundTag data = new CompoundTag();
+        if (dungeonLoot == null && !(getBlockState().getBlock()
+                instanceof gregtech.content.block.inventory.LootChestBlock)) return data;
         data.putBoolean("GTLootGenerated", lootGenerated);
         if (dungeonLoot != null) data.putString("gt.dungeonloot", dungeonLoot.toString());
         data.putLong("GTDungeonLootSeed", dungeonLootSeed);

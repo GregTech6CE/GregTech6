@@ -13,8 +13,13 @@ public final class MachineConstructionMaterials {
     private MachineConstructionMaterials() {}
 
     private static final Map<String, ItemComposition> HOPPERS = new HashMap<>();
+    private static final Map<String, ItemComposition> LOOT_CHESTS = new HashMap<>();
 
     static {
+        // The table variants share GT6's Mossy Stone Chest shell (Loader_MultiTileEntities).
+        var lootShell = new ItemComposition(null, GT6Materials.Stones.Stone, GTValues.U * 8);
+        for (var row : gregtech.content.loot.LootChestCatalog.ENTRIES)
+            LOOT_CHESTS.put("loot_chest_" + row.substring(0, row.indexOf('|')), lootShell);
         for (var entry : HopperCatalog.ALL) {
             // PwP/XCX/ Xh and PCP/XCX/wXh: two flat + three curved plates,
             // and one/two craftingChest inputs whose automatic data is 4U Wood each.
@@ -31,6 +36,8 @@ public final class MachineConstructionMaterials {
     }
 
     public static Optional<ItemComposition> block(String path) {
+        var loot = LOOT_CHESTS.get(path);
+        if (loot != null) return Optional.of(loot);
         var storage = OriginalStorageMaterialData.blocks().get(path);
         if (storage != null) return Optional.of(storage);
         var hopper = HOPPERS.get(path);
@@ -43,6 +50,7 @@ public final class MachineConstructionMaterials {
         var blocks = new HashMap<>(OriginalMachineMaterialData.blocks());
         blocks.putAll(HOPPERS);
         blocks.putAll(OriginalStorageMaterialData.blocks());
+        blocks.putAll(LOOT_CHESTS);
         return Map.copyOf(blocks);
     }
 }
