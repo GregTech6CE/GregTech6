@@ -16,7 +16,7 @@
 | 药水类饮用条目 | 饮料统计表中解析到药水流体的 93 行随流体停注，其余 203 行保留。 | 这些行的食物值与六种统计全为 0，只挂药水效果；物品化后效果由原版药水自带。 |
 | 防火板条箱 | `crate_fireproof` 方块与它用药水流体作沐浴介质的配方一并取消，不再寻找替代介质。 | 它与普通板条箱的唯一差别就是熔岩可点燃；本端从未注册 GT6 的防火木料家族，防火板条箱是唯一仍在用药水沐浴的木制品，改随 lootbox 移植。 |
 | 地牢夜视杯 | 图书馆地牢的夜视杯取消，不再放置杯子或药水物品。 | 杯子按流体字段名填充，流体停注后填充路径会静默失效；改为物品需要新的载体与展示，收益不足。 |
-| 毒瓶与毒性木桶 | `bottle_of_poison` 与 9 个 `wooden_bucket_<band>_poison` 停注，引用它的三明治链改吃原版中毒药水物品。 | 两者都绑定 `potion.poison.strong`；不删条目会留下解析为空头力的孤儿物品。 |
+| 毒瓶与毒性木桶 | `bottle_of_poison` 与 9 个 `wooden_bucket_<band>_poison` 停注；三明治表里的毒瓶条目一并移除，因为该表按物品 ID 记录，无法区分原版药水的类型。 | 两者都绑定 `potion.poison.strong`；不删条目会留下解析为空头力的孤儿物品。 |
 | 蜂房伤害药水 | 蜂房的 `potion.damage` 输出行留作死代码，不单独处理。 | 养蜂整体在移除计划内。 |
 | 密封储罐 | 保留软锤密封与密封语义，密封后拒绝灌入与抽出；删除密封后的发酵——发酵 tick、配方查询、进度、相关 NBT、进度传感器与界面进度提示一并移除，不给密封储罐保留药水入口。 | 密封发酵是上游 GT6 的行为，但药水改为物品后桶内不可能再有药水；剩下的非药水无物品路线只有 17 条，保留半套只对食物与生物质生效的隐藏机制，收益低于维护与展示成本。这 17 条仍由发酵机执行，不受影响。 |
 | 瓶筐经验瓶 | 经验瓶在瓶筐中的液面改用水 + 手动颜色 #06FF44 渲染，替代已停注的跳跃药水液面。 | 上游 GT6 的瓶筐用跳跃药水作为经验瓶的显示流体；跳跃药水停注后，水能保留“有液体”的显示，颜色取原贴图平均色，避免新注册流体或贴图。 |
@@ -93,7 +93,7 @@
 | --- | --- | --- |
 | 流体语言键 | 每语言 94 | `fluid.gt6ce.<id>`，`<id>` 取[附录A](#附录a-停注的药水流体)的 94 个注册名 |
 | 流体类型语言键 | 每语言 94 | `fluid_type.gt6ce.<id 中非字母数字换成下划线>`，同样按附录A 的 94 个注册名派生 |
-| 旧式显示回退键 | 中文 93 | `fluid.potion.<id 去掉前缀>`，即 `fluid.potion.awkward` 一类的 GT6 时代键；显示链先取上一行的 `fluid_type` 键，这些回退键只在中文文件里存在，94 条药水流体中除 `potion.tainted` 外各有 1 条 |
+| 旧式显示回退键 | 中文 93 | `fluid.potion.<id 去掉前缀>`，即 `fluid.potion.awkward` 一类的 GT6 时代键；显示链先取上一行的 `fluid_type` 键，这些回退键只在中文文件里存在，94 条药水流体中除 `potion.poison` 外各有 1 条 |
 | 旧饮品说明键 | 中文 94 | `gt.drink.potion.<id 去掉前缀>`，无任何代码读取，94 条药水流体各有 1 条；同前缀另有 23 条属于饮料 |
 | 流体贴图 | 94 组 | `assets/gt6ce/textures/block/fluids/<id>.png` 与 `<id>.png.mcmeta`，按附录A 的注册名匹配 |
 | 毒瓶 | 1 物品，每语言 2 键 | `assets/gt6ce/models/item/bottle_of_poison.json`、`assets/gt6ce/textures/item/bottles/bottle_of_poison.png`、`item.gt6ce.bottle_of_poison` 与 `item.gt6ce.bottle_of_poison.tooltip`；`assets/gt6ce/stack_groups/material_forms/functional_chemical_bottles.json` 中的 `item:gt6ce:bottle_of_poison` 一个条目，同文件其余条目不属于本次清理 |

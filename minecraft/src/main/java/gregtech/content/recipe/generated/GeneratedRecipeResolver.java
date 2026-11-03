@@ -72,7 +72,6 @@ public final class GeneratedRecipeResolver {
         load("other", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerOtherSource, GTOtherGen::load));
         // Loader_Recipes_Other's nested prefix loops are outside what the transpiler emits.
         load("other_compounds", GTCompoundMixerRows::load);
-        load("potions", GTPotionGen::load);
         load("food", GTFoodGen::load);
         load("extruder", GTExtruderGen::load);
         load("vanilla", GTVanillaGen::load);
