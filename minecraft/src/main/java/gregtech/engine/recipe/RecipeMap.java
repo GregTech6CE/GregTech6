@@ -749,7 +749,7 @@ public class RecipeMap {
             if (aRecipe.mInputs.length      < mMinimalInputItems)  {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input ItemStacks!", mNameInternal); tFailed = true;}
             if (aRecipe.mFluidInputs.length < mMinimalInputFluids) {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input FluidStacks!", mNameInternal); tFailed = true;}
             if (aRecipe.mInputs.length + aRecipe.mFluidInputs.length < mMinimalInputs) {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of general Inputs!", mNameInternal); tFailed = true;}
-            if (aRecipe.mInputs.length      > mInputItemsCount)    {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input ItemStacks!", mNameInternal); tFailed = true;}
+            if (aRecipe.mInputs.length      > mInputItemsCount + mInputPotionCount) {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input ItemStacks!", mNameInternal); tFailed = true;}
             if (aRecipe.mFluidInputs.length > mInputFluidCount)    {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input FluidStacks!", mNameInternal); tFailed = true;}
         }
         return !tFailed;
