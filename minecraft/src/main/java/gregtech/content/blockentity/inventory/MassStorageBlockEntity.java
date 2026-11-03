@@ -279,13 +279,14 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         }
 
         /**
-         * Reports the whole bulk amount, as the original's content slot does. AE2's storage bus and
-         * other oversized-stack handlers read the slot count; {@link #extractItem} still hands out
-         * at most one ordinary stack per call.
+         * Reports the whole bulk amount, as the original's content slot does, unless the storage is
+         * sealed with duct tape. AE2's storage bus and other oversized-stack handlers read the slot
+         * count; {@link #extractItem} still hands out at most one ordinary stack per call.
          */
         @Override
         public ItemStack getStackInSlot(int slot) {
             checkSlot(slot);
+            if (isPacked()) return ItemStack.EMPTY;
             ItemStack key = template();
             long amount = Math.min(stored(), Integer.MAX_VALUE);
             return key.isEmpty() || amount <= 0 ? ItemStack.EMPTY : key.copyWithCount((int) amount);
