@@ -22,7 +22,7 @@ final class ToolFaceOverlay {
             net.minecraft.world.level.block.state.BlockState state) {
         Direction selected = ToolInteractions.selectedFace(hit);
         var mc = net.minecraft.client.Minecraft.getInstance();
-        var tool = ToolInteractions.describe(state, mc.player.getMainHandItem()) != null
+        var tool = ToolInteractions.preview(state, mc.player.getMainHandItem()) != null
                 ? mc.player.getMainHandItem()
                 : mc.player.getOffhandItem();
         boolean valid = ToolInteractions.canApply(spec, state, mc.level, hit.getBlockPos(), mc.player, tool, selected);

@@ -27,6 +27,12 @@ public final class ToolInteractions {
         return state.getBlock() instanceof ToolInteractionTarget target ? target.toolInteraction(state, tool) : null;
     }
 
+    /** Client preview spec: block-declared first, then GT6's vanilla wrench block set. */
+    public static ToolInteractionSpec preview(BlockState state, ItemStack tool) {
+        ToolInteractionSpec declared = describe(state, tool);
+        return declared != null ? declared : VanillaWrenchTargets.spec(state, tool);
+    }
+
     /** Read-only feasibility check used on both sides, including neighbor axle constraints. */
     public static boolean canApply(ToolInteractionSpec spec, BlockState state, Level level, BlockPos pos,
                                    Player player, ItemStack tool, Direction side) {

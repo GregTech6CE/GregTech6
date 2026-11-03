@@ -115,7 +115,12 @@ public final class SlabPlacementOverlayRenderer {
         } else if (holdingSlab || holdingCover) {
             GTRenderHelper.drawWrenchOverlay(poseStack, consumer, target.getDirection(), shade);
         } else {
-            GTRenderHelper.drawPipeWrenchOverlay(poseStack, consumer, target.getDirection(), interaction.activeFaces(state), shade);
+            // Upstream draws the vanilla wrench grid with no connection markers.
+            if (state.getBlock() instanceof gregtech.engine.tool.ToolInteractionTarget) {
+                GTRenderHelper.drawPipeWrenchOverlay(poseStack, consumer, target.getDirection(), interaction.activeFaces(state), shade);
+            } else {
+                GTRenderHelper.drawWrenchOverlay(poseStack, consumer, target.getDirection(), shade);
+            }
             ToolFaceOverlay.drawSelection(poseStack, consumer, target, interaction, state);
         }
         bufferSource.endBatch(RenderType.lines());
@@ -134,9 +139,9 @@ public final class SlabPlacementOverlayRenderer {
     }
 
     private static gregtech.engine.tool.ToolInteractionSpec interaction(BlockState state, Player player) {
-        var main = gregtech.engine.tool.ToolInteractions.describe(state, player.getMainHandItem());
+        var main = gregtech.engine.tool.ToolInteractions.preview(state, player.getMainHandItem());
         if (main != null || !player.getMainHandItem().isEmpty()) return main;
-        var offhand = gregtech.engine.tool.ToolInteractions.describe(state, player.getOffhandItem());
+        var offhand = gregtech.engine.tool.ToolInteractions.preview(state, player.getOffhandItem());
         // Empty-hand machine interaction can open a GUI before the offhand is tried.
         return offhand != null && offhand.connection() != null ? offhand : null;
     }
