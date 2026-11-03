@@ -104424,5 +104424,6 @@
   "fluid_type.gt6ce.molten_trinium": "熔融特林金属",
   "fluid_type.gt6ce.molten_tritaniumelemental": "熔融三钛",
   "fluid_type.gt6ce.molten_tungstentrioxide": "熔融三氧化钨",
-  "fluid_type.gt6ce.molten_vanadiummagnetite": "熔融钒磁铁"
+  "fluid_type.gt6ce.molten_vanadiummagnetite": "熔融钒磁铁",
+  "jade.gt6ce.crucible.break_meltdown": "被破坏时将会熔毁！"
 }

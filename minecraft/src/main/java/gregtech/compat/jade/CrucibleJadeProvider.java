@@ -76,6 +76,8 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         tag.putInt(NBT_FILL, crucible.getDisplayFillPercent());
         tag.putBoolean(NBT_MOLTEN, crucible.isDisplayedMolten());
         tag.putBoolean(NBT_WARNING, crucible.isMeltDownWarning());
+        tag.putBoolean("gt_crucible_break_meltdown", crucible.getBlockState().getBlock() instanceof SmeltingCrucibleBlock
+                && temperature >= gregtech.engine.machine.crucible.CrucibleHazards.BREAK_MELTDOWN_TEMPERATURE_K);
         tag.putLong(NBT_MELT_LIMIT, crucible.getMeltDownLimitK());
         GTMaterial displayed = crucible.getDisplayedMaterial();
         if (displayed != null && displayed.isValid()) {
@@ -107,6 +109,10 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         }
         if (data.getBoolean(NBT_WARNING)) {
             JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.warning").withStyle(net.minecraft.ChatFormatting.RED));
+        }
+        if (data.getBoolean("gt_crucible_break_meltdown")) {
+            JadeText.add(tooltip, Component.translatable("jade.gt6ce.crucible.break_meltdown")
+                    .withStyle(net.minecraft.ChatFormatting.RED));
         }
         for (var entry : data.getList(NBT_CONTENT, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
             var row = (CompoundTag) entry;

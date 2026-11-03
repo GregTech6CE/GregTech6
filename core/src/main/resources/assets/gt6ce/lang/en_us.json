@@ -14232,5 +14232,6 @@
   "fluid_type.gt6ce.molten_trinium": "Molten Trinium",
   "fluid_type.gt6ce.molten_tritaniumelemental": "Molten TritaniumElemental",
   "fluid_type.gt6ce.molten_tungstentrioxide": "Molten Tungsten Trioxide",
-  "fluid_type.gt6ce.molten_vanadiummagnetite": "Molten Vanadium Magnetite"
+  "fluid_type.gt6ce.molten_vanadiummagnetite": "Molten Vanadium Magnetite",
+  "jade.gt6ce.crucible.break_meltdown": "Breaking this crucible will cause a meltdown!"
 }
