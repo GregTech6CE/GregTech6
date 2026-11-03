@@ -83,7 +83,7 @@ public final class SmelteryInteractionHandler {
         } else if (blockEntity instanceof MoldBasinBlockEntity basin) {
             if (event.getLevel().isClientSide()) {
                 player.swing(event.getHand());
-                if (hit.getDirection() != Direction.DOWN) {
+                if (hit.getDirection() == Direction.UP) {
                     event.setCanceled(true);
                     event.setCancellationResult(InteractionResult.CONSUME);
                 }
@@ -229,11 +229,9 @@ public final class SmelteryInteractionHandler {
     private static InteractionResult handleBasinInteraction(MoldBasinBlockEntity basin, Player player,
             InteractionHand hand, ItemStack held, Level level, BlockHitResult hit) {
         if (held.getItem() instanceof net.minecraft.world.item.BlockItem) return InteractionResult.PASS;
-        // Original basin activation accepts any held item on the top and horizontal faces;
-        // only the top face also asks an adjacent crucible to pour. The monkey wrench
+        // Original basin activation accepts any held item on top; the monkey wrench
         // keeps its dedicated auto-input toggle instead of picking up or pouring.
-        Direction face = hit.getDirection();
-        if (face != Direction.DOWN && !GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
+        if (hit.getDirection() == Direction.UP && !GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
             boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
             boolean pickedUp = basin.tryPickupWithPincers(player, usingPincers);
             if (pickedUp) {
@@ -244,12 +242,10 @@ public final class SmelteryInteractionHandler {
                 player.swing(hand);
                 return InteractionResult.CONSUME;
             }
-            if (face == Direction.UP) {
-                InteractionResult pourResult = basin.tryPour(player);
-                if (pourResult != InteractionResult.PASS) {
-                    player.swing(hand);
-                    return pourResult;
-                }
+            InteractionResult pourResult = basin.tryPour(player);
+            if (pourResult != InteractionResult.PASS) {
+                player.swing(hand);
+                return pourResult;
             }
             return InteractionResult.PASS;
         }
