@@ -842,7 +842,7 @@ public final class SourceRecyclingFacts {
         row(rows, 9167, "Kaolinite", M, 8225, U, 1286);
         row(rows, 9169, "Talc", 0, 9169, U, 1236);
         row(rows, 9171, "Greenschist", F, 9171, U, 3822);
-        row(rows, 9174, "Graphite", M | B, 60, U / 2, 1292);
+        row(rows, 9174, "Graphite", M | B, 60, 3 * U, 1292); // GT6CE balance: 3 U carbon per graphite.
         row(rows, 9175, "Graphene", M | B, 60, U / 2, 1535);
         row(rows, 9177, "Komatiite", F, 9177, U, 3816);
         row(rows, 9180, "Quartzite", M | B | F, 8000, U, 3828);
