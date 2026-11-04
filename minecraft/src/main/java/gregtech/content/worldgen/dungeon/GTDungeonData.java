@@ -29,6 +29,7 @@ import gregtech.content.registry.GTDecorBlocks;
 import gregtech.content.registry.GTDungeonBlocks;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
+import gregtech.content.registry.SharedDecorBlocks;
 
 //? if >=1.21.1 {
 //?} else {
@@ -504,6 +505,16 @@ public final class GTDungeonData {
         public BlockMaterialPrefix prefix() {
             return prefix;
         }
+    }
+
+    /**
+     * GT6's loot crate ({@code MultiTileEntityLootCrate}, 32110): the corridor scatters it in the
+     * corner of its central box.
+     *
+     * @return whether the crate was placed
+     */
+    public boolean lootCrate(int ax, int ay, int az) {
+        return set(ax, ay, az, SharedDecorBlocks.LOOT_CRATE.get().defaultBlockState());
     }
 
     /**

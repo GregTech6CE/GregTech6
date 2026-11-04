@@ -30,8 +30,7 @@ public final class SharedDecorBlocks {
                 "loot_crate",
                 () -> new LootCrateBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.WOOD)
-                        .strength(4, 4)
-                        .requiresCorrectToolForDrops()
+                        .strength(1, 3)
                         .sound(SoundType.WOOD)));
         RAILROAD = RegisteredBlock.register(
                 "railroad",
