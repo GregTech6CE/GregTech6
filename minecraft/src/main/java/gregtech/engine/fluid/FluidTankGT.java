@@ -210,6 +210,12 @@ public class FluidTankGT implements IFluidHandler {
         return fluid.isEmpty() || getAmount() <= 0;
     }
 
+    /** Whether this tank already holds the fluid, matching what {@link #fill} would accept. */
+    public boolean contains(FluidStack stack) {
+        return !fluid.isEmpty() && stack != null && !stack.isEmpty()
+                && sameIdentity(ContainerFluidIdentity.canonical(stack));
+    }
+
     public int getCapacity() {
         return bindInt(capacity());
     }

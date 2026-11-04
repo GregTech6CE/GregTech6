@@ -19,6 +19,7 @@ import java.util.List;
 
 /** Items, input tanks and output tanks of a basic machine, including the block-facing fluid contract. */
 public final class MachineInventory implements IFluidHandler {
+    private final RecipeMap recipeMap;
     private final MachineItemHandler items;
     private final MachineItemHandler potionInput;
     private final FluidTankGT[] tanksInput;
@@ -28,6 +29,7 @@ public final class MachineInventory implements IFluidHandler {
     private final boolean originalFluidBuffers;
 
     public MachineInventory(RecipeMap recipeMap, int parallelLimit, boolean originalFluidBuffers, Runnable onChanged) {
+        this.recipeMap = recipeMap;
         this.originalFluidBuffers = originalFluidBuffers;
         this.inputCount = recipeMap.mInputItemsCount;
         this.potionCount = recipeMap.mInputPotionCount;
@@ -151,18 +153,32 @@ public final class MachineInventory implements IFluidHandler {
 
     @Override
     public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-        return tank < tanksInput.length;
+        if (tank < 0 || tank >= tanksInput.length) return false;
+        if (tanksInput[tank].contains(stack)) return true;
+        return tanksInput[tank].isEmpty() && recipeAcceptsFluid(stack);
+    }
+
+    /**
+     * GT6 {@code MultiTileEntityBasicMachine.getFluidTankFillable2}: a tank already holding the
+     * fluid keeps receiving it, a new fluid needs an unclaimed recipe input and an empty tank.
+     * Returning the full tank as-is keeps a surplus input from spilling into the other slots.
+     */
+    private FluidTankGT inputTankFor(FluidStack resource) {
+        if (resource == null || resource.isEmpty()) return null;
+        for (var tank : tanksInput) if (tank.contains(resource)) return tank;
+        if (!recipeAcceptsFluid(resource)) return null;
+        for (var tank : tanksInput) if (tank.isEmpty()) return tank;
+        return null;
+    }
+
+    private boolean recipeAcceptsFluid(FluidStack resource) {
+        return recipeMap != null && recipeMap.containsInput(resource);
     }
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        for (int i = 0; i < tanksInput.length; i++) {
-            if (tanksInput[i].isFluidValid(resource)) {
-                int filled = tanksInput[i].fill(resource, action);
-                if (filled > 0) return filled;
-            }
-        }
-        return 0;
+        FluidTankGT target = inputTankFor(resource);
+        return target == null ? 0 : target.fill(resource, action);
     }
 
     @Override

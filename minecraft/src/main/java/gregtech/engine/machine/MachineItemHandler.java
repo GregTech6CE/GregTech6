@@ -89,6 +89,24 @@ public class MachineItemHandler extends ItemStackHandler {
         return slot >= 0 && inputFilter.test(stack);
     }
 
+    /**
+     * GT6 {@code MultiTileEntityBasicMachine.canInsertItem2}: automation keeps a stack in the input
+     * slot already holding it, so a surplus item cannot spread across the machine's other inputs.
+     */
+    public boolean automationSlotAccepts(int slot, ItemStack stack) {
+        if (slot < 0 || slot >= inputCount || stack.isEmpty()) return false;
+        for (int i = 0; i < inputCount; i++) {
+            ItemStack existing = getStackInSlot(i);
+            if (existing.isEmpty()) continue;
+//? if >=1.21.1 {
+/*            if (ItemStack.isSameItemSameComponents(existing, stack)) return i == slot;
+*///?} else {
+            if (ItemStack.isSameItemSameTags(existing, stack)) return i == slot;
+//?}
+        }
+        return true;
+    }
+
     @Override
     protected void onContentsChanged(int slot) {
         onChanged.run();
