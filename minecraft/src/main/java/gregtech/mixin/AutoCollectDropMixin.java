@@ -26,8 +26,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Block.class)
 public abstract class AutoCollectDropMixin {
     @Inject(method = "playerDestroy", at = @At("HEAD"), cancellable = true, require = 1)
-    private void gregtech$collectDrops(Level level, Player player, BlockPos pos, BlockState state,
-            BlockEntity blockEntity, ItemStack tool, CallbackInfo ci) {
+    private void gregtech$collectDrops(
+            Level level,
+            Player player,
+            BlockPos pos,
+            BlockState state,
+            BlockEntity blockEntity,
+            ItemStack tool,
+            CallbackInfo ci) {
         if (!(level instanceof ServerLevel server)
                 || player == null
                 || player.getAbilities().instabuild
