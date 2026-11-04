@@ -1195,6 +1195,8 @@ public final class GTMachines {
             100.0F);
     public static final RegistryObject<HopperBlock> HOPPER_INFINITY = hopper(
             "hopper_infinity", gregtech.content.material.generated.CompoundMaterials.Infinity, 36, 100.0F, 100.0F);
+    public static final RegistryObject<HopperBlock> HOPPER_VACUUM =
+            MachineRegistry.registerHopper(gregtech.content.transport.VacuumHopper.SPEC);
 
     // --- Queue Hoppers (GT6 meta 8200+aID, ordered by original GT6 aID) ---
 
