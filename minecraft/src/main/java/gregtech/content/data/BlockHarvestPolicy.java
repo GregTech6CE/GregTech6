@@ -54,7 +54,6 @@ public final class BlockHarvestPolicy {
   // Wooden hulls take precedence over machinery implemented by the same base class.
   if(BlockHarvestNames.woodenHull(path)) return Tool.AXE;
   if(block instanceof GTMachineBlock || block instanceof gregtech.content.block.energy.EnergyNodeBlock
-      || block instanceof gregtech.content.block.machine.HopperBlock
       || block instanceof gregtech.content.block.inventory.SafeBlock
       || block instanceof gregtech.content.block.inventory.UsbSwitchBlock
       || block instanceof gregtech.content.block.inventory.DrawerQuadBlock

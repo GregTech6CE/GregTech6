@@ -130,13 +130,6 @@ public final class UtilityCraftingRows {
                             'M',
                             "block:casingMachine")));
         }
-        // GT6CE-only vacuum hopper: five steel plates around one steel rotor.
-        rows.add(new OriginalSurvivalRecipes.Row(
-                gregtech.content.transport.VacuumHopper.ID,
-                1,
-                GTMaterialRegistry.get("Steel"),
-                "P P|PTP| P ",
-                Map.of('P', "mat:plate", 'T', "mat:rotor")));
         return List.copyOf(rows);
     }
 }
