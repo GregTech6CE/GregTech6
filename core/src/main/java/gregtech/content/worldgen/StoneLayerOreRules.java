@@ -22,7 +22,14 @@ public final class StoneLayerOreRules {
         PLAINS,
         RIVER_LAKE,
         MESA,
-        SHROOM
+        SHROOM,
+        FOREST,
+        DARK_FOREST,
+        OCEAN,
+        WOODS,
+        VOLCANIC,
+        MAGICAL,
+        RADIOACTIVE
     }
 
     public record Rule(String blockId, List<BiomeGroup> biomes) {}
@@ -159,7 +166,100 @@ public final class StoneLayerOreRules {
                     new Rule("", List.of(BiomeGroup.SHROOM))),
             Map.entry(
                     new GTStoneLayersGen.OreDef("DiamondPink", true, 32, 0, 32),
-                    new Rule("", List.of(BiomeGroup.JUNGLE))));
+                    new Rule("", List.of(BiomeGroup.JUNGLE))),
+            // GT6 StoneLayer.DEEPSLATE (Loader_Worldgen.java:61-...), used below y<24.
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Emerald", false, 64, 0, 32),
+                    new Rule("", List.of(BiomeGroup.MOUNTAINS))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Diamond", false, 64, 0, 12),
+                    new Rule("", List.of(BiomeGroup.JUNGLE, BiomeGroup.VOLCANIC))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Lapis", false, 12, 16, 24),
+                    new Rule("", List.of(BiomeGroup.FROZEN, BiomeGroup.TAIGA))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Amethyst", false, 64, 0, 32),
+                    new Rule("", List.of(BiomeGroup.FROZEN))),
+            Map.entry(new GTStoneLayersGen.OreDef("Ruby", false, 64, 0, 32), new Rule("", List.of(BiomeGroup.DESERT))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Peridot", false, 64, 0, 32), new Rule("", List.of(BiomeGroup.PLAINS))),
+            Map.entry(new GTStoneLayersGen.OreDef("Topaz", false, 64, 0, 32), new Rule("", List.of(BiomeGroup.JUNGLE))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Tanzanite", false, 64, 0, 32),
+                    new Rule("", List.of(BiomeGroup.TAIGA))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Malachite", false, 64, 0, 32),
+                    new Rule("", List.of(BiomeGroup.SWAMP))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("BlueSapphire", false, 64, 0, 32),
+                    new Rule("", List.of(BiomeGroup.OCEAN_BEACH))),
+            // GT6 has two identical Amber entries (FOREST and OCEAN_BEACH); one rule keeps both.
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Amber", false, 32, 16, 24),
+                    new Rule("", List.of(BiomeGroup.FOREST, BiomeGroup.OCEAN_BEACH))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("BlueTopaz", false, 64, 0, 32),
+                    new Rule("", List.of(BiomeGroup.DARK_FOREST))),
+            Map.entry(new GTStoneLayersGen.OreDef("Redstone", false, 16, 0, 20), new Rule("", List.of())),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Cinnabar", false, 64, 0, 20),
+                    new Rule("", List.of(BiomeGroup.MESA, BiomeGroup.TAIGA, BiomeGroup.VOLCANIC, BiomeGroup.MAGICAL))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Cooperite", false, 64, 0, 12),
+                    new Rule("", List.of(BiomeGroup.VOLCANIC))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Uraninite", false, 64, 0, 12),
+                    new Rule("", List.of(BiomeGroup.JUNGLE, BiomeGroup.RADIOACTIVE))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Th", false, 64, 10, 20),
+                    new Rule("", List.of(BiomeGroup.JUNGLE, BiomeGroup.RADIOACTIVE))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Scheelite", false, 64, 0, 12),
+                    new Rule("", List.of(BiomeGroup.FROZEN))),
+            Map.entry(new GTStoneLayersGen.OreDef("TiO2", false, 64, 0, 12), new Rule("", List.of(BiomeGroup.DESERT))),
+            Map.entry(new GTStoneLayersGen.OreDef("Au", false, 32, 0, 16), new Rule("", List.of(BiomeGroup.MESA))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Bauxite", false, 32, 16, 32),
+                    new Rule("", List.of(BiomeGroup.PLAINS))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("MgCO3", false, 32, 10, 20),
+                    new Rule("", List.of(BiomeGroup.DESERT, BiomeGroup.VOLCANIC))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Borax", false, 32, 10, 20),
+                    new Rule("", List.of(BiomeGroup.OCEAN, BiomeGroup.RIVER_LAKE))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Galena", false, 32, 0, 16),
+                    new Rule("", List.of(BiomeGroup.MOUNTAINS))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Pb", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.MOUNTAINS, BiomeGroup.WOODS))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Cu", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.DESERT, BiomeGroup.SAVANNA))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Cassiterite", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.FROZEN, BiomeGroup.JUNGLE))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Sphalerite", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.SAVANNA, BiomeGroup.SWAMP))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("BrownLimonite", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.SHROOM))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("YellowLimonite", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.SWAMP))),
+            Map.entry(new GTStoneLayersGen.OreDef("Fe2O3", false, 16, 0, 32), new Rule("", List.of(BiomeGroup.WOODS))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Garnierite", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.SHROOM))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Pentlandite", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.SWAMP))),
+            Map.entry(
+                    new GTStoneLayersGen.OreDef("Coal", false, 16, 0, 32),
+                    new Rule("", List.of(BiomeGroup.PLAINS, BiomeGroup.SHROOM))),
+            Map.entry(new GTStoneLayersGen.OreDef("NaCl", false, 32, 20, 32), new Rule("", List.of())),
+            Map.entry(new GTStoneLayersGen.OreDef("Nikolite", false, 32, 0, 20), new Rule("", List.of())));
 
     public static Rule rule(GTStoneLayersGen.OreDef ore) {
         return RULES.getOrDefault(ore, DEFAULT);

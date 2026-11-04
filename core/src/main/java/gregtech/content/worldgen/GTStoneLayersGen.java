@@ -26,6 +26,57 @@ public final class GTStoneLayersGen {
     public static final List<LayerDef> LAYERS = new ArrayList<>();
     public static final List<ContactDef> CONTACTS = new ArrayList<>();
 
+    /**
+     * GT6 {@code StoneLayer.DEEPSLATE}: the layer that replaces {@code noDeep} layers below
+     * {@code GTWorldgenScale.remapY(24)}. It is not part of {@link #LAYERS}; the scan substitutes it.
+     *
+     * <p>Mod-gated GT6 entries (Mithril, Draconium, HexoriumBlack/White, DeepIron) are omitted
+     * because their source mods are not part of the port; entries whose material is missing at
+     * runtime are skipped by the feature's resolver, like the rest of the table.</p>
+     */
+    public static final LayerDef DEEPSLATE = new LayerDef(
+            "SLATE",
+            null,
+            "Deepslate",
+            false,
+            List.of(
+                    ore("Emerald", false, 64, 0, 32),
+                    ore("Diamond", false, 64, 0, 12),
+                    ore("Lapis", false, 12, 16, 24),
+                    ore("Amethyst", false, 64, 0, 32),
+                    ore("Ruby", false, 64, 0, 32),
+                    ore("Peridot", false, 64, 0, 32),
+                    ore("Topaz", false, 64, 0, 32),
+                    ore("Tanzanite", false, 64, 0, 32),
+                    ore("Malachite", false, 64, 0, 32),
+                    ore("BlueSapphire", false, 64, 0, 32),
+                    ore("Amber", false, 32, 16, 24),
+                    ore("BlueTopaz", false, 64, 0, 32),
+                    ore("Redstone", false, 16, 0, 20),
+                    ore("Cinnabar", false, 64, 0, 20),
+                    ore("Cooperite", false, 64, 0, 12),
+                    ore("Uraninite", false, 64, 0, 12),
+                    ore("Th", false, 64, 10, 20),
+                    ore("Scheelite", false, 64, 0, 12),
+                    ore("TiO2", false, 64, 0, 12),
+                    ore("Au", false, 32, 0, 16),
+                    ore("Bauxite", false, 32, 16, 32),
+                    ore("MgCO3", false, 32, 10, 20),
+                    ore("Borax", false, 32, 10, 20),
+                    ore("Galena", false, 32, 0, 16),
+                    ore("Pb", false, 16, 0, 32),
+                    ore("Cu", false, 16, 0, 32),
+                    ore("Cassiterite", false, 16, 0, 32),
+                    ore("Sphalerite", false, 16, 0, 32),
+                    ore("BrownLimonite", false, 16, 0, 32),
+                    ore("YellowLimonite", false, 16, 0, 32),
+                    ore("Fe2O3", false, 16, 0, 32),
+                    ore("Garnierite", false, 16, 0, 32),
+                    ore("Pentlandite", false, 16, 0, 32),
+                    ore("Coal", false, 16, 0, 32),
+                    ore("NaCl", false, 32, 20, 32),
+                    ore("Nikolite", false, 32, 0, 20)));
+
     private GTStoneLayersGen() {}
 
     private static OreDef ore(String material, boolean indicators, int chanceDiv, int minY, int maxY) {

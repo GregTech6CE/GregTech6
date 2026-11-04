@@ -92,6 +92,12 @@ public final class StoneLayerOrePlacement {
                 biome.is(BiomeTags.IS_RIVER) || tagged(biome, BiomeTagsPair.RIVER) || tagged(biome, BiomeTagsPair.LAKE);
             case MESA -> biome.is(BiomeTags.IS_BADLANDS) || tagged(biome, BiomeTagsPair.BADLANDS);
             case SHROOM -> biome.is(Biomes.MUSHROOM_FIELDS) || tagged(biome, BiomeTagsPair.MUSHROOM);
+            case FOREST -> biome.is(BiomeTags.IS_FOREST);
+            case DARK_FOREST -> biome.is(Biomes.DARK_FOREST);
+            case OCEAN -> biome.is(BiomeTags.IS_OCEAN);
+            case WOODS -> biome.is(BiomeTags.IS_FOREST);
+            // GT6's volcanic, magical and radioactive sets are other-mod biomes; no vanilla match.
+            case VOLCANIC, MAGICAL, RADIOACTIVE -> false;
         };
     }
 }

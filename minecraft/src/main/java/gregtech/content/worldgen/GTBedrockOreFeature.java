@@ -3,13 +3,13 @@ package gregtech.content.worldgen;
 import gregtech.api.material.GTMaterial;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -46,48 +46,99 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
         GTBedrockOres.BedrockOre pick = select(level, gridRandom);
         if (pick == null) return false;
 
-        int centerX = chunkPos.getMinBlockX() + 4 + gridRandom.nextInt(8);
-        int centerZ = chunkPos.getMinBlockZ() + 4 + gridRandom.nextInt(8);
-
         RandomSource random = context.random();
         // GT6's vein is chunk anchored (its shape spans the chunk's own 16x16 columns).
         if (!placeVein(level, random, chunkPos.getMinBlockX(), chunkPos.getMinBlockZ(), pick.material())) {
             return false;
         }
 
-        // Indicator flowers on the surface above the deposit (the nether table has none).
-        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
-        if (pick.flowerId() != null) {
-//? if >=1.21.1 {
-            /*Block flower = BuiltInRegistries.BLOCK.get(
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", pick.flowerId()));
-*///?} else {
-            Block flower = ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, pick.flowerId()));
-//?}
-            if (flower != null && flower != Blocks.AIR) {
-                BlockState flowerState = flower.defaultBlockState();
-                for (int attempt = 0; attempt < 6; attempt++) {
-                    int x = centerX + random.nextInt(7) - 3;
-                    int z = centerZ + random.nextInt(7) - 3;
-                    int y = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
-                    cursor.set(x, y, z);
-                    if (!level.getBlockState(cursor).isAir()) continue;
-                    BlockState ground = level.getBlockState(cursor.below());
-                    if (!ground.is(Blocks.GRASS_BLOCK) && !ground.is(Blocks.DIRT) && !ground.is(Blocks.SAND)
-                            && !ground.is(Blocks.PODZOL) && !ground.is(Blocks.COARSE_DIRT)) continue;
-                    if (!flowerState.canSurvive(level, cursor)) continue;
-                    level.setBlock(new BlockPos(x, y, z), flowerState, 2);
-                }
-            }
-        }
-        // Surface rocks above the deposit hide raw ore chunks of the material.
-        for (int attempt = 0; attempt < 3; attempt++) {
-            GTRockPlacement.placeRock(level,
-                    centerX + random.nextInt(9) - 4, centerZ + random.nextInt(9) - 4,
-                    pick.material(), true);
-        }
+        placeIndicators(level, random, chunkPos, pick);
         return true;
+    }
+
+    /**
+     * GT6 {@code WorldgenOresBedrock}'s indicator flowers and raw-ore rocks: three rings of
+     * {@code tD = 4, 8, 16} candidates around the chunk centre, the inner rings denser. Each
+     * candidate scans down from the surface for an opaque grass/ground/sand/rock contact with a
+     * replaceable block above it, tries a flower first (skipped on one quarter of the positions
+     * when rocks are enabled and never on dirt), then a raw-ore rock.
+     */
+    private static void placeIndicators(
+            WorldGenLevel level, RandomSource random, ChunkPos chunkPos, GTBedrockOres.BedrockOre pick) {
+        BlockState flowerState = flowerState(pick);
+        boolean hasRocks = hasRawOre(pick.material());
+        if (flowerState == null && !hasRocks) return;
+
+        int minHeight = Math.min(level.getMaxBuildHeight() - 2, level.getSeaLevel() - 1);
+        int maxHeight = Math.min(level.getMaxBuildHeight() - 1, minHeight * 2 + 16);
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+
+        BedrockIndicatorRules.forEachPosition(
+                chunkPos.getMinBlockX(), chunkPos.getMinBlockZ(), random::nextInt, (x, z) -> {
+                    for (int y = maxHeight; y > minHeight; y--) {
+                        cursor.set(x, y, z);
+                        BlockState contact = level.getBlockState(cursor);
+                        if (contact.liquid() || contact.is(Blocks.FARMLAND)) break;
+                        if (!contact.isSolidRender(level, cursor)
+                                || contact.is(BlockTags.LOGS)
+                                || contact.is(BlockTags.LEAVES)) {
+                            continue;
+                        }
+                        BlockPos above = cursor.above();
+                        if (!replaceable(level.getBlockState(above))) break;
+                        if (flowerState != null
+                                && !contact.is(Blocks.DIRT)
+                                && BedrockIndicatorRules.placeFlower(random::nextInt, hasRocks)) {
+                            level.setBlock(above, flowerState, 2);
+                            if (flowerState.canSurvive(level, above)) break;
+                            level.setBlock(above, Blocks.AIR.defaultBlockState(), 2);
+                        }
+                        if (hasRocks && rockGround(contact)) {
+                            GTRockPlacement.place(level, above, pick.material().getName(), null, true);
+                        }
+                        break;
+                    }
+                });
+    }
+
+    private static BlockState flowerState(GTBedrockOres.BedrockOre pick) {
+        if (pick.flowerId() == null) return null;
+//? if >=1.21.1 {
+        /*Block flower = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", pick.flowerId()));
+*///?} else {
+        Block flower = ForgeRegistries.BLOCKS.getValue(
+                ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, pick.flowerId()));
+//?}
+        return flower == null || flower == Blocks.AIR ? null : flower.defaultBlockState();
+    }
+
+    private static boolean hasRawOre(GTMaterial material) {
+        if (material == null || !material.resolve().isValid()) return false;
+        return !gregtech.engine.material.MaterialStackItemHelper.mat(
+                        gregtech.content.data.MaterialPrefix.oreRaw, material.resolve(), 1)
+                .isEmpty();
+    }
+
+    /** GT6 {@code WD.easyRep}: air, plants, snow, fire and leaves may be replaced by a rock. */
+    private static boolean replaceable(BlockState state) {
+        return state.isAir()
+                || state.is(BlockTags.REPLACEABLE)
+                || state.is(Blocks.SNOW)
+                || state.is(BlockTags.LEAVES);
+    }
+
+    /** GT6's {@code Material.grass / ground / sand / rock} contact test. */
+    private static boolean rockGround(BlockState state) {
+        return state.is(BlockTags.DIRT)
+                || state.is(BlockTags.SAND)
+                || state.is(Blocks.GRASS_BLOCK)
+                || state.is(Blocks.MYCELIUM)
+                || state.is(Blocks.CLAY)
+                || state.is(Blocks.GRAVEL)
+                || state.is(BlockTags.BASE_STONE_OVERWORLD)
+                || state.is(BlockTags.STONE_ORE_REPLACEABLES)
+                || state.getBlock() instanceof gregtech.content.block.stone.GTStoneBlock;
     }
 
     private static Random gridRandom(WorldGenLevel level, ChunkPos chunkPos) {

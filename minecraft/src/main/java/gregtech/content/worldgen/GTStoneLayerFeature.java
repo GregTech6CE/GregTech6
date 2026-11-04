@@ -2,15 +2,18 @@ package gregtech.content.worldgen;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -33,11 +36,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * different layers meet, the contact-ore table (GT6 doublelayers) applies. This is
  * what confines each ore to its regional stone layer instead of blanketing the world
  * at a fixed height.</p>
+ *
+ * <p>The surface-rock state follows GT6's {@code tLastRock}/{@code tLastOre}: every column
+ * tracks the topmost replaced layer and the last indicator ore, and the 1/128 rock roll
+ * happens at the first air or replaceable block above the opaque ground. The rock carries
+ * the layer material, or the ore's crushing target when the 50% ore roll wins.</p>
  */
 public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
 
     private static final int MIN_GEN_Y = GTWorldgenScale.WORLD_FLOOR + 1;
-    private static final int MAX_GEN_Y = GTWorldgenScale.BAND_TOP;
 
     private static final Set<Block> REPLACEABLE_STONE = Set.of(
             Blocks.STONE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE,
@@ -55,12 +62,11 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
     private record Layer(@Nullable BlockState stone, @Nullable BlockState cobble, @Nullable BlockState mossy,
                          String material, boolean noDeep, List<Ore> ores) {}
 
-    /** Below this, noDeep layers (coal seams etc.) keep the host — GT6 used y<24. */
-    private static final int NO_DEEP_Y = GTWorldgenScale.remapY(24);
-
-    private record Ore(GTMaterial material, int chanceDiv, int minY, int maxY, StoneLayerOreRules.Rule rule, @Nullable net.minecraft.resources.ResourceLocation explicitBlock) {}
+    private record Ore(GTMaterial material, boolean indicators, int chanceDiv, int minY, int maxY,
+                       StoneLayerOreRules.Rule rule, @Nullable net.minecraft.resources.ResourceLocation explicitBlock) {}
 
     private static volatile Layer[] LAYER_CACHE;
+    private static volatile Layer DEEPSLATE_LAYER;
     private static volatile Map<String, Map<String, List<Ore>>> CONTACT_CACHE;
     private static final Map<Long, GTCellNoise> NOISE_BY_SEED = new ConcurrentHashMap<>();
 
@@ -77,48 +83,47 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos origin = context.origin();
 
         Layer[] layers = layers();
+        Layer deepslate = deepslateLayer();
         Map<String, Map<String, List<Ore>>> contacts = contacts();
         GTCellNoise noise = NOISE_BY_SEED.computeIfAbsent(level.getSeed(), GTCellNoise::new);
         int listSize = layers.length;
 
         int chunkMinX = origin.getX() & ~15;
         int chunkMinZ = origin.getZ() & ~15;
+        int maxGenY = maxGenY(level, chunkMinX, chunkMinZ);
         boolean placedAny = false;
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
-        Layer[] scan = new Layer[7];
 
         for (int dx = 0; dx < 16; dx++) {
             int x = chunkMinX + dx;
             for (int dz = 0; dz < 16; dz++) {
                 int z = chunkMinZ + dz;
+                SurfaceRockRules.ColumnState rockState = new SurfaceRockRules.ColumnState();
+                StoneLayerScan<Layer> scan = new StoneLayerScan<>(
+                        (sx, sy, sz) -> layers[noise.get(sx, sy, sz, listSize)],
+                        Layer::noDeep, deepslate, GTWorldgenScale.remapY(24), x, MIN_GEN_Y, z);
 
-                // scan[k] = layer at y + (k - 3); start so that scan[3] is MIN_GEN_Y.
-                for (int k = 0; k < 7; k++) {
-                    scan[k] = layers[noise.get(x, MIN_GEN_Y + k - 3, z, listSize)];
-                }
-
-                for (int y = MIN_GEN_Y; y < MAX_GEN_Y; y++) {
+                for (int y = MIN_GEN_Y; y < maxGenY; y++) {
                     cursor.set(x, y, z);
                     BlockState host = level.getBlockState(cursor);
                     Block hostBlock = host.getBlock();
-                    Layer layer = scan[3];
+                    Layer layer = scan.current();
 
-                    // Flammable / soft seams keep the host at depth (GT6 NoDeep).
-                    if (layer.noDeep() && y < NO_DEEP_Y) {
-                        System.arraycopy(scan, 1, scan, 0, 6);
-                        scan[6] = layers[noise.get(x, y + 4, z, listSize)];
-                        continue;
-                    }
-
-                    if (REPLACEABLE_STONE.contains(hostBlock)) {
+                    if (hostBlock == Blocks.BEDROCK) {
+                        rockState.bedrock();
+                    } else if (host.isAir()) {
+                        maybeRock(level, cursor, rockState, random);
+                        rockState.reset();
+                    } else if (REPLACEABLE_STONE.contains(hostBlock)) {
                         // The ore background must be the layer's stone (what the host is about
                         // to become), not the pre-replacement host — otherwise ores show the
                         // vanilla rock (e.g. deepslate) inside a GT stone layer.
                         BlockState background = layer.stone() != null ? layer.stone() : host;
+                        Ore placed = null;
                         boolean orePlaced = false;
-                        if (scan[5] == scan[1]) {
+                        if (scan.isInterior()) {
                             // Interior of one layer: the layer's own ores.
-                            boolean core = scan[6] == scan[0];
+                            boolean core = scan.isCore();
                             for (int oreIndex = 0; oreIndex < layer.ores().size(); oreIndex++) {
                                 Ore ore = layer.ores().get(oreIndex);
                                 if (y < ore.minY() || y > ore.maxY()) continue;
@@ -127,14 +132,15 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                                 if (random.nextInt(ore.chanceDiv()) != 0) continue;
                                 if (placeOre(level, cursor, background, ore, !core)) {
                                     orePlaced = true;
+                                    placed = ore;
                                     placedAny = true;
                                     break;
                                 }
                             }
                         } else {
                             // Layer boundary: contact ores (GT6 doublelayers).
-                            var below = contacts.get(scan[5].material());
-                            List<Ore> contactOres = below == null ? null : below.get(scan[1].material());
+                            var below = contacts.get(scan.above().material());
+                            List<Ore> contactOres = below == null ? null : below.get(scan.below().material());
                             if (contactOres != null) {
                                 for (int oreIndex = 0; oreIndex < contactOres.size(); oreIndex++) {
                                     Ore ore = contactOres.get(oreIndex);
@@ -144,26 +150,44 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                                     if (random.nextInt(ore.chanceDiv()) != 0) continue;
                                     if (placeOre(level, cursor, background, ore, random.nextBoolean())) {
                                         orePlaced = true;
+                                        placed = ore;
                                         placedAny = true;
                                         break;
                                     }
                                 }
                             }
                         }
-                        if (!orePlaced && layer.stone() != null && !host.is(layer.stone().getBlock())) {
-                            level.setBlock(cursor, layer.stone(), 2);
-                            placedAny = true;
+                        if (orePlaced) {
+                            rockState.ore(placed.material().getName(), placed.indicators());
+                        } else {
+                            rockState.replaced(layer.material());
+                            if (layer.stone() != null && !host.is(layer.stone().getBlock())) {
+                                level.setBlock(cursor, layer.stone(), 2);
+                                placedAny = true;
+                            }
                         }
                     } else if (REPLACEABLE_COBBLE.contains(hostBlock)) {
+                        rockState.replaced(layer.material());
                         if (layer.cobble() != null) {
                             level.setBlock(cursor, layer.cobble(), 2);
                             placedAny = true;
                         }
                     } else if (REPLACEABLE_MOSSY.contains(hostBlock)) {
+                        rockState.replaced(layer.material());
                         if (layer.mossy() != null) {
                             level.setBlock(cursor, layer.mossy(), 2);
                             placedAny = true;
                         }
+                    } else if (hostBlock instanceof GTStoneBlock stone && stone.variant().meta() < 3) {
+                        // GT6 BlockStones: metadata 0-2 (stone/cobble/mossy) keeps the rock flag.
+                        rockState.opaque(true);
+                    } else if (replaceable(host)) {
+                        maybeRock(level, cursor, rockState, random);
+                        rockState.reset();
+                    } else if (host.isSolidRender(level, cursor)) {
+                        rockState.opaque(suitableGround(host));
+                    } else {
+                        rockState.reset();
                     }
 
                     // Existing vanilla structure half-blocks follow the same local host material.
@@ -174,21 +198,53 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                         if (replacement != null) placedAny |= level.setBlock(cursor, replacement, 2);
                     }
 
-                    // Slide the window up by one block.
-                    System.arraycopy(scan, 1, scan, 0, 6);
-                    scan[6] = layers[noise.get(x, y + 4, z, listSize)];
-                }
-
-                // GT6 ground pebbles: ~1/128 columns get a rock of the local surface layer.
-                if (gregtech.GregTechConfig.Worldgen.SURFACE_ROCKS.enabled() && random.nextInt(128) == 0) {
-                    GTMaterial rockMaterial = GTMaterialRegistry.get(scan[3].material());
-                    if (rockMaterial != null && rockMaterial.resolve().isValid()) {
-                        GTRockPlacement.placeRock(level, x, z, rockMaterial.resolve());
-                    }
+                    scan.advance();
                 }
             }
         }
         return placedAny;
+    }
+
+    /** GT6's {@code tCanPlaceRocks && aRandom.nextInt(128) == 0} branch. */
+    private static void maybeRock(WorldGenLevel level, BlockPos pos, SurfaceRockRules.ColumnState state,
+            RandomSource random) {
+        if (!gregtech.GregTechConfig.Worldgen.SURFACE_ROCKS.enabled()) return;
+        if (!state.canPlaceRocks()) return;
+        if (!SurfaceRockRules.roll(random::nextInt)) return;
+        String material = SurfaceRockRules.rockMaterial(state, random::nextBoolean, GTStoneLayerFeature::targetCrushing);
+        GTRockPlacement.place(level, pos, material, null, false);
+    }
+
+    /** GT6 {@code tLastOre.mTargetCrushing.mMaterial}; most ores resolve to themselves. */
+    private static String targetCrushing(String name) {
+        GTMaterial material = GTMaterialRegistry.get(name);
+        if (material == null || !material.resolve().isValid()) return name;
+        return material.resolve().getTargetCrushingMaterial().getName();
+    }
+
+    /** GT6's {@code material.clay / sand / grass / ground} opaque-ground test. */
+    private static boolean suitableGround(BlockState state) {
+        return state.is(BlockTags.DIRT)
+                || state.is(BlockTags.SAND)
+                || state.is(Blocks.GRASS_BLOCK)
+                || state.is(Blocks.MYCELIUM)
+                || state.is(Blocks.CLAY)
+                || state.is(Blocks.GRAVEL);
+    }
+
+    /** GT6 {@code WD.easyRep}: air, plants, snow, fire and leaves may be replaced by a rock. */
+    private static boolean replaceable(BlockState state) {
+        return state.isAir()
+                || state.is(BlockTags.REPLACEABLE)
+                || state.is(Blocks.SNOW)
+                || state.is(BlockTags.LEAVES);
+    }
+
+    /** GT6's {@code tMaxHeight = aChunk.getTopFilledSegment()+15}, in modern section terms. */
+    private static int maxGenY(WorldGenLevel level, int chunkMinX, int chunkMinZ) {
+        ChunkAccess chunk = level.getChunk(chunkMinX >> 4, chunkMinZ >> 4);
+        int highest = chunk.getHighestFilledSectionIndex();
+        return highest < 0 ? level.getMinBuildHeight() : level.getMinBuildHeight() + (highest + 1) * 16;
     }
 
     private static boolean placeOre(WorldGenLevel level, BlockPos pos, BlockState background, Ore ore, boolean small) {
@@ -225,31 +281,43 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
             List<GTStoneLayersGen.LayerDef> defs = GTStoneLayersGen.LAYERS;
             Layer[] layers = new Layer[defs.size()];
             for (int i = 0; i < defs.size(); i++) {
-                GTStoneLayersGen.LayerDef def = defs.get(i);
-                BlockState stone = null, cobble = null, mossy = null;
-                if (def.stoneType() != null) {
-                    StoneType type = StoneType.valueOf(def.stoneType());
-                    stone = GTBlocks.getStoneState(type, StoneVariant.STONE);
-                    cobble = GTBlocks.getStoneState(type, StoneVariant.COBBLE);
-                    mossy = GTBlocks.getStoneState(type, StoneVariant.COBBLE_MOSSY);
-                } else if (def.blockId() != null) {
-                    // Whole-block ore seams (GT6 BlockRockOres -> iconset blocks).
-//? if >=1.21.1 {
-                    /*Block seam = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", def.blockId()));
-*///?} else {
-                    Block seam = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, def.blockId()));
-//?}
-                    if (seam != null && seam != Blocks.AIR) {
-                        stone = seam.defaultBlockState();
-                    }
-                }
-                layers[i] = new Layer(stone, cobble, mossy, def.material(), def.noDeep(), resolveOres(def.ores()));
+                layers[i] = resolveLayer(defs.get(i));
             }
             LAYER_CACHE = layers;
             return layers;
         }
+    }
+
+    private static Layer deepslateLayer() {
+        Layer cached = DEEPSLATE_LAYER;
+        if (cached != null) return cached;
+        synchronized (GTStoneLayerFeature.class) {
+            if (DEEPSLATE_LAYER == null) DEEPSLATE_LAYER = resolveLayer(GTStoneLayersGen.DEEPSLATE);
+            return DEEPSLATE_LAYER;
+        }
+    }
+
+    private static Layer resolveLayer(GTStoneLayersGen.LayerDef def) {
+        BlockState stone = null, cobble = null, mossy = null;
+        if (def.stoneType() != null) {
+            StoneType type = StoneType.valueOf(def.stoneType());
+            stone = GTBlocks.getStoneState(type, StoneVariant.STONE);
+            cobble = GTBlocks.getStoneState(type, StoneVariant.COBBLE);
+            mossy = GTBlocks.getStoneState(type, StoneVariant.COBBLE_MOSSY);
+        } else if (def.blockId() != null) {
+            // Whole-block ore seams (GT6 BlockRockOres -> iconset blocks).
+//? if >=1.21.1 {
+            /*Block seam = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", def.blockId()));
+*///?} else {
+            Block seam = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, def.blockId()));
+//?}
+            if (seam != null && seam != Blocks.AIR) {
+                stone = seam.defaultBlockState();
+            }
+        }
+        return new Layer(stone, cobble, mossy, def.material(), def.noDeep(), resolveOres(def.ores()));
     }
 
     private static Map<String, Map<String, List<Ore>>> contacts() {
@@ -286,7 +354,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
             if (material == null || !material.resolve().isValid()) continue;
             var rule = StoneLayerOreRules.rule(def);
             var block = rule.blockId().isEmpty() ? null : net.minecraft.resources.ResourceLocation.parse(rule.blockId());
-            out.add(new Ore(material.resolve(), Math.max(1, def.chanceDiv()),
+            out.add(new Ore(material.resolve(), def.indicators(), Math.max(1, def.chanceDiv()),
                     GTWorldgenScale.stoneLayerOreMinY(def), GTWorldgenScale.remapY(def.maxY()), rule, block));
         }
         return List.copyOf(out);
