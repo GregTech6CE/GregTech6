@@ -1,55 +1,53 @@
 # 板条箱重构
 
-本端把 GT6 的板条箱拆成三种身份：装饰性 `crate`、战利品板条箱 `loot_crate`、材料板条箱 `material_crate`。GT6 的十二族材料板条箱（`crateGt*`，方块与物品各 4,018 个）不再按材料注册，储物间的自然生成改由单一 `material_crate` 承载。
-
-> 状态：已实施。删除项同时登记在[物品移除](item-removal.md)。
+本端把 GT6 的板条箱拆成三种身份：装饰性 `crate`、战利品板条箱 `loot_crate`、材料板条箱 `material_crate`。GT6 的六族材料板条箱（每族 16/64 两档，共十二个 `crateGt*` 前缀）不再按材料注册；本端删除 4,018 个方块与 4,018 个物品，储物间的自然生成改由单一 `material_crate` 承载。删除项同时登记在[物品移除](item-removal.md)。
 
 | 内容 | 差异 | 原因 |
 | --- | --- | --- |
-| 三种身份 | `crate` 只做装饰，`loot_crate` 承载原版战利品，`material_crate` 承载 GT 材料包；三者互不重叠。 | 三种用途混在同一个方块上会让材料箱同时承担产出与容器两种语义。GT6 的 `IL.Crate` 本身是物品；本端把它做成装饰方块。 |
-| `crate` | 去掉 `FallingBlock`（悬空不再下落）；无库存、无 GUI、无比较器与漏斗接口；破坏掉自身。 | 空板条箱的储物功能与储物桶重叠，没有生态位；重力对纯装饰方块没有意义。 |
-| `crate` 破坏掉落 | 补方块战利品表，掉 1 个自身。 | 旧行为依赖 `BlockLootPack` 的运行时生成；静态表让掉落显式，不依赖数据包，也不会让「撬开得到的板条箱」变成一次性物品。 |
-| `loot_crate` 开启 | 保持现状：撬棍右键 → 1 份原版战利品 + 1 个 `crate`，扣 500 耐久，方块消失。 | 与 GT6 `MultiTileEntityLootCrate.onToolClick` 一致：`setToAir()` 后掉两叠物品。 |
-| `loot_crate` 方块属性与掉落 | `strength(4,4)` 且要求正确工具 → 木质 `strength(1,3)`、任意工具可挖；补方块战利品表，挖掉掉自身。 | GT6 该方块是木质方块实体，挖掉时由默认 `getDrops` 掉自身；本端原先要求正确工具，`BlockLootPack` 的运行时表只在正确工具下生效，静态表把掉落显式化。 |
-| `loot_crate` 自然生成 | 新增：二向/三向地牢走廊中央盒，`next1in3` 触发后按 `next(4)` 选角，角点 `next1in2`、叠层 `next2in3`、两个相邻格各 `next1in2`，单簇 0–4 个。四向走廊、储物间与其它房间不生成。 | 对齐 GT6 `DungeonChunkCorridor`（三向走廊经 `DungeonChunkCorridor3` 继承同一中央盒）；本端此前只有合成与创造页，没有自然生成。 |
+| 三种身份 | `crate` 只做装饰，`loot_crate` 承载原版战利品，`material_crate` 承载 GT 材料包；三者互不重叠。 | GT6 的空板条箱是物品，材料板条箱按材料注册；若三种用途共用一个方块，材料箱会同时承担产出与容器两种语义。 |
+| `crate` | 装饰方块：无重力、无库存、无 GUI、无比较器与漏斗接口；破坏掉自身。 | GT6 的空板条箱是物品；本端把它做成装饰方块，储物功能与储物桶重叠，没有生态位。 |
+| `crate` 破坏掉落 | 挖掉掉 1 个自身。 | 撬开战利品箱会得到板条箱，必须能再次放置；掉落由方块战利品表显式给出。 |
+| `loot_crate` 开启 | 撬棍右键 → 至多 1 份原版战利品 + 1 个 `crate`，消耗 5 点耐久，方块消失。 | 与 GT6 的撬棍开启一致：方块消失后掉两叠物品。 |
+| `loot_crate` 方块属性与掉落 | 木质方块，任意工具可挖；挖掉掉自身。 | GT6 该方块是木质方块实体，挖掉时按默认掉落掉自身。 |
+| `loot_crate` 自然生成 | 二向/三向地牢走廊中央盒：1/3 概率触发，1/4 选角；角点 1/2、叠层 2/3、两个相邻格各 1/2，单簇 0–4 个；四向走廊、储物间与其它房间不生成。 | GT6 的二向与三向走廊在中央盒生成战利品箱簇，四向走廊、储物间与其它房间不生成；本端按同一条件生成。 |
 | `material_crate` 方块 | 新增单一 ID，无方向、无状态、无方块实体；普通实心方块，可上下堆叠、无重力、可被活塞推动；非撬棍破坏掉自身；无配方，不进创造页。 | 单一方块无法携带「这一箱是什么」，但换掉整条方块实体、NBT 与存档迁移链；材料箱只作为地牢产出存在。 |
-| `material_crate` 开启 | 撬棍右键 → 方块消失，掉 16/64 个随机材料 + 1 个 `crate`，扣 500 耐久。GT6 是撬棍**挖掉**时由 `GT_Tool_Crowbar.convertBlockDrops` 把方块转成 16/64 材料 + 1 个空箱。 | 右键与 `loot_crate` 一致，且不必把转化塞进掉落管线；产物与 GT6 相同。 |
-| `material_crate` 内容分布 | 开箱时抽取：五个类别等概率；粉/粗矿 64 档约 40%、宝石约 20%、金属 33.3%、木板固定 64；材料按原版列表中的重复次数加权；只从当前端存在的物品里抽。详见[附录A](#附录a-材料板条箱内容分布)。 | 单一方块只能在开启时决定内容；概率保留原版的相对比例，不要求条目数与原版相等。 |
-| 内容与层数无关 | GT6 的 64 档概率随堆叠层数下降（粉/粗矿 1/2、1/3、1/4，宝石 1/4、1/6、1/8）；本端取每箱等权平均（粉/粗矿 29/72 ≈ 40.3%，宝石 29/144 ≈ 20.1%），实现取整为 40%/20%。 | 无方块实体时箱子不记录层数；取整后的单箱期望与精确值相差约 0.2%，只失去「高处箱子更小」的相关性。 |
-| 地牢储物间 | 四象限仍按 `next(7)` 选类别、按 3/4、2/3、1/2 堆 1–3 层，锭/板散堆与粗矿块不变；原材料板条箱统一换成 `material_crate`，不再消耗形态/大小/材料抽取。 | 外观统一后仍要保留房间结构；储物间是 GT6 材料板条箱的主要来源。 |
-| 随机数流 | 不复刻 GT6 的抽取顺序与同种子结果：生成期只保留有可观测效果的判定，各次抽取相互独立；同一种子的布局与 GT6 不再逐格对应。 | 材料箱内容在开启时才 roll，生成期的形态/大小/材料抽取只有补流作用；独立性假设下删除它们不改变任何概率，堆叠与散堆的条件结构原样保留。 |
-| 旧材料板条箱删除 | 删除 12 个 `crateGt*` 前缀、4,018 个方块与 4,018 个物品，连同配方生成、创造页、采掘/可燃/危害/命名规则、模型与贴图；旧存档中已放置的材料板条箱在区块加载时变空气，不迁移。清单见[附录B](#附录b-删除清单)。 | 保留 4,018 个方块 ID 与 4,018 个物品 ID 的代价（注册表、约 13 MB 资源、双路径维护）高于收益：1.0.x 的存档没有需要长期兼容的玩家；1.21.1 也没有 `MissingMappingsEvent`，本端没有 DataFixer schema。 |
-| Boxinator / Unboxinator | 删除材料板条箱的装箱与拆箱行（含「64 材料压成一箱」「9 箱压成方块」）；`loot_crate` 的 Unboxinator 行保留。 | 压缩存储由储物桶承担；材料箱不存在后这些行没有输入或输出。 |
-| 渲染与配置 | 删除 `CrateBlockBakedModel`、`CRATE_OVERLAY`（`blocks.crates.UseOverlayIcon`）与材料板的 crate 模型分支。 | 它们只服务「木壳 + 材料面」的材料板条箱；三种箱子共用同一木壳后不再有消费者。 |
-| 外观 | `crate`、`loot_crate`、`material_crate` 共用 `iconsets/crate` 贴图与相同的 `cube_all` 模型。 | 本次不新增美术资源；三者靠名称与 tooltip 区分。 |
-| 不引燃 | `loot_crate` 与 `material_crate` 不设置 `ignitedByLava`；`crate` 保留。 | 刻意让地牢箱不引燃，避免在岩浆/火附近自燃；GT6 的 crate 前缀带 `BURNABLE`，这是有意偏离。 |
-| 语言 | 新增 `material_crate` 的名称（材料板条箱）与 tooltip；补 `loot_crate.tooltip` 的中文（当前是英文原文）。 | 现有遗漏，与本次改动同批修正。 |
+| `material_crate` 开启 | 撬棍右键 → 方块消失，掉 16/64 个随机材料（按物品最大堆叠数截断）+ 1 个 `crate`，消耗 5 点耐久。 | GT6 是撬棍**挖掉**时把方块掉落转成 16/64 材料 + 1 个空箱；本端改为右键，与 `loot_crate` 一致，且不必把转化塞进掉落流程，产物相同。 |
+| `material_crate` 内容分布 | 开箱时抽取：五个类别等概率；粉/粗矿 64 档约 40%、宝石约 20%、金属 33.3%、木板固定 64；材料按 GT6 列表中的重复次数加权，权重按本端列表长度归一；只从当前端存在的物品里抽。详见[附录A](#附录a-材料板条箱内容分布)。 | 单一方块只能在开启时决定内容；概率保留原版的相对比例，不要求条目数与原版相等。 |
+| 内容与层数无关 | GT6 的 64 档概率随堆叠层数下降（粉/粗矿 1/2、1/3、1/4，宝石 1/4、1/6、1/8）；本端取每箱等权平均（粉/粗矿 29/72 ≈ 40.3%，宝石 29/144 ≈ 20.1%），取整为 40%/20%。 | 无方块实体时箱子不记录层数；取整后的单箱期望与精确值相差约 0.2%，只失去「高处箱子更小」的相关性。 |
+| 地牢储物间 | 与 GT6 相同：四象限按七选一选类别（5/7 命中）、按 3/4、2/3、1/2 堆 1–3 层，锭/板散堆与粗矿块保留；原材料板条箱换成 `material_crate`，生成期不再抽取形态/大小/材料。 | 外观统一后仍要保留房间结构；储物间是 GT6 材料板条箱的主要来源。 |
+| 随机数流 | 不复刻 GT6 的抽取顺序与同种子结果：生成期只保留有可观测效果的判定，各次抽取相互独立；同一种子的布局与 GT6 不再逐格对应。 | 材料箱内容在开启时才抽取，生成期的形态/大小/材料抽取只为推进随机数流；独立性假设下省略它们不改变任何概率，堆叠与散堆的条件结构不变。 |
+| 旧材料板条箱删除 | 删除 12 个 `crateGt*` 前缀、4,018 个方块与 4,018 个物品，连同配方、创造页、采掘与可燃规则、模型与贴图；旧存档中已放置的材料板条箱在区块加载时变空气，不迁移。清单见[附录B](#附录b-删除清单)。 | 保留 4,018 个方块 ID 与 4,018 个物品 ID 的代价（注册表、资源文件、双路径维护）高于收益：1.0.x 的存档不需要长期兼容；1.21.1 也没有缺失映射迁移钩子。 |
+| Boxinator / Unboxinator | 删除材料板条箱的装箱与拆箱行（含「64 材料压成一箱」「1 个材料块 + 9 个空箱压成 9 个满箱」）；`loot_crate` 的 Unboxinator 行保留。 | 压缩存储由储物桶承担；材料箱不存在后这些行没有输入或输出。 |
+| 渲染与配置 | 删除材料板条箱专用的叠加图标与材料面模型，`blocks.crates.UseOverlayIcon` 配置项一并删除。 | 它们只服务「木壳 + 材料面」的材料板条箱；三种箱子共用同一木壳后不再有消费者。 |
+| 外观 | `crate`、`loot_crate`、`material_crate` 共用 `iconsets/crate` 贴图与相同的 `cube_all` 模型。 | 不新增美术资源；三者靠名称区分，两个地牢箱另有 tooltip。 |
+| 不引燃 | `loot_crate` 与 `material_crate` 不会被岩浆点燃；`crate` 保留。 | 刻意让地牢箱不引燃，避免在岩浆/火附近自燃；GT6 的 crate 前缀带 `BURNABLE`，这是有意偏离。 |
+| 语言 | 新增 `material_crate` 的名称（材料板条箱）与 tooltip；`loot_crate.tooltip` 提供中文。 | 三种箱子的名称与两个地牢箱的提示在两种语言中保持一致。 |
 
 ## 不处理的事项
 
-- **战利品抽取算法不改**：仍是「随机选一张原版表 → 整表 roll → 随机取一叠」，与 GT6 `ChestGenHooks.getOneItem` 的「按权重取一条并生成一叠」不是同一分布。现代战利品表是池 + 权重 + 条件的结构，没有与原版 `WeightedRandomChestContent` 一一对应的公开枚举，本次不动。
-- **储物间的流体墙、锭/板散堆、粗矿块、瓶箱与其它地牢房间不改**；只替换板条箱方块本身。
-- **不提供旧存档迁移工具**，也不保留 legacy 方块 ID；旧材料板条箱直接消失。
-- **不恢复压缩存储**（Boxinator 的「材料压箱」能力随材料箱一起删除）。
-- **要塞走廊箱子里的材料板条箱不补**：GT6 在 `stronghold_crossing` 战利品表里直接放 12 条材料板条箱（钢、青铜、黄铜、大马士革钢的粉/锭/板，2–16 个），本端从未实现；材料箱不再按材料注册后也无法实现。
+- **战利品抽取算法**：本端采用「随机选一张原版 MC 表 → 整表抽取 → 随机取一叠」，与 GT6 的「按权重取一条并生成一叠」不是同一分布。现代战利品表是池 + 权重 + 条件的结构，没有与原版 MC 逐条权重条目一一对应的公开枚举，因此不追求一致。
+- **储物间与其它地牢房间**：只替换板条箱方块本身；流体墙、锭/板散堆、粗矿块与其它房间保持 GT6 的结构。
+- **旧存档迁移**：不提供迁移工具，也不保留旧方块 ID；旧材料板条箱直接消失。
+- **压缩存储**：材料箱的「材料压箱」能力随材料箱一起删除，压缩存储由储物桶承担。
+- **要塞走廊箱子**：GT6 在 `stronghold_crossing` 战利品表里直接放 12 条材料板条箱（钢、青铜、黄铜、大马士革钢的粉/锭/板，4–16 个）；本端不实现，材料箱不再按材料注册后也无法实现。
 
 ## 附录A 材料板条箱内容分布
 
-开箱时先按等概率选类别，再在类别内抽形态、大小与材料。类别权重是 GT6 每象限 `next(7)` 的 1/7 去掉 2/7 空档后的条件分布，即 1/5。五张材料表在 core 的 `CrateMaterialTables`，权重表在 core 的 `MaterialCrateDistribution`，地牢生成与开箱抽取共用。
+开箱时先按等概率选类别，再在类别内抽形态、大小与材料。类别权重是 GT6 每象限七选一的 1/7 去掉 2/7 空档后的条件分布，即 1/5。材料表由地牢生成与开箱抽取共用。
 
-| 类别 | 权重 | 16 档 | 64 档 | 单箱期望材料数 | 材料表 |
+| 类别 | 权重 | 16 档 | 64 档 | 单箱期望材料数 | 材料表规模 |
 | --- | --- | --- | --- | --- | --- |
-| 金属（粉 / 锭 / 板） | 1/5 | 66.7% | 33.3% | 32.0 | `CRATE_METALS`：12 项、7 种 |
-| 粉 | 1/5 | 60% | 40% | 35.2 | `CRATE_DUSTS`：30 项、24 种 |
-| 宝石 | 1/5 | 80% | 20% | 25.6 | `CRATE_GEMS`：45 项、23 种 |
-| 木板 | 1/5 | — | 100% | 64.0 | `CRATE_WOODS`：22 项、22 种 |
-| 粗矿 | 1/5 | 60% | 40% | 35.2 | `CRATE_ORES`：54 项、43 种 |
+| 金属（粉 / 锭 / 板） | 1/5 | 66.7% | 33.3% | 32.0 | 12 项、7 种 |
+| 粉 | 1/5 | 60% | 40% | 35.2 | 30 项、24 种 |
+| 宝石 | 1/5 | 80% | 20% | 25.6 | 45 项、23 种 |
+| 木板 | 1/5 | — | 100% | 64.0 | 22 项、22 种 |
+| 粗矿 | 1/5 | 60% | 40% | 35.2 | 54 项、43 种 |
 | 合计 | 1 | 53.3% | 46.7% | 38.4 | — |
 
-- 材料权重等于该材料在列表中的出现次数除以列表长度；「项」是列表长度，「种」是不同材料数。
+- 材料权重等于该材料在本端材料表中的出现次数除以本端表长度；「项」是列表长度，「种」是不同材料数。
 - 某个 `(形态, 大小, 材料)` 在当前端不存在时从表中剔除；类别权重仍为 1/5。
-- 表中 40%/20% 是实现取整后的值；每箱等权精确值为粉/粗矿 29/72、宝石 29/144，对应的单箱期望分别为 35.33、25.67，合计 38.47。
-- 金属的 12 项形态数组为粉 ×2、锭 ×4、板 ×2、粉 64 ×1、板 64 ×1、锭 64 ×2，因此 64 档占 4/12，与层数无关。
+- 表中 40%/20% 是取整后的值；每箱等权精确值为粉/粗矿 29/72、宝石 29/144，对应的单箱期望分别为 35.33、25.67，合计 38.47。
+- 金属的 12 项形态构成为粉 ×2、锭 ×4、板 ×2、粉 64 ×1、板 64 ×1、锭 64 ×2，因此 64 档占 4/12，与层数无关。
 - 单个储物间 36 个格位 × 5/7 类别命中 × 1.5 箱/格 ≈ 38.6 箱，合计约 1,481 个材料单位。
 
 ## 附录B 删除清单
@@ -66,53 +64,40 @@
 
 | 项目 | 数量 | 说明 |
 | --- | --- | --- |
-| 方块与物品 | 各 4,018 | 等于 blockstate 文件数，占全部 10,532 个 blockstate 的 38.2% |
-| blockstate / 方块模型 / 物品模型 | 4,018 / 4,018 / 4,018 | 4,018 个物品模型；`crate.json` 不在删除范围 |
+| 方块与物品 | 各 4,018 | 与 blockstate 文件数相同 |
+| blockstate / 方块模型 / 物品模型 | 各 4,018 | 另有 492 个共享材料模型见下一行；`crate.json` 不在删除范围 |
 | 共享材料模型 | 492 | 41 套材质 × 12 前缀，位于 `models/block/material/*/crategt*.json` |
 | 贴图 | 492 | `textures/block/material_icons/*/crate*.png`；`iconsets/crate.png` 保留 |
 | 堆组 | 12 | `stack_groups/material_forms/crate_gt*.json`；`functional_bottle_crate.json` 保留 |
-| 语言键 | 每语言 12 | `block.gt6ce.crate_gt*`；材料名由命名规则派生，无逐材料键 |
-| 创造页 | 6 个页签、6 个页签图标 | 仅 64 档前缀建页签，16 档本来就不建 |
+| 方块名语言键 | 每语言 12 | `block.gt6ce.crate_gt*` |
+| 创造页语言键 | en_us 18、zh_cn 24 | `itemGroup.gt6ce.crate_gt*` 12 条、`item.gt6ce.tab_icon_block_crate_gt64_*` 6 条；zh_cn 另有 6 条 `itemGroup.crateGt64*` |
+| 矿物词典语言键 | zh_cn 4,916 | `oredict.crateGt*` 4,902 条逐材料键、`oredict.prefix.*` 14 条 |
+| 创造页 | 6 个页签、6 个页签图标 | 仅 64 档前缀建页签，16 档不建 |
 
-## 附录C 移除的爆炸物清单
+## 附录C 未沿用的板条箱爆炸行为
 
-材料板条箱删除后，以下材料不再有「板条箱受热/被爆炸引爆」这条行为。GT6 侧判定见上游 `gregapi/block/prefixblock/PrefixBlock.java`：`EXPLOSIVE` 材料走受热与连锁；`DUST_BASED` 前缀另有可燃粉尘分支，但十二个 `crateGt*` 前缀都没有 `DUST_BASED`（`gregapi/data/OP.java:334`-`343`）。
+材料板条箱删除后，以下材料不再有「板条箱受热/被爆炸引爆」这条行为。GT6 中 `EXPLOSIVE` 材料走连锁；同时带 `FLAMMABLE` 的才受热自爆。`DUST_BASED` 前缀另有可燃粉尘分支，但十二个 `crateGt*` 前缀都没有 `DUST_BASED`。
 
-### C.1 GT6 上游 `EXPLOSIVE` 材料
+| 材料 | 其它标签 | GT6 可形成的板条箱 | 受热自爆 | 被爆炸连锁 |
+| --- | --- | --- | --- | --- |
+| `Dynamite`（锯末炸药） | `FLAMMABLE` | `crateGtDust` / `crateGt64Dust` | 是 | 是 |
+| `Gunpowder`（火药） | `FLAMMABLE` | `crateGtDust` / `crateGt64Dust` | 是 | 是 |
+| `P` / `Phosphor`（元素磷，id 150） | `FLAMMABLE` | dust / gem / raw | 是 | 是 |
+| `Phosphorus`、Blue / Red / White | `FLAMMABLE` | dust / gem / raw | 是 | 是 |
+| `Phosphate`（PO4） | `FLAMMABLE` | dust / raw | 是 | 是 |
+| `Hafnium` | `FLAMMABLE` | dust / ingot / plate | 是 | 是 |
+| `Nq-528` Enriched Naquadah | 仅 `EXPLOSIVE` | dust / ingot / plate / raw | 否（无 `FLAMMABLE`） | 是 |
+| `Nq-522` Naquadria | 仅 `EXPLOSIVE` | dust / ingot / plate / raw | 否（无 `FLAMMABLE`） | 是 |
+| `TNT` | `FLAMMABLE`，`UNUSED` | 无生成形态 | — | — |
+| 液体：`Glyceryl`、`Fuel`、`Nitro-Fuel`、`Kerosine`、`Diesel`、`Petrol`、`Nitro Carbon` | `FLAMMABLE` | 不可装箱 | — | — |
 
-| 材料 | 其它标签 | GT6 可形成的板条箱 | 受热自爆 | 被爆炸连锁 | CE 重构前 |
-| --- | --- | --- | --- | --- | --- |
-| `Dynamite`（锯末炸药） | `FLAMMABLE` | `crateGtDust` / `crateGt64Dust` | 是 | 是 | 是 |
-| `Gunpowder`（火药） | `FLAMMABLE` | `crateGtDust` / `crateGt64Dust` | 是 | 是 | 是 |
-| `P` / `Phosphor`（元素磷，id 150） | `FLAMMABLE` | dust / gem | 是 | 是 | 是 |
-| `Phosphorus`、Blue / Red / White | `FLAMMABLE` | dust / gem | 是 | 是 | 否（CE 数据未标 `EXPLOSIVE`） |
-| `Phosphate`（PO4） | `FLAMMABLE` | dust | 是 | 是 | 否（CE 数据未标） |
-| `Hafnium` | `FLAMMABLE` | dust / ingot / plate | 是 | 是 | 否（CE 数据未标） |
-| `Nq-528` Enriched Naquadah | 仅 `EXPLOSIVE` | dust / ingot / plate | 否（无 `FLAMMABLE`） | 是 | 否（CE 数据未标） |
-| `Nq-522` Naquadria | 仅 `EXPLOSIVE` | dust / ingot / plate | 否（无 `FLAMMABLE`） | 是 | 否（CE 数据未标） |
-| `TNT` | `FLAMMABLE`，`UNUSED` | 无生成形态 | — | — | — |
-| 液体：`Glyceryl`、`Fuel`、`Nitro-Fuel`、`Kerosine`、`Diesel`、`Petrol`、`Nitro Carbon` | `FLAMMABLE` | 不可装箱 | — | — | — |
+- 受热威力：16 档箱子 8，64 档 32；`crateGtRaw` / `crateGt64Raw` 分别为 16 / 64。原版 TNT 的爆炸威力为 4。
+- 连锁威力：16 档 11.2、64 档 44.8；被爆炸摧毁时爆炸抗性为 0。
+- `Gunpowder` 的粉尘物品在 GT6 中统一为原版火药，但火药板条箱仍然生成。
 
-- 受热威力：16 档箱子 `0.5 × 16 = 8`，64 档 `0.5 × 64 = 32`；`crateGtRaw` / `crateGt64Raw` 分别为 16 / 64。原版 TNT 的爆炸威力为 4。
-- 连锁威力：`0.7 × mAmount`，即 16 档 11.2、64 档 44.8；被爆炸摧毁时爆炸抗性为 0。
-- `Dynamite` / `Gunpowder` 的标签见 `gregapi/data/MT.java:1309`-`1310`；`P` 见 `MT.java:403`；磷系见 `MT.java:1294`-`1297`；`PO4` 见 `MT.java:1074`；`Hf` 见 `MT.java:461`；Nq 见 `MT.java:745`-`746`；`TNT` 见 `MT.java:4000`；液体炸药见 `MT.java:1041`、`1191`、`1201`-`1205`。
-- `Gunpowder` 的粉尘物品被 `gregapi/data/OP.java:601` 禁用（改用原版火药），但 `crateGtDust` 的生成条件走 `canGenerateItem`，火药板条箱仍然存在。
+## 附录D 未沿用的碱金属遇水行为
 
-### C.2 CE 重构前额外覆盖的可燃粉尘
-
-CE 重构前的 `core/src/main/java/gregtech/content/hazard/MaterialBlockHazards.java`（commit `fb2465851`，第 13-23 行）把 `crateGtDust` / `crateGt64Dust` 也算作 dust-based；因此下列 CE 中带 `FLAMMABLE` 的粉尘，即使没有 `EXPLOSIVE`，其 dust 板条箱在重构前也会以 `0.33 × units` 受热爆炸、以 `0.7 × units` 连锁：
-
-- `WoodMaterials` 全部 32 种木种：Wood、WoodTreated、WoodPolished、WoodRubber、Bamboo、Livingwood、Dreamwood、Greatwood、Silverwood、Oak、Birch、Spruce、Junglewood、Acacia、DarkOak、Crimsonwood、Warpedwood、WoodCompressed、WoodDead、WoodRotten、WoodMossy、WoodFrozen、Maple、Willow、BlueMahoe、Hazel、Coconutwood、Rainbowood、BlueSpruce、Cherrywood、Mangrove、Cinnamonwood（`core/src/main/java/gregtech/content/material/generated/WoodMaterials.java:13`-`44`）。
-- 燃料/含碳/硫/镁：Coal、CoalCoke、LigniteCoke、PetroleumCoke（PetCoke）、Charcoal、Lignite、Peat、PetrifiedWood、OilShale、C、C-13、C-14、Mg、S（`core/src/main/java/gregtech/content/data/ImportedMaterialData.java:26`-`68`）。
-- `P` 已在上表，按 `EXPLOSIVE` 的 `0.5 × units` 计算。
-
-这些材料在 GT6 上游的**板条箱**中不会因受热爆炸：`crateGt*` 前缀没有 `DUST_BASED`；同材料的 `blockDust` 方块才有该行为（`gregapi/data/OP.java:347`）。CE 重构前把 dust 板条箱显式加入 `dust()`，因此形成了这条比 GT6 更宽的规则。
-
-CE 重构前的 `EXPLOSIVE` 数据只有 `Gunpowder`、`Dynamite`（`core/src/main/java/gregtech/content/material/generated/CompoundMaterials.java:183`-`184`）和 `P`（`core/src/main/java/gregtech/content/data/ImportedMaterialData.java:61`-`67`）；上表中的 `Phosphorus`、`Phosphate`、`Hafnium`、`Nq` 在 CE 数据中没有该标签。
-
-## 附录D 移除的碱金属清单
-
-GT6 的 `PrefixBlock.updateTick` 还有一条独立于点燃的分支：材料带 `TD.Atomic.ALKALI_METAL` 且相邻水时，先移除水，再以 `0.33 × mAmount`（若材料同时 `EXPLOSIVE` 则 `0.5 × mAmount`）爆炸（`gregapi/block/prefixblock/PrefixBlock.java:543`-`556`）。该分支对材料板条箱同样生效（`mCanBurn` / `mCanExplode` 均为 `T`），且不需要 `FLAMMABLE`。
+GT6 的板条箱还有一条独立于点燃的分支：材料带 `ALKALI_METAL` 且相邻水时，先移除水，再以材料量的三分之一（若材料同时 `EXPLOSIVE` 则二分之一）爆炸。该分支对材料板条箱同样生效，且不需要 `FLAMMABLE`。
 
 | 材料 | 符号 | 板条箱形态 |
 | --- | --- | --- |
@@ -124,6 +109,6 @@ GT6 的 `PrefixBlock.updateTick` 还有一条独立于点燃的分支：材料�
 | Caesium | Cs | 金属形态 |
 | Francium | Fr | 金属形态 |
 
-- 来源：`MT.alkali(...)`（`gregapi/data/MT.java:69`）及 `gregapi/data/MT.java:385`、`386`、`399`、`407`、`426`、`444`、`477`。
-- CE 重构前没有实现这条分支：`MaterialBlockHazards` 只计算受热与连锁，`MaterialBlockIgnition.hot()` 只检查相邻火 / 岩浆（`minecraft/src/main/java/gregtech/content/hazard/MaterialBlockIgnition.java:19`-`25`）；CE 的 `MaterialProperty` 也没有 `ALKALI_METAL`。
-- 反物质版本的碱金属（`AM` 中的 Li 等）不在可放置材料板条箱范围；crate 的 `aPlacementChecksAntimatter` 为 `T`。
+- 以上材料在 GT6 中均带 `ALKALI_METAL`。
+- 本端不实现这条分支：`material_crate` 没有材料身份，无法判定碱金属。
+- 反物质版本的碱金属（Li 等）不在可放置材料板条箱范围。
