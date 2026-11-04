@@ -92,6 +92,8 @@ public final class MoltenFluidHandler implements IFluidHandler {
         }
         return FluidStack.EMPTY;
     }
+    /** The material's canonical molten phase, or empty when the catalog has none. */
+    public static FluidStack moltenFluid(GTMaterial material, int amount) { return fluid(material, amount); }
     public boolean isFluidValid(int tank, FluidStack fluid) { return tank == 0 && material(fluid) != null; }
     public FluidStack getFluidInTank(int tank) { return tank == 0 ? drain(Integer.MAX_VALUE, FluidAction.SIMULATE) : FluidStack.EMPTY; }
     public int fill(FluidStack resource, FluidAction action) {

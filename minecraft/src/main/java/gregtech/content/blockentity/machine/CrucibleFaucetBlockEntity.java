@@ -4,13 +4,24 @@ import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.ITileEntityCrucible;
 import gregtech.engine.machine.ITileEntityMold;
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.GTValues;
+import gregtech.engine.fluid.MoltenFluidHandler;
+import gregtech.engine.fluid.MoltenFluidPlans;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.content.blockentity.tool.ProcessingToolBlockEntity;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
 import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+//?}
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -145,10 +156,13 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
 
     @Override
     public long getMoldRequiredMaterialUnits() {
-        // Delegate to the mold below
+        // Delegate to the mold below; an open vessel below always takes one unit.
         BlockEntity below = level != null ? level.getBlockEntity(worldPosition.below()) : null;
         if (below instanceof ITileEntityMold mold) {
             return mold.getMoldRequiredMaterialUnits();
+        }
+        if (below instanceof ProcessingToolBlockEntity vessel && vessel.acceptsFaucetPour()) {
+            return GTValues.U;
         }
         return 0;
     }
@@ -171,21 +185,55 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
     private long pushMaterialToMold(GTMaterial material, long amount, long temperature) {
         if (level == null) return 0;
 
+        // GT6 falls through extra faucets and open air, then pours into the first mold,
+        // bathing pot or mixing bowl; a colliding block stops the search.
         BlockPos below = worldPosition.below();
-        int iterations = 0;
-        while (below.getY() >= level.getMinBuildHeight() && iterations < 16) {
+        while (below.getY() >= level.getMinBuildHeight()) {
             BlockEntity be = level.getBlockEntity(below);
             if (be instanceof CrucibleFaucetBlockEntity) {
                 below = below.below();
-                iterations++;
                 continue;
             }
             if (be instanceof ITileEntityMold mold) {
                 return mold.fillMold(material, amount, temperature, Direction.UP.ordinal());
             }
-            break;
+            if (be instanceof ProcessingToolBlockEntity vessel && vessel.acceptsFaucetPour()) {
+                return fillOpenVessel(below, material, amount);
+            }
+            if (!level.getBlockState(below).getCollisionShape(level, below).isEmpty()) break;
+            below = below.below();
         }
         return 0;
+    }
+
+    /** GT6 pours one material unit, or the exact remainder below one, into the vessel's own tanks. */
+    private long fillOpenVessel(BlockPos pos, GTMaterial material, long amount) {
+        long units = Math.min(amount, GTValues.U);
+        FluidStack molten = MoltenFluidHandler.moltenFluid(material, 1);
+        if (molten.isEmpty()) return 0;
+        var ratio = MoltenFluidHandler.ratio(material, molten);
+        int millibuckets = MoltenFluidPlans.millibuckets(units, ratio);
+        if (millibuckets <= 0) return 0;
+        FluidStack pour = molten.copy();
+        pour.setAmount(millibuckets);
+        IFluidHandler sink = fluidHandlerBelow(pos);
+        if (sink == null) return 0;
+        // GT6's FL.fillAll accepts the whole portion or nothing, so no material is lost.
+        if (sink.fill(pour, IFluidHandler.FluidAction.SIMULATE) != millibuckets) return 0;
+        int filled = sink.fill(pour, IFluidHandler.FluidAction.EXECUTE);
+        return Math.min(units, MoltenFluidPlans.toUnits(filled, ratio));
+    }
+
+    private IFluidHandler fluidHandlerBelow(BlockPos pos) {
+//? if >=1.21.1 {
+        /*return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                pos, Direction.UP);
+*///?} else {
+        BlockEntity below = level.getBlockEntity(pos);
+        return below == null ? null
+                : below.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,
+                        Direction.UP).orElse(null);
+//?}
     }
 
     @Override
