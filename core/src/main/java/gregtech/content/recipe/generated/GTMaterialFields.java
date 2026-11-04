@@ -529,6 +529,7 @@ public final class GTMaterialFields {
         BY_FIELD.put("HydratedCoal", "Hydrated Coal");
         BY_FIELD.put("Graphene", "Graphene");
         BY_FIELD.put("Redstone", "Redstone");
+        BY_FIELD.put("RedstoneAlloy", "Redstone Alloy");
         BY_FIELD.put("Nikolite", "Nikolite");
         BY_FIELD.put("Glowstone", "Glowstone");
         BY_FIELD.put("MilkyQuartz", "Milky Quartz");

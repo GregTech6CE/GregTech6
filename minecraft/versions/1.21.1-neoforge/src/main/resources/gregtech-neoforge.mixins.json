@@ -46,6 +46,7 @@
     "ServerChunkCacheStructureProbeMixin",
     "ServerLevelStructureDataMixin",
     "CoverDropMixin",
+    "AutoCollectDropMixin",
     "ExperienceOrbCountAccessor",
     "CoverWalkMixin",
     "CoverCollisionMixin",
@@ -54,7 +55,8 @@
     "PotionBrewingAccessor",
     "PotionBrewingMixAccessor",
     "MaterialArrowEnchantmentMixin",
-    "EndermanEnchantmentMixin"
+    "EndermanEnchantmentMixin",
+    "DamageSourceDeathMessageMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,6 +1,6 @@
 package gregtech.event;
 
-import gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity;
+import gregtech.content.item.behavior.ItemBehaviors;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -18,9 +18,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
+/** Vanilla flint and steel as GT6's {@code TOOL_igniter}; unclaimed clicks keep vanilla fire placement. */
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-public final class CokeOvenIgnitionHandler {
-    private CokeOvenIgnitionHandler() {}
+public final class IgnitableBlockHandler {
+    private IgnitableBlockHandler() {}
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void ignite(PlayerInteractEvent.RightClickBlock event) {
@@ -28,13 +29,12 @@ public final class CokeOvenIgnitionHandler {
         var player = event.getEntity();
         var held = player.getItemInHand(event.getHand());
         if (level.isClientSide || !held.is(Items.FLINT_AND_STEEL)
-                || !player.mayBuild() || !level.mayInteract(player, event.getPos())
-                || !(level.getBlockEntity(event.getPos()) instanceof CokeOvenControllerBlockEntity oven)) return;
+                || !player.mayBuild() || !level.mayInteract(player, event.getPos())) return;
         var hit = event.getHitVec();
         var pos = event.getPos();
-        long cost = oven.onIgnite(level, pos, hit.getDirection(), player, held, player.isShiftKeyDown(),
-                (float) (hit.getLocation().x - pos.getX()), (float) (hit.getLocation().y - pos.getY()),
-                (float) (hit.getLocation().z - pos.getZ()));
+        long cost = ItemBehaviors.igniteToolClick(level, pos, hit.getDirection(), player, held,
+                player.isShiftKeyDown(), (float) (hit.getLocation().x - pos.getX()),
+                (float) (hit.getLocation().y - pos.getY()), (float) (hit.getLocation().z - pos.getZ()));
         if (cost <= 0) return;
         if (!player.isCreative()) {
 //? if >=1.21.1 {

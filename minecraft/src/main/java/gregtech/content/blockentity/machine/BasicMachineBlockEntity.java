@@ -74,7 +74,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
+//? if >=1.21.1 {
+/*public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+*///?} else {
 public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+//?}
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
@@ -948,7 +952,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public Direction autoIORelativeToAbsolute(int relDir) { return relativeToAbsolute(relDir); }
     @Override public boolean autoIOShutters(Direction side) { return isFaceShuttered(side); }
     @Override public boolean autoIOAllowsItemTraffic(Direction side, ItemStack stack, boolean inserting) { return allowsItemTraffic(side, stack, inserting); }
-    @Override public boolean autoIOAcceptsInput(ItemStack stack) { return acceptsAutomaticInput(stack); }
+    @Override public boolean autoIOAcceptsInput(int slot, ItemStack stack) { return canInsertAutomatically(slot, stack); }
     @Override public IFluidHandler autoIOFluidOutputTarget(Level level, BlockPos pos, Direction absolute) { return automaticFluidOutputTarget(level, pos, absolute); }
     @Override public BlockEntity autoIOOwner() { return this; }
 
@@ -1474,7 +1478,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         // machine behaving exactly as before.
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && be.acceptsAutomaticInput(stack) && be.allowsItemTraffic(side, stack, true)
+            return canInsert && be.canInsertAutomatically(slot, stack) && be.allowsItemTraffic(side, stack, true)
                     ? inner.insertItem(slot, stack, simulate) : stack;
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
@@ -1487,7 +1491,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         @Override public int getSlotLimit(int slot) { return inner.getSlotLimit(slot); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && be.acceptsAutomaticInput(stack) && be.allowsItemTraffic(side, stack, true)
+            return canInsert && be.canInsertAutomatically(slot, stack) && be.allowsItemTraffic(side, stack, true)
                     && inner.isItemValid(slot, stack);
         }
     }
@@ -1529,9 +1533,22 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     // ── Machine item handler ──────────────────────────────────────────────
 
     protected boolean acceptsAutomaticInput(ItemStack stack) {
-        return recipeMap != MachineRecipeMaps.Autocrafter || level != null
-                && (recipeMap.containsInput(stack) || gregtech.content.recipe.AutocraftingRecipes.containsInput(
-                        level, this, autocraftingProgram.getStackInSlot(0), stack));
+        if (recipeMap == null || stack.isEmpty()) return false;
+        if (recipeMap.containsInput(stack)) return true;
+        return recipeMap == MachineRecipeMaps.Autocrafter && level != null
+                && gregtech.content.recipe.AutocraftingRecipes.containsInput(
+                        level, this, autocraftingProgram.getStackInSlot(0), stack);
+    }
+
+    /**
+     * GT6 {@code MultiTileEntityBasicMachine.canInsertItem2}: automatic transfer reaches input
+     * slots only, admits recipe inputs (or potions in their own slot), and keeps one stack per slot.
+     */
+    protected boolean canInsertAutomatically(int viewSlot, ItemStack stack) {
+        if (inventory == null || viewSlot < 0 || viewSlot >= visibleInputSlots()) return false;
+        if (viewSlot >= inputSlots())
+            return inventory.potionInput() != null && inventory.potionInput().isItemValid(0, stack);
+        return acceptsAutomaticInput(stack) && inventory.items().automationSlotAccepts(viewSlot, stack);
     }
     @Override public IItemHandler componentItems(Direction side) {
         if (inventory == null) return null;
@@ -1539,9 +1556,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             public int getSlots() { return machineItemView.getSlots(); }
             public ItemStack getStackInSlot(int slot) { return machineItemView.getStackInSlot(slot); }
             public int getSlotLimit(int slot) { return machineItemView.getSlotLimit(slot); }
-            public boolean isItemValid(int slot, ItemStack stack) { return acceptsAutomaticInput(stack) && machineItemView.isItemValid(slot, stack); }
+            public boolean isItemValid(int slot, ItemStack stack) { return canInsertAutomatically(slot, stack) && machineItemView.isItemValid(slot, stack); }
             public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return acceptsAutomaticInput(stack) ? machineItemView.insertItem(slot, stack, simulate) : stack;
+                return canInsertAutomatically(slot, stack) ? machineItemView.insertItem(slot, stack, simulate) : stack;
             }
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 return machineItemView.extractItem(slot, amount, simulate);

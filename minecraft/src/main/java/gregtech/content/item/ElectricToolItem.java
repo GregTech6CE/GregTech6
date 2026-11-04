@@ -63,7 +63,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
             return gregtech.content.tool.ElectricChainsawHarvest.canHarvest(this,stack,state)
                     ? gregtech.content.tool.ElectricChainsawHarvest.speed(this,stack) : 0;
         if(gregtech.content.tool.ElectricUtilityHarvest.target(this,state))return gregtech.content.tool.ElectricUtilityHarvest.canHarvest(this,stack,state)?gregtech.content.tool.ElectricUtilityHarvest.speed(this,stack):0;
-        return super.getDestroySpeed(stack,state);
+        return 0.0F;
     }
 
     @Override public boolean isCorrectToolForDrops(ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {

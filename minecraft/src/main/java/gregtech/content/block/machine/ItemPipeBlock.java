@@ -345,7 +345,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
             }
         } else {
             if (GTToolHelper.isMachineWrench(tool)) {
-                return 1.0F / hardness / 10.0F;
+                return GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F;
             }
         }
         return super.getDestroyProgress(state, player, level, pos);

@@ -656,6 +656,7 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
             RedSteel = GT6Materials.Compounds.RedSteel,
             RedVitriol = GT6Materials.Compounds.RedVitriol,
             Redstone = GT6Materials.Compounds.Redstone,
+            RedstoneAlloy = GT6Materials.Compounds.RedstoneAlloy,
             Rf = GT6Materials.Elements.Rf,
             Rg = GT6Materials.Elements.Rg,
             Rh = GT6Materials.Elements.Rh,

@@ -170,6 +170,11 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         return !juicer && !stack.isEmpty();
     }
 
+    /** GT6 faucets pour into bathing pots and mixing bowls, never into a juicer. */
+    public boolean acceptsFaucetPour() {
+        return !juicer;
+    }
+
     public IItemHandlerModifiable inventory() {
         return items;
     }

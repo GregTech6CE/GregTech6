@@ -25,7 +25,7 @@ public final class MachineAutoIO {
         Direction autoIORelativeToAbsolute(int relDir);
         boolean autoIOShutters(Direction side);
         boolean autoIOAllowsItemTraffic(Direction side, ItemStack stack, boolean inserting);
-        boolean autoIOAcceptsInput(ItemStack stack);
+        boolean autoIOAcceptsInput(int slot, ItemStack stack);
         IFluidHandler autoIOFluidOutputTarget(Level level, BlockPos pos, Direction absolute);
         BlockEntity autoIOOwner();
     }
@@ -68,7 +68,7 @@ public final class MachineAutoIO {
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
             if (stack.isEmpty()) continue;
-            if (!host.autoIOAcceptsInput(stack) || !host.autoIOAllowsItemTraffic(absolute, stack, true)) continue;
+            if (!host.autoIOAllowsItemTraffic(absolute, stack, true)) continue;
             if (inventory.potionInput() != null && inventory.potionInput().isItemValid(0, stack)) {
                 ItemStack remaining = inventory.potionInput().insertItem(0, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
@@ -80,7 +80,7 @@ public final class MachineAutoIO {
                 continue;
             }
             for (int i = 0; i < inputCount; i++) {
-                if (!host.autoIOAllowsItemTraffic(absolute, stack, true)) break;
+                if (!host.autoIOAcceptsInput(i, stack)) continue;
                 ItemStack remaining = inventory.items().insertItem(i, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
                 if (toTake <= 0) continue;
@@ -156,16 +156,33 @@ public final class MachineAutoIO {
         if (be == null) return;
         IFluidHandler source = adjacentFluids.get(be, absolute.getOpposite());
         if (source == null) return;
-        FluidStack drained = source.drain(1000, IFluidHandler.FluidAction.SIMULATE);
-        if (drained.isEmpty()) return;
-        int filled = inventory.fill(drained, IFluidHandler.FluidAction.SIMULATE);
-        if (filled <= 0) return;
-        FluidStack toDrain = drained.copy();
-        toDrain.setAmount(filled);
-        FluidStack actuallyDrained = source.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
-        if (!actuallyDrained.isEmpty()) {
-            inventory.fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
+        pullFluids(source, inventory);
+    }
+
+    /**
+     * Offers every fluid the source exposes, as GT6 does: one full input tank must not hide the
+     * source's other fluids and starve the remaining inputs.
+     */
+    public static void pullFluids(IFluidHandler source, IFluidHandler target) {
+        int tanks = source.getTanks();
+        if (tanks <= 0) {
+            moveFluid(source, target, source.drain(1000, IFluidHandler.FluidAction.SIMULATE));
+            return;
         }
+        for (int tank = 0; tank < tanks; tank++) {
+            moveFluid(source, target, source.getFluidInTank(tank));
+        }
+    }
+
+    private static void moveFluid(IFluidHandler source, IFluidHandler target, FluidStack candidate) {
+        if (candidate == null || candidate.isEmpty()) return;
+        FluidStack offer = candidate.copy();
+        offer.setAmount(Math.min(offer.getAmount(), 1000));
+        int filled = target.fill(offer, IFluidHandler.FluidAction.SIMULATE);
+        if (filled <= 0) return;
+        offer.setAmount(filled);
+        FluidStack drained = source.drain(offer, IFluidHandler.FluidAction.EXECUTE);
+        if (!drained.isEmpty()) target.fill(drained, IFluidHandler.FluidAction.EXECUTE);
     }
 
     public void outputFluids(Level level, BlockPos pos, int relDir) {

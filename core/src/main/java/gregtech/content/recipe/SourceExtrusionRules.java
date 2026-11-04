@@ -499,6 +499,7 @@ public final class SourceExtrusionRules {
             8729|EnderiumBase|101||648648000
             8730|ElectricalSteel|101||648648000
             8732|Soularium|101||648648000
+            8733|RedstoneAlloy|101||648648000
             8735|GaiaSpirit|101||648648000
             8737|NikolineAlloy|101||648648000
             8744|AncientDebris|101||648648000

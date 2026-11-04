@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down":  {"model": "gt6ce:block/machine/hopper_down"},
+    "facing=up":    {"model": "gt6ce:block/machine/hopper_up"},
+    "facing=north": {"model": "gt6ce:block/machine/hopper_north"},
+    "facing=south": {"model": "gt6ce:block/machine/hopper_south"},
+    "facing=west":  {"model": "gt6ce:block/machine/hopper_west"},
+    "facing=east":  {"model": "gt6ce:block/machine/hopper_east"}
+  }
+}

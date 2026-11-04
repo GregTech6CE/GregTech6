@@ -25,7 +25,8 @@ import java.util.List;
 
 /** Large Crucible multiblock controller. 3x3x3 hollow of crucible wall blocks, HU-powered.
  *  27x capacity of single-block crucible. */
-public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource {
+public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock
+        implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
         if (!level.isClientSide && !entity.isSpectator() && entity instanceof net.minecraft.world.entity.LivingEntity
@@ -57,6 +58,15 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock imp
     }
 
     public gregtech.content.multiblock.LargeCrucibleSpecs.Variant variant() { return variant; }
+
+    /** GT6 {@code TileEntityBase10MultiBlockBase extends TileEntityBase09FacingSingle}. */
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
+                        gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
+                : null;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -115,10 +125,17 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock imp
         super.onRemove(state, level, pos, next, moving);
     }
 //? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){if(level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)return level.isClientSide?(be.canHandleUse(player,hand)?net.minecraft.world.InteractionResult.SUCCESS:net.minecraft.world.InteractionResult.PASS):be.tryUse(player,hand,hit);return net.minecraft.world.InteractionResult.PASS;}
+    /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){if(gregtech.engine.tool.ToolInteractions.use(state,level,pos,player,hand,hit))return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);if(level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)return level.isClientSide?(be.canHandleUse(player,hand)?net.minecraft.world.InteractionResult.SUCCESS:net.minecraft.world.InteractionResult.PASS):be.tryUse(player,hand,hit);return net.minecraft.world.InteractionResult.PASS;}
     @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
     @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
     @Override public List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder context){return List.of(new ItemStack(this));}
 *///?} else {
+    @Override public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)
+                ? net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide)
+                : net.minecraft.world.InteractionResult.PASS;
+    }
 //?}
 }

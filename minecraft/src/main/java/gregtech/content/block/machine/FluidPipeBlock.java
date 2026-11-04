@@ -9,9 +9,9 @@ import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.api.material.MaterialTextureSet;
+import gregtech.engine.tool.GTToolHelper;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 //?}
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
@@ -479,7 +479,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 *///?} else {
             if (GTToolHelper.isMachineWrench(tool)) {
 //?}
-                return 1.0F / hardness / 10.0F;
+                return GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F;
             }
         }
         return super.getDestroyProgress(state, player, level, pos);

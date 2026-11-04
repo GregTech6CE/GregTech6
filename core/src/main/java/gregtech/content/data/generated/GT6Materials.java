@@ -522,6 +522,7 @@ public final class GT6Materials {
         public static final GTMaterial Ta4HfC5              = gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide;
         public static final GTMaterial RedAlloy             = gregtech.content.material.generated.CompoundMaterials.RedAlloy;
         public static final GTMaterial BlueAlloy            = gregtech.content.material.generated.CompoundMaterials.BlueAlloy;
+        public static final GTMaterial RedstoneAlloy        = gregtech.content.material.generated.CompoundMaterials.RedstoneAlloy;
         public static final GTMaterial NikolineAlloy        = gregtech.content.material.generated.CompoundMaterials.NikolineAlloy;
         public static final GTMaterial ElectrotineAlloy     = gregtech.content.material.generated.CompoundMaterials.ElectrotineAlloy;
         public static final GTMaterial ConductiveIron       = gregtech.content.material.generated.CompoundMaterials.ConductiveIron;

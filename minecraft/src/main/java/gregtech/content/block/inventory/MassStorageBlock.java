@@ -71,14 +71,15 @@ import java.util.List;
 
 //? if >=1.21.1 {
 /*/^* Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. ^/
-public class MassStorageBlock extends Block implements EntityBlock {
+public class MassStorageBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private final GTMaterial material;
     public MassStorageBlock(GTMaterial material, Properties properties) {
         super(properties); this.material = material;
 *///?} else {
 /** Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. */
-public class MassStorageBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class MassStorageBlock extends HorizontalDirectionalBlock
+        implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
 
     @Nullable
     private final gregtech.api.material.GTMaterial material;
@@ -222,12 +223,22 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
 
     public long capacity() { return gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY; }
 
+    /** GT6 {@code TileEntityBase09FacingSingle}: the wrench re-aims the front on the 3x3 grid. */
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
+                        gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
+                : null;
+    }
+
     private boolean interact(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         // (insert+extract in one click, double withdrawals, armor swap-backs)
         if (hand == InteractionHand.OFF_HAND || !(level.getBlockEntity(pos) instanceof MassStorageBlockEntity store))
             return false;
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return true;
         ItemStack held = player.getItemInHand(hand);
         if (store.isPacked() && isUnpackingTool(held)) {
             if (!level.isClientSide && store.unseal())

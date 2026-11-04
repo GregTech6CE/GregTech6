@@ -104,6 +104,7 @@ public final class SourceDecompositionData {
         new Profile(8729, "EnderiumBase", new Binding("molten.enderiumbase", SOURCE_U, 144), null, false),
         new Profile(8730, "ElectricalSteel", null, null, false),
         new Profile(8732, "Soularium", null, null, false),
+        new Profile(8733, "RedstoneAlloy", new Binding("molten.redstonealloy", SOURCE_U, 144), null, false),
         new Profile(8737, "NikolineAlloy", new Binding("molten.nikolinealloy", SOURCE_U, 144), null, false),
         new Profile(8745, "Netherite", new Binding("molten.netherite", SOURCE_U, 144), null, false),
         new Profile(8751, "Duranium", null, null, false),

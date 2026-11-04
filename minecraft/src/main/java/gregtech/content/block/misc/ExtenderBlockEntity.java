@@ -173,8 +173,9 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
             return new Target(worldPosition.relative(exit), exit.getOpposite());
         }
         var front = getBlockState().getValue(ExtenderBlock.FACING);
+        var second = getBlockState().getValue(ExtenderBlock.SECONDARY);
         var exit = Direction.values()[gregtech.engine.logistics.RelayRoutingRules.exit(false, side == null ? -1 : side.ordinal(),
-                front.ordinal(), front.getOpposite().ordinal())];
+                front.ordinal(), second.ordinal())];
         return new Target(worldPosition.relative(exit), exit.getOpposite());
     }
 

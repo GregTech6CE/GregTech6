@@ -243,7 +243,10 @@ public final class GTStoneLayersGen {
                 "GraniteRed",
                 false,
                 ore("Pitchblende", true, 32, 0, 18),
-                ore("Uraninite", true, 32, 0, 16));
+                ore("Uraninite", true, 32, 0, 16),
+                ore("Tantalite", true, 64, 30, 40),
+                ore("Columbite", true, 64, 30, 40),
+                ore("Coltan", true, 16, 20, 50));
         layer("GRANITE", null, "S", true);
         layer("GRANITE", null, "KNO3", true);
         layer("GRANITE", null, "Lignite", true);

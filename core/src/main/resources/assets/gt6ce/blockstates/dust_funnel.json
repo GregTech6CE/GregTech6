@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "mode=0": {
       "model": "gt6ce:block/machine/tool/dust_funnel"
+    },
+    "mode=1": {
+      "model": "gt6ce:block/machine/tool/dust_funnel_mode1"
+    },
+    "mode=2": {
+      "model": "gt6ce:block/machine/tool/dust_funnel_mode2"
+    },
+    "mode=3": {
+      "model": "gt6ce:block/machine/tool/dust_funnel_mode3"
+    },
+    "mode=4": {
+      "model": "gt6ce:block/machine/tool/dust_funnel_mode4"
     }
   }
 }

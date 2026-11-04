@@ -872,6 +872,7 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("RedSteel", "Red Steel");
         GTMaterialRegistry.setDisplayName("RedVitriol", "Red Vitriol");
         GTMaterialRegistry.setDisplayName("Redstone", "Redstone");
+        GTMaterialRegistry.setDisplayName("RedstoneAlloy", "Redstone Alloy");
         GTMaterialRegistry.setDisplayName("Rhenium", "Rhenium");
         GTMaterialRegistry.setDisplayName("Rhodium", "Rhodium");
         GTMaterialRegistry.setDisplayName("Roentgenium", "Roentgenium");

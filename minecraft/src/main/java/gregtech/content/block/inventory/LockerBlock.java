@@ -30,7 +30,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** Native locker interaction: a main-hand click swaps the stored and worn armor sets. */
-public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
+public class LockerBlock extends HorizontalDirectionalBlock
+        implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.tool.ToolInteractionTarget {
 
 //? if >=1.21.1 {
     /*@Override
@@ -87,6 +88,15 @@ public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlo
         return new LockerBlockEntity(pos, state);
     }
 
+    /** GT6 {@code MultiTileEntityLocker extends TileEntityBase09FacingSingle}. */
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
+                        gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
+                : null;
+    }
+
 //? if >=1.21.1 {
     /*@Override
     public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state,
@@ -112,8 +122,10 @@ public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlo
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         // A second off-hand callback would immediately swap the armor back.
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND || hit.getDirection() != state.getValue(FACING))
-            return InteractionResult.PASS;
+        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof LockerBlockEntity locker)) return InteractionResult.PASS;
         if (!level.isClientSide) {
             locker.swapArmor(player);

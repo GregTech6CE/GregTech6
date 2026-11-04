@@ -14,6 +14,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -311,6 +312,16 @@ public final class GTToolHelper {
         return type.baseDamage() + stat.getToolQuality();
     }
 
+    /** GT6 {@code ToolStats.getDeathMessage}: a tool-specific kill message, or {@code null} for vanilla. */
+    @Nullable
+    public static Component toolDeathMessage(ItemStack stack, LivingEntity victim, LivingEntity killer) {
+        if (!isTool(stack)) {
+            return null;
+        }
+        String key = getType(stack).deathMessageKey();
+        return key == null ? null : Component.translatable(key, victim.getDisplayName(), killer.getDisplayName());
+    }
+
     public static float getMiningSpeed(ItemStack stack, BlockState state) {
         if (!canEffectiveHarvest(stack, state)) {
             return 0.0F;
@@ -406,7 +417,16 @@ public final class GTToolHelper {
         return type.canCollect() && (!stack.isDamageableItem() || stack.getDamageValue() < stack.getMaxDamage());
     }
 
-    /** GT6 wrench dismantle speed (left-click hold). */
+    /** GT6 {@code MultiItemTool#canCollectDropsDirectly}: this tool type collects block drops. */
+    public static boolean canCollectDrops(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return false;
+        }
+        GTToolType type = getType(stack);
+        return type.canCollect() && matchesTool(stack, type);
+    }
+
+    /** GT6 {@code MultiItemTool#getDigSpeed} for wrench nodes: {@code speedMultiplier * mToolSpeed}. */
     public static float getMachineHarvestSpeed(ItemStack stack) {
 
 //? if >=1.21.1 {
@@ -417,7 +437,8 @@ public final class GTToolHelper {
             return gregtech.content.tool.ElectricWrenchHarvest.speed(electric,stack);
 //?}
 
-        return 12.0F;
+        GTMaterial stat = getStatMaterial(stack);
+        return Math.max(Float.MIN_NORMAL, getType(stack).speedMultiplier() * stat.getToolSpeed());
     }
 
     /**
@@ -448,6 +469,15 @@ public final class GTToolHelper {
     }
 
     public static boolean isSpecialHarvestTool(ItemStack stack, BlockState state) {
+        // GT6 GT_Tool_Wrench.isMinableBlock lists these vanilla blocks, BlockBaseBars and the
+        // redstoneLight material group (the aUtil* tool blocks) for the wrench directly, in
+        // addition to the block's own pickaxe/axe harvest tool.
+        if (isMachineWrench(stack)
+                && (wrenchMinableVanilla(state)
+                || state.getBlock() instanceof gregtech.content.block.misc.BarsBlock
+                || state.getBlock() instanceof gregtech.content.block.tool.DustFunnelBlock)) {
+            return true;
+        }
 
 //? if >=1.21.1 {
 /*        if (stack.getItem() instanceof gregtech.engine.tool.PoweredToolItem electric)
@@ -476,6 +506,18 @@ public final class GTToolHelper {
             case SHEARS -> matchesTool(stack,GTToolType.SCISSORS) || matchesTool(stack,GTToolType.BRANCH_CUTTER);
             default -> false;
         };
+    }
+
+    /** GT6 wrench-mineable vanilla blocks from {@code GT_Tool_Wrench.isMinableBlock}. */
+    private static boolean wrenchMinableVanilla(BlockState state) {
+        var block = state.getBlock();
+        return block == net.minecraft.world.level.block.Blocks.PISTON
+                || block == net.minecraft.world.level.block.Blocks.STICKY_PISTON
+                || block == net.minecraft.world.level.block.Blocks.PISTON_HEAD
+                || block == net.minecraft.world.level.block.Blocks.REDSTONE_LAMP
+                || block == net.minecraft.world.level.block.Blocks.HOPPER
+                || block == net.minecraft.world.level.block.Blocks.DISPENSER
+                || block == net.minecraft.world.level.block.Blocks.DROPPER;
     }
 
     public static int requiredHarvestLevel(BlockState state) {

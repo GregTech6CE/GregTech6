@@ -992,9 +992,30 @@ public enum ToolDefinition {
         };
     }
 
-    /** GT6 default {@code getToolDamagePerEntityAttack}. */
+    /** GT6 default {@code getToolDamagePerEntityAttack}; the wrench overrides it to 200. */
     public int damagePerEntityAttack() {
-        return isGun() || isPocket() && this != POCKET_MULTITOOL ? 200 : 100;
+        return this == WRENCH || this == MONKEY_WRENCH
+                ? 200
+                : isGun() || isPocket() && this != POCKET_MULTITOOL ? 200 : 100;
+    }
+
+    /** GT6 default {@code getExhaustionPerAttack}; the wrench overrides it to 0.6. */
+    public float attackExhaustion() {
+        return this == WRENCH || this == MONKEY_WRENCH ? 0.6F : 0.3F;
+    }
+
+    /** GT6 default {@code getHurtResistanceTime} is unchanged; the wrench doubles it. */
+    public int hurtResistanceMultiplier() {
+        return this == WRENCH || this == MONKEY_WRENCH ? 2 : 1;
+    }
+
+    /** Translation key for this tool's kill message, or {@code null} to keep the vanilla one. */
+    public String deathMessageKey() {
+        return switch (this) {
+            case WRENCH -> "death.attack.gt6ce.wrench";
+            case MONKEY_WRENCH -> "death.attack.gt6ce.monkey_wrench";
+            default -> null;
+        };
     }
 
     public boolean isGun() {

@@ -15,6 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
@@ -37,10 +38,11 @@ import java.util.List;
  */
 public class DustFunnelBlockEntity extends BlockEntity {
 
-    private int mode;
     private gregtech.api.material.GTMaterial material;
     private long amount;
     private boolean inventoryChanged = true;
+    /** NBT mode from a save written before the block state carried it; applied on the next server tick. */
+    private int pendingModeSync = -1;
     private final ItemStackHandler buffer = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) { inventoryChanged = true; setChanged(); }
@@ -90,23 +92,30 @@ public class DustFunnelBlockEntity extends BlockEntity {
         return out;
     }
 
-    public int mode() { return mode; }
+    public int mode() {
+        BlockState state = getBlockState();
+        return state.hasProperty(gregtech.content.block.tool.DustFunnelBlock.MODE)
+                ? state.getValue(gregtech.content.block.tool.DustFunnelBlock.MODE) : 0;
+    }
     public long retainedAmount() { return amount; }
     public boolean needsMoreDust() { return amount > 0 && amount < outputAmount(); }
     @Nullable
     public gregtech.api.material.GTMaterial retainedMaterial() { return material; }
 
     public void cycleMode(boolean reverse) {
-        mode = Math.floorMod(mode + (reverse ? -1 : 1), 5);
+        BlockState state = getBlockState();
+        if (level == null || !state.hasProperty(gregtech.content.block.tool.DustFunnelBlock.MODE)) return;
+        int next = Math.floorMod(mode() + (reverse ? -1 : 1), 5);
+        level.setBlock(worldPosition, state.setValue(gregtech.content.block.tool.DustFunnelBlock.MODE, next), Block.UPDATE_ALL);
         inventoryChanged = true;
         setChanged();
     }
-    private long outputAmount() { return mode == 0 ? 9 * gregtech.api.material.GTValues.U
+    private long outputAmount() { return mode() == 0 ? 9 * gregtech.api.material.GTValues.U
             : outputPrefix().getMaterialWeight(); }
     private MaterialPrefix outputPrefix() { return new MaterialPrefix[]{MaterialPrefix.dust, MaterialPrefix.dust,
-            MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72}[mode]; }
+            MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72}[mode()]; }
     private ItemStack output(gregtech.api.material.GTMaterial mat) {
-        return mode == 0 ? gregtech.content.registry.GTBlocks.getStack(gregtech.engine.prefix.BlockMaterialPrefix.blockDust, mat)
+        return mode() == 0 ? gregtech.content.registry.GTBlocks.getStack(gregtech.engine.prefix.BlockMaterialPrefix.blockDust, mat)
                 : gregtech.content.registry.GTItems.getStack(outputPrefix(), mat, 1);
     }
     public ItemStack modeIcon() { return output(gregtech.content.material.Materials.Iron); }
@@ -122,6 +131,14 @@ public class DustFunnelBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DustFunnelBlockEntity funnel) {
+        if (funnel.pendingModeSync >= 0) {
+            int storedMode = funnel.pendingModeSync;
+            funnel.pendingModeSync = -1;
+            if (state.hasProperty(gregtech.content.block.tool.DustFunnelBlock.MODE)
+                    && state.getValue(gregtech.content.block.tool.DustFunnelBlock.MODE) != storedMode) {
+                level.setBlock(pos, state.setValue(gregtech.content.block.tool.DustFunnelBlock.MODE, storedMode), Block.UPDATE_ALL);
+            }
+        }
         boolean transfer = funnel.inventoryChanged || level.getGameTime() % 100 == 0;
         funnel.inventoryChanged = false;
         if (transfer && funnel.buffer.getStackInSlot(0).isEmpty()) {
@@ -242,12 +259,13 @@ public class DustFunnelBlockEntity extends BlockEntity {
 //?}
     }
     private void saveProcess(CompoundTag tag) {
-        tag.putInt("gt.mode", mode); tag.putLong("gt.amount", amount);
+        tag.putInt("gt.mode", mode()); tag.putLong("gt.amount", amount);
         if (material != null) tag.putString("gt.material", material.getName());
     }
     private void loadProcess(CompoundTag tag) {
         if (buffer.getSlots() != 2) { var input = buffer.getStackInSlot(0).copy(); buffer.setSize(2); buffer.setStackInSlot(0, input); }
-        mode = Math.floorMod(tag.getInt("gt.mode"), 5); amount = Math.max(0, tag.getLong("gt.amount"));
+        pendingModeSync = Math.floorMod(tag.getInt("gt.mode"), 5);
+        amount = Math.max(0, tag.getLong("gt.amount"));
         material = amount > 0 ? gregtech.engine.material.GTMaterialRegistry.get(tag.getString("gt.material")) : null;
         inventoryChanged = true;
     }

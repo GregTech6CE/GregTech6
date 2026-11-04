@@ -84,6 +84,9 @@ public class TankBlock extends Block implements EntityBlock {
         if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
 //?}
             tank.toggleAutoOutput();
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable(tank.isAutoOutput()
+                    ? "tooltip.gt6ce.tank.info.auto_output"
+                    : "tooltip.gt6ce.tank.info.no_auto_output"), true);
 //? if >=1.21.1 {
             /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             NeoToolBindings.damageForUse(held, 1, player);

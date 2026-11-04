@@ -137,6 +137,7 @@ public final class SourceAlloyRecipes {
         }
         mix(rows, amount("molten.bluealloy", 1), amount("molten.nikolite", 4), amount("molten.silver", 1));
 
+        mix(rows, amount("molten.redstonealloy", 1), amount("molten.silicon", 1), amount("molten.redstone", 1));
         mix(rows, amount("molten.nikolinealloy", 1), amount("molten.silicon", 1), amount("molten.nikolite", 1));
         mix(rows, amount("molten.nichrome", 5), amount("molten.chromium", 1), amount("molten.nickel", 4));
         mix(rows, amount("molten.netherite", 1), amount("molten.gold", 4), amount("molten.ancientdebris", 4));

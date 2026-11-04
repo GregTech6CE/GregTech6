@@ -461,6 +461,7 @@ public final class Materials {
     public static final GTMaterial RedSteel = CompoundMaterials.RedSteel;
     public static final GTMaterial RedVitriol = CompoundMaterials.RedVitriol;
     public static final GTMaterial Redstone = CompoundMaterials.Redstone;
+    public static final GTMaterial RedstoneAlloy = CompoundMaterials.RedstoneAlloy;
     public static final GTMaterial Rhenium = ElementMaterials.Rhenium;
     public static final GTMaterial Rhodium = ElementMaterials.Rhodium;
     public static final GTMaterial Roentgenium = ElementMaterials.Roentgenium;
