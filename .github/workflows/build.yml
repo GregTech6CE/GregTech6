@@ -136,8 +136,25 @@ jobs:
       - name: Update nightly release
         run: |
           set -euo pipefail
+          # GitHub sometimes answers with an empty error body, which gh reports as
+          # "unexpected end of JSON input"; retry reads before failing the release job.
+          gh_api() {
+            local attempt=1 output
+            while :; do
+              if output=$(gh api "$@" 2>&1); then
+                printf '%s\n' "$output"
+                return 0
+              fi
+              if (( attempt >= 4 )); then
+                printf '%s\n' "$output" >&2
+                return 1
+              fi
+              sleep $(( attempt * 2 ))
+              attempt=$(( attempt + 1 ))
+            done
+          }
           # An older build must not replace a newer default-branch nightly.
-          current=$(gh api "repos/$GH_REPO/commits/$DEFAULT_BRANCH" --jq '.sha')
+          current=$(gh_api "repos/$GH_REPO/commits/$DEFAULT_BRANCH" --jq '.sha')
           if [[ "$current" != "$BUILD_SHA" ]]; then
             echo "Default branch advanced; leave publication to its build."
             exit 0
@@ -149,22 +166,22 @@ jobs:
             "$BUILD_SHA" "$RUN_ID" "$RUN_URL" "$(date -u -d '+8 hours' '+%Y-%m-%d %H:%M')" \
             "$forge" "$download" "$forge" "$neoforge" "$download" "$neoforge" \
             > notes.md
-          stable=$(gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
+          stable=$(gh_api --paginate "repos/$GH_REPO/releases?per_page=100" \
             --jq '[.[] | select(.prerelease | not) | select(.tag_name | test("^v[0-9]"))][0].tag_name' \
             2>/dev/null | head -n1 || true)
           if [[ -n "$stable" ]]; then
-            if count=$(gh api "repos/$GH_REPO/compare/${stable}...${BUILD_SHA}" \
+            if count=$(gh_api "repos/$GH_REPO/compare/${stable}...${BUILD_SHA}" \
                 --jq '.commits | length' 2>/dev/null); then
               [[ -n "$count" ]] || count=0
               {
                 printf '\n<details><summary>Commits since %s (%s)</summary>\n\n' "$stable" "$count"
-                gh api "repos/$GH_REPO/compare/${stable}...${BUILD_SHA}" \
+                gh_api "repos/$GH_REPO/compare/${stable}...${BUILD_SHA}" \
                   --jq '.commits[] | "- `\(.sha[0:7])` \(.commit.message | split("\n")[0])"'
                 printf '\n[compare](%s/%s/compare/%s...%s)\n</details>\n' "$GH_SERVER" "$GH_REPO" "$stable" "$BUILD_SHA"
               } >> notes.md
             fi
           fi
-          release_id=$(gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
+          release_id=$(gh_api --paginate "repos/$GH_REPO/releases?per_page=100" \
             --jq '.[] | select(.tag_name == "nightly") | .id')
           if [[ -z "$release_id" ]]; then
             # A leftover tag without a release blocks creation; drop it so the release owns the ref.
@@ -180,8 +197,8 @@ jobs:
             -f sha="$BUILD_SHA" -F force=true --silent
           gh release edit nightly --title "Snapshot v$VERSION" --notes-file notes.md \
             --prerelease --latest=false
-          release_id=$(gh api "repos/$GH_REPO/releases/tags/nightly" --jq '.id')
-          gh api --paginate "repos/$GH_REPO/releases/$release_id/assets?per_page=100" \
+          release_id=$(gh_api "repos/$GH_REPO/releases/tags/nightly" --jq '.id')
+          gh_api --paginate "repos/$GH_REPO/releases/$release_id/assets?per_page=100" \
             --jq '.[] | select((.name | startswith("gt6ce-1.20.1-forge-") or startswith("gt6ce-1.21.1-neoforge-")) and (.name | endswith(".jar"))) | [.id, .name] | @tsv' |
           while IFS=$'\t' read -r asset_id name; do
             if [[ ! -f "release/$name" ]]; then
