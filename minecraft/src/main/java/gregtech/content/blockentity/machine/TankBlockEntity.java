@@ -80,7 +80,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     private boolean softHammerState;
 //? if >=1.21.1 {
     /*private boolean fluidAccessKnown;
-    @Nullable private Direction blockedFluidSide;
+    private int blockedFluidMask;
 *///?}
 
     private static final String NBT_TEMPERATURE = "gt.temperature";
@@ -164,8 +164,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
                 return;
             }
 
-            // Auto-output
-            if (autoOutput && tank.getAmount() > 0) {
+            // GT6 TileEntityBase08Barrel only fills adjacent tanks while unsealed.
+            if (autoOutput && !softHammerState && tank.getAmount() > 0) {
                 autoOutputFluid(fluid);
             }
 
@@ -201,10 +201,11 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     @Override public long progressMaximum(BlockFace side) { return 0; }
 
     private void autoOutputFluid(FluidStack fluid) {
-        // Gases rise: a lighter-than-air fluid leaves through the top, everything else falls out
-        // of the bottom. The opposite side stays open as input (see getCapability).
-        boolean isGas = FluidHazards.isLighterThanAir(fluid.getFluid());
-        Direction[] outputs = isGas ? new Direction[]{Direction.UP} : new Direction[]{Direction.DOWN};
+        // GT6 TileEntityBase08Barrel: gases fill both vertical neighbours, other lighter-than-air
+        // fluids rise, and everything else falls.
+        Direction[] outputs = FluidHazards.isGas(fluid.getFluid())
+                ? new Direction[]{Direction.UP, Direction.DOWN}
+                : new Direction[]{FluidHazards.isLighterThanAir(fluid.getFluid()) ? Direction.UP : Direction.DOWN};
         for (Direction side : outputs) {
             if (tank.isEmpty()) break;
             BlockPos targetPos = worldPosition.relative(side);
@@ -346,22 +347,27 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 
     // === Capability ===
 
-    @Nullable
-    private Direction blockedFluidSide() {
-        if (!autoOutput || tank.isEmpty()) return null;
-        return FluidHazards.isLighterThanAir(tank.getFluid().getFluid()) ? Direction.UP : Direction.DOWN;
+    /** Face mask the barrel pushes into; those faces stay open as outputs, not inputs. */
+    private int blockedFluidMask() {
+        if (!autoOutput || tank.isEmpty()) return 0;
+        Fluid fluid = tank.getFluid().getFluid();
+        if (FluidHazards.isGas(fluid)) {
+            return (1 << Direction.UP.ordinal()) | (1 << Direction.DOWN.ordinal());
+        }
+        Direction side = FluidHazards.isLighterThanAir(fluid) ? Direction.UP : Direction.DOWN;
+        return 1 << side.ordinal();
     }
 
 //? if >=1.21.1 {
     /*public @Nullable IFluidHandler capabilityHandler(@Nullable Direction side) {
-        if (side != null && side == blockedFluidSide()) return null;
+        if (side != null && (blockedFluidMask() & (1 << side.ordinal())) != 0) return null;
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.FLUID_HANDLER) {
-            // When auto-output is enabled and the tank has fluid, block input from the output side
-            // to prevent backflow: liquid outputs DOWN, gas outputs UP
-            if (side != null && side == blockedFluidSide()) return LazyOptional.empty();
+            // When auto-output is enabled and the tank has fluid, block input on the output faces
+            // to prevent backflow: liquid outputs DOWN, gas outputs UP and DOWN
+            if (side != null && (blockedFluidMask() & (1 << side.ordinal())) != 0) return LazyOptional.empty();
             return side==null?handler.cast():componentFaceCaps.computeIfAbsent(side,face->LazyOptional.of(()->gregtech.content.cover.ComponentCoverAccess.fluids(this,face,this))).cast();
         }
 //?}
@@ -376,12 +382,12 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     /*public void contentsChanged(){
         setChanged();
         if (level != null) {
-            Direction blocked = blockedFluidSide();
+            int blocked = blockedFluidMask();
             // The handler reads contents and covers live. Only output-side availability needs
             // rediscovery; invalidating it on every amount change discards neighbouring caches.
-            boolean accessChanged = !fluidAccessKnown || blockedFluidSide != blocked;
+            boolean accessChanged = !fluidAccessKnown || blockedFluidMask != blocked;
             fluidAccessKnown = true;
-            blockedFluidSide = blocked;
+            blockedFluidMask = blocked;
             if (accessChanged) level.invalidateCapabilities(worldPosition);
             if (!level.isClientSide) level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),2);
         }

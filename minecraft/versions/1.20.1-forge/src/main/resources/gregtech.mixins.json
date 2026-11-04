@@ -55,7 +55,8 @@
     "CustomPayloadLimitMixin",
     "PotionBrewingAccessor",
     "MaterialArrowEnchantmentMixin",
-    "EndermanEnchantmentMixin"
+    "EndermanEnchantmentMixin",
+    "DamageSourceDeathMessageMixin"
   ],
   "injectors": {
     "defaultRequire": 1

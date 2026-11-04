@@ -14,6 +14,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -311,6 +312,16 @@ public final class GTToolHelper {
         return type.baseDamage() + stat.getToolQuality();
     }
 
+    /** GT6 {@code ToolStats.getDeathMessage}: a tool-specific kill message, or {@code null} for vanilla. */
+    @Nullable
+    public static Component toolDeathMessage(ItemStack stack, LivingEntity victim, LivingEntity killer) {
+        if (!isTool(stack)) {
+            return null;
+        }
+        String key = getType(stack).deathMessageKey();
+        return key == null ? null : Component.translatable(key, victim.getDisplayName(), killer.getDisplayName());
+    }
+
     public static float getMiningSpeed(ItemStack stack, BlockState state) {
         if (!canEffectiveHarvest(stack, state)) {
             return 0.0F;
@@ -458,8 +469,12 @@ public final class GTToolHelper {
     }
 
     public static boolean isSpecialHarvestTool(ItemStack stack, BlockState state) {
-        // GT6 GT_Tool_Wrench.isMinableBlock lists these vanilla blocks for the wrench directly.
-        if (isMachineWrench(stack) && wrenchMinableVanilla(state)) return true;
+        // GT6 GT_Tool_Wrench.isMinableBlock lists these vanilla blocks and BlockBaseBars
+        // for the wrench directly, in addition to the block's own pickaxe/axe harvest tool.
+        if (isMachineWrench(stack)
+                && (wrenchMinableVanilla(state) || state.getBlock() instanceof gregtech.content.block.misc.BarsBlock)) {
+            return true;
+        }
 
 //? if >=1.21.1 {
 /*        if (stack.getItem() instanceof gregtech.engine.tool.PoweredToolItem electric)

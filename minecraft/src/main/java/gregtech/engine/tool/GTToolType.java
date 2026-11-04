@@ -85,6 +85,9 @@ public enum GTToolType {
     public float attackSpeed(){return definition.attackSpeed();}
     public int damagePerBlockBreak(){return definition.damagePerBlockBreak();}
     public int damagePerEntityAttack(){return definition.damagePerEntityAttack();}
+    public float attackExhaustion(){return definition.attackExhaustion();}
+    public int hurtResistanceMultiplier(){return definition.hurtResistanceMultiplier();}
+    @Nullable public String deathMessageKey(){return definition.deathMessageKey();}
     public boolean canUseHead(GTMaterial head){return definition.canUseHead(head);}
     public boolean canHarvest(BlockState state){var tag=harvestTag();return tag!=null&&state.is(tag);}
     public static GTToolType byId(String id){return valueOf(ToolDefinition.byId(id).name());}

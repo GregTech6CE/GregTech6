@@ -55,7 +55,8 @@
     "PotionBrewingAccessor",
     "PotionBrewingMixAccessor",
     "MaterialArrowEnchantmentMixin",
-    "EndermanEnchantmentMixin"
+    "EndermanEnchantmentMixin",
+    "DamageSourceDeathMessageMixin"
   ],
   "injectors": {
     "defaultRequire": 1
