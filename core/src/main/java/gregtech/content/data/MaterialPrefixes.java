@@ -83,15 +83,9 @@ public class MaterialPrefixes {
         private SoundType sound = SoundType.METAL;
         private boolean falling;
         private long materialWeight = GTValues.U * 9;
-        private String textureFileName;
 
         BlockBuilder(String name) {
             this.name = name;
-        }
-
-        BlockBuilder texture(String textureFileName) {
-            this.textureFileName = textureFileName;
-            return this;
         }
 
         BlockBuilder display(String plural, String prefix, String suffix) {
@@ -142,8 +136,7 @@ public class MaterialPrefixes {
                     mapColor,
                     sound,
                     falling,
-                    materialWeight,
-                    textureFileName);
+                    materialWeight);
         }
     }
 

@@ -67,36 +67,6 @@ public final class BlockMaterialPrefix {
             SoundType soundType,
             boolean falling,
             long materialWeight) {
-        return define(
-                name,
-                displayName,
-                namePrefix,
-                nameSuffix,
-                validator,
-                baseHardness,
-                baseResistance,
-                harvestLevelOffset,
-                mapColor,
-                soundType,
-                falling,
-                materialWeight,
-                null);
-    }
-
-    public static BlockMaterialPrefix define(
-            String name,
-            String displayName,
-            String namePrefix,
-            String nameSuffix,
-            Predicate<GTMaterial> validator,
-            float baseHardness,
-            float baseResistance,
-            int harvestLevelOffset,
-            MapColor mapColor,
-            SoundType soundType,
-            boolean falling,
-            long materialWeight,
-            String textureFileName) {
         return new BlockMaterialPrefix(
                 name,
                 displayName,
@@ -110,7 +80,7 @@ public final class BlockMaterialPrefix {
                 soundType,
                 falling,
                 materialWeight,
-                textureFileName,
+                null,
                 false,
                 "",
                 "",

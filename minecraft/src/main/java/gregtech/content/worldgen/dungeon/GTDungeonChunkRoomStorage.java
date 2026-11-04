@@ -1,6 +1,6 @@
 package gregtech.content.worldgen.dungeon;
 
-import gregtech.api.material.*;
+import gregtech.content.data.CrateMaterialTables;
 
 //? if >=1.21.1 {
 /*import gregtech.content.registry.*;
@@ -174,15 +174,15 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                                         data.materialCrate(i, 2, j);
                                         if (data.next1in2()) {
                                             data.materialCrate(i, 3, j);
-                                            if (data.next1in4()) data.rawBlock(i, 4, j, GTDungeonData.CRATE_ORES);
+                                            if (data.next1in4()) data.rawBlock(i, 4, j, CrateMaterialTables.CRATE_ORES);
                                         } else if (data.next1in4()) {
-                                            data.rawBlock(i, 3, j, GTDungeonData.CRATE_ORES);
+                                            data.rawBlock(i, 3, j, CrateMaterialTables.CRATE_ORES);
                                         }
                                     } else if (data.next1in4()) {
-                                        data.rawBlock(i, 2, j, GTDungeonData.CRATE_ORES);
+                                        data.rawBlock(i, 2, j, CrateMaterialTables.CRATE_ORES);
                                     }
                                 } else if (data.next1in4()) {
-                                    data.rawBlock(i, 1, j, GTDungeonData.CRATE_ORES);
+                                    data.rawBlock(i, 1, j, CrateMaterialTables.CRATE_ORES);
                                 }
                             }
                         }
@@ -273,11 +273,11 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
      * GT6's {@code ingots_or_plates} ({@code DungeonData:259-264}): a loose pile of ingots or plates.
      * GT6 rolls the ingot's material and stack size, the plate's material and stack size and then picks
      * plate or ingot with {@code next1in2()}; the port's piles take GT6's own metal list
-     * ({@link GTDungeonData#CRATE_METALS}, the same {@code sMetals} GT6 passes here) and roll the size
+     * ({@link CrateMaterialTables#CRATE_METALS}, the same {@code sMetals} GT6 passes here) and roll the size
      * inside {@link GTDungeonData#pile}.
      */
     private static boolean pile(GTDungeonData data, int x, int y, int z) {
-        return data.ingotsOrPlates(x, y, z, 0, materialNames(GTDungeonData.CRATE_METALS));
+        return data.ingotsOrPlates(x, y, z, 0, materialNames(CrateMaterialTables.CRATE_METALS));
     }
 
     /** The port material names of a GT6 material list, for the helpers that take strings. */

@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.Blocks;
  * cell with exactly three dungeon neighbours ({@code WorldgenDungeonGT:289}).
  *
  * <p>GT6 first lays down {@link GTDungeonChunkCorridor}'s shell (which itself adds the
- * {@link GTDungeonChunkPillar} of a turn), then decorates the one side of the cell that leads nowhere.
- * That dead end is rolled with {@code next(4)}: an alcove with a crafting station and a loot chest, or a
- * cobblestone wall with a container behind it. Every branch returns, so a cell decorates at most one
- * dead end, exactly like GT6.</p>
+ * {@link GTDungeonChunkPillar} of a turn and the loot crate cluster of the central box), then decorates
+ * the one side of the cell that leads nowhere. That dead end is rolled with {@code next(4)}: an alcove
+ * with a crafting station and a loot chest, or a cobblestone wall with a container behind it. Every
+ * branch returns, so a cell decorates at most one dead end, exactly like GT6.</p>
  *
  * <p>Port differences:</p>
  * <ul>
