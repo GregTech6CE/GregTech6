@@ -2,16 +2,23 @@ package gregtech.content.block.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
 
 /** GT6 {@code MultiTileEntityGregOLantern}: a horizontal-faced lit pumpkin with a Greg face. */
-public final class GregLanternBlock extends HorizontalDirectionalBlock {
+public final class GregLanternBlock extends HorizontalDirectionalBlock
+        implements gregtech.engine.tool.ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override
     public com.mojang.serialization.MapCodec<HorizontalDirectionalBlock> codec() {
@@ -43,6 +50,44 @@ public final class GregLanternBlock extends HorizontalDirectionalBlock {
     public BlockState mirror(BlockState state, Mirror mirror) {
         return rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
+
+    /** GT6 {@code MultiTileEntityGregOLantern} uses {@code SIDES_HORIZONTAL}. */
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
+                        gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
+                : null;
+    }
+
+//? if >=1.21.1 {
+/*    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return interact(state, level, pos, player, hand, hit)
+                ? net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide)
+                : net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit)
+                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
+
+    private boolean interact(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit);
+    }
+*///?} else {
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+                                 InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)
+                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
+//?}
 
     /** GT6 emits light 15 but reports no light opacity despite its full solid selection. */
     @Override

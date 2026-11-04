@@ -16,9 +16,19 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import javax.annotation.Nullable;
 
-public class LargeGasTurbineControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource {
+public class LargeGasTurbineControllerBlock extends DirectionalBlock
+        implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     private final gregtech.content.multiblock.GasTurbineDefinitions.Grade grade;
     public gregtech.content.multiblock.GasTurbineDefinitions.Grade grade() { return grade; }
+
+    /** GT6 {@code TileEntityBase10MultiBlockBase extends TileEntityBase09FacingSingle}. */
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
+                        MachineRotationType.ALL)
+                : null;
+    }
     public LargeGasTurbineControllerBlock(Properties properties) {
         this(gregtech.content.multiblock.GasTurbineDefinitions.GRADES.get(0), properties);
     }
