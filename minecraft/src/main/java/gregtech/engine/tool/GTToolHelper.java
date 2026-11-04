@@ -406,6 +406,15 @@ public final class GTToolHelper {
         return type.canCollect() && (!stack.isDamageableItem() || stack.getDamageValue() < stack.getMaxDamage());
     }
 
+    /** GT6 {@code MultiItemTool#canCollectDropsDirectly}: this tool type collects block drops. */
+    public static boolean canCollectDrops(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return false;
+        }
+        GTToolType type = getType(stack);
+        return type.canCollect() && matchesTool(stack, type);
+    }
+
     /** GT6 {@code MultiItemTool#getDigSpeed} for wrench nodes: {@code speedMultiplier * mToolSpeed}. */
     public static float getMachineHarvestSpeed(ItemStack stack) {
 

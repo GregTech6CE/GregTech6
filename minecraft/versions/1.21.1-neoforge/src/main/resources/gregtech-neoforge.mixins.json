@@ -46,6 +46,7 @@
     "ServerChunkCacheStructureProbeMixin",
     "ServerLevelStructureDataMixin",
     "CoverDropMixin",
+    "AutoCollectDropMixin",
     "ExperienceOrbCountAccessor",
     "CoverWalkMixin",
     "CoverCollisionMixin",
