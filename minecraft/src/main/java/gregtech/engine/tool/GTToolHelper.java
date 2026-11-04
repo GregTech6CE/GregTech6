@@ -469,10 +469,13 @@ public final class GTToolHelper {
     }
 
     public static boolean isSpecialHarvestTool(ItemStack stack, BlockState state) {
-        // GT6 GT_Tool_Wrench.isMinableBlock lists these vanilla blocks and BlockBaseBars
-        // for the wrench directly, in addition to the block's own pickaxe/axe harvest tool.
+        // GT6 GT_Tool_Wrench.isMinableBlock lists these vanilla blocks, BlockBaseBars and the
+        // redstoneLight material group (the aUtil* tool blocks) for the wrench directly, in
+        // addition to the block's own pickaxe/axe harvest tool.
         if (isMachineWrench(stack)
-                && (wrenchMinableVanilla(state) || state.getBlock() instanceof gregtech.content.block.misc.BarsBlock)) {
+                && (wrenchMinableVanilla(state)
+                || state.getBlock() instanceof gregtech.content.block.misc.BarsBlock
+                || state.getBlock() instanceof gregtech.content.block.tool.DustFunnelBlock)) {
             return true;
         }
 
