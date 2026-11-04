@@ -40,16 +40,14 @@ import gregtech.content.registry.GTFluids;
  *       GT6's. Only two details differ: the port's gas cylinder has no paint channel (GT6 paints
  *       propane red, oxygen light blue, helium yellow) and GT6's {@code FL.lube} is the port's
  *       {@code Lubricant} fluid.</li>
-     *   <li><b>Crates.</b> GT6 stacks one of its crate multi-tiles per cell - {@code BlocksGT.crateGtDust},
-     *       {@code crateGtIngot}, {@code crateGtPlate}, {@code crateGtGem} and {@code crateGtRaw} plus their
-     *       64x variants, twelve of them in the metal quadrant alone. The port owns both
-     *       sixteen- and sixty-four-piece blocks and this room places
- *       them through {@link GTDungeonData#crate} with GT6's own material tables
- *       ({@link GTDungeonData#CRATE_DUSTS}, {@code CRATE_WOODS}, {@code CRATE_GEMS}, {@code CRATE_METALS},
- *       {@link GTDungeonData#CRATE_ORES}) - GT6's block draw and material draw happen in that order, see
- *       {@link GTDungeonData#crate(int, int, int, GTDungeonData.CrateForm[], gregtech.api.material.GTMaterial[])}.
-     *       The size rolls ({@code next1in2}/{@code next1in3}/{@code next1in4} inside GT6's
-     *       {@code set} calls) choose the corresponding block.</li>
+ *   <li><b>Crates.</b> GT6 stacks one of twelve material crate blocks per cell, chosen from a form
+ *       array and a material table. The port places a single {@code material_crate} block instead,
+ *       whose content is resolved when a player pries it open. GT6's form draw, size draw and material
+ *       draw all still happen, in that order, with the same per-layer odds
+ *       ({@code next1in2}/{@code next1in3}/{@code next1in4} and the gem's
+ *       {@code next1in4}/{@code next1in6}/{@code next1in8}), because every later draw in the room -
+ *       the pile rolls, the raw ore blocks and the fluid walls - reads the same stream. See
+ *       {@link GTDungeonData#materialCrate(int, int, int, int, gregtech.api.material.GTMaterial[])}.</li>
  *   <li><b>Raw ore blocks.</b> GT6's ore quadrant tops its crate stacks with raw ore blocks
  *       ({@code BlocksGT.blockRaw}); the port owns that block too
  *       ({@code MaterialPrefixes.blockRaw}) and places it through {@link GTDungeonData#rawBlock}, so the
@@ -152,11 +150,11 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
-                                    data.crate(i, 1, j, GTDungeonData.CrateForm.PLATE64, GTDungeonData.CRATE_WOODS);
+                                    data.materialCrate(i, 1, j, GTDungeonData.CRATE_WOODS);
                                     if (data.next2in3()) {
-                                        data.crate(i, 2, j, GTDungeonData.CrateForm.PLATE64, GTDungeonData.CRATE_WOODS);
+                                        data.materialCrate(i, 2, j, GTDungeonData.CRATE_WOODS);
                                         if (data.next1in2()) {
-                                            data.crate(i, 3, j, GTDungeonData.CrateForm.PLATE64, GTDungeonData.CRATE_WOODS);
+                                            data.materialCrate(i, 3, j, GTDungeonData.CRATE_WOODS);
                                         }
                                     }
                                 }
@@ -268,50 +266,35 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     private static final String OXYGEN = "Oxygen";
     private static final String HELIUM = "Helium";
 
+    /** GT6's twelve metal crate forms; the room draws one, but the block no longer needs the result. */
+    private static final int METAL_FORM_SLOTS = 12;
+
     /**
-     * GT6's metal quadrant crate: {@code aData.set(tMetalCrates, i, y, j, sMetals)},
-     * one of GT6's twelve crate entries of for one metal of its {@code sMetals}.
+     * GT6's metal quadrant crate: {@code aData.set(tMetalCrates, i, y, j, sMetals)}. The form and
+     * material rolls still happen, in GT6's order, so every later draw of the room keeps its sequence.
      */
     private static boolean crate(GTDungeonData data, int x, int y, int z) {
-        return data.crate(x, y, z, METAL_CRATES, GTDungeonData.CRATE_METALS);
+        return data.materialCrate(x, y, z, METAL_FORM_SLOTS, GTDungeonData.CRATE_METALS);
     }
 
     /**
-     * GT6's {@code aData.next1inX() ? BlocksGT.crateGt64<Form>: BlocksGT.crateGt<Form>} pairs.
-     *
-     * <p>The caller draws the size roll before choosing either the partial or full prefix, preserving
-     * GT6's random stream order.</p>
+     * GT6's {@code aData.next1inX() ? crateGt64<Form> : crateGt<Form>} pairs. The size roll is drawn
+     * by the caller with GT6's per-layer odds; its value no longer selects a block but must still be
+     * consumed, which is why the parameter stays.
      */
     private static boolean dustCrate(GTDungeonData data, int x, int y, int z, boolean large) {
-        return data.crate(x, y, z, large ? GTDungeonData.CrateForm.DUST64 : GTDungeonData.CrateForm.DUST,
-                GTDungeonData.CRATE_DUSTS);
+        return data.materialCrate(x, y, z, GTDungeonData.CRATE_DUSTS);
     }
 
     /** GT6's gem crates; see {@link #dustCrate} for the size roll. */
     private static boolean gemCrate(GTDungeonData data, int x, int y, int z, boolean large) {
-        return data.crate(x, y, z, large ? GTDungeonData.CrateForm.GEM64 : GTDungeonData.CrateForm.GEM,
-                GTDungeonData.CRATE_GEMS);
+        return data.materialCrate(x, y, z, GTDungeonData.CRATE_GEMS);
     }
 
     /** GT6's raw ore crates; see {@link #dustCrate} for the size roll. */
     private static boolean rawCrate(GTDungeonData data, int x, int y, int z, boolean large) {
-        return data.crate(x, y, z, large ? GTDungeonData.CrateForm.RAW64 : GTDungeonData.CrateForm.RAW,
-                GTDungeonData.CRATE_ORES);
+        return data.materialCrate(x, y, z, GTDungeonData.CRATE_ORES);
     }
-
-    /**
-     * GT6's {@code tMetalCrates}: dust twice, ingot four times, plate twice, then the 64
-     * sized dust, plate and ingot twice. GT6's {@code set(IPrefixBlock[],...)} draws one entry at
-     * random, so the multiplicities are the odds - and because the port has one block per form, the
-     * twelve entries keep their distinct sizes and GT6's odds (dust 3/12, ingot 6/12, plate 3/12).
-     */
-    private static final GTDungeonData.CrateForm[] METAL_CRATES = {
-            GTDungeonData.CrateForm.DUST, GTDungeonData.CrateForm.DUST,
-            GTDungeonData.CrateForm.INGOT, GTDungeonData.CrateForm.INGOT,
-            GTDungeonData.CrateForm.INGOT, GTDungeonData.CrateForm.INGOT,
-            GTDungeonData.CrateForm.PLATE, GTDungeonData.CrateForm.PLATE,
-            GTDungeonData.CrateForm.DUST64, GTDungeonData.CrateForm.PLATE64,
-            GTDungeonData.CrateForm.INGOT64, GTDungeonData.CrateForm.INGOT64};
 
     /**
      * GT6's {@code ingots_or_plates} ({@code DungeonData:259-264}): a loose pile of ingots or plates.

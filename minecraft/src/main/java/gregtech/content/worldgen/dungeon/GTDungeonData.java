@@ -480,33 +480,6 @@ public final class GTDungeonData {
             GT6Materials.Compounds.StainlessSteel, GT6Materials.Compounds.StainlessSteel,
             GT6Materials.Compounds.DamascusSteel};
 
-    /** GT6's two real crate sizes: sixteen contents in a partial crate, sixty-four in a full crate. */
-    public enum CrateForm {
-        RAW(BlockMaterialPrefix.crateGtRaw),
-        GEM(BlockMaterialPrefix.crateGtGem),
-        DUST(BlockMaterialPrefix.crateGtDust),
-        INGOT(BlockMaterialPrefix.crateGtIngot),
-        PLATE(BlockMaterialPrefix.crateGtPlate),
-        PLATE_GEM(BlockMaterialPrefix.crateGtPlateGem),
-        RAW64(BlockMaterialPrefix.crateGt64Raw),
-        GEM64(BlockMaterialPrefix.crateGt64Gem),
-        DUST64(BlockMaterialPrefix.crateGt64Dust),
-        INGOT64(BlockMaterialPrefix.crateGt64Ingot),
-        PLATE64(BlockMaterialPrefix.crateGt64Plate),
-        PLATE_GEM64(BlockMaterialPrefix.crateGt64PlateGem);
-
-        private final BlockMaterialPrefix prefix;
-
-        CrateForm(BlockMaterialPrefix prefix) {
-            this.prefix = prefix;
-        }
-
-        /** The port's block prefix behind this GT6 crate form. */
-        public BlockMaterialPrefix prefix() {
-            return prefix;
-        }
-    }
-
     /**
      * GT6's loot crate ({@code MultiTileEntityLootCrate}, 32110): the corridor scatters it in the
      * corner of its central box.
@@ -518,30 +491,22 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's crate multi-tiles ({@code BlocksGT.crateGtDust} and friends): one crate of
-     * {@code form}, made of one material out of {@code materials}.
+     * GT6's material crate ({@code BlocksGT.crateGtDust} and friends) as one block: the room places
+     * the same crate whatever form and material GT6 would have picked. Both rolls still happen, in
+     * GT6's block-then-material order, so every later draw of the room keeps GT6's sequence.
      *
-     * <p>GT6's {@code set(IPrefixBlock[] aBlocks,..., OreDictMaterial... aMaterials)}
-     * ({@code DungeonData:209-210}) draws the <em>block</em> first and the <em>material</em> second -
-     * Java evaluates the array index of the receiver before the arguments - so the port draws them in
-     * that same order out of {@link #random}.</p>
-     *
-     * <p>Both GT6 sizes now have distinct prefixes and material weights. For the material, the port
-     * walks the list from GT6's random index when a material has no such form
-     * (GT6's wood list carries woods without plates, its gem list coals), so a crate is always placed
-     * when the form exists at all.</p>
-     *
-     * @return whether a crate was placed
+     * @param formSlots number of entries in GT6's form array; zero or one means no form roll
+     * @return whether the crate was placed
      */
-    public boolean crate(int ax, int ay, int az, CrateForm form, GTMaterial[] materials) {
-        Block block = pickCrate(form, materials, next(materials.length));
-        return block != null && set(ax, ay, az, block.defaultBlockState());
+    public boolean materialCrate(int ax, int ay, int az, int formSlots, GTMaterial[] materials) {
+        if (formSlots > 1) next(formSlots);
+        return materialCrate(ax, ay, az, materials);
     }
 
-    /** GT6's {@code set(IPrefixBlock[] aBlocks, ...)}: a random block of {@code forms}, then a material. */
-    public boolean crate(int ax, int ay, int az, CrateForm[] forms, GTMaterial[] materials) {
-        CrateForm form = forms[next(forms.length)];
-        return crate(ax, ay, az, form, materials);
+    /** GT6's material draw; the result is discarded because a material crate resolves on opening. */
+    public boolean materialCrate(int ax, int ay, int az, GTMaterial[] materials) {
+        next(materials.length);
+        return set(ax, ay, az, SharedDecorBlocks.MATERIAL_CRATE.get().defaultBlockState());
     }
 
     /** GT6's {@code BlocksGT.blockRaw}: a raw ore block of one of {@code materials}. */
@@ -559,11 +524,6 @@ public final class GTDungeonData {
     public boolean rawBlock(int ax, int ay, int az, GTMaterial material) {
         Block block = pickBlock(BlockMaterialPrefix.blockRaw, new GTMaterial[] {material}, 0);
         return block != null && set(ax, ay, az, block.defaultBlockState());
-    }
-
-    /** The port's crate block of a form and a random index into GT6's material list. */
-    private static @Nullable Block pickCrate(CrateForm form, GTMaterial[] materials, int start) {
-        return pickBlock(form.prefix(), materials, start);
     }
 
     /** A material block of {@code prefix}, walking GT6's list from {@code start} past missing forms. */
