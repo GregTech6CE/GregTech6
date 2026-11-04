@@ -72,8 +72,8 @@ public final class MaterialOreProcessing {
         Compounds.Kaolinite.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.Kaolinite.setSmelting(Compounds.Ceramic, GregTechConstants.U);
         Ores.Graphite.put(MaterialProperty.GENERATE_ORE_PROCESSING);
-        // GT6CE balance: one unit of graphite yields three units of carbon.
-        Ores.Graphite.setSmelting(Elements.C, 3 * GregTechConstants.U);
+        // GT6CE balance: one unit of graphite smelts into one unit of carbon.
+        Ores.Graphite.setSmelting(Elements.C, GregTechConstants.U);
         Compounds.Rubber.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.Rubber.setSmelting(null, 2 * GregTechConstants.U3);
         Compounds.Plastic.put(MaterialProperty.GENERATE_ORE_PROCESSING);

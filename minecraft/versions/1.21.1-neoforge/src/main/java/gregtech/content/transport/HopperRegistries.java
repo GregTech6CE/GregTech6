@@ -33,11 +33,6 @@ public final class HopperRegistries {
                         spec.id(), () -> new HopperBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
             }
         }
-        var vacuum = VacuumHopper.SPEC;
-        var vacuumBlock = BLOCKS.register(vacuum.id(), () -> new HopperBlock(vacuum, properties(vacuum)));
-        HOPPERS.add(vacuumBlock);
-        ITEMS.register(
-                vacuum.id(), () -> new HopperBlockItem(vacuumBlock.get(), new Item.Properties().stacksTo(16), vacuum));
     }
 
     private static BlockBehaviour.Properties properties(HopperSpec spec) {

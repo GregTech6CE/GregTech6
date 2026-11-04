@@ -350,28 +350,21 @@ public class HopperBlockEntity extends BlockEntity
     }
 
     /** GT6: world suction needs no inventory tile entity above (an anvil does not count) and a
-     * non-opaque block above, so a hopper under a machine never scans for dropped items.
-     * The vacuum variant ignores that gate and reaches through blocks instead. */
+     * non-opaque block above, so a hopper under a machine never scans for dropped items. */
     private boolean canSuckWorldItems() {
-        if (spec.vacuum()) return true;
         BlockPos abovePos = worldPosition.above();
         BlockEntity aboveBe = level.getBlockEntity(abovePos);
         if (aboveBe != null && !aboveBe.getClass().getName().contains("Anvil")) return false;
         return !level.getBlockState(abovePos).isSolidRender(level, abovePos);
     }
 
-    /** GT6: suck dropped item stacks out of the block above the hopper; the vacuum variant covers
-     * the surrounding 5x5x5. Merges into existing partial stacks first.
+    /** GT6: suck dropped item stacks out of the block above the hopper. Merges into existing partial stacks first.
      * @return true if at least one item was sucked (entity discarded) */
     private boolean suckWorldItems() {
         if (level == null || !canSuckWorldItems()) return false;
-        AABB area = spec.vacuum()
-                ? new AABB(
-                        worldPosition.getX() - 2.0, worldPosition.getY() - 2.0, worldPosition.getZ() - 2.0,
-                        worldPosition.getX() + 3.0, worldPosition.getY() + 3.0, worldPosition.getZ() + 3.0)
-                : new AABB(
-                        worldPosition.getX(), worldPosition.getY() + 1.0, worldPosition.getZ(),
-                        worldPosition.getX() + 1.0, worldPosition.getY() + 2.0, worldPosition.getZ() + 1.0);
+        AABB area = new AABB(
+                worldPosition.getX(), worldPosition.getY() + 1.0, worldPosition.getZ(),
+                worldPosition.getX() + 1.0, worldPosition.getY() + 2.0, worldPosition.getZ() + 1.0);
         for (ItemEntity entity : level.getEntitiesOfClass(ItemEntity.class, area)) {
             if (entity.isRemoved()) continue;
             ItemStack stack = entity.getItem();

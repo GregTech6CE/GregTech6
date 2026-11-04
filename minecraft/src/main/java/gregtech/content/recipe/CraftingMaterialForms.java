@@ -135,6 +135,19 @@ public final class CraftingMaterialForms {
         if (known != null) return known;
         return tagged(stack);
     }
+
+    /** Single-input conversions whose output depends on which slot the input occupies. */
+    public static boolean positionSensitive(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        var form = form(stack);
+        return form != null && POSITIONED_INPUTS.contains(form.prefix());
+    }
+
+    private static final Set<String> POSITIONED_INPUTS = OriginalFormConversions.FIXED.stream()
+            .filter(OriginalFormConversions.Conversion::single)
+            .map(OriginalFormConversions.Conversion::input)
+            .collect(java.util.stream.Collectors.toUnmodifiableSet());
+
     private static Form tagged(ItemStack stack) {
         // Prefer explicit GT prefix tags over common tags (dense ores can also be in ordinary ores tags).
         Form common = null;

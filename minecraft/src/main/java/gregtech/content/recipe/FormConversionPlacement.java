@@ -34,14 +34,4 @@ public enum FormConversionPlacement implements StringRepresentable {
                 && gridSize >= selector.minimumGridSize()
                 && first >= selector.offset();
     }
-
-    /** Requested port order: the first modulo route gives four small dusts, the second nine tiny. */
-    public static FormConversionSelector orderedSelector(OriginalFormConversions.Conversion conversion) {
-        var source = OriginalFormConversions.selector(conversion);
-        if (conversion.single() && conversion.input().equals("dust")) {
-            if (conversion.output().equals("dustSmall")) return new FormConversionSelector(source.variants(), 0);
-            if (conversion.output().equals("dustTiny")) return new FormConversionSelector(source.variants(), 1);
-        }
-        return source;
-    }
 }

@@ -34,10 +34,9 @@ import java.util.Locale;
 
 /**
  * Loader_Recipes_Handlers:552-625 material-form conversions. Single-input variants follow the
- * source's AdvancedCrafting1ToY rule: the empty slots before the item select the output by modulo;
- * dust uses small then tiny as requested. Other outputs retain source prefix registration order,
- * and missing outputs still reserve their source offset. XToY requires exactly the same material
- * in every occupied cell.
+ * source's AdvancedCrafting1ToY rule: the empty slots before the item select the output by modulo,
+ * in source prefix registration order (dust selects tiny before small). Missing outputs still
+ * reserve their source offset. XToY requires exactly the same material in every occupied cell.
  */
 public final class FormConversionCraftingRecipeInjector {
     private static final List<Conversion> ONE_TO_MANY = OriginalFormConversions.FIXED.stream().filter(Conversion::single).toList();
@@ -241,7 +240,7 @@ public final class FormConversionCraftingRecipeInjector {
         var base = new ShapelessRecipe("gt.form_conversion", CraftingBookCategory.MISC,
                 CraftingMaterialForms.canonical(output.copy()), ingredients);
         var recipe = new gregtech.content.recipe.ToolShapelessRecipe(base, false,
-                FormConversionPlacement.orderedSelector(conversion), conversion.input(), material.resolve().getName(), false, FormConversionPlacement.FIXED);
+                OriginalFormConversions.selector(conversion), conversion.input(), material.resolve().getName(), false, FormConversionPlacement.FIXED);
         recipes.add(new net.minecraft.world.item.crafting.RecipeHolder<>(id, recipe));
         ids.add(id); REGISTERED.add(id.toString()); return 1;
     }
@@ -422,7 +421,7 @@ public final class FormConversionCraftingRecipeInjector {
         ItemStack result = CraftingMaterialForms.canonical(output.copy());
 //? if >=1.21.1 {
         /*ResourceLocation id = conversionId(conversion, material);
-        OriginalCraftingJson.orderedFormConversion(recipes, id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients, FormConversionPlacement.orderedSelector(conversion),
+        OriginalCraftingJson.orderedFormConversion(recipes, id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients, OriginalFormConversions.selector(conversion),
                 conversion.input(), material.resolve().getName());
         REGISTERED.add(id.toString());
     }
@@ -438,7 +437,7 @@ public final class FormConversionCraftingRecipeInjector {
 //?} else {
         // Loader_Recipes_Handlers:552-625 passes F to both conversion classes.
         recipes.add(new gregtech.content.recipe.ToolShapelessRecipe(
-                new ShapelessRecipe(id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients), false, FormConversionPlacement.orderedSelector(conversion),
+                new ShapelessRecipe(id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients), false, OriginalFormConversions.selector(conversion),
                         conversion.input(), material.resolve().getName(), false, FormConversionPlacement.FIXED));
         REGISTERED.add(id.toString());
 //?}
