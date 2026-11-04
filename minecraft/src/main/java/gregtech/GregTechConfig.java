@@ -181,7 +181,6 @@ public final class GregTechConfig {
         MC_ALPHA("general.useMCAlphaBlending", true, true),
         COINS_WORLD_3D("general.use3DCoins", true, true),
         COINS_ITEM_3D("general.use3DCoinsInv", true, true),
-        CRATE_OVERLAY("blocks.crates.UseOverlayIcon", false, true),
         COVER_SNEAK("covers.require_sneaking", true);
 
         private final String key;

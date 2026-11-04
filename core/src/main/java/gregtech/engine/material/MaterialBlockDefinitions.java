@@ -11,8 +11,7 @@ import java.util.Set;
 
 /** Original Loader_Blocks material order, validators and namespace collision policy. */
 public final class MaterialBlockDefinitions {
-    private static final Set<String> ADDON_ORE_HELD_BACK =
-            Set.of("ore", "oreSmall", "blockRaw", "crateGtRaw", "crateGt64Raw");
+    private static final Set<String> ADDON_ORE_HELD_BACK = Set.of("ore", "oreSmall", "blockRaw");
 
     public record Definition(String blockId, String baseBlockId, BlockMaterialPrefix prefix, GTMaterial material) {}
 
@@ -35,7 +34,7 @@ public final class MaterialBlockDefinitions {
             }
         }
         // Ore and small ore of an addon material come after every block the directory already emitted,
-        // including every core block. Raw storage blocks and raw crates stay unregistered.
+        // including every core block. Raw storage blocks stay unregistered.
         for (GTMaterial material : addonOres) {
             BlockMaterialPrefix ore = BlockMaterialPrefix.ore;
             BlockMaterialPrefix oreSmall = BlockMaterialPrefix.oreSmall;

@@ -112,14 +112,9 @@ public final class MaterialBlockClientModels {
                 missing++;
                 continue;
             }
-            int color = materialBlock.material().getColor();
             BakedModel tintedShared = tintedModels.computeIfAbsent(shared, MaterialBlockBakedModel::new);
-            BakedModel worldModel = materialBlock.prefix().isCrate()
-                    ? new CrateBlockBakedModel(tintedShared, color, CrateBlockBakedModel.DisplayMode.WORLD)
-                    : tintedShared;
-            BakedModel itemModel = materialBlock.prefix().isCrate()
-                    ? BlockItemClientModels.asBlockItem(new CrateBlockBakedModel(tintedShared, color, CrateBlockBakedModel.DisplayMode.ITEM))
-                    : BlockItemClientModels.asBlockItem(tintedShared);
+            BakedModel worldModel = tintedShared;
+            BakedModel itemModel = BlockItemClientModels.asBlockItem(tintedShared);
 //? if >=1.21.1 {
             /*ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(entry.get().asItem());
 *///?} else {

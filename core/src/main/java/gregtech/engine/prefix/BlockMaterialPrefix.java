@@ -4,7 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import java.util.function.Predicate;
 
-/** Storage / casing / crate block prefix (GT6 {@code OP} block form). Instances are created from {@link gregtech.content.data.MaterialPrefixes}. */
+/** Storage / casing block prefix (GT6 {@code OP} block form). Instances are created from {@link gregtech.content.data.MaterialPrefixes}. */
 public final class BlockMaterialPrefix {
     public enum MapColor {
         METAL,
@@ -32,18 +32,6 @@ public final class BlockMaterialPrefix {
     public static BlockMaterialPrefix casingMachineDouble;
     public static BlockMaterialPrefix casingMachineQuadruple;
     public static BlockMaterialPrefix casingMachineDense;
-    public static BlockMaterialPrefix crateGtRaw;
-    public static BlockMaterialPrefix crateGtGem;
-    public static BlockMaterialPrefix crateGtDust;
-    public static BlockMaterialPrefix crateGtIngot;
-    public static BlockMaterialPrefix crateGtPlate;
-    public static BlockMaterialPrefix crateGtPlateGem;
-    public static BlockMaterialPrefix crateGt64Raw;
-    public static BlockMaterialPrefix crateGt64Gem;
-    public static BlockMaterialPrefix crateGt64Dust;
-    public static BlockMaterialPrefix crateGt64Ingot;
-    public static BlockMaterialPrefix crateGt64Plate;
-    public static BlockMaterialPrefix crateGt64PlateGem;
     public static BlockMaterialPrefix ore;
     public static BlockMaterialPrefix oreSmall;
 
@@ -202,7 +190,7 @@ public final class BlockMaterialPrefix {
 
     public static void bootstrap() {
         gregtech.content.data.MaterialPrefixes.bootstrap();
-        if (blockRaw == null || blockIngot == null || crateGtRaw == null) {
+        if (blockRaw == null || blockIngot == null) {
             throw new IllegalStateException("BlockMaterialPrefix constants failed to initialize");
         }
     }
@@ -290,24 +278,12 @@ public final class BlockMaterialPrefix {
         return materialWeight;
     }
 
-    /** GT6 crate blocks use a wooden hull ({@code iconsets/crate}) on the bottom face. */
-    public boolean isCrate() {
-        return name.startsWith("crateGt");
-    }
-
-    /** GT6 keeps the sixteen-piece crates out of the creative inventory. */
-    public boolean isPartialCrate() {
-        return isCrate() && !name.startsWith("crateGt64");
-    }
-
     public float computeHardness(GTMaterial material) {
-        if (isCrate()) return baseHardness;
         int level = harvestLevel(material);
         return Math.max(0.1F, baseHardness * (1.0F + level));
     }
 
     public float computeResistance(GTMaterial material) {
-        if (isCrate()) return baseResistance;
         int level = harvestLevel(material);
         return baseResistance * (1.0F + level);
     }

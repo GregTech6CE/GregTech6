@@ -154,7 +154,6 @@ private GTCreativeTabs() {}
 
         BlockPrefixRegistry.ensurePrefixesLoaded();
         for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
-            if (prefix.isPartialCrate()) continue;
             if (!GTBlocks.hasBoundBlocks(prefix)) {
                 continue;
             }

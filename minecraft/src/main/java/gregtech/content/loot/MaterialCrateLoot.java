@@ -4,14 +4,13 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.content.worldgen.dungeon.GTDungeonData;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * The contents of a {@code material_crate}, resolved once from the five GT6 crate material lists.
@@ -39,15 +38,17 @@ public final class MaterialCrateLoot {
 
     /** Twelve GT6 metal crate forms: dust twice, ingot four times, plate twice, then the four full ones. */
     private static final Form[] METAL_FORMS = {
-            new Form(MaterialPrefix.dust, 16, 2.0 / 12),
-            new Form(MaterialPrefix.ingot, 16, 4.0 / 12),
-            new Form(MaterialPrefix.plate, 16, 2.0 / 12),
-            new Form(MaterialPrefix.dust, 64, 1.0 / 12),
-            new Form(MaterialPrefix.plate, 64, 1.0 / 12),
-            new Form(MaterialPrefix.ingot, 64, 2.0 / 12)};
+        new Form(MaterialPrefix.dust, 16, 2.0 / 12),
+        new Form(MaterialPrefix.ingot, 16, 4.0 / 12),
+        new Form(MaterialPrefix.plate, 16, 2.0 / 12),
+        new Form(MaterialPrefix.dust, 64, 1.0 / 12),
+        new Form(MaterialPrefix.plate, 64, 1.0 / 12),
+        new Form(MaterialPrefix.ingot, 64, 2.0 / 12)
+    };
 
     /** Layer-independent odds: GT6's per-layer rolls average to 40% (dust/ore) and 20% (gems). */
     private static final double FULL_ODDS_DUST = 0.40;
+
     private static final double FULL_ODDS_GEM = 0.20;
 
     private static volatile Category[] cache;
@@ -98,17 +99,21 @@ public final class MaterialCrateLoot {
 
     private static Category[] build() {
         return new Category[] {
-                category(GTDungeonData.CRATE_METALS, METAL_FORMS),
-                category(GTDungeonData.CRATE_DUSTS,
-                        new Form(MaterialPrefix.dust, 16, 1 - FULL_ODDS_DUST),
-                        new Form(MaterialPrefix.dust, 64, FULL_ODDS_DUST)),
-                category(GTDungeonData.CRATE_GEMS,
-                        new Form(MaterialPrefix.gem, 16, 1 - FULL_ODDS_GEM),
-                        new Form(MaterialPrefix.gem, 64, FULL_ODDS_GEM)),
-                category(GTDungeonData.CRATE_WOODS, new Form(MaterialPrefix.plate, 64, 1)),
-                category(GTDungeonData.CRATE_ORES,
-                        new Form(MaterialPrefix.oreRaw, 16, 1 - FULL_ODDS_DUST),
-                        new Form(MaterialPrefix.oreRaw, 64, FULL_ODDS_DUST))};
+            category(GTDungeonData.CRATE_METALS, METAL_FORMS),
+            category(
+                    GTDungeonData.CRATE_DUSTS,
+                    new Form(MaterialPrefix.dust, 16, 1 - FULL_ODDS_DUST),
+                    new Form(MaterialPrefix.dust, 64, FULL_ODDS_DUST)),
+            category(
+                    GTDungeonData.CRATE_GEMS,
+                    new Form(MaterialPrefix.gem, 16, 1 - FULL_ODDS_GEM),
+                    new Form(MaterialPrefix.gem, 64, FULL_ODDS_GEM)),
+            category(GTDungeonData.CRATE_WOODS, new Form(MaterialPrefix.plate, 64, 1)),
+            category(
+                    GTDungeonData.CRATE_ORES,
+                    new Form(MaterialPrefix.oreRaw, 16, 1 - FULL_ODDS_DUST),
+                    new Form(MaterialPrefix.oreRaw, 64, FULL_ODDS_DUST))
+        };
     }
 
     /**

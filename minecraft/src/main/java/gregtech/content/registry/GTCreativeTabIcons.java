@@ -66,7 +66,6 @@ public final class GTCreativeTabIcons {
 
         BlockPrefixRegistry.ensurePrefixesLoaded();
         for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
-            if (prefix.isPartialCrate()) continue;
             BlockMaterialPrefix bound = prefix;
             BY_BLOCK_PREFIX.put(prefix, ICONS.register("tab_icon_block_" + bound.getRegistryName(),
                     () -> new CreativeTabIconItem(new Item.Properties(), null, bound)));

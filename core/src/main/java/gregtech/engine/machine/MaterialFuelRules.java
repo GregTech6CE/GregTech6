@@ -73,10 +73,6 @@ public final class MaterialFuelRules {
         if (isWoodFamily(material)) {
             if (prefix == gregtech.engine.prefix.BlockMaterialPrefix.blockPlate)
                 time = Math.max(time, GregTechConstants.TICKS_PER_SMELT * 27L / 2);
-            if (prefix == gregtech.engine.prefix.BlockMaterialPrefix.crateGtPlate)
-                time = Math.max(time, GregTechConstants.TICKS_PER_SMELT * 51L / 2);
-            if (prefix == gregtech.engine.prefix.BlockMaterialPrefix.crateGt64Plate)
-                time = Math.max(time, GregTechConstants.TICKS_PER_SMELT * 195L / 2);
         }
         return clampFuelValue(time);
     }

@@ -28,7 +28,6 @@ public final class BlockHarvestPolicy {
  }
  public static Tool tool(Block block) {
   if(block instanceof gregtech.content.block.machine.TankBlock)return Tool.WRENCH;
-  if(block instanceof MaterialBlockLike material && material.prefix().isCrate())return Tool.CROWBAR;
   var original=source(block);
   if(original.isPresent())return Tool.valueOf(original.get().tool().toUpperCase(java.util.Locale.ROOT));
   if(block instanceof gregtech.content.block.misc.LongDistPipeBlock line) return line.isWire()?Tool.CUTTER:Tool.WRENCH;
@@ -39,7 +38,6 @@ public final class BlockHarvestPolicy {
   if(block instanceof gregtech.content.block.BookShelfBlock shelf) return shelf.variant().metal() ? Tool.WRENCH : Tool.AXE;
   if(block instanceof gregtech.content.block.inventory.MassStorageBlock) return Tool.WRENCH;
   if(block instanceof MaterialBlockLike m) {
-   if(m.prefix().isCrate())return Tool.CROWBAR;
    if(m.prefix().falling())return Tool.SHOVEL;
    return Tool.PICKAXE;
   }

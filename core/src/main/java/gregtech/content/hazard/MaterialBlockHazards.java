@@ -11,15 +11,11 @@ public final class MaterialBlockHazards {
     private MaterialBlockHazards() {}
 
     private static boolean storage(BlockMaterialPrefix prefix) {
-        return prefix.getName().startsWith("block")
-                || prefix.isCrate()
-                || prefix.getName().startsWith("casingMachine");
+        return prefix.getName().startsWith("block") || prefix.getName().startsWith("casingMachine");
     }
 
     private static boolean dust(BlockMaterialPrefix prefix) {
-        return prefix.getName().equals("blockDust")
-                || prefix.getName().equals("crateGtDust")
-                || prefix.getName().equals("crateGt64Dust");
+        return prefix.getName().equals("blockDust");
     }
 
     private static float units(BlockMaterialPrefix prefix) {

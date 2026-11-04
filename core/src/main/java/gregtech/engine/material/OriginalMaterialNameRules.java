@@ -55,29 +55,14 @@ public final class OriginalMaterialNameRules {
         GTMaterial material = input.resolve();
         String local = displayName.apply(material);
 
-        if (prefix.name().equals("crateGtRaw")
-                || prefix.name().equals("crateGt64Raw")
-                || prefix.name().equals("blockRaw"))
-            return prefix.before() + name("ore", material, displayName, aprilFools);
-        if (prefix.name().equals("crateGtGem")
-                || prefix.name().equals("crateGt64Gem")
-                || prefix.name().equals("blockGem"))
-            return prefix.before() + name("gem", material, displayName, aprilFools);
-        if (prefix.name().equals("crateGtDust")
-                || prefix.name().equals("crateGt64Dust")
-                || prefix.name().equals("blockDust"))
-            return prefix.before() + name("dust", material, displayName, aprilFools);
-        if (prefix.name().equals("crateGtIngot")
-                || prefix.name().equals("crateGt64Ingot")
-                || prefix.name().equals("blockIngot"))
+        if (prefix.name().equals("blockRaw")) return prefix.before() + name("ore", material, displayName, aprilFools);
+        if (prefix.name().equals("blockGem")) return prefix.before() + name("gem", material, displayName, aprilFools);
+        if (prefix.name().equals("blockDust")) return prefix.before() + name("dust", material, displayName, aprilFools);
+        if (prefix.name().equals("blockIngot"))
             return prefix.before() + name("ingot", material, displayName, aprilFools);
-        if (prefix.name().equals("crateGtPlate")
-                || prefix.name().equals("crateGt64Plate")
-                || prefix.name().equals("blockPlate"))
+        if (prefix.name().equals("blockPlate"))
             return prefix.before() + name("plate", material, displayName, aprilFools);
-        if (prefix.name().equals("crateGtPlateGem")
-                || prefix.name().equals("crateGt64PlateGem")
-                || prefix.name().equals("blockPlateGem"))
+        if (prefix.name().equals("blockPlateGem"))
             return prefix.before() + name("plateGem", material, displayName, aprilFools);
 
         if (material.getId() >= 0 && material.getId() < 10 && prefix.has("ORE"))
@@ -289,25 +274,6 @@ public final class OriginalMaterialNameRules {
             Map.entry("craft", new Prefix("craft", "", "", Set.of())),
             Map.entry("crafting", new Prefix("crafting", "", "", Set.of())),
             Map.entry("craftingTool", new Prefix("craftingTool", "", "", Set.of())),
-            Map.entry("crateGt64Dust", new Prefix("crateGt64Dust", "Crate of ", " Dusts", Set.of("IS_CONTAINER"))),
-            Map.entry("crateGt64Gem", new Prefix("crateGt64Gem", "Crate of ", " Gems", Set.of("IS_CONTAINER"))),
-            Map.entry("crateGt64Ingot", new Prefix("crateGt64Ingot", "Crate of ", " Ingots", Set.of("IS_CONTAINER"))),
-            Map.entry("crateGt64Plate", new Prefix("crateGt64Plate", "Crate of ", " Plates", Set.of("IS_CONTAINER"))),
-            Map.entry(
-                    "crateGt64PlateGem",
-                    new Prefix("crateGt64PlateGem", "Crate of ", " Gem Plates", Set.of("IS_CONTAINER"))),
-            Map.entry("crateGt64Raw", new Prefix("crateGt64Raw", "Crate of ", " Ore", Set.of("IS_CONTAINER", "ORE"))),
-            Map.entry("crateGtDust", new Prefix("crateGtDust", "Partial Crate of ", " Dusts", Set.of("IS_CONTAINER"))),
-            Map.entry("crateGtGem", new Prefix("crateGtGem", "Partial Crate of ", " Gems", Set.of("IS_CONTAINER"))),
-            Map.entry(
-                    "crateGtIngot", new Prefix("crateGtIngot", "Partial Crate of ", " Ingots", Set.of("IS_CONTAINER"))),
-            Map.entry(
-                    "crateGtPlate", new Prefix("crateGtPlate", "Partial Crate of ", " Plates", Set.of("IS_CONTAINER"))),
-            Map.entry(
-                    "crateGtPlateGem",
-                    new Prefix("crateGtPlateGem", "Partial Crate of ", " Gem Plates", Set.of("IS_CONTAINER"))),
-            Map.entry(
-                    "crateGtRaw", new Prefix("crateGtRaw", "Partial Crate of ", " Ore", Set.of("IS_CONTAINER", "ORE"))),
             Map.entry("crushed", new Prefix("crushed", "Crushed ", " Ore", Set.of("ORE_PROCESSING_BASED"))),
             Map.entry(
                     "crushedCentrifuged",

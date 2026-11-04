@@ -7,8 +7,6 @@ import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
-import gregtech.content.block.LootCrateBlock;
-import gregtech.content.block.MaterialBlockLike;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -19,13 +17,10 @@ import gregtech.content.material.Materials;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -41,12 +36,10 @@ import java.util.List;
  *   <li>{@code Loader_Recipes_Handlers:451-489} — {@code RM.Unboxinator} handlers,
  *       e.g. {@code blockIngot 1 -> ingot 9}, {@code ingot 1 -> nugget 9},
  *       {@code dust 1 -> dustTiny 9}, {@code dustSmall 1 -> dustDiv72 18},
- *       {@code toolHeadPickaxeGem 1 -> gemFlawed 2 + empty head}, and the crate rows that
- *       return the empty {@code IL.Crate}.</li>
+ *       {@code toolHeadPickaxeGem 1 -> gemFlawed 2 + empty head}.</li>
  *   <li>{@code Loader_Recipes_Handlers:492-550} — {@code RM.Boxinator} handlers; the packing
  *       direction needs a circuit ({@code ST.tag(n)}, port: {@link GTTechnological#selectorTag(int)})
- *       so the machine knows which compression is meant, exactly like GT6. Crate rows consume the
- *       empty crate instead, and the block-to-crates rows fill nine crates in one 144-tick pass.</li>
+ *       so the machine knows which compression is meant, exactly like GT6.</li>
  * </ul>
  *
  * <p>One source condition still has no port equivalent: {@code EXPLODES_IN_NONVANILLA_CRAFTING_GRID}
@@ -97,7 +90,6 @@ public final class MaterialFormConversionRecipes {
             unboxinator(material);
             boxinator(material);
         }
-        crates();
 //? if >=1.21.1 {
         /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 material form conversions ({} GT6 pairs skipped: {})",
 *///?} else {
@@ -192,119 +184,17 @@ public final class MaterialFormConversionRecipes {
                 MaterialPrefix.itemCasing, 2, material);
     }
 
-    /**
-     * GT6's crate rows ({@code Loader_Recipes_Handlers:461-473}, {@code Loader_Recipes_Handlers:495-525}). A crate always
-     * returns the empty {@code IL.Crate}; the sixteen-piece crates pack from the quarter-sized forms,
-     * and a block of 64 pieces fills nine full crates in one 144-tick pass. The fireproof empty
-     * crate packs the same rows as the ordinary one, but unboxing always returns the ordinary crate
-     * because GT6's unboxinator handlers name {@code IL.Crate} as the additional output.
-     */
-    private static void crates() {
-        ItemStack empty = LootCrateBlock.crateStack();
-        if (empty.isEmpty()) {
-            skippedOnce("boxinator", "all crate rows", "gt6ce:crate is not registered");
-            return;
-        }
-        // Fixed form order, so a material whose gem and dust blocks canonicalize to the same stack
-        // (Redstone: both are minecraft:redstone_block) keeps the dust row, matching the existing
-        // blockGem/blockDust unbox order instead of letting registry order decide.
-        List<Block> crateBlocks = new ArrayList<>();
-        for (Block block : BuiltInRegistries.BLOCK)
-            if (block instanceof MaterialBlockLike crate && crate.prefix().isCrate()) crateBlocks.add(block);
-        crateBlocks.sort(Comparator.comparingInt(MaterialFormConversionRecipes::crateFormOrder)
-                .thenComparing(block -> BuiltInRegistries.BLOCK.getKey(block).toString()));
-        for (Block block : crateBlocks) {
-            MaterialBlockLike crate = (MaterialBlockLike) block;
-            BlockMaterialPrefix prefix = crate.prefix();
-            GTMaterial material = crate.material();
-            if (material == null || material.has(MaterialProperty.ANTIMATTER)) continue;
-            boolean full = prefix.getName().startsWith("crateGt64");
-            String form = prefix.getName().substring(full ? "crateGt64".length() : "crateGt".length());
-            MaterialPrefix content = switch (form) {
-                case "Raw" -> MaterialPrefix.oreRaw;
-                case "Dust" -> MaterialPrefix.dust;
-                case "Gem" -> MaterialPrefix.gem;
-                case "Ingot" -> MaterialPrefix.ingot;
-                case "Plate" -> MaterialPrefix.plate;
-                case "PlateGem" -> MaterialPrefix.plateGem;
-                default -> null;
-            };
-            BlockMaterialPrefix packed = switch (form) {
-                case "Raw" -> BlockMaterialPrefix.blockRaw;
-                case "Dust" -> BlockMaterialPrefix.blockDust;
-                case "Gem" -> BlockMaterialPrefix.blockGem;
-                case "Ingot" -> BlockMaterialPrefix.blockIngot;
-                case "Plate" -> BlockMaterialPrefix.blockPlate;
-                case "PlateGem" -> BlockMaterialPrefix.blockPlateGem;
-                default -> null;
-            };
-            int amount = full ? 64 : 16;
-            ItemStack contents = content == null ? ItemStack.EMPTY : GTItems.getStack(content, material, amount);
-            if (contents.isEmpty()) continue;
-            ItemStack crateStack = new ItemStack(block);
-            unboxItems(prefix.getName() + " 1 -> " + content.getName() + " " + amount + " + crate",
-                    crateStack, contents, item(empty, 1));
-            packingRows(prefix, full, form, content, material, packed, crateStack, empty);
-        }
-    }
-
-    /** Boxinator rows that fill {@code empty} into this crate prefix ({@code Loader_Recipes_Handlers:495-525}). */
-    private static void packingRows(BlockMaterialPrefix prefix, boolean full, String form, MaterialPrefix content,
-                                    GTMaterial material, BlockMaterialPrefix packed, ItemStack crate, ItemStack empty) {
-        if (full) {
-            boxItems(content.getName() + " 64 + crate -> " + prefix.getName(), 16,
-                    new ItemStack[]{GTItems.getStack(content, material, 64), item(empty, 1)}, crate);
-            ItemStack blockStack = packed == null ? ItemStack.EMPTY : GTBlocks.getStack(packed, material);
-            if (!blockStack.isEmpty())
-                boxItems(packed.getName() + " 64 + 9 crates -> " + prefix.getName() + " 9", 144,
-                        new ItemStack[]{item(blockStack, 64), item(empty, 9)}, item(crate, 9));
-        } else if ("Dust".equals(form)) {
-            packCrate(material, content, MaterialPrefix.dustSmall, 64, crate, empty);
-        } else if ("Ingot".equals(form)) {
-            packCrate(material, content, MaterialPrefix.chunkGt, 64, crate, empty);
-            packCrate(material, content, MaterialPrefix.billet, 24, crate, empty);
-        }
-    }
-
     private static void addLaminator(String route, ItemStack wax, ItemStack empty, ItemStack fireproof) {
         if (wax.isEmpty()) return;
         Recipe recipe = MachineRecipeMaps.Laminator.addRecipe2(false, 16, 32, item(empty, 1), wax, fireproof.copy());
         if (recipe != null) ENTRIES.add(new Entry("laminator", route, MachineRecipeMaps.Laminator, recipe));
     }
 
-    private static int crateFormOrder(Block block) {
-        String name = ((MaterialBlockLike) block).prefix().getName();
-        String form = name.substring(name.startsWith("crateGt64") ? "crateGt64".length() : "crateGt".length());
-        return switch (form) {
-            case "Raw" -> 0;
-            case "Dust" -> 1;
-            case "Gem" -> 2;
-            case "Ingot" -> 3;
-            case "Plate" -> 4;
-            case "PlateGem" -> 5;
-            default -> 6;
-        };
-    }
-
-    /** Quarter-sized input that fills a sixteen-piece crate. */
-    private static void packCrate(GTMaterial material, MaterialPrefix content, MaterialPrefix from,
-                                  int fromCount, ItemStack crate, ItemStack empty) {
-        ItemStack input = GTItems.getStack(from, material, fromCount);
-        if (input.isEmpty()) return;
-        boxItems(from.getName() + " " + fromCount + " + crate -> " + content.getName() + " crate", 16,
-                new ItemStack[]{input, item(empty, 1)}, crate);
-    }
-
     // ── helpers ──────────────────────────────────────────────────────────────
 
-    /** Unboxinator route with extra output stacks (the empty crate or the empty tool head). */
+    /** Unboxinator route with extra output stacks (the empty tool head). */
     private static void unboxItems(String route, ItemStack input, ItemStack... outputs) {
         recipe("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, new ItemStack[]{input}, outputs);
-    }
-
-    /** Boxinator route whose second input consumes the empty crate instead of a selector circuit. */
-    private static void boxItems(String route, long ticks, ItemStack[] inputs, ItemStack output) {
-        recipe("boxinator", route, MachineRecipeMaps.Boxinator, ticks, inputs, new ItemStack[]{output});
     }
 
     /** Compressor route with a block input ({@code blockPlate 1 -> plateDense 1}). */
