@@ -47,7 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * one class, {@code gregapi.block.prefixblock.PrefixBlock} ({@code PrefixBlock.java:84}), and that class
  * backs the whole prefix-material family: {@code CS.BlocksGT} declares the ore blocks
  * ({@code ore}, {@code oreBedrock}, {@code oreSmall}, …, {@code CS.java:1633-1637}) and the material
- * blocks ({@code blockIngot}, {@code crateGtDust}, …) as {@code IPrefixBlock}.
+ * blocks ({@code blockIngot}, {@code blockPlate}, …) as {@code IPrefixBlock}.
  * The worldgen-relevant half of that family is what a vein is made of, and in the port that is
  * {@link gregtech.content.block.OreBlock} — one ore block per material with the host rock in its
  * {@code stone} state property, standing in for GT6's per-stone ore blocks. So the predicate here is

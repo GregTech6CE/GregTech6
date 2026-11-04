@@ -491,7 +491,7 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's material crate ({@code BlocksGT.crateGtDust} and friends) as one block. GT6 draws a form,
+     * GT6's material crate (the twelve dust/gem/ingot/plate/raw crate blocks) as one block. GT6 draws a form,
      * a size and a material here; the port resolves all three when a player pries the crate open
      * ({@code MaterialCrateLoot}), so the generation draws are gone.
      *

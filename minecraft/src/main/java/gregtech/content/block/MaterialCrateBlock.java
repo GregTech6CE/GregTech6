@@ -26,7 +26,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * GT6's twelve material crate prefixes ({@code BlocksGT.crateGtDust} and friends) as one block: a
+ * GT6's twelve material crate prefix blocks (dust, gem, ingot, plate and raw crates, each in a
+ * sixteen- and a sixty-four-piece size) as one block: a
  * crowbar pries it open and hands out sixteen or sixty-four units of one material plus the empty crate.
  *
  * <p>GT6 opens a material crate by <em>mining</em> it with a crowbar, whose
