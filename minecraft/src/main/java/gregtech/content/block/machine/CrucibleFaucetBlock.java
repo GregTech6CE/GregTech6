@@ -146,7 +146,7 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
         if (GTToolHelper.isMachineWrench(tool)) {
             float hardness = state.getDestroySpeed(level, pos);
             if (hardness < 0) return 0;
-            return 1.0F / hardness / 10.0F;
+            return GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F;
         }
         if (tool.getItem() instanceof PickaxeItem || GTToolHelper.matchesTool(tool, GTToolType.PICKAXE)) {
             float hardness = state.getDestroySpeed(level, pos);

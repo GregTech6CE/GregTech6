@@ -406,7 +406,7 @@ public final class GTToolHelper {
         return type.canCollect() && (!stack.isDamageableItem() || stack.getDamageValue() < stack.getMaxDamage());
     }
 
-    /** GT6 wrench dismantle speed (left-click hold). */
+    /** GT6 {@code MultiItemTool#getDigSpeed} for wrench nodes: {@code speedMultiplier * mToolSpeed}. */
     public static float getMachineHarvestSpeed(ItemStack stack) {
 
 //? if >=1.21.1 {
@@ -417,7 +417,8 @@ public final class GTToolHelper {
             return gregtech.content.tool.ElectricWrenchHarvest.speed(electric,stack);
 //?}
 
-        return 12.0F;
+        GTMaterial stat = getStatMaterial(stack);
+        return Math.max(Float.MIN_NORMAL, getType(stack).speedMultiplier() * stat.getToolSpeed());
     }
 
     /**
