@@ -260,6 +260,7 @@ public final class MaterialDecompositionData {
         bind(8729, "EnderiumBase", DECOMPOSABLE, CENTRIFUGE);
         bind(8730, "ElectricalSteel", DECOMPOSABLE, CENTRIFUGE);
         bind(8732, "Soularium", DECOMPOSABLE, CENTRIFUGE);
+        bind(8733, "RedstoneAlloy", DECOMPOSABLE, CENTRIFUGE);
         bind(8735, "GaiaSpirit", DECOMPOSABLE);
         bind(8737, "NikolineAlloy", DECOMPOSABLE, CENTRIFUGE);
         bind(8745, "Netherite", DECOMPOSABLE, CENTRIFUGE);

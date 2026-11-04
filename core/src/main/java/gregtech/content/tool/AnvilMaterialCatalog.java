@@ -142,6 +142,7 @@ public final class AnvilMaterialCatalog {
             "Radium",
             "RedAlloy",
             "RedSteel",
+            "RedstoneAlloy",
             "Rhenium",
             "Rhodium",
             "RoseGold",

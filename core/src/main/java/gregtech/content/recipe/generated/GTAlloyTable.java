@@ -30,6 +30,7 @@ public final class GTAlloyTable {
         new Alloy("AluminiumBrass", 4, List.of(new Alloy.Input("AnnealedCopper", 1), new Alloy.Input("Aluminium", 3))),
         new Alloy("RedAlloy", 1, List.of(new Alloy.Input("Copper", 1), new Alloy.Input("Redstone", 4))),
         new Alloy("RedAlloy", 1, List.of(new Alloy.Input("AnnealedCopper", 1), new Alloy.Input("Redstone", 4))),
+        new Alloy("RedstoneAlloy", 1, List.of(new Alloy.Input("Silicon", 1), new Alloy.Input("Redstone", 1))),
         new Alloy("SterlingSilver", 5, List.of(new Alloy.Input("Copper", 1), new Alloy.Input("Silver", 4))),
         new Alloy("SterlingSilver", 5, List.of(new Alloy.Input("AnnealedCopper", 1), new Alloy.Input("Silver", 4))),
 

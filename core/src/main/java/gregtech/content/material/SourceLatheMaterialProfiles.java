@@ -769,6 +769,7 @@ public final class SourceLatheMaterialProfiles {
             8729|EnderiumBase|0000
             8730|ElectricalSteel|0000
             8732|Soularium|0000
+            8733|RedstoneAlloy|0000
             8735|GaiaSpirit|0000
             8737|NikolineAlloy|0000
             8744|AncientDebris|0000

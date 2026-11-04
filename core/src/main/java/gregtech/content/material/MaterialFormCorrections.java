@@ -118,7 +118,7 @@ final class MaterialFormCorrections {
                     MaterialProperty.GENERATE_WIRE);
         }
         // OP.bouleGt.forceItemGeneration; crystal plates do not imply ordinary gems.
-        for (String name : new String[] {"Silicon", "Germanium", "NikolineAlloy"}) {
+        for (String name : new String[] {"Silicon", "Germanium", "RedstoneAlloy", "NikolineAlloy"}) {
             var material = gregtech.engine.material.GTMaterialRegistry.get(name);
             if (!material.isValid()) throw new IllegalStateException("Missing semiconductor: " + name);
             material.put(

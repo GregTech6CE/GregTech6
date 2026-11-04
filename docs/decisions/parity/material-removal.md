@@ -5,7 +5,7 @@
 | 内容 | 差异 | 原因 |
 | --- | --- | --- |
 | Metallurgy 材料 | 停注 `Alduorite`(8760)、`Amordrine`(8783)、`Angmallen`(8603)、`Aredrite`(8701)、`AstralSilver`(8676)、`Atlarus`(2210)、`Celenegil`(8779)、`Ceruclase`(8765)、`DeepIron`(8641)、`Desichalkos`(8781)、`Eximite`(8773)、`Haderoth`(8778)、`Ignatius`(8775)、`Infuscolium`(8761)、`Inolashite`(8777)、`Kalendrite`(8768)、`Lemurite`(8764)、`Meutoite`(8763)、`Midasium`(8677)、`Oureclase`(8767)、`Prometheum`(8774)、`Rubracium`(8762)、`Sanguinite`(8771)、`ShadowIron`(8670)、`ShadowSteel`(8671)、`Tartarite`(8782)、`Vulcanite`(8776)、`Vyroxeres`(8772)。 | 本端未接入该模组，材料没有物品来源与配方。 |
-| Ender IO 材料 | 停注 `ClayCompound`(8806)、`CrystallineAlloy`(8812)、`EndSteel`(8807)、`EnergeticAlloy`(8728)、`EnergeticSilver`(8808)、`MelodicAlloy`(8809)、`PulsatingIron`(8725)、`RedstoneAlloy`(8733)、`StellarAlloy`(8810)、`VividAlloy`(8811)。 | 本端未接入该模组，材料没有物品来源与配方。 |
+| Ender IO 材料 | 停注 `ClayCompound`(8806)、`CrystallineAlloy`(8812)、`EndSteel`(8807)、`EnergeticAlloy`(8728)、`EnergeticSilver`(8808)、`MelodicAlloy`(8809)、`PulsatingIron`(8725)、`StellarAlloy`(8810)、`VividAlloy`(8811)。 | 本端未接入该模组，材料没有物品来源与配方。 |
 | The Betweenlands 材料 | 停注 `AquaMiddle`(8284)、`Betweenstone`(8519)、`Cragrock`(8524)、`CrimsonMiddle`(8282)、`GreenMiddle`(8283)、`Octine`(8786)、`Pitstone`(8520)、`Scabyst`(8288)、`SlimyBone`(8287)、`Syrmorite`(8785)、`Valonite`(8285)、`Weedwood`(8286)。 | 本端未接入该模组，材料与方块没有来源。 |
 | Thaumcraft、Thaumcraft Extras 与 Forbidden Magic 材料 | 停注 `InfusedAir`(8352)、`InfusedBalance`(8358)、`InfusedDull`(8350)、`InfusedEarth`(8354)、`InfusedEntropy`(8356)、`InfusedFire`(8353)、`InfusedOrder`(8357)、`InfusedVis`(8351)、`InfusedWater`(8355)、`Tallow`(8244)、`DarkThaumium`(8680)、`WoodTainted`(9406)。 | 本端未接入该系列模组，材料没有物品来源与配方。 |
 | Biomes O' Plenty 材料 | 停注 `AmethystEnder`(8329)、`Darkwood`(9367)、`Etherealwood`(9368)、`Goldwood`(9369)、`Hellbark`(9370)、`Magicwood`(9374)、`SacredOak`(9373)。 | 本端只生成 GT6 自有树木与原版木种，该模组的木材与末影紫晶没有来源。 |
@@ -43,3 +43,5 @@
 | 无来源/无消费端材料（2026-11-02 审计） | 停注 `Aerotheum`(8246)、`Bedrockium`(8795)、`CrystallinePinkSlime`(8813)、`Cryotheum`(8213)、`Unstable`(8805)。 | 本端没有保留对应的物品来源或消费端；`Cryotheum` 原有 CryoMixer 粉尘产出已随材料停注，`Aerotheum` 的流体此前已停注。 |
 
 2026-11-03 复核：`Tritanium` 链（`TritaniumElemental`、`Tritanium`、二氧化物与五种卤化物及其连通物品）因末地硅岩矿副产物恢复注册，不再列入本表，见 [issue #273](https://github.com/GregTech6CE/GregTech6/issues/273)。
+
+2026-11-04 复核：`RedstoneAlloy`(8733) 恢复注册。原版 GT6 的 `metal` 预置为它生成整套金属物品，并由 `OP.bouleGt` 强制生成晶柱与微小晶板；精英/究极电子元件、晶柱生长和 Project Red 富硅配方都依赖该物品，Ender IO 只提供锭的统一目标。Ender IO 其余材料仍停注。

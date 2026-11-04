@@ -245,6 +245,7 @@ public final class MaterialModTags {
         ImportedMaterialData.RedSand.mod(ModReferences.MC);
         ImportedMaterialData.RedSteel.mod(ModReferences.TFC);
         ImportedMaterialData.Redstone.mod(ModReferences.MC);
+        ImportedMaterialData.RedstoneAlloy.mod(ModReferences.EIO);
         ImportedMaterialData.RoseGold.mod(ModReferences.TFC);
         ImportedMaterialData.Rubber.mod(ModReferences.IC2);
         ImportedMaterialData.Ruby.mod(ModReferences.RP);

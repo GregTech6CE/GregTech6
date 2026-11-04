@@ -136,9 +136,9 @@ public final class SourceRecyclingFacts {
             8600, 8601, 8602, 8605, 8610, 8611, 8612, 8614, 8615, 8621, 8622, 8630, 8631, 8632, 8633, 8634, 8635, 8636,
             8638, 8640, 8643, 8645, 8646, 8647, 8651, 8652, 8653, 8658, 8659, 8660, 8661, 8662, 8663, 8664, 8665, 8666,
             8667, 8668, 8669, 8672, 8673, 8674, 8675, 8679, 8682, 8684, 8685, 8686, 8687, 8689, 8697, 8698, 8700, 8702,
-            8704, 8705, 8706, 8708, 8709, 8710, 8717, 8720, 8721, 8722, 8726, 8727, 8729, 8730, 8732, 8735, 8737, 8744,
-            8745, 8746, 8751, 8752, 8756, 8784, 8790, 8791, 8792, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8801, 8802,
-            8803, 8805, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
+            8704, 8705, 8706, 8708, 8709, 8710, 8717, 8720, 8721, 8722, 8726, 8727, 8729, 8730, 8732, 8733, 8735, 8737,
+            8744, 8745, 8746, 8751, 8752, 8756, 8784, 8790, 8791, 8792, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8801,
+            8802, 8803, 8805, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
     // Loader_Fluids135-189 optional external receivers. Default-positive bindings still require native proof.
     private static final Set<Integer> OPTIONAL_EXTERNAL = Set.of(
             120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600, 8610, 8630,
@@ -742,6 +742,7 @@ public final class SourceRecyclingFacts {
     private static void seeds6(List<Seed> rows) {
         row(rows, 8730, "ElectricalSteel", M, 8730, U, 1809);
         row(rows, 8732, "Soularium", M, 8732, U, 1810);
+        row(rows, 8733, "RedstoneAlloy", M, 8733, U, 1748);
         row(rows, 8735, "GaiaSpirit", M, 8735, U, 1823);
         row(rows, 8737, "NikolineAlloy", M, 8737, U, 1749);
         row(rows, 8744, "AncientDebris", M, 8744, U, 1832);
@@ -1103,6 +1104,7 @@ public final class SourceRecyclingFacts {
         bind(result, 8709, "molten.lumium", Accessor.LIQUID, 144, U, 659);
         bind(result, 8710, "molten.enderium", Accessor.LIQUID, 144, U, 659);
         bind(result, 8729, "molten.enderiumbase", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8733, "molten.redstonealloy", Accessor.LIQUID, 144, U, 659);
         bind(result, 8737, "molten.nikolinealloy", Accessor.LIQUID, 144, U, 659);
         bind(result, 8744, "molten.ancientdebris", Accessor.LIQUID, 144, U, 659);
         bind(result, 8745, "molten.netherite", Accessor.LIQUID, 144, U, 659);

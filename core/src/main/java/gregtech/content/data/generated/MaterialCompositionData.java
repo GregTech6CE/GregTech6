@@ -781,6 +781,9 @@ public final class MaterialCompositionData {
                 MaterialComponent.of(GTMaterialRegistry.get("Hg"), GTValues.U * 3),
                 MaterialComponent.of(GTMaterialRegistry.get("SiO2"), GTValues.U * 1),
                 MaterialComponent.of(GTMaterialRegistry.get("Ruby"), GTValues.U * 1));
+        bind("RedstoneAlloy", 1,
+                MaterialComponent.of(GTMaterialRegistry.get("Si"), GTValues.U * 1),
+                MaterialComponent.of(GTMaterialRegistry.get("Redstone"), GTValues.U * 1));
         bind("Nikolite", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("Sodalite"), GTValues.U * 5),
                 MaterialComponent.of(GTMaterialRegistry.get("Cu"), GTValues.U * 3),
