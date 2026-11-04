@@ -71,3 +71,57 @@
 | 堆组 | 12 | `stack_groups/material_forms/crate_gt*.json`；`functional_bottle_crate.json` 保留 |
 | 语言键 | 每语言 12 | `block.gt6ce.crate_gt*`；材料名由命名规则派生，无逐材料键 |
 | 创造页 | 6 个页签、6 个页签图标 | 仅 64 档前缀建页签，16 档本来就不建 |
+
+## 附录C 移除的爆炸物清单
+
+材料板条箱删除后，以下材料不再有「板条箱受热/被爆炸引爆」这条行为。GT6 侧判定见上游 `gregapi/block/prefixblock/PrefixBlock.java`：`EXPLOSIVE` 材料走受热与连锁；`DUST_BASED` 前缀另有可燃粉尘分支，但十二个 `crateGt*` 前缀都没有 `DUST_BASED`（`gregapi/data/OP.java:334`-`343`）。
+
+### C.1 GT6 上游 `EXPLOSIVE` 材料
+
+| 材料 | 其它标签 | GT6 可形成的板条箱 | 受热自爆 | 被爆炸连锁 | CE 重构前 |
+| --- | --- | --- | --- | --- | --- |
+| `Dynamite`（锯末炸药） | `FLAMMABLE` | `crateGtDust` / `crateGt64Dust` | 是 | 是 | 是 |
+| `Gunpowder`（火药） | `FLAMMABLE` | `crateGtDust` / `crateGt64Dust` | 是 | 是 | 是 |
+| `P` / `Phosphor`（元素磷，id 150） | `FLAMMABLE` | dust / gem | 是 | 是 | 是 |
+| `Phosphorus`、Blue / Red / White | `FLAMMABLE` | dust / gem | 是 | 是 | 否（CE 数据未标 `EXPLOSIVE`） |
+| `Phosphate`（PO4） | `FLAMMABLE` | dust | 是 | 是 | 否（CE 数据未标） |
+| `Hafnium` | `FLAMMABLE` | dust / ingot / plate | 是 | 是 | 否（CE 数据未标） |
+| `Nq-528` Enriched Naquadah | 仅 `EXPLOSIVE` | dust / ingot / plate | 否（无 `FLAMMABLE`） | 是 | 否（CE 数据未标） |
+| `Nq-522` Naquadria | 仅 `EXPLOSIVE` | dust / ingot / plate | 否（无 `FLAMMABLE`） | 是 | 否（CE 数据未标） |
+| `TNT` | `FLAMMABLE`，`UNUSED` | 无生成形态 | — | — | — |
+| 液体：`Glyceryl`、`Fuel`、`Nitro-Fuel`、`Kerosine`、`Diesel`、`Petrol`、`Nitro Carbon` | `FLAMMABLE` | 不可装箱 | — | — | — |
+
+- 受热威力：16 档箱子 `0.5 × 16 = 8`，64 档 `0.5 × 64 = 32`；`crateGtRaw` / `crateGt64Raw` 分别为 16 / 64。原版 TNT 的爆炸威力为 4。
+- 连锁威力：`0.7 × mAmount`，即 16 档 11.2、64 档 44.8；被爆炸摧毁时爆炸抗性为 0。
+- `Dynamite` / `Gunpowder` 的标签见 `gregapi/data/MT.java:1309`-`1310`；`P` 见 `MT.java:403`；磷系见 `MT.java:1294`-`1297`；`PO4` 见 `MT.java:1074`；`Hf` 见 `MT.java:461`；Nq 见 `MT.java:745`-`746`；`TNT` 见 `MT.java:4000`；液体炸药见 `MT.java:1041`、`1191`、`1201`-`1205`。
+- `Gunpowder` 的粉尘物品被 `gregapi/data/OP.java:601` 禁用（改用原版火药），但 `crateGtDust` 的生成条件走 `canGenerateItem`，火药板条箱仍然存在。
+
+### C.2 CE 重构前额外覆盖的可燃粉尘
+
+CE 重构前的 `core/src/main/java/gregtech/content/hazard/MaterialBlockHazards.java`（commit `fb2465851`，第 13-23 行）把 `crateGtDust` / `crateGt64Dust` 也算作 dust-based；因此下列 CE 中带 `FLAMMABLE` 的粉尘，即使没有 `EXPLOSIVE`，其 dust 板条箱在重构前也会以 `0.33 × units` 受热爆炸、以 `0.7 × units` 连锁：
+
+- `WoodMaterials` 全部 32 种木种：Wood、WoodTreated、WoodPolished、WoodRubber、Bamboo、Livingwood、Dreamwood、Greatwood、Silverwood、Oak、Birch、Spruce、Junglewood、Acacia、DarkOak、Crimsonwood、Warpedwood、WoodCompressed、WoodDead、WoodRotten、WoodMossy、WoodFrozen、Maple、Willow、BlueMahoe、Hazel、Coconutwood、Rainbowood、BlueSpruce、Cherrywood、Mangrove、Cinnamonwood（`core/src/main/java/gregtech/content/material/generated/WoodMaterials.java:13`-`44`）。
+- 燃料/含碳/硫/镁：Coal、CoalCoke、LigniteCoke、PetroleumCoke（PetCoke）、Charcoal、Lignite、Peat、PetrifiedWood、OilShale、C、C-13、C-14、Mg、S（`core/src/main/java/gregtech/content/data/ImportedMaterialData.java:26`-`68`）。
+- `P` 已在上表，按 `EXPLOSIVE` 的 `0.5 × units` 计算。
+
+这些材料在 GT6 上游的**板条箱**中不会因受热爆炸：`crateGt*` 前缀没有 `DUST_BASED`；同材料的 `blockDust` 方块才有该行为（`gregapi/data/OP.java:347`）。CE 重构前把 dust 板条箱显式加入 `dust()`，因此形成了这条比 GT6 更宽的规则。
+
+CE 重构前的 `EXPLOSIVE` 数据只有 `Gunpowder`、`Dynamite`（`core/src/main/java/gregtech/content/material/generated/CompoundMaterials.java:183`-`184`）和 `P`（`core/src/main/java/gregtech/content/data/ImportedMaterialData.java:61`-`67`）；上表中的 `Phosphorus`、`Phosphate`、`Hafnium`、`Nq` 在 CE 数据中没有该标签。
+
+## 附录D 移除的碱金属清单
+
+GT6 的 `PrefixBlock.updateTick` 还有一条独立于点燃的分支：材料带 `TD.Atomic.ALKALI_METAL` 且相邻水时，先移除水，再以 `0.33 × mAmount`（若材料同时 `EXPLOSIVE` 则 `0.5 × mAmount`）爆炸（`gregapi/block/prefixblock/PrefixBlock.java:543`-`556`）。该分支对材料板条箱同样生效（`mCanBurn` / `mCanExplode` 均为 `T`），且不需要 `FLAMMABLE`。
+
+| 材料 | 符号 | 板条箱形态 |
+| --- | --- | --- |
+| Lithium | Li | 金属形态（粉 / 锭 / 板 / 粗矿，按实际生成） |
+| Lithium-6 | Li-6 | 金属形态 |
+| Sodium | Na | 金属形态 |
+| Potassium | K | 金属形态 |
+| Rubidium | Rb | 金属形态 |
+| Caesium | Cs | 金属形态 |
+| Francium | Fr | 金属形态 |
+
+- 来源：`MT.alkali(...)`（`gregapi/data/MT.java:69`）及 `gregapi/data/MT.java:385`、`386`、`399`、`407`、`426`、`444`、`477`。
+- CE 重构前没有实现这条分支：`MaterialBlockHazards` 只计算受热与连锁，`MaterialBlockIgnition.hot()` 只检查相邻火 / 岩浆（`minecraft/src/main/java/gregtech/content/hazard/MaterialBlockIgnition.java:19`-`25`）；CE 的 `MaterialProperty` 也没有 `ALKALI_METAL`。
+- 反物质版本的碱金属（`AM` 中的 Li 等）不在可放置材料板条箱范围；crate 的 `aPlacementChecksAntimatter` 为 `T`。
