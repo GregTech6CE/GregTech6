@@ -491,21 +491,17 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's material crate ({@code BlocksGT.crateGtDust} and friends) as one block: the room places
-     * the same crate whatever form and material GT6 would have picked. Both rolls still happen, in
-     * GT6's block-then-material order, so every later draw of the room keeps GT6's sequence.
+     * GT6's material crate ({@code BlocksGT.crateGtDust} and friends) as one block. GT6 draws a form,
+     * a size and a material here; the port resolves all three when a player pries the crate open
+     * ({@code MaterialCrateLoot}), so the generation draws are gone.
      *
-     * @param formSlots number of entries in GT6's form array; zero or one means no form roll
+     * <p>Parity change: the dungeon's random stream is no longer GT6's. The form, size and material
+     * draws only padded that stream; every surviving roll keeps its GT6 probability and its
+     * conditional nesting, but a given seed no longer reproduces GT6's layout.</p>
+     *
      * @return whether the crate was placed
      */
-    public boolean materialCrate(int ax, int ay, int az, int formSlots, GTMaterial[] materials) {
-        if (formSlots > 1) next(formSlots);
-        return materialCrate(ax, ay, az, materials);
-    }
-
-    /** GT6's material draw; the result is discarded because a material crate resolves on opening. */
-    public boolean materialCrate(int ax, int ay, int az, GTMaterial[] materials) {
-        next(materials.length);
+    public boolean materialCrate(int ax, int ay, int az) {
         return set(ax, ay, az, SharedDecorBlocks.MATERIAL_CRATE.get().defaultBlockState());
     }
 

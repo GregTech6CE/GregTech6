@@ -36,18 +36,17 @@ import gregtech.content.registry.GTFluids;
  *       ({@link GTDungeonData#container}) and builds all four walls, fluid tables
  *       included ({@link #fluidWall}). GT6's fluid pick is {@code UT.Code.select(NF, tFluids[tType])},
  *       which draws from its <em>global</em> RNG rather than the cell's stream, so the port draws it
- *       from a stream of its own ({@link GTDungeonData#select}) and the cell's roll sequence stays
- *       GT6's. Only two details differ: the port's gas cylinder has no paint channel (GT6 paints
+ *       from a stream of its own ({@link GTDungeonData#select}) as well. Only two details differ:
+ *       the port's gas cylinder has no paint channel (GT6 paints
  *       propane red, oxygen light blue, helium yellow) and GT6's {@code FL.lube} is the port's
  *       {@code Lubricant} fluid.</li>
  *   <li><b>Crates.</b> GT6 stacks one of twelve material crate blocks per cell, chosen from a form
  *       array and a material table. The port places a single {@code material_crate} block instead,
- *       whose content is resolved when a player pries it open. GT6's form draw, size draw and material
- *       draw all still happen, in that order, with the same per-layer odds
- *       ({@code next1in2}/{@code next1in3}/{@code next1in4} and the gem's
- *       {@code next1in4}/{@code next1in6}/{@code next1in8}), because every later draw in the room -
- *       the pile rolls, the raw ore blocks and the fluid walls - reads the same stream. See
- *       {@link GTDungeonData#materialCrate(int, int, int, int, gregtech.api.material.GTMaterial[])}.</li>
+ *       whose content is resolved when a player pries it open, so GT6's form, size and material
+ *       draws are gone - they only padded the random stream for the rolls that follow. That is a
+ *       deliberate parity change: the stream itself is no longer GT6's, only the probabilities and
+ *       the conditional nesting of the surviving rolls are. See
+ *       {@link GTDungeonData#materialCrate(int, int, int)}.</li>
  *   <li><b>Raw ore blocks.</b> GT6's ore quadrant tops its crate stacks with raw ore blocks
  *       ({@code BlocksGT.blockRaw}); the port owns that block too
  *       ({@code MaterialPrefixes.blockRaw}) and places it through {@link GTDungeonData#rawBlock}, so the
@@ -67,6 +66,10 @@ import gregtech.content.registry.GTFluids;
  * local 4, well below the hall's ceiling at 7), the write order, the {@code next(7)} category roll per
  * quadrant and every roll that decides how many blocks a stack has and whether a pile joins it
  * ({@code next3in4}, {@code next2in3}, {@code next1in2} and the {@code next1in3} pile rolls).</p>
+ *
+ * <p>Not kept: GT6's random stream. The crate's form, size and material draws are gone, so a given
+ * seed lays out a different room than GT6 would; every surviving roll keeps its GT6 probability and
+ * its conditional nesting, and the rolls are mutually independent.</p>
  */
 public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
 
@@ -99,11 +102,11 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
-                                    crate(data, i, 1, j);
+                                    data.materialCrate(i, 1, j);
                                     if (data.next2in3()) {
-                                        crate(data, i, 2, j);
+                                        data.materialCrate(i, 2, j);
                                         if (data.next1in2()) {
-                                            crate(data, i, 3, j);
+                                            data.materialCrate(i, 3, j);
                                             if (data.next1in3()) pile(data, i, 4, j);
                                         } else if (data.next1in3()) {
                                             pile(data, i, 3, j);
@@ -122,10 +125,10 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
-                                    dustCrate(data, i, 1, j, data.next1in2());
+                                    data.materialCrate(i, 1, j);
                                     if (data.next2in3()) {
-                                        dustCrate(data, i, 2, j, data.next1in3());
-                                        if (data.next1in2()) dustCrate(data, i, 3, j, data.next1in4());
+                                        data.materialCrate(i, 2, j);
+                                        if (data.next1in2()) data.materialCrate(i, 3, j);
                                     }
                                 }
                             }
@@ -136,10 +139,10 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
-                                    gemCrate(data, i, 1, j, data.next1in4());
+                                    data.materialCrate(i, 1, j);
                                     if (data.next2in3()) {
-                                        gemCrate(data, i, 2, j, data.next1in6());
-                                        if (data.next1in2()) gemCrate(data, i, 3, j, data.next1in8());
+                                        data.materialCrate(i, 2, j);
+                                        if (data.next1in2()) data.materialCrate(i, 3, j);
                                     }
                                 }
                             }
@@ -150,11 +153,11 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
-                                    data.materialCrate(i, 1, j, GTDungeonData.CRATE_WOODS);
+                                    data.materialCrate(i, 1, j);
                                     if (data.next2in3()) {
-                                        data.materialCrate(i, 2, j, GTDungeonData.CRATE_WOODS);
+                                        data.materialCrate(i, 2, j);
                                         if (data.next1in2()) {
-                                            data.materialCrate(i, 3, j, GTDungeonData.CRATE_WOODS);
+                                            data.materialCrate(i, 3, j);
                                         }
                                     }
                                 }
@@ -166,11 +169,11 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         for (int i = start[a]; i <= end[a]; i++) {
                             for (int j = start[b]; j <= end[b]; j++) {
                                 if (data.next3in4()) {
-                                    rawCrate(data, i, 1, j, data.next1in2());
+                                    data.materialCrate(i, 1, j);
                                     if (data.next2in3()) {
-                                        rawCrate(data, i, 2, j, data.next1in3());
+                                        data.materialCrate(i, 2, j);
                                         if (data.next1in2()) {
-                                            rawCrate(data, i, 3, j, data.next1in4());
+                                            data.materialCrate(i, 3, j);
                                             if (data.next1in4()) data.rawBlock(i, 4, j, GTDungeonData.CRATE_ORES);
                                         } else if (data.next1in4()) {
                                             data.rawBlock(i, 3, j, GTDungeonData.CRATE_ORES);
@@ -265,36 +268,6 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     private static final String PROPANE = "Propane";
     private static final String OXYGEN = "Oxygen";
     private static final String HELIUM = "Helium";
-
-    /** GT6's twelve metal crate forms; the room draws one, but the block no longer needs the result. */
-    private static final int METAL_FORM_SLOTS = 12;
-
-    /**
-     * GT6's metal quadrant crate: {@code aData.set(tMetalCrates, i, y, j, sMetals)}. The form and
-     * material rolls still happen, in GT6's order, so every later draw of the room keeps its sequence.
-     */
-    private static boolean crate(GTDungeonData data, int x, int y, int z) {
-        return data.materialCrate(x, y, z, METAL_FORM_SLOTS, GTDungeonData.CRATE_METALS);
-    }
-
-    /**
-     * GT6's {@code aData.next1inX() ? crateGt64<Form> : crateGt<Form>} pairs. The size roll is drawn
-     * by the caller with GT6's per-layer odds; its value no longer selects a block but must still be
-     * consumed, which is why the parameter stays.
-     */
-    private static boolean dustCrate(GTDungeonData data, int x, int y, int z, boolean large) {
-        return data.materialCrate(x, y, z, GTDungeonData.CRATE_DUSTS);
-    }
-
-    /** GT6's gem crates; see {@link #dustCrate} for the size roll. */
-    private static boolean gemCrate(GTDungeonData data, int x, int y, int z, boolean large) {
-        return data.materialCrate(x, y, z, GTDungeonData.CRATE_GEMS);
-    }
-
-    /** GT6's raw ore crates; see {@link #dustCrate} for the size roll. */
-    private static boolean rawCrate(GTDungeonData data, int x, int y, int z, boolean large) {
-        return data.materialCrate(x, y, z, GTDungeonData.CRATE_ORES);
-    }
 
     /**
      * GT6's {@code ingots_or_plates} ({@code DungeonData:259-264}): a loose pile of ingots or plates.
