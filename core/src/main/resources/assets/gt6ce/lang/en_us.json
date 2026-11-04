@@ -2286,6 +2286,8 @@
   "block.gt6ce.massfab_osmiridium_t5": "Matter Fabricator (T5)",
   "block.gt6ce.massfab_osmium": "Matter Fabricator (T1)",
   "block.gt6ce.material_bush": "%s Bush",
+  "block.gt6ce.material_crate": "Material Crate",
+  "block.gt6ce.material_crate.tooltip": "Pry open with a Crowbar: 16 or 64 material units and a Crate",
   "block.gt6ce.melter_stainless_steel": "Melter",
   "block.gt6ce.mixer_bronze": "Mixer (Bronze)",
   "block.gt6ce.mixer_steel": "Mixer (Steel)",

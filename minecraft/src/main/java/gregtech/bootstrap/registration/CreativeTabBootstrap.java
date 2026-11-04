@@ -139,7 +139,8 @@ public class CreativeTabBootstrap implements InitializationStep {
                     for (var color : net.minecraft.world.item.DyeColor.values())
                         event.accept(gregtech.content.block.misc.ColoredGlassBlock.coloredItem(block, color));
                 } else {
-                    event.accept(new net.minecraft.world.item.ItemStack(block.asItem(), 1));
+                    var stack = new net.minecraft.world.item.ItemStack(block.asItem(), 1);
+                    if (gregtech.content.item.CatalogVisibility.visible(stack)) event.accept(stack);
                 }
             }
 

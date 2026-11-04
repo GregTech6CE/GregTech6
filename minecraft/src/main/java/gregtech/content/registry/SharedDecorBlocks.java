@@ -1,6 +1,7 @@
 package gregtech.content.registry;
 
 import gregtech.content.block.LootCrateBlock;
+import gregtech.content.block.MaterialCrateBlock;
 import gregtech.content.block.misc.*;
 import java.util.List;
 import net.minecraft.world.level.block.*;
@@ -14,6 +15,7 @@ public final class SharedDecorBlocks {
 
     public static RegisteredBlock<Block> CRATE;
     public static RegisteredBlock<LootCrateBlock> LOOT_CRATE;
+    public static RegisteredBlock<MaterialCrateBlock> MATERIAL_CRATE;
     public static RegisteredBlock<RoadStripeRailBlock> RAILROAD;
     public static RegisteredBlock<GregLanternBlock> GREG_LANTERN;
 
@@ -32,6 +34,12 @@ public final class SharedDecorBlocks {
                         .mapColor(MapColor.WOOD)
                         .strength(1, 3)
                         .sound(SoundType.WOOD)));
+        MATERIAL_CRATE = RegisteredBlock.register(
+                "material_crate",
+                () -> new MaterialCrateBlock(BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.WOOD)
+                        .strength(1, 0.2F)
+                        .sound(SoundType.WOOD)));
         RAILROAD = RegisteredBlock.register(
                 "railroad",
                 () -> new RoadStripeRailBlock(BlockBehaviour.Properties.of()
@@ -49,6 +57,6 @@ public final class SharedDecorBlocks {
     }
 
     public static List<RegisteredBlock<? extends Block>> all() {
-        return List.of(CRATE, LOOT_CRATE, RAILROAD, GREG_LANTERN);
+        return List.of(CRATE, LOOT_CRATE, MATERIAL_CRATE, RAILROAD, GREG_LANTERN);
     }
 }
