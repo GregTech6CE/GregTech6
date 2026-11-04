@@ -254,10 +254,9 @@ public class GTToolItem extends Item {
             return GTToolHelper.getMachineHarvestSpeed(stack);
         }
         if (!GTToolHelper.isUsable(stack)) {
-            return 1.0F;
+            return 0.0F;
         }
-        float speed = GTToolHelper.getMiningSpeed(stack, state);
-        return speed > 0.0F ? speed : 1.0F;
+        return GTToolHelper.getMiningSpeed(stack, state);
     }
 
     @Override

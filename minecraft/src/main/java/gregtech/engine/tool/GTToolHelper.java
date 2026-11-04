@@ -458,6 +458,8 @@ public final class GTToolHelper {
     }
 
     public static boolean isSpecialHarvestTool(ItemStack stack, BlockState state) {
+        // GT6 GT_Tool_Wrench.isMinableBlock lists these vanilla blocks for the wrench directly.
+        if (isMachineWrench(stack) && wrenchMinableVanilla(state)) return true;
 
 //? if >=1.21.1 {
 /*        if (stack.getItem() instanceof gregtech.engine.tool.PoweredToolItem electric)
@@ -486,6 +488,18 @@ public final class GTToolHelper {
             case SHEARS -> matchesTool(stack,GTToolType.SCISSORS) || matchesTool(stack,GTToolType.BRANCH_CUTTER);
             default -> false;
         };
+    }
+
+    /** GT6 wrench-mineable vanilla blocks from {@code GT_Tool_Wrench.isMinableBlock}. */
+    private static boolean wrenchMinableVanilla(BlockState state) {
+        var block = state.getBlock();
+        return block == net.minecraft.world.level.block.Blocks.PISTON
+                || block == net.minecraft.world.level.block.Blocks.STICKY_PISTON
+                || block == net.minecraft.world.level.block.Blocks.PISTON_HEAD
+                || block == net.minecraft.world.level.block.Blocks.REDSTONE_LAMP
+                || block == net.minecraft.world.level.block.Blocks.HOPPER
+                || block == net.minecraft.world.level.block.Blocks.DISPENSER
+                || block == net.minecraft.world.level.block.Blocks.DROPPER;
     }
 
     public static int requiredHarvestLevel(BlockState state) {
