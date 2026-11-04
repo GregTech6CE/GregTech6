@@ -43,6 +43,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.jar.JarFile;
 
 /** Dependency-free consumer of the packaged API; deliberately has no host implementation. */
@@ -418,8 +419,41 @@ public final class ApiContracts {
             } catch (IllegalArgumentException expected) {
                 check(expected.getMessage().contains("already registered"), "Missing duplicate-id diagnostic");
             }
+            check(ModData.of("ironmod", "Ignored Name") == mod, "of() must return the declared mod ignoring case");
+            check(ModData.of("IronMod", "Ignored Name") == mod, "Repeated of() calls must return the same mod");
         } finally {
             Locale.setDefault(previous);
+        }
+        ModData referenced = ModData.of("ReferencedMod", "Referenced Mod");
+        check(ModData.of("referencedmod", "Other Name") == referenced, "of() must create one entry per id");
+        check(referenced.name.equals("Referenced Mod"), "of() must keep the first registered name");
+        try {
+            new ModData("referencedmod", "Referenced Mod Duplicate");
+            throw new AssertionError("Declaring an id registered by of() must fail");
+        } catch (IllegalArgumentException expected) {
+            check(expected.getMessage().contains("already registered"), "Missing of() duplicate-id diagnostic");
+        }
+        int threadCount = 4;
+        ModData[] shared = new ModData[threadCount];
+        CountDownLatch start = new CountDownLatch(1);
+        Thread[] ofWorkers = new Thread[threadCount];
+        for (int t = 0; t < threadCount; t++) {
+            int slot = t;
+            ofWorkers[t] = new Thread(() -> {
+                try {
+                    start.await();
+                } catch (InterruptedException interrupted) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+                shared[slot] = ModData.of("SharedMod", "Shared Mod");
+            });
+        }
+        for (Thread worker : ofWorkers) worker.start();
+        start.countDown();
+        for (Thread worker : ofWorkers) worker.join();
+        for (ModData value : shared) {
+            check(value != null && value == shared[0], "Concurrent of() calls must return one mod");
         }
         int before = ModData.MODS.size();
         int threads = 4;

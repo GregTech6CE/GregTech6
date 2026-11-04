@@ -511,7 +511,7 @@ public final class AddonMaterials {
             for (Pending pending : group) {
                 if (!owners.contains(pending.addonId())) owners.add(pending.addonId());
             }
-            material.setSourceMod(new ModData(owners.get(0), owners.get(0)));
+            material.setSourceMod(sourceMod(owners.get(0)));
             OWNERS.put(material.resolve(), owners);
             if (group.get(0).ore() != null) {
                 ORE_FORMS.add(material.resolve());
@@ -610,8 +610,7 @@ public final class AddonMaterials {
                             + "' created material '" + canonical.getName() + "' id " + canonical.getId()
                             + "; addon materials are assigned from " + GTMaterialRegistry.ADDON_ID_START);
                 addOwner(canonical, submission.addonId);
-                if (canonical.getSourceMod() == null)
-                    canonical.setSourceMod(new ModData(submission.addonId, submission.addonId));
+                if (canonical.getSourceMod() == null) canonical.setSourceMod(sourceMod(submission.addonId));
             }
         }
         sealCrucibleAdditions();
@@ -904,6 +903,11 @@ public final class AddonMaterials {
     private static void addOwner(GTMaterial material, String addonId) {
         List<String> owners = OWNERS.computeIfAbsent(material.resolve(), ignored -> new ArrayList<>());
         if (!owners.contains(addonId)) owners.add(addonId);
+    }
+
+    /** Every material of one addon shares its entry; only a host declaration registers a mod once. */
+    private static ModData sourceMod(String addonId) {
+        return ModData.of(addonId, addonId);
     }
 
     private static String difference(MaterialDefinition left, MaterialDefinition right) {

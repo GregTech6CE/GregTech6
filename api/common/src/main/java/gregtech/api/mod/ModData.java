@@ -14,9 +14,9 @@ import org.jetbrains.annotations.ApiStatus;
  * Mod ownership metadata for materials and recipes, analogous to GregTech {@code ModData}.
  * <p>
  * Internal: not part of the addon contract. {@link #MODS} is a read-only view with one entry per
- * mod, matched case-insensitively; registration happens through the constructor while the host
- * initializes its content. Registering an id that already exists, ignoring case, throws
- * {@link IllegalArgumentException}.
+ * mod, matched case-insensitively. The constructor declares a mod once and throws
+ * {@link IllegalArgumentException} when its id already exists, ignoring case. {@link #of(String, String)}
+ * references a mod and returns the registered entry, so many materials can share one addon id.
  */
 @ApiStatus.Internal
 public final class ModData {
@@ -45,14 +45,36 @@ public final class ModData {
     public final String prefix;
 
     public ModData(String id, String name) {
-        this.id = id;
-        this.name = name;
-        this.prefix = id + ":";
-        this.loaded = PRESENCE.get("Mod presence has not been bound by the platform").test(id);
-        ModData existing = REGISTRY.putIfAbsent(id, this);
-        if (existing != null) {
-            throw new IllegalArgumentException("Mod " + id + " is already registered as " + existing.id);
+        this(id, name, true);
+    }
+
+    private ModData(String id, String name, boolean declare) {
+        this.id = Objects.requireNonNull(id, "id");
+        this.name = Objects.requireNonNull(name, "name");
+        this.prefix = this.id + ":";
+        this.loaded = PRESENCE.get("Mod presence has not been bound by the platform").test(this.id);
+        if (declare) {
+            ModData existing = REGISTRY.putIfAbsent(this.id, this);
+            if (existing != null) {
+                throw new IllegalArgumentException("Mod " + this.id + " is already registered as " + existing.id);
+            }
         }
+    }
+
+    /**
+     * Returns the entry for {@code id}, ignoring case, and registers a new one when absent.
+     * <p>
+     * Unlike the constructor, repeated calls with the same id succeed: the first registration keeps
+     * its name, so a host declaration wins over an addon's own name. Concurrent calls return the same
+     * instance.
+     */
+    public static ModData of(String id, String name) {
+        Objects.requireNonNull(id, "id");
+        ModData existing = REGISTRY.get(id);
+        if (existing != null) return existing;
+        ModData created = new ModData(id, name, false);
+        ModData raced = REGISTRY.putIfAbsent(id, created);
+        return raced != null ? raced : created;
     }
 
     public ModData setLoaded(boolean loaded) {
