@@ -65,8 +65,6 @@ public final class CommonBlockTooltips {
                         .append(Component.literal(Float.toString(Math.min(10, speed / 0.4F)) + "x").withStyle(ChatFormatting.GREEN)));
         }
         if (flammable) rows.add(Component.translatable(FLAMMABLE).withStyle(ChatFormatting.RED));
-        if (block instanceof gregtech.content.block.CrateBlock && !containsKey(lines, "gt.lang.gravity"))
-            rows.add(Component.translatable("gt.lang.gravity").withStyle(ChatFormatting.DARK_GRAY));
         boolean spawnProof = block instanceof gregtech.content.block.stone.GTStoneSlabBlock
                 || block instanceof gregtech.content.block.stone.GTStoneBlock stone
                     && !gregtech.content.block.stone.StoneVariantFlags.spawnsCreatures(stone.variant())
