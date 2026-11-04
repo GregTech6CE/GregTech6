@@ -31,7 +31,9 @@ public class AutoIgniterBlockEntity extends AutoToolBlockEntity {
         if(cooldown>0) { cooldown--;setChanged(); }
         if(stopped || energy==0) return;
         var target=worldPosition.relative(facing());
-        boolean success=level.getBlockEntity(target) instanceof PoweredToolTarget tool && tool.usePoweredIgniter(facing().getOpposite(),gregtech.content.tool.AutomaticToolRules.igniterBudget(energy),quality());
+        long budget=gregtech.content.tool.AutomaticToolRules.igniterBudget(energy);
+        boolean success=level.getBlockEntity(target) instanceof PoweredToolTarget tool && tool.usePoweredIgniter(facing().getOpposite(),budget,quality());
+        if(!success) success=gregtech.content.item.behavior.ItemBehaviors.igniteToolClick(level,target,facing().getOpposite(),null,net.minecraft.world.item.ItemStack.EMPTY,false,0.5F,0.5F,0.5F)>0;
         var state=level.getBlockState(target);
         if(!success && (CampfireBlock.canLight(state) || CandleBlock.canLight(state) || CandleCakeBlock.canLight(state))) {
             level.setBlockAndUpdate(target,state.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,true)); success=true;

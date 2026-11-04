@@ -42,7 +42,7 @@ import java.util.Collection;
 //? if >=1.21.1 {
 /*public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.engine.tool.PoweredToolTarget {
 *///?} else {
-public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.engine.tool.PoweredToolTarget {
+public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ItemBehaviors.Ignitable,gregtech.engine.tool.PoweredToolTarget {
 //?}
     public static final int SLOT_LIMIT = 64;
     private static final int FUEL_SLOT = 0;
@@ -503,11 +503,8 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
         burning=true;
         setChanged(); return true;
     }
-//? if >=1.21.1 {
-    /*@Override public long onIgnite(Level world,BlockPos pos,Direction side,@Nullable Player player,ItemStack igniter,boolean sneaking,float hx,float hy,float hz){
+    @Override public long onIgnite(Level world,BlockPos pos,Direction side,@Nullable Player player,ItemStack igniter,boolean sneaking,float hx,float hy,float hz){
         if(side!=getFrontFacing())return 0;
         return usePoweredIgniter(side,Long.MAX_VALUE,0)?10000L:0L;
     }
-*///?} else {
-//?}
 }

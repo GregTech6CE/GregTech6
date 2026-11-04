@@ -63,7 +63,7 @@ import static gregtech.content.data.FuelRecipeMaps.*;
 //? if >=1.21.1 {
 /*public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.engine.tool.PoweredToolTarget {
 *///?} else {
-public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.engine.tool.PoweredToolTarget {
+public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ItemBehaviors.Ignitable,gregtech.engine.tool.PoweredToolTarget {
 //?}
 
     private static final int FLAME_RANGE = 2;
@@ -588,11 +588,8 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         cooldown=100;
         setChanged(); return true;
     }
-//? if >=1.21.1 {
-    /*@Override public long onIgnite(Level world,BlockPos pos,Direction side,@Nullable Player player,ItemStack igniter,boolean sneaking,float hx,float hy,float hz){
+    @Override public long onIgnite(Level world,BlockPos pos,Direction side,@Nullable Player player,ItemStack igniter,boolean sneaking,float hx,float hy,float hz){
         if(side!=getFrontFacing())return 0;
         return usePoweredIgniter(side,Long.MAX_VALUE,0)?10000L:0L;
     }
-*///?} else {
-//?}
 }

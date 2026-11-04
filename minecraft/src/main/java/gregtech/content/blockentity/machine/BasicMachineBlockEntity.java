@@ -74,7 +74,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
+//? if >=1.21.1 {
+/*public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+*///?} else {
 public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+//?}
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
