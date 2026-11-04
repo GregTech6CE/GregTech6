@@ -247,6 +247,11 @@ public final class GTLootGen {
         "van.STRONGHOLD_CROSSING|10|2|8|tech:seed_pouch:1",
         "van.STRONGHOLD_CROSSING|10|2|8|tech:loot_pouch:1",
         "van.STRONGHOLD_CROSSING|30|2|8|tech:loot_bottle:1",
+        // GT6's twelve stronghold-crossing material crate rows collapse to two rows here:
+        // the port has one generic material_crate, so rows with the same count range merge
+        // their weights (4-8: 18, 8-16: 24). The fixed material identity is not preserved.
+        "van.STRONGHOLD_CROSSING|18|4|8|tech:material_crate:1",
+        "van.STRONGHOLD_CROSSING|24|8|16|tech:material_crate:1",
         "van.STRONGHOLD_CORRIDOR|12|1|4|i:toolHeadSword:Steel:1",
         "van.STRONGHOLD_CORRIDOR|6|1|4|i:toolHeadSword:DamascusSteel:1",
         "van.STRONGHOLD_CORRIDOR|12|1|4|i:toolHeadAxeDouble:Steel:1",
