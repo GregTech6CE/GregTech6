@@ -495,6 +495,9 @@ public final class FluidTransportDefinitions {
         return List.copyOf(result);
     }
 
+    /** GT6 registers {@code NBT_HARDNESS 1.0} for every fluid container; only the resistance varies with material. */
+    private static final float FLUID_CONTAINER_HARDNESS = 1.0F;
+
     public static List<TankSpec> tanks() {
         var result = new ArrayList<TankSpec>();
         for (var cheap : CheapWoodBarrelCatalog.ENTRIES) result.add(cheap.spec());
@@ -509,7 +512,7 @@ public final class FluidTransportDefinitions {
                     false,
                     false,
                     true,
-                    2F,
+                    FLUID_CONTAINER_HARDNESS,
                     3F));
         result.add(TankSpec.of(
                 "plastic_canister",
@@ -521,10 +524,9 @@ public final class FluidTransportDefinitions {
                 false,
                 false,
                 false,
-                3F,
+                FLUID_CONTAINER_HARDNESS,
                 5F));
         for (var drum : DRUMS) {
-            float hardness = drum.material.getToolDurability() > 0 ? 5F + drum.material.getToolQuality() * 1.5F : 5F;
             float resistance = drum.material.getToolDurability() > 0 ? 7F + drum.material.getToolQuality() * 1.5F : 6F;
             result.add(TankSpec.of(
                     drum.id,
@@ -536,7 +538,7 @@ public final class FluidTransportDefinitions {
                     drum.plasmaProof,
                     false,
                     false,
-                    hardness,
+                    FLUID_CONTAINER_HARDNESS,
                     resistance));
         }
         return List.copyOf(result);
