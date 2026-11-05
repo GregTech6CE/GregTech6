@@ -4,11 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialTestFixture;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class MaterialCrateDistributionTest {
     private static final double EPSILON = 1e-9;
+
+    @BeforeAll
+    static void initializeMaterials() {
+        MaterialTestFixture.ensureInitialized();
+    }
 
     @Test
     void fiveCategoriesSumToOne() {
@@ -90,6 +97,12 @@ final class MaterialCrateDistributionTest {
         assertEquals(2.0 / 12, materialWeight(metals, "Copper"), EPSILON);
         assertEquals(1.0 / 12, materialWeight(metals, "Tin"), EPSILON);
         assertEquals(3.0 / 12, materialWeight(metals, "Iron"), EPSILON);
+    }
+
+    @Test
+    void porcelainIsInTheDustTable() {
+        var dusts = MaterialCrateDistribution.categories(entry -> true)[1];
+        assertEquals(1.0 / 31, materialWeight(dusts, "Porcelain"), EPSILON);
     }
 
     @Test

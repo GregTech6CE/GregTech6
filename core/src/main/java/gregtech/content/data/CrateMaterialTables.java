@@ -2,6 +2,7 @@ package gregtech.content.data;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.material.SupplementalMaterials;
 
 /**
  * GT6's crate material tables ({@code DungeonChunkRoomStorage:42-46}) as port materials, in GT6's
@@ -16,9 +17,12 @@ import gregtech.content.data.generated.GT6Materials;
  * the dusts/gems by {@code Compounds}: GT6's dust table mixes ore materials (salt, clay, bone, rare
  * earth) with compounds, exactly as its symbol names say.</p>
  *
- * <p>Kept out: GT6's {@code MT.Porcelain} (the port has no such material; one of 40 dust entries) and
- * the two other-mod tables ({@code sHexoriums} of Hexxit and {@code sInfused} of Thaumcraft), which
- * GT6 itself only uses when those mods are loaded.</p>
+ * <p>Porcelain comes from {@link SupplementalMaterials} (id 8273), the port's material for GT6's
+ * {@code MT.Porcelain}. Kept out: the nine GT6 dust materials the port does not register
+ * ({@code Vanilla}, {@code PepperBlack}, {@code Curry}, {@code Barley}, {@code Rice}, {@code Oat},
+ * {@code OatAbyssal}, {@code Corn}, {@code WaxRefractory}) and the two other-mod tables
+ * ({@code sHexoriums} of Hexxit and {@code sInfused} of Thaumcraft), which GT6 itself only uses when
+ * those mods are loaded.</p>
  */
 public final class CrateMaterialTables {
     private CrateMaterialTables() {}
@@ -41,6 +45,7 @@ public final class CrateMaterialTables {
         GT6Materials.Compounds.Bentonite,
         GT6Materials.Compounds.Palygorskite,
         GT6Materials.Compounds.Kaolinite,
+        SupplementalMaterials.porcelain(),
         GT6Materials.Ores.RareEarth,
         GT6Materials.Compounds.Sugar,
         GT6Materials.Compounds.Cocoa,
