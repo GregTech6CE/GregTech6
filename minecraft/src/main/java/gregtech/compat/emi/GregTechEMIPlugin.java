@@ -20,6 +20,11 @@ import net.minecraft.world.item.Items;
 public final class GregTechEMIPlugin implements EmiPlugin {
     private static int overlayGeneration;
 
+    @Override
+    public void initialize(dev.emi.emi.api.EmiInitRegistry registry) {
+        registry.addIngredientSerializer(FluidDisplayEmiStack.class, new FluidDisplayEmiStack.Serializer());
+    }
+
     /** The client overlay calls this before EMI re-registers, so this pass reads the live maps. */
     public static void overlayChanged() {
         overlayGeneration++;

@@ -58,4 +58,35 @@ final class FluidDisplayEmiStack extends EmiStack {
         lines.add(ClientTooltipComponent.create(gregtech.engine.fluid.FluidUnits.text("gt6ce.fluid.amount", amount).getVisualOrderText()));
         return lines;
     }
+
+    /** Bookmarks persist the fluid identity and its display icon separately, just like live queries. */
+    static final class Serializer implements dev.emi.emi.api.stack.serializer.EmiIngredientSerializer<FluidDisplayEmiStack> {
+        @Override public String getType() { return "gt6ce:fluid_display"; }
+
+        @Override public com.google.gson.JsonElement serialize(FluidDisplayEmiStack stack) {
+            var json = new com.google.gson.JsonObject();
+            json.addProperty("type", getType());
+            var value = stack.fluid.copy().setAmount(stack.getAmount()).setChance(stack.getChance());
+            value.setRemainder(stack.getRemainder());
+            json.add("fluid", dev.emi.emi.api.stack.serializer.EmiIngredientSerializer.getSerialized(value));
+            json.add("icon", dev.emi.emi.api.stack.serializer.EmiIngredientSerializer.getSerialized(stack.icon));
+            json.addProperty("index_icon", stack.indexIcon);
+            return json;
+        }
+
+        @Override public EmiStack deserialize(com.google.gson.JsonElement element) {
+            if (!element.isJsonObject()) return EmiStack.EMPTY;
+            var json = element.getAsJsonObject();
+            if (!json.has("fluid") || !json.has("icon")) return EmiStack.EMPTY;
+            var fluid = dev.emi.emi.api.stack.serializer.EmiIngredientSerializer.getDeserialized(json.get("fluid"));
+            var icon = dev.emi.emi.api.stack.serializer.EmiIngredientSerializer.getDeserialized(json.get("icon"));
+            if (!(fluid instanceof EmiStack value) || value.isEmpty()
+                    || !(value.getKey() instanceof net.minecraft.world.level.material.Fluid)) return EmiStack.EMPTY;
+            if (!(icon instanceof EmiStack image) || image.isEmpty()) return value;
+            var result = new FluidDisplayEmiStack(value, image,
+                    json.has("index_icon") && json.get("index_icon").getAsBoolean());
+            result.setRemainder(value.getRemainder());
+            return result;
+        }
+    }
 }
