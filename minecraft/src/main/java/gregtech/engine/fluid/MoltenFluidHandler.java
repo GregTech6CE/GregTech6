@@ -38,11 +38,16 @@ public final class MoltenFluidHandler implements IFluidHandler {
                 || fluid.getFluid() == net.minecraft.world.level.material.Fluids.FLOWING_LAVA)
             return GTMaterialRegistry.get("Lava");
         var entry = GTFluids.entryForFluid(fluid.getFluid());
-        if (entry == null || entry.textureMode() != RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN) return null;
+        if (!isMoltenPhase(entry)) return null;
         String key = entry.materialKey() != null ? entry.materialKey() : RegisteredFluids.boundMaterial(entry.registryName());
         if (key == null) key = entry.registryName().replaceFirst("^(molten[._]|liquid[._])", "");
         GTMaterial material = GTMaterialRegistry.get(key).resolve();
         return material.isValid() ? material : null;
+    }
+
+    private static boolean isMoltenPhase(RegisteredFluids.FluidEntry entry) {
+        return entry != null && (entry.textureMode() == RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN
+                || RegisteredFluids.isMoltenFactoryDefinition(entry));
     }
     /** The special source dimension belongs to this actual phase, not every addon fluid of the same material. */
     public static MoltenMaterialUnits.Ratio ratio(GTMaterial material, FluidStack fluid) {
@@ -84,9 +89,15 @@ public final class MoltenFluidHandler implements IFluidHandler {
             var primary = GTFluids.stack("Plastic", amount);
             if (ratio(material, primary).equals(MoltenMaterialUnits.PLASTIC)) return primary;
         }
+        // The original molten salts use these established liquid IDs in chemistry recipes.
+        String liquidField = "GenLiquid_" + material.getName();
+        if (RegisteredFluids.isMoltenFactoryDefinition(RegisteredFluids.get(liquidField))) {
+            var primary = GTFluids.stack(liquidField, amount);
+            if (material(primary) == material.resolve()) return primary;
+        }
         for (var entry : RegisteredFluids.all().entrySet()) {
             var definition = entry.getValue();
-            if (definition.textureMode() != RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN) continue;
+            if (!isMoltenPhase(definition)) continue;
             var stack = GTFluids.stack(entry.getKey(), amount);
             if (stack != null && !stack.isEmpty() && material(stack) == material.resolve()) return stack;
         }

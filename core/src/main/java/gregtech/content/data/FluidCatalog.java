@@ -239,6 +239,9 @@ public class FluidCatalog {
     private static final Map<String, FluidEntry> REGISTRY = new LinkedHashMap<>();
     /** Original createMolten provenance, not inferred from a sprite or a late material binding. */
     private static final java.util.Set<String> MOLTEN_FACTORY_FIELDS = new java.util.LinkedHashSet<>();
+
+    private static final java.util.Set<FluidEntry> MOLTEN_FACTORY_DEFINITIONS =
+            java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
     /**
      * Generated key aliases: GT6 asks for "the material's gas/liquid" regardless of which of the two
      * states registered the fluid first, so {@code GenGas_X}/{@code GenLiquid_X} may both exist while
@@ -1330,6 +1333,7 @@ public class FluidCatalog {
      */
     public static void finalizeMaterialFluidProperties() {
         if (definitionsClosed) throw new IllegalStateException("Material fluid properties after registration");
+        MOLTEN_FACTORY_DEFINITIONS.clear();
         for (String field : MOLTEN_FACTORY_FIELDS) {
             FluidEntry entry = REGISTRY.get(field);
             if (entry == null || entry.materialKey() == null) continue;
@@ -1342,9 +1346,15 @@ public class FluidCatalog {
                     melting <= 0 ? 1000 : melting < 300 ? Math.min(300, material.getBoilingPoint() - 1) : melting;
             FluidEntry finalized = entry.withTemperature(temperature).withLuminosity(10);
             REGISTRY.put(field, finalized);
+            MOLTEN_FACTORY_DEFINITIONS.add(finalized);
             if (GENERATED_PHASE_DEFINITIONS.get(field) == entry) GENERATED_PHASE_DEFINITIONS.put(field, finalized);
             if (GENERATED_MOLTEN_DEFINITIONS.get(field) == entry) GENERATED_MOLTEN_DEFINITIONS.put(field, finalized);
         }
+    }
+
+    /** Molten salts retain their legacy liquid IDs and dedicated textures, but can still be cast. */
+    public static boolean isMoltenFactoryDefinition(FluidEntry entry) {
+        return MOLTEN_FACTORY_DEFINITIONS.contains(entry);
     }
 
     /** Field key of the entry carrying this registry name, or null. */

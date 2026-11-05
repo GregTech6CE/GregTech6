@@ -199,21 +199,10 @@ public class MachineRecipeMaps {
     , ImplosionCompressor      = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ImplosionCompressor)
     , Fusion                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Fusion)
 
-    // ── Aliases ───────────────────────────────────────────────────────────
-    , Oven = Furnace, Cooker = Furnace
-    , HeatMixer = Mixer
-    , Debarker = PressureWasher
     , Mortar = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Mortar)
-    , buzzsaw = Cutter
-    , sander = Sharpening
-    , debarker_alias = PressureWasher
-    , electricmixer = Mixer
-    , electricloom = Loom
-    , electricsifter = Sifting
 
     // ── Misc / special ────────────────────────────────────────────────────
     , DidYouKnow               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.DidYouKnow)
-    , Other = DidYouKnow
     , ToolHeads                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ToolHeads)
     , Cooking                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Cooking)
 
@@ -258,6 +247,12 @@ public class MachineRecipeMaps {
     }
 
     // ── Machine name → RecipeMap lookup ───────────────────────────────────
+
+    // Imported rows use original RM aliases; both platforms must resolve them to the same map.
+    public static final RecipeMap Oven = Furnace, Cooker = Furnace, HeatMixer = Mixer,
+            Debarker = PressureWasher, buzzsaw = Cutter, sander = Sharpening,
+            debarker_alias = PressureWasher, electricmixer = Mixer, electricloom = Loom,
+            electricsifter = Sifting, Other = DidYouKnow;
 
     /** No-op compatibility stub — maps are created in the static initializer. */
     public static void bootstrap() {}
