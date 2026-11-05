@@ -96,6 +96,7 @@ jobs:
           TIMEOUT_MINUTES: "110"
         run: python .bot/scripts/control.py finish
       - name: Render
+        if: always()
         continue-on-error: true
         working-directory: .bot
         env:
@@ -122,7 +123,7 @@ jobs:
             --run-url "$B_RUN_URL" \
             --status "$STATUS" --reason "$REASON"
       - name: Cleanup skipped placeholder
-        if: ${{ (inputs.dry_run || 'false') != 'true' }}
+        if: ${{ always() && (inputs.dry_run || 'false') != 'true' }}
         working-directory: .bot
         env:
           REPO: ${{ github.repository }}
@@ -136,7 +137,7 @@ jobs:
             python scripts/control.py cleanup
           fi
       - name: Write back
-        if: ${{ (inputs.dry_run || 'false') != 'true' }}
+        if: ${{ always() && (inputs.dry_run || 'false') != 'true' }}
         working-directory: .bot
         env:
           REPO: ${{ github.repository }}
