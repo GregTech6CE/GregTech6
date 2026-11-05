@@ -275,7 +275,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
             var tank = getTank(sf);
             if (tank == null) continue;
             var current = tank.getFluid();
-            boolean totalsChanged = sf.amount() != tank.getAmount() || sf.capacity() != tank.capacity();
+            long capacity = sf.isInput() ? tank.capacity() : blockEntity.fluidOutputDisplayCapacity(sf.tankIndex());
+            boolean totalsChanged = sf.amount() != tank.getAmount() || sf.capacity() != capacity;
 
 //? if >=1.21.1 {
 /*            if (totalsChanged || current.getAmount()!=sf.fluid().getAmount() || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(current,sf.fluid())) {
@@ -283,8 +284,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
             if (totalsChanged || !current.isFluidStackIdentical(sf.fluid())) {
 //?}
 
-                sf.setFluid(current, tank.getAmount(), tank.capacity());
-                sendFluidUpdate(new PacketSyncFluids(containerId, slot.index, current, tank.getAmount(), tank.capacity()));
+                sf.setFluid(current, tank.getAmount(), capacity);
+                sendFluidUpdate(new PacketSyncFluids(containerId, slot.index, current, tank.getAmount(), capacity));
             }
         }
     }

@@ -3,7 +3,6 @@ package gregtech.compat.jade;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity;
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
-import gregtech.engine.fluid.FluidTankGT;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -79,8 +78,8 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         data.put("inputItems", items(machine.itemView(), 0, machine.visibleInputSlots(), accessor));
         data.put("outputItems", items(machine.itemView(), machine.visibleInputSlots(), machine.outputSlots(), accessor));
         data.put("programItems", items(machine.autocraftingProgram(), 0, 1, accessor));
-        data.put("inputFluids", fluids(machine.getTanksInput(), accessor));
-        data.put("outputFluids", fluids(machine.getTanksOutput(), accessor));
+        data.put("inputFluids", fluids(machine, true, accessor));
+        data.put("outputFluids", fluids(machine, false, accessor));
         if (machine instanceof CokeOvenControllerBlockEntity coke && !control.active() && control.progressMax() == 0) {
             data.putBoolean("cokeHint", true);
             data.putBoolean("ignition", !coke.ignitionReady());
@@ -106,10 +105,14 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 //?}
     }
 
-    private static ListTag fluids(FluidTankGT[] tanks, BlockAccessor accessor) {
+    private static ListTag fluids(BasicMachineBlockEntity machine, boolean input, BlockAccessor accessor) {
         var result = new ListTag();
-        if (tanks != null) for (var tank : tanks)
-            if (!tank.isEmpty()) result.add(saveFluid(tank.getFluid(), tank.getAmount(), tank.capacity(), accessor));
+        var tanks = input ? machine.getTanksInput() : machine.getTanksOutput();
+        if (tanks != null) for (int i = 0; i < tanks.length; i++) {
+            var tank = tanks[i];
+            if (!tank.isEmpty()) result.add(saveFluid(tank.getFluid(), tank.getAmount(),
+                    input ? tank.capacity() : machine.fluidOutputDisplayCapacity(i), accessor));
+        }
         return result;
     }
 
@@ -167,7 +170,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                 tooltip.add(Component.translatable("jade.gt6ce.machine.recipe_outputs").withStyle(net.minecraft.ChatFormatting.GRAY));
             renderItems(tooltip, accessor, data.getList(role + "Items", 10));
             if (role.equals("pending") && data.getInt("more") > 0) line(tooltip, "more_pending", data.getInt("more"));
-            renderFluids(tooltip, accessor, data.getList(role + "Fluids", 10));
+            renderFluids(tooltip, accessor, data.getList(role + "Fluids", 10), !role.equals("pending"));
             if (role.equals("pending") && (!data.getList("pendingItems", 10).isEmpty()
                     || !data.getList("pendingFluids", 10).isEmpty()))
                 tooltip.add(snownee.jade.api.ui.IElementHelper.get().spacer(0, 9));
@@ -237,7 +240,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
     }
 
     /** Stored and predicted fluids share one compact icon row, so the layout never swaps form. */
-    private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, ListTag fluids) {
+    private static void renderFluids(ITooltip tooltip, BlockAccessor accessor, ListTag fluids, boolean showCapacity) {
         if (fluids.isEmpty()) return;
         var helper = snownee.jade.api.ui.IElementHelper.get();
         for (int i = 0; i < fluids.size(); i++) {
@@ -250,7 +253,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             if (fluid.isEmpty()) continue;
             long amount = row.getLong("amount"), capacity = row.getLong("capacity");
             String stored = format(amount) + gregtech.engine.fluid.FluidUnits.unit();
-            if (capacity > amount && capacity != Long.MAX_VALUE)
+            if (showCapacity && capacity > 0 && capacity != Long.MAX_VALUE)
                 stored += " / " + format(capacity) + gregtech.engine.fluid.FluidUnits.unit();
             tooltip.add(helper.fluid(JadeFluidObject.of(fluid.getFluid(), amount))
                     .size(new net.minecraft.world.phys.Vec2(10, 10)));

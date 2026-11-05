@@ -652,7 +652,8 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
                         var inputs = basicBe.getTanksInput();
                         var tank = i < inputs.length ? inputs[i] : basicBe.getTanksOutput()[i - inputs.length];
                         buf.writeVarLong(tank.getAmount());
-                        buf.writeVarLong(tank.capacity());
+                        buf.writeVarLong(i < inputs.length ? tank.capacity()
+                                : basicBe.fluidOutputDisplayCapacity(i - inputs.length));
 
 
 

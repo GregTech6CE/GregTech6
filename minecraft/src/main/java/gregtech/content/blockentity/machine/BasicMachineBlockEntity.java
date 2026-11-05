@@ -295,6 +295,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public long gibblValue(BlockFace side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::getAmount).sum(); }
     @Override public long gibblMaximum(BlockFace side) { return java.util.Arrays.stream(tanksInput()).mapToLong(FluidTankGT::capacity).sum(); }
     public FluidTankGT[] getTanksOutput() { return tanksOutput(); }
+    /** Output-buffer stop threshold for GUI and inspection, not the physical overflow capacity. */
+    public long fluidOutputDisplayCapacity(int tankIndex) { return processor.fluidOutputDisplayCapacity(tankIndex); }
     public long getEnergyTick() { return energyPort.stored(); }
     /** Sanitized per-tick cost of the current job; 0 when idle. */
     public long minimumEnergy() { return processor.minimumEnergy(); }

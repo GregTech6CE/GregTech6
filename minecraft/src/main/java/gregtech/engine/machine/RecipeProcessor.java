@@ -118,6 +118,8 @@ public final class RecipeProcessor {
     private long progress;
     private MachineWorkOutputs pendingOutputs;
     private @Nullable RecipeDetails recipeDetails;
+    /** Unscaled products of the last matched recipe; displaying a tank must not run a lookup. */
+    private FluidStack[] displayFluidOutputs = new FluidStack[0];
     private @Nullable Evaluation cached;
     private long cachedAt = Long.MIN_VALUE;
     private boolean dirty = true;
@@ -165,6 +167,31 @@ public final class RecipeProcessor {
         return totalWork > 0;
     }
 
+    /**
+     * Shows the next-batch stop threshold rather than the unbounded overflow storage. The final
+     * batch may exceed this value; neither the actual tank nor its saved contents are clamped.
+     */
+    public long fluidOutputDisplayCapacity(int tankIndex) {
+        var inventory = io.inventory();
+        if (inventory == null || tankIndex < 0 || tankIndex >= inventory.tanksOutput().length) return 0;
+        var tank = inventory.tanksOutput()[tankIndex];
+        if (!config.limitFluidOutputAccumulation()) return tank.capacity();
+        if (tank.isEmpty()) {
+            var output = tankIndex < displayFluidOutputs.length ? displayFluidOutputs[tankIndex] : FluidStack.EMPTY;
+            return Math.min(tank.capacity(), fluidOutputLimit(output, output == null ? 0 : output.getAmount()));
+        }
+        long limit = Long.MAX_VALUE;
+        boolean matched = false;
+        for (var output : displayFluidOutputs) {
+            if (output != null && !output.isEmpty() && StackCompat.sameFluid(tank.getFluid(), output)) {
+                limit = Math.min(limit, fluidOutputLimit(output, output.getAmount()));
+                matched = true;
+            }
+        }
+        // No selected recipe for this fluid yet: use the original minimum accumulation limit.
+        return Math.min(tank.capacity(), matched ? limit : fluidOutputLimit(tank.getFluid(), 0));
+    }
+
     /** Drops the cached evaluation; call whenever inputs or machine settings change. */
     public void invalidate() {
         stateVersion++;
@@ -209,6 +236,7 @@ public final class RecipeProcessor {
             return null;
         }
         if (!exclusivePairOrPlain(match.recipe())) return null;
+        displayFluidOutputs = match.recipe().mFluidOutputs;
         var fluids = match.outputTanks() ? inventory.outputTankFluids() : inventory.inputFluids();
         int parallel = computeParallel(match.recipe(), fluids);
         var cost = MachineWorkCost.calculate(match.recipe().mEUt, match.recipe().mDuration, parallel,
@@ -265,6 +293,7 @@ public final class RecipeProcessor {
             invalidate();
             return false;
         }
+        displayFluidOutputs = evaluation.recipe().mFluidOutputs;
         pendingOutputs = MachineWorkOutputs.roll(evaluation.recipe(), evaluation.parallel(),
                 io.level().random::nextInt, config.exclusiveOutputs());
         inventory.applyRemainingItems(remaining.items());
@@ -389,6 +418,10 @@ public final class RecipeProcessor {
             progress = 0;
             totalWork = 0;
         }
+        // Recover a running batch's display without looking up its already-consumed inputs.
+        displayFluidOutputs = pendingOutputs == null ? new FluidStack[0]
+                : pendingOutputs.inspectionFluids(Integer.MAX_VALUE).toArray(FluidStack[]::new);
+        for (var output : displayFluidOutputs) output.setAmount(output.getAmount() / parallel);
         invalidate();
     }
 
@@ -505,9 +538,8 @@ public final class RecipeProcessor {
         // keeps accepting the same product and the original accumulation stop never takes effect.
         for (var output : recipe.mFluidOutputs) {
             if (output == null || output.isEmpty()) continue;
-            var entry = gregtech.content.registry.GTFluids.entryForFluid(output.getFluid());
-            if (entry != null && entry.hasFlag(gregtech.content.data.RegisteredFluids.FluidFlags.VOID_OVERFLOW)) continue;
-            long limit = MachineFluidRules.outputBackpressure(output.getAmount(), config.parallelLimit());
+            long limit = fluidOutputLimit(output, output.getAmount());
+            if (limit == Long.MAX_VALUE) continue;
             for (var tank : tanks) {
                 if (!tank.isEmpty() && StackCompat.sameFluid(tank.getFluid(), output)) {
                     if (tank.getAmount() >= limit) return true;
@@ -515,6 +547,12 @@ public final class RecipeProcessor {
             }
         }
         return false;
+    }
+
+    private long fluidOutputLimit(@Nullable FluidStack output, int recipeOutputAmount) {
+        var entry = output == null || output.isEmpty() ? null : gregtech.content.registry.GTFluids.entryForFluid(output.getFluid());
+        if (entry != null && entry.hasFlag(gregtech.content.data.RegisteredFluids.FluidFlags.VOID_OVERFLOW)) return Long.MAX_VALUE;
+        return MachineFluidRules.outputBackpressure(recipeOutputAmount, config.parallelLimit());
     }
 
     /**
