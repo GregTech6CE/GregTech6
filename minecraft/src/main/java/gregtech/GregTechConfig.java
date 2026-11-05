@@ -100,6 +100,9 @@ public final class GregTechConfig {
     private static final BooleanSupplier FLUID_MILLIBUCKETS = option(CLIENT,
             "display.fluid_in_mB", true,
             "True: display fluids in mB/B/kB/MB/GB/TB/PB/EB. False: use L/KL/ML/GL/TL/PL/EL. Display only; stored amounts do not change.");
+    private static final BooleanSupplier STORAGE_LEADING_ZEROES = option(CLIENT,
+            "display.mass_storage_leading_zeroes", false,
+            "Pad mass storage counts to six digits with leading zeroes. Disabled: show only the actual count, as in original GT6.");
     private static final BooleanSupplier FLUID_IDLE_SCHEDULING = option(COMMON,
             "performance.fluid_idle_scheduling", true,
             "Skip the server tick for fluid pipes that are completely idle: no stored fluid, no backflow mask, no covers and no residual heat. Distribution math and timing are unchanged; disable to tick every loaded pipe for comparison and diagnosis.");
@@ -402,6 +405,10 @@ public final class GregTechConfig {
 
     public static boolean fluidInMillibuckets() {
         return FLUID_MILLIBUCKETS.getAsBoolean();
+    }
+
+    public static boolean massStorageLeadingZeroes() {
+        return STORAGE_LEADING_ZEROES.getAsBoolean();
     }
 
     private GregTechConfig() {}

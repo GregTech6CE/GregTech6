@@ -48,7 +48,11 @@ public final class MassStorageRenderer<T extends MassStorageBlockEntity> impleme
                 : 0xFFFFFF;
         var digits = state.getBlock() instanceof gregtech.content.block.inventory.ItemBarrelBlock
                 ? gregtech.engine.sensor.SixCellDisplay.barrel(be.stored(), be.baseCapacity())
-                : gregtech.engine.sensor.SixCellDisplay.storage(be.stored(), be.baseCapacity(), numeralColor);
+                : gregtech.engine.sensor.SixCellDisplay.storage(
+                        be.stored(),
+                        be.baseCapacity(),
+                        numeralColor,
+                        gregtech.GregTechConfig.massStorageLeadingZeroes());
         SixCellDisplayRenderer.draw(digits, ps, buffer, light);
         ps.popPose();
     }

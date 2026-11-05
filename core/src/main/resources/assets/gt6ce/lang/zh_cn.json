@@ -98920,6 +98920,8 @@
   "tooltip.gt6ce.ui.liters_of.mb": "%s mB ",
   "tooltip.gt6ce.ui.max_fluid.mb": "；最大容量：%s mB",
   "gt6ce.configuration.display.fluid_in_mB": "使用 mB 显示流体",
+  "gt6ce.configuration.display.mass_storage_leading_zeroes": "量子存储器数字补零",
+  "gt6ce.configuration.display.mass_storage_leading_zeroes.tooltip": "在数量前补零至六位。默认关闭，只显示实际数量。",
   "jade.gt6ce.engine.waiting_steam": "等待供汽",
   "gt6ce.recipe.material_units": "%s = %s 份此材料。",
   "gt6ce.recipe.material_forms": "同材料的其他形态也可查到此配方；实际仅接受配方允许的形态。",

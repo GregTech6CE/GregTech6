@@ -17,8 +17,13 @@ public final class SixCellDisplay {
     }
     /** The logistics casing uses cyan numerals; a full store stays red on either casing. */
     public static Glyph[] storage(long count, long capacity, int normalColor) {
+        return storage(count, capacity, normalColor, false);
+    }
+
+    public static Glyph[] storage(long count, long capacity, int normalColor, boolean leadingZeroes) {
         Glyph[] cells = new Glyph[6];
-        java.util.Arrays.fill(cells, glyph("0", normalColor));
+        if (leadingZeroes) java.util.Arrays.fill(cells, glyph("0", normalColor));
+        cells[5] = glyph("0", normalColor);
         if (count <= 0) return cells;
         if (count >= capacity) {
             String[] full = {null, "1", "0", "0", "percent", null};
