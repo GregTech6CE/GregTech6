@@ -47,68 +47,10 @@ public final class BlockMaterialIcons {
 //?}
     }
 
-    public static ResourceLocation crateBottomTexture() {
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/crate");
-*///?} else {
-        return GregTech.id("block/iconsets/crate");
-//?}
-    }
-
     public static String sharedModelJson(MaterialTextureSet set, BlockMaterialPrefix prefix) {
         ResourceLocation layer0 = baseTexture(set, prefix);
         ResourceLocation layer1 = overlayTexture(set, prefix);
         String particle = "minecraft:block/stone";
-        if (prefix.isCrate()) {
-            ResourceLocation hull = crateBottomTexture();
-//? if >=1.21.1 {
-            /*return """
-                    {
-                      "loader": "neoforge:composite",
-                      "children": {
-                        "layer0": {
-                          "parent": "minecraft:block/cube_all",
-                          "textures": { "all": "%s", "particle": "%s" },
-                          "render_type": "minecraft:solid"
-                        },
-                        "layer1": {
-                          "parent": "minecraft:block/cube_all",
-                          "textures": { "all": "%s" },
-                          "render_type": "minecraft:solid"
-                        },
-                        "layer2": {
-                          "parent": "minecraft:block/cube_all",
-                          "textures": { "all": "%s" },
-                          "render_type": "minecraft:cutout"
-                        }
-                      }
-                    }
-                    """.formatted(hull, particle, layer0, layer1);
-*///?} else {
-            return """
-                    {
-                      "loader": "forge:composite",
-                      "children": {
-                        "layer0": {
-                          "parent": "minecraft:block/cube_all",
-                          "textures": { "all": "%s", "particle": "%s" },
-                          "render_type": "minecraft:solid"
-                        },
-                        "layer1": {
-                          "parent": "minecraft:block/cube_all",
-                          "textures": { "all": "%s" },
-                          "render_type": "minecraft:solid"
-                        },
-                        "layer2": {
-                          "parent": "minecraft:block/cube_all",
-                          "textures": { "all": "%s" },
-                          "render_type": "minecraft:cutout"
-                        }
-                      }
-                    }
-                    """.formatted(hull, particle, layer0, layer1);
-//?}
-        }
 //? if >=1.21.1 {
         /*return """
                 {

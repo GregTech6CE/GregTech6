@@ -96,7 +96,7 @@ public class LootCrateBlock extends Block {
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(level instanceof ServerLevel server)) return InteractionResult.PASS;
         List<ItemStack> loot = rollVanillaLoot(server, pos, level.random);
-        level.removeBlock(pos, false);
+        if (!level.removeBlock(pos, false)) return InteractionResult.PASS;
         for (ItemStack stack : loot) popResource(level, pos, stack);
         // GT6 also hands the crate itself back (IL.Crate, the port's icon set "crate" block).
         ItemStack crate = crateStack();

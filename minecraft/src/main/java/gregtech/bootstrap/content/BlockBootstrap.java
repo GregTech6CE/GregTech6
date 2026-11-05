@@ -100,7 +100,7 @@ public record BlockBootstrap() implements InitializationStep {
                 .mapColor(gregtech.content.block.BlockPrefixPresentation.mapColor(prefix))
                 .strength(prefix.computeHardness(material), prefix.computeResistance(material))
                 .sound(gregtech.content.block.BlockPrefixPresentation.soundType(prefix));
-        if (!prefix.falling() && !prefix.isCrate()) {
+        if (!prefix.falling()) {
             properties = properties.requiresCorrectToolForDrops();
         }
         if (prefix.falling()) {

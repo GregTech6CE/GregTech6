@@ -83,15 +83,9 @@ public class MaterialPrefixes {
         private SoundType sound = SoundType.METAL;
         private boolean falling;
         private long materialWeight = GTValues.U * 9;
-        private String textureFileName;
 
         BlockBuilder(String name) {
             this.name = name;
-        }
-
-        BlockBuilder texture(String textureFileName) {
-            this.textureFileName = textureFileName;
-            return this;
         }
 
         BlockBuilder display(String plural, String prefix, String suffix) {
@@ -142,8 +136,7 @@ public class MaterialPrefixes {
                     mapColor,
                     sound,
                     falling,
-                    materialWeight,
-                    textureFileName);
+                    materialWeight);
         }
     }
 
@@ -590,24 +583,12 @@ public class MaterialPrefixes {
             bars = register("bars"),
             bar = register("bar");
 
-    /** Block prefixes from GT6 {@code OP} (storage blocks, casings, partial crates). */
+    /** Block prefixes from GT6 {@code OP} (storage blocks, casings). */
     public static Entry casingMachine;
 
     public static Entry casingMachineDouble;
     public static Entry casingMachineQuadruple;
     public static Entry casingMachineDense;
-    public static Entry crateGtRaw;
-    public static Entry crateGtGem;
-    public static Entry crateGtDust;
-    public static Entry crateGtIngot;
-    public static Entry crateGtPlate;
-    public static Entry crateGtPlateGem;
-    public static Entry crateGt64Raw;
-    public static Entry crateGt64Gem;
-    public static Entry crateGt64Dust;
-    public static Entry crateGt64Ingot;
-    public static Entry crateGt64Plate;
-    public static Entry crateGt64PlateGem;
     public static Entry blockRaw;
     public static Entry blockGem;
     public static Entry blockDust;
@@ -664,96 +645,6 @@ public class MaterialPrefixes {
                 .materialWeight(GTValues.U * 56)
                 .physics(9.0F, 18.0F, 0, MapColor.METAL, SoundType.METAL));
         BlockMaterialPrefix.casingMachineDense = casingMachineDense.getBlockDelegate();
-
-        crateGtRaw = registerBlock(block("crateGtRaw")
-                .display("Crates of Ore", "Partial Crate of ", " Ore")
-                .condition(MaterialPrefix.oreRaw)
-                .materialWeight(GTValues.U * 32)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGtRaw = crateGtRaw.getBlockDelegate();
-
-        crateGtGem = registerBlock(block("crateGtGem")
-                .display("Crates of Gems", "Partial Crate of ", " Gems")
-                .condition(MaterialPrefix.gem)
-                .materialWeight(GTValues.U * 16)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGtGem = crateGtGem.getBlockDelegate();
-
-        crateGtDust = registerBlock(block("crateGtDust")
-                .display("Crates of Dust", "Partial Crate of ", " Dusts")
-                .condition(MaterialPrefix.dust)
-                .materialWeight(GTValues.U * 16)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGtDust = crateGtDust.getBlockDelegate();
-
-        crateGtIngot = registerBlock(block("crateGtIngot")
-                .display("Crates of Ingots", "Partial Crate of ", " Ingots")
-                .condition(MaterialPrefix.ingot)
-                .materialWeight(GTValues.U * 16)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGtIngot = crateGtIngot.getBlockDelegate();
-
-        crateGtPlate = registerBlock(block("crateGtPlate")
-                .display("Crates of Plates", "Partial Crate of ", " Plates")
-                .condition(MaterialPrefix.plate)
-                .materialWeight(GTValues.U * 16)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGtPlate = crateGtPlate.getBlockDelegate();
-
-        crateGtPlateGem = registerBlock(block("crateGtPlateGem")
-                .display("Crates of Gem Plates", "Partial Crate of ", " Gem Plates")
-                .condition(MaterialPrefix.plateGem)
-                .materialWeight(GTValues.U * 16)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGtPlateGem = crateGtPlateGem.getBlockDelegate();
-
-        crateGt64Raw = registerBlock(block("crateGt64Raw")
-                .display("Crates of Ore", "Crate of ", " Ore")
-                .texture("crateGtRaw")
-                .condition(MaterialPrefix.oreRaw)
-                .materialWeight(GTValues.U * 128)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGt64Raw = crateGt64Raw.getBlockDelegate();
-
-        crateGt64Gem = registerBlock(block("crateGt64Gem")
-                .display("Crates of Gems", "Crate of ", " Gems")
-                .texture("crateGtGem")
-                .condition(MaterialPrefix.gem)
-                .materialWeight(GTValues.U * 64)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGt64Gem = crateGt64Gem.getBlockDelegate();
-
-        crateGt64Dust = registerBlock(block("crateGt64Dust")
-                .display("Crates of Dust", "Crate of ", " Dusts")
-                .texture("crateGtDust")
-                .condition(MaterialPrefix.dust)
-                .materialWeight(GTValues.U * 64)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGt64Dust = crateGt64Dust.getBlockDelegate();
-
-        crateGt64Ingot = registerBlock(block("crateGt64Ingot")
-                .display("Crates of Ingots", "Crate of ", " Ingots")
-                .texture("crateGtIngot")
-                .condition(MaterialPrefix.ingot)
-                .materialWeight(GTValues.U * 64)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGt64Ingot = crateGt64Ingot.getBlockDelegate();
-
-        crateGt64Plate = registerBlock(block("crateGt64Plate")
-                .display("Crates of Plates", "Crate of ", " Plates")
-                .texture("crateGtPlate")
-                .condition(MaterialPrefix.plate)
-                .materialWeight(GTValues.U * 64)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGt64Plate = crateGt64Plate.getBlockDelegate();
-
-        crateGt64PlateGem = registerBlock(block("crateGt64PlateGem")
-                .display("Crates of Gem Plates", "Crate of ", " Gem Plates")
-                .texture("crateGtPlateGem")
-                .condition(MaterialPrefix.plateGem)
-                .materialWeight(GTValues.U * 64)
-                .physics(1.0F, 0.2F, 0, MapColor.WOOD, SoundType.WOOD));
-        BlockMaterialPrefix.crateGt64PlateGem = crateGt64PlateGem.getBlockDelegate();
 
         blockRaw = registerBlock(block("blockRaw")
                 .display("Blocks of Ore", "Block of ", " Ore")

@@ -22,7 +22,6 @@ public enum OreDictionaryNames {
     craftingWireIron,
     craftingWireTin,
     craftingDuctTape,
-    crateGtEmpty,
     lever,
     button,
     buttonWood,

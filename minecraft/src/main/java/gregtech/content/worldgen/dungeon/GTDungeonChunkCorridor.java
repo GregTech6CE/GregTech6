@@ -12,8 +12,10 @@ package gregtech.content.worldgen.dungeon;
  * <p>A corridor that connects in both axes is a turn and gets a {@link GTDungeonChunkPillar} first; GT6
  * catches failures there because the pillar is optional.</p>
  *
- * <p>Port difference: GT6 decorates some corridors with multi-tile 32110 (a wall decoration). The port has
- * no equivalent block, so that decoration is skipped.</p>
+ * <p>GT6 also scatters a cluster of loot crates into one corner of the central box: one cell in three
+ * rolls a corner, the corner itself is placed on a coin flip, a second crate stacks on top on a two-in-three
+ * roll, and the two cells next to the corner follow on their own coin flips. The port keeps GT6's roll
+ * order, because every later feature of the dungeon draws from the same stream.</p>
  */
 public class GTDungeonChunkCorridor extends GTDungeonChunkPillar {
 
@@ -42,6 +44,45 @@ public class GTDungeonChunkCorridor extends GTDungeonChunkPillar {
                     } else {
                         data.air(x, y, z);
                     }
+                }
+            }
+        }
+
+        // GT6's loot crate cluster, one of the four corners. The roll order is GT6's: corner coin flip,
+        // the nested stack roll, then the two adjacent cells.
+        if (data.next1in3()) {
+            switch (data.next(4)) {
+                case 0 -> {
+                    if (data.next1in2()) {
+                        data.lootCrate(6, 1, 9);
+                        if (data.next2in3()) data.lootCrate(6, 2, 9);
+                    }
+                    if (data.next1in2()) data.lootCrate(7, 1, 9);
+                    if (data.next1in2()) data.lootCrate(6, 1, 8);
+                }
+                case 1 -> {
+                    if (data.next1in2()) {
+                        data.lootCrate(9, 1, 9);
+                        if (data.next2in3()) data.lootCrate(9, 2, 9);
+                    }
+                    if (data.next1in2()) data.lootCrate(8, 1, 9);
+                    if (data.next1in2()) data.lootCrate(9, 1, 8);
+                }
+                case 2 -> {
+                    if (data.next1in2()) {
+                        data.lootCrate(6, 1, 6);
+                        if (data.next2in3()) data.lootCrate(6, 2, 6);
+                    }
+                    if (data.next1in2()) data.lootCrate(7, 1, 6);
+                    if (data.next1in2()) data.lootCrate(6, 1, 7);
+                }
+                default -> {
+                    if (data.next1in2()) {
+                        data.lootCrate(9, 1, 6);
+                        if (data.next2in3()) data.lootCrate(9, 2, 6);
+                    }
+                    if (data.next1in2()) data.lootCrate(8, 1, 6);
+                    if (data.next1in2()) data.lootCrate(9, 1, 7);
                 }
             }
         }

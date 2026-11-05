@@ -460,8 +460,8 @@ public final class GeneratedRecipeResolver {
                 }
                 MaterialPrefix prefix = prefix(parts[1]);
                 if (prefix == null) {
-                    // GT6's block forms (OP.blockGem/blockIngot/blockPlate/…, crateGt*) are blocks in the
-                    // port (BlockPrefixRegistry), so an item-prefix miss falls through to them instead of
+                    // GT6's block forms (OP.blockGem/blockIngot/blockPlate/…) are blocks in the port
+                    // (BlockPrefixRegistry), so an item-prefix miss falls through to them instead of
                     // dropping the recipe row.
                     gregtech.engine.prefix.BlockMaterialPrefix block =
                             gregtech.engine.prefix.BlockPrefixRegistry.byName(parts[1]);

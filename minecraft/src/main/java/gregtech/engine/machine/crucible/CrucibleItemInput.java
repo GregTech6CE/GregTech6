@@ -84,8 +84,6 @@ public final class CrucibleItemInput {
 //?}
                     case "ore" -> 1;
                     case "blockRaw" -> 9;
-                    case "crateGtRaw" -> 16;
-                    case "crateGt64Raw" -> 64;
                     default -> 0;
                 };
 //? if >=1.21.1 {
