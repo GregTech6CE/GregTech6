@@ -27567,6 +27567,8 @@
   "jade.gt6ce.omni.harvest": "收获：%s × %s–%s",
   "jade.gt6ce.omni.hot_surface": "未防护时接触烫伤：%s",
   "jade.gt6ce.omni.input": "输入",
+  "jade.gt6ce.omni.average_input": "平均输入",
+  "jade.gt6ce.omni.average_output": "平均输出",
   "jade.gt6ce.omni.item": "%s #%s：%s × %s",
   "jade.gt6ce.omni.item_count": "%s × %s",
   "jade.gt6ce.omni.manual": "手动输入",

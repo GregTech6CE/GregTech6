@@ -27,6 +27,7 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     private boolean stopped;
     private boolean emitted;
     private final gregtech.engine.energy.EnergyConversionMeter conversionMeter = new gregtech.engine.energy.EnergyConversionMeter();
+    public gregtech.engine.energy.EnergyConversionMeter conversionMeter() { return conversionMeter; }
     public long lastInput() { return level == null ? 0 : conversionMeter.input(level.getGameTime()); }
     public long lastOutput() { return level == null ? 0 : conversionMeter.output(level.getGameTime()); }
     private final gregtech.api.platform.machine.MachineControl control=gregtech.engine.machine.MachineControls.switchable(this,

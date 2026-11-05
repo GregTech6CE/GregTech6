@@ -13335,6 +13335,8 @@
   "jade.gt6ce.vessel.temperature_limit": "Temperature limit: %s K",
   "jade.gt6ce.omni.input": "Input",
   "jade.gt6ce.omni.output": "Output",
+  "jade.gt6ce.omni.average_input": "Average input",
+  "jade.gt6ce.omni.average_output": "Average output",
   "jade.gt6ce.omni.pending": "In progress / pending output",
   "jade.gt6ce.omni.program": "Blueprint",
   "jade.gt6ce.omni.contents": "Contents",

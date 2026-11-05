@@ -65,6 +65,14 @@ final class JadeText {
         add(tooltip, null, text);
     }
 
+    /** Keep the label and value together without changing their existing colours. */
+    static void addLeft(ITooltip tooltip, Component text) {
+        Component formatted = format(text);
+        Detail detail = split(formatted);
+        tooltip.add(
+                detail == null ? formatted : detail.label().copy().append(" ").append(detail.value()));
+    }
+
     static void item(ITooltip tooltip, net.minecraft.world.item.ItemStack stack) {
         item(tooltip, stack, stack.getCount());
     }

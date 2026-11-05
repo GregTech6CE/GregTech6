@@ -78,10 +78,10 @@ public enum BatteryBoxJadeProvider implements IServerDataProvider<BlockAccessor>
         for (String direction : new String[]{"input", "output"}) {
             var rates = data.getLongArray(direction);
             if (rates.length != 3) continue;
-            String value = direction.equals("output")
-                    ? EnergyRateText.offered(data.getLong("offered"), rates[0], rates[1], rates[2], data.getString("unit"))
-                    : EnergyRateText.rate(rates[0], rates[1], rates[2], data.getString("unit"));
-            line(tooltip, "energy_rate", label(direction), value);
+            var value = Component.literal(Long.toString(rates[0]));
+            if (direction.equals("output")) value = Component.translatable("jade.gt6ce.energy.max_packets",
+                    data.getLong("offered")).append(" ").append(value);
+            EnergyRateText.render(tooltip, label(direction), value, unit, rates[1], rates[2], accessor.showDetails());
         }
         line(tooltip, "buffer", data.getLong("buffer"), data.getLong("bufferMax"), unit);
         line(tooltip, "mode", data.getInt("mode"));

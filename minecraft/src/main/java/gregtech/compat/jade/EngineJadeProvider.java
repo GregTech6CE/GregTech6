@@ -59,7 +59,8 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                     : type == EngineType.FLUX ? GregTechTags.Energy.RF : GregTechTags.Energy.RU;
             long tick = accessor.getLevel().getGameTime();
             EnergyRateText.conversion(info, be, input, GregTechTags.Energy.KU,
-                    be.conversionMeter().input(tick), be.conversionMeter().output(tick), ms.efficiency());
+                    be.conversionMeter().averageInput(tick), be.conversionMeter().averageOutput(tick));
+            EnergyRateText.efficiency(info, ms.efficiency());
             info.detail("buffer", be.getEnergyStored(input, null), be.getEnergyCapacity(input, null), input.getShortName());
             info.write(tag);
             return;
@@ -68,9 +69,8 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         if (be instanceof KineticDieselEngineBlockEntity diesel) {
             var info = new JadeInspection(accessor, "gt_engine_conversion");
             info.state(!diesel.isStopped(), diesel.isEmitting());
-            info.line("energy_rate", JadeInspection.label("output"), EnergyRateText.rate(
-                    diesel.conversionMeter().output(accessor.getLevel().getGameTime()),
-                    ms.outputRate(), ms.outputRate(), "RU"));
+            info.energyRate("average_output", diesel.conversionMeter().averageOutput(accessor.getLevel().getGameTime()),
+                    ms.outputRate(), ms.outputRate(), "RU");
             EnergyRateText.efficiency(info, ms.efficiency());
             info.detail("stored", diesel.getEnergyStored(GregTechTags.Energy.RU, null), "RU");
             info.fluid("input", 0, diesel.fuelTank().getFluid(), diesel.fuelTank().getAmount(), diesel.fuelTank().capacity());
@@ -102,7 +102,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
                     tag.putBoolean("gt_eng_working", control.running());
                     tag.putBoolean("gt_eng_waiting_steam", se.isWaitingForSteam());
                     if (se.spec() != null) tag.putDouble("gt_eng_warmup_end", se.spec().minimumRunningFill());
-                    tag.putLong(NBT_OUT_RATE, se.conversionMeter().output(accessor.getLevel().getGameTime()));
+                    tag.putDouble("gt_eng_average_output", se.conversionMeter().averageOutput(accessor.getLevel().getGameTime()));
                     tag.putLong("gt_eng_out_min", se.getEnergySizeOutputMin(GregTechTags.Energy.KU, null));
                     tag.putLong("gt_eng_out_max", se.getEnergySizeOutputMax(GregTechTags.Energy.KU, null));
                     writeTank(tag, "steam", se.steamTank(), "Steam");
@@ -137,19 +137,20 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         int eff = data.getInt(NBT_EFF);
 
         if ("steam".equals(type)) {
-            appendSteam(tooltip, accessor, data, stored, capacity, outRate);
+            appendSteam(tooltip, accessor, data, stored, capacity,
+                    data.contains("gt_eng_average_output") ? data.getDouble("gt_eng_average_output") : outRate);
             return;
         }
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.title", name));
-        JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
+        JadeText.addLeft(tooltip, Component.translatable("jade.gt6ce.engine.title", name));
+        JadeText.addLeft(tooltip, Component.translatable("jade.gt6ce.engine.in", format(inRate), Component.literal(inUnit)));
 
         int pct = capacity > 0 ? (int) Math.min(100, stored * 100 / capacity) : 0;
         boolean inputBuffer = "electric".equals(type) || "flux".equals(type);
-        JadeText.add(tooltip, Component.translatable(inputBuffer ? "jade.gt6ce.engine.out_input_buffer" : "jade.gt6ce.engine.out",
+        JadeText.addLeft(tooltip, Component.translatable(inputBuffer ? "jade.gt6ce.engine.out_input_buffer" : "jade.gt6ce.engine.out",
                 format(outRate), format(stored), format(capacity), pct, inUnit));
 
         if (eff > 0 && accessor.showDetails()) {
-            JadeText.add(tooltip, Component.translatable("jade.gt6ce.engine.eff", EnergyRateText.percent(eff)));
+            JadeText.addLeft(tooltip, Component.translatable("jade.gt6ce.engine.eff", EnergyRateText.percent(eff)));
         }
 
     }
@@ -164,18 +165,19 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
     }
 
     private static void appendSteam(ITooltip tooltip, BlockAccessor accessor, CompoundTag data,
-                                    long stored, long capacity, long output) {
+                                    long stored, long capacity, double output) {
 //? if >=1.21.1 {
         /*tooltip.remove(snownee.jade.api.JadeIds.UNIVERSAL_FLUID_STORAGE);
 *///?} else {
         tooltip.remove(snownee.jade.api.Identifiers.UNIVERSAL_FLUID_STORAGE);
 //?}
-        JadeText.detail(tooltip, "jade.gt6ce.omni.energy_rate", Component.translatable("jade.gt6ce.omni.output"),
-                EnergyRateText.rate(output, data.getLong("gt_eng_out_min"), data.getLong("gt_eng_out_max"), "KU"));
-        if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.engine.eff", EnergyRateText.percent(data.getInt(NBT_EFF)));
+        EnergyRateText.render(tooltip, Component.translatable("jade.gt6ce.omni.average_output"),
+                Component.literal(EnergyRateText.amount(output)), JadeText.unit("KU"),
+                data.getLong("gt_eng_out_min"), data.getLong("gt_eng_out_max"), accessor.showDetails());
+        if (accessor.showDetails()) JadeText.addLeft(tooltip, Component.translatable("jade.gt6ce.engine.eff", EnergyRateText.percent(data.getInt(NBT_EFF))));
         int percent = gregtech.content.energy.BoilerGauge.percent(stored, capacity);
-        if (accessor.showDetails()) JadeText.detail(tooltip, "jade.gt6ce.engine.ku_storage",
-                format(stored), format(capacity), percent);
+        if (accessor.showDetails()) JadeText.addLeft(tooltip, Component.translatable("jade.gt6ce.engine.ku_storage",
+                format(stored), format(capacity), percent));
         if (data.contains("gt_eng_tank_steam")) {
             var view = JadeBars.readFluid(data.getCompound("gt_eng_tank_steam"));
             if (view != null) tooltip.add(JadeBars.fluid(view, view.ratio <= 0

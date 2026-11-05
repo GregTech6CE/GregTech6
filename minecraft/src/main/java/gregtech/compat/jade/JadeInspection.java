@@ -41,9 +41,23 @@ final class JadeInspection {
         return translated("jade.gt6ce.omni." + suffix, arguments);
     }
 
-    void detail(String suffix, Object... arguments) {
+    CompoundTag leftLine(String suffix, Object... arguments) {
         var row = line(suffix, arguments);
+        if (row != null) row.putBoolean("left", true);
+        return row;
+    }
+
+    void detail(String suffix, Object... arguments) {
+        var row = leftLine(suffix, arguments);
         if (row != null) row.putBoolean("details", true);
+    }
+
+    void energyRate(String direction, double amount, long min, long max, String unit) {
+        var row = line("energy_rate", label(direction), EnergyRateText.amount(amount), unit);
+        if (row == null) return;
+        row.putBoolean("energyRate", true);
+        row.putLong("min", min);
+        row.putLong("max", max);
     }
 
     CompoundTag translated(String key, Object... arguments) {
@@ -239,9 +253,15 @@ final class JadeInspection {
             }
             values[j] = value;
         }
+        if (row.getBoolean("energyRate") && values.length == 3) {
+            EnergyRateText.render(tooltip, (Component) values[0], (Component) values[1], (Component) values[2],
+                    row.getLong("min"), row.getLong("max"), accessor.showDetails());
+            return;
+        }
         var text = gregtech.engine.fluid.FluidUnits.text(row.getString("key"), values);
         if (row.getString("key").equals("jade.gt6ce.omni.state") && values.length == 1)
             tooltip.add((Component) values[0]);
+        else if (row.getBoolean("left")) JadeText.addLeft(tooltip, text);
         else if (icon == null) JadeText.detail(tooltip, row.getString("key"), values);
         else JadeText.add(tooltip, icon, text);
     }

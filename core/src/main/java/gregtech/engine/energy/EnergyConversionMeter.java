@@ -1,6 +1,8 @@
 package gregtech.engine.energy;
 
-/** Transient transfer observations. Read the completed tick so block tick order cannot change the display. */
+import gregtech.content.machine.MachineInputAverage;
+
+/** Transient transfer observations. Completed ticks keep inspection independent of block tick order. */
 public final class EnergyConversionMeter {
     private final Window input = new Window();
     private final Window output = new Window();
@@ -40,9 +42,23 @@ public final class EnergyConversionMeter {
         return auxiliaryOutput.previous(tick);
     }
 
+    public double averageInput(long tick) {
+        return input.average(tick);
+    }
+
+    public double averageOutput(long tick) {
+        return output.average(tick);
+    }
+
+    public double averageAuxiliaryOutput(long tick) {
+        return auxiliaryOutput.average(tick);
+    }
+
     private static final class Window {
         private long tick = Long.MIN_VALUE;
         private long current, previous;
+        // Idle channels need no history allocation; observations are never saved with the machine.
+        private MachineInputAverage average;
 
         void add(long now, long amount) {
             if (amount <= 0) return;
@@ -51,11 +67,18 @@ public final class EnergyConversionMeter {
                 current = 0;
                 tick = now;
             }
-            current = amount > Long.MAX_VALUE - current ? Long.MAX_VALUE : current + amount;
+            long accepted = Math.min(amount, Long.MAX_VALUE - current);
+            current += accepted;
+            if (average == null) average = new MachineInputAverage();
+            average.record(now, accepted);
         }
 
         long previous(long now) {
             return tick == now ? previous : tick == now - 1 ? current : 0;
+        }
+
+        double average(long now) {
+            return average == null ? 0 : average.average(now);
         }
     }
 }
