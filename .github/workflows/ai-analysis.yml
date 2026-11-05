@@ -1,0 +1,163 @@
+name: ai-analysis
+
+# 放在 A（issue 仓库）的 .github/workflows/ 下。
+# A 负责 installation check、占位评论、dispatch、轮询、artifact 下载和写回。
+# B 只做只读 gate + analysis，不持有 App 私钥。
+
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: issue 编号
+        required: true
+        type: string
+      dry_run:
+        description: 为 true 时只跑 gate/analysis、不发评论
+        required: false
+        default: "false"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lily-trigger-${{ github.event.issue.number || inputs.issue }}
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    if: |
+      (vars.BOT_ENABLED != 'false') &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'issues' && github.event.issue.user.type != 'Bot') ||
+       (github.event_name == 'issue_comment' &&
+        github.event.comment.user.type != 'Bot' &&
+        contains(github.event.comment.body, vars.GT6CE_BOT_MENTION || '@gt6ce-bot') &&
+        (github.event.comment.author_association == 'OWNER' ||
+         github.event.comment.author_association == 'MEMBER' ||
+         github.event.comment.author_association == 'COLLABORATOR')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      run_id: ${{ steps.start.outputs.run_id }}
+      run_url: ${{ steps.start.outputs.run_url }}
+      comment_id: ${{ steps.start.outputs.comment_id }}
+    steps:
+      - name: Clone execution repo
+        run: git clone --depth 1 --branch branch https://github.com/Tanimodori/lily-chan-bot.git .bot
+      - name: App token (issues:write)
+        id: app_rw
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.GT6CE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GT6CE_APP_PRIVATE_KEY }}
+          permission-issues: write
+      - name: Start control
+        id: start
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+          EVENT: ${{ github.event_name == 'workflow_dispatch' && 'issues' || github.event_name }}
+          COMMENT_ID: ${{ github.event.comment.id || '' }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          REQUEST_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          BOT_NAME: ${{ vars.GT6CE_BOT_NAME || 'gt6ce-bot' }}
+          B_REPO: Tanimodori/lily-chan-bot
+          GH_RW_TOKEN: ${{ steps.app_rw.outputs.token }}
+          B_PAT: ${{ secrets.GT6CE_DISPATCH_TOKEN }}
+        run: python .bot/scripts/control.py start
+
+  finalize:
+    needs: gate
+    if: always() && needs.gate.outputs.run_id != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Clone execution repo
+        run: git clone --depth 1 --branch branch https://github.com/Tanimodori/lily-chan-bot.git .bot
+      - name: App token (issues:write)
+        id: app_rw
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.GT6CE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GT6CE_APP_PRIVATE_KEY }}
+          permission-issues: write
+      - name: Finish control
+        env:
+          B_REPO: Tanimodori/lily-chan-bot
+          RUN_ID: ${{ needs.gate.outputs.run_id }}
+          B_PAT: ${{ secrets.GT6CE_DISPATCH_TOKEN }}
+          OUT_DIR: .bot
+          TIMEOUT_MINUTES: "110"
+        run: python .bot/scripts/control.py finish
+      - name: Render
+        continue-on-error: true
+        working-directory: .bot
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          B_RUN_URL: ${{ needs.gate.outputs.run_url }}
+        run: |
+          set -euo pipefail
+          if [ ! -f outputs/result.json ]; then
+            if [ -f inputs/verdict.json ] && ! python -c 'import json,sys;sys.exit(0 if json.load(open("inputs/verdict.json")).get("decision")=="proceed" else 1)'; then
+              echo "gate skipped; no analysis result"
+              exit 0
+            fi
+          fi
+          SNAPSHOT=$(python -c 'import json;print(json.load(open("inputs/snapshot.json")).get("sha256",""))' 2>/dev/null || true)
+          TITLE=$(python -c 'import json;print(json.load(open("inputs/snapshot.json")).get("issue",{}).get("title",""))' 2>/dev/null || true)
+          STATUS=$(python -c 'import json;print(json.load(open("outputs/result.json")).get("status","failed"))' 2>/dev/null || echo failed)
+          REASON=$(python -c 'import json;print(json.load(open("outputs/result.json")).get("reason",""))' 2>/dev/null || true)
+          python scripts/render.py \
+            --repo "$REPO" --issue "$ISSUE" \
+            --issue-title "$TITLE" --snapshot "$SNAPSHOT" \
+            --relevance outputs/relevance.json \
+            --run-url "$B_RUN_URL" \
+            --status "$STATUS" --reason "$REASON"
+      - name: Cleanup skipped placeholder
+        if: ${{ (inputs.dry_run || 'false') != 'true' }}
+        working-directory: .bot
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+          COMMENT_ID: ${{ needs.gate.outputs.comment_id }}
+          GH_RW_TOKEN: ${{ steps.app_rw.outputs.token }}
+        run: |
+          set -euo pipefail
+          if [ -f outputs/result.json ]; then exit 0; fi
+          if [ -f inputs/verdict.json ] && ! python -c 'import json,sys;sys.exit(0 if json.load(open("inputs/verdict.json")).get("decision")=="proceed" else 1)'; then
+            python scripts/control.py cleanup
+          fi
+      - name: Write back
+        if: ${{ (inputs.dry_run || 'false') != 'true' }}
+        working-directory: .bot
+        env:
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+          COMMENT_ID: ${{ needs.gate.outputs.comment_id }}
+          GH_RW_TOKEN: ${{ steps.app_rw.outputs.token }}
+          GH_RO_TOKEN: ${{ steps.app_rw.outputs.token }}
+          BOT_ENABLED: ${{ vars.BOT_ENABLED }}
+          RUN_URL: ${{ needs.gate.outputs.run_url }}
+        run: |
+          set -euo pipefail
+          if [ ! -f outputs/comment.md ]; then exit 0; fi
+          SNAPSHOT=$(python -c 'import json;print(json.load(open("inputs/snapshot.json")).get("sha256",""))' 2>/dev/null || true)
+          SNAPSHOT_HASH="$SNAPSHOT" python scripts/write_back.py
+      - name: Upload control artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: control-${{ github.run_id }}
+          path: |
+            .bot/inputs
+            .bot/outputs
+          if-no-files-found: ignore
+          retention-days: 30
