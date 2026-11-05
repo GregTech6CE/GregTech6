@@ -23,6 +23,7 @@
 | 覆盖板放置 | 默认潜行右键；关闭 `covers.require_sneaking` 可恢复原版 GT6 的普通右键。 | 避免与机器右键交互冲突。 |
 | 流体显示单位 | 默认用 mB/B 等单位；关闭 `display.fluid_in_mB` 改用 L/KL 等，存量不变。 | 统一现代模组的流体显示习惯。 |
 | 量子存储器数字补零 | 客户端配置 `display.mass_storage_leading_zeroes` 默认关闭，与原版一样只显示实际位数；开启后数量补足六位，满仓仍显示 `100%`。 | 为 [#315](https://github.com/GregTech6CE/GregTech6/issues/315) 保留可选显示样式，不改变存量。 |
+| 钼钙矿、钼铅矿分解 | 原版粉末离心分解改为电解机配方，使用模式 0 的选择器；分解成分和产量保持不变。矿石加工中的离心步骤不变。 | 按 [#318](https://github.com/GregTech6CE/GregTech6/issues/318) 将化合物分解归入电解。 |
 | 储罐手动灌取 | 默认需要流体工具；关闭 `general.TanksRequireFluidTools` 才允许桶等容器直接右键灌取。 | 提供可选便捷交互，不影响管道自动化。 |
 | 幽匿材料 | 新增独立 `Sculk`，物性和工具属性参照 Blaze，但身份分开。 | 支持现代 MC 幽匿物品。 |
 | 现代石材 | 补充 `Tuff`、`MudBrick`、`RedNetherBrick`、`Purpur` 材料。 | 支持现代 MC 石材加工。 |

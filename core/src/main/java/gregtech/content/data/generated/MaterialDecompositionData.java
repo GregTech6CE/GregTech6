@@ -5,8 +5,9 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import static gregtech.api.material.MaterialProperty.*;
 
-/** Generated from Gregorius Techneticies' LGPL-3.0-or-later MT/OreDictMaterial policy.
- * Regenerate with tools/integration/extract_material_decomposition.py. */
+/** Imported from Gregorius Techneticies' LGPL-3.0-or-later MT/OreDictMaterial policy.
+ * The original extraction script is not present in this repository.
+ * GT6CE routes Powellite and Wulfenite through electrolysis instead of centrifuging. */
 public final class MaterialDecompositionData {
     private MaterialDecompositionData() {}
 
@@ -311,7 +312,7 @@ public final class MaterialDecompositionData {
         bind(9120, "Ilmenite", DECOMPOSABLE);
         bind(9122, "Magnetite", DECOMPOSABLE);
         bind(9123, "Molybdenite", DECOMPOSABLE);
-        bind(9124, "Powellite", DECOMPOSABLE, CENTRIFUGE);
+        bind(9124, "Powellite", DECOMPOSABLE, ELECTROLYSER);
         bind(9125, "Pyrite", DECOMPOSABLE);
         bind(9126, "Pyrolusite", DECOMPOSABLE);
         bind(9127, "Pyrope", DECOMPOSABLE, ELECTROLYSER);
@@ -323,7 +324,7 @@ public final class MaterialDecompositionData {
         bind(9133, "Tungstate", DECOMPOSABLE);
         bind(9134, "Uraninite", DECOMPOSABLE);
         bind(9135, "Uvarovite", DECOMPOSABLE, ELECTROLYSER);
-        bind(9136, "Wulfenite", DECOMPOSABLE, CENTRIFUGE);
+        bind(9136, "Wulfenite", DECOMPOSABLE, ELECTROLYSER);
         bind(9137, "YellowLimonite", DECOMPOSABLE);
         bind(9138, "Perlite", DECOMPOSABLE);
         bind(9139, "Borax", DECOMPOSABLE);
