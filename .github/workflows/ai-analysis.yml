@@ -47,7 +47,7 @@ jobs:
           set -euo pipefail
           git init -q .bot
           git -C .bot remote add origin https://github.com/GregTech6CE/ai-gateway.git
-          git -C .bot fetch -q --depth 1 origin branch
+          git -C .bot fetch -q --depth 1 origin master
           git -C .bot checkout -q FETCH_HEAD
 
       - name: App token (issues:write on this repository)
