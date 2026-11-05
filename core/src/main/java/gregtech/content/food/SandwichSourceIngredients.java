@@ -87,7 +87,7 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:mayo", 15), // MultiItemBottles.java:134
             new Entry("gt6ce:dressing", 10), // MultiItemBottles.java:135
             new Entry("gt6ce:heavy_cream", 15), // MultiItemBottles.java:139
-            new Entry("gt6ce:honey", 11), // MultiItemBottles.java:157
+            new Entry("minecraft:honey_bottle", 11), // MultiItemBottles.java:157
             new Entry("gt6ce:royal_jelly", 11), // MultiItemBottles.java:159
             new Entry("gt6ce:ambrosia", 5), // MultiItemBottles.java:160
             new Entry("gt6ce:chocolate_cream", 3), // MultiItemBottles.java:194

@@ -70,8 +70,11 @@ public final class BottleFillingRecipePack extends AbstractPackResources {
                     ingredients.add(Map.of(
                             "item",
                             BuiltInRegistries.ITEM
-                                    .getKey(gregtech.content.item.BottleItem.emptyBottle()
-                                            .getItem())
+                                    .getKey(
+                                            family.itemId().equals("minecraft:honey_bottle")
+                                                    ? net.minecraft.world.item.Items.GLASS_BOTTLE
+                                                    : gregtech.content.item.BottleItem.emptyBottle()
+                                                            .getItem())
                                     .toString()));
                 var recipe = Map.of(
                         "type",
@@ -83,7 +86,7 @@ public final class BottleFillingRecipePack extends AbstractPackResources {
                         "ingredients",
                         ingredients,
                         "result",
-                        Map.of("id", "gt6ce:" + family.bottleId(), "count", count));
+                        Map.of("id", family.itemId(), "count", count));
                 generated.put(
                         ResourceLocation.fromNamespaceAndPath(
                                 "gt6ce", "recipe/bottles/" + family.bottleId() + "_x" + count + ".json"),

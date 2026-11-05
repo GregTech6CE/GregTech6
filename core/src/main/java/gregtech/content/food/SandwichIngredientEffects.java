@@ -89,7 +89,7 @@ public final class SandwichIngredientEffects {
             new Effect("fish_oil", "immersiveengineering:flammable", 300, 0, 70, false),
             new Effect("mayo", "immersiveengineering:slippery", 300, 1, 70, false),
             new Effect("dressing", "immersiveengineering:slippery", 300, 1, 70, false),
-            new Effect("honey", "immersiveengineering:sticky", 300, 0, 70, false),
+            new Effect("minecraft:honey_bottle", "immersiveengineering:sticky", 300, 0, 70, false),
             new Effect("royal_jelly", "immersiveengineering:sticky", 300, 0, 70, false),
             new Effect("royal_jelly", "minecraft:regeneration", 150, 1, 100, false),
             new Effect("ambrosia", "immersiveengineering:sticky", 300, 0, 70, false),
@@ -126,10 +126,9 @@ public final class SandwichIngredientEffects {
             new Effect("huge_food_can_chum", "minecraft:nausea", 300, 1, 80, false));
 
     public static List<Effect> forItem(String item) {
-        return item.startsWith("gt6ce:")
-                ? java.util.stream.Stream.concat(ROWS.stream(), CANNED.stream())
-                        .filter(row -> row.item().equals(item.substring("gt6ce:".length())))
-                        .toList()
-                : List.of();
+        String key = item.startsWith("gt6ce:") ? item.substring("gt6ce:".length()) : item;
+        return java.util.stream.Stream.concat(ROWS.stream(), CANNED.stream())
+                .filter(row -> row.item().equals(key))
+                .toList();
     }
 }

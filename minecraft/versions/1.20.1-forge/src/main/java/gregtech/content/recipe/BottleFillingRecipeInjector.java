@@ -76,7 +76,7 @@ public final class BottleFillingRecipeInjector {
 
     /** The four GT6 counts (4/3/2/1 bottles) of one family, in GT6's order. */
     private static int fill(List<Recipe<?>> recipes, gregtech.content.food.BottleFillingRows.Family family) {
-        Item bottle = ForgeRegistries.ITEMS.getValue(GregTech.id(family.bottleId()));
+        Item bottle = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(family.itemId()));
         if (bottle == null || bottle == Items.AIR) {
             SKIPPED.add(family.bottleId() + ": the port registers no such bottle item");
             return 0;
@@ -86,7 +86,7 @@ public final class BottleFillingRecipeInjector {
             SKIPPED.add(family.bottleId() + " (" + family.source() + "): no registered fluid for " + family.fluidKey());
             return 0;
         }
-        ItemStack empty = BottleItem.emptyBottle();
+        ItemStack empty = bottle == Items.HONEY_BOTTLE ? new ItemStack(Items.GLASS_BOTTLE) : BottleItem.emptyBottle();
         int added = 0;
         for (int count = 4; count >= 1; count--) {
             NonNullList<Ingredient> ingredients = NonNullList.create();

@@ -7,6 +7,8 @@ public final class TechnologicalItemDefinitions {
     private TechnologicalItemDefinitions() {}
 
     public static final Map<String, String> ALIASES = Map.ofEntries(
+            Map.entry("honey", "minecraft:honey_bottle"),
+            Map.entry("bottle_honey", "minecraft:honey_bottle"),
             Map.entry("shape_press_bulletcasingsmall", "press_bullet_casing_shape_small"),
             Map.entry("shape_press_bulletcasingmedium", "press_bullet_casing_shape_medium"),
             Map.entry("shape_press_bulletcasinglarge", "press_bullet_casing_shape_large"),

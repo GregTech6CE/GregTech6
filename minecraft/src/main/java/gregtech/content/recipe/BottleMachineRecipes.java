@@ -28,12 +28,16 @@ public final class BottleMachineRecipes {
         for(int i=0;i<GTBottlesGen.ENTRIES.length;i+=3){
             String id=GTBottlesGen.ENTRIES[i];
             var item=gregtech.content.food.GTFoodItems.itemOrNull(id);
-            if(!(item instanceof BottleItem bottle)||bottle.fluid()==null){MISSING.add(id);continue;}
-            var liquid=new FluidStack(bottle.fluid(),BottleItem.BOTTLE_AMOUNT);
+            if(item==null){MISSING.add(id);continue;}
             var filled=new ItemStack(item);
-            var empty=BottleItem.emptyBottle();
+            var liquid=gregtech.engine.fluid.PotionBottleHandler.contents(filled);
+            if(liquid.isEmpty()){MISSING.add(id);continue;}
+            var empty=item==Items.HONEY_BOTTLE?new ItemStack(Items.GLASS_BOTTLE):BottleItem.emptyBottle();
             if(MachineRecipeMaps.Canner.addRecipe1(false,16,16,empty,liquid,FluidStack.EMPTY,filled)!=null)count++;
             if(MachineRecipeMaps.Canner.addRecipe1(false,16,16,filled,FluidStack.EMPTY,liquid,empty)!=null)count++;
+            var gtEmpty=BottleItem.emptyBottle();
+            if(item==Items.HONEY_BOTTLE&&!gtEmpty.is(empty.getItem())
+                    &&MachineRecipeMaps.Canner.addRecipe1(false,16,16,gtEmpty,liquid,FluidStack.EMPTY,filled)!=null)count++;
         }
         count += registerWaterBottle();
         com.mojang.logging.LogUtils.getLogger().info("GT6 bottle filling/draining: {} rows, unresolved {}",count,MISSING);

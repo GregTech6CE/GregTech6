@@ -999,7 +999,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("hemp_oil", new Entry("bottles", 203));
         ITEMS.put("hoglin_tusk", new Entry("nature_foods", 480));
         ITEMS.put("holy_water", new Entry("bottles", 225));
-        ITEMS.put("honey", new Entry("bottles", 213));
         ITEMS.put("honey_comb", new Entry("nature_foods", 535));
         ITEMS.put("honey_ice_cream", new Entry("nature_foods", 524));
         ITEMS.put("honeydew", new Entry("bottles", 214));

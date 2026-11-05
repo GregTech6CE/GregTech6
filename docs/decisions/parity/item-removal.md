@@ -8,6 +8,7 @@
 | 材料灌木 | 删除 `bush_plant_gt_berry_*`；普通蓝莓、棉花等灌木保留，旧材料灌木 ID 会缺失。 | 随材料浆果形态一并取消。 |
 | 赞助证书 | 删除 `supporter_certificate` 及关联实现。 | 原版赞助体系未沿用。 |
 | 重复钥匙 | 删除 `key_*` 旧项及贴图，保留 `brass_key` 等 `*_key`。 | 同一把钥匙只保留一套身份。 |
+| 蜂蜜瓶 | 删除 `gt6ce:honey` 及其模型、贴图和语言键，所有产出改用 `minecraft:honey_bottle`，不保留旧注册。 | 使用现代 MC 蜂蜜瓶，详见[原版优先](prefer-origin.md)。 |
 | 重复主控 | 旧 `large_crucible_main/large_boiler_main/bedrock_drill_main/lightning_rod_main` 入口移除，使用对应原版型号。 | 去掉移植期重复主控。 |
 | 光谱露物品 | 删除 `spectral_dew` 瓶、`wooden_bucket_*_spectral_dew` 木桶（9 种）及对应模型、贴图、堆组和语言键。 | 对应流体 `spectral_dew` 停注，见[流体移除](fluid-removal.md)。 |
 | 毒瓶与毒性木桶 | 删除 `bottle_of_poison` 与 9 个 `wooden_bucket_<band>_poison`（`copper`、`tin`、`zinc`、`lead`、`bismuth`、`brass`、`bronze`、`bismuth_bronze`、`gold`）及对应模型、贴图、堆组和语言键；三明治表中的毒瓶条目一并移除。 | 两者都绑定已停注的 `potion.poison.strong` 流体；详见[药水系统移除](potion-removal.md)。 |

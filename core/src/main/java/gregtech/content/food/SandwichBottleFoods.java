@@ -241,7 +241,17 @@ public final class SandwichBottleFoods {
                     false,
                     false), // Loader_Fluids.java:592; MultiItemBottles.java:139
             new Food(
-                    "honey", 1, 0.1f, 0, 0, 0, 40, 0, 0, true, false,
+                    "minecraft:honey_bottle",
+                    1,
+                    0.1f,
+                    0,
+                    0,
+                    0,
+                    40,
+                    0,
+                    0,
+                    true,
+                    false,
                     false), // Loader_Fluids.java:574; MultiItemBottles.java:157
             new Food(
                     "royal_jelly",
@@ -357,10 +367,7 @@ public final class SandwichBottleFoods {
             );
 
     public static Food forItem(String item) {
-        if (!item.startsWith("gt6ce:")) return null;
-        return ROWS.stream()
-                .filter(row -> row.item().equals(item.substring("gt6ce:".length())))
-                .findFirst()
-                .orElse(null);
+        String key = item.startsWith("gt6ce:") ? item.substring("gt6ce:".length()) : item;
+        return ROWS.stream().filter(row -> row.item().equals(key)).findFirst().orElse(null);
     }
 }
