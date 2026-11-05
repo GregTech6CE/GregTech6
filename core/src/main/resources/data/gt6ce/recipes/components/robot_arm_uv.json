@@ -19,7 +19,7 @@
       "item": "gt6ce:compact_electric_piston_uv"
     },
     "E": {
-      "item": "gt6ce:integrated_circuit_8"
+      "tag": "gt6ce:circuits_tier_8_plus"
     }
   },
   "result": {

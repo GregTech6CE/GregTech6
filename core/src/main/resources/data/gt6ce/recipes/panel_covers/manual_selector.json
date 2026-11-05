@@ -19,7 +19,7 @@
       "item": "gt6ce:cable_01_copper"
     },
     "X": {
-      "item": "gt6ce:integrated_circuit_0"
+      "tag": "gt6ce:integrated_circuits"
     }
   },
   "result": {

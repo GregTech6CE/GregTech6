@@ -16,7 +16,7 @@
       "item": "gt6ce:blank_cover"
     },
     "X": {
-      "item": "gt6ce:integrated_circuit_0"
+      "tag": "gt6ce:integrated_circuits"
     }
   },
   "result": {

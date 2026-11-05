@@ -16,7 +16,7 @@
       "item": "gt6ce:wire_01_graphene"
     },
     "C": {
-      "item": "gt6ce:integrated_circuit_9"
+      "tag": "gt6ce:circuits_tier_9_plus"
     }
   },
   "result": {

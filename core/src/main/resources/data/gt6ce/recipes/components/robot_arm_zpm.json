@@ -19,7 +19,7 @@
       "item": "gt6ce:compact_electric_piston_zpm"
     },
     "E": {
-      "item": "gt6ce:integrated_circuit_7"
+      "tag": "gt6ce:circuits_tier_7_plus"
     }
   },
   "result": {

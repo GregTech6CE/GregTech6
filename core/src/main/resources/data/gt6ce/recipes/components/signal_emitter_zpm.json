@@ -13,7 +13,7 @@
       "item": "gt6ce:plate_curved_osmiumelemental"
     },
     "C": {
-      "item": "gt6ce:integrated_circuit_7"
+      "tag": "gt6ce:circuits_tier_7_plus"
     },
     "W": {
       "item": "gt6ce:wire_01_graphene"
