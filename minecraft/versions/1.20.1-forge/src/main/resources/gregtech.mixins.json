@@ -19,6 +19,7 @@
     "GasImmersionMixin",
     "ConstructionRecipeMixin",
     "VanillaOreConfigMixin",
+    "VanillaOreVeinMixin",
     "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "WaterFluidMixin",

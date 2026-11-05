@@ -3,9 +3,14 @@ package gregtech.content.worldgen;
 import gregtech.GregTechConfig;
 import net.minecraft.resources.ResourceLocation;
 
-/** Shared by vanilla features and explicit vanilla outputs of GT stone layers. */
+/** Shared by vanilla features, vanilla ore veins and explicit vanilla outputs of GT stone layers. */
 public final class VanillaOreGeneration {
     private VanillaOreGeneration() {}
+
+    /** Vanilla's large copper and iron veins are written by {@code OreVeinifier}, not by an ore feature. */
+    public static boolean veinsDisabled() {
+        return GregTechConfig.Rule.DISABLE_VANILLA_ORES.enabled();
+    }
 
     public static boolean disabled(ResourceLocation id) {
         if (!id.getNamespace().equals("minecraft")) return false;
