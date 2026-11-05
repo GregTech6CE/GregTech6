@@ -60,7 +60,7 @@ public final class GTEntityHelper {
 
     /**
      * GT6 {@code UT.Entities.getHeatDamageFromItem}: how much a carried item burns its holder, summed
-     * over the prefix ({@code OP.ingotHot.mHeatDamage = 3.0F}) and the material. GT6 adds the
+     * over the prefix and the material. GT6 adds the
      * material's own {@code mHeatDamage}, which nothing in GT6 or the port declares, so the prefix
      * decides.
      */

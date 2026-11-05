@@ -33,11 +33,7 @@ public final class FurnaceSmeltingRules {
             new ExternalRow(MaterialPrefix.cleanGravel, -1),
             new ExternalRow(MaterialPrefix.dirtyGravel, -1),
             new ExternalRow(MaterialPrefix.crystalline, -1),
-            new ExternalRow(MaterialPrefix.reduced, -1),
-            // GT6 {@code Loader_Recipes_Handlers.java:142-143}: inherits the prefix weight and grants no experience.
-            new ExternalRow(MaterialPrefix.dustPure, -1, false),
-            new ExternalRow(MaterialPrefix.dustRefined, -1, false),
-            new ExternalRow(MaterialPrefix.dustImpure, -1, false));
+            new ExternalRow(MaterialPrefix.reduced, -1));
 
     public static boolean allows(GTMaterial material) {
         if (material == null || !material.isValid()) return false;

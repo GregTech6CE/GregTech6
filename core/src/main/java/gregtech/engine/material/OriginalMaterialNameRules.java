@@ -295,12 +295,6 @@ public final class OriginalMaterialNameRules {
             Map.entry("dirtyGravel", new Prefix("dirtyGravel", "", "", Set.of("ORE_PROCESSING_BASED"))),
             Map.entry("dust", new Prefix("dust", "", " Dust", Set.of("DUST_BASED"))),
             Map.entry("dustDiv72", new Prefix("dustDiv72", "1/72nd of a Pile of ", " Dust", Set.of("DUST_BASED"))),
-            Map.entry(
-                    "dustImpure", new Prefix("dustImpure", "Impure Pile of ", " Dust", Set.of("ORE_PROCESSING_BASED"))),
-            Map.entry("dustPure", new Prefix("dustPure", "Purified Pile of ", " Dust", Set.of("ORE_PROCESSING_BASED"))),
-            Map.entry(
-                    "dustRefined",
-                    new Prefix("dustRefined", "Refined Pile of ", " Dust", Set.of("ORE_PROCESSING_BASED"))),
             Map.entry("dustSmall", new Prefix("dustSmall", "Small Pile of ", " Dust", Set.of("DUST_BASED"))),
             Map.entry("dustTiny", new Prefix("dustTiny", "Tiny Pile of ", " Dust", Set.of("DUST_BASED"))),
             Map.entry("dye", new Prefix("dye", "", "", Set.of())),
@@ -324,7 +318,6 @@ public final class OriginalMaterialNameRules {
             Map.entry("glass", new Prefix("glass", "", "", Set.of())),
             Map.entry("ingot", new Prefix("ingot", "", " Ingot", Set.of())),
             Map.entry("ingotDouble", new Prefix("ingotDouble", "Double ", " Ingot", Set.of())),
-            Map.entry("ingotHot", new Prefix("ingotHot", "Hot ", " Ingot", Set.of())),
             Map.entry("ingotQuadruple", new Prefix("ingotQuadruple", "Quadruple ", " Ingot", Set.of())),
             Map.entry("ingotQuintuple", new Prefix("ingotQuintuple", "Quintuple ", " Ingot", Set.of())),
             Map.entry("ingotTriple", new Prefix("ingotTriple", "Triple ", " Ingot", Set.of())),

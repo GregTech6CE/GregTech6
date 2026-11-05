@@ -94,11 +94,7 @@ public class MaterialFactories {
 
     public static GTMaterial ore(int id, String name, int color, MaterialProperty... props) {
         return dust(id, name, color, props)
-                .put(
-                        MaterialProperty.ORE,
-                        MaterialProperty.GENERATE_ORE,
-                        MaterialProperty.GENERATE_ORE_PROCESSING,
-                        MaterialProperty.GENERATE_DIRTY_DUST)
+                .put(MaterialProperty.ORE, MaterialProperty.GENERATE_ORE, MaterialProperty.GENERATE_ORE_PROCESSING)
                 .setTextureSet(MaterialTextureSet.STONE);
     }
 

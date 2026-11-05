@@ -47,8 +47,7 @@ import java.util.List;
  * a nugget stays a nugget, exactly as in the original.</p>
  *
  * <p>External listener rows bind actual tagged items through ExternalOreProcessing after tags load.
- * dustPure/dustRefined bind external items without adding GT-owned forms. Cooking metadata retains source experience
- * and smoker/blast selection for the native oven bridge.</p>
+ * Cooking metadata retains source experience and smoker/blast selection for the native oven bridge.</p>
  */
 public final class FurnaceSmeltingRecipes {
     /** One row of GT6's listener list: prefix, fixed target amount in units (-1 = the prefix's own) and exp flag. */
@@ -62,7 +61,6 @@ public final class FurnaceSmeltingRecipes {
     private static final List<Row> ROWS = List.of(
             Row.of("scrapGt"),
             Row.of("dust"), Row.of("dustSmall"), Row.of("dustTiny"),
-            Row.of("dustImpure"), Row.of("dustPure"), Row.of("dustRefined"),
             Row.of("gemChipped"), Row.of("gemFlawed"), Row.of("gem"), Row.of("gemFlawless"),
             Row.of("gemExquisite"), Row.of("gemLegendary"),
             Row.exp("rockGt"), Row.exp("rawOreChunk"),

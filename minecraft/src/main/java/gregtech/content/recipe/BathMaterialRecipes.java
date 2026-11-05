@@ -124,14 +124,13 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
     }
 
     /**
-     * The shared handler condition plus scrap and hot ingots: GT6's Bath dump contains both, even
-     * though its {@code tConditionP} lists them as excluded.
+     * The shared handler condition plus scrap: GT6's Bath dump contains scrap conversions even
+     * though its {@code tConditionP} excludes them.
      */
     private static boolean allowsPrefix(String name) {
         String source = PrefixRegistry.sourceName(name);
         return PolarizerMaterialRecipes.allowsPrefix(name)
-                || source.equals("scrapGt")
-                || source.equals("ingotHot");
+                || source.equals("scrapGt");
     }
 
     private static Set<GTMaterial> group(GTMaterial group, String... extraMembers) {

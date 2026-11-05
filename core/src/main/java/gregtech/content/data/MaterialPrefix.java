@@ -33,9 +33,6 @@ public final class MaterialPrefix {
     public static final MaterialPrefix dustSmall;
     public static final MaterialPrefix dustTiny;
     public static final MaterialPrefix dustDiv72;
-    public static final MaterialPrefix dustImpure;
-    /** Source metadata only: Loader_Items does not create these two GT-owned forms. */
-    public static final MaterialPrefix dustPure, dustRefined;
 
     public static final MaterialPrefix unit;
     public static final MaterialPrefix crushed;
@@ -65,7 +62,6 @@ public final class MaterialPrefix {
     public static final MaterialPrefix chunkGt;
     public static final MaterialPrefix billet;
     public static final MaterialPrefix ingot;
-    public static final MaterialPrefix ingotHot;
     public static final MaterialPrefix ingotDouble;
     public static final MaterialPrefix ingotTriple;
     public static final MaterialPrefix ingotQuadruple;
@@ -176,11 +172,6 @@ public final class MaterialPrefix {
     public static final MaterialPrefix bulletGtMedium;
     public static final MaterialPrefix bulletGtLarge;
 
-    // GT6 OP.java:158/165: `dust = Or(DIRTY_DUSTS, DUSTS)` and `dustImpure = DIRTY_DUSTS`. `DUSTS` is
-    // live (every G_WOOD/G_GEM/G_INGOT material carries it), `DIRTY_DUSTS` is **dead** — declared in
-    // `TD.java:577` but used by no material in `MT.java`, so the original registers no impure dusts at
-    // all. The port therefore consults only `DUSTS` here and keeps its own impure dusts (they drive the
-    // port's ore-processing chain).
     /**
      * Source form flags and the port's property predicate are combined until the generated
      * {@code MaterialForms} table carries every factory preset (see card 72). Source negatives
@@ -196,8 +187,6 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> HAS_ORE_PROCESSING =
             m -> m.hasAny(MaterialProperty.ORE, MaterialProperty.GENERATE_ORE, MaterialProperty.GENERATE_ORE_PROCESSING)
                     || MaterialForms.has(m, "ORES"); // GT6 OP.ore = ORES
-    private static final Predicate<GTMaterial> HAS_DIRTY_DUST =
-            m -> m.has(MaterialProperty.GENERATE_DIRTY_DUST) || HAS_ORE_PROCESSING.test(m);
     private static final Predicate<GTMaterial> HAS_INGOT = nativeOr(
             m -> m.hasAny(
                     MaterialProperty.INGOT,
@@ -311,9 +300,6 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_RAILS = m -> MaterialForms.has(m, "RAILS");
     /** GT6 {@code OP.ORES}: raw ore, crushed ore, rock. */
     private static final Predicate<GTMaterial> GT6_ORES = m -> MaterialForms.has(m, "ORES");
-    /** GT6 {@code OP.ingotHot}: {@code And(INGOTS_HOT, SMITHABLE, meltmin(800))}. */
-    private static final Predicate<GTMaterial> GT6_INGOTS_HOT =
-            m -> MaterialForms.has(m, "INGOTS_HOT") && m.has(MaterialProperty.SMITHABLE) && m.getMeltingPoint() >= 800;
     /** GT6 {@code OP.ingotDouble} … {@code ingotQuintuple}. */
     private static final Predicate<GTMaterial> GT6_MULTIINGOTS = m -> MaterialForms.has(m, "MULTIINGOTS");
     /** GT6 {@code OP.plateDouble} … {@code plateQuintuple}. */
@@ -355,15 +341,6 @@ public final class MaterialPrefix {
         dustSmall = child("dustSmall", "Small Dust", dust);
         dustTiny = child("dustTiny", "Tiny Dust", dust);
         dustDiv72 = child("dustDiv72", "1/72 Dust", dust);
-        dustImpure = tex("dustImpure", "Impure Dust", "dust", HAS_DIRTY_DUST);
-        dustPure = tex("dustPure", "Purified Dust", "dust", m -> MaterialForms.has(m, "DIRTY_DUSTS"));
-        dustRefined = tex(
-                "dustRefined",
-                "Refined Dust",
-                "dust",
-                m -> MaterialForms.has(m, "DIRTY_DUSTS")
-                        && !m.getName().equals("Obsidian")
-                        && !m.getName().equals("Glowstone"));
         // Unit marker items exist for every material (recipe display / JEI bookkeeping).
         unit = def("unit", "Unit", m -> true);
         crushed = def("crushed", "Crushed Ore", HAS_ORE_PROCESSING);
@@ -398,11 +375,6 @@ public final class MaterialPrefix {
         nugget = child("nugget", "Nugget", ingot);
         chunkGt = child("chunkGt", "Chunk", ingot);
         billet = child("billet", "Billet", ingot);
-        ingotHot = def(
-                "ingotHot",
-                "Hot Ingot",
-                nativeOr(m -> HAS_INGOT.test(m) && m.has(MaterialProperty.SMITHABLE), m -> GT6_INGOTS_HOT.test(m)),
-                true);
         ingotDouble = def(
                 "ingotDouble",
                 "Double Ingot",
@@ -628,9 +600,6 @@ public final class MaterialPrefix {
         if (dust == null || ingot == null || plate == null || gearGt == null || bulletGtLarge == null) {
             throw new IllegalStateException("MaterialPrefix constants failed to initialize");
         }
-        // GT6 OP.java:578 — carrying a white-hot ingot burns its holder
-        // (UT.Entities.getHeatDamageFromItem -> GTEntityHelper.heatDamageFromItem).
-        ingotHot.heatDamage = 3.0F;
     }
 
     private final String name;
@@ -760,10 +729,6 @@ public final class MaterialPrefix {
             case "dust_small" -> GTValues.U4;
             case "dust_tiny", "nugget" -> GTValues.U9;
             case "dust_div72" -> GTValues.U72;
-            // OP:158-160 includes one, two or three ninths of impurities.
-            case "dust_impure" -> GTValues.U9 * 10;
-            case "dust_pure" -> GTValues.U9 * 11;
-            case "dust_refined" -> GTValues.U9 * 12;
             // GT6's coin is the only form whose amount is written down outside the prefix table: the
             // coin multi-tile recycles itself as one ninth of a unit
             // (`OM.stack(mMaterial, U9)`, MultiTileEntityCoin.java:99).
@@ -873,7 +838,7 @@ public final class MaterialPrefix {
         return hiddenFromCreative;
     }
 
-    /** GT6 {@code OreDictPrefix.mHeatDamage} — see {@code OP.ingotHot.mHeatDamage = 3.0F}. */
+    /** GT6 {@code OreDictPrefix.mHeatDamage}: contact damage for a carried material form. */
     public float heatDamage() {
         return heatDamage;
     }

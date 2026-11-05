@@ -162,18 +162,15 @@ public final class SourceThermalInputRules {
 
     /** A finite proof boundary. Unreviewed prefixes (including other recyclable forms and the old
      * plain-dust producer) are UNKNOWN here, not banned from the original listener or other owners.
-     * OP133 marks oreRaw ORE; OP135-136 mark crushed forms DIRTY; OP158/166 lack RECYCLABLE
-     * for impure dust/hot ingot. Quantity mismatches, source secondary materials and unproved
+     * OP133 marks oreRaw ORE; OP135-136 mark crushed forms DIRTY.
+     * Quantity mismatches, source secondary materials and unproved
      * prefix identities stay UNKNOWN; neither recoverable=true nor a one-component port
      * composition silently admits those separately scoped cases.
      */
     public static Truth prefixDecision(MaterialPrefix prefix) {
         if (form(prefix) != null) return Truth.YES;
-        if (prefix == MaterialPrefix.oreRaw
-                || prefix == MaterialPrefix.crushed
-                || prefix == MaterialPrefix.crushedTiny
-                || prefix == MaterialPrefix.dustImpure
-                || prefix == MaterialPrefix.ingotHot) return Truth.NO;
+        if (prefix == MaterialPrefix.oreRaw || prefix == MaterialPrefix.crushed || prefix == MaterialPrefix.crushedTiny)
+            return Truth.NO;
         return Truth.UNKNOWN;
     }
 

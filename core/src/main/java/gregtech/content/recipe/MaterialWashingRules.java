@@ -20,10 +20,7 @@ public final class MaterialWashingRules {
     }
 
     public static final List<Row> ROWS = List.of(
-            new Row(MaterialPrefix.crushed, MaterialPrefix.crushedPurified, MaterialPrefix.crushedPurifiedTiny, 2),
-            new Row(MaterialPrefix.dustImpure, MaterialPrefix.dust, null, 1),
-            new Row(MaterialPrefix.dustPure, MaterialPrefix.dust, null, 1),
-            new Row(MaterialPrefix.dustRefined, MaterialPrefix.dust, null, 1));
+            new Row(MaterialPrefix.crushed, MaterialPrefix.crushedPurified, MaterialPrefix.crushedPurifiedTiny, 2));
 
     public static Row row(MaterialPrefix prefix) {
         for (var row : ROWS) if (row.input() == prefix) return row;

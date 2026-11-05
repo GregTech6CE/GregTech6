@@ -23,9 +23,7 @@ public final class ExternalOreProcessingRules {
             MaterialPrefix.cleanGravel,
             MaterialPrefix.cluster,
             MaterialPrefix.dirtyGravel,
-            MaterialPrefix.crystal,
-            MaterialPrefix.dustPure,
-            MaterialPrefix.dustRefined);
+            MaterialPrefix.crystal);
     /** RecipeMapCrucible:getNEIRecipes lists these eight external ore forms, not clump/crystal/rawOreChunk. */
     public static final List<MaterialPrefix> CRUCIBLE_FORMS = List.of(
             MaterialPrefix.chunk,
@@ -36,7 +34,7 @@ public final class ExternalOreProcessingRules {
             MaterialPrefix.dirtyGravel,
             MaterialPrefix.crystalline,
             MaterialPrefix.reduced);
-    /** Include tagged crushed/impure dust so world listeners also recognize foreign items. */
+    /** Include tagged crushed ore so world listeners also recognize foreign items. */
     public static final List<MaterialPrefix> COMPOSITION_FORMS = java.util.stream.Stream.concat(
                     EXTERNAL_FORMS.stream(), MaterialWashingRules.ROWS.stream().map(MaterialWashingRules.Row::input))
             .distinct()
@@ -142,11 +140,7 @@ public final class ExternalOreProcessingRules {
             new GrindingRoute("Mortar", MaterialPrefix.reduced, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.clump, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.dirtyGravel, 0, false),
-            new GrindingRoute("Mortar", MaterialPrefix.crystal, 0, false),
-            // Registered inputs only, no Bedrock, explicit fines ({@code Loader_Recipes_Handlers.java:114-128}).
-            new GrindingRoute("Shredder", MaterialPrefix.dustImpure, 1, 1, true),
-            new GrindingRoute("Shredder", MaterialPrefix.dustPure, 1, 2, true),
-            new GrindingRoute("Shredder", MaterialPrefix.dustRefined, 1, 3, true));
+            new GrindingRoute("Mortar", MaterialPrefix.crystal, 0, false));
 
     public static boolean allows(GTMaterial material) {
         return material.isValid() && !material.has(MaterialProperty.ANTIMATTER);
