@@ -9,7 +9,7 @@
       "item": "gt6ce:wire_01_tin"
     },
     "C": {
-      "item": "gt6ce:circuit_good"
+      "tag": "gt6ce:circuits_tier_2_plus"
     },
     "Q": {
       "item": "gt6ce:blank_cover"

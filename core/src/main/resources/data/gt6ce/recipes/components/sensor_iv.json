@@ -16,7 +16,7 @@
       "item": "gt6ce:wire_01_platinum"
     },
     "C": {
-      "item": "gt6ce:circuit_master"
+      "tag": "gt6ce:circuits_tier_5_plus"
     }
   },
   "result": {

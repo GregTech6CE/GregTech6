@@ -9,7 +9,7 @@
       "item": "minecraft:repeater"
     },
     "C": {
-      "item": "gt6ce:circuit_master"
+      "tag": "gt6ce:circuits_tier_5_plus"
     },
     "Q": {
       "item": "gt6ce:blank_cover"

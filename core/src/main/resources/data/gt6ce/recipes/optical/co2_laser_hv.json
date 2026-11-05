@@ -13,7 +13,7 @@
       "item": "gt6ce:cable_01_gold"
     },
     "C": {
-      "item": "gt6ce:circuit_advanced"
+      "tag": "gt6ce:circuits_tier_3_plus"
     },
     "M": {
       "item": "gt6ce:casing_machine_stainlesssteel"

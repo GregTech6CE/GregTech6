@@ -10,7 +10,7 @@
       "item": "gt6ce:compact_electric_piston_ev"
     },
     "C": {
-      "item": "gt6ce:circuit_master"
+      "tag": "gt6ce:circuits_tier_5_plus"
     },
     "M": {
       "item": "gt6ce:casing_machine_dense_lead"

@@ -16,7 +16,7 @@
       "item": "gt6ce:wire_01_gold"
     },
     "C": {
-      "item": "gt6ce:circuit_advanced"
+      "tag": "gt6ce:circuits_tier_3_plus"
     }
   },
   "result": {

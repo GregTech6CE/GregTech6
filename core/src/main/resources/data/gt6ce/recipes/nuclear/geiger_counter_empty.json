@@ -16,7 +16,7 @@
       "tag": "forge:plates/aluminium"
     },
     "C": {
-      "item": "gt6ce:circuit_basic"
+      "tag": "gt6ce:circuits_tier_1_plus"
     },
     "d": {
       "item": "gt6ce:tool_screwdriver"

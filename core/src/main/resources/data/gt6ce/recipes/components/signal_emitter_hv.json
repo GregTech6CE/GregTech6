@@ -13,7 +13,7 @@
       "item": "gt6ce:plate_curved_stainlesssteel"
     },
     "C": {
-      "item": "gt6ce:circuit_advanced"
+      "tag": "gt6ce:circuits_tier_3_plus"
     },
     "W": {
       "item": "gt6ce:cable_01_gold"

@@ -19,7 +19,7 @@
       "item": "gt6ce:compact_electric_piston_lv"
     },
     "E": {
-      "item": "gt6ce:circuit_basic"
+      "tag": "gt6ce:circuits_tier_1_plus"
     }
   },
   "result": {

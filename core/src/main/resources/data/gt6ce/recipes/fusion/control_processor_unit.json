@@ -10,7 +10,7 @@
       "item": "gt6ce:casing_machine_steelgalvanized"
     },
     "C": {
-      "item": "gt6ce:circuit_ultimate"
+      "tag": "gt6ce:circuits_tier_6_plus"
     },
     "P": {
       "item": "gt6ce:crystal_processor_ruby"

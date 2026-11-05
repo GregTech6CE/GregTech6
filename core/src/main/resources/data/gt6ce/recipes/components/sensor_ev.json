@@ -16,7 +16,7 @@
       "item": "gt6ce:wire_01_aluminium"
     },
     "C": {
-      "item": "gt6ce:circuit_elite"
+      "tag": "gt6ce:circuits_tier_4_plus"
     }
   },
   "result": {

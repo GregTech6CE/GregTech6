@@ -2,7 +2,7 @@
   "type": "gt6ce:tool_shaped",
   "pattern": ["CPC", "TMT", "UdU"],
   "key": {
-    "C": {"item": "gt6ce:circuit_advanced"},
+    "C": {"tag": "gt6ce:circuits_tier_3_plus"},
     "P": {"item": "gt6ce:crystal_processor_emerald"},
     "T": {"tag": "forge:screws/steel_galvanized"},
     "M": {"item": "gt6ce:casing_machine_steelgalvanized"},

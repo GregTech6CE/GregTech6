@@ -13,7 +13,7 @@
       "item": "gt6ce:cable_01_copper"
     },
     "C": {
-      "item": "gt6ce:circuit_good"
+      "tag": "gt6ce:circuits_tier_2_plus"
     },
     "M": {
       "item": "gt6ce:casing_machine_aluminium"

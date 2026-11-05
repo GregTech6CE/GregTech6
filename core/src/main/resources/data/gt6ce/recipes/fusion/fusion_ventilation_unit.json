@@ -10,7 +10,7 @@
       "item": "gt6ce:air_vent"
     },
     "C": {
-      "item": "gt6ce:circuit_advanced"
+      "tag": "gt6ce:circuits_tier_3_plus"
     },
     "M": {
       "item": "gt6ce:casing_machine_steelgalvanized"

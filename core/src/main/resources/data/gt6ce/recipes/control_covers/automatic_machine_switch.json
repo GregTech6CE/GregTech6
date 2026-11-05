@@ -9,7 +9,7 @@
       "item": "minecraft:lever"
     },
     "C": {
-      "item": "gt6ce:circuit_basic"
+      "tag": "gt6ce:circuits_tier_1_plus"
     },
     "Q": {
       "item": "gt6ce:blank_cover"
