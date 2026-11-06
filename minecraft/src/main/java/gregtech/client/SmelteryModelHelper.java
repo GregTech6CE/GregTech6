@@ -119,9 +119,6 @@ public final class SmelteryModelHelper {
 
     // === Faucet geometry (per-facing) ===
 
-    /** Base texture prefix for tint string injection. */
-    private static final String TINT_PREFIX = ",\"tintindex\":0\"";
-
     public static String faucetElements(Direction facing, boolean tinted) {
         String tint = tinted ? ",\"tintindex\":0" : "";
         return switch (facing) {

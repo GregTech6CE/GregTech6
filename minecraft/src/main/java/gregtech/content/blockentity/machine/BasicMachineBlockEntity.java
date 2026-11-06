@@ -79,12 +79,10 @@ import java.util.Collections;
 *///?} else {
 public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
 //?}
-    private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
     private static final String NBT_TANKS_OUT = "gt.tanks_output";
     private static final String NBT_ENERGY = "gt.energy";
-    private static final String NBT_FACE_CONFIG = "gt.face_config";
 
     private BasicMachineSpec spec;
     /** A save loaded before this machine had a spec; sanitize once the spec arrives. */

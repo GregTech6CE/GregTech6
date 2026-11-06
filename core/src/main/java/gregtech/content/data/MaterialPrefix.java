@@ -285,10 +285,6 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_INGOTS = m -> MaterialForms.has(m, "INGOTS");
     /** GT6 {@code OP.STICKS}. Like {@link #GT6_PARTS}, {@code OreDictMaterial.qual} grants it. */
     private static final Predicate<GTMaterial> GT6_STICKS = m -> MaterialForms.has(m, "STICKS") || m.getToolTypes() > 0;
-    /** GT6 {@code OP.FOILS}. */
-    private static final Predicate<GTMaterial> GT6_FOILS = m -> MaterialForms.has(m, "FOILS");
-    /** GT6 {@code OP.LENSES}. */
-    private static final Predicate<GTMaterial> GT6_LENSES = m -> MaterialForms.has(m, "LENSES");
     /**
      * GT6 {@code OP.PARTS}: gears, rings, springs, rotors, casings. <br>
      * {@code OreDictMaterial.qual} also grants PARTS to every material with a positive tool type
@@ -300,10 +296,6 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_RAILS = m -> MaterialForms.has(m, "RAILS");
     /** GT6 {@code OP.ORES}: raw ore, crushed ore, rock. */
     private static final Predicate<GTMaterial> GT6_ORES = m -> MaterialForms.has(m, "ORES");
-    /** GT6 {@code OP.ingotDouble} … {@code ingotQuintuple}. */
-    private static final Predicate<GTMaterial> GT6_MULTIINGOTS = m -> MaterialForms.has(m, "MULTIINGOTS");
-    /** GT6 {@code OP.plateDouble} … {@code plateQuintuple}. */
-    private static final Predicate<GTMaterial> GT6_MULTIPLATES = m -> MaterialForms.has(m, "MULTIPLATES");
     /**
      * The four metals GT6 coins unconditionally ({@code MultiTileEntityCoin.java:286}):
      * {@code tMaterial != MT.Cu && tMaterial != MT.Ag && tMaterial != MT.Au && tMaterial != MT.Pt}.
@@ -333,8 +325,6 @@ public final class MaterialPrefix {
     private static boolean gt6Coin(GTMaterial m) {
         return plateTiny.isValidFor(m) || GT6_COIN_METALS.contains(m.getName());
     }
-    /** GT6 {@code OP.plateDense}. */
-    private static final Predicate<GTMaterial> GT6_DENSEPLATES = m -> MaterialForms.has(m, "DENSEPLATES");
 
     static {
         dust = def("dust", "Dust", HAS_DUST);

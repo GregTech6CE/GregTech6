@@ -66,8 +66,6 @@ import static gregtech.content.data.FuelRecipeMaps.*;
 public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ItemBehaviors.Ignitable,gregtech.engine.tool.PoweredToolTarget {
 //?}
 
-    private static final int FLAME_RANGE = 2;
-
     protected final BurningBoxFuelType fuelType;
     protected final MachineSpec spec;
     protected final RecipeMap recipeMap;

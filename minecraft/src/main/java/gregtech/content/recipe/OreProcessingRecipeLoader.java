@@ -38,10 +38,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
     /** Chances are 1/100th of a percent: 10_000 = 100 %. */
     private static final long CHANCE_100 = 10_000L;
-    private static final long CHANCE_50  =  5_000L;
-    private static final long CHANCE_15  =  1_500L;
-    private static final long CHANCE_10  =  1_000L;
-    private static final long CHANCE_5   =    500L;
+    private static final long CHANCE_10 = 1_000L;
 
     /** Default EU/t for the ore processing tier. */
     private static final long EU_TIER = 16;
@@ -399,11 +396,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (output.isEmpty()) return false;
         if (ReviewedCinnabarFacts.supports(material) || ReviewedOreShredderFacts.supports(material)) {
             // Unsupported contexts preserve the former reviewed Crusher/follow-on split.
-            MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{10000,1000,1000},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
+            MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{CHANCE_100,CHANCE_10,CHANCE_10},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
         } else if (NonOreMacerationRows.reviewed(material)) {
             for (var map : new gregtech.engine.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
                 NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
-                        new ItemStack[]{output,ItemStack.EMPTY,ItemStack.EMPTY},new long[]{10000,1000,1000},null,64,16);
+                        new ItemStack[]{output,ItemStack.EMPTY,ItemStack.EMPTY},new long[]{CHANCE_100,CHANCE_10,CHANCE_10},null,64,16);
         } else MachineRecipeMaps.pulverizing(input, output);
         return false;
     }

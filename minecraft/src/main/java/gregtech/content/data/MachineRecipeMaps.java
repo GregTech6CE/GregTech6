@@ -122,8 +122,6 @@ import net.minecraftforge.fluids.FluidStack;
 public class MachineRecipeMaps {
     protected MachineRecipeMaps() {}
 
-    private static final String GUI = "textures/gui/machines/";
-
     // ── RecipeMap instances ──────────────────────────────────────────────
     // Constructor order: (collection, internalName, localName, guiPath,
     //   inItems, outItems, minItems, inFluids, outFluids, minFluids, minInputs,

@@ -18,7 +18,6 @@ import java.util.Set;
  */
 public class HopperScreen extends MachineContainerScreen<HopperContainerMenu> {
     private static final Set<Integer> TEXTURE_SIZES = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15, 16, 18, 27, 36, 54);
-    private static final int TEX_WIDTH = 176;
 
     private final ResourceLocation texture;
 

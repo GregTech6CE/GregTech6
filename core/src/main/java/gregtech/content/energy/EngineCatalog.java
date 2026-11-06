@@ -111,11 +111,6 @@ public final class EngineCatalog {
         5000, 6400, 6450, 5000, 6200,
         6300, 5800, 5800, 6000
     };
-    private static final int[] STEAM_CAPACITIES = {
-        16000, 20000, 24000, 24000, 28000,
-        24000, 16000, 16000, 32000, 64000,
-        96000, 112000, 128000, 128000
-    };
     private static final long[] STEAM_OUTPUTS = {
         16, 20, 24, 24, 28,
         24, 16, 16, 32, 64,
@@ -137,12 +132,6 @@ public final class EngineCatalog {
         64, 80, 96, 96, 112,
         96, 64, 64, 128, 256,
         384, 448, 512, 512
-    };
-
-    private static final int[] STRONG_STEAM_CAPACITIES = {
-        64000, 80000, 96000, 96000, 112000,
-        96000, 64000, 64000, 128000, 256000,
-        384000, 448000, 512000, 512000
     };
 
     // ── Hardness / blast resistance per tier (lightweight engines) ─────────

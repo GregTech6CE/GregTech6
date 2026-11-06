@@ -17,8 +17,6 @@ public class Recipe {
     private static final ItemStack[] NO_ITEMS = new ItemStack[0];
     private static final FluidStack[] NO_FLUIDS = new FluidStack[0];
     private static final long[] NO_CHANCES = new long[0];
-    // Shared only while empty; each mutator detaches before setting a bit.
-    private static final java.util.BitSet NO_FLAGS = new java.util.BitSet(0);
 
     private java.util.Map<Integer, net.minecraft.tags.TagKey<net.minecraft.world.item.Item>> itemTags = java.util.Map.of();
     private java.util.Map<Integer, net.minecraft.tags.TagKey<net.minecraft.world.level.material.Fluid>> fluidTags = java.util.Map.of();

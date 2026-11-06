@@ -15,7 +15,6 @@ import java.util.Map;
 public class FuelRecipeMaps {
     protected FuelRecipeMaps() {}
 
-    private static final String GUI = "gt6ce:textures/gui/machines/";
     private static final java.util.Set<String> FUEL_NAMES = new java.util.LinkedHashSet<>();
 
     /** True for a built-in fuel map and for a fuel map an addon declared. */

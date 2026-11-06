@@ -16,7 +16,6 @@ public final class MoldShapes {
 
     public record Recipe(MaterialPrefix itemPrefix, boolean blockSolid) {}
 
-    private static final Recipe BLOCK_SOLID = new Recipe(null, true);
     private static final Map<Integer, Recipe> MOLD_RECIPES = new HashMap<>();
     private static final int[] B = new int[25];
 
