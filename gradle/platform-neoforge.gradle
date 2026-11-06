@@ -170,11 +170,12 @@ tasks.named('jar', Jar).configure {
     // Embedding the complete shared resource catalog requires ZIP64 too.
     zip64 = true
     // The same Java 17 output used by Forge is embedded exactly once. The shared tree is authored
-    // in the 1.20.1 layout, so its plural recipe/item-tag directories are not part of this artifact;
-    // the generated 1.21.1 tree comes through this node's own resources instead.
+    // in the 1.20.1 layout, so its plural recipe, item-tag and loot-table directories are not part
+    // of this artifact; the generated or node-native 1.21.1 paths come through this node instead.
     from(project(':core').sourceSets.main.output) {
         exclude 'data/*/recipes/**'
         exclude 'data/*/tags/items/**'
+        exclude 'data/*/loot_tables/**'
     }
     from project(':api').sourceSets.main.output
     from platformApi.sourceSets.main.output
