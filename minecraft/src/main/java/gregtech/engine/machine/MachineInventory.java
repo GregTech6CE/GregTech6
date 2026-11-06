@@ -26,11 +26,9 @@ public final class MachineInventory implements IFluidHandler {
     private final FluidTankGT[] tanksOutput;
     private final int inputCount;
     private final int potionCount;
-    private final boolean originalFluidBuffers;
 
-    public MachineInventory(RecipeMap recipeMap, int parallelLimit, boolean originalFluidBuffers, Runnable onChanged) {
+    public MachineInventory(RecipeMap recipeMap, int parallelLimit, Runnable onChanged) {
         this.recipeMap = recipeMap;
-        this.originalFluidBuffers = originalFluidBuffers;
         this.inputCount = recipeMap.mInputItemsCount;
         this.potionCount = recipeMap.mInputPotionCount;
         this.items = new MachineItemHandler(inputCount + recipeMap.mOutputItemsCount, inputCount, onChanged);
@@ -39,10 +37,12 @@ public final class MachineInventory implements IFluidHandler {
             this.items.setInputFilter(stack -> !(stack.getItem() instanceof net.minecraft.world.item.PotionItem));
         this.tanksInput = new FluidTankGT[recipeMap.mInputFluidCount];
         this.tanksOutput = new FluidTankGT[recipeMap.mOutputFluidCount];
+        // GT6's MultiTileEntityBasicMachine starts input tanks at 1000 mB and scales each fluid's
+        // largest recipe amount by parallel × 2.
         for (int i = 0; i < tanksInput.length; i++) {
-            tanksInput[i] = new FluidTankGT(originalFluidBuffers ? MachineFluidRules.INPUT_BASE_CAPACITY : 8000)
+            tanksInput[i] = new FluidTankGT(MachineFluidRules.INPUT_BASE_CAPACITY)
                     .setAdjustableCapacity(recipeMap.mMinInputTankSizes,
-                            originalFluidBuffers ? MachineFluidRules.inputCapacityMultiplier(parallelLimit) : 1)
+                            MachineFluidRules.inputCapacityMultiplier(parallelLimit))
                     .setOnChanged(onChanged);
         }
         // GT6's MultiTileEntityBasicMachine output tanks are unbounded (new FluidTankGT()); a finite
@@ -52,9 +52,11 @@ public final class MachineInventory implements IFluidHandler {
         }
     }
 
-    /** Saved capacities are not machine settings. Keep excess contents available for extraction. */
+    /**
+     * Saved capacities are not machine settings: old saves still carry the previous 8000 mB base
+     * and output cap. Reset the bases without dropping saved contents above them.
+     */
     public void restoreConfiguredTankCapacities() {
-        if (!originalFluidBuffers) return;
         for (var tank : tanksInput) tank.setCapacityPreservingContents(MachineFluidRules.INPUT_BASE_CAPACITY);
         for (var tank : tanksOutput) tank.setCapacityPreservingContents(Long.MAX_VALUE);
     }

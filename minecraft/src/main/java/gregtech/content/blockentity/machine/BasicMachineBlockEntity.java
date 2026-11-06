@@ -278,7 +278,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         this.recipeMap = spec.recipeMap();
         processor.invalidate();
         this.faceConfig = spec.faceConfig();
-        this.inventory = new MachineInventory(recipeMap, spec.parallelLimit(), usesOriginalFluidBuffers(), this::inventoryChanged);
+        this.inventory = new MachineInventory(recipeMap, spec.parallelLimit(), this::inventoryChanged);
         this.machineItemView = new MachineItemView();
         this.inventory.items().setEmptyInputsOnly(toolSettings::emptyInputsOnly);
         if (specDirty) sanitizeForSpec();

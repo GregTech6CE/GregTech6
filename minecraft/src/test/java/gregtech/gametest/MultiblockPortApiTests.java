@@ -46,7 +46,7 @@ public final class MultiblockPortApiTests {
             var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[] {new ItemStack(Items.IRON_INGOT)},
                     new ItemStack[0], null, null, new FluidStack[0], new FluidStack[] {new FluidStack(Fluids.WATER, 100)}, 20, 16, 0);
             helper.assertTrue(map.addRecipe(recipe) != null, "Backpressure fixture recipe was rejected");
-            var inventory = new gregtech.engine.machine.MachineInventory(map, 1, true, () -> {});
+            var inventory = new gregtech.engine.machine.MachineInventory(map, 1, () -> {});
             inventory.items().setStackInSlot(0, new ItemStack(Items.IRON_INGOT, 2));
             inventory.tanksOutput()[0].setFluid(new FluidStack(Fluids.WATER, 100));
             inventory.tanksOutput()[1].setFluid(new FluidStack(Fluids.WATER, 16000));
