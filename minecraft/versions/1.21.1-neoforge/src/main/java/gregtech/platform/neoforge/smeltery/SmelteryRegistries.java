@@ -2,38 +2,36 @@ package gregtech.platform.neoforge.smeltery;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
+import gregtech.content.registry.ContentRegistrar;
+import gregtech.content.registry.RegisteredBlock;
+import gregtech.content.registry.RegisteredItem;
 import gregtech.engine.machine.InitialSmelteryDefinitions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** Real GT6 block/BE identities; domain specifications come exclusively from core. */
 public final class SmelteryRegistries {
     private SmelteryRegistries() {}
-
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(REGISTRY_NAMESPACE);
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(REGISTRY_NAMESPACE);
     public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
-    public static final DeferredItem<SmelteryToolItem> CHISEL = gregtech.content.registry.GTToolItems.CHISEL;
-    public static final DeferredItem<SmelteryToolItem> PINCERS = gregtech.content.registry.GTToolItems.PINCERS;
+    public static RegisteredItem<? extends gregtech.content.item.GTToolItem> CHISEL;
+    public static RegisteredItem<? extends gregtech.content.item.GTToolItem> PINCERS;
 
-    private static final java.util.List<DeferredBlock<gregtech.content.block.machine.SolidBurningBoxBlock>>
+    private static final java.util.List<RegisteredBlock<gregtech.content.block.machine.SolidBurningBoxBlock>>
             SOLID_BOXES = new java.util.ArrayList<>();
-    private static final java.util.List<DeferredBlock<gregtech.content.block.machine.BurningBoxBlock>> FUEL_BOXES =
+    private static final java.util.List<RegisteredBlock<gregtech.content.block.machine.BurningBoxBlock>> FUEL_BOXES =
             new java.util.ArrayList<>();
 
-    public static java.util.List<DeferredBlock<gregtech.content.block.machine.SolidBurningBoxBlock>> solidBoxes() {
+    public static java.util.List<RegisteredBlock<gregtech.content.block.machine.SolidBurningBoxBlock>> solidBoxes() {
         return java.util.List.copyOf(SOLID_BOXES);
     }
 
-    public static java.util.List<DeferredBlock<gregtech.content.block.machine.BurningBoxBlock>> fuelBoxes() {
+    public static java.util.List<RegisteredBlock<gregtech.content.block.machine.BurningBoxBlock>> fuelBoxes() {
         return java.util.List.copyOf(FUEL_BOXES);
     }
 
@@ -45,41 +43,33 @@ public final class SmelteryRegistries {
                 .lightLevel(state -> state.getValue(gregtech.content.block.machine.GTFacingMachineBlock.LIT) ? 13 : 0);
     }
 
-    private static DeferredBlock<gregtech.content.block.machine.SolidBurningBoxBlock> solidBox(
-            gregtech.engine.machine.MachineSpec spec) {
-        var holder = BLOCKS.register(
-                spec.id(), () -> new gregtech.content.block.machine.SolidBurningBoxBlock(spec, boxProperties(spec)));
+    private static RegisteredBlock<gregtech.content.block.machine.SolidBurningBoxBlock> solidBox(
+            ContentRegistrar registrar, gregtech.engine.machine.MachineSpec spec) {
+        var holder = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+                () -> new gregtech.content.block.machine.SolidBurningBoxBlock(spec, boxProperties(spec)),
+                box -> new gregtech.content.block.machine.BurningBoxBlockItem(
+                        box, new Item.Properties().stacksTo(16), spec));
         SOLID_BOXES.add(holder);
-        ITEMS.register(
-                spec.id(),
-                () -> new gregtech.content.block.machine.BurningBoxBlockItem(
-                        holder.get(), new Item.Properties().stacksTo(16), spec));
         return holder;
     }
 
-    private static void fuelBox(gregtech.engine.machine.BurningBoxDefinitions.Entry entry) {
+    private static void fuelBox(ContentRegistrar registrar, gregtech.engine.machine.BurningBoxDefinitions.Entry entry) {
         var spec = entry.spec();
-        var holder = BLOCKS.register(
-                spec.id(),
-                () -> new gregtech.content.block.machine.BurningBoxBlock(entry.fuelType(), spec, boxProperties(spec)));
+        var holder = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+                () -> new gregtech.content.block.machine.BurningBoxBlock(entry.fuelType(), spec, boxProperties(spec)),
+                box -> new gregtech.content.block.machine.BurningBoxBlockItem(
+                        box, new Item.Properties().stacksTo(16), spec));
         FUEL_BOXES.add(holder);
-        ITEMS.register(
-                spec.id(),
-                () -> new gregtech.content.block.machine.BurningBoxBlockItem(
-                        holder.get(), new Item.Properties().stacksTo(16), spec));
     }
 
-    public static final DeferredBlock<gregtech.content.block.machine.SolidBurningBoxBlock> BRICK_BURNING_BOX =
-            solidBox(InitialSmelteryDefinitions.brickBurningBox());
-    private static final java.util.List<DeferredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock>> CRUCIBLES =
+    public static RegisteredBlock<gregtech.content.block.machine.SolidBurningBoxBlock> BRICK_BURNING_BOX;
+    private static final java.util.List<RegisteredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock>> CRUCIBLES =
             new java.util.ArrayList<>();
-    public static final DeferredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock> CERAMIC_CRUCIBLE =
-            crucible(InitialSmelteryDefinitions.ceramicCrucible());
+    public static RegisteredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock> CERAMIC_CRUCIBLE;
 
-    private static DeferredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock> crucible(
-            gregtech.engine.machine.CrucibleSpec spec) {
-        var block = BLOCKS.register(
-                spec.id(),
+    private static RegisteredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock> crucible(
+            ContentRegistrar registrar, gregtech.engine.machine.CrucibleSpec spec) {
+        var block = registrar.blockWithoutItem(REGISTRY_NAMESPACE, spec.id(),
                 () -> new gregtech.content.block.machine.SmeltingCrucibleBlock(
                         spec,
                         gregtech.content.block.machine.SmeltingCrucibleBlock.defaultProperties(spec)
@@ -88,88 +78,75 @@ public final class SmelteryRegistries {
         return block;
     }
 
-    public static java.util.List<DeferredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock>> crucibles() {
+    public static java.util.List<RegisteredBlock<gregtech.content.block.machine.SmeltingCrucibleBlock>> crucibles() {
         return java.util.List.copyOf(CRUCIBLES);
     }
 
-    private static final java.util.List<DeferredBlock<gregtech.content.block.machine.MoldBlock>> MOLDS =
+    private static final java.util.List<RegisteredBlock<gregtech.content.block.machine.MoldBlock>> MOLDS =
             new java.util.ArrayList<>();
-    private static final java.util.List<DeferredBlock<gregtech.content.block.machine.MoldBasinBlock>> BASINS =
+    private static final java.util.List<RegisteredBlock<gregtech.content.block.machine.MoldBasinBlock>> BASINS =
             new java.util.ArrayList<>();
-    private static final java.util.List<DeferredBlock<gregtech.content.block.machine.CrucibleFaucetBlock>> FAUCETS =
+    private static final java.util.List<RegisteredBlock<gregtech.content.block.machine.CrucibleFaucetBlock>> FAUCETS =
             new java.util.ArrayList<>();
-    private static final java.util.List<DeferredBlock<gregtech.content.block.machine.CrucibleCrossingBlock>> CROSSINGS =
+    private static final java.util.List<RegisteredBlock<gregtech.content.block.machine.CrucibleCrossingBlock>> CROSSINGS =
             new java.util.ArrayList<>();
 
-    public static java.util.List<DeferredBlock<gregtech.content.block.machine.MoldBlock>> molds() {
+    public static java.util.List<RegisteredBlock<gregtech.content.block.machine.MoldBlock>> molds() {
         return java.util.List.copyOf(MOLDS);
     }
 
-    public static java.util.List<DeferredBlock<gregtech.content.block.machine.MoldBasinBlock>> basins() {
+    public static java.util.List<RegisteredBlock<gregtech.content.block.machine.MoldBasinBlock>> basins() {
         return java.util.List.copyOf(BASINS);
     }
 
-    public static java.util.List<DeferredBlock<gregtech.content.block.machine.CrucibleFaucetBlock>> faucets() {
+    public static java.util.List<RegisteredBlock<gregtech.content.block.machine.CrucibleFaucetBlock>> faucets() {
         return java.util.List.copyOf(FAUCETS);
     }
 
-    public static java.util.List<DeferredBlock<gregtech.content.block.machine.CrucibleCrossingBlock>> crossings() {
+    public static java.util.List<RegisteredBlock<gregtech.content.block.machine.CrucibleCrossingBlock>> crossings() {
         return java.util.List.copyOf(CROSSINGS);
     }
 
-    private static DeferredBlock<gregtech.content.block.machine.MoldBlock> mold(
-            gregtech.engine.machine.CrucibleSpec base) {
+    private static RegisteredBlock<gregtech.content.block.machine.MoldBlock> mold(
+            ContentRegistrar registrar, gregtech.engine.machine.CrucibleSpec base) {
         var spec = gregtech.engine.machine.SmelteryCompanionDefinitions.of(
                 base, gregtech.engine.machine.SmelteryCompanionDefinitions.Kind.MOLD);
-        var holder = BLOCKS.register(
-                spec.id(),
+        var holder = registrar.block(REGISTRY_NAMESPACE, spec.id(),
                 () -> new gregtech.content.block.machine.MoldBlock(
-                        spec, gregtech.content.block.machine.MoldBlock.defaultProperties(spec)));
+                        spec, gregtech.content.block.machine.MoldBlock.defaultProperties(spec)),
+                mold -> new gregtech.content.block.machine.CrucibleHullBlockItem(
+                        mold, new Item.Properties().stacksTo(16), spec));
         MOLDS.add(holder);
-        ITEMS.register(
-                spec.id(),
-                () -> new gregtech.content.block.machine.CrucibleHullBlockItem(
-                        holder.get(), new Item.Properties().stacksTo(16), spec));
         return holder;
     }
 
-    public static final DeferredBlock<gregtech.content.block.machine.MoldBlock> CERAMIC_MOLD =
-            mold(InitialSmelteryDefinitions.ceramicCrucible());
+    public static RegisteredBlock<gregtech.content.block.machine.MoldBlock> CERAMIC_MOLD;
 
-    private static void otherCompanions(gregtech.engine.machine.CrucibleSpec base) {
+    private static void otherCompanions(ContentRegistrar registrar, gregtech.engine.machine.CrucibleSpec base) {
         var basin = gregtech.engine.machine.SmelteryCompanionDefinitions.of(
                 base, gregtech.engine.machine.SmelteryCompanionDefinitions.Kind.BASIN);
-        var b = BLOCKS.register(
-                basin.id(),
+        var b = registrar.block(REGISTRY_NAMESPACE, basin.id(),
                 () -> new gregtech.content.block.machine.MoldBasinBlock(
-                        basin, gregtech.content.block.machine.MoldBasinBlock.defaultProperties(basin)));
+                        basin, gregtech.content.block.machine.MoldBasinBlock.defaultProperties(basin)),
+                hull -> new gregtech.content.block.machine.CrucibleHullBlockItem(
+                        hull, new Item.Properties().stacksTo(16), basin));
         BASINS.add(b);
-        ITEMS.register(
-                basin.id(),
-                () -> new gregtech.content.block.machine.CrucibleHullBlockItem(
-                        b.get(), new Item.Properties().stacksTo(16), basin));
         var faucet = gregtech.engine.machine.SmelteryCompanionDefinitions.of(
                 base, gregtech.engine.machine.SmelteryCompanionDefinitions.Kind.FAUCET);
-        var f = BLOCKS.register(
-                faucet.id(),
+        var f = registrar.block(REGISTRY_NAMESPACE, faucet.id(),
                 () -> new gregtech.content.block.machine.CrucibleFaucetBlock(
-                        faucet, gregtech.content.block.machine.CrucibleFaucetBlock.defaultProperties(faucet)));
+                        faucet, gregtech.content.block.machine.CrucibleFaucetBlock.defaultProperties(faucet)),
+                hull -> new gregtech.content.block.machine.CrucibleHullBlockItem(
+                        hull, new Item.Properties().stacksTo(16), faucet));
         FAUCETS.add(f);
-        ITEMS.register(
-                faucet.id(),
-                () -> new gregtech.content.block.machine.CrucibleHullBlockItem(
-                        f.get(), new Item.Properties().stacksTo(16), faucet));
         var crossing = gregtech.engine.machine.SmelteryCompanionDefinitions.of(
                 base, gregtech.engine.machine.SmelteryCompanionDefinitions.Kind.CROSSING);
-        var x = BLOCKS.register(
-                crossing.id(),
+        var x = registrar.block(REGISTRY_NAMESPACE, crossing.id(),
                 () -> new gregtech.content.block.machine.CrucibleCrossingBlock(
-                        crossing, gregtech.content.block.machine.CrucibleCrossingBlock.defaultProperties(crossing)));
+                        crossing, gregtech.content.block.machine.CrucibleCrossingBlock.defaultProperties(crossing)),
+                hull -> new gregtech.content.block.machine.CrucibleHullBlockItem(
+                        hull, new Item.Properties().stacksTo(16), crossing));
         CROSSINGS.add(x);
-        ITEMS.register(
-                crossing.id(),
-                () -> new gregtech.content.block.machine.CrucibleHullBlockItem(
-                        x.get(), new Item.Properties().stacksTo(16), crossing));
     }
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolidBurningBoxEntity>> SOLID_BURNING_BOX =
@@ -178,7 +155,7 @@ public final class SmelteryRegistries {
                     () -> BlockEntityType.Builder.of(
                                     SolidBurningBoxEntity::new,
                                     SOLID_BOXES.stream()
-                                            .map(DeferredBlock::get)
+                                            .map(RegisteredBlock::get)
                                             .toArray(net.minecraft.world.level.block.Block[]::new))
                             .build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SmeltingCrucibleEntity>> SMELTING_CRUCIBLE =
@@ -187,7 +164,7 @@ public final class SmelteryRegistries {
                     () -> BlockEntityType.Builder.of(
                                     SmeltingCrucibleEntity::new,
                                     CRUCIBLES.stream()
-                                            .map(DeferredBlock::get)
+                                            .map(RegisteredBlock::get)
                                             .toArray(net.minecraft.world.level.block.Block[]::new))
                             .build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MoldEntity>> MOLD = ENTITIES.register(
@@ -195,24 +172,25 @@ public final class SmelteryRegistries {
             () -> BlockEntityType.Builder.of(
                             MoldEntity::new,
                             MOLDS.stream()
-                                    .map(DeferredBlock::get)
+                                    .map(RegisteredBlock::get)
                                     .toArray(net.minecraft.world.level.block.Block[]::new))
                     .build(null));
 
-    static {
-        ITEMS.register(
-                "smelting_crucible_ceramic",
+    public static void register(ContentRegistrar registrar, IEventBus bus) {
+        CHISEL = gregtech.content.registry.GTToolItems.CHISEL;
+        PINCERS = gregtech.content.registry.GTToolItems.PINCERS;
+        BRICK_BURNING_BOX = solidBox(registrar, InitialSmelteryDefinitions.brickBurningBox());
+        CERAMIC_CRUCIBLE = crucible(registrar, InitialSmelteryDefinitions.ceramicCrucible());
+        CERAMIC_MOLD = mold(registrar, InitialSmelteryDefinitions.ceramicCrucible());
+        registrar.item(REGISTRY_NAMESPACE, "smelting_crucible_ceramic",
                 () -> new gregtech.content.block.machine.SmeltingCrucibleBlockItem(
                         CERAMIC_CRUCIBLE.get(),
                         new Item.Properties().stacksTo(16),
                         InitialSmelteryDefinitions.ceramicCrucible()));
-    }
-
-    public static void register(IEventBus bus) {
         for (var entry : gregtech.engine.machine.BurningBoxDefinitions.all()) {
             if (entry.spec().id().equals("burning_box_solid_brick")) continue;
-            if (entry.fuelType() == gregtech.engine.machine.BurningBoxFuelType.SOLID) solidBox(entry.spec());
-            else fuelBox(entry);
+            if (entry.fuelType() == gregtech.engine.machine.BurningBoxFuelType.SOLID) solidBox(registrar, entry.spec());
+            else fuelBox(registrar, entry);
         }
         com.mojang.logging.LogUtils.getLogger()
                 .info(
@@ -222,15 +200,14 @@ public final class SmelteryRegistries {
         bus.addListener(SmelteryRegistries::capabilities);
         for (var spec : gregtech.engine.machine.OriginalCrucibleDefinitions.all()) {
             if (spec.id().equals("smelting_crucible_ceramic")) continue;
-            var holder = crucible(spec);
-            ITEMS.register(
-                    spec.id(),
+            var holder = crucible(registrar, spec);
+            registrar.item(REGISTRY_NAMESPACE, spec.id(),
                     () -> new gregtech.content.block.machine.SmeltingCrucibleBlockItem(
                             holder.get(), new Item.Properties().stacksTo(16), spec));
         }
         for (var base : gregtech.engine.machine.OriginalCrucibleDefinitions.all()) {
-            if (!base.id().equals("smelting_crucible_ceramic")) mold(base);
-            otherCompanions(base);
+            if (!base.id().equals("smelting_crucible_ceramic")) mold(registrar, base);
+            otherCompanions(registrar, base);
         }
         com.mojang.logging.LogUtils.getLogger()
                 .info(
@@ -242,8 +219,6 @@ public final class SmelteryRegistries {
                         CROSSINGS.size());
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Native original smelting crucibles: {}", CRUCIBLES.size());
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
         ENTITIES.register(bus);
     }
 

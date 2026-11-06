@@ -7,7 +7,7 @@ import gregtech.content.transport.fluid.FluidTransportDefinitions;
 public final class FluidPipeDefinitions {
     private FluidPipeDefinitions() {}
 
-    public static void register() {
+    public static void register(gregtech.content.registry.ContentRegistrar registrar) {
         gregtech.engine.addon.AddonMachines.collectContributors();
         for (var spec : FluidTransportDefinitions.pipes()) {
             String owner = gregtech.engine.addon.AddonPipes.owner(spec.id());
@@ -15,7 +15,7 @@ public final class FluidPipeDefinitions {
                 var block = GTFluidPipes.register(spec);
                 if (spec.id().equals("pipe_medium_steel")) GTFluidPipes.PIPE_MEDIUM_STEEL = block;
             } else {
-                gregtech.content.registry.AddonPipeRegistration.queueFluid(owner, spec);
+                gregtech.content.registry.AddonPipeRegistration.queueFluid(registrar, owner, spec);
             }
         }
     }

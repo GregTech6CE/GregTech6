@@ -102,9 +102,13 @@ public final class GTItems {
         if (initialized) throw new IllegalStateException("Neo material items already queued");
         int total = registerAll(new NeoContentRegistrar());
         ITEMS.register(modEventBus);
-        for (DeferredRegister.Items register : ADDON_ITEMS.values()) register.register(modEventBus);
         initialized = true;
         return total;
+    }
+
+    // Addon namespaces keep being created during bootstrap, so they are submitted by the entry point last.
+    public static void registerAddonItems(IEventBus modEventBus) {
+        for (DeferredRegister.Items register : ADDON_ITEMS.values()) register.register(modEventBus);
     }
 *///?}
     public static void bind(MaterialPrefix prefix, GTMaterial material, RegisteredItem<Item> item) {

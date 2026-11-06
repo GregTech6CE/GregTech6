@@ -51,7 +51,7 @@ public class GregTech {
         initialize(
                 "machine registration",
                 new MachineBlockBootstrap(modEventBus),
-                new CreativeTabBootstrap(modEventBus),
+                new CreativeTabBootstrap(modEventBus, new gregtech.platform.forge.ForgeContentRegistrar()),
                 new DeferredRegistrySubmission(modEventBus));
 
         modEventBus.addListener(this::commonSetup);

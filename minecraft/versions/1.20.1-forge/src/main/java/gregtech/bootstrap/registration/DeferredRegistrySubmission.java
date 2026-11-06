@@ -17,9 +17,8 @@ public record DeferredRegistrySubmission(IEventBus bus) implements Initializatio
         GTItems.registerAddonItems(bus);
         GTBlocks.BLOCKS.register(bus);
         GTBlocks.BLOCK_ITEMS.register(bus);
-        GTMultiblocks.registerAddonParts();
-        GTMultiblocks.registerAddonBlocks(bus);
-        AddonPipeRegistration.submit(bus);
+        GTMultiblocks.registerAddonParts(new gregtech.platform.forge.ForgeContentRegistrar());
+        GTBlocks.registerAddonBlocks(bus);
         // GTIconSetBlocks uses GTBlocks.BLOCKS / GTBlocks.BLOCK_ITEMS directly
         GTSounds.REGISTRY.register(bus);
         GTMenuTypes.MENU_TYPES.register(bus);

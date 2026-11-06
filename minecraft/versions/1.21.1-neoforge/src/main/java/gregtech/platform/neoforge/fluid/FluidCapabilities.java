@@ -40,7 +40,7 @@ public final class FluidCapabilities {
         event.registerItem(
                 Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((FluidDisplayItem) stack.getItem()).handler(stack),
-                FluidRegistries.ITEMS.getEntries().stream()
+                FluidRegistries.allItems()
                         .map(holder -> holder.get())
                         .toArray(net.minecraft.world.item.Item[]::new));
         event.registerItem(

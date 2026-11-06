@@ -1,7 +1,5 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.content.energy.GearboxCatalog.Tier;
 import gregtech.engine.energy.GearboxSpec;
@@ -19,7 +17,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 *///?} else {
-import net.minecraftforge.registries.RegistryObject;
 //?}
 
 import java.util.ArrayList;
@@ -28,13 +25,8 @@ import java.util.List;
 
 /** Material variants of GT6 custom gearboxes and RU rotation transformers. */
 public final class GTGearboxes {
-//? if >=1.21.1 {
-    /*private static final List<DeferredHolder<Block, GearboxBlock>> ALL_GEARBOXES = new ArrayList<>();
-    private static final List<DeferredHolder<Block, EnergyNodeBlock>> ALL_TRANSFORMERS = new ArrayList<>();
-*///?} else {
-    private static final List<RegistryObject<GearboxBlock>> ALL_GEARBOXES = new ArrayList<>();
-    private static final List<RegistryObject<EnergyNodeBlock>> ALL_TRANSFORMERS = new ArrayList<>();
-//?}
+    private static final List<RegisteredBlock<GearboxBlock>> ALL_GEARBOXES = new ArrayList<>();
+    private static final List<RegisteredBlock<EnergyNodeBlock>> ALL_TRANSFORMERS = new ArrayList<>();
 
     // GT6 Loader_MultiTileEntities.kinetic(): 24778–24899. Registry names of
     // the existing variants remain stable; the source's numeric IDs are in the
@@ -42,95 +34,64 @@ public final class GTGearboxes {
     private static final gregtech.content.energy.GearboxCatalog.Tier[] TIERS = gregtech.content.energy.GearboxCatalog.tiers();
 
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<net.minecraft.world.item.Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
+    /*public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,
             BlockEntityType<gregtech.content.blockentity.energy.GearboxBlockEntity>> GEARBOX = ENTITIES.register("gearbox",
             () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.GearboxBlockEntity::new,
-            allGearboxes().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
-*///?} else {
-//?}
+            allGearboxes().stream().map(RegisteredBlock::get).toArray(Block[]::new)).build(null));
+*///?}
     private GTGearboxes() {
     }
 //? if >=1.21.1 {
-    /*public static void register(IEventBus bus) {
+    /*public static void register(ContentRegistrar registrar, IEventBus bus) {
         if (!ALL_GEARBOXES.isEmpty()) throw new IllegalStateException("Gearboxes registered twice");
-        registerAll();
+        registerAll(registrar);
         bootstrap();
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
         ENTITIES.register(bus);
     }
-*///?} else {
-//?}
+*///?}
 
-//? if >=1.21.1 {
-
-    /*public static List<DeferredHolder<Block, GearboxBlock>> allGearboxes() {
+    public static List<RegisteredBlock<GearboxBlock>> allGearboxes() {
         return Collections.unmodifiableList(ALL_GEARBOXES);
     }
 
-    public static List<DeferredHolder<Block, EnergyNodeBlock>> allTransformers() {
+    public static List<RegisteredBlock<EnergyNodeBlock>> allTransformers() {
         return Collections.unmodifiableList(ALL_TRANSFORMERS);
     }
-*///?} else {
-    public static List<RegistryObject<GearboxBlock>> allGearboxes() {
-        return Collections.unmodifiableList(ALL_GEARBOXES);
-    }
 
-    public static List<RegistryObject<EnergyNodeBlock>> allTransformers() {
-        return Collections.unmodifiableList(ALL_TRANSFORMERS);
-    }
-//?}
-
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (Tier tier : TIERS) {
-            registerGearbox(tier);
-            registerTransformer(tier);
+            registerGearbox(registrar, tier);
+            registerTransformer(registrar, tier);
         }
     }
 
-    private static void registerGearbox(Tier tier) {
+    private static void registerGearbox(ContentRegistrar registrar, Tier tier) {
         String id = "gearbox_" + tier.suffix();
         // The original custom gearbox only has NBT_INPUT = VMAX[t]. maxPower
         // is a legacy display field in this port and must not limit transfers.
         GearboxSpec spec = gregtech.content.energy.GearboxCatalog.gearbox(tier);
         boolean wooden = tier.voltageTier() == 0;
-//? if >=1.21.1 {
-        /*DeferredHolder<Block, GearboxBlock> block = BLOCKS.register(id,
-*///?} else {
-        RegistryObject<GearboxBlock> block = GTBlocks.BLOCKS.register(id,
-//?}
-                () -> new GearboxBlock(spec, machineProperties(wooden).noOcclusion()));
+        RegisteredBlock<GearboxBlock> block = registrar.block(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                id,
+                () -> new GearboxBlock(spec, machineProperties(wooden).noOcclusion()),
+                gearbox -> new BlockItem(gearbox, new Item.Properties().stacksTo(16)));
         ALL_GEARBOXES.add(block);
-//? if >=1.21.1 {
-        /*ITEMS.register(id,
-*///?} else {
-        GTBlocks.BLOCK_ITEMS.register(id,
-//?}
-                () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
     }
 
-    private static void registerTransformer(Tier tier) {
+    private static void registerTransformer(ContentRegistrar registrar, Tier tier) {
         // NBT_INPUT = V[t], NBT_OUTPUT = V[t-1] (wood: 2); multiplier 4.
         int voltageTierIndex = tier.voltageTier();
         String id = "rotation_transformer_" + tier.suffix();
         EnergyNodeSpec spec = gregtech.content.energy.GearboxCatalog.transformer(tier);
         boolean wooden = voltageTierIndex == 0;
-//? if >=1.21.1 {
-        /*DeferredHolder<Block, EnergyNodeBlock> block = BLOCKS.register(id,
-*///?} else {
-        RegistryObject<EnergyNodeBlock> block = GTBlocks.BLOCKS.register(id,
-//?}
-                () -> new EnergyNodeBlock(spec, machineProperties(wooden)));
+        RegisteredBlock<EnergyNodeBlock> block = registrar.block(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                id,
+                () -> new EnergyNodeBlock(spec, machineProperties(wooden)),
+                transformer -> new BlockItem(transformer, new Item.Properties().stacksTo(16)));
         ALL_TRANSFORMERS.add(block);
-//? if >=1.21.1 {
-        /*ITEMS.register(id,
-*///?} else {
-        GTBlocks.BLOCK_ITEMS.register(id,
-//?}
-                () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
     }
 
     public static void bootstrap() {

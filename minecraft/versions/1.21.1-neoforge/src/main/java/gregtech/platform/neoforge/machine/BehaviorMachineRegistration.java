@@ -2,6 +2,8 @@ package gregtech.platform.neoforge.machine;
 
 import gregtech.content.block.machine.BehaviorMachineBlock;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.registry.ContentRegistrar;
+import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.addon.AddonMachines;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,35 +24,33 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** Registers addon behavior machines in the addon's namespace, on GregTech's mod bus. */
 public final class BehaviorMachineRegistration {
-    private static final List<DeferredHolder<Block, BehaviorMachineBlock>> BLOCKS = new ArrayList<>();
+    private static final List<RegisteredBlock<BehaviorMachineBlock>> BLOCKS = new ArrayList<>();
     private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<BehaviorMachineBlockEntity>>> TYPES =
             new ArrayList<>();
 
     private BehaviorMachineRegistration() {}
 
-    public static List<DeferredHolder<Block, BehaviorMachineBlock>> all() {
+    public static List<RegisteredBlock<BehaviorMachineBlock>> all() {
         return List.copyOf(BLOCKS);
     }
 
-    public static void register(IEventBus bus) {
+    public static void register(ContentRegistrar registrar, IEventBus bus) {
         var byNamespace = new LinkedHashMap<String, List<AddonMachines.AcceptedBehavior>>();
         for (AddonMachines.AcceptedBehavior accepted : AddonMachines.behaviorMachines())
             byNamespace
                     .computeIfAbsent(accepted.addonId(), id -> new ArrayList<>())
                     .add(accepted);
-        for (var entry : byNamespace.entrySet()) registerNamespace(entry.getKey(), entry.getValue(), bus);
+        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue(), bus);
         bus.addListener(BehaviorMachineRegistration::capabilities);
     }
 
     private static void registerNamespace(
-            String namespace, List<AddonMachines.AcceptedBehavior> machines, IEventBus bus) {
-        DeferredRegister<Block> blocks = DeferredRegister.create(Registries.BLOCK, namespace);
-        DeferredRegister<Item> items = DeferredRegister.create(Registries.ITEM, namespace);
+            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedBehavior> machines, IEventBus bus) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
-        var holders = new ArrayList<DeferredHolder<Block, BehaviorMachineBlock>>();
+        var holders = new ArrayList<RegisteredBlock<BehaviorMachineBlock>>();
         for (AddonMachines.AcceptedBehavior accepted : machines) {
-            DeferredHolder<Block, BehaviorMachineBlock> block =
+            RegisteredBlock<BehaviorMachineBlock> block =
                     gregtech.content.registry.MultiblockRegistration.register(
                             gregtech.content.multiblock.ControllerDeclarations.behavior(
                                     accepted,
@@ -60,14 +60,13 @@ public final class BehaviorMachineRegistration {
                                                     .mapColor(MapColor.METAL)
                                                     .strength(5.0F, 5.0F)
                                                     .requiresCorrectToolForDrops())),
-                            blocks::register);
+                            (path, factory) -> registrar.block(
+                                    namespace, path, factory,
+                                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(16))));
             holders.add(block);
             BLOCKS.add(block);
-            items.register(
-                    accepted.declaration().casing().id(),
-                    () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
         }
-        var groups = new LinkedHashMap<String, List<DeferredHolder<Block, BehaviorMachineBlock>>>();
+        var groups = new LinkedHashMap<String, List<RegisteredBlock<BehaviorMachineBlock>>>();
         for (int i = 0; i < machines.size(); i++)
             groups.computeIfAbsent(machines.get(i).blockEntityPath(), path -> new ArrayList<>())
                     .add(holders.get(i));
@@ -76,21 +75,19 @@ public final class BehaviorMachineRegistration {
                     entities.register(group.getKey(), () -> {
                         AtomicReference<BlockEntityType<BehaviorMachineBlockEntity>> typeRef = new AtomicReference<>();
                         Block[] valid = group.getValue().stream()
-                                .map(DeferredHolder::get)
+                                .map(RegisteredBlock::get)
                                 .toArray(Block[]::new);
                         BlockEntityType<BehaviorMachineBlockEntity> built = BlockEntityType.Builder.of(
                                         (pos, state) -> new BehaviorMachineBlockEntity(typeRef.get(), pos, state),
                                         valid)
                                 .build(null);
                         typeRef.set(built);
-                        for (DeferredHolder<Block, BehaviorMachineBlock> block : group.getValue())
+                        for (RegisteredBlock<BehaviorMachineBlock> block : group.getValue())
                             block.get().setBeType(() -> built);
                         return built;
                     });
             TYPES.add(type);
         }
-        blocks.register(bus);
-        items.register(bus);
         entities.register(bus);
     }
 

@@ -4,15 +4,19 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.fluid.FluidDefinitions;
+import gregtech.content.registry.ContentRegistrar;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.GTWorldWaterFluid;
+import gregtech.content.registry.RegisteredBlock;
+import gregtech.content.registry.RegisteredItem;
 import gregtech.engine.fluid.FluidPhysicalProperties;
 import gregtech.engine.fluid.FluidRenderLayers;
 import gregtech.engine.fluid.GTWaterParity;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -27,35 +31,18 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** Saltnya full fluid table and IDs with masson's Neo BaseFlowingFluid registration boundary. */
 public final class FluidRegistries {
-    public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(BuiltInRegistries.BLOCK, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(BuiltInRegistries.ITEM, REGISTRY_NAMESPACE);
-    private static final java.util.Map<String, DeferredRegister<Item>> ADDON_ITEMS = new java.util.LinkedHashMap<>();
+    private static final List<RegisteredItem<? extends Item>> ALL_ITEMS = new ArrayList<>();
 
     private FluidRegistries() {}
 
-    /** Built-in display items stay on {@link #ITEMS}; an addon fluid uses that addon's namespace. */
-    public static DeferredRegister<Item> items(String namespace) {
-        if (REGISTRY_NAMESPACE.equals(namespace)) return ITEMS;
-        return ADDON_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(BuiltInRegistries.ITEM, id));
+    public static java.util.stream.Stream<RegisteredItem<? extends Item>> allItems() {
+        return ALL_ITEMS.stream();
     }
 
-    public static void registerAddonItems(IEventBus bus) {
-        for (DeferredRegister<Item> register : ADDON_ITEMS.values()) register.register(bus);
-    }
-
-    public static java.util.stream.Stream<DeferredHolder<Item, ? extends Item>> allItems() {
-        return java.util.stream.Stream.concat(
-                ITEMS.getEntries().stream(),
-                ADDON_ITEMS.values().stream().flatMap(register -> register.getEntries().stream()));
-    }
-
-    public static void register(IEventBus bus) {
+    public static void register(ContentRegistrar registrar, IEventBus bus) {
         FluidDefinitions.prepare();
         var paths = new HashSet<String>();
         for (var definition : RegisteredFluids.all().entrySet()) {
@@ -64,8 +51,8 @@ public final class FluidRegistries {
             if (entry.usesVanillaFluid()) {
                 String displayPath = RegisteredFluids.sanitizePath(entry.registryName());
                 if (paths.add(displayPath))
-                    ITEMS.register(
-                            "fluid_item_" + displayPath, () -> new FluidDisplayItem(entry, new Item.Properties()));
+                    ALL_ITEMS.add(registrar.item(REGISTRY_NAMESPACE,
+                            "fluid_item_" + displayPath, () -> new FluidDisplayItem(entry, new Item.Properties())));
                 continue;
             }
             String path = RegisteredFluids.sanitizePath(entry.registryName());
@@ -73,14 +60,13 @@ public final class FluidRegistries {
             String namespace = GTFluids.namespace(entry);
             var type = GTFluids.fluidTypes(namespace).register(path, () -> GTFluids.createFluidType(entry));
             var stillRef = new AtomicReference<DeferredHolder<Fluid, ? extends Fluid>>();
-            var blockRef = new AtomicReference<DeferredHolder<Block, LiquidBlock>>();
+            var blockRef = new AtomicReference<RegisteredBlock<? extends LiquidBlock>>();
             boolean water = GTWaterParity.isWorldWater(path);
             // Negative density is the original's densityDir = -1: these fluids rise instead of
             // falling. Air itself is density 0, so nothing neutrally buoyant is included.
             boolean lighterThanAir = !water && FluidPhysicalProperties.density(entry) < 0;
-            if (FluidRenderLayers.worldFluidPaths().contains(path))
-                blockRef.set(BLOCKS.register(
-                        path,
+            if (FluidRenderLayers.worldFluidPaths().contains(path)) {
+                var holder = registrar.blockWithoutItem(REGISTRY_NAMESPACE, path,
                         () -> new gregtech.content.block.GTWorldFluidBlock(
                                 (FlowingFluid) stillRef.get().get(),
                                 BlockBehaviour.Properties.of()
@@ -91,7 +77,9 @@ public final class FluidRegistries {
                                         .pushReaction(PushReaction.DESTROY)
                                         .noLootTable()
                                         .liquid()
-                                        .sound(SoundType.EMPTY))));
+                                        .sound(SoundType.EMPTY)));
+                blockRef.set(holder);
+            }
             var still = GTFluids.fluids(namespace)
                     .register(
                             path,
@@ -110,21 +98,19 @@ public final class FluidRegistries {
                                             ? new GTGasFluid.Flowing(properties(field, type, blockRef, false))
                                             : new BaseFlowingFluid.Flowing(properties(field, type, blockRef, false)));
             GTFluids.bindFluid(field, still, flowing, ResourceLocation.fromNamespaceAndPath(namespace, path), entry);
-            items(namespace).register("fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties()));
+            ALL_ITEMS.add(registrar.item(
+                    namespace, "fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties())));
         }
         RegisteredFluids.closeDefinitions();
         GTFluids.FLUID_TYPES.register(bus);
         GTFluids.FLUIDS.register(bus);
         GTFluids.registerAddonFluids(bus);
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
-        registerAddonItems(bus);
     }
 
     private static BaseFlowingFluid.Properties properties(
             String field,
             DeferredHolder<FluidType, FluidType> type,
-            AtomicReference<DeferredHolder<Block, LiquidBlock>> block,
+            AtomicReference<RegisteredBlock<? extends LiquidBlock>> block,
             boolean water) {
         var properties = new BaseFlowingFluid.Properties(
                 type,

@@ -301,11 +301,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * still supports the embedded charge.
      */
     private static void explosive(GTDungeonData data, int x, int y, int z,
-//? if >=1.21.1 {
-                                  /*net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.level.block.Block,? extends DynamiteBlock> block) {
-*///?} else {
-                                  net.minecraftforge.registries.RegistryObject<? extends DynamiteBlock> block) {
-//?}
+                                  gregtech.content.registry.RegisteredBlock<? extends DynamiteBlock> block) {
         data.set(x, y, z, block.get().defaultBlockState().setValue(DirectionalBlock.FACING, Direction.UP).setValue(DynamiteBlock.SUNK, true));
     }
 

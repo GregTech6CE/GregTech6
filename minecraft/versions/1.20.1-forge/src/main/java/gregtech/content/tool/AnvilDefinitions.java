@@ -3,8 +3,8 @@ package gregtech.content.tool;
 public final class AnvilDefinitions {
     private AnvilDefinitions() {}
 
-    public static void registerAll() {
+    public static void registerAll(gregtech.content.registry.ContentRegistrar registrar) {
         for (var v : AnvilVariantCatalog.ALL)
-            gregtech.content.registry.GTToolBlocks.anvil(v.id(), v.material(), v.durability());
+            gregtech.content.registry.GTToolBlocks.anvil(registrar, v.id(), v.material(), v.durability());
     }
 }

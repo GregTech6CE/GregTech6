@@ -21,10 +21,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** Registers ordinary and logistics mass-storage blocks from the shared metal catalog. */
 public final class StorageRegistries {
-    public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(BuiltInRegistries.BLOCK, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(BuiltInRegistries.ITEM, REGISTRY_NAMESPACE);
     public static final DeferredRegister<BlockEntityType<?>> TYPES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     private static final List<java.util.function.Supplier<? extends Block>> STORAGES = new ArrayList<>();
@@ -57,48 +53,50 @@ public final class StorageRegistries {
                 .toList();
     }
 
-    public static void register(IEventBus eventBus) {
+    public static void register(gregtech.content.registry.ContentRegistrar registrar, IEventBus eventBus) {
         // Register both block families before attaching their deferred registers.
         for (var materialSpec : GTStorageMetals.ALL)
             bind(
+                    registrar,
                     "mass_storage_" + materialSpec.suffix(),
                     materialSpec.material(),
                     materialSpec.hardness(),
                     materialSpec.resistance());
         for (var materialSpec : GTStorageMetals.ALL)
             bindLogistics(
+                    registrar,
                     "logistics_mass_storage_" + materialSpec.suffix(),
                     materialSpec.material(),
                     materialSpec.hardness(),
                     materialSpec.resistance());
-        BLOCKS.register(eventBus);
-        ITEMS.register(eventBus);
         TYPES.register(eventBus);
     }
 
-    private static void bindLogistics(String registryId, GTMaterial material, float hardness, float resistance) {
-        var registeredBlock = BLOCKS.register(
+    private static void bindLogistics(gregtech.content.registry.ContentRegistrar registrar, String registryId, GTMaterial material, float hardness, float resistance) {
+        var registeredBlock = registrar.block(
+                REGISTRY_NAMESPACE,
                 registryId,
                 () -> new gregtech.content.block.inventory.LogisticsMassStorageBlock(
                         material,
                         BlockBehaviour.Properties.of()
                                 .mapColor(MapColor.COLOR_BLACK)
                                 .strength(hardness, resistance)
-                                .requiresCorrectToolForDrops()));
+                                .requiresCorrectToolForDrops()),
+                block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
         LOGISTICS_STORAGES.add(registeredBlock);
-        ITEMS.register(registryId, () -> new BlockItem(registeredBlock.get(), new Item.Properties().stacksTo(16)));
     }
 
-    private static void bind(String registryId, GTMaterial material, float hardness, float resistance) {
-        var registeredBlock = BLOCKS.register(
+    private static void bind(gregtech.content.registry.ContentRegistrar registrar, String registryId, GTMaterial material, float hardness, float resistance) {
+        var registeredBlock = registrar.block(
+                REGISTRY_NAMESPACE,
                 registryId,
                 () -> new MassStorageBlock(
                         material,
                         BlockBehaviour.Properties.of()
                                 .mapColor(MapColor.METAL)
                                 .strength(hardness, resistance)
-                                .requiresCorrectToolForDrops()));
+                                .requiresCorrectToolForDrops()),
+                block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
         STORAGES.add(registeredBlock);
-        ITEMS.register(registryId, () -> new BlockItem(registeredBlock.get(), new Item.Properties().stacksTo(16)));
     }
 }

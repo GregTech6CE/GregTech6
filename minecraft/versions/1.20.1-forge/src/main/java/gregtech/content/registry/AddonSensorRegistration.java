@@ -31,8 +31,8 @@ public final class AddonSensorRegistration {
     }
 
     private static void registerNamespace(String namespace, List<AddonSensor> sensors, IEventBus bus) {
-        DeferredRegister<Block> blocks = DeferredRegister.create(ForgeRegistries.BLOCKS, namespace);
-        DeferredRegister<Item> items = DeferredRegister.create(ForgeRegistries.ITEMS, namespace);
+        var blocks = GTBlocks.blocks(namespace);
+        var items = GTItems.items(namespace);
         for (AddonSensor sensor : sensors) {
             String path = "sensor_" + sensor.id();
             RegistryObject<SensorBlock> block = blocks.register(
@@ -45,7 +45,5 @@ public final class AddonSensorRegistration {
             AddonSensors.addBlock(() -> block.get());
             items.register(path, () -> new BlockItem(block.get(), new Item.Properties()));
         }
-        blocks.register(bus);
-        items.register(bus);
     }
 }

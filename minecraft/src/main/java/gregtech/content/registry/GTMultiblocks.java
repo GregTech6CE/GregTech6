@@ -69,10 +69,9 @@ public final class GTMultiblocks {
         DISTILLATION_TOWER_MAIN = RegisteredBlock.wrap(spec.id(),
                 gregtech.engine.machine.MachineRegistry.registerBasicMachine(spec, props -> new MultiblockControllerBlock(spec, props)));
         //?}
-        registerAddonParts();
     }
     /** Queues addon casings after the built-in parts. A call before addon machines install does nothing. */
-    public static void registerAddonParts() {
+    public static void registerAddonParts(ContentRegistrar registrar) {
         if (addonQueued || !gregtech.engine.addon.AddonMachines.installed()) return;
         addonQueued = true;
         for (var part : gregtech.engine.addon.AddonMachines.structureParts()) {
@@ -86,46 +85,20 @@ public final class GTMultiblocks {
                     state.hasProperty(AddonEnergyPartBlock.SATISFIED) && state.getValue(AddonEnergyPartBlock.SATISFIED) ? 12 : 0);
             var partProperties = properties;
             var block = energyPart
-                    ? registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(partProperties,
+                    ? registerAddon(registrar, part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(partProperties,
                             part.addonId(), declaration))
                     : functional
-                    ? registerAddon(part.addonId(), declaration.name(), () -> new AddonFunctionalPartBlock(partProperties,
+                    ? registerAddon(registrar, part.addonId(), declaration.name(), () -> new AddonFunctionalPartBlock(partProperties,
                             part.addonId(), declaration))
-                    : registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(partProperties));
+                    : registerAddon(registrar, part.addonId(), declaration.name(), () -> new MultiblockPortBlock(partProperties));
             if (NAMED.put(part.id(), block) != null)
                 throw new IllegalStateException("Addon structure part id already used: " + part.id());
             ADDON_PARTS.add(new AddonPart(block, declaration.material(), declaration.texture()));
         }
     }
-//? if >=1.21.1 {
-    /*private static final Map<String, DeferredRegister<Block>> ADDON_BLOCKS = new LinkedHashMap<>();
-    private static final Map<String, DeferredRegister<Item>> ADDON_BLOCK_ITEMS = new LinkedHashMap<>();
-    private static RegisteredBlock<Block> registerAddon(String namespace, String path, java.util.function.Supplier<Block> factory) {
-        var blocks = ADDON_BLOCKS.computeIfAbsent(namespace, id -> DeferredRegister.create(Registries.BLOCK, id));
-        var items = ADDON_BLOCK_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(Registries.ITEM, id));
-        var holder = blocks.register(path, factory);
-        items.register(path, () -> new BlockItem(holder.get(), new Item.Properties()));
-        return new RegisteredBlock<>(ResourceLocation.fromNamespaceAndPath(namespace, path), holder);
+    private static RegisteredBlock<Block> registerAddon(ContentRegistrar registrar, String namespace, String path, java.util.function.Supplier<Block> factory) {
+        return registrar.block(namespace, path, factory, block -> new BlockItem(block, new Item.Properties()));
     }
-    public static void registerAddonBlocks(net.neoforged.bus.api.IEventBus bus) {
-        for (var register : ADDON_BLOCKS.values()) register.register(bus);
-        for (var register : ADDON_BLOCK_ITEMS.values()) register.register(bus);
-    }
-    *///?} else {
-    private static final Map<String, DeferredRegister<Block>> ADDON_BLOCKS = new LinkedHashMap<>();
-    private static final Map<String, DeferredRegister<Item>> ADDON_BLOCK_ITEMS = new LinkedHashMap<>();
-    private static RegisteredBlock<Block> registerAddon(String namespace, String path, java.util.function.Supplier<Block> factory) {
-        var blocks = ADDON_BLOCKS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.BLOCKS, id));
-        var items = ADDON_BLOCK_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.ITEMS, id));
-        var holder = blocks.register(path, factory);
-        items.register(path, () -> new BlockItem(holder.get(), new Item.Properties()));
-        return new RegisteredBlock<>(ResourceLocation.fromNamespaceAndPath(namespace, path), holder);
-    }
-    public static void registerAddonBlocks(net.minecraftforge.eventbus.api.IEventBus bus) {
-        for (var register : ADDON_BLOCKS.values()) register.register(bus);
-        for (var register : ADDON_BLOCK_ITEMS.values()) register.register(bus);
-    }
-//?}
     private static BlockBehaviour.Properties properties(float hardness) {
         return BlockBehaviour.Properties.of().strength(hardness, hardness).requiresCorrectToolForDrops();
     }

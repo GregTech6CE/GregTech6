@@ -38,8 +38,8 @@ public final class FuelGeneratorRegistration {
     }
 
     private static void registerNamespace(String namespace, List<AddonMachines.AcceptedFuel> machines, IEventBus bus) {
-        DeferredRegister<Block> blocks = DeferredRegister.create(ForgeRegistries.BLOCKS, namespace);
-        DeferredRegister<Item> items = DeferredRegister.create(ForgeRegistries.ITEMS, namespace);
+        var blocks = GTBlocks.blocks(namespace);
+        var items = GTItems.items(namespace);
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
         for (AddonMachines.AcceptedFuel accepted : machines) {
@@ -70,8 +70,6 @@ public final class FuelGeneratorRegistration {
                 return type;
             });
         }
-        blocks.register(bus);
-        items.register(bus);
         entities.register(bus);
     }
 }

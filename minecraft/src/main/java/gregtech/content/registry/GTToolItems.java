@@ -2,11 +2,6 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-//? if >=1.21.1 {
-//?} else {
-
-import gregtech.GregTech;
-//?}
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.item.GTToolItem;
 //? if >=1.21.1 {
@@ -15,62 +10,51 @@ import gregtech.content.item.GTToolItem;
 //?}
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.bus.api.IEventBus;
 import java.util.*;
-/^* Original 37 manual-tool item IDs with one register and preserved smeltery aliases. ^/
-*///?} else {
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.Map;
-
-//?}
 
 public final class GTToolItems {
-//? if >=1.21.1 {
- /*public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems(REGISTRY_NAMESPACE);
- public static final DeferredItem<SmelteryToolItem> CHISEL=ITEMS.register("tool_chisel",()->new SmelteryToolItem(SmelteryToolItem.Kind.CHISEL));
- public static final DeferredItem<SmelteryToolItem> PINCERS=ITEMS.register("tool_pincers",()->new SmelteryToolItem(SmelteryToolItem.Kind.PINCERS));
- private static final EnumMap<GTToolType,DeferredItem<? extends GTToolItem>> BY_TYPE=new EnumMap<>(GTToolType.class);
- static{for(var type:GTToolType.values())BY_TYPE.put(type,type==GTToolType.CHISEL?CHISEL:type==GTToolType.PINCERS?PINCERS:ITEMS.register("tool_"+type.id(),()->type.definition().isGun()?new gregtech.content.item.GunToolItem(new Item.Properties().stacksTo(1),type):type.definition().isPocket()?new gregtech.content.item.PocketToolItem(new Item.Properties().stacksTo(1),type):new GTToolItem(new Item.Properties().stacksTo(1),type)));}
- private GTToolItems(){}
- public static void register(IEventBus bus){if(BY_TYPE.size()!=GTToolType.values().length)throw new IllegalStateException("Incomplete manual tool register");ITEMS.register(bus);}
- public static Map<GTToolType,DeferredItem<? extends GTToolItem>> all(){return Collections.unmodifiableMap(BY_TYPE);}
- public static GTToolItem get(GTToolType type){var entry=BY_TYPE.get(type);return entry==null?null:entry.get();}
- public static ItemStack empty(GTToolType type){var item=get(type);return item==null?ItemStack.EMPTY:new ItemStack(item);}
-*///?} else {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
+    private static final Map<GTToolType, RegisteredItem<? extends GTToolItem>> BY_TYPE = new EnumMap<>(GTToolType.class);
+    public static RegisteredItem<? extends GTToolItem> CHISEL, PINCERS;
 
-    private static final Map<GTToolType, RegistryObject<GTToolItem>> BY_TYPE = new EnumMap<>(GTToolType.class);
+    private GTToolItems() {}
 
-    static {
+    public static void register(ContentRegistrar registrar) {
+        if (!BY_TYPE.isEmpty()) throw new IllegalStateException("Incomplete manual tool register");
         for (GTToolType type : GTToolType.values()) {
-            String id = "tool_" + type.id();
-            RegistryObject<GTToolItem> holder = ITEMS.register(id, () -> type.definition().isGun()?new gregtech.content.item.GunToolItem(new Item.Properties().stacksTo(1),type):type.definition().isPocket()?new gregtech.content.item.PocketToolItem(new Item.Properties().stacksTo(1),type):new GTToolItem(new Item.Properties().stacksTo(1), type));
-            BY_TYPE.put(type, holder);
+            RegisteredItem<? extends GTToolItem> item = create(registrar, type);
+            BY_TYPE.put(type, item);
+            if (type == GTToolType.CHISEL) CHISEL = item;
+            if (type == GTToolType.PINCERS) PINCERS = item;
         }
     }
 
-    public static Map<GTToolType, RegistryObject<GTToolItem>> all() {
+    private static RegisteredItem<? extends GTToolItem> create(ContentRegistrar registrar, GTToolType type) {
+//? if >=1.21.1 {
+        /*if (type == GTToolType.CHISEL)
+            return registrar.item(REGISTRY_NAMESPACE, "tool_chisel", () -> new SmelteryToolItem(SmelteryToolItem.Kind.CHISEL));
+        if (type == GTToolType.PINCERS)
+            return registrar.item(REGISTRY_NAMESPACE, "tool_pincers", () -> new SmelteryToolItem(SmelteryToolItem.Kind.PINCERS));
+*///?} else {
+//?}
+        return registrar.item(REGISTRY_NAMESPACE, "tool_" + type.id(), () ->
+                type.definition().isGun()
+                        ? new gregtech.content.item.GunToolItem(new Item.Properties().stacksTo(1), type)
+                        : type.definition().isPocket()
+                                ? new gregtech.content.item.PocketToolItem(new Item.Properties().stacksTo(1), type)
+                                : new GTToolItem(new Item.Properties().stacksTo(1), type));
+    }
+
+    public static Map<GTToolType, RegisteredItem<? extends GTToolItem>> all() {
         return Collections.unmodifiableMap(BY_TYPE);
     }
 
     public static GTToolItem get(GTToolType type) {
-        RegistryObject<GTToolItem> holder = BY_TYPE.get(type);
-        return holder == null ? null : holder.get();
+        var entry = BY_TYPE.get(type);
+        return entry == null ? null : entry.get();
     }
 
     public static ItemStack empty(GTToolType type) {
         GTToolItem item = get(type);
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
-
-    private GTToolItems() {}
-//?}
 }

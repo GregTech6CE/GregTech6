@@ -1,11 +1,12 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.engine.energy.WireSpec;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.engine.material.ItemMaterialRegistry;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -18,79 +19,53 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 *///?} else {
-import net.minecraftforge.registries.RegistryObject;
 //?}
-
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /** Native electric wire registrations populated from the shared WireCatalog on both platforms. */
 public final class GTWires {
 
-//? if >=1.21.1 {
-/*    private static final List<DeferredHolder<Block,ElectricWireBlock>> ALL_WIRES = new ArrayList<>();
-    private static final List<DeferredHolder<Block,ElectricWireBlock>> ALL_CABLES = new ArrayList<>();
-    private static final List<DeferredHolder<Block,ElectricWireBlock>> ALL = new ArrayList<>();
-*///?} else {
-    private static final List<RegistryObject<ElectricWireBlock>> ALL_WIRES = new ArrayList<>();
-    private static final List<RegistryObject<ElectricWireBlock>> ALL_CABLES = new ArrayList<>();
-    private static final List<RegistryObject<ElectricWireBlock>> ALL = new ArrayList<>();
-//?}
-
-
+    private static final List<RegisteredBlock<ElectricWireBlock>> ALL_WIRES = new ArrayList<>();
+    private static final List<RegisteredBlock<ElectricWireBlock>> ALL_CABLES = new ArrayList<>();
+    private static final List<RegisteredBlock<ElectricWireBlock>> ALL = new ArrayList<>();
 
 //? if >=1.21.1 {
-/*    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,REGISTRY_NAMESPACE);
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,REGISTRY_NAMESPACE);
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,REGISTRY_NAMESPACE);
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ElectricWireBlockEntity>> ELECTRIC_WIRE=ENTITIES.register("electric_wire",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ElectricWireBlockEntity::new,all().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
+/*    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ElectricWireBlockEntity>> ELECTRIC_WIRE=ENTITIES.register("electric_wire",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ElectricWireBlockEntity::new,all().stream().map(RegisteredBlock::get).toArray(Block[]::new)).build(null));
 *///?} else {
 //?}
 
     private GTWires() {}
 
 //? if >=1.21.1 {
-/*    public static void register(IEventBus bus){
+/*    public static void register(ContentRegistrar registrar, IEventBus bus){
         if(!ALL.isEmpty())throw new IllegalStateException("Electric wires registered twice");
-        for(var spec:gregtech.content.energy.WireCatalog.specifications())register(spec.id(),spec.material(),spec.size(),spec.voltage(),spec.amperage(),spec.lossPerBlock(),spec.insulated(),spec.contactDamage());
-        bootstrap();BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);
+        for(var spec:gregtech.content.energy.WireCatalog.specifications())register(registrar,spec.id(),spec.material(),spec.size(),spec.voltage(),spec.amperage(),spec.lossPerBlock(),spec.insulated(),spec.contactDamage());
+        bootstrap();ENTITIES.register(bus);
     }
 *///?} else {
 //?}
 
 
-    public static void register(String idSuffix, GTMaterial material, int size,
+    public static void register(ContentRegistrar registrar, String idSuffix, GTMaterial material, int size,
                          long voltage, long amperage, long loss, boolean insulated, boolean contactDamage) {
         String prefix = insulated ? "cable" : "wire";
         String id = String.format("%s_%02d_%s", prefix, size, idSuffix);
         WireSpec spec = new WireSpec(idSuffix, material, size, voltage, amperage, loss, insulated, contactDamage);
 
-//? if >=1.21.1 {
-/*        DeferredHolder<Block,ElectricWireBlock> block = BLOCKS.register(id,
-*///?} else {
-        RegistryObject<ElectricWireBlock> block = GTBlocks.BLOCKS.register(id,
-//?}
-
+        RegisteredBlock<ElectricWireBlock> block = registrar.block(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                id,
                 () -> new ElectricWireBlock(spec, BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
                         .strength(1.0f, 2.0f)
                         .sound(SoundType.METAL)
                         .noOcclusion()
                         // Arms depend on neighbour thickness, so no per-state shape cache.
-                        .dynamicShape()));
+                        .dynamicShape()),
+                bare -> new gregtech.content.item.WireBlockItem(bare,
+                        new Item.Properties().stacksTo(stackSize(size, insulated))));
         (insulated ? ALL_CABLES : ALL_WIRES).add(block);
         ALL.add(block);
-
-//? if >=1.21.1 {
-/*        ITEMS.register(id,
-*///?} else {
-        GTBlocks.BLOCK_ITEMS.register(id,
-//?}
-
-                () -> new gregtech.content.item.WireBlockItem(block.get(),
-                        new Item.Properties().stacksTo(stackSize(size, insulated))));
     }
 
     /**
@@ -103,35 +78,17 @@ public final class GTWires {
     }
 
     /** All bare wire blocks for BlockEntityType registration. */
-
-//? if >=1.21.1 {
-/*    public static List<DeferredHolder<Block,ElectricWireBlock>> allWires() {
-*///?} else {
-    public static List<RegistryObject<ElectricWireBlock>> allWires() {
-//?}
-
+    public static List<RegisteredBlock<ElectricWireBlock>> allWires() {
         return Collections.unmodifiableList(ALL_WIRES);
     }
 
     /** All insulated cable blocks. */
-
-//? if >=1.21.1 {
-/*    public static List<DeferredHolder<Block,ElectricWireBlock>> allCables() {
-*///?} else {
-    public static List<RegistryObject<ElectricWireBlock>> allCables() {
-//?}
-
+    public static List<RegisteredBlock<ElectricWireBlock>> allCables() {
         return Collections.unmodifiableList(ALL_CABLES);
     }
 
     /** All wire + cable blocks in registration order. */
-
-//? if >=1.21.1 {
-/*    public static List<DeferredHolder<Block,ElectricWireBlock>> all() {
-*///?} else {
-    public static List<RegistryObject<ElectricWireBlock>> all() {
-//?}
-
+    public static List<RegisteredBlock<ElectricWireBlock>> all() {
         return Collections.unmodifiableList(ALL);
     }
 

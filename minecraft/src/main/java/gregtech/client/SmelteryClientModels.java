@@ -102,7 +102,7 @@ public final class SmelteryClientModels {
     private static <T extends Block> int aliasHullBlocks(
 //? if >=1.21.1 {
             /*Map<ModelResourceLocation, BakedModel> models,
-            Iterable<? extends net.neoforged.neoforge.registries.DeferredHolder<Block,T>> blocks,
+            Iterable<? extends gregtech.content.registry.RegisteredBlock<T>> blocks,
 *///?} else {
             Map<ResourceLocation, BakedModel> models,
             Iterable<net.minecraftforge.registries.RegistryObject<T>> blocks,

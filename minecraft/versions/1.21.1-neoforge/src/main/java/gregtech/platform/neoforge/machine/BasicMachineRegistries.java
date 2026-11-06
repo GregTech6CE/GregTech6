@@ -26,8 +26,6 @@ import net.neoforged.neoforge.registries.*;
 public final class BasicMachineRegistries {
     private BasicMachineRegistries() {}
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
     public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredRegister<MenuType<?>> MENUS =
@@ -45,11 +43,11 @@ public final class BasicMachineRegistries {
             "part",
             () -> IMenuTypeExtension.create(
                     (id, inventory, buffer) -> new gregtech.client.gui.PartMenu(id, inventory, buffer)));
-    private static final List<DeferredHolder<Block, BasicMachineBlock>> MACHINES = new ArrayList<>();
+    private static final List<gregtech.content.registry.RegisteredBlock<BasicMachineBlock>> MACHINES = new ArrayList<>();
     private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<BasicMachineBlockEntity>>> TYPES =
             new ArrayList<>();
 
-    public static List<DeferredHolder<Block, BasicMachineBlock>> all() {
+    public static List<gregtech.content.registry.RegisteredBlock<BasicMachineBlock>> all() {
         return Collections.unmodifiableList(MACHINES);
     }
 
@@ -57,25 +55,11 @@ public final class BasicMachineRegistries {
         return Collections.unmodifiableList(TYPES);
     }
 
-    public static void register(IEventBus bus) {
-        var blocks = new LinkedHashMap<String, DeferredRegister<Block>>();
-        var items = new LinkedHashMap<String, DeferredRegister<Item>>();
+    public static void register(gregtech.content.registry.ContentRegistrar registrar, IEventBus bus) {
         var entities = new LinkedHashMap<String, DeferredRegister<BlockEntityType<?>>>();
-        blocks.put(REGISTRY_NAMESPACE, BLOCKS);
-        items.put(REGISTRY_NAMESPACE, ITEMS);
         entities.put(REGISTRY_NAMESPACE, ENTITIES);
         for (BasicMachineSpec spec : BasicMachineDefinitions.specifications()) {
             String namespace = spec.namespace();
-            var blockReg = blocks.computeIfAbsent(namespace, ns -> {
-                var created = DeferredRegister.create(Registries.BLOCK, ns);
-                created.register(bus);
-                return created;
-            });
-            var itemReg = items.computeIfAbsent(namespace, ns -> {
-                var created = DeferredRegister.create(Registries.ITEM, ns);
-                created.register(bus);
-                return created;
-            });
             var entityReg = entities.computeIfAbsent(namespace, ns -> {
                 var created = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ns);
                 created.register(bus);
@@ -97,9 +81,10 @@ public final class BasicMachineRegistries {
                                                     .mapColor(MapColor.METAL)
                                                     .strength(spec.hardness(), spec.blastResistance())
                                                     .requiresCorrectToolForDrops())),
-                    blockReg::register);
+                    (path, factory) -> registrar.block(
+                            namespace, path, factory,
+                            bare -> new BasicMachineItem(bare, new Item.Properties().stacksTo(16))));
             MACHINES.add(block);
-            itemReg.register(spec.id(), () -> new BasicMachineItem(block.get(), new Item.Properties().stacksTo(16)));
             var type = entityReg.register("be_" + spec.id(), () -> {
                 AtomicReference<BlockEntityType<BasicMachineBlockEntity>> ref = new AtomicReference<>();
                 var value = BlockEntityType.Builder.of(
@@ -116,13 +101,11 @@ public final class BasicMachineRegistries {
             });
             TYPES.add(type);
         }
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
         ENTITIES.register(bus);
         MENUS.register(bus);
-        BehaviorMachineRegistration.register(bus);
-        FuelGeneratorRegistration.register(bus);
-        CompressedGasTankRegistration.register(bus);
+        BehaviorMachineRegistration.register(registrar, bus);
+        FuelGeneratorRegistration.register(registrar, bus);
+        CompressedGasTankRegistration.register(registrar, bus);
         bus.addListener(BasicMachineRegistries::capabilities);
         bus.addListener(gregtech.network.MachinePayloads::register);
     }

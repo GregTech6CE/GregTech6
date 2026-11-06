@@ -11,9 +11,9 @@ public record MachineBlockBootstrap(IEventBus bus) implements InitializationStep
     @Override
     public void run() {
         gregtech.content.energy.WireDefinitions.register();
-        gregtech.content.registry.GTSignalWires.register();
-        gregtech.content.fluid.FluidPipeDefinitions.register();
-        gregtech.content.transport.ItemPipeDefinitions.register();
+        gregtech.content.registry.GTSignalWires.register(new gregtech.platform.forge.ForgeContentRegistrar());
+        gregtech.content.fluid.FluidPipeDefinitions.register(new gregtech.platform.forge.ForgeContentRegistrar());
+        gregtech.content.transport.ItemPipeDefinitions.register(new gregtech.platform.forge.ForgeContentRegistrar());
         gregtech.content.fluid.TankDefinitions.register();
         registerMachines();
     }
@@ -22,23 +22,24 @@ public record MachineBlockBootstrap(IEventBus bus) implements InitializationStep
         GTMachines.bootstrap();
         GTBasicMachines.registerAll(bus);
         GTEngines.registerAll();
-        GTEnergyNodes.registerAll();
+        var registrar = new gregtech.platform.forge.ForgeContentRegistrar();
+        GTEnergyNodes.registerAll(registrar);
         GTBoilers.registerAll();
-        GTAxles.registerAll();
-        GTGearboxes.registerAll();
+        GTAxles.registerAll(registrar);
+        GTGearboxes.registerAll(registrar);
         GTPumps.registerAll();
         GTMultiblocks.registerAll();
         GTStorage.registerAll();
         GTLootChests.registerAll();
         GTSensors.registerAll();
         gregtech.content.registry.AddonSensorRegistration.register(bus);
-        GTToolBlocks.registerAll();
+        GTToolBlocks.registerAll(new gregtech.platform.forge.ForgeContentRegistrar());
         GTMiscBlocks.registerAll();
         GTWoods.registerAll();
         GTTreeHoles.registerAll();
         GTBushes.registerAll();
         GTElectricItems.register(new gregtech.platform.forge.ForgeContentRegistrar());
-        GTChemicalBatteries.registerAll();
+        GTChemicalBatteries.registerAll(registrar);
         GTDecorBlocks.registerAll();
         GTTrackBlocks.registerAll();
         GTLasers.registerAll();

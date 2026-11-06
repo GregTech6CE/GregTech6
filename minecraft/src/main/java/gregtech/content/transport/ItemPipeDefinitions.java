@@ -9,7 +9,7 @@ public final class ItemPipeDefinitions {
 
     // ==================== Item Pipes ====================
 
-    public static void register() {
+    public static void register(ContentRegistrar registrar) {
         gregtech.engine.addon.AddonMachines.collectContributors();
         for (ItemPipeCatalog.ItemPipeMat mat : ItemPipeCatalog.mats()) {
             for (ItemPipeSpec.ItemPipeSize size : ItemPipeSpec.ItemPipeSize.values()) {
@@ -18,10 +18,11 @@ public final class ItemPipeDefinitions {
                 String owner = gregtech.engine.addon.AddonPipes.owner(id);
                 if (owner != null) {
                     gregtech.content.registry.AddonPipeRegistration.queueItem(
-                            owner, id, mat.material(), size, mat.stepSize(), mat.invSize(), true);
+                            registrar, owner, id, mat.material(), size, mat.stepSize(), mat.invSize(), true);
                     continue;
                 }
-                var block = GTItemPipes.register(id, mat.material(), size, mat.stepSize(), mat.invSize(), true);
+                var block =
+                        GTItemPipes.register(registrar, id, mat.material(), size, mat.stepSize(), mat.invSize(), true);
                 if (mat.idSuffix().equals("brass") && size == ItemPipeSpec.ItemPipeSize.MEDIUM) {
                     GTItemPipes.PIPE_MEDIUM_BRASS = block;
                 }

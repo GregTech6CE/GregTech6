@@ -60,7 +60,7 @@ public record ToolBootstrap(IEventBus bus) implements InitializationStep {
         gregtech.content.recipe.FiniteBottleFillingRecipe.registerIngredient();
         gregtech.content.recipe.BlockTagCraftingIngredient.registerIngredient();
         gregtech.content.recipe.QuarterFluidCraftingIngredient.registerIngredient();
-        GTToolItems.ITEMS.register(bus);
+        GTToolItems.register(new gregtech.platform.forge.ForgeContentRegistrar());
         RECIPE_SERIALIZERS.register("book_binding", () -> gregtech.content.recipe.BookBindingRecipe.SERIALIZER);
         RECIPE_SERIALIZERS.register("machine", () -> gregtech.content.recipe.MachineDatapackRecipe.ADDITION);
         RECIPE_SERIALIZERS.register("machine_removal", () -> gregtech.content.recipe.MachineDatapackRecipe.REMOVAL);

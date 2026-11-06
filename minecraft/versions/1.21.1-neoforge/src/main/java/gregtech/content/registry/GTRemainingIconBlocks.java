@@ -24,16 +24,6 @@ public final class GTRemainingIconBlocks {
     public static void initialize() {
         Set<String> seen = new HashSet<>(buildSkipIds());
         queued(seen, GTBlocks.BLOCKS);
-        queued(seen, GTEnergyNodes.BLOCKS);
-        queued(seen, GTAxles.BLOCKS);
-        queued(seen, GTGearboxes.BLOCKS);
-        queued(seen, GTToolBlocks.BLOCKS);
-        queued(seen, GTItemPipes.BLOCKS);
-        queued(seen, gregtech.content.transport.fluid.FluidTransportRegistries.BLOCKS);
-        queued(seen, gregtech.content.transport.HopperRegistries.BLOCKS);
-        queued(seen, gregtech.platform.neoforge.smeltery.SmelteryRegistries.BLOCKS);
-        queued(seen, gregtech.platform.neoforge.machine.BasicMachineRegistries.BLOCKS);
-        queued(seen, gregtech.platform.neoforge.logistics.StorageRegistries.BLOCKS);
         seen.addAll(gregtech.platform.neoforge.logistics.LogisticsRegistries.queuedBlockIds());
         for (String icon : gregtech.content.plant.IconPlantCatalog.BLOCK_ICONS) {
             String id = blockId(icon);

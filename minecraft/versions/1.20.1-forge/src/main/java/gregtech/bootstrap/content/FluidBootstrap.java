@@ -64,6 +64,7 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
     @Override
     public void run() {
         gregtech.content.fluid.FluidDefinitions.prepare();
+        var registrar = new gregtech.platform.forge.ForgeContentRegistrar();
 
         java.util.Set<String> seenPaths = new java.util.HashSet<>();
         java.util.Set<String> seenItemPaths = new java.util.HashSet<>();
@@ -77,8 +78,10 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
                 if (seenItemPaths.add("fluid_item_" + displayPath))
                     GTFluidItems.bindFluidItem(
                             field,
-                            GTFluidItems.ITEMS.register(
-                                    "fluid_item_" + displayPath, () -> new FluidItem(flEntry, new Item.Properties())));
+                            registrar.item(
+                                    GregTech.NAMESPACE,
+                                    "fluid_item_" + displayPath,
+                                    () -> new FluidItem(flEntry, new Item.Properties())));
                 continue;
             }
 
@@ -160,8 +163,8 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
                     flEntry);
 
             // Fluid item
-            RegistryObject<FluidItem> itemRO = GTFluidItems.items(namespace)
-                    .register("fluid_item_" + itemPath, () -> new FluidItem(flEntry, new Item.Properties()));
+            gregtech.content.registry.RegisteredItem<FluidItem> itemRO = registrar.item(
+                    namespace, "fluid_item_" + itemPath, () -> new FluidItem(flEntry, new Item.Properties()));
             GTFluidItems.bindFluidItem(field, itemRO);
 
             count++;
@@ -173,7 +176,5 @@ public record FluidBootstrap(IEventBus bus) implements InitializationStep {
         GTFluids.FLUID_TYPES.register(bus);
         GTFluids.FLUIDS.register(bus);
         GTFluids.registerAddonFluids(bus);
-        GTFluidItems.ITEMS.register(bus);
-        GTFluidItems.registerAddonItems(bus);
     }
 }

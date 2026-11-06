@@ -20,25 +20,14 @@ import net.minecraftforge.registries.RegistryObject;
 
 /** Registers addon recipe machines in the addon's own namespace, on GregTech's mod bus. */
 public final class AddonMachineRegistration {
-    private static final Map<String, DeferredRegister<net.minecraft.world.level.block.Block>> BLOCKS =
-            new LinkedHashMap<>();
-    private static final Map<String, DeferredRegister<Item>> ITEMS = new LinkedHashMap<>();
     private static final Map<String, DeferredRegister<BlockEntityType<?>>> ENTITIES = new LinkedHashMap<>();
 
     private AddonMachineRegistration() {}
 
     public static void register(BasicMachineSpec spec, IEventBus bus) {
         String namespace = spec.namespace();
-        var blocks = BLOCKS.computeIfAbsent(namespace, ns -> {
-            var created = DeferredRegister.create(ForgeRegistries.BLOCKS, ns);
-            created.register(bus);
-            return created;
-        });
-        var items = ITEMS.computeIfAbsent(namespace, ns -> {
-            var created = DeferredRegister.create(ForgeRegistries.ITEMS, ns);
-            created.register(bus);
-            return created;
-        });
+        var blocks = gregtech.content.registry.GTBlocks.blocks(namespace);
+        var items = gregtech.content.registry.GTItems.items(namespace);
         var entities = ENTITIES.computeIfAbsent(namespace, ns -> {
             var created = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ns);
             created.register(bus);

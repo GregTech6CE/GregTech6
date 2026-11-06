@@ -1,7 +1,5 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.engine.energy.EnergyNodeSpec;
 //? if >=1.21.1 {
 /*import gregtech.content.block.energy.*;
@@ -28,8 +26,6 @@ import java.util.*;
 
 /^* Registered current energy nodes; reactors retain their native registry boundary. ^/
 *///?} else {
-import net.minecraftforge.registries.RegistryObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,22 +38,12 @@ import java.util.List;
  */
 //?}
 public final class GTEnergyNodes {
+    private static final List<RegisteredBlock<EnergyNodeBlock>> ALL = new ArrayList<>();
+
 //? if >=1.21.1 {
     /*private GTEnergyNodes() {
     }
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
-    public static final DeferredHolder<Block, ReactorCoreBlock> REACTOR_CORE_BLOCK = BLOCKS.register("reactor_core",
-            () -> new ReactorCoreBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(8, 12).requiresCorrectToolForDrops()));
-    public static final DeferredHolder<Block, ReactorCore2x2Block> REACTOR_CORE_2X2 = BLOCKS.register("reactor_core_2x2", ReactorCore2x2Block::new);
-    public static final DeferredHolder<Block, ReactorCasingBlock> REACTOR_CASING = BLOCKS.register("reactor_casing", ReactorCasingBlock::new);
-    static {
-        ITEMS.register("reactor_core", () -> new BlockItem(REACTOR_CORE_BLOCK.get(), new Item.Properties()));
-        ITEMS.register("reactor_core_2x2", () -> new BlockItem(REACTOR_CORE_2X2.get(), new Item.Properties()));
-        ITEMS.register("reactor_casing", () -> new BlockItem(REACTOR_CASING.get(), new Item.Properties()));
-    }
-    private static final List<DeferredHolder<Block, EnergyNodeBlock>> ALL = new ArrayList<>();
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,
             BlockEntityType<gregtech.content.blockentity.energy.EnergyNodeBlockEntity>> ENERGY_NODE = ENTITIES.register("energy_node",
             () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.EnergyNodeBlockEntity::new, supportedBlocks()).build(null));
@@ -69,21 +55,9 @@ public final class GTEnergyNodes {
         return blocks.toArray(Block[]::new);
     }
 
-    public static List<DeferredHolder<Block, EnergyNodeBlock>> all() {
-        return Collections.unmodifiableList(ALL);
-    }
-
-    private static void add(EnergyNodeSpec spec) {
-        var block = BLOCKS.register(spec.id(), () -> createBlock(spec));
-        ALL.add(block);
-        ITEMS.register(spec.id(), () -> new BlockItem(block.get(), itemProperties(spec)));
-    }
-
-    public static void register(IEventBus bus) {
+    public static void register(ContentRegistrar registrar, IEventBus bus) {
         if (!ALL.isEmpty()) throw new IllegalStateException("Energy nodes registered twice");
-        registerSpecifications();
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
+        registerAll(registrar);
         ENTITIES.register(bus);
         bus.addListener(GTEnergyNodes::capabilities);
     }
@@ -98,49 +72,52 @@ public final class GTEnergyNodes {
                 gregtech.content.blockentity.energy.EnergyNodeBlockEntity::fluidCapability);
     }
 *///?} else {
-    private static final List<RegistryObject<EnergyNodeBlock>> ALL = new ArrayList<>();
-
     private GTEnergyNodes() {
     }
+//?}
 
-    public static List<RegistryObject<EnergyNodeBlock>> all() {
-        return Collections.unmodifiableList(ALL);
-    }
+    public static RegisteredBlock<gregtech.content.block.energy.ReactorCoreBlock> REACTOR_CORE_BLOCK;
+    public static RegisteredBlock<ReactorCasingBlock> REACTOR_CASING;
+    public static RegisteredBlock<ReactorCore2x2Block> REACTOR_CORE_2X2;
 
-    private static void add(EnergyNodeSpec spec) {
-        RegistryObject<EnergyNodeBlock> block = GTBlocks.BLOCKS.register(spec.id(),
-                () -> createBlock(spec));
-        ALL.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BlockItem(block.get(),
-                itemProperties(spec)));
-    }
-
-    public static net.minecraftforge.registries.RegistryObject<gregtech.content.block.energy.ReactorCoreBlock> REACTOR_CORE_BLOCK;
-
-    public static RegistryObject<ReactorCasingBlock> REACTOR_CASING;
-    public static RegistryObject<ReactorCore2x2Block> REACTOR_CORE_2X2;
-
-    public static void registerAll() {
-        REACTOR_CORE_BLOCK = GTBlocks.BLOCKS.register("reactor_core", () ->
-                new gregtech.content.block.energy.ReactorCoreBlock(
+    public static void registerAll(ContentRegistrar registrar) {
+        REACTOR_CORE_BLOCK = registrar.block(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                "reactor_core",
+                () -> new gregtech.content.block.energy.ReactorCoreBlock(
                         BlockBehaviour.Properties.of()
                                 .mapColor(MapColor.METAL)
                                 .strength(8.0f, 12.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("reactor_core",
-                () -> new BlockItem(REACTOR_CORE_BLOCK.get(), new Item.Properties()));
+                                .requiresCorrectToolForDrops()),
+                block -> new BlockItem(block, new Item.Properties()));
 
-        REACTOR_CASING = GTBlocks.BLOCKS.register("reactor_casing", ReactorCasingBlock::new);
-        GTBlocks.BLOCK_ITEMS.register("reactor_casing",
-                () -> new BlockItem(REACTOR_CASING.get(), new Item.Properties()));
+        REACTOR_CASING = registrar.block(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                "reactor_casing",
+                ReactorCasingBlock::new,
+                block -> new BlockItem(block, new Item.Properties()));
 
-        REACTOR_CORE_2X2 = GTBlocks.BLOCKS.register("reactor_core_2x2", ReactorCore2x2Block::new);
-        GTBlocks.BLOCK_ITEMS.register("reactor_core_2x2",
-                () -> new BlockItem(REACTOR_CORE_2X2.get(), new Item.Properties()));
+        REACTOR_CORE_2X2 = registrar.block(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                "reactor_core_2x2",
+                ReactorCore2x2Block::new,
+                block -> new BlockItem(block, new Item.Properties()));
 
-        registerSpecifications();
+        registerSpecifications(registrar);
     }
-//?}
+
+    public static List<RegisteredBlock<EnergyNodeBlock>> all() {
+        return Collections.unmodifiableList(ALL);
+    }
+
+    private static void add(ContentRegistrar registrar, EnergyNodeSpec spec) {
+        var block = registrar.block(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                spec.id(),
+                () -> createBlock(spec),
+                node -> new BlockItem(node, itemProperties(spec)));
+        ALL.add(block);
+    }
 
     private static EnergyNodeBlock createBlock(EnergyNodeSpec spec) {
         BlockBehaviour.Properties props = BlockBehaviour.Properties.of()
@@ -174,8 +151,8 @@ public final class GTEnergyNodes {
                 ? new Item.Properties().stacksTo(16) : new Item.Properties();
     }
 
-    private static void registerSpecifications() {
-        gregtech.content.energy.EnergyNodeDefinitions.specifications().forEach(GTEnergyNodes::add);
-        gregtech.content.energy.MagnetMachineDefinitions.specifications().forEach(GTEnergyNodes::add);
+    private static void registerSpecifications(ContentRegistrar registrar) {
+        gregtech.content.energy.EnergyNodeDefinitions.specifications().forEach(spec -> add(registrar, spec));
+        gregtech.content.energy.MagnetMachineDefinitions.specifications().forEach(spec -> add(registrar, spec));
     }
 }

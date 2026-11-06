@@ -387,9 +387,9 @@ public final class GregTechClient {
                         entry.get().asItem());
             }
         });
-        GTFluidItems.ITEMS.getEntries().stream()
-                .filter(RegistryObject::isPresent)
-                .map(RegistryObject::get)
+        GTFluidItems.allEntries().stream()
+                .filter(gregtech.content.registry.RegisteredItem::isPresent)
+                .map(gregtech.content.registry.RegisteredItem::get)
                 .filter(item -> item instanceof FluidItem)
                 .map(item -> (FluidItem) item)
                 .forEach(fluidItem -> {

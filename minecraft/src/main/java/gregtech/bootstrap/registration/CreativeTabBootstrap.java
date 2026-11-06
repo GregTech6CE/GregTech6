@@ -7,7 +7,7 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 import gregtech.engine.material.*;import gregtech.engine.prefix.*;import gregtech.content.data.MaterialPrefix;import gregtech.content.registry.*;import net.minecraft.world.item.*;import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
 public final class CreativeTabBootstrap {private CreativeTabBootstrap(){}
-public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIcons.register();GTCreativeTabIcons.ICONS.register(bus);GTCreativeTabs.registerTabs();GTCreativeTabs.TABS.register(bus);}
+public static void register(gregtech.content.registry.ContentRegistrar registrar, net.neoforged.bus.api.IEventBus bus){GTCreativeTabIcons.register(registrar);GTCreativeTabs.registerTabs();GTCreativeTabs.TABS.register(bus);}
 @SubscribeEvent public static void populateTabs(BuildCreativeModeTabContentsEvent event){if(!event.getTabKey().location().getNamespace().equals(REGISTRY_NAMESPACE))return;
  for(var prefix:PrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populatePrefix(event,prefix);return;}}
  for(var prefix:BlockPrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populateBlockPrefix(event,prefix);return;}}
@@ -55,15 +55,16 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CreativeTabBootstrap implements InitializationStep {
     private final IEventBus bus;
+    private final gregtech.content.registry.ContentRegistrar registrar;
 
-    public CreativeTabBootstrap(IEventBus bus) {
+    public CreativeTabBootstrap(IEventBus bus, gregtech.content.registry.ContentRegistrar registrar) {
         this.bus = bus;
+        this.registrar = registrar;
     }
 
     @Override
     public void run() {
-        GTCreativeTabIcons.register();
-        GTCreativeTabIcons.ICONS.register(bus);
+        GTCreativeTabIcons.register(registrar);
         GTCreativeTabs.registerTabs();
         GTCreativeTabs.TABS.register(bus);
     }
@@ -99,7 +100,7 @@ public class CreativeTabBootstrap implements InitializationStep {
             }
             var crank = gregtech.content.registry.GTToolBlocks.CRANK;
             if (crank != null && crank.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(crank.get()));
-            for (var ro : new net.minecraftforge.registries.RegistryObject[]{
+            for (var ro : new gregtech.content.registry.RegisteredBlock[]{
                     gregtech.content.registry.GTToolBlocks.DUST_FUNNEL,
                     gregtech.content.registry.GTToolBlocks.TAP,
                     gregtech.content.registry.GTToolBlocks.NOZZLE,

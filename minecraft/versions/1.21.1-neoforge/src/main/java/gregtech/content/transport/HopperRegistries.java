@@ -3,39 +3,19 @@ package gregtech.content.transport;
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 import gregtech.content.block.machine.*;
+import gregtech.content.registry.ContentRegistrar;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.machine.HopperSpec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.*;
 
 public final class HopperRegistries {
     private HopperRegistries() {}
-
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(REGISTRY_NAMESPACE);
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(REGISTRY_NAMESPACE);
-    private static final java.util.List<DeferredBlock<HopperBlock>> HOPPERS = new java.util.ArrayList<>();
-    private static final java.util.List<DeferredBlock<QueueHopperBlock>> QUEUES = new java.util.ArrayList<>();
-
-    static {
-        for (var row : HopperCatalog.ALL) {
-            var spec = row.spec();
-            if (row.queue()) {
-                var block = BLOCKS.register(spec.id(), () -> new QueueHopperBlock(spec, properties(spec)));
-                QUEUES.add(block);
-                ITEMS.register(
-                        spec.id(),
-                        () -> new QueueHopperBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
-            } else {
-                var block = BLOCKS.register(spec.id(), () -> new HopperBlock(spec, properties(spec)));
-                HOPPERS.add(block);
-                ITEMS.register(
-                        spec.id(), () -> new HopperBlockItem(block.get(), new Item.Properties().stacksTo(16), spec));
-            }
-        }
-    }
+    private static final java.util.List<RegisteredBlock<HopperBlock>> HOPPERS = new java.util.ArrayList<>();
+    private static final java.util.List<RegisteredBlock<QueueHopperBlock>> QUEUES = new java.util.ArrayList<>();
 
     private static BlockBehaviour.Properties properties(HopperSpec spec) {
         return BlockBehaviour.Properties.of()
@@ -44,17 +24,30 @@ public final class HopperRegistries {
                 .requiresCorrectToolForDrops();
     }
 
-    public static java.util.List<DeferredBlock<HopperBlock>> hoppers() {
+    public static java.util.List<RegisteredBlock<HopperBlock>> hoppers() {
         return java.util.Collections.unmodifiableList(HOPPERS);
     }
 
-    public static java.util.List<DeferredBlock<QueueHopperBlock>> queues() {
+    public static java.util.List<RegisteredBlock<QueueHopperBlock>> queues() {
         return java.util.Collections.unmodifiableList(QUEUES);
     }
 
-    public static void register(IEventBus bus) {
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
+    public static void register(ContentRegistrar registrar, IEventBus bus) {
+        if (!HOPPERS.isEmpty() || !QUEUES.isEmpty()) throw new IllegalStateException("Hoppers registered twice");
+        for (var row : HopperCatalog.ALL) {
+            var spec = row.spec();
+            if (row.queue()) {
+                var block = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+                        () -> new QueueHopperBlock(spec, properties(spec)),
+                        hopper -> new QueueHopperBlockItem(hopper, new Item.Properties().stacksTo(16), spec));
+                QUEUES.add(block);
+            } else {
+                var block = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+                        () -> new HopperBlock(spec, properties(spec)),
+                        hopper -> new HopperBlockItem(hopper, new Item.Properties().stacksTo(16), spec));
+                HOPPERS.add(block);
+            }
+        }
         bus.addListener(HopperRegistries::capabilities);
     }
 

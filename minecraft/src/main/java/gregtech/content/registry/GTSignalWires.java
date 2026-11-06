@@ -1,11 +1,8 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.content.block.energy.SignalWireBlock;
-import gregtech.content.material.Materials;
 import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -16,63 +13,46 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 *///?} else {
-import net.minecraftforge.registries.RegistryObject;
 //?}
 import java.util.*;
 
 /** GT6 source IDs 27000/27006, 27050/27056, 27500/27506. These carry redstone, never EU. */
 public final class GTSignalWires {
+    private static final List<RegisteredBlock<SignalWireBlock>> ALL = new ArrayList<>();
 //? if >=1.21.1 {
-    /*private static final List<DeferredHolder<Block, SignalWireBlock>> ALL = new ArrayList<>();
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
+    /*public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,
             BlockEntityType<gregtech.content.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE = ENTITIES.register("signal_wire",
             () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.SignalWireBlockEntity::new,
-            all().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
-*///?} else {
-    private static final List<RegistryObject<SignalWireBlock>> ALL = new ArrayList<>();
-//?}
+            all().stream().map(RegisteredBlock::get).toArray(Block[]::new)).build(null));
+*///?}
     private GTSignalWires() {
     }
 //? if >=1.21.1 {
-    /*public static void register(IEventBus bus) {
+    /*public static void register(ContentRegistrar registrar, IEventBus bus) {
         if (!ALL.isEmpty()) throw new IllegalStateException("Signal wires registered twice");
-        register();
-        BLOCKS.register(bus);
-        ITEMS.register(bus);
+        register(registrar);
         ENTITIES.register(bus);
     }
-
-    public static List<DeferredHolder<Block, SignalWireBlock>> all() {
+*///?}
+    public static List<RegisteredBlock<SignalWireBlock>> all() {
         return Collections.unmodifiableList(ALL);
     }
-*///?} else {
-    public static List<RegistryObject<SignalWireBlock>> all() {
-        return Collections.unmodifiableList(ALL);
-    }
-//?}
-    public static void register() {
+    public static void register(ContentRegistrar registrar) {
         for (var familySpec : gregtech.content.energy.SignalWireCatalog.families())
-            registerFamily(familySpec.name(), familySpec.material(), familySpec.range(), familySpec.luminous());
+            registerFamily(registrar, familySpec.name(), familySpec.material(), familySpec.range(), familySpec.luminous());
     }
 
-    private static void registerFamily(String name, GTMaterial material, int range, boolean luminous) {
+    private static void registerFamily(ContentRegistrar registrar, String name, GTMaterial material, int range, boolean luminous) {
         for (boolean insulated : new boolean[]{false, true}) {
             String id = (insulated ? "cable_01_" : "wire_01_") + name;
-//? if >=1.21.1 {
-            /*var block = BLOCKS.register(id, () -> new SignalWireBlock(material, range, insulated,
-*///?} else {
-            var block = GTBlocks.BLOCKS.register(id, () -> new SignalWireBlock(material, range, insulated,
-//?}
-                    luminous && !insulated, BlockBehaviour.Properties.of().strength(1, 2).noOcclusion()));
+            var block = registrar.block(
+                    gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                    id,
+                    () -> new SignalWireBlock(material, range, insulated,
+                            luminous && !insulated, BlockBehaviour.Properties.of().strength(1, 2).noOcclusion()),
+                    bare -> new BlockItem(bare, new Item.Properties()));
             ALL.add(block);
-//? if >=1.21.1 {
-            /*ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
-*///?} else {
-            GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
-//?}
         }
     }
 

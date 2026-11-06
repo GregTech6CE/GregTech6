@@ -38,9 +38,45 @@ public final class GTBlocks {
 //? if >=1.21.1 {
     /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
     public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
+    private static final Map<String, DeferredRegister<Block>> ADDON_BLOCKS = new HashMap<>();
+    private static final Map<String, DeferredRegister<Item>> ADDON_BLOCK_ITEMS = new HashMap<>();
+
+    // Built-in blocks stay on BLOCKS; an addon namespace gets its own register.
+    public static DeferredRegister<Block> blocks(String namespace) {
+        if (REGISTRY_NAMESPACE.equals(namespace)) return BLOCKS;
+        return ADDON_BLOCKS.computeIfAbsent(namespace, id -> DeferredRegister.create(Registries.BLOCK, id));
+    }
+
+    public static DeferredRegister<Item> blockItems(String namespace) {
+        if (REGISTRY_NAMESPACE.equals(namespace)) return BLOCK_ITEMS;
+        return ADDON_BLOCK_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(Registries.ITEM, id));
+    }
+
+    public static void registerAddonBlocks(net.neoforged.bus.api.IEventBus bus) {
+        for (DeferredRegister<Block> register : ADDON_BLOCKS.values()) register.register(bus);
+        for (DeferredRegister<Item> register : ADDON_BLOCK_ITEMS.values()) register.register(bus);
+    }
 *///?} else {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, GregTech.NAMESPACE);
     public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
+    private static final Map<String, DeferredRegister<Block>> ADDON_BLOCKS = new HashMap<>();
+    private static final Map<String, DeferredRegister<Item>> ADDON_BLOCK_ITEMS = new HashMap<>();
+
+    /** Built-in blocks stay on {@link #BLOCKS}; an addon namespace gets its own register. */
+    public static DeferredRegister<Block> blocks(String namespace) {
+        if (REGISTRY_NAMESPACE.equals(namespace)) return BLOCKS;
+        return ADDON_BLOCKS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.BLOCKS, id));
+    }
+
+    public static DeferredRegister<Item> blockItems(String namespace) {
+        if (REGISTRY_NAMESPACE.equals(namespace)) return BLOCK_ITEMS;
+        return ADDON_BLOCK_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.ITEMS, id));
+    }
+
+    public static void registerAddonBlocks(net.minecraftforge.eventbus.api.IEventBus bus) {
+        for (DeferredRegister<Block> register : ADDON_BLOCKS.values()) register.register(bus);
+        for (DeferredRegister<Item> register : ADDON_BLOCK_ITEMS.values()) register.register(bus);
+    }
 //?}
 
 //? if >=1.21.1 {
