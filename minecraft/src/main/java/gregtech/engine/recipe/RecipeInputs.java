@@ -66,27 +66,21 @@ public final class RecipeInputs {
                 if (required == null || required.isEmpty()) continue;
                 boolean catalyst = recipe.isCatalystInput(input);
                 long needed = (long) required.getCount() * (catalyst ? 1 : parallel);
-                boolean anyAccepted = false;
                 for (int slot = 0; slot < items.size(); slot++) {
-                    var available = items.get(slot);
-                    if (itemCounts[slot] <= 0 || !recipe.matchesItemInput(input, available)) continue;
-                    if (recipe.mExactItemInputs && !sameItem(required, available)) continue;
-                    if (recipe.mRequiresEmptyContainerInputs
-                            && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available)) continue;
-                    if (recipe.mMaterialRecovery
-                            && (available.isDamaged()
-                                    || !gregtech.engine.material.ItemMaterialRegistry.canRecover(available))) continue;
-                    anyAccepted = true;
+                    if (itemCounts[slot] <= 0) continue;
+                    if (!acceptsItem(recipe, input, required, items.get(slot))) continue;
                     int take = (int) Math.min(needed, itemCounts[slot]);
                     itemCounts[slot] -= take;
                     if (catalyst) retainedItems[slot] += take;
                     needed -= take;
                     if (needed == 0) break;
                 }
-                // Reordering can only rescue a requirement that some slot accepted; keeping the
-                // hopeless case on the cheaper path matters, because every rejected candidate
-                // reaches this loop.
-                if (needed != 0) return anyAccepted && allocateItems(recipe, parallel);
+                // An earlier, broader requirement may already have drained the only slot this one
+                // accepts, so the fallback must test acceptance, not the remaining counts. A
+                // requirement no slot accepts, or whose accepting slots lack the total supply,
+                // still stays off the planner.
+                if (needed != 0) return couldBeSatisfied(recipe, input, required, needed)
+                        && allocateItems(recipe, parallel);
             }
             for (int input = 0; input < recipe.mFluidInputs.length; input++) {
                 var required = recipe.mFluidInputs[input];
@@ -103,6 +97,9 @@ public final class RecipeInputs {
                     needed -= take;
                     if (needed == 0) break;
                 }
+                // A tank holds exactly one fluid, so its acceptance does not depend on the
+                // requirement: a drained accepting tank means the supply was short, not that the
+                // assignment order was wrong.
                 if (needed != 0) return anyAccepted && allocateFluids(recipe, parallel);
             }
             return true;
@@ -128,6 +125,21 @@ public final class RecipeInputs {
                     if (recipe.isCatalystInput(input)) retainedItems[slot] += plan[input][slot];
                 }
             return true;
+        }
+
+        /**
+         * Whether the original slots can cover this requirement at all. Acceptance is evaluated
+         * without the remaining counts, because a greedy pass may already have spent the only slot
+         * this requirement accepts and the planner is what undoes that.
+         */
+        private boolean couldBeSatisfied(Recipe recipe, int input, ItemStack required, long needed) {
+            long supply = 0;
+            for (int slot = 0; slot < items.size(); slot++) {
+                if (!acceptsItem(recipe, input, required, items.get(slot))) continue;
+                supply += items.get(slot).getCount();
+                if (supply >= needed) return true;
+            }
+            return false;
         }
 
         private boolean allocateFluids(Recipe recipe, int parallel) {
