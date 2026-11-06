@@ -145,7 +145,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         }
         if(isElectricTransformer()){transformerControl=new gregtech.content.energy.ElectricTransformerControl(this::setChanged);if(!(batteryCovers instanceof java.util.EnumMap))batteryCovers=new java.util.EnumMap<>(Direction.class);}
         if (spec.kind() == EnergyNodeSpec.Kind.TURBINE) {
-            steamTank = new FluidTankGT(spec.inputRate() * 8).setOnChanged(this::setChanged);
+            steamTank = new FluidTankGT(spec.inputRate() * 4).setOnChanged(this::setChanged);
         }
     }
 
@@ -1275,7 +1275,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 *///?} else {
             steamTank.readFromNBT(tag.getCompound("gt.steam"));
 //?}
-            steamTank.setCapacity(spec.inputRate() * 8); // Source resets rated tank capacity after loading saved contents.
+            steamTank.setCapacity(spec.inputRate() * 4); // Source resets rated tank capacity after loading saved contents.
         }
     }
     @Override public void dropContents() {
