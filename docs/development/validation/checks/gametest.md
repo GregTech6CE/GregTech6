@@ -16,11 +16,7 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 - 案例表：`minecraft/src/test/resources/gregtech/gametest/crafting-issue-cases.tsv`。
 - 结构模板：`minecraft/src/test/templates/test_empty.nbt`。
 
-### 配方回归案例表
-
-针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威；core 静态子集由 JUnit 检查维护。
-
-引擎契约不属于某个配方 issue，例如 `RecipeMap` 的注册、删除与碰撞判定，直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。
+### 运行时覆盖与边界
 
 物品管道的 `ItemPipeRoutingTests` 覆盖最近出口饱和后续搜、逐路径带宽、库存更换与提前唤醒、含水状态和普通盖板不重建、取回器与 I/O 失效、拆管恢复及卸载回调保护。夹具使用竖直柱避免相邻测试互相连接；卸载用例只验证回调使快照失效，真实跨区块卸载与重新加载仍需游戏内确认。
 
@@ -31,6 +27,18 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 上述生命周期用例还检查固定和重复层部件的 `design`：成型时应用，失效时恢复，修复及拆除后不残留；更新包必须携带同一编号。这只验证服务端状态和同步负载，实际贴图切换、渲染层及 Jade 的 Shift 展开仍需客户端验收。
 
 端口用例使用真实代理壁板的 Forge/NeoForge 能力调用，检查四个水平朝向、重复层、实际侧面回调、槽位选择、物品 ID/流体标签过滤、无方向调用限制、模拟不消耗、流体不混合，以及拆除和布局重载后缓存能力的权限变化。另检查所有通用配方主控对 `FLUID_INPUT`、`FLUID_IO`、`ITEM_IO` 的接入，验证越界槽位和未知资源配置会被拒绝，以及能源从结构输出口发出时的面限制、实际扣减与拒绝后守恒。
+
+主动输出回归检查四朝向、槽位与过滤交集、模拟后实际扣减和拆除后的停传。诊断回归从公开入口检查数量差额、材料不一致、可选方块、重复层、占用主控和未加载区块，并确认查询不改变归属、不加载区块。客户端放大镜排版及全部内置机器生产行为仍需游戏内验收。
+
+`MultiblockBehaviorApiTests.partsOpenTheControllerMenuAndInvalidateWithTheStructure` 经真实服务端右键入口检查端口、普通方块和重复层部件开窗，以及潜行、液体容器、距离和拆除后的失效。大型结构还需确认距离超过主控八格时，部件开窗保持有效并使用主控真实库存；客户端画面和工具、覆盖板的完整操作链仍需游戏内验收。
+
+端口回归同时覆盖关闭闸门、面输出到空气的物品守恒，以及同流体多个输出槽的背压。菜单回归检查主方块和部件一致的 8 格边界。
+
+### 配方回归案例表
+
+针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威；core 静态子集由 JUnit 检查维护。
+
+引擎契约不属于某个配方 issue，例如 `RecipeMap` 的注册、删除与碰撞判定，直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。
 
 #### 全量表
 
@@ -122,6 +130,7 @@ GameTest 只保留一份 canonical 模板 `minecraft/src/test/templates/test_emp
 ### 维护规则
 
 - 所有 `src/test` 默认常驻；不要恢复测试目录的 ignore 规则。
+- 修改结构模板尺寸后重跑所有既有 GameTest。
 - GameTest 保持单 namespace `gt6ce`、单结构模板；测试类保持少量，用例优先用数据表扩展。
 - 不新增 per-issue JavaExec 任务；不为每个 issue 建类、namespace 或 NBT。
 - 平台脚本只保留 `gameTestServer` 所需的最小接线，不改现有 mods 注入。
@@ -148,9 +157,3 @@ GameTest 只保留一份 canonical 模板 `minecraft/src/test/templates/test_emp
 ```
 
 `-PgameTestDirectory` 由 Gradle 按节点项目目录解析；要放到仓库根 `work/` 时使用上面的 `../../../work/...`。
-
-主动输出回归检查四朝向、槽位与过滤交集、模拟后实际扣减和拆除后的停传。诊断回归从公开入口检查数量差额、材料不一致、可选方块、重复层、占用主控和未加载区块，并确认查询不改变归属、不加载区块。客户端放大镜排版及全部内置机器生产行为仍需游戏内验收。
-
-`MultiblockBehaviorApiTests.partsOpenTheControllerMenuAndInvalidateWithTheStructure` 经真实服务端右键入口检查端口、普通方块和重复层部件开窗，以及潜行、液体容器、距离和拆除后的失效。大型结构还需确认距离超过主控八格时，部件开窗保持有效并使用主控真实库存；客户端画面和工具、覆盖板的完整操作链仍需游戏内验收。
-
-共享模板的 NBT `size` 为 6×5×5，为重复层与部件测试提供纵向空间；模板尺寸变化后须重跑所有既有 GameTest，而非只跑新增多方块用例。端口回归同时覆盖关闭闸门、面输出到空气的物品守恒，以及同流体多个输出槽的背压。菜单回归检查主方块和部件一致的 8 格边界。

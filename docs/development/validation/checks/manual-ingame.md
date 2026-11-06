@@ -41,7 +41,9 @@ Forge 默认实例在节点内 `run/`，NeoForge 客户端/服务端在 `run-cli
 
 `-PserverDirectory` 由 Gradle 按节点项目目录解析；要放到仓库根 `work/` 时使用上面的 `../../../work/...`。
 
-可选开关：`-PkubejsRuntime=true`、`-PcompatRuntime=ie|mek|ae|pr|hc`（每次选择一个值）、`-PemiSmoke=true`、`-PemiOnlySmoke=true`、`-PdirectCoreClasspath=true`、`-PdirectCoreResources=true`。开关只装载开发运行依赖，不代表集成已通过验证。
+可选集成开关：`-PkubejsRuntime=true`、`-PcompatRuntime=ie|mek|ae|pr|hc`（每次选择一个值）、`-PemiSmoke=true`、`-PemiOnlySmoke=true`。具体依赖见 [Forge 配置](../../../../gradle/platform-forge.gradle)与 [NeoForge 配置](../../../../gradle/platform-neoforge.gradle)；加载依赖不代表集成已通过验证。
+
+`-PdirectCoreClasspath=true`、`-PdirectCoreResources=true` 是本地运行优化；常规打包验收保持默认配置。
 
 修改 GUI 模板、别名、图标引用或 PNG 时，先做静态预览：
 
@@ -50,4 +52,4 @@ python tools/gui/preview.py
 python tools/gui/preview.py --output work/gui-preview
 ```
 
-预览检查模板、别名、图标引用、PNG 尺寸和进度条两半；输出 PNG/HTML 需要 Pillow。预览不执行注册、不修改配方、不启动服务器，不替代游戏内效果。
+依赖、参数、输出与预览边界见[工具说明](../../../../tools/gui/README.md)。

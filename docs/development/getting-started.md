@@ -1,61 +1,36 @@
 # 开发上手
 
-所有命令在仓库根目录执行。下面的命令来自当前 Gradle 配置，是否在某台机器成功必须以该次输出为准。
+所有命令在仓库根目录执行。首次工作先读[根工作规则](../../AGENTS.md)，用 `git status --short` 确认已有变更。
 
 ## 环境与首次检查
 
-1. 阅读[根工作规则](../../AGENTS.md)，运行 `git status --short`，确认已有变更。
-   API 源码已内联在 `api/`（GregTech6API a9c879176，基线 API 1.2.0；当前 API 1.3.0），普通 `git clone` 即可，不需要子模块初始化。
-2. 准备 JDK 17 与 21。`core` 和 Forge 节点使用 17，NeoForge 节点使用 21；`JAVA_HOME` 决定启动 Gradle 的 JVM，`JAVA17_HOME`、`JAVA21_HOME` 被项目配置用于发现工具链。
-3. 使用仓库 Wrapper：Linux/macOS 为 `./gradlew`，Windows PowerShell 为 `.\gradlew.bat`。当前 Wrapper 指向 Gradle 8.8，Stonecutter 为 0.7.11，以配置文件为准。
-4. 初次运行需要下载 Gradle、插件及游戏依赖。先执行 `./gradlew --version`，再按需查询 `./gradlew projects` 和目标节点的 `tasks --all`。
+1. 普通 `git clone` 即可；API 源码已内联，无需初始化子模块，来源与版本见[附属 API](../ADDON_API.zh-CN.md#独立库与-sdk-构建)。
+2. 准备 JDK 17 与 21。core 和 Forge 节点使用 17，NeoForge 节点使用 21；`JAVA_HOME` 决定启动 Gradle 的 JVM，`JAVA17_HOME`、`JAVA21_HOME` 用于发现工具链。
+3. 使用仓库 Wrapper：Linux/macOS 为 `./gradlew`，Windows PowerShell 为 `.\gradlew.bat`。当前 Wrapper 为 Gradle 8.8，Stonecutter 为 0.7.11。
+4. 首次运行需要下载 Gradle、插件及游戏依赖。执行 `./gradlew --version`，按需用 `./gradlew projects` 和目标节点的 `tasks --all` 查询任务。
 
-版本依据见 [settings.gradle](../../settings.gradle)、[Wrapper 配置](../../gradle/wrapper/gradle-wrapper.properties)、[工具链属性](../../gradle.properties)及 [CI 环境配置](../../.github/actions/setup-build/action.yml)。
+配置依据：[settings.gradle](../../settings.gradle)、[Wrapper](../../gradle/wrapper/gradle-wrapper.properties)、[工具链属性](../../gradle.properties)、[CI 环境](../../.github/actions/setup-build/action.yml)。
 
-`gradle.properties` 当前没有代理配置。需要代理时，连接失败先核实本机代理与网络，不要把本机代理、JDK 绝对路径或密码写入共享配置。个人配置优先放用户级 `~/.gradle/gradle.properties` 或使用命令行覆盖；`local.properties` 虽被忽略，但本项目没有通用自动读取它的逻辑。
+`gradle.properties` 当前没有代理配置。个人代理或 JDK 路径放用户级 `~/.gradle/gradle.properties`，或使用命令行覆盖。`local.properties` 虽被忽略，本项目没有通用自动读取它的逻辑。
 
-## 构建目标
+## 选择构建与检查
 
-| 目的 | 命令 |
+| 目的 | 命令与说明 |
 | --- | --- |
-| 公共 API 检查与库产物 | `./gradlew :api:check :api:assemble` |
-| core 检查 | `./gradlew :core:check` |
-| buildtools 检查 | `./gradlew :buildtools:check` |
-| 两个平台编译 | `./gradlew compileBothPlatforms` |
-| Forge 发行 JAR | `./gradlew :minecraft:1.20.1-forge:distributionJar` |
-| NeoForge 发行 JAR | `./gradlew :minecraft:1.21.1-neoforge:jar` |
-| 两个平台组装 | `./gradlew assembleBothPlatforms` |
-| 全仓检查 | `./gradlew check` |
-| 代码格式化（core、buildtools、共享与节点源码） | `./gradlew format` |
-| 单节点打包，与 CI 一致 | `./gradlew :api:jar :minecraft:1.20.1-forge:assemble` 或 `./gradlew :api:jar :minecraft:1.21.1-neoforge:assemble` |
-| 单节点完整检查 | `./gradlew :minecraft:1.20.1-forge:build` 或 `./gradlew :minecraft:1.21.1-neoforge:build` |
+| 编译两个平台 | [compile](validation/checks/compile.md#运行命令) |
+| 生成发行模组、公共 API 库或 SDK | [assemble](validation/checks/assemble.md#运行命令)；产物区别见该页[产物位置](validation/checks/assemble.md#产物位置) |
+| 运行公共 API、core、buildtools 或平台 API 单元测试 | [junit](validation/checks/junit.md#运行命令) |
+| 检查外部消费者看到的 API 契约 | [api-contracts](validation/checks/api-contracts.md#运行命令) |
+| 格式检查与格式化 | [format](validation/checks/format.md) |
+| 启动开发客户端、服务端或可选集成 | [manual-ingame](validation/checks/manual-ingame.md#运行命令) |
+| 运行 Minecraft 场景测试 | [gametest](validation/checks/gametest.md#运行命令) |
 
-`format` 使用 Spotless + Palantir Java Format（4 空格、120 列）。Spotless 覆盖 `:core`、`:buildtools`、`:minecraft` 共享源码与两个节点；`api` 与 `api-platform` 尚未接入，修改这两层时仍按现有文件风格书写。`**/generated/**` 与带 Stonecutter `//?` 标记的共享文件不在直接格式化范围内，需要按节点处理。`spotlessCheck` 已接入上述项目的 `check`。
+改动后的必需检查按[验证与验收](validation/README.md)选择。全仓检查可用 `./gradlew check`，但不包含 GameTest；单节点 `build` 同样不能代替游戏验收。
 
-`./gradlew check` 不包含 GameTest；GameTest 通过两个节点的 `runGameTestServer` 单独运行。
-
-改动后按[验证与验收](validation/README.md)读取对应 package 与检查，再执行相关命令。
-
-发行文件在 `minecraft/versions/<version-loader>/build/libs/`。Forge `jar` 输出到 `build/forge-intermediates/`，最终交付使用 `distributionJar`；两平台发行包均携带 core、公共 API 和游戏 API。独立公共库位于 `api/common/build/libs/`，平台 SDK 位于节点 `build/addon-sdk/`，使用方式见[附属 API](../ADDON_API.zh-CN.md)。不要把 API 库、SDK、sources 或 javadoc JAR 当模组安装。
-
-根 `compileJava`、`runClient`、`runServer` 等兼容入口委托给 Forge 节点，并不表示同时处理两个平台。任务关系见 [stonecutter-native.gradle](../../gradle/stonecutter-native.gradle)。
-
-## 开发运行与可选集成
-
-```bash
-./gradlew :minecraft:1.20.1-forge:runClient
-./gradlew :minecraft:1.21.1-neoforge:runClient
-./gradlew :minecraft:1.21.1-neoforge:runServer
-```
-
-Forge 默认实例在节点内 `run/`，NeoForge 客户端/服务端在 `run-client/`、`run-server/`。都属于本机数据，不提交存档或配置；测试服务端 EULA 由操作者自行处理。
-
-当前配置提供 `-PkubejsRuntime=true`、`-PcompatRuntime=ie|mek|ae|pr|hc`（每次选择一个实际值）、`-PemiSmoke=true` 与 `-PemiOnlySmoke=true` 等开发开关，具体依赖以 [Forge 适配](../../gradle/platform-forge.gradle)和 [NeoForge 适配](../../gradle/platform-neoforge.gradle)为准。开关仅装载开发运行依赖，不代表集成已通过验证。
-
-`-PdirectCoreClasspath=true`、`-PdirectCoreResources=true` 是本地运行优化；常规打包验收保持默认配置。Forge `runData` 会写源码资源，先读[资源指南](../architecture/resources.md)。
+根 `compileJava`、`runClient`、`runServer` 等兼容入口委托给 Forge 节点。开发运行和单平台检查应明确节点，任务关系见 [stonecutter-native.gradle](../../gradle/stonecutter-native.gradle)。
 
 ## 常见排错顺序
 
 先看首个实际失败原因：工具链、代理、依赖解析、源码编译、Mixin 或运行期异常。保留失败命令及必要输出于 `work/<任务名>/`，修复共享输入后重跑受影响检查。不要先删全部缓存、反复全量 clean，或从生成副本修复问题。
 
-不能把其他空测试任务当覆盖证明；具体检查的注意事项与运行命令按验证入口执行。
+Forge `runData` 会写源码资源，使用前读[资源指南](../architecture/resources.md#数据生成与打包)。

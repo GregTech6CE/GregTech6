@@ -4,7 +4,7 @@
 
 ## 独立公共 API
 
-源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，内联基线来自 [GregTech6API](https://github.com/GregTech6CE/GregTech6API)（a9c879176，API 1.2.0），当前分支扩展为 1.3.0。`common/` 接为 `:api`。模块使用 Java 17；core 和游戏侧 API 单向依赖它。以下表内路径相对于 `gregtech`。
+源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，`common/` 接为 `:api`。模块使用 Java 17，core 和游戏侧 API 单向依赖它；来源、版本与消费方式见[附属 API](../../ADDON_API.zh-CN.md#独立库与-sdk-构建)。以下表内路径相对于 `gregtech`。
 
 | 包 | 应当承担 | 代表入口/关注点 |
 | --- | --- | --- |
@@ -27,11 +27,9 @@
 
 `StructureGrid` 与 `RecipeMapSpec` 已移回宿主，分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`；它们不属于附属契约。
 
-这些包只定义必要可消费的协议，不放注册执行、游戏世界访问、客户端渲染或内部缓存。扩展输入在进入运行时前验证身份、范围、冲突与引用，避免把错误拖到机器 tick 才暴露。
-
 ## Minecraft 层的 API
 
-入口为 [minecraft/gregtech/api](../../../api/minecraft/src/main/java/gregtech/api)。源码内联自独立 API 仓库（a9c879176），共享源码由 `:api-platform:<node>` 经 Stonecutter 分别编译为 Forge / NeoForge API；编译路径不包含 core 或模组 main 输出。
+入口为 [minecraft/gregtech/api](../../../api/minecraft/src/main/java/gregtech/api)。共享源码由 `:api-platform:<node>` 经 Stonecutter 分别编译为 Forge / NeoForge API；编译路径不包含 core 或模组 main 输出。
 
 | 包 | 应当承担 | 边界 |
 | --- | --- | --- |
@@ -39,9 +37,13 @@
 | `api.machine` | 游戏中的机器控制接口 | 当前有 `MachineControl`，与 core 同包但不同源码层 |
 | `api.transport` | 游戏世界中管道的连接契约 | `FluidPipeConnectable`、`ItemPipeConnectable`；避免公开整个内部网络 |
 
-## 修改顺序
+## 宿主接入
 
-先确认外部消费者需要什么，再定义最小契约；由 engine 提供执行，bootstrap/platform 绑定，content 消费。接口新增字段、方法或默认行为时，检查两个加载器的实现与附属生命周期，说明二进制、源码和数据兼容影响。
+先确认外部消费者需要什么，再定义最小契约；由 engine 提供执行，bootstrap/platform 绑定，content 消费。
+
+本体入口是 `ControllerDeclaration.multiblock(namespace, path, factory, binding)`。`ControllerBinding` 明确给出主控实体类、方块实体注册 ID 和结构工厂；配方机另外绑定单元布局供应器。声明在 `MultiblockRegistration` 注册后，共同驱动运行时识别、JEI/EMI 和建筑之杖；独立主控的方块实体适用方块列表也从声明生成。启动时扫描实际方块注册表，校验漏登记、主控类/实体类型不匹配和空结构。
+
+多方块声明、端口和诊断的消费契约见[附属 API](../../ADDON_API.zh-CN.md#多方块声明api-13)，内部执行见[engine 多方块运行时](engine.md#多方块运行时)。
 
 ## 验收
 
@@ -50,7 +52,7 @@
 - 修改公开签名、默认方法、异常或生命周期声明时，说明二进制、源码与数据兼容影响；`public` 不自动意味着长期兼容。
 - 扩展输入在进入运行时前验证身份、范围、冲突与引用。
 - 修改后运行 JUnit 与 `apiContracts`；修改 `api/minecraft` 的共享游戏侧 API 时编译两个平台。`api/common` 仅依赖 JDK，不需要平台编译。
-- `:api` 与 `:api-platform` 尚未接入 Spotless，格式检查不能把这两层解读为已覆盖。
+- 格式检查的覆盖缺口见 [format](../../development/validation/checks/format.md)。
 
 ## 自动化测试范围
 
@@ -60,5 +62,3 @@
   - `apiContracts` 用打包后的 API JAR 运行外部消费者，检查签名闭包、能源契约与宿主未绑定时的失败行为；它不属于 JUnit，但属于公共 API 的自动检查。
 - GameTest
   - 公共契约层不使用 GameTest；平台运行期由 `MultiblockDeclarationTests` 检查原版主控声明、实体工厂与预览一致性，由 `MultiblockBehaviorApiTests` 检查仅调用公共 API 的附属注册、数量约束、同类方块、重复层及结构回调，`MultiblockPortApiTests` 检查真实能力调用、四向旋转、槽位/资源过滤、模拟守恒和失效后的缓存视图。
-
-`StructureAccess.diagnose()` 供行为回调按需查询；`AddonStructures.diagnose(level, pos)` 供独立工具查询内置/附属主控及已关联部件。公开的 `StructureProblem` 保存不可变诊断字段，`AddonStructures.describe` 返回可翻译文本。新增宿主桥接采用默认抛出不支持的方式，旧实现不会被误当作诊断成功；既有注册 ID 与 NBT 不变。多方块的 `EnergyAccess.emitTo` 现要求目标接收面对应已成型主控或有效输出部件，不能绕过单元面限制；单方块远程输出维持原契约。

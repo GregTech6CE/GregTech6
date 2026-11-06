@@ -148,6 +148,4 @@ GuiTemplates.background(graphics, ResourceLocation.parse("example:textures/gui/c
 
 ## 预览、重载与验证
 
-静态预览命令、资源包重载与游戏内验收清单见[验证与验收](validation/README.md)。
-
-GUI 预览不执行注册、不修改配方、不启动服务器；自定义 Menu、物品、标题、流体内容、交互和动画插值仍需游戏内验证。预览工具不会覆盖用户整理目录或生成新的整机 PNG 到生产资源中。
+先按[预览工具](../../tools/gui/README.md)检查模板并生成静态预览，再按[游戏内验收](validation/checks/manual-ingame.md)确认资源包重载、GUI 缩放、显示、交互与动画。静态预览的覆盖边界见工具说明。

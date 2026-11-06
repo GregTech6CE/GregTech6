@@ -1,13 +1,9 @@
 # 集成、来源与验证结论
 
-本目录保存跨平台、跨模组、原 GT6 对照与移植验证的长期结论。首次修改先读[架构](../architecture/README.md)与[验证与验收](../development/validation/README.md)，再使用[结论模板](report-template.md)。
+本目录保存跨平台、跨模组与原 GT6 对照的长期结论，包括来源版本、单位转换、兼容条件、可复现问题及覆盖状态。目前只有模板，尚无正式报告。
 
-适合保存：原始实现的仓库/版本/路径、数据单位转换、两平台已知差异、可选集成兼容条件、可复现问题与覆盖状态。职责归属放架构文档；发布执行记录放 [operations](../operations/README.md)。
-
-新报告建议命名 `<topic>.md` 或 `<platform>-<topic>.md`，明确范围和状态；持续同一主题优先更新原报告。全文日志、下载源码、反编译文件、截图原件和个人计划放 `work/<任务名>/`，不要直接搬入本目录。状态表述、证据要求与“未验证/部分验证/验证通过”的写法按[验证与验收](../development/validation/README.md)执行；不要把局部验证写成移植完成或全面一致。
-
-本入口建立归档方法，不表示已经存在兼容性验证结论。新增正式报告后在下方目录中添加链接。
+新报告复制[结论模板](report-template.md)，命名 `<topic>.md` 或 `<platform>-<topic>.md`，并在下方添加链接。同一主题持续更新原报告；结论与证据要求见[验证与验收](../development/validation/README.md#结果与证据)，其他材料按[文档归属](../development/repository-layout.md#文档归属)存放。
 
 ## 目录
 
-- [验证结论模板](report-template.md)：模板，不是已执行报告。
+- [验证结论模板](report-template.md)

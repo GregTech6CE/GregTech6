@@ -1,24 +1,11 @@
 # 开发指南
 
-本目录维护环境准备、构建、排错和协作步骤。
+| 主题 | 内容 |
+| --- | --- |
+| [开发上手](getting-started.md) | 工具链、首次构建与排错 |
+| [文件与产物归属](repository-layout.md) | 源码、测试、工具、文档和临时材料的位置 |
+| [验证与验收](validation/README.md) | 改动路径路由、检查命令与结果报告 |
+| [碎片贴图与机器 GUI 模板](gui-templates.md) | 模板格式、素材引用和界面接入 |
+| [Issue 分类与标签](github-issue-tags.md) | 问题分类与协作约定 |
 
-## 阅读顺序
-
-1. [上手](getting-started.md)
-2. [文件归属](repository-layout.md)
-3. [验证与验收](validation/README.md)
-4. [架构](../architecture/README.md)
-
-## 次要主题
-
-- [碎片贴图与机器 GUI 模板](gui-templates.md)
-- [Issue 分类与标签](github-issue-tags.md)
-
-## 其他主题
-
-- 验证规则按 package 与检查拆分在 [validation](validation/README.md)；验收章节写在 `architecture/packages/*`，命令写在对应的检查文档中。
-- 集成与验证结论放在 [integration](../integration/README.md)。
-- 真实执行记录放在 [operations](../operations/README.md)。
-- 长期决策放在 [decisions](../decisions/README.md)。
-- 临时排查放在 `work/`。
-- 单个工具的使用说明放在 `tools/<scope>/README.md`，不在本目录。
+其他主题见[文档入口](../README.md)，开发工具用法见[工具目录](../../tools/README.md)。

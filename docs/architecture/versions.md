@@ -24,6 +24,6 @@
 - 物品 NBT 与数据组件、资源标识构造、注册与能力 API 存在差异，沿已有适配处理。
 - 两版本数据包目录命名不同，不能把一边 JSON 路径直接拷给另一边。
 - 共享构建对完整 JSON 文档中的 composite loader 名称进行转换；这不是所有资源格式都会自动迁移的保证。
-- Forge 发行包经 `distributionJar` 合并纯 Java API 和 core；NeoForge 在 `jar` 合并。游戏侧 API 在平台编译/重映射阶段接入。SDK 与模组产物分开。
+- 两平台的发行任务和产物区别见[组装检查](../development/validation/checks/assemble.md#产物位置)；游戏侧 API 在平台编译/重映射阶段接入。
 
 版本支持、依赖版本和任务入口以仓库配置为事实来源。升级工具或加载器属于单独任务，不能因文档示例而顺手修改。

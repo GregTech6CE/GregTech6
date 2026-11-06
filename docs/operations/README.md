@@ -2,13 +2,13 @@
 
 本项目的可交付物是模组 JAR，不存在本文隐含的生产发布服务。这里维护可重复执行的构建/更新流程；真正操作实例需在用户授权范围内进行。
 
-阅读顺序：[验证与验收](../development/validation/README.md) → 本页 → [执行记录目录](records/README.md)及[模板](records/TEMPLATE.md)。
+本页负责实例更新流程；检查选择见[验证与验收](../development/validation/README.md)，执行后使用[记录模板](records/TEMPLATE.md)。
 
 ## 准备产物
 
 1. 记录源码状态；正式可追踪构建使用提交号，有本地改动或无初始提交时如实标注，不能伪造版本来源。
-2. 从仓库根按目标构建：Forge 用 `./gradlew :minecraft:1.20.1-forge:distributionJar`，NeoForge 用 `./gradlew :minecraft:1.21.1-neoforge:jar`，两边组装用 `assembleBothPlatforms`。
-3. 从对应节点 `build/libs/` 选取最终模组 JAR，核对平台、版本和 JAR 内容；记录 SHA-256（如 `sha256sum <实际文件>`）。SDK 与源码/Javadoc 包不是模组。
+2. 按[组装检查](../development/validation/checks/assemble.md)构建目标平台并选择最终模组 JAR。
+3. 核对平台、版本和 JAR 内容，记录 SHA-256（如 `sha256sum <实际文件>`）。
 4. 按[验证与验收](../development/validation/README.md)完成相关检查，明确编译、打包、启动和玩法验证各自的状态。
 
 ## 更新隔离实例
@@ -21,6 +21,4 @@
 
 存档不保证跨开发构建兼容。新版改写过存档后，不能仅换回旧 JAR 充当恢复；应从更新前一致的世界、配置、脚本及模组快照恢复，在隔离实例验证。记录是否实际执行/验证恢复，未验证就明确写出。
 
-执行结束后，把脱敏的目标、来源、产物校验值、操作、结果、异常与恢复信息写到 `docs/operations/records/`；完整控制台输出、截图、配置和备份留在本地目录。长期兼容结论提炼到 [integration](../integration/README.md)，不要让每条部署日志成为新的架构说明。
-
-只完成构建时记录“仅构建，未部署”；没有实际执行就不创建貌似成功的部署记录。本次建立流程本身也不构成一次部署。
+执行结束后，按[记录目录](records/README.md)归档来源、产物校验值、操作、结果与恢复信息。只完成交付构建时记录“仅构建，未部署”；普通开发编译无需建立记录。长期兼容结论另存 [integration](../integration/README.md)。

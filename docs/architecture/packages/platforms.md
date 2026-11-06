@@ -28,8 +28,7 @@ Forge 的大量原生实现当前仍位于节点的 `bootstrap`、`content`、`e
 
 - 检查两个节点相同功能的初始化时机、注册 ID、能力方向、模拟/实际资源转移、序列化与客户端隔离。
 - 共享契约改动进行双平台编译；平台运行期行为分别验证并记录证据。代码结构相似不等于行为一致。
-- Forge 使用 `distributionJar`，中间 `jar` 不用于部署；`runData` 会写生产资源，运行后审查差异。
-- NeoForge 使用 `jar`；1.21.1 的数据包路径不能与 1.20.1 互拷；客户端初始化不得进入专用服务端路径。
+- 发行产物按[组装检查](../../development/validation/checks/assemble.md)选择，数据生成与版本资源路径按[资源指南](../resources.md)审查。
 - 版本元数据与 Mixin 配置按节点检查；只验证一个节点时，明确写出未覆盖节点。
 - 结论归档到 [integration](../../integration/README.md)。
 

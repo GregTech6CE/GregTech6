@@ -6,6 +6,19 @@
 
 修改 `src/main/resources/**`、资源处理或打包逻辑、跨版本资源路径、`META-INF` 元数据或模组声明，以及需要确认最终交付物内容时执行。
 
+## 验证原理
+
+### 产物位置
+
+| 产物 | 任务与输出目录 |
+| --- | --- |
+| Forge 最终模组 | `:minecraft:1.20.1-forge:distributionJar` → 节点 `build/libs/` |
+| NeoForge 最终模组 | `:minecraft:1.21.1-neoforge:jar` → 节点 `build/libs/` |
+| 公共 API 库 | `:api:assemble` → `api/common/build/libs/` |
+| 附属平台 SDK | 节点 `addonSdk` → 节点 `build/addon-sdk/`；坐标与消费方式见[附属 API](../../../ADDON_API.zh-CN.md#独立库与-sdk-构建) |
+
+节点目录为 `minecraft/versions/<version-loader>/`。两平台最终模组均携带 core、公共 API 与游戏 API；公共库与 SDK 是开发依赖。
+
 ## 注意事项
 
 - 打包成功不等于运行正常；仍需编译、GameTest 或游戏内验证。
@@ -33,5 +46,3 @@
 ```bash
 python tools/resources/check_compact_model_json.py <发行JAR> --resources core/build/resources/main minecraft/versions/<node>/build/resources/main
 ```
-
-Forge 使用 `distributionJar` 的 `build/libs` 产物，不使用中间 JAR。

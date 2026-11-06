@@ -4,7 +4,7 @@
 
 | 目录 | 应当放什么 | 不应放什么 |
 | --- | --- | --- |
-| `api/` | 内联的 GregTech6API 源码（锁定 a9c879176，基线 API 1.2.0；当前 API 1.3.0），由 `:api`、`:api-platform` 直接编译 | 未更新 API 版本记录、未说明来源基线的 API 改动 |
+| `api/` | 内联 API 源码，由 `:api`、`:api-platform` 直接编译；来源与版本见[附属 API](../ADDON_API.zh-CN.md#独立库与-sdk-构建) | 未说明兼容影响的公共 API 改动 |
 | `api/common/src/main/java/` | Java 17 公共协议、模型、声明与宿主服务接口 | core 实现、内容目录、游戏类型、任务报告 |
 | `api/common/src/test/` | 仅依赖公共 API JAR 的消费者与契约回归 | 主模组实现和资源 |
 | `core/src/main/java/` | 平台无关内容定义、运行规则 | 游戏 API、加载器适配、任务报告 |
@@ -24,9 +24,24 @@
 | 各级 `build/` | Gradle 生成（含 `generated/stonecutter/`、`generated/recipe-resources/`）、编译、打包、报告 | 手工维护的生产输入 |
 | 节点 `run/`、`run-*/` | 本地游戏实例、存档、配置与运行输出 | 要提交的源码 |
 
-`tools/`、`examples/` 是新增内容的归属约定，本文不表示仓库已经包含可用脚本或示例。工具按 scope 放 `tools/<scope>/`，目录内是脚本或构建期模块、其数据文件（如 `*.json`）和 `README.md`；工具说明写在该 README，不写进 `docs/development/`。构建期模块仍是 Gradle 子项目，由 `settings.gradle` 的 `projectDir` 指到这里（如 `tools/buildtools`），不用 `build` 作目录名以免被 `build/` 忽略规则覆盖。
+现有工具见[工具目录](../../tools/README.md)；`examples/` 是未来独立示例的归属约定。工具说明与脚本、数据同放在 `tools/<scope>/`。构建期模块仍是 Gradle 子项目，由 `settings.gradle` 的 `projectDir` 指到这里（如 `tools/buildtools`），不用 `build` 作目录名以免被 `build/` 忽略规则覆盖。
 
 从上游源码导入数据、再生成提交表、或对本地 dump 做一次性比对的脚本不进仓库：它们绑定固定提交的上游源码，只对一个版本有效。这类脚本连同说明放本机被忽略的 `work/local-tools/`，仓库只保留已提交的生成文件与来源说明。
+
+## 文档归属
+
+| 内容 | 维护位置 |
+| --- | --- |
+| 环境、开发步骤与专题操作 | [development](README.md) |
+| 检查选择、注意事项和运行命令 | [validation](validation/README.md) |
+| 分层、系统原理与资源机制 | [architecture](../architecture/README.md) |
+| 包职责、边界与验收条件 | [architecture/packages](../architecture/packages/README.md) |
+| 跨平台、跨模组与上游对照结论 | [integration](../integration/README.md) |
+| 交付与实例更新流程、脱敏执行记录 | [operations](../operations/README.md) |
+| 长期取舍与原版差异 | [decisions](../decisions/README.md) |
+| 单个开发工具的依赖、参数与输出 | 对应 `tools/<scope>/README.md` |
+
+文档入口只导航；正文放在所属专题，其他页面链接引用。工作过程先留在 `work/<任务名>/`，形成可复用结论后再归档。
 
 ## 临时内容如何沉淀
 
