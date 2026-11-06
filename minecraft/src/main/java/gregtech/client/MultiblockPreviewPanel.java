@@ -79,8 +79,7 @@ public final class MultiblockPreviewPanel {
                 && boilerItem.getBlock() instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock)
             return List.of(Component.translatable("gt6ce.jei.assembly_boiler"));
         if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem tankItem
-                && tankItem.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock tank
-                && tank.valveSpec() != null)
+                && tankItem.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock)
             return List.of(Component.translatable("gt6ce.jei.assembly_tank"));
         if(mouseY>=height-24 && info.controller().getItem() instanceof net.minecraft.world.item.BlockItem block
                 && (block.getBlock() instanceof gregtech.content.block.machine.LargeCrucibleControllerBlock

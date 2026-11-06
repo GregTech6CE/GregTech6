@@ -46,7 +46,7 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
 
     public PumpBlockEntity(BlockPos pos, BlockState state) {
         super(GTBlockEntities.PUMP.get(), pos, state);
-        this.tank = new FluidTankGT(gregtech.engine.energy.PumpWorkRules.TANK_CAPACITY).setOnChanged(this::setChanged);
+        this.tank = new FluidTankGT().setOnChanged(this::setChanged);
     }
 
     @Override

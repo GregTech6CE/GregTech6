@@ -24,7 +24,7 @@ public final class MultiblockTankTooltips {
 //?}
         add(lines, "gt.lang.structure", ChatFormatting.AQUA).append(":");
         for (var key : OriginalTankTooltipData.structureKeys(size)) add(lines, key, ChatFormatting.WHITE);
-        long capacity = spec == null ? (size == 5 ? 1_024_000 : 320_000) : spec.capacity();
+        long capacity = spec.capacity();
         var tank = new FluidTankGT(capacity);
         var data = CommonBlockTooltips.blockData(stack);
 //? if >=1.21.1 {

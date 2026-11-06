@@ -3,7 +3,6 @@ package gregtech.content.multiblock;
 import gregtech.content.block.machine.OriginalLightningRodControllerBlock;
 import gregtech.content.blockentity.machine.*;
 import gregtech.content.logistics.LogisticsCoreStructure;
-import gregtech.content.registry.GTMultiblocks;
 import gregtech.engine.multiblock.MultiblockLayout.Role;
 import gregtech.engine.multiblock.tracking.*;
 import java.util.ArrayList;
@@ -47,10 +46,7 @@ public final class SpecialStructures {
         return new Fixed(tank, StructureDefinition.ClaimPolicy.ATOMIC) {
             @Override
             List<CompiledPattern.FixedCell> cells(Direction front) {
-                int radius = tank.trackedSize() / 2;
-                Block wall = tank.valveSpec() == null
-                        ? (radius == 2 ? GTMultiblocks.TANK_WALL_DENSE.get() : GTMultiblocks.TANK_WALL.get())
-                        : LargeMachineParts.block(tank.valveSpec().wallId());
+                Block wall = LargeMachineParts.block(tank.valveSpec().wallId());
                 return tankCells(tank.trackedSize(), wall, front);
             }
         };

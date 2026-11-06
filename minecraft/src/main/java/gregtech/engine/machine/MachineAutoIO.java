@@ -166,7 +166,7 @@ public final class MachineAutoIO {
     public static void pullFluids(IFluidHandler source, IFluidHandler target) {
         int tanks = source.getTanks();
         if (tanks <= 0) {
-            moveFluid(source, target, source.drain(1000, IFluidHandler.FluidAction.SIMULATE));
+            moveFluid(source, target, source.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE));
             return;
         }
         for (int tank = 0; tank < tanks; tank++) {
@@ -176,10 +176,9 @@ public final class MachineAutoIO {
 
     private static void moveFluid(IFluidHandler source, IFluidHandler target, FluidStack candidate) {
         if (candidate == null || candidate.isEmpty()) return;
-        FluidStack offer = candidate.copy();
-        offer.setAmount(Math.min(offer.getAmount(), 1000));
-        int filled = target.fill(offer, IFluidHandler.FluidAction.SIMULATE);
+        int filled = target.fill(candidate.copy(), IFluidHandler.FluidAction.SIMULATE);
         if (filled <= 0) return;
+        FluidStack offer = candidate.copy();
         offer.setAmount(filled);
         FluidStack drained = source.drain(offer, IFluidHandler.FluidAction.EXECUTE);
         if (!drained.isEmpty()) target.fill(drained, IFluidHandler.FluidAction.EXECUTE);
@@ -192,7 +191,7 @@ public final class MachineAutoIO {
         if (host.autoIOShutters(absolute)) return;
         IFluidHandler target = host.autoIOFluidOutputTarget(level, pos, absolute);
         if (target == null) return;
-        FluidStack drained = inventory.drain(1000, IFluidHandler.FluidAction.SIMULATE);
+        FluidStack drained = inventory.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
         if (drained.isEmpty()) return;
         int filled = target.fill(drained, IFluidHandler.FluidAction.SIMULATE);
         if (filled <= 0) return;

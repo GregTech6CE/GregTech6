@@ -42,8 +42,8 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     boolean active;
     private long activityHistory;
     boolean stopped;
-    FluidTankGT fuelTank = new FluidTankGT(4000).setOnChanged(this::setChanged);
-    FluidTankGT exhaustTank = new FluidTankGT(4000).setOnChanged(this::setChanged);
+    FluidTankGT fuelTank = new FluidTankGT().setOnChanged(this::setChanged);
+    FluidTankGT exhaustTank = new FluidTankGT().setOnChanged(this::setChanged);
 
 
 //? if >=1.21.1 {
@@ -256,6 +256,10 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         if (tag.contains("fuelTank")) fuelTank.readFromNBT(tag.getCompound("fuelTank"));
         if (tag.contains("exhaustTank")) exhaustTank.readFromNBT(tag.getCompound("exhaustTank"));
 //?}
+        // Original MultiTileEntityMotorLiquid re-applies mRate * 10 after reading the tanks.
+        long capacity = outputRate() * 10;
+        fuelTank.setCapacityPreservingContents(capacity);
+        exhaustTank.setCapacityPreservingContents(capacity);
     }
 
     // ── Capabilities ─────────────────────────────────────────────────────────

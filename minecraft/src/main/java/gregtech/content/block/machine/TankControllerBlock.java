@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.DirectionalBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -27,23 +26,11 @@ import java.util.List;
 /** Multiblock tank controller (3x3x3 or 5x5x5). Size is determined by the block variant. */
 public class TankControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     private final int size;
-    @Nullable private final TankValveSpec valveSpec;
-
-    public TankControllerBlock(int size) {
-        this(size, Properties.of().strength(5.0F, 10.0F).sound(SoundType.METAL).requiresCorrectToolForDrops());
-    }
-
-    public TankControllerBlock(int size, Properties properties) {
-        this(size, properties, null);
-    }
+    private final TankValveSpec valveSpec;
 
     public TankControllerBlock(TankValveSpec spec, Properties properties) {
-        this(spec.size(), properties, spec);
-    }
-
-    private TankControllerBlock(int size, Properties properties, @Nullable TankValveSpec spec) {
         super(properties);
-        this.size = size;
+        this.size = spec.size();
         this.valveSpec = spec;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
@@ -84,7 +71,7 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
     public int size() {
         return size;
     }
-    @Nullable public TankValveSpec valveSpec() {
+    public TankValveSpec valveSpec() {
         return valveSpec;
     }
 

@@ -44,8 +44,8 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     int size = 3;
     // Selected from the placed valve block during construction.
-    @Nullable private final TankValveSpec valveSpec;
-    FluidTankGT tank = new FluidTankGT(320_000).setOnChanged(this::setChanged);
+    private final TankValveSpec valveSpec;
+    FluidTankGT tank = new FluidTankGT().setOnChanged(this::setChanged);
 
 //? if >=1.21.1 {
 //?} else {
@@ -54,23 +54,22 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     public MultiblockTankControllerBlockEntity(BlockPos pos, BlockState state) {
         super(gregtech.content.registry.GTBlockEntities.MULTIBLOCK_TANK.get(), pos, state);
-        valveSpec = state.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock block
-                ? block.valveSpec() : null;
-        if (state.getBlock() instanceof gregtech.content.block.machine.TankControllerBlock block) setSize(block.size());
+        var block = (gregtech.content.block.machine.TankControllerBlock) state.getBlock();
+        valveSpec = block.valveSpec();
+        setSize(block.size());
     }
 
     public void setSize(int size) {
         if (size != 3 && size != 5) throw new IllegalArgumentException("Tank size: " + size);
-        if (valveSpec != null && valveSpec.size() != size) throw new IllegalArgumentException("Tank valve size: " + size);
+        if (valveSpec.size() != size) throw new IllegalArgumentException("Tank valve size: " + size);
         this.size = size;
-        gregtech.engine.fluid.MultiblockTankData.setCapacity(tank,
-                valveSpec == null ? (size == 5 ? 1_024_000 : 320_000) : valveSpec.capacity());
-        if (valveSpec != null) tank.setGasProof(valveSpec.gasProof()).setAcidProof(valveSpec.acidProof())
+        gregtech.engine.fluid.MultiblockTankData.setCapacity(tank, valveSpec.capacity());
+        tank.setGasProof(valveSpec.gasProof()).setAcidProof(valveSpec.acidProof())
                 .setPlasmaProof(valveSpec.plasmaProof()).setMagicProof(valveSpec.magicProof())
                 .setMaxTemperature(valveSpec.meltingPoint());
     }
 
-    @Nullable public TankValveSpec valveSpec() {
+    public TankValveSpec valveSpec() {
         return valveSpec;
     }
 
@@ -145,7 +144,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             MultiblockTankControllerBlockEntity controller) {
         if (!controller.structureOk() || controller.tank.isEmpty()) return;
-        if (controller.valveSpec != null && controller.processHazard(controller.tank.getFluid())) return;
+        if (controller.processHazard(controller.tank.getFluid())) return;
         controller.pushFluid();
     }
 
