@@ -5,6 +5,7 @@ package gregtech.client;
 import gregtech.GregTech;
 //?}
 import gregtech.content.recipe.MachineRecipeOverlay;
+import gregtech.content.recipe.OvenRecipeBridge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.crafting.RecipeManager;
 //? if >=1.21.1 {
@@ -55,6 +56,10 @@ public final class MachineRecipeClient {
         // Integrated server and client share the static maps. The server pass already applied them.
         if (ServerLifecycleHooks.getCurrentServer() != null) return;
         MachineRecipeOverlay.apply(recipes);
+        // A dedicated client also needs the furnace bridge: the machine-visible oven rows only
+        // exist after it runs, and the synced recipe list alone does not recreate them locally.
+        var connection = Minecraft.getInstance().getConnection();
+        if (connection != null) OvenRecipeBridge.apply(recipes, connection.registryAccess());
         // The row set is final now; build on the task queue so the sync thread is not blocked.
         Minecraft.getInstance().execute(gregtech.engine.recipe.RecipeMap::prebuildLookupIndexes);
         refresh("jei", "gregtech.compat.jei.GregTechJEIPlugin");
