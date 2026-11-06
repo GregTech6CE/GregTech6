@@ -25,6 +25,10 @@ routes:
   - paths: ["core/src/main/resources/**"]
     packages: [content]
     checks: [junit, assemble, format]
+  # 构建期资源转换器
+  - paths: ["tools/buildtools/**"]
+    packages: [content]
+    checks: [junit, format]
   - paths:
       - "core/src/main/java/gregtech/engine/**"
       - "core/src/test/java/gregtech/engine/**"

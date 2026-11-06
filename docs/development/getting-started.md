@@ -20,16 +20,17 @@
 | --- | --- |
 | 公共 API 检查与库产物 | `./gradlew :api:check :api:assemble` |
 | core 检查 | `./gradlew :core:check` |
+| buildtools 检查 | `./gradlew :buildtools:check` |
 | 两个平台编译 | `./gradlew compileBothPlatforms` |
 | Forge 发行 JAR | `./gradlew :minecraft:1.20.1-forge:distributionJar` |
 | NeoForge 发行 JAR | `./gradlew :minecraft:1.21.1-neoforge:jar` |
 | 两个平台组装 | `./gradlew assembleBothPlatforms` |
 | 全仓检查 | `./gradlew check` |
-| 代码格式化（core、共享与节点源码） | `./gradlew format` |
+| 代码格式化（core、buildtools、共享与节点源码） | `./gradlew format` |
 | 单节点打包，与 CI 一致 | `./gradlew :api:jar :minecraft:1.20.1-forge:assemble` 或 `./gradlew :api:jar :minecraft:1.21.1-neoforge:assemble` |
 | 单节点完整检查 | `./gradlew :minecraft:1.20.1-forge:build` 或 `./gradlew :minecraft:1.21.1-neoforge:build` |
 
-`format` 使用 Spotless + Palantir Java Format（4 空格、120 列）。Spotless 覆盖 `:core`、`:minecraft` 共享源码与两个节点；`api` 与 `api-platform` 尚未接入，修改这两层时仍按现有文件风格书写。`**/generated/**` 与带 Stonecutter `//?` 标记的共享文件不在直接格式化范围内，需要按节点处理。`spotlessCheck` 已接入上述项目的 `check`。
+`format` 使用 Spotless + Palantir Java Format（4 空格、120 列）。Spotless 覆盖 `:core`、`:buildtools`、`:minecraft` 共享源码与两个节点；`api` 与 `api-platform` 尚未接入，修改这两层时仍按现有文件风格书写。`**/generated/**` 与带 Stonecutter `//?` 标记的共享文件不在直接格式化范围内，需要按节点处理。`spotlessCheck` 已接入上述项目的 `check`。
 
 `./gradlew check` 不包含 GameTest；GameTest 通过两个节点的 `runGameTestServer` 单独运行。
 

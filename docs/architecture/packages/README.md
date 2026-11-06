@@ -9,8 +9,9 @@
 | [具体内容](content.md) | `content.*` | 材料、配方、设备、世界与注册目录 |
 | [游戏运行时](runtime.md) | `bootstrap`、`client`、`compat`、`event`、`network`、`mixin`、`util`、顶层配置 | 生命周期、游戏对象与横向接入 |
 | [平台边界](platforms.md) | `platform`、`platform.forge.*`、`platform.neoforge.*` | 原生能力、加载器入口及版本差异 |
+| [构建期资源转换](../../../tools/buildtools/README.md) | `buildtools`（`tools/buildtools/`，不在模组源码层） | 1.21.1 原生配方与标签生成、排除表与验收 |
 
-每份专题文档末尾有 `## 验收` 与 `## 自动化测试范围`；改动路径到 package 与检查的路由、命令入口见[验证与验收](../../development/validation/README.md)。
+每份专题文档末尾有 `## 验收` 与 `## 自动化测试范围`；改动路径到 package 与检查的路由、命令入口见[验证与验收](../../development/validation/README.md)。`buildtools` 只参与构建，不进入模组包；其检查按 content 路由执行。
 
 ## 修改前的三个判断
 
