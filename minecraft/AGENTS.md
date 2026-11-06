@@ -8,7 +8,7 @@
 - `versions/*/build/generated/stonecutter/` 是生成结果，只读检查，不手工修复。新增同名类前检查共享输入和两节点，避免重复类。
 - 渲染、模型、屏幕及客户端事件留在 `gregtech.client` 和明确的客户端初始化路径，公用静态初始化不引用客户端类型。
 - 游戏对象、能力、物品/流体栈、网络和持久化留在本层；复用 `core` 中的纯规则，不复制一套平台无关逻辑。
-- 注册和生命周期检查 `GregTech`、`GregTechNeoForge` 及 bootstrap，保持基础数据先于依赖注册的顺序。
+- 注册顺序由共享 `bootstrap.ContentRegistration` 决定；平台入口 `ForgeContent`、`NeoContent` 只追加平台专属家族并在最后提交一次。检查 `GregTech`、`GregTechNeoForge` 的装配，保持基础数据先于依赖注册。
 - Mixin 检查两节点的配置和目标方法签名；可选模组相关类保持加载隔离。
 - 网络数据检查方向、边界、线程与服务端权限；客户端显示值不能作为服务端规则的权威来源。
 - 资源遵循版本格式，注意 1.20.1 与 1.21.1 数据包路径的单复数差异。

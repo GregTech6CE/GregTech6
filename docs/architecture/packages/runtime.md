@@ -10,8 +10,9 @@
 | Forge 的 `gregtech.GregTech` | Forge 模组入口、绑定与阶段装配 | 具体机器每 tick 的执行器 |
 | NeoForge 的 `platform.neoforge.GregTechNeoForge` | NeoForge 模组入口与原生装配 | 从共享代码直接调用的跨平台门面 |
 | `bootstrap` | core 的 `InitializationStep` 初始化步骤契约 | 与加载器耦合的 API |
+| `bootstrap.ContentRegistration` | 共享内容家族的固定顺序与平台专属 hook | 直接持有加载器注册类型 |
 | `bootstrap.content` | 内容初始化装配，如 `DataBootstrap`、`MaterialBootstrap`、`BlockBootstrap` | 新的内容目录副本 |
-| `bootstrap.registration` | 材料链接、延迟注册提交、机器及创造栏装配 | 在任意时刻可重复调用的注册工具 |
+| `bootstrap.registration` | 创造栏内容分类、原始顺序与材料链接等装配辅助 | 在任意时刻可重复调用的注册工具 |
 | `client` | 模型、渲染、颜色、tooltip、预览及客户端同步消费 | 服务端规则与权威库存状态 |
 | `client.gui` | Screen、控件，以及既有 Menu、Slot 和转移逻辑 | 直接批准客户端请求的业务控制器 |
 | `network` | 数据包定义、注册、编解码、发送和状态同步 | 绕过服务端权限的命令入口 |
@@ -30,6 +31,19 @@
 先绑定平台服务与模组存在性，再加载依赖这些能力的材料和内容；注册依赖对象后在正确生命周期装配配方与附属回调。Forge 入口已有按阶段执行的步骤，NeoForge 入口包含原生注册序列。调整任何步骤都应读完对应入口的上下文，不凭方法名排序。
 
 `SetupOnce` 之类控制的是执行次数，不是所有初始化天然可交换的证明；静态字段首次访问也可能触发加载。重构时核对材料、前缀、流体、物品、机器和配方的依赖链。
+
+## 内容注册
+
+`bootstrap.ContentRegistration` 是共享内容家族的唯一顺序：物品 → 方块 → 平台 `blocks` hook → 机器家族 → 平台 `machines` hook → 附属多方块部件 → 创造栏。物品和方块家族只提供一个共享入口（通常是 `register(ContentRegistrar)`），通过 `RegisteredItem` / `RegisteredBlock` 句柄取结果，不直接声明物品或方块 `DeferredRegister`，也不接收 `IEventBus`；创造栏、声音、流体和结构等非物品注册仍由各自的共享注册表持有。
+
+两个平台的 `ContentRegistrar` 实现把同一批句柄落到中心注册表：内置命名空间使用 `GTItems.ITEMS`、`GTBlocks.BLOCKS` 和 `GTBlocks.BLOCK_ITEMS`，附属命名空间按 namespace 取独立注册表，不并入 `gt6ce`。平台入口只做三件事：绑定平台服务与前置数据、通过 `ContentRegistration.PlatformContent` 的 `blocks` / `machines` 位置追加平台专属家族、在最后调用一次 `submit()` 提交所有延迟注册表。方块实体类型、Menu、能力、声音、网络和其他原生注册仍留在版本层。
+
+新增内容家族时：
+
+1. 在定义层（`core` 或共享 `minecraft/src`）提供数据与工厂；
+2. 家族类实现唯一的共享注册入口，只使用 `ContentRegistrar`；
+3. 把入口加到 `ContentRegistration` 的对应阶段；平台专属家族加到该平台的 `PlatformContent` hook；
+4. 确实需要新的注册对象类型（方块实体、Menu、能力等）时，只扩展平台适配层，不复制共享顺序。
 
 ## 世界对象如何接规则
 
