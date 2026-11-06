@@ -12,7 +12,8 @@ Checks:
   * ambiguous shaped recipes (same type+pattern+key, different results)
   * unknown top-level fields (typo guard)
   * static publish exclusions exist and name a shipped recipe
-  * `--converted DIR`: one native output per published source, no stale or legacy-shaped file
+  * `--converted DIR`: one native output per published recipe and item tag, no stale or
+    legacy-shaped file, and every converted tag keeps its source values
   * gt6ce: item ids that have no item model or blockstate (warning only)
 
 Exit code is 0 unless --strict is given and errors were found.
@@ -28,6 +29,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 RECIPE_DIR = Path("core/src/main/resources/data/gt6ce/recipes")
+SHARED_DATA = Path("core/src/main/resources/data")
 DATA_ROOTS = [
     Path("core/src/main/resources/data"),
     Path("minecraft/versions/1.20.1-forge/src/main/resources/data"),
@@ -276,6 +278,46 @@ def load_exclusions():
     return entries
 
 
+def shared_tags():
+    """Source tag files under the shared 1.20.1 tree, keyed by their native 1.21.1 path."""
+    tags = {}
+    for namespace in sorted((REPO / SHARED_DATA).iterdir()):
+        tag_dir = namespace / "tags" / "items"
+        if not tag_dir.is_dir():
+            continue
+        for path in sorted(tag_dir.rglob("*.json")):
+            key = f"{namespace.name}/tags/item/{path.relative_to(tag_dir).as_posix()}"
+            tags[key] = path
+    return tags
+
+
+def check_converted_tags(data: Path, errors):
+    """Every shared tag reaches the native tree unchanged, and nothing else appears."""
+    expected = shared_tags()
+    for relative, source in sorted(expected.items()):
+        target = data / relative
+        if not target.is_file():
+            errors.append({"kind": "converted-tag", "file": relative, "detail": "missing converted tag"})
+            continue
+        try:
+            source_document = json.loads(source.read_text(encoding="utf-8-sig"))
+            converted_document = json.loads(target.read_text(encoding="utf-8-sig"))
+        except Exception as exc:  # noqa: BLE001 - report and continue
+            errors.append({"kind": "converted-tag", "file": relative, "detail": str(exc)})
+            continue
+        if converted_document != source_document:
+            errors.append(
+                {"kind": "converted-tag", "file": relative, "detail": "values differ from source"}
+            )
+    actual = {
+        path.relative_to(data).as_posix()
+        for namespace in data.glob("*/tags/item")
+        for path in namespace.rglob("*.json")
+    }
+    for extra in sorted(actual - set(expected)):
+        errors.append({"kind": "converted-tag", "file": extra, "detail": "no matching source tag"})
+
+
 def check_converted(root: Path, published):
     """Cross-check the build output: one native recipe per published source, nothing else."""
     errors = []
@@ -315,6 +357,7 @@ def check_converted(root: Path, published):
     actual = {path.relative_to(data).as_posix() for path in (data / "gt6ce" / "recipe").rglob("*.json")}
     for extra in sorted(actual - expected):
         errors.append({"kind": "converted", "file": extra, "detail": "no matching source"})
+    check_converted_tags(data, errors)
     return errors
 
 
@@ -460,6 +503,7 @@ def main():
         "recipes": len(recipes),
         "published": len(published),
         "excluded": len(excluded_relative),
+        "tags": len(shared_tags()),
         "types": dict(sorted(types.items())),
         "errors": len(errors),
         "warnings": len(warnings),

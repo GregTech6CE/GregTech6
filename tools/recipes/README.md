@@ -40,6 +40,8 @@ python tools/recipes/audit_recipes.py --strict   # 有 error 时返回 1
 - **构建产物**（`--converted DIR`）：`data/gt6ce/recipe/` 必须与“已发布源”一一对应：
   缺文件、多文件、结果缺少 `id`、或 ingredient 被写成裸字符串（1.21.1 的 Ingredient
   codec 不接受，必须是 `{"item":…}` / `{"tag":…}` 物件或数组）都报 error。
+  `data/*/tags/item/` 也必须与 `core/src/main/resources/data/*/tags/items/` 一一对应，
+  内容逐文档比较；生成树缺少某个标签、多出无源标签或值不一致都报 error。
 - **物品模型**：结果物品在 `assets/*/models/item` 或 `blockstates` 中找不到模型时
   报 warning；材料物品可能有运行时模型，warning 只作提示。
 
