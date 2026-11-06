@@ -4,32 +4,17 @@ import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.generated.GTSensorRecipesGen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.AbstractPackResources;
-import net.minecraft.server.packs.PackResources;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.minecraft.core.registries.BuiltInRegistries;
+/*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.event.AddPackFindersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,55 +72,16 @@ import java.util.TreeMap;
  * <em>after</em> filtering so an unused key cannot log a substitution it never needed.
  * </p>
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-//?}
-public final class SensorRecipePack extends AbstractPackResources {
+public final class SensorRecipePack {
     private static final Gson GSON = new Gson();
     /** GT6's twenty sensor rows are registered against {@code aUtilMetal} with a null material. */
     private static final String DEFAULT_MATERIAL = "StainlessSteel";
     /** The single tiered key is {@code IL.SENSORS[1]} = LV, so the rows resolve at tier 1. */
     public static final int SENSOR_TIER = 1;
 
-    private Map<ResourceLocation, byte[]> resources;
     private static final Set<String> EMITTED = new HashSet<>();
 
-//? if >=1.21.1 {
-    /*public SensorRecipePack(net.minecraft.server.packs.PackLocationInfo info) {
-        super(info);
-*///?} else {
-    public SensorRecipePack(String id) {
-        super(id, true);
-//?}
-    }
-
-    @SubscribeEvent
-    public static void packs(AddPackFindersEvent event) {
-        if (event.getPackType() != PackType.SERVER_DATA) return;
-        event.addRepositorySource(output -> {
-//? if >=1.21.1 {
-            /*var location = new net.minecraft.server.packs.PackLocationInfo("gt6ce:sensor_recipes",
-                    Component.literal("GregTech sensor machine manufacturing recipes"),
-                    PackSource.BUILT_IN, java.util.Optional.empty());
-            Pack pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
-                public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info) {
-                    return new SensorRecipePack(info);
-                }
-                public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info, Pack.Metadata metadata) {
-                    return new SensorRecipePack(info);
-                }
-            }, PackType.SERVER_DATA, new net.minecraft.server.packs.PackSelectionConfig(true, Pack.Position.BOTTOM, true));
-*///?} else {
-            Pack pack = Pack.readMetaAndCreate("gt6ce:sensor_recipes",
-                    Component.literal("GregTech sensor machine manufacturing recipes"), true,
-                    SensorRecipePack::new, PackType.SERVER_DATA, Pack.Position.BOTTOM,
-                    PackSource.BUILT_IN);
-//?}
-            if (pack != null) output.accept(pack);
-        });
-    }
+    private SensorRecipePack() {}
 
     /** Port block ids that received a recipe in the last generated pack. */
     public static Set<String> emittedBlockIds() {
@@ -161,9 +107,7 @@ public final class SensorRecipePack extends AbstractPackResources {
         return used;
     }
 
-    private synchronized Map<ResourceLocation, byte[]> data() {
-        if (resources != null) return resources;
-        Map<ResourceLocation, byte[]> generated = new HashMap<>();
+    public static void contribute(Map<ResourceLocation, byte[]> generated) {
         EMITTED.clear();
 
         for (GTSensorRecipesGen.Row row : GTSensorRecipesGen.ROWS) {
@@ -192,11 +136,9 @@ public final class SensorRecipePack extends AbstractPackResources {
 
 //? if >=1.21.1 {
         /*com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original sensor crafting datapack: {} emitted, {} not registered or unresolved",
-                generated.size(), GTSensorRecipesGen.ROWS.size() - generated.size());
+                EMITTED.size(), GTSensorRecipesGen.ROWS.size() - EMITTED.size());
 *///?} else {
 //?}
-        resources = Collections.unmodifiableMap(generated);
-        return resources;
     }
 
     private static Map<String, Object> buildRecipe(GTSensorRecipesGen.Row row, Item resultItem) {
@@ -244,42 +186,4 @@ public final class SensorRecipePack extends AbstractPackResources {
         return recipe;
     }
 
-    @Override
-    public IoSupplier<InputStream> getRootResource(String... path) {
-        if (path.length != 1 || !path[0].equals("pack.mcmeta")) return null;
-//? if >=1.21.1 {
-        /*return () -> new ByteArrayInputStream(("{\"pack\":{\"pack_format\":48,\"description\":"
-*///?} else {
-        return () -> new ByteArrayInputStream(("{\"pack\":{\"pack_format\":15,\"description\":"
-//?}
-                + "\"GregTech sensor recipes\"}}").getBytes(StandardCharsets.UTF_8));
-    }
-
-    @Override
-    public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-        if (type != PackType.SERVER_DATA) return null;
-        byte[] bytes = data().get(id);
-        return bytes == null ? null : () -> new ByteArrayInputStream(bytes);
-    }
-
-    @Override
-    public void listResources(PackType type, String namespace, String path,
-                              PackResources.ResourceOutput output) {
-        if (type != PackType.SERVER_DATA) return;
-        data().forEach((id, bytes) -> {
-            if (id.getNamespace().equals(namespace) && id.getPath().startsWith(path + "/")) {
-                output.accept(id, () -> new ByteArrayInputStream(bytes));
-            }
-        });
-    }
-
-    @Override
-    public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
-    }
-
-    @Override
-    public void close() {
-        resources = null;
-    }
 }

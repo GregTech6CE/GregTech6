@@ -58,6 +58,15 @@ public final class GregTechNeoForge {
         NeoContent content = new NeoContent(modEventBus);
         content.bootstrap();
         content.submit();
+        // Every dynamic recipe pack is published by one owner; this node contributes its producers.
+        gregtech.content.data.RecipePublishing.contributeGenerated(
+                "original manual tools", gregtech.content.data.ManualToolRecipePack::contribute);
+        gregtech.content.data.RecipePublishing.contributeGenerated(
+                "original wood crafting", gregtech.content.data.WoodCraftingRecipePack::contribute);
+        gregtech.content.data.RecipePublishing.contributeGenerated(
+                "finite bottle filling", gregtech.content.data.BottleFillingRecipePack::contribute);
+        gregtech.content.data.RecipePublishing.contributeGenerated(
+                "original track crafting", gregtech.content.data.TrackCraftingRecipePack::contribute);
         modEventBus.addListener(this::commonSetup);
     }
 
