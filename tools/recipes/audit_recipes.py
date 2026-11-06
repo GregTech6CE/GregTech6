@@ -1,7 +1,7 @@
 """Audit the shipped GT6CE datapack recipe tree (stdlib only).
 
 Usage:
-    python tools/recipes/audit_recipes.py [--report PATH] [--strict]
+    python tools/recipes/audit_recipes.py [--report PATH] [--converted DIR] [--strict]
 
 Checks:
   * JSON parse failures and unknown recipe types
@@ -11,7 +11,8 @@ Checks:
   * concrete circuit-family ingredients where a cumulative tier tag is expected
   * ambiguous shaped recipes (same type+pattern+key, different results)
   * unknown top-level fields (typo guard)
-  * hand-maintained catalogs versus the shipped files
+  * static publish exclusions exist and name a shipped recipe
+  * `--converted DIR`: one native output per published source, no stale or legacy-shaped file
   * gt6ce: item ids that have no item model or blockstate (warning only)
 
 Exit code is 0 unless --strict is given and errors were found.
@@ -261,47 +262,68 @@ def recipe_signature(recipe):
     return (recipe.get("type"), tuple(recipe.get("pattern") or ()), key)
 
 
-def java_string_list(path: Path, marker: str):
-    """Read a `List.of(...)` or `String[] = {...}` literal that follows `marker`."""
-    text = path.read_text(encoding="utf-8")
-    start = text.find(marker)
-    if start < 0:
-        return []
-    ends = [pos for pos in (text.find(");", start), text.find("};", start)) if pos >= 0]
-    if not ends:
-        return []
-    return re.findall(r'"([^"]+)"', text[start : min(ends)])
+# The only static rows the NeoForge build does not publish: each is replaced by a runtime row.
+EXCLUSIONS = Path("tools/recipes/static-publish-exclusions.txt")
 
 
-# Catalogs re-emitted by the NeoForge recipe packs (plural `recipes/` is not read on 1.21.1).
-NEOFORGE_CATALOGS = [
-    ("core/src/main/java/gregtech/content/recipe/EquipmentCraftingCatalog.java", ""),
-    ("core/src/main/java/gregtech/content/recipe/ClayMoldCatalog.java", ""),
-    ("core/src/main/java/gregtech/content/tool/PortableCraftingCatalog.java", "fluid_tools/"),
-    ("core/src/main/java/gregtech/content/recipe/AmmunitionCraftingCatalog.java", "ammunition/"),
-    ("core/src/main/java/gregtech/content/book/BookCraftingCatalog.java", "books/"),
-    ("core/src/main/java/gregtech/content/bumble/BumbleCraftingCatalog.java", "tool_blocks/"),
-    ("core/src/main/java/gregtech/content/nuclear/NuclearCraftingCatalog.java", "nuclear/"),
-]
+def load_exclusions():
+    """data-relative source paths that the 1.21.1 build replaces with generated rows."""
+    entries = set()
+    for line in (REPO / EXCLUSIONS).read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            entries.add(line)
+    return entries
 
-# Files another NeoForge pack loads by name.
-NEOFORGE_EXPLICIT_FILES = {"tools/repair.json"}
 
-# Static rows replaced by runtime generators (FormConversionCraftingRecipeInjector and friends).
-NEOFORGE_GENERATED_PREFIXES = (
-    "wire_working/",
-    "axial/",
-    "polymer_forming/",
-    "hand/pipe/",
-    "hand_material/rocks/",
-    "machines/basic/massfab_",
-    "machines/multiblock/",
-)
+def check_converted(root: Path, published):
+    """Cross-check the build output: one native recipe per published source, nothing else."""
+    errors = []
+    data = root / "data"
+    if not data.is_dir():
+        return [{"kind": "converted", "file": str(root), "detail": "no data directory"}]
+    expected = {f"gt6ce/recipe/{relative}" for relative in published}
+    for relative in sorted(expected):
+        target = data / relative
+        if not target.is_file():
+            errors.append({"kind": "converted", "file": relative, "detail": "missing converted recipe"})
+            continue
+        try:
+            document = json.loads(target.read_text(encoding="utf-8"))
+        except Exception as exc:  # noqa: BLE001 - report and continue
+            errors.append({"kind": "converted", "file": relative, "detail": str(exc)})
+            continue
+        result = document.get("result")
+        if document.get("type") != "gt6ce:tool_repair":
+            if not isinstance(result, dict) or not isinstance(result.get("id"), str):
+                errors.append({"kind": "converted", "file": relative, "detail": "result has no id"})
+        # 1.21.1's ingredient codec rejects a bare string; only value objects and lists are native.
+        checked_values = []
+        if isinstance(document.get("ingredients"), list):
+            checked_values.extend(document["ingredients"])
+        if "ingredient" in document:
+            checked_values.append(document["ingredient"])
+        if isinstance(document.get("key"), dict):
+            checked_values.extend(document["key"].values())
+        for value in checked_values:
+            nested = value if isinstance(value, list) else [value]
+            for entry in nested:
+                if isinstance(entry, str):
+                    errors.append(
+                        {"kind": "converted", "file": relative, "detail": "bare string ingredient"}
+                    )
+    actual = {path.relative_to(data).as_posix() for path in (data / "gt6ce" / "recipe").rglob("*.json")}
+    for extra in sorted(actual - expected):
+        errors.append({"kind": "converted", "file": extra, "detail": "no matching source"})
+    return errors
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, help="write the full JSON report to this path")
+    parser.add_argument(
+        "--converted", type=Path, help="cross-check a generated 1.21.1 resource tree"
+    )
     parser.add_argument("--strict", action="store_true", help="exit 1 when errors were found")
     args = parser.parse_args()
 
@@ -394,20 +416,24 @@ def main():
     shipped = {
         path.relative_to(REPO / RECIPE_DIR).as_posix() for path in (REPO / RECIPE_DIR).rglob("*.json")
     }
-    listed = set()
-    for relative, prefix in NEOFORGE_CATALOGS:
-        path = REPO / relative
-        entries = {prefix + entry for entry in java_string_list(path, "FILES")}
-        listed |= entries
-        for missing in sorted(entries - shipped):
-            errors.append({"kind": "catalog", "file": rel(path), "detail": f"listed but missing: {missing}"})
-    # On 1.21.1 only `recipe/` is read, so a plural `recipes/` file must be re-emitted by a
-    # pack or replaced by a runtime generator; otherwise it is silently dead.
-    for file in sorted(shipped - listed - NEOFORGE_EXPLICIT_FILES):
-        if not file.startswith(NEOFORGE_GENERATED_PREFIXES):
-            warnings.append(
-                {"kind": "neoforge-unlisted", "file": file, "detail": "not re-emitted on 1.21.1"}
-            )
+    # Every shared row is published by the build except the ones named here; those are replaced by
+    # a runtime row, so an entry that no longer exists or a row neither published nor excluded is
+    # a real defect instead of a warning.
+    excluded = load_exclusions()
+    excluded_relative = set()
+    for entry in sorted(excluded):
+        prefix = "gt6ce/recipes/"
+        if not entry.startswith(prefix):
+            errors.append({"kind": "exclusion", "file": rel(EXCLUSIONS), "detail": f"not a recipe path: {entry}"})
+            continue
+        relative = entry[len(prefix):]
+        if relative not in shipped:
+            errors.append({"kind": "exclusion", "file": rel(EXCLUSIONS), "detail": f"stale entry: {entry}"})
+        excluded_relative.add(relative)
+    published = shipped - excluded_relative
+
+    if args.converted:
+        errors.extend(check_converted(Path(args.converted), published))
 
     material_prefixes = material_prefix_names()
     for path, recipe in recipes.items():
@@ -432,6 +458,8 @@ def main():
 
     summary = {
         "recipes": len(recipes),
+        "published": len(published),
+        "excluded": len(excluded_relative),
         "types": dict(sorted(types.items())),
         "errors": len(errors),
         "warnings": len(warnings),

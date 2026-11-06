@@ -1,0 +1,48 @@
+# Shared recipe documents that are NOT published as static 1.21.1 resources.
+# Each entry is replaced by a runtime-generated row with a stable id; the source stays because the
+# 1.20.1 node still loads it and its generated replacement is deduplicated against it there.
+# Paths are relative to data/ in the shared core resources.
+gt6ce/recipes/wire_working/insulate_01_efrine.json
+gt6ce/recipes/wire_working/insulate_02_efrine.json
+gt6ce/recipes/wire_working/unpack_02_efrine.json
+gt6ce/recipes/wire_working/unpack_03_efrine.json
+gt6ce/recipes/wire_working/unpack_04_efrine.json
+gt6ce/recipes/wire_working/unpack_05_efrine.json
+gt6ce/recipes/wire_working/unpack_06_efrine.json
+gt6ce/recipes/wire_working/unpack_07_efrine.json
+gt6ce/recipes/wire_working/unpack_08_efrine.json
+gt6ce/recipes/wire_working/unpack_09_efrine.json
+gt6ce/recipes/wire_working/unpack_10_efrine.json
+gt6ce/recipes/wire_working/unpack_11_efrine.json
+gt6ce/recipes/wire_working/unpack_12_efrine.json
+gt6ce/recipes/wire_working/unpack_13_efrine.json
+gt6ce/recipes/wire_working/unpack_14_efrine.json
+gt6ce/recipes/wire_working/unpack_15_efrine.json
+gt6ce/recipes/wire_working/unpack_16_efrine.json
+gt6ce/recipes/wire_working/weave_01_02_efrine.json
+gt6ce/recipes/wire_working/weave_01_03_efrine.json
+gt6ce/recipes/wire_working/weave_01_04_efrine.json
+gt6ce/recipes/wire_working/weave_01_05_efrine.json
+gt6ce/recipes/wire_working/weave_01_06_efrine.json
+gt6ce/recipes/wire_working/weave_01_07_efrine.json
+gt6ce/recipes/wire_working/weave_01_08_efrine.json
+gt6ce/recipes/wire_working/weave_01_09_efrine.json
+gt6ce/recipes/wire_working/weave_02_04_efrine.json
+gt6ce/recipes/wire_working/weave_02_06_efrine.json
+gt6ce/recipes/wire_working/weave_02_08_efrine.json
+gt6ce/recipes/wire_working/weave_02_10_efrine.json
+gt6ce/recipes/wire_working/weave_02_12_efrine.json
+gt6ce/recipes/wire_working/weave_02_14_efrine.json
+gt6ce/recipes/wire_working/weave_02_16_efrine.json
+gt6ce/recipes/wire_working/weave_03_06_efrine.json
+gt6ce/recipes/wire_working/weave_03_09_efrine.json
+gt6ce/recipes/wire_working/weave_03_12_efrine.json
+gt6ce/recipes/wire_working/weave_03_15_efrine.json
+gt6ce/recipes/wire_working/weave_04_08_efrine.json
+gt6ce/recipes/wire_working/weave_04_12_efrine.json
+gt6ce/recipes/wire_working/weave_04_16_efrine.json
+gt6ce/recipes/wire_working/weave_05_10_efrine.json
+gt6ce/recipes/wire_working/weave_05_15_efrine.json
+gt6ce/recipes/wire_working/weave_06_12_efrine.json
+gt6ce/recipes/wire_working/weave_07_14_efrine.json
+gt6ce/recipes/wire_working/weave_08_16_efrine.json
