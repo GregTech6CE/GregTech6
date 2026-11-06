@@ -9,9 +9,7 @@ import gregtech.content.registry.GTItems;
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 //?}
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.AbstractPackResources;
 //? if >=1.21.1 {
 /*import net.minecraft.world.item.crafting.RecipeHolder;
 *///?} else {
@@ -23,26 +21,17 @@ import net.minecraft.world.item.crafting.RecipeManager;
 *///?} else {
 import net.minecraftforge.event.AddReloadListenerEvent;
 //?}
-import net.minecraft.server.packs.PackResources;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.server.packs.resources.IoSupplier;
 //? if >=1.21.1 {
 /*import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
 *///?} else {
-import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,44 +46,12 @@ import java.util.Set;
  * The in-memory pack is not always the last datapack, so a reload listener also drops those ids
  * after the recipe manager has applied every pack.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-//?}
-public final class CompatCraftingPack extends AbstractPackResources {
+public final class CompatCraftingPack {
     private static final Gson GSON = new Gson();
-    private Map<ResourceLocation, byte[]> resources;
 
-//? if >=1.21.1 {
-    /*public CompatCraftingPack(net.minecraft.server.packs.PackLocationInfo info) { super(info); }
-*///?} else {
-    public CompatCraftingPack(String id) { super(id, true); }
-//?}
+    private CompatCraftingPack() {}
 
-    @SubscribeEvent
-    public static void packs(AddPackFindersEvent event) {
-        if (event.getPackType() != PackType.SERVER_DATA) return;
-        event.addRepositorySource(output -> {
-//? if >=1.21.1 {
-            /*var location = new net.minecraft.server.packs.PackLocationInfo("gt6ce:compat_crafting",
-                    Component.literal("GregTech mod compat crafting"), PackSource.BUILT_IN, java.util.Optional.empty());
-            Pack pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
-                public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info) { return new CompatCraftingPack(info); }
-                public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info, Pack.Metadata metadata) { return new CompatCraftingPack(info); }
-            }, PackType.SERVER_DATA, new net.minecraft.server.packs.PackSelectionConfig(true, Pack.Position.TOP, true));
-*///?} else {
-            Pack pack = Pack.readMetaAndCreate("gt6ce:compat_crafting",
-                    Component.literal("GregTech mod compat crafting"), true,
-                    CompatCraftingPack::new, PackType.SERVER_DATA, Pack.Position.TOP, PackSource.BUILT_IN);
-//?}
-            if (pack != null) output.accept(pack);
-        });
-    }
-
-    private synchronized Map<ResourceLocation, byte[]> data() {
-        if (resources != null) return resources;
-        var generated = new HashMap<ResourceLocation, byte[]>();
+    public static void contribute(Map<ResourceLocation, byte[]> generated) {
         for (var module : CompatSpecs.modules()) {
             if (!ModList.get().isLoaded(module.modernId())) continue;
             for (var row : module.crafting()) add(generated, row);
@@ -102,9 +59,6 @@ public final class CompatCraftingPack extends AbstractPackResources {
             if (gregtech.GregTechConfig.Rule.REPLACE_MOD_RECIPES.enabled())
                 for (var removal : module.removals()) disable(generated, removal);
         }
-        resources = Map.copyOf(generated);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Compat crafting pack: {} files", resources.size());
-        return resources;
     }
 
     private static void add(Map<ResourceLocation, byte[]> generated, CompatSpecs.CraftingRow row) {
@@ -212,45 +166,6 @@ public final class CompatCraftingPack extends AbstractPackResources {
     private static void put(Map<ResourceLocation, byte[]> generated, ResourceLocation file, Map<String, Object> json) {
         generated.put(file, GSON.toJson(json).getBytes(StandardCharsets.UTF_8));
     }
-
-    @Override
-    public IoSupplier<InputStream> getRootResource(String... path) {
-        if (path.length != 1 || !path[0].equals("pack.mcmeta")) return null;
-//? if >=1.21.1 {
-        /*return () -> new ByteArrayInputStream("{\"pack\":{\"pack_format\":48,\"description\":\"GregTech mod compat crafting\"}}"
-*///?} else {
-        return () -> new ByteArrayInputStream("{\"pack\":{\"pack_format\":15,\"description\":\"GregTech mod compat crafting\"}}"
-//?}
-                .getBytes(StandardCharsets.UTF_8));
-    }
-
-    @Override
-    public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-        if (type != PackType.SERVER_DATA) return null;
-        byte[] bytes = data().get(id);
-        return bytes == null ? null : () -> new ByteArrayInputStream(bytes);
-    }
-
-    @Override
-    public void listResources(PackType type, String namespace, String path, PackResources.ResourceOutput output) {
-        if (type != PackType.SERVER_DATA) return;
-        data().forEach((id, bytes) -> {
-            if (id.getNamespace().equals(namespace) && id.getPath().startsWith(path + "/"))
-                output.accept(id, () -> new ByteArrayInputStream(bytes));
-        });
-    }
-
-    @Override
-    public Set<String> getNamespaces(PackType type) {
-        if (type != PackType.SERVER_DATA) return Set.of();
-        var names = new java.util.HashSet<String>();
-        data().keySet().forEach(id -> names.add(id.getNamespace()));
-        if (names.isEmpty()) names.add("gt6ce");
-        return names;
-    }
-
-    @Override
-    public void close() { resources = null; }
 
 //? if >=1.21.1 {
     /*/^* Game bus. Runs after the recipe manager because NeoForge appends these listeners to the reload. ^/

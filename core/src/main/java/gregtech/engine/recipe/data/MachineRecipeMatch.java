@@ -59,60 +59,58 @@ public final class MachineRecipeMatch {
 
     public static boolean matches(MachineRecipeRemovalSpec spec, RecipeView recipe, TagQuery tags) {
         if (spec.clear()) return true;
-        var usedItems = new boolean[recipe.inputItems()];
-        for (var need : spec.itemInputs()) {
-            int found = -1;
-            for (int i = 0; i < recipe.inputItems(); i++) {
-                if (usedItems[i]
-                        || !itemMatches(
+        // Matching, not a first-match scan: a broad removal condition must not consume the one
+        // input that a later, more specific condition can only match. Each condition and entry are
+        // compared once, then bipartite matching decides the assignment, so large lists stay
+        // polynomial instead of enumerating every permutation.
+        return assign(
+                        spec.itemInputs(),
+                        recipe.inputItems(),
+                        (need, i) -> itemMatches(
                                 need, recipe.inputItem(i), recipe.inputItemTag(i), recipe.inputItemCount(i), tags))
-                    continue;
-                found = i;
-                break;
-            }
-            if (found < 0) return false;
-            usedItems[found] = true;
-        }
-        var usedFluids = new boolean[recipe.inputFluids()];
-        for (var need : spec.fluidInputs()) {
-            int found = -1;
-            for (int i = 0; i < recipe.inputFluids(); i++) {
-                if (usedFluids[i]
-                        || !fluidInputMatches(
+                && assign(
+                        spec.fluidInputs(),
+                        recipe.inputFluids(),
+                        (need, i) -> fluidInputMatches(
                                 need, recipe.inputFluid(i), recipe.inputFluidTag(i), recipe.inputFluidAmount(i), tags))
-                    continue;
-                found = i;
-                break;
-            }
-            if (found < 0) return false;
-            usedFluids[found] = true;
-        }
-        var usedOutputs = new boolean[recipe.outputItems()];
-        for (var need : spec.itemOutputs()) {
-            int found = -1;
-            for (int i = 0; i < recipe.outputItems(); i++) {
-                if (usedOutputs[i] || !outputMatches(need, recipe, i)) continue;
-                found = i;
-                break;
-            }
-            if (found < 0) return false;
-            usedOutputs[found] = true;
-        }
-        var usedFluidOutputs = new boolean[recipe.outputFluids()];
-        for (var need : spec.fluidOutputs()) {
-            int found = -1;
-            for (int i = 0; i < recipe.outputFluids(); i++) {
-                if (usedFluidOutputs[i]
-                        || !fluidMatches(
-                                need.fluid(), need.amount(), recipe.outputFluid(i), recipe.outputFluidAmount(i)))
-                    continue;
-                found = i;
-                break;
-            }
-            if (found < 0) return false;
-            usedFluidOutputs[found] = true;
-        }
+                && assign(spec.itemOutputs(), recipe.outputItems(), (need, i) -> outputMatches(need, recipe, i))
+                && assign(
+                        spec.fluidOutputs(),
+                        recipe.outputFluids(),
+                        (need, i) -> fluidMatches(
+                                need.fluid(), need.amount(), recipe.outputFluid(i), recipe.outputFluidAmount(i)));
+    }
+
+    @FunctionalInterface
+    private interface SlotTest<T> {
+        boolean accepts(T need, int index);
+    }
+
+    /** One need per distinct recipe entry; adjacency is built once and solved as a matching. */
+    private static <T> boolean assign(java.util.List<T> needs, int size, SlotTest<T> accepts) {
+        if (needs.isEmpty()) return true;
+        if (needs.size() > size) return false;
+        var adjacency = new boolean[needs.size()][size];
+        for (int need = 0; need < needs.size(); need++)
+            for (int slot = 0; slot < size; slot++) adjacency[need][slot] = accepts.accepts(needs.get(need), slot);
+        var slotOwner = new int[size];
+        java.util.Arrays.fill(slotOwner, -1);
+        for (int need = 0; need < needs.size(); need++)
+            if (!augment(need, adjacency, slotOwner, new boolean[size])) return false;
         return true;
+    }
+
+    /** Kuhn's augmenting path: a need may displace the need currently holding a slot. */
+    private static boolean augment(int need, boolean[][] adjacency, int[] slotOwner, boolean[] seen) {
+        for (int slot = 0; slot < slotOwner.length; slot++) {
+            if (seen[slot] || !adjacency[need][slot]) continue;
+            seen[slot] = true;
+            if (slotOwner[slot] < 0 || augment(slotOwner[slot], adjacency, slotOwner, seen)) {
+                slotOwner[slot] = need;
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean itemMatches(ItemComponent need, String item, String tag, int count, TagQuery tags) {

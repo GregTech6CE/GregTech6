@@ -122,6 +122,9 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
                     || net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f -> !f.isEmpty()).isPresent())) return false;
 //?}
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;
+            // An electric tool with no charge must not craft, exactly like the shaped serializer.
+            if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric
+                    && !electric.canInteract(stack)) return false;
             if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
         }
 //? if >=1.21.1 {
@@ -149,6 +152,14 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
         for (int i = 0; i < grid.getContainerSize(); i++) {
 //?}
             var stack = grid.getItem(i);
+            if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
+                // Charge and wear the returned tool; the shaped row already used this rule.
+                var tool = stack.copyWithCount(1);
+                electric.consumeInteractionEnergy(
+                        tool, gregtech.content.tool.ElectricToolWear.craftEnergy(electric), null);
+                remaining.set(i, gregtech.content.tool.ElectricToolWear.broken(electric, tool) ? ItemStack.EMPTY : tool);
+                continue;
+            }
             if (!(stack.getItem() instanceof GTToolItem)) continue;
             var tool = stack.copyWithCount(1);
             long damage = (long) tool.getDamageValue() + GTToolHelper.getType(tool).damagePerCraft();

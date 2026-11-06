@@ -122,8 +122,15 @@ public final class OvenRecipeBridge {
                     unsmelted++;
                 }
                 if (recipe.getType() == RecipeType.SMELTING) {
-                    ItemStack input = firstInput(recipe);
-                    if (!input.isEmpty() && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty() && MachineRecipeMaps.add_smelting(input, scrap)) mirrored++;
+                    // Every option of the ingredient mirrors; taking only the display sample left
+                    // the remaining accepted inputs unable to smelt in the GT oven.
+                    var seen = new java.util.HashSet<Item>();
+                    for (var candidate : smeltingInputs(recipe, recipeId)) {
+                        ItemStack input = candidate.copyWithCount(1);
+                        if (!input.isEmpty() && seen.add(input.getItem())
+                                && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty()
+                                && MachineRecipeMaps.add_smelting(input, scrap)) mirrored++;
+                    }
                 }
                 continue;
             }
@@ -136,8 +143,7 @@ public final class OvenRecipeBridge {
             if (recipe.getType() == RecipeType.SMELTING) {
                 // Vanilla glass has one ingredient containing both sand variants. Mirroring only
                 // its first stack restores the furnace recipe but still strands red sand in the GT oven.
-                var inputs = isRetainedVanillaSmelting(recipeId, recipe, result)
-                        ? recipe.getIngredients().get(0).getItems() : new ItemStack[]{firstInput(recipe)};
+                var inputs = smeltingInputs(recipe, recipeId);
                 var seen = new java.util.HashSet<Item>();
                 for (var candidate : inputs) {
                     ItemStack input = candidate.copyWithCount(1);
@@ -508,6 +514,24 @@ public final class OvenRecipeBridge {
         if (stack == null || stack.isEmpty()) return false;
         if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem) return true;
         return gregtech.engine.material.ItemMaterialRegistry.get(stack).isPresent();
+    }
+
+    /**
+     * Every accepted input of a smelting row. A custom ingredient that resolves to no concrete
+     * stack cannot be mirrored into the oven's stack-keyed table; report it instead of importing
+     * its display sample as if it were the real match.
+     */
+    private static ItemStack[] smeltingInputs(Recipe<?> recipe, net.minecraft.resources.ResourceLocation id) {
+        if (recipe.getIngredients().isEmpty()) return new ItemStack[0];
+        var items = recipe.getIngredients().get(0).getItems();
+        var resolved = java.util.Arrays.stream(items)
+                .filter(stack -> !stack.isEmpty() && !stack.is(net.minecraft.world.item.Items.BARRIER))
+                .toArray(ItemStack[]::new);
+        if (resolved.length != items.length)
+            com.mojang.logging.LogUtils.getLogger()
+                    .info("[gregtech] Smelting input of {} has {} unresolved option(s); not mirrored",
+                            id, items.length - resolved.length);
+        return resolved;
     }
 
     private static ItemStack firstInput(Recipe<?> recipe) {

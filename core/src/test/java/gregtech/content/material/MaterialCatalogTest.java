@@ -7,28 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.content.fluid.FluidDefinitions;
-import gregtech.content.recipe.ClayMoldCatalog;
-import gregtech.content.recipe.EquipmentCraftingCatalog;
 import gregtech.content.recipe.SourceRecyclingFacts;
 import gregtech.content.recipe.SourceWaxMaterials;
 import gregtech.content.storage.ItemBarrelCatalog;
 import gregtech.content.tool.AnvilVariantCatalog;
-import gregtech.content.tool.PortableCraftingCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
 import org.junit.jupiter.api.Test;
 
 class MaterialCatalogTest {
-    @Test
-    void portableCraftingIndexOnlyReferencesPackagedRecipes() {
-        for (String file : EquipmentCraftingCatalog.FILES) assertRecipeResource(file);
-        for (String file : ClayMoldCatalog.FILES) assertRecipeResource(file);
-        for (String file : PortableCraftingCatalog.FILES) assertRecipeResource("fluid_tools/" + file);
-    }
-
-    private static void assertRecipeResource(String file) {
-        assertNotNull(MaterialCatalogTest.class.getResource("/data/gt6ce/recipes/" + file), file);
-    }
-
     @Test
     void standaloneMaterialsAndDeviceCatalogsResolveWithoutLegacyMods() {
         MaterialTestFixture.ensureInitialized();

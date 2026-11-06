@@ -9,6 +9,7 @@ JUnit 5 测试覆盖不依赖 Minecraft 运行时的规则与静态数据：公�
 | `:api` | `api/common/src/test` | 公共契约、能源、机器、材料、多方块、附属声明 |
 | `:api-platform` | `api/minecraft/src/test` | 含游戏类型的 API 契约与平台适配 |
 | `:core` | `core/src/test` | 配方表、材料事实、流体与配方引擎等平台无关逻辑 |
+| `:buildtools` | `tools/buildtools/src/test` | 1.21.1 配方与标签转换（构建输入，不随模组发布） |
 
 core 测试不得引入 Minecraft、Forge、NeoForge 类型。API 测试优先使用打包后的 API JAR，不借用 main 或 core 输出。
 
@@ -42,6 +43,7 @@ issue  source  kind  target  expected
 ```bash
 ./gradlew :api:test
 ./gradlew :core:test
+./gradlew :buildtools:test
 ./gradlew :api-platform:1.20.1-forge:test
 ./gradlew :api-platform:1.21.1-neoforge:test
 

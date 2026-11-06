@@ -18,13 +18,13 @@
 | `gradle/`、各 `*.gradle*` | 构建定义、Wrapper 与平台任务配置 | 个人安装路径、凭据 |
 | `docs/` | 经整理的长期指南、验证结论和记录 | 完整日志、随手计划、下载 |
 | `docs/development/validation/` | 验证规则、检查文档、命令与路由表；验收章节在 `docs/architecture/packages/` | 一次性计划、未提炼的日志、与规则无关的执行记录 |
-| `tools/<scope>/` | 按 scope 分组、随代码演进的检查/验证脚本、其数据文件与 `README.md` | 一次性实验、上游导入/再生成脚本；散放在 `tools/` 根目录的文件 |
+| `tools/<scope>/` | 按 scope 分组、随代码演进的检查/验证脚本或构建期模块、其数据文件与 `README.md` | 一次性实验、上游导入/再生成脚本；散放在 `tools/` 根目录的文件 |
 | `examples/` | 将来可维护、可独立使用的附属/脚本示例 | 临时探针或未验证伪示例 |
 | `work/<任务名>/` | 当前任务原始材料与私有执行参数，Git 忽略 | 唯一一份尚未提炼的长期结论 |
-| 各级 `build/` | Gradle 生成、编译、打包、报告 | 手工维护的生产输入 |
+| 各级 `build/` | Gradle 生成（含 `generated/stonecutter/`、`generated/recipe-resources/`）、编译、打包、报告 | 手工维护的生产输入 |
 | 节点 `run/`、`run-*/` | 本地游戏实例、存档、配置与运行输出 | 要提交的源码 |
 
-`tools/`、`examples/` 是新增内容的归属约定，本文不表示仓库已经包含可用脚本或示例。工具按 scope 放 `tools/<scope>/`，目录内是 `*.py`、其数据文件（如 `*.json`）和 `README.md`；工具说明写在该 README，不写进 `docs/development/`。
+`tools/`、`examples/` 是新增内容的归属约定，本文不表示仓库已经包含可用脚本或示例。工具按 scope 放 `tools/<scope>/`，目录内是脚本或构建期模块、其数据文件（如 `*.json`）和 `README.md`；工具说明写在该 README，不写进 `docs/development/`。构建期模块仍是 Gradle 子项目，由 `settings.gradle` 的 `projectDir` 指到这里（如 `tools/buildtools`），不用 `build` 作目录名以免被 `build/` 忽略规则覆盖。
 
 从上游源码导入数据、再生成提交表、或对本地 dump 做一次性比对的脚本不进仓库：它们绑定固定提交的上游源码，只对一个版本有效。这类脚本连同说明放本机被忽略的 `work/local-tools/`，仓库只保留已提交的生成文件与来源说明。
 

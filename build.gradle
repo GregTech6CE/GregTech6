@@ -15,7 +15,7 @@ subprojects {
 
 // Formatting lives in the build, not in individual edits. The inlined API sources keep
 // their own formatting pass; committed generated sources stay untouched in this pass.
-def spotlessProjects = [':core', ':minecraft', ':minecraft:1.20.1-forge', ':minecraft:1.21.1-neoforge']
+def spotlessProjects = [':core', ':buildtools', ':minecraft', ':minecraft:1.20.1-forge', ':minecraft:1.21.1-neoforge']
 configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
     // Spotless resolves the formatter and its transitive dependencies from this project's
     // repositories. Core and the shared Minecraft project have no repository of their own;
@@ -71,7 +71,8 @@ if (System.getProperty('idea.sync.active') == 'true') {
 }
 
 tasks.named('check').configure {
-    dependsOn ':api:check', ':core:check', ':minecraft:1.20.1-forge:check', ':minecraft:1.21.1-neoforge:check'
+    dependsOn ':api:check', ':core:check', ':buildtools:test'
+    dependsOn ':minecraft:1.20.1-forge:check', ':minecraft:1.21.1-neoforge:check'
     dependsOn spotlessProjects.collect { "${it}:spotlessCheck" }
 }
 tasks.named('assemble').configure { dependsOn 'assembleBothPlatforms' }

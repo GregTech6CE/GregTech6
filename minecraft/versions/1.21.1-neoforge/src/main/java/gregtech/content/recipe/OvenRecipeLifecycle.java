@@ -1,9 +1,5 @@
 package gregtech.content.recipe;
 
-import java.util.*;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -11,52 +7,33 @@ import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
-/** Original furnace/oven bridge over the actual loaded Native recipes, including datapack reload. */
+/** NeoForge lifecycle adapter; the publication sequence itself lives in {@link RecipePublication}. */
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class OvenRecipeLifecycle {
-    private OvenRecipeLifecycle() {}
+    static {
+        RecipePublication.register((manager, access) -> {
+            FormConversionCraftingRecipeInjector.replacePlain(manager, access);
+            TrackRecipeReplacement.removeConflicts(manager, access);
+        });
+    }
 
-    private static final Map<RecipeManager, Set<RecipeHolder<?>>> APPLIED = new WeakHashMap<>();
+    private OvenRecipeLifecycle() {}
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void started(ServerStartedEvent event) {
-        rebuild(event.getServer());
+        RecipePublication.publish(event.getServer());
     }
 
     // Rail replacements run at NORMAL; the tooltip index runs at LOWEST.
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void sync(OnDatapackSyncEvent event) {
-        if (event.getPlayer() == null) rebuild(event.getPlayerList().getServer());
+        if (event.getPlayer() == null)
+            RecipePublication.publish(event.getPlayerList().getServer());
     }
 
     @SubscribeEvent
     public static void stopped(ServerStoppedEvent event) {
         OvenRecipeBridge.clearMirrors();
-        APPLIED.clear();
-    }
-
-    private static void rebuild(MinecraftServer server) {
-        var manager = server.getRecipeManager();
-        var current = manager.getRecipes();
-        var applied = APPLIED.get(manager);
-        // The same RecipeManager may be reused on reload. Compare actual holder identities, not manager identity.
-        if (applied != null && applied.size() == current.size() && applied.containsAll(current)) return;
-        gregtech.content.recipe.FormConversionCraftingRecipeInjector.replacePlain(manager, server.registryAccess());
-        OvenRecipeBridge.apply(manager, server.registryAccess());
-        // Later injectors add rows that duplicate the generated wire/pipe families; dedup after all of them.
-        var deduped = new ArrayList<RecipeHolder<?>>(manager.getRecipes());
-        int duplicates = FormConversionCraftingRecipeInjector.dedupGenerated(
-                deduped,
-                server.registryAccess(),
-                entry -> ((RecipeHolder<?>) entry).id(),
-                entry -> ((RecipeHolder<?>) entry).value());
-        if (duplicates > 0) {
-            manager.replaceRecipes(deduped);
-            com.mojang.logging.LogUtils.getLogger()
-                    .info("[gregtech] Removed {} duplicate source crafting rows", duplicates);
-        }
-        Set<RecipeHolder<?>> snapshot = Collections.newSetFromMap(new IdentityHashMap<>());
-        snapshot.addAll(manager.getRecipes());
-        APPLIED.put(manager, snapshot);
+        RecipePublication.clear();
     }
 }

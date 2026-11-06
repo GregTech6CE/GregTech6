@@ -55,4 +55,69 @@ public final class IngredientAllocation {
         }
         return false;
     }
+
+    /**
+     * Feasible allocation when an input may draw from any accepting slot, regardless of identity.
+     * A greedy first-match scan can strand an earlier broad requirement on the only slot a later
+     * specific requirement accepts; this is the same bipartite assignment solved as a flow, so the
+     * result depends on availability rather than on inventory order.
+     *
+     * @param available units currently present per slot
+     * @param demand    units needed per input
+     * @param accepts   whether an input can consume a slot at all
+     * @return per-input per-slot amounts, or {@code null} when the demand cannot be met
+     */
+    public static int[][] planMixed(int[] available, long[] demand, boolean[][] accepts) {
+        int inputs = demand.length;
+        int slots = available.length;
+        long total = 0;
+        for (long need : demand) total += need;
+        if (total == 0) return new int[inputs][slots];
+        int source = 0;
+        int firstInput = 1;
+        int firstSlot = firstInput + inputs;
+        int sink = firstSlot + slots;
+        long[][] capacity = new long[sink + 1][sink + 1];
+        for (int input = 0; input < inputs; input++) capacity[source][firstInput + input] = demand[input];
+        for (int slot = 0; slot < slots; slot++) capacity[firstSlot + slot][sink] = Math.max(0, available[slot]);
+        for (int input = 0; input < inputs; input++)
+            for (int slot = 0; slot < slots; slot++)
+                if (accepts[input][slot] && available[slot] > 0)
+                    capacity[firstInput + input][firstSlot + slot] =
+                            Math.min(demand[input], Math.max(0, available[slot]));
+        long flow = 0;
+        int[] parent = new int[sink + 1];
+        while (true) {
+            java.util.Arrays.fill(parent, -1);
+            parent[source] = source;
+            var queue = new java.util.ArrayDeque<Integer>();
+            queue.add(source);
+            while (!queue.isEmpty() && parent[sink] < 0) {
+                int current = queue.poll();
+                for (int next = 0; next <= sink; next++)
+                    if (parent[next] < 0 && capacity[current][next] > 0) {
+                        parent[next] = current;
+                        queue.add(next);
+                    }
+            }
+            if (parent[sink] < 0) break;
+            long push = Long.MAX_VALUE;
+            for (int node = sink; node != source; node = parent[node])
+                push = Math.min(push, capacity[parent[node]][node]);
+            for (int node = sink; node != source; node = parent[node]) {
+                capacity[parent[node]][node] -= push;
+                capacity[node][parent[node]] += push;
+            }
+            flow += push;
+        }
+        if (flow != total) return null;
+        int[][] taken = new int[inputs][slots];
+        for (int input = 0; input < inputs; input++)
+            for (int slot = 0; slot < slots; slot++) {
+                // The residual back edge carries exactly what the forward edge accepted.
+                long used = capacity[firstSlot + slot][firstInput + input];
+                if (used > 0) taken[input][slot] = (int) used;
+            }
+        return taken;
+    }
 }

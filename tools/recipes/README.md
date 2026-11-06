@@ -9,6 +9,7 @@
 ```bash
 python tools/recipes/audit_recipes.py
 python tools/recipes/audit_recipes.py --report work/recipe-audit/report.json
+python tools/recipes/audit_recipes.py --converted minecraft/versions/1.21.1-neoforge/build/generated/recipe-resources
 python tools/recipes/audit_recipes.py --strict   # 有 error 时返回 1
 ```
 
@@ -33,22 +34,22 @@ python tools/recipes/audit_recipes.py --strict   # 有 error 时返回 1
   区分颜色的变体不报错。
 - **未知字段**：`_comment`、`_mirror_flags`、`_autocrafting_source` 之外的未知顶层字段
   报 warning（防拼写错误）。
-- **目录清单**：`EquipmentCraftingCatalog`、`ClayMoldCatalog`、`PortableCraftingCatalog`、
-  `AmmunitionCraftingCatalog`、`BookCraftingCatalog`、`BumbleCraftingCatalog`、
-  `NuclearCraftingCatalog` 列出的文件必须存在（error）。
-- **NeoForge 覆盖**：1.21.1 只读取 `recipe/`（单数），`recipes/`（复数）文件必须由
-  `PortableCraftingRecipePack` 等重新发布，或由运行时生成器（
-  `FormConversionCraftingRecipeInjector` 等）覆盖；两者都不是的文件报
-  `neoforge-unlisted` warning。已知例外只有 `tools/repair.json`
-  （由 `ManualToolRecipePack` 加载）。
+- **发布豁免**：`static-publish-exclusions.txt` 里的每个条目都必须仍然存在，并且必须是
+  `gt6ce/recipes/` 下的路径（error）。豁免只用于“源文件保留、1.21.1 由运行时行替代”的
+  静态配方；其余源文件全部由构建期转换发布，因此不再存在未被发布却沉默通过的配方。
+- **构建产物**（`--converted DIR`）：`data/gt6ce/recipe/` 必须与“已发布源”一一对应：
+  缺文件、多文件、结果缺少 `id`、或 ingredient 被写成裸字符串（1.21.1 的 Ingredient
+  codec 不接受，必须是 `{"item":…}` / `{"tag":…}` 物件或数组）都报 error。
+  `data/*/tags/item/` 也必须与 `core/src/main/resources/data/*/tags/items/` 一一对应，
+  内容逐文档比较；生成树缺少某个标签、多出无源标签或值不一致都报 error。
 - **物品模型**：结果物品在 `assets/*/models/item` 或 `blockstates` 中找不到模型时
   报 warning；材料物品可能有运行时模型，warning 只作提示。
 
 ## 维护约定
 
 - 新增配方类型、字段或运行时标签家庭时，同步更新本脚本的常量，否则审计会误报。
+- 新增“由运行时行替代”的静态配方时，把它加入 `static-publish-exclusions.txt` 并说明
+  替代它的生成器；不要用目录前缀或宽泛白名单降低标准。
 - 生成器（从上游 GT6 源码导入数据、再生成提交表）按根目录规则留在被忽略的
   `work/local-tools/`，不要放进这里：它们依赖固定上游快照，放进仓库会持续腐烂。
   这里只放随本仓库数据演进的检查工具。
-- 报告里 `neoforge-unlisted` 是真实缺陷：把文件加入相应 catalog，或确认它确实由
-  生成器覆盖后更新 `NEOFORGE_GENERATED_PREFIXES`。

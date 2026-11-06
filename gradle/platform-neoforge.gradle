@@ -124,6 +124,28 @@ neoForge {
     }
 }
 
+// The shared recipe and item-tag tree is authored in the 1.20.1 shape. This node consumes one
+// generated 1.21.1 tree, so the build output and a development run read the same files; the
+// converter is shared with its JUnit tests instead of being reimplemented in Gradle.
+def recipeResourcesDir = layout.buildDirectory.dir('generated/recipe-resources')
+def generateRecipeResources = tasks.register('generateRecipeResources', JavaExec) {
+    group = 'build'
+    description = 'Converts the shared recipe and item-tag tree to 1.21.1 native resources.'
+    classpath = project(':buildtools').sourceSets.main.runtimeClasspath
+    mainClass = 'gregtech.buildtools.RecipeResourceMain'
+    args rootProject.file('core/src/main/resources/data').absolutePath,
+         recipeResourcesDir.get().dir('data').asFile.absolutePath,
+         rootProject.file('tools/recipes/static-publish-exclusions.txt').absolutePath,
+         project.file('src/main/resources/data').absolutePath,
+         layout.buildDirectory.file('reports/recipe-resources-manifest.txt').get().asFile.absolutePath
+    inputs.dir rootProject.file('core/src/main/resources/data')
+    inputs.file rootProject.file('tools/recipes/static-publish-exclusions.txt')
+    inputs.files(fileTree(project.file('src/main/resources/data')) {
+        include '*/recipe/**', '*/tags/item/**'
+    })
+    outputs.dir(recipeResourcesDir)
+}
+
 def modProperties = [
         mod_id: rootProject.property('mod_id'),
         mod_name: rootProject.property('mod_name'),
@@ -147,8 +169,14 @@ tasks.withType(JavaCompile).configureEach {
 tasks.named('jar', Jar).configure {
     // Embedding the complete shared resource catalog requires ZIP64 too.
     zip64 = true
-    // The same Java 17 output used by Forge is embedded exactly once.
-    from project(':core').sourceSets.main.output
+    // The same Java 17 output used by Forge is embedded exactly once. The shared tree is authored
+    // in the 1.20.1 layout, so its plural recipe, item-tag and loot-table directories are not part
+    // of this artifact; the generated or node-native 1.21.1 paths come through this node instead.
+    from(project(':core').sourceSets.main.output) {
+        exclude 'data/*/recipes/**'
+        exclude 'data/*/tags/items/**'
+        exclude 'data/*/loot_tables/**'
+    }
     from project(':api').sourceSets.main.output
     from platformApi.sourceSets.main.output
     duplicatesStrategy = DuplicatesStrategy.FAIL

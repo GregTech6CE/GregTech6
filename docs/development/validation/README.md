@@ -24,4 +24,4 @@
 
 ## CI
 
-`verify` 运行 `:api:check :core:check :minecraft:spotlessCheck`；`build` 对两个节点运行 `assemble`、`compileTestJava` 与 `spotlessCheck`。GameTest 不在 CI 或 `check` 内，需要本地用两个节点的 `runGameTestServer` 单独运行。
+`verify` 运行 `:api:check :core:check :buildtools:check :minecraft:spotlessCheck`；`build` 对两个节点运行 `assemble`、`compileTestJava` 与 `spotlessCheck`。GameTest 不在 CI 或 `check` 内，需要本地用两个节点的 `runGameTestServer` 单独运行。

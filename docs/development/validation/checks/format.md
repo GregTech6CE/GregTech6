@@ -7,6 +7,7 @@ Spotless 使用 Palantir Java Format 检查 Java 源码格式：4 空格缩进�
 | 项目 | 是否接入 Spotless |
 | --- | --- |
 | `:core` | 是 |
+| `:buildtools` | 是 |
 | `:minecraft` 共享源码 | 是 |
 | `:minecraft:1.20.1-forge` | 是 |
 | `:minecraft:1.21.1-neoforge` | 是 |
@@ -31,6 +32,7 @@ Spotless 排除 `**/generated/**` 与包含 Stonecutter `//?` 标记的共享文
 ./gradlew format
 
 ./gradlew :core:spotlessApply
+./gradlew :buildtools:spotlessApply
 ./gradlew :minecraft:spotlessApply
 ./gradlew :minecraft:1.20.1-forge:spotlessApply
 ./gradlew :minecraft:1.21.1-neoforge:spotlessApply

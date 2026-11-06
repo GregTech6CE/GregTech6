@@ -8,6 +8,7 @@ on:
       - 'core/**'
       - 'minecraft/**'
       - 'gradle/**'
+      - 'tools/buildtools/**'
       - 'gradlew'
       - 'gradlew.bat'
       - 'build.gradle'
@@ -40,7 +41,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-build
       - name: JUnit and formatting
-        run: ./gradlew --no-daemon --stacktrace :api:check :core:check :minecraft:spotlessCheck
+        run: ./gradlew --no-daemon --stacktrace :api:check :core:check :buildtools:check :minecraft:spotlessCheck
 
   build:
     name: Build ${{ matrix.minecraft }} ${{ matrix.loader }}

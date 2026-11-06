@@ -474,6 +474,17 @@
       "flammability": 0
     },
     {
+      "path": "bookshelf_metal_efrine",
+      "gt6_id": 7153,
+      "kind": "metal",
+      "material": "Efrine",
+      "display": "Efrine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
+      "hardness": 8.0,
+      "resistance": 8.0,
+      "flammability": 0
+    },
+    {
       "path": "bookshelf_metal_chromium",
       "gt6_id": 7113,
       "kind": "metal",
