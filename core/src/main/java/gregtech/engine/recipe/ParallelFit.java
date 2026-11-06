@@ -71,7 +71,11 @@ public final class ParallelFit {
                 for (int slot = 0; slot < slotKeys.length && remaining > 0; slot++) {
                     int key = slotKeys[slot];
                     boolean empty = key == EMPTY;
-                    if (empty ? pass != 0 : key != output) continue;
+                    // Merge into slots already keyed to this output first, exactly like the flush
+                    // pass; empty slots are only used afterwards. The inverted test here used to
+                    // claim empty slots for the first output and then reject a later output that
+                    // the real flush would have placed in the slot this one should have merged into.
+                    if (empty != (pass == 1) || (!empty && key != output)) continue;
                     int space = capacityPerOutput[output] - (empty ? 0 : slotCounts[slot]);
                     int take = (int) Math.min(Math.max(0, space), remaining);
                     if (take <= 0) continue;
@@ -98,7 +102,8 @@ public final class ParallelFit {
             for (int pass = 0; pass < 2 && remaining > 0; pass++) {
                 for (int tank = 0; tank < tankKeys.length && remaining > 0; tank++) {
                     boolean empty = tankKeys[tank] == EMPTY;
-                    if (empty ? pass != 0 : tankKeys[tank] != output) continue;
+                    // Same order as the real flush: matching tanks, then empty ones.
+                    if (empty != (pass == 1) || (!empty && tankKeys[tank] != output)) continue;
                     if (free[tank] <= 0) continue;
                     long take = Math.min(free[tank], remaining);
                     free[tank] -= take;
