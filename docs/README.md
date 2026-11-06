@@ -16,5 +16,6 @@
 | 保存跨平台、跨模组或上游对照结论 | [集成、来源与验证结论](integration/README.md) |
 | 交付产物、更新实例或保存执行记录 | [发布、实例更新与执行记录](operations/README.md) |
 | 查询或记录长期取舍、与原版的差异 | [决策](decisions/README.md) |
+| 查看版本方针与路线图 | [路线图](roadmap/v1.0.md) |
 
 文档的维护规则见[文档 AGENTS.md](AGENTS.md)。
