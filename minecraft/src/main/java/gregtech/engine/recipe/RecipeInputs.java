@@ -78,9 +78,13 @@ public final class RecipeInputs {
                 // An earlier, broader requirement may already have drained the only slot this one
                 // accepts, so the fallback must test acceptance, not the remaining counts. A
                 // requirement no slot accepts, or whose accepting slots lack the total supply,
-                // still stays off the planner.
-                if (needed != 0) return couldBeSatisfied(recipe, input, required, needed)
-                        && allocateItems(recipe, parallel);
+                // still stays off the planner. The planner re-plans every item input, but the
+                // fluid pass below still has to run.
+                if (needed != 0) {
+                    if (!couldBeSatisfied(recipe, input, required, needed)
+                            || !allocateItems(recipe, parallel)) return false;
+                    break;
+                }
             }
             for (int input = 0; input < recipe.mFluidInputs.length; input++) {
                 var required = recipe.mFluidInputs[input];
