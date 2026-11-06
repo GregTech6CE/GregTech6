@@ -1,19 +1,15 @@
 package gregtech.content.recipe;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
+/** Removes the vanilla shaped rail rows that the GT track family replaces; part of the publication pass. */
 public final class TrackRecipeReplacement {
     private TrackRecipeReplacement() {}
 
-    @SubscribeEvent
-    public static void sync(OnDatapackSyncEvent e) {
-        var server = e.getPlayerList().getServer();
-        var manager = server.getRecipeManager();
+    public static void removeConflicts(RecipeManager manager, RegistryAccess access) {
         var replaced = java.util.Set.of(Items.RAIL, Items.POWERED_RAIL, Items.DETECTOR_RAIL, Items.ACTIVATOR_RAIL);
         var rows = manager.getRecipes();
         var kept = rows.stream()
@@ -23,9 +19,8 @@ public final class TrackRecipeReplacement {
                                         : gregtech.GregTechConfig.Rule.REPLACE_MOD_RECIPES)
                                 .enabled()
                         || !(holder.value() instanceof ShapedRecipe)
-                        || !replaced.contains(holder.value()
-                                .getResultItem(server.registryAccess())
-                                .getItem()))
+                        || !replaced.contains(
+                                holder.value().getResultItem(access).getItem()))
                 .toList();
         if (kept.size() != rows.size()) {
             manager.replaceRecipes(kept);
