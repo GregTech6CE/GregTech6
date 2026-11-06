@@ -298,7 +298,8 @@ public final class MachineRecipeDocuments {
 
     private static int requiredInt(Map<String, Object> json, String key) {
         long value = requiredLong(json, key);
-        if (value > Integer.MAX_VALUE) throw new IllegalArgumentException(key);
+        // A narrowing cast would silently wrap negative values into valid counts.
+        if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) throw new IllegalArgumentException(key);
         return (int) value;
     }
 
