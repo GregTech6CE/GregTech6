@@ -22,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.GregTechNeoForge;
-import gregtech.platform.neoforge.registry.NeoContentRegistrar;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 *///?} else {
@@ -40,7 +39,6 @@ public final class GTItems {
         if (GregTechNeoForge.NAMESPACE.equals(namespace)) return ITEMS;
         return ADDON_ITEMS.computeIfAbsent(namespace, DeferredRegister::createItems);
     }
-    private static boolean initialized;
 *///?} else {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
     private static final java.util.Map<String, DeferredRegister<Item>> ADDON_ITEMS = new java.util.LinkedHashMap<>();
@@ -97,16 +95,7 @@ public final class GTItems {
     }
 
 //? if >=1.21.1 {
-    /*// Called after linked catalog/role setup and before the platform RegisterEvents.
-    public static int register(IEventBus modEventBus) {
-        if (initialized) throw new IllegalStateException("Neo material items already queued");
-        int total = registerAll(new NeoContentRegistrar());
-        ITEMS.register(modEventBus);
-        initialized = true;
-        return total;
-    }
-
-    // Addon namespaces keep being created during bootstrap, so they are submitted by the entry point last.
+    /*// Addon namespaces keep being created during bootstrap, so they are submitted by the entry point last.
     public static void registerAddonItems(IEventBus modEventBus) {
         for (DeferredRegister.Items register : ADDON_ITEMS.values()) register.register(modEventBus);
     }

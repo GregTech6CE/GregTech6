@@ -7,7 +7,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 import gregtech.engine.material.*;import gregtech.engine.prefix.*;import gregtech.content.data.MaterialPrefix;import gregtech.content.registry.*;import net.minecraft.world.item.*;import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
 public final class CreativeTabBootstrap {private CreativeTabBootstrap(){}
-public static void register(gregtech.content.registry.ContentRegistrar registrar, net.neoforged.bus.api.IEventBus bus){GTCreativeTabIcons.register(registrar);GTCreativeTabs.registerTabs();GTCreativeTabs.TABS.register(bus);}
 @SubscribeEvent public static void populateTabs(BuildCreativeModeTabContentsEvent event){if(!event.getTabKey().location().getNamespace().equals(REGISTRY_NAMESPACE))return;
  for(var prefix:PrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populatePrefix(event,prefix);return;}}
  for(var prefix:BlockPrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populateBlockPrefix(event,prefix);return;}}
@@ -37,14 +36,12 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
-import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -53,22 +50,7 @@ import java.util.List;
 
 /** Registers creative tabs and populates them — combined from Loader_Creative and CreativeTabHandler. */
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class CreativeTabBootstrap implements InitializationStep {
-    private final IEventBus bus;
-    private final gregtech.content.registry.ContentRegistrar registrar;
-
-    public CreativeTabBootstrap(IEventBus bus, gregtech.content.registry.ContentRegistrar registrar) {
-        this.bus = bus;
-        this.registrar = registrar;
-    }
-
-    @Override
-    public void run() {
-        GTCreativeTabIcons.register(registrar);
-        GTCreativeTabs.registerTabs();
-        GTCreativeTabs.TABS.register(bus);
-    }
-
+public class CreativeTabBootstrap {
     // ==================== Creative tab population ====================
 
     @SubscribeEvent

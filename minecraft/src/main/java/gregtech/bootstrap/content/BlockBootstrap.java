@@ -12,16 +12,7 @@ import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
-//? if >=1.21.1 {
-//?} else {
-import gregtech.bootstrap.InitializationStep;
-//?}
 import gregtech.content.registry.GTBlocks;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTSpecialOreBlocks;
-*///?} else {
-import gregtech.content.registry.GTIconSetBlocks;
-//?}
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -35,37 +26,18 @@ import org.slf4j.Logger;
 import java.util.HashSet;
 import java.util.Set;
 
-/** Registers GT6 material blocks, stone blocks, and stone slabs — logic inlined from three separate loader classes. */
-//? if >=1.21.1 {
-/*public record BlockBootstrap() implements Runnable {
-*///?} else {
-public record BlockBootstrap() implements InitializationStep {
-//?}
+/** Queues GT6 material blocks, stone blocks, and stone slabs — logic inlined from three separate loader classes. */
+public final class BlockBootstrap {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    @Override
-    public void run() {
+    private BlockBootstrap() {}
+
+    public static void register() {
         gregtech.content.registry.GTLegacyEnergyDevices.registerAll();
         gregtech.content.registry.GTItemBarrels.registerAll();
         registerMaterialBlocks();
         registerStoneBlocks();
         registerStoneSlabs();
-        registerIconSetBlocks();
-//? if >=1.21.1 {
-        /*gregtech.content.registry.GTMultiblocks.registerAll();
-*///?} else {
-//?}
-    }
-
-    private static void registerIconSetBlocks() {
-//? if >=1.21.1 {
-        /*GTSpecialOreBlocks.registerAll();
-        gregtech.content.registry.GTPlants.registerAll();
-        LOGGER.info("Queued {} icon set blocks for registration", GTSpecialOreBlocks.all().size());
-*///?} else {
-        GTIconSetBlocks.registerAll();
-        LOGGER.info("Queued {} icon set blocks for registration", GTIconSetBlocks.all().size());
-//?}
     }
 
     // === Material blocks ===

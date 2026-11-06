@@ -63,9 +63,7 @@ public final class GTItemPipes {
     }
 
 //? if >=1.21.1 {
-    /*public static void register(ContentRegistrar registrar, IEventBus bus) {
-        if (!ALL.isEmpty()) throw new IllegalStateException("Item pipes registered twice");
-        gregtech.content.transport.ItemPipeDefinitions.register(registrar);
+    /*public static void submit(IEventBus bus) {
         bus.addListener(GTItemPipes::capabilities);
     }
 

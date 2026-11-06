@@ -29,9 +29,7 @@ public final class GTSignalWires {
     private GTSignalWires() {
     }
 //? if >=1.21.1 {
-    /*public static void register(ContentRegistrar registrar, IEventBus bus) {
-        if (!ALL.isEmpty()) throw new IllegalStateException("Signal wires registered twice");
-        register(registrar);
+    /*public static void submit(IEventBus bus) {
         ENTITIES.register(bus);
     }
 *///?}

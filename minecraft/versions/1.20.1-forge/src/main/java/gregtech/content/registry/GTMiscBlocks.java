@@ -327,7 +327,6 @@ public final class GTMiscBlocks {
                                 .quality()));
 
         // The common catalog owns every original line and endpoint.
-        GTLongDistance.initialize();
         LONG_DIST_PIPE = RegistryObject.create(
                 gregtech.GregTech.id("long_dist_pipe_fluid"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
         LONG_DIST_WIRE = RegistryObject.create(

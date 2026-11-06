@@ -6,7 +6,6 @@ import gregtech.content.recipe.GTToolAssemblyRecipe;
 import gregtech.content.recipe.GTToolHeadRecipe;
 import gregtech.content.recipe.GTToolPatternRecipe;
 import gregtech.content.recipe.GTToolRecipeSerializers;
-import gregtech.content.registry.GTToolItems;
 import gregtech.engine.tool.GTToolType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -60,7 +59,6 @@ public record ToolBootstrap(IEventBus bus) implements InitializationStep {
         gregtech.content.recipe.FiniteBottleFillingRecipe.registerIngredient();
         gregtech.content.recipe.BlockTagCraftingIngredient.registerIngredient();
         gregtech.content.recipe.QuarterFluidCraftingIngredient.registerIngredient();
-        GTToolItems.register(new gregtech.platform.forge.ForgeContentRegistrar());
         RECIPE_SERIALIZERS.register("book_binding", () -> gregtech.content.recipe.BookBindingRecipe.SERIALIZER);
         RECIPE_SERIALIZERS.register("machine", () -> gregtech.content.recipe.MachineDatapackRecipe.ADDITION);
         RECIPE_SERIALIZERS.register("machine_removal", () -> gregtech.content.recipe.MachineDatapackRecipe.REMOVAL);

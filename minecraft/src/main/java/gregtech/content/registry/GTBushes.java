@@ -18,16 +18,11 @@ public final class GTBushes {
     private GTBushes() {}
 //? if >=1.21.1 {
     /*private static final Map<String, DeferredHolder<Block, BushBlock>> VARIANTS = new LinkedHashMap<>();
-    public static final DeferredHolder<Block, BushBlock> BUSH = register("bush", "");
+    public static DeferredHolder<Block, BushBlock> BUSH;
 *///?} else {
     private static final Map<String, RegistryObject<BushBlock>> VARIANTS = new LinkedHashMap<>();
-    public static final RegistryObject<BushBlock> BUSH = register("bush", "");
+    public static RegistryObject<BushBlock> BUSH;
 //?}
-
-    static {
-        for (var type : BerryBushCatalog.worldgenTypes())
-            register(BerryBushCatalog.blockPath(type.id()), type.id());
-    }
 
 //? if >=1.21.1 {
     /*private static DeferredHolder<Block, BushBlock> register(String path, String berry) {
@@ -50,6 +45,10 @@ public final class GTBushes {
     }
 
     public static void registerAll() {
+        if (BUSH != null) return;
+        BUSH = register("bush", "");
+        for (var type : BerryBushCatalog.worldgenTypes())
+            register(BerryBushCatalog.blockPath(type.id()), type.id());
         VARIANTS.forEach((path, block) -> GTBlocks.BLOCK_ITEMS.register(path,
                 () -> new gregtech.content.item.BushBlockItem(block.get(), new Item.Properties())));
     }

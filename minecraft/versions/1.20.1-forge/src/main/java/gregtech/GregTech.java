@@ -34,25 +34,15 @@ public class GregTech {
         IEventBus modEventBus = context.getModEventBus();
 
         GTPackets.register();
-        gregtech.content.registry.GTProjectiles.register(modEventBus);
-        gregtech.content.worldgen.GTFeatures.register(modEventBus);
 
         // Base data must precede material items and dependent blocks.
-        initialize(
-                "content",
-                new DataBootstrap(),
-                new MaterialBootstrap(),
-                new ItemBootstrap(),
-                new BlockBootstrap(),
-                new ToolBootstrap(modEventBus),
-                new FluidBootstrap(modEventBus));
+        initialize("content", new DataBootstrap(), new MaterialBootstrap());
 
-        // Queue machines and creative tabs before submitting deferred registries.
-        initialize(
-                "machine registration",
-                new MachineBlockBootstrap(modEventBus),
-                new CreativeTabBootstrap(modEventBus, new gregtech.platform.forge.ForgeContentRegistrar()),
-                new DeferredRegistrySubmission(modEventBus));
+        // Shared content order plus the Forge-only families; then one submission for every register.
+        gregtech.platform.forge.ForgeContent content = new gregtech.platform.forge.ForgeContent(modEventBus);
+        content.bootstrap();
+        initialize("tools", new ToolBootstrap(modEventBus));
+        content.submit();
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::loadComplete);

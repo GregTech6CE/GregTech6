@@ -55,9 +55,7 @@ public final class GTEnergyNodes {
         return blocks.toArray(Block[]::new);
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
-        if (!ALL.isEmpty()) throw new IllegalStateException("Energy nodes registered twice");
-        registerAll(registrar);
+    public static void submit(IEventBus bus) {
         ENTITIES.register(bus);
         bus.addListener(GTEnergyNodes::capabilities);
     }

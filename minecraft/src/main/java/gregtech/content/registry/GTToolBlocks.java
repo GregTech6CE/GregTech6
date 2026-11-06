@@ -57,7 +57,7 @@ public final class GTToolBlocks {
         return p.strength(.5f, 6);
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void registerAll(ContentRegistrar registrar) {
         DYNAMITE = dynamite(registrar, "dynamite", 10, 5, Materials.Red);
         BOOMSTICK = dynamite(registrar, "boomstick", 10, 3, Materials.Orange);
         DYNAMITE_STRONG = dynamite(registrar, "strong_dynamite", 40, 5, Materials.Purple);
@@ -76,6 +76,9 @@ public final class GTToolBlocks {
             registrar.block(REGISTRY_NAMESPACE, spec.id(), () -> new gregtech.content.block.tool.FluidAttachmentBlock(spec,
                     attachmentProperties(spec.id())), block -> new BlockItem(block, new Item.Properties().stacksTo(64)));
         }
+    }
+
+    public static void submit(IEventBus bus) {
         GTFluidComponents.TYPES.register(bus);
     }
 *///?} else {

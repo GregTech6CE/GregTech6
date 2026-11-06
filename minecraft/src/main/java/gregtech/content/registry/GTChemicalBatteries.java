@@ -21,7 +21,7 @@ public final class GTChemicalBatteries {
 *///?}
     private GTChemicalBatteries(){}
 //? if >=1.21.1 {
-    /*public static void register(ContentRegistrar registrar,IEventBus bus){if(!ALL.isEmpty())throw new IllegalStateException("Chemical batteries registered twice");registerAll(registrar);ENTITIES.register(bus);}
+    /*public static void submit(IEventBus bus){ENTITIES.register(bus);}
 *///?}
     public static List<RegisteredBlock<ChemicalBatteryBlock>> allRegistered(){return Collections.unmodifiableList(ALL);}
     public static List<RegisteredBlock<ChemicalBatteryBlock>> all(){return ALL.stream().filter(holder -> holder.get().spec() instanceof ChemicalBatterySpec).toList();}

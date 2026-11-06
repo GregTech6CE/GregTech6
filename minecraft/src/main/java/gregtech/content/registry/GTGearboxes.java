@@ -43,10 +43,7 @@ public final class GTGearboxes {
     private GTGearboxes() {
     }
 //? if >=1.21.1 {
-    /*public static void register(ContentRegistrar registrar, IEventBus bus) {
-        if (!ALL_GEARBOXES.isEmpty()) throw new IllegalStateException("Gearboxes registered twice");
-        registerAll(registrar);
-        bootstrap();
+    /*public static void submit(IEventBus bus) {
         ENTITIES.register(bus);
     }
 *///?}

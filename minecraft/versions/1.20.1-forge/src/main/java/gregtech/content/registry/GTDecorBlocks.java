@@ -114,16 +114,6 @@ public final class GTDecorBlocks {
     public static RegistryObject<gregtech.content.block.misc.CFoamSlabBlock> GLOW_GLASS_SLAB;
 
     public static void registerAll() {
-        GTConstructionBlocks.initialize();
-        GTSpikes.initialize();
-        GTBars.initialize();
-        GTSurfaceBlocks.initializeDiggables();
-        GTMaterialPiles.initialize();
-        GTCoinPiles.initialize();
-        GTBookShelves.initialize();
-        SharedDecorBlocks.initialize();
-        GTSandwich.initialize();
-        GTBumbleBlocks.initializeHives();
         ASPHALT = reference(GTConstructionVariants.defaultId("asphalt"));
         CONCRETE = reference(GTConstructionVariants.defaultId("concrete"));
         CONCRETE_REINFORCED = reference(GTConstructionVariants.defaultId("concrete_reinforced"));
@@ -173,7 +163,6 @@ public final class GTDecorBlocks {
             HIVE_VARIANTS.put(color, hive);
             ALL.add(hive);
         }
-        GTFluidSprings.initialize();
         FLUID_SPRING = GTFluidSprings.FLUID_SPRING;
     }
 }

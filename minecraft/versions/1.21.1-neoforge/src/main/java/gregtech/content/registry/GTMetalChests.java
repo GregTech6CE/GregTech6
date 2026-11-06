@@ -59,6 +59,5 @@ public final class GTMetalChests {
                     () -> new MetalChestBlockItem(
                             registeredWoodChest.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
         }
-        GTLootChests.registerAll();
     }
 }

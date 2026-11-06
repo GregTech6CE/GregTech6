@@ -31,20 +31,23 @@ public final class GTWires {
 //? if >=1.21.1 {
 /*    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ElectricWireBlockEntity>> ELECTRIC_WIRE=ENTITIES.register("electric_wire",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ElectricWireBlockEntity::new,all().stream().map(RegisteredBlock::get).toArray(Block[]::new)).build(null));
+
+    public static void submit(IEventBus bus) {
+        ENTITIES.register(bus);
+    }
 *///?} else {
 //?}
 
     private GTWires() {}
 
-//? if >=1.21.1 {
-/*    public static void register(ContentRegistrar registrar, IEventBus bus){
-        if(!ALL.isEmpty())throw new IllegalStateException("Electric wires registered twice");
-        for(var spec:gregtech.content.energy.WireCatalog.specifications())register(registrar,spec.id(),spec.material(),spec.size(),spec.voltage(),spec.amperage(),spec.lossPerBlock(),spec.insulated(),spec.contactDamage());
-        bootstrap();ENTITIES.register(bus);
+    /** Queues every wire and cable from the shared catalog. */
+    public static void registerAll(ContentRegistrar registrar) {
+        if (!ALL.isEmpty()) throw new IllegalStateException("Electric wires registered twice");
+        for (var spec : gregtech.content.energy.WireCatalog.specifications())
+            register(registrar, spec.id(), spec.material(), spec.size(), spec.voltage(), spec.amperage(),
+                    spec.lossPerBlock(), spec.insulated(), spec.contactDamage());
+        bootstrap();
     }
-*///?} else {
-//?}
-
 
     public static void register(ContentRegistrar registrar, String idSuffix, GTMaterial material, int size,
                          long voltage, long amperage, long loss, boolean insulated, boolean contactDamage) {

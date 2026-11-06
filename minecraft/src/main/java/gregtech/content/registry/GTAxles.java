@@ -33,7 +33,7 @@ public final class GTAxles {
 
     private GTAxles() {}
 
-    public static void register(ContentRegistrar registrar,IEventBus bus){if(!ALL.isEmpty())throw new IllegalStateException("Axles registered twice");registerAll(registrar);bootstrap();ENTITIES.register(bus);}
+    public static void submit(IEventBus bus){ENTITIES.register(bus);}
 *///?} else {
     private GTAxles() {}
 //?}

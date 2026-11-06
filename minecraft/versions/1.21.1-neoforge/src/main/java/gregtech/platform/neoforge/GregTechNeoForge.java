@@ -13,8 +13,7 @@ import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialRoleFlags;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.MachineWorkCost;
-import gregtech.platform.neoforge.registry.NeoContentRegistrar;
-import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
+import gregtech.platform.neoforge.registry.NeoContent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
@@ -56,79 +55,10 @@ public final class GregTechNeoForge {
         gregtech.engine.addon.AddonMaterials.collectContributors();
         GTMaterialRegistry.init();
         MaterialRoleFlags.apply();
-        NeoContentRegistrar contentRegistrar = new NeoContentRegistrar();
-        gregtech.platform.neoforge.fluid.FluidRegistries.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTFuelRods.register(contentRegistrar);
-        gregtech.content.registry.GTDungeonKeys.registerAll();
-        gregtech.content.registry.GTRadiationProtection.MATERIALS.register(modEventBus);
-        gregtech.content.registry.GTColoredBooks.register(contentRegistrar);
-        int materialItems = GTItems.register(modEventBus);
-        gregtech.content.registry.GTProjectiles.register(modEventBus);
-        new gregtech.bootstrap.content.BlockBootstrap().run();
-        gregtech.content.registry.GTWoods.registerAll();
-        gregtech.content.registry.GTTreeHoles.registerAll();
-        gregtech.content.registry.GTBumbleBlocks.initialize();
-        gregtech.content.registry.GTSurfaceBlocks.initialize();
-        gregtech.content.registry.GTBlackSands.initialize();
-        gregtech.content.registry.GTFluidSprings.initialize();
-        gregtech.content.registry.GTGrassSoils.initialize();
-        gregtech.content.registry.GTConstructionBlocks.initialize();
-        gregtech.content.registry.GTBars.initialize();
-        gregtech.content.registry.GTSpikes.initialize();
-        gregtech.content.registry.GTMaterialPiles.initialize();
-        gregtech.content.registry.GTCoinPiles.initialize();
-        gregtech.content.registry.GTBookShelves.initialize();
-        gregtech.content.registry.GTSafes.initialize();
-        gregtech.content.registry.GTCraftingTables.initialize();
-        gregtech.content.registry.GTStorageContainers.initialize();
-        gregtech.content.registry.GTRelaysFilters.initialize();
-        gregtech.content.registry.GTManualStations.initialize();
-        gregtech.content.registry.GTZpmArtifacts.initialize();
-        gregtech.content.registry.GTLasers.registerAll();
-        gregtech.content.registry.GTSensors.registerAll();
-        gregtech.platform.neoforge.machine.AddonSensorRegistration.register(contentRegistrar);
-        gregtech.content.registry.GTLongDistance.initialize();
-        gregtech.content.registry.GTTrackBlocks.registerAll();
-        gregtech.content.registry.GTEngines.registerAll();
-        gregtech.content.registry.GTBoilers.registerAll();
-        gregtech.content.registry.GTPumps.registerAll();
-        gregtech.content.registry.GTLogisticsTank.initialize();
-        gregtech.content.registry.GTSandwich.initialize();
-        gregtech.content.registry.GTRemainingDecor.initialize();
-        gregtech.content.registry.GTDungeonBlocks.registerAll();
-        gregtech.content.registry.GTMetalChests.initialize();
-        gregtech.content.registry.GTBlocks.BLOCKS.register(modEventBus);
-        gregtech.content.registry.GTBlocks.BLOCK_ITEMS.register(modEventBus);
-        gregtech.content.registry.GTBlockEntities.register(modEventBus);
-        gregtech.content.worldgen.GTFeatures.register(modEventBus);
-        gregtech.platform.neoforge.logistics.StorageRegistries.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTMultiItems.register(contentRegistrar);
-        gregtech.content.registry.GTFoodItems.register(contentRegistrar);
-        gregtech.content.registry.GTTechnological.register(contentRegistrar);
-        gregtech.platform.neoforge.logistics.LogisticsRegistries.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTSounds.bootstrap();
-        gregtech.content.transport.fluid.FluidTransportRegistries.register(contentRegistrar, modEventBus);
-        gregtech.platform.neoforge.machine.BasicMachineRegistries.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTMultiblocks.registerAddonParts(contentRegistrar);
-        gregtech.content.recipe.NeoRecipeSerializers.register(modEventBus);
-        gregtech.content.registry.GTChemicalBatteries.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTWires.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTSignalWires.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTMenuTypes.register(modEventBus);
-        gregtech.content.registry.GTEnergyNodes.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTAxles.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTGearboxes.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTToolItems.register(contentRegistrar);
-        gregtech.content.registry.GTElectricItems.register(contentRegistrar);
-        gregtech.content.registry.GTToolBlocks.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTItemPipes.register(contentRegistrar, modEventBus);
-        gregtech.content.transport.HopperRegistries.register(contentRegistrar, modEventBus);
-        SmelteryRegistries.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTRemainingIconBlocks.initialize();
-        gregtech.bootstrap.registration.CreativeTabBootstrap.register(contentRegistrar, modEventBus);
-        gregtech.content.registry.GTBlocks.registerAddonBlocks(modEventBus);
-        GTItems.registerAddonItems(modEventBus);
-        LOGGER.info("Queued {} Neo material items from the shared original definitions", materialItems);
+        // Shared content order plus the NeoForge-only families; then one submission for every register.
+        NeoContent content = new NeoContent(modEventBus);
+        content.bootstrap();
+        content.submit();
         modEventBus.addListener(this::commonSetup);
     }
 
@@ -187,6 +117,18 @@ public final class GregTechNeoForge {
         if (cost == null || cost.minimumPower() != 8 || cost.totalWork() != 160) {
             throw new IllegalStateException("GT6 shared machine work accounting failed to initialize");
         }
+        long itemCount = net.minecraft.core.registries.BuiltInRegistries.ITEM.keySet().stream()
+                .filter(id -> NAMESPACE.equals(id.getNamespace()))
+                .count();
+        long blockCount = net.minecraft.core.registries.BuiltInRegistries.BLOCK.keySet().stream()
+                .filter(id -> NAMESPACE.equals(id.getNamespace()))
+                .count();
+        LOGGER.info(
+                "{} loaded: {} materials, {} items, {} blocks",
+                MOD_ID,
+                GTMaterialRegistry.allMaterials().size(),
+                itemCount,
+                blockCount);
         LOGGER.info(
                 "GregTech shared core initialized: {} material objects, minimumPower={}, totalWork={}; "
                         + "Neo material items/blocks/stones and ore-vein/small-ore/stone-layer features registered; "

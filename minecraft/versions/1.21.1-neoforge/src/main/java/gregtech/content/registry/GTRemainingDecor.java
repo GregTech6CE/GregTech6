@@ -31,7 +31,6 @@ public final class GTRemainingDecor {
     }
 
     public static void initialize() {
-        SharedDecorBlocks.initialize();
         for (var variant : gregtech.content.transport.PanelCatalog.ALL)
             if (java.util.Set.of("wood", "concrete", "cfoam", "asphalt", "colored_gray", "colored_black")
                     .contains(variant.material()))
