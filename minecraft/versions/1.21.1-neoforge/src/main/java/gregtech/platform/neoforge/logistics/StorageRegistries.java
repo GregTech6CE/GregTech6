@@ -72,7 +72,12 @@ public final class StorageRegistries {
         TYPES.register(eventBus);
     }
 
-    private static void bindLogistics(gregtech.content.registry.ContentRegistrar registrar, String registryId, GTMaterial material, float hardness, float resistance) {
+    private static void bindLogistics(
+            gregtech.content.registry.ContentRegistrar registrar,
+            String registryId,
+            GTMaterial material,
+            float hardness,
+            float resistance) {
         var registeredBlock = registrar.block(
                 REGISTRY_NAMESPACE,
                 registryId,
@@ -86,7 +91,12 @@ public final class StorageRegistries {
         LOGISTICS_STORAGES.add(registeredBlock);
     }
 
-    private static void bind(gregtech.content.registry.ContentRegistrar registrar, String registryId, GTMaterial material, float hardness, float resistance) {
+    private static void bind(
+            gregtech.content.registry.ContentRegistrar registrar,
+            String registryId,
+            GTMaterial material,
+            float hardness,
+            float resistance) {
         var registeredBlock = registrar.block(
                 REGISTRY_NAMESPACE,
                 registryId,

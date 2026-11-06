@@ -40,9 +40,7 @@ public final class FluidCapabilities {
         event.registerItem(
                 Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((FluidDisplayItem) stack.getItem()).handler(stack),
-                FluidRegistries.allItems()
-                        .map(holder -> holder.get())
-                        .toArray(net.minecraft.world.item.Item[]::new));
+                FluidRegistries.allItems().map(holder -> holder.get()).toArray(net.minecraft.world.item.Item[]::new));
         event.registerItem(
                 Capabilities.FluidHandler.ITEM,
                 (stack, context) -> ((gregtech.content.item.PortableFluidContainerItem) stack.getItem()).handler(stack),

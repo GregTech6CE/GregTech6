@@ -45,24 +45,25 @@ public final class BehaviorMachineRegistration {
     }
 
     private static void registerNamespace(
-            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedBehavior> machines, IEventBus bus) {
+            ContentRegistrar registrar,
+            String namespace,
+            List<AddonMachines.AcceptedBehavior> machines,
+            IEventBus bus) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
         var holders = new ArrayList<RegisteredBlock<BehaviorMachineBlock>>();
         for (AddonMachines.AcceptedBehavior accepted : machines) {
-            RegisteredBlock<BehaviorMachineBlock> block =
-                    gregtech.content.registry.MultiblockRegistration.register(
-                            gregtech.content.multiblock.ControllerDeclarations.behavior(
+            RegisteredBlock<BehaviorMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
+                    gregtech.content.multiblock.ControllerDeclarations.behavior(
+                            accepted,
+                            () -> new BehaviorMachineBlock(
                                     accepted,
-                                    () -> new BehaviorMachineBlock(
-                                            accepted,
-                                            BlockBehaviour.Properties.of()
-                                                    .mapColor(MapColor.METAL)
-                                                    .strength(5.0F, 5.0F)
-                                                    .requiresCorrectToolForDrops())),
-                            (path, factory) -> registrar.block(
-                                    namespace, path, factory,
-                                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(16))));
+                                    BlockBehaviour.Properties.of()
+                                            .mapColor(MapColor.METAL)
+                                            .strength(5.0F, 5.0F)
+                                            .requiresCorrectToolForDrops())),
+                    (path, factory) -> registrar.block(
+                            namespace, path, factory, bare -> new BlockItem(bare, new Item.Properties().stacksTo(16))));
             holders.add(block);
             BLOCKS.add(block);
         }

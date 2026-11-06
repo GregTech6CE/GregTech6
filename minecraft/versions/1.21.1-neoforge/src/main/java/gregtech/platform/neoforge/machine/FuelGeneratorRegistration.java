@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -59,8 +58,7 @@ public final class FuelGeneratorRegistration {
                                             .strength(5.0F, 5.0F)
                                             .requiresCorrectToolForDrops())),
                     (path, factory) -> registrar.block(
-                            namespace, path, factory,
-                            bare -> new BlockItem(bare, new Item.Properties().stacksTo(16))));
+                            namespace, path, factory, bare -> new BlockItem(bare, new Item.Properties().stacksTo(16))));
             BLOCKS.add(block);
             String path = "be_" + accepted.declaration().casing().id().replace('/', '_');
             DeferredHolder<BlockEntityType<?>, BlockEntityType<FuelGeneratorBlockEntity>> type =

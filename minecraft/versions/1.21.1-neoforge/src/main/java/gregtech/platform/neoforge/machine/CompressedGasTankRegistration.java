@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -45,7 +44,10 @@ public final class CompressedGasTankRegistration {
     }
 
     private static void registerNamespace(
-            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedCompressedGas> tanks, IEventBus bus) {
+            ContentRegistrar registrar,
+            String namespace,
+            List<AddonMachines.AcceptedCompressedGas> tanks,
+            IEventBus bus) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
         for (AddonMachines.AcceptedCompressedGas accepted : tanks) {

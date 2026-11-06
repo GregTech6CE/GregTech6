@@ -14,6 +14,7 @@ import net.neoforged.bus.api.IEventBus;
 
 public final class HopperRegistries {
     private HopperRegistries() {}
+
     private static final java.util.List<RegisteredBlock<HopperBlock>> HOPPERS = new java.util.ArrayList<>();
     private static final java.util.List<RegisteredBlock<QueueHopperBlock>> QUEUES = new java.util.ArrayList<>();
 
@@ -37,12 +38,16 @@ public final class HopperRegistries {
         for (var row : HopperCatalog.ALL) {
             var spec = row.spec();
             if (row.queue()) {
-                var block = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+                var block = registrar.block(
+                        REGISTRY_NAMESPACE,
+                        spec.id(),
                         () -> new QueueHopperBlock(spec, properties(spec)),
                         hopper -> new QueueHopperBlockItem(hopper, new Item.Properties().stacksTo(16), spec));
                 QUEUES.add(block);
             } else {
-                var block = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+                var block = registrar.block(
+                        REGISTRY_NAMESPACE,
+                        spec.id(),
                         () -> new HopperBlock(spec, properties(spec)),
                         hopper -> new HopperBlockItem(hopper, new Item.Properties().stacksTo(16), spec));
                 HOPPERS.add(block);

@@ -43,7 +43,8 @@ public final class BasicMachineRegistries {
             "part",
             () -> IMenuTypeExtension.create(
                     (id, inventory, buffer) -> new gregtech.client.gui.PartMenu(id, inventory, buffer)));
-    private static final List<gregtech.content.registry.RegisteredBlock<BasicMachineBlock>> MACHINES = new ArrayList<>();
+    private static final List<gregtech.content.registry.RegisteredBlock<BasicMachineBlock>> MACHINES =
+            new ArrayList<>();
     private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<BasicMachineBlockEntity>>> TYPES =
             new ArrayList<>();
 
@@ -82,7 +83,9 @@ public final class BasicMachineRegistries {
                                                     .strength(spec.hardness(), spec.blastResistance())
                                                     .requiresCorrectToolForDrops())),
                     (path, factory) -> registrar.block(
-                            namespace, path, factory,
+                            namespace,
+                            path,
+                            factory,
                             bare -> new BasicMachineItem(bare, new Item.Properties().stacksTo(16))));
             MACHINES.add(block);
             var type = entityReg.register("be_" + spec.id(), () -> {

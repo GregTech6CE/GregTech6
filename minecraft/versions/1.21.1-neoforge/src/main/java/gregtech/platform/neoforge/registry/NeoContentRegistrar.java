@@ -25,13 +25,11 @@ public record NeoContentRegistrar() implements ContentRegistrar {
             String namespace, String path, Supplier<T> factory, Function<T, ? extends Item> itemFactory) {
         var block = GTBlocks.blocks(namespace).register(path, factory);
         GTBlocks.blockItems(namespace).register(path, () -> itemFactory.apply(block.get()));
-        return new RegisteredBlock<>(
-                ResourceLocation.fromNamespaceAndPath(namespace, path), block);
+        return new RegisteredBlock<>(ResourceLocation.fromNamespaceAndPath(namespace, path), block);
     }
 
     @Override
-    public <T extends Block> RegisteredBlock<T> blockWithoutItem(
-            String namespace, String path, Supplier<T> factory) {
+    public <T extends Block> RegisteredBlock<T> blockWithoutItem(String namespace, String path, Supplier<T> factory) {
         return new RegisteredBlock<>(
                 ResourceLocation.fromNamespaceAndPath(namespace, path),
                 GTBlocks.blocks(namespace).register(path, factory));

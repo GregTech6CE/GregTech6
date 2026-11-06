@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -51,8 +50,10 @@ public final class FluidRegistries {
             if (entry.usesVanillaFluid()) {
                 String displayPath = RegisteredFluids.sanitizePath(entry.registryName());
                 if (paths.add(displayPath))
-                    ALL_ITEMS.add(registrar.item(REGISTRY_NAMESPACE,
-                            "fluid_item_" + displayPath, () -> new FluidDisplayItem(entry, new Item.Properties())));
+                    ALL_ITEMS.add(registrar.item(
+                            REGISTRY_NAMESPACE,
+                            "fluid_item_" + displayPath,
+                            () -> new FluidDisplayItem(entry, new Item.Properties())));
                 continue;
             }
             String path = RegisteredFluids.sanitizePath(entry.registryName());
@@ -66,7 +67,9 @@ public final class FluidRegistries {
             // falling. Air itself is density 0, so nothing neutrally buoyant is included.
             boolean lighterThanAir = !water && FluidPhysicalProperties.density(entry) < 0;
             if (FluidRenderLayers.worldFluidPaths().contains(path)) {
-                var holder = registrar.blockWithoutItem(REGISTRY_NAMESPACE, path,
+                var holder = registrar.blockWithoutItem(
+                        REGISTRY_NAMESPACE,
+                        path,
                         () -> new gregtech.content.block.GTWorldFluidBlock(
                                 (FlowingFluid) stillRef.get().get(),
                                 BlockBehaviour.Properties.of()

@@ -69,7 +69,9 @@ public final class FluidTransportRegistries {
     public static void register(ContentRegistrar registrar, IEventBus bus) {
         gregtech.engine.addon.AddonMachines.collectContributors();
         for (TankSpec spec : FluidTransportDefinitions.tanks()) {
-            var block = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+            var block = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    spec.id(),
                     () -> new TankBlock(spec, TankBlock.defaultProperties(spec)),
                     tank -> new FluidTransportBlockItem(tank, new Item.Properties().stacksTo(16)));
             TANKS.add(block);
@@ -83,10 +85,11 @@ public final class FluidTransportRegistries {
                 gregtech.content.registry.AddonPipeRegistration.queueFluid(registrar, owner, spec);
                 continue;
             }
-            var block = registrar.block(REGISTRY_NAMESPACE, spec.id(),
+            var block = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    spec.id(),
                     () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)),
-                    pipe -> new FluidTransportBlockItem(
-                            pipe, new Item.Properties().stacksTo(stackSize(spec.size()))));
+                    pipe -> new FluidTransportBlockItem(pipe, new Item.Properties().stacksTo(stackSize(spec.size()))));
             PIPES.add(block);
             if (spec.id().equals("pipe_medium_steel")) PIPE_MEDIUM_STEEL = block;
         }
