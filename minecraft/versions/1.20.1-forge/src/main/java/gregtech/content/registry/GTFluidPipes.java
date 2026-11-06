@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.GTMachineBlockItem;
@@ -8,17 +10,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
 
 /** GT6 fluid pipe blocks — holder populated by {@code Loader_MultiTileEntities}. */
 public final class GTFluidPipes {
-    private static final List<RegistryObject<FluidPipeBlock>> ALL = new ArrayList<>();
+    private static final List<RegisteredBlock<FluidPipeBlock>> ALL = new ArrayList<>();
 
     private GTFluidPipes() {}
 
-    public static RegistryObject<FluidPipeBlock> PIPE_MEDIUM_STEEL;
+    public static RegisteredBlock<FluidPipeBlock> PIPE_MEDIUM_STEEL;
 
-    public static RegistryObject<FluidPipeBlock> register(
+    public static RegisteredBlock<FluidPipeBlock> register(
+            ContentRegistrar registrar,
             String id,
             GTMaterial material,
             PipeSpec.PipeSize size,
@@ -27,20 +29,19 @@ public final class GTFluidPipes {
             boolean acidProof,
             boolean plasmaProof) {
         PipeSpec spec = PipeSpec.of(id, material, size, baseCapacity, gasProof, acidProof, plasmaProof, false);
-        return register(spec);
+        return register(registrar, spec);
     }
 
-    public static RegistryObject<FluidPipeBlock> register(PipeSpec spec) {
+    public static RegisteredBlock<FluidPipeBlock> register(ContentRegistrar registrar, PipeSpec spec) {
         String id = spec.id();
         GTMaterial material = spec.material();
         PipeSpec.PipeSize size = spec.size();
-        RegistryObject<FluidPipeBlock> block =
-                GTBlocks.BLOCKS.register(id, () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)));
-        ALL.add(block);
-        GTBlocks.BLOCK_ITEMS.register(
+        RegisteredBlock<FluidPipeBlock> block = registrar.block(
+                REGISTRY_NAMESPACE,
                 id,
-                () -> new GTMachineBlockItem(
-                        block.get(),
+                () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)),
+                bare -> new GTMachineBlockItem(
+                        bare,
                         new Item.Properties().stacksTo(stackSize(size)),
                         new gregtech.engine.machine.MachineSpec(
                                 id,
@@ -51,6 +52,7 @@ public final class GTFluidPipes {
                                 gregtech.engine.machine.MachineTextures.BURNING_SOLID,
                                 4.0F,
                                 3.0F)));
+        ALL.add(block);
         return block;
     }
 
@@ -66,7 +68,7 @@ public final class GTFluidPipes {
         };
     }
 
-    public static List<RegistryObject<FluidPipeBlock>> all() {
+    public static List<RegisteredBlock<FluidPipeBlock>> all() {
         return Collections.unmodifiableList(ALL);
     }
 }

@@ -64,7 +64,7 @@ public final class GTDecorBlocks {
 
     private static final java.util.Map<String, RegistryObject<gregtech.content.block.BookShelfBlock>> BOOKSHELVES =
             new java.util.LinkedHashMap<>();
-    public static RegistryObject<gregtech.content.block.FluidSpringBlock> FLUID_SPRING;
+    public static gregtech.content.registry.RegisteredBlock<gregtech.content.block.FluidSpringBlock> FLUID_SPRING;
     public static RegistryObject<GregLanternBlock> GREG_LANTERN;
     public static RegistryObject<SandwichBlock> SANDWICH_BLOCK;
 

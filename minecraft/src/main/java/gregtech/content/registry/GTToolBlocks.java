@@ -257,7 +257,7 @@ public final class GTToolBlocks {
         // GT6's bumbliary (Loader_MultiTileEntities:2221, hardness 5.0/resistance 5.0) and the
         // advanced one ({@code Loader_MultiTileEntities:2222}, stainless steel, 6.0/6.0). The port
         // keeps GT6's ids, so the existing lang keys and the model keep working.
-        GTBumbleBlocks.initializeApiaries();
+        GTBumbleBlocks.initializeApiaries(registrar);
         BUMBLIARY = RegisteredBlock.reference("bumbliary");
         ADVANCED_BUMBLIARY = RegisteredBlock.reference("advanced_bumbliary");
         ALL_SIMPLE.add(BUMBLIARY);

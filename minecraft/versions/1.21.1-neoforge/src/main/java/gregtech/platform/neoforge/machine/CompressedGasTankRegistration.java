@@ -26,6 +26,7 @@ public final class CompressedGasTankRegistration {
     private static final List<RegisteredBlock<CompressedGasTankBlock>> BLOCKS = new ArrayList<>();
     private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<CompressedGasTankBlockEntity>>> TYPES =
             new ArrayList<>();
+    private static final List<DeferredRegister<BlockEntityType<?>>> ENTITIES = new ArrayList<>();
 
     private CompressedGasTankRegistration() {}
 
@@ -33,23 +34,28 @@ public final class CompressedGasTankRegistration {
         return List.copyOf(BLOCKS);
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         var byNamespace = new LinkedHashMap<String, List<AddonMachines.AcceptedCompressedGas>>();
         for (AddonMachines.AcceptedCompressedGas accepted : AddonMachines.compressedGasTanks())
             byNamespace
                     .computeIfAbsent(accepted.addonId(), id -> new ArrayList<>())
                     .add(accepted);
-        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue(), bus);
+        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue());
+    }
+
+    public static void submit(IEventBus bus) {
+        for (var entities : ENTITIES) entities.register(bus);
+        ENTITIES.clear();
         bus.addListener(CompressedGasTankRegistration::capabilities);
     }
 
     private static void registerNamespace(
             ContentRegistrar registrar,
             String namespace,
-            List<AddonMachines.AcceptedCompressedGas> tanks,
-            IEventBus bus) {
+            List<AddonMachines.AcceptedCompressedGas> tanks) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
+        ENTITIES.add(entities);
         for (AddonMachines.AcceptedCompressedGas accepted : tanks) {
             RegisteredBlock<CompressedGasTankBlock> block = registrar.block(
                     namespace,
@@ -77,7 +83,6 @@ public final class CompressedGasTankRegistration {
                     });
             TYPES.add(type);
         }
-        entities.register(bus);
     }
 
     private static void capabilities(RegisterCapabilitiesEvent event) {

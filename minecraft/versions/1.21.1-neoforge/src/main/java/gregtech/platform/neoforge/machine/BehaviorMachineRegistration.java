@@ -27,6 +27,7 @@ public final class BehaviorMachineRegistration {
     private static final List<RegisteredBlock<BehaviorMachineBlock>> BLOCKS = new ArrayList<>();
     private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<BehaviorMachineBlockEntity>>> TYPES =
             new ArrayList<>();
+    private static final List<DeferredRegister<BlockEntityType<?>>> ENTITIES = new ArrayList<>();
 
     private BehaviorMachineRegistration() {}
 
@@ -34,23 +35,28 @@ public final class BehaviorMachineRegistration {
         return List.copyOf(BLOCKS);
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         var byNamespace = new LinkedHashMap<String, List<AddonMachines.AcceptedBehavior>>();
         for (AddonMachines.AcceptedBehavior accepted : AddonMachines.behaviorMachines())
             byNamespace
                     .computeIfAbsent(accepted.addonId(), id -> new ArrayList<>())
                     .add(accepted);
-        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue(), bus);
+        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue());
+    }
+
+    public static void submit(IEventBus bus) {
+        for (var entities : ENTITIES) entities.register(bus);
+        ENTITIES.clear();
         bus.addListener(BehaviorMachineRegistration::capabilities);
     }
 
     private static void registerNamespace(
             ContentRegistrar registrar,
             String namespace,
-            List<AddonMachines.AcceptedBehavior> machines,
-            IEventBus bus) {
+            List<AddonMachines.AcceptedBehavior> machines) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
+        ENTITIES.add(entities);
         var holders = new ArrayList<RegisteredBlock<BehaviorMachineBlock>>();
         for (AddonMachines.AcceptedBehavior accepted : machines) {
             RegisteredBlock<BehaviorMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
@@ -89,7 +95,6 @@ public final class BehaviorMachineRegistration {
                     });
             TYPES.add(type);
         }
-        entities.register(bus);
     }
 
     private static void capabilities(RegisterCapabilitiesEvent event) {

@@ -68,22 +68,22 @@ public final class ContentRegistration {
     }
 
     private static void registerBlocks(ContentRegistrar registrar) {
-        BlockBootstrap.register();
-        gregtech.content.registry.SharedDecorBlocks.initialize();
-        gregtech.content.registry.GTWoods.registerAll();
-        gregtech.content.registry.GTTreeHoles.registerAll();
-        gregtech.content.registry.GTFluidSprings.initialize();
-        gregtech.content.registry.GTConstructionBlocks.initialize();
-        gregtech.content.registry.GTBars.initialize();
-        gregtech.content.registry.GTSpikes.initialize();
-        gregtech.content.registry.GTMaterialPiles.initialize();
-        gregtech.content.registry.GTCoinPiles.initialize();
-        gregtech.content.registry.GTBookShelves.initialize();
-        gregtech.content.registry.GTSandwich.initialize();
-        gregtech.content.registry.GTDungeonBlocks.registerAll();
-        gregtech.content.registry.GTLongDistance.initialize();
-        gregtech.content.registry.GTTrackBlocks.registerAll();
-        gregtech.content.registry.GTLootChests.registerAll();
+        BlockBootstrap.register(registrar);
+        gregtech.content.registry.SharedDecorBlocks.initialize(registrar);
+        gregtech.content.registry.GTWoods.registerAll(registrar);
+        gregtech.content.registry.GTTreeHoles.registerAll(registrar);
+        gregtech.content.registry.GTFluidSprings.initialize(registrar);
+        gregtech.content.registry.GTConstructionBlocks.initialize(registrar);
+        gregtech.content.registry.GTBars.initialize(registrar);
+        gregtech.content.registry.GTSpikes.initialize(registrar);
+        gregtech.content.registry.GTMaterialPiles.initialize(registrar);
+        gregtech.content.registry.GTCoinPiles.initialize(registrar);
+        gregtech.content.registry.GTBookShelves.initialize(registrar);
+        gregtech.content.registry.GTSandwich.initialize(registrar);
+        gregtech.content.registry.GTDungeonBlocks.registerAll(registrar);
+        gregtech.content.registry.GTLongDistance.initialize(registrar);
+        gregtech.content.registry.GTTrackBlocks.registerAll(registrar);
+        gregtech.content.registry.GTLootChests.registerAll(registrar);
     }
 
     private static void registerMachines(ContentRegistrar registrar) {
@@ -95,13 +95,13 @@ public final class ContentRegistration {
         gregtech.content.registry.GTEnergyNodes.registerAll(registrar);
         gregtech.content.registry.GTAxles.registerAll(registrar);
         gregtech.content.registry.GTAxles.bootstrap();
-        gregtech.content.registry.GTEngines.registerAll();
-        gregtech.content.registry.GTBoilers.registerAll();
-        gregtech.content.registry.GTPumps.registerAll();
+        gregtech.content.registry.GTEngines.registerAll(registrar);
+        gregtech.content.registry.GTBoilers.registerAll(registrar);
+        gregtech.content.registry.GTPumps.registerAll(registrar);
         gregtech.content.registry.GTPumps.bootstrap();
-        gregtech.content.registry.GTMultiblocks.registerAll();
-        gregtech.content.registry.GTLasers.registerAll();
-        gregtech.content.registry.GTSensors.registerAll();
+        gregtech.content.registry.GTMultiblocks.registerAll(registrar);
+        gregtech.content.registry.GTLasers.registerAll(registrar);
+        gregtech.content.registry.GTSensors.registerAll(registrar);
         ItemPipeDefinitions.register(registrar);
     }
 

@@ -12,7 +12,7 @@ public final class FluidPipeDefinitions {
         for (var spec : FluidTransportDefinitions.pipes()) {
             String owner = gregtech.engine.addon.AddonPipes.owner(spec.id());
             if (owner == null) {
-                var block = GTFluidPipes.register(spec);
+                var block = GTFluidPipes.register(registrar, spec);
                 if (spec.id().equals("pipe_medium_steel")) GTFluidPipes.PIPE_MEDIUM_STEEL = block;
             } else {
                 gregtech.content.registry.AddonPipeRegistration.queueFluid(registrar, owner, spec);

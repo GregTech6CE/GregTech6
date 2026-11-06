@@ -2,7 +2,13 @@ package gregtech.platform.forge;
 
 import gregtech.bootstrap.ContentRegistration;
 import gregtech.bootstrap.content.FluidBootstrap;
+import gregtech.bootstrap.content.ToolBootstrap;
+import gregtech.content.registry.AddonMachineRegistration;
+import gregtech.content.registry.AddonSensorRegistration;
+import gregtech.content.registry.BehaviorMachineRegistration;
+import gregtech.content.registry.CompressedGasTankRegistration;
 import gregtech.content.registry.ContentRegistrar;
+import gregtech.content.registry.FuelGeneratorRegistration;
 import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTBlocks;
@@ -11,6 +17,7 @@ import gregtech.content.registry.GTBushes;
 import gregtech.content.registry.GTCreativeTabs;
 import gregtech.content.registry.GTDecorBlocks;
 import gregtech.content.registry.GTEnchantments;
+import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTIconSetBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTMachines;
@@ -37,28 +44,28 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
     }
 
     public void bootstrap() {
-        ContentRegistration.bootstrap(new ForgeContentRegistrar(), this);
+        ContentRegistration.bootstrap(ContentRegistrar.shared(), this);
     }
 
     @Override
     public void blocks(ContentRegistrar registrar) {
-        new FluidBootstrap(bus).run();
-        GTIconSetBlocks.registerAll();
-        GTBushes.registerAll();
-        GTSurfaceBlocks.initializeDiggables();
-        GTBumbleBlocks.initializeHives();
+        new FluidBootstrap().run();
+        GTIconSetBlocks.registerAll(registrar);
+        GTBushes.registerAll(registrar);
+        GTSurfaceBlocks.initializeDiggables(registrar);
+        GTBumbleBlocks.initializeHives(registrar);
         GTDecorBlocks.registerAll();
-        GTMiscBlocks.registerAll();
+        GTMiscBlocks.registerAll(registrar);
     }
 
     @Override
     public void machines(ContentRegistrar registrar) {
         gregtech.content.fluid.FluidPipeDefinitions.register(registrar);
-        gregtech.content.fluid.TankDefinitions.register();
+        gregtech.content.fluid.TankDefinitions.register(registrar);
         GTMachines.bootstrap();
-        gregtech.content.registry.AddonSensorRegistration.register(bus);
-        GTBasicMachines.registerAll(bus);
-        GTStorage.registerAll();
+        AddonSensorRegistration.register(registrar);
+        GTBasicMachines.registerAll(registrar);
+        GTStorage.registerAll(registrar);
         GTToolBlocks.registerAll(registrar);
         MachineRegistry.registerBasicMachineBeTypes(GTBlockEntities.BLOCK_ENTITY_TYPES);
         MachineRegistry.registerEngineBeTypes(GTBlockEntities.BLOCK_ENTITY_TYPES);
@@ -66,6 +73,14 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
 
     /** Attaches every shared, addon and platform content register exactly once. */
     public void submit() {
+        GTFluids.FLUID_TYPES.register(bus);
+        GTFluids.FLUIDS.register(bus);
+        GTFluids.registerAddonFluids(bus);
+        ToolBootstrap.submit(bus);
+        AddonMachineRegistration.submit(bus);
+        BehaviorMachineRegistration.submit(bus);
+        FuelGeneratorRegistration.submit(bus);
+        CompressedGasTankRegistration.submit(bus);
         GTItems.ITEMS.register(bus);
         GTItems.registerAddonItems(bus);
         GTBlocks.BLOCKS.register(bus);

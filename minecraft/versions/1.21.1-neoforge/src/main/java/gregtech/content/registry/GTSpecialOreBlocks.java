@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.*;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.ItemMaterialRegistry;
@@ -11,36 +13,38 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 /** Actual original crystal/rock/vanilla ore blocks from GTIconSetBlocks; no decorative substitutes. */
 public final class GTSpecialOreBlocks {
-    private static final List<DeferredHolder<Block, Block>> ALL = new ArrayList<>();
+    private static final List<RegisteredBlock<Block>> ALL = new ArrayList<>();
 
     private GTSpecialOreBlocks() {}
 
-    public static List<DeferredHolder<Block, Block>> all() {
+    public static List<RegisteredBlock<Block>> all() {
         return Collections.unmodifiableList(ALL);
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (String icon : SpecialOreDefinitions.ORDERED_ICONS) {
             String id = icon.startsWith("ore_") ? "block_" + icon : icon;
-            var block = GTBlocks.BLOCKS.register(id, () -> create(icon));
-            GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
+            var block = registrar.block(
+                    REGISTRY_NAMESPACE, id, () -> create(icon), bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
             ALL.add(block);
         }
         // Original plate/WoodTreated exception is this real, placeable treated plank.
-        DeferredHolder<Block, Block> treated = GTBlocks.BLOCKS.register(
+        RegisteredBlock<Block> treated = registrar.blockWithoutItem(
+                REGISTRY_NAMESPACE,
                 "planks_treated",
                 () -> new IconSetBlock(
                         BlockBehaviour.Properties.of().strength(2.0F, 3.0F).sound(SoundType.WOOD), "planks_treated"));
-        var treatedItem = GTBlocks.BLOCK_ITEMS.register(
-                "planks_treated", () -> new BlockItem(treated.get(), new Item.Properties().stacksTo(64)));
+        RegisteredItem<Item> treatedItem = registrar.blockItem(
+                REGISTRY_NAMESPACE,
+                "planks_treated",
+                () -> new BlockItem(treated.get(), new Item.Properties().stacksTo(64)));
         GTItems.bind(
                 MaterialPrefix.plate,
                 gregtech.content.material.generated.WoodMaterials.WoodTreated,
-                new RegisteredItem<Item>(treatedItem.getId(), treatedItem::get));
+                treatedItem);
         ALL.add(treated);
     }
 

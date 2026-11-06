@@ -1,7 +1,10 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.BookShelfBlock;
 import gregtech.content.book.BookShelfVariants;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -19,9 +22,10 @@ public final class GTBookShelves {
         return ALL.get(id).get();
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         for (var v : BookShelfVariants.all()) {
-            var b = RegisteredBlock.registerBlock(
+            var b = registrar.block(
+                    REGISTRY_NAMESPACE,
                     v.path(),
                     () -> new BookShelfBlock(
                             BlockBehaviour.Properties.of()
@@ -29,12 +33,9 @@ public final class GTBookShelves {
                                     .strength(v.hardness(), v.resistance())
                                     .requiresCorrectToolForDrops()
                                     .sound(v.metal() ? SoundType.METAL : SoundType.WOOD),
-                            v));
+                            v),
+                    block -> new gregtech.content.item.BookShelfBlockItem(block, new Item.Properties().stacksTo(16)));
             ALL.put(v.path(), b);
-            GTBlocks.BLOCK_ITEMS.register(
-                    v.path(),
-                    () -> new gregtech.content.item.BookShelfBlockItem(
-                            b.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
         }
     }
 }

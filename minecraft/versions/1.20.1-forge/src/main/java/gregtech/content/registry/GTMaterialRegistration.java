@@ -74,7 +74,7 @@ public final class GTMaterialRegistration {
 
         // GT6 BlockSands metas 0..2 are OP.blockDust forms: one placed sand is nine dust units.
         // Keep the original sand texture block distinct from the generic MaterialBlock model.
-        for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
+        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
             if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.BlackSandBlock sand)) continue;
             ItemMaterialRegistry.register(sand.asItem(), null, sand.material(), GTValues.U * 9);
             count++;
@@ -82,7 +82,7 @@ public final class GTMaterialRegistration {
 
         // GT6 BlockCrystalOres / BlockRockOres register their block items as OP.oreDense.
         // This is a 4U ore form; no separate material item or replacement model is generated.
-        for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
+        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
             if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre)) continue;
             Block block = entry.get();
             GTMaterial oreMaterial = denseOre.material();
@@ -93,7 +93,7 @@ public final class GTMaterialRegistration {
         }
 
         // GT6 BlockVanillaOresA metas 0..15 carry OP.oreVanillastone, an ordinary 2U ore.
-        for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
+        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
             if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore)) continue;
             GTMaterial oreMaterial = ore.material();
             if (oreMaterial == null || !oreMaterial.isValid()) continue;
@@ -104,7 +104,7 @@ public final class GTMaterialRegistration {
 
         // GT6's ordinary and broken host-stone ores are both OP.oreVanillastone (2U).
         // The port shares one block ID per material and marks the broken form in BlockStateTag.
-        for (RegistryObject<Block> entry : GTBlocks.allEntries()) {
+        for (RegisteredBlock<? extends Block> entry : GTBlocks.allEntries()) {
             if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.OreBlock ore) || ore.isSmall())
                 continue;
             ItemMaterialRegistry.register(

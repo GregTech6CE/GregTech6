@@ -1,6 +1,9 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.SpikeBlock;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -34,12 +37,13 @@ public final class GTSpikes {
         return java.util.List.copyOf(ALL.values());
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         for (var family : SpikeBlock.Family.values())
             for (boolean secondary : new boolean[] {false, true})
                 for (var mode : SpikeBlock.Mode.values()) {
                     String id = id(family, mode, secondary);
-                    var b = RegisteredBlock.registerBlock(
+                    var b = registrar.block(
+                            REGISTRY_NAMESPACE,
                             id,
                             () -> new SpikeBlock(
                                     family,
@@ -49,12 +53,9 @@ public final class GTSpikes {
                                             .mapColor(MapColor.METAL)
                                             .strength(30, 5)
                                             .requiresCorrectToolForDrops()
-                                            .sound(SoundType.METAL)));
+                                            .sound(SoundType.METAL)),
+                            block -> new gregtech.content.item.SpikeBlockItem(block, new Item.Properties()));
                     ALL.put(id, b);
-                    GTBlocks.BLOCK_ITEMS.register(
-                            id,
-                            () -> new gregtech.content.item.SpikeBlockItem(
-                                    b.get(), new net.minecraft.world.item.Item.Properties()));
                 }
     }
 }

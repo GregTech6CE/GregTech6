@@ -19,18 +19,17 @@ public final class GTBlackSands {
         }
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         for (String id : BlackSandDefinitions.IDS) {
-            net.neoforged.neoforge.registries.DeferredHolder<
-                            net.minecraft.world.level.block.Block, net.minecraft.world.level.block.Block>
-                    block = GTBlocks.BLOCKS.register(
-                            id,
-                            () -> new BlackSandBlock(
-                                    BlockBehaviour.Properties.of()
-                                            .strength(.5f, .5f)
-                                            .sound(SoundType.SAND),
-                                    BlackSandBlock.spec(id)));
-            GTBlocks.registerBlockItem(id, block);
+            var block = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    id,
+                    () -> new BlackSandBlock(
+                            BlockBehaviour.Properties.of()
+                                    .strength(.5f, .5f)
+                                    .sound(SoundType.SAND),
+                            BlackSandBlock.spec(id)),
+                    GTBlocks::materialBlockItem);
             GTBlocks.bind(
                     gregtech.engine.prefix.BlockMaterialPrefix.blockDust,
                     gregtech.engine.material.GTMaterialRegistry.get(

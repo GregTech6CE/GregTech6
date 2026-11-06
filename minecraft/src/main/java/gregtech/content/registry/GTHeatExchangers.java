@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.machine.HeatExchangerBlock;
 import gregtech.content.energy.HeatExchangerCatalog;
 import gregtech.content.item.HeatExchangerItem;
@@ -16,15 +18,17 @@ public final class GTHeatExchangers {
         return List.copyOf(ALL);
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
+        if (!ALL.isEmpty()) throw new IllegalStateException("Heat exchangers registered twice");
         for (var spec : HeatExchangerCatalog.ALL)
-            ALL.add(RegisteredBlock.register(
+            ALL.add(registrar.block(
+                    REGISTRY_NAMESPACE,
                     spec.id(),
                     () -> new HeatExchangerBlock(
                             spec,
                             BlockBehaviour.Properties.of()
                                     .strength(spec.hardness())
                                     .requiresCorrectToolForDrops()),
-                    block -> new HeatExchangerItem(block)));
+                    HeatExchangerItem::new));
     }
 }

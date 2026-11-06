@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.*;
 import gregtech.content.logistics.LongDistanceCatalog;
 import java.util.*;
@@ -29,10 +31,11 @@ public final class GTLongDistance {
                 .toArray(Block[]::new);
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         if (!ALL.isEmpty()) throw new IllegalStateException("Long-distance networks registered twice");
         for (var spec : LongDistanceCatalog.ALL) {
-            var block = RegisteredBlock.<Block>register(
+            var block = registrar.block(
+                    REGISTRY_NAMESPACE,
                     spec.id(),
                     () -> {
                         var properties = BlockBehaviour.Properties.of()

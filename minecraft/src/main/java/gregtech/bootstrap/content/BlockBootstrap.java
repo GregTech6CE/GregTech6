@@ -1,30 +1,24 @@
 package gregtech.bootstrap.content;
 
-import gregtech.content.material.Materials;
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
+import com.mojang.logging.LogUtils;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.engine.prefix.BlockMaterialPrefix;
-import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.content.block.MaterialBlock;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.registry.ContentRegistrar;
 import gregtech.content.registry.GTBlocks;
-import com.mojang.logging.LogUtils;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
-*///?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
-import org.slf4j.Logger;
-
+import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.prefix.BlockPrefixRegistry;
 import java.util.HashSet;
 import java.util.Set;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import org.slf4j.Logger;
 
 /** Queues GT6 material blocks, stone blocks, and stone slabs — logic inlined from three separate loader classes. */
 public final class BlockBootstrap {
@@ -32,16 +26,16 @@ public final class BlockBootstrap {
 
     private BlockBootstrap() {}
 
-    public static void register() {
-        gregtech.content.registry.GTLegacyEnergyDevices.registerAll();
-        gregtech.content.registry.GTItemBarrels.registerAll();
-        registerMaterialBlocks();
-        registerStoneBlocks();
-        registerStoneSlabs();
+    public static void register(ContentRegistrar registrar) {
+        gregtech.content.registry.GTLegacyEnergyDevices.registerAll(registrar);
+        gregtech.content.registry.GTItemBarrels.registerAll(registrar);
+        registerMaterialBlocks(registrar);
+        registerStoneBlocks(registrar);
+        registerStoneSlabs(registrar);
     }
 
     // === Material blocks ===
-    private static void registerMaterialBlocks() {
+    private static void registerMaterialBlocks(ContentRegistrar registrar) {
         BlockPrefixRegistry.ensurePrefixesLoaded();
         Set<String> seenIds = new HashSet<>();
         int count = 0;
@@ -51,16 +45,16 @@ public final class BlockBootstrap {
             BlockMaterialPrefix prefix = definition.prefix();
             String blockId = definition.blockId();
             if (!blockId.equals(definition.baseBlockId())) {
-                LOGGER.warn("Duplicate block id '{}' for material {} (id={}); using '{}'",
-                        definition.baseBlockId(), material.getName(), material.getId(), blockId);
+                LOGGER.warn(
+                        "Duplicate block id '{}' for material {} (id={}); using '{}'",
+                        definition.baseBlockId(),
+                        material.getName(),
+                        material.getId(),
+                        blockId);
             }
-//? if >=1.21.1 {
-            /*DeferredHolder<Block, Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(prefix, material));
-*///?} else {
-            RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(prefix, material));
-//?}
+            var block = registrar.block(
+                    REGISTRY_NAMESPACE, blockId, () -> createBlock(prefix, material), GTBlocks::materialBlockItem);
             GTBlocks.bind(prefix, material, block);
-            GTBlocks.registerBlockItem(blockId, block);
             count++;
         }
         LOGGER.info("Queued {} material blocks for registration", count);
@@ -85,21 +79,19 @@ public final class BlockBootstrap {
     }
 
     // === Stone blocks ===
-    private static void registerStoneBlocks() {
+    private static void registerStoneBlocks(ContentRegistrar registrar) {
         int count = 0;
         for (StoneType stoneType : StoneType.values()) {
             for (StoneVariant variant : StoneVariant.values()) {
                 String blockId = stoneType.registryId() + "_" + variant.registrySuffix();
                 StoneType boundType = stoneType;
                 StoneVariant boundVariant = variant;
-//? if >=1.21.1 {
-                /*DeferredHolder<Block, Block> block = GTBlocks.BLOCKS.register(blockId,
-*///?} else {
-                RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId,
-//?}
-                        () -> new GTStoneBlock(boundType, boundVariant));
+                var block = registrar.block(
+                        REGISTRY_NAMESPACE,
+                        blockId,
+                        () -> new GTStoneBlock(boundType, boundVariant),
+                        GTBlocks::materialBlockItem);
                 GTBlocks.bindStone(blockId, block);
-                GTBlocks.registerBlockItem(blockId, block);
                 count++;
             }
         }
@@ -107,21 +99,19 @@ public final class BlockBootstrap {
     }
 
     // === Stone slabs ===
-    private static void registerStoneSlabs() {
+    private static void registerStoneSlabs(ContentRegistrar registrar) {
         int count = 0;
         for (StoneType stoneType : StoneType.values()) {
             for (StoneVariant variant : StoneVariant.values()) {
                 String blockId = stoneType.registryId() + "_" + variant.registrySuffix() + "_slab";
                 StoneType boundType = stoneType;
                 StoneVariant boundVariant = variant;
-//? if >=1.21.1 {
-                /*DeferredHolder<Block, Block> block = GTBlocks.BLOCKS.register(blockId,
-*///?} else {
-                RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId,
-//?}
-                        () -> new GTStoneSlabBlock(boundType, boundVariant));
+                var block = registrar.block(
+                        REGISTRY_NAMESPACE,
+                        blockId,
+                        () -> new GTStoneSlabBlock(boundType, boundVariant),
+                        GTBlocks::stoneSlabItem);
                 GTBlocks.bindStoneSlab(blockId, block);
-                GTBlocks.registerStoneSlabItem(blockId, block);
                 count++;
             }
         }

@@ -1,6 +1,8 @@
 package gregtech.content.registry;
 //? if >=1.21.1 {
-/*import gregtech.api.machine.*;
+/*import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
+import gregtech.api.machine.*;
 import gregtech.engine.machine.*;
 import gregtech.engine.machine.*;
 import gregtech.content.block.machine.EngineBlock;
@@ -10,37 +12,38 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import java.util.*;
 
 public final class GTEngines {
     private GTEngines() {}
 
-    private static final List<DeferredHolder<Block, EngineBlock>> ALL = new ArrayList<>();
+    private static final List<RegisteredBlock<EngineBlock>> ALL = new ArrayList<>();
 
-    public static List<DeferredHolder<Block, EngineBlock>> all() {
+    public static List<RegisteredBlock<EngineBlock>> all() {
         return List.copyOf(ALL);
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (var e : EngineCatalog.all()) {
             MachineSpec itemSpec = machineSpec(e.spec());
             boolean wood = e.spec() instanceof RotationEngineSpec rotation
                     && rotation.material() == gregtech.content.material.generated.WoodMaterials.WoodTreated;
             var typeRef = new java.util.concurrent.atomic.AtomicReference<BlockEntityType<?>>();
-            var block = GTBlocks.BLOCKS.register(itemSpec.id(), () -> {
-                var props = BlockBehaviour.Properties.of().mapColor(wood ? MapColor.WOOD : MapColor.METAL)
-                        .strength(itemSpec.hardness(), itemSpec.blastResistance()).requiresCorrectToolForDrops();
-                if (wood) props.sound(SoundType.WOOD);
-                var b = e.type() == EngineType.ROTATION || e.type() == EngineType.DIESEL
-                        ? new EngineBlock(e.type(), itemSpec, e.spec(), props)
-                        : new gregtech.content.block.machine.WaterloggedEngineBlock(e.type(), itemSpec, e.spec(), props);
-                b.setBeTypeSupplier(typeRef::get);
-                return b;
-            });
+            var block = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    itemSpec.id(),
+                    () -> {
+                        var props = BlockBehaviour.Properties.of().mapColor(wood ? MapColor.WOOD : MapColor.METAL)
+                                .strength(itemSpec.hardness(), itemSpec.blastResistance()).requiresCorrectToolForDrops();
+                        if (wood) props.sound(SoundType.WOOD);
+                        var b = e.type() == EngineType.ROTATION || e.type() == EngineType.DIESEL
+                                ? new EngineBlock(e.type(), itemSpec, e.spec(), props)
+                                : new gregtech.content.block.machine.WaterloggedEngineBlock(e.type(), itemSpec, e.spec(), props);
+                        b.setBeTypeSupplier(typeRef::get);
+                        return b;
+                    },
+                    bare -> new EngineItem(bare, new net.minecraft.world.item.Item.Properties().stacksTo(16)));
             ALL.add(block);
-            GTBlocks.BLOCK_ITEMS.register(itemSpec.id(), () -> new EngineItem(block.get(),
-                    new net.minecraft.world.item.Item.Properties().stacksTo(16)));
             var holder = GTBlockEntities.BLOCK_ENTITIES.register("be_" + itemSpec.id(), () -> {
                 var type = buildType(block.get());
                 typeRef.set(type);
@@ -152,7 +155,7 @@ import gregtech.engine.machine.*;
 public final class GTEngines {
     private GTEngines() {}
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (var e : gregtech.content.energy.EngineCatalog.all()) {
             if (e.spec() instanceof ElectricEngineSpec spec) MachineRegistry.registerElectricEngine(spec);
             if (e.spec() instanceof FluxEngineSpec spec) MachineRegistry.registerFluxEngine(spec);

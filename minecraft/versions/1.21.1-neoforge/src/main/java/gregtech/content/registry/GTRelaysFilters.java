@@ -1,19 +1,22 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.*;
 import gregtech.content.logistics.ExtenderSpec;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class GTRelaysFilters {
     private GTRelaysFilters() {}
 
-    public static final java.util.List<DeferredHolder<Block, ? extends Block>> EXTENDERS = new java.util.ArrayList<>();
-    public static final java.util.List<DeferredHolder<Block, AutoHammerBlock>> HAMMERS = new java.util.ArrayList<>();
-    public static final java.util.List<DeferredHolder<Block, AutoIgniterBlock>> IGNITERS = new java.util.ArrayList<>();
-    public static final java.util.List<DeferredHolder<Block, FilterBlock>> FILTERS = new java.util.ArrayList<>();
+    public static final java.util.List<RegisteredBlock<? extends Block>> EXTENDERS = new java.util.ArrayList<>();
+    public static final java.util.List<RegisteredBlock<AutoHammerBlock>> HAMMERS = new java.util.ArrayList<>();
+    public static final java.util.List<RegisteredBlock<AutoIgniterBlock>> IGNITERS = new java.util.ArrayList<>();
+    public static final java.util.List<RegisteredBlock<FilterBlock>> FILTERS = new java.util.ArrayList<>();
 
     private static BlockBehaviour.Properties props(float hardness) {
         return BlockBehaviour.Properties.of()
@@ -22,43 +25,41 @@ public final class GTRelaysFilters {
                 .requiresCorrectToolForDrops();
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         for (var spec : gregtech.content.tool.AutomaticToolRules.ALL) {
             if (spec.igniter() != true) continue;
-            var b = GTBlocks.BLOCKS.register(
-                    spec.id(), () -> new AutoIgniterBlock(props(spec.hardness()), spec.input(), spec.quality()));
-            IGNITERS.add(b);
-            GTBlocks.BLOCK_ITEMS.register(
+            var b = registrar.block(
+                    REGISTRY_NAMESPACE,
                     spec.id(),
-                    () -> new net.minecraft.world.item.BlockItem(
-                            b.get(), new net.minecraft.world.item.Item.Properties()));
+                    () -> new AutoIgniterBlock(props(spec.hardness()), spec.input(), spec.quality()),
+                    bare -> new BlockItem(bare, new Item.Properties()));
+            IGNITERS.add(b);
         }
         for (var spec : gregtech.content.tool.AutomaticToolRules.ALL) {
             if (spec.igniter() != false) continue;
-            var b = GTBlocks.BLOCKS.register(
-                    spec.id(), () -> new AutoHammerBlock(props(spec.hardness()), spec.input(), spec.quality()));
-            HAMMERS.add(b);
-            GTBlocks.BLOCK_ITEMS.register(
+            var b = registrar.block(
+                    REGISTRY_NAMESPACE,
                     spec.id(),
-                    () -> new net.minecraft.world.item.BlockItem(
-                            b.get(), new net.minecraft.world.item.Item.Properties()));
+                    () -> new AutoHammerBlock(props(spec.hardness()), spec.input(), spec.quality()),
+                    bare -> new BlockItem(bare, new Item.Properties()));
+            HAMMERS.add(b);
         }
         for (var spec : ExtenderSpec.values()) {
-            var b = GTBlocks.BLOCKS.register(spec.id, () -> new SourceExtenderBlock(spec, props(6)));
-            EXTENDERS.add(b);
-            GTBlocks.BLOCK_ITEMS.register(
+            var b = registrar.block(
+                    REGISTRY_NAMESPACE,
                     spec.id,
-                    () -> new net.minecraft.world.item.BlockItem(
-                            b.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+                    () -> new SourceExtenderBlock(spec, props(6)),
+                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
+            EXTENDERS.add(b);
         }
         for (String kind : new String[] {"items", "fluids", "items_fluids", "oredict"}) {
             String id = "filter_" + kind;
-            var b = GTBlocks.BLOCKS.register(id, () -> new FilterBlock(kind, props(6)));
-            FILTERS.add(b);
-            GTBlocks.BLOCK_ITEMS.register(
+            var b = registrar.block(
+                    REGISTRY_NAMESPACE,
                     id,
-                    () -> new net.minecraft.world.item.BlockItem(
-                            b.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+                    () -> new FilterBlock(kind, props(6)),
+                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
+            FILTERS.add(b);
         }
     }
 }

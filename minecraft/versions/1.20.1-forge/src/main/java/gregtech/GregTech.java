@@ -41,7 +41,7 @@ public class GregTech {
         // Shared content order plus the Forge-only families; then one submission for every register.
         gregtech.platform.forge.ForgeContent content = new gregtech.platform.forge.ForgeContent(modEventBus);
         content.bootstrap();
-        initialize("tools", new ToolBootstrap(modEventBus));
+        initialize("tools", new ToolBootstrap());
         content.submit();
 
         modEventBus.addListener(this::commonSetup);

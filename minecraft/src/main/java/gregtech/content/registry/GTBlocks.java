@@ -79,15 +79,9 @@ public final class GTBlocks {
     }
 //?}
 
-//? if >=1.21.1 {
-    /*private static final Map<String, DeferredHolder<Block, Block>> BY_KEY = new HashMap<>();
-    private static final Map<String, DeferredHolder<Block, Block>> STONES_BY_ID = new HashMap<>();
-    private static final Map<String, DeferredHolder<Block, Block>> STONE_SLABS_BY_ID = new HashMap<>();
-*///?} else {
-    private static final Map<String, RegistryObject<Block>> BY_KEY = new HashMap<>();
-    private static final Map<String, RegistryObject<Block>> STONES_BY_ID = new HashMap<>();
-    private static final Map<String, RegistryObject<Block>> STONE_SLABS_BY_ID = new HashMap<>();
-//?}
+    private static final Map<String, RegisteredBlock<? extends Block>> BY_KEY = new HashMap<>();
+    private static final Map<String, RegisteredBlock<? extends Block>> STONES_BY_ID = new HashMap<>();
+    private static final Map<String, RegisteredBlock<? extends Block>> STONE_SLABS_BY_ID = new HashMap<>();
 
     /** Ground pebble carrying a material (GT6 surface rocks — vein indicators). */
 //? if >=1.21.1 {
@@ -118,28 +112,16 @@ public final class GTBlocks {
 
     private GTBlocks() {}
 
-//? if >=1.21.1 {
-    /*public static void bind(BlockMaterialPrefix prefix, GTMaterial material, DeferredHolder<Block, Block> block) {
-*///?} else {
-    public static void bind(BlockMaterialPrefix prefix, GTMaterial material, RegistryObject<Block> block) {
-//?}
+    public static void bind(BlockMaterialPrefix prefix, GTMaterial material, RegisteredBlock<? extends Block> block) {
         BY_KEY.put(key(prefix, material), block);
     }
 
-//? if >=1.21.1 {
-    /*public static void bindStone(String id, DeferredHolder<Block, Block> block) {
-*///?} else {
-    public static void bindStone(String id, RegistryObject<Block> block) {
-//?}
+    public static void bindStone(String id, RegisteredBlock<? extends Block> block) {
         BY_KEY.put("stone/" + id, block);
         STONES_BY_ID.put(id, block);
     }
 
-//? if >=1.21.1 {
-    /*public static void bindStoneSlab(String id, DeferredHolder<Block, Block> block) {
-*///?} else {
-    public static void bindStoneSlab(String id, RegistryObject<Block> block) {
-//?}
+    public static void bindStoneSlab(String id, RegisteredBlock<? extends Block> block) {
         BY_KEY.put("stone_slab/" + id, block);
         STONE_SLABS_BY_ID.put(id, block);
     }
@@ -148,45 +130,27 @@ public final class GTBlocks {
         return prefix.getName() + "/" + material.getName();
     }
 
-//? if >=1.21.1 {
-    /*public static DeferredHolder<Block, Block> getObject(BlockMaterialPrefix prefix, GTMaterial material) {
-*///?} else {
-    public static RegistryObject<Block> getObject(BlockMaterialPrefix prefix, GTMaterial material) {
-//?}
+    public static RegisteredBlock<? extends Block> getObject(BlockMaterialPrefix prefix, GTMaterial material) {
         return BY_KEY.get(key(prefix, material));
     }
 
     public static ItemStack getStack(BlockMaterialPrefix prefix, GTMaterial material) {
-//? if >=1.21.1 {
-        /*DeferredHolder<Block, Block> block = getObject(prefix, material);
-        if (block == null || !block.isBound()) {
-*///?} else {
-        RegistryObject<Block> block = getObject(prefix, material);
+        RegisteredBlock<? extends Block> block = getObject(prefix, material);
         if (block == null || !block.isPresent()) {
-//?}
             return ItemStack.EMPTY;
         }
         return new ItemStack(block.get(), 1);
     }
 
     public static ItemStack getCreativeStack(BlockMaterialPrefix prefix, GTMaterial material) {
-//? if >=1.21.1 {
-        /*DeferredHolder<Block, Block> block = getObject(prefix, material);
-        if (block == null || !block.isBound()) {
-*///?} else {
-        RegistryObject<Block> block = getObject(prefix, material);
+        RegisteredBlock<? extends Block> block = getObject(prefix, material);
         if (block == null || !block.isPresent()) {
-//?}
             return ItemStack.EMPTY;
         }
         return new ItemStack(block.get().asItem(), 1);
     }
 
-//? if >=1.21.1 {
-    /*public static Collection<DeferredHolder<Block, Block>> allEntries() {
-*///?} else {
-    public static Collection<RegistryObject<Block>> allEntries() {
-//?}
+    public static Collection<RegisteredBlock<? extends Block>> allEntries() {
         return Collections.unmodifiableCollection(BY_KEY.values());
     }
 
@@ -200,15 +164,10 @@ public final class GTBlocks {
         return false;
     }
 
-//? if >=1.21.1 {
-    /*public static DeferredHolder<Item, Item> registerBlockItem(String id, DeferredHolder<Block, Block> block) {
-        return BLOCK_ITEMS.register(id, () -> block.get() instanceof net.minecraft.world.level.block.WaterlilyBlock
-                ? new net.minecraft.world.item.PlaceOnWaterBlockItem(block.get(), new Item.Properties())
-                : new gregtech.content.block.MaterialBlockItem(block.get(), new Item.Properties().stacksTo(materialStackLimit(block.get()))));
-*///?} else {
-    public static RegistryObject<Item> registerBlockItem(String id, RegistryObject<Block> block) {
-        return BLOCK_ITEMS.register(id, () -> new gregtech.content.block.MaterialBlockItem(block.get(), new Item.Properties().stacksTo(materialStackLimit(block.get()))));
-//?}
+    /** Item factory for a material block, shared by every family that queues one. */
+    public static Item materialBlockItem(Block block) {
+        return new gregtech.content.block.MaterialBlockItem(
+                block, new Item.Properties().stacksTo(materialStackLimit(block)));
     }
 
     private static int materialStackLimit(Block block) {
@@ -222,36 +181,23 @@ public final class GTBlocks {
         return 64;
     }
 
-//? if >=1.21.1 {
-    /*public static DeferredHolder<Item, Item> registerStoneSlabItem(String id, DeferredHolder<Block, Block> block) {
-*///?} else {
-    public static RegistryObject<Item> registerStoneSlabItem(String id, RegistryObject<Block> block) {
-//?}
-        return BLOCK_ITEMS.register(id, () -> new GTStoneSlabBlockItem(block.get(), new Item.Properties()));
+    /** Item factory for a stone slab block. */
+    public static Item stoneSlabItem(Block block) {
+        return new GTStoneSlabBlockItem(block, new Item.Properties());
     }
 
     @javax.annotation.Nullable
     public static Block getStoneSlab(StoneType type, StoneVariant variant) {
         String id = type.registryId() + "_" + variant.registrySuffix() + "_slab";
-//? if >=1.21.1 {
-        /*DeferredHolder<Block, Block> block = STONE_SLABS_BY_ID.get(id);
-        return block == null || !block.isBound() ? null : block.get();
-*///?} else {
-        RegistryObject<Block> block = STONE_SLABS_BY_ID.get(id);
+        RegisteredBlock<? extends Block> block = STONE_SLABS_BY_ID.get(id);
         return block == null || !block.isPresent() ? null : block.get();
-//?}
     }
 
     @javax.annotation.Nullable
     public static Block getStone(StoneType type, StoneVariant variant) {
         String id = type.registryId() + "_" + variant.registrySuffix();
-//? if >=1.21.1 {
-        /*DeferredHolder<Block, Block> block = STONES_BY_ID.get(id);
-        return block == null || !block.isBound() ? null : block.get();
-*///?} else {
-        RegistryObject<Block> block = STONES_BY_ID.get(id);
+        RegisteredBlock<? extends Block> block = STONES_BY_ID.get(id);
         return block == null || !block.isPresent() ? null : block.get();
-//?}
     }
 
     @javax.annotation.Nullable

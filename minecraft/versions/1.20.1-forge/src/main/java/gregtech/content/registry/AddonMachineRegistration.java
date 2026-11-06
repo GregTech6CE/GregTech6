@@ -24,15 +24,12 @@ public final class AddonMachineRegistration {
 
     private AddonMachineRegistration() {}
 
-    public static void register(BasicMachineSpec spec, IEventBus bus) {
+    public static void register(BasicMachineSpec spec) {
         String namespace = spec.namespace();
         var blocks = gregtech.content.registry.GTBlocks.blocks(namespace);
         var items = gregtech.content.registry.GTItems.items(namespace);
-        var entities = ENTITIES.computeIfAbsent(namespace, ns -> {
-            var created = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ns);
-            created.register(bus);
-            return created;
-        });
+        var entities = ENTITIES.computeIfAbsent(
+                namespace, ns -> DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ns));
         RegistryObject<BasicMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
                 gregtech.content.multiblock.ControllerDeclarations.recipe(
                         spec,
@@ -73,5 +70,10 @@ public final class AddonMachineRegistration {
             block.get().setBeTypeSupplier(() -> type);
             return type;
         });
+    }
+
+    public static void submit(IEventBus bus) {
+        for (var entities : ENTITIES.values()) entities.register(bus);
+        ENTITIES.clear();
     }
 }

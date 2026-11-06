@@ -1,6 +1,10 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.PileBlock;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -15,14 +19,16 @@ public final class GTMaterialPiles {
         return java.util.List.of(INGOT_PILE, PLATE_PILE, PLATE_GEM_PILE);
     }
 
-    public static void initialize() {
-        INGOT_PILE = registerPile("ingot_pile", PileBlock.Kind.INGOT, MapColor.METAL);
-        PLATE_PILE = registerPile("plate_pile", PileBlock.Kind.PLATE, MapColor.METAL);
-        PLATE_GEM_PILE = registerPile("plate_gem_pile", PileBlock.Kind.GEM_PLATE, MapColor.DIAMOND);
+    public static void initialize(ContentRegistrar registrar) {
+        INGOT_PILE = registerPile(registrar, "ingot_pile", PileBlock.Kind.INGOT, MapColor.METAL);
+        PLATE_PILE = registerPile(registrar, "plate_pile", PileBlock.Kind.PLATE, MapColor.METAL);
+        PLATE_GEM_PILE = registerPile(registrar, "plate_gem_pile", PileBlock.Kind.GEM_PLATE, MapColor.DIAMOND);
     }
 
-    private static RegisteredBlock<PileBlock> registerPile(String id, PileBlock.Kind kind, MapColor color) {
-        var registered = RegisteredBlock.registerBlock(
+    private static RegisteredBlock<PileBlock> registerPile(
+            ContentRegistrar registrar, String id, PileBlock.Kind kind, MapColor color) {
+        return registrar.block(
+                REGISTRY_NAMESPACE,
                 id,
                 () -> new PileBlock(
                         kind,
@@ -31,11 +37,7 @@ public final class GTMaterialPiles {
                                 .strength(.25f, 0)
                                 .sound(SoundType.METAL)
                                 .noOcclusion()
-                                .isSuffocating((s, l, p) -> false)));
-        GTBlocks.BLOCK_ITEMS.register(
-                id,
-                () -> new net.minecraft.world.item.BlockItem(
-                        registered.get(), new net.minecraft.world.item.Item.Properties()));
-        return registered;
+                                .isSuffocating((s, l, p) -> false)),
+                block -> new BlockItem(block, new Item.Properties()));
     }
 }

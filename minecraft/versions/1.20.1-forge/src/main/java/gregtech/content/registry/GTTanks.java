@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.machine.GTMachineBlockItem;
 import gregtech.content.block.machine.TankBlock;
@@ -9,21 +11,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
 
 /** GT6 fluid container blocks — holder populated by {@code Loader_MultiTileEntities}. */
 public final class GTTanks {
-    private static final List<RegistryObject<TankBlock>> ALL = new ArrayList<>();
+    private static final List<RegisteredBlock<TankBlock>> ALL = new ArrayList<>();
 
     private GTTanks() {}
 
-    public static RegistryObject<TankBlock> WOOD_BARREL;
-    public static RegistryObject<TankBlock> DRUM_BRONZE;
-    public static RegistryObject<TankBlock> DRUM_STEEL;
+    public static RegisteredBlock<TankBlock> WOOD_BARREL;
+    public static RegisteredBlock<TankBlock> DRUM_BRONZE;
+    public static RegisteredBlock<TankBlock> DRUM_STEEL;
     /** GT6 32072, a one-million-litre direct logistics storage node. */
-    public static RegistryObject<TankBlock> LOGISTICS_TANK;
+    public static RegisteredBlock<TankBlock> LOGISTICS_TANK;
 
-    public static RegistryObject<TankBlock> register(
+    public static RegisteredBlock<TankBlock> register(
+            ContentRegistrar registrar,
             String id,
             GTMaterial material,
             TankSpec.TankType type,
@@ -47,20 +49,19 @@ public final class GTTanks {
                 simpleOnly,
                 hardness,
                 blastResistance);
-        return register(spec);
+        return register(registrar, spec);
     }
 
-    public static RegistryObject<TankBlock> register(TankSpec spec) {
+    public static RegisteredBlock<TankBlock> register(ContentRegistrar registrar, TankSpec spec) {
         String id = spec.id();
         var material = spec.material();
         float hardness = spec.hardness(), blastResistance = spec.blastResistance();
-        RegistryObject<TankBlock> block =
-                GTBlocks.BLOCKS.register(id, () -> new TankBlock(spec, TankBlock.defaultProperties(spec)));
-        ALL.add(block);
-        GTBlocks.BLOCK_ITEMS.register(
+        RegisteredBlock<TankBlock> block = registrar.block(
+                REGISTRY_NAMESPACE,
                 id,
-                () -> new GTMachineBlockItem(
-                        block.get(),
+                () -> new TankBlock(spec, TankBlock.defaultProperties(spec)),
+                bare -> new GTMachineBlockItem(
+                        bare,
                         new Item.Properties().stacksTo(16),
                         new MachineSpec(
                                 id,
@@ -71,21 +72,20 @@ public final class GTTanks {
                                 gregtech.engine.machine.MachineTextures.BURNING_SOLID,
                                 hardness,
                                 blastResistance)));
+        ALL.add(block);
         return block;
     }
 
-    public static RegistryObject<TankBlock> registerLogisticsTank() {
+    public static RegisteredBlock<TankBlock> registerLogisticsTank(ContentRegistrar registrar) {
         String id = "logistics_tank";
         var material = gregtech.content.material.Materials.Tungsten;
         TankSpec spec = gregtech.content.transport.fluid.LogisticsTankSpec.spec();
-        RegistryObject<TankBlock> block = GTBlocks.BLOCKS.register(
+        RegisteredBlock<TankBlock> block = registrar.block(
+                REGISTRY_NAMESPACE,
                 id,
-                () -> new gregtech.content.block.machine.LogisticsTankBlock(spec, TankBlock.defaultProperties(spec)));
-        ALL.add(block);
-        GTBlocks.BLOCK_ITEMS.register(
-                id,
-                () -> new GTMachineBlockItem(
-                        block.get(),
+                () -> new gregtech.content.block.machine.LogisticsTankBlock(spec, TankBlock.defaultProperties(spec)),
+                bare -> new GTMachineBlockItem(
+                        bare,
                         new Item.Properties().stacksTo(16),
                         new MachineSpec(
                                 id,
@@ -96,10 +96,11 @@ public final class GTTanks {
                                 gregtech.engine.machine.MachineTextures.BURNING_SOLID,
                                 1.0F,
                                 10.0F)));
+        ALL.add(block);
         return block;
     }
 
-    public static List<RegistryObject<TankBlock>> all() {
+    public static List<RegisteredBlock<TankBlock>> all() {
         return Collections.unmodifiableList(ALL);
     }
 }

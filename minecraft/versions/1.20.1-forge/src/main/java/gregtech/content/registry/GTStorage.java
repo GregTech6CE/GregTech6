@@ -1,29 +1,30 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.registries.RegistryObject;
 
 /** GT6 storage blocks (mass storage; drawers/lockers/safes to follow). */
 public final class GTStorage {
 
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.LockerBlock>> LOCKERS =
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.LockerBlock>> LOCKERS =
             new java.util.ArrayList<>();
-    public static RegistryObject<gregtech.content.block.inventory.MassStorageBlock> MASS_STORAGE;
+    public static RegisteredBlock<gregtech.content.block.inventory.MassStorageBlock> MASS_STORAGE;
     /** Per-material variants in GT6 metalset order. */
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.MassStorageBlock>>
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.MassStorageBlock>>
             MASS_STORAGES = new java.util.ArrayList<>();
     /** GT6 6200+ metalset: direct logistics-network storages, in metalset registration order. */
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.LogisticsMassStorageBlock>>
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.LogisticsMassStorageBlock>>
             LOGISTICS_MASS_STORAGES = new java.util.ArrayList<>();
 
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.MetalChestBlock>> METAL_CHESTS =
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.MetalChestBlock>> METAL_CHESTS =
             new java.util.ArrayList<>();
-    public static RegistryObject<gregtech.content.block.inventory.DrawerQuadBlock> DRAWER_QUAD;
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.DrawerQuadBlock>> DRAWERS =
+    public static RegisteredBlock<gregtech.content.block.inventory.DrawerQuadBlock> DRAWER_QUAD;
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.DrawerQuadBlock>> DRAWERS =
             new java.util.ArrayList<>();
 
     public static gregtech.content.block.inventory.DrawerQuadBlock drawer(gregtech.api.material.GTMaterial material) {
@@ -31,16 +32,16 @@ public final class GTStorage {
         throw new IllegalArgumentException("No drawer for " + material.getName());
     }
     /** GT6's Wooden Bottlecrate (multi-tile 8762, a nine bottle display crate). */
-    public static RegistryObject<gregtech.content.block.inventory.BottleCrateBlock> BOTTLE_CRATE;
+    public static RegisteredBlock<gregtech.content.block.inventory.BottleCrateBlock> BOTTLE_CRATE;
     /** GT6 multi-tile 19000: sixteen USB-stick positions selected by a cover. */
-    public static RegistryObject<gregtech.content.block.inventory.UsbSwitchBlock> USB_SWITCH;
+    public static RegisteredBlock<gregtech.content.block.inventory.UsbSwitchBlock> USB_SWITCH;
     /** GT6 multi-tile 19001: one HDD holding sixteen selectable data positions. */
-    public static RegistryObject<gregtech.content.block.inventory.UsbSwitchBlock> HDD_SWITCH;
+    public static RegisteredBlock<gregtech.content.block.inventory.UsbSwitchBlock> HDD_SWITCH;
 
-    public static RegistryObject<gregtech.content.block.inventory.SafeBlock> SAFE;
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.SafeBlock>> SAFES =
+    public static RegisteredBlock<gregtech.content.block.inventory.SafeBlock> SAFE;
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.SafeBlock>> SAFES =
             new java.util.ArrayList<>();
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.SafeBlock>> KEY_SAFES =
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.SafeBlock>> KEY_SAFES =
             new java.util.ArrayList<>();
 
     public static gregtech.content.block.inventory.SafeBlock safe(
@@ -49,17 +50,16 @@ public final class GTStorage {
         throw new IllegalArgumentException("No safe for " + material.getName());
     }
 
-    public static RegistryObject<gregtech.content.block.inventory.LockerBlock> LOCKER;
-    public static RegistryObject<gregtech.content.block.inventory.EnderGarbageBlock> ENDER_GARBAGE;
-    public static RegistryObject<gregtech.content.block.inventory.EnderGarbageDumpBlock> ENDER_GARBAGE_DUMP;
+    public static RegisteredBlock<gregtech.content.block.inventory.LockerBlock> LOCKER;
+    public static RegisteredBlock<gregtech.content.block.inventory.EnderGarbageBlock> ENDER_GARBAGE;
+    public static RegisteredBlock<gregtech.content.block.inventory.EnderGarbageDumpBlock> ENDER_GARBAGE_DUMP;
 
-    public static final java.util.List<
-                    net.minecraftforge.registries.RegistryObject<gregtech.content.block.inventory.BottleCrateBlock>>
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.BottleCrateBlock>>
             BOTTLE_CRATES = new java.util.ArrayList<>();
 
     private GTStorage() {}
 
-    public static final java.util.List<RegistryObject<gregtech.content.block.inventory.MetalChestBlock>>
+    public static final java.util.List<RegisteredBlock<gregtech.content.block.inventory.MetalChestBlock>>
             REINFORCED_WOOD_CHESTS = new java.util.ArrayList<>();
 
     public static gregtech.content.block.inventory.MetalChestBlock reinforcedChest(
@@ -77,38 +77,37 @@ public final class GTStorage {
         throw new IllegalArgumentException("No registered GT chest for " + material.getName());
     }
 
-    public static void registerAll() {
-        MASS_STORAGE = RegistryObject.create(
-                gregtech.GregTech.id("mass_storage_stainless_steel"),
-                net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+    public static void registerAll(ContentRegistrar registrar) {
+        MASS_STORAGE = RegisteredBlock.reference("mass_storage_stainless_steel");
         for (GTStorageMetals.Spec spec : GTStorageMetals.ALL) {
             String id = spec.suffix().equals("stainless_steel") ? "drawer_quad" : "drawer_quad_" + spec.suffix();
-            var drawer = GTBlocks.BLOCKS.register(
+            var drawer = registrar.block(
+                    REGISTRY_NAMESPACE,
                     id,
                     () -> new gregtech.content.block.inventory.DrawerQuadBlock(
                             spec.material(),
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.METAL)
                                     .strength(spec.hardness(), spec.resistance())
-                                    .requiresCorrectToolForDrops()));
-            GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(drawer.get(), new Item.Properties().stacksTo(16)));
+                                    .requiresCorrectToolForDrops()),
+                    block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
             DRAWERS.add(drawer);
             if (spec.suffix().equals("stainless_steel")) DRAWER_QUAD = drawer;
         }
-        BOTTLE_CRATE = GTBlocks.BLOCKS.register(
+        BOTTLE_CRATE = registrar.block(
+                REGISTRY_NAMESPACE,
                 "bottle_crate",
                 () -> new gregtech.content.block.inventory.BottleCrateBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.WOOD)
                         .noOcclusion()
                         .strength(0.5f, 2.0f)
-                        .sound(net.minecraft.world.level.block.SoundType.WOOD)));
-        GTBlocks.BLOCK_ITEMS.register(
-                "bottle_crate",
-                () -> new BlockItem(BOTTLE_CRATE.get(), new Item.Properties().stacksTo(16))); // GT6 Bottlecrate: 64
+                        .sound(net.minecraft.world.level.block.SoundType.WOOD)),
+                block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
 
         BOTTLE_CRATES.add(BOTTLE_CRATE);
         for (var spec : gregtech.content.storage.BottleCrateVariants.WOODS) {
-            var crate = GTBlocks.BLOCKS.register(
+            var crate = registrar.block(
+                    REGISTRY_NAMESPACE,
                     spec.id(),
                     () -> new gregtech.content.block.inventory.BottleCrateBlock(
                             null,
@@ -117,16 +116,14 @@ public final class GTStorage {
                                     .mapColor(MapColor.WOOD)
                                     .noOcclusion()
                                     .strength(.5f, 2f)
-                                    .sound(net.minecraft.world.level.block.SoundType.WOOD)));
-            GTBlocks.BLOCK_ITEMS.register(
-                    spec.id(),
-                    () -> new net.minecraft.world.item.BlockItem(
-                            crate.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+                                    .sound(net.minecraft.world.level.block.SoundType.WOOD)),
+                    block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
             BOTTLE_CRATES.add(crate);
         }
         for (var spec : GTStorageMetals.ALL) {
             String id = "bottle_crate_" + spec.suffix();
-            var crate = GTBlocks.BLOCKS.register(
+            var crate = registrar.block(
+                    REGISTRY_NAMESPACE,
                     id,
                     () -> new gregtech.content.block.inventory.BottleCrateBlock(
                             spec.material(),
@@ -136,72 +133,70 @@ public final class GTStorage {
                                     .noOcclusion()
                                     .strength(.5f, spec.resistance())
                                     .sound(net.minecraft.world.level.block.SoundType.METAL)
-                                    .requiresCorrectToolForDrops()));
-            GTBlocks.BLOCK_ITEMS.register(
-                    id,
-                    () -> new net.minecraft.world.item.BlockItem(
-                            crate.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+                                    .requiresCorrectToolForDrops()),
+                    block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
             BOTTLE_CRATES.add(crate);
         }
-        USB_SWITCH = GTBlocks.BLOCKS.register(
+        USB_SWITCH = registrar.block(
+                REGISTRY_NAMESPACE,
                 "usb_switch",
                 () -> new gregtech.content.block.inventory.UsbSwitchBlock(
                         gregtech.content.block.inventory.UsbSwitchBlock.Kind.USB,
                         BlockBehaviour.Properties.of()
                                 .mapColor(MapColor.METAL)
                                 .strength(6.0f, 6.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("usb_switch", () -> new BlockItem(USB_SWITCH.get(), new Item.Properties()));
-        HDD_SWITCH = GTBlocks.BLOCKS.register(
+                                .requiresCorrectToolForDrops()),
+                block -> new BlockItem(block, new Item.Properties()));
+        HDD_SWITCH = registrar.block(
+                REGISTRY_NAMESPACE,
                 "hdd_switch",
                 () -> new gregtech.content.block.inventory.UsbSwitchBlock(
                         gregtech.content.block.inventory.UsbSwitchBlock.Kind.HDD,
                         BlockBehaviour.Properties.of()
                                 .mapColor(MapColor.METAL)
                                 .strength(6.0f, 6.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("hdd_switch", () -> new BlockItem(HDD_SWITCH.get(), new Item.Properties()));
-        SAFE = GTBlocks.BLOCKS.register(
+                                .requiresCorrectToolForDrops()),
+                block -> new BlockItem(block, new Item.Properties()));
+        SAFE = registrar.block(
+                REGISTRY_NAMESPACE,
                 "safe",
                 () -> new gregtech.content.block.inventory.SafeBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
                         .strength(12.0f, 12.0f)
-                        .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("safe", () -> new BlockItem(SAFE.get(), new Item.Properties().stacksTo(16)));
+                        .requiresCorrectToolForDrops()),
+                block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
         for (var spec : GTStorageMetals.ALL) {
             String id = spec.suffix().equals("stainless_steel") ? "locker" : "locker_" + spec.suffix();
-            var locker = GTBlocks.BLOCKS.register(
+            var locker = registrar.block(
+                    REGISTRY_NAMESPACE,
                     id,
                     () -> new gregtech.content.block.inventory.LockerBlock(
                             spec.material(),
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.METAL)
                                     .strength(spec.hardness(), spec.resistance())
-                                    .requiresCorrectToolForDrops()));
+                                    .requiresCorrectToolForDrops()),
+                    block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
             LOCKERS.add(locker);
             if (id.equals("locker")) LOCKER = locker;
-            GTBlocks.BLOCK_ITEMS.register(
-                    id,
-                    () -> new net.minecraft.world.item.BlockItem(
-                            locker.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
         }
-        ENDER_GARBAGE = GTBlocks.BLOCKS.register(
+        ENDER_GARBAGE = registrar.block(
+                REGISTRY_NAMESPACE,
                 "ender_garbage_bin",
                 () -> new gregtech.content.block.inventory.EnderGarbageBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.COLOR_BLACK)
                         .strength(3.0f, 3.0f)
                         .requiresCorrectToolForDrops()
-                        .noOcclusion()));
-        GTBlocks.BLOCK_ITEMS.register(
-                "ender_garbage_bin", () -> new BlockItem(ENDER_GARBAGE.get(), new Item.Properties()));
-        ENDER_GARBAGE_DUMP = GTBlocks.BLOCKS.register(
+                        .noOcclusion()),
+                block -> new BlockItem(block, new Item.Properties()));
+        ENDER_GARBAGE_DUMP = registrar.block(
+                REGISTRY_NAMESPACE,
                 "ender_garbage_dump",
                 () -> new gregtech.content.block.inventory.EnderGarbageDumpBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.COLOR_BLACK)
                         .strength(8.0f, 1200.0f)
-                        .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register(
-                "ender_garbage_dump", () -> new BlockItem(ENDER_GARBAGE_DUMP.get(), new Item.Properties()));
+                        .requiresCorrectToolForDrops()),
+                block -> new BlockItem(block, new Item.Properties()));
 
         // per-material variants (GT6 metalset): mass storages + metal chests
         for (GTStorageMetals.Spec spec : GTStorageMetals.ALL) {
@@ -212,7 +207,8 @@ public final class GTStorage {
                     continue;
                 }
                 String id = (keyLocked ? "key_safe_" : "safe_") + spec.suffix();
-                var safe = GTBlocks.BLOCKS.register(
+                var safe = registrar.block(
+                        REGISTRY_NAMESPACE,
                         id,
                         () -> new gregtech.content.block.inventory.SafeBlock(
                                 spec.material(),
@@ -220,35 +216,34 @@ public final class GTStorage {
                                 BlockBehaviour.Properties.of()
                                         .mapColor(MapColor.METAL)
                                         .strength(spec.hardness() * 2, spec.resistance() * 2)
-                                        .requiresCorrectToolForDrops()));
-                GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(safe.get(), new Item.Properties().stacksTo(16)));
+                                        .requiresCorrectToolForDrops()),
+                        block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
                 target.add(safe);
             }
-            var storage = GTBlocks.BLOCKS.register(
+            var storage = registrar.block(
+                    REGISTRY_NAMESPACE,
                     "mass_storage_" + spec.suffix(),
                     () -> new gregtech.content.block.inventory.MassStorageBlock(
                             spec.material(),
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.METAL)
                                     .strength(spec.hardness(), spec.resistance())
-                                    .requiresCorrectToolForDrops()));
-            GTBlocks.BLOCK_ITEMS.register(
-                    "mass_storage_" + spec.suffix(),
-                    () -> new BlockItem(storage.get(), new Item.Properties().stacksTo(16))); // GT6 Storage: 16
+                                    .requiresCorrectToolForDrops()),
+                    block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
             MASS_STORAGES.add(storage);
-            var logisticsStorage = GTBlocks.BLOCKS.register(
+            var logisticsStorage = registrar.block(
+                    REGISTRY_NAMESPACE,
                     "logistics_mass_storage_" + spec.suffix(),
                     () -> new gregtech.content.block.inventory.LogisticsMassStorageBlock(
                             spec.material(),
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.COLOR_BLACK)
                                     .strength(spec.hardness(), spec.resistance())
-                                    .requiresCorrectToolForDrops()));
-            GTBlocks.BLOCK_ITEMS.register(
-                    "logistics_mass_storage_" + spec.suffix(),
-                    () -> new BlockItem(logisticsStorage.get(), new Item.Properties().stacksTo(16)));
+                                    .requiresCorrectToolForDrops()),
+                    block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
             LOGISTICS_MASS_STORAGES.add(logisticsStorage);
-            var chest = GTBlocks.BLOCKS.register(
+            var chest = registrar.block(
+                    REGISTRY_NAMESPACE,
                     "chest_" + spec.suffix(),
                     () -> new gregtech.content.block.inventory.MetalChestBlock(
                             spec.material(),
@@ -256,12 +251,12 @@ public final class GTStorage {
                                     .mapColor(MapColor.METAL)
                                     .strength(spec.hardness(), spec.resistance())
                                     .requiresCorrectToolForDrops()
-                                    .noOcclusion()));
-            GTBlocks.BLOCK_ITEMS.register(
-                    "chest_" + spec.suffix(),
-                    () -> new gregtech.content.block.inventory.MetalChestBlockItem(chest.get(), new Item.Properties()));
+                                    .noOcclusion()),
+                    block -> new gregtech.content.block.inventory.MetalChestBlockItem(
+                            block, new Item.Properties()));
             METAL_CHESTS.add(chest);
-            var wooden = GTBlocks.BLOCKS.register(
+            var wooden = registrar.block(
+                    REGISTRY_NAMESPACE,
                     "reinforced_wood_chest_" + spec.suffix(),
                     () -> new gregtech.content.block.inventory.MetalChestBlock(
                             spec.material(),
@@ -270,11 +265,9 @@ public final class GTStorage {
                                     .mapColor(MapColor.WOOD)
                                     .sound(net.minecraft.world.level.block.SoundType.WOOD)
                                     .strength(spec.hardness() / 2, spec.resistance() / 2)
-                                    .noOcclusion()));
-            GTBlocks.BLOCK_ITEMS.register(
-                    "reinforced_wood_chest_" + spec.suffix(),
-                    () -> new gregtech.content.block.inventory.MetalChestBlockItem(
-                            wooden.get(), new Item.Properties().stacksTo(16)));
+                                    .noOcclusion()),
+                    block -> new gregtech.content.block.inventory.MetalChestBlockItem(
+                            block, new Item.Properties().stacksTo(16)));
             REINFORCED_WOOD_CHESTS.add(wooden);
         }
     }

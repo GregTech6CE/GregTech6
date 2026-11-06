@@ -21,7 +21,7 @@ public final class GTConstructionVariants {
     private static final List<RegisteredBlock<? extends Block>> ALL = new ArrayList<>();
     private GTConstructionVariants() {}
 
-    public static void initialize(List<RegisteredBlock<? extends Block>> legacy) {
+    public static void initialize(ContentRegistrar registrar, List<RegisteredBlock<? extends Block>> legacy) {
         if (!VARIANTS.isEmpty()) throw new IllegalStateException("Construction variants initialized twice");
         for (var source : legacy) {
             String family = source.getId().getPath();
@@ -29,7 +29,10 @@ public final class GTConstructionVariants {
             var colors = new EnumMap<DyeColor, RegisteredBlock<? extends Block>>(DyeColor.class);
             VARIANTS.put(family, colors);
             for (DyeColor color : DyeColor.values()) {
-                var variant = RegisteredBlock.register(family + "_" + color.getName(), () -> create(family, color, properties(source.get())));
+                var variant = registrar.block(
+                        REGISTRY_NAMESPACE,
+                        family + "_" + color.getName(),
+                        () -> create(family, color, properties(source.get())));
                 colors.put(color, variant);
                 ALL.add(variant);
             }

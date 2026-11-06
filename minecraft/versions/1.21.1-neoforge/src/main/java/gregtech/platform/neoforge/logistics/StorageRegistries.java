@@ -53,7 +53,7 @@ public final class StorageRegistries {
                 .toList();
     }
 
-    public static void register(gregtech.content.registry.ContentRegistrar registrar, IEventBus eventBus) {
+    public static void register(gregtech.content.registry.ContentRegistrar registrar) {
         // Register both block families before attaching their deferred registers.
         for (var materialSpec : GTStorageMetals.ALL)
             bind(
@@ -69,6 +69,9 @@ public final class StorageRegistries {
                     materialSpec.material(),
                     materialSpec.hardness(),
                     materialSpec.resistance());
+    }
+
+    public static void submit(IEventBus eventBus) {
         TYPES.register(eventBus);
     }
 

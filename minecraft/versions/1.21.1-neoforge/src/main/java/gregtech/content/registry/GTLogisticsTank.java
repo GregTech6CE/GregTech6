@@ -1,22 +1,23 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.machine.*;
-import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.minecraft.world.item.Item;
 
 /** Registers the logistics barrel using the shared specification and entity implementation. */
 public final class GTLogisticsTank {
     private GTLogisticsTank() {}
 
-    public static DeferredHolder<Block, LogisticsTankBlock> BLOCK;
+    public static RegisteredBlock<LogisticsTankBlock> BLOCK;
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         var spec = gregtech.content.transport.fluid.LogisticsTankSpec.spec();
-        BLOCK = GTBlocks.BLOCKS.register(
-                spec.id(), () -> new LogisticsTankBlock(spec, TankBlock.defaultProperties(spec)));
-        GTBlocks.BLOCK_ITEMS.register(
+        BLOCK = registrar.block(
+                REGISTRY_NAMESPACE,
                 spec.id(),
-                () -> new gregtech.content.transport.fluid.FluidTransportBlockItem(
-                        BLOCK.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+                () -> new LogisticsTankBlock(spec, TankBlock.defaultProperties(spec)),
+                bare -> new gregtech.content.transport.fluid.FluidTransportBlockItem(
+                        bare, new Item.Properties().stacksTo(16)));
     }
 }

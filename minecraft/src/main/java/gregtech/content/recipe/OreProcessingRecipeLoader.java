@@ -8,6 +8,7 @@ import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.*;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.GTFluids;
+import gregtech.content.registry.RegisteredBlock;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -213,7 +214,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 : gregtech.content.registry.GTSpecialOreBlocks.all()) {
             if (!entry.isBound() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre))
 *///?} else {
-        for (RegistryObject<net.minecraft.world.level.block.Block> entry
+        for (RegisteredBlock<net.minecraft.world.level.block.Block> entry
                 : gregtech.content.registry.GTIconSetBlocks.all()) {
             if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre))
 //?}
@@ -234,7 +235,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                 : gregtech.content.registry.GTSpecialOreBlocks.all()) {
             if (!entry.isBound() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore))
 *///?} else {
-        for (RegistryObject<net.minecraft.world.level.block.Block> entry
+        for (RegisteredBlock<net.minecraft.world.level.block.Block> entry
                 : gregtech.content.registry.GTIconSetBlocks.all()) {
             if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore))
 //?}

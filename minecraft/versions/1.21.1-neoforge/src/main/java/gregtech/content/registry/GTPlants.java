@@ -1,25 +1,25 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.plant.*;
 import java.util.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.registries.*;
 
 /** Actual baseline bush/desert flower/lily factories, over shared source identities. */
 public final class GTPlants {
     private GTPlants() {}
 
-    private static final List<DeferredHolder<Block, Block>> ALL = new ArrayList<>();
+    private static final List<RegisteredBlock<Block>> ALL = new ArrayList<>();
 
-    public static List<DeferredHolder<Block, Block>> all() {
+    public static List<RegisteredBlock<Block>> all() {
         return List.copyOf(ALL);
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (String id : IconPlantCatalog.IDS) {
-            var block = GTBlocks.BLOCKS.register(id, () -> create(id));
-            GTBlocks.registerBlockItem(id, block);
+            var block = registrar.block(REGISTRY_NAMESPACE, id, () -> create(id), GTBlocks::materialBlockItem);
             ALL.add(block);
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native original icon plants: {}", ALL.size());

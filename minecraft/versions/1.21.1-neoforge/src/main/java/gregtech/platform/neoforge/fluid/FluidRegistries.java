@@ -41,7 +41,7 @@ public final class FluidRegistries {
         return ALL_ITEMS.stream();
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         FluidDefinitions.prepare();
         var paths = new HashSet<String>();
         for (var definition : RegisteredFluids.all().entrySet()) {
@@ -105,6 +105,9 @@ public final class FluidRegistries {
                     namespace, "fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties())));
         }
         RegisteredFluids.closeDefinitions();
+    }
+
+    public static void submit(IEventBus bus) {
         GTFluids.FLUID_TYPES.register(bus);
         GTFluids.FLUIDS.register(bus);
         GTFluids.registerAddonFluids(bus);

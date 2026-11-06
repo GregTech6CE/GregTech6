@@ -47,6 +47,7 @@ public final class BasicMachineRegistries {
             new ArrayList<>();
     private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<BasicMachineBlockEntity>>> TYPES =
             new ArrayList<>();
+    private static final List<DeferredRegister<BlockEntityType<?>>> ADDON_ENTITIES = new ArrayList<>();
 
     public static List<gregtech.content.registry.RegisteredBlock<BasicMachineBlock>> all() {
         return Collections.unmodifiableList(MACHINES);
@@ -56,14 +57,14 @@ public final class BasicMachineRegistries {
         return Collections.unmodifiableList(TYPES);
     }
 
-    public static void register(gregtech.content.registry.ContentRegistrar registrar, IEventBus bus) {
+    public static void register(gregtech.content.registry.ContentRegistrar registrar) {
         var entities = new LinkedHashMap<String, DeferredRegister<BlockEntityType<?>>>();
         entities.put(REGISTRY_NAMESPACE, ENTITIES);
         for (BasicMachineSpec spec : BasicMachineDefinitions.specifications()) {
             String namespace = spec.namespace();
             var entityReg = entities.computeIfAbsent(namespace, ns -> {
                 var created = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ns);
-                created.register(bus);
+                ADDON_ENTITIES.add(created);
                 return created;
             });
             var block = gregtech.content.registry.MultiblockRegistration.register(
@@ -104,11 +105,19 @@ public final class BasicMachineRegistries {
             });
             TYPES.add(type);
         }
+        BehaviorMachineRegistration.register(registrar);
+        FuelGeneratorRegistration.register(registrar);
+        CompressedGasTankRegistration.register(registrar);
+    }
+
+    public static void submit(IEventBus bus) {
         ENTITIES.register(bus);
         MENUS.register(bus);
-        BehaviorMachineRegistration.register(registrar, bus);
-        FuelGeneratorRegistration.register(registrar, bus);
-        CompressedGasTankRegistration.register(registrar, bus);
+        for (var entities : ADDON_ENTITIES) entities.register(bus);
+        ADDON_ENTITIES.clear();
+        BehaviorMachineRegistration.submit(bus);
+        FuelGeneratorRegistration.submit(bus);
+        CompressedGasTankRegistration.submit(bus);
         bus.addListener(BasicMachineRegistries::capabilities);
         bus.addListener(gregtech.network.MachinePayloads::register);
     }

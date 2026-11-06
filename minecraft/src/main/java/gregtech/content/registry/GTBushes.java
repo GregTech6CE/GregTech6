@@ -1,36 +1,35 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.plant.BushBlock;
 import gregtech.content.plant.BerryBushCatalog;
+import java.util.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
-*///?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
-import java.util.*;
 
 /** Independent food, cotton and material berry identities, plus the unplanted bush. */
 public final class GTBushes {
     private GTBushes() {}
-//? if >=1.21.1 {
-    /*private static final Map<String, DeferredHolder<Block, BushBlock>> VARIANTS = new LinkedHashMap<>();
-    public static DeferredHolder<Block, BushBlock> BUSH;
-*///?} else {
-    private static final Map<String, RegistryObject<BushBlock>> VARIANTS = new LinkedHashMap<>();
-    public static RegistryObject<BushBlock> BUSH;
-//?}
 
-//? if >=1.21.1 {
-    /*private static DeferredHolder<Block, BushBlock> register(String path, String berry) {
-*///?} else {
-    private static RegistryObject<BushBlock> register(String path, String berry) {
-//?}
-        var block = GTBlocks.BLOCKS.register(path, () -> new BushBlock(berry, BlockBehaviour.Properties.of()
-                .mapColor(MapColor.PLANT).strength(.2f).sound(SoundType.GRASS).noOcclusion().instabreak()));
+    private static final Map<String, RegisteredBlock<BushBlock>> VARIANTS = new LinkedHashMap<>();
+    public static RegisteredBlock<BushBlock> BUSH;
+
+    private static RegisteredBlock<BushBlock> register(ContentRegistrar registrar, String path, String berry) {
+        var block = registrar.block(
+                REGISTRY_NAMESPACE,
+                path,
+                () -> new BushBlock(
+                        berry,
+                        BlockBehaviour.Properties.of()
+                                .mapColor(MapColor.PLANT)
+                                .strength(.2f)
+                                .sound(SoundType.GRASS)
+                                .noOcclusion()
+                                .instabreak()),
+                bare -> new gregtech.content.item.BushBlockItem(bare, new Item.Properties()));
         VARIANTS.put(path, block);
         return block;
     }
@@ -44,12 +43,10 @@ public final class GTBushes {
         return VARIANTS.values().stream().map(e -> (Block) e.get()).toArray(Block[]::new);
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         if (BUSH != null) return;
-        BUSH = register("bush", "");
+        BUSH = register(registrar, "bush", "");
         for (var type : BerryBushCatalog.worldgenTypes())
-            register(BerryBushCatalog.blockPath(type.id()), type.id());
-        VARIANTS.forEach((path, block) -> GTBlocks.BLOCK_ITEMS.register(path,
-                () -> new gregtech.content.item.BushBlockItem(block.get(), new Item.Properties())));
+            register(registrar, BerryBushCatalog.blockPath(type.id()), type.id());
     }
 }

@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.content.block.BarsRules;
@@ -25,9 +27,10 @@ public final class GTBars {
         return ALL.get(id).get();
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         for (var spec : BarsRules.SPECS) {
-            var b = RegisteredBlock.registerBlock(
+            var b = registrar.block(
+                    REGISTRY_NAMESPACE,
                     spec.id(),
                     () -> new BarsBlock(
                             spec.material(),
@@ -38,9 +41,9 @@ public final class GTBars {
                                     .strength(5, spec.resistance())
                                     .requiresCorrectToolForDrops()
                                     .sound(SoundType.METAL)
-                                    .noOcclusion()));
+                                    .noOcclusion()),
+                    block -> new BarsBlockItem(block, new Item.Properties()));
             ALL.put(spec.id(), b);
-            GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BarsBlockItem(b.get(), new Item.Properties()));
         }
     }
 

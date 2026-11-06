@@ -1,56 +1,41 @@
 package gregtech.content.registry;
 
-import gregtech.content.material.Materials;
-import gregtech.engine.machine.PumpSpec;
-import gregtech.api.material.GTMaterial;
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.energy.PumpBlock;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
-import net.minecraft.world.level.block.Block;
-*///?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /** GT6 rotational pumps — RU-powered fluid drainage, 4 tiers. */
 public final class GTPumps {
-//? if >=1.21.1 {
-    /*private static final List<DeferredHolder<Block,PumpBlock>> ALL = new ArrayList<>();
-*///?} else {
-    private static final List<RegistryObject<PumpBlock>> ALL = new ArrayList<>();
-//?}
+    private static final List<RegisteredBlock<PumpBlock>> ALL = new ArrayList<>();
 
     private GTPumps() {}
 
-//? if >=1.21.1 {
-    /*public static List<DeferredHolder<Block,PumpBlock>> all() { return Collections.unmodifiableList(ALL); }
-*///?} else {
-    public static List<RegistryObject<PumpBlock>> all() { return Collections.unmodifiableList(ALL); }
-//?}
+    public static List<RegisteredBlock<PumpBlock>> all() {
+        return Collections.unmodifiableList(ALL);
+    }
 
-    public static void registerAll() {
-        for(var spec:gregtech.content.energy.PumpCatalog.all()){
-            String id=spec.id();
-//? if >=1.21.1 {
-            /*DeferredHolder<Block,PumpBlock> block = GTBlocks.BLOCKS.register(id,
-*///?} else {
-            RegistryObject<PumpBlock> block = GTBlocks.BLOCKS.register(id,
-//?}
-                    () -> new PumpBlock(spec, BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.METAL)
-                            .strength(4.0f, 6.0f)
-                            .requiresCorrectToolForDrops()
-                            .noOcclusion()));
+    public static void registerAll(ContentRegistrar registrar) {
+        for (var spec : gregtech.content.energy.PumpCatalog.all()) {
+            String id = spec.id();
+            RegisteredBlock<PumpBlock> block = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    id,
+                    () -> new PumpBlock(
+                            spec,
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.METAL)
+                                    .strength(4.0f, 6.0f)
+                                    .requiresCorrectToolForDrops()
+                                    .noOcclusion()),
+                    bare -> new BlockItem(bare, new Item.Properties()));
             ALL.add(block);
-            GTBlocks.BLOCK_ITEMS.register(id,
-                    () -> new BlockItem(block.get(), new Item.Properties()));
         }
     }
 

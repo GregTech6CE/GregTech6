@@ -66,7 +66,7 @@ public final class FluidTransportRegistries {
         return List.copyOf(PIPES);
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         gregtech.engine.addon.AddonMachines.collectContributors();
         for (TankSpec spec : FluidTransportDefinitions.tanks()) {
             var block = registrar.block(
@@ -93,6 +93,9 @@ public final class FluidTransportRegistries {
             PIPES.add(block);
             if (spec.id().equals("pipe_medium_steel")) PIPE_MEDIUM_STEEL = block;
         }
+    }
+
+    public static void submit(IEventBus bus) {
         ENTITIES.register(bus);
         SOUNDS.register(bus);
     }

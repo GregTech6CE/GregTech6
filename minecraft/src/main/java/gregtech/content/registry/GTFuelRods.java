@@ -51,7 +51,7 @@ public final class GTFuelRods {
                 "fuel_rod_am_241");
         for (var definition : gregtech.content.nuclear.ReactorRodCatalog.ALL)
             if (!existing.contains(definition.id())) {
-                var block = registerBlock(definition.id());
+                var block = registerBlock(registrar, definition.id());
                 var item = registrar.item(
                         REGISTRY_NAMESPACE,
                         definition.id(),
@@ -64,7 +64,7 @@ public final class GTFuelRods {
 
     private static RegisteredItem<FuelRodItem> register(
             ContentRegistrar registrar, String id, FuelType type, int tier) {
-        var block = registerBlock(id);
+        var block = registerBlock(registrar, id);
         Item.Properties props = new Item.Properties()
                 .stacksTo(
                         switch (type) {
@@ -76,8 +76,8 @@ public final class GTFuelRods {
         return item;
     }
 
-    private static RegisteredBlock<ReactorRodBlock> registerBlock(String id) {
-        var block = RegisteredBlock.registerBlock(id, ReactorRodBlock::new);
+    private static RegisteredBlock<ReactorRodBlock> registerBlock(ContentRegistrar registrar, String id) {
+        var block = registrar.blockWithoutItem(REGISTRY_NAMESPACE, id, ReactorRodBlock::new);
         BLOCKS.put(id, block);
         return block;
     }

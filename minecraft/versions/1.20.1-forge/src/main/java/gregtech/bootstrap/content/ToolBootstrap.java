@@ -14,8 +14,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-/** Registers GT6 tools and the tool crafting recipe serializers. */
-public record ToolBootstrap(IEventBus bus) implements InitializationStep {
+/** Queues GT6 tools and the tool crafting recipe serializers; the platform entry submits them. */
+public record ToolBootstrap() implements InitializationStep {
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, GregTech.NAMESPACE);
@@ -62,6 +62,9 @@ public record ToolBootstrap(IEventBus bus) implements InitializationStep {
         RECIPE_SERIALIZERS.register("book_binding", () -> gregtech.content.recipe.BookBindingRecipe.SERIALIZER);
         RECIPE_SERIALIZERS.register("machine", () -> gregtech.content.recipe.MachineDatapackRecipe.ADDITION);
         RECIPE_SERIALIZERS.register("machine_removal", () -> gregtech.content.recipe.MachineDatapackRecipe.REMOVAL);
+    }
+
+    public static void submit(IEventBus bus) {
         gregtech.content.recipe.MachineDatapackRecipe.TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
     }

@@ -26,6 +26,7 @@ public final class FuelGeneratorRegistration {
     private static final List<RegisteredBlock<FuelGeneratorBlock>> BLOCKS = new ArrayList<>();
     private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<FuelGeneratorBlockEntity>>> TYPES =
             new ArrayList<>();
+    private static final List<DeferredRegister<BlockEntityType<?>>> ENTITIES = new ArrayList<>();
 
     private FuelGeneratorRegistration() {}
 
@@ -33,20 +34,26 @@ public final class FuelGeneratorRegistration {
         return List.copyOf(BLOCKS);
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         var byNamespace = new LinkedHashMap<String, List<AddonMachines.AcceptedFuel>>();
         for (AddonMachines.AcceptedFuel accepted : AddonMachines.fuelGenerators())
             byNamespace
                     .computeIfAbsent(accepted.addonId(), id -> new ArrayList<>())
                     .add(accepted);
-        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue(), bus);
+        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue());
+    }
+
+    public static void submit(IEventBus bus) {
+        for (var entities : ENTITIES) entities.register(bus);
+        ENTITIES.clear();
         bus.addListener(FuelGeneratorRegistration::capabilities);
     }
 
     private static void registerNamespace(
-            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedFuel> machines, IEventBus bus) {
+            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedFuel> machines) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
+        ENTITIES.add(entities);
         for (AddonMachines.AcceptedFuel accepted : machines) {
             RegisteredBlock<FuelGeneratorBlock> block = gregtech.content.registry.MultiblockRegistration.register(
                     gregtech.content.multiblock.ControllerDeclarations.fuel(
@@ -75,7 +82,6 @@ public final class FuelGeneratorRegistration {
                     });
             TYPES.add(type);
         }
-        entities.register(bus);
     }
 
     private static void capabilities(RegisterCapabilitiesEvent event) {

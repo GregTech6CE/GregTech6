@@ -15,45 +15,49 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 /** Registers addon compressed gas drums in the addon's namespace, on GregTech's mod bus. */
 public final class CompressedGasTankRegistration {
-    private static final List<RegistryObject<CompressedGasTankBlock>> BLOCKS = new ArrayList<>();
+    private static final List<RegisteredBlock<CompressedGasTankBlock>> BLOCKS = new ArrayList<>();
+    private static final List<DeferredRegister<BlockEntityType<?>>> ENTITIES = new ArrayList<>();
 
     private CompressedGasTankRegistration() {}
 
-    public static List<RegistryObject<CompressedGasTankBlock>> all() {
+    public static List<RegisteredBlock<CompressedGasTankBlock>> all() {
         return List.copyOf(BLOCKS);
     }
 
-    public static void register(IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         var byNamespace = new LinkedHashMap<String, List<AddonMachines.AcceptedCompressedGas>>();
         for (AddonMachines.AcceptedCompressedGas accepted : AddonMachines.compressedGasTanks())
             byNamespace
                     .computeIfAbsent(accepted.addonId(), id -> new ArrayList<>())
                     .add(accepted);
-        for (var entry : byNamespace.entrySet()) registerNamespace(entry.getKey(), entry.getValue(), bus);
+        for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue());
+    }
+
+    public static void submit(IEventBus bus) {
+        for (var entities : ENTITIES) entities.register(bus);
+        ENTITIES.clear();
     }
 
     private static void registerNamespace(
-            String namespace, List<AddonMachines.AcceptedCompressedGas> tanks, IEventBus bus) {
-        var blocks = GTBlocks.blocks(namespace);
-        var items = GTItems.items(namespace);
+            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedCompressedGas> tanks) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
+        ENTITIES.add(entities);
         for (AddonMachines.AcceptedCompressedGas accepted : tanks) {
-            RegistryObject<CompressedGasTankBlock> block = blocks.register(
+            RegisteredBlock<CompressedGasTankBlock> block = registrar.block(
+                    namespace,
                     accepted.declaration().id(),
                     () -> new CompressedGasTankBlock(
                             accepted,
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.METAL)
                                     .strength(1.0F, 6.0F)
-                                    .requiresCorrectToolForDrops()));
+                                    .requiresCorrectToolForDrops()),
+                    tank -> new BlockItem(tank, new Item.Properties().stacksTo(16)));
             BLOCKS.add(block);
-            items.register(
-                    accepted.declaration().id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
             String path = "be_" + accepted.declaration().id().replace('/', '_');
             entities.register(path, () -> {
                 AtomicReference<BlockEntityType<CompressedGasTankBlockEntity>> typeRef = new AtomicReference<>();
@@ -66,6 +70,5 @@ public final class CompressedGasTankRegistration {
                 return type;
             });
         }
-        entities.register(bus);
     }
 }

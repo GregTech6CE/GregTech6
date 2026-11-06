@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.IconSetBlock;
 import java.util.*;
 import net.minecraft.world.item.BlockItem;
@@ -7,20 +9,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Registers placeable icon-set blocks; renderer-only textures are not blocks. Registry ids are the plain
  * icon name ({@code asphalt}, {@code planks_maple}, ...) — {@code ore_*} icons get a
  * {@code special_} prefix because the per-material {@code OreBlock}s own those ids.
  * Block properties follow the matching original GT6 block category.
- * <p>
- * Uses {@link GTBlocks#BLOCKS} and {@link GTBlocks#BLOCK_ITEMS} directly — there
- * must be only one DeferredRegister per registry to avoid ForgeRegistry.sync() conflicts.
  */
 public final class GTIconSetBlocks {
-    private static final List<RegistryObject<Block>> ALL = new ArrayList<>();
-    public static RegistryObject<Block> LOGISTICS_WIRE;
+    private static final List<RegisteredBlock<Block>> ALL = new ArrayList<>();
+    public static RegisteredBlock<Block> LOGISTICS_WIRE;
 
     /**
      * IDs already registered by other registries ({@link GTWoods}, {@link GTDecorBlocks},
@@ -73,15 +71,16 @@ public final class GTIconSetBlocks {
 
     private GTIconSetBlocks() {}
 
-    public static List<RegistryObject<Block>> all() {
+    public static List<RegisteredBlock<Block>> all() {
         return Collections.unmodifiableList(ALL);
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (String iconName : ICON_NAMES) {
             String blockId = blockId(iconName);
             if (SKIP_IDS.contains(blockId)) continue;
-            RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(iconName));
+            RegisteredBlock<Block> block =
+                    registrar.blockWithoutItem(REGISTRY_NAMESPACE, blockId, () -> createBlock(iconName));
             if (iconName.equals("logistics_wire")) LOGISTICS_WIRE = block;
             var sandSpec = gregtech.content.block.BlackSandBlock.spec(iconName);
             if (sandSpec != null)
@@ -89,7 +88,8 @@ public final class GTIconSetBlocks {
                         gregtech.engine.prefix.BlockMaterialPrefix.blockDust,
                         gregtech.engine.material.GTMaterialRegistry.get(sandSpec.material()),
                         block);
-            RegistryObject<Item> item = GTBlocks.BLOCK_ITEMS.register(
+            RegisteredItem<Item> item = registrar.blockItem(
+                    REGISTRY_NAMESPACE,
                     blockId,
                     () -> gregtech.content.logistics.LongDistanceCatalog.find(blockId) != null
                             ? new gregtech.content.item.LongDistanceBlockItem(
@@ -108,7 +108,7 @@ public final class GTIconSetBlocks {
                 GTItems.bind(
                         gregtech.content.data.MaterialPrefix.plate,
                         gregtech.content.material.generated.WoodMaterials.WoodTreated,
-                        new RegisteredItem<>(item.getId(), item));
+                        item);
             }
             ALL.add(block);
         }
@@ -119,7 +119,7 @@ public final class GTIconSetBlocks {
             String blockId = spec[0];
             if (SKIP_IDS.contains(blockId)) continue;
             String sideTex = spec[1];
-            RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> switch (blockId) {
+            RegisteredBlock<Block> block = registrar.block(REGISTRY_NAMESPACE, blockId, () -> switch (blockId) {
                 case "log_dry" ->
                     new gregtech.content.block.wood.FallenLogBlock(
                             gregtech.content.block.wood.FallenLogBlock.Kind.DRY,
@@ -150,24 +150,20 @@ public final class GTIconSetBlocks {
                                             .strength(0.5F)
                                             .sound(SoundType.GRASS))
                             : new net.minecraft.world.level.block.RotatedPillarBlock(propertiesFor(sideTex));
-            });
-            GTBlocks.BLOCK_ITEMS.register(
-                    blockId, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
+            }, bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
             ALL.add(block);
         }
         for (String[] spec : BOTTOM_TOP_BLOCKS) {
             String blockId = spec[0];
             if (SKIP_IDS.contains(blockId)) continue;
             String sideTex = spec[1];
-            RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> {
+            RegisteredBlock<Block> block = registrar.block(REGISTRY_NAMESPACE, blockId, () -> {
                 var properties = propertiesFor(sideTex);
                 if (blockId.equals("grass") || blockId.startsWith("grassblock_"))
                     return new gregtech.content.block.GTGrassBlock(
                             properties.isValidSpawn((state, level, pos, entity) -> false), sideTex);
                 return new IconSetBlock(properties, sideTex);
-            });
-            GTBlocks.BLOCK_ITEMS.register(
-                    blockId, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
+            }, bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
             ALL.add(block);
         }
     }

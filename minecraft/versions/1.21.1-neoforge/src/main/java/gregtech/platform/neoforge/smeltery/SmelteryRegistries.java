@@ -191,7 +191,7 @@ public final class SmelteryRegistries {
                                     .toArray(net.minecraft.world.level.block.Block[]::new))
                     .build(null));
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         CHISEL = gregtech.content.registry.GTToolItems.CHISEL;
         PINCERS = gregtech.content.registry.GTToolItems.PINCERS;
         BRICK_BURNING_BOX = solidBox(registrar, InitialSmelteryDefinitions.brickBurningBox());
@@ -214,7 +214,6 @@ public final class SmelteryRegistries {
                         "[gregtech] Native original burning boxes: solid={} fluid/gas/fluidized={}",
                         SOLID_BOXES.size(),
                         FUEL_BOXES.size());
-        bus.addListener(SmelteryRegistries::capabilities);
         for (var spec : gregtech.engine.machine.OriginalCrucibleDefinitions.all()) {
             if (spec.id().equals("smelting_crucible_ceramic")) continue;
             var holder = crucible(registrar, spec);
@@ -238,7 +237,11 @@ public final class SmelteryRegistries {
                         CROSSINGS.size());
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Native original smelting crucibles: {}", CRUCIBLES.size());
+    }
+
+    public static void submit(IEventBus bus) {
         ENTITIES.register(bus);
+        bus.addListener(SmelteryRegistries::capabilities);
     }
 
     private static void capabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {

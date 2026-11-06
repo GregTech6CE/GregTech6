@@ -453,7 +453,7 @@ private GTCreativeTabs() {}
 //? if >=1.21.1 {
         /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("iconsets");
 *///?} else {
-        for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
+        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
             if (entry.isPresent()) return new ItemStack(entry.get());
         }
         return new ItemStack(Items.BRICK);

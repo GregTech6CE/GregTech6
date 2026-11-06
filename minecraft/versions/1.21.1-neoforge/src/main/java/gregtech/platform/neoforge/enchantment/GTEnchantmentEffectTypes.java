@@ -26,7 +26,7 @@ public final class GTEnchantmentEffectTypes {
 
     private GTEnchantmentEffectTypes() {}
 
-    public static void register(IEventBus bus) {
+    public static void submit(IEventBus bus) {
         TYPES.register(bus);
     }
 

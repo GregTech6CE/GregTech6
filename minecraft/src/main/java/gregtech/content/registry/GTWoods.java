@@ -1,62 +1,34 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.wood.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-
-//? if >=1.21.1 {
-//?} else {
-import net.minecraft.world.level.block.grower.AbstractTreeGrower;
-//?}
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
-*///?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
 
 import java.util.*;
 import java.util.function.Supplier;
 
 /** GT6 tree/wood system: logs, stripped logs, planks, leaves and saplings by species. */
 public final class GTWoods {
-//? if >=1.21.1 {
-    /*private static final List<DeferredHolder<Block,? extends Block>> ALL = new ArrayList<>();
-*///?} else {
-    private static final List<RegistryObject<? extends Block>> ALL = new ArrayList<>();
-//?}
+    private static final List<RegisteredBlock<? extends Block>> ALL = new ArrayList<>();
 
     // The currently registered species each have five basic wood blocks.
-//? if >=1.21.1 {
-    /*private static final Map<WoodSpecies, DeferredHolder<Block,WoodLogBlock>> LOGS = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, DeferredHolder<Block,WoodPlanksBlock>> PLANKS = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, DeferredHolder<Block,WoodLeavesBlock>> LEAVES = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, DeferredHolder<Block,WoodSaplingBlock>> SAPLINGS = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, DeferredHolder<Block,WoodStrippedLogBlock>> STRIPPED_LOGS = new LinkedHashMap<>();
-*///?} else {
-    private static final Map<WoodSpecies, RegistryObject<WoodLogBlock>> LOGS = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, RegistryObject<WoodPlanksBlock>> PLANKS = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, RegistryObject<WoodLeavesBlock>> LEAVES = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, RegistryObject<WoodSaplingBlock>> SAPLINGS = new LinkedHashMap<>();
-    private static final Map<WoodSpecies, RegistryObject<WoodStrippedLogBlock>> STRIPPED_LOGS = new LinkedHashMap<>();
-//?}
+    private static final Map<WoodSpecies, RegisteredBlock<WoodLogBlock>> LOGS = new LinkedHashMap<>();
+    private static final Map<WoodSpecies, RegisteredBlock<WoodPlanksBlock>> PLANKS = new LinkedHashMap<>();
+    private static final Map<WoodSpecies, RegisteredBlock<WoodLeavesBlock>> LEAVES = new LinkedHashMap<>();
+    private static final Map<WoodSpecies, RegisteredBlock<WoodSaplingBlock>> SAPLINGS = new LinkedHashMap<>();
+    private static final Map<WoodSpecies, RegisteredBlock<WoodStrippedLogBlock>> STRIPPED_LOGS = new LinkedHashMap<>();
     /** GT6 BlocksGT.Planks2.mSlabs[1], meta 0: the Blue Spruce shelf support in dungeon libraries. */
-//? if >=1.21.1 {
-    /*public static DeferredHolder<Block,WoodSlabBlock> SLAB_BLUE_SPRUCE;
-*///?} else {
-    public static RegistryObject<WoodSlabBlock> SLAB_BLUE_SPRUCE;
-//?}
+    public static RegisteredBlock<WoodSlabBlock> SLAB_BLUE_SPRUCE;
 
     private GTWoods() {}
 
-//? if >=1.21.1 {
-    /*public static List<DeferredHolder<Block,? extends Block>> all() { return Collections.unmodifiableList(ALL); }
-*///?} else {
-    public static List<RegistryObject<? extends Block>> all() { return Collections.unmodifiableList(ALL); }
-//?}
+    public static List<RegisteredBlock<? extends Block>> all() { return Collections.unmodifiableList(ALL); }
 
     public static WoodLogBlock log(WoodSpecies s) { return LOGS.get(s).get(); }
     public static WoodPlanksBlock planks(WoodSpecies s) { return PLANKS.get(s).get(); }
@@ -66,29 +38,21 @@ public final class GTWoods {
 
     /** Reverse lookup used by worldgen/tests: the species of a registered leaves block, else {@code null}. */
     public static WoodSpecies leavesOf(Block block) {
-//? if >=1.21.1 {
-        /*for (Map.Entry<WoodSpecies, DeferredHolder<Block,WoodLeavesBlock>> e : LEAVES.entrySet()) {
-*///?} else {
-        for (Map.Entry<WoodSpecies, RegistryObject<WoodLeavesBlock>> e : LEAVES.entrySet()) {
-//?}
+        for (Map.Entry<WoodSpecies, RegisteredBlock<WoodLeavesBlock>> e : LEAVES.entrySet()) {
             if (e.getValue().get() == block) return e.getKey();
         }
         return null;
     }
 
-//? if >=1.21.1 {
-    /*private static <T extends Block> DeferredHolder<Block,T> reg(String id, Supplier<T> blockSupplier) {
-        DeferredHolder<Block,T> ro = GTBlocks.BLOCKS.register(id, blockSupplier);
-*///?} else {
-    private static <T extends Block> RegistryObject<T> reg(String id, Supplier<T> blockSupplier) {
-        RegistryObject<T> ro = GTBlocks.BLOCKS.register(id, blockSupplier);
-//?}
+    private static <T extends Block> RegisteredBlock<T> reg(
+            ContentRegistrar registrar, String id, Supplier<T> blockSupplier) {
+        RegisteredBlock<T> ro = registrar.block(
+                REGISTRY_NAMESPACE, id, blockSupplier, bare -> new BlockItem(bare, new Item.Properties()));
         ALL.add(ro);
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(ro.get(), new Item.Properties()));
         return ro;
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (WoodSpecies sp : WoodSpecies.values()) {
             BlockBehaviour.Properties base = BlockBehaviour.Properties.of()
                     .mapColor(MapColor.WOOD)
@@ -96,17 +60,17 @@ public final class GTWoods {
                     .sound(SoundType.WOOD);
             final BlockBehaviour.Properties p = sp.fireproof() ? base.ignitedByLava() : base;
 
-            LOGS.put(sp, reg("log_" + sp.id(), () -> new WoodLogBlock(sp, p)));
-            PLANKS.put(sp, reg("planks_" + sp.id(), () -> new WoodPlanksBlock(sp, p)));
-            LEAVES.put(sp, reg("leaves_" + sp.id(), () -> new WoodLeavesBlock(sp,
+            LOGS.put(sp, reg(registrar, "log_" + sp.id(), () -> new WoodLogBlock(sp, p)));
+            PLANKS.put(sp, reg(registrar, "planks_" + sp.id(), () -> new WoodPlanksBlock(sp, p)));
+            LEAVES.put(sp, reg(registrar, "leaves_" + sp.id(), () -> new WoodLeavesBlock(sp,
                     BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.2f).randomTicks().sound(SoundType.GRASS).noOcclusion())));
-            SAPLINGS.put(sp, reg("sapling_" + sp.id(), () -> new WoodSaplingBlock(sp,
+            SAPLINGS.put(sp, reg(registrar, "sapling_" + sp.id(), () -> new WoodSaplingBlock(sp,
                     new gregtech.content.worldgen.GTTreeGrower(sp),
                     BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS))));
-            STRIPPED_LOGS.put(sp, reg("stripped_log_" + sp.id(), () -> new WoodStrippedLogBlock(p)));
+            STRIPPED_LOGS.put(sp, reg(registrar, "stripped_log_" + sp.id(), () -> new WoodStrippedLogBlock(p)));
         }
         for (String wood : gregtech.content.plant.WoodSlabCatalog.WOODS) {
-            var slab = reg("slab_" + wood, () -> new WoodSlabBlock(BlockBehaviour.Properties.of()
+            var slab = reg(registrar, "slab_" + wood, () -> new WoodSlabBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD)));
             if (wood.equals("bluespruce")) SLAB_BLUE_SPRUCE = slab;
         }

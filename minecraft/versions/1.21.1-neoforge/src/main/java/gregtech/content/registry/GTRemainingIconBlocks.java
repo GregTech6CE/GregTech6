@@ -1,19 +1,22 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.IconSetBlock;
 import java.util.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** Complete remaining original icon identities. Existing typed registrations retain ownership. */
 public final class GTRemainingIconBlocks {
     private GTRemainingIconBlocks() {}
 
-    private static final List<DeferredHolder<Block, Block>> ALL = new ArrayList<>();
+    private static final List<RegisteredBlock<Block>> ALL = new ArrayList<>();
 
-    public static List<DeferredHolder<Block, Block>> all() {
+    public static List<RegisteredBlock<Block>> all() {
         return List.copyOf(ALL);
     }
 
@@ -21,13 +24,13 @@ public final class GTRemainingIconBlocks {
         for (var h : registry.getEntries()) ids.add(h.getId().getPath());
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         Set<String> seen = new HashSet<>(buildSkipIds());
         queued(seen, GTBlocks.BLOCKS);
         seen.addAll(gregtech.platform.neoforge.logistics.LogisticsRegistries.queuedBlockIds());
         for (String icon : gregtech.content.plant.IconPlantCatalog.BLOCK_ICONS) {
             String id = blockId(icon);
-            if (seen.add(id)) add(id, () -> createBlock(icon));
+            if (seen.add(id)) add(registrar, id, () -> createBlock(icon));
         }
         for (var v : gregtech.content.plant.IconColumnCatalog.all()) {
             String id = v[0];
@@ -40,7 +43,7 @@ public final class GTRemainingIconBlocks {
                     case "bale_grass_rotten" -> gregtech.content.block.plant.BaleBlock.Stage.ROTTEN;
                     default -> gregtech.content.block.plant.BaleBlock.Stage.CROP;
                 };
-                add(
+                add(registrar, 
                         id,
                         () -> new gregtech.content.block.plant.BaleBlock(
                                 stage,
@@ -49,11 +52,11 @@ public final class GTRemainingIconBlocks {
                     .contains(id)) {
                 var kind = gregtech.content.block.wood.FallenLogBlock.Kind.valueOf(
                         id.substring(4).toUpperCase(java.util.Locale.ROOT));
-                add(
+                add(registrar, 
                         id,
                         () -> new gregtech.content.block.wood.FallenLogBlock(
                                 kind, propertiesFor(v[1]).strength(1f, 3f)));
-            } else add(id, () -> new RotatedPillarBlock(propertiesFor(v[1])));
+            } else add(registrar, id, () -> new RotatedPillarBlock(propertiesFor(v[1])));
         }
         com.mojang.logging.LogUtils.getLogger()
                 .info(
@@ -62,12 +65,12 @@ public final class GTRemainingIconBlocks {
                         ALL.stream().map(h -> h.getId().getPath()).toList());
     }
 
-    private static void add(String id, java.util.function.Supplier<Block> factory) {
-        var b = GTBlocks.BLOCKS.register(id, factory);
-        GTBlocks.BLOCK_ITEMS.register(
+    private static void add(ContentRegistrar registrar, String id, java.util.function.Supplier<Block> factory) {
+        var b = registrar.block(
+                REGISTRY_NAMESPACE,
                 id,
-                () -> new net.minecraft.world.item.BlockItem(
-                        b.get(), new net.minecraft.world.item.Item.Properties().stacksTo(64)));
+                factory,
+                bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
         ALL.add(b);
     }
 

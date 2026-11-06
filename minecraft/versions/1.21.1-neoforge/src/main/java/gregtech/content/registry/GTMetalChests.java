@@ -1,21 +1,23 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.*;
 import gregtech.content.block.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class GTMetalChests {
 
     private GTMetalChests() {}
 
-    public static final java.util.List<DeferredHolder<Block, MetalChestBlock>> METAL = new java.util.ArrayList<>(),
+    public static final java.util.List<RegisteredBlock<MetalChestBlock>> METAL = new java.util.ArrayList<>(),
             WOOD = new java.util.ArrayList<>();
 
-    public static java.util.List<DeferredHolder<Block, ? extends MetalChestBlock>> all() {
-        var out = new java.util.ArrayList<DeferredHolder<Block, ? extends MetalChestBlock>>();
+    public static java.util.List<RegisteredBlock<? extends MetalChestBlock>> all() {
+        var out = new java.util.ArrayList<RegisteredBlock<? extends MetalChestBlock>>();
         out.addAll(METAL);
         out.addAll(WOOD);
         out.addAll(GTLootChests.LOOT_CHESTS);
@@ -27,9 +29,10 @@ public final class GTMetalChests {
         throw new IllegalArgumentException("No chest for " + material.getName());
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         for (var spec : GTStorageMetals.ALL) {
-            var registeredChest = GTBlocks.BLOCKS.register(
+            var registeredChest = registrar.block(
+                    REGISTRY_NAMESPACE,
                     "chest_" + spec.suffix(),
                     () -> new MetalChestBlock(
                             spec.material(),
@@ -37,13 +40,11 @@ public final class GTMetalChests {
                                     .mapColor(MapColor.METAL)
                                     .strength(spec.hardness(), spec.resistance())
                                     .requiresCorrectToolForDrops()
-                                    .noOcclusion()));
+                                    .noOcclusion()),
+                    bare -> new MetalChestBlockItem(bare, new Item.Properties()));
             METAL.add(registeredChest);
-            GTBlocks.BLOCK_ITEMS.register(
-                    "chest_" + spec.suffix(),
-                    () -> new MetalChestBlockItem(
-                            registeredChest.get(), new net.minecraft.world.item.Item.Properties()));
-            var registeredWoodChest = GTBlocks.BLOCKS.register(
+            var registeredWoodChest = registrar.block(
+                    REGISTRY_NAMESPACE,
                     "reinforced_wood_chest_" + spec.suffix(),
                     () -> new MetalChestBlock(
                             spec.material(),
@@ -52,12 +53,9 @@ public final class GTMetalChests {
                                     .mapColor(MapColor.WOOD)
                                     .sound(SoundType.WOOD)
                                     .strength(spec.hardness() / 2, spec.resistance() / 2)
-                                    .noOcclusion()));
+                                    .noOcclusion()),
+                    bare -> new MetalChestBlockItem(bare, new Item.Properties().stacksTo(16)));
             WOOD.add(registeredWoodChest);
-            GTBlocks.BLOCK_ITEMS.register(
-                    "reinforced_wood_chest_" + spec.suffix(),
-                    () -> new MetalChestBlockItem(
-                            registeredWoodChest.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
         }
     }
 }

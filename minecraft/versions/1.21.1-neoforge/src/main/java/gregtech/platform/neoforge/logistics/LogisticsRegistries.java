@@ -30,7 +30,7 @@ public final class LogisticsRegistries {
 
     private LogisticsRegistries() {}
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         WIRE = registrar.block(
                 REGISTRY_NAMESPACE,
                 "logistics_wire",
@@ -39,6 +39,9 @@ public final class LogisticsRegistries {
                         .requiresCorrectToolForDrops()
                         .sound(net.minecraft.world.level.block.SoundType.METAL)),
                 block -> new BlockItem(block, new Item.Properties()));
+    }
+
+    public static void submit(IEventBus bus) {
         TYPES.register(bus);
     }
 }

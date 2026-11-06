@@ -250,7 +250,7 @@ public class CreativeTabBootstrap {
             for (var storage : gregtech.content.registry.GTStorage.LOGISTICS_MASS_STORAGES) {
                 if (storage.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(storage.get()));
             }
-            for (var ro : new net.minecraftforge.registries.RegistryObject[]{
+            for (var ro : new gregtech.content.registry.RegisteredBlock[]{
                     gregtech.content.registry.GTStorage.LOCKER,
                     gregtech.content.registry.GTStorage.ENDER_GARBAGE,
                     gregtech.content.registry.GTStorage.ENDER_GARBAGE_DUMP}) {
@@ -390,7 +390,7 @@ public class CreativeTabBootstrap {
         for (var entry : GTTechnological.all()) {
             if (entry.isPresent()) event.accept(new ItemStack(entry.get(), 1));
         }
-        for (var entry : new net.minecraftforge.registries.RegistryObject[]{GTStorage.USB_SWITCH, GTStorage.HDD_SWITCH}) {
+        for (var entry : new gregtech.content.registry.RegisteredBlock[]{GTStorage.USB_SWITCH, GTStorage.HDD_SWITCH}) {
             if (entry != null && entry.isPresent())
                 event.accept(new ItemStack(((net.minecraft.world.level.block.Block) entry.get()).asItem(), 1));
         }

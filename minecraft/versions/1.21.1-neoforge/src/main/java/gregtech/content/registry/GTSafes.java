@@ -1,18 +1,21 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.*;
 import gregtech.content.block.inventory.SafeBlock;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class GTSafes {
     private GTSafes() {}
 
-    private static final java.util.List<DeferredHolder<Block, SafeBlock>> ALL = new java.util.ArrayList<>();
+    private static final java.util.List<RegisteredBlock<SafeBlock>> ALL = new java.util.ArrayList<>();
 
-    public static java.util.List<DeferredHolder<Block, SafeBlock>> all() {
+    public static java.util.List<RegisteredBlock<SafeBlock>> all() {
         return java.util.List.copyOf(ALL);
     }
 
@@ -21,13 +24,14 @@ public final class GTSafes {
         return null;
     }
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         for (var spec : GTStorageMetals.ALL)
             for (boolean locked : new boolean[] {false, true}) {
                 String id = !locked && spec.suffix().equals("steel")
                         ? "safe"
                         : (locked ? "key_safe_" : "safe_") + spec.suffix();
-                var b = GTBlocks.BLOCKS.register(
+                var b = registrar.block(
+                        REGISTRY_NAMESPACE,
                         id,
                         () -> new SafeBlock(
                                 spec.material(),
@@ -35,12 +39,9 @@ public final class GTSafes {
                                 BlockBehaviour.Properties.of()
                                         .mapColor(MapColor.METAL)
                                         .strength(spec.hardness() * 2, spec.resistance() * 2)
-                                        .requiresCorrectToolForDrops()));
+                                        .requiresCorrectToolForDrops()),
+                        bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
                 ALL.add(b);
-                GTBlocks.BLOCK_ITEMS.register(
-                        id,
-                        () -> new net.minecraft.world.item.BlockItem(
-                                b.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
             }
     }
 }

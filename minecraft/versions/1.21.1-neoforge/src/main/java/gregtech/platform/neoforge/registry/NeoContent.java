@@ -37,6 +37,7 @@ import gregtech.content.registry.GTZpmArtifacts;
 import gregtech.content.transport.HopperRegistries;
 import gregtech.content.transport.fluid.FluidTransportRegistries;
 import gregtech.content.worldgen.GTFeatures;
+import gregtech.platform.neoforge.enchantment.GTEnchantmentEffectTypes;
 import gregtech.platform.neoforge.fluid.FluidRegistries;
 import gregtech.platform.neoforge.logistics.LogisticsRegistries;
 import gregtech.platform.neoforge.logistics.StorageRegistries;
@@ -57,46 +58,54 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
     }
 
     public void bootstrap() {
-        ContentRegistration.bootstrap(new NeoContentRegistrar(), this);
+        ContentRegistration.bootstrap(ContentRegistrar.shared(), this);
     }
 
     @Override
     public void blocks(ContentRegistrar registrar) {
-        FluidRegistries.register(registrar, bus);
-        GTSpecialOreBlocks.registerAll();
-        GTPlants.registerAll();
-        GTBlackSands.initialize();
-        GTGrassSoils.initialize();
-        GTSafes.initialize();
-        GTCraftingTables.initialize();
-        GTStorageContainers.initialize();
-        GTRelaysFilters.initialize();
-        GTManualStations.initialize();
-        GTZpmArtifacts.initialize();
-        GTLogisticsTank.initialize();
-        GTRemainingDecor.initialize();
-        GTMetalChests.initialize();
-        GTBumbleBlocks.initialize();
-        GTSurfaceBlocks.initialize();
+        FluidRegistries.register(registrar);
+        GTSpecialOreBlocks.registerAll(registrar);
+        GTPlants.registerAll(registrar);
+        GTBlackSands.initialize(registrar);
+        GTGrassSoils.initialize(registrar);
+        GTSafes.initialize(registrar);
+        GTCraftingTables.initialize(registrar);
+        GTStorageContainers.initialize(registrar);
+        GTRelaysFilters.initialize(registrar);
+        GTManualStations.initialize(registrar);
+        GTZpmArtifacts.initialize(registrar);
+        GTLogisticsTank.initialize(registrar);
+        GTRemainingDecor.initialize(registrar);
+        GTMetalChests.initialize(registrar);
+        GTBumbleBlocks.initialize(registrar);
+        GTSurfaceBlocks.initialize(registrar);
     }
 
     @Override
     public void machines(ContentRegistrar registrar) {
         GTToolBlocks.registerAll(registrar);
         AddonSensorRegistration.register(registrar);
-        StorageRegistries.register(registrar, bus);
-        LogisticsRegistries.register(registrar, bus);
+        StorageRegistries.register(registrar);
+        LogisticsRegistries.register(registrar);
         GTSounds.bootstrap();
-        FluidTransportRegistries.register(registrar, bus);
-        BasicMachineRegistries.register(registrar, bus);
-        SmelteryRegistries.register(registrar, bus);
-        HopperRegistries.register(registrar, bus);
+        FluidTransportRegistries.register(registrar);
+        BasicMachineRegistries.register(registrar);
+        SmelteryRegistries.register(registrar);
+        HopperRegistries.register(registrar);
         // Last: fills the icon ids no earlier family claimed, so it must follow every block family.
-        GTRemainingIconBlocks.initialize();
+        GTRemainingIconBlocks.initialize(registrar);
     }
 
     /** Attaches every shared, addon and platform content register exactly once. */
     public void submit() {
+        FluidRegistries.submit(bus);
+        StorageRegistries.submit(bus);
+        LogisticsRegistries.submit(bus);
+        FluidTransportRegistries.submit(bus);
+        BasicMachineRegistries.submit(bus);
+        SmelteryRegistries.submit(bus);
+        HopperRegistries.submit(bus);
+        GTEnchantmentEffectTypes.submit(bus);
         GTItems.ITEMS.register(bus);
         GTItems.registerAddonItems(bus);
         GTBlocks.BLOCKS.register(bus);

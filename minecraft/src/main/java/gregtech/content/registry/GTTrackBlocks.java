@@ -1,23 +1,19 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.TrackBlock;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
-*///?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * GT6's {@code Loader_Rails} tracks ({@code Loader_Rails:41-72}): ten materials, each as a plain
@@ -50,12 +46,8 @@ public final class GTTrackBlocks {
     }
 
     /** One registered track: port id, GT6 parameters and the block. */
-    public record Track(String id, Family family, String material, float speed, float resistance,
-//? if >=1.21.1 {
-            /*DeferredHolder<Block, Block> block) {
-*///?} else {
-            RegistryObject<Block> block) {
-//?}
+    public record Track(
+            String id, Family family, String material, float speed, float resistance, RegisteredBlock<Block> block) {
         /** GT6's "Aluminium Booster Track". */
         public String displayName() {
             String base = material.substring(0, 1).toUpperCase(Locale.ROOT) + material.substring(1);
@@ -72,11 +64,11 @@ public final class GTTrackBlocks {
      * the booster recipe uses as its "G" ingredient. This port registers the three families per material.
      */
     private static final List<Track> TRACKS = new ArrayList<>();
+
     private static final Map<String, Track> BY_ID = new LinkedHashMap<>();
     private static boolean registered;
 
-    private GTTrackBlocks() {
-    }
+    private GTTrackBlocks() {}
 
     /** The thirty material tracks in this port's registration order. */
     public static List<Track> all() {
@@ -99,7 +91,7 @@ public final class GTTrackBlocks {
     }
 
     /** Registers the thirty tracks; idempotent. */
-    public static synchronized void registerAll() {
+    public static synchronized void registerAll(ContentRegistrar registrar) {
         if (registered) return;
         registered = true;
         for (var row : gregtech.content.transport.TrackCatalog.MATERIALS) {
@@ -107,27 +99,29 @@ public final class GTTrackBlocks {
             float speed = row.speed();
             float resistance = row.resistance();
             String slug = material.toLowerCase(Locale.ROOT);
-            registerTrack("track_" + slug, Family.STRAIGHT, material, speed, resistance);
-            registerTrack("track_booster_" + slug, Family.BOOSTER, material, speed, resistance);
-            registerTrack("track_detector_" + slug, Family.DETECTOR, material, speed, resistance);
+            registerTrack(registrar, "track_" + slug, Family.STRAIGHT, material, speed, resistance);
+            registerTrack(registrar, "track_booster_" + slug, Family.BOOSTER, material, speed, resistance);
+            registerTrack(registrar, "track_detector_" + slug, Family.DETECTOR, material, speed, resistance);
         }
     }
 
-    private static void registerTrack(String id, Family family, String material, float speed, float resistance) {
-        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+    private static void registerTrack(
+            ContentRegistrar registrar, String id, Family family, String material, float speed, float resistance) {
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of()
+                .mapColor(MapColor.METAL)
                 .noCollission()
                 // GT6 keeps the vanilla rail hardness and uses the material's explosion resistance.
-                .strength(0.7F, resistance).sound(SoundType.METAL);
-//? if >=1.21.1 {
-        /*DeferredHolder<Block, Block> block = GTBlocks.BLOCKS.register(id, () -> switch (family) {
-*///?} else {
-        RegistryObject<Block> block = GTBlocks.BLOCKS.register(id, () -> switch (family) {
-//?}
-            case STRAIGHT -> new TrackBlock.Straight(properties, speed);
-            case BOOSTER -> new TrackBlock.Booster(properties, speed);
-            case DETECTOR -> new TrackBlock.Detector(properties, speed);
-        });
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
+                .strength(0.7F, resistance)
+                .sound(SoundType.METAL);
+        RegisteredBlock<Block> block = registrar.block(
+                REGISTRY_NAMESPACE,
+                id,
+                () -> switch (family) {
+                    case STRAIGHT -> new TrackBlock.Straight(properties, speed);
+                    case BOOSTER -> new TrackBlock.Booster(properties, speed);
+                    case DETECTOR -> new TrackBlock.Detector(properties, speed);
+                },
+                bare -> new BlockItem(bare, new Item.Properties()));
         Track track = new Track(id, family, material, speed, resistance, block);
         TRACKS.add(track);
         BY_ID.put(id, track);

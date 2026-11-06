@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.*;
 import gregtech.content.block.tool.BumbliaryBlock;
 import java.util.*;
@@ -23,24 +25,27 @@ public final class GTBumbleBlocks {
         return HIVES.values().stream().map(RegisteredBlock::get).toArray(Block[]::new);
     }
 
-    public static void initializeHives() {
+    public static void initializeHives(ContentRegistrar registrar) {
         if (!HIVES.isEmpty()) throw new IllegalStateException("Hives registered twice");
         for (var color : DyeColor.values())
             HIVES.put(
                     color,
-                    RegisteredBlock.register(
+                    registrar.block(
+                            REGISTRY_NAMESPACE,
                             "bumble_hive_" + color.getName(),
                             () -> new FixedBumbleHiveBlock(BumbleHiveBlock.defaultProperties(), color)));
     }
 
-    public static void initializeApiaries() {
-        if (BUMBLIARY != null) throw new IllegalStateException("Apiaries registered twice");
-        BUMBLIARY = apiary("bumbliary", false, MapColor.WOOD, 5);
-        ADVANCED_BUMBLIARY = apiary("advanced_bumbliary", true, MapColor.METAL, 6);
+    public static void initializeApiaries(ContentRegistrar registrar) {
+        if (BUMBLIARY != null) return;
+        BUMBLIARY = apiary(registrar, "bumbliary", false, MapColor.WOOD, 5);
+        ADVANCED_BUMBLIARY = apiary(registrar, "advanced_bumbliary", true, MapColor.METAL, 6);
     }
 
-    private static RegisteredBlock<BumbliaryBlock> apiary(String id, boolean advanced, MapColor color, float hardness) {
-        return RegisteredBlock.register(
+    private static RegisteredBlock<BumbliaryBlock> apiary(
+            ContentRegistrar registrar, String id, boolean advanced, MapColor color, float hardness) {
+        return registrar.block(
+                REGISTRY_NAMESPACE,
                 id,
                 () -> new BumbliaryBlock(
                         id,
@@ -52,8 +57,8 @@ public final class GTBumbleBlocks {
                 block -> new BlockItem(block, new Item.Properties().stacksTo(16)));
     }
 
-    public static void initialize() {
-        initializeHives();
-        initializeApiaries();
+    public static void initialize(ContentRegistrar registrar) {
+        initializeHives(registrar);
+        initializeApiaries(registrar);
     }
 }

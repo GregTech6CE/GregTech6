@@ -33,7 +33,7 @@ public final class HopperRegistries {
         return java.util.Collections.unmodifiableList(QUEUES);
     }
 
-    public static void register(ContentRegistrar registrar, IEventBus bus) {
+    public static void register(ContentRegistrar registrar) {
         if (!HOPPERS.isEmpty() || !QUEUES.isEmpty()) throw new IllegalStateException("Hoppers registered twice");
         for (var row : HopperCatalog.ALL) {
             var spec = row.spec();
@@ -53,6 +53,9 @@ public final class HopperRegistries {
                 HOPPERS.add(block);
             }
         }
+    }
+
+    public static void submit(IEventBus bus) {
         bus.addListener(HopperRegistries::capabilities);
     }
 

@@ -2,16 +2,14 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.block.misc.DungeonPortalBlock;
 import gregtech.content.plant.BedrockFlowers;
 
 //? if >=1.21.1 {
-//?} else {
+/*import net.minecraft.core.registries.BuiltInRegistries;
+*///?} else {
 import gregtech.GregTech;
+import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,13 +19,6 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
-import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,45 +34,23 @@ import java.util.function.Supplier;
 public final class GTDungeonBlocks {
 
     /** GT6's {@code MultiTileEntityMiniPortalNether} (32766) as a craftable cross-dimension relay. */
-//? if >=1.21.1 {
-    /*public static DeferredHolder<Block,DungeonPortalBlock> PORTAL_NETHER;
-*///?} else {
-    public static RegistryObject<DungeonPortalBlock> PORTAL_NETHER;
-//?}
+    public static RegisteredBlock<DungeonPortalBlock> PORTAL_NETHER;
     /** GT6's {@code MultiTileEntityMiniPortalEnd} (32000) as a craftable cross-dimension relay. */
-//? if >=1.21.1 {
-    /*public static DeferredHolder<Block,DungeonPortalBlock> PORTAL_END;
-*///?} else {
-    public static RegistryObject<DungeonPortalBlock> PORTAL_END;
-//?}
+    public static RegisteredBlock<DungeonPortalBlock> PORTAL_END;
 
-//? if >=1.21.1 {
-    /*private static final List<DeferredHolder<Block,? extends Block>> ALL = new ArrayList<>();
-    private static final Map<String, DeferredHolder<Block,FlowerPotBlock>> POTTED_FLOWERS = new LinkedHashMap<>();
-*///?} else {
-    private static final List<RegistryObject<? extends Block>> ALL = new ArrayList<>();
-    private static final Map<String, RegistryObject<FlowerPotBlock>> POTTED_FLOWERS = new LinkedHashMap<>();
-//?}
+    private static final List<RegisteredBlock<? extends Block>> ALL = new ArrayList<>();
+    private static final Map<String, RegisteredBlock<FlowerPotBlock>> POTTED_FLOWERS = new LinkedHashMap<>();
 
     private GTDungeonBlocks() {}
 
-//? if >=1.21.1 {
-    /*public static List<DeferredHolder<Block,? extends Block>> all() {
-*///?} else {
-    public static List<RegistryObject<? extends Block>> all() {
-//?}
+    public static List<RegisteredBlock<? extends Block>> all() {
         return Collections.unmodifiableList(ALL);
     }
 
     /** One GT6 indicator flower in a vanilla-shaped pot; the pot itself is not a separate inventory item. */
     public static Block pottedFlower(String flowerId) {
-//? if >=1.21.1 {
-        /*DeferredHolder<Block,FlowerPotBlock> pot = POTTED_FLOWERS.get(flowerId);
-        if (pot == null || !pot.isBound())
-*///?} else {
-        RegistryObject<FlowerPotBlock> pot = POTTED_FLOWERS.get(flowerId);
+        RegisteredBlock<FlowerPotBlock> pot = POTTED_FLOWERS.get(flowerId);
         if (pot == null || !pot.isPresent())
-//?}
             throw new IllegalStateException("Missing dungeon potted flower " + flowerId);
         return pot.get();
     }
@@ -114,31 +83,28 @@ public final class GTDungeonBlocks {
                 .lightLevel(state -> state.getValue(DungeonPortalBlock.ACTIVE) ? 11 : 0);
     }
 
-//? if >=1.21.1 {
-    /*private static DeferredHolder<Block,DungeonPortalBlock> reg(String id, Supplier<DungeonPortalBlock> block) {
-        DeferredHolder<Block,DungeonPortalBlock> registered = GTBlocks.BLOCKS.register(id, block);
-*///?} else {
-    private static RegistryObject<DungeonPortalBlock> reg(String id, Supplier<DungeonPortalBlock> block) {
-        RegistryObject<DungeonPortalBlock> registered = GTBlocks.BLOCKS.register(id, block);
-//?}
+    private static RegisteredBlock<DungeonPortalBlock> reg(
+            ContentRegistrar registrar, String id, Supplier<DungeonPortalBlock> block) {
+        RegisteredBlock<DungeonPortalBlock> registered = registrar.block(
+                REGISTRY_NAMESPACE,
+                id,
+                block,
+                bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
         ALL.add(registered);
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(registered.get(), new Item.Properties().stacksTo(16)));
         return registered;
     }
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         if (!ALL.isEmpty()) return;
-        PORTAL_NETHER = reg("dungeon_portal_nether",
+        PORTAL_NETHER = reg(registrar, "dungeon_portal_nether",
                 () -> new DungeonPortalBlock(DungeonPortalBlock.Target.NETHER, properties(50.0F, 1200.0F)));
-        PORTAL_END = reg("dungeon_portal_end",
+        PORTAL_END = reg(registrar, "dungeon_portal_end",
                 () -> new DungeonPortalBlock(DungeonPortalBlock.Target.END, properties(3.0F, 9.0F)));
         for (BedrockFlowers.Flower flower : BedrockFlowers.ALL) {
             String id = flower.id();
-//? if >=1.21.1 {
-            /*DeferredHolder<Block,FlowerPotBlock> potted = GTBlocks.BLOCKS.register("potted_" + id,
-*///?} else {
-            RegistryObject<FlowerPotBlock> potted = GTBlocks.BLOCKS.register("potted_" + id,
-//?}
+            RegisteredBlock<FlowerPotBlock> potted = registrar.blockWithoutItem(
+                    REGISTRY_NAMESPACE,
+                    "potted_" + id,
                     () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT,
 //? if >=1.21.1 {
                             /*() -> BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,id)),

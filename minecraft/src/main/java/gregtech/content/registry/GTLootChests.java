@@ -1,17 +1,13 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.loot.GTLootTables;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
-*///?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * GT6's configurable loot chests — one block per loot table.
@@ -37,30 +33,27 @@ public final class GTLootChests {
      */
     private static final java.util.List<String> TABLES = gregtech.content.loot.LootChestCatalog.ENTRIES;
 
-//? if >=1.21.1 {
-    /*public static final List<DeferredHolder<net.minecraft.world.level.block.Block,gregtech.content.block.inventory.LootChestBlock>> LOOT_CHESTS =
-*///?} else {
-    public static final List<RegistryObject<gregtech.content.block.inventory.LootChestBlock>> LOOT_CHESTS =
-//?}
+    public static final List<RegisteredBlock<gregtech.content.block.inventory.LootChestBlock>> LOOT_CHESTS =
             new ArrayList<>();
 
     private GTLootChests() {}
 
-    public static void registerAll() {
+    public static void registerAll(ContentRegistrar registrar) {
         for (String entry : TABLES) {
             String suffix = entry.substring(0, entry.indexOf('|'));
             String table = entry.substring(entry.indexOf('|') + 1);
-            var chest = GTBlocks.BLOCKS.register("loot_chest_" + suffix, () ->
-                    new gregtech.content.block.inventory.LootChestBlock(
-                            gregtech.content.material.Materials.Steel, table,
+            var chest = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    "loot_chest_" + suffix,
+                    () -> new gregtech.content.block.inventory.LootChestBlock(
+                            gregtech.content.material.Materials.Steel,
+                            table,
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.METAL)
                                     .strength(4.0f, 6.0f)
                                     .requiresCorrectToolForDrops()
-                                    .noOcclusion()));
-            GTBlocks.BLOCK_ITEMS.register("loot_chest_" + suffix, () ->
-                    new gregtech.content.block.inventory.MetalChestBlockItem(chest.get(),
-                            new Item.Properties()));
+                                    .noOcclusion()),
+                    block -> new gregtech.content.block.inventory.MetalChestBlockItem(block, new Item.Properties()));
             LOOT_CHESTS.add(chest);
         }
     }

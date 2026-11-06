@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.LootCrateBlock;
 import gregtech.content.block.MaterialCrateBlock;
 import gregtech.content.block.misc.*;
@@ -19,34 +21,39 @@ public final class SharedDecorBlocks {
     public static RegisteredBlock<RoadStripeRailBlock> RAILROAD;
     public static RegisteredBlock<GregLanternBlock> GREG_LANTERN;
 
-    public static void initialize() {
+    public static void initialize(ContentRegistrar registrar) {
         if (CRATE != null) throw new IllegalStateException("Decorative blocks registered twice");
-        CRATE = RegisteredBlock.register(
+        CRATE = registrar.block(
+                REGISTRY_NAMESPACE,
                 "crate",
                 () -> new gregtech.content.block.CrateBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.WOOD)
                         .strength(1, 3)
                         .sound(SoundType.WOOD)
                         .ignitedByLava()));
-        LOOT_CRATE = RegisteredBlock.register(
+        LOOT_CRATE = registrar.block(
+                REGISTRY_NAMESPACE,
                 "loot_crate",
                 () -> new LootCrateBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.WOOD)
                         .strength(1, 3)
                         .sound(SoundType.WOOD)));
-        MATERIAL_CRATE = RegisteredBlock.register(
+        MATERIAL_CRATE = registrar.block(
+                REGISTRY_NAMESPACE,
                 "material_crate",
                 () -> new MaterialCrateBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.WOOD)
                         .strength(1, 0.2F)
                         .sound(SoundType.WOOD)));
-        RAILROAD = RegisteredBlock.register(
+        RAILROAD = registrar.block(
+                REGISTRY_NAMESPACE,
                 "railroad",
                 () -> new RoadStripeRailBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
                         .strength(.35F, 20F)
                         .sound(SoundType.METAL)));
-        GREG_LANTERN = RegisteredBlock.register(
+        GREG_LANTERN = registrar.block(
+                REGISTRY_NAMESPACE,
                 "greg_lantern",
                 () -> new GregLanternBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.COLOR_ORANGE)

@@ -36,7 +36,9 @@
 
 `bootstrap.ContentRegistration` 是共享内容家族的唯一顺序：物品 → 方块 → 平台 `blocks` hook → 机器家族 → 平台 `machines` hook → 附属多方块部件 → 创造栏。物品和方块家族只提供一个共享入口（通常是 `register(ContentRegistrar)`），通过 `RegisteredItem` / `RegisteredBlock` 句柄取结果，不直接声明物品或方块 `DeferredRegister`，也不接收 `IEventBus`；创造栏、声音、流体和结构等非物品注册仍由各自的共享注册表持有。
 
-两个平台的 `ContentRegistrar` 实现把同一批句柄落到中心注册表：内置命名空间使用 `GTItems.ITEMS`、`GTBlocks.BLOCKS` 和 `GTBlocks.BLOCK_ITEMS`，附属命名空间按 namespace 取独立注册表，不并入 `gt6ce`。平台入口只做三件事：绑定平台服务与前置数据、通过 `ContentRegistration.PlatformContent` 的 `blocks` / `machines` 位置追加平台专属家族、在最后调用一次 `submit()` 提交所有延迟注册表。方块实体类型、Menu、能力、声音、网络和其他原生注册仍留在版本层。
+`ContentRegistrar.shared()` 是唯一的适配器实现：内置命名空间落到 `GTItems.ITEMS`、`GTBlocks.BLOCKS` 和 `GTBlocks.BLOCK_ITEMS`，附属命名空间按 namespace 取独立注册表，不并入 `gt6ce`。平台入口只做三件事：绑定平台服务与前置数据、通过 `ContentRegistration.PlatformContent` 的 `blocks` / `machines` 位置追加平台专属家族、在最后调用一次 `submit()` 提交所有延迟注册表。`submit()` 是唯一的提交点；家族方法只排队，不自带 `IEventBus` 重载，也不调用 `DeferredRegister#register(bus)`。附属命名空间的方块实体表、Menu、能力、声音、网络和其他原生注册仍留在版本层，由各平台入口在同一个 `submit()` 中集中提交。
+
+平台内部装载适配器（Forge 的 `MachineRegistry` / `GTMachines`、`GTBlockEntities`、`GTFluids` 等非物品注册表）仍需使用平台注册类型，它们属于版本层的适配代码，不受“内容家族只使用 `ContentRegistrar`”约束；共享内容家族不得绕过适配器直接写 `GTBlocks` / `GTItems`。
 
 新增内容家族时：
 
