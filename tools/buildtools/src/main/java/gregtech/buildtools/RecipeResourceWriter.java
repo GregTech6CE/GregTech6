@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,8 +30,7 @@ public final class RecipeResourceWriter {
 
     public record Summary(int recipes, int tags, int excluded) {}
 
-    public static Summary write(
-            Path sourceData, Path outputData, Set<String> excluded, Path existingData, Path report)
+    public static Summary write(Path sourceData, Path outputData, Set<String> excluded, Path existingData, Path report)
             throws IOException {
         if (!Files.isDirectory(sourceData)) throw new IOException("Missing source data root " + sourceData);
         deleteTree(outputData);
@@ -67,7 +65,11 @@ public final class RecipeResourceWriter {
             if (Files.isDirectory(tagSource)) {
                 for (Path file : sortedJson(tagSource)) {
                     String rel = relative(tagSource, file);
-                    var target = outputData.resolve(ns).resolve("tags").resolve("item").resolve(rel);
+                    var target = outputData
+                            .resolve(ns)
+                            .resolve("tags")
+                            .resolve("item")
+                            .resolve(rel);
                     rejectExisting(outputData, existingData, target, "tag");
                     var source = parse(file);
                     RecipeResourceConverter.convertTag(ns + "/tags/items/" + rel, source.getAsJsonObject());

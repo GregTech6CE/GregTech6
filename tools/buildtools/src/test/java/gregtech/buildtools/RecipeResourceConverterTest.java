@@ -19,25 +19,34 @@ final class RecipeResourceConverterTest {
     @Test
     void itemAndTagIngredientsKeepTheNativeObjectForm() {
         var converted = RecipeResourceConverter.convertRecipe(
-                "test",
-                JsonParser.parseString("""
+                "test", JsonParser.parseString("""
                         {"type":"minecraft:crafting_shapeless",
                          "ingredients":[{"item":"gt6ce:a"},{"tag":"forge:b"},[{"item":"gt6ce:c"}]],
                          "result":{"item":"gt6ce:d","count":4}}
-                        """)
-                        .getAsJsonObject());
+                        """).getAsJsonObject());
         assertEquals("gt6ce:d", converted.getAsJsonObject("result").get("id").getAsString());
         assertEquals(4, converted.getAsJsonObject("result").get("count").getAsInt());
         // 1.21.1 rejects a bare string ingredient: the value object is the native form.
         assertEquals(
                 "gt6ce:a",
-                converted.getAsJsonArray("ingredients").get(0).getAsJsonObject().get("item").getAsString());
+                converted
+                        .getAsJsonArray("ingredients")
+                        .get(0)
+                        .getAsJsonObject()
+                        .get("item")
+                        .getAsString());
         assertEquals(
                 "forge:b",
-                converted.getAsJsonArray("ingredients").get(1).getAsJsonObject().get("tag").getAsString());
+                converted
+                        .getAsJsonArray("ingredients")
+                        .get(1)
+                        .getAsJsonObject()
+                        .get("tag")
+                        .getAsString());
         assertEquals(
                 "gt6ce:c",
-                converted.getAsJsonArray("ingredients")
+                converted
+                        .getAsJsonArray("ingredients")
                         .get(2)
                         .getAsJsonArray()
                         .get(0)
@@ -49,49 +58,54 @@ final class RecipeResourceConverterTest {
     @Test
     void shapedKeysAreKeptAsValueObjects() {
         var converted = RecipeResourceConverter.convertRecipe(
-                "test",
-                JsonParser.parseString("""
+                "test", JsonParser.parseString("""
                         {"type":"gt6ce:tool_shaped","pattern":["AB"],
                          "key":{"A":{"item":"gt6ce:a"},"B":{"tag":"gt6ce:b"}},
                          "result":{"item":"gt6ce:c"}}
-                        """)
-                        .getAsJsonObject());
-        assertEquals("gt6ce:a", converted.getAsJsonObject("key").getAsJsonObject("A").get("item").getAsString());
-        assertEquals("gt6ce:b", converted.getAsJsonObject("key").getAsJsonObject("B").get("tag").getAsString());
+                        """).getAsJsonObject());
+        assertEquals(
+                "gt6ce:a",
+                converted
+                        .getAsJsonObject("key")
+                        .getAsJsonObject("A")
+                        .get("item")
+                        .getAsString());
+        assertEquals(
+                "gt6ce:b",
+                converted.getAsJsonObject("key").getAsJsonObject("B").get("tag").getAsString());
         assertEquals("gt6ce:c", converted.getAsJsonObject("result").get("id").getAsString());
     }
 
     @Test
     void smeltingResultKeepsASingleItem() {
         var converted = RecipeResourceConverter.convertRecipe(
-                "test",
-                JsonParser.parseString("""
+                "test", JsonParser.parseString("""
                         {"type":"minecraft:smelting","ingredient":{"item":"minecraft:clay"},
                          "result":"minecraft:brick","experience":0.3,"cookingtime":200}
-                        """)
-                        .getAsJsonObject());
-        assertEquals("minecraft:brick", converted.getAsJsonObject("result").get("id").getAsString());
+                        """).getAsJsonObject());
         assertEquals(
-                "minecraft:clay", converted.getAsJsonObject("ingredient").get("item").getAsString());
+                "minecraft:brick", converted.getAsJsonObject("result").get("id").getAsString());
+        assertEquals(
+                "minecraft:clay",
+                converted.getAsJsonObject("ingredient").get("item").getAsString());
     }
 
     @Test
     void customIngredientTypesStayObjects() {
         var converted = RecipeResourceConverter.convertRecipe(
-                "test",
-                JsonParser.parseString("""
+                "test", JsonParser.parseString("""
                         {"type":"minecraft:crafting_shapeless",
                          "ingredients":[{"type":"gt6ce:block_tag","tag":"gt6ce:stone"}],
                          "result":{"id":"gt6ce:a"}}
-                        """)
-                        .getAsJsonObject());
+                        """).getAsJsonObject());
         assertTrue(converted.getAsJsonArray("ingredients").get(0).isJsonObject());
     }
 
     @Test
     void toolRepairNeedsNoResult() {
         var converted = RecipeResourceConverter.convertRecipe(
-                "test", JsonParser.parseString("{\"type\":\"gt6ce:tool_repair\"}").getAsJsonObject());
+                "test",
+                JsonParser.parseString("{\"type\":\"gt6ce:tool_repair\"}").getAsJsonObject());
         assertFalse(converted.has("result"));
     }
 
@@ -101,8 +115,7 @@ final class RecipeResourceConverterTest {
                 RecipeResourceConverter.ConversionException.class,
                 () -> RecipeResourceConverter.convertRecipe(
                         "gt6ce:recipes/x.json",
-                        JsonParser.parseString(
-                                        "{\"type\":\"minecraft:campfire_cooking\",\"result\":{\"item\":\"a\"}}")
+                        JsonParser.parseString("{\"type\":\"minecraft:campfire_cooking\",\"result\":{\"item\":\"a\"}}")
                                 .getAsJsonObject()));
         assertTrue(failure.getMessage().contains("gt6ce:recipes/x.json"));
     }
@@ -112,12 +125,10 @@ final class RecipeResourceConverterTest {
         assertThrows(
                 RecipeResourceConverter.ConversionException.class,
                 () -> RecipeResourceConverter.convertRecipe(
-                        "x",
-                        JsonParser.parseString("""
+                        "x", JsonParser.parseString("""
                                 {"type":"minecraft:crafting_shapeless","ingredients":[{"item":"a"}],
                                  "result":{"item":"b","nbt":"{}"}}
-                                """)
-                                .getAsJsonObject()));
+                                """).getAsJsonObject()));
     }
 
     @Test
@@ -125,12 +136,10 @@ final class RecipeResourceConverterTest {
         assertThrows(
                 RecipeResourceConverter.ConversionException.class,
                 () -> RecipeResourceConverter.convertRecipe(
-                        "x",
-                        JsonParser.parseString("""
+                        "x", JsonParser.parseString("""
                                 {"type":"minecraft:crafting_shapeless","ingredients":[{"item":"a"}],
                                  "result":{"item":"b","count":100}}
-                                """)
-                                .getAsJsonObject()));
+                                """).getAsJsonObject()));
     }
 
     @Test
@@ -152,8 +161,7 @@ final class RecipeResourceConverterTest {
                 StandardCharsets.UTF_8);
 
         Path output = temp.resolve("output");
-        var summary = RecipeResourceWriter.write(
-                source, output, Set.of("gt6ce/recipes/replaced.json"), null, null);
+        var summary = RecipeResourceWriter.write(source, output, Set.of("gt6ce/recipes/replaced.json"), null, null);
         assertEquals(1, summary.recipes());
         assertEquals(1, summary.tags());
         assertEquals(1, summary.excluded());
@@ -204,7 +212,6 @@ final class RecipeResourceConverterTest {
         RecipeResourceWriter.write(source, first, Set.of(), null, null);
         RecipeResourceWriter.write(source, second, Set.of(), null, null);
         for (String rel : List.of("gt6ce/recipe/a.json", "gt6ce/recipe/b.json"))
-            assertEquals(
-                    Files.readString(first.resolve(rel)), Files.readString(second.resolve(rel)));
+            assertEquals(Files.readString(first.resolve(rel)), Files.readString(second.resolve(rel)));
     }
 }

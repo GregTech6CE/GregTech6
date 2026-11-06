@@ -21,6 +21,7 @@ rootProject.name = 'gt6ce'
 include 'api', 'core'
 // Build-time resource conversion shared by the build and its tests; never shipped in the mod.
 include 'buildtools'
+project(':buildtools').projectDir = file('tools/buildtools')
 project(':api').projectDir = file('api/common')
 include 'api-platform'
 project(':api-platform').projectDir = file('api/minecraft')

@@ -20,7 +20,7 @@ public final class RecipeResourceMain {
                 exclusions,
                 args.length > 3 ? Path.of(args[3]) : null,
                 args.length > 4 ? Path.of(args[4]) : null);
-        System.out.println("Recipe resources: " + summary.recipes() + " recipes, " + summary.tags()
-                + " tags, " + summary.excluded() + " replaced by generators.");
+        System.out.println("Recipe resources: " + summary.recipes() + " recipes, " + summary.tags() + " tags, "
+                + summary.excluded() + " replaced by generators.");
     }
 }

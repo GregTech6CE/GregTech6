@@ -75,7 +75,8 @@ public final class RecipeResourceConverter {
                 throw new ConversionException(resource, "result count is not a number");
             int amount = count.getAsInt();
             // ItemStack.CODEC accepts 1..99 only.
-            if (amount < 1 || amount > 99) throw new ConversionException(resource, "result count out of range " + amount);
+            if (amount < 1 || amount > 99)
+                throw new ConversionException(resource, "result count out of range " + amount);
             out.addProperty("count", amount);
         }
         return out;
@@ -120,7 +121,9 @@ public final class RecipeResourceConverter {
 
     private static String requiredString(JsonObject source, String key, String resource) {
         var value = source.get(key);
-        if (value == null || !value.isJsonPrimitive() || !value.getAsJsonPrimitive().isString())
+        if (value == null
+                || !value.isJsonPrimitive()
+                || !value.getAsJsonPrimitive().isString())
             throw new ConversionException(resource, key + " must be a string");
         return value.getAsString();
     }
