@@ -21,8 +21,7 @@ public final class GTStorageContainers {
     public static RegisteredBlock<EnderGarbageBlock> ENDER_GARBAGE;
     public static RegisteredBlock<EnderGarbageDumpBlock> ENDER_GARBAGE_DUMP;
 
-    public static final java.util.List<RegisteredBlock<BottleCrateBlock>> BOTTLE_CRATES =
-            new java.util.ArrayList<>();
+    public static final java.util.List<RegisteredBlock<BottleCrateBlock>> BOTTLE_CRATES = new java.util.ArrayList<>();
 
     public static void initialize(ContentRegistrar registrar) {
         for (var spec : GTStorageMetals.ALL) {

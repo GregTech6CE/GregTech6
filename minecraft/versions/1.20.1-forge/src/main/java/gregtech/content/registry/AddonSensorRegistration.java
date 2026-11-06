@@ -25,8 +25,7 @@ public final class AddonSensorRegistration {
         for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue());
     }
 
-    private static void registerNamespace(
-            ContentRegistrar registrar, String namespace, List<AddonSensor> sensors) {
+    private static void registerNamespace(ContentRegistrar registrar, String namespace, List<AddonSensor> sensors) {
         for (AddonSensor sensor : sensors) {
             String path = "sensor_" + sensor.id();
             var block = registrar.block(

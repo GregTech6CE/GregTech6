@@ -70,7 +70,8 @@ public final class BehaviorMachineRegistration {
         for (var group : groups.entrySet()) {
             entities.register(group.getKey(), () -> {
                 AtomicReference<BlockEntityType<BehaviorMachineBlockEntity>> typeRef = new AtomicReference<>();
-                Block[] valid = group.getValue().stream().map(RegisteredBlock::get).toArray(Block[]::new);
+                Block[] valid =
+                        group.getValue().stream().map(RegisteredBlock::get).toArray(Block[]::new);
                 BlockEntityType<BehaviorMachineBlockEntity> type = BlockEntityType.Builder.of(
                                 (pos, state) -> new BehaviorMachineBlockEntity(typeRef.get(), pos, state), valid)
                         .build(null);

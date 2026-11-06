@@ -43,7 +43,8 @@ public final class GTRemainingIconBlocks {
                     case "bale_grass_rotten" -> gregtech.content.block.plant.BaleBlock.Stage.ROTTEN;
                     default -> gregtech.content.block.plant.BaleBlock.Stage.CROP;
                 };
-                add(registrar, 
+                add(
+                        registrar,
                         id,
                         () -> new gregtech.content.block.plant.BaleBlock(
                                 stage,
@@ -52,7 +53,8 @@ public final class GTRemainingIconBlocks {
                     .contains(id)) {
                 var kind = gregtech.content.block.wood.FallenLogBlock.Kind.valueOf(
                         id.substring(4).toUpperCase(java.util.Locale.ROOT));
-                add(registrar, 
+                add(
+                        registrar,
                         id,
                         () -> new gregtech.content.block.wood.FallenLogBlock(
                                 kind, propertiesFor(v[1]).strength(1f, 3f)));
@@ -67,10 +69,7 @@ public final class GTRemainingIconBlocks {
 
     private static void add(ContentRegistrar registrar, String id, java.util.function.Supplier<Block> factory) {
         var b = registrar.block(
-                REGISTRY_NAMESPACE,
-                id,
-                factory,
-                bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
+                REGISTRY_NAMESPACE, id, factory, bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
         ALL.add(b);
     }
 

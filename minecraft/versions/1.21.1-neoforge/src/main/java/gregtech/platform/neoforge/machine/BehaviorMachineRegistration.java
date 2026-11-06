@@ -51,9 +51,7 @@ public final class BehaviorMachineRegistration {
     }
 
     private static void registerNamespace(
-            ContentRegistrar registrar,
-            String namespace,
-            List<AddonMachines.AcceptedBehavior> machines) {
+            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedBehavior> machines) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
         ENTITIES.add(entities);

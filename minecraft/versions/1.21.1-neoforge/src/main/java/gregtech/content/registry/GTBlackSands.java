@@ -25,9 +25,7 @@ public final class GTBlackSands {
                     REGISTRY_NAMESPACE,
                     id,
                     () -> new BlackSandBlock(
-                            BlockBehaviour.Properties.of()
-                                    .strength(.5f, .5f)
-                                    .sound(SoundType.SAND),
+                            BlockBehaviour.Properties.of().strength(.5f, .5f).sound(SoundType.SAND),
                             BlackSandBlock.spec(id)),
                     GTBlocks::materialBlockItem);
             GTBlocks.bind(

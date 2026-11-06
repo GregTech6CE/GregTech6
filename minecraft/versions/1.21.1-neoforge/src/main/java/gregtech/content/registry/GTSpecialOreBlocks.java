@@ -28,7 +28,10 @@ public final class GTSpecialOreBlocks {
         for (String icon : SpecialOreDefinitions.ORDERED_ICONS) {
             String id = icon.startsWith("ore_") ? "block_" + icon : icon;
             var block = registrar.block(
-                    REGISTRY_NAMESPACE, id, () -> create(icon), bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
+                    REGISTRY_NAMESPACE,
+                    id,
+                    () -> create(icon),
+                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
             ALL.add(block);
         }
         // Original plate/WoodTreated exception is this real, placeable treated plank.
@@ -41,10 +44,7 @@ public final class GTSpecialOreBlocks {
                 REGISTRY_NAMESPACE,
                 "planks_treated",
                 () -> new BlockItem(treated.get(), new Item.Properties().stacksTo(64)));
-        GTItems.bind(
-                MaterialPrefix.plate,
-                gregtech.content.material.generated.WoodMaterials.WoodTreated,
-                treatedItem);
+        GTItems.bind(MaterialPrefix.plate, gregtech.content.material.generated.WoodMaterials.WoodTreated, treatedItem);
         ALL.add(treated);
     }
 

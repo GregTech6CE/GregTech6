@@ -50,9 +50,7 @@ public final class CompressedGasTankRegistration {
     }
 
     private static void registerNamespace(
-            ContentRegistrar registrar,
-            String namespace,
-            List<AddonMachines.AcceptedCompressedGas> tanks) {
+            ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedCompressedGas> tanks) {
         DeferredRegister<BlockEntityType<?>> entities =
                 DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
         ENTITIES.add(entities);

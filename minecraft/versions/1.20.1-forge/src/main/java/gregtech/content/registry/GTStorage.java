@@ -252,8 +252,7 @@ public final class GTStorage {
                                     .strength(spec.hardness(), spec.resistance())
                                     .requiresCorrectToolForDrops()
                                     .noOcclusion()),
-                    block -> new gregtech.content.block.inventory.MetalChestBlockItem(
-                            block, new Item.Properties()));
+                    block -> new gregtech.content.block.inventory.MetalChestBlockItem(block, new Item.Properties()));
             METAL_CHESTS.add(chest);
             var wooden = registrar.block(
                     REGISTRY_NAMESPACE,

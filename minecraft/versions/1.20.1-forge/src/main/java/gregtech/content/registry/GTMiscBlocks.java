@@ -135,8 +135,7 @@ public final class GTMiscBlocks {
                                         new Item.Properties()
                                                 .stacksTo(
                                                         block instanceof FilterBlock
-                                                                        || block
-                                                                                instanceof AdvancedCraftingTableBlock
+                                                                        || block instanceof AdvancedCraftingTableBlock
                                                                 ? 16
                                                                 : 64)));
         ALL.add(ro);
@@ -165,7 +164,8 @@ public final class GTMiscBlocks {
             String id = spec.suffix().equals("steel")
                     ? "advanced_crafting_table"
                     : "advanced_crafting_table_" + spec.suffix();
-            var table = reg(registrar, 
+            var table = reg(
+                    registrar,
                     id,
                     () -> new AdvancedCraftingTableBlock(
                             spec.material(),
@@ -180,7 +180,8 @@ public final class GTMiscBlocks {
             String id = spec.suffix().equals("steel")
                     ? "charging_crafting_table"
                     : "charging_crafting_table_" + spec.suffix();
-            var table = reg(registrar, 
+            var table = reg(
+                    registrar,
                     id,
                     () -> new ChargingCraftingTableBlock(
                             spec.material(),
@@ -195,8 +196,8 @@ public final class GTMiscBlocks {
         // N8: Filters
         FILTER_ITEMS = reg(registrar, "filter_items", () -> new FilterBlock("items", props(MapColor.METAL, 6f)));
         FILTER_FLUIDS = reg(registrar, "filter_fluids", () -> new FilterBlock("fluids", props(MapColor.METAL, 6f)));
-        FILTER_ITEMS_FLUIDS = reg(
-                registrar, "filter_items_fluids", () -> new FilterBlock("items_fluids", props(MapColor.METAL, 6f)));
+        FILTER_ITEMS_FLUIDS =
+                reg(registrar, "filter_items_fluids", () -> new FilterBlock("items_fluids", props(MapColor.METAL, 6f)));
         FILTER_OREDICT = reg(registrar, "filter_oredict", () -> new FilterBlock("oredict", props(MapColor.METAL, 6f)));
 
         // N8: Extenders
@@ -215,7 +216,8 @@ public final class GTMiscBlocks {
         }
 
         // N8: Auto Igniters (6 tiers)
-        AUTO_IGNITER_STEEL = reg(registrar, 
+        AUTO_IGNITER_STEEL = reg(
+                registrar,
                 "auto_igniter_steel",
                 () -> new AutoIgniterBlock(
                         props(
@@ -226,7 +228,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_steel")
                                 .quality()));
-        AUTO_IGNITER_ALUMINIUM = reg(registrar, 
+        AUTO_IGNITER_ALUMINIUM = reg(
+                registrar,
                 "auto_igniter_aluminium",
                 () -> new AutoIgniterBlock(
                         props(
@@ -237,7 +240,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_aluminium")
                                 .quality()));
-        AUTO_IGNITER_STAINLESS = reg(registrar, 
+        AUTO_IGNITER_STAINLESS = reg(
+                registrar,
                 "auto_igniter_stainless",
                 () -> new AutoIgniterBlock(
                         props(
@@ -248,7 +252,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_stainless")
                                 .quality()));
-        AUTO_IGNITER_TITANIUM = reg(registrar, 
+        AUTO_IGNITER_TITANIUM = reg(
+                registrar,
                 "auto_igniter_titanium",
                 () -> new AutoIgniterBlock(
                         props(
@@ -259,7 +264,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_titanium")
                                 .quality()));
-        AUTO_IGNITER_TUNGSTEN = reg(registrar, 
+        AUTO_IGNITER_TUNGSTEN = reg(
+                registrar,
                 "auto_igniter_tungsten",
                 () -> new AutoIgniterBlock(
                         props(
@@ -270,7 +276,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_tungsten")
                                 .quality()));
-        AUTO_IGNITER_ULTIMET = reg(registrar, 
+        AUTO_IGNITER_ULTIMET = reg(
+                registrar,
                 "auto_igniter_ultimet",
                 () -> new AutoIgniterBlock(
                         props(
@@ -283,7 +290,8 @@ public final class GTMiscBlocks {
                                 .quality()));
 
         // N8: Auto Hammers (4 tiers)
-        AUTO_HAMMER_STEEL = reg(registrar, 
+        AUTO_HAMMER_STEEL = reg(
+                registrar,
                 "auto_hammer_steel",
                 () -> new AutoHammerBlock(
                         props(
@@ -294,7 +302,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_steel")
                                 .quality()));
-        AUTO_HAMMER_BRONZE = reg(registrar, 
+        AUTO_HAMMER_BRONZE = reg(
+                registrar,
                 "auto_hammer_bronze",
                 () -> new AutoHammerBlock(
                         props(
@@ -305,7 +314,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_bronze")
                                 .quality()));
-        AUTO_HAMMER_TITANIUM = reg(registrar, 
+        AUTO_HAMMER_TITANIUM = reg(
+                registrar,
                 "auto_hammer_titanium",
                 () -> new AutoHammerBlock(
                         props(
@@ -316,7 +326,8 @@ public final class GTMiscBlocks {
                                 .input(),
                         gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium")
                                 .quality()));
-        AUTO_HAMMER_TUNGSTEN_STEEL = reg(registrar, 
+        AUTO_HAMMER_TUNGSTEN_STEEL = reg(
+                registrar,
                 "auto_hammer_tungsten_steel",
                 () -> new AutoHammerBlock(
                         props(

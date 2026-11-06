@@ -119,51 +119,62 @@ public final class GTIconSetBlocks {
             String blockId = spec[0];
             if (SKIP_IDS.contains(blockId)) continue;
             String sideTex = spec[1];
-            RegisteredBlock<Block> block = registrar.block(REGISTRY_NAMESPACE, blockId, () -> switch (blockId) {
-                case "log_dry" ->
-                    new gregtech.content.block.wood.FallenLogBlock(
-                            gregtech.content.block.wood.FallenLogBlock.Kind.DRY,
-                            propertiesFor(sideTex).strength(1.0F, 3.0F));
-                case "log_rotten" ->
-                    new gregtech.content.block.wood.FallenLogBlock(
-                            gregtech.content.block.wood.FallenLogBlock.Kind.ROTTEN,
-                            propertiesFor(sideTex).strength(1.0F, 3.0F));
-                case "log_mossy" ->
-                    new gregtech.content.block.wood.FallenLogBlock(
-                            gregtech.content.block.wood.FallenLogBlock.Kind.MOSSY,
-                            propertiesFor(sideTex).strength(1.0F, 3.0F));
-                case "log_frozen" ->
-                    new gregtech.content.block.wood.FallenLogBlock(
-                            gregtech.content.block.wood.FallenLogBlock.Kind.FROZEN,
-                            propertiesFor(sideTex).strength(1.0F, 3.0F));
-                default ->
-                    blockId.startsWith("bale_")
-                            ? new gregtech.content.block.plant.BaleBlock(
-                                    switch (blockId) {
-                                        case "bale_grass" -> gregtech.content.block.plant.BaleBlock.Stage.FRESH;
-                                        case "bale_grass_dry" -> gregtech.content.block.plant.BaleBlock.Stage.DRY;
-                                        case "bale_grass_moldy" -> gregtech.content.block.plant.BaleBlock.Stage.MOLDY;
-                                        case "bale_grass_rotten" -> gregtech.content.block.plant.BaleBlock.Stage.ROTTEN;
-                                        default -> gregtech.content.block.plant.BaleBlock.Stage.CROP;
-                                    },
-                                    BlockBehaviour.Properties.of()
-                                            .strength(0.5F)
-                                            .sound(SoundType.GRASS))
-                            : new net.minecraft.world.level.block.RotatedPillarBlock(propertiesFor(sideTex));
-            }, bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
+            RegisteredBlock<Block> block = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    blockId,
+                    () -> switch (blockId) {
+                        case "log_dry" ->
+                            new gregtech.content.block.wood.FallenLogBlock(
+                                    gregtech.content.block.wood.FallenLogBlock.Kind.DRY,
+                                    propertiesFor(sideTex).strength(1.0F, 3.0F));
+                        case "log_rotten" ->
+                            new gregtech.content.block.wood.FallenLogBlock(
+                                    gregtech.content.block.wood.FallenLogBlock.Kind.ROTTEN,
+                                    propertiesFor(sideTex).strength(1.0F, 3.0F));
+                        case "log_mossy" ->
+                            new gregtech.content.block.wood.FallenLogBlock(
+                                    gregtech.content.block.wood.FallenLogBlock.Kind.MOSSY,
+                                    propertiesFor(sideTex).strength(1.0F, 3.0F));
+                        case "log_frozen" ->
+                            new gregtech.content.block.wood.FallenLogBlock(
+                                    gregtech.content.block.wood.FallenLogBlock.Kind.FROZEN,
+                                    propertiesFor(sideTex).strength(1.0F, 3.0F));
+                        default ->
+                            blockId.startsWith("bale_")
+                                    ? new gregtech.content.block.plant.BaleBlock(
+                                            switch (blockId) {
+                                                case "bale_grass" -> gregtech.content.block.plant.BaleBlock.Stage.FRESH;
+                                                case "bale_grass_dry" ->
+                                                    gregtech.content.block.plant.BaleBlock.Stage.DRY;
+                                                case "bale_grass_moldy" ->
+                                                    gregtech.content.block.plant.BaleBlock.Stage.MOLDY;
+                                                case "bale_grass_rotten" ->
+                                                    gregtech.content.block.plant.BaleBlock.Stage.ROTTEN;
+                                                default -> gregtech.content.block.plant.BaleBlock.Stage.CROP;
+                                            },
+                                            BlockBehaviour.Properties.of()
+                                                    .strength(0.5F)
+                                                    .sound(SoundType.GRASS))
+                                    : new net.minecraft.world.level.block.RotatedPillarBlock(propertiesFor(sideTex));
+                    },
+                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
             ALL.add(block);
         }
         for (String[] spec : BOTTOM_TOP_BLOCKS) {
             String blockId = spec[0];
             if (SKIP_IDS.contains(blockId)) continue;
             String sideTex = spec[1];
-            RegisteredBlock<Block> block = registrar.block(REGISTRY_NAMESPACE, blockId, () -> {
-                var properties = propertiesFor(sideTex);
-                if (blockId.equals("grass") || blockId.startsWith("grassblock_"))
-                    return new gregtech.content.block.GTGrassBlock(
-                            properties.isValidSpawn((state, level, pos, entity) -> false), sideTex);
-                return new IconSetBlock(properties, sideTex);
-            }, bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
+            RegisteredBlock<Block> block = registrar.block(
+                    REGISTRY_NAMESPACE,
+                    blockId,
+                    () -> {
+                        var properties = propertiesFor(sideTex);
+                        if (blockId.equals("grass") || blockId.startsWith("grassblock_"))
+                            return new gregtech.content.block.GTGrassBlock(
+                                    properties.isValidSpawn((state, level, pos, entity) -> false), sideTex);
+                        return new IconSetBlock(properties, sideTex);
+                    },
+                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(64)));
             ALL.add(block);
         }
     }

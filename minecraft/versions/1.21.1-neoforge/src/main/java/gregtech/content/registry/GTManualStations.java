@@ -1,12 +1,13 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.tool.*;
 import gregtech.content.blockentity.tool.ManualToolBlockEntity.Kind;
 import java.util.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 public final class GTManualStations {
 
@@ -59,7 +60,8 @@ public final class GTManualStations {
     }
 
     public static void initialize(ContentRegistrar registrar) {
-        COIN_MOLD = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+        COIN_MOLD = registrar.blockWithoutItem(
+                REGISTRY_NAMESPACE,
                 "coin_mold",
                 () -> new CoinMoldBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
@@ -69,7 +71,8 @@ public final class GTManualStations {
         SHAPED.add((RegisteredBlock) COIN_MOLD);
         item(registrar, "coin_mold", COIN_MOLD);
         for (var v : gregtech.content.tool.UtilityToolRules.ROPES) {
-            var b = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+            var b = registrar.blockWithoutItem(
+                    REGISTRY_NAMESPACE,
                     v.id(),
                     () -> new RopeBlock(
                             BlockBehaviour.Properties.of()
@@ -85,7 +88,8 @@ public final class GTManualStations {
         }
         for (var v : GTStorageMetals.ALL) {
             String id = v.suffix().equals("steel") ? "scaffold" : "scaffold_" + v.suffix();
-            var b = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+            var b = registrar.blockWithoutItem(
+                    REGISTRY_NAMESPACE,
                     id,
                     () -> new ScaffoldBlock(
                             v.material(),
@@ -97,7 +101,8 @@ public final class GTManualStations {
             SCAFFOLDS.add(b);
             item(registrar, id, b, 64);
         }
-        CRANK = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+        CRANK = registrar.blockWithoutItem(
+                REGISTRY_NAMESPACE,
                 "crank",
                 () -> new CrankBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
@@ -105,7 +110,8 @@ public final class GTManualStations {
                         .sound(SoundType.METAL)
                         .noOcclusion()));
         item(registrar, "crank", CRANK);
-        DUST_FUNNEL = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+        DUST_FUNNEL = registrar.blockWithoutItem(
+                REGISTRY_NAMESPACE,
                 "dust_funnel",
                 () -> new DustFunnelBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.STONE)
@@ -113,7 +119,8 @@ public final class GTManualStations {
                         .requiresCorrectToolForDrops()
                         .noOcclusion()));
         item(registrar, "dust_funnel", DUST_FUNNEL);
-        PLANT_POT = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+        PLANT_POT = registrar.blockWithoutItem(
+                REGISTRY_NAMESPACE,
                 "plant_pot",
                 () -> new PlantPotBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.CLAY)
@@ -121,7 +128,8 @@ public final class GTManualStations {
                         .sound(SoundType.STONE)));
         SHAPED.add((RegisteredBlock) PLANT_POT);
         item(registrar, "plant_pot", PLANT_POT);
-        SAP_BAG = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+        SAP_BAG = registrar.blockWithoutItem(
+                REGISTRY_NAMESPACE,
                 "sap_bag",
                 () -> new SapBagBlock(
                         "sap_bag",
@@ -131,7 +139,8 @@ public final class GTManualStations {
                                 .sound(SoundType.WOOL)));
         SHAPED.add((RegisteredBlock) SAP_BAG);
         item(registrar, "sap_bag", SAP_BAG);
-        ADVANCED_BUTTON = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+        ADVANCED_BUTTON = registrar.blockWithoutItem(
+                REGISTRY_NAMESPACE,
                 "advanced_button",
                 () -> new AdvancedButtonBlock(BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
@@ -152,7 +161,8 @@ public final class GTManualStations {
         }
 
         for (var v : gregtech.content.tool.AnvilVariantCatalog.ALL) {
-            var b = registrar.blockWithoutItem(REGISTRY_NAMESPACE, 
+            var b = registrar.blockWithoutItem(
+                    REGISTRY_NAMESPACE,
                     v.id(),
                     () -> new MaterialAnvilBlock(
                             () -> gregtech.engine.material.GTMaterialRegistry.get(v.material()),
