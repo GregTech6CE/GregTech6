@@ -59,6 +59,31 @@ final class MachineRecipeMatchTest {
         assertFalse(MachineRecipeMatch.matches(spec, view(List.of("minecraft:dirt")), TAGS));
     }
 
+    @Test
+    void aRejectedConditionDoesNotEnumerateEveryPermutation() {
+        var spec = MachineRecipeDocuments.removal("""
+                {"map":"gt.recipe.crusher",
+                 "item_inputs":[{"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},
+                                {"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},
+                                {"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},
+                                {"item":"minecraft:bedrock"}]}
+                """);
+        var items = new java.util.ArrayList<String>();
+        for (int i = 0; i < 12; i++) items.add("minecraft:item_" + i);
+        int[] queries = {0};
+        var tags = new MachineRecipeMatch.TagQuery() {
+            @Override
+            public boolean itemInTag(String itemId, String tagId) {
+                queries[0]++;
+                return tagId.equals("test:any");
+            }
+        };
+        assertFalse(MachineRecipeMatch.matches(spec, view(items), tags));
+        // Every condition is compared against every entry once; enumerating permutations would
+        // reach hundreds of millions of lookups for this shape.
+        assertTrue(queries[0] <= 12 * 12, "unexpected query count " + queries[0]);
+    }
+
     private static MachineRecipeMatch.RecipeView view(List<String> inputItems) {
         return new MachineRecipeMatch.RecipeView() {
             public int inputItems() {

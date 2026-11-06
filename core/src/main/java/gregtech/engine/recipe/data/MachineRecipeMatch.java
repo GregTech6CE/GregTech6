@@ -59,9 +59,10 @@ public final class MachineRecipeMatch {
 
     public static boolean matches(MachineRecipeRemovalSpec spec, RecipeView recipe, TagQuery tags) {
         if (spec.clear()) return true;
-        // Assignment, not a first-match scan: a broad removal condition must not consume the one
-        // input that a later, more specific condition can only match. The lists come from user
-        // data and stay small, so backtracking is bounded and order-independent.
+        // Matching, not a first-match scan: a broad removal condition must not consume the one
+        // input that a later, more specific condition can only match. Each condition and entry are
+        // compared once, then bipartite matching decides the assignment, so large lists stay
+        // polynomial instead of enumerating every permutation.
         return assign(
                         spec.itemInputs(),
                         recipe.inputItems(),
@@ -85,21 +86,29 @@ public final class MachineRecipeMatch {
         boolean accepts(T need, int index);
     }
 
-    /** One need per distinct recipe entry; {@code used} survives a failed branch for backtracking. */
+    /** One need per distinct recipe entry; adjacency is built once and solved as a matching. */
     private static <T> boolean assign(java.util.List<T> needs, int size, SlotTest<T> accepts) {
         if (needs.isEmpty()) return true;
-        var used = new boolean[size];
-        return assignFrom(needs, 0, size, used, accepts);
+        if (needs.size() > size) return false;
+        var adjacency = new boolean[needs.size()][size];
+        for (int need = 0; need < needs.size(); need++)
+            for (int slot = 0; slot < size; slot++) adjacency[need][slot] = accepts.accepts(needs.get(need), slot);
+        var slotOwner = new int[size];
+        java.util.Arrays.fill(slotOwner, -1);
+        for (int need = 0; need < needs.size(); need++)
+            if (!augment(need, adjacency, slotOwner, new boolean[size])) return false;
+        return true;
     }
 
-    private static <T> boolean assignFrom(
-            java.util.List<T> needs, int index, int size, boolean[] used, SlotTest<T> accepts) {
-        if (index == needs.size()) return true;
-        for (int slot = 0; slot < size; slot++) {
-            if (used[slot] || !accepts.accepts(needs.get(index), slot)) continue;
-            used[slot] = true;
-            if (assignFrom(needs, index + 1, size, used, accepts)) return true;
-            used[slot] = false;
+    /** Kuhn's augmenting path: a need may displace the need currently holding a slot. */
+    private static boolean augment(int need, boolean[][] adjacency, int[] slotOwner, boolean[] seen) {
+        for (int slot = 0; slot < slotOwner.length; slot++) {
+            if (seen[slot] || !adjacency[need][slot]) continue;
+            seen[slot] = true;
+            if (slotOwner[slot] < 0 || augment(slotOwner[slot], adjacency, slotOwner, seen)) {
+                slotOwner[slot] = need;
+                return true;
+            }
         }
         return false;
     }
