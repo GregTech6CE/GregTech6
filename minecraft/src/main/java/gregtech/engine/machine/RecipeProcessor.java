@@ -286,6 +286,10 @@ public final class RecipeProcessor {
         totalWork = evaluation.cost().totalWork();
 
         var fluids = evaluation.outputTanks() ? inventory.outputTankFluids() : inventory.inputFluids();
+        // Keep the snapshot each tank reported: a long tank above the int range reports a capped
+        // amount, so the amount to remove is the snapshot delta, never "current minus remainder".
+        var before = new int[fluids.size()];
+        for (int i = 0; i < before.length; i++) before[i] = fluids.get(i).getAmount();
         var remaining = RecipeInputs.consume(evaluation.recipe(), inventory.matchingInputItems(), fluids, evaluation.parallel());
         if (remaining == null || evaluation.parallel() < 1) {
             totalWork = 0;
@@ -299,7 +303,12 @@ public final class RecipeProcessor {
                 io.level().random::nextInt, config.exclusiveOutputs());
         inventory.applyRemainingItems(remaining.items());
         var drained = evaluation.outputTanks() ? inventory.tanksOutput() : inventory.tanksInput();
-        for (int i = 0; i < drained.length; i++) drained[i].setFluid(remaining.fluids().get(i));
+        // Only the consumed difference reaches a real tank. Tanks the recipe did not touch keep
+        // their long contents instead of being overwritten by the truncated snapshot.
+        for (int i = 0; i < drained.length && i < remaining.fluids().size(); i++) {
+            int consumed = before[i] - remaining.fluids().get(i).getAmount();
+            if (consumed > 0) drained[i].remove(consumed);
+        }
         io.markJobStarted();
 
         parallel = evaluation.parallel();
@@ -436,17 +445,10 @@ public final class RecipeProcessor {
             recipeDetails = null;
             return;
         }
-        var savedCost = savedJobCost();
-        if (savedCost != null) {
-            minimumEnergy = savedCost.minimumPower();
-            totalWork = savedCost.totalWork();
-        } else {
-            // The inputs of an in-progress job are already consumed, so its recipe may not be
-            // resolvable. Keep the saved cost bounded instead of zeroing it: a zero cost would
-            // let a reloaded job finish for free.
-            minimumEnergy = clamp(minimumEnergy, 0, config.inputMaximum());
-            totalWork = clamp(totalWork, 0, MAX_SAVED_WORK);
-        }
+        // The inputs of an in-progress job are already consumed, so a fresh lookup would price the
+        // *next* batch instead. Keep the cost the job recorded, bounded instead of re-derived.
+        minimumEnergy = clamp(minimumEnergy, 0, config.inputMaximum());
+        totalWork = clamp(totalWork, 0, MAX_SAVED_WORK);
         progress = clamp(progress, 0, totalWork);
         if (recipeDetails != null) {
             var cost = MachineWorkCost.calculate(recipeDetails.power(), recipeDetails.duration(), parallel,
@@ -455,21 +457,6 @@ public final class RecipeProcessor {
             if (cost == null || cost.totalWork() != totalWork || cost.minimumPower() != minimumEnergy)
                 recipeDetails = null;
         }
-    }
-
-    /** Recomputes the current job cost without consuming inputs or rolling outputs. */
-    @Nullable
-    private MachineWorkCost.Cost savedJobCost() {
-        RecipeMap map = config.recipeMap();
-        MachineInventory inventory = io.inventory();
-        if (map == null || inventory == null || io.level() == null) return null;
-        var match = RecipeLookup.find(io.owner(), map, inventory, io.autocraftingProgram(), config.searchOutputTanks());
-        if (match == null || !exclusivePairOrPlain(match.recipe())) return null;
-        // The saved batch is the one the job actually rolled; remaining inputs may already be
-        // partly consumed, so re-running the parallel search would understate the cost.
-        return MachineWorkCost.calculate(match.recipe().mEUt, match.recipe().mDuration, Math.max(1, parallel),
-                config.parallelScalesDuration(), config.efficiency(), config.inputMinimum(), config.inputMaximum(),
-                config.cheapOverclocking(), config.usesTimeEnergy());
     }
 
     /** A plain machine accepts any row. An exclusive machine accepts only a pair, and skips the rest. */
