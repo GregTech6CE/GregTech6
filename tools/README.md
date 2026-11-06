@@ -7,7 +7,6 @@
 | [comments/](comments/README.md) | 检查代码注释里的失效引用，并证明一次改动只碰了注释。 |
 | [gui/](gui/README.md) | 检查 GUI 模板、别名、图标引用与静态预览。 |
 | [recipes/](recipes/README.md) | 审计数据包配方的形状、标签、电路家族、歧义与 NeoForge 覆盖。 |
-| [registry-audit/](registry-audit/README.md) | 审计物品/方块注册表声明、入口约定、命名空间与重复 ID。 |
 | [resources/](resources/README.md) | 核对模板化发行包的模型、方块状态与 PNG 完整性。 |
 | [validation/](validation/README.md) | 读取验证路由表，计算改动对应的检查并校验文档闭合。 |
 
