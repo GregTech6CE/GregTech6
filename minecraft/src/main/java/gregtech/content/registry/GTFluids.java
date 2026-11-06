@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 //? if >=1.21.1 {
 /*import gregtech.engine.fluid.FluidVisualPolicy;
 *///?} else {
@@ -82,8 +84,8 @@ public final class GTFluids {
     }
 
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, "gt6ce");
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, "gt6ce");
+    /*public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, REGISTRY_NAMESPACE);
     private static final Map<String, DeferredRegister<FluidType>> ADDON_FLUID_TYPES = new LinkedHashMap<>();
     private static final Map<String, DeferredRegister<Fluid>> ADDON_FLUIDS = new LinkedHashMap<>();
     private static final Map<String, DeferredHolder<Fluid, ? extends Fluid>> STILL = new LinkedHashMap<>(), FLOWING = new LinkedHashMap<>();

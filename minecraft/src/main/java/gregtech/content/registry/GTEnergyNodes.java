@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.engine.energy.EnergyNodeSpec;
 //? if >=1.21.1 {
 /*import gregtech.content.block.energy.*;
@@ -43,9 +45,9 @@ public final class GTEnergyNodes {
 //? if >=1.21.1 {
     /*private GTEnergyNodes() {
     }
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gt6ce");
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, "gt6ce");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredHolder<Block, ReactorCoreBlock> REACTOR_CORE_BLOCK = BLOCKS.register("reactor_core",
             () -> new ReactorCoreBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(8, 12).requiresCorrectToolForDrops()));
     public static final DeferredHolder<Block, ReactorCore2x2Block> REACTOR_CORE_2X2 = BLOCKS.register("reactor_core_2x2", ReactorCore2x2Block::new);

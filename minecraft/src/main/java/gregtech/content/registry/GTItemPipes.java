@@ -1,4 +1,7 @@
 package gregtech.content.registry;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 //? if >=1.21.1 {
 /*import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.api.material.GTMaterial;
@@ -25,8 +28,8 @@ public final class GTItemPipes {
 //? if >=1.21.1 {
  /*private GTItemPipes() {}
 
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gt6ce");
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(REGISTRY_NAMESPACE);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(REGISTRY_NAMESPACE);
     private static final java.util.List<DeferredBlock<ItemPipeBlock>> ALL = new java.util.ArrayList<>();
     public static DeferredBlock<ItemPipeBlock> PIPE_MEDIUM_BRASS;
 

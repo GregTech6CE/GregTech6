@@ -1,5 +1,7 @@
 package gregtech.content.recipe;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
@@ -9,10 +11,10 @@ public final class NeoRecipeSerializers {
     private NeoRecipeSerializers() {}
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
-            DeferredRegister.create(Registries.RECIPE_SERIALIZER, "gt6ce");
+            DeferredRegister.create(Registries.RECIPE_SERIALIZER, REGISTRY_NAMESPACE);
     public static final DeferredRegister<net.neoforged.neoforge.common.crafting.IngredientType<?>> INGREDIENTS =
             DeferredRegister.create(
-                    net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.INGREDIENT_TYPES, "gt6ce");
+                    net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.INGREDIENT_TYPES, REGISTRY_NAMESPACE);
     public static final net.neoforged.neoforge.registries.DeferredHolder<
                     net.neoforged.neoforge.common.crafting.IngredientType<?>,
                     net.neoforged.neoforge.common.crafting.IngredientType<

@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
 *///?} else {
@@ -34,7 +36,7 @@ public final class GTSounds {
     /*private GTSounds() {}
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return REGISTRY.register(name, () -> SoundEvent.createVariableRangeEvent(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", name)));
+                ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, name)));
 *///?} else {
     public static final RegistryObject<SoundEvent> WRENCH   = register("wrench");
     public static final RegistryObject<SoundEvent> SCREWDRIVER = register("screwdriver");

@@ -1,5 +1,7 @@
 package gregtech.platform.neoforge.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.stone.RetiredStoneIds;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -19,17 +21,18 @@ public final class RetiredStoneAliases {
         for (String path : RetiredStoneIds.blockPaths()) {
             event.getRegistry()
                     .addAlias(
-                            ResourceLocation.fromNamespaceAndPath("gt6ce", path),
+                            ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, path),
                             ResourceLocation.withDefaultNamespace("stone"));
         }
         for (var entry : RetiredStoneIds.materialPaths().entrySet()) {
-            ResourceLocation target = ResourceLocation.fromNamespaceAndPath("gt6ce", entry.getValue());
+            ResourceLocation target = ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, entry.getValue());
             if (!event.getRegistry().containsKey(target)) {
                 target = event.getRegistryKey().equals(Registries.BLOCK)
                         ? ResourceLocation.withDefaultNamespace("stone")
-                        : ResourceLocation.fromNamespaceAndPath("gt6ce", "rock_gt_stone");
+                        : ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, "rock_gt_stone");
             }
-            event.getRegistry().addAlias(ResourceLocation.fromNamespaceAndPath("gt6ce", entry.getKey()), target);
+            event.getRegistry()
+                    .addAlias(ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, entry.getKey()), target);
         }
     }
 }

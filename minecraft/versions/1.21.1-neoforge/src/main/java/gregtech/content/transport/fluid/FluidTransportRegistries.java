@@ -1,5 +1,7 @@
 package gregtech.content.transport.fluid;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.TankBlock;
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
@@ -28,14 +30,16 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class FluidTransportRegistries {
     private FluidTransportRegistries() {}
 
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gt6ce");
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(REGISTRY_NAMESPACE);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(REGISTRY_NAMESPACE);
     public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
-            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
-    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, "gt6ce");
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<SoundEvent> SOUNDS =
+            DeferredRegister.create(Registries.SOUND_EVENT, REGISTRY_NAMESPACE);
     public static final DeferredHolder<SoundEvent, SoundEvent> WRENCH = SOUNDS.register(
             "wrench",
-            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("gt6ce", "wrench")));
+            () -> SoundEvent.createVariableRangeEvent(
+                    ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, "wrench")));
     private static final List<DeferredBlock<TankBlock>> TANKS = new ArrayList<>();
     private static final List<DeferredBlock<FluidPipeBlock>> PIPES = new ArrayList<>();
     public static DeferredBlock<TankBlock> WOOD_BARREL, DRUM_BRONZE, DRUM_STEEL;

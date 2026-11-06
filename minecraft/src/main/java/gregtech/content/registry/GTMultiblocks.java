@@ -1,4 +1,7 @@
 package gregtech.content.registry;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.block.machine.*;
 import gregtech.content.multiblock.*;
@@ -17,6 +20,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import java.util.*;
+
 /** One registration catalog for original multiblock controllers and structural parts. */
 public final class GTMultiblocks {
     private GTMultiblocks() {}
@@ -127,7 +131,7 @@ public final class GTMultiblocks {
     }
     private static RegisteredBlock<Block> controller(String id, java.util.function.Supplier<Block> factory,
             gregtech.engine.multiblock.ControllerBinding<?> structure) {
-        return controller(gregtech.engine.multiblock.ControllerDeclaration.multiblock("gt6ce", id, factory, structure));
+        return controller(gregtech.engine.multiblock.ControllerDeclaration.multiblock(REGISTRY_NAMESPACE, id, factory, structure));
     }
     private static RegisteredBlock<Block> controller(gregtech.engine.multiblock.ControllerDeclaration<Block> declaration) {
         var block = MultiblockRegistration.register(declaration,

@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 
 
 //? if >=1.21.1 {
@@ -50,7 +52,7 @@ import java.util.Map;
 
 public final class GTCreativeTabs {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "gt6ce");
+    /*public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, REGISTRY_NAMESPACE);
 *///?} else {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, GregTech.NAMESPACE);
 //?}

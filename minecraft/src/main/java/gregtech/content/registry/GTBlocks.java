@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
@@ -34,8 +36,8 @@ import java.util.Map;
 
 public final class GTBlocks {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gt6ce");
-    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(Registries.ITEM, "gt6ce");
+    /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
 *///?} else {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, GregTech.NAMESPACE);
     public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);

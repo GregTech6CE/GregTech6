@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import java.util.Objects;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -54,6 +56,6 @@ public record RegisteredBlock<T extends Block>(ResourceLocation getId, Supplier<
     }
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath("gt6ce", path);
+        return ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, path);
     }
 }

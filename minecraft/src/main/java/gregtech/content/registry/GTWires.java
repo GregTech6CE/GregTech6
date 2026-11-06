@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.engine.energy.WireSpec;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.energy.ElectricWireBlock;
@@ -40,9 +42,9 @@ public final class GTWires {
 
 
 //? if >=1.21.1 {
-/*    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gt6ce");
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gt6ce");
+/*    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,REGISTRY_NAMESPACE);
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ElectricWireBlockEntity>> ELECTRIC_WIRE=ENTITIES.register("electric_wire",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ElectricWireBlockEntity::new,all().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
 *///?} else {
 //?}

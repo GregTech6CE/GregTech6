@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.engine.multiblock.ControllerDeclaration;
@@ -117,7 +119,7 @@ public final class MultiblockRegistration {
         if (validated) return;
         var controllers = new LinkedHashMap<Block, TrackedMultiblock>();
         var namespaces = new HashSet<String>();
-        namespaces.add("gt6ce");
+        namespaces.add(REGISTRY_NAMESPACE);
         for (var entry : DECLARATIONS.values()) {
             var declared = entry.declaration();
             namespaces.add(declared.id().getNamespace());

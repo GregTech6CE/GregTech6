@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.FixedConstructionBlocks;
 import gregtech.content.block.misc.FixedConstructionColor;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -58,7 +60,7 @@ public final class GTConstructionVariants {
     public static String family(Block block) {
         if (block instanceof FixedConstructionColor fixed) return fixed.family();
         var key = BuiltInRegistries.BLOCK.getKey(block);
-        return key.getNamespace().equals("gt6ce") && LEGACY.containsKey(key.getPath()) ? key.getPath() : null;
+        return key.getNamespace().equals(REGISTRY_NAMESPACE) && LEGACY.containsKey(key.getPath()) ? key.getPath() : null;
     }
 
     public static boolean legacy(Block block) { return !(block instanceof FixedConstructionColor) && family(block) != null; }

@@ -1,5 +1,7 @@
 package gregtech.platform.neoforge.logistics;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.inventory.MassStorageBlock;
 import gregtech.content.blockentity.inventory.LogisticsMassStorageBlockEntity;
@@ -19,10 +21,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** Registers ordinary and logistics mass-storage blocks from the shared metal catalog. */
 public final class StorageRegistries {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "gt6ce");
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
+    public static final DeferredRegister<Block> BLOCKS =
+            DeferredRegister.create(BuiltInRegistries.BLOCK, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(BuiltInRegistries.ITEM, REGISTRY_NAMESPACE);
     public static final DeferredRegister<BlockEntityType<?>> TYPES =
-            DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, "gt6ce");
+            DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     private static final List<java.util.function.Supplier<? extends Block>> STORAGES = new ArrayList<>();
     private static final List<java.util.function.Supplier<? extends Block>> LOGISTICS_STORAGES = new ArrayList<>();
     public static final java.util.function.Supplier<BlockEntityType<MassStorageBlockEntity>> MASS_STORAGE =

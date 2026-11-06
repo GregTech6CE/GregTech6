@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import java.util.function.Supplier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -21,6 +23,6 @@ public record RegisteredItem<T extends Item>(ResourceLocation getId, Supplier<T>
 
     public static <T extends Item> RegisteredItem<T> register(String path, Supplier<T> factory) {
         return new RegisteredItem<>(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", path), GTItems.ITEMS.register(path, factory));
+                ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, path), GTItems.ITEMS.register(path, factory));
     }
 }

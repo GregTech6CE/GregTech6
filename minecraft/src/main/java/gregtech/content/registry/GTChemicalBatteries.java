@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.energy.ChemicalBatteryBlock;
 import gregtech.content.energy.ChemicalBatterySpec;
 import gregtech.content.item.ChemicalBatteryItem;
@@ -18,9 +20,9 @@ import java.util.*;
 public final class GTChemicalBatteries {
 //? if >=1.21.1 {
     /*private static final List<DeferredHolder<Block,ChemicalBatteryBlock>> ALL=new ArrayList<>();
-    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gt6ce");
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gt6ce");
+    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,REGISTRY_NAMESPACE);
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity>> CHEMICAL_BATTERY=ENTITIES.register("chemical_battery",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity::new,allRegistered().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
 *///?} else {
     private static final List<RegistryObject<ChemicalBatteryBlock>> ALL=new ArrayList<>();
@@ -36,7 +38,7 @@ public final class GTChemicalBatteries {
 //?}
     public static ChemicalBatteryItem item(ChemicalBatterySpec.Chemistry chemistry,int tier){
 //? if >=1.21.1 {
-        /*var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",new ChemicalBatterySpec(chemistry,tier).id());
+        /*var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,new ChemicalBatterySpec(chemistry,tier).id());
 *///?} else {
         var id=gregtech.GregTech.id(new ChemicalBatterySpec(chemistry,tier).id());
 //?}

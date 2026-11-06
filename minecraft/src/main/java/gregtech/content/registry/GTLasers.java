@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -147,7 +149,7 @@ public final class GTLasers {
         ZPM_DISCHARGER_ELITE = ZPM_DISCHARGER_BASIC;
 
         // F8: Logistics Core
-        LOGISTICS_CORE = MultiblockRegistration.register(gregtech.engine.multiblock.ControllerDeclaration.multiblock("gt6ce", "logistics_core",
+        LOGISTICS_CORE = MultiblockRegistration.register(gregtech.engine.multiblock.ControllerDeclaration.multiblock(REGISTRY_NAMESPACE, "logistics_core",
                 () -> new gregtech.content.block.machine.LogisticsCoreControllerBlock(laserProps()),
                 gregtech.content.multiblock.ControllerDeclarations.LOGISTICS), GTLasers::reg);
 //?}

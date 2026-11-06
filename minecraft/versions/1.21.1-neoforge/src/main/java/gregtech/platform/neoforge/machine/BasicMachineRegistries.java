@@ -1,5 +1,7 @@
 package gregtech.platform.neoforge.machine;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.*;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
@@ -24,11 +26,12 @@ import net.neoforged.neoforge.registries.*;
 public final class BasicMachineRegistries {
     private BasicMachineRegistries() {}
 
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gt6ce");
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, "gt6ce");
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
     public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
-            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
-    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, "gt6ce");
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<MenuType<?>> MENUS =
+            DeferredRegister.create(Registries.MENU, REGISTRY_NAMESPACE);
     public static final DeferredHolder<MenuType<?>, MenuType<gregtech.client.gui.BasicMachineContainerMenu>> MENU =
             MENUS.register(
                     "basic_machine",
@@ -58,9 +61,9 @@ public final class BasicMachineRegistries {
         var blocks = new LinkedHashMap<String, DeferredRegister<Block>>();
         var items = new LinkedHashMap<String, DeferredRegister<Item>>();
         var entities = new LinkedHashMap<String, DeferredRegister<BlockEntityType<?>>>();
-        blocks.put("gt6ce", BLOCKS);
-        items.put("gt6ce", ITEMS);
-        entities.put("gt6ce", ENTITIES);
+        blocks.put(REGISTRY_NAMESPACE, BLOCKS);
+        items.put(REGISTRY_NAMESPACE, ITEMS);
+        entities.put(REGISTRY_NAMESPACE, ENTITIES);
         for (BasicMachineSpec spec : BasicMachineDefinitions.specifications()) {
             String namespace = spec.namespace();
             var blockReg = blocks.computeIfAbsent(namespace, ns -> {

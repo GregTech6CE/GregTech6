@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.item.FuelRodItem;
 import gregtech.content.item.FuelRodItem.FuelType;
 import net.minecraft.world.item.Item;
@@ -34,7 +36,7 @@ public final class GTFuelRods {
     public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_CO_60 = register("fuel_rod_co_60", FuelType.Co_60, 0);
     public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_AM_241 = register("fuel_rod_am_241", FuelType.Am_241, 0);
     public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_AM_243 = register("fuel_rod_am_243", FuelType.Am_243, 0);
-    public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_NAQUADAH = DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "reactor_rod_9440"));
+    public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_NAQUADAH = DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, "reactor_rod_9440"));
 *///?} else {
     public static final RegistryObject<FuelRodItem> FUEL_ROD_U_235 = register("fuel_rod_u_235", FuelType.U_235, 0);
     public static final RegistryObject<FuelRodItem> FUEL_ROD_U_238 = register("fuel_rod_u_238", FuelType.U_238, 0);
@@ -81,7 +83,7 @@ public final class GTFuelRods {
 *///?} else {
         return new net.minecraft.world.item.ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
 //?}
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",definition.id())));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,definition.id())));
     }
     /** Call during mod construction to trigger static init. */
     public static void registerAll() {

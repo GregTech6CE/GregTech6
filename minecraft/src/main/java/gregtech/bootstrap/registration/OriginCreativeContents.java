@@ -1,5 +1,7 @@
 package gregtech.bootstrap.registration;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.creative.*;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.content.block.MaterialBlockLike;
@@ -102,9 +104,9 @@ public final class OriginCreativeContents {
 /*            var itemId = BuiltInRegistries.ITEM.getKey(item);
             boolean addonMachine = item instanceof BlockItem blockItem
                     && (blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
-                    && !"gt6ce".equals(machine.basicSpec().namespace())
+                    && !REGISTRY_NAMESPACE.equals(machine.basicSpec().namespace())
                     || blockItem.getBlock() instanceof gregtech.content.block.machine.BehaviorMachineBlock behavior
-                    && !"gt6ce".equals(behavior.accepted().addonId()));
+                    && !REGISTRY_NAMESPACE.equals(behavior.accepted().addonId()));
             boolean addonPipe = item instanceof BlockItem pipeItem
                     && (pipeItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock
                     || pipeItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock);
@@ -115,15 +117,15 @@ public final class OriginCreativeContents {
             boolean addonDrum = item instanceof BlockItem drumItem
                     && drumItem.getBlock() instanceof gregtech.content.block.machine.CompressedGasTankBlock;
             boolean addonFluid = item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem;
-            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)
+            if ((!itemId.getNamespace().equals(REGISTRY_NAMESPACE) && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)
                     || item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem) || item instanceof CreativeTabIconItem) continue;
 *///?} else {
             var itemId = BuiltInRegistries.ITEM.getKey(item);
             boolean addonMachine = item instanceof BlockItem blockItem
                     && (blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
-                    && !"gt6ce".equals(machine.basicSpec().namespace())
+                    && !REGISTRY_NAMESPACE.equals(machine.basicSpec().namespace())
                     || blockItem.getBlock() instanceof gregtech.content.block.machine.BehaviorMachineBlock behavior
-                    && !"gt6ce".equals(behavior.accepted().addonId()));
+                    && !REGISTRY_NAMESPACE.equals(behavior.accepted().addonId()));
             boolean addonPipe = item instanceof BlockItem pipeItem
                     && (pipeItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock
                     || pipeItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock);
@@ -134,7 +136,7 @@ public final class OriginCreativeContents {
             boolean addonDrum = item instanceof BlockItem drumItem
                     && drumItem.getBlock() instanceof gregtech.content.block.machine.CompressedGasTankBlock;
             boolean addonFluid = item instanceof gregtech.content.item.FluidItem;
-            if((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)||item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem)||item instanceof CreativeTabIconItem)continue;
+            if((!itemId.getNamespace().equals(REGISTRY_NAMESPACE) && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)||item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem)||item instanceof CreativeTabIconItem)continue;
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;

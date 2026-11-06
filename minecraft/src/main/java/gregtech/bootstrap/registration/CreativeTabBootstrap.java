@@ -1,11 +1,14 @@
 package gregtech.bootstrap.registration;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 //? if >=1.21.1 {
 /*import gregtech.api.material.*;
 import gregtech.engine.material.*;import gregtech.engine.prefix.*;import gregtech.content.data.MaterialPrefix;import gregtech.content.registry.*;import net.minecraft.world.item.*;import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
 public final class CreativeTabBootstrap {private CreativeTabBootstrap(){}
 public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIcons.register();GTCreativeTabIcons.ICONS.register(bus);GTCreativeTabs.registerTabs();GTCreativeTabs.TABS.register(bus);}
-@SubscribeEvent public static void populateTabs(BuildCreativeModeTabContentsEvent event){if(!event.getTabKey().location().getNamespace().equals("gt6ce"))return;
+@SubscribeEvent public static void populateTabs(BuildCreativeModeTabContentsEvent event){if(!event.getTabKey().location().getNamespace().equals(REGISTRY_NAMESPACE))return;
  for(var prefix:PrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populatePrefix(event,prefix);return;}}
  for(var prefix:BlockPrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populateBlockPrefix(event,prefix);return;}}
  for(var stack:OriginCreativeContents.contents(event.getTabKey().location().getPath()))event.accept(stack.copyWithCount(1));

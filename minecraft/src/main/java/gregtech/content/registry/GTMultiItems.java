@@ -1,4 +1,7 @@
 package gregtech.content.registry;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 //? if >=1.21.1 {
 /*import gregtech.content.item.TechItem;
 import net.minecraft.world.item.Item;
@@ -8,7 +11,7 @@ import net.neoforged.bus.api.IEventBus;
 import java.util.*;
 /^* Complete original multi-item identities and full behavior/loot/food/bottle adapters. ^/
 public final class GTMultiItems {
- public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
+ public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,REGISTRY_NAMESPACE);
  private static final Set<String> PROCESSING_REMAINDERS=Set.of("plant_remains","fruit_remains","vegetable_remains","nut_remains","rubber_resin","clay_tap","clay_funnel","clay_jug","clay_measuring_pot","modeled_porcelain_cup","geiger_counter","geiger_counter_empty","empty_blueprint","blueprint");
  private static final Map<String,DeferredHolder<Item,Item>> BY_ID=new LinkedHashMap<>();
  private GTMultiItems(){}

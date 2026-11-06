@@ -1,4 +1,7 @@
 package gregtech.content.registry;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 /** Source-compatible name pointing at the native module's sole menu registration. */
 
 
@@ -18,6 +21,7 @@ import java.util.Map;
 
 
 //?}
+
 public final class GTMenuTypes {
 
 //? if >=1.21.1 {
@@ -25,7 +29,7 @@ public final class GTMenuTypes {
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.BasicMachineContainerMenu>> BASIC_MACHINE=gregtech.platform.neoforge.machine.BasicMachineRegistries.MENU;
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.BehaviorMachineMenu>> BEHAVIOR_MACHINE=gregtech.platform.neoforge.machine.BasicMachineRegistries.BEHAVIOR_MENU;
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.PartMenu>> PART=gregtech.platform.neoforge.machine.BasicMachineRegistries.PART_MENU;
- public static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.inventory.MenuType<?>> MENU_TYPES=net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.MENU,"gt6ce");
+ public static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.inventory.MenuType<?>> MENU_TYPES=net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.MENU,REGISTRY_NAMESPACE);
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.BumbliaryContainerMenu>> BUMBLIARY=MENU_TYPES.register("bumbliary",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.BumbliaryContainerMenu(id,inventory,false)));
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.BumbliaryContainerMenu>> ADVANCED_BUMBLIARY=MENU_TYPES.register("advanced_bumbliary",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.BumbliaryContainerMenu(id,inventory,true)));
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<gregtech.client.gui.AdvancedCraftingMenu>> ADVANCED_CRAFTING=MENU_TYPES.register("advanced_crafting",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new gregtech.client.gui.AdvancedCraftingMenu(id,inventory)));

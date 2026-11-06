@@ -19,6 +19,7 @@ public final class GTKubeJSPlugin implements KubeJSPlugin {
 
     @Override
     public void registerRecipeSchemas(RecipeSchemaRegistry registry) {
+        // Scripts spell this namespace, so it is public API rather than a registry key.
         registry.namespace("gt6ce").register("machine", MachineRecipeSchema.SCHEMA);
     }
 }

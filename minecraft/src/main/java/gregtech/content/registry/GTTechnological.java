@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 
 //? if >=1.21.1 {
 //?} else {
@@ -23,7 +25,7 @@ import java.util.*;
 public final class GTTechnological {
     public static final DeferredRegister<Item> ITEMS =
 //? if >=1.21.1 {
-            /*DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
+            /*DeferredRegister.create(BuiltInRegistries.ITEM, REGISTRY_NAMESPACE);
 *///?} else {
             DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 //?}

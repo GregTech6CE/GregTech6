@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
@@ -125,7 +127,7 @@ public final class GTMaterialRegistration {
         for (var flower : gregtech.content.plant.BedrockFlowers.ALL) {
             if (flower.material() == null) continue;
             Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", flower.id()));
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, flower.id()));
             if (block == null || block == net.minecraft.world.level.block.Blocks.AIR)
                 throw new IllegalStateException("Missing GT6 bedrock flower " + flower.id());
             ItemMaterialRegistry.register(block.asItem(), null, flower.material(), GTValues.U);

@@ -1,4 +1,7 @@
 package gregtech.content.registry;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 //? if >=1.21.1 {
 /*import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.material.Materials;
@@ -36,8 +39,8 @@ public final class GTToolBlocks {
     /*private GTToolBlocks() {
     }
     public static final java.util.List<DeferredBlock<gregtech.content.block.tool.PortableContainerBlock>> PORTABLE = new java.util.ArrayList<>();
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gt6ce");
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(REGISTRY_NAMESPACE);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(REGISTRY_NAMESPACE);
     public static final DeferredBlock<DynamiteBlock> DYNAMITE = dynamite("dynamite", 10, 5, Materials.Red), BOOMSTICK = dynamite("boomstick", 10, 3,
             Materials.Orange), DYNAMITE_STRONG = dynamite("strong_dynamite", 40, 5, Materials.Purple);
 

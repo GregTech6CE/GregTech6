@@ -1,5 +1,7 @@
 package gregtech.platform.neoforge.smeltery;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.engine.machine.InitialSmelteryDefinitions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -15,10 +17,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class SmelteryRegistries {
     private SmelteryRegistries() {}
 
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gt6ce");
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(REGISTRY_NAMESPACE);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(REGISTRY_NAMESPACE);
     public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
-            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredItem<SmelteryToolItem> CHISEL = gregtech.content.registry.GTToolItems.CHISEL;
     public static final DeferredItem<SmelteryToolItem> PINCERS = gregtech.content.registry.GTToolItems.PINCERS;
 
@@ -232,7 +234,8 @@ public final class SmelteryRegistries {
         }
         com.mojang.logging.LogUtils.getLogger()
                 .info(
-                        "[gregtech] Native original smeltery companions: molds={} basins={} faucets={} crossings={}",
+                        "[gregtech] Native original smeltery companions: molds={} basins={} faucets={}"
+                                + " crossings={}",
                         MOLDS.size(),
                         BASINS.size(),
                         FAUCETS.size(),

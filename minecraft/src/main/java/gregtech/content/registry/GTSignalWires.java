@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.content.block.energy.SignalWireBlock;
@@ -22,9 +24,9 @@ import java.util.*;
 public final class GTSignalWires {
 //? if >=1.21.1 {
     /*private static final List<DeferredHolder<Block, SignalWireBlock>> ALL = new ArrayList<>();
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gt6ce");
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, "gt6ce");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,
             BlockEntityType<gregtech.content.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE = ENTITIES.register("signal_wire",
             () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.SignalWireBlockEntity::new,

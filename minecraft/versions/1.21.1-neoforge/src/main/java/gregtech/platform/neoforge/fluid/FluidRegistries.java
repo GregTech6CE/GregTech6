@@ -1,5 +1,7 @@
 package gregtech.platform.neoforge.fluid;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.registry.GTFluids;
@@ -29,15 +31,17 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** Saltnya full fluid table and IDs with masson's Neo BaseFlowingFluid registration boundary. */
 public final class FluidRegistries {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "gt6ce");
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
+    public static final DeferredRegister<Block> BLOCKS =
+            DeferredRegister.create(BuiltInRegistries.BLOCK, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(BuiltInRegistries.ITEM, REGISTRY_NAMESPACE);
     private static final java.util.Map<String, DeferredRegister<Item>> ADDON_ITEMS = new java.util.LinkedHashMap<>();
 
     private FluidRegistries() {}
 
     /** Built-in display items stay on {@link #ITEMS}; an addon fluid uses that addon's namespace. */
     public static DeferredRegister<Item> items(String namespace) {
-        if ("gt6ce".equals(namespace)) return ITEMS;
+        if (REGISTRY_NAMESPACE.equals(namespace)) return ITEMS;
         return ADDON_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(BuiltInRegistries.ITEM, id));
     }
 

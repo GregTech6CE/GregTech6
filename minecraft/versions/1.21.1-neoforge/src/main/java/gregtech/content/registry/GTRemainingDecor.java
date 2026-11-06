@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.*;
 import java.util.*;
 import net.minecraft.world.level.block.*;
@@ -58,9 +60,9 @@ public final class GTRemainingDecor {
                                 variant, new net.minecraft.world.item.Item.Properties()));
         RAILROAD = DeferredHolder.create(
                 net.minecraft.core.registries.Registries.BLOCK,
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "railroad"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, "railroad"));
         GREG_LANTERN = DeferredHolder.create(
                 net.minecraft.core.registries.Registries.BLOCK,
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "greg_lantern"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, "greg_lantern"));
     }
 }

@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.entity.MaterialArrowEntity;
 import gregtech.content.item.MaterialArrowItem;
 //? if >=1.21.1 {
@@ -32,10 +34,10 @@ import net.minecraftforge.registries.RegistryObject;
 public final class GTProjectiles {
     private GTProjectiles() {}
 //? if >=1.21.1 {
-    /*private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, "gt6ce");
+    /*private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredHolder<EntityType<?>, EntityType<MaterialArrowEntity>> MATERIAL_ARROW = TYPES.register("material_arrow",
 *///?} else {
-    private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, "gt6ce");
+    private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, REGISTRY_NAMESPACE);
     public static final RegistryObject<EntityType<MaterialArrowEntity>> MATERIAL_ARROW = TYPES.register("material_arrow",
 //?}
             () -> EntityType.Builder.<MaterialArrowEntity>of(MaterialArrowEntity::new, MobCategory.MISC)

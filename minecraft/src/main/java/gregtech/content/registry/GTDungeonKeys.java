@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.item.GTDungeonKeyItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +56,7 @@ public final class GTDungeonKeys {
     public static GTDungeonKeyItem byIndex(int index) {
         if (index < 0 || index >= ALL.size()) return null;
         var original = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", MATERIALS.get(index) + "_key"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, MATERIALS.get(index) + "_key"));
         if (original instanceof GTDungeonKeyItem nativeKey) return nativeKey;
 //? if >=1.21.1 {
         /*DeferredHolder<Item,GTDungeonKeyItem> key = ALL.get(index);
@@ -78,9 +80,9 @@ public final class GTDungeonKeys {
         if (!ALL.isEmpty()) return;
         for (String material : MATERIALS) {
 //? if >=1.21.1 {
-            /*ALL.add(DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", material + "_key")));
+            /*ALL.add(DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, material + "_key")));
 *///?} else {
-            ALL.add(RegistryObject.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", material + "_key"), net.minecraftforge.registries.ForgeRegistries.ITEMS));
+            ALL.add(RegistryObject.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, material + "_key"), net.minecraftforge.registries.ForgeRegistries.ITEMS));
 //?}
         }
     }

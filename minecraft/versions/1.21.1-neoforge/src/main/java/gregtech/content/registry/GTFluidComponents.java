@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
@@ -10,7 +12,7 @@ public final class GTFluidComponents {
     private GTFluidComponents() {}
 
     public static final DeferredRegister<DataComponentType<?>> TYPES =
-            DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, "gt6ce");
+            DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> VESSEL_CONTENTS =
             TYPES.register(
                     "vessel_contents",

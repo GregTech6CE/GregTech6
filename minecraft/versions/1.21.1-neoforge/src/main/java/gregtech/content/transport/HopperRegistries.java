@@ -1,5 +1,7 @@
 package gregtech.content.transport;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.machine.*;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.machine.HopperSpec;
@@ -12,8 +14,8 @@ import net.neoforged.neoforge.registries.*;
 public final class HopperRegistries {
     private HopperRegistries() {}
 
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gt6ce");
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(REGISTRY_NAMESPACE);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(REGISTRY_NAMESPACE);
     private static final java.util.List<DeferredBlock<HopperBlock>> HOPPERS = new java.util.ArrayList<>();
     private static final java.util.List<DeferredBlock<QueueHopperBlock>> QUEUES = new java.util.ArrayList<>();
 

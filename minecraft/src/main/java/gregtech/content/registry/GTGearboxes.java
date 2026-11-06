@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.content.energy.GearboxCatalog.Tier;
 import gregtech.engine.energy.GearboxSpec;
@@ -40,9 +42,9 @@ public final class GTGearboxes {
     private static final gregtech.content.energy.GearboxCatalog.Tier[] TIERS = gregtech.content.energy.GearboxCatalog.tiers();
 
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gt6ce");
-    public static final DeferredRegister<net.minecraft.world.item.Item> ITEMS = DeferredRegister.create(Registries.ITEM, "gt6ce");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
+    /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<net.minecraft.world.item.Item> ITEMS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,
             BlockEntityType<gregtech.content.blockentity.energy.GearboxBlockEntity>> GEARBOX = ENTITIES.register("gearbox",
             () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.GearboxBlockEntity::new,

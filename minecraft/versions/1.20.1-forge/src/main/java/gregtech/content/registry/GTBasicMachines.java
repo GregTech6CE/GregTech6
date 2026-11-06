@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.machine.BasicMachineDefinitions;
 import gregtech.engine.machine.MachineRegistry;
@@ -13,7 +15,7 @@ public final class GTBasicMachines {
 
     public static void registerAll(IEventBus bus) {
         for (var spec : BasicMachineDefinitions.specifications()) {
-            if ("gt6ce".equals(spec.namespace())) MachineRegistry.registerBasicMachine(spec);
+            if (REGISTRY_NAMESPACE.equals(spec.namespace())) MachineRegistry.registerBasicMachine(spec);
             else AddonMachineRegistration.register(spec, bus);
         }
         BehaviorMachineRegistration.register(bus);

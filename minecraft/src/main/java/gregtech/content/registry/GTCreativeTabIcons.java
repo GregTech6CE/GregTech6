@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.material.Materials;
 
 //? if >=1.21.1 {
@@ -34,7 +36,7 @@ import java.util.Map;
 
 public final class GTCreativeTabIcons {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<Item> ICONS = DeferredRegister.create(Registries.ITEM, "gt6ce");
+    /*public static final DeferredRegister<Item> ICONS = DeferredRegister.create(Registries.ITEM, REGISTRY_NAMESPACE);
 *///?} else {
     public static final DeferredRegister<Item> ICONS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 //?}

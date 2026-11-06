@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.item.RadiationSuitItem;
 import net.minecraft.world.item.ArmorItem;
 //? if >=1.21.1 {
@@ -36,7 +38,7 @@ public final class GTRadiationProtection {
     public static void registerAll() {
     }
 //? if >=1.21.1 {
-    /*public static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.ArmorMaterial> MATERIALS = net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.ARMOR_MATERIAL, "gt6ce");
+    /*public static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.ArmorMaterial> MATERIALS = net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.ARMOR_MATERIAL, REGISTRY_NAMESPACE);
     public static final DeferredHolder<net.minecraft.world.item.ArmorMaterial,
             net.minecraft.world.item.ArmorMaterial> MATERIAL = MATERIALS.register("radiation_suit",
             () -> new net.minecraft.world.item.ArmorMaterial(java.util.Map.of(
@@ -45,7 +47,7 @@ public final class GTRadiationProtection {
                     ArmorItem.Type.LEGGINGS, 1,
                     ArmorItem.Type.BOOTS, 1), 0, net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_LEATHER,
             () -> net.minecraft.world.item.crafting.Ingredient.EMPTY,
-            java.util.List.of(new net.minecraft.world.item.ArmorMaterial.Layer(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
+            java.util.List.of(new net.minecraft.world.item.ArmorMaterial.Layer(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(gregtech.engine.mod.GregTechIdentity.MOD_ID,
             "radiation_suit"))), 0, 0));
 *///?} else {
 //?}

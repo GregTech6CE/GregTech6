@@ -1,5 +1,7 @@
 package gregtech.platform.neoforge.logistics;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.machine.LogisticsWireBlock;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,10 +14,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** NeoForge registration boundary for the logistics wire block, item and block entity. */
 public final class LogisticsRegistries {
-    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "gt6ce");
-    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
+    private static final DeferredRegister<Block> BLOCKS =
+            DeferredRegister.create(BuiltInRegistries.BLOCK, REGISTRY_NAMESPACE);
+    private static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(BuiltInRegistries.ITEM, REGISTRY_NAMESPACE);
     private static final DeferredRegister<BlockEntityType<?>> TYPES =
-            DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, "gt6ce");
+            DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final java.util.function.Supplier<LogisticsWireBlock> WIRE = BLOCKS.register(
             "logistics_wire",
             () -> new LogisticsWireBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
