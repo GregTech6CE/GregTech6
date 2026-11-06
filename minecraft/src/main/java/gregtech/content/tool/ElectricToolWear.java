@@ -26,6 +26,17 @@ public final class ElectricToolWear {
     public static int chanceBound(ElectricToolItem tool, ItemStack stack) {
         return ElectricToolWearRules.chanceBound(tool.headMaterial(stack).getToolQuality());
     }
+    /** GT6 tool-container crafting charge; shaped and shapeless rows must charge the same amount. */
+    public static long craftEnergy(ElectricToolItem tool) {
+//? if >=1.21.1 {
+        /*String name = tool.toolName();
+*///?} else {
+        String name = tool.definition().name();
+//?}
+        if (name.equals("Chainsaw")) return 200;
+        if (name.equals("Wrench")) return 800L * (1L << (2 * (tool.energyTier() - 1)));
+        return name.equals("Screwdriver") ? 200 : 100;
+    }
     /** Caller provides the world's RNG, or a controlled RNG for boundary tests. */
     public static void apply(ElectricToolItem tool, ItemStack stack, long amount, IntUnaryOperator random) {
         if (amount <= 0 || stack.getCount() != 1 || random.applyAsInt(chanceBound(tool, stack)) != 0) return;

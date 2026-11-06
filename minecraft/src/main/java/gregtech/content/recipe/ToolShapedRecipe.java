@@ -224,9 +224,8 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
             var original = input.getItem(i);
             if (original.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
                 var copy = original.copyWithCount(1);
-                electric.consumeInteractionEnergy(copy,
-                        electric.toolName().equals("Chainsaw") ? 200 : electric.toolName().equals("Wrench")
-                        ? 800L * (1L << (2 * (electric.energyTier() - 1))) : electric.toolName().equals("Screwdriver") ? 200 : 100, null);
+                electric.consumeInteractionEnergy(
+                        copy, gregtech.content.tool.ElectricToolWear.craftEnergy(electric), null);
                 result.set(i, gregtech.content.tool.ElectricToolWear.broken(electric, copy) ? ItemStack.EMPTY : copy);
                 continue;
             }
@@ -380,9 +379,8 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
             var original = inventory.getItem(slot);
             if (original.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
                 var copy = original.copyWithCount(1);
-                electric.consumeInteractionEnergy(copy,
-                        electric.definition().name().equals("Chainsaw") ? 200 : electric.definition().name().equals("Wrench")
-                        ? 800L * (1L << (2 * (electric.energyTier() - 1))) : electric.definition().name().equals("Screwdriver") ? 200 : 100, null);
+                electric.consumeInteractionEnergy(
+                        copy, gregtech.content.tool.ElectricToolWear.craftEnergy(electric), null);
                 result.set(slot, gregtech.content.tool.ElectricToolWear.broken(electric, copy) ? ItemStack.EMPTY : copy);
                 continue;
             }
