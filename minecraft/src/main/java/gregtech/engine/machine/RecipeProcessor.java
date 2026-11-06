@@ -175,7 +175,8 @@ public final class RecipeProcessor {
         var inventory = io.inventory();
         if (inventory == null || tankIndex < 0 || tankIndex >= inventory.tanksOutput().length) return 0;
         var tank = inventory.tanksOutput()[tankIndex];
-        if (!config.limitFluidOutputAccumulation()) return tank.capacity();
+        // Output tanks are unbounded like GT6's; report the original accumulation threshold instead
+        // so the GUI and Jade keep a finite denominator.
         if (tank.isEmpty()) {
             var output = tankIndex < displayFluidOutputs.length ? displayFluidOutputs[tankIndex] : FluidStack.EMPTY;
             return Math.min(tank.capacity(), fluidOutputLimit(output, output == null ? 0 : output.getAmount()));

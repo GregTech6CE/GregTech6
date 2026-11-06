@@ -45,8 +45,10 @@ public final class MachineInventory implements IFluidHandler {
                             originalFluidBuffers ? MachineFluidRules.inputCapacityMultiplier(parallelLimit) : 1)
                     .setOnChanged(onChanged);
         }
+        // GT6's MultiTileEntityBasicMachine output tanks are unbounded (new FluidTankGT()); a finite
+        // cap silently refuses every recipe whose single output is larger than that cap.
         for (int i = 0; i < tanksOutput.length; i++) {
-            tanksOutput[i] = new FluidTankGT(originalFluidBuffers ? Long.MAX_VALUE : 8000).setOnChanged(onChanged);
+            tanksOutput[i] = new FluidTankGT(Long.MAX_VALUE).setOnChanged(onChanged);
         }
     }
 
