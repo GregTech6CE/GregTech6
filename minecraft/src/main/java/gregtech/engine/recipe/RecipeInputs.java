@@ -50,22 +50,51 @@ public final class RecipeInputs {
             Arrays.fill(retainedItems, 0);
             Arrays.fill(retainedFluids, 0);
             if (recipe.hasTaggedInputs()) return tagged(recipe, parallel);
+            // Presence requirements do not consume; they are answered against the original tanks.
+            for (int input = 0; input < recipe.mFluidInputs.length; input++) {
+                var required = recipe.mFluidInputs[input];
+                if (required == null || !recipe.isPresenceFluidInput(input)) continue;
+                if (required.isEmpty()) return false;
+                boolean present = false;
+                for (var available : fluids)
+                    if (!available.isEmpty() && sameFluid(available, required)) { present = true; break; }
+                if (!present) return false;
+            }
             // Reserve catalysts alongside consumables; restore them only in the final consumption plan.
+            return plainItems(recipe, parallel) && plainFluids(recipe, parallel);
+        }
+
+        /** Greedy first; the flow assignment only takes over when first-match strands a later need. */
+        private boolean plainItems(Recipe recipe, int parallel) {
+            if (greedyItems(recipe, parallel)) return true;
+            resetItems();
+            var demand = new long[recipe.mInputs.length];
+            var accepts = new boolean[recipe.mInputs.length][items.size()];
+            for (int input = 0; input < recipe.mInputs.length; input++) {
+                var required = recipe.mInputs[input];
+                if (required == null || required.isEmpty()) continue;
+                demand[input] = (long) required.getCount() * (recipe.isCatalystInput(input) ? 1 : parallel);
+                for (int slot = 0; slot < items.size(); slot++)
+                    accepts[input][slot] = acceptsItem(recipe, input, required, items.get(slot));
+            }
+            var plan = IngredientAllocation.planMixed(itemCounts, demand, accepts);
+            if (plan == null) return false;
+            for (int input = 0; input < plan.length; input++)
+                for (int slot = 0; slot < items.size(); slot++) {
+                    itemCounts[slot] -= plan[input][slot];
+                    if (recipe.isCatalystInput(input)) retainedItems[slot] += plan[input][slot];
+                }
+            return true;
+        }
+
+        private boolean greedyItems(Recipe recipe, int parallel) {
             for (int input = 0; input < recipe.mInputs.length; input++) {
                 var required = recipe.mInputs[input];
                 if (required == null || required.isEmpty()) continue;
                 boolean catalyst = recipe.isCatalystInput(input);
                 long needed = (long) required.getCount() * (catalyst ? 1 : parallel);
                 for (int slot = 0; slot < items.size(); slot++) {
-                    var available = items.get(slot);
-                    if (itemCounts[slot] <= 0 || !recipe.matchesItemInput(input, available)) continue;
-//? if >=1.21.1 {
-                    /*if (recipe.mExactItemInputs && !ItemStack.isSameItemSameComponents(required, available)) continue;
-*///?} else {
-                    if (recipe.mExactItemInputs && !ItemStack.isSameItemSameTags(required, available)) continue;
-//?}
-                    if (recipe.mRequiresEmptyContainerInputs && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available)) continue;
-                    if (recipe.mMaterialRecovery && (available.isDamaged() || !gregtech.engine.material.ItemMaterialRegistry.canRecover(available))) continue;
+                    if (itemCounts[slot] <= 0 || !acceptsItem(recipe, input, required, items.get(slot))) continue;
                     int take = (int) Math.min(needed, itemCounts[slot]);
                     itemCounts[slot] -= take;
                     if (catalyst) retainedItems[slot] += take;
@@ -74,20 +103,45 @@ public final class RecipeInputs {
                 }
                 if (needed != 0) return false;
             }
+            return true;
+        }
+
+        private boolean acceptsItem(Recipe recipe, int input, ItemStack required, ItemStack available) {
+            if (!recipe.matchesItemInput(input, available)) return false;
+            if (recipe.mExactItemInputs && !sameItem(required, available)) return false;
+            if (recipe.mRequiresEmptyContainerInputs
+                    && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available)) return false;
+            return !recipe.mMaterialRecovery
+                    || !available.isDamaged() && gregtech.engine.material.ItemMaterialRegistry.canRecover(available);
+        }
+
+        private boolean plainFluids(Recipe recipe, int parallel) {
+            if (greedyFluids(recipe, parallel)) return true;
+            resetFluids();
+            var demand = new long[recipe.mFluidInputs.length];
+            var accepts = new boolean[recipe.mFluidInputs.length][fluids.size()];
             for (int input = 0; input < recipe.mFluidInputs.length; input++) {
                 var required = recipe.mFluidInputs[input];
-                if (required == null) continue;
-                // Presence tests the original tanks, including when a preceding input consumes all fluid.
-                if (recipe.isPresenceFluidInput(input)) {
-                    if (required.isEmpty()) return false;
-                    boolean present = false;
-                    for (var available : fluids) {
-                        if (!available.isEmpty() && sameFluid(available, required)) { present = true; break; }
-                    }
-                    if (!present) return false;
-                    continue;
+                if (required == null || required.isEmpty() || recipe.isPresenceFluidInput(input)) continue;
+                demand[input] = RecipeKeptInputs.fluidDemand(
+                        recipe.isCatalystFluidInput(input), required.getAmount(), parallel);
+                for (int tank = 0; tank < fluids.size(); tank++)
+                    accepts[input][tank] = recipe.matchesFluidInput(input, fluids.get(tank));
+            }
+            var plan = IngredientAllocation.planMixed(fluidCounts, demand, accepts);
+            if (plan == null) return false;
+            for (int input = 0; input < plan.length; input++)
+                for (int tank = 0; tank < fluids.size(); tank++) {
+                    fluidCounts[tank] -= plan[input][tank];
+                    if (recipe.isCatalystFluidInput(input)) retainedFluids[tank] += plan[input][tank];
                 }
-                if (required.isEmpty()) continue;
+            return true;
+        }
+
+        private boolean greedyFluids(Recipe recipe, int parallel) {
+            for (int input = 0; input < recipe.mFluidInputs.length; input++) {
+                var required = recipe.mFluidInputs[input];
+                if (required == null || required.isEmpty() || recipe.isPresenceFluidInput(input)) continue;
                 boolean catalyst = recipe.isCatalystFluidInput(input);
                 long needed = RecipeKeptInputs.fluidDemand(catalyst, required.getAmount(), parallel);
                 for (int tank = 0; tank < fluids.size(); tank++) {
@@ -101,6 +155,16 @@ public final class RecipeInputs {
                 if (needed != 0) return false;
             }
             return true;
+        }
+
+        private void resetItems() {
+            for (int slot = 0; slot < itemCounts.length; slot++) itemCounts[slot] = items.get(slot).getCount();
+            Arrays.fill(retainedItems, 0);
+        }
+
+        private void resetFluids() {
+            for (int tank = 0; tank < fluidCounts.length; tank++) fluidCounts[tank] = fluids.get(tank).getAmount();
+            Arrays.fill(retainedFluids, 0);
         }
 
         private boolean tagged(Recipe recipe, int parallel) {
