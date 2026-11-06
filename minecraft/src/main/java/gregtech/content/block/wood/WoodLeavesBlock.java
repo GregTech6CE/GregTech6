@@ -80,6 +80,11 @@ public class WoodLeavesBlock extends LeavesBlock {
             net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var tool=builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL);
         if(tool==null)tool=net.minecraft.world.item.ItemStack.EMPTY;
+        // GT_Tool_BranchCutter.convertBlockDrops: a grafter replaces a BlockBaseLeaves block's whole
+        // drop list with one sapling of that species. It runs after the normal roll, so silk touch
+        // and Fortune do not change it either.
+        if(gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.BRANCH_CUTTER))
+            return java.util.List.of(sapling());
 //? if >=1.21.1 {
         /*if(tool.canPerformAction(net.neoforged.neoforge.common.ItemAbilities.SHEARS_HARVEST)
 *///?} else {
@@ -99,17 +104,14 @@ public class WoodLeavesBlock extends LeavesBlock {
 //?}
         int chance=fortune<=0?50:fortune>=4?5:Math.max(5,50-(5<<fortune));
         var random=builder.getLevel().random;
-        if(random.nextInt(chance)==0) {
-//? if >=1.21.1 {
-            /*var sapling=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","sapling_"+species.id()));
-*///?} else {
-            var sapling=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","sapling_"+species.id()));
-//?}
-            return java.util.List.of(new net.minecraft.world.item.ItemStack(sapling));
-        }
+        if(random.nextInt(chance)==0) return java.util.List.of(sapling());
         if((species==WoodSpecies.WILLOW || species==WoodSpecies.BLUE_MAHOE) && random.nextInt(chance)<2)
             return java.util.List.of(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.STICK));
         return java.util.List.of();
+    }
+
+    private net.minecraft.world.item.ItemStack sapling() {
+        return new net.minecraft.world.item.ItemStack(gregtech.content.registry.GTWoods.sapling(species));
     }
 
     public WoodSpecies species() { return species; }
