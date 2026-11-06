@@ -2,7 +2,7 @@
 
 本项目的可交付物是模组 JAR，不存在本文隐含的生产发布服务。这里维护可重复执行的构建/更新流程；真正操作实例需在用户授权范围内进行。
 
-本页负责实例更新流程；检查选择见[验证与验收](../development/validation/README.md)，执行后使用[记录模板](records/TEMPLATE.md)。
+本页负责构建交付与实例更新流程；检查选择见[验证与验收](../development/validation/README.md)，执行后使用[执行记录模板](records/TEMPLATE.md)。
 
 ## 准备产物
 

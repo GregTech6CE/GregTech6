@@ -41,11 +41,11 @@
 | 长期取舍与原版差异 | [decisions](../decisions/README.md) |
 | 单个开发工具的依赖、参数与输出 | 对应 `tools/<scope>/README.md` |
 
-文档入口只导航；正文放在所属专题，其他页面链接引用。工作过程先留在 `work/<任务名>/`，形成可复用结论后再归档。
+顶层文档入口以导航为主；正文放在所属专题，其他页面链接引用。工作过程先留在 `work/<任务名>/`，形成可复用结论后再归档。
 
 ## 临时内容如何沉淀
 
-例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台行为结论放 `docs/integration/`；算法边界补到架构文档；若确实执行了实例更新，再写 `docs/operations/records/`。无需给每次小改动建立长期报告。
+例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台行为结论放 `docs/integration/`；算法边界补到架构文档；若确实执行了实例更新，再写 `docs/operations/records/`。无需给每次小改动建立长期记录。
 
 开发用探针优先放 `work/`，不会自动参与生产编译；若要长期保留为自动测试，接入合适测试源码集及依赖，并记录运行命令；测试目录与案例表约定见[验证与验收](validation/README.md)。不要把探针改名成业务类混入 `src/main/java/`。
 

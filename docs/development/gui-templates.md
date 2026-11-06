@@ -148,4 +148,4 @@ GuiTemplates.background(graphics, ResourceLocation.parse("example:textures/gui/c
 
 ## 预览、重载与验证
 
-先按[预览工具](../../tools/gui/README.md)检查模板并生成静态预览，再按[游戏内验收](validation/checks/manual-ingame.md)确认资源包重载、GUI 缩放、显示、交互与动画。静态预览的覆盖边界见工具说明。
+先按[预览工具](../../tools/gui/README.md)检查模板并生成静态预览，再按[游戏内验收](validation/checks/manual-ingame.md)确认资源包重载、GUI 缩放、显示与交互；动画插值按[预览工具](../../tools/gui/README.md)的边界在游戏内确认。

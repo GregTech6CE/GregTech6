@@ -41,17 +41,17 @@
 
 先确认外部消费者需要什么，再定义最小契约；由 engine 提供执行，bootstrap/platform 绑定，content 消费。
 
-本体入口是 `ControllerDeclaration.multiblock(namespace, path, factory, binding)`。`ControllerBinding` 明确给出主控实体类、方块实体注册 ID 和结构工厂；配方机另外绑定单元布局供应器。声明在 `MultiblockRegistration` 注册后，共同驱动运行时识别、JEI/EMI 和建筑之杖；独立主控的方块实体适用方块列表也从声明生成。启动时扫描实际方块注册表，校验漏登记、主控类/实体类型不匹配和空结构。
+宿主入口是 `ControllerDeclaration.multiblock(namespace, path, factory, binding)`。`ControllerBinding` 明确给出主控实体类、方块实体注册 ID 和结构工厂；配方机另外绑定单元布局供应器。声明在 `MultiblockRegistration` 注册后，共同驱动运行时识别、JEI/EMI 和建筑之杖；独立主控的方块实体适用方块列表也从声明生成。启动时扫描实际方块注册表，校验漏登记、主控类/实体类型不匹配和空结构。
 
-多方块声明、端口和诊断的消费契约见[附属 API](../../ADDON_API.zh-CN.md#多方块声明api-13)，内部执行见[engine 多方块运行时](engine.md#多方块运行时)。
+多方块声明、端口和诊断的消费契约见[附属 API](../../ADDON_API.zh-CN.md)，内部执行见[engine 多方块运行时](engine.md#多方块运行时)。
 
 ## 验收
 
 - 公共契约只定义可消费的协议，不放注册执行、世界访问、客户端渲染或内部缓存。
-- `api/common` 使用 Java 17，仅依赖 JDK；`api/minecraft` 含游戏类型，由 `:api-platform:<node>` 分别编译，不依赖 core 或模组 main。
+- `api/common` 使用 Java 17，运行时仅依赖 JDK；`api/minecraft` 含游戏类型，由 `:api-platform:<node>` 分别编译，不依赖 core 或模组 main。
 - 修改公开签名、默认方法、异常或生命周期声明时，说明二进制、源码与数据兼容影响；`public` 不自动意味着长期兼容。
 - 扩展输入在进入运行时前验证身份、范围、冲突与引用。
-- 修改后运行 JUnit 与 `apiContracts`；修改 `api/minecraft` 的共享游戏侧 API 时编译两个平台。`api/common` 仅依赖 JDK，不需要平台编译。
+- 修改后运行 JUnit 与 `apiContracts`；修改 `api/minecraft` 的共享游戏侧 API 时编译两个平台。`api/common` 运行时仅依赖 JDK，不需要平台编译。
 - 格式检查的覆盖缺口见 [format](../../development/validation/checks/format.md)。
 
 ## 自动化测试范围

@@ -10,11 +10,11 @@
 | 修改材料、配方、机器或其他领域代码 | [包职责索引](architecture/packages/README.md) |
 | 处理 Forge / NeoForge 差异 | [跨版本修改](architecture/versions.md) |
 | 修改资源、生成表或许可声明 | [资源与生成内容](architecture/resources.md) |
-| 选择检查、运行命令和记录验收结果 | [验证与验收](development/validation/README.md) |
+| 选择检查、运行命令和记录结果证据 | [验证与验收](development/validation/README.md) |
 | 开发附属、SDK 或 KubeJS 扩展 | [附属 API](ADDON_API.zh-CN.md) |
-| 制作 GUI 或查找协作约定 | [开发专题](development/README.md) |
-| 保存跨平台、跨模组或上游对照结论 | [集成报告](integration/README.md) |
-| 交付产物、更新实例或保存执行记录 | [操作指南](operations/README.md) |
+| 制作 GUI 或查找协作约定 | [开发指南](development/README.md) |
+| 保存跨平台、跨模组或上游对照结论 | [集成、来源与验证结论](integration/README.md) |
+| 交付产物、更新实例或保存执行记录 | [发布、实例更新与执行记录](operations/README.md) |
 | 查询或记录长期取舍、与原版的差异 | [决策](decisions/README.md) |
 
-文档的维护规则见[文档 AGENTS.md](AGENTS.md)。专题页保留本主题的说明，通用规则和命令通过链接引用。
+文档的维护规则见[文档 AGENTS.md](AGENTS.md)。
