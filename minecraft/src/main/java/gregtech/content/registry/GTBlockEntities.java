@@ -53,7 +53,7 @@ public final class GTBlockEntities {
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ReactorCoreBlockEntity>> REACTOR_CORE=BLOCK_ENTITIES.register("reactor_core",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ReactorCoreBlockEntity::new,GTEnergyNodes.REACTOR_CORE_BLOCK.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ReactorCore2x2BlockEntity>> REACTOR_CORE_2X2=BLOCK_ENTITIES.register("reactor_core_2x2",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ReactorCore2x2BlockEntity::new,GTEnergyNodes.REACTOR_CORE_2X2.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity>> PLACED_REACTOR_ROD=BLOCK_ENTITIES.register("placed_reactor_rod",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity::new,GTFuelRods.BLOCKS.values().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity>> PLACED_REACTOR_ROD=BLOCK_ENTITIES.register("placed_reactor_rod",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity::new,GTFuelRods.BLOCKS.values().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RockBlockEntity>> ROCK =
             BLOCK_ENTITIES.register("rock", () -> BlockEntityType.Builder.of(RockBlockEntity::new, GTBlocks.ROCK.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.tool.DynamiteBlockEntity>> DYNAMITE=BLOCK_ENTITIES.register("dynamite",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.DynamiteBlockEntity::new,GTToolBlocks.DYNAMITE.get(),GTToolBlocks.BOOMSTICK.get(),GTToolBlocks.DYNAMITE_STRONG.get()).build(null));
@@ -282,7 +282,7 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity>> PLACED_REACTOR_ROD =
             BLOCK_ENTITY_TYPES.register("placed_reactor_rod", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity::new,
-                    GTFuelRods.BLOCKS.values().stream().map(RegistryObject::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+                    GTFuelRods.BLOCKS.values().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ReactorCoreBlockEntity>> REACTOR_CORE =
             BLOCK_ENTITY_TYPES.register("reactor_core", () -> BlockEntityType.Builder.of(

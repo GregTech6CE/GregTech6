@@ -37,7 +37,7 @@ public record MachineBlockBootstrap(IEventBus bus) implements InitializationStep
         GTWoods.registerAll();
         GTTreeHoles.registerAll();
         GTBushes.registerAll();
-        GTElectricItems.registerAll();
+        GTElectricItems.register(new gregtech.platform.forge.ForgeContentRegistrar());
         GTChemicalBatteries.registerAll();
         GTDecorBlocks.registerAll();
         GTTrackBlocks.registerAll();

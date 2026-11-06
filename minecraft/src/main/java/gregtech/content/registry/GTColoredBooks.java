@@ -1,17 +1,21 @@
 package gregtech.content.registry;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.book.ColoredBookRules;
 import net.minecraft.world.item.*;
 import java.util.*;
+
 /** Registry identities stay independent of book content and native NBT/component storage. */
 public final class GTColoredBooks {
     private GTColoredBooks() {}
-    private static final Map<String,java.util.function.Supplier<? extends Item>> BOOKS=new LinkedHashMap<>();
-    public static void registerAll(){
+    private static final Map<String,RegisteredItem<Item>> BOOKS=new LinkedHashMap<>();
+    public static void register(ContentRegistrar registrar){
         if(!BOOKS.isEmpty())return;
-        for(var spec:ColoredBookRules.VARIANTS)BOOKS.put(spec.path(),GTItems.ITEMS.register(spec.path(),()->new gregtech.content.item.ColoredBookItem(spec)));
+        for(var spec:ColoredBookRules.VARIANTS)BOOKS.put(spec.path(),registrar.item(REGISTRY_NAMESPACE,spec.path(),()->new gregtech.content.item.ColoredBookItem(spec)));
     }
     public static ItemStack stack(int originalId){return new ItemStack(BOOKS.get(ColoredBookRules.byId(originalId).path()).get());}
-    public static List<Item> items(){return BOOKS.values().stream().map(java.util.function.Supplier::get).map(i->(Item)i).toList();}
+    public static List<Item> items(){return BOOKS.values().stream().map(RegisteredItem::get).map(i->(Item)i).toList();}
     private static boolean recipesRegistered;
     /** Original directed RM.generify conversion: one book to a blank vanilla written book. */
     public static synchronized void registerRecipes(){

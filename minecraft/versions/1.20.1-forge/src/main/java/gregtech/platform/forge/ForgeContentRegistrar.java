@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item;
 /** Forge item adapter over the shared per-namespace deferred registers. */
 public record ForgeContentRegistrar() implements ContentRegistrar {
     @Override
-    public RegisteredItem<Item> item(String namespace, String path, Supplier<? extends Item> factory) {
+    public <T extends Item> RegisteredItem<T> item(String namespace, String path, Supplier<T> factory) {
         return new RegisteredItem<>(
                 ResourceLocation.fromNamespaceAndPath(namespace, path),
                 GTItems.items(namespace).register(path, factory));

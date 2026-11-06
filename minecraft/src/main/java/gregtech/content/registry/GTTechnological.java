@@ -2,72 +2,48 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.item.TechItem;
-import net.minecraft.world.item.Item;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.neoforged.neoforge.registries.DeferredHolder;
-*///?} else {
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-//?}
-
 import java.util.*;
+import net.minecraft.world.item.Item;
 
 /** Technological items; cover hosts and machines provide the behavior of installed components. */
 public final class GTTechnological {
-    public static final DeferredRegister<Item> ITEMS =
-//? if >=1.21.1 {
-            /*DeferredRegister.create(BuiltInRegistries.ITEM, REGISTRY_NAMESPACE);
-*///?} else {
-            DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
-//?}
-
-//? if >=1.21.1 {
-    /*private static final Map<String, DeferredHolder<Item,Item>> BY_ID = new LinkedHashMap<>();
-*///?} else {
-    private static final Map<String, RegistryObject<Item>> BY_ID = new LinkedHashMap<>();
-//?}
+    private static final Map<String, RegisteredItem<Item>> BY_ID = new LinkedHashMap<>();
 
     private GTTechnological() {}
 
     /** All registered tech items in insertion order. */
-//? if >=1.21.1 {
-    /*public static Collection<DeferredHolder<Item,Item>> all() { return BY_ID.values(); }
-*///?} else {
-    public static Collection<RegistryObject<Item>> all() { return BY_ID.values(); }
-//?}
+    public static Collection<RegisteredItem<Item>> all() {
+        return BY_ID.values();
+    }
 
-    public static void registerAll() {
+    public static void register(ContentRegistrar registrar) {
         for (String id : IDS) {
             String name = englishName(id);
             boolean catalyst = id.contains("_shape_");
-//? if >=1.21.1 {
-            /*DeferredHolder<Item,Item> obj = ITEMS.register(id, () -> new TechItem(name, catalyst, new Item.Properties().stacksTo(64)));
-*///?} else {
-            RegistryObject<Item> obj = ITEMS.register(id, () -> new TechItem(name, catalyst, new Item.Properties().stacksTo(64)));
-//?}
-            BY_ID.put(id, obj);
+            BY_ID.put(
+                    id,
+                    registrar.item(
+                            REGISTRY_NAMESPACE,
+                            id,
+                            () -> new TechItem(name, catalyst, new Item.Properties().stacksTo(64))));
         }
         for (var variant : gregtech.content.cover.CanvasRules.VARIANTS)
-            BY_ID.put(variant.path(), ITEMS.register(variant.path(), () -> new gregtech.content.item.CanvasItem(variant)));
+            BY_ID.put(
+                    variant.path(),
+                    registrar.item(
+                            REGISTRY_NAMESPACE, variant.path(), () -> new gregtech.content.item.CanvasItem(variant)));
         // GT6 ST.tag equivalents: integrated circuits select recipe variants, never consumed.
         for (int i = 0; i < 25; i++) {
             String id = "integrated_circuit_" + i;
             final int configuration = i;
-//? if >=1.21.1 {
-            /*DeferredHolder<Item,Item> obj = ITEMS.register(id, () -> new gregtech.content.item.SelectorTagItem(configuration, new Item.Properties().stacksTo(64)));
-*///?} else {
-            RegistryObject<Item> obj = ITEMS.register(id, () -> new gregtech.content.item.SelectorTagItem(configuration, new Item.Properties().stacksTo(64)));
-//?}
-            BY_ID.put(id, obj);
+            BY_ID.put(
+                    id,
+                    registrar.item(
+                            REGISTRY_NAMESPACE,
+                            id,
+                            () -> new gregtech.content.item.SelectorTagItem(
+                                    configuration, new Item.Properties().stacksTo(64))));
         }
     }
 
@@ -78,13 +54,9 @@ public final class GTTechnological {
 
     /** Tech item by registry id (e.g. {@code "extruder_shape_plate"}), or null before registration. */
     public static Item get(String id) {
-//? if >=1.21.1 {
-        /*DeferredHolder<Item,Item> obj = BY_ID.get(ALIASES.getOrDefault(id, id.replace("compact__electric_conveyor", "compact_electric_conveyor")));
-        return obj != null && obj.isBound() ? obj.get() : null;
-*///?} else {
-        RegistryObject<Item> obj = BY_ID.get(ALIASES.getOrDefault(id, id.replace("compact__electric_conveyor", "compact_electric_conveyor")));
+        RegisteredItem<Item> obj = BY_ID.get(
+                ALIASES.getOrDefault(id, id.replace("compact__electric_conveyor", "compact_electric_conveyor")));
         return obj != null && obj.isPresent() ? obj.get() : null;
-//?}
     }
 
     /**
@@ -99,7 +71,11 @@ public final class GTTechnological {
      * {@code PressAmmunitionRecipes}), and {@code IL.Shape_Slicer_Eigths} is the original's typo of
      * "eighths". Read by {@code tools/audit_tech_item_tokens.py}.</p>
      */
-    public static final Map<String,String> ALIASES=gregtech.content.recipe.TechnologicalItemDefinitions.ALIASES;
-    static final String[] IDS=gregtech.content.recipe.TechnologicalItemDefinitions.IDS;
-    private static String englishName(String id) { return gregtech.content.recipe.TechnologicalItemDefinitions.englishName(id); }
+    public static final Map<String, String> ALIASES = gregtech.content.recipe.TechnologicalItemDefinitions.ALIASES;
+
+    static final String[] IDS = gregtech.content.recipe.TechnologicalItemDefinitions.IDS;
+
+    private static String englishName(String id) {
+        return gregtech.content.recipe.TechnologicalItemDefinitions.englishName(id);
+    }
 }

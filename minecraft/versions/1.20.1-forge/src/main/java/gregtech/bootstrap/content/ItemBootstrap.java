@@ -16,27 +16,28 @@ public record ItemBootstrap() implements InitializationStep {
 
     @Override
     public void run() {
-        LOGGER.info("Queued {} material items for registration", GTItems.registerAll(new ForgeContentRegistrar()));
+        ForgeContentRegistrar registrar = new ForgeContentRegistrar();
+        LOGGER.info("Queued {} material items for registration", GTItems.registerAll(registrar));
 
-        gregtech.content.registry.GTColoredBooks.registerAll();
-        GTTechnological.registerAll();
+        gregtech.content.registry.GTColoredBooks.register(registrar);
+        GTTechnological.register(registrar);
         LOGGER.info(
                 "Queued {} technological items for registration",
                 GTTechnological.all().size());
 
-        gregtech.content.registry.GTMultiItems.registerAll();
+        gregtech.content.registry.GTMultiItems.register(registrar);
         LOGGER.info(
                 "Queued {} multi-items (tools/bottles/food/bumblebees) for registration",
                 gregtech.content.registry.GTMultiItems.all().size());
 
         // GT6's food items are all inside the multi-item table above; this registry only holds
         // the handful that were genuinely missing (today none - see GTFoodItemsGen.GAP).
-        gregtech.content.registry.GTFoodItems.registerAll();
+        gregtech.content.registry.GTFoodItems.register(registrar);
         LOGGER.info(
                 "Queued {} GT6 food items the multi-item table was missing",
                 gregtech.content.registry.GTFoodItems.registered());
 
-        gregtech.content.registry.GTFuelRods.registerAll();
+        gregtech.content.registry.GTFuelRods.register(registrar);
         LOGGER.info("Queued {} fuel rod items for registration", gregtech.content.registry.GTFuelRods.ALL.size());
     }
 }

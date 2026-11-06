@@ -8,5 +8,5 @@ import net.minecraft.world.item.Item;
  * Each platform implements it once; the shared definitions keep deciding what gets registered.
  */
 public interface ContentRegistrar {
-    RegisteredItem<Item> item(String namespace, String path, Supplier<? extends Item> factory);
+    <T extends Item> RegisteredItem<T> item(String namespace, String path, Supplier<T> factory);
 }

@@ -442,7 +442,7 @@ private GTCreativeTabs() {}
 //? if >=1.21.1 {
         /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("technology");
 *///?} else {
-        for (RegistryObject<Item> entry : GTTechnological.all()) {
+        for (RegisteredItem<Item> entry : GTTechnological.all()) {
             if (entry.isPresent()) return new ItemStack(entry.get());
         }
         return new ItemStack(Items.REDSTONE);
