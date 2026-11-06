@@ -37,7 +37,10 @@ public final class GTSpecialOreBlocks {
                         BlockBehaviour.Properties.of().strength(2.0F, 3.0F).sound(SoundType.WOOD), "planks_treated"));
         var treatedItem = GTBlocks.BLOCK_ITEMS.register(
                 "planks_treated", () -> new BlockItem(treated.get(), new Item.Properties().stacksTo(64)));
-        GTItems.bind(MaterialPrefix.plate, gregtech.content.material.generated.WoodMaterials.WoodTreated, treatedItem);
+        GTItems.bind(
+                MaterialPrefix.plate,
+                gregtech.content.material.generated.WoodMaterials.WoodTreated,
+                new RegisteredItem<Item>(treatedItem.getId(), treatedItem::get));
         ALL.add(treated);
     }
 

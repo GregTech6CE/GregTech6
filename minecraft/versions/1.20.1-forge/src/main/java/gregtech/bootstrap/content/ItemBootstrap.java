@@ -1,53 +1,22 @@
 package gregtech.bootstrap.content;
 
 import com.mojang.logging.LogUtils;
-import gregtech.api.material.GTMaterial;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.item.CoinItem;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
-import gregtech.engine.material.MaterialItemDefinitions;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
+import gregtech.platform.forge.ForgeContentRegistrar;
 import org.slf4j.Logger;
 
 /**
- * Registers one GT6 material item per valid (prefix, material) pair.
- * The shared definition stream retains the original explicit prefix order and material filtering.
+ * Queues the shared material item stream into the Forge registries.
+ * The definition loop itself lives in {@link GTItems#registerAll}.
  */
 public record ItemBootstrap() implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     @Override
     public void run() {
-        int total = 0;
-        for (MaterialItemDefinitions.Definition definition : MaterialItemDefinitions.all()) {
-            MaterialPrefix prefix = definition.prefix();
-            GTMaterial material = definition.material();
-            if (definition.hasIdSuffix()) {
-                LOGGER.warn(
-                        "Duplicate item id '{}' for material {} (id={}); using '{}'",
-                        definition.baseItemId(),
-                        material.getName(),
-                        material.getId(),
-                        definition.itemId());
-            }
-            RegistryObject<Item> registered = GTItems.items(definition.namespace())
-                    .register(
-                            definition.itemId(),
-                            () -> prefix == MaterialPrefix.coin
-                                    ? new CoinItem(new Item.Properties().stacksTo(64), material)
-                                    : gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)
-                                            ? new gregtech.content.item.MaterialArrowItem(
-                                                    new Item.Properties().stacksTo(64), prefix, material)
-                                            : gregtech.content.item.EnergyCrystalItem.createOrMaterial(
-                                                    prefix, material));
-            GTItems.bind(prefix, material, registered);
-            total++;
-        }
-
-        LOGGER.info("Queued {} material items for registration", total);
+        LOGGER.info("Queued {} material items for registration", GTItems.registerAll(new ForgeContentRegistrar()));
 
         gregtech.content.registry.GTColoredBooks.registerAll();
         GTTechnological.registerAll();

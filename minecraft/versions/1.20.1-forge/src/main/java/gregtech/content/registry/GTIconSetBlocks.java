@@ -108,7 +108,7 @@ public final class GTIconSetBlocks {
                 GTItems.bind(
                         gregtech.content.data.MaterialPrefix.plate,
                         gregtech.content.material.generated.WoodMaterials.WoodTreated,
-                        item);
+                        new RegisteredItem<>(item.getId(), item));
             }
             ALL.add(block);
         }

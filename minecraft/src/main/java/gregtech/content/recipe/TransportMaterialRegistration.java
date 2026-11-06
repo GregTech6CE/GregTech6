@@ -20,12 +20,11 @@ public final class TransportMaterialRegistration {
         var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse(key));
         if(item==Items.AIR)throw new IllegalStateException("Missing native transport material item "+key);
         ItemMaterialRegistry.register(item,data); RECOVERY_ITEMS.add(item);
-        if(data.prefix()!=null) gregtech.content.registry.GTItems.bind(data.prefix(),data.material(),
-//? if >=1.21.1 {
-                /*net.neoforged.neoforge.registries.DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM,ResourceLocation.parse(key)));
-*///?} else {
-                net.minecraftforge.registries.RegistryObject.create(ResourceLocation.parse(key),net.minecraftforge.registries.ForgeRegistries.ITEMS));
-//?}
+        if(data.prefix()!=null){
+            ResourceLocation itemId=ResourceLocation.parse(key);
+            gregtech.content.registry.GTItems.bind(data.prefix(),data.material(),
+                    new gregtech.content.registry.RegisteredItem<>(itemId,()->item));
+        }
     }
     public static int register(){
         for(var spec:FluidTransportDefinitions.pipes())bind(spec.id(),TransportMaterialRules.pipe(spec));
