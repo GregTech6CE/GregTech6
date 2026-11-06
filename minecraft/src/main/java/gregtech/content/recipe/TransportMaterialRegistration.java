@@ -1,38 +1,50 @@
 package gregtech.content.recipe;
 
-import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.api.material.*;
-import gregtech.engine.material.*;
 import gregtech.content.transport.*;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
+import gregtech.engine.machine.ItemPipeSpec;
+import gregtech.engine.material.*;
+import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
-import java.util.*;
 
 /** Bind the actual native block items before material recovery recipes are created. */
 public final class TransportMaterialRegistration {
     private TransportMaterialRegistration() {}
-    private static final Set<Item> RECOVERY_ITEMS=Collections.newSetFromMap(new IdentityHashMap<>());
-    public static Set<Item> recoveryItems(){return Collections.unmodifiableSet(RECOVERY_ITEMS);}
-    private static void bind(String id,ItemComposition data){
-        String key=gregtech.engine.addon.AddonPipes.namespace(id)+":"+id;
-        var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse(key));
-        if(item==Items.AIR)throw new IllegalStateException("Missing native transport material item "+key);
-        ItemMaterialRegistry.register(item,data); RECOVERY_ITEMS.add(item);
-        if(data.prefix()!=null){
-            ResourceLocation itemId=ResourceLocation.parse(key);
-            gregtech.content.registry.GTItems.bind(data.prefix(),data.material(),
-                    new gregtech.content.registry.RegisteredItem<>(itemId,()->item));
+
+    private static final Set<Item> RECOVERY_ITEMS = Collections.newSetFromMap(new IdentityHashMap<>());
+
+    public static Set<Item> recoveryItems() {
+        return Collections.unmodifiableSet(RECOVERY_ITEMS);
+    }
+
+    private static void bind(String id, ItemComposition data) {
+        String key = gregtech.engine.addon.AddonPipes.namespace(id) + ":" + id;
+        var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(key));
+        if (item == Items.AIR) throw new IllegalStateException("Missing native transport material item " + key);
+        ItemMaterialRegistry.register(item, data);
+        RECOVERY_ITEMS.add(item);
+        if (data.prefix() != null) {
+            ResourceLocation itemId = ResourceLocation.parse(key);
+            gregtech.content.registry.GTItems.bind(
+                    data.prefix(), data.material(), new gregtech.content.registry.RegisteredItem<>(itemId, () -> item));
         }
     }
-    public static int register(){
-        for(var spec:FluidTransportDefinitions.pipes())bind(spec.id(),TransportMaterialRules.pipe(spec));
-        for(var mat:ItemPipeCatalog.mats())for(var size:ItemPipeSpec.ItemPipeSize.values()){
-            String id="item_pipe_"+size.name().toLowerCase(Locale.ROOT)+"_"+mat.idSuffix();
-            bind(id,TransportMaterialRules.pipe(ItemPipeSpec.of(id,mat.material(),size,mat.stepSize(),mat.invSize(),true)));
-        }
-        for(var spec:FluidTransportDefinitions.tanks())TransportMaterialRules.tank(spec).ifPresent(data->bind(spec.id(),data));
+
+    public static int register() {
+        for (var spec : FluidTransportDefinitions.pipes()) bind(spec.id(), TransportMaterialRules.pipe(spec));
+        for (var mat : ItemPipeCatalog.mats())
+            for (var size : ItemPipeSpec.ItemPipeSize.values()) {
+                String id = "item_pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + mat.idSuffix();
+                bind(
+                        id,
+                        TransportMaterialRules.pipe(
+                                ItemPipeSpec.of(id, mat.material(), size, mat.stepSize(), mat.invSize(), true)));
+            }
+        for (var spec : FluidTransportDefinitions.tanks())
+            TransportMaterialRules.tank(spec).ifPresent(data -> bind(spec.id(), data));
         TransportMaterialRules.logisticsComponents().forEach((id, data) -> {
             var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:" + id));
             if (item == Items.AIR) throw new IllegalStateException("Missing logistics component " + id);
