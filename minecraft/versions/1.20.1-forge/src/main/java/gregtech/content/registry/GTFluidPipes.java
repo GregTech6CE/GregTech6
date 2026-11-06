@@ -69,8 +69,4 @@ public final class GTFluidPipes {
     public static List<RegistryObject<FluidPipeBlock>> all() {
         return Collections.unmodifiableList(ALL);
     }
-
-    public static void bootstrap() {
-        if (ALL.isEmpty()) throw new IllegalStateException("GTFluidPipes failed to initialize");
-    }
 }

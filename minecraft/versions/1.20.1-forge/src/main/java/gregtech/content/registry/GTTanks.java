@@ -102,8 +102,4 @@ public final class GTTanks {
     public static List<RegistryObject<TankBlock>> all() {
         return Collections.unmodifiableList(ALL);
     }
-
-    public static void bootstrap() {
-        if (ALL.isEmpty()) throw new IllegalStateException("GTTanks failed to initialize");
-    }
 }

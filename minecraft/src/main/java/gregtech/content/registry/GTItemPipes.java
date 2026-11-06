@@ -71,9 +71,5 @@ public final class GTItemPipes {
         event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
                 GTBlockEntities.ITEM_PIPE.get(), (be, side) -> be.capabilityHandler(side));
     }
-*///?} else {
-    public static void bootstrap() {
-        if (ALL.isEmpty()) throw new IllegalStateException("GTItemPipes failed to initialize");
-    }
-//?}
+*///?}
 }

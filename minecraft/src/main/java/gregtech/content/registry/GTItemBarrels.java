@@ -16,5 +16,6 @@ public final class GTItemBarrels {
                     block -> new BlockItem(block, new Item.Properties().stacksTo(16))))
             .toList();
 
+    /** The static list queues the blocks; this hook forces class initialization at the block phase. */
     public static void registerAll() {}
 }

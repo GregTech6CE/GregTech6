@@ -834,7 +834,8 @@ public final class GTFoodItemsGen {
      * point: all 266 rows of {@code MultiItemFood} line up 1:1 with the {@code food} category of
      * {@code GTMultiItemsGen} (the extractor fails loudly if a single row stops matching), and the
      * one row GT6 itself does not register is the hidden ID-migration stub in {@link #SKIPPED}.
-     * {@code registry/GTFoodItems} registers whatever this list holds.
+     * The list stays empty while the food line is complete; a future gap row would be registered
+     * through the shared content registrar, not a per-platform copy.
      */
     public static final List<String> GAP = List.of();
 }

@@ -56,7 +56,6 @@ public final class ContentRegistration {
         int materialItems = gregtech.content.registry.GTItems.registerAll(registrar);
         gregtech.content.registry.GTTechnological.register(registrar);
         gregtech.content.registry.GTMultiItems.register(registrar);
-        gregtech.content.registry.GTFoodItems.register(registrar);
         gregtech.content.registry.GTDungeonKeys.registerAll();
         gregtech.content.registry.GTToolItems.register(registrar);
         gregtech.content.registry.GTElectricItems.register(registrar);

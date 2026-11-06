@@ -19,7 +19,6 @@ public final class GTLegacyEnergyDevices {
             block -> new net.minecraft.world.item.BlockItem(
                     block, new net.minecraft.world.item.Item.Properties().stacksTo(16)));
 
-    public static void registerAll() {
-        /* Triggers deferred registration during block bootstrap. */
-    }
+    /** The static fields queue the blocks; this hook forces class initialization at the block phase. */
+    public static void registerAll() {}
 }
