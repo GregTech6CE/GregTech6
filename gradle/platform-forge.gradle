@@ -136,7 +136,7 @@ minecraft {
 repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
-    maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
+    maven { name = 'EMI'; url = 'https://repo.sleeping.town/' }
     maven {
         name = "BlameJared"
         url = "https://maven.blamejared.com"

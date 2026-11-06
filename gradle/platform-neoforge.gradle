@@ -29,7 +29,7 @@ repositories {
     mavenCentral()
     maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
     maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
-    maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
+    maven { name = 'EMI'; url = 'https://repo.sleeping.town/' }
     maven { name = 'Latvian'; url = 'https://maven.latvian.dev/releases' }
 }
 
