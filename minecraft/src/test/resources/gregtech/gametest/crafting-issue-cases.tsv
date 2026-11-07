@@ -37,3 +37,7 @@
 348	forge:dyes/red	T	-	-	gt6ce:dust_dyered	-	none	GT6 red dye dust is a red dye
 348	forge:dyes/light_gray	T	-	-	gt6ce:dust_dyelightgray	-	none	GT6 light grey dye dust uses the vanilla colour name
 348	forge:dyes/light_blue	T	-	-	gt6ce:dust_dyelightblue	-	none	GT6 light blue dye dust uses the vanilla colour name
+346	gt6ce:stone/stone_granite/stone_to_slab_by_saw	R	gt6ce:tool_shaped	-	gt6ce:stone_granite_stone_slab	2	fill	saw splits a full stone block into two slabs
+346	gt6ce:stone/stone_marble/bricks_to_slab_by_saw	S	gt6ce:tool_shaped	##	gt6ce:stone_marble_bricks_slab	2	none	every masonry variant saws into its own slab
+346	gt6ce:stone/stone_granite/bricks_reinforced_to_slab_by_saw	R	gt6ce:tool_shaped	-	gt6ce:stone_granite_bricks_reinforced_slab	2	fill	reinforced bricks keep the generic base row
+346	gt6ce:stone/stone_granite/stone_slabs_to_block	S	gt6ce:tool_shaped	#/#	gt6ce:stone_granite_stone	1	none	two slabs rebuild the full block

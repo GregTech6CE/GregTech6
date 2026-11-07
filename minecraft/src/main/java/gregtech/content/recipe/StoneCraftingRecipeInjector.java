@@ -63,6 +63,11 @@ import java.util.Map;
  * rows with the {@code CR.DEF} flag are registered <em>without</em> mirroring, which is why
  * {@link ToolShapedRecipe} is used instead of a plain {@link ShapedRecipe}.</p>
  *
+ * <p>{@code BlockMetaType:88-95} adds two rows to every full masonry block, independently of those
+ * variant groups: {@code "X"/"X"} turns two slabs back into the block and {@code "sX"} saws the block
+ * into two slabs. Both are registered per meta, so all 16 {@link StoneVariant}s of every rock get
+ * them, including reinforced and redstone bricks.</p>
+ *
  * <p>GT6's {@code CR.shaped(BRICK ×4, "XX"/"XX", plain stone)} is not repeated here: the data pack
  * already ships it as {@code stone_<rock>_bricks.json}.</p>
  */
@@ -136,6 +141,7 @@ public final class StoneCraftingRecipeInjector {
         Ingredient file = Ingredient.of(tool(GTToolType.FILE));
         Ingredient chisel = Ingredient.of(tool(GTToolType.CHISEL));
         Ingredient hammer = Ingredient.of(tool(GTToolType.HARD_HAMMER));
+        Ingredient saw = Ingredient.of(tool(GTToolType.SAW));
 
         int added = 0;
         added += shaped(recipes, path + "/rocks_to_cobble", new String[]{"XX", "XX"},
@@ -153,6 +159,18 @@ public final class StoneCraftingRecipeInjector {
                 Map.of('X', Ingredient.of(cobble)), new ItemStack(Items.COBBLESTONE_STAIRS, 4), true);
         added += shaped(recipes, path + "/cobble_to_wall", new String[]{"XXX", "XXX"},
                 Map.of('X', Ingredient.of(cobble)), new ItemStack(Items.COBBLESTONE_WALL, 6), true);
+
+        // GT6 BlockMetaType:88-95 — every full block and its slab pair, whatever the variant group.
+        for (StoneVariant variant : StoneVariant.values()) {
+            ItemStack full = block(type, variant);
+            ItemStack half = slab(type, variant);
+            if (full.isEmpty() || half.isEmpty()) continue;
+            String base = path + "/" + variant.registrySuffix();
+            added += shaped(recipes, base + "_slabs_to_block", new String[]{"X", "X"},
+                    Map.of('X', Ingredient.of(half)), full, false);
+            added += shaped(recipes, base + "_to_slab_by_saw", new String[]{"sX"},
+                    Map.of('X', Ingredient.of(full), 's', saw), copy(half, 2), false);
+        }
 
         added += shaped(recipes, path + "/bricks_cracked_by_chisel", new String[]{"y", "X"},
                 Map.of('X', Ingredient.of(bricks), 'y', chisel), cracked, false);

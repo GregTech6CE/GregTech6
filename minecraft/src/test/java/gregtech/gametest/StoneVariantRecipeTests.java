@@ -8,9 +8,11 @@ import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -56,6 +58,39 @@ public final class StoneVariantRecipeTests {
                     type.registryId() + " loose dust smelts into its stone block");
         }
         helper.succeed();
+    }
+
+    /** Every full masonry block rebuilds from two slabs, saws into two slabs, and has both rows. */
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void everyMasonryBlockHasItsSlabRows(GameTestHelper helper) {
+        var recipes = helper.getLevel().getRecipeManager();
+        var missing = new ArrayList<String>();
+        for (StoneType type : StoneType.values()) {
+            for (StoneVariant variant : StoneVariant.values()) {
+                var full = GTBlocks.getStone(type, variant);
+                var slab = GTBlocks.getStoneSlab(type, variant);
+                helper.assertTrue(full != null && slab != null,
+                        type.registryId() + "_" + variant.registrySuffix() + " has a block and a slab");
+                var base = "stone/" + type.registryId() + "/" + variant.registrySuffix();
+                if (recipes.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce", base + "_to_slab_by_saw"))
+                        .isEmpty()) missing.add(base + "_to_slab_by_saw");
+                if (recipes.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce", base + "_slabs_to_block"))
+                        .isEmpty()) missing.add(base + "_slabs_to_block");
+                if (!sawsTwoSlabs(new ItemStack(full), new ItemStack(slab))) missing.add(base + " cutter row");
+            }
+        }
+        helper.assertTrue(missing.isEmpty(), "missing masonry slab rows: " + missing);
+        helper.succeed();
+    }
+
+    /** Whether the Cutter turns the full block into exactly two of its slabs. */
+    private static boolean sawsTwoSlabs(ItemStack full, ItemStack slab) {
+        for (Recipe recipe : MachineRecipeMaps.Cutter.mRecipeList) {
+            if (recipe.mInputs.length != 1 || !recipe.mInputs[0].is(full.getItem())) continue;
+            for (ItemStack output : recipe.mOutputs)
+                if (output.is(slab.getItem()) && output.getCount() == 2) return true;
+        }
+        return false;
     }
 
     private static Recipe find(ItemStack input) {

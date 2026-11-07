@@ -1,6 +1,9 @@
 package gregtech.gametest;
 
+import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.engine.tool.GTToolHelper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -40,7 +43,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class CraftingRecipeIssueSmokeTests {
     private static final Set<String> FIXED_ISSUES = Set.of(
-            "2", "148", "151", "153", "155", "157", "158", "161", "171", "173", "176", "185", "209", "286", "293", "312", "345", "348");
+            "2", "148", "151", "153", "155", "157", "158", "161", "171", "173", "176", "185", "209", "286", "293", "312", "345", "346", "348");
 
     // Checks the table covers every fixed issue and the GameTest runtime is wired.
     @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
@@ -311,9 +314,19 @@ public final class CraftingRecipeIssueSmokeTests {
         var items = emptyGrid(width, height);
         for (int index = 0; index < ingredients.size() && index < items.size(); index++) {
             var choices = ingredients.get(index).getItems();
-            if (choices.length > 0) items.set(index, choices[0].copyWithCount(1));
+            if (choices.length > 0) items.set(index, craftableTool(choices[0].copyWithCount(1)));
         }
         return new Filled(width, height, items);
+    }
+
+    // A bare GT tool item carries no head or handle stats, so a grid built from it never passes the
+    // tool check. Give it the stats a crafted tool has.
+    private static ItemStack craftableTool(ItemStack stack) {
+        if (stack.getItem() instanceof GTToolItem tool
+                && tool.toolType().requiresHeadAssembly()
+                && !GTToolHelper.isUsable(stack))
+            return GTToolHelper.write(stack, GT6Materials.Compounds.VanadiumSteel, GT6Materials.Woods.Spruce);
+        return stack;
     }
 
     // Returns the first bound item of a recipe or fails clearly.

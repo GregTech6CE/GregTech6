@@ -48,8 +48,10 @@ import java.util.Map;
  *
  * <p>Two details worth keeping: the reinforced and redstone brick groups carry their extra material
  * into the crusher/shredder byproducts (and therefore are never smelted back to plain stone, GT6
- * {@code BlockStones:426-438}), and the sawing rows exist for every variant GT6 marks
- * {@code JUSTSTONE} — i.e. all but those same two (GT6 {@code BlockStones:271-274}).</p>
+ * {@code BlockStones:426-438}), and the slab-to-plate sawing rows exist for every variant GT6 marks
+ * {@code JUSTSTONE} — i.e. all but those same two (GT6 {@code BlockStones:271-274}). The Cutter also
+ * saws every full block into two of its slabs, a base row every variant gets from
+ * {@code BlockMetaType:92}.</p>
  */
 public final class StoneVariantRecipes {
 
@@ -192,11 +194,19 @@ public final class StoneVariantRecipes {
         }
     }
 
-    /** GT6 {@code BlockStones:271-274}: every {@code JUSTSTONE} slab saws into plates and small dust. */
+    /**
+     * GT6 {@code BlockMetaType:92} saws every full block into two of its own slabs, and
+     * {@code BlockStones:271-274} saws every {@code JUSTSTONE} slab into plates and small dust.
+     */
     private static void sawing(StoneType type) {
         for (StoneVariant variant : StoneVariant.values()) {
-            if (variant == StoneVariant.BRICKS_REINFORCED || variant == StoneVariant.BRICKS_REDSTONE) continue;
             ItemStack slab = slab(type, variant);
+            ItemStack full = block(type, variant);
+            if (!full.isEmpty() && !slab.isEmpty()
+                    && MachineRecipeMaps.sawing(16, 16, false, 5, full, slab.copyWithCount(2))) {
+                COUNTS.merge("sawing", 1, Integer::sum);
+            }
+            if (variant == StoneVariant.BRICKS_REINFORCED || variant == StoneVariant.BRICKS_REDSTONE) continue;
             if (slab.isEmpty()) {
                 SKIPPED.add(type.registryId() + " has no " + variant.registrySuffix() + " slab");
                 continue;
