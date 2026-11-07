@@ -18,45 +18,63 @@ public final class RecipeDiagnostics {
         // Fake viewer rows intentionally share inputs with real recipes.
         if (candidate.mFakeRecipe) return;
         int count = REJECTED.merge(map, 1, Integer::sum);
-        if (count <= DETAIL_LIMIT) LOGGER.warn("[{}] Recipe input collision (kept first): existing {}; skipped {}",
+        if (count <= DETAIL_LIMIT) LOGGER.warn("[{}] Recipe duplicate (same inputs and conditions, kept first): existing {}; skipped {}",
                 map.mNameInternal, describe(existing), describe(candidate));
     }
 
-    /** Linear pass per map also catches producers using the explicit collision-check bypass.
-     * Arbitrary predicates and special slots cannot be compared safely; do not infer equality. */
+    /**
+     * Linear pass per map also catches producers using the explicit collision-check bypass.
+     * A row whose inputs are already present under the same conditions is a duplicate; the same
+     * inputs under different conditions (special value, catalyst role, priority, energy, duration,
+     * probability) are a legitimate variant and are counted separately. Arbitrary predicates and
+     * special slots cannot be compared safely; do not infer equality.
+     */
     public static void report() {
         long started = System.nanoTime();
-        int total = 0;
+        int totalDuplicates = 0;
+        int totalVariants = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            Map<Inputs, Recipe> first = new HashMap<>();
+            Map<Conditions, Recipe> first = new HashMap<>();
+            Map<Inputs, Recipe> variants = new HashMap<>();
             int duplicates = 0;
+            int variantsRetained = 0;
             for (Recipe recipe : map.mRecipeList) {
                 if (!recipe.mEnabled || recipe.mFakeRecipe || recipe.mSpecialItems != null
                         || recipe.hasItemInputGuards() || recipe.hasSameItemInputPredicates()) continue;
-                Inputs inputs = inputs(recipe);
-                if (inputs.items().isEmpty() && inputs.fluids().isEmpty()) continue;
-                Recipe existing = first.putIfAbsent(inputs, recipe);
+                Conditions conditions = conditions(recipe);
+                if (conditions.inputs().items().isEmpty() && conditions.inputs().fluids().isEmpty()) continue;
+                Recipe existing = first.putIfAbsent(conditions, recipe);
                 if (existing != null && existing != recipe) {
-                    if (++duplicates <= DETAIL_LIMIT) LOGGER.warn("[{}] Potential duplicate machine recipes: first {}; later {}",
+                    if (++duplicates <= DETAIL_LIMIT) LOGGER.warn("[{}] Duplicate machine recipe (same inputs and conditions): first {}; later {}",
                             map.mNameInternal, describe(existing), describe(recipe));
+                    continue;
                 }
+                Recipe sameInputs = variants.putIfAbsent(conditions.inputs(), recipe);
+                if (sameInputs != null && sameInputs != recipe) variantsRetained++;
             }
+            long[] priorities = map.dynamicProviderPriorities();
+            if (priorities.length > 0) LOGGER.info("[{}] Dynamic provider priorities: {}", map.mNameInternal,
+                    Arrays.toString(priorities));
             int rejected = REJECTED.getOrDefault(map, 0);
-            if (rejected > 0 || duplicates > 0) LOGGER.warn(
-                    "[{}] Recipe diagnostics: {} input collisions skipped, {} potential duplicates retained; first {} details of each shown",
-                    map.mNameInternal, rejected, duplicates, DETAIL_LIMIT);
-            total += duplicates;
+            if (rejected > 0 || duplicates > 0 || variantsRetained > 0) LOGGER.warn(
+                    "[{}] Recipe diagnostics: {} duplicate rows skipped, {} duplicates retained, "
+                            + "{} condition variants retained; first {} details shown",
+                    map.mNameInternal, rejected, duplicates, variantsRetained, DETAIL_LIMIT);
+            totalDuplicates += duplicates;
+            totalVariants += variantsRetained;
         }
-        LOGGER.info("Machine recipe duplicate scan: {} potential duplicates, {} ms", total,
-                (System.nanoTime() - started) / 1_000_000L);
+        LOGGER.info("Machine recipe duplicate scan: {} duplicates, {} condition variants, {} ms",
+                totalDuplicates, totalVariants, (System.nanoTime() - started) / 1_000_000L);
         REJECTED.clear();
     }
 
     private record StackKey(Object type, Object data, int amount, boolean retained, boolean presence) {}
-    private record Inputs(Map<StackKey, Integer> items, Map<StackKey, Integer> fluids,
-                          long specialValue, boolean exact, boolean explicitCatalysts, boolean emptyContainers) {}
+    private record Inputs(Map<StackKey, Integer> items, Map<StackKey, Integer> fluids) {}
+    private record Conditions(Inputs inputs, long specialValue, long priority, long euPerTick, long duration,
+                              boolean exact, boolean explicitCatalysts, boolean emptyContainers,
+                              List<Long> chances) {}
 
-    private static Inputs inputs(Recipe recipe) {
+    private static Conditions conditions(Recipe recipe) {
         Map<StackKey, Integer> items = new HashMap<>(), fluids = new HashMap<>();
         for (int i = 0; i < recipe.mInputs.length; i++) {
             ItemStack stack = recipe.mInputs[i];
@@ -83,8 +101,11 @@ public final class RecipeDiagnostics {
                     recipe.isCatalystFluidInput(i), recipe.isPresenceFluidInput(i));
             fluids.merge(key, 1, Integer::sum);
         }
-        return new Inputs(items, fluids, recipe.mSpecialValue, recipe.mExactItemInputs,
-                recipe.mExplicitCatalystsOnly, recipe.mRequiresEmptyContainerInputs);
+        var chances = new ArrayList<Long>(recipe.mChances.length);
+        for (long chance : recipe.mChances) chances.add(chance);
+        return new Conditions(new Inputs(items, fluids), recipe.mSpecialValue, recipe.mPriority,
+                recipe.mEUt, recipe.mDuration, recipe.mExactItemInputs,
+                recipe.mExplicitCatalystsOnly, recipe.mRequiresEmptyContainerInputs, List.copyOf(chances));
     }
 
     private static String describe(Recipe recipe) {
@@ -98,6 +119,8 @@ public final class RecipeDiagnostics {
         for (var stack : recipe.mFluidOutputs) if (stack != null && !stack.isEmpty())
             outputs.add(stack.getAmount() + "mB " + BuiltInRegistries.FLUID.getKey(stack.getFluid()));
         return inputs + " -> " + outputs + " (power=" + recipe.mEUt + "/t, duration=" + recipe.mDuration
-                + "t, chances=" + Arrays.toString(recipe.mChances) + ")";
+                + "t, chances=" + Arrays.toString(recipe.mChances) + ", special=" + recipe.mSpecialValue
+                + ", priority=" + recipe.mPriority
+                + (recipe.mSource.isEmpty() ? "" : ", source=" + recipe.mSource) + ")";
     }
 }

@@ -35,4 +35,28 @@ final class MachineRecipeDocumentsTest {
                          "item_inputs":[{"item":"minecraft:stone","count":1.5}]}
                         """));
     }
+
+    @Test
+    void priorityIsOptionalAndRoundTripsOnlyWhenSet() {
+        var ordinary = MachineRecipeDocuments.addition("""
+                {"map":"gt.recipe.crusher",
+                 "item_inputs":[{"item":"minecraft:stone"}],
+                 "item_outputs":[{"item":"minecraft:gravel"}],
+                 "eu_per_tick":16,"duration":20}
+                """);
+        assertEquals(0, ordinary.priority());
+        assertEquals("""
+                {"map":"gt.recipe.crusher","item_inputs":[{"item":"minecraft:stone","count":1}],\
+                "fluid_inputs":[],"item_outputs":[{"item":"minecraft:gravel","count":1,"chance":10000}],\
+                "fluid_outputs":[],"eu_per_tick":16,"duration":20,"special":0}""", MachineRecipeDocuments.canonical(ordinary));
+
+        var prioritized = MachineRecipeDocuments.addition("""
+                {"map":"gt.recipe.crusher",
+                 "item_inputs":[{"item":"minecraft:stone"}],
+                 "item_outputs":[{"item":"minecraft:gravel"}],
+                 "eu_per_tick":16,"duration":20,"priority":7}
+                """);
+        assertEquals(7, prioritized.priority());
+        assertEquals(prioritized, MachineRecipeDocuments.addition(MachineRecipeDocuments.canonical(prioritized)));
+    }
 }

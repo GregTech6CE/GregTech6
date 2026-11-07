@@ -61,7 +61,12 @@ public final class MachineRecipeClient {
         var connection = Minecraft.getInstance().getConnection();
         if (connection != null) OvenRecipeBridge.apply(recipes, connection.registryAccess());
         // The row set is final now; build on the task queue so the sync thread is not blocked.
-        Minecraft.getInstance().execute(gregtech.engine.recipe.RecipeMap::prebuildLookupIndexes);
+        // A newer tag update supersedes this pass and its queued build.
+        long generation = MachineRecipeOverlay.generation();
+        Minecraft.getInstance().execute(() -> {
+            if (MachineRecipeOverlay.generation() != generation) return;
+            gregtech.engine.recipe.RecipeMap.prebuildLookupIndexes();
+        });
         refresh("jei", "gregtech.compat.jei.GregTechJEIPlugin");
         refresh("emi", "gregtech.compat.emi.GregTechEMIPlugin");
     }

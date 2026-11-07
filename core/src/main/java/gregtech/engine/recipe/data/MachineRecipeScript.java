@@ -29,9 +29,23 @@ public final class MachineRecipeScript {
             long euPerTick,
             long duration,
             long special) {
+        return addition(map, itemInputs, fluidInputs, itemOutputs, fluidOutputs, euPerTick, duration, special, 0L);
+    }
+
+    /** The same row with an explicit lookup priority; higher wins, equal priorities keep publication order. */
+    public static String addition(
+            String map,
+            List<ItemComponent> itemInputs,
+            List<FluidComponent> fluidInputs,
+            List<ItemResult> itemOutputs,
+            List<FluidComponent> fluidOutputs,
+            long euPerTick,
+            long duration,
+            long special,
+            long priority) {
         requireKnownMap(map);
         return MachineRecipeDocuments.canonical(new MachineRecipeSpec(
-                map, itemInputs, fluidInputs, itemOutputs, fluidOutputs, euPerTick, duration, special));
+                map, itemInputs, fluidInputs, itemOutputs, fluidOutputs, euPerTick, duration, special, null, priority));
     }
 
     public static String removal(

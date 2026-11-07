@@ -23,8 +23,15 @@ import java.util.*;
  * {@code findRecipe()} to build a row from the <em>contents</em> of the inputs (the scanner, the
  * printer and the replicator read the NBT of a USB stick) are ported through
  * {@link #dynamicRecipes(DynamicRecipes)}: the port keeps the table-driven lookup and asks the
- * providers only when no static row matches. The built-in provider stays first. Each
- * {@link #addDynamicRecipes(DynamicRecipes)} call appends another provider behind it.</p>
+ * providers only when no static row matches. The built-in provider stays first; addon providers are
+ * ordered by the explicit priority passed to {@link #addDynamicRecipes(long, DynamicRecipes)}, not
+ * by the order they were registered.</p>
+ *
+ * <p>Static rows carry an explicit {@link Recipe#mPriority}; a lookup returns the highest-priority
+ * matching row and uses the row published first only to break a tie. Rows that share inputs but
+ * differ in conditions (energy, duration, probability, special value, catalyst role, priority) are
+ * legitimate variants and coexist instead of one being rejected as a duplicate; see
+ * {@link #conditionsEqual(Recipe, Recipe)}.</p>
  */
 public class RecipeMap {
 
@@ -43,7 +50,10 @@ public class RecipeMap {
     @javax.annotation.Nullable
     private DynamicRecipes mDynamicRecipes;
     private static final DynamicRecipes[] NO_ADDON_DYNAMIC_RECIPES = new DynamicRecipes[0];
+    private static final long[] NO_ADDON_DYNAMIC_PRIORITIES = new long[0];
     private DynamicRecipes[] mAddonDynamicRecipes = NO_ADDON_DYNAMIC_RECIPES;
+    /** Parallel to {@link #mAddonDynamicRecipes}; descending, ties in registration order. */
+    private long[] mAddonDynamicPriorities = NO_ADDON_DYNAMIC_PRIORITIES;
 
     /** Original findRecipe overrides that also need the machine world and special slot. */
     @FunctionalInterface
@@ -78,17 +88,41 @@ public class RecipeMap {
     }
 
     /**
-     * Appends a provider behind the built-in one. A null answer means this provider does not
-     * handle the input; the next provider is asked. The first non-null answer is the dynamic
-     * row, and later providers are not asked.
+     * Registers a provider at neutral priority; see {@link #addDynamicRecipes(long, DynamicRecipes)}.
      */
     public RecipeMap addDynamicRecipes(DynamicRecipes provider) {
+        return addDynamicRecipes(0L, provider);
+    }
+
+    /**
+     * Registers a provider behind the built-in one, ordered by explicit priority instead of call
+     * order. A null answer means this provider does not handle the input; the next provider in
+     * priority order is asked. The first answer that yields a row the machine can actually use is
+     * the dynamic row, so a provider returning a row that fails the normal matcher does not mask a
+     * later provider that would have matched. Equal priorities keep registration order.
+     */
+    public RecipeMap addDynamicRecipes(long priority, DynamicRecipes provider) {
         if (provider == null) throw new IllegalArgumentException("dynamic recipe provider");
-        var next = Arrays.copyOf(mAddonDynamicRecipes, mAddonDynamicRecipes.length + 1);
-        next[mAddonDynamicRecipes.length] = provider;
-        mAddonDynamicRecipes = next;
+        int length = mAddonDynamicRecipes.length;
+        int at = 0;
+        while (at < length && mAddonDynamicPriorities[at] >= priority) at++;
+        var providers = new DynamicRecipes[length + 1];
+        var priorities = new long[length + 1];
+        System.arraycopy(mAddonDynamicRecipes, 0, providers, 0, at);
+        System.arraycopy(mAddonDynamicPriorities, 0, priorities, 0, at);
+        providers[at] = provider;
+        priorities[at] = priority;
+        System.arraycopy(mAddonDynamicRecipes, at, providers, at + 1, length - at);
+        System.arraycopy(mAddonDynamicPriorities, at, priorities, at + 1, length - at);
+        mAddonDynamicRecipes = providers;
+        mAddonDynamicPriorities = priorities;
         lookupTable.invalidate();
         return this;
+    }
+
+    /** Priorities of the addon providers, in lookup order; the built-in provider is not listed. */
+    public long[] dynamicProviderPriorities() {
+        return mAddonDynamicPriorities.clone();
     }
 
     /**
@@ -190,6 +224,8 @@ public class RecipeMap {
     // ── Recipe storage ───────────────────────────────────────────────────
     public final Collection<Recipe> mRecipeList;
     private final RecipeLookupTable lookupTable;
+    /** Publication counter behind {@link Recipe#mRegistrationOrder}; survives removals and reloads. */
+    private long mNextRegistrationOrder;
     /** Index: input {@link Item} -> recipes using it as an input. */
     public final Map<Item, Collection<Recipe>> mRecipeItemMap = new HashMap<>();
     public final Map<String, Collection<Recipe>> mRecipeFluidMap = new HashMap<>();
@@ -766,10 +802,12 @@ public class RecipeMap {
         if (aRecipe.hasTaggedInputs()) {
             // Whole-domain collision checks cannot prove coverage for guarded inputs.
             if (aRecipe.hasItemInputGuards() || aRecipe.hasSameItemInputPredicates()) return null;
-            for (Recipe existing : mRecipeList) if (RecipeTagInputs.covers(existing, aRecipe)) return existing;
+            for (Recipe existing : mRecipeList)
+                if (conditionsEqual(existing, aRecipe) && RecipeTagInputs.covers(existing, aRecipe)) return existing;
             return null;
         }
-        for (Recipe existing : lookupTable.tagged()) if (RecipeTagInputs.covers(existing, aRecipe)) return existing;
+        for (Recipe existing : lookupTable.tagged())
+            if (conditionsEqual(existing, aRecipe) && RecipeTagInputs.covers(existing, aRecipe)) return existing;
         if (mCollisionDirty || mCollisionRows != mRecipeList.size()) rebuildCollisionIndex();
         int[] keys = availableCollisionIds(aRecipe);
         if (keys.length > COLLISION_SIGNATURE_KEYS) return findCollisionByPools(aRecipe);
@@ -835,9 +873,33 @@ public class RecipeMap {
         return true;
     }
 
+    /**
+     * Whether two rows that may see the same inputs also have the same execution conditions.
+     * Rows that differ in energy, duration, probability, special value, priority, catalyst role or
+     * exactness are legitimate variants of one another and may coexist: the machine's own matcher
+     * decides between them, and {@link #findRecipe} prefers the higher priority. Only rows whose
+     * conditions are identical are duplicates, which is the case the collision check rejects.
+     */
+    static boolean conditionsEqual(Recipe a, Recipe b) {
+        return a.mSpecialValue == b.mSpecialValue
+                && a.mPriority == b.mPriority
+                && a.mEUt == b.mEUt
+                && a.mDuration == b.mDuration
+                && a.mNeedsEmptyOutput == b.mNeedsEmptyOutput
+                && a.mExactItemInputs == b.mExactItemInputs
+                && a.mExplicitCatalystsOnly == b.mExplicitCatalystsOnly
+                && a.mRequiresEmptyContainerInputs == b.mRequiresEmptyContainerInputs
+                && a.mMaterialRecovery == b.mMaterialRecovery
+                && java.util.Objects.equals(a.mSpecialItems, b.mSpecialItems)
+                && Arrays.equals(a.mChances, b.mChances)
+                && Arrays.equals(a.explicitCatalystInputs(), b.explicitCatalystInputs())
+                && Arrays.equals(a.explicitCatalystFluidInputs(), b.explicitCatalystFluidInputs());
+    }
+
     /** Whether every input of {@code aExisting} is covered by the inputs of {@code aCandidate}. */
     private boolean inputsSatisfiedBy(Recipe aExisting, Recipe aCandidate) {
         if (aExisting.mFakeRecipe) return false;
+        if (!conditionsEqual(aExisting, aCandidate)) return false;
         // In an anvil recipe an empty entry is a required empty work area, not a wildcard.
         if (mAnvilRowMap) {
             long requiredEmpty = java.util.Arrays.stream(aExisting.mInputs).filter(RecipeMap::empty).count();
@@ -932,6 +994,9 @@ public class RecipeMap {
         }
         boolean inserted = mRecipeList.add(aRecipe);
         if (inserted) {
+            // The first publication order is kept when a baseline row is put back, so an equal-priority
+            // tie resolves the same way after a reload.
+            if (aRecipe.mRegistrationOrder < 0) aRecipe.mRegistrationOrder = mNextRegistrationOrder++;
             for (var capture : mAdditionCaptures) capture.record(aRecipe);
             indexCollision(aRecipe);
         }
@@ -1250,31 +1315,22 @@ public class RecipeMap {
         for (var fluid : fluids) inputFluids.add(fluid == null ? FluidStack.EMPTY : fluid);
         var matcher = new RecipeInputs.Matcher(inputItems, inputFluids);
         boolean emptyOutputs = !needsOutputs || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount);
-        // Preserve the existing exact-item pass and collection order. HashSet index iteration must
-        // never choose a different recipe when two rows accept the same input.
+        // The exact-item pass keeps its stage precedence; within a stage the explicit priority wins
+        // and the original publication order breaks ties, so a row's answer no longer depends on the
+        // backing collection's iteration order.
         var candidates = lookupTable.candidates(inputItems, inputFluids);
         // Both candidate stages already apply exactItems to every static row; the cached candidate
         // lists keep that split for the same input identities, so the check is not repeated here.
-        for (Recipe r : candidates.exact()) {
-            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r)) continue;
-            if (needsOutputs && r.mNeedsEmptyOutput && !emptyOutputs) continue;
-            if (matcher.matches(r, 1)) return r;
-        }
+        Recipe best = bestStaticMatch(candidates.exact(), matcher, needsOutputs, emptyOutputs);
+        if (best != null) return best;
         // Material aliases, legacy colour alternatives and tag-derived forms retain the full fallback.
-        for (Recipe r : candidates.alternatives()) {
-            if (!r.mEnabled || r.mFakeRecipe || !supportsFluidPresence(r)) continue;
-            if (needsOutputs && r.mNeedsEmptyOutput && !emptyOutputs) continue;
-            if (matcher.matches(r, 1)) return r;
-        }
+        best = bestStaticMatch(candidates.alternatives(), matcher, needsOutputs, emptyOutputs);
+        if (best != null) return best;
         // GT6's subclass overrides run only when the table had no answer, exactly like GT6's
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
         if (mDynamicRecipes != null || mAddonDynamicRecipes.length != 0) {
-            Recipe dynamic = firstDynamicRecipe(inputItems, inputFluids);
-            if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe && supportsFluidPresence(dynamic)) {
-                if (needsOutputs && dynamic.mNeedsEmptyOutput
-                        && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) return null;
-                if (matcher.matches(dynamic, 1)) return dynamic;
-            }
+            Recipe dynamic = firstMatchingDynamicRecipe(matcher, inputItems, inputFluids, needsOutputs, emptyOutputs);
+            if (dynamic != null) return dynamic;
         }
         if (mContextRecipes != null && level != null) {
             Recipe dynamic = mContextRecipes.find(level, machine, special, inputItems, inputFluids);
@@ -1284,6 +1340,67 @@ public class RecipeMap {
                     && matcher.matches(dynamic, 1)) return dynamic;
         }
         return null;
+    }
+
+    /**
+     * The row a machine should use from one lookup stage: highest explicit priority first, then the
+     * earliest publication. Only rows the machine can actually run are considered, so a disabled,
+     * fake, presence-incompatible or non-matching row never shadows a usable variant.
+     */
+    @javax.annotation.Nullable
+    private Recipe bestStaticMatch(List<Recipe> stage, RecipeInputs.Matcher matcher,
+                                   boolean needsOutputs, boolean emptyOutputs) {
+        if (stage.isEmpty()) return null;
+        // Explicit priority first; equal priorities keep the row published first. The matcher then
+        // runs in that order and the first usable row answers, so ordinary content (one priority
+        // everywhere) does not pay for the rest of a shared mold/tool bucket.
+        List<Recipe> ordered = stage;
+        if (stage.size() > 1) {
+            ordered = new java.util.ArrayList<>(stage);
+            ordered.sort(RecipeMap::compareSelectionOrder);
+        }
+        for (Recipe candidate : ordered) {
+            if (!candidate.mEnabled || candidate.mFakeRecipe || !supportsFluidPresence(candidate)) continue;
+            if (needsOutputs && candidate.mNeedsEmptyOutput && !emptyOutputs) continue;
+            if (matcher.matches(candidate, 1)) return candidate;
+        }
+        return null;
+    }
+
+    private static int compareSelectionOrder(Recipe a, Recipe b) {
+        int byPriority = Long.compare(b.mPriority, a.mPriority);
+        if (byPriority != 0) return byPriority;
+        long first = a.mRegistrationOrder < 0 ? Long.MAX_VALUE : a.mRegistrationOrder;
+        long second = b.mRegistrationOrder < 0 ? Long.MAX_VALUE : b.mRegistrationOrder;
+        return Long.compare(first, second);
+    }
+
+    /**
+     * The built-in handler, then addon providers in priority order. A provider whose row cannot be
+     * used does not consume the query: the next provider is still asked, so one provider's partial
+     * match cannot hide another's real one. This is the same row set {@link #dynamicEnumeration}
+     * must expose.
+     */
+    @javax.annotation.Nullable
+    private Recipe firstMatchingDynamicRecipe(RecipeInputs.Matcher matcher, List<ItemStack> inputItems,
+                                              List<FluidStack> inputFluids, boolean needsOutputs,
+                                              boolean emptyOutputs) {
+        if (mDynamicRecipes != null) {
+            Recipe recipe = mDynamicRecipes.find(inputItems, inputFluids);
+            if (usableDynamicRecipe(recipe, matcher, needsOutputs, emptyOutputs)) return recipe;
+        }
+        for (int i = 0; i < mAddonDynamicRecipes.length; i++) {
+            Recipe recipe = mAddonDynamicRecipes[i].find(inputItems, inputFluids);
+            if (usableDynamicRecipe(recipe, matcher, needsOutputs, emptyOutputs)) return recipe;
+        }
+        return null;
+    }
+
+    private boolean usableDynamicRecipe(Recipe recipe, RecipeInputs.Matcher matcher,
+                                        boolean needsOutputs, boolean emptyOutputs) {
+        return recipe != null && recipe.mEnabled && !recipe.mFakeRecipe && supportsFluidPresence(recipe)
+                && (!needsOutputs || !recipe.mNeedsEmptyOutput || emptyOutputs)
+                && matcher.matches(recipe, 1);
     }
 
     static boolean exactItems(Recipe recipe, List<ItemStack> inputs) {

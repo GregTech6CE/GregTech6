@@ -98,8 +98,11 @@ public final class AddonLoaderServices {
             Recipe recipe;
             if (!line.materialInputs().isEmpty()) {
                 var entry = line.materialInputs().entrySet().iterator().next();
-                recipe = gregtech.engine.recipe.MaterialUnitRecipes.add(map, recipe(line), entry.getKey(), entry.getValue());
-            } else recipe = map.addRecipe(recipe(line));
+                recipe = gregtech.engine.recipe.MachineRecipeAdapter.addMaterial(
+                        map, recipe(line), entry.getKey(), entry.getValue(),
+                        gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON);
+            } else recipe = gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
+                    map, recipe(line), gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON);
             return recipe == null ? null : line(recipe);
         }
 
@@ -112,7 +115,9 @@ public final class AddonLoaderServices {
         @Override public AddonRecipes.Line addDisplay(AddonRecipes.Line line) {
             if (!line.materialInputs().isEmpty()) throw new IllegalArgumentException("Register material rules with add or addMaterial");
             gregtech.engine.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
-            Recipe recipe = map.addFakeRecipe(false, recipe(line));
+            Recipe recipe = gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
+                    map, recipe(line), gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON,
+                    false, true, false, map.mLogErrors);
             return recipe == null ? null : line(recipe);
         }
 
@@ -129,11 +134,13 @@ public final class AddonLoaderServices {
 
         @Override public void addDynamic(AddonRecipes.Dynamic provider) {
             if (provider == null) throw new IllegalArgumentException("dynamic recipe provider");
-            map.addDynamicRecipes((items, fluids) -> {
-                AddonRecipes.Line line = provider.find(itemSnapshot(items), fluidSnapshot(fluids));
-                if (line != null && !line.materialInputs().isEmpty()) throw new IllegalArgumentException("Dynamic providers must return a concrete batch; register material rules with addMaterial");
-                return line == null ? null : recipe(line);
-            });
+            gregtech.engine.recipe.MachineRecipeAdapter.addDynamic(map,
+                    gregtech.engine.recipe.MachineRecipeAdapter.ADDON_DYNAMIC_PRIORITY,
+                    (items, fluids) -> {
+                        AddonRecipes.Line line = provider.find(itemSnapshot(items), fluidSnapshot(fluids));
+                        if (line != null && !line.materialInputs().isEmpty()) throw new IllegalArgumentException("Dynamic providers must return a concrete batch; register material rules with addMaterial");
+                        return line == null ? null : recipe(line);
+                    });
         }
 
         @Override public AddonRecipes.Line find(List<ItemStack> items, List<FluidStack> fluids,

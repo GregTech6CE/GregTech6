@@ -175,6 +175,8 @@ public final class RecipeDump {
         json.addProperty("euPerTick", recipe.mEUt);
         json.addProperty("duration", recipe.mDuration);
         json.addProperty("specialValue", recipe.mSpecialValue);
+        json.addProperty("priority", recipe.mPriority);
+        if (!recipe.mSource.isEmpty()) json.addProperty("source", recipe.mSource);
         json.addProperty("enabled", recipe.mEnabled);
         json.addProperty("hidden", recipe.mHidden);
         json.addProperty("fake", recipe.mFakeRecipe);

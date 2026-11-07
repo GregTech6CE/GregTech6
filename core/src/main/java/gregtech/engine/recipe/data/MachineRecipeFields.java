@@ -12,6 +12,9 @@ public final class MachineRecipeFields {
     public static final String EU_PER_TICK = "eu_per_tick";
     public static final String DURATION = "duration";
     public static final String SPECIAL = "special";
+    /** Explicit lookup priority; omitted or zero for ordinary rows. */
+    public static final String PRIORITY = "priority";
+
     public static final String CLEAR = "clear";
     public static final String ITEM = "item";
     public static final String TAG = "tag";

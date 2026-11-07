@@ -40,7 +40,12 @@ import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
 
-/** Restores the startup rows, rebuilds tag-owned rows, then applies datapack additions and removals. */
+/**
+ * Restores the startup rows, rebuilds tag-owned rows, then applies datapack removals and finally
+ * additions. The order is the published contract: a removal can only target a baseline or
+ * producer row, and an addition always sees the final static set. Additions carry an explicit
+ * priority, so two additions never depend on a datapack's file order.
+ */
 public final class MachineRecipeOverlay {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static int logged;
@@ -49,12 +54,18 @@ public final class MachineRecipeOverlay {
     private static Result lastResult = Result.unchanged();
     private static List<Recipe> furnaceAdded = List.of();
     private static List<Recipe> furnaceRemoved = List.of();
+    /** Bumped for every applied overlay; queued index builds compare it so an old pass cannot publish. */
+    private static long generation;
 
     private MachineRecipeOverlay() {}
 
-    public record Result(int removed, int added, int rejected, long restoreMillis, int baselineRows, boolean skipped) {
-        public static Result unchanged() { return new Result(0, 0, 0, 0, 0, true); }
+    public record Result(int removed, int added, int rejected, long restoreMillis, int baselineRows, boolean skipped,
+                         boolean failed) {
+        public static Result unchanged() { return new Result(0, 0, 0, 0, 0, true, false); }
     }
+
+    /** The generation of the last completed or failed overlay application. */
+    public static long generation() { return generation; }
 
     public static int staticRows() {
         int rows = 0;
@@ -80,6 +91,21 @@ public final class MachineRecipeOverlay {
     }
 
     public static Result apply(RecipeManager manager) {
+        long current = ++generation;
+        try {
+            return applyGeneration(manager, current);
+        } catch (RuntimeException failure) {
+            // A half-applied overlay would leave some maps restored and others still carrying the
+            // previous world's rows. Restore every map and drop the tag-owned producers instead of
+            // publishing a partial generation.
+            LOGGER.error("[gregtech] Machine recipe overlay generation {} failed; restoring the baseline", current, failure);
+            recover();
+            lastResult = new Result(0, 0, 0, 0, baselineRows(), false, true);
+            return lastResult;
+        }
+    }
+
+    private static Result applyGeneration(RecipeManager manager, long current) {
         // Undo the previous overlay before clearing mirrors: DISPLACED may otherwise
         // restore a previous world's datapack row after the baseline was restored.
         gregtech.content.recipe.OvenRecipeBridge.clearMirrors();
@@ -122,16 +148,43 @@ public final class MachineRecipeOverlay {
         long installMillis = (System.nanoTime() - installStarted) / 1_000_000L;
         rememberFurnaceChanges(furnaceBefore);
         LOGGER.info("[gregtech] Machine recipe overlay baseline {} rows, restore {} ms, producers {} ms, moved {}, "
-                        + "removed {} ({} ms), added {} ({} ms), rejected {}",
+                        + "removed {} ({} ms), added {} ({} ms), prioritized {}, rejected {}",
                 baselineRows(), restoreMillis, producersMillis, moved, tally.removed, removeMillis, tally.added,
-                installMillis, tally.rejected);
-        lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false);
+                installMillis, tally.priority, tally.rejected);
+        if (generation != current) return lastResult;
+        lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false, false);
         applications++;
         if (!overlayDumped) {
             overlayDumped = true;
             RecipeDump.afterOverlay();
         }
         return lastResult;
+    }
+
+    /** Drops every overlay-owned row and returns the maps to their captured baseline. */
+    private static void recover() {
+        try {
+            for (var map : RecipeMap.RECIPE_MAP_LIST) if (map.hasBaseline()) map.restoreBaseline();
+            ExternalOreProcessing.clear();
+            gregtech.content.recipe.NonOreMacerationRows.clear();
+            gregtech.content.recipe.SourceOreOutputRows.clear();
+            SharedPurifiedCentrifugeRows.clear();
+            SharedMineralSteamCrackingRows.clear();
+            SharedOreWashingRows.clear();
+            SharedOreMagneticRows.clear();
+            SharedOreSiftingRows.clear();
+            SharedOreCrushingRows.clear();
+            SharedOilSandRows.clear();
+            SharedPurifiedAcidRows.clear();
+            SharedThermalInputRows.clear();
+            SharedThermalRecyclingRows.clear();
+            MoltenMetalUnitRecipes.clear();
+            CompatRecipes.clear();
+            MaterialDisplayBinding.invalidate();
+            for (var map : RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
+        } catch (RuntimeException secondary) {
+            LOGGER.error("[gregtech] Machine recipe overlay recovery failed", secondary);
+        }
     }
 
     public static int applications() { return applications; }
@@ -259,12 +312,15 @@ public final class MachineRecipeOverlay {
         var chances = new long[spec.itemOutputs().size()];
         for (int i = 0; i < chances.length; i++) chances[i] = spec.itemOutputs().get(i).chance();
         var items = new ItemStack[slots.size()];
+        // A tag slot's first member is only the representative that carries the count; add() marks
+        // the slot with the tag itself, so every member stays accepted instead of just this one.
         for (int i = 0; i < slots.size(); i++) items[i] = slots.get(i).get(0).copy();
-        add(map, items, outputs, chances, fluidInputs, fluidOutputs, spec, tally);
+        add(map, items, outputs, chances, fluidInputs, fluidOutputs, spec, tally, "datapack:" + id);
     }
 
     private static void add(RecipeMap map, ItemStack[] items, ItemStack[] outputs, long[] chances,
-            FluidStack[] fluidInputs, FluidStack[] fluidOutputs, MachineRecipeSpec spec, Tally tally) {
+            FluidStack[] fluidInputs, FluidStack[] fluidOutputs, MachineRecipeSpec spec, Tally tally,
+            String source) {
         if (gregtech.engine.addon.ExclusiveOutputMaps.enabled(map)
                 && !gregtech.engine.addon.ExclusiveOutputRules.isPair(outputs.length,
                 gregtech.engine.addon.ExclusiveOutputMaps.nonEmptyItems(outputs))) {
@@ -280,7 +336,8 @@ public final class MachineRecipeOverlay {
         var copiedFluidOutputs = new FluidStack[fluidOutputs.length];
         for (int i = 0; i < fluidOutputs.length; i++) copiedFluidOutputs[i] = fluidOutputs[i].copy();
         var recipe = new Recipe(items, copiedOutputs, null, chances, copiedFluidInputs, copiedFluidOutputs,
-                spec.duration(), gregtech.content.data.FuelRecipeMaps.storedEu(map, spec.euPerTick()), spec.special());
+                spec.duration(), gregtech.content.data.FuelRecipeMaps.storedEu(map, spec.euPerTick()), spec.special())
+                .withPriority(spec.priority());
         for (int i = 0; i < spec.itemInputs().size(); i++)
             if (spec.itemInputs().get(i).tag() != null) recipe.withItemTagInput(i + (spec.materialInput() == null ? 0 : 1), ResourceLocation.parse(spec.itemInputs().get(i).tag()));
         for (int i = 0; i < spec.fluidInputs().size(); i++)
@@ -289,15 +346,20 @@ public final class MachineRecipeOverlay {
                 .filter(i -> spec.fluidInputs().get(i).amount() == 0).toArray());
         if (spec.materialInput() != null) {
             try {
-                gregtech.engine.recipe.MaterialUnitRecipes.add(map, recipe, 0, spec.materialInput());
+                gregtech.engine.recipe.MachineRecipeAdapter.addMaterial(map, recipe, 0, spec.materialInput(), source);
                 tally.added++;
+                if (spec.priority() != 0) tally.priority++;
             } catch (IllegalArgumentException failure) {
                 tally.rejected++; problem(spec.map() + " " + failure.getMessage());
             }
             return;
         }
-        if (map.addRecipe(recipe, true, false, false, false) == null) tally.rejected++;
-        else tally.added++;
+        if (gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
+                map, recipe, source, true, false, false, false) == null) tally.rejected++;
+        else {
+            tally.added++;
+            if (spec.priority() != 0) tally.priority++;
+        }
     }
 
     /**
@@ -327,7 +389,7 @@ public final class MachineRecipeOverlay {
                         break;
                     }
             }
-            tally.removed += entry.getKey().removeAll(drop);
+            tally.removed += gregtech.engine.recipe.MachineRecipeAdapter.remove(entry.getKey(), drop);
         }
     }
 
@@ -488,5 +550,6 @@ public final class MachineRecipeOverlay {
         private int removed;
         private int added;
         private int rejected;
+        private int priority;
     }
 }

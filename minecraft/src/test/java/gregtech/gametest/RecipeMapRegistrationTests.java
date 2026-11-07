@@ -259,6 +259,109 @@ public final class RecipeMapRegistrationTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void collisionKeepsConditionVariantsAndRejectsDuplicates(GameTestHelper helper) {
+        var map = map(helper, "gt.test.recipe.conditions");
+        try {
+            var base = row(new ItemStack[] {stack(Items.IRON_INGOT, 1)}, NO_FLUIDS);
+            helper.assertTrue(map.addRecipe(base) == base, "base row registered");
+
+            var differentPower = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 32, 0);
+            helper.assertTrue(map.addRecipe(differentPower) == differentPower,
+                    "a different energy is a legitimate condition variant");
+
+            var differentSpecial = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 300);
+            helper.assertTrue(map.addRecipe(differentSpecial) == differentSpecial,
+                    "a different special value is a legitimate condition variant");
+
+            var duplicate = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+            helper.assertTrue(map.addRecipe(duplicate) == null,
+                    "the same inputs and conditions are still rejected as a duplicate");
+        } finally {
+            RecipeMap.unregister("gt.test.recipe.conditions");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void lookupPrefersExplicitPriorityOverRegistrationOrder(GameTestHelper helper) {
+        var map = map(helper, "gt.test.recipe.priority");
+        try {
+            var high = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                    .withPriority(10);
+            var low = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+            // Register the winner first, then the loser: the answer must not depend on either order.
+            helper.assertTrue(map.addRecipe(high) == high, "high-priority row registered");
+            helper.assertTrue(map.addRecipe(low) == low, "low-priority row is a distinct variant");
+
+            var found = map.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
+                    false, 9, 9);
+            helper.assertTrue(found == high, "the explicit priority wins regardless of order: " + found);
+
+            var second = map(helper, "gt.test.recipe.priority.reverse");
+            try {
+                var laterHigh = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                        .withPriority(10);
+                var reverseLow = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                helper.assertTrue(second.addRecipe(reverseLow) == reverseLow, "low-priority row registered first");
+                helper.assertTrue(second.addRecipe(laterHigh) == laterHigh, "high-priority row registered later");
+                var reverse = second.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
+                        false, 9, 9);
+                helper.assertTrue(reverse == laterHigh, "priority beats later publication order: " + reverse);
+            } finally {
+                RecipeMap.unregister("gt.test.recipe.priority.reverse");
+            }
+        } finally {
+            RecipeMap.unregister("gt.test.recipe.priority");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void dynamicProvidersFollowPriorityAndFallThrough(GameTestHelper helper) {
+        var map = map(helper, "gt.test.recipe.dynamic.priority");
+        try {
+            var lowRow = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+            var highRow = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+            map.addDynamicRecipes(0, (items, fluids) -> lowRow);
+            map.addDynamicRecipes(10, (items, fluids) -> highRow);
+            helper.assertTrue(java.util.Arrays.equals(new long[] {10, 0}, map.dynamicProviderPriorities()),
+                    "providers are ordered by priority: " + java.util.Arrays.toString(map.dynamicProviderPriorities()));
+
+            var found = map.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
+                    false, 9, 9);
+            helper.assertTrue(found == highRow, "the higher-priority provider answers first: " + found);
+
+            // A provider whose row does not fit the actual input must not hide a later provider.
+            var other = map(helper, "gt.test.recipe.dynamic.fallthrough");
+            try {
+                var mismatched = new Recipe(new ItemStack[] {stack(Items.GOLD_INGOT, 1)},
+                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                var fallback = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                other.addDynamicRecipes(10, (items, fluids) -> mismatched);
+                other.addDynamicRecipes(0, (items, fluids) -> fallback);
+                var resolved = other.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
+                        false, 9, 9);
+                helper.assertTrue(resolved == fallback, "an unusable high-priority answer falls through: " + resolved);
+            } finally {
+                RecipeMap.unregister("gt.test.recipe.dynamic.fallthrough");
+            }
+        } finally {
+            RecipeMap.unregister("gt.test.recipe.dynamic.priority");
+        }
+        helper.succeed();
+    }
+
     private static RecipeMap map(GameTestHelper helper, String name) {
         return map(helper, name, 9);
     }

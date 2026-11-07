@@ -2,7 +2,13 @@ package gregtech.engine.recipe.data;
 
 import java.util.List;
 
-/** One datapack row added to an existing machine recipe map. */
+/**
+ * One datapack row added to an existing machine recipe map.
+ *
+ * <p>{@code priority} is the row's explicit claim when several rows could match the same machine
+ * input; a higher value wins and equal values keep the row published first. It is optional and
+ * defaults to zero, which is also every built-in row's priority.</p>
+ */
 public record MachineRecipeSpec(
         String map,
         List<ItemComponent> itemInputs,
@@ -12,7 +18,8 @@ public record MachineRecipeSpec(
         long euPerTick,
         long duration,
         long special,
-        gregtech.api.addon.recipe.MaterialUnitIngredient materialInput) {
+        gregtech.api.addon.recipe.MaterialUnitIngredient materialInput,
+        long priority) {
     public MachineRecipeSpec(
             String map,
             List<ItemComponent> items,
@@ -22,7 +29,20 @@ public record MachineRecipeSpec(
             long power,
             long duration,
             long special) {
-        this(map, items, fluids, outputs, fluidOutputs, power, duration, special, null);
+        this(map, items, fluids, outputs, fluidOutputs, power, duration, special, null, 0L);
+    }
+
+    public MachineRecipeSpec(
+            String map,
+            List<ItemComponent> items,
+            List<FluidComponent> fluids,
+            List<ItemResult> outputs,
+            List<FluidComponent> fluidOutputs,
+            long power,
+            long duration,
+            long special,
+            gregtech.api.addon.recipe.MaterialUnitIngredient materialInput) {
+        this(map, items, fluids, outputs, fluidOutputs, power, duration, special, materialInput, 0L);
     }
 
     public MachineRecipeSpec {

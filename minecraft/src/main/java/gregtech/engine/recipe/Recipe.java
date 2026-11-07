@@ -109,8 +109,36 @@ public class Recipe {
     public boolean mRequiresEmptyContainerInputs;
     /** Blueprint recipes require exact stack data and only their explicit retained inputs. */
     public boolean mExactItemInputs, mExplicitCatalystsOnly;
+
+    /**
+     * Explicit selection order among rows that could otherwise match the same machine input.
+     * A higher value wins regardless of registration order; equal priorities keep the row that the
+     * map registered first. Every row defaults to zero, so built-in content is unaffected until a
+     * producer states its intent.
+     */
+    public long mPriority;
+
+    /**
+     * Which producer published this row ({@code datapack:<id>}, {@code addon}); empty means the
+     * built-in content tables. Diagnostics and the recipe dump read it; it never participates in
+     * matching.
+     */
+    public String mSource = "";
+
+    /**
+     * Map-assigned publication order. Used only as the deterministic tie-breaker between rows of
+     * equal priority, replacing the accidental ordering of the backing collection.
+     */
+    long mRegistrationOrder = -1L;
+
     public Recipe withMaterialRecovery() { mMaterialRecovery = true; mRequiresEmptyContainerInputs = true; return this; }
     public Recipe withEmptyContainerInputs() { mRequiresEmptyContainerInputs = true; return this; }
+
+    /** Marks the explicit selection order; see {@link #mPriority}. */
+    public Recipe withPriority(long priority) { mPriority = priority; return this; }
+
+    /** Records the producing entry point; see {@link #mSource}. */
+    public Recipe withSource(String source) { mSource = source == null ? "" : source; return this; }
 
     public Recipe(ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecialItems,
                   long[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs,

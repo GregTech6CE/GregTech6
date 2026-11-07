@@ -19,6 +19,7 @@ public final class MachineRecipeDocuments {
             MachineRecipeFields.EU_PER_TICK,
             MachineRecipeFields.DURATION,
             MachineRecipeFields.SPECIAL,
+            MachineRecipeFields.PRIORITY,
             "material_input");
     private static final Set<String> ROOT_REMOVAL = Set.of(
             MachineRecipeFields.TYPE_REMOVAL, "type",
@@ -53,7 +54,8 @@ public final class MachineRecipeDocuments {
                 requiredLong(json, MachineRecipeFields.EU_PER_TICK),
                 requiredLong(json, MachineRecipeFields.DURATION),
                 optionalLong(json, MachineRecipeFields.SPECIAL),
-                json.containsKey("material_input") ? material(object(json.get("material_input"))) : null);
+                json.containsKey("material_input") ? material(object(json.get("material_input"))) : null,
+                optionalLong(json, MachineRecipeFields.PRIORITY));
         for (var input : spec.itemInputs()) if (input.count() < 1) throw new IllegalArgumentException("count");
         for (var input : spec.fluidInputs()) if (input.amount() < 0) throw new IllegalArgumentException("amount");
         for (var output : spec.itemOutputs()) {
@@ -102,6 +104,7 @@ public final class MachineRecipeDocuments {
         json.number(MachineRecipeFields.EU_PER_TICK, spec.euPerTick());
         json.number(MachineRecipeFields.DURATION, spec.duration());
         json.number(MachineRecipeFields.SPECIAL, spec.special());
+        if (spec.priority() != 0) json.number(MachineRecipeFields.PRIORITY, spec.priority());
         if (spec.materialInput() != null) json.raw("material_input", materialJson(spec.materialInput()));
         return json.finish();
     }

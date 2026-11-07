@@ -44,9 +44,16 @@ public final class MachineRecipeLifecycle {
      * Builds the lookup indexes once the overlay rows are final. Runs on the server task queue so
      * the build is charged to the next tick instead of the reload tick, which already carries the
      * overlay producers and can approach the server watchdog limit on large worlds.
+     * <p>The generation captured when the task is queued is compared when it runs: a reload that
+     * finishes first supersedes an earlier pass, whose queued build must not publish a stale row
+     * set.</p>
      */
     private static void prebuild(MinecraftServer server) {
-        server.execute(gregtech.engine.recipe.RecipeMap::prebuildLookupIndexes);
+        long generation = MachineRecipeOverlay.generation();
+        server.execute(() -> {
+            if (MachineRecipeOverlay.generation() != generation) return;
+            gregtech.engine.recipe.RecipeMap.prebuildLookupIndexes();
+        });
     }
 
     /**
