@@ -18,6 +18,7 @@ public final class RuntimeRecipeLifecycle {
     static {
         RecipePublication.register((manager, access) -> {
             BottleFillingRecipeInjector.apply(manager, access);
+            ConstructionCraftingRecipeInjector.apply(manager, access);
             FormConversionCraftingRecipeInjector.apply(manager, access);
             HandToolCraftingRecipeInjector.apply(manager, access);
             StoneCraftingRecipeInjector.apply(manager, access);

@@ -78,6 +78,7 @@ public final class ManualToolRecipePack {
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Original powered tool datapack: {} concrete material/battery assemblies", powered);
         OriginalHandCraftingRows.add(generated);
+        gregtech.content.recipe.ConstructionCraftingRecipeInjector.add(generated);
         gregtech.content.recipe.FormConversionCraftingRecipeInjector.add(generated);
         gregtech.content.recipe.StoneCraftingRecipeInjector.add(generated);
         gregtech.content.recipe.BedrockFlowerCraftingRecipeInjector.add(generated);

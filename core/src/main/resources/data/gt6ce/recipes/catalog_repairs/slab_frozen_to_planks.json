@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "X"
+  ],
+  "key": {
+    "X": {
+      "item": "gt6ce:slab_frozen"
+    }
+  },
+  "result": {
+    "item": "gt6ce:planks_frozen",
+    "count": 1
+  },
+  "_comment": "GT6 BlockMetaType.java:88-95 registers two slabs -> the block for every meta of every BlockMetaType subclass; BlockBasePlanks skips only RM.sawing and the saw row."
+}
