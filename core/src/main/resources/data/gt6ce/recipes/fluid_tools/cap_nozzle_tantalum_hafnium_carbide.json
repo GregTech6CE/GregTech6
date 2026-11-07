@@ -1,27 +1,34 @@
 {
   "type": "gt6ce:tool_shaped",
   "pattern": [
-    "  h",
-    "PRP",
-    "o  "
+    "Rw",
+    "BT",
+    "Nd"
   ],
   "key": {
-    "P": {
-      "item": "gt6ce:plate_curved_tantalumhafniumcarbide"
-    },
-    "h": {
-      "item": "gt6ce:tool_hammer"
-    },
-    "o": {
-      "item": "gt6ce:tool_bending_cylinder"
+    "N": {
+      "item": "gt6ce:nozzle_tungsten"
     },
     "R": {
       "tag": "forge:rings/tantalum_hafnium_carbide"
+    },
+    "B": {
+      "item": "gt6ce:round_tantalumhafniumcarbide"
+    },
+    "T": {
+      "tag": "forge:screws/tantalum_hafnium_carbide"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
     }
   },
   "result": {
     "item": "gt6ce:cap_nozzle_tantalum_hafnium_carbide"
   },
   "allow_mirror": false,
-  "_mirror_flags": "gt6-census"
+  "_mirror_flags": "gt6-census",
+  "_comment": "GT6 Loader_MultiTileEntities.java:2133 builds the Tantalum Hafnium Carbide cap nozzle from the Tungsten nozzle (32749), not 32079."
 }

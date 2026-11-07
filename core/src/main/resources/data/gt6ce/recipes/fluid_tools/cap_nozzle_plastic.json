@@ -1,22 +1,28 @@
 {
   "type": "gt6ce:tool_shaped",
   "pattern": [
-    "  s",
-    "PRP",
-    "x  "
+    "Rw",
+    "BT",
+    "Nd"
   ],
   "key": {
-    "P": {
-      "item": "gt6ce:plate_curved_plastic"
-    },
-    "s": {
-      "item": "gt6ce:tool_saw"
-    },
-    "x": {
-      "item": "gt6ce:tool_wire_cutter"
+    "N": {
+      "item": "gt6ce:nozzle_plastic"
     },
     "R": {
       "tag": "forge:rings/rubber"
+    },
+    "B": {
+      "item": "gt6ce:round_plastic"
+    },
+    "T": {
+      "tag": "forge:screws/plastic"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
     }
   },
   "result": {
