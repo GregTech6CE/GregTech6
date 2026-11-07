@@ -1,9 +1,11 @@
 package gregtech.content.recipe;
 
+import gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding;
 import gregtech.content.data.*;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.registry.*;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -51,25 +53,24 @@ public final class StructuralPartRecipes {
     }
 
     private static int wall(Block result, String material, boolean dense) {
-        ItemStack plate = GTItems.getStack(
-                dense ? MaterialPrefix.plateDense : MaterialPrefix.plate, GTMaterialRegistry.get(material), 4);
+        var materialObject = GTMaterialRegistry.get(material);
+        MaterialPrefix prefix = dense ? MaterialPrefix.plateDense : MaterialPrefix.plate;
+        ItemStack plate = GTItems.getStack(prefix, materialObject, 4);
         if (plate.isEmpty()) return 0;
-        return MachineRecipeMaps.Welder.addRecipe(
-                                new Recipe(
-                                        new ItemStack[] {plate, new ItemStack(GTTechnological.selectorTag(10))},
-                                        new ItemStack[] {new ItemStack(result)},
-                                        null,
-                                        null,
-                                        null,
-                                        null,
-                                        dense ? 512 : 256,
-                                        dense ? 64 : 16,
-                                        0),
-                                true,
-                                false,
-                                false)
-                        != null
-                ? 1
-                : 0;
+        var template = new Recipe(
+                new ItemStack[] {plate, new ItemStack(GTTechnological.selectorTag(10))},
+                new ItemStack[] {new ItemStack(result)},
+                null,
+                null,
+                null,
+                null,
+                dense ? 512 : 256,
+                dense ? 64 : 16,
+                0);
+        long required = Math.multiplyExact(prefix.getMaterialWeight(), 4);
+        var rule = new MaterialUnitRecipe(template, 0, materialObject, required, Rounding.WHOLE_OUTPUTS);
+        rule.source(plate, prefix.getMaterialWeight());
+        rule.publish(MachineRecipeMaps.Welder);
+        return 1;
     }
 }

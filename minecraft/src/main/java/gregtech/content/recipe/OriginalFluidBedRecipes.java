@@ -5,15 +5,24 @@ package gregtech.content.recipe;
 import com.mojang.logging.LogUtils;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
+import gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding;
 import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTFluids;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
+import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.recipe.MaterialUnitRecipe;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 /** Native item/fluid boundary for the original fluidized-bed fuel charges. */
 final class OriginalFluidBedRecipes {
@@ -47,10 +56,26 @@ final class OriginalFluidBedRecipes {
                 }
                 var calciteInput = calcite.copy();
                 calciteInput.setAmount(form.calcite());
-                var recipe = FuelRecipeMaps.FluidBed.addRecipe1(
-                        true, -1, OriginalFluidBedFuelRows.heatUnits(fuel, form), input, calciteInput, null, ash);
-                if (recipe == null) rejected++;
-                else added++;
+                var template = RecipeMap.make(
+                        true,
+                        new ItemStack[] {input},
+                        new ItemStack[] {ash},
+                        null,
+                        null,
+                        new FluidStack[] {calciteInput},
+                        null,
+                        OriginalFluidBedFuelRows.heatUnits(fuel, form),
+                        -1,
+                        0);
+                if (template == null) {
+                    rejected++;
+                    continue;
+                }
+                long required = Math.multiplyExact(form.materialAmount(), input.getCount());
+                var rule = new MaterialUnitRecipe(template, 0, material, required, Rounding.WHOLE_OUTPUTS);
+                rule.source(input, form.materialAmount());
+                rule.publish(FuelRecipeMaps.FluidBed);
+                added++;
             }
         }
         LogUtils.getLogger()
@@ -64,7 +89,12 @@ final class OriginalFluidBedRecipes {
     private static ItemStack input(GTMaterial material, String prefix) {
         if (!material.isValid()) return ItemStack.EMPTY;
         return switch (prefix) {
-            case "blockDust" -> GTBlocks.getStack(BlockMaterialPrefix.blockDust, material);
+            case "blockDust" -> {
+                ItemStack stack = GTBlocks.getStack(BlockMaterialPrefix.blockDust, material);
+                yield stack.isEmpty()
+                        ? MaterialUnification.vanillaFormStack("blockDust", material)
+                        : stack;
+            }
             case "dust" -> MaterialStackItemHelper.mat(MaterialPrefix.dust, material, 1);
             case "dustSmall" -> MaterialStackItemHelper.mat(MaterialPrefix.dustSmall, material, 1);
             case "dustTiny" -> MaterialStackItemHelper.mat(MaterialPrefix.dustTiny, material, 1);

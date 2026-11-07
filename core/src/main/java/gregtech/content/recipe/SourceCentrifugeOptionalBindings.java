@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 
+import gregtech.engine.recipe.chem.MaterialAmount;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -44,6 +45,16 @@ public final class SourceCentrifugeOptionalBindings {
         public Target {
             Objects.requireNonNull(kind);
             Objects.requireNonNull(value);
+        }
+
+        /**
+         * Typed material amount. The value keeps the legacy {@code omdu:} spelling because the
+         * generated resolver still parses it; this factory is the only place that renders it.
+         */
+        public static Target materialSpec(String material, MaterialAmount amount) {
+            Objects.requireNonNull(material);
+            Objects.requireNonNull(amount);
+            return new Target(TargetKind.MATERIAL_SPEC, "omdu:" + material + ":" + amount.units());
         }
     }
 
@@ -238,7 +249,7 @@ public final class SourceCentrifugeOptionalBindings {
         DARK_ASH(
                 "darkash_second",
                 List.of(Symbol.TE_SLAG, Symbol.IE_SLAG, Symbol.FZ_SLUDGE),
-                new Target(TargetKind.MATERIAL_SPEC, "omdu:Ash:648648000"),
+                Target.materialSpec("Ash", MaterialAmount.units(648_648_000L)),
                 UnknownTreatment.DEFER_ROW),
         STICKY(
                 "sticky_resin",

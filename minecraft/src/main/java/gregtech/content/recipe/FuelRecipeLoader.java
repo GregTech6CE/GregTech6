@@ -20,6 +20,10 @@ import org.slf4j.Logger;
  * produced per tick), {@code mDuration} is burn time in ticks for the listed input
  * amount, so total energy = {@code |EUt| * duration} per charge. Exhaust fluids
  * (CO2 / water / pahoehoe lava) are recipe outputs. Missing fluids skip silently.</p>
+ *
+ * <p>These rows stay static because their input is a fluid key, not a material item form;
+ * {@link gregtech.engine.recipe.MaterialUnitRecipe} only applies to item-side rules. The
+ * fluidized-bed charges are item forms and are published through that rule instead.</p>
  */
 public class FuelRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();

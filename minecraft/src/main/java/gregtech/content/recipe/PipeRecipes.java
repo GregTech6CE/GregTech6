@@ -11,7 +11,10 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
+import gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding;
+import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
@@ -201,9 +204,14 @@ public final class PipeRecipes {
         long ticks = PipeWeldingRules.ticks(material,row);
 
         ItemStack tag = new ItemStack(GTTechnological.selectorTag(row.circuit()));
-        Recipe recipe = MachineRecipeMaps.Welder.addRecipe2(true, 16, ticks, input, tag, output);
-        if (recipe != null) {
-            ENTRIES.add(new Entry(material.getName(), row.size(), output.getItem().toString(), itemPipe, recipe));
-        }
+        var template = RecipeMap.make(
+                true, new ItemStack[] {input, tag}, new ItemStack[] {output}, null, null, null, null, ticks, 16, 0);
+        if (template == null) return;
+        int batchCount = template.mInputs[0].getCount();
+        long required = Math.multiplyExact(MaterialPrefix.plateCurved.getMaterialWeight(), batchCount);
+        var rule = new MaterialUnitRecipe(template, 0, material, required, Rounding.WHOLE_OUTPUTS);
+        rule.source(input.copyWithCount(batchCount), MaterialPrefix.plateCurved.getMaterialWeight());
+        Recipe recipe = rule.publish(MachineRecipeMaps.Welder);
+        ENTRIES.add(new Entry(material.getName(), row.size(), output.getItem().toString(), itemPipe, recipe));
     }
 }

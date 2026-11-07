@@ -9,6 +9,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding;
+import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
@@ -71,9 +73,14 @@ public final class MachineCasingRecipes {
         long ticks = MaterialWorkability.isFurnace(material)
                 ? 16L * grade.units()                                        // easy pass: fixed duration
                 : 64L * grade.units() * (material.getToolQuality() + 1);     // hard pass: multiplier 64
-        Recipe recipe = MachineRecipeMaps.Welder.addRecipe(
-                new Recipe(new ItemStack[]{plates, rod}, new ItemStack[]{output},
-                        null, null, null, null, ticks, 16, 0));
-        return recipe != null ? 1 : 0;
+        // The source handler scales the plate batch by the form's material units; the rod input
+        // stays a template slot (equivalent rods are admitted by the ordinary matcher).
+        var template = new Recipe(new ItemStack[] {plates, rod}, new ItemStack[] {output},
+                null, null, null, null, ticks, 16, 0);
+        long required = Math.multiplyExact(grade.plates().getMaterialWeight(), 6);
+        var rule = new MaterialUnitRecipe(template, 0, material, required, Rounding.WHOLE_OUTPUTS);
+        rule.source(plates, grade.plates().getMaterialWeight());
+        rule.publish(MachineRecipeMaps.Welder);
+        return 1;
     }
 }

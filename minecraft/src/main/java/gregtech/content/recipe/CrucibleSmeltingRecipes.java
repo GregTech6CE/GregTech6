@@ -36,7 +36,8 @@ import net.minecraft.world.item.ItemStack;
  * The entries are display-only: the crucible block entity performs the same conversion locally from
  * {@link GTMaterial#getTargetSmeltingMaterial()} (see {@code SmeltingCrucibleBlockEntity}), exactly
  * like the original tile entity, which never consults the map either. They must not be executable,
- * or a machine would "melt" items without any heat.
+ * or a machine would "melt" items without any heat. They therefore stay static fake rows; a
+ * {@link gregtech.engine.recipe.MaterialUnitRecipe} would expose them to machine lookup.
  * </p>
  */
 public final class CrucibleSmeltingRecipes {

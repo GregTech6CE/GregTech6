@@ -124,7 +124,9 @@ public final class MaterialFormConversionRecipes {
         ItemStack gems = GTItems.getStack(MaterialPrefix.gemFlawed, material, 2);
         ItemStack empty = GTItems.getStack(MaterialPrefix.toolHeadPickaxeGem, Materials.Empty, 1);
         if (input.isEmpty() || gems.isEmpty() || empty.isEmpty()) return;
-        unboxItems("toolHeadPickaxeGem 1 -> gemFlawed 2 + empty head", input, gems, empty);
+        unit("unboxinator", "toolHeadPickaxeGem 1 -> gemFlawed 2 + empty head",
+                MachineRecipeMaps.Unboxinator, 16, material, input,
+                MaterialPrefix.toolHeadPickaxeGem.getMaterialWeight(), null, gems, empty);
     }
 
     /** GT6 {@code Loader_Recipes_Handlers:451-489}: 1 block / big form -> 9 (or 6/18/8) smaller forms. */
@@ -207,19 +209,15 @@ public final class MaterialFormConversionRecipes {
 
     // ── helpers ──────────────────────────────────────────────────────────────
 
-    /** Unboxinator route with extra output stacks (the empty tool head). */
-    private static void unboxItems(String route, ItemStack input, ItemStack... outputs) {
-        recipe("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, new ItemStack[]{input}, outputs);
-    }
-
     /** Compressor route with a block input ({@code blockPlate 1 -> plateDense 1}). */
     private static void compressingBlock(GTMaterial material, long ticks, BlockMaterialPrefix from, int fromCount,
                                         MaterialPrefix to, int toCount) {
         ItemStack input = GTBlocks.getStack(from, material);
         ItemStack output = GTItems.getStack(to, material, toCount);
         if (input.isEmpty() || output.isEmpty()) return;
-        recipe("compressor", from.getName() + " " + fromCount + " -> " + to.getName() + " " + toCount,
-                MachineRecipeMaps.Compressor, ticks, item(input, fromCount), output, null);
+        unit("compressor", from.getName() + " " + fromCount + " -> " + to.getName() + " " + toCount,
+                MachineRecipeMaps.Compressor, ticks, material, item(input, fromCount),
+                from.getMaterialWeight(), null, output);
     }
 
     private static void unbox(String route, BlockMaterialPrefix from, int fromCount, MaterialPrefix to, int toCount,
@@ -227,7 +225,8 @@ public final class MaterialFormConversionRecipes {
         ItemStack input = blockStack(from, material);
         ItemStack output = GTItems.getStack(to, material, toCount);
         if (input.isEmpty() || output.isEmpty()) return;
-        recipe("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, item(input, fromCount), output, null);
+        unit("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, material, item(input, fromCount),
+                from.getMaterialWeight(), null, output);
     }
 
     /** A vanilla block target replaces the GT stack of that form; other forms keep the GT block. */
@@ -246,7 +245,8 @@ public final class MaterialFormConversionRecipes {
         ItemStack output = GTItems.getStack(content, material, contentCount);
         ItemStack empty = GTItems.getStack(from, Materials.Empty, 1);
         if (input.isEmpty() || output.isEmpty() || empty.isEmpty()) return;
-        unboxItems(route, input, output, empty);
+        unit("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, material, input,
+                from.getMaterialWeight(), null, output, empty);
     }
 
     private static void unpack(String route, MaterialPrefix from, int fromCount, MaterialPrefix to, int toCount,
@@ -254,7 +254,8 @@ public final class MaterialFormConversionRecipes {
         ItemStack input = GTItems.getStack(from, material, fromCount);
         ItemStack output = GTItems.getStack(to, material, toCount);
         if (input.isEmpty() || output.isEmpty()) return;
-        recipe("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, input, output, null);
+        unit("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, material, input,
+                from.getMaterialWeight(), null, output);
     }
 
     private static void box(String route, MaterialPrefix from, int fromCount, int circuit, BlockMaterialPrefix to,
@@ -262,7 +263,8 @@ public final class MaterialFormConversionRecipes {
         ItemStack input = GTItems.getStack(from, material, fromCount);
         ItemStack output = blockStack(to, material);
         if (input.isEmpty() || output.isEmpty()) return;
-        recipe("boxinator", route, MachineRecipeMaps.Boxinator, 16, input, item(output, toCount), circuit);
+        unit("boxinator", route, MachineRecipeMaps.Boxinator, 16, material, input,
+                from.getMaterialWeight(), circuit, item(output, toCount));
     }
 
     private static void pack(String route, MaterialPrefix from, int fromCount, int circuit, MaterialPrefix to,
@@ -270,7 +272,8 @@ public final class MaterialFormConversionRecipes {
         ItemStack input = GTItems.getStack(from, material, fromCount);
         ItemStack output = GTItems.getStack(to, material, toCount);
         if (input.isEmpty() || output.isEmpty()) return;
-        recipe("boxinator", route, MachineRecipeMaps.Boxinator, 16, input, output, circuit);
+        unit("boxinator", route, MachineRecipeMaps.Boxinator, 16, material, input,
+                from.getMaterialWeight(), circuit, output);
     }
 
     /** Single-input conversion used by the compressor table ({@code plate 9 -> plateDense 1}). */
@@ -279,8 +282,8 @@ public final class MaterialFormConversionRecipes {
         ItemStack input = GTItems.getStack(from, material, fromCount);
         ItemStack output = GTItems.getStack(to, material, toCount);
         if (input.isEmpty() || output.isEmpty()) return;
-        recipe("compressor", from.getName() + " " + fromCount + " -> " + to.getName() + " " + toCount,
-                MachineRecipeMaps.Compressor, ticks, input, output, null);
+        unit("compressor", from.getName() + " " + fromCount + " -> " + to.getName() + " " + toCount,
+                MachineRecipeMaps.Compressor, ticks, material, input, from.getMaterialWeight(), null, output);
     }
 
     /** GT6 checks prefix membership through the material's registered items; the port does it directly. */
@@ -294,22 +297,28 @@ public final class MaterialFormConversionRecipes {
         return copy;
     }
 
-    private static void recipe(String kind, String route, RecipeMap map, long ticks, ItemStack input,
-                               ItemStack output, Integer circuit) {
-        Recipe recipe = circuit == null
-                ? map.addRecipe1(false, 16, ticks, input, output)
-                : map.addRecipe2(false, 16, ticks, input, new ItemStack(GTTechnological.selectorTag(circuit)), output);
-        // A null result means an already registered recipe claims the same inputs: GT6 keeps the first
-        // one too, and the port's hand-written recipes are registered before this table on purpose.
-        if (recipe == null) return;
-        ENTRIES.add(new Entry(kind, route, map, recipe));
-    }
-
-    private static void recipe(String kind, String route, RecipeMap map, long ticks, ItemStack[] inputs,
-                               ItemStack... outputs) {
-        Recipe recipe = map.addRecipeX(false, 16, ticks, inputs, outputs);
-        if (recipe == null) return;
-        ENTRIES.add(new Entry(kind, route, map, recipe));
+    /**
+     * Publishes one fixed-form conversion in material units. The template keeps the row's printed
+     * counts; the rule rebuilds the same batch from the offered form's unit weight, so any
+     * equivalent item of the form is admitted.
+     */
+    private static void unit(String kind, String route, RecipeMap map, long ticks, GTMaterial material,
+                             ItemStack input, long unitsPerItem, Integer circuit, ItemStack... outputs) {
+        if (input.isEmpty() || outputs.length == 0) return;
+        ItemStack[] inputs = circuit == null
+                ? new ItemStack[] {input}
+                : new ItemStack[] {input, new ItemStack(GTTechnological.selectorTag(circuit))};
+        var template = RecipeMap.make(false, inputs, outputs, null, null, null, null, ticks, 16, 0);
+        if (template == null) return;
+        long required = Math.multiplyExact(unitsPerItem, input.getCount());
+        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+                template,
+                0,
+                material,
+                required,
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+        rule.source(input, unitsPerItem);
+        ENTRIES.add(new Entry(kind, route, map, rule.publish(map)));
     }
 
     private static void skippedOnce(String kind, String route, String reason) {
