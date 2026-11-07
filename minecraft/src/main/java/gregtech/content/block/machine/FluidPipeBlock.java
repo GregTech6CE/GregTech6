@@ -400,28 +400,16 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         if (hardness < 0) return 0;
 
         if (texSet == MaterialTextureSet.RUBBER) {
-//? if >=1.21.1 {
-            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) {
-                float speed = GTToolHelper.matchesTool(tool, GTToolType.SCISSORS) && !tool.isEmpty()
-                        ? tool.getDestroySpeed(state)
-*///?} else {
             if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) {
                 float speed = GTToolHelper.matchesTool(tool, GTToolType.SCISSORS) && GTToolHelper.isUsable(tool)
                         ? GTToolHelper.getMiningSpeed(tool, state)
-//?}
                         : tool.getItem() instanceof ShearsItem ? tool.getDestroySpeed(state) : 1.0F;
                 return speed / hardness / 30.0F;
             }
         } else if (texSet == MaterialTextureSet.WOOD) {
-//? if >=1.21.1 {
-            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) {
-                float speed = GTToolHelper.matchesTool(tool, GTToolType.AXE) && !tool.isEmpty()
-                        ? tool.getDestroySpeed(state)
-*///?} else {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) {
                 float speed = GTToolHelper.matchesTool(tool, GTToolType.AXE) && GTToolHelper.isUsable(tool)
                         ? GTToolHelper.getMiningSpeed(tool, state)
-//?}
                         : tool.getItem() instanceof AxeItem ? tool.getDestroySpeed(state) : 1.0F;
                 return speed / hardness / 30.0F;
             }
