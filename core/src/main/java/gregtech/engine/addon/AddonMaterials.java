@@ -75,6 +75,7 @@ public final class AddonMaterials {
     private static boolean collected;
     private static boolean closed;
     private static volatile List<AcceptedForm> acceptedForms = List.of();
+    private static volatile Set<String> acceptedFormKeys = Set.of();
     private static final Set<GTMaterial> ORE_FORMS = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
     private static final Set<GTMaterial> POLYMERS = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
     private static final Set<GTMaterial> WIRES = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
@@ -460,6 +461,11 @@ public final class AddonMaterials {
         return acceptedForms;
     }
 
+    /** Whether an addon explicitly accepted this material/prefix pair. */
+    public static boolean accepts(String materialName, String prefixName) {
+        return acceptedFormKeys.contains(prefixName + "\0" + materialName);
+    }
+
     /** Called from material init after the built-in declarations and before linking. */
     public static void installDefinitions() {
         Map<String, List<Pending>> grouped = new LinkedHashMap<>();
@@ -768,6 +774,9 @@ public final class AddonMaterials {
             }
         }
         acceptedForms = List.copyOf(published);
+        var formKeys = new HashSet<String>(published.size());
+        for (var form : published) formKeys.add(form.prefixName() + "\0" + form.materialName());
+        acceptedFormKeys = Set.copyOf(formKeys);
     }
 
     /** Compositions, smelting targets and crucible rows, after every {@code link()} callback. */
