@@ -15,6 +15,22 @@ subprojects {
 
 // Formatting lives in the build, not in individual edits. The inlined API sources keep
 // their own formatting pass; committed generated sources stay untouched in this pass.
+// Local checks only look at files changed since the default branch; CI keeps the full check.
+// Set -PspotlessRatchet=<ref> to override, or -PspotlessRatchet= to disable the ratchet.
+def spotlessRatchet = null
+if (System.getenv('CI') == null) {
+    try {
+        def probe = providers.exec {
+            commandLine 'git', 'rev-parse', '--verify', '--quiet', 'origin/master'
+            ignoreExitValue = true
+        }
+        if (probe.result.get().exitValue == 0) spotlessRatchet = 'origin/master'
+    } catch (Exception ignored) {
+        // No git or no default branch: keep the full check.
+    }
+}
+def requestedRatchet = providers.gradleProperty('spotlessRatchet').orNull
+if (requestedRatchet != null) spotlessRatchet = requestedRatchet ?: null
 def spotlessProjects = [':core', ':buildtools', ':minecraft', ':minecraft:1.20.1-forge', ':minecraft:1.21.1-neoforge']
 configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
     // Spotless resolves the formatter and its transitive dependencies from this project's
@@ -31,11 +47,15 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
         exclude '**/generated/**'
     }
     // Stonecutter keeps one version's code inside block comments. A formatter cannot
-    // see through those comments, so marked files wait for the per-node pass.
-    def stonecutterPaths = javaSources
-            .filter { File file -> file.getText('UTF-8').contains('//?') }
-            .files.collect { spotlessProject.relativePath(it) }
+    // see through those comments, so marked files wait for the per-node pass. Resolve the
+    // marker scan lazily; otherwise every Gradle invocation reads the whole source tree.
+    def stonecutterPaths = spotlessProject.provider {
+        javaSources
+                .filter { File file -> file.getText('UTF-8').contains('//?') }
+                .files.collect { spotlessProject.relativePath(it) }
+    }
     spotlessProject.spotless {
+        if (spotlessRatchet) ratchetFrom spotlessRatchet
         java {
             target javaSources
             targetExclude stonecutterPaths
