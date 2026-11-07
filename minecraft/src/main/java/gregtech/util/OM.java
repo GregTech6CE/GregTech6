@@ -42,8 +42,8 @@ public final class OM {
 
     /**
      * Chooses the best dust/dustSmall/dustTiny/dustDiv72 stack for the given U amount.
-     * Faithful port of GT6 {@code OM.dust(OreDictMaterial, long)} (block tier omitted —
-     * the port has no blockDust prefix).
+     * Port of GT6 {@code OM.dust(OreDictMaterial, long)}; GT6's block tier (72 U and above resolve
+     * to blocks of dust) is not modelled here.
      */
     public static ItemStack dust(GTMaterial aMaterial, long aMaterialAmount) {
         if (aMaterial == null || aMaterialAmount < U72) return ItemStack.EMPTY;

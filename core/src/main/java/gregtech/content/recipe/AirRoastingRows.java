@@ -36,17 +36,15 @@ public final class AirRoastingRows {
         new OreRow("Kesterite", 4000, 1500, "omdu:Cu:162162000", "omdu:Zn:81081000", "omdu:Sn:81081000"),
     };
 
-    /**
-     * {@code ore}, air volume, duration, SO2 volume ({@code Loader_Recipes_Chem:461-465}). The
-     * original block-dust rows are left out: the port has no dust-block item, so their nine-dust
-     * stack would be swallowed by the dust row as a collision instead of registering.
-     */
+    /** {@code ore}, air volume, duration, SO2 volume ({@code Loader_Recipes_Chem:461-465}). */
     private record SulfurRow(String item, int air, int ticks, int sulfurDioxide) {}
 
     private static final SulfurRow[] SULFUR_ROWS = {
         new SulfurRow("i:dust:S:1", 8000, 16, 3000),
+        new SulfurRow("i:blockDust:S:1", 72000, 144, 27000),
         new SulfurRow("i:dustTiny:Blaze:1", 8000, 16, 3000),
         new SulfurRow("i:dust:Blaze:1", 72000, 144, 27000),
+        new SulfurRow("i:blockDust:Blaze:1", 648000, 1296, 243000),
     };
 
     private AirRoastingRows() {}

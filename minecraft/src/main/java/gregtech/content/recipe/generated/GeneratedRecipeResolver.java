@@ -382,8 +382,9 @@ public final class GeneratedRecipeResolver {
         return new CentrifugeOutputs(out, false);
     }
 
-    /** Only the eight named source calls use cbd; all legacy i:blockDust semantics stay untouched.
-     * No table sweep/removal: an unavailable exact block simply prevents this producer's submission.
+    /** Only the eight named source calls use cbd; {@code i:blockDust} resolves through the ordinary
+     * block-prefix path. No table sweep/removal: an unavailable exact block simply prevents this
+     * producer's submission.
      */
     private static List<ItemStack> resolveCentrifugeInputs(String[] specs) {
         if (java.util.Arrays.stream(specs).noneMatch(s -> s.startsWith("cbd:"))) return resolveItems(specs);
@@ -454,10 +455,6 @@ public final class GeneratedRecipeResolver {
                 if (material == null) return null;
                 // Keep a visible stack; register() separately marks GT6 count-zero inputs as catalysts.
                 int count = Math.max(1, Integer.parseInt(parts[3]));
-                if ("blockDust".equals(parts[1])) {
-                    // the port has no dust-block prefix -> 9 dusts worth
-                    return OM.dust(material, 9L * count * GTValues.U);
-                }
                 MaterialPrefix prefix = prefix(parts[1]);
                 if (prefix == null) {
                     // GT6's block forms (OP.blockGem/blockIngot/blockPlate/…) are blocks in the port
