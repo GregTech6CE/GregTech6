@@ -45,6 +45,15 @@ public final class GTBottles {
         return "mercury_bottle".equals(itemId) ? 144 : 250;
     }
 
+    /**
+     * Deliberate drinking time for a bottle, or 0 to use the drink row's own
+     * {@code max(foodLevel * 8, 32)}. Mercury is a poison drink, so the port doubles the vanilla
+     * potion time to reduce misclicks.
+     */
+    public static int useTicksOf(String itemId) {
+        return "mercury_bottle".equals(itemId) ? 64 : 0;
+    }
+
     /** How many bottles the generated table covers (GT6 registers ~180; the rest are other mods' bottles). */
     public static int registered() {
         return FLUID_BY_ID.size();

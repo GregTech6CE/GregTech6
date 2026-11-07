@@ -8,10 +8,12 @@ import gregtech.GregTech;
 import gregtech.content.food.GTDrinks;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
@@ -43,17 +45,19 @@ public class BottleItem extends Item {
 
     private final String fluidKey;
     private final int amount;
+    private final int useTicks;
 
     public BottleItem(String fluidKey, Properties properties) {
-        this(fluidKey, BOTTLE_AMOUNT, properties);
+        this(fluidKey, BOTTLE_AMOUNT, 0, properties);
     }
 
     /** {@code amount} is the source portion: 250 mB for a drink, one material unit for mercury. */
-    public BottleItem(String fluidKey, int amount, Properties properties) {
+    public BottleItem(String fluidKey, int amount, int useTicks, Properties properties) {
         super(properties);
         // The native lubricant is used when no Railcraft fluid replaces FL.lube.
         this.fluidKey = "Lubricant".equals(fluidKey) ? "Lubricant" : fluidKey;
         this.amount = amount;
+        this.useTicks = useTicks;
     }
 
     /** GT6's portion this bottle holds: 250 mB for a drink, 144 mB for mercury. */
@@ -113,17 +117,39 @@ public class BottleItem extends Item {
         if (fluid == null || !GTDrinks.canDrink(player, new FluidStack(fluid, amount()))) {
             return InteractionResultHolder.pass(stack);
         }
-        if (!level.isClientSide) {
-            if (!GTDrinks.drink(player, new FluidStack(fluid, amount()))) return InteractionResultHolder.fail(stack);
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-//? if >=1.21.1 {
-                /*gregtech.content.food.GTFoodItems.deliverContainer(player,emptyBottle());
-*///?} else {
-                gregtech.content.food.GTFoodItems.deliverContainer(player, emptyBottle());
-//?}
-            }
-        }
+        player.startUsingItem(hand);
         return InteractionResultHolder.consume(stack);
+    }
+
+    @Override
+    public UseAnim getUseAnimation(ItemStack stack) {
+        var row = GTDrinks.rowFor(fluid());
+        return row != null && row.useAction().equals("eat") ? UseAnim.EAT : UseAnim.DRINK;
+    }
+
+//? if >=1.21.1 {
+    /*@Override public int getUseDuration(ItemStack stack, LivingEntity entity) {
+*///?} else {
+    @Override public int getUseDuration(ItemStack stack) {
+//?}
+        if (useTicks > 0) return useTicks;
+        var row = GTDrinks.rowFor(fluid());
+        return Math.max(32, row == null ? 32 : row.foodLevel() * 8);
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        if (level.isClientSide || !(entity instanceof Player player)) return stack;
+        Fluid fluid = fluid();
+        if (fluid == null || !GTDrinks.drink(player, new FluidStack(fluid, amount()))) return stack;
+        if (!player.getAbilities().instabuild) {
+            stack.shrink(1);
+//? if >=1.21.1 {
+            /*gregtech.content.food.GTFoodItems.deliverContainer(player,emptyBottle());
+*///?} else {
+            gregtech.content.food.GTFoodItems.deliverContainer(player, emptyBottle());
+//?}
+        }
+        return stack;
     }
 }

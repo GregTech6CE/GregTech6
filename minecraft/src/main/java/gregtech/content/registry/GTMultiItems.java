@@ -68,7 +68,8 @@ public final class GTMultiItems {
         String bottleFluid = gregtech.content.food.GTBottles.fluidKeyOf(id);
         if (bottleFluid != null && !"food".equals(category) && !"cans".equals(category))
             return new gregtech.content.item.BottleItem(
-                    bottleFluid, gregtech.content.food.GTBottles.amountOf(id), props);
+                    bottleFluid, gregtech.content.food.GTBottles.amountOf(id),
+                    gregtech.content.food.GTBottles.useTicksOf(id), props);
         return switch (id) {
             case "printed_pages", "many_printed_pages" ->
                     new gregtech.content.item.PrintedPagesItem(id.equals("many_printed_pages"), props);
