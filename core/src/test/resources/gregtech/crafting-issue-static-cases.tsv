@@ -15,3 +15,4 @@
 209	form	conversion	blockGem->gem	inputCount=1;outputCount=9;single=true
 209	form	conversion	blockPlate->plate	inputCount=1;outputCount=9;single=true
 209	form	conversion	blockDust->dust	inputCount=1;outputCount=9;single=true
+326	json	shapeless	hand_components/integrated_circuit_0_from_any.json	type=gt6ce:tool_shapeless;ingredient:0=tag:gt6ce:integrated_circuits;result=gt6ce:integrated_circuit_0;count=1

@@ -41,3 +41,5 @@
 346	gt6ce:stone/stone_marble/bricks_to_slab_by_saw	S	gt6ce:tool_shaped	##	gt6ce:stone_marble_bricks_slab	2	none	every masonry variant saws into its own slab
 346	gt6ce:stone/stone_granite/bricks_reinforced_to_slab_by_saw	R	gt6ce:tool_shaped	-	gt6ce:stone_granite_bricks_reinforced_slab	2	fill	reinforced bricks keep the generic base row
 346	gt6ce:stone/stone_granite/stone_slabs_to_block	S	gt6ce:tool_shaped	#/#	gt6ce:stone_granite_stone	1	none	two slabs rebuild the full block
+326	gt6ce:hand_components/integrated_circuit_0_from_any	R	gt6ce:tool_shapeless	-	gt6ce:integrated_circuit_0	1	one@0/2x2/gt6ce:integrated_circuit_1	any non-zero circuit resets to configuration 0
+326	gt6ce:hand_components/integrated_circuit_0_from_any	R	gt6ce:tool_shapeless	-	gt6ce:integrated_circuit_0	1	one@0/2x2/gt6ce:integrated_circuit_24	upper-range circuit resets to configuration 0
