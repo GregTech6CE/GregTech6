@@ -56,18 +56,21 @@ public final class HandFamilyRecipesTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
-    public static void autoclaveConsumesTheDeclaredFormCount(GameTestHelper helper) {
-        // NetherQuartz is CRYSTALLISABLE and carries the whole gem ladder.
-        GTMaterial quartz = GTMaterialRegistry.get("NetherQuartz").resolve();
-        ItemStack tiny = stack(MaterialPrefix.dustSmall, "NetherQuartz", 32);
-        FluidStack steam = GTFluids.stack("Steam", Math.multiplyExact(819200, quartz.getToolQuality() + 1));
+    public static void autoclaveSteamScalesWithToolQuality(GameTestHelper helper) {
+        // CertusQuartz is CRYSTALLISABLE and carries the whole gem ladder.
+        GTMaterial quartz = GTMaterialRegistry.get("CertusQuartz").resolve();
+        ItemStack tiny = stack(MaterialPrefix.dustSmall, "CertusQuartz", 1);
+        ItemStack tag = new ItemStack(gregtech.content.registry.GTTechnological.selectorTag(0));
+        int expectedSteam = Math.multiplyExact(25600, quartz.getToolQuality() + 1);
+        FluidStack steam = GTFluids.stack("Steam", expectedSteam);
         helper.assertTrue(steam != null && !steam.isEmpty(), "steam is registered");
         Recipe row = MachineRecipeMaps.Autoclave.findRecipe(
-                List.of(tiny), List.of(steam), false,
+                List.of(tiny, tag), List.of(steam), false,
                 MachineRecipeMaps.Autoclave.mInputItemsCount, MachineRecipeMaps.Autoclave.mOutputItemsCount);
-        helper.assertTrue(row != null, "32 small quartz dusts grow a legendary gem");
-        helper.assertTrue(row.mInputs[0].getCount() == 32,
-                "the rule rebuilds the batch count from material units, not from one representative item");
+        helper.assertTrue(row != null,
+                "a small quartz dust and circuit 0 start the crystal ladder");
+        helper.assertTrue(hasFluidInput(row, steam),
+                "steam is scaled by toolQuality+1 (RecipeMapHandlerPrefix:218)");
         helper.succeed();
     }
 
@@ -78,6 +81,44 @@ public final class HandFamilyRecipesTests {
         Recipe row = find(MachineRecipeMaps.Welder, List.of(casing, tag));
         helper.assertTrue(row != null, "two steel casings weld back into a plate");
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void formConversionRebuildsTheCountedBatch(GameTestHelper helper) {
+        ItemStack nuggets = stack(MaterialPrefix.nugget, "Iron", 9);
+        ItemStack tag = new ItemStack(gregtech.content.registry.GTTechnological.selectorTag(9));
+        Recipe row = find(MachineRecipeMaps.Boxinator, List.of(nuggets, tag));
+        helper.assertTrue(row != null,
+                "nine nuggets and circuit 9 pack into an ingot");
+        helper.assertTrue(row.mInputs[0].getCount() == 9,
+                "the material-unit rule keeps the nine-item batch");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void machineCasingConsumesSixPlates(GameTestHelper helper) {
+        ItemStack plates = stack(MaterialPrefix.plate, "Steel", 6);
+        ItemStack rods = stack(MaterialPrefix.stickLong, "Steel", 2);
+        Recipe row = find(MachineRecipeMaps.Welder, List.of(plates, rods));
+        helper.assertTrue(row != null, "six steel plates and two long rods weld a machine casing");
+        helper.assertTrue(row.mInputs[0].getCount() == 6, "the casing rule keeps the plate batch");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void pipeWeldConsumesCurvedPlates(GameTestHelper helper) {
+        ItemStack curved = stack(MaterialPrefix.plateCurved, "Steel", 3);
+        ItemStack tag = new ItemStack(gregtech.content.registry.GTTechnological.selectorTag(3));
+        Recipe row = find(MachineRecipeMaps.Welder, List.of(curved, tag));
+        helper.assertTrue(row != null, "three curved steel plates weld a medium pipe");
+        helper.succeed();
+    }
+
+    private static boolean hasFluidInput(Recipe row, FluidStack expected) {
+        for (FluidStack input : row.mFluidInputs)
+            if (input.getFluid() == expected.getFluid() && input.getAmount() == expected.getAmount())
+                return true;
+        return false;
     }
 
     private static Recipe find(RecipeMap map, List<ItemStack> items) {

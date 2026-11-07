@@ -164,6 +164,16 @@ final class FamilyRowTablesTest {
     }
 
     @Test
+    void centrifugeDefaultOutputCarriesMaterialUnits() {
+        var binding = SourceCentrifugeItemOutputs.binding("Bone", "dust");
+        var output = SourceCentrifugeItemOutputs.output(binding, 2);
+        assertEquals("Bone", output.materialName());
+        assertEquals(2 * 648_648_000L, output.units().units());
+        // The legacy descriptor is rendered only at the resolver boundary.
+        assertEquals("omdu:Bone:1297296000", SourceCentrifugeItemOutputs.fallback(binding, 2));
+    }
+
+    @Test
     void generifierKeepsItsSourceFormFilterAndCost() {
         assertTrue(GenerifyingRules.simplifiable("dust"));
         assertTrue(GenerifyingRules.simplifiable("ingot"));
