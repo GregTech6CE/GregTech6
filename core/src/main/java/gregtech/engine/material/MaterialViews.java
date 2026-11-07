@@ -30,6 +30,7 @@ public final class MaterialViews {
         var directTagMembers = new LinkedHashMap<DataKey, Set<MaterialKey>>();
         var tagFacts = new LinkedHashMap<DataKey, TagFacts>();
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+            if (material.resolve() != material) continue;
             var definition = MaterialDefinitions.find(material.getName());
             var relations = MaterialInfoRegistry.relationsForPublication(material.getName());
             if (!material.isValid() || definition != null && relations.group()) continue;
@@ -247,8 +248,13 @@ public final class MaterialViews {
         for (var material : materials.keySet()) processRules.put(material, new LinkedHashMap<>());
         for (var material : materials.keySet()) {
             MaterialInfoRegistry.processesForPublication(material).rules().forEach((key, rules) -> {
-                registerProcessType(processTypes, key, "linked material catalog");
-                for (var rule : rules) addProcessRule(processRules.get(material), key, rule);
+                String source = "linked material catalog";
+                registerProcessType(processTypes, key, source);
+                for (var rule : rules)
+                    addProcessRule(
+                            processRules.get(material),
+                            key,
+                            MaterialInfoRegistry.normalizeProcessRule(source, key, rule));
             });
         }
         for (var submission : AddonMaterials.processDeclarations()) {
@@ -259,11 +265,15 @@ public final class MaterialViews {
                 throw new IllegalArgumentException("Addon '" + submission.addonId()
                         + "' process uses unknown material '" + declaration.materialName() + "'");
             var key = new MaterialKey(material.getName());
-            registerProcessType(processTypes, declaration.process(), "addon '" + submission.addonId() + "'");
+            String source = "addon '" + submission.addonId() + "'";
+            registerProcessType(processTypes, declaration.process(), source);
             addProcessRule(
                     processRules.get(key),
                     declaration.process(),
-                    new MaterialProcessRule<>(declaration.forms(), declaration.value()));
+                    MaterialInfoRegistry.normalizeProcessRule(
+                            source,
+                            declaration.process(),
+                            new MaterialProcessRule<>(declaration.forms(), declaration.value())));
         }
         for (var submission : MaterialInfoRegistry.processSubmissions()) {
             GTMaterial material = GTMaterialRegistry.get(submission.material().name());
@@ -272,12 +282,14 @@ public final class MaterialViews {
                         "Addon '" + submission.addonId() + "' process uses unknown material '"
                                 + submission.material().name() + "'");
             var key = new MaterialKey(material.getName());
-            registerProcessType(processTypes, submission.process(), "addon '" + submission.addonId() + "'");
+            String source = "addon '" + submission.addonId() + "'";
+            registerProcessType(processTypes, submission.process(), source);
             @SuppressWarnings("unchecked")
             var process = (MaterialProcessKey<Object>) submission.process();
             @SuppressWarnings("unchecked")
             var rule = (MaterialProcessRule<Object>) submission.rule();
-            addProcessRule(processRules.get(key), process, rule);
+            addProcessRule(
+                    processRules.get(key), process, MaterialInfoRegistry.normalizeProcessRule(source, process, rule));
         }
         var immutableProcesses =
                 new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
@@ -325,8 +337,10 @@ public final class MaterialViews {
         var ordered = List.copyOf(materials.values());
         var aliases = new LinkedHashMap<String, MaterialKey>();
         GTMaterialRegistry.registeredNames().forEach((name, material) -> {
-            if (material.isValid() && indexed.containsKey(new MaterialKey(material.getName())))
-                aliases.put(name, new MaterialKey(material.getName()));
+            GTMaterial canonical = material.resolve();
+            if (!canonical.isValid()) return;
+            var key = new MaterialKey(canonical.getName());
+            if (indexed.containsKey(key)) aliases.put(name, key);
         });
         published = new MaterialCatalogView() {
             public long revision() {

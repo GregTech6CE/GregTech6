@@ -18,12 +18,15 @@ import gregtech.api.material.OreProcessingMaterialHelper;
 import gregtech.api.material.PulverizationMaterialHelper;
 import gregtech.api.material.SmeltingMaterialHelper;
 import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.prefix.PrefixRegistry;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /** Independent indexes for auxiliary material facts, keyed by the canonical material identity. */
 public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
@@ -250,6 +253,25 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         return List.copyOf(ADDON_PROCESSES);
     }
 
+    private static Set<FormKey> normalizeProcessForms(
+            String source, MaterialProcessKey<?> process, Set<FormKey> sourceForms) {
+        if (sourceForms.isEmpty()) return sourceForms;
+        var forms = new LinkedHashSet<FormKey>();
+        for (var form : sourceForms) {
+            var prefix = PrefixRegistry.byName(form.name());
+            if (prefix == null)
+                throw new IllegalArgumentException(
+                        "Unknown material form '" + form.name() + "' in process " + process.id() + " from " + source);
+            forms.add(new FormKey(prefix.getName()));
+        }
+        return Set.copyOf(forms);
+    }
+
+    static MaterialProcessRule<?> normalizeProcessRule(
+            String source, MaterialProcessKey<?> process, MaterialProcessRule<?> rule) {
+        return new MaterialProcessRule<>(normalizeProcessForms(source, process, rule.forms()), rule.value());
+    }
+
     @Override
     public MaterialToolProfile tool(MaterialKey key) {
         var frozen = requireReadySnapshot();
@@ -422,6 +444,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                 throw new IllegalArgumentException("Addon '" + addonId + "' cannot declare process " + process.id());
             if (!process.type().isInstance(rule.value()))
                 throw new IllegalArgumentException("Process value type mismatch for " + process.id());
+            rule = new MaterialProcessRule<>(
+                    normalizeProcessForms("addon '" + addonId + "'", process, rule.forms()), rule.value());
             ADDON_PROCESSES.add(new ProcessSubmission(addonId, Objects.requireNonNull(material), process, rule));
             return this;
         }
