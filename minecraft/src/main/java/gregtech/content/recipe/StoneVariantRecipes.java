@@ -6,6 +6,7 @@ import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.registry.GTItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -75,15 +76,17 @@ public final class StoneVariantRecipes {
             items(type);
             sawing(type);
         }
-        // GT6 BlockStones:262 — one dust block smelts back into the plain stone block. The port has no
-        // OP.blockDust block, so nine dusts stand in for it; where that input already smelts into the
-        // material's metal (FurnaceSmeltingRecipes) the row is rejected and recorded instead.
+        // GT6 BlockStones:262 — one block of rock dust smelts back into the plain stone block. Nine
+        // dusts are not interchangeable: they are the material's own dust and smelt into its
+        // smelting target (FurnaceSmeltingRecipes), not into masonry.
         for (StoneType type : StoneType.values()) {
-            ItemStack dust = GTItems.getStack(MaterialPrefix.dust, type.material(), 9);
-            ItemStack stone = block(type, StoneVariant.STONE);
-            if (!smelt("dust", dust, stone)) {
-                SKIPPED.add(type.registryId() + ": 9 dust already smelt into the material's metal"
-                        + " (the port has no blockDust block, so GT6's row shares its input)");
+            ItemStack dustBlock = GTBlocks.getStack(BlockMaterialPrefix.blockDust, type.material());
+            if (dustBlock.isEmpty()) {
+                SKIPPED.add(type.registryId() + ": no blockDust block to smelt back into stone");
+                continue;
+            }
+            if (!smelt("dust", dustBlock, block(type, StoneVariant.STONE))) {
+                SKIPPED.add(type.registryId() + ": blockDust smelting row rejected");
             }
         }
         report();
