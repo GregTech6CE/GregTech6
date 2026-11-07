@@ -1,6 +1,10 @@
 package gregtech.gametest;
 
+import gregtech.api.addon.material.MaterialInfoTool;
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.material.GTValues;
+import gregtech.api.material.PulverizationMaterialHelper;
+import gregtech.api.material.SmeltingMaterialHelper;
 import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.block.machine.MoldItemData;
 import gregtech.content.data.MachineRecipeMaps;
@@ -54,6 +58,15 @@ public final class MaterialBaselineTests {
         helper.assertTrue("material_baseline_test".equals(gregtech.engine.addon.AddonMaterials.owner(material)), "SPI ownership");
         helper.assertTrue(!gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(material), "addon identity is separate from core");
         helper.assertTrue(material.getCompositionComponents().size() == 2 && material.getCompositionDivider() == 3, "SPI composition linked");
+        var indexed = MaterialInfoTool.composition(new MaterialKey(material.getName())).orElseThrow();
+        helper.assertTrue(indexed.divider() == 3 && indexed.parts().size() == 2 && !indexed.crucible(), "legacy SPI composition reaches the frozen index");
+        helper.assertTrue(indexed.parts().get(0).material().equals("Iron") && indexed.parts().get(0).amount() == GTValues.U * 2
+                && indexed.parts().get(1).material().equals("Copper") && indexed.parts().get(1).amount() == GTValues.U, "indexed composition retains order and amounts");
+        var iron = new MaterialKey("Iron");
+        helper.assertTrue(SmeltingMaterialHelper.target(iron).equals(SmeltingMaterialHelper.target(Materials.Iron))
+                && SmeltingMaterialHelper.target(iron).isPresent(), "default smelting agrees across query entries");
+        helper.assertTrue(PulverizationMaterialHelper.target(iron).equals(PulverizationMaterialHelper.target(Materials.Iron))
+                && PulverizationMaterialHelper.target(iron).isPresent(), "default pulverization agrees across query entries");
         var dust = GTItems.getStack(MaterialPrefix.dust, material, 3);
         helper.assertFalse(dust.isEmpty(), "host generated the requested dust form");
         helper.assertTrue(find(MachineRecipeMaps.Centrifuge, List.of(dust), List.of()) != null, "SPI decomposition is queryable");

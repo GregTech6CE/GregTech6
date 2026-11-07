@@ -17,6 +17,54 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
                 MaterialDeclaration.builder("MetadataSecond").dust().build());
     }
 
+    @Override
+    public List<MaterialComposition> compositions() {
+        if (!"infoLegacy".equals(System.getProperty("material.metadata.scenario"))) return List.of();
+        return List.of(
+                new MaterialComposition(
+                        "MetadataMaterial",
+                        2,
+                        List.of(
+                                new MaterialComposition.Part("Iron", GTValues.U),
+                                new MaterialComposition.Part("Copper", GTValues.U)),
+                        true),
+                new MaterialComposition(
+                        "MetadataSecond", 1, List.of(new MaterialComposition.Part("Iron", GTValues.U)), false));
+    }
+
+    @Override
+    public List<SmeltingTargetDeclaration> smeltingTargets() {
+        return "infoLegacy".equals(System.getProperty("material.metadata.scenario"))
+                ? List.of(new SmeltingTargetDeclaration("MetadataMaterial", "Copper", GTValues.U2))
+                : List.of();
+    }
+
+    @Override
+    public List<SmeltingTargetRemoval> smeltingTargetRemovals() {
+        return "infoLegacy".equals(System.getProperty("material.metadata.scenario"))
+                ? List.of(new SmeltingTargetRemoval("MetadataSecond"))
+                : List.of();
+    }
+
+    @Override
+    public void link() {
+        String scenario = System.getProperty("material.metadata.scenario");
+        if ("infoLegacy".equals(scenario)) {
+            var material = GTMaterialRegistry.get("MetadataMaterial");
+            material.setToolStats(3, 7F, 600L, 4)
+                    .setCrushing(GTMaterialRegistry.get("Iron"), GTValues.U2)
+                    .setPulver(GTMaterialRegistry.get("Copper"), GTValues.U9)
+                    .setFurnaceBurnTime(100)
+                    .setBurning(GTMaterialRegistry.get("Ashes"), GTValues.U9)
+                    .setOreMultiplier(2)
+                    .setOreProcessingMultiplier(3);
+            material.addOreByProducts(GTMaterialRegistry.get("Copper"));
+            GTMaterialRegistry.get("MetadataSecond").setPulver(null, 0).setCrushing(null, 0);
+        } else if ("infoLegacyToolConflictFailure".equals(scenario)) {
+            GTMaterialRegistry.get("MetadataMaterial").setToolStats(3, 7F, 600L, 4);
+        }
+    }
+
     public List<MaterialMetadataDeclaration> metadata() {
         String scenario = System.getProperty("material.metadata.scenario");
         var value = new PropertyKey<>(new DataKey(addonId(), "hardness"), Integer.class);
@@ -133,6 +181,9 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
         String scenario = System.getProperty("material.metadata.scenario");
         var material = new MaterialKey("MetadataMaterial");
         switch (scenario) {
+            case "infoLegacyToolConflictFailure":
+                registrar.registerTool(material, new MaterialToolProfile(1, 3F, 64, 1));
+                return;
             case "infoOwnerFailure":
                 registrar.registerTool(new MaterialKey("Iron"), new MaterialToolProfile(1, 2F, 8, 1));
                 return;

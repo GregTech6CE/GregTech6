@@ -918,9 +918,10 @@ public final class AddonMaterials {
                 throw new IllegalStateException("Addon '" + addonId + "' composition of '" + material.getName()
                         + "' does not match the existing composition");
             }
-            return material;
+        } else {
+            material.setComposition(composition.divider(), components.toArray(MaterialComponent[]::new));
         }
-        material.setComposition(composition.divider(), components.toArray(MaterialComponent[]::new));
+        MaterialInfoRegistry.recordLinkedComposition(material, composition.crucible());
         return material;
     }
 

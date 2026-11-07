@@ -139,6 +139,8 @@ class MaterialRegistrationTest {
                 "metadataNamespaceFailure",
                 "metadataTypeFailure",
                 "info",
+                "infoLegacy",
+                "infoLegacyToolConflictFailure",
                 "infoOwnerFailure",
                 "infoNamespaceFailure",
                 "infoProcessTypeFailure",

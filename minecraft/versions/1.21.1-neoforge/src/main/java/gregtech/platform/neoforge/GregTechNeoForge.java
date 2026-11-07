@@ -58,6 +58,7 @@ import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.MachineWorkCost;
 import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 import gregtech.platform.neoforge.registry.NeoContent;
+import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -67,8 +68,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import org.slf4j.Logger;
-
-import java.util.List;
 
 /** NeoForge lifecycle adapter. Gameplay registrations are added by subsystem ports. */
 @Mod(GregTechNeoForge.MOD_ID)
@@ -83,14 +82,8 @@ public final class GregTechNeoForge {
         AddonPlatformServices.bind();
         AddonLoaderServices.bind();
         GregTechConfig.prepareDirectory(FMLPaths.CONFIGDIR.get());
-        modContainer.registerConfig(
-                ModConfig.Type.COMMON,
-                GregTechConfig.SPEC,
-                GregTechConfig.COMMON_FILE);
-        modContainer.registerConfig(
-                ModConfig.Type.CLIENT,
-                GregTechConfig.CLIENT_SPEC,
-                GregTechConfig.CLIENT_FILE);
+        modContainer.registerConfig(ModConfig.Type.COMMON, GregTechConfig.SPEC, GregTechConfig.COMMON_FILE);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, GregTechConfig.CLIENT_SPEC, GregTechConfig.CLIENT_FILE);
         // No material/metadata holder may initialize before this platform binding.
         ModData.bindPresence(id -> ModList.get().isLoaded(NAMESPACE.equals(id) ? MOD_ID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {
@@ -108,14 +101,10 @@ public final class GregTechNeoForge {
         content.bootstrap();
         content.submit();
         // Every dynamic recipe pack is published by one owner; this node contributes its producers.
-        RecipePublishing.contributeGenerated(
-                "original manual tools", ManualToolRecipePack::contribute);
-        RecipePublishing.contributeGenerated(
-                "original wood crafting", WoodCraftingRecipePack::contribute);
-        RecipePublishing.contributeGenerated(
-                "finite bottle filling", BottleFillingRecipePack::contribute);
-        RecipePublishing.contributeGenerated(
-                "original track crafting", TrackCraftingRecipePack::contribute);
+        RecipePublishing.contributeGenerated("original manual tools", ManualToolRecipePack::contribute);
+        RecipePublishing.contributeGenerated("original wood crafting", WoodCraftingRecipePack::contribute);
+        RecipePublishing.contributeGenerated("finite bottle filling", BottleFillingRecipePack::contribute);
+        RecipePublishing.contributeGenerated("original track crafting", TrackCraftingRecipePack::contribute);
         modEventBus.addListener(this::commonSetup);
     }
 
@@ -160,15 +149,11 @@ public final class GregTechNeoForge {
                 gregtech.content.recipe.GTBumbleBeeRecipes.registerDisplayRows());
         GTMaterialRegistry.postInit();
         MachineRecipeBootstrap.load();
-        GregTechAddons.dispatchRecipesReady(
-                new GregTechAddon.Context("neoforge", "1.21.1"));
+        GregTechAddons.dispatchRecipesReady(new GregTechAddon.Context("neoforge", "1.21.1"));
         ExclusiveOutputMaps.audit();
         PlainStructureBlocks.resolve();
         MultiblockRegistration.validate();
-        LOGGER.info(
-                "GT addon API {} ready: {}",
-                GregTechAddons.API_VERSION,
-                GregTechAddons.registeredIds());
+        LOGGER.info("GT addon API {} ready: {}", GregTechAddons.API_VERSION, GregTechAddons.registeredIds());
         MachineWorkCost.Cost cost = MachineWorkCost.calculate(8, 20, 1, false, 10_000, 8, 32, false);
         if (cost == null || cost.minimumPower() != 8 || cost.totalWork() != 160) {
             throw new IllegalStateException("GT6 shared machine work accounting failed to initialize");
@@ -201,11 +186,9 @@ public final class GregTechNeoForge {
             if (block instanceof MaterialBlockLike b)
                 weights = BlockMaterialWeights.contained(b.material(), b.prefix());
             else if (block instanceof GTStoneBlock b)
-                weights = StoneMaterialWeights.contained(
-                        b.stoneMaterial(), b.variant(), false);
+                weights = StoneMaterialWeights.contained(b.stoneMaterial(), b.variant(), false);
             else if (block instanceof GTStoneSlabBlock b)
-                weights = StoneMaterialWeights.contained(
-                        b.stoneMaterial(), b.variant(), true);
+                weights = StoneMaterialWeights.contained(b.stoneMaterial(), b.variant(), true);
             else continue;
             var components = weights.stream()
                     .filter(w -> w.material().isValid() && w.amount() > 0)
@@ -213,8 +196,7 @@ public final class GregTechNeoForge {
                     .toList();
             if (!components.isEmpty())
                 ItemMaterialRegistry.register(
-                        block.asItem(),
-                        new ItemComposition(null, components, "GT6 block composition", true));
+                        block.asItem(), new ItemComposition(null, components, "GT6 block composition", true));
         }
     }
 }

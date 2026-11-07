@@ -7,10 +7,16 @@ import gregtech.api.addon.material.MaterialFormRequest;
 import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.api.material.CrushingMaterialHelper;
+import gregtech.api.material.FuelMaterialHelper;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialToolProfile;
+import gregtech.api.material.OreProcessingMaterialHelper;
+import gregtech.api.material.PulverizationMaterialHelper;
+import gregtech.api.material.SmeltingMaterialHelper;
 import gregtech.engine.addon.AddonMaterials;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -93,12 +99,67 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     static void freeze() {
         if (snapshot != null) return;
         registrationsClosed = true;
+        captureLinkedFacts();
         snapshot = new Snapshot(
                 Map.copyOf(TOOLS),
                 Map.copyOf(COMPOSITIONS),
                 Map.copyOf(COMPOSITION_CRUCIBLE),
                 Map.copyOf(RELATIONS),
                 Map.copyOf(PROCESSES));
+    }
+
+    /** Preserve the legacy SPI's crucible permission separately from its final linked composition. */
+    public static void recordLinkedComposition(GTMaterial material, boolean crucible) {
+        if (snapshot != null) throw new IllegalStateException("Material auxiliary registrations are frozen");
+        COMPOSITION_CRUCIBLE.put(material.resolve().getName(), crucible);
+    }
+
+    private static MaterialToolProfile linkedTool(GTMaterial material) {
+        return new MaterialToolProfile(
+                material.getToolTypes(),
+                material.getToolSpeed(),
+                material.getToolDurability(),
+                material.getToolQuality());
+    }
+
+    private static void captureLinkedFacts() {
+        // Legacy callbacks still write the runtime model until the remaining domains migrate.
+        // Publish their final results, including implicit defaults and explicit target removals.
+        for (ToolSubmission submission : ADDON_TOOLS) {
+            GTMaterial material = requireOwned(submission.addonId(), submission.material(), "tool profile");
+            if (!linkedTool(material).equals(submission.profile()))
+                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' tool profile for '"
+                        + material.getName() + "' conflicts with the linked profile");
+        }
+        for (String name : TOOLS.keySet()) {
+            GTMaterial material = GTMaterialRegistry.get(name);
+            if (!material.isValid()) continue;
+            TOOLS.put(name, linkedTool(material));
+            COMPOSITIONS.put(
+                    name,
+                    new MaterialInfoDefinition.Composition(
+                            material.getCompositionDivider(),
+                            material.getCompositionComponents().stream()
+                                    .map(part -> new MaterialInfoDefinition.Part(
+                                            part.material().resolve().getName(), part.amount()))
+                                    .toList()));
+            var rules = new LinkedHashMap<>(PROCESSES.get(name).rules());
+            replaceProcess(rules, MaterialProcessKeys.SMELTING, SmeltingMaterialHelper.target(material));
+            replaceProcess(rules, MaterialProcessKeys.CRUSHING, CrushingMaterialHelper.target(material));
+            replaceProcess(rules, MaterialProcessKeys.PULVERIZING, PulverizationMaterialHelper.target(material));
+            replaceProcess(rules, MaterialProcessKeys.FUEL, FuelMaterialHelper.rule(material));
+            replaceProcess(
+                    rules, MaterialProcessKeys.ORE_PROCESSING, Optional.of(OreProcessingMaterialHelper.rule(material)));
+            PROCESSES.put(name, new MaterialInfoDefinition.Processes(rules));
+        }
+    }
+
+    private static <T> void replaceProcess(
+            Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules,
+            MaterialProcessKey<T> key,
+            Optional<T> value) {
+        rules.remove(key);
+        value.ifPresent(result -> rules.put(key, List.of(MaterialProcessRule.anyForm(result))));
     }
 
     static void closeRegistrations() {

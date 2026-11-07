@@ -246,10 +246,8 @@ public final class MaterialViews {
         var processRules = new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
         for (var material : materials.keySet()) processRules.put(material, new LinkedHashMap<>());
         for (var material : materials.keySet()) {
-            var definition = MaterialDefinitions.find(material.name());
-            if (definition == null) continue;
             MaterialInfoRegistry.processes(material).rules().forEach((key, rules) -> {
-                registerProcessType(processTypes, key, "built-in catalog");
+                registerProcessType(processTypes, key, "linked material catalog");
                 for (var rule : rules) addProcessRule(processRules.get(material), key, rule);
             });
         }

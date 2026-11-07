@@ -116,6 +116,10 @@ public final class MaterialLifecycleProbe {
                 check(failure.getMessage().contains("density")
                         && failure.getMessage().contains("alpha_addon")
                         && failure.getMessage().contains("beta_addon"));
+            if (scenario.equals("infoLegacyToolConflictFailure"))
+                check(failure.getMessage().contains("tool profile")
+                        && failure.getMessage().contains("MetadataMaterial")
+                        && failure.getMessage().contains("metadata_test"));
             rejects(GTMaterialRegistry::init);
             rejects(() -> GTMaterialRegistry.get("Iron"));
             rejects(GTMaterialRegistry::allMaterials);
@@ -144,6 +148,7 @@ public final class MaterialLifecycleProbe {
         check(MaterialViews.catalog().find(new MaterialKey("UnknownMaterial")).isEmpty());
         rejects(() -> MaterialViews.catalog().materials().clear());
         rejects(() -> MaterialViews.catalog().forms().forms().clear());
+        if (scenario.equals("normal") || scenario.equals("infoLegacy")) checkEffectiveQueries();
         if (scenario.equals("merge")) {
             var material = GTMaterialRegistry.get("SharedMaterial");
             check(material.getId() >= GTMaterialRegistry.ADDON_ID_START);
@@ -230,8 +235,62 @@ public final class MaterialLifecycleProbe {
             rejects(() ->
                     MaterialInfoRegistry.addonRegistrar("metadata_test").registerForm(material, new FormKey("dust")));
         }
+        if (scenario.equals("infoLegacy")) {
+            var material = new MaterialKey("MetadataMaterial");
+            var composition = MaterialInfoTool.composition(material).orElseThrow();
+            check(composition.divider() == 2 && composition.parts().size() == 2 && composition.crucible());
+            check(composition.parts().get(0).equals(new MaterialComposition.Part("Iron", GTValues.U)));
+            check(composition.parts().get(1).equals(new MaterialComposition.Part("Copper", GTValues.U)));
+            check(MaterialInfoTool.tool(material).equals(new MaterialToolProfile(3, 7F, 600L, 4)));
+            check(GregTechMaterials.find(material.name()).toolQuality() == 4);
+            check(SmeltingMaterialHelper.target(material)
+                    .orElseThrow()
+                    .equals(new MaterialTarget(new MaterialKey("Copper"), GTValues.U2)));
+            var second = new MaterialKey("MetadataSecond");
+            check(!MaterialInfoTool.composition(second).orElseThrow().crucible());
+            check(SmeltingMaterialHelper.target(second).isEmpty());
+            check(PulverizationMaterialHelper.target(second).isEmpty());
+            check(CrushingMaterialHelper.target(second).isEmpty());
+            check(MaterialViews.catalog()
+                    .processes()
+                    .find(second, MaterialProcessKeys.SMELTING)
+                    .isEmpty());
+        }
         rejects(() -> GTMaterialRegistry.registerDefinition(shared.material()));
         rejects(() -> GTMaterialRegistry.installAddonMaterial(shared, 10001));
         rejects(() -> GTMaterialRegistry.registerAlias("Fe", "Iron"));
+    }
+
+    private static void checkEffectiveQueries() {
+        for (var view : MaterialViews.catalog().materials()) {
+            var key = view.key();
+            var material = GTMaterialRegistry.get(key.name());
+            check(SmeltingMaterialHelper.target(material).equals(SmeltingMaterialHelper.target(key)));
+            check(CrushingMaterialHelper.target(material).equals(CrushingMaterialHelper.target(key)));
+            check(PulverizationMaterialHelper.target(material).equals(PulverizationMaterialHelper.target(key)));
+            check(FuelMaterialHelper.rule(material).equals(FuelMaterialHelper.rule(key)));
+            check(OreProcessingMaterialHelper.rule(material).equals(OreProcessingMaterialHelper.rule(key)));
+            check(material.tool()
+                    .equals(new MaterialToolProfile(
+                            material.getToolTypes(),
+                            material.getToolSpeed(),
+                            material.getToolDurability(),
+                            material.getToolQuality())));
+            var indexed = MaterialInfoTool.composition(key);
+            check(indexed.isPresent() == material.hasComposition());
+            if (indexed.isPresent()) {
+                check(indexed.get().divider() == material.getCompositionDivider());
+                check(indexed.get()
+                        .parts()
+                        .equals(material.getCompositionComponents().stream()
+                                .map(part -> new MaterialComposition.Part(
+                                        part.material().getName(), part.amount()))
+                                .toList()));
+            }
+        }
+        var iron = MaterialViews.catalog().resolve("Fe").orElseThrow();
+        check(SmeltingMaterialHelper.target(iron).orElseThrow().equals(new MaterialTarget(iron, GTValues.U)));
+        check(SmeltingMaterialHelper.isMaterialSmeltable(iron));
+        check(PulverizationMaterialHelper.target(iron).orElseThrow().equals(new MaterialTarget(iron, GTValues.U)));
     }
 }
