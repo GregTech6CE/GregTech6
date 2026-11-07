@@ -7,6 +7,9 @@ import gregtech.api.addon.material.AddonMaterialContributor;
 import gregtech.api.addon.material.MaterialComposition;
 import gregtech.api.addon.material.MaterialDeclaration;
 import gregtech.api.addon.material.MaterialFormRequest;
+import gregtech.api.addon.material.MaterialGroupDeclaration;
+import gregtech.api.addon.material.MaterialMetadataDeclaration;
+import gregtech.api.addon.material.MaterialTagDeclaration;
 import gregtech.api.addon.material.PrefixCondition;
 import gregtech.api.addon.material.PrefixDeclaration;
 import gregtech.api.addon.material.SmeltingTargetDeclaration;
@@ -22,11 +25,17 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.api.mod.ModData;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
+import gregtech.content.worldgen.AddonOreVeins;
 import gregtech.engine.machine.crucible.CrucibleReactions;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialItemDefinitions;
+import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
@@ -72,6 +81,30 @@ public final class AddonMaterials {
 
     private static final TreeMap<String, Submission> QUEUE = new TreeMap<>();
     private static final Map<GTMaterial, List<String>> OWNERS = new IdentityHashMap<>();
+
+    public record MetadataSubmission(
+            String addonId, MaterialMetadataDeclaration declaration) {}
+
+    public record TagSubmission(String addonId, MaterialTagDeclaration declaration) {}
+
+    public record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
+
+    private static final List<MetadataSubmission> METADATA = new ArrayList<>();
+    private static final List<TagSubmission> TAGS = new ArrayList<>();
+    private static final List<GroupSubmission> GROUPS = new ArrayList<>();
+
+    public static List<MetadataSubmission> metadataDeclarations() {
+        return List.copyOf(METADATA);
+    }
+
+    public static List<TagSubmission> tagDeclarations() {
+        return List.copyOf(TAGS);
+    }
+
+    public static List<GroupSubmission> groupDeclarations() {
+        return List.copyOf(GROUPS);
+    }
+
     private static boolean collected;
     private static boolean closed;
     private static volatile List<AcceptedForm> acceptedForms = List.of();
@@ -89,7 +122,7 @@ public final class AddonMaterials {
      * {@code polymer()} allows {@code plate} and {@code foil}. {@code wires()} allows {@code wireFine}.
      * Core materials and every other prefix keep {@code MaterialPrefix.isValidFor}.
      */
-    public static boolean explicitPlateOrFoil(gregtech.content.data.MaterialPrefix prefix, GTMaterial material) {
+    public static boolean explicitPlateOrFoil(MaterialPrefix prefix, GTMaterial material) {
         if (prefix == null
                 || material == null
                 || !material.isValid()
@@ -163,6 +196,12 @@ public final class AddonMaterials {
                         contributor.oreVeins(),
                         contributor.smallOres(),
                         formTags(declarations));
+                for (var metadata : List.copyOf(contributor.metadata()))
+                    METADATA.add(new MetadataSubmission(contributor.addonId(), metadata));
+                for (var tag : List.copyOf(contributor.materialTags()))
+                    TAGS.add(new TagSubmission(contributor.addonId(), tag));
+                for (var group : List.copyOf(contributor.materialGroups()))
+                    GROUPS.add(new GroupSubmission(contributor.addonId(), group));
             } catch (RuntimeException | Error failure) {
                 throw AddonFailures.of(
                         "Addon material contributor failed: "
@@ -454,7 +493,7 @@ public final class AddonMaterials {
      */
     public static String namespaceOf(GTMaterial material) {
         String owner = owner(material);
-        return owner == null ? gregtech.engine.mod.GregTechIdentity.MOD_ID : owner;
+        return owner == null ? GregTechIdentity.MOD_ID : owner;
     }
 
     public static List<AcceptedForm> acceptedForms() {
@@ -558,12 +597,12 @@ public final class AddonMaterials {
 
     /** Veins resolve after linking, so a row can name a material created in {@code link()}. */
     public static void publishOreVeins() {
-        var queued = new ArrayList<gregtech.content.worldgen.AddonOreVeins.Submission>();
+        var queued = new ArrayList<AddonOreVeins.Submission>();
         for (Submission submission : snapshot()) {
-            queued.add(new gregtech.content.worldgen.AddonOreVeins.Submission(
+            queued.add(new AddonOreVeins.Submission(
                     submission.addonId, submission.veins, submission.smallOres));
         }
-        gregtech.content.worldgen.AddonOreVeins.publish(queued);
+        AddonOreVeins.publish(queued);
     }
 
     /** Byproduct names resolve after linking, so a list can name a material created in {@code link()}. */
@@ -602,21 +641,10 @@ public final class AddonMaterials {
     /** Called after the built-in link, so callbacks can see core materials and link-time groups. */
     public static void linkAddons() {
         for (Submission submission : snapshot()) {
-            Set<GTMaterial> before = new HashSet<>(GTMaterialRegistry.allMaterials());
             try {
                 submission.link.run();
             } catch (RuntimeException | Error failure) {
                 throw AddonFailures.of("Addon '" + submission.addonId + "' material link failed", failure);
-            }
-            for (GTMaterial created : GTMaterialRegistry.allMaterials()) {
-                if (before.contains(created)) continue;
-                GTMaterial canonical = created.resolve();
-                if (canonical.getId() < GTMaterialRegistry.ADDON_ID_START)
-                    throw new IllegalArgumentException("Addon '" + submission.addonId
-                            + "' created material '" + canonical.getName() + "' id " + canonical.getId()
-                            + "; addon materials are assigned from " + GTMaterialRegistry.ADDON_ID_START);
-                addOwner(canonical, submission.addonId);
-                if (canonical.getSourceMod() == null) canonical.setSourceMod(sourceMod(submission.addonId));
             }
         }
         sealCrucibleAdditions();
@@ -641,7 +669,7 @@ public final class AddonMaterials {
         if (existing != null)
             throw new IllegalStateException("Addon '" + addonId + "' prefix '" + declaration.name()
                     + "' already exists as '" + existing.getName() + "'");
-        if (gregtech.engine.prefix.BlockPrefixRegistry.byName(declaration.name()) != null)
+        if (BlockPrefixRegistry.byName(declaration.name()) != null)
             throw new IllegalStateException(
                     "Addon '" + addonId + "' prefix '" + declaration.name() + "' already exists as a block prefix");
         Set<GTMaterial> selected = selectPrefixMaterials(addonId, declaration);
@@ -660,13 +688,13 @@ public final class AddonMaterials {
 
     private static void installBlockPrefix(String addonId, PrefixDeclaration declaration) {
         if (PrefixRegistry.conflict(declaration.name()) != null
-                || gregtech.engine.prefix.BlockPrefixRegistry.byName(declaration.name()) != null)
+                || BlockPrefixRegistry.byName(declaration.name()) != null)
             throw new IllegalStateException(
                     "Addon '" + addonId + "' block prefix '" + declaration.name() + "' already exists");
         Set<GTMaterial> selected = selectPrefixMaterials(addonId, declaration);
         long weight = declaration.amount();
         String label = (declaration.displayPrefix() + declaration.displaySuffix()).trim();
-        gregtech.engine.prefix.BlockMaterialPrefix.defineAddon(
+        BlockMaterialPrefix.defineAddon(
                 declaration.name(),
                 label,
                 declaration.displayPrefix(),
@@ -681,7 +709,7 @@ public final class AddonMaterials {
     private static Set<GTMaterial> selectPrefixMaterials(String addonId, PrefixDeclaration declaration) {
         boolean positive = false;
         for (PrefixCondition condition : declaration.conditions()) if (condition.positive()) positive = true;
-        var selected = java.util.Collections.newSetFromMap(new IdentityHashMap<GTMaterial, Boolean>());
+        var selected = Collections.newSetFromMap(new IdentityHashMap<GTMaterial, Boolean>());
         for (String name : declaration.materials()) {
             GTMaterial found = GTMaterialRegistry.get(name);
             if (!found.isValid())
@@ -749,7 +777,7 @@ public final class AddonMaterials {
                 MaterialPrefix prefix = PrefixRegistry.byName(request.prefixName());
                 GTMaterial material = GTMaterialRegistry.get(request.materialName());
                 if (prefix == null) {
-                    if (gregtech.engine.prefix.BlockPrefixRegistry.byName(request.prefixName()) != null)
+                    if (BlockPrefixRegistry.byName(request.prefixName()) != null)
                         throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
                                 + request.prefixName() + " / " + request.materialName() + "' is a block prefix");
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '" + request.prefixName()
@@ -758,7 +786,7 @@ public final class AddonMaterials {
                 if (!material.isValid())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '" + request.prefixName()
                             + " / " + request.materialName() + "' uses an unknown material");
-                if (!gregtech.engine.material.MaterialItemDefinitions.candidatePrefixes()
+                if (!MaterialItemDefinitions.candidatePrefixes()
                         .contains(prefix))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
                             + prefix.getName() + " / " + material.resolve().getName()

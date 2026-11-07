@@ -1,191 +1,47 @@
 package gregtech.content.data;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialTextureSet;
+import gregtech.api.material.MaterialSentinels;
 import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.material.generated.CompoundMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 
 /**
  * Single import-only holder for the original GT6 short symbols and special rows.
  * Handwritten content uses content.material.Materials and named definitions.
  * <p>
- * Bulk GT6 definitions live in {@link gregtech.content.data.generated.GT6Materials}.
+ * Bulk GT6 definitions live in {@link GT6Materials}.
  * Short names are grouped like GT6: top-level elements/compounds, plus {@link OREMATS}, {@link STONES}, and {@link WOODS}.
  * Special rows ({@code Ma}, {@code elec}/{@code cent}/{@code clay} factories) live here.
  */
 @Deprecated
-public final class ImportedMaterialData extends gregtech.engine.material.MaterialFactories {
+public final class ImportedMaterialData {
     private ImportedMaterialData() {}
 
-    // --- GT6-style factories (used by generated GT6Materials) ---
-
-    /**
-     * GT6 fuel stats applied after all materials are registered ({@code coal()}, randomData, etc.).
-     */
-    public static void applyPostInitFuelStats() {
-        fuel(Coal, GregTechConstants.TICKS_PER_SMELT * 8L, DarkAsh, GregTechConstants.U4);
-        fuel(CoalCoke, GregTechConstants.TICKS_PER_SMELT * 16L, DarkAsh, GregTechConstants.U9);
-        fuel(LigniteCoke, GregTechConstants.TICKS_PER_SMELT * 8L, DarkAsh, GregTechConstants.U9);
-        fuel(PetCoke, GregTechConstants.TICKS_PER_SMELT * 32L, DarkAsh, GregTechConstants.U9);
-        fuel(Charcoal, GregTechConstants.TICKS_PER_SMELT * 8L, Ash, GregTechConstants.U4);
-
-        // MT.java fuel rows outside the coal-family table. Keep the original flags instead of
-        // reusing fuel(), which would add FLAMMABLE and MELTING to every entry.
-        fuelOnly(
-                Lignite,
-                GregTechConstants.TICKS_PER_SMELT * 4L,
-                DarkAsh,
-                GregTechConstants.U4,
-                MaterialProperty.FLAMMABLE);
-        fuelOnly(Peat, GregTechConstants.TICKS_PER_SMELT * 10L, Ash, GregTechConstants.U2, MaterialProperty.FLAMMABLE);
-        fuelOnly(Blaze, GregTechConstants.TICKS_PER_SMELT * 24L, null, 0, MaterialProperty.MELTING);
-        fuelOnly(PetrifiedWood, GregTechConstants.TICKS_PER_SMELT / 4L, null, 0, MaterialProperty.FLAMMABLE);
-        fuelOnly(GT6Materials.Ores.Oilsands, GregTechConstants.TICKS_PER_SMELT * 30L, null, 0);
-        fuelOnly(CrudeOil, GregTechConstants.TICKS_PER_SMELT * 60L, null, 0);
-        fuelOnly(
-                GT6Materials.Ores.Oilshale,
-                GregTechConstants.TICKS_PER_SMELT * 2L,
-                STONES.Stone,
-                GregTechConstants.U2,
-                MaterialProperty.FLAMMABLE);
-
-        // MT elemental fuels.
-        fuelOnly(Li, GregTechConstants.TICKS_PER_SMELT * 10L, null, 0);
-        fuelOnly(Li_6, GregTechConstants.TICKS_PER_SMELT * 10L, null, 0);
-        fuelOnly(C, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
-        fuelOnly(C_13, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
-        fuelOnly(C_14, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
-        fuelOnly(Na, GregTechConstants.TICKS_PER_SMELT * 20L, null, 0);
-        fuelOnly(Mg, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);
-        fuelOnly(
-                P,
-                GregTechConstants.TICKS_PER_SMELT * 5L,
-                null,
-                0,
-                MaterialProperty.FLAMMABLE,
-                MaterialProperty.EXPLOSIVE);
-        fuelOnly(S, GregTechConstants.TICKS_PER_SMELT * 5L, null, 0, MaterialProperty.FLAMMABLE);
-
-        applyAcidFlags();
-    }
-
-    /** GT6 {@code TD.Properties.ACID} materials, extracted from gregapi/data/MT.java. */
-    private static void applyAcidFlags() {
-        GTMaterial[] acids = {
-            HCl,
-            HF,
-            NH3,
-            HNO3,
-            CO3,
-            H2S,
-            H2SO4,
-            H2S2O7,
-            H2SiF6,
-            H2WO4,
-            AlF3,
-            TiCl4,
-            CaF2,
-            FluoriteRed,
-            FluoritePink,
-            FluoriteBlue,
-            FluoriteGreen,
-            FluoriteBlack,
-            FluoriteWhite,
-            FluoriteYellow,
-            FluoriteOrange,
-            FluoriteMagenta,
-            Na3AlF6,
-            ChloroauricAcid,
-            ChloroplatinicAcid,
-            StannicChloride,
-            BlackVitriol,
-            BlueVitriol,
-            GreenVitriol,
-            RedVitriol,
-            PinkVitriol,
-            CyanVitriol,
-            WhiteVitriol,
-            GrayVitriol,
-            VitriolOfClay,
-            AquaRegia,
-        };
-        for (GTMaterial m : acids) {
-            if (m != null && m.isValid()) m.put(MaterialProperty.ACID);
-        }
-    }
-
-    private static void fuel(GTMaterial material, long burnTime, GTMaterial ash, long ashAmount) {
-        if (!material.isValid()) {
-            return;
-        }
-        material.put(MaterialProperty.FLAMMABLE, MaterialProperty.MELTING)
-                .setFurnaceBurnTime(burnTime)
-                .setBurning(ash, ashAmount);
-    }
-
-    /** Fuel rows whose original flags are not the coal-family FLAMMABLE+MELTING pair. */
-    private static void fuelOnly(
-            GTMaterial material, long burnTime, GTMaterial ash, long ashAmount, MaterialProperty... flags) {
-        if (!material.isValid()) {
-            return;
-        }
-        material.put(flags).setFurnaceBurnTime(burnTime).setBurning(ash, ashAmount);
-    }
-
-    // --- special / sentinel materials ---
-
-    public static final GTMaterial NULL = gregtech.api.material.MaterialSentinels.INVALID;
-    public static final GTMaterial Empty = gregtech.api.material.MaterialSentinels.EMPTY;
-
-    /**
-     * Magic pseudo-element ({@code Ma}). Used in Ender Pearl ({@code BeK₄N₅Ma₆}) and other magical chemistry.
-     */
-    public static final GTMaterial
-            Ma =
-                    gregtech.engine.material.GTMaterialRegistry.registerDefinition(
-                                    gregtech.engine.material.MaterialDefinition.builder(4000, "Magic")
-                                            .displayName("Ma")
-                                            .color(0xFF00FF)
-                                            .properties(
-                                                    MaterialProperty.ELEMENT,
-                                                    MaterialProperty.MAGICAL,
-                                                    MaterialProperty.HIDDEN)
-                                            .texture(MaterialTextureSet.SHINY)
-                                            .chemicalFormula("Ma")
-                                            .atomicProperties(0, 0, 0, -1)
-                                            .alpha(0)
-                                            .meltingPointKelvin(0)
-                                            .boilingPointKelvin(0)
-                                            .density(0)
-                                            .build())
-                            .mod(ModReferences.GT),
-            Magic = Ma;
-
-    static {
-        GTMaterialRegistry.registerAlias("Ma", "Magic");
-    }
+    public static final GTMaterial NULL = MaterialSentinels.INVALID;
+    public static final GTMaterial Empty = MaterialSentinels.EMPTY;
+    public static final GTMaterial Ma = GTMaterialRegistry.requireInstalled("Magic"), Magic = Ma;
 
     // --- dye material array (GT6 DATA.Dye_Materials) ---
 
     public static final class DATA {
         public static final GTMaterial[] DYE_MATERIALS = {
-            gregtech.content.material.generated.CompoundMaterials.Black,
-            gregtech.content.material.generated.CompoundMaterials.Red,
-            gregtech.content.material.generated.CompoundMaterials.Green,
-            gregtech.content.material.generated.CompoundMaterials.Brown,
-            gregtech.content.material.generated.CompoundMaterials.Blue,
-            gregtech.content.material.generated.CompoundMaterials.Purple,
-            gregtech.content.material.generated.CompoundMaterials.Cyan,
-            gregtech.content.material.generated.CompoundMaterials.LightGray,
-            gregtech.content.material.generated.CompoundMaterials.Gray,
-            gregtech.content.material.generated.CompoundMaterials.Pink,
-            gregtech.content.material.generated.CompoundMaterials.Lime,
-            gregtech.content.material.generated.CompoundMaterials.Yellow,
-            gregtech.content.material.generated.CompoundMaterials.LightBlue,
-            gregtech.content.material.generated.CompoundMaterials.Magenta,
-            gregtech.content.material.generated.CompoundMaterials.Orange,
-            gregtech.content.material.generated.CompoundMaterials.White
+            CompoundMaterials.Black,
+            CompoundMaterials.Red,
+            CompoundMaterials.Green,
+            CompoundMaterials.Brown,
+            CompoundMaterials.Blue,
+            CompoundMaterials.Purple,
+            CompoundMaterials.Cyan,
+            CompoundMaterials.LightGray,
+            CompoundMaterials.Gray,
+            CompoundMaterials.Pink,
+            CompoundMaterials.Lime,
+            CompoundMaterials.Yellow,
+            CompoundMaterials.LightBlue,
+            CompoundMaterials.Magenta,
+            CompoundMaterials.Orange,
+            CompoundMaterials.White
         };
     }
 

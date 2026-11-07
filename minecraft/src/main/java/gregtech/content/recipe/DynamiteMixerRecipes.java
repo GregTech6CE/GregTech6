@@ -6,7 +6,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.material.MaterialFactories;
+import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.recipe.Recipe;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -35,7 +35,9 @@ public final class DynamiteMixerRecipes {
     public static int register() {
         if (!REGISTERED.isEmpty()) throw new IllegalStateException("Dynamite mixing recipes registered twice");
         GTMaterial dynamite = GTMaterialRegistry.get("Dynamite").resolve();
-        Set<GTMaterial> sources = new LinkedHashSet<>(MaterialFactories.woods());
+        Set<GTMaterial> sources = new LinkedHashSet<>();
+        for (var definition : MaterialDefinitions.all())
+            if (definition.facts().classifications().contains("wood_family")) sources.add(GTMaterialRegistry.get(definition.name()));
         sources.add(GTMaterialRegistry.get("Bark").resolve());
         sources.add(GTMaterialRegistry.get("Paper").resolve());
         for (GTMaterial source : sources) {

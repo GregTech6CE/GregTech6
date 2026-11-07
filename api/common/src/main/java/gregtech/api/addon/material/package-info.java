@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** Addon material, prefix, composition and smelting declarations. */
+/** Addon material, prefix, composition, metadata, tag and substitution-group declarations. */
 @NullMarked
 package gregtech.api.addon.material;
 

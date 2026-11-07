@@ -66,6 +66,15 @@ public interface AddonMaterialContributor {
      */
     default List<SmallOreDeclaration> smallOres() { return List.of(); }
 
+    /** Immutable descriptive metadata; default empty preserves existing contributors. */
+    default List<MaterialMetadataDeclaration> metadata() { return List.of(); }
+
+    /** Descriptive tag declarations owned by this addon. Defaults to none. */
+    default List<MaterialTagDeclaration> materialTags() { return List.of(); }
+
+    /** Substitution group declarations owned by this addon. Defaults to none. */
+    default List<MaterialGroupDeclaration> materialGroups() { return List.of(); }
+
     /** Other cross-material links. New materials still belong in {@link #materials()}. */
     default void link() {}
 }

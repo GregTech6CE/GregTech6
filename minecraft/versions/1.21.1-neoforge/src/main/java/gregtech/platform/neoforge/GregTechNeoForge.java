@@ -1,46 +1,96 @@
 package gregtech.platform.neoforge;
 
 import com.mojang.logging.LogUtils;
+import gregtech.GregTechConfig;
+import gregtech.api.addon.GregTechAddon;
+import gregtech.api.addon.GregTechAddons;
 import gregtech.api.material.*;
 import gregtech.api.mod.ModData;
-import gregtech.content.data.MaterialGroups;
+import gregtech.content.block.BlockMaterialWeights;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.content.block.stone.GTStoneSlabBlock;
+import gregtech.content.block.stone.StoneMaterialWeights;
+import gregtech.content.data.BottleFillingRecipePack;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.ManualToolRecipePack;
 import gregtech.content.data.ModReferences;
+import gregtech.content.data.RecipePublishing;
+import gregtech.content.data.TrackCraftingRecipePack;
+import gregtech.content.data.WoodCraftingRecipePack;
+import gregtech.content.machine.MachineConstructionMaterials;
+import gregtech.content.material.ModMaterialUnificationLoader;
 import gregtech.content.material.VanillaCompositionLoader;
+import gregtech.content.material.VanillaMaterialCorrections;
 import gregtech.content.material.VanillaUnificationLoader;
+import gregtech.content.multiblock.PlainStructureBlocks;
+import gregtech.content.recipe.DiggableRecipes;
+import gregtech.content.recipe.FermenterFoodRecipes;
+import gregtech.content.recipe.GTBumbleBeeRecipes;
+import gregtech.content.recipe.MachineRecipeBootstrap;
+import gregtech.content.recipe.PanelMaterialRegistration;
+import gregtech.content.recipe.RegisteredWoodSurvivalRecipes;
+import gregtech.content.recipe.TransportMaterialRegistration;
+import gregtech.content.recipe.VanillaWoodProcessingRecipes;
+import gregtech.content.registry.GTBars;
+import gregtech.content.registry.GTBlackSands;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTDungeonBlocks;
 import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTProjectiles;
+import gregtech.content.registry.GTSignalWires;
+import gregtech.content.registry.GTSpecialOreBlocks;
+import gregtech.content.registry.GTWires;
+import gregtech.content.registry.MultiblockRegistration;
+import gregtech.engine.addon.AddonCoreServices;
+import gregtech.engine.addon.AddonLoaderServices;
+import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.addon.AddonPlatformServices;
+import gregtech.engine.addon.ExclusiveOutputMaps;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.material.MaterialRoleFlags;
+import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.mod.SetupOnce;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.MachineWorkCost;
+import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 import gregtech.platform.neoforge.registry.NeoContent;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLPaths;
 import org.slf4j.Logger;
+
+import java.util.List;
 
 /** NeoForge lifecycle adapter. Gameplay registrations are added by subsystem ports. */
 @Mod(GregTechNeoForge.MOD_ID)
 public final class GregTechNeoForge {
-    public static final String MOD_ID = gregtech.engine.mod.GregTechIdentity.MOD_ID;
-    public static final String NAMESPACE = gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+    public static final String MOD_ID = GregTechIdentity.MOD_ID;
+    public static final String NAMESPACE = GregTechIdentity.REGISTRY_NAMESPACE;
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final gregtech.engine.mod.SetupOnce SHARED_SETUP = new gregtech.engine.mod.SetupOnce();
+    private static final SetupOnce SHARED_SETUP = new SetupOnce();
 
-    public GregTechNeoForge(IEventBus modEventBus, net.neoforged.fml.ModContainer modContainer) {
-        gregtech.engine.addon.AddonCoreServices.bind();
-        gregtech.engine.addon.AddonPlatformServices.bind();
-        gregtech.engine.addon.AddonLoaderServices.bind();
-        gregtech.GregTechConfig.prepareDirectory(net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get());
+    public GregTechNeoForge(IEventBus modEventBus, ModContainer modContainer) {
+        AddonCoreServices.bind();
+        AddonPlatformServices.bind();
+        AddonLoaderServices.bind();
+        GregTechConfig.prepareDirectory(FMLPaths.CONFIGDIR.get());
         modContainer.registerConfig(
-                net.neoforged.fml.config.ModConfig.Type.COMMON,
-                gregtech.GregTechConfig.SPEC,
-                gregtech.GregTechConfig.COMMON_FILE);
+                ModConfig.Type.COMMON,
+                GregTechConfig.SPEC,
+                GregTechConfig.COMMON_FILE);
         modContainer.registerConfig(
-                net.neoforged.fml.config.ModConfig.Type.CLIENT,
-                gregtech.GregTechConfig.CLIENT_SPEC,
-                gregtech.GregTechConfig.CLIENT_FILE);
+                ModConfig.Type.CLIENT,
+                GregTechConfig.CLIENT_SPEC,
+                GregTechConfig.CLIENT_FILE);
         // No material/metadata holder may initialize before this platform binding.
         ModData.bindPresence(id -> ModList.get().isLoaded(NAMESPACE.equals(id) ? MOD_ID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {
@@ -50,8 +100,7 @@ public final class GregTechNeoForge {
         // Same domain holder order as Forge Loader_Data, followed by Loader_Materials.
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
-        MaterialGroups.Glowstone.getClass();
-        gregtech.engine.addon.AddonMaterials.collectContributors();
+        AddonMaterials.collectContributors();
         GTMaterialRegistry.init();
         MaterialRoleFlags.apply();
         // Shared content order plus the NeoForge-only families; then one submission for every register.
@@ -59,14 +108,14 @@ public final class GregTechNeoForge {
         content.bootstrap();
         content.submit();
         // Every dynamic recipe pack is published by one owner; this node contributes its producers.
-        gregtech.content.data.RecipePublishing.contributeGenerated(
-                "original manual tools", gregtech.content.data.ManualToolRecipePack::contribute);
-        gregtech.content.data.RecipePublishing.contributeGenerated(
-                "original wood crafting", gregtech.content.data.WoodCraftingRecipePack::contribute);
-        gregtech.content.data.RecipePublishing.contributeGenerated(
-                "finite bottle filling", gregtech.content.data.BottleFillingRecipePack::contribute);
-        gregtech.content.data.RecipePublishing.contributeGenerated(
-                "original track crafting", gregtech.content.data.TrackCraftingRecipePack::contribute);
+        RecipePublishing.contributeGenerated(
+                "original manual tools", ManualToolRecipePack::contribute);
+        RecipePublishing.contributeGenerated(
+                "original wood crafting", WoodCraftingRecipePack::contribute);
+        RecipePublishing.contributeGenerated(
+                "finite bottle filling", BottleFillingRecipePack::contribute);
+        RecipePublishing.contributeGenerated(
+                "original track crafting", TrackCraftingRecipePack::contribute);
         modEventBus.addListener(this::commonSetup);
     }
 
@@ -75,59 +124,59 @@ public final class GregTechNeoForge {
     }
 
     private static void finishSharedSetup() {
-        gregtech.content.registry.GTProjectiles.registerDispensers();
+        GTProjectiles.registerDispensers();
         for (var holder : GTItems.allEntries()) {
             var item = holder.get();
-            var form = (gregtech.engine.material.MaterialFormItem) item;
+            var form = (MaterialFormItem) item;
             ItemMaterialRegistry.register(item, form.getPrefix(), form.getMaterial());
         }
-        gregtech.content.registry.GTDungeonBlocks.registerPotPlants();
+        GTDungeonBlocks.registerPotPlants();
         registerBlockCompositions();
-        gregtech.platform.neoforge.machine.BasicMachineRegistries.registerCompositions();
-        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
-            var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
+        BasicMachineRegistries.registerCompositions();
+        for (var block : BuiltInRegistries.BLOCK) {
+            var id = BuiltInRegistries.BLOCK.getKey(block);
             if (!id.getNamespace().equals("gt6ce")) continue;
-            gregtech.content.machine.MachineConstructionMaterials.block(id.getPath())
+            MachineConstructionMaterials.block(id.getPath())
                     .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
         }
-        gregtech.content.registry.GTSpecialOreBlocks.registerCompositions();
-        gregtech.content.recipe.DiggableRecipes.registerMaterials();
-        gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();
-        gregtech.content.registry.GTBlackSands.registerCompositions();
+        GTSpecialOreBlocks.registerCompositions();
+        DiggableRecipes.registerMaterials();
+        RegisteredWoodSurvivalRecipes.registerMaterials();
+        GTBlackSands.registerCompositions();
         VanillaUnificationLoader.register();
-        gregtech.content.material.ModMaterialUnificationLoader.register();
+        ModMaterialUnificationLoader.register();
         VanillaCompositionLoader.register();
-        gregtech.content.material.VanillaMaterialCorrections.register();
-        gregtech.content.registry.GTBars.registerCompositions();
-        gregtech.content.registry.GTWires.registerCompositions();
-        gregtech.content.registry.GTSignalWires.registerCompositions();
-        gregtech.content.recipe.VanillaWoodProcessingRecipes.registerMaterials();
-        gregtech.content.recipe.PanelMaterialRegistration.register();
-        gregtech.content.recipe.TransportMaterialRegistration.register();
-        gregtech.content.data.MachineRecipeMaps.bootstrap();
-        gregtech.content.recipe.GTBumbleBeeRecipes.register();
+        VanillaMaterialCorrections.register();
+        GTBars.registerCompositions();
+        GTWires.registerCompositions();
+        GTSignalWires.registerCompositions();
+        VanillaWoodProcessingRecipes.registerMaterials();
+        PanelMaterialRegistration.register();
+        TransportMaterialRegistration.register();
+        MachineRecipeMaps.bootstrap();
+        GTBumbleBeeRecipes.register();
         LOGGER.info(
                 "[gregtech] Native bumblebee scanning display rows: {}",
                 gregtech.content.recipe.GTBumbleBeeRecipes.registerDisplayRows());
         GTMaterialRegistry.postInit();
-        gregtech.content.recipe.MachineRecipeBootstrap.load();
-        gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
-                new gregtech.api.addon.GregTechAddon.Context("neoforge", "1.21.1"));
-        gregtech.engine.addon.ExclusiveOutputMaps.audit();
-        gregtech.content.multiblock.PlainStructureBlocks.resolve();
-        gregtech.content.registry.MultiblockRegistration.validate();
+        MachineRecipeBootstrap.load();
+        GregTechAddons.dispatchRecipesReady(
+                new GregTechAddon.Context("neoforge", "1.21.1"));
+        ExclusiveOutputMaps.audit();
+        PlainStructureBlocks.resolve();
+        MultiblockRegistration.validate();
         LOGGER.info(
                 "GT addon API {} ready: {}",
-                gregtech.api.addon.GregTechAddons.API_VERSION,
-                gregtech.api.addon.GregTechAddons.registeredIds());
+                GregTechAddons.API_VERSION,
+                GregTechAddons.registeredIds());
         MachineWorkCost.Cost cost = MachineWorkCost.calculate(8, 20, 1, false, 10_000, 8, 32, false);
         if (cost == null || cost.minimumPower() != 8 || cost.totalWork() != 160) {
             throw new IllegalStateException("GT6 shared machine work accounting failed to initialize");
         }
-        long itemCount = net.minecraft.core.registries.BuiltInRegistries.ITEM.keySet().stream()
+        long itemCount = BuiltInRegistries.ITEM.keySet().stream()
                 .filter(id -> NAMESPACE.equals(id.getNamespace()))
                 .count();
-        long blockCount = net.minecraft.core.registries.BuiltInRegistries.BLOCK.keySet().stream()
+        long blockCount = BuiltInRegistries.BLOCK.keySet().stream()
                 .filter(id -> NAMESPACE.equals(id.getNamespace()))
                 .count();
         LOGGER.info(
@@ -146,26 +195,26 @@ public final class GregTechNeoForge {
     }
 
     private static void registerBlockCompositions() {
-        for (var holder : gregtech.content.registry.GTBlocks.allEntries()) {
+        for (var holder : GTBlocks.allEntries()) {
             var block = holder.get();
-            java.util.List<gregtech.api.material.MaterialComponent> weights;
-            if (block instanceof gregtech.content.block.MaterialBlockLike b)
-                weights = gregtech.content.block.BlockMaterialWeights.contained(b.material(), b.prefix());
-            else if (block instanceof gregtech.content.block.stone.GTStoneBlock b)
-                weights = gregtech.content.block.stone.StoneMaterialWeights.contained(
+            List<MaterialComponent> weights;
+            if (block instanceof MaterialBlockLike b)
+                weights = BlockMaterialWeights.contained(b.material(), b.prefix());
+            else if (block instanceof GTStoneBlock b)
+                weights = StoneMaterialWeights.contained(
                         b.stoneMaterial(), b.variant(), false);
-            else if (block instanceof gregtech.content.block.stone.GTStoneSlabBlock b)
-                weights = gregtech.content.block.stone.StoneMaterialWeights.contained(
+            else if (block instanceof GTStoneSlabBlock b)
+                weights = StoneMaterialWeights.contained(
                         b.stoneMaterial(), b.variant(), true);
             else continue;
             var components = weights.stream()
                     .filter(w -> w.material().isValid() && w.amount() > 0)
-                    .map(w -> gregtech.api.material.MaterialComponent.of(w.material(), w.amount()))
+                    .map(w -> MaterialComponent.of(w.material(), w.amount()))
                     .toList();
             if (!components.isEmpty())
                 ItemMaterialRegistry.register(
                         block.asItem(),
-                        new gregtech.engine.material.ItemComposition(null, components, "GT6 block composition", true));
+                        new ItemComposition(null, components, "GT6 block composition", true));
         }
     }
 }

@@ -342,8 +342,6 @@ composition	Dioptase	owner	Dioptase	0	VALID
 composition	DistWater	component[0]	H	0	ALIAS
 composition	DistWater	component[1]	O	0	ALIAS
 composition	DistWater	owner	DistWater	0	ALIAS
-composition	DraconiumAwakened	component[0]	Draconium	0	VALID
-composition	DraconiumAwakened	owner	DraconiumAwakened	0	VALID
 composition	Dreamwood	component[0]	C	0	ALIAS
 composition	Dreamwood	component[1]	H2O	0	ALIAS
 composition	Dreamwood	owner	Dreamwood	0	VALID
@@ -774,8 +772,6 @@ composition	Malachite	owner	Malachite	0	VALID
 composition	ManaDiamond	component[0]	C	0	ALIAS
 composition	ManaDiamond	component[1]	Ma	0	ALIAS
 composition	ManaDiamond	owner	ManaDiamond	0	VALID
-composition	ManaQuartz	component[0]	SiO2	0	ALIAS
-composition	ManaQuartz	owner	ManaQuartz	0	VALID
 composition	Manasteel	component[0]	Fe	0	ALIAS
 composition	Manasteel	component[1]	Ma	0	ALIAS
 composition	Manasteel	owner	Manasteel	0	VALID
@@ -1527,7 +1523,6 @@ decomposition	Diatomite	owner	Diatomite	9001	VALID
 decomposition	DiduraniumTrioxide	owner	DiduraniumTrioxide	9198	VALID
 decomposition	Dioptase	owner	Dioptase	8325	VALID
 decomposition	DisulfuricAcid	owner	DisulfuricAcid	9844	VALID
-decomposition	DraconiumAwakened	owner	DraconiumAwakened	8792	VALID
 decomposition	DragonEye	owner	DragonEye	8432	VALID
 decomposition	Duralumin	owner	Duralumin	8756	VALID
 decomposition	Duranium	owner	Duranium	8751	VALID

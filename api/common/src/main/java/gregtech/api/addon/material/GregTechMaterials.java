@@ -24,7 +24,13 @@ public final class GregTechMaterials {
 
     public static Iterable<Material> all() { return AddonRuntime.services().materials().all(); }
 
+    /** Immutable definition view. Requires a host supporting API 1.4 and completed material bootstrap. */
+    public static MaterialCatalogView catalog() { return AddonRuntime.services().materials().catalog(); }
+
     public interface Catalog {
+        /** Old hosts fail explicitly, preserving source and binary compatibility for implementers. */
+        default MaterialCatalogView catalog() { throw new UnsupportedOperationException("Material definition views require a supporting host"); }
+
         Material find(String name);
 
         Material find(int id);

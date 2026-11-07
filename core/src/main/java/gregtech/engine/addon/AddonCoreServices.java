@@ -3,9 +3,11 @@ package gregtech.engine.addon;
 import gregtech.api.addon.*;
 import gregtech.api.addon.AddonRuntime;
 import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialCatalogView;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialViews;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,11 @@ public final class AddonCoreServices {
     }
 
     private static final class Materials implements GregTechMaterials.Catalog {
+        @Override
+        public MaterialCatalogView catalog() {
+            return MaterialViews.catalog();
+        }
+
         @Override
         public GregTechMaterials.Material find(String name) {
             return new Handle(GTMaterialRegistry.get(name));

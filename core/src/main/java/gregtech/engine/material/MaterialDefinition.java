@@ -20,22 +20,53 @@ public record MaterialDefinition(
         String chemicalFormula,
         Set<MaterialProperty> properties,
         AtomicProperties atomicProperties,
-        int alpha) {
+        int alpha,
+        MaterialFacts facts) {
     public MaterialDefinition {
         Objects.requireNonNull(name, "Material name");
         Objects.requireNonNull(displayName, "Material display name");
-        Objects.requireNonNull(texture, "Material texture");
+        Objects.requireNonNull(facts, "Material facts");
         Objects.requireNonNull(chemicalFormula, "Chemical formula");
         Objects.requireNonNull(atomicProperties, "Atomic properties");
         if (alpha < 0 || alpha > 255) throw new IllegalArgumentException("Alpha must be 0..255");
         properties = Set.copyOf(properties);
-        if (id <= 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 1..9999: " + id);
-        if (!name.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if ((id <= 0 || id >= 10_000) && !(id == -1 && facts.group()))
+            throw new IllegalArgumentException("Material ID must be 1..9999: " + id);
+        if (!name.matches(facts.group() ? "[A-Za-z][A-Za-z0-9_/]*" : "[A-Za-z][A-Za-z0-9_]*"))
             throw new IllegalArgumentException("Use a stable, readable material name: " + name);
         if (displayName.isBlank() || (color & 0xFF000000) != 0)
             throw new IllegalArgumentException("Material requires a display name and RGB color: " + name);
         if (meltingPointKelvin < 0 || boilingPointKelvin < 0 || !Float.isFinite(density) || density < 0)
             throw new IllegalArgumentException("Invalid physical properties for " + name);
+    }
+
+    public MaterialDefinition(
+            int id,
+            String name,
+            String displayName,
+            int color,
+            MaterialTextureSet texture,
+            int melt,
+            int boil,
+            float density,
+            String formula,
+            Set<MaterialProperty> properties,
+            AtomicProperties atoms,
+            int alpha) {
+        this(
+                id,
+                name,
+                displayName,
+                color,
+                texture,
+                melt,
+                boil,
+                density,
+                formula,
+                properties,
+                atoms,
+                alpha,
+                MaterialFacts.EMPTY);
     }
 
     public static Builder builder(int id, String name) {
@@ -66,7 +97,8 @@ public record MaterialDefinition(
                 chemicalFormula,
                 properties,
                 AtomicProperties.GT6_DEFAULT,
-                255);
+                255,
+                MaterialFacts.EMPTY);
     }
 
     public static final class Builder {
@@ -81,12 +113,18 @@ public record MaterialDefinition(
         private String formula = "";
         private AtomicProperties atoms = AtomicProperties.GT6_DEFAULT;
         private int alpha = 255;
+        private MaterialFacts facts = MaterialFacts.EMPTY;
         private final EnumSet<MaterialProperty> properties = EnumSet.noneOf(MaterialProperty.class);
 
         private Builder(int id, String name) {
             this.id = id;
             this.name = name;
             this.displayName = name;
+        }
+
+        public Builder facts(MaterialFacts value) {
+            facts = value;
+            return this;
         }
 
         public Builder displayName(String value) {
@@ -164,7 +202,8 @@ public record MaterialDefinition(
                     formula,
                     properties,
                     atoms,
-                    alpha);
+                    alpha,
+                    facts);
         }
     }
 }

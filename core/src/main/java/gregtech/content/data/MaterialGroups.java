@@ -1,20 +1,17 @@
 package gregtech.content.data;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialProperty;
-import gregtech.content.data.generated.GT6Materials;
 import gregtech.engine.material.GTMaterialRegistry;
 
 /**
- * Generic "Any X" unification materials from GregTech 6 {@code ANY.java}, maintained by hand.
+ * Generic "Any X" unification materials from GregTech 6 ANY.java.
+ * Compatibility symbols; membership is declared in the canonical group catalog.
  */
 public class MaterialGroups {
     protected MaterialGroups() {}
 
-    private static boolean initialized = false;
-
     private static GTMaterial any(String name) {
-        return GTMaterialRegistry.createMaterial(-1, name, name, 0xFFFFFF).put(MaterialProperty.HIDDEN);
+        return GTMaterialRegistry.requireInstalled(name);
     }
 
     public static final GTMaterial Glowstone = any("AnyGlowstone"),
@@ -71,123 +68,4 @@ public class MaterialGroups {
             _Bronze = any("AnyBronze"),
             _Metal = any("AnyMetal"),
             CaF2 = Fluorite;
-
-    public static void init() {
-        if (initialized) {
-            return;
-        }
-        initialized = true;
-
-        // MT diamond(...) puts every diamond in ANY.Diamond; ANY also adds Diamantine.
-        Diamond.addReRegistrationToThis(
-                GT6Materials.Compounds.Diamond,
-                GT6Materials.Compounds.DiamondBlue,
-                GT6Materials.Compounds.DiamondGreen,
-                GT6Materials.Compounds.DiamondRed,
-                GT6Materials.Compounds.DiamondYellow,
-                GT6Materials.Compounds.DiamondPink,
-                GT6Materials.Compounds.DiamondIndustrial);
-        var diamantine = GTMaterialRegistry.get("Diamantine");
-        if (diamantine.isValid()) Diamond.addReRegistrationToThis(diamantine);
-        // MT.fluorite(...) puts every coloured fluorite into ANY.CaF2.
-        Fluorite.addReRegistrationToThis(
-                GT6Materials.Compounds.CaF2,
-                GT6Materials.Compounds.FluoriteRed,
-                GT6Materials.Compounds.FluoritePink,
-                GT6Materials.Compounds.FluoriteBlue,
-                GT6Materials.Compounds.FluoriteGreen,
-                GT6Materials.Compounds.FluoriteBlack,
-                GT6Materials.Compounds.FluoriteWhite,
-                GT6Materials.Compounds.FluoriteYellow,
-                GT6Materials.Compounds.FluoriteOrange,
-                GT6Materials.Compounds.FluoriteMagenta);
-        Amethyst.addReRegistrationToThis(GT6Materials.Compounds.Amethyst);
-        Ash.addReRegistrationToThis(GT6Materials.Compounds.Ash, GT6Materials.Compounds.DarkAsh);
-        BlackSteel.addReRegistrationToThis(GT6Materials.Compounds.BlackSteel);
-        BlueSteel.addReRegistrationToThis(GT6Materials.Compounds.BlueSteel);
-        C.addReRegistrationToThis(GT6Materials.Elements.C, GT6Materials.Ores.Graphite);
-        Calcite.addReRegistrationToThis(
-                GT6Materials.Ores.CaCO3, GT6Materials.Stones.Marble, GT6Materials.Stones.Limestone);
-        Clay.addReRegistrationToThis(GT6Materials.Ores.Clay);
-        Coal.addReRegistrationToThis(
-                GT6Materials.Elements.C,
-                GT6Materials.Ores.Graphite,
-                GT6Materials.Compounds.CoalCoke,
-                GT6Materials.Compounds.Coal,
-                GT6Materials.Compounds.Charcoal);
-        Cu.addReRegistrationToThis(GT6Materials.Elements.Cu, GT6Materials.Compounds.AnnealedCopper);
-        Fe.addReRegistrationToThis(
-                GT6Materials.Elements.Fe, GT6Materials.Elements.WroughtIron, GT6Materials.Compounds.IronCast);
-        Flour.addReRegistrationToThis(
-                GT6Materials.Compounds.Wheat, GT6Materials.Compounds.Rye, GT6Materials.Compounds.Potato);
-        FlourGrains.addReRegistrationToThis(GT6Materials.Compounds.Potato);
-        Iron.addReRegistrationToThis(
-                GT6Materials.Elements.Fe,
-                GT6Materials.Elements.WroughtIron,
-                GT6Materials.Compounds.IronCast,
-                GT6Materials.Compounds.Steel,
-                GT6Materials.Compounds.Knightmetal);
-        MagicIron.addReRegistrationToThis(
-                GT6Materials.Compounds.Manasteel, GT6Materials.Compounds.Thaumium, GT6Materials.Compounds.FierySteel);
-        Phosphorus.addReRegistrationToThis(
-                GT6Materials.Compounds.Phosphorus,
-                GT6Materials.Compounds.PhosphorusBlue,
-                GT6Materials.Compounds.PhosphorusRed,
-                GT6Materials.Compounds.PhosphorusWhite);
-        Plastic.addReRegistrationToThis(
-                GT6Materials.Compounds.PVC, GT6Materials.Compounds.Teflon, GT6Materials.Compounds.Plastic);
-        PlasticHard.addReRegistrationToThis(GT6Materials.Compounds.PVC);
-        Prismarine.addReRegistrationToThis(GT6Materials.Stones.PrismarineLight, GT6Materials.Stones.PrismarineDark);
-        Quartz.addReRegistrationToThis(GT6Materials.Stones.Quartzite);
-        RedSteel.addReRegistrationToThis(GT6Materials.Compounds.RedSteel);
-        Rubber.addReRegistrationToThis(GT6Materials.Compounds.Rubber);
-        Salt.addReRegistrationToThis(
-                GT6Materials.Ores.NaCl,
-                GT6Materials.Ores.KCl,
-                GT6Materials.Ores.LiCl,
-                GT6Materials.Ores.MgCl2,
-                GT6Materials.Ores.CaCl2);
-        Sand.addReRegistrationToThis(GT6Materials.Compounds.Sand, GT6Materials.Compounds.RedSand);
-        Si.addReRegistrationToThis(GT6Materials.Elements.Si);
-        SiO2.addReRegistrationToThis(
-                GT6Materials.Stones.Quartzite,
-                GT6Materials.Ores.SiO2,
-                GT6Materials.Compounds.Sand,
-                GT6Materials.Compounds.RedSand,
-                GT6Materials.Compounds.Glass,
-                GT6Materials.Compounds.Flint);
-        Steel.addReRegistrationToThis(GT6Materials.Compounds.Steel, GT6Materials.Compounds.Knightmetal);
-        W.addReRegistrationToThis(GT6Materials.Elements.W, GT6Materials.Compounds.TungstenSintered);
-        // GT6 reverses MT.Wood into ANY.Wood itself (ANY), so the generic wood material
-        // belongs to both the default and the broad wood families.
-        Wood.addReRegistrationToThis(GT6Materials.Woods.Wood);
-        WoodDefault.addReRegistrationToThis(GT6Materials.Woods.Wood);
-        WoodMagical.addReRegistrationToThis(
-                GT6Materials.Woods.Greatwood,
-                GT6Materials.Woods.Silverwood,
-                GT6Materials.Woods.Livingwood,
-                GT6Materials.Woods.Dreamwood,
-                GT6Materials.Woods.Rainbowood);
-        WoodNormal.addReRegistrationToThis(
-                GT6Materials.Woods.WoodRubber, GT6Materials.Woods.Bamboo, GT6Materials.Woods.Wood);
-        WoodPlastic.addReRegistrationToThis(GT6Materials.Compounds.PetrifiedWood);
-        WoodTreated.addReRegistrationToThis(GT6Materials.Woods.WoodTreated, GT6Materials.Woods.WoodPolished);
-        WoodUntreated.addReRegistrationToThis(
-                GT6Materials.Woods.Greatwood,
-                GT6Materials.Woods.Silverwood,
-                GT6Materials.Woods.Livingwood,
-                GT6Materials.Woods.Dreamwood,
-                GT6Materials.Woods.Rainbowood,
-                GT6Materials.Woods.WoodRubber,
-                GT6Materials.Woods.Bamboo,
-                GT6Materials.Woods.Wood);
-        // MT.woodnormal registers these families in its factory, before ANY.init's explicit rows.
-        for (var material : gregtech.engine.material.MaterialFactories.normalWoods()) {
-            Wood.addReRegistrationToThis(material);
-            WoodPlastic.addReRegistrationToThis(material);
-            WoodNormal.addReRegistrationToThis(material);
-            WoodDefault.addReRegistrationToThis(material);
-            WoodUntreated.addReRegistrationToThis(material);
-        }
-    }
 }
