@@ -126,11 +126,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("bagged_sapling", new Entry("equipment", 131));
         ITEMS.put("baguette", new Entry("nature_foods", 437));
         ITEMS.put("baguettes", new Entry("nature_foods", 439));
-        ITEMS.put("bale_grass_moldy", new Entry("nature_foods", 12000));
-        ITEMS.put("bale_grass", new Entry("nature_foods", 12000));
-        ITEMS.put("bale_grass_dry", new Entry("nature_foods", 12000));
-        ITEMS.put("bale_grass_rotten", new Entry("nature_foods", 12000));
-        ITEMS.put("bale_rye", new Entry("nature_foods", 12000));
+        ITEMS.put("bale_grass_moldy", new Entry("iconsets", 12000));
+        ITEMS.put("bale_grass", new Entry("iconsets", 12000));
+        ITEMS.put("bale_grass_dry", new Entry("iconsets", 12000));
+        ITEMS.put("bale_grass_rotten", new Entry("iconsets", 12000));
+        ITEMS.put("bale_rye", new Entry("iconsets", 12000));
         ITEMS.put("banana", new Entry("nature_foods", 337));
         ITEMS.put("banana_ice_cream", new Entry("nature_foods", 518));
         ITEMS.put("banana_juice", new Entry("bottles", 233));
@@ -1300,7 +1300,8 @@ public final class SourceCreativeCatalog {
         ITEMS.put("loom_titanium", new Entry("basic_machines", 763));
         ITEMS.put("loom_tungsten_steel", new Entry("basic_machines", 763));
         ITEMS.put("loot_crate", new Entry("untyped", 1119));
-        ITEMS.put("crate", new Entry("woods", 11));
+        ITEMS.put("material_crate", new Entry("untyped", 1119));
+        ITEMS.put("crate", new Entry("untyped", 1119));
         ITEMS.put("loot_pouch", new Entry("equipment", 134));
         ITEMS.put("low_heat_extruder_shape_axehead", new Entry("basic_machines", 759));
         ITEMS.put("low_heat_extruder_shape_block", new Entry("basic_machines", 759));
@@ -2427,7 +2428,7 @@ public final class SourceCreativeCatalog {
             return new Entry("crystal_chargers", (id.startsWith("large_") ? 10140 : 10130) + tier);
         }
         if (id.equals("magic_field_absorber")) return new Entry("magical_energy_production", 10180);
-        if (id.equals("flower_vindicator_flower")) return new Entry("nature_foods", 9);
+        if (id.equals("flower_vindicator_flower")) return new Entry("iconsets", 9);
         for (var cell : gregtech.content.energy.PowerCellSpec.ALL)
             if (cell.id().equals(id)) return new Entry("portable_power_cells", cell.originalId());
         for (int i = 0; i < gregtech.content.energy.FluxRotaryCatalog.TIERS.size(); i++) {

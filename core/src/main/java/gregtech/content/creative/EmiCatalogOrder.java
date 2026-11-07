@@ -55,7 +55,7 @@ public final class EmiCatalogOrder {
 
     private static int section(String category) {
         return switch (category) {
-            case "stones", "construction", "woods", "foam", "panels", "scaffolds" -> 20;
+            case "stones", "construction", "woods", "iconsets", "foam", "panels", "scaffolds" -> 20;
             case "nature_foods", "bottles", "bumblebees", "books" -> 30;
             case "multiblocks" -> 50;
             case "fluids" -> 90;

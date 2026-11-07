@@ -38,6 +38,13 @@ public final class OriginCreativeContents {
         if(item instanceof BlockItem b) {
             var block=b.getBlock(); String type=block.getClass().getSimpleName();
             if(type.equals("GTStoneBlock")||type.equals("GTStoneSlabBlock")) return "stones";
+            // Original tabDecorations content: flowers, lilies, saplings, leaves and bales.
+            if(id.startsWith("flower_")||id.startsWith("glowtus_")||id.startsWith("sapling_")
+                    ||id.startsWith("leaves_")||id.startsWith("bale_")) return "iconsets";
+            // Original tabBlock content that the generic icon-set registration also covers.
+            if(id.startsWith("planks_")||id.startsWith("log_")) return "woods";
+            if(id.startsWith("crystal_ore_")) return "stones";
+            if(type.equals("GTGrassBlock")) return "construction";
             if(type.startsWith("IconSet"))return "iconsets";
             if(type.equals("ConcreteBlock")||type.equals("ColoredConstructionBlock")||type.equals("ColoredGlassBlock")||id.startsWith("glass_")||id.startsWith("cfoam_")||id.equals("asphalt")) return "construction";
             if(id.startsWith("safe_")||id.startsWith("key_safe_")||type.equals("SafeBlock"))return "safes";
@@ -70,6 +77,25 @@ public final class OriginCreativeContents {
             if(id.startsWith("hopper_")||id.startsWith("queue_hopper_"))return "hoppers";
             if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock")||type.equals("BehaviorMachineBlock")||type.equals("FuelGeneratorBlock"))return "basic_machines";
             if(id.startsWith("usb_")||id.startsWith("hdd_"))return "computing";
+            // Per-material variants whose base id is already in the source catalog.
+            if(id.startsWith("bottle_crate")||id.startsWith("bookshelf")||id.startsWith("locker"))return "storage";
+            if(id.startsWith("advanced_crafting_table")||id.startsWith("charging_crafting_table"))return "crafting_tables";
+            if(id.startsWith("anvil")||id.equals("plant_pot")||id.equals("sap_bag"))return "tool_blocks";
+            if(id.startsWith("block_ore_"))return "stones";
+            if(id.startsWith("fluid_cell")||id.startsWith("fluid_measuring_pot")||id.startsWith("fluid_barometer")
+                    ||id.equals("fluid_cup")||id.equals("fluid_jug")||id.equals("fluid_thermos"))return "fluid_containers";
+            if(id.startsWith("concrete")||id.startsWith("asphalt")||id.startsWith("track")
+                    ||id.equals("railroad")||id.equals("mud")||id.equals("turf"))return "construction";
+            if(id.startsWith("rotation_transformer"))return "axles";
+            if(id.startsWith("laser_absorber"))return "laser_absorbers";
+            if(id.startsWith("co2_laser"))return "lasers";
+            if(id.startsWith("auto_hammer")||id.startsWith("auto_igniter"))return "automatic_tools";
+            if(id.startsWith("zpm_discharger"))return "zpm";
+            if(id.startsWith("coin"))return "coins";
+            if(id.startsWith("sand_"))return "stones";
+            if(id.startsWith("clay_"))return "iconsets";
+            if(id.startsWith("bars_")||id.startsWith("spike"))return "tool_blocks";
+            if(id.startsWith("filter_"))return "sorting";
         }
         var source=SourceCreativeCatalog.entry(id);
         if(source!=null && CreativeTabCatalog.FAMILIES.contains(source.family()))return source.family();
@@ -80,7 +106,8 @@ public final class OriginCreativeContents {
             if(id.startsWith("mold")||id.contains("casting_basin"))return "molds";
             if(id.contains("faucet")||id.contains("crossing"))return "crucibles_faucets";
             if(id.startsWith("large_")||idClass.contains("Controller")||idClass.equals("MultiblockPortBlock")||idClass.equals("AddonEnergyPartBlock")||idClass.equals("AddonFunctionalPartBlock"))return "multiblocks";
-            if(idClass.contains("Wood")||idClass.contains("Log")||idClass.contains("Leaves")||id.contains("planks"))return "woods";
+            if(idClass.contains("Leaves")||idClass.contains("Sapling"))return "iconsets";
+            if(idClass.contains("Wood")||idClass.contains("Log")||id.contains("planks"))return "woods";
             if(idClass.contains("Wire"))return id.contains("redstone")?"redstone_wires":"wires";
             if(idClass.contains("Tank")||idClass.contains("Drum")||idClass.contains("PortableFluid"))return "fluid_containers";
             if(idClass.contains("Tool")||idClass.contains("Crank")||idClass.contains("Processing")||idClass.contains("FluidAttachment"))return "tool_blocks";

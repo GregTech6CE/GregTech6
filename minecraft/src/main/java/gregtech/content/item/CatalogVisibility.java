@@ -19,8 +19,6 @@ public final class CatalogVisibility {
         if (gregtech.engine.material.MaterialUnification.hiddenDuplicate(stack)) return false;
         if (id.getNamespace().equals("gt6ce")
                 && (id.getPath().startsWith("sapling_small_") || id.getPath().startsWith("sapling_large_"))) return false;
-        // Dungeon-only block: players can still obtain it by mining an unopened crate.
-        if (id.getNamespace().equals("gt6ce") && id.getPath().equals("material_crate")) return false;
         // Original MicroBlocks controls third-party microblocks/facades, not GT slabs.
         if (!Rule.MICROBLOCKS.enabled() && java.util.Set.of(
                 "forgemultipart:microblock", "extrautils:microblocks", "extrautils2:microblocks",
