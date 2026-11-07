@@ -28,6 +28,7 @@ import java.util.List;
  * <ul>
  *   <li>{@code ingot 2/3/4/5/9 + ST.tag(n) -> ingotDouble/Triple/Quadruple/Quintuple/blockSolid},
  *       </li>
+ *   <li>{@code casingSmall 2 + tag2 -> plate},</li>
  *   <li>{@code bolt 4 + tag4 -> stick}, {@code bolt 8 + tag8 -> stickLong},
  *       {@code stick 2 + tag2 -> stickLong},</li>
  *   <li>{@code plateCurved 4 + ring 1 -> rotor} (/).</li>
@@ -47,9 +48,7 @@ public final class WelderFamilyRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "plateCurved 1/3/6/12 -> pipeTiny/Small/Medium/Large/Huge (:324-328, :339-343):"
-                    + " the port has no per-size pipe forms (registry/GTFluidPipes only models medium pipes)",
-            "casingSmall 2 -> plate 1 (:329): the port has no MaterialPrefix.casingSmall",
+            "the plateCurved -> pipe rows (:324-328) belong to PipeRecipes, which resolves the block form",
             "GT6's COATED.NOT condition has no port counterpart; SMITHABLE and FLAMMABLE.NOT are applied");
 
     /** One GT6 row: input prefix, input count, optional second input, circuit tag, output. */

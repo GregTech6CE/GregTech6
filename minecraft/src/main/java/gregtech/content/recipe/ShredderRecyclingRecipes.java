@@ -11,6 +11,7 @@ import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
@@ -75,6 +76,9 @@ public final class ShredderRecyclingRecipes {
             }
         }
         for (MaterialPrefix prefix : PrefixRegistry.addonPrefixes()) {
+            // The source listener only walks RECYCLABLE prefixes; an addon's own prefix gets a
+            // row only when it resolves to one of those source names.
+            if (!RecyclablePrefixes.NAMES.contains(PrefixRegistry.sourceName(prefix.getName()))) continue;
             for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
                 if (material.has(MaterialProperty.ANTIMATTER) || !prefix.isValidFor(material)) continue;
                 recycle(material, prefix);
@@ -103,9 +107,16 @@ public final class ShredderRecyclingRecipes {
         long multiplier = gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material) ? 16 : 256;
         long duration = Math.max(1, (units * multiplier * (material.getToolQuality() + 1)
                 + GTValues.U - 1) / GTValues.U);
-        Recipe recipe = MachineRecipeMaps.Shredder.addRecipe1(true, 16, duration, input, output);
-        if (recipe != null) {
-            ENTRIES.add(new Entry(name, recipe));
-        }
+        var template = RecipeMap.make(
+                true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, 16, 0);
+        if (template == null) return;
+        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+                template,
+                0,
+                material,
+                units,
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+        rule.source(input, units);
+        ENTRIES.add(new Entry(name, rule.publish(MachineRecipeMaps.Shredder)));
     }
 }

@@ -77,15 +77,7 @@ public final class SharedOreWashingRows {
   return List.copyOf(out);
  }
  record Definition(RecipeMap map,boolean optimize,ItemStack[] inputs,ItemStack[] outputs,long[] chances,
-                   FluidStack[] fluidInputs,FluidStack[] fluidOutputs,long duration,long power,boolean waterTag){
-  Definition(RecipeMap map,boolean optimize,ItemStack[] inputs,ItemStack[] outputs,long[] chances,
-             FluidStack[] fluidInputs,FluidStack[] fluidOutputs,long duration,long power){
-   this(map,optimize,inputs,outputs,chances,fluidInputs,fluidOutputs,duration,power,false);
-  }
-  Definition withWater(){return new Definition(map,optimize,inputs,outputs,chances,fluidInputs,fluidOutputs,duration,power,true);}
-  Recipe tagWater(Recipe row){
-   return waterTag&&row!=null?row.withFluidTagInput(0,net.minecraft.resources.ResourceLocation.parse("minecraft:water")):row;
-  }
+                   FluidStack[] fluidInputs,FluidStack[] fluidOutputs,long duration,long power){
   Recipe admit(){
    // RecipeMap discards EMPTY fluids. Reject required unresolved bindings before it can create a free row.
    for(var fluid:fluidInputs)if(fluid==null||fluid.isEmpty())return null;
@@ -107,10 +99,10 @@ public final class SharedOreWashingRows {
     var retained=new Recipe(new ItemStack[]{normalized.mInputs[0].copy(),reagent},normalized.mOutputs,
         normalized.mSpecialItems,normalized.mChances,normalized.mFluidInputs,normalized.mFluidOutputs,
         normalized.mDuration,normalized.mEUt,normalized.mSpecialValue).withCatalystInputs(1);
-    return map.addRecipe(tagWater(retained));
+    return map.addRecipe(retained);
    }
    var row=RecipeMap.make(optimize,inputs,outputs,null,chances,fluidInputs,fluidOutputs,duration,power,0);
-   return row==null?null:map.addRecipe(tagWater(row));
+   return row==null?null:map.addRecipe(row);
   }
  }
  private static boolean hasOverlap(ItemStack[] inputs,ItemStack[] outputs){
@@ -146,11 +138,9 @@ public final class SharedOreWashingRows {
    FluidStack sluice=s.fluid("Sluice",size.waterMb());if(!s.fluidReady(m,route,sluice))continue;
    var waters=waters(m,s,route,size.waterMb());
    for(FluidStack fluid:waters){
-    var row=new Definition(MachineRecipeMaps.Sluice,WATER_OPTIMIZE,new ItemStack[]{size==Size.WHOLE?whole.stack():tiny.stack()},
+    out.add(new Definition(MachineRecipeMaps.Sluice,WATER_OPTIMIZE,new ItemStack[]{size==Size.WHOLE?whole.stack():tiny.stack()},
         copies(outputs),SLUICE_CHANCES.stream().mapToLong(Long::longValue).toArray(),new FluidStack[]{fluid},
-        new FluidStack[]{sluice.copy()},size.ticks(),SLUICE_POWER);
-    out.add(waters.size()==WATERS.length?row.withWater():row);
-    if(waters.size()==WATERS.length)break;
+        new FluidStack[]{sluice.copy()},size.ticks(),SLUICE_POWER));
    }
   }
   for(var tag:SourceOreWashingData.Tag.values()){
@@ -165,8 +155,9 @@ public final class SharedOreWashingRows {
          new long[0],new FluidStack[]{mercury},new FluidStack[0],size.ticks(),BATH_POWER));
     }
    }else{
+    // Loader_Recipes_Ores:437 names Firestone first; a retired reagent material is skipped, not fatal.
     String[] reagents=tag==SourceOreWashingData.Tag.PERSULFATE?new String[]{"SodiumPersulfate","PotassiumPersulfate"}
-        :new String[]{"Pyrotheum"};
+        :new String[]{"Firestone","Pyrotheum","Octine"};
     for(String reagentName:reagents)for(BathShape shape:bathShapes()){
      String route="bath/"+tag+"/"+reagentName+"/"+shape;
      NativeForm reagent=s.direct(shape.reagent(),GTMaterialRegistry.get(reagentName),shape.reagentCount());
@@ -179,10 +170,8 @@ public final class SharedOreWashingRows {
      var input=s.input(shape.input(),m,shape.inputCount());if(!s.ready(m,route,input.availability()))continue;
      var waters=waters(m,s,route,shape.outputSize().waterMb());
      for(FluidStack fluid:waters){
-      var row=new Definition(MachineRecipeMaps.Bath,REAGENT_BATH_OPTIMIZE,new ItemStack[]{input.stack(),reagent.stack()},copies(outputs),new long[0],
-          new FluidStack[]{fluid},copies(steam),shape.outputSize().ticks(),BATH_POWER);
-      out.add(waters.size()==WATERS.length?row.withWater():row);
-      if(waters.size()==WATERS.length)break;
+      out.add(new Definition(MachineRecipeMaps.Bath,REAGENT_BATH_OPTIMIZE,new ItemStack[]{input.stack(),reagent.stack()},copies(outputs),new long[0],
+          new FluidStack[]{fluid},copies(steam),shape.outputSize().ticks(),BATH_POWER));
      }
     }
    }

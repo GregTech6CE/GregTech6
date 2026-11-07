@@ -125,8 +125,18 @@ public final class MortarGrindingRecipes {
         if (output.isEmpty()) return;
         // GT6 RecipeMapHandlerPrefix#getCosts: ceil(units / U * 16 * (1 + toolQuality)), 16 EU/t.
         long duration = Math.max(1, (units * 16L * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
-        Recipe recipe = MachineRecipeMaps.Mortar.addRecipe1(true, 16, duration, input, output);
-        if (recipe != null) ENTRIES.add(new Entry(prefixName, MachineRecipeMaps.Mortar, recipe));
+        // The row is a material-unit conversion: every equivalent item of the form is admitted.
+        var template = RecipeMap.make(
+                true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, 16, 0);
+        if (template == null) return;
+        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+                template,
+                0,
+                material,
+                units,
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+        rule.source(input, units);
+        ENTRIES.add(new Entry(prefixName, MachineRecipeMaps.Mortar, rule.publish(MachineRecipeMaps.Mortar)));
     }
 
     /** GT6 {@code OM.pulverize(material, amount)} ({@code gregapi/util/OM.java:370-372}): dust of the pulverization target. */

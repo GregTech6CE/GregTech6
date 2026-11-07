@@ -11,6 +11,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.RegisteredFluids;
@@ -30,7 +31,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * GT6's Autoclave handler block: {@code Loader_Recipes_Handlers:60-77}.
+ * GT6's Autoclave handler block: {@code Loader_Recipes_Handlers:436-448}.
  * <p>
  * Twelve rows grow crystals from dust: {@code dustSmall 1/2/4/8/16/32} and {@code dust 1/1/1/2/4/8} turn
  * into the gem ladder ({@code gemChipped} → {@code gemLegendary}), consuming steam and returning
@@ -81,17 +82,39 @@ public final class AutoclaveRecipes {
     private static void crystallise(GTMaterial material, Row row) {
         ItemStack input = GTItems.getStack(row.input(), material, row.inCount());
         ItemStack output = GTItems.getStack(row.output(), material, row.outCount());
-        FluidStack steam = GTFluids.stack("Steam", row.steam());
-        FluidStack distilledWater = byRegistryName("ic2distilledwater", row.distW());
+        // RecipeMapHandlerPrefix:218 scales both fluid sides by toolQuality+1 (aFlatFluidCosts = F).
+        int quality = material.getToolQuality() + 1;
+        FluidStack steam = GTFluids.stack("Steam", Math.multiplyExact(row.steam(), quality));
+        FluidStack distilledWater = byRegistryName("ic2distilledwater", Math.multiplyExact(row.distW(), quality));
         if (input.isEmpty() || output.isEmpty() || steam == null || distilledWater == null) return;
         ItemStack tag = new ItemStack(GTTechnological.selectorTag(row.circuit()));
         // GT6 runs these on steam (aEUt = 0); the circuit selector is a required input.
-        Recipe recipe = MachineRecipeMaps.Autoclave.addRecipe2(false, 0, row.ticks(), input, tag,
-                steam, distilledWater, output);
-        if (recipe != null) {
-            ENTRIES.add(new Entry(row.input().getName() + " x" + row.inCount() + " -> "
-                    + row.output().getName() + " x" + row.outCount(), recipe));
-        }
+        var template = RecipeMap.make(
+                false,
+                new ItemStack[] {input, tag},
+                new ItemStack[] {output},
+                null,
+                null,
+                new FluidStack[] {steam},
+                new FluidStack[] {distilledWater},
+                row.ticks(),
+                0,
+                0);
+        if (template == null) return;
+        // The row consumes {@code inCount} items of the form; the rule keeps that total in
+        // material units while admitting every equivalent item of the same form.
+        int count = template.mInputs[0].getCount();
+        long required = row.input().getMaterialWeight() * count;
+        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+                template,
+                0,
+                material,
+                required,
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+        rule.source(input.copyWithCount(count), row.input().getMaterialWeight());
+        ENTRIES.add(new Entry(row.input().getName() + " x" + row.inCount() + " -> "
+                + row.output().getName() + " x" + row.outCount(),
+                rule.publish(MachineRecipeMaps.Autoclave)));
     }
 
     /** Fluid by GT6 registry name (GT6 {@code FL.DistW} is registered as {@code ic2distilledwater}). */

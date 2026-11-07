@@ -71,10 +71,22 @@ final class MoltenMetalUnitRecipes {
         // the component actually represented by the already-admitted fluid output.
         long units = inputUnits(input, material);
         if (!material.isValid() || units <= 0) return null;
-        if (java.math.BigInteger.valueOf(units).multiply(java.math.BigInteger.valueOf(input.getCount())).multiply(java.math.BigInteger.valueOf(144))
+        long reference = referenceMillibuckets(material);
+        if (java.math.BigInteger.valueOf(units).multiply(java.math.BigInteger.valueOf(input.getCount())).multiply(java.math.BigInteger.valueOf(reference))
                 .compareTo(java.math.BigInteger.valueOf(output.getAmount()).multiply(java.math.BigInteger.valueOf(GTValues.U))) != 0) return null;
         if (GTItems.getStack(MaterialPrefix.unit, material, 1).isEmpty()) return null;
         return material;
+    }
+
+    /**
+     * The molten material's reviewed millibucket reference, not a global constant. The chemistry
+     * resolver reads the same binding, so a material with an explicit unit reference stays exact.
+     */
+    private static int referenceMillibuckets(GTMaterial material) {
+        return gregtech.engine.recipe.chem.MaterialFluidBinding
+                .find(material.getName(), gregtech.engine.recipe.chem.FluidPhase.LIQUID)
+                .map(gregtech.engine.recipe.chem.MaterialFluidBinding::referenceMillibuckets)
+                .orElse(144);
     }
 
     private static long inputUnits(ItemStack input, GTMaterial material) {
@@ -95,7 +107,8 @@ final class MoltenMetalUnitRecipes {
                     .add(java.math.BigInteger.valueOf(reference.units).multiply(java.math.BigInteger.valueOf(reference.item.getCount())).subtract(java.math.BigInteger.ONE))
                     .divide(java.math.BigInteger.valueOf(reference.units).multiply(java.math.BigInteger.valueOf(reference.item.getCount()))).longValueExact();
             var template = new Recipe(new ItemStack[]{GTItems.getStack(MaterialPrefix.unit, key.material, 1)}, new ItemStack[0],
-                    null, null, null, new FluidStack[]{new FluidStack(key.fluid, 144)}, Math.max(1, ticks), key.power, 0);
+                    null, null, null, new FluidStack[]{new FluidStack(key.fluid, referenceMillibuckets(key.material))},
+                    Math.max(1, ticks), key.power, 0);
             var rule = new MaterialUnitRecipe(template, 0, key.material, GTValues.U, Rounding.EXACT_RATIO);
             for (Input input : inputs) rule.source(input.item, input.units, input.guard, input.ticks, input.fluidAmount);
             rule.publish(MachineRecipeMaps.Smelter).withMaterialInputTag(0, MaterialUnitInputTags.smeltable(key.material)); OWNED.add(rule); physical += inputs.size();

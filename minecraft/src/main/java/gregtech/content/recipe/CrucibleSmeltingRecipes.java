@@ -4,8 +4,11 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialUnification;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.util.OM;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,22 +42,29 @@ import net.minecraft.world.item.ItemStack;
 public final class CrucibleSmeltingRecipes {
     private CrucibleSmeltingRecipes() {}
 
-    /**
-     * Item forms GT6's {@code getNEIRecipes} lists. GT6 knows more of them (blockIngot, blockGem,
-     * blockDust, chunk, rubble, pebbles, cluster, cleanGravel, dirtyGravel, crystalline, reduced);
-     * this port has no items for those, so only the forms that exist are emitted.
-     */
+    /** Item forms GT6's {@code getNEIRecipes} lists for every meltable material. */
     private static final MaterialPrefix[] FORMS = {
         MaterialPrefix.dust,
         MaterialPrefix.crushed,
         MaterialPrefix.crushedPurified,
         MaterialPrefix.crushedCentrifuged,
-        MaterialPrefix.oreRaw,
+        MaterialPrefix.chunk,
+        MaterialPrefix.rubble,
+        MaterialPrefix.pebbles,
+        MaterialPrefix.cluster,
+        MaterialPrefix.cleanGravel,
+        MaterialPrefix.dirtyGravel,
+        MaterialPrefix.crystalline,
+        MaterialPrefix.reduced,
     };
     /** Forms GT6 only lists when the input material is not its own smelting target. */
     private static final MaterialPrefix[] SOLID_FORMS = {
         MaterialPrefix.ingot, MaterialPrefix.gem,
     };
+    /** Block forms: {@code blockDust} always, the two solid blocks only for transformed materials. */
+    private static final String[] BLOCK_FORM_NAMES = {"blockDust"};
+
+    private static final String[] SOLID_BLOCK_FORM_NAMES = {"blockIngot", "blockGem"};
 
     private static final TreeSet<String> MISSING = new TreeSet<>();
 
@@ -78,19 +88,49 @@ public final class CrucibleSmeltingRecipes {
             boolean transformed = target != material;
             List<MaterialPrefix> forms = new ArrayList<>(List.of(FORMS));
             if (transformed) forms.addAll(List.of(SOLID_FORMS));
+            List<BlockMaterialPrefix> blockForms = blockForms(BLOCK_FORM_NAMES);
+            if (transformed) blockForms.addAll(blockForms(SOLID_BLOCK_FORM_NAMES));
 
             for (MaterialPrefix prefix : forms) {
                 ItemStack input = GTItems.getStack(prefix, material, 1);
                 if (input.isEmpty()) continue;
-                // Raw ore must first use the actual crushing payload, not its 2U shell weight.
                 var preview = gregtech.engine.machine.crucible.CrucibleInputRules.smeltingPreview(material, prefix);
                 if (preview == null) continue;
-                ItemStack output = OM.ingotOrDust(preview.material(), preview.amount());
-                if (output.isEmpty()) {
-                    MISSING.add(prefix.getName() + " of " + preview.material().getName());
-                    continue;
-                }
-                if (MachineRecipeMaps.CrucibleSmelting.addFakeRecipe(
+                count += display(prefix.getName(), input, preview);
+            }
+            for (BlockMaterialPrefix prefix : blockForms) {
+                ItemStack input = GTBlocks.getStack(prefix, material);
+                if (input.isEmpty() && "blockDust".equals(prefix.getName()))
+                    input = MaterialUnification.vanillaFormStack(prefix.getName(), material);
+                if (input.isEmpty()) continue;
+                var preview = gregtech.engine.machine.crucible.CrucibleInputRules.smeltingPreview(
+                        material, prefix.getMaterialWeight());
+                if (preview == null) continue;
+                count += display(prefix.getName(), input, preview);
+            }
+        }
+        return count;
+    }
+
+    /** Resolve deferred block prefixes after the prefix registry has bootstrapped. */
+    private static List<BlockMaterialPrefix> blockForms(String[] names) {
+        List<BlockMaterialPrefix> forms = new ArrayList<>(names.length);
+        for (String name : names) {
+            var prefix = gregtech.engine.prefix.BlockPrefixRegistry.byName(name);
+            if (prefix != null) forms.add(prefix);
+        }
+        return forms;
+    }
+
+    /** One display row; a missing target form is recorded instead of invented. */
+    private static int display(
+            String form, ItemStack input, gregtech.engine.machine.crucible.CrucibleInputRules.SmeltingPreview preview) {
+        ItemStack output = OM.ingotOrDust(preview.material(), preview.amount());
+        if (output.isEmpty()) {
+            MISSING.add(form + " of " + preview.material().getName());
+            return 0;
+        }
+        return MachineRecipeMaps.CrucibleSmelting.addFakeRecipe(
                                 false,
                                 new ItemStack[] {input},
                                 new ItemStack[] {output},
@@ -101,11 +141,8 @@ public final class CrucibleSmeltingRecipes {
                                 0,
                                 0,
                                 preview.temperatureK())
-                        != null) {
-                    count++;
-                }
-            }
-        }
-        return count;
+                        == null
+                ? 0
+                : 1;
     }
 }

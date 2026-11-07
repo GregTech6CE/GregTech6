@@ -147,6 +147,20 @@ public final class MaterialFormConversionRecipes {
         unpack("dust 1 -> dustTiny 9", MaterialPrefix.dust, 1, MaterialPrefix.dustTiny, 9, material);
         unpack("dustSmall 1 -> dustDiv72 18", MaterialPrefix.dustSmall, 1, MaterialPrefix.dustDiv72, 18, material);
         unpack("dustTiny 1 -> dustDiv72 8", MaterialPrefix.dustTiny, 1, MaterialPrefix.dustDiv72, 8, material);
+        // Loader_Recipes_Handlers:452-456: a projectile gives back its head/dust and the empty
+        // carrier. MT.Empty itself is excluded by the source's MT.Empty.NOT condition.
+        if (material != Materials.Empty) {
+            projectile("arrowGtWood 1 -> toolHeadArrow 1 + empty arrow", MaterialPrefix.arrowGtWood,
+                    MaterialPrefix.toolHeadArrow, 1, material);
+            projectile("arrowGtPlastic 1 -> toolHeadArrow 1 + empty arrow", MaterialPrefix.arrowGtPlastic,
+                    MaterialPrefix.toolHeadArrow, 1, material);
+            projectile("bulletGtSmall 1 -> dustTiny 1 + empty bullet", MaterialPrefix.bulletGtSmall,
+                    MaterialPrefix.dustTiny, 1, material);
+            projectile("bulletGtMedium 1 -> dustTiny 2 + empty bullet", MaterialPrefix.bulletGtMedium,
+                    MaterialPrefix.dustTiny, 2, material);
+            projectile("bulletGtLarge 1 -> dustTiny 3 + empty bullet", MaterialPrefix.bulletGtLarge,
+                    MaterialPrefix.dustTiny, 3, material);
+        }
     }
 
     /** GT6 {@code Loader_Recipes_Handlers:492-550}: pack smaller forms into blocks / bigger forms. */
@@ -223,6 +237,16 @@ public final class MaterialFormConversionRecipes {
             if (!vanilla.isEmpty()) return vanilla;
         }
         return GTBlocks.getStack(prefix, material);
+    }
+
+    /** Unboxinator row that returns the empty projectile carrier as the second output. */
+    private static void projectile(String route, MaterialPrefix from, MaterialPrefix content, int contentCount,
+                                   GTMaterial material) {
+        ItemStack input = GTItems.getStack(from, material, 1);
+        ItemStack output = GTItems.getStack(content, material, contentCount);
+        ItemStack empty = GTItems.getStack(from, Materials.Empty, 1);
+        if (input.isEmpty() || output.isEmpty() || empty.isEmpty()) return;
+        unboxItems(route, input, output, empty);
     }
 
     private static void unpack(String route, MaterialPrefix from, int fromCount, MaterialPrefix to, int toCount,

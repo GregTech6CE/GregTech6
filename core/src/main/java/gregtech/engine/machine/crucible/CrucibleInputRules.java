@@ -12,7 +12,15 @@ public final class CrucibleInputRules {
     public record SmeltingPreview(GTMaterial material, long amount, long temperatureK) {}
 
     public static SmeltingPreview smeltingPreview(GTMaterial material, MaterialPrefix prefix) {
-        CrucibleMaterialStack input = materialItem(material.resolve(), prefix);
+        return smeltingPreview(materialItem(material.resolve(), prefix));
+    }
+
+    /** Block forms carry their own unit weight and are not material prefixes. */
+    public static SmeltingPreview smeltingPreview(GTMaterial material, long inputUnits) {
+        return smeltingPreview(CrucibleMaterialStack.of(material.resolve(), inputUnits));
+    }
+
+    private static SmeltingPreview smeltingPreview(CrucibleMaterialStack input) {
         GTMaterial source = input.material.resolve();
         GTMaterial target = source.getTargetSmeltingMaterial();
         if (!source.isValid()

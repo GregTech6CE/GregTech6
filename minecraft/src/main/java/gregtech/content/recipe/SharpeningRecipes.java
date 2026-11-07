@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * GT6's Sharpening (grindstone) handler block: {@code Loader_Recipes_Handlers:113-145}.
+ * GT6's Sharpening (grindstone) handler block: {@code Loader_Recipes_Handlers:396-415}.
  * <p>
  * Twenty rows in two groups:
  * </p>
@@ -125,12 +125,22 @@ public final class SharpeningRecipes {
                 + GTValues.U - 1) / GTValues.U);
         ItemStack remains = pulverizedRemains && unitsIn > unitsOut
                 ? MortarGrindingRecipes.pulverize(material, unitsIn - unitsOut) : ItemStack.EMPTY;
-        Recipe recipe = remains.isEmpty()
-                ? MachineRecipeMaps.Sharpening.addRecipe1(true, 16, duration, input, output)
-                : MachineRecipeMaps.Sharpening.addRecipe1(true, 16, duration, input, output, remains);
-        if (recipe != null) {
-            ENTRIES.add(new Entry(inName + " x" + inAmount + " -> " + outName + " x" + outCount
-                    + (remains.isEmpty() ? "" : " + remains"), MachineRecipeMaps.Sharpening, recipe));
-        }
+        // GT6's grinding rows call chances(10000, 7500): the pulverized remainder is 75%.
+        ItemStack[] outputs = remains.isEmpty()
+                ? new ItemStack[] {output} : new ItemStack[] {output, remains};
+        long[] chances = remains.isEmpty() ? null : new long[] {10000, 7500};
+        var template = RecipeMap.make(
+                true, new ItemStack[] {input}, outputs, null, chances, null, null, duration, 16, 0);
+        if (template == null) return;
+        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+                template,
+                0,
+                material,
+                unitsIn,
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+        rule.source(input, unitsIn);
+        Recipe recipe = rule.publish(MachineRecipeMaps.Sharpening);
+        ENTRIES.add(new Entry(inName + " x" + inAmount + " -> " + outName + " x" + outCount
+                + (remains.isEmpty() ? "" : " + remains"), MachineRecipeMaps.Sharpening, recipe));
     }
 }

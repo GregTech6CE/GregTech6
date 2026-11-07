@@ -20,7 +20,7 @@ public final class OriginalFuelRecipeRows {
     public static final List<Row> ROWS = List.of(
             new Row("gas", 16, 2, "Hydrogen", 2, "water", 3, null, 0),
             new Row("gas", 64, 30, "Methane", 5, "water", 6, "CarbonDioxide", 3),
-            new Row("gas", 64, 30, "NaturalGas", 5, "water", 6, "CarbonDioxide", 3),
+            // Natural gas resolves through its registered aliases in OriginalSupplementalFuelRows.
             new Row("gas", 64, 56, "Butane", 7, "water", 7, "CarbonDioxide", 6),
             new Row("gas", 64, 40, "Propane", 5, "water", 5, "CarbonDioxide", 4),
             new Row("gas", 64, 5, "Ethylene", 1, "water", 1, "CarbonDioxide", 1),

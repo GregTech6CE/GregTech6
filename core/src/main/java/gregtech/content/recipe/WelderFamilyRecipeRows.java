@@ -51,6 +51,8 @@ public final class WelderFamilyRecipeRows {
             Row.of(MaterialPrefix.ingot, 4, 4, MaterialPrefix.ingotQuadruple),
             Row.of(MaterialPrefix.ingot, 5, 5, MaterialPrefix.ingotQuintuple),
             Row.block(MaterialPrefix.ingot, 9, 9, BlockMaterialPrefix.blockSolid),
+            // GT6 spelling: casingSmall, the port's itemCasing.
+            Row.of(MaterialPrefix.itemCasing, 2, 2, MaterialPrefix.plate),
             Row.of(MaterialPrefix.bolt, 4, 4, MaterialPrefix.stick),
             Row.of(MaterialPrefix.bolt, 8, 8, MaterialPrefix.stickLong),
             Row.of(MaterialPrefix.stick, 2, 2, MaterialPrefix.stickLong),

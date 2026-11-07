@@ -9,6 +9,7 @@ import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
+import gregtech.engine.recipe.Recipe;
 import gregtech.content.registry.GTTechnological;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
@@ -120,8 +121,10 @@ public class PartRecipeLoader implements InitializationStep {
         ItemStack input = mat(in, m, inCount);
         ItemStack output = mat(out, m, outCount);
         if (input.isEmpty() || output.isEmpty()) return;
-        MachineRecipeMaps.Lathe.addRecipe1(true, EU, duration, input,
-                machiningOutputs(m, in, inCount, out, outCount, output));
+        var template = gregtech.engine.recipe.RecipeMap.make(true, new ItemStack[] {input},
+                machiningOutputs(m, in, inCount, out, outCount, output), null, null, null, null, duration, EU, 0);
+        if (template == null) return;
+        unitRule(MachineRecipeMaps.Lathe, m, in, input, template);
     }
 
     /** RecipeMapHandlerPrefix:213–218 → OM.pulverize, including target identity and ratio. */
@@ -277,7 +280,31 @@ public class PartRecipeLoader implements InitializationStep {
         if (input.isEmpty()) return;
         ItemStack output = mat(out, m, outCount);
         if (output.isEmpty()) return;
-        map.addRecipe1(true, eut, duration, input, output);
+        var template = gregtech.engine.recipe.RecipeMap.make(
+                true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, eut, 0);
+        if (template == null) return;
+        unitRule(map, m, in, input, template);
+    }
+
+    /**
+     * Publishes one material-unit rule for a fixed one-form row. {@code required} is the whole
+     * batch's material amount; the source weight stays per item, so a count above one is rebuilt
+     * from the units rather than from a representative stack.
+     */
+    private static void unitRule(gregtech.engine.recipe.RecipeMap map, GTMaterial material, MaterialPrefix in,
+                                 ItemStack input, Recipe template) {
+        // The optimizer may have divided the batch; use the template's surviving count so the
+        // rule cannot ask for more items than the row actually consumes.
+        if (template.mInputs.length == 0 || template.mInputs[0].isEmpty()
+                || template.mInputs[0].getItem() != input.getItem()) return;
+        int count = template.mInputs[0].getCount();
+        ItemStack source = input.copyWithCount(count);
+        long required = in.getMaterialWeight() * count;
+        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+                template, 0, material, required,
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+        rule.source(source, in.getMaterialWeight());
+        rule.publish(map);
     }
 
     private static ItemStack mat(MaterialPrefix prefix, GTMaterial material, int count) {

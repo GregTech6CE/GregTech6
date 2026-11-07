@@ -30,6 +30,7 @@ public class FuelRecipeLoader implements InitializationStep {
     public void run() {
         OriginalFluidBedRecipes.register();
         registerEngineFuels();
+        registerTurbineFuel();
         for(var row:gregtech.content.recipe.OriginalFuelRecipeRows.ROWS)switch(row.kind()){
             case "burn"->burn(row.eut(),row.duration(),row.input());
             case "gas"->gas(row.eut(),row.duration(),row.input(),row.amount(),rowFluid(row.output(),row.outputAmount()),rowFluid(row.output2(),row.output2Amount()));
@@ -67,6 +68,17 @@ public class FuelRecipeLoader implements InitializationStep {
             }
             if(!resolved)skipped++;
         }
+    }
+
+    /** Loader_Fuels:213: the turbine map's only original row, 160 mB steam -> 1 mB distilled water. */
+    private void registerTurbineFuel() {
+        FluidStack steam = make("Steam", 160);
+        FluidStack distilledWater = make("DistW", 1);
+        if (steam == null || distilledWater == null) {
+            skipped++;
+            return;
+        }
+        record(FuelRecipeMaps.Turbine.addRecipe0(true, -16, 5, steam, distilledWater, RecipeMap.ZL_IS));
     }
 
     private void gas(long eut, long duration, String key, int amount, FluidStack out1, FluidStack out2) {

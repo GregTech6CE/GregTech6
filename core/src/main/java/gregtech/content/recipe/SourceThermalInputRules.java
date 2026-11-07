@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Eighty-one single-component item-input contracts for source RecyclingProcessing, not the complete
+ * Eighty-five single-component item-input contracts for source RecyclingProcessing, not the complete
  * listener and not a global prefix policy. Pinned GT6 3703e40308c8c030763fd6297dea8b210d2a77b1:
  * OreDictManager 650-669 admits RECYCLABLE prefixes; Loader_OreProcessing 240-291 rejects ORE and
  * ORE_PROCESSING_DIRTY, converts each original component, then uses all original mass for timing.
@@ -133,7 +133,12 @@ public final class SourceThermalInputRules {
             new Form(MaterialPrefix.toolHeadRawPlow, U * 4, 267),
             new Form(MaterialPrefix.toolHeadBuzzSaw, U * 4, 235),
             new Form(MaterialPrefix.toolHeadArrow, U / 9, 254),
-            new Form(MaterialPrefix.toolHeadRawArrow, U / 8, 268));
+            new Form(MaterialPrefix.toolHeadRawArrow, U / 8, 268),
+            // OP143/149-151: ORE_PROCESSING_CLEAN/REFINED, not DIRTY, so the listener converts them.
+            new Form(MaterialPrefix.clump, U, 143),
+            new Form(MaterialPrefix.crystalline, U, 149),
+            new Form(MaterialPrefix.reduced, U, 150),
+            new Form(MaterialPrefix.cleanGravel, U, 151));
     private static final List<Form> FORMS =
             Stream.concat(INITIAL_FORMS.stream(), ADDITIONAL_FORMS.stream()).toList();
 

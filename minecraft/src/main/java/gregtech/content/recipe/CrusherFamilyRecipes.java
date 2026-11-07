@@ -12,6 +12,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
@@ -79,11 +80,21 @@ public final class CrusherFamilyRecipes {
                 row.output() == null ? 0 : row.output().getMaterialWeight() * row.outCount());
         long duration = Math.max(1, (units * row.multiplier() * (material.getToolQuality() + 1)
                 + GTValues.U - 1) / GTValues.U);
-        Recipe recipe = MachineRecipeMaps.Crusher.addRecipe1(true, 16, duration, input, output);
-        if (recipe != null) {
-            ENTRIES.add(new Entry(row.input().getName()
-                    + " -> " + (row.output() == null ? "remains" : row.output().getName() + " x" + row.outCount()),
-                    recipe));
-        }
+        // One rule per (material, input form): every equivalent item of that form is admitted,
+        // and the batch is derived from the form's material units instead of a fixed count.
+        var template = RecipeMap.make(
+                true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, 16, 0);
+        if (template == null) return;
+        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+                template,
+                0,
+                material,
+                row.input().getMaterialWeight(),
+                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+        rule.source(input, row.input().getMaterialWeight());
+        Recipe recipe = rule.publish(MachineRecipeMaps.Crusher);
+        ENTRIES.add(new Entry(row.input().getName()
+                + " -> " + (row.output() == null ? "remains" : row.output().getName() + " x" + row.outCount()),
+                recipe));
     }
 }

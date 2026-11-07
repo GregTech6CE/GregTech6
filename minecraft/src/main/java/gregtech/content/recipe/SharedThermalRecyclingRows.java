@@ -109,10 +109,13 @@ final class SharedThermalRecyclingRows {
             "blockGem", "blockDust", "blockIngot", "blockPlate", "blockPlateGem", "blockSolid",
             "oreberry");
 
-    /** The listener rejects prefixes carrying ORE or ORE_PROCESSING_DIRTY before conversion. */
+    /**
+     * The listener rejects prefixes carrying ORE or ORE_PROCESSING_DIRTY before conversion.
+     * {@code OP.java} marks clump/reduced/cleanGravel CLEAN and crystalline REFINED, so they stay
+     * recyclable (the DIRTY ore forms below are the ones the source skips).
+     */
     private static final Set<String> ORE_FORMS = Set.of(
-            "chunk", "cluster", "crushed", "crushedTiny", "dirtyGravel", "pebbles", "rawOreChunk",
-            "rubble", "clump", "crystalline", "reduced", "cleanGravel");
+            "chunk", "cluster", "crushed", "crushedTiny", "dirtyGravel", "pebbles", "rawOreChunk", "rubble");
 
     private SharedThermalRecyclingRows() {}
 
