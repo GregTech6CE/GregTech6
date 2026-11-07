@@ -223,11 +223,7 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
                                   InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 
-//? if >=1.21.1 {
-        /*if (gregtech.platform.neoforge.energy.WireToolInteractions.use(state, level, pos, player, hand, hit)) {
-*///?} else {
         if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
-//?}
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 

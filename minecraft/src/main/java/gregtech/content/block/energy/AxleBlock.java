@@ -213,11 +213,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
                                   InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 
-//? if >=1.21.1 {
-        /*if (gregtech.platform.neoforge.energy.AxleToolInteractions.use(state, level, pos, player, hand, hit))
-*///?} else {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
-//?}
             return InteractionResult.sidedSuccess(level.isClientSide);
 
         return InteractionResult.PASS;

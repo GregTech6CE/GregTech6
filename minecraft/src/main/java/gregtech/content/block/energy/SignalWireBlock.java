@@ -110,8 +110,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
 
 //? if >=1.21.1 {
     /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (gregtech.platform.neoforge.energy.WireToolInteractions.use(state, level, pos, player, hand,
-                hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
         if (GTToolHelper.isScrewdriver(player.getItemInHand(hand))) {
 *///?} else {
     @Override

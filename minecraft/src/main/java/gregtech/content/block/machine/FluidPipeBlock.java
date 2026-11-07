@@ -1,8 +1,8 @@
 package gregtech.content.block.machine;
 
+import gregtech.engine.tool.ToolInteractions;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 //?}
@@ -19,7 +19,6 @@ import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.PanelCoverInteraction;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
-import gregtech.platform.neoforge.transport.FluidPipeToolInteractions;
 *///?} else {
 import gregtech.content.registry.GTBlockEntities;
 //?}
@@ -234,7 +233,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
      * GT6's right-click order on a tile that can carry covers, mirrored from
      * {@code BasicMachineBlock.use} so a pipe and a machine answer a click the same way.
      *
-     * <p>{@code FluidPipeToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
+     * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
      * rotation) is on the machine, and the pipe's own responses keep their order:
      * the magnifying glass, the fluid-container path through
      * {@link FluidPipeBlockEntity#handleUse} and the shift-empty-hand debug print. Between the two
@@ -276,11 +275,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                                  InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 
-//? if >=1.21.1 {
-        /*if (FluidPipeToolInteractions.use(state, level, pos, player, hand, hit)) {
-*///?} else {
         if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
-//?}
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
