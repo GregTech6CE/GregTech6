@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.data.MaterialPrefix;
@@ -33,7 +30,7 @@ import java.util.Map;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class CreativeTabIconClientModels {
     private static final MaterialTextureSet ICON_SET = MaterialTextureSet.NONE;

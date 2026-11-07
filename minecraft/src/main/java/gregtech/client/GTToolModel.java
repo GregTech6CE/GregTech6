@@ -1,9 +1,6 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.registry.GTToolItems;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -32,7 +29,7 @@ import java.util.Map;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class GTToolModel {
     public static final ModelProperty<ItemStack> STACK = new ModelProperty<>();
@@ -100,7 +97,7 @@ public final class GTToolModel {
 //? if >=1.21.1 {
         /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/tool_iconset/" + ToolIconSets.baseName(icon));
 *///?} else {
-        return GregTech.id("item/tool_iconset/" + ToolIconSets.baseName(icon));
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/tool_iconset/" + ToolIconSets.baseName(icon)).toLowerCase());
 //?}
     }
 
@@ -108,7 +105,7 @@ public final class GTToolModel {
 //? if >=1.21.1 {
         /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay");
 *///?} else {
-        return GregTech.id("item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay");
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay").toLowerCase());
 //?}
     }
 }

@@ -1,9 +1,6 @@
 package gregtech.content.recipe;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.server.MinecraftServer;
 //? if >=1.21.1 {
 /*import net.neoforged.bus.api.EventPriority;
@@ -25,7 +22,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 //?}
 public final class MachineRecipeLifecycle {
     private MachineRecipeLifecycle() {}

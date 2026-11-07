@@ -1,21 +1,16 @@
 package gregtech.client;
 
-import gregtech.content.material.Materials;
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.RegisteredFluids;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
-
+import gregtech.content.material.Materials;
+import gregtech.engine.material.GTMaterialRegistry;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * GT6-style material → fluid appearance for crucible / tank rendering.
@@ -27,11 +22,7 @@ import java.util.Map;
 public final class MaterialFluidVisuals {
     /** Crucible / BER appearance for one material state. */
     public record Appearance(
-            ResourceLocation baseTexture,
-            @Nullable ResourceLocation overlayTexture,
-            int tintArgb,
-            boolean tintBase
-    ) {}
+            ResourceLocation baseTexture, @Nullable ResourceLocation overlayTexture, int tintArgb, boolean tintBase) {}
 
     private static final Map<String, RegisteredFluids.FluidEntry> BY_REGISTRY = new HashMap<>();
     private static final Map<String, RegisteredFluids.FluidEntry> BY_MATERIAL = new HashMap<>();
@@ -63,11 +54,11 @@ public final class MaterialFluidVisuals {
         bootstrap();
         GTMaterial resolved = material.resolve();
         if (resolved == Materials.Water.resolve())
-            return new Appearance(ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still"),
-                    null, 0xFF3F76E4, true);
+            return new Appearance(
+                    ResourceLocation.fromNamespaceAndPath("minecraft", "block/water_still"), null, 0xFF3F76E4, true);
         if (resolved == Materials.Lava.resolve())
-            return new Appearance(ResourceLocation.fromNamespaceAndPath("minecraft", "block/lava_still"),
-                    null, 0xFFFFFFFF, false);
+            return new Appearance(
+                    ResourceLocation.fromNamespaceAndPath("minecraft", "block/lava_still"), null, 0xFFFFFFFF, false);
         if (!resolved.isValid()) {
             return genericMolten(resolved);
         }
@@ -99,8 +90,8 @@ public final class MaterialFluidVisuals {
     }
 
     private static Appearance fromFluidEntry(RegisteredFluids.FluidEntry entry, GTMaterial material) {
-        var visual=FluidAppearance.appearance(entry);
-        return new Appearance(visual.texture(),null,visual.tint(),true);
+        var visual = FluidAppearance.appearance(entry);
+        return new Appearance(visual.texture(), null, visual.tint(), true);
     }
 
     private static Appearance genericMolten(GTMaterial material) {

@@ -1,10 +1,7 @@
 package gregtech.content.block.misc;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.blockentity.misc.PileBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -32,7 +29,7 @@ import net.minecraftforge.fml.common.Mod;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 //?}
 public final class PileItemExpireHandler {
     private static final BlockPos[] CUBE_3=java.util.Arrays.stream(gregtech.content.block.MaterialPileRules.EXPIRE_OFFSETS).map(v->new BlockPos(v[0],v[1],v[2])).toArray(BlockPos[]::new);

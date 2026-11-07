@@ -1,9 +1,6 @@
 package gregtech.client.gui;
+import net.minecraft.resources.ResourceLocation;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;

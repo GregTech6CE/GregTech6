@@ -1,9 +1,6 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.recipe.MachineRecipeOverlay;
 import gregtech.content.recipe.OvenRecipeBridge;
 import net.minecraft.client.Minecraft;
@@ -32,7 +29,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
 public final class MachineRecipeClient {
     private MachineRecipeClient() {}

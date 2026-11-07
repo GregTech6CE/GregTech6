@@ -1,11 +1,11 @@
 package gregtech.content.registry;
+import gregtech.engine.mod.GregTechIdentity;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
 *///?} else {
-import gregtech.GregTech;
 //?}
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -29,7 +29,7 @@ public final class GTSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> BEEP = register("beep");
 *///?} else {
     public static final DeferredRegister<SoundEvent> REGISTRY =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, GregTech.NAMESPACE);
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, GregTechIdentity.REGISTRY_NAMESPACE);
 //?}
 
 //? if >=1.21.1 {
@@ -43,7 +43,7 @@ public final class GTSounds {
     public static final RegistryObject<SoundEvent> BEEP     = register("beep");
 
     private static RegistryObject<SoundEvent> register(String name) {
-        return REGISTRY.register(name, () -> SoundEvent.createVariableRangeEvent(GregTech.id(name)));
+        return REGISTRY.register(name, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (name).toLowerCase())));
 //?}
     }
 

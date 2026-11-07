@@ -1,10 +1,10 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;
 *///?} else {
-import gregtech.GregTech;
 import gregtech.content.item.FluidItem;
 //?}
 import gregtech.content.registry.GTFluidItems;
@@ -58,13 +58,13 @@ import java.util.Map;
  * {@link FluidItemOverrideList}. That list lazily resolves the correct fluid
  * sprite at <em>render time</em> (not bake time), so the atlas is always ready.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class FluidItemClientModels {
 //? if >=1.21.1 {
     /*private static final ResourceLocation SHARED_MODEL = ResourceLocation.fromNamespaceAndPath("gt6ce","item/fluid_item");
 *///?} else {
-    private static final ResourceLocation SHARED_MODEL = GregTech.id("item/fluid_item");
+    private static final ResourceLocation SHARED_MODEL = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/fluid_item").toLowerCase());
 //?}
 
     private FluidItemClientModels() {}

@@ -1,4 +1,5 @@
 package gregtech.engine.multiblock.tracking;
+import gregtech.engine.mod.GregTechIdentity;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -11,7 +12,6 @@ import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 *///?} else {
-import gregtech.GregTech;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -27,7 +27,7 @@ import java.util.List;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 //?}
 public final class StructureScheduler {
     public static final int CELLS_PER_TICK = 20_000;

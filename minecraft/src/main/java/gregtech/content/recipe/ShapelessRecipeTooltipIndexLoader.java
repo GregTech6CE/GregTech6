@@ -1,10 +1,7 @@
 package gregtech.content.recipe;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.client.Minecraft;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
@@ -24,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 //?}
 public final class ShapelessRecipeTooltipIndexLoader {
     private ShapelessRecipeTooltipIndexLoader() {}
@@ -48,7 +45,7 @@ public final class ShapelessRecipeTooltipIndexLoader {
 
     @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-    @Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
     public static final class Client {
         private Client() {}

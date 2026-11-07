@@ -1,4 +1,5 @@
 package gregtech.content.recipe;
+import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.multiblock.StructureLayoutOverlayRuntime;
 import gregtech.network.PacketSyncStructureLayouts;
@@ -13,7 +14,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 *///?} else {
-import gregtech.GregTech;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -30,7 +30,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 //?}
 public final class StructureLayoutLifecycle {
     private StructureLayoutLifecycle() {}

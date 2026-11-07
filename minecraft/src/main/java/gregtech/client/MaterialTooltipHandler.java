@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.content.item.MaterialItem;
 import gregtech.content.block.MaterialBlockItem;
@@ -24,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
 public final class MaterialTooltipHandler {
     private MaterialTooltipHandler() {}

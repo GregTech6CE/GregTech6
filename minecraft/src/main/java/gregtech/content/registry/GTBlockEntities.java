@@ -1,4 +1,6 @@
 package gregtech.content.registry;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
@@ -6,7 +8,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 /*import gregtech.content.blockentity.RockBlockEntity;
 import net.minecraft.core.registries.Registries;
 *///?} else {
-import gregtech.GregTech;
 import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.content.blockentity.machine.CrucibleCrossingBlockEntity;
 import gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity;
@@ -134,7 +135,7 @@ public final class GTBlockEntities {
 *///?} else {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
-            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, GregTech.NAMESPACE);
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, GregTechIdentity.REGISTRY_NAMESPACE);
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE =
             BLOCK_ENTITY_TYPES.register("signal_wire", () -> BlockEntityType.Builder.of(
@@ -595,12 +596,12 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.AdvancedButtonBlockEntity>> ADVANCED_BUTTON =
             BLOCK_ENTITY_TYPES.register("advanced_button", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.tool.AdvancedButtonBlockEntity::new,
-                    ForgeRegistries.BLOCKS.getValue(GregTech.id("advanced_button"))).build(null));
+                    ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("advanced_button").toLowerCase()))).build(null));
 
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.CoinMoldBlockEntity>> COIN_MOLD =
             BLOCK_ENTITY_TYPES.register("coin_mold", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.tool.CoinMoldBlockEntity::new,
-                    ForgeRegistries.BLOCKS.getValue(GregTech.id("coin_mold"))).build(null));
+                    ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("coin_mold").toLowerCase()))).build(null));
 
     // Wave 45 BE types
     public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.AdvancedCraftingTableBlockEntity>> ADVANCED_CRAFTING_TABLE =

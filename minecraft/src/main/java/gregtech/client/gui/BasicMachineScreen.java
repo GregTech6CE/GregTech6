@@ -1,10 +1,6 @@
 package gregtech.client.gui;
 
 
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.GregTech;
-//?}
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

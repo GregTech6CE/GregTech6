@@ -4,10 +4,6 @@ package gregtech.content.block.stone;
 import gregtech.engine.material.MaterialPresentation;
 //?}
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.registry.GTBlocks;

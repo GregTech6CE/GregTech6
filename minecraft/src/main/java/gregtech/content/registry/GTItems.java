@@ -1,4 +1,5 @@
 package gregtech.content.registry;
+import gregtech.engine.mod.GregTechIdentity;
 
 import com.mojang.logging.LogUtils;
 import gregtech.api.material.GTMaterial;
@@ -25,7 +26,6 @@ import org.slf4j.Logger;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 *///?} else {
-import gregtech.GregTech;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
@@ -40,12 +40,12 @@ public final class GTItems {
         return ADDON_ITEMS.computeIfAbsent(namespace, DeferredRegister::createItems);
     }
 *///?} else {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTechIdentity.REGISTRY_NAMESPACE);
     private static final java.util.Map<String, DeferredRegister<Item>> ADDON_ITEMS = new java.util.LinkedHashMap<>();
 
     /** Built-in forms stay on {@link #ITEMS}. An addon prefix uses that addon's namespace. */
     public static DeferredRegister<Item> items(String namespace) {
-        if (GregTech.NAMESPACE.equals(namespace)) return ITEMS;
+        if (GregTechIdentity.REGISTRY_NAMESPACE.equals(namespace)) return ITEMS;
         return ADDON_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.ITEMS, id));
     }
 

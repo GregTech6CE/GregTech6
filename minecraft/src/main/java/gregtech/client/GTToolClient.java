@@ -1,9 +1,6 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.item.GTToolItem;
@@ -23,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class GTToolClient {
     private GTToolClient() {}

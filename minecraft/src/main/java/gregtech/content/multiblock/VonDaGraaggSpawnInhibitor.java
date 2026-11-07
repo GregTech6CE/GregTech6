@@ -1,9 +1,6 @@
 package gregtech.content.multiblock;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneVariant;
@@ -31,7 +28,7 @@ import java.util.WeakHashMap;
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
 /** Forge 1.20 equivalent of GT6's MOB_SPAWN_INHIBITORS list. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 //?}
 public final class VonDaGraaggSpawnInhibitor {
     private static final WeakHashMap<ServerLevel, Set<BlockPos>> ACTIVE = new WeakHashMap<>();

@@ -1,9 +1,9 @@
 package gregtech.content.worldgen;
+import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.Registries;
 *///?} else {
-import gregtech.GregTech;
 //?}
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -39,7 +39,7 @@ public final class GTFeatures {
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> ORE_VEIN =
 *///?} else {
     public static final DeferredRegister<Feature<?>> FEATURES =
-            DeferredRegister.create(ForgeRegistries.FEATURES, GregTech.NAMESPACE);
+            DeferredRegister.create(ForgeRegistries.FEATURES, GregTechIdentity.REGISTRY_NAMESPACE);
 
     /** Large layered ore veins (GT6 {@code WorldgenOresLarge}). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ORE_VEIN =

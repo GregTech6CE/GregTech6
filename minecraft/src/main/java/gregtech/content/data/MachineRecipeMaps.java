@@ -3,7 +3,6 @@ package gregtech.content.data;
 import gregtech.engine.recipe.RecipeMap;
 //? if >=1.21.1 {
 //?} else {
-import gregtech.GregTech;
 import gregtech.api.material.MaterialProperty;
 //?}
 import net.minecraft.world.item.ItemStack;

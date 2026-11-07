@@ -1,9 +1,6 @@
 package gregtech.content.nuclear;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.world.level.Level;
@@ -22,7 +19,7 @@ import java.util.*;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 //?}
 public final class ReactorNetwork {
 

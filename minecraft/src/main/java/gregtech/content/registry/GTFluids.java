@@ -5,7 +5,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 //? if >=1.21.1 {
 /*import gregtech.engine.fluid.FluidVisualPolicy;
 *///?} else {
-import gregtech.GregTech;
 //?}
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.api.material.GTMaterial;
@@ -106,9 +105,9 @@ public final class GTFluids {
         STILL.put(field, still); FLOWING.put(field, flowing); ENTRIES.put(id, entry);
 *///?} else {
     public static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, GregTech.NAMESPACE);
+            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, GregTechIdentity.REGISTRY_NAMESPACE);
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, GregTech.NAMESPACE);
+            DeferredRegister.create(ForgeRegistries.FLUIDS, GregTechIdentity.REGISTRY_NAMESPACE);
 
     private static final Map<String, DeferredRegister<FluidType>> ADDON_FLUID_TYPES = new HashMap<>();
     private static final Map<String, DeferredRegister<Fluid>> ADDON_FLUIDS = new HashMap<>();
@@ -118,13 +117,13 @@ public final class GTFluids {
 
     /** The fluid-type register for a namespace; addon namespaces get their own register. */
     public static DeferredRegister<FluidType> fluidTypes(String namespace) {
-        if (GregTech.NAMESPACE.equals(namespace)) return FLUID_TYPES;
+        if (GregTechIdentity.REGISTRY_NAMESPACE.equals(namespace)) return FLUID_TYPES;
         return ADDON_FLUID_TYPES.computeIfAbsent(namespace,
                 id -> DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, id));
     }
 
     public static DeferredRegister<Fluid> fluids(String namespace) {
-        if (GregTech.NAMESPACE.equals(namespace)) return FLUIDS;
+        if (GregTechIdentity.REGISTRY_NAMESPACE.equals(namespace)) return FLUIDS;
         return ADDON_FLUIDS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.FLUIDS, id));
     }
 

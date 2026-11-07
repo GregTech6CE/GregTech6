@@ -1,4 +1,5 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -8,7 +9,6 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
-import gregtech.GregTech;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
 public final class CommonBlockTooltipHandler {
     private CommonBlockTooltipHandler() {}

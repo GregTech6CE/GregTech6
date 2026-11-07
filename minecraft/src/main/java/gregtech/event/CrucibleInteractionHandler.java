@@ -1,9 +1,9 @@
 package gregtech.event;
+import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
-import gregtech.GregTech;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
 import net.minecraft.core.Direction;
@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.Mod;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 //?}
 public final class CrucibleInteractionHandler {
     private CrucibleInteractionHandler() {}
