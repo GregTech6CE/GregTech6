@@ -1268,6 +1268,9 @@ public class FluidCatalog {
                 case "Cryolite", "AluminiumFluoride", "LithiumChloride", "LithiumChlorate" -> true;
                 default -> false;
             }) MOLTEN_FACTORY_FIELDS.add(field);
+            long flags = gas ? FluidFlags.GAS_FLAG : FluidFlags.LIQUID;
+            // Loader_Fluids:618 creates mercury as an ordinary simple liquid, not a generated one.
+            if (!gas && material.getName().equals("Mercury")) flags |= FluidFlags.SIMPLE;
             FluidEntry generated = register(
                     field,
                     new FluidEntry(
@@ -1282,7 +1285,7 @@ public class FluidCatalog {
                             0,
                             0,
                             DEF_ENV_TEMP,
-                            gas ? FluidFlags.GAS_FLAG : FluidFlags.LIQUID));
+                            flags));
             GENERATED_PHASE_DEFINITIONS.put(field, generated);
             // GT6 keeps one fluid object for both states, so the other generated key aliases it.
             GENERATED_ALIASES.put((gas ? "GenLiquid_" : "GenGas_") + material.getName(), field);
