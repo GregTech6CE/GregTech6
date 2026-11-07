@@ -1,4 +1,5 @@
 package gregtech.engine.machine;
+
 import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.world.item.ItemStack;

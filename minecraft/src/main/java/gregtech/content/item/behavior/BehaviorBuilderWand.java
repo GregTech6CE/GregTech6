@@ -1,4 +1,5 @@
 package gregtech.content.item.behavior;
+
 import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.core.BlockPos;

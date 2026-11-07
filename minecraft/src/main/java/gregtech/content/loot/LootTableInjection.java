@@ -4,8 +4,8 @@ package gregtech.content.loot;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
-import gregtech.platform.Mc;
 //?}
+import gregtech.platform.Mc;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootPool;

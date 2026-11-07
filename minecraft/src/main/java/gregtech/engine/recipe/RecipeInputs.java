@@ -1,4 +1,5 @@
 package gregtech.engine.recipe;
+
 import gregtech.engine.stack.StackCompat;
 
 import java.util.*;

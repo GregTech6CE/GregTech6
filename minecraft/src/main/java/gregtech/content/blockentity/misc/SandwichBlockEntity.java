@@ -6,11 +6,11 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.content.food.SandwichIngredients;
 import gregtech.content.food.SandwichNutrition;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.StackCompat;
 
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.registry.GTDecorBlocks;
-import gregtech.engine.stack.StackCompat;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

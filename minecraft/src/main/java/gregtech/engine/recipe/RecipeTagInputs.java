@@ -1,5 +1,6 @@
 package gregtech.engine.recipe;
 
+import gregtech.engine.stack.StackCompat;
 import java.util.List;
 
 /** Conservative whole-domain collision checks: a single overlapping member never rejects a tag. */
@@ -36,7 +37,7 @@ final class RecipeTagInputs {
             } else {
                 // Fluid tags must not change concrete-item collision rules. Equal-material
                 // aliases may deliberately have distinct outputs (e.g. legacy wood species).
-                if (!net.minecraft.world.item.StackCompat.sameItem(required, stack)) return false;
+                if (!StackCompat.sameItem(required, stack)) return false;
             }
         }
         return true;

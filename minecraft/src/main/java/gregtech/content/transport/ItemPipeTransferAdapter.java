@@ -1,4 +1,5 @@
 package gregtech.content.transport;
+
 import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.world.item.ItemStack;

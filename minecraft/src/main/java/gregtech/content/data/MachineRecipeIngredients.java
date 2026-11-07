@@ -13,13 +13,13 @@ import gregtech.content.block.energy.ElectricWireBlock;
 //?}
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.item.MaterialItem;
+import gregtech.platform.Mc;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
 
 *///?} else {
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTWires;
-import gregtech.platform.Mc;
 //?}
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

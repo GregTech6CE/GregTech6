@@ -1,4 +1,5 @@
 package gregtech.content.world;
+
 import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.nbt.CompoundTag;

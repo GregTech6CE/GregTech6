@@ -3,11 +3,11 @@ package gregtech.content.blockentity.inventory;
 import gregtech.api.machine.BlockFace;
 
 import gregtech.engine.inventory.MassStorageMaterialForms;
+import gregtech.engine.stack.StackCompat;
 
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.item.behavior.BehaviorDuctTape;
-import gregtech.engine.stack.StackCompat;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
