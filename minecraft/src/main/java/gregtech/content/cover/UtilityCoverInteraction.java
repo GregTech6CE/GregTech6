@@ -1,4 +1,5 @@
 package gregtech.content.cover;
+import gregtech.engine.stack.StackCompat;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import net.minecraft.world.*;
@@ -18,11 +19,7 @@ public final class UtilityCoverInteraction {
     private UtilityCoverInteraction(){}
     /** Samples without draining the held item; material-container fallback is currently ID-based. */
     public static FluidStack sample(ItemStack held) {
-//? if >=1.21.1 {
-        /*var container = held.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
-*///?} else {
-        var container = net.minecraftforge.fluids.FluidUtil.getFluidHandler(held).orElse(null);
-//?}
+        var container = StackCompat.fluidHandler(held);
         if (container != null) {
             var fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
             if (!fluid.isEmpty()) return fluid;

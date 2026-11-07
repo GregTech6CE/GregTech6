@@ -26,11 +26,7 @@ public final class GTChemicalBatteries {
     public static List<RegisteredBlock<ChemicalBatteryBlock>> allRegistered(){return Collections.unmodifiableList(ALL);}
     public static List<RegisteredBlock<ChemicalBatteryBlock>> all(){return ALL.stream().filter(holder -> holder.get().spec() instanceof ChemicalBatterySpec).toList();}
     public static ChemicalBatteryItem item(ChemicalBatterySpec.Chemistry chemistry,int tier){
-//? if >=1.21.1 {
-        /*var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,new ChemicalBatterySpec(chemistry,tier).id());
-*///?} else {
-        var id=gregtech.GregTech.id(new ChemicalBatterySpec(chemistry,tier).id());
-//?}
+        var id=gregtech.platform.Mc.gregtechId(new ChemicalBatterySpec(chemistry,tier).id());
         var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id);
         if(!(item instanceof ChemicalBatteryItem battery))throw new IllegalStateException("Missing chemical battery "+id);
         return battery;

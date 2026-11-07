@@ -9,6 +9,7 @@ import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.mod.SetupOnce;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -24,14 +25,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 //?}
 
 /** Four original default C event instances, NOT a modern OreDictionary/tag listener.
@@ -227,11 +226,7 @@ public final class BuiltinEventCentrifugeRecipes {
         boolean complete = false;
         List<Long> capacities = new ArrayList<>();
         try {
-//? if >=1.21.1 {
-            /*var handler = FluidUtil.getFluidHandler(input.copy()).orElse(null);*/
-//?} else {
-            var handler = FluidUtil.getFluidHandler(input.copy()).resolve().orElse(null);
-//?}
+            var handler = StackCompat.fluidHandler(input.copy());
             present = handler == null ? Fact.NO : Fact.YES;
             if (handler != null) {
                 int tanks = handler.getTanks();

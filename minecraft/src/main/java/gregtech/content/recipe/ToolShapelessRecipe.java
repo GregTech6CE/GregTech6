@@ -4,6 +4,7 @@ package gregtech.content.recipe;
 //?} else {
 import com.google.gson.JsonObject;
 //?}
+import gregtech.engine.stack.StackCompat;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.FormConversionSelector;
@@ -114,13 +115,8 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
 //?}
             if (!stack.isEmpty() && !conversionInput.isEmpty()
                     && !CraftingMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
-//? if >=1.21.1 {
-            /*if (requireEmptyFluidContainers && (gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)
-                    || net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(f -> !f.isEmpty()).isPresent())) return false;
-*///?} else {
             if (requireEmptyFluidContainers && (gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)
-                    || net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f -> !f.isEmpty()).isPresent())) return false;
-//?}
+                    || !StackCompat.fluidContained(stack).isEmpty())) return false;
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;
             // An electric tool with no charge must not craft, exactly like the shaped serializer.
             if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric

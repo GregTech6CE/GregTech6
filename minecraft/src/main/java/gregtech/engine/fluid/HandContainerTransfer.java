@@ -5,11 +5,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
@@ -19,11 +17,7 @@ public final class HandContainerTransfer {
     public record Filled(ItemStack container, int amount) {}
     public static Filled prepare(ItemStack held, FluidStack offered, boolean requireAll) {
         if (held.isEmpty() || offered.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*var handler = FluidUtil.getFluidHandler(held.copyWithCount(1)).orElse(null);
-*///?} else {
-        var handler = FluidUtil.getFluidHandler(held.copyWithCount(1)).resolve().orElse(null);
-//?}
+        var handler = gregtech.engine.stack.StackCompat.fluidHandler(held.copyWithCount(1));
         if (handler == null) return null;
         int possible = handler.fill(offered.copy(), IFluidHandler.FluidAction.SIMULATE);
         if (possible <= 0 || requireAll && possible < offered.getAmount()) return null;

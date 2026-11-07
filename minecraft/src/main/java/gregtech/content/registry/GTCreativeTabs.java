@@ -117,9 +117,7 @@ public final class GTCreativeTabs {
     }
 private GTCreativeTabs() {}
 
-    /** Call once before {@link #TABS#register(net.minecraftforge.eventbus.api.IEventBus)}. */
-
-/** Call once before {@link #TABS#register(net.neoforged.neoforge.eventbus.api.IEventBus)}. */
+    /** Call once before {@code TABS.register(IEventBus)}. */
     public static void registerTabs() {
         if (registered) {
             return;

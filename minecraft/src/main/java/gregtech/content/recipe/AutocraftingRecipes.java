@@ -28,15 +28,10 @@ public final class AutocraftingRecipes {
 
     private AutocraftingRecipes() {
     }
-//? if >=1.21.1 {
-    /*public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce",
+    public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce",
             "autocrafter/blueprints"));
     public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce",
             "autocrafter/infinite"));
-*///?} else {
-    public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", "autocrafter/blueprints"));
-    public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", "autocrafter/infinite"));
-//?}
 
     private static final class Cache {
 //? if >=1.21.1 {

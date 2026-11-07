@@ -1,6 +1,7 @@
 package gregtech.content.blockentity.tool;
 
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -50,11 +51,9 @@ public final class PortableContainerBlockEntity extends BlockEntity {
     }
     private IFluidHandlerItem tank() {
         if (vessel.isEmpty()) vessel = new ItemStack(getBlockState().getBlock());
-//? if >=1.21.1 {
-        /*return FluidUtil.getFluidHandler(vessel).orElseThrow(() -> new IllegalStateException("Vessel lacks fluid capability"));
-*///?} else {
-        return vessel.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(() -> new IllegalStateException("Vessel lacks fluid capability"));
-//?}
+        var handler = StackCompat.fluidHandler(vessel);
+        if (handler == null) throw new IllegalStateException("Vessel lacks fluid capability");
+        return handler;
     }
     private final IFluidHandler handler = new IFluidHandler() {
         public int getTanks() { return tank().getTanks(); }

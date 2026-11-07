@@ -24,6 +24,7 @@ import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.recipe.SourceRecyclingMath;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,10 +32,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 //?}
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
@@ -491,11 +490,7 @@ final class SharedThermalRecyclingRows {
                     return false;
                 if (!data.components().equals(components)) return false;
                 // Reject filled fluid containers exactly like the audited producer.
-//? if >=1.21.1 {
-                /*var handler = FluidUtil.getFluidHandler(copy).orElse(null);
-*///?} else {
-                var handler = FluidUtil.getFluidHandler(copy).resolve().orElse(null);
-//?}
+                var handler = StackCompat.fluidHandler(copy);
                 if (handler != null) {
                     int tanks = handler.getTanks();
                     if (tanks < 0) return false;

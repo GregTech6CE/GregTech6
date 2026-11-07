@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import com.google.gson.JsonObject;
 //?}
+import gregtech.engine.stack.StackCompat;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.item.GTToolItem;
 import net.minecraft.core.*;
@@ -187,8 +188,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
             var stack = input.getItem(i);
             if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
             if (requireEmptyFluidContainers && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
-            if (requireEmptyFluidContainers && net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(
-                    fluid -> !fluid.isEmpty()).isPresent()) return false;
+            if (requireEmptyFluidContainers && !StackCompat.fluidContained(stack).isEmpty()) return false;
             if ((stack.getItem() instanceof gregtech.content.item.GTToolItem
                     || stack.getItem() instanceof gregtech.content.item.ElectricToolItem)
                     && !gregtech.engine.tool.GTToolHelper.matchesTool(stack,
@@ -344,8 +344,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
             var stack = inventory.getItem(slot);
             if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
             if (requireEmptyFluidContainers && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
-            if (requireEmptyFluidContainers && net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(
-                    f -> !f.isEmpty()).isPresent()) return false;
+            if (requireEmptyFluidContainers && !StackCompat.fluidContained(stack).isEmpty()) return false;
             if ((stack.getItem() instanceof GTToolItem || stack.getItem() instanceof gregtech.content.item.ElectricToolItem)
                     && !GTToolHelper.matchesTool(stack, GTToolHelper.getType(stack))) return false;
         }

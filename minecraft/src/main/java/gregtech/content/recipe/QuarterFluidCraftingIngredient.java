@@ -14,7 +14,6 @@ import com.mojang.serialization.MapCodec;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 /^* The original container250 torch ingredient consumes one finite quarter-bucket portion. ^/
@@ -29,7 +28,6 @@ import net.minecraftforge.common.crafting.AbstractIngredient;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 /** The original container250 torch ingredient consumes one finite quarter-bucket portion. */
@@ -63,29 +61,21 @@ public final class QuarterFluidCraftingIngredient extends AbstractIngredient {
         var wanted = GTDrinks.fluidForField(fluidKey);
         if (wanted == null) return false;
         if (stack.getItem() instanceof BottleItem bottle) return bottle.fluid() == wanted;
-//? if >=1.21.1 {
-        /*var handler = FluidUtil.getFluidHandler(stack.copyWithCount(1)).orElse(null);
-*///?} else {
-        var handler = FluidUtil.getFluidHandler(stack.copyWithCount(1)).resolve().orElse(null);
-//?}
+        var handler = StackCompat.fluidHandler(stack.copyWithCount(1));
         if (handler == null) return false;
-        var before = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+        var before = StackCompat.fluidContained(handler.getContainer());
         if (before.isEmpty() || before.getFluid() != wanted || before.getAmount() != 250) return false;
         var requested = new FluidStack(wanted, 250);
         var taken = handler.drain(requested, IFluidHandler.FluidAction.EXECUTE);
         if (!StackCompat.sameFluid(taken, requested) || taken.getAmount() != 250) return false;
-        var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+        var after = StackCompat.fluidContained(handler.getContainer());
         return before.getAmount() - after.getAmount() == 250;
     }
 
     public ItemStack drainOne(ItemStack stack) {
         if (!test(stack)) throw new IllegalStateException("Invalid finite 250 mB crafting ingredient");
         if (stack.getItem() instanceof BottleItem) return BottleItem.emptyBottle();
-//? if >=1.21.1 {
-        /*var handler = FluidUtil.getFluidHandler(stack.copyWithCount(1)).orElseThrow();
-*///?} else {
-        var handler = FluidUtil.getFluidHandler(stack.copyWithCount(1)).resolve().orElseThrow();
-//?}
+        var handler = StackCompat.fluidHandlerOrThrow(stack.copyWithCount(1));
         var drained = handler.drain(new FluidStack(GTDrinks.fluidForField(fluidKey), 250), IFluidHandler.FluidAction.EXECUTE);
         if (drained.getAmount() != 250) throw new IllegalStateException("Torch recipe did not drain 250 mB");
         return handler.getContainer();

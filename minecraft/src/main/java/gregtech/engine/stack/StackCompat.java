@@ -4,9 +4,11 @@ import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 //?}
 
 /**
@@ -54,9 +56,25 @@ public final class StackCompat {
         return FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
     }
 
+    /** The stack's fluid handler, or null when it carries none. */
+    public static IFluidHandlerItem fluidHandler(ItemStack stack) {
+//? if >=1.21.1 {
+/*        return FluidUtil.getFluidHandler(stack).orElse(null);
+*///?} else {
+        return FluidUtil.getFluidHandler(stack).resolve().orElse(null);
+//?}
+    }
+
+    /** The stack's fluid handler; throws when the stack carries none. */
+    public static IFluidHandlerItem fluidHandlerOrThrow(ItemStack stack) {
+        var handler = fluidHandler(stack);
+        if (handler == null) throw new java.util.NoSuchElementException();
+        return handler;
+    }
+
     /** Capacity of the stack's first fluid tank, or 1 when the stack carries no fluid handler. */
     public static int fluidCapacity(ItemStack stack) {
-        return FluidUtil.getFluidHandler(stack)
-                .map(handler -> handler.getTankCapacity(0)).orElse(1);
+        var handler = fluidHandler(stack);
+        return handler == null ? 1 : handler.getTankCapacity(0);
     }
 }

@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.stack.StackCompat;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.*;
 import gregtech.content.registry.GTFluids;
@@ -127,22 +128,22 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
             if (allowLubricantBottle && input.getItem() instanceof gregtech.content.item.BottleItem bottle)
                 return accepts(bottle.fluid());
             var one = input.copyWithCount(1);
-            var handler = FluidUtil.getFluidHandler(one).orElse(null);
+            var handler = StackCompat.fluidHandler(one);
             if (handler == null) return false;
-            var before = FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);
+            var before = StackCompat.fluidContained(one);
             if (before.isEmpty() || !accepts(before.getFluid()) || before.getAmount() < 1000) return false;
             var requested = before.copyWithAmount(1000);
             var taken = handler.drain(requested, IFluidHandler.FluidAction.EXECUTE);
-            if (!FluidStack.isSameFluidSameComponents(taken, requested) || taken.getAmount() != 1000) return false;
-            var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+            if (!StackCompat.sameFluid(taken, requested) || taken.getAmount() != 1000) return false;
+            var after = StackCompat.fluidContained(handler.getContainer());
             return before.getAmount() - after.getAmount() == 1000;
         }
 
         static ItemStack drainOne(ItemStack input) {
             if (input.getItem() instanceof gregtech.content.item.BottleItem)
                 return gregtech.content.item.BottleItem.emptyBottle();
-            var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).orElseThrow();
-            var before = FluidUtil.getFluidContained(input).orElse(FluidStack.EMPTY);
+            var handler = StackCompat.fluidHandlerOrThrow(input.copyWithCount(1));
+            var before = StackCompat.fluidContained(input);
             var drained = handler.drain(before.copyWithAmount(1000), IFluidHandler.FluidAction.EXECUTE);
             if (drained.getAmount() != 1000) throw new IllegalStateException("Bottle recipe failed to drain 1000mB");
             return handler.getContainer();
@@ -190,7 +191,6 @@ import net.minecraftforge.common.crafting.AbstractIngredient;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -315,24 +315,24 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
                     || FluidDisplayBinding.hasPayload(input)) return false;
             if (allowLubricantBottle && input.getItem() instanceof gregtech.content.item.BottleItem bottle)
                 return accepts(bottle.fluid());
-            ItemStack one = input.copyWithCount(1);
-            var handler = FluidUtil.getFluidHandler(one).resolve().orElse(null);
+            var one = input.copyWithCount(1);
+            var handler = StackCompat.fluidHandler(one);
             if (handler == null) return false;
-            FluidStack before = FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);
+            var before = StackCompat.fluidContained(one);
             if (before.isEmpty() || !accepts(before.getFluid()) || before.getAmount() < 1000) return false;
-            FluidStack requested = new FluidStack(before.getFluid(), 1000);
-            FluidStack taken = handler.drain(requested, IFluidHandler.FluidAction.EXECUTE);
-            if (!taken.isFluidEqual(requested) || taken.getAmount() != 1000) return false;
-            FluidStack after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+            var requested = new FluidStack(before.getFluid(), 1000);
+            var taken = handler.drain(requested, IFluidHandler.FluidAction.EXECUTE);
+            if (!StackCompat.sameFluid(taken, requested) || taken.getAmount() != 1000) return false;
+            var after = StackCompat.fluidContained(handler.getContainer());
             return before.getAmount() - after.getAmount() == 1000;
         }
 
         static ItemStack drainOne(ItemStack input) {
             if (input.getItem() instanceof gregtech.content.item.BottleItem)
                 return gregtech.content.item.BottleItem.emptyBottle();
-            var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).resolve().orElseThrow();
-            FluidStack before = FluidUtil.getFluidContained(input).orElse(FluidStack.EMPTY);
-            FluidStack drained = handler.drain(new FluidStack(before.getFluid(), 1000),
+            var handler = StackCompat.fluidHandlerOrThrow(input.copyWithCount(1));
+            var before = StackCompat.fluidContained(input);
+            var drained = handler.drain(new FluidStack(before.getFluid(), 1000),
                     IFluidHandler.FluidAction.EXECUTE);
             if (drained.getAmount() != 1000)
                 throw new IllegalStateException("Bottle filling recipe did not drain 1000 mB");

@@ -10,11 +10,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import java.util.ArrayList;
@@ -42,18 +40,14 @@ final class FiniteCraftingVessels {
             if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) continue;
             var required = new FluidStack(fluid, amount);
             for (var vessel : empty) {
-//? if >=1.21.1 {
-                /*var handler = FluidUtil.getFluidHandler(vessel.copy()).orElse(null);
-*///?} else {
-                var handler = FluidUtil.getFluidHandler(vessel.copy()).resolve().orElse(null);
-//?}
+                var handler = StackCompat.fluidHandler(vessel.copy());
                 if (handler == null || handler.fill(required, IFluidHandler.FluidAction.EXECUTE) != amount) continue;
                 var filled = handler.getContainer().copy();
-                var before = FluidUtil.getFluidContained(filled).orElse(FluidStack.EMPTY);
+                var before = StackCompat.fluidContained(filled);
                 // Wooden buckets canonicalize some families; never advertise a different fluid.
                 if (!sameFluid(before, required) || before.getAmount() != amount) continue;
                 var drained = handler.drain(required, IFluidHandler.FluidAction.EXECUTE);
-                var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+                var after = StackCompat.fluidContained(handler.getContainer());
                 if (!sameFluid(drained, required) || drained.getAmount() != amount
                         || before.getAmount() - after.getAmount() != amount) continue;
                 if (result.stream().noneMatch(existing -> StackCompat.sameItem(existing, filled)))

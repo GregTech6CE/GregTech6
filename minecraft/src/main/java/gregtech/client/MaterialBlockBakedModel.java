@@ -25,12 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Assigns {@code tintindex 0} on material template quads so {@link net.minecraftforge.client.event.RegisterColorHandlersEvent}
- * can apply material RGB (same approach as crucible / burning-box hulls).
- */
-
-/**
- * Assigns {@code tintindex 0} on material template quads so {@link net.neoforged.neoforge.client.event.RegisterColorHandlersEvent}
+ * Assigns {@code tintindex 0} on material template quads so {@code RegisterColorHandlersEvent}
  * can apply material RGB (same approach as crucible / burning-box hulls).
  */
 public final class MaterialBlockBakedModel implements BakedModel {
