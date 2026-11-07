@@ -216,6 +216,30 @@ public final class GeneratedRecipeTablesTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void representativeSourceRowsArePublished(GameTestHelper helper) {
+        // The five rows the merged run reported as missing are checked in the ledger itself, so a
+        // producer that stops emitting them fails here even if the map lookup changes.
+        String[][] rows = {
+            {"Loader_Recipes_Other:row/3", "bronze compound mixer row"},
+            {"Loader_Recipes_Other:71-100:", "compound prefix matrix row"},
+            {"Loader_Recipes_Extruder:Stone/extruder_shape_plate", "stone generator plate row"},
+            {"MultiItemRandomTools:503-512", "wrench boxinator row"},
+            {"MultiItemFood:251", "honey comb row"},
+        };
+        for (String[] row : rows) helper.assertTrue(publishedSource(row[0]), "published: " + row[1]);
+        helper.succeed();
+    }
+
+    private static boolean publishedSource(String source) {
+        for (var result : ChemRecipeResolver.results()) {
+            if (!result.source().contains(source)) continue;
+            if (result.outcome() == ChemOutcome.PUBLISHED || result.outcome() == ChemOutcome.SUBSTITUTED)
+                return true;
+        }
+        return false;
+    }
+
     private static int published(String family) {
         int count = 0;
         for (var result : ChemRecipeResolver.results()) {

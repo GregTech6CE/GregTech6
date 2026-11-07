@@ -28,23 +28,23 @@ public final class GTTechnologyRecipes {
 
     private static void toolBoxes(List<ChemRecipe> rows) {
         for (CraftingToolDefinitions.Tool tool : CraftingToolDefinitions.ALL)
-            row(SOURCE + "345-361", "Boxinator", 16, 16L * tool.count())
+            row(SOURCE + "503-512", "Boxinator", 16, 16L * tool.count())
                     .item(form(tool.prefix(), tool.material(), 1))
                     .kept(tech(tool.tip(), 1))
                     .out(tech(tool.token(), tool.count())).add(rows);
-        row(SOURCE + "369", "Boxinator", 64, 64)
+        row(SOURCE + "360", "Boxinator", 64, 64)
                 .item(tech("match", 64)).item(form("plateDouble", "Paper", 1))
                 .out(tech("match_box_full", 1)).add(rows);
-        row(SOURCE + "378", "Unboxinator", 32, 32)
+        row(SOURCE + "361", "Unboxinator", 32, 32)
                 .item(tech("match_box_full", 1))
                 .out(tech("match", 64)).out(form("scrapGt", "Paper", 16)).add(rows);
     }
 
     private static void lighters(List<ChemRecipe> rows) {
-        row(SOURCE + "389", "Canner", 16, 16)
+        row(SOURCE + "369", "Canner", 16, 16)
                 .item(tech("lighter_empty", 1)).fluid(nativeFluid("Butane", 100))
                 .out(tech("lighter_full", 1)).add(rows);
-        row(SOURCE + "389", "Canner", 64, 64)
+        row(SOURCE + "378", "Canner", 64, 64)
                 .item(tech("shiny_lighter_empty", 1)).fluid(nativeFluid("Butane", 1000))
                 .out(tech("shiny_lighter_full", 1)).add(rows);
         row(SOURCE + "389", "Canner", 16, 16)
@@ -64,10 +64,10 @@ public final class GTTechnologyRecipes {
             for (GTMaterial material : phosphorus) {
                 if (material == null || !MaterialPrefix.dust.isValidFor(material.resolve())) continue;
                 String name = material.resolve().getName(), stick = wood.resolve().getName();
-                row(SOURCE + "503-512", "Assembler", 16, 16)
+                row(SOURCE + "345-349", "Assembler", 16, 16)
                         .item(form("bolt", stick, 1)).item(form("dustSmall", name, 1))
                         .out(tech("match", 1)).add(rows);
-                row(SOURCE + "503-512", "Assembler", 64, 64)
+                row(SOURCE + "345-349", "Assembler", 64, 64)
                         .item(form("bolt", stick, 4)).item(form("dust", name, 1))
                         .out(tech("match", 4)).add(rows);
             }

@@ -31,10 +31,10 @@ public final class GTTemporaryRecipes {
 
     /** Graphite electrodes wait for the source's pyrolitic route; the extruder rows stay. */
     private static void extruderRows(List<ChemRecipe> rows) {
-        row(SOURCE + "45", "Extruder", 512, 512)
+        row(SOURCE + "54", "Extruder", 512, 512)
                 .item(form("dust", "Graphite", 1)).kept(tech("extruder_shape_rod", 1))
                 .out(form("stick", "Graphite", 1)).add(rows);
-        row(SOURCE + "46", "Extruder", 512, 512)
+        row(SOURCE + "55", "Extruder", 512, 512)
                 .item(form("dust", "Graphite", 2)).kept(tech("extruder_shape_longrod", 1))
                 .out(form("stickLong", "Graphite", 1)).add(rows);
     }
