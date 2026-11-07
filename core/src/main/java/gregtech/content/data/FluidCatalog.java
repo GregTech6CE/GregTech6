@@ -253,7 +253,7 @@ public class FluidCatalog {
             java.util.Set.of("Pyrotheum", "Cryotheum", "Petrotheum", "Aerotheum", "FreshWater", "SeaWater");
     /** Materials whose molten phase is retired while their gas/liquid phase stays. */
     private static final java.util.Set<String> RETIRED_MOLTEN_MATERIALS =
-            java.util.Set.of("Cryolite", "LithiumChloride", "LithiumChlorate", "AluminiumFluoride");
+            java.util.Set.of("Cryolite", "LithiumChloride", "LithiumChlorate", "AluminiumFluoride", "Mercury");
     /** Exact entries actually created by the gas/liquid material factory, never external preemptions.
      * Registration-phase bookkeeping only; follows the catalog's existing single-threaded lifecycle. */
     private static final Map<String, FluidEntry> GENERATED_PHASE_DEFINITIONS = new LinkedHashMap<>();

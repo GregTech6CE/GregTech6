@@ -41,7 +41,7 @@ public final class CrucibleFluidTests {
         helper.assertTrue(!liquid.isEmpty(), "generated mercury liquid exists");
         helper.assertTrue(MoltenFluidHandler.material(liquid) == mercury, "the ordinary liquid is crucible mercury");
         var molten = GTFluids.stack("GenMolten_Mercury", MERCURY);
-        helper.assertTrue(MoltenFluidHandler.material(molten) == mercury, "the compatibility molten ID stays readable");
+        helper.assertTrue(molten == null || molten.isEmpty(), "no separate molten mercury ID");
         var emitted = MoltenFluidHandler.moltenFluid(mercury, MERCURY);
         helper.assertTrue(emitted.getFluid() == liquid.getFluid(), "the crucible emits the ordinary liquid");
         helper.succeed();

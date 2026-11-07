@@ -52,17 +52,16 @@ public final class MoltenFluidHandler implements IFluidHandler {
     }
 
     /**
-     * A material that is liquid at room temperature (mercury) has an ordinary liquid entry next to its
-     * molten ID. GT6 keeps one fluid for such a material, so both IDs address the same crucible content.
+     * A metal that is liquid at room temperature (mercury) has an ordinary liquid entry instead of a
+     * molten one. GT6 keeps one fluid for such a material, so the liquid is the crucible content.
      */
     private static boolean isOrdinaryLiquidPhase(RegisteredFluids.FluidEntry entry) {
         if (entry == null || entry.materialKey() == null) return false;
         GTMaterial material = GTMaterialRegistry.get(entry.materialKey()).resolve();
-        if (!material.isValid() || !material.has(MaterialProperty.LIQUID)) return false;
+        if (!material.isValid() || !material.has(MaterialProperty.LIQUID) || !material.has(MaterialProperty.METAL))
+            return false;
         var liquid = RegisteredFluids.get("GenLiquid_" + material.getName());
-        return liquid != null
-                && liquid.registryName().equals(entry.registryName())
-                && RegisteredFluids.get("GenMolten_" + material.getName()) != null;
+        return liquid != null && liquid.registryName().equals(entry.registryName());
     }
     /** The special source dimension belongs to this actual phase, not every addon fluid of the same material. */
     public static MoltenMaterialUnits.Ratio ratio(GTMaterial material, FluidStack fluid) {
