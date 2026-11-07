@@ -1,4 +1,5 @@
 package gregtech.content.item;
+import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.material.MaterialPresentation;
 
 
@@ -6,7 +7,6 @@ import gregtech.engine.material.MaterialPresentation;
 /**///?} else {
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import gregtech.GregTech;
 //?}
 
 import gregtech.api.material.GTMaterial;
@@ -320,7 +320,7 @@ public class GTToolItem extends Item {
 //? if >=1.21.1 {
 /*        return "item." + "gt6ce" + ".tool." + toolType.id();
 *///?} else {
-        return "item." + GregTech.NAMESPACE + ".tool." + toolType.id();
+        return "item." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool." + toolType.id();
 //?}
 
     }
@@ -335,7 +335,7 @@ public class GTToolItem extends Item {
 //? if >=1.21.1 {
 /*        return Component.translatable("item." + "gt6ce" + ".tool." + toolType.id() + ".named",
 *///?} else {
-        return Component.translatable("item." + GregTech.NAMESPACE + ".tool." + toolType.id() + ".named",
+        return Component.translatable("item." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool." + toolType.id() + ".named",
 //?}
 
                 MaterialPresentation.name(head), Component.translatable(toolType.translationKey()));

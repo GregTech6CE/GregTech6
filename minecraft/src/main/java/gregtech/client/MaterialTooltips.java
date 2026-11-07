@@ -1,14 +1,11 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.api.material.MaterialComponent;
 import gregtech.engine.material.MaterialPresentation;
 
 
 
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.GregTech;
-//?}
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -103,7 +100,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*                tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".shapeless_recipes")
 *///?} else {
-                tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".shapeless_recipes")
+                tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".shapeless_recipes")
 //?}
 
                         .append(Component.literal(shapeless.toString()).withStyle(ChatFormatting.WHITE))
@@ -116,7 +113,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".contained_materials")
 //?}
 
                     .withStyle(ChatFormatting.DARK_AQUA));
@@ -130,7 +127,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".f3h_hint")
 //?}
 
                     .withStyle(ChatFormatting.DARK_GRAY));
@@ -159,7 +156,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_gt")
 //?}
 
                     .withStyle(ChatFormatting.BLUE));
@@ -170,7 +167,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".vanilla_material")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".vanilla_material")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".vanilla_material")
 //?}
 
                     .withStyle(ChatFormatting.BLUE));
@@ -181,7 +178,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_periodic_table")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_periodic_table")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_periodic_table")
 //?}
 
                     .withStyle(ChatFormatting.BLUE));
@@ -192,7 +189,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_gt")
 //?}
 
                     .withStyle(ChatFormatting.BLUE));
@@ -204,7 +201,7 @@ public final class MaterialTooltips {
 /*            tooltip.add(Component.translatable("tooltip.gt6ce.material_from_addons", String.join(", ", owners))
                     .withStyle(ChatFormatting.BLUE));
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_addons",
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_addons",
                     String.join(", ", owners)).withStyle(ChatFormatting.BLUE));
 //?}
             return;
@@ -216,8 +213,8 @@ public final class MaterialTooltips {
                 : "tooltip." + "gt6ce" + ".material_from_addon";
 *///?} else {
 // Version-specific branch.
-                ? "tooltip." + GregTech.NAMESPACE + ".material_from_mod"
-                : "tooltip." + GregTech.NAMESPACE + ".material_from_addon";
+                ? "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_mod"
+                : "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_addon";
 //?}
         tooltip.add(Component.translatable(sourceKey, source.name)
                 .withStyle(ChatFormatting.BLUE));
@@ -256,7 +253,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".contained_materials")
 //?}
 
                     .withStyle(ChatFormatting.DARK_AQUA));
@@ -270,7 +267,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".f3h_hint")
 //?}
 
                     .withStyle(ChatFormatting.DARK_GRAY));
@@ -371,7 +368,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*                .append(Component.translatable("tooltip." + "gt6ce" + ".fuel_value.label")
 *///?} else {
-                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".fuel_value.label")
+                .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".fuel_value.label")
 //?}
 
                         .withStyle(ChatFormatting.RED))
@@ -387,7 +384,7 @@ public final class MaterialTooltips {
 //? if >=1.21.1 {
 /*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".flammable")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".flammable")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".flammable")
 //?}
 
                     .withStyle(ChatFormatting.RED));

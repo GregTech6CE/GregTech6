@@ -2,10 +2,6 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.block.stone.GTStoneBlock;
@@ -57,8 +53,8 @@ public final class GTBlocks {
         for (DeferredRegister<Item> register : ADDON_BLOCK_ITEMS.values()) register.register(bus);
     }
 *///?} else {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, GregTech.NAMESPACE);
-    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, REGISTRY_NAMESPACE);
     private static final Map<String, DeferredRegister<Block>> ADDON_BLOCKS = new HashMap<>();
     private static final Map<String, DeferredRegister<Item>> ADDON_BLOCK_ITEMS = new HashMap<>();
 

@@ -1,10 +1,7 @@
 package gregtech.content.bumble;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -94,7 +91,7 @@ public final class GTBumbleProducts {
                 ResourceLocation.fromNamespaceAndPath("gt6ce", comb));
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, comb));
+                ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, comb));
 //?}
         if (item == null || item == Items.AIR) return ItemStack.EMPTY;
         return new ItemStack(item, Math.max(1, count));

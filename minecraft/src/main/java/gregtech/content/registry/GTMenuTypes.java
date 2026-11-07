@@ -7,7 +7,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.GregTech;
 import gregtech.client.gui.BasicMachineContainerMenu;
 import gregtech.client.gui.HopperContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -50,7 +49,7 @@ public final class GTMenuTypes {
     private GTMenuTypes() {}
 
     public static final DeferredRegister<MenuType<?>> MENU_TYPES =
-            DeferredRegister.create(ForgeRegistries.MENU_TYPES, GregTech.NAMESPACE);
+            DeferredRegister.create(ForgeRegistries.MENU_TYPES, REGISTRY_NAMESPACE);
 
     public static final RegistryObject<MenuType<HopperContainerMenu>> METAL_CHEST =
             MENU_TYPES.register("metal_chest", () -> IForgeMenuType.create(

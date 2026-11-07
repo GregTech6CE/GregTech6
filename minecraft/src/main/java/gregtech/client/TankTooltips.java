@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.machine.TankSpec;
@@ -209,7 +206,7 @@ public final class TankTooltips {
 //? if >=1.21.1 {
                     /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.tool_label")
 *///?} else {
-                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.tool_label")
+                    .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest.tool_label")
 //?}
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.translatable(toolKey)
@@ -221,14 +218,14 @@ public final class TankTooltips {
 //? if >=1.21.1 {
                     /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.hand_harvest")
 *///?} else {
-                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hand_harvest")
+                    .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.hand_harvest")
 //?}
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.literal(", "))
 //? if >=1.21.1 {
                     /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.but_label")
 *///?} else {
-                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.but_label")
+                    .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest.but_label")
 //?}
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.translatable(toolKey)
@@ -236,7 +233,7 @@ public final class TankTooltips {
 //? if >=1.21.1 {
                     /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.faster")
 *///?} else {
-                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.faster")
+                    .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest.faster")
 //?}
                             .withStyle(ChatFormatting.GRAY)));
         }
@@ -247,20 +244,20 @@ public final class TankTooltips {
 //? if >=1.21.1 {
             /*return "tooltip." + "gt6ce" + ".machine.harvest_shears";
 *///?} else {
-            return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_shears";
+            return "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest_shears";
 //?}
         }
         if (texSet == MaterialTextureSet.WOOD) {
 //? if >=1.21.1 {
             /*return "tooltip." + "gt6ce" + ".machine.harvest_axe";
 *///?} else {
-            return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_axe";
+            return "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest_axe";
 //?}
         }
 //? if >=1.21.1 {
         /*return "tooltip." + "gt6ce" + ".machine.harvest_wrench";
 *///?} else {
-        return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_wrench";
+        return "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest_wrench";
 //?}
     }
 
@@ -282,8 +279,8 @@ public final class TankTooltips {
                         : Component.translatable("tooltip." + "gt6ce" + ".tank.info.no_auto_output"))
 *///?} else {
 // Version-specific branch.
-                        ? Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.auto_output")
-                        : Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.no_auto_output"))
+                        ? Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tank.info.auto_output")
+                        : Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tank.info.no_auto_output"))
 //?}
                 .withStyle(autoOutput ? ChatFormatting.GREEN : ChatFormatting.WHITE));
 
@@ -301,7 +298,7 @@ public final class TankTooltips {
 //? if >=1.21.1 {
                     /*.append(Component.translatable("tooltip." + "gt6ce" + ".tank.info.capacity")
 *///?} else {
-                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.capacity")
+                    .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tank.info.capacity")
 //?}
                             .withStyle(ChatFormatting.WHITE))
                     .append(Component.literal(": " + formatLargeNumber(spec.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit())

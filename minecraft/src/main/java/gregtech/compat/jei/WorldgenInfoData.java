@@ -1,10 +1,7 @@
 package gregtech.compat.jei;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
@@ -49,7 +46,7 @@ public class WorldgenInfoData {
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
+        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE,
 //?}
                 "ore_" + material.resolve().getName().toLowerCase()));
         return item == null || item == Items.AIR ? new ItemStack(Items.STONE) : new ItemStack(item);
@@ -60,7 +57,7 @@ public class WorldgenInfoData {
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
+        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE,
 //?}
                 "ore_small_" + material.resolve().getName().toLowerCase()));
         return item == null || item == Items.AIR ? oreStack(material) : new ItemStack(item);
@@ -310,7 +307,7 @@ public class WorldgenInfoData {
 //? if >=1.21.1 {
                 /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
-                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, id));
+                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, id));
 //?}
                 if (item == null || item == Items.AIR) continue;
                 stone = new ItemStack(item);
@@ -319,7 +316,7 @@ public class WorldgenInfoData {
 //? if >=1.21.1 {
                 /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", def.blockId()));
 *///?} else {
-                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, def.blockId()));
+                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, def.blockId()));
 //?}
                 if (item == null || item == Items.AIR) continue;
                 stone = new ItemStack(item);
@@ -348,7 +345,7 @@ public static List<BedrockInfo> buildBedrockOres() {
 //? if >=1.21.1 {
             /*Item flower = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", ore.flowerId()));
 *///?} else {
-            Item flower = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, ore.flowerId()));
+            Item flower = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ore.flowerId()));
 //?}
             out.add(new BedrockInfo(ore.name(), ore.material(), ore.chance(),
                     flower == null || flower == Items.AIR ? new ItemStack(Items.POPPY) : new ItemStack(flower)));

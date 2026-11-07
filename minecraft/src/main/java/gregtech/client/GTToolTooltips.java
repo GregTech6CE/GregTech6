@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.material.MaterialPresentation;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
@@ -39,7 +36,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
         /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_durability",
 *///?} else {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_durability",
+        tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_durability",
 //?}
                         Component.literal(GTCodeFormat.makeString(remaining)).withStyle(ChatFormatting.GREEN),
                         Component.literal(GTCodeFormat.makeString(max)).withStyle(ChatFormatting.GREEN))
@@ -55,7 +52,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
         /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_melee_damage",
 *///?} else {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_melee_damage",
+        tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_melee_damage",
 //?}
                         Component.literal(String.format(Locale.ROOT, "+%.1f", combat)).withStyle(ChatFormatting.BLUE),
                         Component.literal(String.format(Locale.ROOT, "(= %.1f Hearts)", hearts)).withStyle(ChatFormatting.RED))
@@ -65,7 +62,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
         /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_attack_speed",
 *///?} else {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_attack_speed",
+        tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_attack_speed",
 //?}
                         Component.literal(String.format(Locale.ROOT, "%.1f", attackSpeed)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));
@@ -74,7 +71,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
         /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_mining_speed",
 *///?} else {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_mining_speed",
+        tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_mining_speed",
 //?}
                         Component.literal(String.format(Locale.ROOT, "%.1f", miningSpeed)).withStyle(ChatFormatting.LIGHT_PURPLE))
                 .withStyle(ChatFormatting.WHITE));
@@ -83,7 +80,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
         /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_crafting_uses",
 *///?} else {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_crafting_uses",
+        tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_crafting_uses",
 //?}
                         Component.literal(GTCodeFormat.makeString(craftingUses)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));
@@ -92,7 +89,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
             /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_penetrate_armor")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_penetrate_armor")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_penetrate_armor")
 //?}
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
@@ -100,7 +97,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
             /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_autocollect")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_autocollect")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_autocollect")
 //?}
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
@@ -108,7 +105,7 @@ public final class GTToolTooltips {
 //? if >=1.21.1 {
             /*var hint = Component.translatable("tooltip." + "gt6ce" + ".tool_hint." + type.tooltipKey());
 *///?} else {
-            var hint = Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_hint." + type.tooltipKey());
+            var hint = Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_hint." + type.tooltipKey());
 //?}
             // The original Chinese patch intentionally leaves some tool descriptions empty.
             if (!hint.getString().isEmpty()) tooltip.add(hint.withStyle(ChatFormatting.DARK_GRAY));

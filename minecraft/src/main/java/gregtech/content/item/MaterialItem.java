@@ -1,4 +1,5 @@
 package gregtech.content.item;
+import gregtech.engine.mod.GregTechIdentity;
 //? if >=1.21.1 {
 
 /*import gregtech.api.material.GTMaterial;
@@ -8,7 +9,6 @@ import gregtech.engine.material.MaterialPresentation;
 //? if >=1.21.1 {
 //?} else {
 
-import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
 //?}
 import gregtech.engine.material.GTMaterialRegistry;
@@ -142,7 +142,7 @@ public class MaterialItem extends Item implements gregtech.engine.material.Mater
 //? if >=1.21.1 {
         /*return "item.gt6ce." + prefix.getRegistryName();
 *///?} else {
-        return "item." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
+        return "item." + GregTechIdentity.REGISTRY_NAMESPACE + "." + prefix.getRegistryName();
 //?}
     }
 

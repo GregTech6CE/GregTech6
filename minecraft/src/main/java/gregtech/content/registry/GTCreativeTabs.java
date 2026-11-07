@@ -6,7 +6,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.GregTech;
 import gregtech.engine.machine.MachineRegistry;
 //?}
 import gregtech.engine.prefix.BlockMaterialPrefix;
@@ -54,7 +53,7 @@ public final class GTCreativeTabs {
 //? if >=1.21.1 {
     /*public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, REGISTRY_NAMESPACE);
 *///?} else {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, GregTech.NAMESPACE);
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, REGISTRY_NAMESPACE);
 //?}
 
 //? if >=1.21.1 {

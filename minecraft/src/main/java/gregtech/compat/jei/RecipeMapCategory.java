@@ -1,10 +1,7 @@
 package gregtech.compat.jei;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.recipe.*;
 import gregtech.client.gui.RecipeGuiLayout;
 import gregtech.engine.fluid.FluidDisplayBinding;
@@ -64,7 +61,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
 //? if >=1.21.1 {
         /*return RecipeType.create("gt6ce",map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
 *///?} else {
-        return RecipeType.create(GregTech.NAMESPACE,map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
+        return RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE,map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
 //?}
     }
     @Override public RecipeType<Recipe> getRecipeType() {return recipeType(map);}

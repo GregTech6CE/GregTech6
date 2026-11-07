@@ -1,10 +1,7 @@
 package gregtech.compat.jei;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.item.GTToolItem;
@@ -41,7 +38,7 @@ public final class ToolAssemblyCategory {
 //? if >=1.21.1 {
             /*RecipeType.create("gt6ce", "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
 *///?} else {
-            RecipeType.create(GregTech.NAMESPACE, "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
+            RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
 //?}
 
     /** The JEI category: one slot per required form, the tool as output. */

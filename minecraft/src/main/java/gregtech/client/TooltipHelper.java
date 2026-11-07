@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.energy.FaceConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -49,7 +46,7 @@ public final class TooltipHelper {
 //? if >=1.21.1 {
     /*private static final String MOD = "gt6ce";
 *///?} else {
-    private static final String MOD = GregTech.NAMESPACE;
+    private static final String MOD = GregTechIdentity.REGISTRY_NAMESPACE;
 //?}
 
     // ── Direction names ────────────────────────────────────────────────────

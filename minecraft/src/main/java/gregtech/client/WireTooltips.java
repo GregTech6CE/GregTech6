@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.energy.WireSpec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -40,14 +37,14 @@ public final class WireTooltips {
 //? if >=1.21.1 {
             /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".wire.insulated")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.insulated")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".wire.insulated")
 //?}
                     .withStyle(ChatFormatting.GREEN));
         } else if (spec.contactDamage()) {
 //? if >=1.21.1 {
             /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".wire.damage_warning")
 *///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.damage_warning")
+            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".wire.damage_warning")
 //?}
                     .withStyle(ChatFormatting.RED));
         }
@@ -56,7 +53,7 @@ public final class WireTooltips {
 //? if >=1.21.1 {
         /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".wire.use_cutter")
 *///?} else {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.use_cutter")
+        tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".wire.use_cutter")
 //?}
                 .withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("gt.lang.tool.to.harvest").append(":")

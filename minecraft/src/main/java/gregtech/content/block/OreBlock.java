@@ -1,13 +1,10 @@
 package gregtech.content.block;
+import gregtech.engine.mod.GregTechIdentity;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.engine.material.MaterialPresentation;
 //?}
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
@@ -156,7 +153,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
 //? if >=1.21.1 {
         /*return "block." + "gt6ce" + "." + prefix.getRegistryName();
 *///?} else {
-        return "block." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
+        return "block." + GregTechIdentity.REGISTRY_NAMESPACE + "." + prefix.getRegistryName();
 //?}
     }
 

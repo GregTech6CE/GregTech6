@@ -1,10 +1,7 @@
 package gregtech.content.cover;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -81,7 +78,7 @@ public final class CoverItems {
 //? if >=1.21.1 {
         /*if (!key.getNamespace().equals("gt6ce")) return null;
 *///?} else {
-        if (!key.getNamespace().equals(GregTech.NAMESPACE)) return null;
+        if (!key.getNamespace().equals(GregTechIdentity.REGISTRY_NAMESPACE)) return null;
 //?}
         if (id.startsWith("compact_electric_pump_")) return PUMP;               // IL.PUMPS[i]
         if (id.startsWith("compact_electric_conveyor_")) return CONVEYOR;       // IL.CONVEYERS[i]
@@ -170,7 +167,7 @@ public final class CoverItems {
         return key != null && key.getNamespace().equals("gt6ce") ? key.getPath() : null;
 *///?} else {
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-        return key != null && key.getNamespace().equals(GregTech.NAMESPACE) ? key.getPath() : null;
+        return key != null && key.getNamespace().equals(GregTechIdentity.REGISTRY_NAMESPACE) ? key.getPath() : null;
 //?}
     }
 }

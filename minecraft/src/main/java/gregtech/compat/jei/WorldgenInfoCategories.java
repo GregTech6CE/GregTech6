@@ -1,10 +1,7 @@
 package gregtech.compat.jei;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.content.worldgen.GTOreVeins;
 import gregtech.content.worldgen.GTStoneLayersGen;
@@ -47,9 +44,9 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
     public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create("gt6ce", "small_ores_info", SmallOreInfo.class);
     public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create("gt6ce", "stone_layers_info", LayerInfo.class);
 *///?} else {
-    public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create(GregTech.NAMESPACE, "ore_veins", VeinInfo.class);
-    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create(GregTech.NAMESPACE, "small_ores_info", SmallOreInfo.class);
-    public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create(GregTech.NAMESPACE, "stone_layers_info", LayerInfo.class);
+    public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "ore_veins", VeinInfo.class);
+    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "small_ores_info", SmallOreInfo.class);
+    public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "stone_layers_info", LayerInfo.class);
 //?}
 
     // ── categories ───────────────────────────────────────────────────────────
@@ -207,7 +204,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 //? if >=1.21.1 {
     /*public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create("gt6ce", "bedrock_ores", BedrockInfo.class);
 *///?} else {
-    public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create(GregTech.NAMESPACE, "bedrock_ores", BedrockInfo.class);
+    public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "bedrock_ores", BedrockInfo.class);
 //?}
 
 

@@ -1,10 +1,7 @@
 package gregtech.content.worldgen;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +44,7 @@ public final class GTStructures {
 //? if >=1.21.1 {
             /*DeferredRegister.create(Registries.STRUCTURE_TYPE, "gt6ce");
 *///?} else {
-            DeferredRegister.create(Registries.STRUCTURE_TYPE, GregTech.NAMESPACE);
+            DeferredRegister.create(Registries.STRUCTURE_TYPE, GregTechIdentity.REGISTRY_NAMESPACE);
 //?}
 
     /** {@code gt6ce:gt_dungeon_lattice} as a placement type, registered like vanilla's {@code random_spread}. */
@@ -55,7 +52,7 @@ public final class GTStructures {
 //? if >=1.21.1 {
             /*DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, "gt6ce");
 *///?} else {
-            DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, GregTech.NAMESPACE);
+            DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, GregTechIdentity.REGISTRY_NAMESPACE);
 //?}
 
     /** The anchor marker piece ({@link GTDungeonAnchorPiece}) needs a piece id to be saved with its chunk. */
@@ -63,7 +60,7 @@ public final class GTStructures {
 //? if >=1.21.1 {
             /*DeferredRegister.create(Registries.STRUCTURE_PIECE, "gt6ce");
 *///?} else {
-            DeferredRegister.create(Registries.STRUCTURE_PIECE, GregTech.NAMESPACE);
+            DeferredRegister.create(Registries.STRUCTURE_PIECE, GregTechIdentity.REGISTRY_NAMESPACE);
 //?}
 
     /** The dungeon structure's type; its codec is {@link GTDungeonStructure#CODEC}. */
@@ -96,7 +93,7 @@ public final class GTStructures {
 //? if >=1.21.1 {
             /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
 *///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeon"));
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "gt_dungeon"));
 //?}
 
     /** Key of the structure set that carries the dungeon ({@code data/gt6ce/worldgen/structure_set/gt_dungeons.json}). */
@@ -104,7 +101,7 @@ public final class GTStructures {
 //? if >=1.21.1 {
             /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeons"));
 *///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeons"));
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "gt_dungeons"));
 //?}
 
     /**
@@ -117,7 +114,7 @@ public final class GTStructures {
 //? if >=1.21.1 {
             /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
 *///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeon"));
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "gt_dungeon"));
 //?}
 
     private GTStructures() {}
