@@ -2,7 +2,6 @@ package gregtech.content.worldgen;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.OreHostStone;
-import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -11,17 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 /**
  * Port of GT6's {@code WorldgenDeepOcean} ({@code Loader_Worldgen:580}, registered as
@@ -42,10 +35,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6's noise bound: {@code new NoiseGenerator(world).get(minX + 8, 32, minZ + 8, 16)}. */
     public static final int NOISE_OPTIONS = 16;
+
     public static final int NOISE_XZ = 8;
     public static final float NOISE_Y = 32.0F;
     /** GT6's two pylon kinds: dark prismarine for noise 12-13, light for 14-15. */
     public static final int DARK_NOISE_MIN = 12;
+
     public static final int DARK_NOISE_MAX = 13;
     public static final int LIGHT_NOISE_MIN = 14;
     public static final int LIGHT_NOISE_MAX = 15;
@@ -56,7 +51,9 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
     public record Tier(int fromL, int toL, int radius) {}
 
     /** GT6's four tiers, in source order. */
-    public static final Tier[] TIERS = MineralWorldgenRules.PYLON_TIERS.stream().map(row->new Tier(row.fromL(),row.toL(),row.radius())).toArray(Tier[]::new);
+    public static final Tier[] TIERS = MineralWorldgenRules.PYLON_TIERS.stream()
+            .map(row -> new Tier(row.fromL(), row.toL(), row.radius()))
+            .toArray(Tier[]::new);
 
     public GTDeepOceanFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -71,7 +68,8 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
         int minX = context.origin().getX() & ~15;
         int minZ = context.origin().getZ() & ~15;
         // GT6 requires the deep ocean specifically (BiomeGenBase.deepOcean).
-        if (!GTWorldgenBiomes.anyOf(GTWorldgenBiomes.chunkBiomes(level, minX, minZ),
+        if (!GTWorldgenBiomes.anyOf(
+                GTWorldgenBiomes.chunkBiomes(level, minX, minZ),
                 java.util.Set.of(ResourceLocation.withDefaultNamespace("deep_ocean")))) {
             return false;
         }
@@ -99,8 +97,8 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
      * @param oreMaterial GT6's ore for this prismarine kind ({@code ores_normal[14]} garnierite for
      *                    dark, {@code ores_normal[13]} pyrolusite for light)
      */
-    public static boolean buildPylon(WorldGenLevel level, BlockPos column, StoneType prismarine,
-                                     String oreMaterial, RandomSource random) {
+    public static boolean buildPylon(
+            WorldGenLevel level, BlockPos column, StoneType prismarine, String oreMaterial, RandomSource random) {
         BlockState stone = blockState(prismarine);
         if (stone == null) return false;
         GTMaterial ore = gregtech.engine.material.GTMaterialRegistry.get(oreMaterial);
@@ -125,8 +123,8 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
      * <b>normal stone</b> — into the pylon, so the port places the ore with an explicit
      * {@link OreHostStone#STONE} background instead of the prismarine it replaces.
      */
-    private static boolean setPylonBlock(WorldGenLevel level, BlockPos pos, BlockState stone,
-                                         GTMaterial ore, RandomSource random) {
+    private static boolean setPylonBlock(
+            WorldGenLevel level, BlockPos pos, BlockState stone, GTMaterial ore, RandomSource random) {
         if (level.isOutsideBuildHeight(pos)) return false;
         level.setBlock(pos, stone, 2);
         if (ore != null && random.nextInt(ORE_CHANCE) == 0) {
@@ -135,26 +133,18 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    /** GT6's {@code WD.anywater}: vanilla water or GT's own sea water. */
+    /** GT6's {@code WD.anywater}: the port uses vanilla water only. */
     public static boolean isWater(BlockState state) {
-        if (state.is(Blocks.WATER)) return true;
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-//?}
-        return id != null && id.getNamespace().equals("gt6ce")
-                && (id.getPath().equals("seawater") || id.getPath().equals("riverwater"));
+        return state.is(Blocks.WATER);
     }
 
     /** The GT stone block of a stone type: stone blocks are registered as {@code <type>_<variant>}. */
     private static BlockState blockState(StoneType type) {
-        return gregtech.content.registry.GTBlocks.getStoneState(
-                type, gregtech.content.block.stone.StoneVariant.STONE);
+        return gregtech.content.registry.GTBlocks.getStoneState(type, gregtech.content.block.stone.StoneVariant.STONE);
     }
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_deep_ocean.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_deep_ocean"));
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_deep_ocean"));
 }

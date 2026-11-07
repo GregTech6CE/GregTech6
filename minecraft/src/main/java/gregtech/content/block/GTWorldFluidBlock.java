@@ -28,8 +28,8 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (GT6's sea
- * and river water, the oil/gas springs and geothermal water).
+ * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (the oil
+ * and gas springs).
  *
  * <p>Forge's {@code LiquidBlock(Supplier<? extends FlowingFluid>, Properties)} constructor - the one
  * a mod has to use, because the fluid needs the block to build its {@code createLegacyBlock} - leaves
@@ -48,8 +48,8 @@ import java.util.function.Supplier;
  */
 
 /**
- * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (GT6's sea
- * and river water, the oil/gas springs and geothermal water).
+ * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (the oil
+ * and gas springs).
  *
  * <p>Forge's {@code LiquidBlock(Supplier<? extends FlowingFluid>, Properties)} constructor - the one
  * a mod has to use, because the fluid needs the block to build its {@code createLegacyBlock} - leaves
@@ -75,21 +75,6 @@ public class GTWorldFluidBlock extends LiquidBlock {
 //?}
         super(fluid, properties);
     }
-
-//? if >=1.21.1 {
-//?} else {
-
-    /** Share vanilla water's general Forge plant-support behavior, including other mods' water plants. */
-    @Override
-    public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction facing,
-                                   net.minecraftforge.common.IPlantable plant) {
-        if (gregtech.content.registry.GTWorldWaterFluid.isWaterFamily(getFluid())) {
-            var water = Blocks.WATER.defaultBlockState().setValue(LEVEL, state.getValue(LEVEL));
-            return Blocks.WATER.canSustainPlant(water, level, pos, facing, plant);
-        }
-        return super.canSustainPlant(state, level, pos, facing, plant);
-    }
-//?}
 
     /** Loader_Blocks:149-153 assigns 1000 to all four oils and natural gas. */
     @Override
@@ -215,12 +200,8 @@ public class GTWorldFluidBlock extends LiquidBlock {
     public Optional<SoundEvent> getPickupSound() {
         // BucketItem and FluidUtil play this through the normal vanilla/loader filling flow.
 //? if >=1.21.1 {
-        /*if (fluid instanceof gregtech.content.registry.GTWorldWaterFluid.Source)
-            return Optional.of(net.minecraft.sounds.SoundEvents.BUCKET_FILL);
-        return fluid.getPickupSound();
+        /*return fluid.getPickupSound();
 *///?} else {
-        if (getFluid() instanceof gregtech.content.registry.GTWorldWaterFluid.Source)
-            return Optional.of(net.minecraft.sounds.SoundEvents.BUCKET_FILL);
         return getFluid().getPickupSound();
 //?}
     }

@@ -58,7 +58,6 @@ public final class GregTechConfig {
         GEOLOGY("geology", true, "Generate geological layers, their ores, regular veins, small ores and ocean mineral pillars. Bedrock ores are separate."),
         BEDROCK_ORES("bedrock_ores", true, "Generate bedrock ores and indicators, including veins placed by dungeons and coltan fields."),
         DEPOSITS("deposits", true, "Generate deposits and pits, including clay, peat and magnetite sand."),
-        WATER_BODIES("water_bodies", true, "Generate GT ocean and river water bodies."),
         FLUID_SPRINGS("fluid_springs", true, "Generate natural fluid springs."),
         VEGETATION("vegetation", true, "Generate natural trees, bushes, surface plants and twigs. Does not affect planted saplings."),
         HIVES("hives", true, "Generate natural bee hives."),

@@ -6,7 +6,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 /*import gregtech.engine.fluid.FluidVisualPolicy;
 *///?} else {
 import gregtech.GregTech;
-import gregtech.engine.fluid.GTWaterParity;
 //?}
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.api.material.GTMaterial;
@@ -17,15 +16,12 @@ import gregtech.engine.fluid.FluidPhysicalProperties;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 //?}
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
 //?} else {
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.level.BlockGetter;
 //?}
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
@@ -39,8 +35,6 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import java.util.LinkedHashMap;
 import java.util.Map;
 *///?} else {
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.FluidStack;
@@ -159,9 +153,10 @@ public final class GTFluids {
     }
     public static Map<ResourceLocation, RegisteredFluids.FluidEntry> entries() { return Map.copyOf(ENTRIES); }
     public static FluidStack stack(String field, int mb) {
+        if ("Water".equals(field) || "minecraft:water".equals(field))
+            return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, mb);
         var entry = RegisteredFluids.get(field);
         if (entry == null || mb <= 0) return FluidStack.EMPTY;
-        if (entry.isVanillaWater()) return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, mb);
         if (entry.isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, mb);
         var holder = still(field);
         return holder == null || !holder.isBound() ? FluidStack.EMPTY : new FluidStack(holder.get(), mb);
@@ -172,40 +167,26 @@ public final class GTFluids {
 
     // ==================== factories called by Loader_Fluids ====================
 
-    /**
-     * Creates a GT6 {@link FluidType} with GT6-specific density, viscosity, luminosity, temperature, and client extensions.
-     *
-     * <p>GT6's two world waters (sea and river water) are the exception: they get vanilla
-     * water's own attributes and client extensions (see {@link #waterProperties()} and
-     * {@code WaterFluidClientExtensions}) so they behave and look exactly like {@code minecraft:water}
-     * while staying separate fluids. Note that the engine identifies those two as vanilla water
-     * through {@link GTWorldWaterFluid#waterType()} rather than through this type; this type stays
-     * registered as the GT6 metadata carrier for the port's own items, tanks and GUIs
-     * ({@link #entryForFluid}).
-     * </p>
-     */
+    /** Creates a GT6 {@link FluidType} with GT6-specific density, viscosity, luminosity, temperature, and client extensions. */
 //?}
     public static FluidType createFluidType(RegisteredFluids.FluidEntry entry) {
 //? if >=1.21.1 {
-        /*boolean water = gregtech.engine.fluid.GTWaterParity.isWorldWater(entry.registryName());
-        var properties = FluidType.Properties.create().density(water ? 1000 : FluidPhysicalProperties.density(entry))
-                .viscosity(water ? 1000 : FluidPhysicalProperties.viscosity(entry))
-                .temperature(entry.temperature()).lightLevel(entry.luminosity()).canConvertToSource(water).supportsBoating(water).canHydrate(water).canSwim(water).canDrown(water);
+        /*var properties = FluidType.Properties.create().density(FluidPhysicalProperties.density(entry))
+                .viscosity(FluidPhysicalProperties.viscosity(entry))
+                .temperature(entry.temperature()).lightLevel(entry.luminosity()).canConvertToSource(false).supportsBoating(false).canHydrate(false).canSwim(false).canDrown(false);
 *///?} else {
-        final boolean worldWater = GTWaterParity.isWorldWater(entry.registryName());
-        FluidType.Properties properties = worldWater ? waterProperties()
-                : FluidType.Properties.create()
-                        .density(FluidPhysicalProperties.density(entry))
-                        .viscosity(FluidPhysicalProperties.viscosity(entry))
-                        .lightLevel(entry.luminosity())
-                        .temperature(entry.temperature())
-                        .canConvertToSource(false)
-                        .supportsBoating(false)
-                        .canHydrate(false)
-                        .canSwim(false)
-                        .canDrown(false)
-                        .fallDistanceModifier(0.0F)
-                        .motionScale(0.007D);
+        FluidType.Properties properties = FluidType.Properties.create()
+                .density(FluidPhysicalProperties.density(entry))
+                .viscosity(FluidPhysicalProperties.viscosity(entry))
+                .lightLevel(entry.luminosity())
+                .temperature(entry.temperature())
+                .canConvertToSource(false)
+                .supportsBoating(false)
+                .canHydrate(false)
+                .canSwim(false)
+                .canDrown(false)
+                .fallDistanceModifier(0.0F)
+                .motionScale(0.007D);
 //?}
         boolean nonLiquid = FluidPhysicalProperties.nonLiquid(entry);
         properties.sound(SoundActions.BUCKET_FILL, net.minecraft.sounds.SoundEvents.BUCKET_FILL)
@@ -219,9 +200,7 @@ public final class GTFluids {
 *///?} else {
             @Override
             public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
-                consumer.accept(worldWater
-                        ? gregtech.client.WaterFluidClientExtensions.INSTANCE
-                        : clientExtensions(entry));
+                consumer.accept(clientExtensions(entry));
             }
 
             @Override
@@ -236,17 +215,6 @@ public final class GTFluids {
                 return GTFluidType.describe(entry, path);
             }
 
-            /**
-             * {@code ForgeMod.WATER_TYPE} answers {@code null} (vanilla behaviour) unless the path is
-             * being computed for a fluid that can log blocks; the world waters copy that, every other
-             * GT6 fluid keeps the {@code FluidType.Properties} default.
-             */
-            @Override
-            public BlockPathTypes getBlockPathType(FluidState state, BlockGetter level, BlockPos pos,
-                                                   Mob mob, boolean canFluidLog) {
-                if (!worldWater) return super.getBlockPathType(state, level, pos, mob, canFluidLog);
-                return canFluidLog ? super.getBlockPathType(state, level, pos, mob, true) : null;
-            }
 //?}
         };
         if (nonLiquid) NON_LIQUID_TYPES.add(type);
@@ -257,41 +225,6 @@ public final class GTFluids {
     public static boolean isGas(FluidStack stack) { var entry = entryForFluid(stack.getFluid()); return entry != null ? entry.gas() : stack.getFluid().getFluidType().isLighterThanAir(); }
     public static int resolveTint(RegisteredFluids.FluidEntry entry) { return FluidVisualPolicy.rawTint(entry); }
 *///?} else {
-
-    /**
-     * The {@code FluidType.Properties} vanilla water has, copied value by value from
-     * {@code ForgeMod.WATER_TYPE} (Forge 1.20.1). Entries Forge leaves at their
-     * {@code FluidType.Properties} defaults are spelled out here so the parity is visible:
-     * density 1000, viscosity 1000, temperature 300, light level 0, motion scale 0.014,
-     * can push entity, can swim, can drown, fall distance modifier 0, can extinguish,
-     * can convert to source, supports boating, can hydrate, water/border path types and the three
-     * bucket/vaporize sounds.
-     */
-    public static FluidType.Properties waterProperties() {
-        return FluidType.Properties.create()
-                .density(1000)
-                .viscosity(1000)
-                .temperature(300)
-                .lightLevel(0)
-                .motionScale(0.014D)
-                .canPushEntity(true)
-                .canSwim(true)
-                .canDrown(true)
-                .fallDistanceModifier(0.0F)
-                .canExtinguish(true)
-                .canConvertToSource(true)
-                .supportsBoating(true)
-                .canHydrate(true)
-                .pathType(BlockPathTypes.WATER)
-                .adjacentPathType(BlockPathTypes.WATER_BORDER)
-                .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-                .sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH);
-    }
-
-    // The two world waters' FlowingFluid classes live in GTWorldWaterFluid: they override
-    // getFluidType() (vanilla water's FluidType, see that class) and the waterlogged-block spread
-    // hooks, which is a different concern from this registry holder.
 
     /** Binds a still/flowing fluid pair into lookup maps. Called by Loader_Fluids during registration. */
     public static void bindFluid(String field, RegistryObject<Fluid> still, RegistryObject<Fluid> flowing,
@@ -326,16 +259,17 @@ public final class GTFluids {
     /**
      * A registered GT6 fluid as a {@link FluidStack}, or {@code null} when it is not registered.
      * <p>
-     * GT6's {@code Water}/{@code Lava} entries reuse the vanilla fluids, so {@link FluidBootstrap}
-     * deliberately does not register a still/flowing pair for them (by registry identity, not texture mode); those two resolve to the vanilla fluids here.
+     * {@code Water} is vanilla water and has no catalog entry; {@code Lava} reuses the vanilla
+     * fluid, so {@link FluidBootstrap} deliberately does not register a still/flowing pair for it
+     * (by registry identity, not texture mode).
      * </p>
      */
     public static FluidStack stack(String flField, int mb) {
-        RegisteredFluids.FluidEntry entry = RegisteredFluids.get(flField);
-        if (entry == null) return null;
-        if (entry.isVanillaWater()) {
+        if ("Water".equals(flField) || "minecraft:water".equals(flField)) {
             return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, mb);
         }
+        RegisteredFluids.FluidEntry entry = RegisteredFluids.get(flField);
+        if (entry == null) return null;
         if (entry.isVanillaLava()) {
             return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, mb);
         }
@@ -351,14 +285,11 @@ public final class GTFluids {
     /**
      * The GT6 {@link RegisteredFluids.FluidEntry} of a registered fluid, still or flowing.
      *
-     * <p>Keyed by the <em>fluid's</em> registry id, not by its {@code FluidType}: GT6's three world
-     * waters report {@code ForgeMod.WATER_TYPE} ({@link GTWorldWaterFluid}), so a
-     * {@code FluidType}-keyed lookup would resolve them to {@code minecraft:water} and lose their
-     * GT6 entry (name, tooltip, flags, tank metadata). The ids are the same ones
-     * {@link #bindFluid} was called with, so nothing else about the lookup changes; the flowing
-     * variant is registered as {@code <path>_flowing} and is resolved through its still fluid.
-     * The {@code FluidType}-keyed lookup is kept for callers that only have a type id (for example
-     * a synced fluid-type id from a menu packet).
+     * <p>Keyed by the <em>fluid's</em> registry id. The ids are the same ones {@link #bindFluid}
+     * was called with, so nothing else about the lookup changes; the flowing variant is registered
+     * as {@code <path>_flowing} and is resolved through its still fluid. The {@code FluidType}-keyed
+     * lookup is kept for callers that only have a type id (for example a synced fluid-type id from
+     * a menu packet).
      */
     public static RegisteredFluids.FluidEntry entryForFluid(Fluid fluid) {
         if (fluid == null) return null;

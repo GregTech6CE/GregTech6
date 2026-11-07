@@ -32,7 +32,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 
 /**
- * Modern overworld feature using the shared seven-kind spring catalog and crater writer.
+ * Modern overworld feature using the shared six-kind spring catalog and crater writer.
  * One kind is selected before its probability roll. The separate indicator helper is not
  * invoked by placement; original dispatch, mutual exclusion and indicator contracts need
  * independent verification rather than a claim that the whole algorithm is preserved.

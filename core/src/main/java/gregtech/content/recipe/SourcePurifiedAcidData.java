@@ -42,7 +42,7 @@ public final class SourcePurifiedAcidData {
         PINKVITRIOL(id(8407, "PinkVitriol"), State.LIQUID, "GenLiquid_PinkVitriol", "gt6ce:pinkvitriol"),
         REDVITRIOL(id(8406, "RedVitriol"), State.LIQUID, "GenLiquid_RedVitriol", "gt6ce:redvitriol"),
         VITRIOLOFCLAY(id(8412, "VitriolOfClay"), State.LIQUID, "GenLiquid_VitriolOfClay", "gt6ce:vitriolofclay"),
-        WATER(id(9800, "Water"), State.LIQUID, "Water", "minecraft:water"),
+        WATER(id(9800, "Water"), State.LIQUID, "minecraft:water", "minecraft:water"),
         WHITEVITRIOL(id(8409, "WhiteVitriol"), State.LIQUID, "GenLiquid_WhiteVitriol", "gt6ce:whitevitriol");
         private final Identity material;
         private final State state;

@@ -7,12 +7,10 @@ import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.registry.ContentRegistrar;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTGasFluid;
-import gregtech.content.registry.GTWorldWaterFluid;
 import gregtech.content.registry.RegisteredBlock;
 import gregtech.content.registry.RegisteredItem;
 import gregtech.engine.fluid.FluidPhysicalProperties;
 import gregtech.engine.fluid.FluidRenderLayers;
-import gregtech.engine.fluid.GTWaterParity;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -62,10 +60,9 @@ public final class FluidRegistries {
             var type = GTFluids.fluidTypes(namespace).register(path, () -> GTFluids.createFluidType(entry));
             var stillRef = new AtomicReference<DeferredHolder<Fluid, ? extends Fluid>>();
             var blockRef = new AtomicReference<RegisteredBlock<? extends LiquidBlock>>();
-            boolean water = GTWaterParity.isWorldWater(path);
             // Negative density is the original's densityDir = -1: these fluids rise instead of
             // falling. Air itself is density 0, so nothing neutrally buoyant is included.
-            boolean lighterThanAir = !water && FluidPhysicalProperties.density(entry) < 0;
+            boolean lighterThanAir = FluidPhysicalProperties.density(entry) < 0;
             if (FluidRenderLayers.worldFluidPaths().contains(path)) {
                 var holder = registrar.blockWithoutItem(
                         REGISTRY_NAMESPACE,
@@ -86,20 +83,16 @@ public final class FluidRegistries {
             var still = GTFluids.fluids(namespace)
                     .register(
                             path,
-                            () -> water
-                                    ? new GTWorldWaterFluid.Source(properties(field, type, blockRef, true))
-                                    : lighterThanAir
-                                            ? new GTGasFluid.Source(properties(field, type, blockRef, false))
-                                            : new BaseFlowingFluid.Source(properties(field, type, blockRef, false)));
+                            () -> lighterThanAir
+                                    ? new GTGasFluid.Source(properties(field, type, blockRef))
+                                    : new BaseFlowingFluid.Source(properties(field, type, blockRef)));
             stillRef.set(still);
             var flowing = GTFluids.fluids(namespace)
                     .register(
                             path + "_flowing",
-                            () -> water
-                                    ? new GTWorldWaterFluid.Flowing(properties(field, type, blockRef, true))
-                                    : lighterThanAir
-                                            ? new GTGasFluid.Flowing(properties(field, type, blockRef, false))
-                                            : new BaseFlowingFluid.Flowing(properties(field, type, blockRef, false)));
+                            () -> lighterThanAir
+                                    ? new GTGasFluid.Flowing(properties(field, type, blockRef))
+                                    : new BaseFlowingFluid.Flowing(properties(field, type, blockRef)));
             GTFluids.bindFluid(field, still, flowing, ResourceLocation.fromNamespaceAndPath(namespace, path), entry);
             ALL_ITEMS.add(registrar.item(
                     namespace, "fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties())));
@@ -116,14 +109,12 @@ public final class FluidRegistries {
     private static BaseFlowingFluid.Properties properties(
             String field,
             DeferredHolder<FluidType, FluidType> type,
-            AtomicReference<RegisteredBlock<? extends LiquidBlock>> block,
-            boolean water) {
+            AtomicReference<RegisteredBlock<? extends LiquidBlock>> block) {
         var properties = new BaseFlowingFluid.Properties(
                 type,
                 () -> GTFluids.still(field).get(),
                 () -> GTFluids.flowing(field).get());
         if (block.get() != null) properties.block(() -> block.get().get());
-        if (water) properties.explosionResistance(100);
         return properties;
     }
 }

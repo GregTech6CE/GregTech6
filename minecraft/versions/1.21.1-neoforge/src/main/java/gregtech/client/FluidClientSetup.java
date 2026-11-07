@@ -1,7 +1,6 @@
 package gregtech.client;
 
 import gregtech.content.registry.GTFluids;
-import gregtech.engine.fluid.GTWaterParity;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,31 +20,24 @@ public final class FluidClientSetup {
     private FluidClientSetup() {}
 
     @SubscribeEvent
-    public static void blockColors(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.Block event) {
-        WorldWaterBlockColors.register(event::register);
-    }
-
-    @SubscribeEvent
     public static void extensions(RegisterClientExtensionsEvent event) {
         for (var binding : GTFluids.entries().entrySet()) {
             var entry = binding.getValue();
             var type = net.neoforged.neoforge.registries.NeoForgeRegistries.FLUID_TYPES.get(binding.getKey());
             if (type == null) continue;
-            IClientFluidTypeExtensions extension = GTWaterParity.isWorldWater(entry.registryName())
-                    ? WaterFluidClientExtensions.INSTANCE
-                    : new IClientFluidTypeExtensions() {
-                        public ResourceLocation getStillTexture() {
-                            return FluidAppearance.appearance(entry).texture();
-                        }
+            IClientFluidTypeExtensions extension = new IClientFluidTypeExtensions() {
+                public ResourceLocation getStillTexture() {
+                    return FluidAppearance.appearance(entry).texture();
+                }
 
-                        public ResourceLocation getFlowingTexture() {
-                            return getStillTexture();
-                        }
+                public ResourceLocation getFlowingTexture() {
+                    return getStillTexture();
+                }
 
-                        public int getTintColor() {
-                            return FluidAppearance.appearance(entry).tint();
-                        }
-                    };
+                public int getTintColor() {
+                    return FluidAppearance.appearance(entry).tint();
+                }
+            };
             event.registerFluidType(extension, type);
         }
     }

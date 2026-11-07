@@ -5,7 +5,7 @@
 - [世界生成](worldgen.md)：世界生成与矿物生成。
 - [物品移除](item-removal.md)：无用物品、重复条目及其替代处理。
 - [材料移除](material-removal.md)：停注的材料及其来源模组。
-- [流体移除](fluid-removal.md)：重复注册、闲置兼容流体及随材料停注的生成流体。
+- [流体移除](fluid-removal.md)：重复注册、闲置兼容流体、原版水替代项、无产出流体及随材料停注的生成流体。
 - [原版优先](prefer-origin.md)：以原版 MC 物品、流体或方块替代 GT 自有实现。
 - [幻觉物品](illusion.md)：重构期凭空产生、原 GT6 不存在的注册项及其清理。
 - [流体管道分布模式](fluid-distribution.md)：新增的 `BALANCED`/`SHARED` 配置与空闲调度开关。

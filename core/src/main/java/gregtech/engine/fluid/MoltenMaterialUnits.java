@@ -56,7 +56,7 @@ public final class MoltenMaterialUnits {
     }
 
     /**
-     * Fluid adapters must verify the built-in Alumina (primary or Al2O3 alias) or Plastic binding before passing true.
+     * Fluid adapters must verify the built-in Alumina or Plastic binding before passing true.
      * An alternate addon fluid of the same material retains its existing 144 behavior.
      */
     public static Ratio ratio(GTMaterial material, boolean verifiedCanonicalPhase) {

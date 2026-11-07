@@ -43,6 +43,7 @@ public final class GlowtusProcessingRecipes extends OriginalRecipeBatch {
         // The 4 passed to RM.biomass scales its per-plant fluid amounts and duration.
         // It consumes one Glowtus in each recipe; the original stack size is a divisor.
         Set<String> seenFluids = new HashSet<>();
+        biomass(colour, glowtus, "Water", 270, 270, 64, seenFluids);
         biomass(colour, glowtus, "Rotten_Drink", 270, 810, 32, seenFluids);
         biomass(colour, glowtus, "Soup_Mushroom", 270, 810, 32, seenFluids);
         List<String> fluidFields = new ArrayList<>(RegisteredFluids.all().keySet());

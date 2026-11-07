@@ -190,11 +190,9 @@ public final class GTDrinksGen {
             new DrinkNutritionRows.Row("reedwater", 1, 0.1f, 0, 0, 0, 0, 0, 0, false, false, "drink", false, false, false, List.of()),
             new DrinkNutritionRows.Row("ricardosanchez", 2, 0.2f, 30, 0, 0, 10, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.heal.id", 1, 0, 60))),
 
-            new DrinkNutritionRows.Row("riverwater", 0, 0.0f, 0, 0, 0, 0, 0, 0, true, false, "drink", false, true, false, List.of()),
             new DrinkNutritionRows.Row("rottendrink", 0, 0.0f, 0, 0, 0, 0, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 100))),
             new DrinkNutritionRows.Row("royaljelly", 2, 0.2f, 0, 0, 0, 40, 0, 0, true, false, "drink", true, false, false, List.of(new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 70), new DrinkNutritionRows.Effect("Potion.regeneration.id", 150, 1, 100))),
             new DrinkNutritionRows.Row("saltwater", 1, 0.0f, 0, 0, 90, 0, 0, 0, false, false, "drink", false, true, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 800, 2, 100), new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 800, 2, 100))),
-            new DrinkNutritionRows.Row("seawater", 0, 0.0f, 0, 0, 30, 0, 0, 0, false, false, "drink", false, true, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 400, 2, 95), new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 1, 100))),
             new DrinkNutritionRows.Row("seedoil", 2, 0.2f, 0, 0, 20, 0, 20, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 400, 1, 70), new DrinkNutritionRows.Effect("PotionsGT.ID_SLIPPERY", 300, 1, 70), new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 0, 70))),
             new DrinkNutritionRows.Row("short.mead", 3, 0.1f, 30, 0, 0, 30, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.damageBoost.id", 300, 1, 60), new DrinkNutritionRows.Effect("Potion.resistance.id", 300, 1, 60))),
             new DrinkNutritionRows.Row("slime", 2, 0.5f, 0, 0, 0, 0, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.jump.id", 600, 0, 50), new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 90))),
@@ -210,8 +208,6 @@ public final class GTDrinksGen {
             new DrinkNutritionRows.Row("sweettea", 2, 0.2f, 0, 30, 0, 30, 0, 0, false, false, "drink", false, false, false, List.of()),
             new DrinkNutritionRows.Row("tea", 2, 0.2f, 0, 30, 0, 0, 0, 0, false, false, "drink", false, false, false, List.of()),
             new DrinkNutritionRows.Row("vinegar", 2, 0.2f, 30, 0, 0, 20, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.heal.id", 1, 1, 70))),
-            new DrinkNutritionRows.Row("water", 0, 0.0f, 0, 0, 0, 0, 0, 0, true, false, "drink", false, true, false, List.of()),
-            new DrinkNutritionRows.Row("watergeothermal", 1, 0.1f, 0, 0, 0, 0, 0, 0, false, false, "drink", false, true, false, List.of(new DrinkNutritionRows.Effect("Potion.regeneration.id", 100, 1, 20))),
 
             new DrinkNutritionRows.Row("whitegrapesmoothie", 4, 0.2f, 0, 0, 5, 20, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 200, 1, 60))),
             new DrinkNutritionRows.Row("wine", 2, 0.2f, 30, 0, 0, 10, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.heal.id", 1, 0, 60))));

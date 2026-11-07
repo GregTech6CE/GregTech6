@@ -69,7 +69,6 @@ public final class GTFeatures {
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> PITS=FEATURES.register("gt_pits",GTPitFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> TURF=FEATURES.register("gt_turf",GTTurfFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> SURFACE_DEPOSITS=FEATURES.register("gt_surface_deposits",GTSurfaceDepositFeature::new);
-    public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> WATER_BODIES=FEATURES.register("gt_water_bodies",GTWaterBodyFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> ROCKS=FEATURES.register("gt_rocks",GTRocksFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> BEDROCK_ORES=FEATURES.register("gt_bedrock_ores",GTBedrockOreFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> COLTAN=FEATURES.register("gt_coltan",GTColtanFeature::new);
@@ -113,10 +112,6 @@ public final class GTFeatures {
     /** GT6's deep ocean prismarine pylons (WorldgenDeepOcean, Loader_Worldgen:580). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> DEEP_OCEAN =
             FEATURES.register("gt_deep_ocean", GTDeepOceanFeature::new);
-
-    /** GT6's ocean and river water (WorldgenOcean/River, Loader_Worldgen:576-577). */
-    public static final RegistryObject<Feature<NoneFeatureConfiguration>> WATER_BODIES =
-            FEATURES.register("gt_water_bodies", GTWaterBodyFeature::new);
 
     /** GT6's river black sands (WorldgenBlackSand, Loader_Worldgen:581). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_SAND =

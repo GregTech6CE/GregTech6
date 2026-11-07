@@ -102,15 +102,13 @@ public final class GTDrinks {
 
     /**
      * The registered still fluid of a GT6 fluid entry. Resolved through {@code GTFluids.entryForFluid} rather
-     * than by name, so the two world waters and every other renamed fluid resolve correctly.
+     * than by name, so every renamed fluid resolves correctly.
      */
     public static Fluid fluidOf(RegisteredFluids.FluidEntry entry) {
         if (entry == null) {
             return null;
         }
-        // The catalog binds these entries to vanilla fluids rather than GT deferred holders.
-        if (entry.isVanillaWater())
-            return net.minecraft.world.level.material.Fluids.WATER;
+        // The catalog binds Lava to the vanilla fluid rather than a GT deferred holder.
         if (entry.isVanillaLava())
             return net.minecraft.world.level.material.Fluids.LAVA;
 //? if >=1.21.1 {
@@ -149,6 +147,8 @@ public final class GTDrinks {
 
     /** The port fluid a GT6 drink row resolved to, by GT6 field name (case-insensitive); for tests/tooling. */
     public static Fluid fluidForField(String field) {
+        // Water is vanilla water; the catalog keeps no separate entry for it.
+        if ("Water".equalsIgnoreCase(field)) return net.minecraft.world.level.material.Fluids.WATER;
         ensureBuilt();
         for (Map.Entry<Fluid, Row> entry : BY_FLUID.entrySet()) {
             if (entry.getValue().field().equalsIgnoreCase(field)) {

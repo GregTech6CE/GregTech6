@@ -137,15 +137,7 @@ public final class SourceDecompositionData {
     };
     private static final Thermal[] AMBIENT = {
         new Thermal(180, "Argon", 83, 87, 8700, null, new Binding("argon", SOURCE_U, 1000), null),
-        new Thermal(
-                20,
-                "Helium",
-                1,
-                4,
-                400,
-                null,
-                new Binding("helium", SOURCE_U, 1000),
-                new Binding("heliumplasma", SOURCE_U, 1000)),
+        new Thermal(20, "Helium", 1, 4, 400, null, new Binding("helium", SOURCE_U, 1000), null),
         new Thermal(
                 9826, "HydrochloricAcid", 100, 200, 20000, null, new Binding("hydrochloricacid", SOURCE_U, 1000), null),
         new Thermal(
@@ -177,7 +169,7 @@ public final class SourceDecompositionData {
                 273,
                 373,
                 37300,
-                new Binding("water", SOURCE_U, 1000),
+                new Binding("minecraft:water", SOURCE_U, 1000),
                 new Binding("steam", SOURCE_U, 160000),
                 null)
     };

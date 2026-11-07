@@ -71,9 +71,9 @@ public final class AddonLoaderServices {
     }
 
     private static FluidStack flowing(String name, int millibuckets) {
+        if ("Water".equals(name)) return new FluidStack(Fluids.FLOWING_WATER, millibuckets);
         RegisteredFluids.FluidEntry entry = RegisteredFluids.get(name);
         if (entry == null) return FluidStack.EMPTY;
-        if (entry.isVanillaWater()) return new FluidStack(Fluids.FLOWING_WATER, millibuckets);
         if (entry.isVanillaLava()) return new FluidStack(Fluids.FLOWING_LAVA, millibuckets);
 //? if >=1.21.1 {
 /*        DeferredHolder<Fluid, ? extends Fluid> fluid = GTFluids.flowing(name);

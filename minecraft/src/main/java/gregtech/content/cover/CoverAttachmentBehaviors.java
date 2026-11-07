@@ -94,7 +94,6 @@ public final class CoverAttachmentBehaviors {
      *       quantum - 125 mB each, 1-8 quanta - and a partly emptied block keeps its remaining
      *       quanta. This is also what makes flowing gas, not just a source, drainable.</li>
      *   <li>Vanilla water and lava keep vanilla's source-block rule and one 1000 mB block.</li>
-     *   <li>River/ocean/swamp blocks keep the original bulk-water shortcut.</li>
      * </ul>
      */
     private static boolean drainFluidBlock(Level level, BlockPos machinePos, Direction side, IFluidHandler sink) {
@@ -106,15 +105,6 @@ public final class CoverAttachmentBehaviors {
         FluidState fluidState = state.getFluidState();
         if (fluidState.isEmpty()) return false;
         Fluid fluid = fluidState.getType();
-        var entry = GTFluids.entryForFluid(fluid);
-        String bulkField = DrainCoverRules.bulkWaterField(entry == null ? null : entry.registryName());
-        // Original River/Ocean/Swamp blocks supply bulk water independently of source level/gravity.
-        if (bulkField != null) {
-            var bulk = GTFluids.still(bulkField);
-            Fluid collected = "Water".equals(bulkField) ? Fluids.WATER : bulk == null ? Fluids.EMPTY : bulk.get();
-            return collected != Fluids.EMPTY
-                    && sink.fill(new FluidStack(collected, 16000), IFluidHandler.FluidAction.EXECUTE) > 0;
-        }
         boolean gtWorldBlock = state.getBlock() instanceof gregtech.content.block.GTWorldFluidBlock;
         if (!gtWorldBlock && !fluidState.isSource()) return false;
         var biome = level.getBiome(front);

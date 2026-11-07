@@ -7,7 +7,7 @@ public final class SawingCoolants {
     public record Variant(String field, int multiplier) {}
 
     private static final List<Variant> FOOD =
-            List.of(new Variant("Water", 4), new Variant("MnWtr", 4), new Variant("DistW", 3));
+            List.of(new Variant("minecraft:water", 4), new Variant("MnWtr", 4), new Variant("DistW", 3));
     private static final List<Variant> INDUSTRIAL = java.util.stream.Stream.concat(
                     FOOD.stream(), java.util.stream.Stream.of(new Variant("Lubricant", 1), new Variant("Lubricant", 1)))
             .toList();

@@ -9,7 +9,6 @@ import gregtech.content.registry.ContentRegistrar;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTGasFluid;
-import gregtech.content.registry.GTWorldWaterFluid;
 import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.fluid.FluidPhysicalProperties;
 import gregtech.engine.fluid.FluidRenderLayers;
@@ -34,10 +33,8 @@ import net.minecraftforge.registries.RegistryObject;
 public record FluidBootstrap() implements InitializationStep {
     /**
      * Fluids that also exist as world blocks. GT6's fluid springs ({@code WorldgenFluidSpring},
-     * Loader_Worldgen:782-797) place oil, natural gas and geothermal water into the world, and
-     * GT6's ocean/river/swamp passes ({@code WorldgenOcean} / {@code WorldgenRiver} /
-     * {@code WorldgenSwamp}, Loader_Worldgen:576-578) replace the water of oceans, rivers and
-     * swamps with GT6's own water fluids — all of those need a {@link LiquidBlock}.
+     * Loader_Worldgen:782-797) place oil and natural gas into the world, so those need a
+     * {@link LiquidBlock}.
      */
     private static final Set<String> WORLD_FLUID_PATHS = FluidRenderLayers.worldFluidPaths();
 
@@ -45,19 +42,12 @@ public record FluidBootstrap() implements InitializationStep {
     private static ForgeFlowingFluid.Properties properties(
             RegistryObject<FluidType> type,
             String field,
-            AtomicReference<RegisteredBlock<? extends LiquidBlock>> blockRef,
-            boolean worldWater) {
+            AtomicReference<RegisteredBlock<? extends LiquidBlock>> blockRef) {
         ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
                 type,
                 () -> GTFluids.still(field).get(),
                 () -> GTFluids.flowing(field).get());
-        if (blockRef.get() != null) {
-            properties.block(() -> blockRef.get().get());
-            // Vanilla water: WaterFluid.getExplosionResistance() is 100.0F, matching its block's
-            // strength(100.0F). ForgeFlowingFluid.Properties defaults it to 1.0F. Only the three
-            // world waters are changed, so the oil/gas/geothermal springs keep their old value.
-            if (worldWater) properties.explosionResistance(100.0F);
-        }
+        if (blockRef.get() != null) properties.block(() -> blockRef.get().get());
         return properties;
     }
 
@@ -103,21 +93,17 @@ public record FluidBootstrap() implements InitializationStep {
             RegistryObject<FluidType> typeRO =
                     GTFluids.fluidTypes(namespace).register(path, () -> GTFluids.createFluidType(flEntry));
 
-            // GT6's sea/river/swamp water copy minecraft:water completely, so they get vanilla
-            // water's block properties, explosion resistance and WaterFluid flow behaviour.
-            boolean worldWater = gregtech.engine.fluid.GTWaterParity.isWorldWater(path);
             // Negative density is the original's densityDir = -1: these fluids rise instead of
             // falling. Air itself is density 0, so nothing neutrally buoyant is included.
-            boolean lighterThanAir = !worldWater && FluidPhysicalProperties.density(flEntry) < 0;
+            boolean lighterThanAir = FluidPhysicalProperties.density(flEntry) < 0;
 
             // World block for the spring fluids (created first: the fluid references it).
             final AtomicReference<RegistryObject<Fluid>> stillRef = new AtomicReference<>();
             final AtomicReference<RegisteredBlock<? extends LiquidBlock>> blockRef = new AtomicReference<>();
             if (WORLD_FLUID_PATHS.contains(path)) {
-                // Exactly Blocks.WATER in 1.20.1 - including noLootTable() and the absence of
-                // randomTicks() - so the world water blocks drop nothing and never random tick.
-                // GTWorldFluidBlock is a LiquidBlock that survives Forge's supplier constructor
-                // (it is the only constructor a mod can use here), see its javadoc.
+                // The spring blocks use vanilla water's block properties: replaceable, no
+                // collision, no loot and no random ticks. GTWorldFluidBlock is a LiquidBlock that
+                // survives Forge's supplier constructor (the only constructor a mod can use here).
                 blockRef.set(registrar.blockWithoutItem(
                         GregTech.NAMESPACE,
                         path,
@@ -138,23 +124,18 @@ public record FluidBootstrap() implements InitializationStep {
             RegistryObject<Fluid> stillRO = GTFluids.fluids(namespace)
                     .register(
                             path,
-                            () -> worldWater
-                                    ? new GTWorldWaterFluid.Source(properties(typeRO, field, blockRef, true))
-                                    : lighterThanAir
-                                            ? new GTGasFluid.Source(properties(typeRO, field, blockRef, false))
-                                            : new ForgeFlowingFluid.Source(properties(typeRO, field, blockRef, false)));
+                            () -> lighterThanAir
+                                    ? new GTGasFluid.Source(properties(typeRO, field, blockRef))
+                                    : new ForgeFlowingFluid.Source(properties(typeRO, field, blockRef)));
             stillRef.set(stillRO);
 
             // Flowing fluid
             RegistryObject<Fluid> flowingRO = GTFluids.fluids(namespace)
                     .register(
                             path + "_flowing",
-                            () -> worldWater
-                                    ? new GTWorldWaterFluid.Flowing(properties(typeRO, field, blockRef, true))
-                                    : lighterThanAir
-                                            ? new GTGasFluid.Flowing(properties(typeRO, field, blockRef, false))
-                                            : new ForgeFlowingFluid.Flowing(
-                                                    properties(typeRO, field, blockRef, false)));
+                            () -> lighterThanAir
+                                    ? new GTGasFluid.Flowing(properties(typeRO, field, blockRef))
+                                    : new ForgeFlowingFluid.Flowing(properties(typeRO, field, blockRef)));
 
             GTFluids.bindFluid(
                     field,

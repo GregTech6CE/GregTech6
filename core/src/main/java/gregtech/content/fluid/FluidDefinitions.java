@@ -222,8 +222,6 @@ public final class FluidDefinitions {
         bindMolten("molten.waxbee", "WaxBee");
         bindMolten("molten.waxparaffin", "WaxParaffin");
         bindMolten("molten.waxplant", "WaxPlant");
-
-        bindMolten("molten.al2o3", "Al2O3");
     }
 
     /** Links a molten fluid registry name to a GTMaterial by material name. */

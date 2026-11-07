@@ -49,14 +49,12 @@ import java.util.List;
  *
  * <ol>
  *   <li><b>The effect list is the switch, not decoration.</b> A fluid that declares no row deals no
- *       drown damage either, which is why {@code seawater} and {@code riverwater} are completely
- *       harmless in GT6 ({@code Loader_Blocks.java:135,136} pass no effects) although they are water.</li>
+ *       drown damage either; the port's world fluids are the oils and natural gas.</li>
  *   <li><b>The head-inside gate is the breathing-suit check.</b> {@code BlockBaseFluid} always asks
  *       {@code isImmuneToBreathingGases}, even for the oils, which are liquids. The port has no
  *       waterlike head row because dirty water is not registered.</li>
  *   <li><b>Drown damage keys on the material, not on the fluid class.</b> Oils and natural gas carry
- *       {@code MaterialOil}/{@code MaterialGas} and therefore drown; the geothermal spring is
- *       {@code Material.water} ({@code Loader_Blocks.java:146}) and does not.</li>
+ *       {@code MaterialOil}/{@code MaterialGas} and therefore drown.</li>
  * </ol>
  *
  * <h2>What is not portable</h2>
@@ -92,7 +90,7 @@ public final class WorldFluidEffects {
     }
 
     // ---------------------------------------------------------------------------------------------
-    // The eight fluids the port puts into the world (Loader_Fluids.WORLD_FLUID_PATHS)
+    // The five fluids the port puts into the world (Loader_Fluids.WORLD_FLUID_PATHS)
     // ---------------------------------------------------------------------------------------------
 
     public static final String EXTRA_HEAVY_OIL = "liquid_extra_heavy_oil";
@@ -100,7 +98,6 @@ public final class WorldFluidEffects {
     public static final String MEDIUM_OIL = "liquid_medium_oil";
     public static final String LIGHT_OIL = "liquid_light_oil";
     public static final String NATURAL_GAS = "gas_natural_gas";
-    public static final String GEOTHERMAL_WATER = "watergeothermal";
 
     /** GT6 {@code BlockBaseFluid:414} / {@code BlockWaterlike:229}: {@code SERVER_TIME % 20 == 0}. */
     public static final int DROWN_INTERVAL = 20;
@@ -124,18 +121,11 @@ public final class WorldFluidEffects {
     /** Recorded, not applied: GT6 gets these three from Immersive Engineering ({@code GT_API:786-789}). */
     public static final List<String> OIL_IE_EFFECTS = List.of("flammable 300/1", "sticky 300/1", "slippery 300/1");
 
-    /** {@code Loader_Blocks.java:146}: the geothermal spring heals and hardens whoever touches it. */
-    private static final List<EffectRow> GEOTHERMAL_BATHING = List.of(
-            new EffectRow(MobEffects.REGENERATION, 100, 0, "Loader_Blocks.java:146 regeneration 100/0"),
-            // GT6 names Potion.resistance; 1.20.1 calls the same effect MobEffects.DAMAGE_RESISTANCE.
-            new EffectRow(MobEffects.DAMAGE_RESISTANCE, 2400, 2, "Loader_Blocks.java:146 resistance 2400/2"));
-
     /** Which fluids have a bathing row, and their rows. */
     public static List<EffectRow> bathingRows(Fluid fluid) {
         String path = path(fluid);
         return switch (path) {
             case EXTRA_HEAVY_OIL, HEAVY_OIL, MEDIUM_OIL, LIGHT_OIL -> OIL_BATHING;
-            case GEOTHERMAL_WATER -> GEOTHERMAL_BATHING;
             default -> List.of();
         };
     }
@@ -256,9 +246,8 @@ public final class WorldFluidEffects {
         return path.endsWith("_flowing") ? path.substring(0, path.length() - "_flowing".length()) : path;
     }
 
-    /** Every fluid of the port's eight world-fluid blocks, for the coverage assertion in the test. */
+    /** Every fluid of the port's five world-fluid blocks, for the coverage assertion in the test. */
     public static List<String> worldFluidPaths() {
-        return List.of(EXTRA_HEAVY_OIL, HEAVY_OIL, MEDIUM_OIL, LIGHT_OIL, NATURAL_GAS, GEOTHERMAL_WATER,
-                "seawater", "riverwater");
+        return List.of(EXTRA_HEAVY_OIL, HEAVY_OIL, MEDIUM_OIL, LIGHT_OIL, NATURAL_GAS);
     }
 }

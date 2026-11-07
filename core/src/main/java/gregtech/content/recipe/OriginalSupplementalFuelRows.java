@@ -50,16 +50,28 @@ public final class OriginalSupplementalFuelRows {
         rows.add(burn(32, 9, "fire_water"));
         rows.add(burn(64, 4, "rocket_fuel"));
 
-        paired(rows, 16, 1, 2, 2, "Water", 3, null, 0, "hydrogen");
+        paired(rows, 16, 1, 2, 2, "minecraft:water", 3, null, 0, "hydrogen");
         paired(rows, 16, 1, 2, 2, "GenLiquid_HeavyWater", 3, null, 0, "deuterium");
         paired(rows, 16, 1, 2, 2, "GenLiquid_TritiatedWater", 3, null, 0, "tritium");
-        paired(rows, 64, 24, 30, 5, "Water", 6, "CarbonDioxide", 3, "methane");
-        paired(rows, 64, 24, 30, 5, "Water", 6, "CarbonDioxide", 3, "gas_natural_gas", "naturalgas", "gas.natural");
-        paired(rows, 64, 24, 30, 20, "Water", 6, "CarbonDioxide", 3, "ic2biogas");
-        paired(rows, 64, 42, 56, 7, "Water", 7, "CarbonDioxide", 6, "butane");
-        paired(rows, 64, 30, 40, 5, "Water", 5, "CarbonDioxide", 4, "propane");
-        paired(rows, 64, 4, 5, 1, "Water", 1, "CarbonDioxide", 1, "ethylene");
-        paired(rows, 64, 3, 4, 1, "Water", 1, "CarbonDioxide", 1, "propylene");
+        paired(rows, 64, 24, 30, 5, "minecraft:water", 6, "CarbonDioxide", 3, "methane");
+        paired(
+                rows,
+                64,
+                24,
+                30,
+                5,
+                "minecraft:water",
+                6,
+                "CarbonDioxide",
+                3,
+                "gas_natural_gas",
+                "naturalgas",
+                "gas.natural");
+        paired(rows, 64, 24, 30, 20, "minecraft:water", 6, "CarbonDioxide", 3, "ic2biogas");
+        paired(rows, 64, 42, 56, 7, "minecraft:water", 7, "CarbonDioxide", 6, "butane");
+        paired(rows, 64, 30, 40, 5, "minecraft:water", 5, "CarbonDioxide", 4, "propane");
+        paired(rows, 64, 4, 5, 1, "minecraft:water", 1, "CarbonDioxide", 1, "ethylene");
+        paired(rows, 64, 3, 4, 1, "minecraft:water", 1, "CarbonDioxide", 1, "propylene");
         return List.copyOf(rows);
     }
 

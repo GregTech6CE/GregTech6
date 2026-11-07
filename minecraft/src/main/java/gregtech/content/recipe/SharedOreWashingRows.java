@@ -19,6 +19,7 @@ import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -83,7 +84,7 @@ public final class SharedOreWashingRows {
   }
   Definition withWater(){return new Definition(map,optimize,inputs,outputs,chances,fluidInputs,fluidOutputs,duration,power,true);}
   Recipe tagWater(Recipe row){
-   return waterTag&&row!=null?row.withFluidTagInput(0,net.minecraft.resources.ResourceLocation.parse("gt6ce:water")):row;
+   return waterTag&&row!=null?row.withFluidTagInput(0,net.minecraft.resources.ResourceLocation.parse("minecraft:water")):row;
   }
   Recipe admit(){
    // RecipeMap discards EMPTY fluids. Reject required unresolved bindings before it can create a free row.
@@ -303,8 +304,13 @@ public final class SharedOreWashingRows {
  static FluidStack checkedFluid(String field,int amount,Map<String,FluidCatalog.FluidEntry> definitions,
                                 BiFunction<String,Integer,FluidStack> lookup){
   if(amount<=0||!FluidCatalog.canonicalField(field).equals(field))return FluidStack.EMPTY;
+  if(field.equals("Water")){
+   var water=lookup.apply(field,amount);
+   return water==null||water.isEmpty()||water.getAmount()!=amount||water.getFluid()!=Fluids.WATER
+       ?FluidStack.EMPTY:water.copy();
+  }
   var entry=definitions.get(field);if(entry==null)return FluidStack.EMPTY;
-  var builtin=switch(field){case "Water"->FluidCatalog.Water;case "MnWtr"->FluidCatalog.MnWtr;
+  var builtin=switch(field){case "MnWtr"->FluidCatalog.MnWtr;
    case "DistW"->FluidCatalog.DistW;case "Sluice"->FluidCatalog.Sluice;
    case "Steam"->FluidCatalog.Steam;default->null;};
   if(field.equals("GenLiquid_Mercury")){
@@ -317,9 +323,9 @@ default->null;};
   if(materialLiquid&&(binding==null||!binding.field().equals(field)
       ||!binding.registryPath().equals(entry.registryName())))return FluidStack.EMPTY;
   var stack=lookup.apply(field,amount);if(stack==null||stack.isEmpty()||stack.getAmount()!=amount)return FluidStack.EMPTY;
-  String expected=field.equals("Water")?"minecraft:water":"gt6ce:"+FluidCatalog.sanitizePath(entry.registryName());
+  String expected="gt6ce:"+FluidCatalog.sanitizePath(entry.registryName());
   if(!BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals(expected))return FluidStack.EMPTY;
-  if(!field.equals("Water")&&GTFluids.entryForFluid(stack.getFluid())!=entry)return FluidStack.EMPTY;
+  if(GTFluids.entryForFluid(stack.getFluid())!=entry)return FluidStack.EMPTY;
   return stack.copy();
  }
 }

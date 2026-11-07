@@ -599,6 +599,8 @@ public final class GeneratedRecipeResolver {
     private static volatile Map<String, String> BY_REGISTRY_NAME;
 
     public static FluidStack byRegistryName(String registryName, int mb) {
+        if ("water".equalsIgnoreCase(registryName) || "minecraft:water".equalsIgnoreCase(registryName))
+            return new FluidStack(Fluids.WATER, mb);
         Map<String, String> index = BY_REGISTRY_NAME;
         if (index == null) {
             synchronized (GeneratedRecipeResolver.class) {
@@ -625,16 +627,13 @@ public final class GeneratedRecipeResolver {
     }
 
     private static FluidStack named(String key, int mb) {
+        // Water is vanilla water; the catalog keeps no separate entry for it.
+        if ("Water".equals(key) || "minecraft:water".equals(key)) return new FluidStack(Fluids.WATER, mb);
         RegisteredFluids.FluidEntry entry = RegisteredFluids.get(key);
         if (entry == null) return null;
-        // Water/Lava declarations reuse the vanilla fluids; Loader_Fluids registers no still/flowing
-        // pair for them, so the vanilla stacks have to be returned here (same as GTFluids.stack).
-
-        if (entry.isVanillaWater())
-            return new FluidStack(Fluids.WATER, mb);
-        if (entry.isVanillaLava())
-
-            return new FluidStack(Fluids.LAVA, mb);
+        // Lava declarations reuse the vanilla fluid; Loader_Fluids registers no still/flowing pair
+        // for it, so the vanilla stack has to be returned here (same as GTFluids.stack).
+        if (entry.isVanillaLava()) return new FluidStack(Fluids.LAVA, mb);
 //? if >=1.21.1 {
         /*DeferredHolder<Fluid, ? extends Fluid> fluid = GTFluids.still(key);
         if (fluid == null || !fluid.isBound()) return null;

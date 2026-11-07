@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -76,6 +77,9 @@ final class SourceDecompositionNativeFacts {
     static FluidStack fluid(SourceDecompositionRules.Binding binding, long amount, boolean up) {
         int mb = SourceDecompositionRules.fluidAmount(binding, amount, up);
         if (binding == null || mb <= 0) return null;
+        // Water is vanilla water; it has no GT catalog entry.
+        if ("minecraft:water".equals(binding.registry()) || "water".equals(binding.registry()))
+            return new FluidStack(Fluids.WATER, mb);
         // sanitizePath is the port's declared source-registry translation, not material-name aliasing.
         String path = RegisteredFluids.sanitizePath(binding.registry());
         for (var field : RegisteredFluids.all().entrySet()) {

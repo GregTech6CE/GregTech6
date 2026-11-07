@@ -411,7 +411,6 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-        WorldWaterBlockColors.register(event::register);
         for (var entry : java.util.List.of(
                 gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS,
                 gregtech.content.registry.GTMiscBlocks.FILTER_FLUIDS,
@@ -1022,22 +1021,15 @@ public final class GregTechClient {
         // contains Fluids.WATER / Fluids.FLOWING_WATER -> RenderType.translucent()
         // (ItemBlockRenderTypes.java, default RenderType.solid() at line 400), so a separate
         // fluid stayed on the opaque solid layer - "the liquid still is not transparent like vanilla
-        // water". The flowing variants are fluids of their own and are what most blocks of a GT6
-        // water body actually carry, so they are registered too: worldWaterLayers() is the shared
-        // six water IDs plus twelve spring IDs share this registry policy. setRenderLayer may only be called
-        // while the client mod loader is still loading (checkClientLoading,
-        // ItemBlockRenderTypes.java), i.e. here, directly from the event, not from
-        // enqueueWork.
+        // water". The flowing variants are fluids of their own, so they are registered too: the
+        // five spring IDs and their flowing variants share this registry policy. setRenderLayer may
+        // only be called while the client mod loader is still loading (checkClientLoading,
+        // ItemBlockRenderTypes.java), i.e. here, directly from the event, not from enqueueWork.
         for (var registration : FluidRenderLayers.worldFluidLayers().entrySet()) {
             Fluid fluid = ForgeRegistries.FLUIDS.getValue(GregTech.id(registration.getKey()));
             if (fluid == null) {
                 throw new IllegalStateException(
                         "GT world fluid is missing its registered fluid: " + registration.getKey());
-            }
-            if (gregtech.engine.fluid.GTWaterParity.isWorldWater(registration.getKey())
-                    && (!Fluids.WATER.isSame(fluid) || !fluid.isSame(Fluids.WATER))) {
-                throw new IllegalStateException("GT world water does not merge with vanilla water: "
-                        + registration.getKey() + ". Check gregtech.mixins.json and water registration.");
             }
             ItemBlockRenderTypes.setRenderLayer(
                     fluid,

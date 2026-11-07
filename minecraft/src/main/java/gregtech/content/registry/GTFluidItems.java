@@ -38,9 +38,8 @@ public final class GTFluidItems {
         BY_FIELD.put(field, ro);
         var entry = RegisteredFluids.get(field);
         if (entry != null && entry.usesVanillaFluid()) {
-            String path = entry.isVanillaWater() ? "water" : "lava";
-            BY_FLUID.put(ResourceLocation.parse("minecraft:" + path), ro);
-            BY_FLUID.put(ResourceLocation.parse("minecraft:flowing_" + path), ro);
+            BY_FLUID.put(ResourceLocation.parse("minecraft:lava"), ro);
+            BY_FLUID.put(ResourceLocation.parse("minecraft:flowing_lava"), ro);
         }
         var still=GTFluids.still(field); var flowing=GTFluids.flowing(field);
         if(still!=null) BY_FLUID.put(still.getId(),ro);

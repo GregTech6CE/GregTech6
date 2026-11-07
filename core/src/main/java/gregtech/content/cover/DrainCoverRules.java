@@ -20,19 +20,9 @@
 /* Adapted from Gregorius Techneticies' CoverDrain, LGPL-3.0-or-later. */
 package gregtech.content.cover;
 
-/** Original world-water conversion and rain yield, independent of native fluid identities. */
+/** Original rain yield, independent of native fluid identities. */
 public final class DrainCoverRules {
     private DrainCoverRules() {}
-
-    /** CoverDrain:136-143: river becomes ordinary water, sea becomes ocean water. */
-    public static String bulkWaterField(String worldFluid) {
-        if (worldFluid == null) return null;
-        return switch (worldFluid) {
-            case "riverwater" -> "Water";
-            case "seawater" -> "Ocean";
-            default -> null;
-        };
-    }
 
     public static long rainAmount(float downfall, float temperature, boolean thundering) {
         if (downfall <= 0 || temperature < 0.2F) return 0;

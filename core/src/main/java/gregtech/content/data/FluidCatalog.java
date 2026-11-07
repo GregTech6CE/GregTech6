@@ -66,7 +66,6 @@ public class FluidCatalog {
     public enum FluidTextureMode {
         DEDICATED,
         GENERIC_MOLTEN,
-        VANILLA_WATER,
         VANILLA_LAVA
     }
 
@@ -223,16 +222,12 @@ public class FluidCatalog {
         }
 
         /** Registry identity, independent of the sprite used to draw this fluid. */
-        public boolean isVanillaWater() {
-            return "water".equals(registryName);
-        }
-
         public boolean isVanillaLava() {
             return "lava".equals(registryName);
         }
 
         public boolean usesVanillaFluid() {
-            return isVanillaWater() || isVanillaLava();
+            return isVanillaLava();
         }
     }
 
@@ -249,20 +244,16 @@ public class FluidCatalog {
      */
     private static final Map<String, String> GENERATED_ALIASES = new LinkedHashMap<>();
     /** Dedicated gameplay fluids whose IDs differ from their material names. */
-    private static final Map<String, String> MATERIAL_FLUIDS = Map.of(
-            "WaterDistilled",
-            "DistW",
-            "Ethanol",
-            "BioEthanol",
-            "OliveOil",
-            "Oil_Olive",
-            "Water",
-            "Water",
-            "Lava",
-            "Lava");
-    /** Retired compatibility liquids must not reappear through material phase generation. */
+    private static final Map<String, String> MATERIAL_FLUIDS =
+            Map.of("WaterDistilled", "DistW", "Ethanol", "BioEthanol", "OliveOil", "Oil_Olive", "Lava", "Lava");
+    /** Materials whose fluid is a vanilla fluid and must not get a GT-generated phase. */
+    private static final java.util.Set<String> VANILLA_FLUID_MATERIALS = java.util.Set.of("Water");
+    /** Materials whose generated phase fluid is retired and must not reappear. */
     private static final java.util.Set<String> RETIRED_FLUID_MATERIALS =
-            java.util.Set.of("Pyrotheum", "Cryotheum", "Petrotheum", "Aerotheum");
+            java.util.Set.of("Pyrotheum", "Cryotheum", "Petrotheum", "Aerotheum", "FreshWater", "SeaWater");
+    /** Materials whose molten phase is retired while their gas/liquid phase stays. */
+    private static final java.util.Set<String> RETIRED_MOLTEN_MATERIALS =
+            java.util.Set.of("Cryolite", "LithiumChloride", "LithiumChlorate", "AluminiumFluoride");
     /** Exact entries actually created by the gas/liquid material factory, never external preemptions.
      * Registration-phase bookkeeping only; follows the catalog's existing single-threaded lifecycle. */
     private static final Map<String, FluidEntry> GENERATED_PHASE_DEFINITIONS = new LinkedHashMap<>();
@@ -327,9 +318,6 @@ public class FluidCatalog {
     }
 
     private static FluidEntry fluid(String field, String registryName, FluidTextureMode mode) {
-        long fl = (mode == FluidTextureMode.VANILLA_LAVA
-                ? FluidFlags.LIQUID | FluidFlags.SIMPLE
-                : FluidFlags.LIQUID | FluidFlags.SIMPLE);
         return register(
                 field,
                 new FluidEntry(
@@ -337,14 +325,14 @@ public class FluidCatalog {
                         mode,
                         null,
                         0,
-                        mode != FluidTextureMode.VANILLA_WATER && mode != FluidTextureMode.VANILLA_LAVA,
+                        mode != FluidTextureMode.VANILLA_LAVA,
                         false,
                         false,
                         0,
                         0,
                         0,
                         DEF_ENV_TEMP,
-                        fl));
+                        FluidFlags.LIQUID | FluidFlags.SIMPLE));
     }
 
     private static FluidEntry fluidMolten(String field, String registryName, String materialKey) {
@@ -444,21 +432,6 @@ public class FluidCatalog {
             Mcguffium = fluid("Mcguffium", "mcguffium"),
 
             // =======================================================================
-            // Plasmas
-            // =======================================================================
-
-            HeliumPlasma =
-                    fluid("HeliumPlasma", "heliumplasma")
-                            .withLuminosity(15)
-                            .withTemperature(10000)
-                            .withFlags(FluidFlags.PLASMA | FluidFlags.HIDDEN),
-            NitrogenPlasma =
-                    fluid("NitrogenPlasma", "nitrogenplasma")
-                            .withLuminosity(15)
-                            .withTemperature(10000)
-                            .withFlags(FluidFlags.PLASMA | FluidFlags.HIDDEN),
-
-            // =======================================================================
             // Elemental gases
             // =======================================================================
 
@@ -524,17 +497,9 @@ public class FluidCatalog {
             // Water
             // =======================================================================
 
-            Water =
-                    fluid("Water", "water", FluidTextureMode.VANILLA_WATER)
-                            .withFlags(FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH),
             DistW =
                     fluid("DistW", "ic2distilledwater")
                             .withFlags(FluidFlags.LIQUID | FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH),
-            River_Water =
-                    fluid("River_Water", "riverwater").withFlags(FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH),
-            Water_Geothermal =
-                    fluid("Water_Geothermal", "watergeothermal")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH | FluidFlags.THERMOS),
             MnWtr = fluid("MnWtr", "potion.mineralwater").withFlags(FluidFlags.FOOD | FluidFlags.WATER),
             Ice =
                     fluid("Ice", "ice")
@@ -543,10 +508,9 @@ public class FluidCatalog {
             Soda = fluid("Soda", "soda").withFlags(FluidFlags.FOOD),
 
             // =======================================================================
-            // Ocean / salt / waste
+            // Salt / waste
             // =======================================================================
 
-            Ocean = fluid("Ocean", "seawater"),
             Saltwater = fluid("Saltwater", "saltwater"),
             Holywater = fluid("Holywater", "holywater").withGlint().withFlags(FluidFlags.MAGIC),
 
@@ -1115,8 +1079,7 @@ public class FluidCatalog {
             Molten_Wax = createMolten("Wax"),
             Molten_WaxBee = createMolten("WaxBee"),
             Molten_WaxParaffin = createMolten("WaxParaffin"),
-            Molten_WaxPlant = createMolten("WaxPlant"),
-            Molten_Al2O3 = createMolten("Al2O3");
+            Molten_WaxPlant = createMolten("WaxPlant");
 
     private static FluidEntry createMolten(String materialName) {
         MOLTEN_FACTORY_FIELDS.add("GenMolten_" + materialName);
@@ -1215,7 +1178,8 @@ public class FluidCatalog {
     public static void registerGeneratedMoltenFluids(Collection<GTMaterial> materials) {
         for (GTMaterial raw : materials) {
             GTMaterial material = raw.resolve();
-            if (RETIRED_FLUID_MATERIALS.contains(material.getName())) continue;
+            if (RETIRED_FLUID_MATERIALS.contains(material.getName())
+                    || RETIRED_MOLTEN_MATERIALS.contains(material.getName())) continue;
             if (material.getName().equals("Lava")) {
                 GENERATED_ALIASES.put("GenMolten_Lava", "Lava");
                 bindMaterial("Lava", material);
@@ -1277,7 +1241,8 @@ public class FluidCatalog {
     public static void registerGeneratedGasLiquidFluids(Collection<GTMaterial> materials) {
         for (GTMaterial raw : materials) {
             GTMaterial material = raw.resolve();
-            if (RETIRED_FLUID_MATERIALS.contains(material.getName())) continue;
+            if (RETIRED_FLUID_MATERIALS.contains(material.getName())
+                    || VANILLA_FLUID_MATERIALS.contains(material.getName())) continue;
             if (!material.isValid() || material.getId() <= 0 || material.has(MaterialProperty.HIDDEN)) {
                 continue;
             }

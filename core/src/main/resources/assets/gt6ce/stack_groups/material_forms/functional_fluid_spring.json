@@ -8,8 +8,7 @@
     "item:gt6ce:fluid_spring_liquid_extra_heavy_oil",
     "item:gt6ce:fluid_spring_liquid_heavy_oil",
     "item:gt6ce:fluid_spring_liquid_light_oil",
-    "item:gt6ce:fluid_spring_liquid_medium_oil",
-    "item:gt6ce:fluid_spring_watergeothermal"
+    "item:gt6ce:fluid_spring_liquid_medium_oil"
   ],
   "priority": 110
 }

@@ -90,11 +90,7 @@ public final class NativeOriginWorld implements OriginWorld {
 //?}
     private BlockState state(StateKey key) {
         String blockId = key.side >= 0 ? (key.id.equals("gt6ce:glass_glow") ? "gt6ce:glass_glow_slab" : "gt6ce:cfoam_slab") : key.id;
-        if (blockId.equals("source:river")) {
-            var fluid = BuiltInRegistries.FLUID.get(id("gt6ce:riverwater"));
-            if (fluid == net.minecraft.world.level.material.Fluids.EMPTY) throw new IllegalStateException("Missing original river water");
-            return fluid.defaultFluidState().createLegacyBlock();
-        }
+        if (blockId.equals("source:river")) return net.minecraft.world.level.block.Blocks.WATER.defaultBlockState();
         if (blockId.equals("source:sands")) blockId = "gt6ce:" + gregtech.content.block.BlackSandDefinitions.IDS.get(key.metadata % 3);
         if (blockId.equals("source:diggables")) blockId = "gt6ce:" + new String[]{
             "mud", "clay_brown", "turf", "clay_red", "clay_yellow", "clay_blue", "clay_white"

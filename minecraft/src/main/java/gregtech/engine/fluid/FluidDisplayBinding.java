@@ -62,7 +62,6 @@ public final class FluidDisplayBinding {
     public static FluidStack resolve(HolderLookup.Provider lookup, ItemStack stack) {
         if (!(stack.getItem() instanceof FluidDisplayItem carrierItem)) return FluidStack.EMPTY;
         if (hasPayload(stack)) return FluidStack.parseOptional(lookup, gregtech.content.data.UsbDataMedia.tag(stack).getCompound(TAG));
-        if (carrierItem.fluidEntry().isVanillaWater()) return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000);
         if (carrierItem.fluidEntry().isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, 1000);
         var itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
         var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),
@@ -109,7 +108,6 @@ public final class FluidDisplayBinding {
     public static FluidStack resolve(ItemStack stack) {
         if (!(stack.getItem() instanceof FluidItem carrierItem)) return FluidStack.EMPTY;
         if (hasPayload(stack)) return FluidStack.loadFluidStackFromNBT(stack.getTag().getCompound(TAG));
-        if (carrierItem.fluidEntry().isVanillaWater()) return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000);
         if (carrierItem.fluidEntry().isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, 1000);
         var itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
         var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),

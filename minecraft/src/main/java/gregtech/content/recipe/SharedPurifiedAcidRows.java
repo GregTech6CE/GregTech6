@@ -218,26 +218,25 @@ public final class SharedPurifiedAcidRows {
         NativeFluid fluid(Phase phase, long amount) {
             if (phase == null || amount <= 0 || amount > Integer.MAX_VALUE || material(phase.material()) == null)
                 return NativeFluid.unknown();
+            // Water is vanilla water; it has no GT catalog entry.
+            if (phase == Phase.WATER) return NativeFluid.present(new FluidStack(Fluids.WATER, (int) amount));
             String field = phase.nativeField();
             var entry = fluidDefinitions.get(field);
             if (entry == null || !FluidCatalog.canonicalField(field).equals(field) || FluidCatalog.get(field) != entry
                     || entry.gas() != (phase.state() == State.GAS)) return NativeFluid.unknown();
-            if (phase == Phase.WATER || phase == Phase.HYDROGEN) {
-                var expected = phase == Phase.WATER ? FluidCatalog.Water : FluidCatalog.Hydrogen;
-                if (entry != expected || !FluidCatalog.isBuiltInDefinition(entry)) return NativeFluid.unknown();
-                if (phase == Phase.HYDROGEN && !phase.material().name().equals(FluidCatalog.boundMaterial(entry.registryName())))
+            if (phase == Phase.HYDROGEN) {
+                if (entry != FluidCatalog.Hydrogen || !FluidCatalog.isBuiltInDefinition(entry)) return NativeFluid.unknown();
+                if (!phase.material().name().equals(FluidCatalog.boundMaterial(entry.registryName())))
                     return NativeFluid.unknown();
             } else if (!FluidCatalog.isGeneratedGasLiquidDefinition(field, entry)
                     || !phase.material().name().equals(entry.materialKey())) return NativeFluid.unknown();
-            String expectedPath = phase == Phase.WATER ? "minecraft:water"
-                    : "gt6ce:" + FluidCatalog.sanitizePath(entry.registryName());
+            String expectedPath = "gt6ce:" + FluidCatalog.sanitizePath(entry.registryName());
             if (!phase.registryId().equals(expectedPath)) return NativeFluid.unknown();
             var stack = lookup.apply(field, (int)amount);
             if (stack == null || stack.isEmpty() || stack.getAmount() != amount
                     || !BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals(phase.registryId()))
                 return NativeFluid.unknown();
-            if (phase == Phase.WATER ? stack.getFluid() != Fluids.WATER : GTFluids.entryForFluid(stack.getFluid()) != entry)
-                return NativeFluid.unknown();
+            if (GTFluids.entryForFluid(stack.getFluid()) != entry) return NativeFluid.unknown();
             // All eighteen source phases are positively evidenced. A missing native output holder
             // is UNKNOWN too, never source ABSENT that could silently discard a vitriol/gas product.
             return NativeFluid.present(stack);

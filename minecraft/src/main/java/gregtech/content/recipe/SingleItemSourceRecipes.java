@@ -174,6 +174,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         // Loader_Recipes_Crops:142-152 delegates all plant remains to RM.biomass(8).
         for (String id : OriginalSingleItemCatalog.PLANT_REMAINS) {
             Set<String> seen = new HashSet<>();
+            biomass(id, "Water", 135, 32, seen);
             biomass(id, "Rotten_Drink", 405, 16, seen);
             biomass(id, "Soup_Mushroom", 405, 16, seen);
             var fields = new TreeSet<>(RegisteredFluids.all().keySet());

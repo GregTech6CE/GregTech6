@@ -452,7 +452,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
 *///?} else {
         var key = net.minecraftforge.registries.ForgeRegistries.FLUIDS.getKey(fluid);
 //?}
-        return key != null && java.util.Set.of("water","ic2distilledwater","riverwater","watergeothermal","ice").contains(key.getPath());
+        return key != null && java.util.Set.of("ic2distilledwater","ice").contains(key.getPath());
     }
 
 //? if >=1.21.1 {

@@ -16,7 +16,7 @@ public final class GTBottlesGen {
     /** {@code id, display, GT6 fluid key} triples, in GT6 file order. */
     public static final String[] ENTRIES = {
         "mineral_water", "Mineral Water", "MnWtr",
-        "sea_water", "Sea Water", "Ocean",
+        "sea_water", "Sea Water", "Saltwater",
         "soda", "Soda", "Soda",
         "mineral_soda", "Mineral Soda", "Mineralsoda",
         "ice_water", "Ice Water", "Ice",

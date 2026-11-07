@@ -233,11 +233,9 @@ final class GTChemGen {
         r("Electrolyzer", 16, 4096, null, sp("tag:0"), sp("m:MnCl2:3000"), sp("m:Cl:2000"), sp("omd:Mn:1000"));
         r("Electrolyzer", 16, 256, null, sp("tag:1"), sp("m:LiClO3:5000", "m:O:1000"), NONE, sp("omd:LiClO4:6000"));
         r("Electrolyzer", 16, 3840, null, sp("tag:0"), sp("w:3000"), sp("m:H:2000", "m:O:1000"), NONE);
-        r("Electrolyzer", 16, 3840, null, sp("tag:0"), sp("f:Water_Geothermal:3000"), sp("m:H:2000", "m:O:1000"), NONE);
         r("Electrolyzer", 16, 3840, null, sp("tag:0"), sp("m:D2O:3000"), sp("m:D:2000", "m:O:1000"), NONE);
         r("Electrolyzer", 16, 3840, null, sp("tag:0"), sp("m:T2O:3000"), sp("m:T:2000", "m:O:1000"), NONE);
         r("Electrolyzer", 16, 8960, null, sp("tag:0"), sp("f:Saltwater:7000"), sp("m:Cl:125", "m:H:4375", "m:O:2125"), sp("omd:NaOH:375"));
-        r("Electrolyzer", 16, 8960, null, sp("tag:0"), sp("f:Ocean:7000"), sp("m:Cl:125", "m:H:4375", "m:O:2125"), sp("omd:NaOH:375"));
         r("Electrolyzer", 16, 1280, null, sp("tag:0"), sp("f:Saltwater:1000"), sp("m:Cl:125", "m:H:375", "m:O:125"), sp("omd:NaOH:375"));
         r("Electrolyzer", 16, 1280, null, sp("tag:0"), sp("m:SaltWater:1000"), sp("m:Cl:125", "m:H:375", "m:O:125"), sp("omd:NaOH:375"));
         r("Electrolyzer", 16, 1280, null, sp("tag:0"), sp("m:SaltedWater:1000"), sp("m:Cl:125", "m:H:375", "m:O:125"), sp("omd:KOH:375"));
@@ -299,7 +297,6 @@ final class GTChemGen {
         r("Centrifuge", 64, 64, null, NONE, sp("w:100000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
         r("Centrifuge", 64, 64, null, NONE, sp("f:MnWtr:100000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
         r("Centrifuge", 64, 64, null, NONE, sp("f:DistW:100000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
-        r("Centrifuge", 64, 64, null, NONE, sp("f:Water_Geothermal:50000"), sp("mu:HDO:liquid:64864800:down", "mu:D2O:liquid:6486480:down", "mu:T2O:liquid:648648:down"), NONE);
         source(true, "Centrifuge", 64, 64, null, NONE, sp("mu:HDO:liquid:648648000:up"), sp("mu:D2O:liquid:64864800:down", "mu:T2O:liquid:6486480:down"), NONE);
         source(true, "Centrifuge", 64, 64, null, NONE, sp("mu:D2O:liquid:648648000:up"), sp("mu:T2O:liquid:64864800:down"), NONE);
         r("Melter", 16, 222, null, sp("omdu:Ice:72072000"), NONE, sp("w:111"), NONE);
@@ -343,12 +340,9 @@ final class GTChemGen {
         r("Drying", 16, 4000, null, sp("v:snow:1"), NONE, sp("f:DistW:1000"), NONE);
         r("Drying", 16, 16, null, NONE, sp("w:10"), sp("f:DistW:8"), NONE);
         r("Drying", 16, 16, null, NONE, sp("f:MnWtr:10"), sp("f:DistW:8"), NONE);
-        r("Drying", 16, 16, null, NONE, sp("f:Water_Geothermal:25"), sp("f:DistW:20"), NONE);
         r("Distillery", 16, 16, null, sp("tag:0"), sp("w:10"), sp("f:DistW:8"), NONE);
         r("Distillery", 16, 16, null, sp("tag:0"), sp("f:MnWtr:10"), sp("f:DistW:8"), NONE);
-        r("Distillery", 16, 16, null, sp("tag:0"), sp("f:Water_Geothermal:25"), sp("f:DistW:20"), NONE);
         r("Drying", 16, 11200, null, NONE, sp("f:Saltwater:7000"), sp("f:DistW:6750"), sp("omd:NaCl:250"));
-        r("Drying", 16, 11200, null, NONE, sp("f:Ocean:7000"), sp("f:DistW:6750"), sp("omd:NaCl:250"));
         r("Drying", 16, 1600, null, NONE, sp("f:Saltwater:1000"), sp("f:DistW:750"), sp("omd:NaCl:250"));
         r("Drying", 16, 1600, null, NONE, sp("m:SaltWater:1000"), sp("f:DistW:750"), sp("omd:NaCl:250"));
         r("Drying", 16, 1600, null, NONE, sp("m:SaltedWater:1000"), sp("f:DistW:750"), sp("omd:KCl:250"));

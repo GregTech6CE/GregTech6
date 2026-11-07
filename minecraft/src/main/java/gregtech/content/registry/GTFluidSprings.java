@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import java.util.*;
 
-/** Seven fixed output/rate variants plus a legacy metadata carrier. */
+/** Six fixed output/rate variants plus a legacy metadata carrier. */
 public final class GTFluidSprings {
 
     private GTFluidSprings() {

@@ -43,10 +43,8 @@ public class FluidItem extends Item {
         if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
             var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack);
             if (!fluid.isEmpty()) {
-                // entryForFluid, not FluidStack#getDisplayName: the three world waters report vanilla
-                // water's FluidType (see GTWorldWaterFluid), so their type description is "Water" and
-                // the GT6 name of the fluid the payload actually carries would be lost. Resolve the
-                // GT6 entry of that fluid instead, exactly what the type description used to give.
+                // entryForFluid, not FluidStack#getDisplayName: the display name does not carry the
+                // GT6 metadata. Resolve the GT6 entry of the fluid the payload actually carries.
                 var entry = gregtech.content.registry.GTFluids.entryForFluid(fluid.getFluid());
                 if (entry == null) return fluid.getDisplayName();
                 String path = gregtech.content.registry.GTFluids.sanitizePath(entry.registryName());

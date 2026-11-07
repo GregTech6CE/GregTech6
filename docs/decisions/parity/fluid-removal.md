@@ -1,6 +1,6 @@
 # 流体移除
 
-本端停注的重复流体、闲置兼容流体、联动残留，以及随材料停注不再生成的流体。材料身份与来源见[材料移除](material-removal.md)。
+本端停注的重复流体、闲置兼容流体、联动残留、原版水替代项、无产出流体，以及随材料停注不再生成的流体。材料身份与来源见[材料移除](material-removal.md)。
 
 | 内容 | 差异 | 原因 |
 | --- | --- | --- |
@@ -34,6 +34,13 @@
 | 现实名称化合物熔融流体 | 停注 `molten.ferrite`、`molten.niobiumnitride`。 | 本端未保留对应配方与物品形态，停注。 |
 | 药水系统（整套移除） | 停注全部 94 条带药水标志的流体，含基底、即时效果、时长效果及喷溅/滞留形态；注册名与数量见[药水系统移除](potion-removal.md)附录A。 | 药水身份改由原版药水物品承载，流体侧保持单一体系；该标志没有运行期读取者。 |
 | 无来源/无消费端材料熔融流体 | 停注 `molten.bedrockium`、`molten.crystallinepinkslime`、`molten.unstable`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
+| GT 水目录项（奥卡姆剃刀） | 删除 `Water` 目录项、`fluid_item_water` 物品与 `VANILLA_WATER` 贴图模式；配方中的 `Water` 字段改指 `minecraft:water`，材料 `Water` 不再生成 GT 流体。 | 原版已有水，GT 目录项只是原版水的别名；保留目录项会继续产生重复的流体物品与语言键。 |
+| 热温泉水、河水、海水（奥卡姆剃刀） | 停注 `watergeothermal`、`riverwater`、`seawater`，删除海洋/河流水体温替换特性 `gt_water_bodies`、地热泉 `overworld.fluid.water` 及其方块、模型、贴图与语言键；`minecraft:water` 流体标签不再追加 GT 水体。相关配方改指原版水或删除重复行：电解、干燥、蒸馏保留 `w:` 行，海水电解、干燥保留 `Saltwater` 行；`watergeothermal` 的重水离心、燃料与再生饮品行随流体删除。 | 三种流体都是原版水的变体；世界生成直接保留原版水，避免整块替换与地图模组不贴合，也去掉热泉水独有的重水与再生效果。 |
+| 淡水 | 停注材料生成流体 `freshwater`；材料 `FreshWater` 保留但不再生成流体。 | 没有世界生成、物品来源或配方消费端。 |
+| 氦离子、氮离子 | 停注 `heliumplasma`、`nitrogenplasma`。 | 端口没有达到等离子相温度的配方；`heliumplasma` 的离心绑定在 293 K 下不可达，`nitrogenplasma` 没有引用。 |
+| 无产出且不可熔炼的熔融金属流体 | 停注 `molten.al2o3`、`molten.cryolite`、`molten.lithiumchloride`、`molten.lithiumchlorate`、`molten.aluminiumfluoride`。 | 按 `RecipeDump` 核对：255 条生成熔融流体中 148 条有配方产出，107 条无配方产出；其中只有这 5 条同时没有 `MELTING` 可熔炼物品。`molten.al2o3` 是 `molten.alumina` 的静态重复项，配方使用后者；其余 4 条是只有 `MOLTEN` 旗标、没有熔点的熔盐。 |
+
+本次复核使用 `RecipeDump` 的静态与 overlay 快照（93 张图、128,858 条）核对熔融流体的配方产出；坩埚动态熔炼不算配方产出，因此只删除同时没有可熔炼物品形态的 5 条。水类流体删除后，`GTWaterParity`、`GTWorldWaterFluid`、`VanillaWaterlogging`、`WaterFamilyIdentity`、`WaterFluidClientExtensions`、`WorldWaterBlockColors` 及 10 个水体 mixin 一并移除，`minecraft:water` 流体标签文件不再需要。
 
 随材料停注不再生成的流体共 113 条，包括 110 条 `molten.*`、`ectoplasm`、`martianvitriol` 和 `uumatter`。[类型C](https://github.com/GregTech6CE/GregTech6/issues/251) 的 `molten.brass`、`molten.zinc`、`molten.calcite` 静态声明已删除，但材料生成器以同一 ID 重建，不属于流体移除；属性改由材料熔点与亮度 10 决定。
 

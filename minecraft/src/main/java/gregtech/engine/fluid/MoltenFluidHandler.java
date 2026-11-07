@@ -65,14 +65,10 @@ public final class MoltenFluidHandler implements IFluidHandler {
         String actualId = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(fluid.getFluid()).toString();
         boolean primary = RegisteredFluids.isGeneratedMoltenDefinition("GenMolten_Alumina", entry)
                 && entry.registryName().equals("molten.alumina") && actualId.equals("gt6ce:molten_alumina");
-        boolean legacyAlias = entry == RegisteredFluids.get("GenMolten_Al2O3")
-                && entry.registryName().equals("molten.al2o3") && actualId.equals("gt6ce:molten_al2o3")
-                && material != null && entry.equals(RegisteredFluids.Molten_Al2O3
-                        .withTemperature(material.getMeltingPoint()).withLuminosity(10));
         boolean plastic = entry == RegisteredFluids.Plastic && entry == RegisteredFluids.get("Plastic")
                 && entry.registryName().equals("molten.plastic") && entry.temperature() == 423
                 && actualId.equals("gt6ce:molten_plastic");
-        return MoltenMaterialUnits.ratio(material, primary || legacyAlias || plastic);
+        return MoltenMaterialUnits.ratio(material, primary || plastic);
     }
 
     private static FluidStack fluid(GTMaterial material, int amount) {
@@ -80,7 +76,6 @@ public final class MoltenFluidHandler implements IFluidHandler {
             return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, amount);
         if (material.resolve() == GTMaterialRegistry.get("Lava"))
             return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, amount);
-        // Prefer the source primary phase to the older Al2O3 compatibility alias.
         if (MoltenMaterialUnits.ratio(material).equals(MoltenMaterialUnits.ALUMINA)) {
             var primary = GTFluids.stack("GenMolten_Alumina", amount);
             if (ratio(material, primary).equals(MoltenMaterialUnits.ALUMINA)) return primary;

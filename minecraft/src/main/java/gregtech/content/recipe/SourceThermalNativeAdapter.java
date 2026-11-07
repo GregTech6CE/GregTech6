@@ -170,7 +170,6 @@ final class SourceThermalNativeAdapter {
    case 8333->declared("Redstone","molten.redstone",FluidCatalog.Redstone);
 
 
-   case 9800->declared("Water","water",FluidCatalog.Water);
    case 9810->declared("Lava","lava",FluidCatalog.Lava);
    case 9883->declared("CFoam","ic2constructionfoam",FluidCatalog.CFoam);
    case 8217->finalized("Rubber",FluidCatalog.Molten_Rubber);
@@ -309,7 +308,6 @@ final class SourceThermalNativeAdapter {
   }
   boolean holder(NativeBinding binding,FluidCatalog.FluidEntry entry,FluidStack stack){
    if(stack.getAmount()!=1)return false;
-   if(entry.isVanillaWater())return stack.getFluid()==Fluids.WATER;
    if(entry.isVanillaLava())return stack.getFluid()==Fluids.LAVA;
    return BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals("gt6ce:"+FluidCatalog.sanitizePath(binding.registry()))
        &&GTFluids.entryForFluid(stack.getFluid())==entry;
@@ -337,9 +335,6 @@ final class SourceThermalNativeAdapter {
     // glowstone's optional entry is gas-only. These unchanged directory aliases are not overrides.
     if(material.getId()==8333&&field.equals("Redstone")&&entry==FluidCatalog.Redstone
         ||material.getId()==8341&&field.equals("GenMolten_Glowstone")&&entry==FluidCatalog.get("GenMolten_Glowstone"))continue;
-    // The immutable short-name Alumina compatibility declaration is not its source phase choice.
-    if(material.getId()==8008&&field.equals("GenMolten_Al2O3")&&entry==FluidCatalog.get(field)
-        &&entry.equals(FluidCatalog.Molten_Al2O3.withTemperature(material.getMeltingPoint()).withLuminosity(10)))continue;
     // ConstructionFoam's old port gas is a known default artifact; thermal uses the source CFoam.
     if(material.getId()==9883&&field.equals("GenGas_ConstructionFoam")
         &&FluidCatalog.isGeneratedGasLiquidDefinition(field,entry)&&"ConstructionFoam".equals(entry.materialKey()))continue;

@@ -143,12 +143,25 @@ class MaterialCatalogTest {
                 "cryotheum",
                 "petrotheum",
                 "aerotheum",
-                "mana")) {
+                "mana",
+                "water",
+                "riverwater",
+                "seawater",
+                "watergeothermal",
+                "heliumplasma",
+                "nitrogenplasma",
+                "freshwater",
+                "molten.al2o3",
+                "molten.cryolite",
+                "molten.lithiumchloride",
+                "molten.lithiumchlorate",
+                "molten.aluminiumfluoride")) {
             assertTrue(
                     catalog.values().stream()
                             .noneMatch(fluid -> fluid.registryName().equals(id)),
                     id);
         }
+        assertNull(gregtech.content.data.FluidCatalog.get("Water"));
         assertTrue(gregtech.content.data.FluidCatalog.get("Lava").usesVanillaFluid());
         assertEquals(
                 gregtech.content.data.FluidCatalog.FluidTextureMode.DEDICATED,
