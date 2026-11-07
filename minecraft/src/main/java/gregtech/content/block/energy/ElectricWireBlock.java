@@ -68,15 +68,6 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
     private final WireSpec spec;
     private @Nullable Direction placementFace;
 
-//? if >=1.21.1 {
-    /*@Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(
-                    ToolInteractionSpec.ConnectionKind.ELECTRIC) : null;
-    }
-
-*///?} else {
-//?}
     public ElectricWireBlock(WireSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
@@ -92,8 +83,6 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
         Direction f = placementFace;
         placementFace = null;
         return f;
-//? if >=1.21.1 {
-//?} else {
     }
 
     @Override
@@ -101,7 +90,6 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
         return GTToolHelper.isWireCutter(tool)
                 ? ToolInteractionSpec.connections(
                     ToolInteractionSpec.ConnectionKind.ELECTRIC) : null;
-//?}
     }
 
     @Override

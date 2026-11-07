@@ -10,11 +10,6 @@ import gregtech.GregTech;
 //?}
 import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.GTMaterial;
-//? if >=1.21.1 {
-//?} else {
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
-//?}
 import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

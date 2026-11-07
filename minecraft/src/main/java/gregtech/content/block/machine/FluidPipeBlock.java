@@ -1,19 +1,13 @@
 package gregtech.content.block.machine;
 
 import gregtech.engine.tool.ToolInteractions;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-//?}
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.tool.GTToolHelper;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.tool.GTToolType;
-//?}
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.PanelCoverInteraction;
@@ -56,7 +50,7 @@ import java.util.Map;
 
 /** GT6 fluid pipe block with wrench-toggleable connections and thin-cross collision shape. */
 //? if >=1.21.1 {
-/*public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.tool.ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
+/*public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
     public static final BooleanProperty UP    = gregtech.engine.transport.PipeConnections.UP;
     public static final BooleanProperty DOWN  = gregtech.engine.transport.PipeConnections.DOWN;
     public static final BooleanProperty NORTH = gregtech.engine.transport.PipeConnections.NORTH;
@@ -93,17 +87,10 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
     @Override public String pipeSizeName() { return spec.size().name(); }
 
     @Override
-//? if >=1.21.1 {
-    /*public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-            ? gregtech.engine.tool.ToolInteractionSpec.connections(
-                gregtech.engine.tool.ToolInteractionSpec.ConnectionKind.FLUID) : null;
-*///?} else {
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
                 ? ToolInteractionSpec.connections(
                     ToolInteractionSpec.ConnectionKind.FLUID) : null;
-//?}
     }
 
     /**
@@ -280,7 +267,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
 //? if >=1.21.1 {
-            /*if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("crowbar"))) {
+            /*if (GTToolHelper.matchesTool(held, GTToolType.byId("crowbar"))) {
 *///?} else {
             if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
 //?}
@@ -292,7 +279,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             }
             if (!held.isEmpty()) {
 //? if >=1.21.1 {
-                /*if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("screwdriver"))
+                /*if (GTToolHelper.matchesTool(held, GTToolType.byId("screwdriver"))
 *///?} else {
                 if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
 //?}
@@ -300,7 +287,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
 //? if >=1.21.1 {
-                /*if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"))
+                /*if (GTToolHelper.matchesTool(held, GTToolType.byId("soft_hammer"))
 *///?} else {
                 if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
 //?}
@@ -317,7 +304,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
         // Magnifying glass: show pipe network info in chat
 //? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("magnifying_glass"))) {
+        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.byId("magnifying_glass"))) {
 *///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
 //?}
@@ -430,8 +417,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
         if (texSet == MaterialTextureSet.RUBBER) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("scissors"))) {
-                float speed = GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("scissors")) && !tool.isEmpty()
+            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.byId("scissors"))) {
+                float speed = GTToolHelper.matchesTool(tool, GTToolType.byId("scissors")) && !tool.isEmpty()
                         ? tool.getDestroySpeed(state)
 *///?} else {
             if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) {
@@ -443,8 +430,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             }
         } else if (texSet == MaterialTextureSet.WOOD) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("axe"))) {
-                float speed = GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("axe")) && !tool.isEmpty()
+            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.byId("axe"))) {
+                float speed = GTToolHelper.matchesTool(tool, GTToolType.byId("axe")) && !tool.isEmpty()
                         ? tool.getDestroySpeed(state)
 *///?} else {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) {
@@ -473,13 +460,13 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         MaterialTextureSet texSet = spec.material().getTextureSet();
         if (texSet == MaterialTextureSet.RUBBER) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("scissors"))) return true;
+            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.byId("scissors"))) return true;
 *///?} else {
             if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) return true;
 //?}
         } else if (texSet == MaterialTextureSet.WOOD) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("axe"))) return true;
+            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.byId("axe"))) return true;
 *///?} else {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) return true;
 //?}
