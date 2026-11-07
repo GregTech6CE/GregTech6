@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Runtime resolver for the transpiled GT6 chemistry data ({@link GTChemGen}).
+ * Runtime resolver for the remaining transpiled GT6 tables.
  *
  * <p>Unresolved inputs and outputs are skipped and counted. Missing tokens may
  * come from optional content or an incomplete local definition/lookup; the
@@ -48,7 +48,6 @@ public final class GeneratedRecipeResolver {
     /** Distinct content tokens (material/fluid, amount stripped) that failed to resolve. */
     private static final java.util.Set<String> MISSING = new java.util.TreeSet<>();
     private static int added, skipped;
-    private static int waterLoopRows;
 
     private GeneratedRecipeResolver() {}
 
@@ -63,12 +62,8 @@ public final class GeneratedRecipeResolver {
     public static void loadAll() {
         added = 0;
         skipped = 0;
-        waterLoopRows = 0;
         MISSING.clear();
         SET_STATS.clear();
-        load("original_distillation", GeneratedRecipeResolver::originalDistillation);
-        load("chem", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerChemicalSource, GTChemGen::load));
-        load("air_roasting", () -> gregtech.content.recipe.AirRoastingRows.emit(GeneratedRecipeResolver::registerChemicalSource));
         load("other", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerOtherSource, GTOtherGen::load));
         // Loader_Recipes_Other's nested prefix loops are outside what the transpiler emits.
         load("other_compounds", GTCompoundMixerRows::load);
@@ -114,53 +109,6 @@ public final class GeneratedRecipeResolver {
     private static void registerOtherSource(boolean optimize, String map, long eut, long ticks, long[] chances,
             String[] in, String[] fluidIn, String[] fluidOut, String[] out) {
         registerSource(optimize, map, eut, ticks, chances, in, fluidIn, fluidOut, out);
-    }
-
-    /** Loader_Recipes_Chem:333-360; solid chances correspond to the three item outputs. */
-    private static void originalDistillation() {
-        String[] none = {};
-        String[] solids = {"i:dustTiny:WaxParaffin:1", "i:dustTiny:Asphalt:1", "i:dustTiny:PetCoke:1"};
-        String[] oils = {"Oil_ExtraHeavy", "Oil_Heavy", "Oil_Medium", "Oil_Normal", "Oil_Light", "Oil_Soulsand"};
-        int[][] amounts = {{35,25,25,20,5,5,50}, {30,20,20,15,10,10,40},
-                {25,15,15,15,15,15,25}, {25,15,15,15,15,15,25},
-                {15,10,10,10,25,25,15}, {10,5,5,5,5,5,40}};
-        int[] durations = {256,196,128,128,64,64};
-        long[] chances = {5000,4000,3000,3000,2000,1000};
-        String[] names = {"Fuel", "Diesel", "Kerosine", "Petrol", "Propane", "Butane", "Lubricant"};
-        for (int i = 0; i < oils.length; i++) {
-            String[] fluids = new String[names.length];
-            for (int j = 0; j < names.length; j++) fluids[j] = "f:" + names[j] + ":" + amounts[i][j];
-            registerSource(false, "DistillationTower", 64, durations[i],
-                    new long[]{chances[i], chances[i], chances[i]}, none,
-                    new String[]{"f:" + oils[i] + ":25"}, fluids, solids);
-            registerSource(true, "Distillery", 16, 16, null, new String[]{"tag:0"},
-                    new String[]{"f:" + oils[i] + ":25"}, new String[]{fluids[0], fluids[6]}, none);
-        }
-        for (String biomass : new String[]{"Biomass"}) {
-            registerSource(false, "DistillationTower", 64, 16, new long[]{500,500,500}, none,
-                    new String[]{"f:" + biomass + ":80"},
-                    new String[]{"f:BioEthanol:20", "m:Glycerol:20", "f:Methane:4", "f:DistW:50"}, none);
-            registerSource(true, "Distillery", 16, 24, null, new String[]{"tag:0"},
-                    new String[]{"f:" + biomass + ":40"}, new String[]{"f:BioEthanol:12", "f:DistW:20"}, none);
-        }
-    }
-
-    /** Number of distinct original water-loop rows encountered in the chemistry import. */
-    public static int waterLoopRows() { return waterLoopRows; }
-
-    private static void registerChemicalSource(boolean optimize, String mapName, long eut, long dur,
-            long[] chances, String[] itemIn, String[] fluidIn, String[] fluidOut, String[] itemOut) {
-        registerSource(optimize, mapName, eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);
-        if (!SourceChemicalWaterRows.matches(mapName, itemIn, fluidIn)) return;
-        waterLoopRows++;
-        // Original FL.waters includes vanilla water, mineral water, distilled water and spectral dew;
-        // the port retires spectral dew as a type-D residual and keeps the other three.
-        for (String water : new String[]{"MnWtr", "DistW"}) {
-            String[] variant = fluidIn.clone();
-            for (int i = 0; i < variant.length; i++)
-                if (variant[i].startsWith("w:")) variant[i] = "f:" + water + ":" + variant[i].substring(2);
-            registerSource(optimize, mapName, eut, dur, chances, itemIn, variant, fluidOut, itemOut);
-        }
     }
 
     /** Record the failing spec (trailing amount stripped) for the audit summary. */

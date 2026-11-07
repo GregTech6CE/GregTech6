@@ -73,7 +73,6 @@ public final class MachineRecipeBootstrap {
         /*runStep("fuel maps", FuelRecipeMaps::bootstrap);
 *///?}
         runStep("FuelRecipeLoader", new FuelRecipeLoader());
-        runStep("ChemicalRecipeLoader", new ChemicalRecipeLoader());
         register("ConcreteMixerRecipes", ConcreteMixerRecipes::register);
         register("DynamiteMixerRecipes", DynamiteMixerRecipes::register);
         runStep("FusionRecipeLoader", new FusionRecipeLoader());
@@ -102,6 +101,8 @@ public final class MachineRecipeBootstrap {
         register("GTMaterialDataRecipes", GTMaterialDataRecipes::register);
         register("FoodItemRecipes", FoodItemRecipes::register);
 
+        // The source chemistry family is the only producer for those maps' original rows.
+        runStep("GTChemRecipes", gregtech.content.recipe.generated.GTChemRecipes::register);
         // Imported rows only fill gaps; never run these before the explicit recipes.
         runStep("imported recipe tables", GeneratedRecipeResolver::loadAll);
         gregtech.engine.recipe.RecipeDiagnostics.report();

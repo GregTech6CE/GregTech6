@@ -81,6 +81,14 @@ public final class OriginalMaterialFluidUnits {
         return null;
     }
 
+    /** Name/phase lookup for callers that do not carry the numeric material id. */
+    public static Binding binding(String canonicalName, String phase) {
+        for (Binding binding : BINDINGS) {
+            if (binding.materialName().equals(canonicalName) && binding.phase().equals(phase)) return binding;
+        }
+        return null;
+    }
+
     /**
      * Original UT.Code.units ratio and final rounding, without signed multiplication overflow.
      * Returns -1 for invalid inputs or results outside native FluidStack int capacity; zero stays
