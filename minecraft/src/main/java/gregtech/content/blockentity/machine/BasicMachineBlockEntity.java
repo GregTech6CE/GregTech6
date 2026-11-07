@@ -873,13 +873,25 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         updateBlockStates(false, false);
     }
 
+    @Override
+    public boolean consumesTool(ItemStack tool) {
+        if (gregtech.content.cover.PanelCoverHost.blockConsumesTool(this, tool)) return true;
+        if (GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
+                || GTToolHelper.isScrewdriver(tool)
+                || GTToolHelper.isMonkeyWrench(tool)
+                || GTToolHelper.isSoftHammer(tool)
+                || GTToolHelper.isMagnifyingGlass(tool)
+                || GTToolHelper.matchesTool(tool, GTToolType.PLUNGER)) return true;
+        return sourceRequiresIgnition() && gregtech.content.item.behavior.ItemBehaviors.isIgniter(tool);
+    }
+
     public InteractionResult useMachineTool(Player player,
             InteractionHand hand, BlockHitResult hit) {
         var held = player.getItemInHand(hand);
         GTToolType tool = null;
         for (var candidate : new GTToolType[] {
                 GTToolType.SCREWDRIVER, GTToolType.MONKEY_WRENCH,
-                GTToolType.SOFT_HAMMER, GTToolType.MAGNIFYING_GLASS}) {
+                GTToolType.SOFT_HAMMER, GTToolType.MAGNIFYING_GLASS, GTToolType.PLUNGER}) {
             if (GTToolHelper.matchesTool(held, candidate)) { tool = candidate; break; }
         }
         if (tool == null || level == null || spec == null) return InteractionResult.PASS;
@@ -917,6 +929,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 else appendMachineInspection(messages);
                 cost = 1;
             }
+            case PLUNGER -> {
+                long trashed = purgeTank(tanksOutput());
+                if (trashed == 0) trashed = purgeTank(tanksInput());
+                if (trashed == 0) return InteractionResult.PASS;
+                cost = trashed;
+            }
             default -> { return InteractionResult.PASS; }
         }
         for (var message : messages) player.displayClientMessage(message, false);
@@ -932,6 +950,19 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             }
         }
         return InteractionResult.CONSUME;
+    }
+
+    /** Original GT6 plunger: trash up to 1000 mB from the first non-empty output, then input tank. */
+    private long purgeTank(FluidTankGT[] tanks) {
+        if (tanks == null) return 0;
+        for (var tank : tanks) {
+            var drained = tank.drain(1000, FluidAction.EXECUTE);
+            if (!drained.isEmpty()) {
+                gregtech.content.world.GarbageData.get(level).trash(drained);
+                return drained.getAmount();
+            }
+        }
+        return 0;
     }
 
     protected void appendMachineInspection(java.util.List<Component> messages) {

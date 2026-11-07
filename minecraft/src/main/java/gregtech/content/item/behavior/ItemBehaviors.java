@@ -359,6 +359,13 @@ public final class ItemBehaviors {
         };
     }
 
+    /** GT6's {@code TOOL_igniter} item set: GT flint-and-tinder, vanilla flint-and-steel, and lighter families. */
+    public static boolean isIgniter(ItemStack stack) {
+        return gregtech.engine.tool.GTToolHelper.matchesTool(stack, gregtech.engine.tool.GTToolType.FLINT_AND_TINDER)
+                || stack.getItem() instanceof net.minecraft.world.item.FlintAndSteelItem
+                || lighterSpec(itemId(stack)) != null;
+    }
+
     /** The last scan cost, so a caller without a chat channel can still report it. */
     private static long lastScanCost;
 

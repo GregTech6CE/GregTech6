@@ -1,11 +1,6 @@
 package gregtech.content.cover;
 
-//? if >=1.21.1 {
-/*import gregtech.engine.tool.GTToolHelper;
-import gregtech.platform.neoforge.transport.FluidPipeToolInteractions;
-*///?} else {
 import gregtech.engine.tool.*;
-//?}
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
@@ -28,26 +23,14 @@ public final class PanelCoverInteraction {
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-//? if >=1.21.1 {
-        /*if(manageAllCovers&&GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("crowbar"))){
-            if(!level.isClientSide){var removed=host.removeCover(side);if(!removed.isEmpty()){if(!player.addItem(removed))player.drop(removed,false);GTToolHelper.damageForUse(held,1,player);}}
-*///?} else {
         if(manageAllCovers&&GTToolHelper.matchesTool(held,GTToolType.CROWBAR)){
             if(!level.isClientSide){var removed=host.removeCover(side);if(!removed.isEmpty()){if(!player.addItem(removed))player.drop(removed,false);GTToolHelper.damageForUse(held,1,player);}}
-//?}
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         // Source controller forwards edge tool actions to the selected neighboring cover.
-//? if >=1.21.1 {
-        /*if (PanelCover.of(host.getCover(side)) == PanelCover.CONTROLLER
-                && FluidPipeToolInteractions.isInteractionTool(held)) side = FluidPipeToolInteractions.selectedFace(hit);
-        if (GTToolHelper.isMagnifyingGlass(held)
-                && !host.getCover(side).isEmpty()) {
-*///?} else {
         if (PanelCover.of(host.getCover(side)) == PanelCover.CONTROLLER
-                && GTToolHelper.isInteractionTool(held)) side = ToolInteractions.selectedFace(hit);
+                && host.consumesTool(held)) side = ToolInteractions.selectedFace(hit);
         if (GTToolHelper.isMagnifyingGlass(held) && !host.getCover(side).isEmpty()) {
-//?}
             // Generic mode/strength output currently replaces cover-specific diagnostics.
             // This consumed path has no tool-click damage charge.
             if (!level.isClientSide) {
@@ -61,20 +44,12 @@ public final class PanelCoverInteraction {
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-//? if >=1.21.1 {
-        /*boolean cutter=GTToolHelper.isWireCutter(held),screw=GTToolHelper.isScrewdriver(held),chisel=GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("chisel"));
-*///?} else {
         boolean cutter=GTToolHelper.isWireCutter(held),screw=GTToolHelper.isScrewdriver(held),chisel=GTToolHelper.matchesTool(held,GTToolType.CHISEL);
-//?}
         if((cutter||screw||chisel)&&(host.panels().configure(side,cutter,chisel)
                 ||!chisel&&host instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity machine&&machine.configureControlCover(side,cutter))){
             // Fixed one-point charge; original cover tool-return costs differ by action.
             if(!level.isClientSide){
-//? if >=1.21.1 {
-                /*GTToolHelper.damageForUse(held,1,player);
-*///?} else {
                 GTToolHelper.damageForUse(held,1,player);
-//?}
                 var stack=host.getCover(side);var panel=PanelCover.of(stack);
                 String message=chisel?"message.gt6ce.panel.style":cutter?(MachineCoverSpec.strong(stack)?"message.gt6ce.cover.strong":"message.gt6ce.cover.weak"):
 //? if >=1.21.1 {
@@ -87,11 +62,7 @@ public final class PanelCoverInteraction {
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-//? if >=1.21.1 {
-        /*if(!FluidPipeToolInteractions.isInteractionTool(held)){
-*///?} else {
-        if(!GTToolHelper.isInteractionTool(held)){
-//?}
+        if(!host.consumesTool(held)){
             var point=hit.getLocation().subtract(owner.getBlockPos().getX(),owner.getBlockPos().getY(),owner.getBlockPos().getZ());
             var uv=CoverFaceCoordinates.from(side,point.x,point.y,point.z);
             if(host.panels().click(side,uv.u(),uv.v()))return InteractionResult.sidedSuccess(level.isClientSide);

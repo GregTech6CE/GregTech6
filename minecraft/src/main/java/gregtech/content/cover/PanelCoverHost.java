@@ -56,6 +56,15 @@ public interface PanelCoverHost {
 //?}
     }
     default BlockEntity coverOwner(){return (BlockEntity)this;}
+    /** Block-declared tool operation, shared by hosts that add their own tool actions. */
+    static boolean blockConsumesTool(PanelCoverHost host,ItemStack tool){
+        var owner=host.coverOwner();
+        var state=owner.getBlockState();
+        return state.getBlock() instanceof gregtech.engine.tool.ToolInteractionTarget target
+                &&target.toolInteraction(state,tool)!=null;
+    }
+    /** Whether the host consumes this tool click before cover right-click handling. */
+    default boolean consumesTool(ItemStack tool){return blockConsumesTool(this,tool);}
     default MachineControl coverControl(Direction side){var c=MachineControl.find(coverOwner(),side);return c!=null?c:CoverProgress.control(this,side);}
     default boolean coverPossible(Direction side){var c=coverControl(side);return c!=null&&c.available()&&(c.active()||c.progressMax()>0);}
     default boolean coverSupportsPossible(){return false;}

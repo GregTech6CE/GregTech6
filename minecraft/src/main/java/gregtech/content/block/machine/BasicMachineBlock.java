@@ -360,11 +360,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
 
 
-//? if >=1.21.1 {
-/*            if (!gregtech.platform.neoforge.transport.FluidPipeToolInteractions.isInteractionTool(held) && gregtech.content.cover.CoverUtilityBehaviors.CRAFTING_TABLE.equals(coverId)) {
-*///?} else {
-            if (!GTToolHelper.isInteractionTool(held) && gregtech.content.cover.CoverUtilityBehaviors.CRAFTING_TABLE.equals(coverId)) {
-//?}
+            if (!utilityBe.consumesTool(held) && gregtech.content.cover.CoverUtilityBehaviors.CRAFTING_TABLE.equals(coverId)) {
 
 
 
@@ -406,7 +402,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
                 }
 
-                if (!isCoverItem(held) && utilityBe.clickFilterCover(side, held)) {
+                if (!utilityBe.consumesTool(held) && !isCoverItem(held) && utilityBe.clickFilterCover(side, held)) {
 
                     return InteractionResult.sidedSuccess(level.isClientSide);
 
@@ -577,8 +573,11 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
                                            InteractionHand hand, BlockEntity be) {
 
         // Tool-specific actions already ran; an unhandled tool may open the GUI.
-
-
+        // Igniters run at the item level after the block declines; do not swallow them with the GUI.
+        var held = player.getItemInHand(hand);
+        if (be instanceof BasicMachineBlockEntity machine
+                && gregtech.content.item.behavior.ItemBehaviors.isIgniter(held)
+                && machine.consumesTool(held)) return InteractionResult.PASS;
 
 //? if >=1.21.1 {
 /*        if (!level.isClientSide) {

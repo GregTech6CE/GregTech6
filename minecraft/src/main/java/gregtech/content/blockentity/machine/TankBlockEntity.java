@@ -5,6 +5,7 @@ import gregtech.api.machine.BlockFace;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.TankSpec;
+import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.TankBlock;
 import gregtech.content.data.GregTechConstants;
@@ -69,6 +70,11 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     @Override public boolean attachCover(Direction side, net.minecraft.world.item.ItemStack stack) { return componentCovers.attach(side,stack); }
     @Override public net.minecraft.world.item.ItemStack removeCover(Direction side) { return componentCovers.remove(side); }
     @Override public gregtech.content.cover.PanelCoverRuntime panels() { return componentCovers.panels(); }
+    @Override public boolean consumesTool(ItemStack tool) {
+        return GTToolHelper.isMachineWrench(tool)
+                || GTToolHelper.isSoftHammer(tool)
+                || GTToolHelper.isMagnifyingGlass(tool);
+    }
     public void tickComponentCovers() { componentCovers.tick(); }
     public void dropComponentCovers() { componentCovers.drop(); }
 

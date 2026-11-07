@@ -10,6 +10,8 @@ import gregtech.content.cover.MachineCoverSpec;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import gregtech.content.transport.ItemPipeNetwork;
 import gregtech.content.transport.ItemPipeNetwork.Membership;
 import gregtech.content.transport.ItemPipeNetworkTransfer;
@@ -227,6 +229,14 @@ public class ItemPipeBlockEntity extends BlockEntity
     public boolean hasCovers() { return coverStore.hasCovers(); }
     @Override public PanelCoverRuntime panels() {
         return coverStore.panels();
+    }
+
+    @Override
+    public boolean consumesTool(ItemStack tool) {
+        if (PanelCoverHost.blockConsumesTool(this, tool)) return true;
+        return GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
+                || GTToolHelper.isScrewdriver(tool)
+                || GTToolHelper.isSoftHammer(tool);
     }
 
     /** Item filters reject pipe-to-pipe faces; attempted placement disconnects that face. */

@@ -17,7 +17,7 @@ public final class AxleToolInteractions {
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         var tool = player.getItemInHand(hand);
         if (!GTToolHelper.isMachineWrench(tool)) return false;
-        var side = gregtech.platform.neoforge.transport.FluidPipeToolInteractions.selectedFace(hit);
+        var side = gregtech.engine.tool.ToolInteractions.selectedFace(hit);
         var neighbor = pos.relative(side);
         boolean connect = !state.getValue(AxleBlock.propFor(side));
         var next = state.setValue(AxleBlock.propFor(side), connect);

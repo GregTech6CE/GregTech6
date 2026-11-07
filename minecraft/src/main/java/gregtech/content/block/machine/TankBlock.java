@@ -7,7 +7,6 @@ import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.client.TankTooltips;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
-import gregtech.platform.neoforge.transport.FluidPipeToolInteractions;
 
 *///?} else {
 import gregtech.content.registry.GTBlockEntities;

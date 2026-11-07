@@ -18,6 +18,8 @@ import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.data.GregTechConstants;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 
 //? if >=1.21.1 {
 //?} else {
@@ -306,6 +308,15 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     @Override
     public PanelCoverRuntime panels() {
         return coverStore.panels();
+    }
+
+    @Override
+    public boolean consumesTool(ItemStack tool) {
+        if (PanelCoverHost.blockConsumesTool(this, tool)) return true;
+        return GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
+                || GTToolHelper.isScrewdriver(tool)
+                || GTToolHelper.isSoftHammer(tool)
+                || GTToolHelper.isMagnifyingGlass(tool);
     }
 
     /**

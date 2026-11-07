@@ -53,6 +53,8 @@ public final class UtilityCoverInteraction {
         var owner=host.coverOwner();var level=owner.getLevel();if(level==null)return InteractionResult.PASS;
         var held=player.getItemInHand(hand);var side=hit.getDirection();var installed=host.getCover(side);var id=CoverItems.behavior(installed);
         if(!player.mayBuild()||!level.mayInteract(player,owner.getBlockPos()))return InteractionResult.FAIL;
+        // Crowbar removal belongs to the panel/cover path that runs after this one.
+        if(GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.CROWBAR))return InteractionResult.PASS;
         if(CoverPlacement.placing(player)&&installed.isEmpty()&&CoverItems.isCover(held)&&gregtech.content.logistics.LogisticsCoverType.of(held)==null){
             if(!CoverAdmission.allowCover(owner,side,held))return InteractionResult.PASS;
             if(!level.isClientSide&&host.attachCover(side,held)&&!player.getAbilities().instabuild)held.shrink(1);
@@ -80,20 +82,16 @@ public final class UtilityCoverInteraction {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
 //? if >=1.21.1 {
-            /*if(!gregtech.platform.neoforge.transport.FluidPipeToolInteractions.isInteractionTool(held)){
+            /*if(!host.consumesTool(held)){
                 if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
 *///?} else {
-            if(!gregtech.engine.tool.GTToolHelper.isInteractionTool(held)){
+            if(!host.consumesTool(held)){
                 if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held);else CoverUtilityBehaviors.setFluidFilter(installed,sample(held));host.panels().changed();}
 //?}
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-//? if >=1.21.1 {
-        /*if(CoverUtilityBehaviors.CRAFTING_TABLE.equals(id)&&!gregtech.platform.neoforge.transport.FluidPipeToolInteractions.isInteractionTool(held)){
-*///?} else {
-        if(CoverUtilityBehaviors.CRAFTING_TABLE.equals(id)&&!gregtech.engine.tool.GTToolHelper.isInteractionTool(held)){
-//?}
+        if(CoverUtilityBehaviors.CRAFTING_TABLE.equals(id)&&!host.consumesTool(held)){
             if(!level.isClientSide)CoverUtilityBehaviors.clickCraftingCover(player,(net.minecraft.server.level.ServerLevel)level,owner.getBlockPos());
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

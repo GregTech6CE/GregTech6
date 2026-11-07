@@ -4,6 +4,9 @@ import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.fluid.FluidTankGT;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
+import net.minecraft.world.item.ItemStack;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -60,6 +63,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     }
     @Override public boolean coverSupportsPossible(){return hasControlPanels();}
     @Override public boolean coverPossible(Direction side){return hasOriginalConverter()||isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
+    @Override public boolean consumesTool(ItemStack tool){
+        if(gregtech.content.cover.PanelCoverHost.blockConsumesTool(this,tool))return true;
+        return GTToolHelper.isMonkeyWrench(tool)
+                ||GTToolHelper.isSoftHammer(tool)
+                ||GTToolHelper.isMagnifyingGlass(tool)
+                ||GTToolHelper.matchesTool(tool,GTToolType.PLUNGER)
+                ||GTToolHelper.matchesTool(tool,GTToolType.CROWBAR);
+    }
     @Override public boolean attachCover(Direction side,net.minecraft.world.item.ItemStack stack){
         var panel=gregtech.content.cover.PanelCover.of(stack);
         if(!gregtech.content.cover.CoverItems.isCover(stack)||!getCover(side).isEmpty()||!panels().canAttach(side,stack)

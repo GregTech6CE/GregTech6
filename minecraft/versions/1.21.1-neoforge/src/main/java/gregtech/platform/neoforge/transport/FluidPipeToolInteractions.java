@@ -3,7 +3,6 @@ package gregtech.platform.neoforge.transport;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.transport.fluid.FluidTransportRegistries;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -17,38 +16,11 @@ import net.minecraft.world.phys.BlockHitResult;
 public final class FluidPipeToolInteractions {
     private FluidPipeToolInteractions() {}
 
-    public static Direction selectedFace(BlockHitResult hit) {
-        var p = hit.getBlockPos();
-        return gregtech.util.GTPlacementCode.getSideWrenching(
-                hit.getDirection(),
-                (float) (hit.getLocation().x - p.getX()),
-                (float) (hit.getLocation().y - p.getY()),
-                (float) (hit.getLocation().z - p.getZ()));
-    }
-
-    public static boolean isInteractionTool(ItemStack stack) {
-        if (GTToolHelper.isMachineWrench(stack)
-                || GTToolHelper.isWireCutter(stack)
-                || GTToolHelper.isScrewdriver(stack)) return true;
-        for (String kind : new String[] {
-            "crowbar",
-            "chisel",
-            "soft_hammer",
-            "hammer",
-            "monkey_wrench",
-            "scissors",
-            "knife",
-            "magnifying_glass",
-            "soldering_iron"
-        }) if (GTToolHelper.matchesTool(stack, GTToolType.byId(kind))) return true;
-        return false;
-    }
-
     public static boolean use(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         if (!GTToolHelper.isMachineWrench(held)) return false;
-        Direction side = selectedFace(hit);
+        Direction side = gregtech.engine.tool.ToolInteractions.selectedFace(hit);
         BlockPos neighbor = pos.relative(side);
         if (!player.mayBuild()
                 || !level.mayInteract(player, pos)

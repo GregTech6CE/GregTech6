@@ -18,7 +18,7 @@ public final class WireToolInteractions {
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         var heldTool = player.getItemInHand(hand);
         if (!GTToolHelper.isWireCutter(heldTool)) return false;
-        var connectionSide = gregtech.platform.neoforge.transport.FluidPipeToolInteractions.selectedFace(hit);
+        var connectionSide = gregtech.engine.tool.ToolInteractions.selectedFace(hit);
         var neighborPos = pos.relative(connectionSide);
         if (!player.mayBuild()
                 || !level.mayInteract(player, pos)
