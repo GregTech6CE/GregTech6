@@ -892,7 +892,6 @@ public final class SourceRecyclingFacts {
         row(rows, 9246, "Columbite", B, 9246, U, 3745);
         row(rows, 9247, "Coltan", B, 9247, U, 3746);
         row(rows, 9248, "Deepslate", F, 9248, U, 3842);
-        row(rows, 9252, "MercuryRock", F, 9252, U, 3847);
         row(rows, 9261, "TitanRock", F, 9261, U, 3856);
         row(rows, 9271, "Quicklime", 0, 9271, U, 1107);
         row(rows, 9300, "Oak", M, 8200, U / 4, 3872);

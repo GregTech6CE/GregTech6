@@ -916,7 +916,6 @@ public final class SourceLatheMaterialProfiles {
             9246|Columbite|0000
             9247|Coltan|0000
             9248|Deepslate|0010
-            9252|MercuryRock|0010
             9261|TitanRock|0010
             9271|Quicklime|0000
             9300|Oak|0000

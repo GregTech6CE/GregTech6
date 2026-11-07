@@ -646,7 +646,6 @@ public final class SourceExtrusionRules {
             9246|Columbite|000||648648000
             9247|Coltan|000||648648000
             9248|Deepslate|110||648648000
-            9252|MercuryRock|110||648648000
             9261|TitanRock|110||648648000
             9271|Quicklime|000||648648000
             9300|Oak|000||648648000

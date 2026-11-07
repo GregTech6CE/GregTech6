@@ -98,7 +98,6 @@ public final class ClayMoldCatalog {
                 GT6Materials.Stones.Dacite,
                 GT6Materials.Stones.Slate,
                 GT6Materials.Stones.Deepslate,
-                GT6Materials.Stones.MercuryRock,
                 GT6Materials.Stones.TitanRock);
         static final java.util.Set<GTMaterial> WAX = members(
                 GT6Materials.Compounds.Wax,

@@ -259,7 +259,6 @@ public final class MaterialModTags {
         ImportedMaterialData.STONES.Livingrock.mod(ModReferences.BOTA);
         ImportedMaterialData.STONES.Marble.mod(ModReferences.RP);
         ImportedMaterialData.STONES.MarsSand.mod(ModReferences.GC);
-        ImportedMaterialData.STONES.MercuryRock.mod(ModReferences.GC_EXTRAPLANETS);
         ImportedMaterialData.STONES.NetherBrick.mod(ModReferences.MC);
         ImportedMaterialData.STONES.Netherrack.mod(ModReferences.MC);
         ImportedMaterialData.STONES.PrismarineDark.mod(ModReferences.EtFu);

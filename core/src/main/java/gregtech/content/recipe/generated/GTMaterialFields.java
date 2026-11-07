@@ -764,7 +764,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("Dacite", "Dacite");
         BY_FIELD.put("Slate", "Slate");
         BY_FIELD.put("Deepslate", "Deepslate");
-        BY_FIELD.put("MercuryRock", "MercuryRock");
         BY_FIELD.put("TitanRock", "TitanRock");
         BY_FIELD.put("Oak", "Oak");
         BY_FIELD.put("Birch", "Birch");
