@@ -7,11 +7,7 @@ import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTEnergyNodes;
-*///?} else {
 import gregtech.content.registry.GTBlockEntities;
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -120,11 +116,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
     @Override
     @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-//? if >=1.21.1 {
-        /*if (level.isClientSide || type != GTEnergyNodes.ENERGY_NODE.get()) return null;
-*///?} else {
         if (level.isClientSide || type != GTBlockEntities.ENERGY_NODE.get()) return null;
-//?}
         return (BlockEntityTicker<T>) (BlockEntityTicker<EnergyNodeBlockEntity>) EnergyNodeBlockEntity::serverTick;
     }
 
@@ -150,18 +142,10 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         }
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
-//? if >=1.21.1 {
-        /*if (node.isOriginalMotor() && gregtech.platform.neoforge.NeoToolBindings.isMonkeyWrench(held)) {
-*///?} else {
         if (node.isOriginalMotor() && GTToolHelper.isMonkeyWrench(held)) {
-//?}
             if (!level.isClientSide) {
                 node.reverseMotor();
-//? if >=1.21.1 {
-                /*gregtech.platform.neoforge.NeoToolBindings.damageForUse(held, 1, player);
-*///?} else {
                 GTToolHelper.damageForUse(held, 1, player);
-//?}
                 player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -176,21 +160,11 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         // GT6 rotational transformers reverse with a monkey wrench; the other
         // invertible energy nodes keep their existing soft-hammer interaction.
         boolean modeTool = node.isRotationTransformer() || node.isElectricTransformer()
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                ? gregtech.platform.neoforge.NeoToolBindings.isMonkeyWrench(held) : gregtech.platform.neoforge.NeoToolBindings.isSoftHammer(held);
-*///?} else {
-// Version-specific branch.
                 ? GTToolHelper.isMonkeyWrench(held) : GTToolHelper.isSoftHammer(held);
-//?}
         if (node.isInvertible() && modeTool) {
             if (!level.isClientSide) {
                 boolean up = node.toggleInverted();
-//? if >=1.21.1 {
-                /*if (node.isRotationTransformer() || node.isElectricTransformer()) gregtech.platform.neoforge.NeoToolBindings.damageForUse(held, 1, player);
-*///?} else {
                 if (node.isRotationTransformer() || node.isElectricTransformer()) GTToolHelper.damageForUse(held, 1, player);
-//?}
                 player.displayClientMessage(Component.translatable(
                         up ? "message.gt6ce.transformer.step_up" : "message.gt6ce.transformer.step_down"), true);
             }
@@ -205,12 +179,8 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         }
         // Return obsolete installed rotors from worlds made by earlier port versions.
         if (node.isTurbine()) {
-//? if >=1.21.1 {
-            /*if (node.hasRotor() && gregtech.platform.neoforge.NeoToolBindings.matches(held,"crowbar")) {
-*///?} else {
             if (node.hasRotor() && GTToolHelper.matchesTool(held,
                     gregtech.engine.tool.GTToolType.CROWBAR)) {
-//?}
                 if (!level.isClientSide) {
                     ItemStack removed = node.removeRotor();
                     if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
@@ -226,28 +196,18 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-//? if >=1.21.1 {
-            /*if (gregtech.platform.neoforge.NeoToolBindings.matches(held,"crowbar")) {
-*///?} else {
             if (GTToolHelper.matchesTool(held,
                     gregtech.engine.tool.GTToolType.CROWBAR)) {
-//?}
                 if (!level.isClientSide) {
                     ItemStack removed = node.removeBattery();
                     if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-//? if >=1.21.1 {
-            /*if (!gregtech.platform.neoforge.NeoToolBindings.isTool(held)) {
-*///?} else {
-            if (!GTToolHelper.isTool(held)) {
-//?}
-                if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer sp) {
-                    sp.openMenu(node.batteryMenu());
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+            if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                sp.openMenu(node.batteryMenu());
             }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
     }

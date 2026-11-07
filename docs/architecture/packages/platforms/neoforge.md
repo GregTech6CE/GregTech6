@@ -20,7 +20,7 @@
 | `platform.neoforge.registry` | `NeoContent`、`RetiredStoneAliases` 等注册入口 |
 | `platform.neoforge.enchantment` | `GTEnchantmentEffectTypes` 等附魔效果类型 |
 
-共享门面契约见[共享门面](facade.md)；表中是代表入口，完整包列表以源码为准。`NeoToolBindings` 当前以转发 `GTToolHelper` 为主，`isTool` 还映射到 `isInteractionTool`。共享输入仍有直接引用，属于已知边界违规，新代码不得新增；按[跨版本指南](../../versions.md)的“已知需要单独检查的边界”处理。
+共享门面契约见[共享门面](facade.md)；表中是代表入口，完整包列表以源码为准。工具判定与损耗统一走 `GTToolHelper`，节点侧不再保留转发层；共享输入不得直接引用节点类，按[跨版本指南](../../versions.md)的“已知需要单独检查的边界”处理。
 
 ## 设计准则
 

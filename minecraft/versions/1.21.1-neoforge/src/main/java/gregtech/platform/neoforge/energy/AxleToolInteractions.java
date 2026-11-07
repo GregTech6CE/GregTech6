@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.energy;
 
 import gregtech.content.block.energy.AxleBlock;
-import gregtech.platform.neoforge.NeoToolBindings;
+import gregtech.engine.tool.GTToolHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +16,7 @@ public final class AxleToolInteractions {
     public static boolean use(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         var tool = player.getItemInHand(hand);
-        if (!NeoToolBindings.isMachineWrench(tool)) return false;
+        if (!GTToolHelper.isMachineWrench(tool)) return false;
         var side = gregtech.platform.neoforge.transport.FluidPipeToolInteractions.selectedFace(hit);
         var neighbor = pos.relative(side);
         boolean connect = !state.getValue(AxleBlock.propFor(side));
@@ -43,7 +43,7 @@ public final class AxleToolInteractions {
                 net.minecraft.sounds.SoundSource.BLOCKS,
                 1F,
                 1F);
-        NeoToolBindings.damageForUse(tool, 1, player);
+        GTToolHelper.damageForUse(tool, 1, player);
         return true;
     }
 }

@@ -19,7 +19,6 @@ import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.PanelCoverInteraction;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
-import gregtech.platform.neoforge.NeoToolBindings;
 import gregtech.platform.neoforge.transport.FluidPipeToolInteractions;
 *///?} else {
 import gregtech.content.registry.GTBlockEntities;
@@ -164,8 +163,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         if (context instanceof EntityCollisionContext ctx
                 && ctx.getEntity() instanceof Player player
 //? if >=1.21.1 {
-                /*&& (NeoToolBindings.isMachineWrench(player.getMainHandItem())
-                    || NeoToolBindings.isMachineWrench(player.getOffhandItem()))) {
+                /*&& (GTToolHelper.isMachineWrench(player.getMainHandItem())
+                    || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
 *///?} else {
                 && (GTToolHelper.isMachineWrench(player.getMainHandItem())
                     || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
@@ -299,7 +298,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
 //? if >=1.21.1 {
-            /*if (NeoToolBindings.matches(held,"crowbar")) {
+            /*if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("crowbar"))) {
 *///?} else {
             if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
 //?}
@@ -311,7 +310,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             }
             if (!held.isEmpty()) {
 //? if >=1.21.1 {
-                /*if (NeoToolBindings.matches(held,"screwdriver")
+                /*if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("screwdriver"))
 *///?} else {
                 if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
 //?}
@@ -319,7 +318,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
 //? if >=1.21.1 {
-                /*if (NeoToolBindings.matches(held,"soft_hammer")
+                /*if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"))
 *///?} else {
                 if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
 //?}
@@ -336,7 +335,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
         // Magnifying glass: show pipe network info in chat
 //? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && NeoToolBindings.matches(held,"magnifying_glass")) {
+        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("magnifying_glass"))) {
 *///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
 //?}
@@ -449,8 +448,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
         if (texSet == MaterialTextureSet.RUBBER) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof ShearsItem || NeoToolBindings.matches(tool,"scissors")) {
-                float speed = NeoToolBindings.matches(tool,"scissors") && !tool.isEmpty()
+            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("scissors"))) {
+                float speed = GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("scissors")) && !tool.isEmpty()
                         ? tool.getDestroySpeed(state)
 *///?} else {
             if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) {
@@ -462,8 +461,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             }
         } else if (texSet == MaterialTextureSet.WOOD) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof AxeItem || NeoToolBindings.matches(tool,"axe")) {
-                float speed = NeoToolBindings.matches(tool,"axe") && !tool.isEmpty()
+            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("axe"))) {
+                float speed = GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("axe")) && !tool.isEmpty()
                         ? tool.getDestroySpeed(state)
 *///?} else {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) {
@@ -475,7 +474,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             }
         } else {
 //? if >=1.21.1 {
-            /*if (NeoToolBindings.isMachineWrench(tool)) {
+            /*if (GTToolHelper.isMachineWrench(tool)) {
 *///?} else {
             if (GTToolHelper.isMachineWrench(tool)) {
 //?}
@@ -496,19 +495,19 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         MaterialTextureSet texSet = spec.material().getTextureSet();
         if (texSet == MaterialTextureSet.RUBBER) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof ShearsItem || NeoToolBindings.matches(tool,"scissors")) return true;
+            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("scissors"))) return true;
 *///?} else {
             if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) return true;
 //?}
         } else if (texSet == MaterialTextureSet.WOOD) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof AxeItem || NeoToolBindings.matches(tool,"axe")) return true;
+            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.byId("axe"))) return true;
 *///?} else {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) return true;
 //?}
         } else {
 //? if >=1.21.1 {
-            /*if (NeoToolBindings.isMachineWrench(tool)) return true;
+            /*if (GTToolHelper.isMachineWrench(tool)) return true;
 *///?} else {
             if (GTToolHelper.isMachineWrench(tool)) return true;
 //?}

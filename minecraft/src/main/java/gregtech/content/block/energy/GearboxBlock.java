@@ -5,11 +5,7 @@ import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.block.machine.MachineRotationType;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.NeoToolBindings;
-*///?} else {
 import gregtech.engine.tool.GTToolHelper;
-//?}
 import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
@@ -133,17 +129,10 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
-//? if >=1.21.1 {
-        /*boolean monkey = NeoToolBindings.isMonkeyWrench(held);
-        boolean wrench = NeoToolBindings.isMachineWrench(held) && !monkey;
-        boolean hammer = NeoToolBindings.isSoftHammer(held);
-        boolean glass = NeoToolBindings.isMagnifyingGlass(held);
-*///?} else {
         boolean monkey = GTToolHelper.isMonkeyWrench(held);
         boolean wrench = GTToolHelper.isMachineWrench(held) && !monkey;
         boolean hammer = GTToolHelper.isSoftHammer(held);
         boolean glass = GTToolHelper.isMagnifyingGlass(held);
-//?}
         if (!monkey && !wrench && !hammer && !glass) return InteractionResult.PASS;
         Direction side = ToolInteractions.selectedFace(hit);
         if ((wrench || monkey) && !ToolInteractions.canApply(toolInteraction(state, held),
@@ -168,40 +157,24 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
                 }
                 gearbox.mountGear(side);
             }
-//? if >=1.21.1 {
-            /*NeoToolBindings.damageForToolClickReturn(held, 10000, player);
-*///?} else {
             GTToolHelper.damageForToolClickReturn(held, 10000, player);
-//?}
             return InteractionResult.CONSUME;
         }
         if (monkey) {
             gearbox.toggleAxis(side.getAxis());
             if (gearbox.hasAxis(side.getAxis())) level.setBlockAndUpdate(pos, state.setValue(FACING, side));
-//? if >=1.21.1 {
-            /*NeoToolBindings.damageForToolClickReturn(held, 10000, player);
-*///?} else {
             GTToolHelper.damageForToolClickReturn(held, 10000, player);
-//?}
             return InteractionResult.CONSUME;
         }
         if (hammer) {
             gearbox.toggleJammed();
-//? if >=1.21.1 {
-            /*NeoToolBindings.damageForToolClickReturn(held, 10000, player);
-*///?} else {
             GTToolHelper.damageForToolClickReturn(held, 10000, player);
-//?}
             return InteractionResult.CONSUME;
         }
         player.sendSystemMessage(Component.literal(gearbox.gearsWork()
                 ? gearbox.isJammed() ? "Gears interlocked, but stopped." : "Gears interlocked properly."
                 : "Gears interlocked improperly."));
-//? if >=1.21.1 {
-        /*NeoToolBindings.damageForToolClickReturn(held, 1, player);
-*///?} else {
         GTToolHelper.damageForToolClickReturn(held, 1, player);
-//?}
         return InteractionResult.CONSUME;
     }
 

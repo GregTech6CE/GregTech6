@@ -1,4 +1,5 @@
 package gregtech.content.cover;
+import gregtech.engine.tool.GTToolHelper;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
@@ -59,8 +60,8 @@ public final class UtilityCoverInteraction {
         }
         if(id==null)return InteractionResult.PASS;
 //? if >=1.21.1 {
-        /*if(gregtech.platform.neoforge.NeoToolBindings.matches(held,"chisel")&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
-            if(!level.isClientSide){CoverUtilityBehaviors.cycleDesign(installed,installed.getItem() instanceof gregtech.engine.material.MaterialFormItem material?MaterialCoverRules.designCount(material.getPrefix().getName(),material.getMaterial().getName()):CoverUtilityBehaviors.designCount(id));host.panels().changed();gregtech.platform.neoforge.NeoToolBindings.damageForUse(held,1,player);}
+        /*if(GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("chisel"))&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
+            if(!level.isClientSide){CoverUtilityBehaviors.cycleDesign(installed,installed.getItem() instanceof gregtech.engine.material.MaterialFormItem material?MaterialCoverRules.designCount(material.getPrefix().getName(),material.getMaterial().getName()):CoverUtilityBehaviors.designCount(id));host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
 *///?} else {
         if(gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.CHISEL)&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
             if(!level.isClientSide){CoverUtilityBehaviors.cycleDesign(installed,installed.getItem() instanceof gregtech.engine.material.MaterialFormItem material?MaterialCoverRules.designCount(material.getPrefix().getName(),material.getMaterial().getName()):CoverUtilityBehaviors.designCount(id));host.panels().changed();gregtech.engine.tool.GTToolHelper.damageForUse(held,1,player);}
@@ -70,8 +71,8 @@ public final class UtilityCoverInteraction {
         boolean item=CoverUtilityBehaviors.FILTER_ITEM.equals(id)||CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id),fluid=CoverUtilityBehaviors.FILTER_FLUID.equals(id);
         if(item||fluid){
 //? if >=1.21.1 {
-            /*if(gregtech.platform.neoforge.NeoToolBindings.isScrewdriver(held)||gregtech.platform.neoforge.NeoToolBindings.matches(held,"soft_hammer")){
-                if(!level.isClientSide){if(gregtech.platform.neoforge.NeoToolBindings.matches(held,"soft_hammer"))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();gregtech.platform.neoforge.NeoToolBindings.damageForUse(held,1,player);}
+            /*if(GTToolHelper.isScrewdriver(held)||GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"))){
+                if(!level.isClientSide){if(GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer")))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
 *///?} else {
             if(gregtech.engine.tool.GTToolHelper.isScrewdriver(held)||gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.SOFT_HAMMER)){
                 if(!level.isClientSide){if(gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.SOFT_HAMMER))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();gregtech.engine.tool.GTToolHelper.damageForUse(held,1,player);}

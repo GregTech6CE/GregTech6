@@ -1,7 +1,7 @@
 package gregtech.content.cover;
 
 //? if >=1.21.1 {
-/*import gregtech.platform.neoforge.NeoToolBindings;
+/*import gregtech.engine.tool.GTToolHelper;
 import gregtech.platform.neoforge.transport.FluidPipeToolInteractions;
 *///?} else {
 import gregtech.engine.tool.*;
@@ -29,8 +29,8 @@ public final class PanelCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 //? if >=1.21.1 {
-        /*if(manageAllCovers&&NeoToolBindings.matches(held,"crowbar")){
-            if(!level.isClientSide){var removed=host.removeCover(side);if(!removed.isEmpty()){if(!player.addItem(removed))player.drop(removed,false);NeoToolBindings.damageForUse(held,1,player);}}
+        /*if(manageAllCovers&&GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("crowbar"))){
+            if(!level.isClientSide){var removed=host.removeCover(side);if(!removed.isEmpty()){if(!player.addItem(removed))player.drop(removed,false);GTToolHelper.damageForUse(held,1,player);}}
 *///?} else {
         if(manageAllCovers&&GTToolHelper.matchesTool(held,GTToolType.CROWBAR)){
             if(!level.isClientSide){var removed=host.removeCover(side);if(!removed.isEmpty()){if(!player.addItem(removed))player.drop(removed,false);GTToolHelper.damageForUse(held,1,player);}}
@@ -41,7 +41,7 @@ public final class PanelCoverInteraction {
 //? if >=1.21.1 {
         /*if (PanelCover.of(host.getCover(side)) == PanelCover.CONTROLLER
                 && FluidPipeToolInteractions.isInteractionTool(held)) side = FluidPipeToolInteractions.selectedFace(hit);
-        if (gregtech.platform.neoforge.NeoToolBindings.isMagnifyingGlass(held)
+        if (GTToolHelper.isMagnifyingGlass(held)
                 && !host.getCover(side).isEmpty()) {
 *///?} else {
         if (PanelCover.of(host.getCover(side)) == PanelCover.CONTROLLER
@@ -62,7 +62,7 @@ public final class PanelCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 //? if >=1.21.1 {
-        /*boolean cutter=NeoToolBindings.isWireCutter(held),screw=NeoToolBindings.isScrewdriver(held),chisel=NeoToolBindings.matches(held,"chisel");
+        /*boolean cutter=GTToolHelper.isWireCutter(held),screw=GTToolHelper.isScrewdriver(held),chisel=GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("chisel"));
 *///?} else {
         boolean cutter=GTToolHelper.isWireCutter(held),screw=GTToolHelper.isScrewdriver(held),chisel=GTToolHelper.matchesTool(held,GTToolType.CHISEL);
 //?}
@@ -71,7 +71,7 @@ public final class PanelCoverInteraction {
             // Fixed one-point charge; original cover tool-return costs differ by action.
             if(!level.isClientSide){
 //? if >=1.21.1 {
-                /*NeoToolBindings.damageForUse(held,1,player);
+                /*GTToolHelper.damageForUse(held,1,player);
 *///?} else {
                 GTToolHelper.damageForUse(held,1,player);
 //?}

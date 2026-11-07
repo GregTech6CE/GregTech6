@@ -219,6 +219,13 @@ public final class GTToolHelper {
 *///?} else {
 //?}
 
+    /** GT tool crafting damage; non-tools cost nothing. Uses the item's base type, not a pocket tool's active mode. */
+    public static int craftDamage(ItemStack stack) {
+        return ToolCraftingRules.damage(isTool(stack)
+                ? ((GTToolItem) stack.getItem()).toolType().id()
+                : "");
+    }
+
     public static GTMaterial getHead(ItemStack stack) {
         CompoundTag stats = stats(stack);
         if (stats == null) {

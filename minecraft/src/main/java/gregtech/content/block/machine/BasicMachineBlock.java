@@ -8,11 +8,7 @@ import gregtech.engine.machine.MachineSpec;
 
 
 
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.NeoToolBindings;
-*///?} else {
 import gregtech.engine.tool.GTToolHelper;
-//?}
 
 
 
@@ -320,11 +316,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
 
 
-//? if >=1.21.1 {
-/*            if (NeoToolBindings.matches(held,"crowbar")) {
-*///?} else {
             if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.CROWBAR)) {
-//?}
 
 
 
@@ -392,11 +384,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
 
 
-//? if >=1.21.1 {
-/*                if (NeoToolBindings.matches(held,"screwdriver")
-*///?} else {
                 if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCREWDRIVER)
-//?}
 
 
 
@@ -408,11 +396,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
 
 
-//? if >=1.21.1 {
-/*                if (NeoToolBindings.matches(held,"soft_hammer")
-*///?} else {
                 if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SOFT_HAMMER)
-//?}
 
 
 

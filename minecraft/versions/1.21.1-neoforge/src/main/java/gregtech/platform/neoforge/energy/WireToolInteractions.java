@@ -1,7 +1,7 @@
 package gregtech.platform.neoforge.energy;
 
 import gregtech.content.block.energy.ElectricWireBlock;
-import gregtech.platform.neoforge.NeoToolBindings;
+import gregtech.engine.tool.GTToolHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ public final class WireToolInteractions {
     public static boolean use(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         var heldTool = player.getItemInHand(hand);
-        if (!NeoToolBindings.isWireCutter(heldTool)) return false;
+        if (!GTToolHelper.isWireCutter(heldTool)) return false;
         var connectionSide = gregtech.platform.neoforge.transport.FluidPipeToolInteractions.selectedFace(hit);
         var neighborPos = pos.relative(connectionSide);
         if (!player.mayBuild()
@@ -44,7 +44,7 @@ public final class WireToolInteractions {
                 net.minecraft.sounds.SoundSource.BLOCKS,
                 1F,
                 1F);
-        NeoToolBindings.damageForUse(heldTool, 1, player);
+        GTToolHelper.damageForUse(heldTool, 1, player);
         return true;
     }
 }

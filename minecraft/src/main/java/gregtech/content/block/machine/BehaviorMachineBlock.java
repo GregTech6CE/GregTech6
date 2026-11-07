@@ -8,10 +8,6 @@ import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.NeoToolBindings;
-*///?} else {
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -148,14 +144,13 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregte
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (!level.isClientSide && machine.onUse(player, hand)) return InteractionResult.sidedSuccess(false);
+        if (!level.isClientSide && player instanceof ServerPlayer server) {
 //? if >=1.21.1 {
-/*        if (!level.isClientSide && player instanceof ServerPlayer server && !NeoToolBindings.isTool(held))
             server.openMenu(machine, buf -> buf.writeBlockPos(pos));
-*///?} else {
-        if (!level.isClientSide && player instanceof ServerPlayer server && !GTToolHelper.isTool(held)) {
+//?} else {
             NetworkHooks.openScreen(server, machine, buf -> buf.writeBlockPos(pos));
-        }
 //?}
+        }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 

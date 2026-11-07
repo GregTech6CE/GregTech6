@@ -10,7 +10,7 @@ public final class EnergyNodeClientSetup {
     @net.neoforged.bus.api.SubscribeEvent
     public static void renderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(
-                gregtech.content.registry.GTEnergyNodes.ENERGY_NODE.get(), EnergyNodeRenderer::new);
+                gregtech.content.registry.GTBlockEntities.ENERGY_NODE.get(), EnergyNodeRenderer::new);
     }
 
     @net.neoforged.bus.api.SubscribeEvent

@@ -42,19 +42,11 @@ public final class PowerCellBlock extends Block implements EntityBlock, SimpleWa
 //?}
             net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
         var tool=player.getItemInHand(hand);
-//? if >=1.21.1 {
-        /*if(!gregtech.platform.neoforge.NeoToolBindings.matches(tool,"magnifying_glass"))
-*///?} else {
         if(!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
-//?}
             return net.minecraft.world.InteractionResult.PASS;
         if(!level.isClientSide&&level.getBlockEntity(pos) instanceof PowerCellBlockEntity be) {
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",be.stored(),spec.capacity()),true);
-//? if >=1.21.1 {
-            /*gregtech.platform.neoforge.NeoToolBindings.damageForUse(tool,1,player,
-*///?} else {
             gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
-//?}
                     hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
         }
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);

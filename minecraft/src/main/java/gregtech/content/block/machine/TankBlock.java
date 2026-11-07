@@ -1,16 +1,12 @@
 package gregtech.content.block.machine;
 
 import gregtech.engine.machine.TankSpec;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-//?}
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.client.TankTooltips;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
-import gregtech.platform.neoforge.NeoToolBindings;
 import gregtech.platform.neoforge.transport.FluidPipeToolInteractions;
 
 *///?} else {
@@ -79,7 +75,7 @@ public class TankBlock extends Block implements EntityBlock {
 
         // Wrench / Monkey Wrench: toggle automatic output
 //? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && NeoToolBindings.isMachineWrench(held)) {
+        /*if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
 *///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
 //?}
@@ -89,7 +85,7 @@ public class TankBlock extends Block implements EntityBlock {
                     : "tooltip.gt6ce.tank.info.no_auto_output"), true);
 //? if >=1.21.1 {
             /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            NeoToolBindings.damageForUse(held, 1, player);
+            GTToolHelper.damageForUse(held, 1, player);
 *///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             GTToolHelper.damageForUse(held, 1, player);
@@ -99,14 +95,14 @@ public class TankBlock extends Block implements EntityBlock {
 
         // Soft Hammer: toggle states
 //? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && NeoToolBindings.matches(held,"soft_hammer")) {
+        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"))) {
 *///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
 //?}
             tank.toggleSoftHammerState();
 //? if >=1.21.1 {
             /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
-            NeoToolBindings.damageForUse(held, 1, player);
+            GTToolHelper.damageForUse(held, 1, player);
 *///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
             GTToolHelper.damageForUse(held, 1, player);
@@ -116,7 +112,7 @@ public class TankBlock extends Block implements EntityBlock {
 
         // Magnifying Glass: show details
 //? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && NeoToolBindings.matches(held,"magnifying_glass")) {
+        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("magnifying_glass"))) {
 *///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
 //?}

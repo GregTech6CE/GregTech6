@@ -3,11 +3,8 @@ package gregtech.content.block.energy;
 import gregtech.engine.energy.EnergyNodeSpec;
 
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
-//?}
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -53,11 +50,7 @@ public final class MagnetMachineBlock extends EnergyNodeBlock {
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
         ItemStack tool = player.getItemInHand(hand);
         if (level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node) {
-//? if >=1.21.1 {
-            /*if (gregtech.platform.neoforge.NeoToolBindings.isSoftHammer(tool)) {
-*///?} else {
             if (GTToolHelper.isSoftHammer(tool)) {
-//?}
                 if (!level.isClientSide) {
                     boolean on = node.toggleMagnetEnabled();
                     player.displayClientMessage(Component.translatable(on

@@ -1,14 +1,13 @@
 package gregtech.content.logistics;
 
 //? if >=1.21.1 {
-/*import gregtech.platform.neoforge.NeoToolBindings;
-import gregtech.platform.neoforge.StackCustomData;
+/*import gregtech.platform.neoforge.StackCustomData;
 import net.minecraft.core.HolderLookup;
 
 *///?} else {
+//?}
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-//?}
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -206,7 +205,7 @@ public final class LogisticsCoverInteraction {
         LogisticsCoverType installedType = LogisticsCoverType.of(installed);
         if (installedType == null) return InteractionResult.PASS;
 //? if >=1.21.1 {
-        /*if (NeoToolBindings.isMagnifyingGlass(held)) {
+        /*if (GTToolHelper.isMagnifyingGlass(held)) {
 *///?} else {
         if (GTToolHelper.isMagnifyingGlass(held)) {
 //?}
@@ -214,10 +213,10 @@ public final class LogisticsCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 //? if >=1.21.1 {
-        /*boolean crowbar = NeoToolBindings.matches(held, "crowbar");
-        boolean screwdriver = NeoToolBindings.isScrewdriver(held);
-        boolean cutter = NeoToolBindings.isWireCutter(held);
-        boolean softHammer = NeoToolBindings.matches(held, "soft_hammer");
+        /*boolean crowbar = GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("crowbar"));
+        boolean screwdriver = GTToolHelper.isScrewdriver(held);
+        boolean cutter = GTToolHelper.isWireCutter(held);
+        boolean softHammer = GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"));
 *///?} else {
         boolean crowbar = GTToolHelper.matchesTool(held, GTToolType.CROWBAR);
         boolean screwdriver = GTToolHelper.isScrewdriver(held);
@@ -244,7 +243,7 @@ public final class LogisticsCoverInteraction {
                 }
                 if (!crowbar) describe(player, installed);
 //? if >=1.21.1 {
-                /*NeoToolBindings.damageForUse(held, 1, player);
+                /*GTToolHelper.damageForUse(held, 1, player);
 *///?} else {
                 GTToolHelper.damageForUse(held, 1, player);
 //?}

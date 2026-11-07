@@ -160,9 +160,10 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
                 remaining.set(i, gregtech.content.tool.ElectricToolWear.broken(electric, tool) ? ItemStack.EMPTY : tool);
                 continue;
             }
-            if (!(stack.getItem() instanceof GTToolItem)) continue;
+            int cost = GTToolHelper.craftDamage(stack);
+            if (cost <= 0) continue;
             var tool = stack.copyWithCount(1);
-            long damage = (long) tool.getDamageValue() + GTToolHelper.getType(tool).damagePerCraft();
+            long damage = (long) tool.getDamageValue() + cost;
             if (damage >= tool.getMaxDamage()) remaining.set(i, ItemStack.EMPTY);
             else {
                 tool.setDamageValue((int) damage);

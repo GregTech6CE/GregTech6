@@ -142,13 +142,8 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
         if (ctx instanceof EntityCollisionContext entityCtx
                 && entityCtx.getEntity() instanceof Player player
-//? if >=1.21.1 {
-                /*&& (gregtech.platform.neoforge.NeoToolBindings.isMachineWrench(player.getMainHandItem())
-                    || gregtech.platform.neoforge.NeoToolBindings.isMachineWrench(player.getOffhandItem()))) {
-*///?} else {
                 && (GTToolHelper.isMachineWrench(player.getMainHandItem())
                     || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
-//?}
             return Shapes.block();
         }
         return shapeFor(state, level, pos);

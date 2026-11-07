@@ -133,13 +133,8 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
         if (ctx instanceof EntityCollisionContext entityCtx
                 && entityCtx.getEntity() instanceof Player player
-//? if >=1.21.1 {
-                /*&& (gregtech.platform.neoforge.NeoToolBindings.isWireCutter(player.getMainHandItem())
-                    || gregtech.platform.neoforge.NeoToolBindings.isWireCutter(player.getOffhandItem()))) {
-*///?} else {
                 && (GTToolHelper.isWireCutter(player.getMainHandItem())
                     || GTToolHelper.isWireCutter(player.getOffhandItem()))) {
-//?}
             return Shapes.block();
         }
         return shapeFor(state, level, pos);

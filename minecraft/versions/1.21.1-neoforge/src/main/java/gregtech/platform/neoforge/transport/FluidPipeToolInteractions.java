@@ -2,7 +2,8 @@ package gregtech.platform.neoforge.transport;
 
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.transport.fluid.FluidTransportRegistries;
-import gregtech.platform.neoforge.NeoToolBindings;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -26,9 +27,9 @@ public final class FluidPipeToolInteractions {
     }
 
     public static boolean isInteractionTool(ItemStack stack) {
-        if (NeoToolBindings.isMachineWrench(stack)
-                || NeoToolBindings.isWireCutter(stack)
-                || NeoToolBindings.isScrewdriver(stack)) return true;
+        if (GTToolHelper.isMachineWrench(stack)
+                || GTToolHelper.isWireCutter(stack)
+                || GTToolHelper.isScrewdriver(stack)) return true;
         for (String kind : new String[] {
             "crowbar",
             "chisel",
@@ -39,14 +40,14 @@ public final class FluidPipeToolInteractions {
             "knife",
             "magnifying_glass",
             "soldering_iron"
-        }) if (NeoToolBindings.matches(stack, kind)) return true;
+        }) if (GTToolHelper.matchesTool(stack, GTToolType.byId(kind))) return true;
         return false;
     }
 
     public static boolean use(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
-        if (!NeoToolBindings.isMachineWrench(held)) return false;
+        if (!GTToolHelper.isMachineWrench(held)) return false;
         Direction side = selectedFace(hit);
         BlockPos neighbor = pos.relative(side);
         if (!player.mayBuild()
@@ -64,7 +65,7 @@ public final class FluidPipeToolInteractions {
         level.invalidateCapabilities(neighbor);
         level.playSound(
                 null, pos, FluidTransportRegistries.WRENCH.get(), net.minecraft.sounds.SoundSource.BLOCKS, 1F, 1F);
-        NeoToolBindings.damageForUse(held, 1, player);
+        GTToolHelper.damageForUse(held, 1, player);
         return true;
     }
 }

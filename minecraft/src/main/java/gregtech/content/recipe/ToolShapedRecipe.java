@@ -2,13 +2,12 @@ package gregtech.content.recipe;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
 
 import com.google.gson.JsonObject;
+//?}
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.item.GTToolItem;
-//?}
 import net.minecraft.core.*;
 //? if >=1.21.1 {
 /*import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -229,7 +228,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                 result.set(i, gregtech.content.tool.ElectricToolWear.broken(electric, copy) ? ItemStack.EMPTY : copy);
                 continue;
             }
-            int cost = NeoToolBindings.craftDamage(original);
+            int cost = GTToolHelper.craftDamage(original);
             if (cost <= 0) continue;
             var copy = original.copyWithCount(1);
             long damage = (long) copy.getDamageValue() + cost;
@@ -384,10 +383,11 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                 result.set(slot, gregtech.content.tool.ElectricToolWear.broken(electric, copy) ? ItemStack.EMPTY : copy);
                 continue;
             }
-            if (!(original.getItem() instanceof GTToolItem)) continue;
+            int cost = GTToolHelper.craftDamage(original);
+            if (cost <= 0) continue;
             var copy = original.copy();
             copy.setCount(1);
-            long damage = (long) copy.getDamageValue() + ((GTToolItem) copy.getItem()).toolType().damagePerCraft();
+            long damage = (long) copy.getDamageValue() + cost;
             if (damage >= copy.getMaxDamage()) result.set(slot, ItemStack.EMPTY);
             else {
                 copy.setDamageValue((int) damage);

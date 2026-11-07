@@ -252,16 +252,6 @@ public final class GTBlockEntities {
                     gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity::new,
                     GTChemicalBatteries.allRegistered().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
-    public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.EnergyNodeBlockEntity>> ENERGY_NODE =
-            BLOCK_ENTITY_TYPES.register("energy_node", () -> {
-                net.minecraft.world.level.block.Block[] blocks = java.util.stream.Stream.concat(GTEnergyNodes.all().stream(), GTGearboxes.allTransformers().stream())
-                        .filter(RegisteredBlock::isPresent)
-                        .map(RegisteredBlock::get)
-                        .toArray(net.minecraft.world.level.block.Block[]::new);
-                return BlockEntityType.Builder.of(
-                        gregtech.content.blockentity.energy.EnergyNodeBlockEntity::new, blocks).build(null);
-            });
-
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.BoilerTankBlockEntity>> STEAM_BOILER =
             BLOCK_ENTITY_TYPES.register("steam_boiler", () -> {
                 gregtech.content.block.machine.BoilerTankBlock[] blocks = GTBoilers.all().stream()
@@ -672,6 +662,20 @@ public final class GTBlockEntities {
             BLOCK_ENTITY_TYPES.register("zpm_module", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTLasers.ZPM.get()).build(null));
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER =
             BLOCK_ENTITY_TYPES.register("zpm_discharger", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTLasers.ZPM_DISCHARGER_BASIC.get(),GTLasers.ZPM_DISCHARGER_ADVANCED.get(),GTLasers.ZPM_DISCHARGER_ELITE.get()).build(null));
+//?}
+
+    public static final java.util.function.Supplier<BlockEntityType<gregtech.content.blockentity.energy.EnergyNodeBlockEntity>> ENERGY_NODE =
+//? if >=1.21.1 {
+            /*GTEnergyNodes.ENERGY_NODE;
+*///?} else {
+            BLOCK_ENTITY_TYPES.register("energy_node", () -> {
+                net.minecraft.world.level.block.Block[] blocks = java.util.stream.Stream.concat(GTEnergyNodes.all().stream(), GTGearboxes.allTransformers().stream())
+                        .filter(RegisteredBlock::isPresent)
+                        .map(RegisteredBlock::get)
+                        .toArray(net.minecraft.world.level.block.Block[]::new);
+                return BlockEntityType.Builder.of(
+                        gregtech.content.blockentity.energy.EnergyNodeBlockEntity::new, blocks).build(null);
+            });
 //?}
 
     public static final java.util.function.Supplier<BlockEntityType<gregtech.content.blockentity.energy.PowerCellBlockEntity>> POWER_CELL =

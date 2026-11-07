@@ -13,7 +13,6 @@ import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 //? if >=1.21.1 {
 /*import gregtech.engine.transport.PipeConnections;
-import gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.block.energy.ElectricWireBlock;
@@ -108,7 +107,7 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
             if (coverResult != InteractionResult.PASS) return coverResult;
         }
 //? if >=1.21.1 {
-        /*if (!NeoToolBindings.isWireCutter(player.getItemInHand(hand))) return InteractionResult.PASS;
+        /*if (!GTToolHelper.isWireCutter(player.getItemInHand(hand))) return InteractionResult.PASS;
         if (!level.isClientSide) {
             Direction side = ToolInteractions.selectedFace(hit);
             var property = PipeConnections.propFor(side);
@@ -129,7 +128,7 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
             if (level.hasChunkAt(neighborPos) && level.getBlockState(neighborPos).getBlock() instanceof LogisticsWireBlock)
                 level.setBlockAndUpdate(neighborPos,
                         level.getBlockState(neighborPos).setValue(PipeConnections.propFor(side.getOpposite()), open));
-            NeoToolBindings.damageForUse(player.getItemInHand(hand), 1, player);
+            GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -221,7 +220,7 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player player
 //? if >=1.21.1 {
-                /*&& NeoToolBindings.isWireCutter(player.getMainHandItem())) return Shapes.block();
+                /*&& GTToolHelper.isWireCutter(player.getMainHandItem())) return Shapes.block();
 *///?} else {
                 && GTToolHelper.isWireCutter(player.getMainHandItem())) return Shapes.block();
 //?}

@@ -3,21 +3,12 @@ package gregtech.content.block.energy;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import gregtech.engine.GTWaterloggable;
-//? if >=1.21.1 {
-/*import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-*///?} else {
-//?}
 
 import gregtech.api.material.GTMaterial;
-
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.NeoToolBindings;
-*///?} else {
-import gregtech.engine.tool.*;
-//?}
 
 import gregtech.content.blockentity.energy.SignalWireBlockEntity;
 
@@ -121,7 +112,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
     /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (gregtech.platform.neoforge.energy.WireToolInteractions.use(state, level, pos, player, hand,
                 hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        if (NeoToolBindings.isScrewdriver(player.getItemInHand(hand))) {
+        if (GTToolHelper.isScrewdriver(player.getItemInHand(hand))) {
 *///?} else {
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
@@ -139,11 +130,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
                 wire.setMode((wire.mode() + (player.isShiftKeyDown() ? 15 : 1)) & 15);
                 player.displayClientMessage(Component.translatable("message.gt6ce.signal_wire.mode", wire.mode()), true);
 
-//? if >=1.21.1 {
-                /*NeoToolBindings.damageForUse(player.getItemInHand(hand), 1, player);
-*///?} else {
                 GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
-//?}
 
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -285,13 +272,8 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 
-//? if >=1.21.1 {
-        /*if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player playerHoldingTool
-                && NeoToolBindings.isWireCutter(playerHoldingTool.getMainHandItem())) return Shapes.block();
-*///?} else {
         if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player playerHoldingTool
                 && GTToolHelper.isWireCutter(playerHoldingTool.getMainHandItem())) return Shapes.block();
-//?}
         return connectionShape(state, level, pos);
     }
 

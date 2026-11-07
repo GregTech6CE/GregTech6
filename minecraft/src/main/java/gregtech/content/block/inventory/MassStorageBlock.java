@@ -313,14 +313,10 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
     }
 
     private static boolean isUnpackingTool(ItemStack held) {
-//? if >=1.21.1 {
-        /*return (gregtech.platform.neoforge.NeoToolBindings.matches(held,"scissors") || gregtech.platform.neoforge.NeoToolBindings.matches(held,"knife"));
-*///?} else {
         return (gregtech.engine.tool.GTToolHelper.matchesTool(held,
                 gregtech.engine.tool.GTToolType.SCISSORS)
                 || gregtech.engine.tool.GTToolHelper.matchesTool(held,
                 gregtech.engine.tool.GTToolType.KNIFE));
-//?}
     }
 
     private static boolean useStorageModeTool(MassStorageBlockEntity store, Player player, ItemStack held) {
