@@ -208,17 +208,10 @@ public final class LogisticsCoverInteraction {
             if (!level.isClientSide) describe(player, installed);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-//? if >=1.21.1 {
-        /*boolean crowbar = GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("crowbar"));
-        boolean screwdriver = GTToolHelper.isScrewdriver(held);
-        boolean cutter = GTToolHelper.isWireCutter(held);
-        boolean softHammer = GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"));
-*///?} else {
         boolean crowbar = GTToolHelper.matchesTool(held, GTToolType.CROWBAR);
         boolean screwdriver = GTToolHelper.isScrewdriver(held);
         boolean cutter = GTToolHelper.isWireCutter(held);
         boolean softHammer = GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER);
-//?}
         if (crowbar || screwdriver || cutter || softHammer) {
             boolean handled = crowbar || screwdriver && installedType.usesPriority()
                     || cutter && installedType.targetStackSize()

@@ -266,11 +266,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-//? if >=1.21.1 {
-            /*if (GTToolHelper.matchesTool(held, GTToolType.byId("crowbar"))) {
-*///?} else {
             if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
-//?}
                 if (!level.isClientSide) {
                     ItemStack removed = coverHost.removeCover(hit.getDirection());
                     if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
@@ -278,19 +274,11 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             if (!held.isEmpty()) {
-//? if >=1.21.1 {
-                /*if (GTToolHelper.matchesTool(held, GTToolType.byId("screwdriver"))
-*///?} else {
                 if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
-//?}
                         && coverHost.configureFilterCover(hit.getDirection(), true, false)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-//? if >=1.21.1 {
-                /*if (GTToolHelper.matchesTool(held, GTToolType.byId("soft_hammer"))
-*///?} else {
                 if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
-//?}
                         && coverHost.configureFilterCover(hit.getDirection(), false, true)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
@@ -303,11 +291,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         }
 
         // Magnifying glass: show pipe network info in chat
-//? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.byId("magnifying_glass"))) {
-*///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
-//?}
             if (level.isClientSide) return InteractionResult.SUCCESS;
             BlockEntity glassTarget = level.getBlockEntity(pos);
             if (glassTarget instanceof FluidPipeBlockEntity pipe) {
@@ -417,8 +401,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
         if (texSet == MaterialTextureSet.RUBBER) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.byId("scissors"))) {
-                float speed = GTToolHelper.matchesTool(tool, GTToolType.byId("scissors")) && !tool.isEmpty()
+            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) {
+                float speed = GTToolHelper.matchesTool(tool, GTToolType.SCISSORS) && !tool.isEmpty()
                         ? tool.getDestroySpeed(state)
 *///?} else {
             if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) {
@@ -430,8 +414,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             }
         } else if (texSet == MaterialTextureSet.WOOD) {
 //? if >=1.21.1 {
-            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.byId("axe"))) {
-                float speed = GTToolHelper.matchesTool(tool, GTToolType.byId("axe")) && !tool.isEmpty()
+            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) {
+                float speed = GTToolHelper.matchesTool(tool, GTToolType.AXE) && !tool.isEmpty()
                         ? tool.getDestroySpeed(state)
 *///?} else {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) {
@@ -459,17 +443,9 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         ItemStack tool = player.getMainHandItem();
         MaterialTextureSet texSet = spec.material().getTextureSet();
         if (texSet == MaterialTextureSet.RUBBER) {
-//? if >=1.21.1 {
-            /*if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.byId("scissors"))) return true;
-*///?} else {
             if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) return true;
-//?}
         } else if (texSet == MaterialTextureSet.WOOD) {
-//? if >=1.21.1 {
-            /*if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.byId("axe"))) return true;
-*///?} else {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) return true;
-//?}
         } else {
             if (GTToolHelper.isMachineWrench(tool)) return true;
         }

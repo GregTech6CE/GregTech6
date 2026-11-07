@@ -89,11 +89,7 @@ public class TankBlock extends Block implements EntityBlock {
         }
 
         // Soft Hammer: toggle states
-//? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"))) {
-*///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
-//?}
             tank.toggleSoftHammerState();
 //? if >=1.21.1 {
             /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
@@ -106,11 +102,7 @@ public class TankBlock extends Block implements EntityBlock {
         }
 
         // Magnifying Glass: show details
-//? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("magnifying_glass"))) {
-*///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
-//?}
             TankTooltips.sendTankInfo(tank, player);
             return InteractionResult.CONSUME;
         }

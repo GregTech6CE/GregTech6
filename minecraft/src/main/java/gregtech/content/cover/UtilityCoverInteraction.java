@@ -1,5 +1,6 @@
 package gregtech.content.cover;
 import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
@@ -54,31 +55,21 @@ public final class UtilityCoverInteraction {
         var held=player.getItemInHand(hand);var side=hit.getDirection();var installed=host.getCover(side);var id=CoverItems.behavior(installed);
         if(!player.mayBuild()||!level.mayInteract(player,owner.getBlockPos()))return InteractionResult.FAIL;
         // Crowbar removal belongs to the panel/cover path that runs after this one.
-        if(GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.CROWBAR))return InteractionResult.PASS;
+        if(GTToolHelper.matchesTool(held,GTToolType.CROWBAR))return InteractionResult.PASS;
         if(CoverPlacement.placing(player)&&installed.isEmpty()&&CoverItems.isCover(held)&&gregtech.content.logistics.LogisticsCoverType.of(held)==null){
             if(!CoverAdmission.allowCover(owner,side,held))return InteractionResult.PASS;
             if(!level.isClientSide&&host.attachCover(side,held)&&!player.getAbilities().instabuild)held.shrink(1);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if(id==null)return InteractionResult.PASS;
-//? if >=1.21.1 {
-        /*if(GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("chisel"))&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
+        if(GTToolHelper.matchesTool(held,GTToolType.CHISEL)&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
             if(!level.isClientSide){CoverUtilityBehaviors.cycleDesign(installed,installed.getItem() instanceof gregtech.engine.material.MaterialFormItem material?MaterialCoverRules.designCount(material.getPrefix().getName(),material.getMaterial().getName()):CoverUtilityBehaviors.designCount(id));host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
-*///?} else {
-        if(gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.CHISEL)&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
-            if(!level.isClientSide){CoverUtilityBehaviors.cycleDesign(installed,installed.getItem() instanceof gregtech.engine.material.MaterialFormItem material?MaterialCoverRules.designCount(material.getPrefix().getName(),material.getMaterial().getName()):CoverUtilityBehaviors.designCount(id));host.panels().changed();gregtech.engine.tool.GTToolHelper.damageForUse(held,1,player);}
-//?}
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         boolean item=CoverUtilityBehaviors.FILTER_ITEM.equals(id)||CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id),fluid=CoverUtilityBehaviors.FILTER_FLUID.equals(id);
         if(item||fluid){
-//? if >=1.21.1 {
-            /*if(GTToolHelper.isScrewdriver(held)||GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer"))){
-                if(!level.isClientSide){if(GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.byId("soft_hammer")))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
-*///?} else {
-            if(gregtech.engine.tool.GTToolHelper.isScrewdriver(held)||gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.SOFT_HAMMER)){
-                if(!level.isClientSide){if(gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.SOFT_HAMMER))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();gregtech.engine.tool.GTToolHelper.damageForUse(held,1,player);}
-//?}
+            if(GTToolHelper.isScrewdriver(held)||GTToolHelper.matchesTool(held,GTToolType.SOFT_HAMMER)){
+                if(!level.isClientSide){if(GTToolHelper.matchesTool(held,GTToolType.SOFT_HAMMER))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
 //? if >=1.21.1 {
