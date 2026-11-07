@@ -261,15 +261,6 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), item.getBytes(StandardCharsets.UTF_8));
     }
 
-//? if >=1.21.1 {
-    /*private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
-    private static ResourceLocation itemModel(ResourceLocation item) {
-        return ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "models/item/" + item.getPath() + ".json");
-    }
-    private static ResourceLocation named(String namespace, String path) {
-        return ResourceLocation.fromNamespaceAndPath(namespace, path);
-    }
-*///?} else {
     private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
     private static ResourceLocation itemModel(ResourceLocation item) {
         return ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "models/item/" + item.getPath() + ".json");
@@ -277,7 +268,6 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     private static ResourceLocation named(String namespace, String path) {
         return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
-//?}
 
     private static void emitAddonBlockPrefixes(Map<ResourceLocation, byte[]> result) {
         var emitted = new HashSet<String>();

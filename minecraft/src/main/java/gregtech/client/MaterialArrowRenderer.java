@@ -24,11 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class MaterialArrowRenderer extends ArrowRenderer<MaterialArrowEntity> {
-//? if >=1.21.1 {
-    /*private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/entity/arrow.png");
-*///?} else {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/entity/arrow.png");
-//?}
     public MaterialArrowRenderer(EntityRendererProvider.Context context) { super(context); }
     @Override
     public ResourceLocation getTextureLocation(MaterialArrowEntity arrow) { return TEXTURE; }

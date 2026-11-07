@@ -41,11 +41,7 @@ public final class AutomaticToolClientColors {
         ids.add("hdd_switch");
         ids.add("advanced_button");
         ids.add("dust_funnel");
-//? if >=1.21.1 {
-        /*for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
-*///?} else {
         for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
-//?}
         return result;
     }
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {

@@ -79,15 +79,9 @@ public final class NativeOriginWorld implements OriginWorld {
                 || state.is(BlockTags.WOODEN_PRESSURE_PLATES);
     }
 
-//? if >=1.21.1 {
-    /*private static ResourceLocation id(String value) {
-        return ResourceLocation.parse(value);
-    }
-*///?} else {
     private static ResourceLocation id(String value) {
         return ResourceLocation.parse(value);
     }
-//?}
     private BlockState state(StateKey key) {
         String blockId = key.side >= 0 ? (key.id.equals("gt6ce:glass_glow") ? "gt6ce:glass_glow_slab" : "gt6ce:cfoam_slab") : key.id;
         if (blockId.equals("source:river")) return net.minecraft.world.level.block.Blocks.WATER.defaultBlockState();

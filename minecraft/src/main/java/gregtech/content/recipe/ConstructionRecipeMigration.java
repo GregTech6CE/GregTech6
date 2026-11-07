@@ -13,7 +13,9 @@ public final class ConstructionRecipeMigration {
     public static void migrate(JsonElement json) {
         if (!json.isJsonObject()) return;
         JsonObject recipe = json.getAsJsonObject();
-        String color = recipe.has("construction_color") ? recipe.get("construction_color").getAsString() : "";
+        String color = recipe.has("construction_color")
+                ? recipe.get("construction_color").getAsString()
+                : "";
         for (String key : java.util.List.of("key", "ingredients", "ingredient", "base", "addition", "template"))
             if (recipe.has(key)) ingredients(recipe.get(key), color);
         if (recipe.has("result")) result(recipe.get("result"), color);
@@ -22,11 +24,7 @@ public final class ConstructionRecipeMigration {
     private static String family(String id) {
         if (!id.startsWith("gt6ce:")) return null;
         String path = id.substring("gt6ce:".length());
-//? if >=1.21.1 {
-        /*var block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse(id));
-*///?} else {
         var block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse(id));
-//?}
         return block != Blocks.AIR && GTConstructionVariants.legacy(block) ? path : null;
     }
 
@@ -36,7 +34,8 @@ public final class ConstructionRecipeMigration {
         } else if (element.isJsonObject()) {
             JsonObject object = element.getAsJsonObject();
             String family = object.has("item") && object.get("item").isJsonPrimitive()
-                    ? family(object.get("item").getAsString()) : null;
+                    ? family(object.get("item").getAsString())
+                    : null;
             if (family != null) {
                 if (color.isEmpty()) {
                     object.remove("item");
@@ -52,7 +51,9 @@ public final class ConstructionRecipeMigration {
         String key = object.has("id") ? "id" : "item";
         if (!object.has(key) || !object.get(key).isJsonPrimitive()) return;
         String family = family(object.get(key).getAsString());
-        if (family != null) object.addProperty(key, "gt6ce:" + (color.isEmpty()
-                ? GTConstructionVariants.defaultId(family) : family + "_" + color));
+        if (family != null)
+            object.addProperty(
+                    key,
+                    "gt6ce:" + (color.isEmpty() ? GTConstructionVariants.defaultId(family) : family + "_" + color));
     }
 }

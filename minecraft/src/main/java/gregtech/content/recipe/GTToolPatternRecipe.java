@@ -362,11 +362,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
         }
         String fixed = ManualToolRecipeCatalog.specialItem(type.definition(), letter);
         if (fixed != null) {
-//? if >=1.21.1 {
-            /*var id = net.minecraft.resources.ResourceLocation.parse(fixed.startsWith("#") ? fixed.substring(1) : fixed);
-*///?} else {
             var id = net.minecraft.resources.ResourceLocation.parse(fixed.startsWith("#") ? fixed.substring(1) : fixed);
-//?}
             return fixed.startsWith("#") ? Ingredient.of(net.minecraft.tags.ItemTags.create(id))
                     : Ingredient.of(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id));
         }

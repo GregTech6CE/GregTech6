@@ -110,11 +110,7 @@ public final class CompatCraftingPack {
     }
 
     private static void disable(Map<ResourceLocation, byte[]> generated, CompatSpecs.Removal removal) {
-//? if >=1.21.1 {
-        /*var id = ResourceLocation.parse(removal.recipeId());
-*///?} else {
         var id = ResourceLocation.parse(removal.recipeId());
-//?}
         var json = new LinkedHashMap<String, Object>();
         json.put("type", "minecraft:crafting_shapeless");
 //? if >=1.21.1 {
@@ -189,11 +185,7 @@ public final class CompatCraftingPack {
             var removed = new HashSet<ResourceLocation>();
             for (var module : CompatSpecs.modules()) {
                 if (!ModList.get().isLoaded(module.modernId())) continue;
-//? if >=1.21.1 {
-                /*for (var removal : module.removals()) removed.add(ResourceLocation.parse(removal.recipeId()));
-*///?} else {
                 for (var removal : module.removals()) removed.add(ResourceLocation.parse(removal.recipeId()));
-//?}
             }
             if (removed.isEmpty()) return;
 //? if >=1.21.1 {

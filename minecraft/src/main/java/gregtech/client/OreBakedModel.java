@@ -52,16 +52,6 @@ public final class OreBakedModel implements IDynamicBakedModel {
     private static final Map<String, ResourceLocation> STONE_TEXTURES = new HashMap<>();
     private static final Map<String, ResourceLocation> BROKEN_TEXTURES = new HashMap<>();
     static {
-//? if >=1.21.1 {
-        /*STONE_TEXTURES.put("stone", ResourceLocation.fromNamespaceAndPath("minecraft", "block/stone"));
-        STONE_TEXTURES.put("granite", ResourceLocation.fromNamespaceAndPath("minecraft", "block/granite"));
-        STONE_TEXTURES.put("diorite", ResourceLocation.fromNamespaceAndPath("minecraft", "block/diorite"));
-        STONE_TEXTURES.put("andesite", ResourceLocation.fromNamespaceAndPath("minecraft", "block/andesite"));
-        STONE_TEXTURES.put("deepslate", ResourceLocation.fromNamespaceAndPath("minecraft", "block/deepslate"));
-        STONE_TEXTURES.put("tuff", ResourceLocation.fromNamespaceAndPath("minecraft", "block/tuff"));
-        STONE_TEXTURES.put("netherrack", ResourceLocation.fromNamespaceAndPath("minecraft", "block/netherrack"));
-        STONE_TEXTURES.put("end_stone", ResourceLocation.fromNamespaceAndPath("minecraft", "block/end_stone"));
-*///?} else {
         STONE_TEXTURES.put("stone", ResourceLocation.fromNamespaceAndPath("minecraft", "block/stone"));
         STONE_TEXTURES.put("granite", ResourceLocation.fromNamespaceAndPath("minecraft", "block/granite"));
         STONE_TEXTURES.put("diorite", ResourceLocation.fromNamespaceAndPath("minecraft", "block/diorite"));
@@ -70,46 +60,21 @@ public final class OreBakedModel implements IDynamicBakedModel {
         STONE_TEXTURES.put("tuff", ResourceLocation.fromNamespaceAndPath("minecraft", "block/tuff"));
         STONE_TEXTURES.put("netherrack", ResourceLocation.fromNamespaceAndPath("minecraft", "block/netherrack"));
         STONE_TEXTURES.put("end_stone", ResourceLocation.fromNamespaceAndPath("minecraft", "block/end_stone"));
-//?}
         // Loose sediments — GT6's DUST_ORE hosts.
-//? if >=1.21.1 {
-        /*STONE_TEXTURES.put("sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/sand"));
-        STONE_TEXTURES.put("red_sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/red_sand"));
-        STONE_TEXTURES.put("gravel", ResourceLocation.fromNamespaceAndPath("minecraft", "block/gravel"));
-        STONE_TEXTURES.put("mud", ResourceLocation.fromNamespaceAndPath("minecraft", "block/mud"));
-*///?} else {
         STONE_TEXTURES.put("sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/sand"));
         STONE_TEXTURES.put("red_sand", ResourceLocation.fromNamespaceAndPath("minecraft", "block/red_sand"));
         STONE_TEXTURES.put("gravel", ResourceLocation.fromNamespaceAndPath("minecraft", "block/gravel"));
         STONE_TEXTURES.put("mud", ResourceLocation.fromNamespaceAndPath("minecraft", "block/mud"));
-//?}
         // Bedrock deposits (unbreakable ores).
-//? if >=1.21.1 {
-        /*STONE_TEXTURES.put("bedrock", ResourceLocation.fromNamespaceAndPath("minecraft", "block/bedrock"));
-*///?} else {
         STONE_TEXTURES.put("bedrock", ResourceLocation.fromNamespaceAndPath("minecraft", "block/bedrock"));
-//?}
         BROKEN_TEXTURES.putAll(STONE_TEXTURES);
-//? if >=1.21.1 {
-        /*BROKEN_TEXTURES.put("stone", ResourceLocation.fromNamespaceAndPath("minecraft", "block/cobblestone"));
-        BROKEN_TEXTURES.put("deepslate", ResourceLocation.fromNamespaceAndPath("minecraft", "block/cobbled_deepslate"));
-*///?} else {
         BROKEN_TEXTURES.put("stone", ResourceLocation.fromNamespaceAndPath("minecraft", "block/cobblestone"));
         BROKEN_TEXTURES.put("deepslate", ResourceLocation.fromNamespaceAndPath("minecraft", "block/cobbled_deepslate"));
-//?}
         for (StoneType type : StoneType.values()) {
             STONE_TEXTURES.put(type.registryId(),
-//? if >=1.21.1 {
-                    /*ResourceLocation.fromNamespaceAndPath("gt6ce", "block/stones/" + type.textureFolder() + "/stone"));
-*///?} else {
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "block/stones/" + type.textureFolder() + "/stone"));
-//?}
             BROKEN_TEXTURES.put(type.registryId(),
-//? if >=1.21.1 {
-                    /*ResourceLocation.fromNamespaceAndPath("gt6ce", "block/stones/" + type.textureFolder() + "/cobble"));
-*///?} else {
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "block/stones/" + type.textureFolder() + "/cobble"));
-//?}
         }
     }
 

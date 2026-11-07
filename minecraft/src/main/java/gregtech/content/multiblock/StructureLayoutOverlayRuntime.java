@@ -1,23 +1,21 @@
 package gregtech.content.multiblock;
 
-import gregtech.engine.addon.AddonMachines;
-import gregtech.api.multiblock.CellMatch;
-import gregtech.engine.kubejs.StructureLayoutDocuments;
 import com.mojang.logging.LogUtils;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import org.slf4j.Logger;
-
+import gregtech.api.multiblock.CellMatch;
+import gregtech.engine.addon.AddonMachines;
+import gregtech.engine.kubejs.StructureLayoutDocuments;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import org.slf4j.Logger;
 
 /** Reloads addon structure layouts from {@code gt6ce_layouts} and keeps the text sent to clients. */
 public final class StructureLayoutOverlayRuntime {
@@ -28,16 +26,21 @@ public final class StructureLayoutOverlayRuntime {
 
     private StructureLayoutOverlayRuntime() {}
 
-    public static Map<String, String> documents() { return documents; }
+    public static Map<String, String> documents() {
+        return documents;
+    }
 
     /** Machine names whose layout changed in the most recent install. */
-    public static java.util.Set<String> lastAffected() { return lastAffected; }
+    public static java.util.Set<String> lastAffected() {
+        return lastAffected;
+    }
 
     /** Server datapack pass. Restores baselines, then applies the files that remain, in id order. */
     public static void apply(MinecraftServer server) {
         var found = new TreeMap<String, String>();
         var listed = new ArrayList<>(server.getResourceManager()
-                .listResources("gt6ce_layouts", id -> id.getPath().endsWith(".json")).entrySet());
+                .listResources("gt6ce_layouts", id -> id.getPath().endsWith(".json"))
+                .entrySet());
         listed.sort(Comparator.comparing(entry -> entry.getKey().toString()));
         for (var entry : listed) {
             String machine = machine(entry.getKey());
@@ -46,8 +49,8 @@ public final class StructureLayoutOverlayRuntime {
                 continue;
             }
             try (var in = entry.getValue().open()) {
-                var layout = StructureLayoutDocuments.parse(machine,
-                        new String(in.readAllBytes(), StandardCharsets.UTF_8));
+                var layout =
+                        StructureLayoutDocuments.parse(machine, new String(in.readAllBytes(), StandardCharsets.UTF_8));
                 if (!accept(entry.getKey().toString(), layout)) continue;
                 found.put(machine, StructureLayoutDocuments.canonical(layout));
             } catch (RuntimeException | IOException failure) {
@@ -116,11 +119,7 @@ public final class StructureLayoutOverlayRuntime {
     }
 
     private static boolean registered(String id) {
-        //? if >=1.21.1 {
-        /*var name = ResourceLocation.parse(id);
-        *///?} else {
         var name = ResourceLocation.parse(id);
-        //?}
         return BuiltInRegistries.BLOCK.containsKey(name);
     }
 
