@@ -110,10 +110,10 @@ public final class ToolAssemblyCatalog {
 
     private static ToolAssemblyInfo build(GTToolType type) {
         if (type == GTToolType.FLINT_AND_TINDER) return flintAndTinder(type);
-        // A head-based tool shows its head + handle row: that is GT6's main route, the shaped early
-        // rows (rock or flint plus a stick) are the recipes JEI lists next to it.
-        if (type.requiresHeadAssembly()) return headAndHandle(type);
-        if (type == GTToolType.MAGNIFYING_GLASS) return magnifyingGlass(type);
+        // Tools GT6 registers with AdvancedCraftingTool show their head + handle row; the shaped
+        // early rows (rock or flint plus a stick) are the recipes JEI lists next to it. The
+        // universal spade has a head prefix but only its own shaped row, so it falls through.
+        if (GTToolRecipes.isHeadAssembly(type)) return headAndHandle(type);
         // GT6's shaped rows for one-piece tools: list every material that satisfies each slot.
         var patterns = GTToolRecipes.shaped(type);
         if (!patterns.isEmpty()) return shaped(type, patterns.get(0));
@@ -277,11 +277,6 @@ public final class ToolAssemblyCatalog {
         var pattern = GTToolRecipes.shaped(GTToolType.FLINT_AND_TINDER).get(0);
         return new ToolAssemblyInfo(type, List.of(List.copyOf(striking), List.of(new ItemStack(Items.FLINT))),
                 GTToolItem.create(type, sample, GTMaterialRegistry.get("Flint")), false, pattern);
-    }
-
-    /** Magnifying glass: an optic lens plus a handle (GT6 lens + stick), shapeless like GT6's row. */
-    private static ToolAssemblyInfo magnifyingGlass(GTToolType type) {
-        return headAndHandle(type);
     }
 
     /** Every registered item of {@code prefix} whose material may be used as this tool's head. */

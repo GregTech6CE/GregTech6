@@ -746,9 +746,14 @@ public final class ManualToolRecipeCatalog {
      * Whether GT6 registers the head + handle (shapeless {@code AdvancedCraftingTool}) recipe for this
      * tool. Head-based tools keep that row even when they also have shaped early rows — a pickaxe can
      * come from a head plus a stick <em>or</em> straight from a rock.
+     *
+     * <p>The universal spade is the exception: {@code Loader_Tools.java:298} gives it a tool row
+     * ({@code "AT", "Sd"}) rather than a head recipe, and {@code Loader_Tools.java:332-350} has no
+     * {@code AdvancedCraftingTool} row for it.</p>
      */
     public static boolean isHeadAssembly(ToolDefinition type) {
-        return type.requiresHeadAssembly();
+        return type == ToolDefinition.MAGNIFYING_GLASS
+                || type.requiresHeadAssembly() && type != ToolDefinition.UNIVERSAL_SPADE;
     }
 
     /** The vanilla item a pattern letter stands for, or null when it is a material form. */

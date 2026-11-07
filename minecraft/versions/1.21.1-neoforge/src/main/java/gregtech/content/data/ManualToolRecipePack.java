@@ -24,7 +24,7 @@ public final class ManualToolRecipePack {
                 add(generated, "tools/" + type.id() + (i == 0 ? "" : "_" + i), "tool_crafting", type.id(), i);
                 shaped++;
             }
-            boolean assembly = type.requiresHeadAssembly() || type == gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS;
+            boolean assembly = gregtech.content.tool.ManualToolRecipeCatalog.isHeadAssembly(type.definition());
             if (assembly) {
                 add(generated, "tools/" + type.id() + "_assembly", "tool_assembly", type.id(), 0);
                 assemblies++;

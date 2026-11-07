@@ -49,7 +49,7 @@ public final class ToolCraftingRecipeInjector {
                 REGISTERED.add(id.toString());
                 shaped++;
             }
-            boolean assembly = type.requiresHeadAssembly() || type == GTToolType.MAGNIFYING_GLASS;
+            boolean assembly = gregtech.content.tool.ManualToolRecipeCatalog.isHeadAssembly(type.definition());
             if (assembly) {
                 ResourceLocation id = id("tools/" + type.id() + "_assembly");
                 recipes.add(new GTToolAssemblyRecipe(id, type));

@@ -77,8 +77,7 @@ public final class MaterialTooltips {
         }
 
         if (prefix != null && java.util.Arrays.stream(gregtech.engine.tool.GTToolType.values())
-                .anyMatch(type -> type.headPrefix() == prefix
-                        && gregtech.content.recipe.GTToolRecipes.isHeadAssembly(type))) {
+                .anyMatch(type -> type.headPrefix() == prefix && type.requiresHeadAssembly())) {
             var handle = gregtech.content.tool.OriginalToolMaterials.requiredHandleMaterial(mat);
             if (handle != null) tooltip.add(Component.translatable("gt.lang.needs.handle")
                     .append(MaterialPresentation.name(handle))
