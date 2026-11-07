@@ -161,13 +161,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (context instanceof EntityCollisionContext ctx
                 && ctx.getEntity() instanceof Player player
-//? if >=1.21.1 {
-                /*&& (GTToolHelper.isMachineWrench(player.getMainHandItem())
-                    || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
-*///?} else {
                 && (GTToolHelper.isMachineWrench(player.getMainHandItem())
                     || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
-//?}
             return Shapes.block();
         }
         return shapeFor(state, level, pos);
@@ -468,11 +463,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                 return speed / hardness / 30.0F;
             }
         } else {
-//? if >=1.21.1 {
-            /*if (GTToolHelper.isMachineWrench(tool)) {
-*///?} else {
             if (GTToolHelper.isMachineWrench(tool)) {
-//?}
                 return GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F;
             }
         }
@@ -501,11 +492,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) return true;
 //?}
         } else {
-//? if >=1.21.1 {
-            /*if (GTToolHelper.isMachineWrench(tool)) return true;
-*///?} else {
             if (GTToolHelper.isMachineWrench(tool)) return true;
-//?}
         }
         return super.canHarvestBlock(state, level, pos, player);
     }

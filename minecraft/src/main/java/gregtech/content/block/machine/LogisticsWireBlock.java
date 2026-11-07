@@ -219,11 +219,7 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player player
-//? if >=1.21.1 {
-                /*&& GTToolHelper.isWireCutter(player.getMainHandItem())) return Shapes.block();
-*///?} else {
                 && GTToolHelper.isWireCutter(player.getMainHandItem())) return Shapes.block();
-//?}
         var shape = Block.box(5, 5, 5, 11, 11, 11);
 //? if >=1.21.1 {
         /*for (Direction side : Direction.values()) if (state.getValue(PipeConnections.propFor(side)))

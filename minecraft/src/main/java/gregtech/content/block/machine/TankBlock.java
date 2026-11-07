@@ -73,11 +73,7 @@ public class TankBlock extends Block implements EntityBlock {
         ItemStack held = player.getItemInHand(hand);
 
         // Wrench / Monkey Wrench: toggle automatic output
-//? if >=1.21.1 {
-        /*if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
-*///?} else {
         if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
-//?}
             tank.toggleAutoOutput();
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(tank.isAutoOutput()
                     ? "tooltip.gt6ce.tank.info.auto_output"
