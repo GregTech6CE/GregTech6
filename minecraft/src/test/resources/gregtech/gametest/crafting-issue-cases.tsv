@@ -43,3 +43,15 @@
 346	gt6ce:stone/stone_granite/stone_slabs_to_block	S	gt6ce:tool_shaped	#/#	gt6ce:stone_granite_stone	1	none	two slabs rebuild the full block
 326	gt6ce:hand_components/integrated_circuit_0_from_any	R	gt6ce:tool_shapeless	-	gt6ce:integrated_circuit_0	1	one@0/2x2/gt6ce:integrated_circuit_1	any non-zero circuit resets to configuration 0
 326	gt6ce:hand_components/integrated_circuit_0_from_any	R	gt6ce:tool_shapeless	-	gt6ce:integrated_circuit_0	1	one@0/2x2/gt6ce:integrated_circuit_24	upper-range circuit resets to configuration 0
+352	gt6ce:fluid_tools/nozzle_steel	R	gt6ce:tool_shaped	-	gt6ce:nozzle_steel	1	fill	plain steel nozzle recipe restored
+352	gt6ce:fluid_tools/nozzle_plastic	R	gt6ce:tool_shaped	-	gt6ce:nozzle_plastic	1	fill	plastic nozzle uses saw and wire cutter
+352	gt6ce:fluid_tools/nozzle_stainless_steel	R	gt6ce:tool_shaped	-	gt6ce:nozzle_stainless_steel	1	fill	plain stainless nozzle recipe restored
+352	gt6ce:fluid_tools/nozzle_tungsten	R	gt6ce:tool_shaped	-	gt6ce:nozzle_tungsten	1	fill	tungsten nozzle uses a tungsten ring
+352	gt6ce:fluid_tools/nozzle_tantalum_hafnium_carbide	R	gt6ce:tool_shaped	-	gt6ce:nozzle_tantalum_hafnium_carbide	1	fill	plain tantalum hafnium carbide nozzle restored
+352	gt6ce:fluid_tools/nozzle_adamantium	R	gt6ce:tool_shaped	-	gt6ce:nozzle_adamantium	1	fill	adamantium nozzle uses an adamantium ring
+352	gt6ce:fluid_tools/cap_nozzle_steel	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_steel	1	fill	capped nozzle uses Rw/BT/Nd with nozzle, round and screw
+352	gt6ce:fluid_tools/cap_nozzle_plastic	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_plastic	1	fill	plastic capped nozzle built from the plastic nozzle
+352	gt6ce:fluid_tools/cap_nozzle_stainless_steel	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_stainless_steel	1	fill	stainless capped nozzle built from the stainless nozzle
+352	gt6ce:fluid_tools/cap_nozzle_tungsten	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_tungsten	1	fill	tungsten capped nozzle uses a tungsten ring
+352	gt6ce:fluid_tools/cap_nozzle_tantalum_hafnium_carbide	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_tantalum_hafnium_carbide	1	fill	GT6 2133 builds this capped nozzle from the tungsten nozzle
+352	gt6ce:fluid_tools/cap_nozzle_adamantium	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_adamantium	1	fill	adamantium capped nozzle uses an adamantium ring
