@@ -5,6 +5,7 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.content.block.BookShelfBlock;
 import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
 import gregtech.content.book.BookShelfGeometry;
+import gregtech.platform.Mc;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,11 +29,7 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
         if (stack.is(Items.FILLED_MAP)) return "folder_red";
         if (stack.is(Items.PAPER) || stack.is(Items.MAP) || stack.is(Items.NAME_TAG)) return "folder";
         if (stack.is(Items.ITEM_FRAME) || stack.is(Items.PAINTING)) return "frame";
-//? if >=1.21.1 {
-        /*var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        var key = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        var key = Mc.itemId(stack.getItem());
         if (key != null && key.getPath().equals("dusty_guide_book")) return "book_dusty";
         if (key != null && key.getPath().equals("dusty_material_dictionary")) return "book_matdict";
         return "book_vanilla";

@@ -2,6 +2,7 @@ package gregtech.content.block;
 
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.platform.Mc;
 
 //? if >=1.21.1 {
 //?} else {
@@ -117,11 +118,7 @@ public class LootCrateBlock extends Block {
 
     /** {@code IL.Crate_Fireproof} resolves through the same meta-item family in GT6. */
     public static ItemStack crateStack(String id) {
-//? if >=1.21.1 {
-        /*var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-*///?} else {
-        var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-//?}
+        var block = Mc.block(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? ItemStack.EMPTY : new ItemStack(block);
     }

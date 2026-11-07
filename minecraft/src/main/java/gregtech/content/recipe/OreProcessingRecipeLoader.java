@@ -10,6 +10,7 @@ import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.RegisteredBlock;
 import gregtech.util.OM;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
@@ -250,11 +251,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         // deliberately has no FURNACE flag; the vanilla smelting row stays authoritative.
         for(String[] pair:new String[][]{{"nether_quartz_ore","NetherQuartz"},{"nether_gold_ore","Gold"},{"ancient_debris","AncientDebris"}}) {
             GTMaterial material=lookup(pair[1]);
-//? if >=1.21.1 {
-            /*var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("minecraft:"+pair[0]));
-*///?} else {
-            var item=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.parse("minecraft:"+pair[0]));
-//?}
+            var item=Mc.item(net.minecraft.resources.ResourceLocation.parse("minecraft:"+pair[0]));
             if(material!=null&&material.isValid()&&item!=null)registerOreEntryRecipes(material,new ItemStack(item),Math.max(1,material.getOreMultiplier()*material.getOreProcessingMultiplier()));
         }
         for(String[] pair : new String[][]{{"iron","Iron"},{"gold","Gold"},{"copper","Copper"},{"coal","Coal"},
@@ -263,21 +260,13 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             if(material==null||!material.isValid())continue;
             if(pair[0].equals("iron")||pair[0].equals("gold")||pair[0].equals("copper")) {
                 for(String suffix:new String[]{"","_block"}) {
-//? if >=1.21.1 {
-                    /*var raw=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("minecraft:raw_"+pair[0]+suffix));
-*///?} else {
-                    var raw=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.parse("minecraft:raw_"+pair[0]+suffix));
-//?}
+                    var raw=Mc.item(net.minecraft.resources.ResourceLocation.parse("minecraft:raw_"+pair[0]+suffix));
                     if(raw!=null&&raw!=net.minecraft.world.item.Items.AIR)
                         registerOreEntryRecipes(material,new ItemStack(raw),Math.max(1,material.getOreMultiplier()*material.getOreProcessingMultiplier())*(suffix.isEmpty()?1:9));
                 }
             }
             for(String prefix:new String[]{"","deepslate_"}) {
-//? if >=1.21.1 {
-                /*var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("minecraft:"+prefix+pair[0]+"_ore"));
-*///?} else {
-                var item=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.parse("minecraft:"+prefix+pair[0]+"_ore"));
-//?}
+                var item=Mc.item(net.minecraft.resources.ResourceLocation.parse("minecraft:"+prefix+pair[0]+"_ore"));
                 if(item!=null&&item!=net.minecraft.world.item.Items.AIR)
                     registerOreEntryRecipes(material,new ItemStack(item),Math.max(1,material.getOreMultiplier()*material.getOreProcessingMultiplier()));
             }

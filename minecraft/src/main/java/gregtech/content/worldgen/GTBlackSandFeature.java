@@ -1,6 +1,7 @@
 package gregtech.content.worldgen;
 
 import gregtech.content.block.OreBlock;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -143,11 +144,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
                 || state.is(Blocks.GRAVEL) || state.is(Blocks.CLAY)) {
             return true;
         }
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-//?}
+        ResourceLocation id = Mc.blockId(state.getBlock());
         if (id == null || !id.getNamespace().equals("gt6ce")) return false;
         if (id.getPath().startsWith("sand_")) return true;
         return state.getBlock() instanceof OreBlock && OreBlock.stoneOf(state).isSediment();

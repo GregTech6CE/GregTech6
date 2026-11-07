@@ -5,6 +5,7 @@ import gregtech.content.book.GTMaterialDictionary;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import gregtech.content.recipe.generated.GTLootGen;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -133,11 +134,7 @@ public final class GTLootTables {
     public static String itemIdOf(String spec) {
         ItemStack stack = stackOf(spec);
         if (stack.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*ResourceLocation key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation key = Mc.itemId(stack.getItem());
         return key == null ? null : key.toString();
     }
 

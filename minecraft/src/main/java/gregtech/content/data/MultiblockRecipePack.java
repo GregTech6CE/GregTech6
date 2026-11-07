@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -60,11 +61,7 @@ public final class MultiblockRecipePack {
             // The native wall family owns these rows, including its complete tool tags.
             if (OriginalHandCraftingRows.hasMetalWallRecipe(entry.blockId())) continue;
             ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", entry.blockId());
-//? if >=1.21.1 {
-            /*Block block = BuiltInRegistries.BLOCK.get(blockId);
-*///?} else {
-            Block block = ForgeRegistries.BLOCKS.getValue(blockId);
-//?}
+            Block block = Mc.block(blockId);
             if (block == null || block == net.minecraft.world.level.block.Blocks.AIR) continue;
             Item item = block.asItem();
             if (item == net.minecraft.world.item.Items.AIR) continue;
@@ -89,11 +86,7 @@ public final class MultiblockRecipePack {
 //?}
         for (var row : java.util.stream.Stream.concat(OriginalSurvivalRecipes.allRows().stream(), UtilityCraftingRows.ROWS.stream()).toList()) {
             var blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", row.id());
-//? if >=1.21.1 {
-            /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(blockId);
-*///?} else {
-            Item item = ForgeRegistries.ITEMS.getValue(blockId);
-//?}
+            Item item = Mc.item(blockId);
             if (item == null || item == net.minecraft.world.item.Items.AIR)
                 throw new IllegalStateException("Unregistered original recipe output " + row.id());
             if (!concreteInputsAvailable(row)) continue;
@@ -207,11 +200,7 @@ public final class MultiblockRecipePack {
         }
         if (pattern.isEmpty()) return null;
 
-//? if >=1.21.1 {
-        /*ResourceLocation resultId = BuiltInRegistries.ITEM.getKey(resultItem);
-*///?} else {
-        ResourceLocation resultId = ForgeRegistries.ITEMS.getKey(resultItem);
-//?}
+        ResourceLocation resultId = Mc.itemId(resultItem);
         if (resultId == null) return null;
 
         Map<String, Object> recipe = new HashMap<>();

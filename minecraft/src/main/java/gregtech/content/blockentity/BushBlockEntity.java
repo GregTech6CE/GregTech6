@@ -3,6 +3,7 @@ package gregtech.content.blockentity;
 import gregtech.content.block.plant.BushBlock;
 import gregtech.content.plant.GTBerryBushes;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -73,11 +74,7 @@ public class BushBlockEntity extends BlockEntity {
     public ItemStack berryStack(int count) {
         var key = GTBerryBushes.itemId(berryId());
         if (key == null) return ItemStack.EMPTY;
-//? if >=1.21.1 {
-        /*var item = BuiltInRegistries.ITEM.get(key);
-*///?} else {
-        var item = ForgeRegistries.ITEMS.getValue(key);
-//?}
+        var item = Mc.item(key);
         return item == null ? ItemStack.EMPTY : new ItemStack(item, count);
     }
 

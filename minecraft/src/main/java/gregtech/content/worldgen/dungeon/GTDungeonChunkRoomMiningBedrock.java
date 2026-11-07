@@ -17,6 +17,7 @@ import gregtech.content.registry.GTDecorBlocks;
 //?}
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.worldgen.GTBedrockOreFeature;
+import gregtech.platform.Mc;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
@@ -307,11 +308,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
 
     /** One of the port's blocks by registry name, or {@code null} when it is not registered. */
     private static BlockState port(String id) {
-//? if >=1.21.1 {
-        /*Block block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-*///?} else {
-        Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-//?}
+        Block block = Mc.block(
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? null : block.defaultBlockState();
     }

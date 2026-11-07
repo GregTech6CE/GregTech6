@@ -1,6 +1,7 @@
 package gregtech.content.data;
 
 import gregtech.content.recipe.GTMaterialDataRecipes;
+import gregtech.platform.Mc;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -49,11 +50,7 @@ public final class UsbDataMedia {
 
     private static int tier(ItemStack stack, String suffix) {
         if (stack == null || stack.isEmpty()) return -1;
-//? if >=1.21.1 {
-        /*var key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        var key = Mc.itemId(stack.getItem());
         if (key == null || !key.getNamespace().equals("gt6ce")) return -1;
         return UsbDataRules.tier(key.getNamespace(), key.getPath(), suffix);
     }

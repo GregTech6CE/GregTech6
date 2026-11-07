@@ -11,6 +11,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
+import gregtech.platform.Mc;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -245,11 +246,7 @@ public final class GTMaterialDataRecipes {
     public static int driveTier(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return 0;
 
-//? if >=1.21.1 {
-/*        var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        var id = Mc.itemId(stack.getItem());
 
         if (id == null) return 0;
         var matcher = DRIVE_ID.matcher(id.getPath());

@@ -4,6 +4,7 @@ import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.registry.GTBlocks;
+import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -57,11 +58,7 @@ public final class StoneBlockClientModels {
                 continue;
             }
             Block block = entry.get();
-//? if >=1.21.1 {
-            /*ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+            ResourceLocation blockId = Mc.blockId(block);
             if (blockId == null) {
                 continue;
             }
@@ -76,11 +73,7 @@ public final class StoneBlockClientModels {
                 continue;
             }
             BakedModel itemModel = BlockItemClientModels.asBlockItem(shared);
-//? if >=1.21.1 {
-            /*ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
-//?}
+            ResourceLocation itemId = Mc.itemId(block.asItem());
             if (itemId == null) {
                 itemId = blockId;
             }

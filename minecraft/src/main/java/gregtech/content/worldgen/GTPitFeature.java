@@ -1,4 +1,5 @@
 package gregtech.content.worldgen;
+import gregtech.platform.Mc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -154,11 +155,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's {@code BlocksGT.oreSand} family — the port keeps its sands as icon set blocks. */
     public static boolean isSandLike(BlockState state) {
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-//?}
+        ResourceLocation id = Mc.blockId(state.getBlock());
         return id != null && id.getNamespace().equals("gt6ce") && id.getPath().startsWith("sand_");
     }
 
@@ -172,11 +169,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static BlockState blockState(String id) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(id));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(id));
-//?}
+        Block block = Mc.block(ResourceLocation.parse(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 

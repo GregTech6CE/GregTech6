@@ -31,6 +31,7 @@ import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.EngineBlock;
 
 import gregtech.content.block.machine.SolidBurningBoxBlock;
+import gregtech.platform.Mc;
 
 import com.mojang.logging.LogUtils;
 
@@ -263,11 +264,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+            ResourceLocation blockId = Mc.blockId(block);
 
 
 
@@ -341,11 +338,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
-//?}
+            ResourceLocation itemId = Mc.itemId(block.asItem());
 
 
 
@@ -391,11 +384,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+            ResourceLocation blockId = Mc.blockId(block);
 
 
 
@@ -475,11 +464,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
-//?}
+            ResourceLocation itemId = Mc.itemId(block.asItem());
 
 
 
@@ -517,11 +502,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+            ResourceLocation blockId = Mc.blockId(block);
 
 
 
@@ -609,11 +590,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
-//?}
+            ResourceLocation itemId = Mc.itemId(block.asItem());
 
 
 
@@ -653,11 +630,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
-//?}
+            ResourceLocation itemId = Mc.itemId(block.asItem());
 
 
 
@@ -665,11 +638,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*                itemId = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-                itemId = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+                itemId = Mc.blockId(block);
 
 
 

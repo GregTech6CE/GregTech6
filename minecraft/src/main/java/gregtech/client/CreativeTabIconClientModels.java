@@ -7,6 +7,7 @@ import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.CreativeTabIconItem;
 import gregtech.content.registry.GTCreativeTabIcons;
+import gregtech.platform.Mc;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -50,11 +51,7 @@ public final class CreativeTabIconClientModels {
             if (!(entry.get() instanceof CreativeTabIconItem iconItem)) {
                 continue;
             }
-//? if >=1.21.1 {
-            /*ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(entry.get());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(entry.get());
-//?}
+            ResourceLocation itemId = Mc.itemId(entry.get());
             if (itemId == null) {
                 continue;
             }

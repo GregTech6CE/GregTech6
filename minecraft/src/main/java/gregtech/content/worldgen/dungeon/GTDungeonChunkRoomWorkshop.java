@@ -30,6 +30,7 @@ import gregtech.content.registry.GTTanks;
 //?}
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.registry.GTToolItems;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -417,11 +418,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
             if (book.isEmpty()) throw new IllegalStateException("Missing GT6 workshop manual: " + manuals[i]);
             shelf.inventory().setStackInSlot(i, book);
         }
-//? if >=1.21.1 {
-        /*var tape = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "duct_tape"));
-*///?} else {
-        var tape = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", "duct_tape"));
-//?}
+        var tape = Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce", "duct_tape"));
         if (tape == null) throw new IllegalStateException("Missing GT6 workshop duct tape");
         shelf.inventory().setStackInSlot(8, new ItemStack(tape));
         shelf.inventory().setStackInSlot(9, new ItemStack(tape));
@@ -501,11 +498,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
      * ({@code TankDefinitions.register}, {@code GTToolBlocks.registerAll}).
      */
     private static Block container(String id) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(
-//?}
+        Block block = Mc.block(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 //? if >=1.21.1 {
         /*return block == null ? DungeonBindings.block("wood_barrel") : block;
@@ -516,11 +509,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /** One of the port's simple tool blocks by registry name, or {@code null} when it is missing. */
     private static BlockState tool(String id) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(
-//?}
+        Block block = Mc.block(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? null : block.defaultBlockState();
     }

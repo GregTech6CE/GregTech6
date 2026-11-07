@@ -3,6 +3,7 @@ package gregtech.content.worldgen;
 import gregtech.content.block.FluidSpringBlock;
 import gregtech.content.block.OreBlock;
 import gregtech.content.blockentity.FluidSpringBlockEntity;
+import gregtech.platform.Mc;
 //? if >=1.21.1 {
 /*import gregtech.content.registry.GTFluidSprings;
 *///?} else {
@@ -177,20 +178,12 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
             case 2 -> "grassblock_brown";
             default -> "grassblock_normal";
         };
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-//?}
+        Block block = Mc.block(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == Blocks.AIR ? null : block;
     }
 
     private static BlockState blockState(String id) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(id));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(id));
-//?}
+        Block block = Mc.block(ResourceLocation.parse(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 

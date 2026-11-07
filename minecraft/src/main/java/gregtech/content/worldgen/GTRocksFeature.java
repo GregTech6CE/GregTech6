@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -149,11 +150,7 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
         if (resolved == null || !resolved.resolve().isValid()) return null;
         ItemStack stack = MaterialStackItemHelper.mat(prefix, resolved.resolve(), 1);
         if (stack.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation id = Mc.itemId(stack.getItem());
         return id == null ? null : id.toString();
     }
 

@@ -241,13 +241,8 @@ public final class GTMainRecipes {
         if (!spec.startsWith("g:")) return GeneratedRecipeResolver.resolveSpec(spec);
         String[] parts = spec.split(":");
         if (parts.length != 3) return null;
-//? if >=1.21.1 {
-        /*var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+        var item = Mc.item(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", parts[1]));
-*///?} else {
-        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", parts[1]));
-//?}
         return item == null || item == net.minecraft.world.item.Items.AIR
                 ? null : new ItemStack(item, Integer.parseInt(parts[2]));
     }

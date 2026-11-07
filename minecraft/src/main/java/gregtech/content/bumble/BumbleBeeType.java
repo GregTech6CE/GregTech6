@@ -1,4 +1,5 @@
 package gregtech.content.bumble;
+import gregtech.platform.Mc;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -109,11 +110,7 @@ public enum BumbleBeeType {
     @Nullable
     public static BumbleBeeType of(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation id = Mc.itemId(stack.getItem());
         if (id == null) return null;
         // Longest suffix first, so "_scanned_drone" is not read as "_drone".
         for (BumbleBeeType type : new BumbleBeeType[]{SCANNED_PRINCESS, SCANNED_DRONE, SCANNED_QUEEN,
@@ -128,11 +125,7 @@ public enum BumbleBeeType {
     public static GTBumbleSpecies.Species speciesOf(ItemStack stack) {
         BumbleBeeType type = of(stack);
         if (type == null) return null;
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation id = Mc.itemId(stack.getItem());
         if (id == null) return null;
         String prefix = id.getPath().substring(0, id.getPath().length() - type.suffix().length() - 1);
         return GTBumbleSpecies.byPrefix(prefix);
@@ -150,11 +143,7 @@ public enum BumbleBeeType {
 
     @Nullable
     private static Item item(GTBumbleSpecies.Species species, BumbleBeeType type) {
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(
-//?}
+        Item item = Mc.item(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", itemId(species, type)));
         return item == null || item == net.minecraft.world.item.Items.AIR ? null : item;
     }

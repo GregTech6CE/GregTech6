@@ -1,16 +1,7 @@
 package gregtech.content.item;
 import gregtech.engine.mod.GregTechIdentity;
-//? if >=1.21.1 {
-
-/*import gregtech.api.material.GTMaterial;
-*///?} else {
-//?}
-import gregtech.engine.material.MaterialPresentation;
-//? if >=1.21.1 {
-//?} else {
-
 import gregtech.api.material.GTMaterial;
-//?}
+import gregtech.engine.material.MaterialPresentation;
 import gregtech.engine.material.GTMaterialRegistry;
 //? if >=1.21.1 {
 //?} else {

@@ -1,5 +1,6 @@
 package gregtech.content.data.generated;
 import gregtech.content.food.*;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.*;
 import net.minecraft.resources.ResourceLocation;
 import java.util.*;
@@ -27,13 +28,7 @@ public final class GTFoodStatsGen {
         }
         return List.copyOf(rows);
     }
-//? if >=1.21.1 {
-    /*private static Item resolveItem(String itemId) {
-        return net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemId));
-    }
-*///?} else {
     private static Item resolveItem(String itemId) {
-        return net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(itemId));
+        return Mc.item(ResourceLocation.parse(itemId));
     }
-//?}
 }

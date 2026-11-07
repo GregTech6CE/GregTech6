@@ -1,6 +1,7 @@
 package gregtech.content.blockentity;
 
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -61,11 +62,7 @@ public class RockBlockEntity extends BlockEntity {
     /** The stack this rock hands out, when it carries an explicit item id. */
     public net.minecraft.world.item.ItemStack itemStack() {
         if (itemId.isEmpty()) return net.minecraft.world.item.ItemStack.EMPTY;
-//? if >=1.21.1 {
-        /*var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
-*///?} else {
-        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-//?}
+        var item = Mc.item(
                 net.minecraft.resources.ResourceLocation.parse(itemId));
         return item == null ? net.minecraft.world.item.ItemStack.EMPTY : new net.minecraft.world.item.ItemStack(item, count);
     }

@@ -1,4 +1,5 @@
 package gregtech.content.worldgen;
+import gregtech.platform.Mc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -60,11 +61,7 @@ public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
         Set<ResourceLocation> biomes = GTWorldgenBiomes.chunkBiomes(level, minX, minZ);
         if (!GTWorldgenBiomes.anyOf(biomes, GTWorldgenBiomes.SWAMP)) return false;
 
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(TURF));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(TURF));
-//?}
+        Block block = Mc.block(ResourceLocation.parse(TURF));
         if (block == null || block == Blocks.AIR) return false;
         BlockState fill = block.defaultBlockState();
 

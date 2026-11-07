@@ -23,6 +23,7 @@ import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.ModReferences;
 import gregtech.content.recipe.ShapelessRecipeTooltipIndex;
+import gregtech.platform.Mc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -274,11 +275,7 @@ public final class MaterialTooltips {
         }
 
 
-//? if >=1.21.1 {
-/*        tooltip.add(Component.translatable(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
-*///?} else {
-        tooltip.add(Component.translatable(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
-//?}
+        tooltip.add(Component.translatable(Mc.itemId(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
 
                 .withStyle(ChatFormatting.BLUE));
     }

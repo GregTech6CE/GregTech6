@@ -13,6 +13,7 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
+import gregtech.platform.Mc;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
@@ -497,11 +498,7 @@ public final class GTToolHelper {
         if (!isUsable(stack)) return false;
         var tool=gregtech.content.data.BlockHarvestPolicy.tool(state.getBlock());
 
-//? if >=1.21.1 {
-/*        var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock());
-*///?} else {
-        var id=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(state.getBlock());
-//?}
+        var id=Mc.blockId(state.getBlock());
 
         if(id==null || !id.getNamespace().equals("gt6ce")) return false;
         return switch(tool) {

@@ -6,6 +6,7 @@ import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTWoods;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -54,11 +55,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
     public ItemStack toolProduct() {
         if (species == WoodSpecies.CINNAMON) {
             // GT6 BlockTreeLogB:99 prefers its own IL.Food_Cinnamon before cinnamon dust.
-//? if >=1.21.1 {
-            /*Item bark = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
-*///?} else {
-            Item bark = ForgeRegistries.ITEMS.getValue(
-//?}
+            Item bark = Mc.item(
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "cinnamon_bark"));
 //? if >=1.21.1 {
             /*if (bark != null && bark != net.minecraft.world.item.Items.AIR) return new ItemStack(bark);

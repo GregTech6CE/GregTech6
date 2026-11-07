@@ -1,4 +1,5 @@
 package gregtech.content.cover;
+import gregtech.platform.Mc;
 
 import net.minecraft.world.item.ItemStack;
 
@@ -41,11 +42,7 @@ public enum PanelCover {
 
     public static PanelCover of(ItemStack stack) {
         if (stack.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        var key = Mc.itemId(stack.getItem());
         if (key != null && key.getNamespace().equals("gt6ce"))
             for (var cover : values())
                 if (cover.id.equals(key.getPath())) return cover;

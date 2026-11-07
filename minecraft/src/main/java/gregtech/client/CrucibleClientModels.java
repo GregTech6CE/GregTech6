@@ -10,6 +10,7 @@ import gregtech.engine.machine.MachineRegistry;
 //?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
+import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -74,11 +75,7 @@ public final class CrucibleClientModels {
             }
             SmeltingCrucibleBlock block = entry.get();
             CrucibleSpec spec = block.spec();
-//? if >=1.21.1 {
-            /*ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+            ResourceLocation blockId = Mc.blockId(block);
             if (blockId == null) {
                 continue;
             }

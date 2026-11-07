@@ -1,6 +1,7 @@
 package gregtech.content.block.wood;
 
 import gregtech.content.blockentity.TreeHoleBlockEntity;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -88,11 +89,7 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
     }
 
     public ItemStack resinItem() {
-//? if >=1.21.1 {
-        /*return new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
-*///?} else {
-        return new ItemStack(ForgeRegistries.ITEMS.getValue(
-//?}
+        return new ItemStack(Mc.item(
                 ResourceLocation.parse(yield.substring("item:".length()))));
     }
 

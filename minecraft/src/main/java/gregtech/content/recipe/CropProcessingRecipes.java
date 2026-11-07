@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTFluids;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -21,13 +22,8 @@ public final class CropProcessingRecipes {
         for(var row:CropProcessingCatalog.ROWS)crop(row.input(),row.fluid(),row.amount(),row.chance(),row.residue());
     }
     private void crop(String inputId,String fluidName,int amount,long chance,String residueId) {
-//? if >=1.21.1 {
-        /*var input=BuiltInRegistries.ITEM.get(ResourceLocation.parse(inputId));
-        var residue=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",residueId));
-*///?} else {
-        var input=ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(inputId));
-        var residue=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",residueId));
-//?}
+        var input=Mc.item(ResourceLocation.parse(inputId));
+        var residue=Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce",residueId));
         var fluid=GTFluids.still(fluidName);
 //? if >=1.21.1 {
         /*if(input==null || input==net.minecraft.world.item.Items.AIR || residue==null || residue==net.minecraft.world.item.Items.AIR || fluid==null || !fluid.isBound()) throw new IllegalStateException("Unresolved crop recipe: "+inputId+" / "+fluidName);

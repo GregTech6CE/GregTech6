@@ -1,5 +1,6 @@
 package gregtech.content.cover;
 import gregtech.engine.mod.GregTechIdentity;
+import gregtech.platform.Mc;
 
 
 import net.minecraft.resources.ResourceLocation;
@@ -56,11 +57,7 @@ public final class CoverItems {
      */
     public static String behavior(ItemStack stack) {
         if (stack.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation key = Mc.itemId(stack.getItem());
         if (key == null) return null;
         String id = key.getPath();
         if (stack.getItem() instanceof gregtech.content.item.PanelItemView panel)

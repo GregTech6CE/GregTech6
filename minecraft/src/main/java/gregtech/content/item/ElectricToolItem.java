@@ -12,6 +12,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.Level;
 import gregtech.content.tool.ElectricToolWear;
+import gregtech.platform.Mc;
 
 /** GT6 electric tool base — stores EU and consumes power on use. */
 
@@ -145,11 +146,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         if (!player.mayBuild() || !level.mayInteract(player, pos)) return net.minecraft.world.InteractionResult.FAIL;
         var state = level.getBlockState(pos);
 
-//? if >=1.21.1 {
-/*        var key = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock());
-*///?} else {
-        var key = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(state.getBlock());
-//?}
+        var key = Mc.blockId(state.getBlock());
 
         boolean ownBlock = key != null && key.getNamespace().equals("gt6ce");
         // Sneaking skips Block.use. Give the machine's existing tool handling first chance.

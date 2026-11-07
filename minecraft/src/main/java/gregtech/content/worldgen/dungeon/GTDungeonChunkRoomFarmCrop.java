@@ -6,6 +6,7 @@ package gregtech.content.worldgen.dungeon;
 //?}
 import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.registry.GTWoods;
+import gregtech.platform.Mc;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -107,11 +108,7 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
      * cannot support the plants written one block above it.</p>
      */
     private static void planter(GTDungeonData data, int x, int y, int z) {
-//? if >=1.21.1 {
-        /*Block block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-*///?} else {
-        Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-//?}
+        Block block = Mc.block(
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "plant_pot"));
         data.set(x, y, z, (block == null ? Blocks.FLOWER_POT : block).defaultBlockState());
     }

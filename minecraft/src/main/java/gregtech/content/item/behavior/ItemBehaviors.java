@@ -1,4 +1,5 @@
 package gregtech.content.item.behavior;
+import gregtech.platform.Mc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -180,11 +181,7 @@ public final class ItemBehaviors {
 
     /** Registry lookup by full id, e.g. {@code stack("gt6ce:duct_tape")}; empty when unknown. */
     public static ItemStack stack(String id) {
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(id));
-//?}
+        Item item = Mc.item(ResourceLocation.parse(id));
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
@@ -192,11 +189,7 @@ public final class ItemBehaviors {
     @Nullable
     public static String itemId(ItemStack stack) {
         if (stack.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation id = Mc.itemId(stack.getItem());
         return id == null ? null : id.getPath();
     }
 

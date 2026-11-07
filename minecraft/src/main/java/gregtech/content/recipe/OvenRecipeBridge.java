@@ -8,6 +8,7 @@ import gregtech.GregTech;
 //?}
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.stack.StackCompat;
+import gregtech.platform.Mc;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -381,11 +382,7 @@ public final class OvenRecipeBridge {
             if (metadata.isEmpty()) continue;
             var data = metadata.get(); var covered = data.food() ? smoked : blasted;
             if (!covered.add(input.getItem())) continue;
-//? if >=1.21.1 {
-            /*var itemId = BuiltInRegistries.ITEM.getKey(input.getItem());
-*///?} else {
-            var itemId = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(input.getItem());
-//?}
+            var itemId = Mc.itemId(input.getItem());
             var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
                     "material_cooking/" + (data.food() ? "smoking/" : "blasting/") + itemId.getNamespace() + "/" + itemId.getPath());
             Recipe<?> recipe = data.food()

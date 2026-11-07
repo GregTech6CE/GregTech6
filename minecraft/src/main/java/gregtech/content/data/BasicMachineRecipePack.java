@@ -3,6 +3,7 @@ package gregtech.content.data;
 import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.platform.Mc;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 *///?} else {
@@ -56,11 +57,7 @@ public final class BasicMachineRecipePack {
             var spec = machine.basicSpec();
             if (MULTIBLOCK_CONTROLLERS.contains(spec.machineName())) continue;
 
-//? if >=1.21.1 {
-            /*ResourceLocation outputId = BuiltInRegistries.ITEM.getKey(machine.asItem());
-*///?} else {
-            ResourceLocation outputId = ForgeRegistries.ITEMS.getKey(machine.asItem());
-//?}
+            ResourceLocation outputId = Mc.itemId(machine.asItem());
             if (outputId == null) continue;
 
             BasicMachineCraftingRecipes.Entry table = BasicMachineCraftingRecipes.find(spec.machineName(), spec.tier());

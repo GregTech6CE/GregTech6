@@ -19,6 +19,7 @@ import gregtech.content.recipe.RuntimeRecipeLifecycle;
 import gregtech.content.recipe.ToolShapedRecipe;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTToolItems;
+import gregtech.platform.Mc;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -119,11 +120,7 @@ public final class BedrockFlowerCraftingRecipeInjector {
     }
 
     private static ItemStack flower(BedrockFlowers.Flower entry) {
-//? if >=1.21.1 {
-        /*var item = BuiltInRegistries.ITEM.get(
-*///?} else {
-        var item = ForgeRegistries.ITEMS.getValue(
-//?}
+        var item = Mc.item(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", entry.id()));
         if (item == null) throw new IllegalStateException("Missing GT6 flower " + entry.id());
         return new ItemStack(item);

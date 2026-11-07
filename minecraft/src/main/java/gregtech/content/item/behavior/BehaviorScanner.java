@@ -5,6 +5,7 @@ import gregtech.api.platform.machine.MachineControl;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.data.BlockHarvestPolicy;
 import gregtech.content.data.GregTechTags;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -94,11 +95,7 @@ public final class BehaviorScanner {
         // WD.java:921-936 — the block-level header, which the original never charges for.
         lines.add("--- X: " + pos.getX() + " Y: " + pos.getY() + " Z: " + pos.getZ() + " ---");
         lines.add("Name: " + blockName(level, pos, be) + "  State: " + stateProperties(state));
-//? if >=1.21.1 {
-        /*var id = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-        var id = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+        var id = Mc.blockId(block);
         lines.add("Registry: " + (id == null ? "unknown" : id.toString()));
         if (scanLevel >= CLASS_LEVEL) {
             lines.add("Block Class: " + block.getClass().getName());

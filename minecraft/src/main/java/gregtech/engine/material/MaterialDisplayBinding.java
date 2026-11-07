@@ -4,6 +4,7 @@ import gregtech.api.material.*;
 
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,11 +25,7 @@ public final class MaterialDisplayBinding {
         if (!(display.getItem() instanceof gregtech.engine.material.MaterialFormItem item) || item.getPrefix()!=MaterialPrefix.unit) return List.of();
         if (aliases==null) {
             Map<GTMaterial,List<ItemStack>> index=new IdentityHashMap<>();
-//? if >=1.21.1 {
-            /*for(Item registered:BuiltInRegistries.ITEM) {
-*///?} else {
-            for(Item registered:ForgeRegistries.ITEMS.getValues()) {
-//?}
+            for(Item registered:Mc.items()) {
                 var stack = new ItemStack(registered);
                 if (registered instanceof MaterialFormItem form && form.getPrefix() == MaterialPrefix.unit) continue;
                 var form = MaterialEquivalence.form(stack);

@@ -3,6 +3,7 @@ package gregtech.content.item.behavior;
 import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.tool.DynamiteSubstrates;
 import gregtech.content.item.ElectricToolItem;
+import gregtech.platform.Mc;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -51,11 +52,7 @@ public final class BehaviorPlaceDynamite {
             for (int hotbar = 0; hotbar < 9; hotbar++) {
                 var remote = player.getInventory().items.get(hotbar);
                 if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "remote_activator")
-//? if >=1.21.1 {
-                        /*.equals(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(remote.getItem()))
-*///?} else {
-                        .equals(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(remote.getItem()))
-//?}
+                        .equals(Mc.itemId(remote.getItem()))
                         && BehaviorRemote.addCoords(remote, level, target)) break;
             }
             player.getInventory().setChanged();

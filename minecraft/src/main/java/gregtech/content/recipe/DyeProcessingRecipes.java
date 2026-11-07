@@ -6,6 +6,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import gregtech.content.tool.PaintingRules;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
@@ -257,13 +258,7 @@ public final class DyeProcessingRecipes {
         var stack=gregtech.content.block.misc.ConcreteBlock.coloredItem(block,color);stack.setCount(count);return stack;
     }
     private static ItemStack item(String id,int count){
-//? if >=1.21.1 {
-
-        /*var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
-
-*///?} else {
-        var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(id));
-//?}
+        var item=Mc.item(ResourceLocation.parse(id));
         if(item==null||item==Items.AIR)throw new IllegalStateException("Missing dye ingredient "+id);
         return new ItemStack(item,count);
     }

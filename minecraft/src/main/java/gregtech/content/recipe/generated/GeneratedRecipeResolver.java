@@ -8,6 +8,7 @@ import gregtech.content.registry.GTTechnological;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.util.OM;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -95,13 +96,8 @@ public final class GeneratedRecipeResolver {
                 return tag == null ? null : new ItemStack(tag);
             }
             case "v" -> {
-//? if >=1.21.1 {
-                /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+                Item item = Mc.item(
                         net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("minecraft", parts[1]));
-*///?} else {
-                Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("minecraft", parts[1]));
-//?}
                 return (item == null || item == net.minecraft.world.item.Items.AIR)
                         ? null : new ItemStack(item, Integer.parseInt(parts[2]));
             }
@@ -127,13 +123,8 @@ public final class GeneratedRecipeResolver {
                             : net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
                                     gregtech.GregTech.NAMESPACE, id);
 //?}
-//? if >=1.21.1 {
-                    /*techItem = key == null ? null
-                            : net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key);
-*///?} else {
                     techItem = key == null ? null
-                            : net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(key);
-//?}
+                            : Mc.item(key);
                 }
                 return techItem == null || techItem == net.minecraft.world.item.Items.AIR
                         ? null : new ItemStack(techItem, Math.max(1, Integer.parseInt(parts[2])));

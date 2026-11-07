@@ -50,11 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class GTCreativeTabs {
-//? if >=1.21.1 {
-    /*public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, REGISTRY_NAMESPACE);
-*///?} else {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, REGISTRY_NAMESPACE);
-//?}
 
 //? if >=1.21.1 {
     /*private static final Map<MaterialPrefix, DeferredHolder<CreativeModeTab,CreativeModeTab>> BY_PREFIX = new HashMap<>();

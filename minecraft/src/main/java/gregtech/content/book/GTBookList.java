@@ -1,4 +1,5 @@
 package gregtech.content.book;
+import gregtech.platform.Mc;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -33,11 +34,7 @@ public final class GTBookList {
     private static final String DUSTY_DICTIONARY = "gt6ce:dusty_material_dictionary";
 
     private static boolean isDustyBook(ItemStack stack) {
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation id = Mc.itemId(stack.getItem());
         return id != null && (id.toString().equals(DUSTY_GUIDE) || id.toString().equals(DUSTY_DICTIONARY));
     }
 
@@ -45,24 +42,14 @@ public final class GTBookList {
     public static boolean canPlace(ItemStack stack) {
         // Native dungeon keys are shelf display items, not books or enchantment sources.
         if (!stack.isEmpty() && stack.getItem() instanceof gregtech.content.item.GTDungeonKeyItem) return true;
-//? if >=1.21.1 {
-        /*return !stack.isEmpty()
-                && BookShelfRules.canPlace(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
-*///?} else {
         return !stack.isEmpty()
-                && BookShelfRules.canPlace(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
-//?}
+                && BookShelfRules.canPlace(Mc.itemId(stack.getItem()).toString());
     }
 
     /** Current one-point book classification, corresponding to GT6 {@code BooksGT.BOOKS_NORMAL}. */
     public static boolean isNormalBook(ItemStack stack) {
-//? if >=1.21.1 {
-        /*return !stack.isEmpty()
-                && BookShelfRules.enchantPower(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()) == 1;
-*///?} else {
         return !stack.isEmpty()
-                && BookShelfRules.enchantPower(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString()) == 1;
-//?}
+                && BookShelfRules.enchantPower(Mc.itemId(stack.getItem()).toString()) == 1;
     }
 
     /** GT6 {@code BooksGT.BOOKS_ENCHANTED} — worth two enchantment points. */
@@ -77,13 +64,8 @@ public final class GTBookList {
 
     /** GT6 excludes its button, lever, torch and cobblestone decoys from automated extraction. */
     public static boolean canAutoExtract(ItemStack stack) {
-//? if >=1.21.1 {
-        /*return !stack.isEmpty()
-                && BookShelfRules.canAutoExtract(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
-*///?} else {
         return !stack.isEmpty()
-                && BookShelfRules.canAutoExtract(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
-//?}
+                && BookShelfRules.canAutoExtract(Mc.itemId(stack.getItem()).toString());
     }
 
     /** Stored-item points used by GT6's shelf: +1 per classified plain book, +2 per enchanted book. */

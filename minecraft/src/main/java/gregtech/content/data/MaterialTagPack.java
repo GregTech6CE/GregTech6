@@ -4,6 +4,7 @@ import gregtech.api.material.GTValues;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.content.block.MaterialBlockLike;
+import gregtech.platform.Mc;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;import net.minecraft.network.chat.Component;
 *///?} else {
@@ -121,13 +122,8 @@ public final class MaterialTagPack extends AbstractPackResources {
         var blocksByMaterial=new TreeMap<String,Set<String>>();
         // Block-form items keyed by "material|blockPrefix", for the other mods' own material tags.
         var materialBlockItems=new java.util.HashMap<String,String>();
-//? if >=1.21.1 {
-        /*for(var item:BuiltInRegistries.ITEM) {
-            var id=BuiltInRegistries.ITEM.getKey(item); if(id==null||item==Items.AIR)continue;
-*///?} else {
-        for(var item:ForgeRegistries.ITEMS.getValues()) {
-            var id=ForgeRegistries.ITEMS.getKey(item); if(id==null||item==Items.AIR)continue;
-//?}
+        for(var item:Mc.items()) {
+            var id=Mc.itemId(item); if(id==null||item==Items.AIR)continue;
             var preferred = gregtech.engine.material.MaterialUnification.canonical(new ItemStack(item));
             if (preferred.getItem() != item)
                 preferredItems.put(id.toString(), BuiltInRegistries.ITEM.getKey(preferred.getItem()).toString());
@@ -495,13 +491,8 @@ public final class MaterialTagPack extends AbstractPackResources {
         tags.computeIfAbsent("gt6ce:tags/items/wooden_slabs.json", k -> new TreeSet<>())
 //?}
                 .add("#minecraft:wooden_slabs");
-//? if >=1.21.1 {
-        /*for (var item : BuiltInRegistries.ITEM) {
-            var id = BuiltInRegistries.ITEM.getKey(item);
-*///?} else {
-        for (var item : ForgeRegistries.ITEMS.getValues()) {
-            var id = ForgeRegistries.ITEMS.getKey(item);
-//?}
+        for (var item : Mc.items()) {
+            var id = Mc.itemId(item);
             if (id == null || !id.getNamespace().equals("gt6ce")) continue;
 //? if >=1.21.1 {
             /*if(item instanceof net.minecraft.world.item.BlockItem blockItem

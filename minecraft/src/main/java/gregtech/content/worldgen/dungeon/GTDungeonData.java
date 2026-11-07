@@ -35,6 +35,7 @@ import gregtech.content.registry.SharedDecorBlocks;
 import gregtech.content.registry.GTLasers;
 //?}
 import gregtech.content.worldgen.GTSurfaceFlora;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -526,11 +527,7 @@ public final class GTDungeonData {
      * used to; the port registers every id used by the dungeon unconditionally.
      */
     public static Block container(String id) {
-//? if >=1.21.1 {
-        /*Block block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-*///?} else {
-        Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-//?}
+        Block block = Mc.block(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 //? if >=1.21.1 {
         /*return block == null ? DungeonBindings.block("wood_barrel") : block;

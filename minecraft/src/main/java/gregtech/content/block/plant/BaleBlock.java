@@ -1,21 +1,28 @@
 package gregtech.content.block.plant;
 
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 
 /**
  * GT6 crop and grass bales. Grass has four material states; only fresh and
  * moldy bales continue ageing after placement (BlockBaleGrass).
  */
 public final class BaleBlock extends RotatedPillarBlock {
-    public enum Stage { CROP, FRESH, DRY, MOLDY, ROTTEN }
+    public enum Stage {
+        CROP,
+        FRESH,
+        DRY,
+        MOLDY,
+        ROTTEN
+    }
 
     private final Stage stage;
 
@@ -24,13 +31,16 @@ public final class BaleBlock extends RotatedPillarBlock {
         this.stage = stage;
     }
 
-    public Stage stage() { return stage; }
+    public Stage stage() {
+        return stage;
+    }
 
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState previous, boolean moving) {
         super.onPlace(state, level, pos, previous, moving);
         if (!level.isClientSide && state.getBlock() != previous.getBlock() && canAge()) {
-            level.scheduleTick(pos, this, gregtech.content.plant.BaleAgingRules.initialDelay(level.random.nextInt(2400)));
+            level.scheduleTick(
+                    pos, this, gregtech.content.plant.BaleAgingRules.initialDelay(level.random.nextInt(2400)));
         }
     }
 
@@ -70,7 +80,10 @@ public final class BaleBlock extends RotatedPillarBlock {
         wet |= biome.is(net.minecraft.tags.BiomeTags.IS_OCEAN)
                 || biome.is(net.minecraft.tags.BiomeTags.IS_RIVER)
                 || biome.is(net.minecraft.tags.BiomeTags.IS_BEACH)
-                || biome.unwrapKey().map(key -> gregtech.content.worldgen.center.OriginBiomeNames.water(key.location().getPath())).orElse(false);
+                || biome.unwrapKey()
+                        .map(key -> gregtech.content.worldgen.center.OriginBiomeNames.water(
+                                key.location().getPath()))
+                        .orElse(false);
         if (!wet) {
             for (Direction direction : Direction.values()) {
                 if (level.getFluidState(pos.relative(direction)).is(FluidTags.WATER)) {
@@ -84,13 +97,8 @@ public final class BaleBlock extends RotatedPillarBlock {
     }
 
     private static void replace(BlockState state, ServerLevel level, BlockPos pos, Stage target) {
-        String id=gregtech.content.plant.BaleAgingRules.id(target.name());
-//? if >=1.21.1 {
-        /*var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-*///?} else {
-        var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-//?}
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+        String id = gregtech.content.plant.BaleAgingRules.id(target.name());
+        var block = Mc.block(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         if (block instanceof BaleBlock) {
             level.setBlock(pos, block.defaultBlockState().setValue(AXIS, state.getValue(AXIS)), 3);
         }

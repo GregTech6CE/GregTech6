@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.content.tool.CraftingToolDefinitions;
 import gregtech.content.item.GTToolItem;
+import gregtech.platform.Mc;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -14,11 +15,7 @@ import java.util.*;
 public final class CraftingTools {
     private CraftingTools() {}
     private static String id(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        var id = Mc.itemId(stack.getItem());
         return id != null && id.getNamespace().equals("gt6ce") ? id.getPath() : "";
     }
     public static boolean matches(ItemStack stack, gregtech.engine.tool.GTToolType kind) {
@@ -85,11 +82,7 @@ public final class CraftingTools {
         for(var tool : CraftingToolDefinitions.ALL) {
             if(tool.kinds().stream().noneMatch(kinds::contains)) continue;
             for(String name : List.of(tool.tip(),tool.token())) {
-//? if >=1.21.1 {
-                /*var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",name));
-*///?} else {
-                var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",name));
-//?}
+                var item = Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce",name));
                 if(item == null || item == Items.AIR) throw new IllegalStateException("Missing crafting tool " + name);
                 if(stacks.stream().noneMatch(s -> s.is(item))) stacks.add(new ItemStack(item));
             }

@@ -3,6 +3,7 @@ package gregtech.content.block.misc;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.engine.stack.StackCompat;
+import gregtech.platform.Mc;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.*;
@@ -124,21 +125,13 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     }
 
     public static boolean isBlueprint(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        var id = Mc.itemId(stack.getItem());
         return id != null && id.getNamespace().equals("gt6ce") && (id.getPath().equals("empty_blueprint") || id.getPath().equals("blueprint"));
     }
 
     public boolean writeBlueprint() {
         ItemStack blank = inventory.getStackInSlot(30);
-//? if >=1.21.1 {
-        /*var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(blank.getItem());
-*///?} else {
-        var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(blank.getItem());
-//?}
+        var id = Mc.itemId(blank.getItem());
         if (id == null || !id.toString().equals("gt6ce:empty_blueprint")) return false;
 //? if >=1.21.1 {
         /*ItemStack written = new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(

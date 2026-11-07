@@ -264,11 +264,7 @@ public final class StoneVariantRecipes {
 
     /** GT6 {@code RM.generify(block, vanillaBlock)} — lets GT machines treat the rock as the vanilla block. */
     private static void generify(ItemStack in, String vanillaPath) {
-//? if >=1.21.1 {
-        /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(vanillaPath));
-*///?} else {
-        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.withDefaultNamespace(vanillaPath));
-//?}
+        var item = Mc.item(ResourceLocation.withDefaultNamespace(vanillaPath));
         if (item == null || item == Items.AIR) {
             SKIPPED.add("generify target missing: " + vanillaPath);
             return;

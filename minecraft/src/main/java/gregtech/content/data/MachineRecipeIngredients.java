@@ -208,21 +208,13 @@ public final class MachineRecipeIngredients {
     private static Object blockIngredient(BlockMaterialPrefix prefix, GTMaterial material) {
         var stack = gregtech.content.registry.GTBlocks.getStack(prefix, material);
         if (!stack.isEmpty()) {
-//? if >=1.21.1 {
-            /*return Map.of("item", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
-*///?} else {
-            return Map.of("item", ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
-//?}
+            return Map.of("item", Mc.itemId(stack.getItem()).toString());
         }
         note("block " + (prefix == null ? "?" : prefix.getName()) + " of " + material.getName(),
                 "machine casing block");
         var casing = gregtech.content.registry.GTBlocks.getStack(BlockMaterialPrefix.casingMachine, material);
         if (!casing.isEmpty()) {
-//? if >=1.21.1 {
-            /*return Map.of("item", BuiltInRegistries.ITEM.getKey(casing.getItem()).toString());
-*///?} else {
-            return Map.of("item", ForgeRegistries.ITEMS.getKey(casing.getItem()).toString());
-//?}
+            return Map.of("item", Mc.itemId(casing.getItem()).toString());
         }
         return Map.of("item", "minecraft:iron_block");
     }
@@ -267,11 +259,7 @@ public final class MachineRecipeIngredients {
         }
         Item item = pipeItem(sizeName, target);
         if (item != null) {
-//? if >=1.21.1 {
-            /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-*///?} else {
-            ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-//?}
+            ResourceLocation id = Mc.itemId(item);
             if (id != null) return Map.of("item", id.toString());
         }
         note("pipe " + sizeName + " of " + target.getName(), "machine casing block");
@@ -289,11 +277,7 @@ public final class MachineRecipeIngredients {
     private static Object wireIngredient(String size, GTMaterial target, GTMaterial machineMaterial, boolean insulated) {
         Item item = wireItem(size, target, insulated);
         if (item != null) {
-//? if >=1.21.1 {
-            /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-*///?} else {
-            ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-//?}
+            ResourceLocation id = Mc.itemId(item);
             if (id != null) return Map.of("item", id.toString());
         }
         List<Object> anyOfSize = wiresOfSize(size, insulated);
@@ -384,11 +368,7 @@ public final class MachineRecipeIngredients {
         if (key == null) return null;
         if (key.getNamespace().equals("gt6ce")) key = ResourceLocation.fromNamespaceAndPath("gt6ce",
                 key.getPath());
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(key);
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(key);
-//?}
+        Item item = Mc.item(key);
         if (item == null || item == Items.AIR) return null;
         return Map.of("item", key.toString());
     }
@@ -407,11 +387,7 @@ public final class MachineRecipeIngredients {
     private static synchronized void indexMaterialItems() {
         if (materialItems != null) return;
         Map<MaterialPrefix, Map<GTMaterial, Item>> index = new HashMap<>();
-//? if >=1.21.1 {
-        /*for (Item item : BuiltInRegistries.ITEM) {
-*///?} else {
-        for (Item item : ForgeRegistries.ITEMS.getValues()) {
-//?}
+        for (Item item : Mc.items()) {
             if (item instanceof gregtech.engine.material.MaterialFormItem materialItem) {
                 GTMaterial material = materialItem.getMaterial();
                 if (material != null && material.isValid()) {
@@ -468,11 +444,7 @@ public final class MachineRecipeIngredients {
         List<Object> result = new java.util.ArrayList<>();
         // GTMaterial is not Comparable, so order by the resolved item id instead.
         for (var entry : wiresBySize.getOrDefault(key, Map.of()).entrySet()) {
-//? if >=1.21.1 {
-            /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(entry.getValue());
-*///?} else {
-            ResourceLocation id = ForgeRegistries.ITEMS.getKey(entry.getValue());
-//?}
+            ResourceLocation id = Mc.itemId(entry.getValue());
             if (id != null) result.add(Map.of("item", id.toString()));
         }
         result.sort(java.util.Comparator.comparing(Object::toString));
@@ -580,11 +552,7 @@ public final class MachineRecipeIngredients {
         if (ingredient instanceof Map<?, ?> map) {
             Object item = map.get("item");
             if (item != null) {
-//? if >=1.21.1 {
-                /*return stack.is(BuiltInRegistries.ITEM.get(ResourceLocation.parse(item.toString())));
-*///?} else {
-                return stack.is(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(item.toString())));
-//?}
+                return stack.is(Mc.item(ResourceLocation.parse(item.toString())));
             }
             Object tag = map.get("tag");
             if (tag != null) {

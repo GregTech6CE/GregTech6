@@ -7,6 +7,7 @@ import gregtech.engine.recipe.*;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.*;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
@@ -36,11 +37,7 @@ public final class RadiationMedicineRecipes {
         // The complete wax pill and capsule matrix belongs to SourceExtruderRecipes.
     }
     private static ItemStack item(String id) {
-//? if >=1.21.1 {
-        /*return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
-*///?} else {
-        return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
-//?}
+        return new ItemStack(Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
     }
     private static void add(RecipeMap map, ItemStack[] inputs, ItemStack output, int ticks) {
         if (output.isEmpty() || java.util.Arrays.stream(inputs).anyMatch(ItemStack::isEmpty))

@@ -3,6 +3,7 @@ package gregtech.content.data;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.item.MaterialItem;
+import gregtech.platform.Mc;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.*;
@@ -71,13 +72,8 @@ public final class BlockLootPack extends AbstractPackResources {
         var gson = new com.google.gson.Gson();
         var result = new HashMap<ResourceLocation, byte[]>();
         var tags = new TreeMap<String, Set<String>>();
-//? if >=1.21.1 {
-        /*for (var block : BuiltInRegistries.BLOCK) {
-            var id = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-        for (var block : ForgeRegistries.BLOCKS.getValues()) {
-            var id = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+        for (var block : Mc.blocks()) {
+            var id = Mc.blockId(block);
             if (id == null || !id.getNamespace().equals("gt6ce") || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;
             String tag = BlockHarvestPolicy.tag(BlockHarvestPolicy.tool(block));
             tags.computeIfAbsent(tag, k -> new TreeSet<>()).add(id.toString());
@@ -88,20 +84,10 @@ public final class BlockLootPack extends AbstractPackResources {
             // Supply vanilla loot only. Blocks overriding getDrops retain their specialized NBT/drop behavior.
             // Only blocks with stack-carried variants copy state; flattened variants drop their own item ID.
             Map<String, Object> entry = block instanceof gregtech.engine.block.StatefulBlockLoot stateful
-//? if >=1.21.1 {
-            /*// Version-specific branch.
-                    ? Map.of("type", "minecraft:item", "name", BuiltInRegistries.ITEM.getKey(block.asItem()).toString(),
-*///?} else {
-            // Version-specific branch.
-                    ? Map.of("type", "minecraft:item", "name", ForgeRegistries.ITEMS.getKey(block.asItem()).toString(),
-//?}
+                    ? Map.of("type", "minecraft:item", "name", Mc.itemId(block.asItem()).toString(),
                     "functions", List.of(Map.of("function", "minecraft:copy_state", "block", id.toString(),
                     "properties", stateful.lootStateProperties())))
-//? if >=1.21.1 {
-                    /*: Map.of("type", "minecraft:item", "name", BuiltInRegistries.ITEM.getKey(block.asItem()).toString());
-*///?} else {
-                    : Map.of("type", "minecraft:item", "name", ForgeRegistries.ITEMS.getKey(block.asItem()).toString());
-//?}
+                    : Map.of("type", "minecraft:item", "name", Mc.itemId(block.asItem()).toString());
             var pool = Map.of("rolls", 1, "entries", List.of(entry), "conditions", List.of(Map.of("condition", "minecraft:survives_explosion")));
 //? if >=1.21.1 {
             /*result.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "loot_table/blocks/" + id.getPath() + ".json"),

@@ -7,6 +7,7 @@ import gregtech.content.block.RockBlock;
 import gregtech.content.blockentity.RockBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -155,11 +156,7 @@ public class GTNetherScatterFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static String key(ItemStack stack) {
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation id = Mc.itemId(stack.getItem());
         return id == null ? "" : id.toString();
     }
 

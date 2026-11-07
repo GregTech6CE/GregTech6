@@ -3,6 +3,7 @@ package gregtech.content.material;
 import com.google.gson.*;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
@@ -23,11 +24,7 @@ public final class VanillaCompositionLoader {
             var json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
             var errors = new ArrayList<String>();
             for (var entry : json.entrySet()) {
-//? if >=1.21.1 {
-                /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(entry.getKey()));
-*///?} else {
-                var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.withDefaultNamespace(entry.getKey()));
-//?}
+                var item = Mc.item(ResourceLocation.withDefaultNamespace(entry.getKey()));
                 if (item == null || item == Items.AIR) continue; // Model variants are not registered items.
                 var row = entry.getValue().getAsJsonObject();
                 var components = new ArrayList<MaterialComponent>();

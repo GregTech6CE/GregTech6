@@ -13,6 +13,7 @@ import gregtech.content.block.machine.CrucibleCrossingBlock;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
 import gregtech.content.block.machine.MoldBasinBlock;
 import gregtech.content.block.machine.MoldBlock;
+import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -120,11 +121,7 @@ public final class SmelteryClientModels {
             if (spec == null) {
                 continue;
             }
-//? if >=1.21.1 {
-            /*ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+            ResourceLocation blockId = Mc.blockId(block);
             if (blockId == null) {
                 continue;
             }

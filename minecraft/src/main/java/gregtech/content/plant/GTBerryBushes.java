@@ -1,4 +1,5 @@
 package gregtech.content.plant;
+import gregtech.platform.Mc;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,11 +23,7 @@ public final class GTBerryBushes extends BerryBushCatalog {
     public static BerryType of(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return null;
         if (stack.is(Items.STRING)) return DEFAULT;
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        ResourceLocation id = Mc.itemId(stack.getItem());
         if (id == null) return null;
         return id.getNamespace().equals("gt6ce") ? BerryBushCatalog.byId(id.getPath()) : null;
     }
@@ -36,11 +33,7 @@ public final class GTBerryBushes extends BerryBushCatalog {
         if (known != null) return known;
         var key = itemId(id);
         if (key == null) return null;
-//? if >=1.21.1 {
-        /*var item = BuiltInRegistries.ITEM.get(key);
-*///?} else {
-        var item = ForgeRegistries.ITEMS.getValue(key);
-//?}
+        var item = Mc.item(key);
         return item == null ? null : of(new ItemStack(item));
     }
 

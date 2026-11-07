@@ -6,6 +6,7 @@ import gregtech.engine.recipe.*;
 import gregtech.engine.recipe.*;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.*;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
@@ -54,11 +55,7 @@ public abstract class OriginalRecipeBatch {
         entries.add(new Entry(id, map, recipe));
     }
     protected static ItemStack item(String id, int count) {
-//? if >=1.21.1 {
-        /*var value = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
-*///?} else {
-        var value = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(id));
-//?}
+        var value = Mc.item(ResourceLocation.parse(id));
         if (value == null || value == Items.AIR) throw new IllegalStateException("Missing source item " + id);
         return new ItemStack(value, count);
     }

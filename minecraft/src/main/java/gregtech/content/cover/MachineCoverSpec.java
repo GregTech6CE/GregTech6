@@ -1,4 +1,5 @@
 package gregtech.content.cover;
+import gregtech.platform.Mc;
 
 import net.minecraft.world.item.ItemStack;
 
@@ -41,13 +42,8 @@ public enum MachineCoverSpec {
     }
 
     public static MachineCoverSpec of(ItemStack stack) {
-//? if >=1.21.1 {
-        /*if (stack.isEmpty()) return null;
-        var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-*///?} else {
         if (stack.isEmpty()) return null;
-        var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-//?}
+        var key = Mc.itemId(stack.getItem());
         if (key == null || !key.getNamespace().equals("gt6ce")) return null;
         for (var spec : values())
             if (spec.id.equals(key.getPath())) return spec;

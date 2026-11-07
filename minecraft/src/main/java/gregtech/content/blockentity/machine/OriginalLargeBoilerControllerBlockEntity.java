@@ -17,6 +17,7 @@ import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTMultiblocks;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -382,11 +383,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-//? if >=1.21.1 {
-        /*var heldId = BuiltInRegistries.ITEM.getKey(held.getItem());
-*///?} else {
-        var heldId = ForgeRegistries.ITEMS.getKey(held.getItem());
-//?}
+        var heldId = Mc.itemId(held.getItem());
         if (heldId != null && heldId.getNamespace().equals("gt6ce")
                 && heldId.getPath().equals("quicksilver_thermometer")) {
             if (!level.isClientSide)

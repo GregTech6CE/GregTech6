@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.generated.GTSensorRecipesGen;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -112,11 +113,7 @@ public final class SensorRecipePack {
 
         for (GTSensorRecipesGen.Row row : GTSensorRecipesGen.ROWS) {
             ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", row.blockId());
-//? if >=1.21.1 {
-            /*Block block = BuiltInRegistries.BLOCK.get(blockId);
-*///?} else {
-            Block block = ForgeRegistries.BLOCKS.getValue(blockId);
-//?}
+            Block block = Mc.block(blockId);
             if (block == null || block == Blocks.AIR) continue;
             Item item = block.asItem();
             if (item == Items.AIR) continue;
@@ -165,11 +162,7 @@ public final class SensorRecipePack {
             key.put(String.valueOf(pair.getKey()), pair.getValue());
         }
 
-//? if >=1.21.1 {
-        /*ResourceLocation resultId = BuiltInRegistries.ITEM.getKey(resultItem);
-*///?} else {
-        ResourceLocation resultId = ForgeRegistries.ITEMS.getKey(resultItem);
-//?}
+        ResourceLocation resultId = Mc.itemId(resultItem);
         if (resultId == null) return null;
 
         Map<String, Object> recipe = new HashMap<>();

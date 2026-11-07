@@ -8,6 +8,7 @@ import gregtech.engine.recipe.*;
 import gregtech.content.block.stone.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.GTItems;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -102,11 +103,7 @@ public final class StoneAndToolSurvivalRecipes {
 
     private static List<GTStoneBlock> stoneBlocks() {
         var result = new ArrayList<GTStoneBlock>();
-//? if >=1.21.1 {
-        /*for (var block : BuiltInRegistries.BLOCK) if (block instanceof GTStoneBlock stone) result.add(stone);
-*///?} else {
-        for (var block : ForgeRegistries.BLOCKS.getValues()) if (block instanceof GTStoneBlock stone) result.add(stone);
-//?}
+        for (var block : Mc.blocks()) if (block instanceof GTStoneBlock stone) result.add(stone);
         return result;
     }
 
@@ -155,11 +152,7 @@ public final class StoneAndToolSurvivalRecipes {
     }
 
     private static ItemStack blockItem(String id) {
-//? if >=1.21.1 {
-        /*var item = BuiltInRegistries.ITEM.get(
-*///?} else {
-        var item = ForgeRegistries.ITEMS.getValue(
-//?}
+        var item = Mc.item(
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }

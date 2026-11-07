@@ -1,4 +1,5 @@
 package gregtech.content.item;
+import gregtech.platform.Mc;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -50,11 +51,7 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
     public FuelRodItem(net.minecraft.world.level.block.Block block, gregtech.content.nuclear.ReactorRodCatalog.Rod definition, Properties properties) {
         super(block,properties);this.definition=definition;this.fuelType=FuelType.NONE;this.tier=0;this.maxHealth=0;
     }
-//? if >=1.21.1 {
-    /*@Override public String getDescriptionId() { return "item.gt6ce." + net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this).getPath(); }
-*///?} else {
-    @Override public String getDescriptionId() { return "item.gt6ce." + net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(this).getPath(); }
-//?}
+    @Override public String getDescriptionId() { return "item.gt6ce." + Mc.itemId(this).getPath(); }
     public gregtech.content.nuclear.ReactorRodCatalog.Rod definition(){return definition;}
     public FuelType fuelType() { return fuelType; }
     public int tier() { return tier; }

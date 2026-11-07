@@ -9,6 +9,7 @@ import gregtech.engine.recipe.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.stack.StackCompat;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,13 +24,8 @@ public final class VanillaRecoveryRecipes {
     public static List<Recipe> recipes() { return Collections.unmodifiableList(RECIPES); }
     private VanillaRecoveryRecipes() {}
     public static int register() {
-//? if >=1.21.1 {
-        /*for (var item : BuiltInRegistries.ITEM.stream().sorted(Comparator.comparing(i -> BuiltInRegistries.ITEM.getKey(i).toString())).toList()) {
-            var id = BuiltInRegistries.ITEM.getKey(item);
-*///?} else {
-        for (var item : ForgeRegistries.ITEMS.getValues().stream().sorted(Comparator.comparing(i -> ForgeRegistries.ITEMS.getKey(i).toString())).toList()) {
-            var id = ForgeRegistries.ITEMS.getKey(item);
-//?}
+        for (var item : Mc.itemStream().sorted(Comparator.comparing(i -> Mc.itemId(i).toString())).toList()) {
+            var id = Mc.itemId(item);
             boolean auditedMachine = originalMachine(item);
             boolean meatCut = gregtech.content.material.MeatItemMaterials.contains(item);
             if (!id.getNamespace().equals("minecraft") && !PanelMaterialRegistration.recoveryItems().contains(item)

@@ -7,6 +7,7 @@ import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.registry.GTBlocks;
+import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -96,11 +97,7 @@ public final class MaterialBlockClientModels {
             if (entry.get() instanceof gregtech.content.block.OreBlock) {
                 continue;
             }
-//? if >=1.21.1 {
-            /*ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(entry.get());
-*///?} else {
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(entry.get());
-//?}
+            ResourceLocation blockId = Mc.blockId(entry.get());
             if (blockId == null) {
                 continue;
             }
@@ -112,11 +109,7 @@ public final class MaterialBlockClientModels {
             BakedModel tintedShared = tintedModels.computeIfAbsent(shared, MaterialBlockBakedModel::new);
             BakedModel worldModel = tintedShared;
             BakedModel itemModel = BlockItemClientModels.asBlockItem(tintedShared);
-//? if >=1.21.1 {
-            /*ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(entry.get().asItem());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(entry.get().asItem());
-//?}
+            ResourceLocation itemId = Mc.itemId(entry.get().asItem());
             if (itemId == null) {
                 itemId = blockId;
             }

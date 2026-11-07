@@ -11,6 +11,7 @@ import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneVariantFlags;
 import gregtech.content.block.wood.TreeHoleBlock;
 import gregtech.content.block.wood.WoodSpecies;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -102,22 +103,14 @@ public final class BumbleWorkplace {
     }
 
     private static boolean isRainbowLeaf(Block block) {
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+        ResourceLocation id = Mc.blockId(block);
         return id != null && id.getNamespace().equals("gt6ce")
                 && (id.getPath().equals("leaves_rainbowood")
                 || id.getPath().equals("leaves_opaque_rainbowood"));
     }
 
     private static boolean isThaumicPlant(Block block) {
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-*///?} else {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
-//?}
+        ResourceLocation id = Mc.blockId(block);
         return id != null && id.getNamespace().equals("thaumcraft")
                 && (id.getPath().equals("blockcustomplant") || id.getPath().equals("block_custom_plant"));
     }

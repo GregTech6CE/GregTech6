@@ -2,6 +2,7 @@ package gregtech.client;
 import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.registry.GTToolItems;
+import gregtech.platform.Mc;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -60,11 +61,7 @@ public final class GTToolModel {
 //?}
 
         for (var entry : GTToolItems.all().entrySet()) {
-//? if >=1.21.1 {
-            /*ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(entry.getValue().get());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(entry.getValue().get());
-//?}
+            ResourceLocation itemId = Mc.itemId(entry.getValue().get());
             if (itemId == null) {
                 continue;
             }

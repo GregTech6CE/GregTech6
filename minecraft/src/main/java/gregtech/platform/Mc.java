@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import java.lang.StackWalker.Option;
 *///?} else {
 //?}
+import java.util.stream.Stream;
 
 /**
  * Platform shim. NeoForge has a class with the same name and the same methods.
@@ -88,6 +89,22 @@ public final class Mc {
 /*        return BuiltInRegistries.BLOCK;
 *///?} else {
         return ForgeRegistries.BLOCKS.getValues();
+//?}
+    }
+
+    public static Iterable<Item> items() {
+//? if >=1.21.1 {
+/*        return BuiltInRegistries.ITEM;
+*///?} else {
+        return ForgeRegistries.ITEMS.getValues();
+//?}
+    }
+
+    public static Stream<Item> itemStream() {
+//? if >=1.21.1 {
+/*        return BuiltInRegistries.ITEM.stream();
+*///?} else {
+        return ForgeRegistries.ITEMS.getValues().stream();
 //?}
     }
 

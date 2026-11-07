@@ -8,6 +8,7 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.content.item.FluidItem;
 //?}
 import gregtech.content.registry.GTFluidItems;
+import gregtech.platform.Mc;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -111,11 +112,7 @@ public final class FluidItemClientModels {
 //?}
                 continue;
             }
-//? if >=1.21.1 {
-            /*ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(entry.get());
-*///?} else {
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(entry.get());
-//?}
+            ResourceLocation itemId = Mc.itemId(entry.get());
             if (itemId == null) {
                 continue;
             }

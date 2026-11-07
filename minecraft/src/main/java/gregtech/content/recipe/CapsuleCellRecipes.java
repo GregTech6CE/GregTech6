@@ -6,6 +6,7 @@ import gregtech.engine.fluid.PortableFluidContainerSpec;
 import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -40,11 +41,7 @@ public final class CapsuleCellRecipes {
         for(var spec:PortableFluidContainerSpec.values())if(spec.shapeId().equals("cell")) {
             var output=GTItems.getStack(MaterialPrefix.dustTiny,spec.material(),1);
             if(output.isEmpty())throw new IllegalStateException("Missing capsule recycling dust: "+spec.id());
-//? if >=1.21.1 {
-            /*var input=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
-*///?} else {
-            var input=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
-//?}
+            var input=new ItemStack(Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
             boolean brittle=spec.id().startsWith("cell_wax")||spec.id().equals("cell_plastic");
             long work=(brittle?2L:256L)*Math.max(1,spec.material().getToolQuality()+1);
             if(MachineRecipeMaps.Shredder.addRecipe(new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0))!=null)count++;

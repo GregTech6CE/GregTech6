@@ -6,6 +6,7 @@ import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -45,11 +46,7 @@ public final class FallenLogBlock extends RotatedPillarBlock {
     public ItemStack toolProduct() {
         return switch (kind) {
             case DRY -> {
-//? if >=1.21.1 {
-                /*Item bark = BuiltInRegistries.ITEM.get(
-*///?} else {
-                Item bark = ForgeRegistries.ITEMS.getValue(
-//?}
+                Item bark = Mc.item(
                         ResourceLocation.fromNamespaceAndPath("gt6ce", "dry_bark"));
                 yield bark == null ? ItemStack.EMPTY : new ItemStack(bark);
             }

@@ -1,6 +1,7 @@
 package gregtech.content.food;
 
 import gregtech.content.data.generated.GTFoodItemsGen;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -115,11 +116,7 @@ public final class GTFoodItems {
         if (item == null) {
             return null;
         }
-//? if >=1.21.1 {
-        /*ResourceLocation key = BuiltInRegistries.ITEM.getKey(item);
-*///?} else {
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
-//?}
+        ResourceLocation key = Mc.itemId(item);
         return key == null || !"gt6ce".equals(key.getNamespace()) ? null : entryFor(key.getPath());
     }
 
