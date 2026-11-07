@@ -63,6 +63,7 @@ public final class ApiContracts {
         checkMachineTemplateContracts();
         checkUnifiedValidationContracts();
         checkMaterialContracts();
+        MaterialViewContracts.check();
         checkMachineFaceMaskContracts();
         checkStructureLayoutContracts();
         StructurePatternContracts.check();

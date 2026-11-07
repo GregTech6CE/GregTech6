@@ -38,9 +38,9 @@
 
 | 产物坐标 | 内容与输出 |
 | --- | --- |
-| `gregtech:gt6ce-api:1.3.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
-| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.3.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
-| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.3.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-api:1.4.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
+| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.4.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.4.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
 
 这些是构建配置中的坐标，不表示已发布到公共 Maven 仓库。版本规则见下节[API 版本](#api-版本)。
 
@@ -54,11 +54,34 @@
 
 ## API 版本
 
-当前分支使用 API `1.3.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.3 为 `1003`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
+当前分支使用 API `1.4.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.4 为 `1004`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
 
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 
 公共 API 的契约检查、SDK 与平台检查见[验证与验收](development/validation/README.md)。移动到 API 包的可变模型或内部辅助类不自动获得长期兼容保证。
+
+## 材料目录（API 1.4）
+
+材料和 metadata 仍通过 `AddonMaterialContributor` 提交。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
+
+`metadata()` 可给真实材料添加本附属 namespace 的分类 tag、flag 和类型化值。`materialTags()` 声明 tag 包含关系，`materialGroups()` 声明替代组及其材料／子组。附属只能定义自身 addon id namespace 的 tag、组和 property key；给其他材料添加描述 tag 允许，但修改其他材料的 property、flag、形态或加工能力仍需所有权。未知引用、同 key 异类型、跨所有者冲突、tag 包含环和组环均阻止材料初始化进入 READY。
+
+```java
+MaterialMetadata metadata = MaterialMetadata.builder()
+        .property(new PropertyKey<>(new DataKey(addonId, "hardness"), Integer.class), 3)
+        .tag(new DataKey(addonId, "conductive"))
+        .build();
+MaterialTagDeclaration metals = new MaterialTagDeclaration(
+        new DataKey(addonId, "metals"),
+        Set.of(new DataKey(addonId, "conductive")));
+MaterialGroupDeclaration family = new MaterialGroupDeclaration(
+        new MaterialGroupKey(new DataKey(addonId, "family")),
+        "Family",
+        Set.of(new MaterialKey("Iron")),
+        Set.of());
+```
+
+分类 tag 只表达描述关系，不会自动生成形态、启用燃料、允许回收或授权分解；替代组成员关系也只供明确声明了组匹配的消费者使用。内容层面的实际物品、资源和配方 tag 属于 08-C 及后续阶段，不在当前定义目录中广播展开。
 
 ## 多方块声明（API 1.3）
 

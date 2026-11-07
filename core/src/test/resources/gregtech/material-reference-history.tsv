@@ -1,0 +1,93 @@
+# table	owner	field	name	id	classification	evidence (GT6 3703e403 MT.java, or existing parity)
+composition	Iridiron	owner	Iridiron	0	RETIRED	MT.java:3997 unused/deprecated；上游即非可用材料
+composition	IridironReinforced	owner	IridironReinforced	0	RETIRED	MT.java:3998 unused/deprecated；上游即非可用材料
+composition	OsmiumTetroxide	owner	OsmiumTetroxide	0	RETIRED	MT.java:3994 unused/deprecated；上游即非可用材料
+composition	SodiumPeroxide	owner	SodiumPeroxide	0	RETIRED	MT.java:3995 unused/deprecated；上游即非可用材料
+composition	Vis	owner	Vis	0	RETIRED	MT.java:4003 unused/deprecated；上游即非可用材料
+forms	adamite	owner	adamite	0	RETIRED	MT.java:4044 unused/deprecated；上游即非可用材料
+forms	adluorite	owner	adluorite	0	RETIRED	MT.java:4045 unused/deprecated；上游即非可用材料
+forms	advancedalloy	owner	advancedalloy	0	RETIRED	MT.java:4066 unused/deprecated；上游即非可用材料
+forms	agate	owner	agate	0	RETIRED	MT.java:4046 unused/deprecated；上游即非可用材料
+forms	ametrine	owner	ametrine	0	RETIRED	MT.java:1475 valgem(0)；未分配有效材料 ID
+forms	ammonium	owner	ammonium	0	RETIRED	MT.java:4047 unused/deprecated；上游即非可用材料
+forms	angelite	owner	angelite	0	RETIRED	MT.java:1472 valgem(0)；未分配有效材料 ID
+forms	australium	owner	australium	0	RETIRED	MT.java:4060 unused/deprecated；上游即非可用材料
+forms	basanite	owner	basanite	0	RETIRED	MT.java:1470 valgem(0)；未分配有效材料 ID
+forms	bitumen	owner	bitumen	0	RETIRED	MT.java:4048 unused/deprecated；上游即非可用材料
+forms	blackberyl	owner	blackberyl	0	RETIRED	MT.java:1455 valgem(0)；未分配有效材料 ID
+forms	bloodstone	owner	bloodstone	0	RETIRED	MT.java:1449,4049 unused/deprecated；上游即非可用材料
+forms	carnelian	owner	carnelian	0	RETIRED	MT.java:1464 valgem(0)；未分配有效材料 ID
+forms	charoite	owner	charoite	0	RETIRED	MT.java:1463 valgem(0)；未分配有效材料 ID
+forms	chestnut	owner	chestnut	0	RETIRED	MT.java:3929；字段对应 Chestnutwood(9345)，见 docs/decisions/parity/material-removal.md
+forms	chrysocolla	owner	chrysocolla	0	RETIRED	MT.java:1468,4052 unused/deprecated；上游即非可用材料
+forms	chrysoprase	owner	chrysoprase	0	RETIRED	MT.java:1474 valgem(0)；未分配有效材料 ID
+forms	citrine	owner	citrine	0	RETIRED	MT.java:4050 unused/deprecated；上游即非可用材料
+forms	citrus	owner	citrus	0	RETIRED	MT.java:3930；字段对应 Citruswood(9346)，见 docs/decisions/parity/material-removal.md
+forms	cmbsteel	owner	cmbsteel	0	RETIRED	MT.java:4064 unused/deprecated；上游即非可用材料
+forms	coral	owner	coral	0	RETIRED	MT.java:1469,4051 unused/deprecated；上游即非可用材料
+forms	crystalflux	owner	crystalflux	0	RETIRED	MT.java:4018 unused/deprecated；上游即非可用材料
+forms	daffergon	owner	daffergon	0	RETIRED	MT.java:4056 unused/deprecated；上游即非可用材料
+forms	darkstone	owner	darkstone	0	RETIRED	MT.java:4053 unused/deprecated；上游即非可用材料
+forms	demonite	owner	demonite	0	RETIRED	MT.java:4054 unused/deprecated；上游即非可用材料
+forms	dineutronium	owner	dineutronium	0	RETIRED	MT.java:4068 unused/deprecated；上游即非可用材料
+forms	draconic	owner	draconic	0	RETIRED	MT.java:4012 unused/deprecated；上游即非可用材料
+forms	dumortierite	owner	dumortierite	0	RETIRED	MT.java:1459 valgem(0)；未分配有效材料 ID
+forms	durasteel	owner	durasteel	0	RETIRED	MT.java:4065 unused/deprecated；上游即非可用材料
+forms	elder	owner	elder	0	RETIRED	MT.java:3967；字段对应 Elderwood(9382)，见 docs/decisions/parity/material-removal.md
+forms	euphemium	owner	euphemium	0	RETIRED	MT.java:4070 unused/deprecated；上游即非可用材料
+forms	fig	owner	fig	0	RETIRED	MT.java:3970；字段对应 Figwood(9385)，见 docs/decisions/parity/material-removal.md
+forms	infusedgold	owner	infusedgold	0	RETIRED	MT.java:4055 unused/deprecated；上游即非可用材料
+forms	invisium	owner	invisium	0	RETIRED	MT.java:4021 unused/deprecated；上游即非可用材料
+forms	iridiron	owner	iridiron	0	RETIRED	MT.java:3997 unused/deprecated；上游即非可用材料
+forms	iridironreinforced	owner	iridironreinforced	0	RETIRED	MT.java:3998 unused/deprecated；上游即非可用材料
+forms	ironsharp	owner	ironsharp	0	RETIRED	MT.java:4016 unused/deprecated；上游即非可用材料
+forms	irridantreinforced	owner	irridantreinforced	0	RETIRED	MT.java:4015 unused/deprecated；上游即非可用材料
+forms	irridanturanium	owner	irridanturanium	0	RETIRED	MT.java:4014 unused/deprecated；上游即非可用材料
+forms	jet	owner	jet	0	RETIRED	MT.java:1452,4091 unused/deprecated；上游即非可用材料
+forms	kunzite	owner	kunzite	0	RETIRED	MT.java:1471 valgem(0)；未分配有效材料 ID
+forms	labradorite	owner	labradorite	0	RETIRED	MT.java:1458 valgem(0)；未分配有效材料 ID
+forms	lapislazuli	owner	lapislazuli	0	RETIRED	MT.java:1453 valgem(0)；未分配有效材料 ID
+forms	larimar	owner	larimar	0	RETIRED	MT.java:1462 valgem(0)；未分配有效材料 ID
+forms	lodestone	owner	lodestone	0	RETIRED	MT.java:4022 unused/deprecated；上游即非可用材料
+forms	luminite	owner	luminite	0	RETIRED	MT.java:4023 unused/deprecated；上游即非可用材料
+forms	magnetizedtungsten	owner	magnetizedtungsten	0	RETIRED	MT.java:4069 unused/deprecated；上游即非可用材料
+forms	mawsitsit	owner	mawsitsit	0	RETIRED	MT.java:4025 unused/deprecated；上游即非可用材料
+forms	mercassium	owner	mercassium	0	RETIRED	MT.java:4005 unused/deprecated；上游即非可用材料
+forms	mimichite	owner	mimichite	0	RETIRED	MT.java:4019 unused/deprecated；上游即非可用材料
+forms	moissanite	owner	moissanite	0	RETIRED	MT.java:1460 valgem(0)；未分配有效材料 ID
+forms	mookaite	owner	mookaite	0	RETIRED	MT.java:1461 valgem(0)；未分配有效材料 ID
+forms	obsidianflux	owner	obsidianflux	0	RETIRED	MT.java:4017 unused/deprecated；上游即非可用材料
+forms	olive	owner	olive	0	RETIRED	MT.java:3980；字段对应 Olivewood(9395)，见 docs/decisions/parity/material-removal.md
+forms	osmonium	owner	osmonium	0	RETIRED	MT.java:4006 unused/deprecated；上游即非可用材料
+forms	papaya	owner	papaya	0	RETIRED	MT.java:3941；字段对应 Papayawood(9359)，见 docs/decisions/parity/material-removal.md
+forms	pear	owner	pear	0	RETIRED	MT.java:3981；字段对应 Pearwood(9396)，见 docs/decisions/parity/material-removal.md
+forms	petroleum	owner	petroleum	0	RETIRED	MT.java:4028 unused/deprecated；上游即非可用材料
+forms	phoenixite	owner	phoenixite	0	RETIRED	MT.java:4007 unused/deprecated；上游即非可用材料
+forms	pietersite	owner	pietersite	0	RETIRED	MT.java:1467 valgem(0)；未分配有效材料 ID
+forms	plum	owner	plum	0	RETIRED	MT.java:3942；字段对应 Plumwood(9360)，见 docs/decisions/parity/material-removal.md
+forms	randomite	owner	randomite	0	RETIRED	MT.java:4031 unused/deprecated；上游即非可用材料
+forms	reiium	owner	reiium	0	RETIRED	MT.java:4057 unused/deprecated；上游即非可用材料
+forms	rhodonite	owner	rhodonite	0	RETIRED	MT.java:1457 valgem(0)；未分配有效材料 ID
+forms	saturnite	owner	saturnite	0	RETIRED	MT.java:4067 unused/deprecated；上游即非可用材料
+forms	scapolite	owner	scapolite	0	RETIRED	MT.java:1473 valgem(0)；未分配有效材料 ID
+forms	schrabidium	owner	schrabidium	0	RETIRED	MT.java:4061 unused/deprecated；上游即非可用材料
+forms	selenite	owner	selenite	0	RETIRED	MT.java:1466,4090 unused/deprecated；上游即非可用材料
+forms	snowflakeobsidian	owner	snowflakeobsidian	0	RETIRED	MT.java:1454 valgem(0)；未分配有效材料 ID
+forms	starconium	owner	starconium	0	RETIRED	MT.java:4009 unused/deprecated；上游即非可用材料
+forms	starmetal	owner	starmetal	0	RETIRED	MT.java:4062 unused/deprecated；上游即非可用材料
+forms	tapazite	owner	tapazite	0	RETIRED	MT.java:4040 unused/deprecated；上游即非可用材料
+forms	terrasteelalloyraw	owner	terrasteelalloyraw	0	RETIRED	MT.java:4001 unused/deprecated；上游即非可用材料
+forms	terrasteelalloystrengthened	owner	terrasteelalloystrengthened	0	RETIRED	MT.java:4002 unused/deprecated；上游即非可用材料
+forms	teslatite	owner	teslatite	0	RETIRED	MT.java:4013 unused/deprecated；上游即非可用材料
+forms	thyrium	owner	thyrium	0	RETIRED	MT.java:4010 unused/deprecated；上游即非可用材料
+forms	tourmaline	owner	tourmaline	0	RETIRED	MT.java:4041 unused/deprecated；上游即非可用材料
+forms	turquoise	owner	turquoise	0	RETIRED	MT.java:4042 unused/deprecated；上游即非可用材料
+forms	unakite	owner	unakite	0	RETIRED	MT.java:1465 valgem(0)；未分配有效材料 ID
+forms	unobtainium	owner	unobtainium	0	RETIRED	MT.java:4063 unused/deprecated；上游即非可用材料
+forms	verticium	owner	verticium	0	RETIRED	MT.java:4059 unused/deprecated；上游即非可用材料
+forms	walnut	owner	walnut	0	RETIRED	MT.java:3946；字段对应 Walnutwood(9364)，见 docs/decisions/parity/material-removal.md
+forms	weidanium	owner	weidanium	0	RETIRED	MT.java:4058 unused/deprecated；上游即非可用材料
+forms	wimalite	owner	wimalite	0	RETIRED	MT.java:4043 unused/deprecated；上游即非可用材料
+forms	wonderstone	owner	wonderstone	0	RETIRED	MT.java:1450 valgem(0)；未分配有效材料 ID
+forms	zectium	owner	zectium	0	RETIRED	MT.java:4011 unused/deprecated；上游即非可用材料
+processing	EndSandWhite	Forging.owner	EndSandWhite	0	RETIRED	MT.java:1620；字段对应 White End Sand(8105)，见 docs/decisions/parity/material-removal.md

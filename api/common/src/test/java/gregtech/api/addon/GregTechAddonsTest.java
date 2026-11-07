@@ -24,8 +24,8 @@ class GregTechAddonsTest {
         assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(),
                 GregTechAddons.apiVersion());
         assertEquals(1, GregTechAddons.apiMajor());
-        assertEquals(3, GregTechAddons.apiMinor());
-        assertEquals(1003, GregTechAddons.apiVersion());
+        assertEquals(4, GregTechAddons.apiMinor());
+        assertEquals(1004, GregTechAddons.apiVersion());
     }
 
     @Test
