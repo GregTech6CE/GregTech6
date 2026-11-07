@@ -41,8 +41,12 @@ public final class DyeProcessingRecipes {
             String vanilla=color.replace("LightBlue","light_blue").replace("LightGray","light_gray").toLowerCase(Locale.ROOT);
             var dye=item("minecraft:"+vanilla+"_dye",1);
             var waters=RecipeInputGroups.fluids("water","Water","MnWtr","DistW");
-            add(MachineRecipeMaps.Mixer,waters.apply(new Recipe(new ItemStack[]{dye.copy()},null,null,null,
-                    new FluidStack[]{waters.stack(144)},new FluidStack[]{fluid("Dye_Water_"+color,216)},16,16,0),0));
+            // Loader_Recipes_Other:135-140 mixes every dyeMixable item, i.e. the vanilla dye and
+            // GT6's own dye dust of that colour, so the recipe takes the shared dye tag.
+            var recipe=waters.apply(new Recipe(new ItemStack[]{dye.copy()},null,null,null,
+                    new FluidStack[]{waters.stack(144)},new FluidStack[]{fluid("Dye_Water_"+color,216)},16,16,0),0);
+            add(MachineRecipeMaps.Mixer,recipe.withItemTagInput(0,
+                    ResourceLocation.fromNamespaceAndPath("forge","dyes/"+vanilla)));
             var naturalDyes=RecipeInputGroups.fluids("dyes/"+vanilla+"/natural","Dye_Water_"+color,"Dye_Flower_"+color);
             var oils=RecipeInputGroups.fluids("vegetable_oils","Oil_Sunflower","Oil_Olive","Oil_Nut","Oil_Seed","Oil_Lin","Oil_Hemp");
             var chemical=new Recipe(null,null,null,null,new FluidStack[]{naturalDyes.stack(216),oils.stack(20)},

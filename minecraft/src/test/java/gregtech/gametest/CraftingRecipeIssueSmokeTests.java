@@ -40,7 +40,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class CraftingRecipeIssueSmokeTests {
     private static final Set<String> FIXED_ISSUES = Set.of(
-            "2", "148", "151", "153", "155", "157", "158", "161", "171", "173", "176", "185", "209", "286", "293", "312", "345");
+            "2", "148", "151", "153", "155", "157", "158", "161", "171", "173", "176", "185", "209", "286", "293", "312", "345", "348");
 
     // Checks the table covers every fixed issue and the GameTest runtime is wired.
     @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)

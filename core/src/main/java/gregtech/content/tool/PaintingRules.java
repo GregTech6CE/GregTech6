@@ -18,6 +18,14 @@ public final class PaintingRules {
         }
     }
 
+    /** GT6's dye material for one colour id: {@code light_gray} → {@code DyeLightGray}. */
+    public static String dyeMaterial(String colorId) {
+        StringBuilder name = new StringBuilder("Dye");
+        for (String part : colorId.split("_"))
+            name.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1));
+        return name.toString();
+    }
+
     public static final java.util.List<Dye> DYES = java.util.List.of(
             new Dye(0, "black", 0x202020),
             new Dye(1, "red", 0xFF0000),

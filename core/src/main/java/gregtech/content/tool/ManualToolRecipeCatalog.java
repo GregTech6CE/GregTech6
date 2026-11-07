@@ -729,7 +729,8 @@ public final class ManualToolRecipeCatalog {
     public static String specialItem(ToolDefinition type, char letter) {
         if (letter != 'V') return null;
         return switch (type) {
-            case CROWBAR -> "minecraft:blue_dye";
+            // Loader_Tools:314 uses DYE_OREDICTS[Blue], so GT6's blue dye dust works as well.
+            case CROWBAR -> "#forge:dyes/blue";
             case SCOOP -> "#minecraft:wool";
             default -> null;
         };

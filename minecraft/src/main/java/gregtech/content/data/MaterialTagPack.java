@@ -176,6 +176,10 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                     add(tags,"minecraft","items","arrows",id.toString());
 //?}
+                // GT6's dye materials are the same sixteen colours as the vanilla dyes
+                // (LoaderOreDictReRegistrations: dust<Color> -> dyeMixable<Color> -> dye<Color>).
+                String dyeColor=dyeTagColor(form);
+                if(dyeColor!=null) add(tags,"forge","items","dyes/"+dyeColor,id.toString());
                 String common=MaterialEquivalence.tagPath(form);
 //? if >=1.21.1 {
                 /*if(common!=null) add(tags,"forge","item",common,id.toString());
@@ -629,6 +633,15 @@ public final class MaterialTagPack extends AbstractPackResources {
         if (data == null || data.prefix() == null || data.components().size() != 1
                 || data.amount() != data.prefix().getMaterialWeight()) return null;
         return new MaterialEquivalence.Form(data.prefix(), data.material().resolve());
+    }
+
+    /** Vanilla dye colour of a GT6 dye dust, or null for every other form. */
+    private static String dyeTagColor(MaterialEquivalence.Form form) {
+        if (form.prefix() != MaterialPrefix.dust) return null;
+        String material = form.material().getName();
+        for (var dye : gregtech.content.tool.PaintingRules.DYES)
+            if (material.equals(gregtech.content.tool.PaintingRules.dyeMaterial(dye.id()))) return dye.id();
+        return null;
     }
 
     /** Aggregate tag value list for one material (forms + its blocks). */

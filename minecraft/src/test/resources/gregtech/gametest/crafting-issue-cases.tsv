@@ -33,3 +33,7 @@
 345	gt6ce:form_conversion/blockdust_to_dust/sand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_sand	9	one@0/2x2/minecraft:sand	vanilla sand unpacks to nine sand dust
 345	gt6ce:form_conversion/blockdust_to_dust/redsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_redsand	9	one@0/2x2/minecraft:red_sand	vanilla red sand unpacks to nine red sand dust
 345	gt6ce:form_conversion/blockdust_to_dust/stone_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_stone	9	one@0/2x2/minecraft:gravel	vanilla gravel unpacks to nine stone dust
+348	forge:dyes/black	T	-	-	gt6ce:dust_dyeblack	-	none	GT6 black dye dust is a black dye
+348	forge:dyes/red	T	-	-	gt6ce:dust_dyered	-	none	GT6 red dye dust is a red dye
+348	forge:dyes/light_gray	T	-	-	gt6ce:dust_dyelightgray	-	none	GT6 light grey dye dust uses the vanilla colour name
+348	forge:dyes/light_blue	T	-	-	gt6ce:dust_dyelightblue	-	none	GT6 light blue dye dust uses the vanilla colour name

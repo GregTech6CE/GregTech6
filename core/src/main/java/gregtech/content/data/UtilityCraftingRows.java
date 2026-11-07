@@ -70,8 +70,9 @@ public final class UtilityCraftingRows {
                 Map.of(
                         'G',
                         "mat:plate@Glass",
+                        // GT6 uses DYE_OREDICTS[Red], so GT6's red dye dust works as well.
                         'D',
-                        "item:minecraft:red_dye",
+                        "tag:forge:dyes/red",
                         'Q',
                         "tag:gt6ce:quicksilver",
                         'P',
