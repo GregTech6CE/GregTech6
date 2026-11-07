@@ -45,19 +45,17 @@ public class BottleItem extends Item {
 
     private final String fluidKey;
     private final int amount;
-    private final int useTicks;
 
     public BottleItem(String fluidKey, Properties properties) {
-        this(fluidKey, BOTTLE_AMOUNT, 0, properties);
+        this(fluidKey, BOTTLE_AMOUNT, properties);
     }
 
     /** {@code amount} is the source portion: 250 mB for a drink, one material unit for mercury. */
-    public BottleItem(String fluidKey, int amount, int useTicks, Properties properties) {
+    public BottleItem(String fluidKey, int amount, Properties properties) {
         super(properties);
         // The native lubricant is used when no Railcraft fluid replaces FL.lube.
         this.fluidKey = "Lubricant".equals(fluidKey) ? "Lubricant" : fluidKey;
         this.amount = amount;
-        this.useTicks = useTicks;
     }
 
     /** GT6's portion this bottle holds: 250 mB for a drink, 144 mB for mercury. */
@@ -132,7 +130,7 @@ public class BottleItem extends Item {
 *///?} else {
     @Override public int getUseDuration(ItemStack stack) {
 //?}
-        if (useTicks > 0) return useTicks;
+        // Vanilla potion time as the floor; GT6's 16-tick floor is recorded in the parity notes.
         var row = GTDrinks.rowFor(fluid());
         return Math.max(32, row == null ? 32 : row.foodLevel() * 8);
     }

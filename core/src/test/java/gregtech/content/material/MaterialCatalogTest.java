@@ -179,8 +179,6 @@ class MaterialCatalogTest {
         // MT.Hg.liquid(U, T) is one material unit; the drink rows are 250 mB portions.
         assertEquals(144, gregtech.content.food.GTBottles.amountOf("mercury_bottle"));
         assertEquals(250, gregtech.content.food.GTBottles.amountOf("soda"));
-        assertEquals(64, gregtech.content.food.GTBottles.useTicksOf("mercury_bottle"));
-        assertEquals(0, gregtech.content.food.GTBottles.useTicksOf("soda"));
         assertTrue(!GTMaterialRegistry.get(9884).isValid());
         assertTrue(!GTMaterialRegistry.get(9885).isValid());
     }
