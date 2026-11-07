@@ -8,15 +8,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
-//? if >=1.21.1 {
-/*import net.minecraft.client.resources.model.ModelResourceLocation;
-*///?} else {
-//?}
-import net.minecraft.resources.ResourceLocation;
-//? if >=1.21.1 {
-//?} else {
 import net.minecraft.client.resources.model.ModelResourceLocation;
-//?}
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Resolves GregTech material icon paths under {@code textures/item/material_icons/{set}/{prefix}.png}.

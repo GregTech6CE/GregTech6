@@ -185,15 +185,9 @@ public final class GTOreBlockResolver {
         // GT6 ore.normal.sandstone: sandstone-hosted ores have the sandstone host and no gangue.
         if (host.is(Blocks.SANDSTONE) || host.is(Blocks.CUT_SANDSTONE) || host.is(Blocks.CHISELED_SANDSTONE))
             return OreHostStone.SANDSTONE;
-//? if >=1.21.1 {
-        /*if (host.is(BlockTags.DEEPSLATE_ORE_REPLACEABLES)) return OreHostStone.DEEPSLATE;
-*///?} else {
-//?}
-        if (host.is(BlockTags.STONE_ORE_REPLACEABLES)) return OreHostStone.STONE;
-//? if >=1.21.1 {
-//?} else {
+        // 1.21.1 order: deepslate before stone. The 1.20.1 tag sets are unified separately.
         if (host.is(BlockTags.DEEPSLATE_ORE_REPLACEABLES)) return OreHostStone.DEEPSLATE;
-//?}
+        if (host.is(BlockTags.STONE_ORE_REPLACEABLES)) return OreHostStone.STONE;
         if (host.getBlock() instanceof GTStoneBlock stone && stone.variant() == StoneVariant.STONE) {
             return OreHostStone.of(stone.stoneType());
         }

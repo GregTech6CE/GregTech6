@@ -64,14 +64,6 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     private final AxleSpec spec;
     private @Nullable Direction placementFace;
-//? if >=1.21.1 {
-
-    /*@Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.AXLE) : null;
-    }
-*///?} else {
-//?}
 
     public AxleBlock(AxleSpec spec, Properties properties) {
         super(properties);
@@ -105,14 +97,11 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         return Direction.EAST;
     }
 
-//? if >=1.21.1 {
-//?} else {
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
                 ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.AXLE) : null;
     }
 
-//?}
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(CONNECTIONS);

@@ -21,10 +21,7 @@ import gregtech.api.addon.platform.MachinePanel;
 import gregtech.api.addon.platform.StructureAccess;
 import gregtech.api.addon.platform.WorldAccess;
 import gregtech.api.addon.platform.BehaviorState;
-//? if >=1.21.1 {
-/*import gregtech.api.addon.platform.EnergyBlock;
-*///?} else {
-//?}
+import gregtech.api.addon.platform.EnergyBlock;
 import gregtech.api.addon.platform.BoundPart;
 import gregtech.api.addon.platform.EnergyPart;
 import gregtech.api.addon.platform.PartBehavior;
@@ -45,10 +42,6 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.block.machine.BehaviorMachineBlock;
 import gregtech.client.gui.BehaviorMachineMenu;
 import gregtech.content.data.GregTechTags;
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.api.addon.platform.EnergyBlock;
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 //? if >=1.21.1 {

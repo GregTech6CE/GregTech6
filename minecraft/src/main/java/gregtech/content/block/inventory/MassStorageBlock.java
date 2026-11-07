@@ -30,15 +30,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 //?}
 import net.minecraft.world.item.context.BlockPlaceContext;
-//? if >=1.21.1 {
-/*import net.minecraft.world.level.Level;
-*///?} else {
-//?}
-import net.minecraft.world.level.BlockGetter;
-//? if >=1.21.1 {
-//?} else {
 import net.minecraft.world.level.Level;
-//?}
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;

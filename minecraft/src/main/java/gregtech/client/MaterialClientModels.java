@@ -5,15 +5,8 @@ package gregtech.client;
 import gregtech.GregTech;
 //?}
 import gregtech.api.material.MaterialTextureSet;
-//? if >=1.21.1 {
-/*import gregtech.engine.prefix.PrefixRegistry;
-*///?} else {
-//?}
-import gregtech.content.data.MaterialPrefix;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.prefix.PrefixRegistry;
-//?}
+import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
 //? if >=1.21.1 {
 //?} else {

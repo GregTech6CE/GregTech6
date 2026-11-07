@@ -202,20 +202,11 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 *///?} else {
 //?}
         return switch (basicSpec.controllerKind()) {
-//? if >=1.21.1 {
-/*
-            case DISTILLATION -> new gregtech.content.blockentity.machine.DistillationTowerControllerBlockEntity(type,pos,state);
-*///?} else {
-//?}
-
             case COMPACT_MATTER -> new gregtech.content.blockentity.machine.CompactMatterFabricatorBlockEntity(type,pos,state);
 
             case MATTER -> new gregtech.content.blockentity.machine.MatterFabricatorBlockEntity(type,pos,state);
-//? if >=1.21.1 {
-/**///?} else {
 
             case DISTILLATION -> new gregtech.content.blockentity.machine.DistillationTowerControllerBlockEntity(type,pos,state);
-//?}
 
             case LARGE_RECIPE -> new gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity(type,pos,state);
 
