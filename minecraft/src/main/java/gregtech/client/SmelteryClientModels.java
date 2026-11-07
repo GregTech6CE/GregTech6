@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.machine.CrucibleSpec;
 
 //? if >=1.21.1 {
@@ -46,7 +43,7 @@ import java.util.function.Function;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class SmelteryClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -95,7 +92,7 @@ public final class SmelteryClientModels {
 //? if >=1.21.1 {
                 /*"gt6ce", basins, molds, crossings, faucets);
 *///?} else {
-                GregTech.NAMESPACE, basins, molds, crossings, faucets);
+                GregTechIdentity.REGISTRY_NAMESPACE, basins, molds, crossings, faucets);
 //?}
     }
 
@@ -136,7 +133,7 @@ public final class SmelteryClientModels {
             /*ResourceLocation blockModelId = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath());
             ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
 *///?} else {
-            ResourceLocation blockModelId = GregTech.id("block/blocks/" + blockId.getPath());
+            ResourceLocation blockModelId = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/blocks/" + blockId.getPath()).toLowerCase());
             ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
 //?}
             if (itemId == null) {

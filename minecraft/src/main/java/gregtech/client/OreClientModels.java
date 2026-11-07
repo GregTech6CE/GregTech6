@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.OreBlock;
 import gregtech.content.registry.GTBlocks;
@@ -47,7 +44,7 @@ import java.util.Map;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class OreClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -78,7 +75,7 @@ public final class OreClientModels {
 //? if >=1.21.1 {
             /*LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", "gt6ce");
 *///?} else {
-            LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", GregTech.NAMESPACE);
+            LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", GregTechIdentity.REGISTRY_NAMESPACE);
 //?}
             return;
         }
@@ -112,7 +109,7 @@ public final class OreClientModels {
 //? if >=1.21.1 {
                 /*"gt6ce", mapped, states, sharedModels.size());
 *///?} else {
-                GregTech.NAMESPACE, mapped, states, sharedModels.size());
+                GregTechIdentity.REGISTRY_NAMESPACE, mapped, states, sharedModels.size());
 //?}
     }
 
@@ -129,13 +126,13 @@ public final class OreClientModels {
 //? if >=1.21.1 {
                 /*ResourceLocation texture = ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
-                ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
+                ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE,
 //?}
                         "block/material_icons/" + set.folder() + "/" + file);
 //? if >=1.21.1 {
                 /*ResourceLocation file_png = ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
-                ResourceLocation file_png = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
+                ResourceLocation file_png = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE,
 //?}
                         "textures/block/material_icons/" + set.folder() + "/" + file + ".png");
                 if (Minecraft.getInstance().getResourceManager().getResource(file_png).isPresent()) {
@@ -145,7 +142,7 @@ public final class OreClientModels {
 //? if >=1.21.1 {
             /*return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/" + file);
 *///?} else {
-            return ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "block/material_icons/metallic/" + file);
+            return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "block/material_icons/metallic/" + file);
 //?}
         });
     }

@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.machine.CrucibleSpec;
 
 //? if >=1.21.1 {
@@ -38,7 +35,7 @@ import java.util.Map;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class CrucibleClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -111,7 +108,7 @@ public final class CrucibleClientModels {
             /*ResourceLocation blockModelId = ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath());
             ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
 *///?} else {
-            ResourceLocation blockModelId = GregTech.id("block/blocks/" + blockId.getPath());
+            ResourceLocation blockModelId = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/blocks/" + blockId.getPath()).toLowerCase());
             ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
 //?}
             if (itemId == null) {
@@ -125,7 +122,7 @@ public final class CrucibleClientModels {
 //? if >=1.21.1 {
         /*LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
 *///?} else {
-        LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
+        LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", GregTechIdentity.REGISTRY_NAMESPACE, aliased, missing);
 //?}
     }
 

@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
@@ -34,7 +31,7 @@ import java.util.Map;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class MaterialBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -127,7 +124,7 @@ public final class MaterialBlockClientModels {
 //? if >=1.21.1 {
                     /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath()), worldModel, itemModel);
 *///?} else {
-                    GregTech.id("block/blocks/" + blockId.getPath()), worldModel, itemModel);
+                    ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/blocks/" + blockId.getPath()).toLowerCase()), worldModel, itemModel);
 //?}
             for (var state : entry.get().getStateDefinition().getPossibleStates())
                 models.put(net.minecraft.client.renderer.block.BlockModelShaper.stateToModelLocation(blockId, state), worldModel);
@@ -137,7 +134,7 @@ public final class MaterialBlockClientModels {
 //? if >=1.21.1 {
         /*LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
 *///?} else {
-        LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
+        LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", GregTechIdentity.REGISTRY_NAMESPACE, aliased, missing);
 //?}
     }
 

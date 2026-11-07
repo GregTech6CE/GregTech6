@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.plant.BedrockFlowers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -26,7 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
 public final class BedrockFlowerTooltips {
     private BedrockFlowerTooltips() {}
@@ -38,7 +35,7 @@ public final class BedrockFlowerTooltips {
         if (id == null || !"gt6ce".equals(id.getNamespace())) return;
 *///?} else {
         var id = ForgeRegistries.ITEMS.getKey(event.getItemStack().getItem());
-        if (id == null || !GregTech.NAMESPACE.equals(id.getNamespace())) return;
+        if (id == null || !GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace())) return;
 //?}
         BedrockFlowers.Flower flower = BedrockFlowers.byId(id.getPath());
         if (flower == null) return;

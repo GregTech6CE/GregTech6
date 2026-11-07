@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.registry.GTBlocks;
 import com.mojang.logging.LogUtils;
@@ -33,7 +30,7 @@ import java.util.Map;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class StoneBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -90,7 +87,7 @@ public final class StoneBlockClientModels {
 //? if >=1.21.1 {
             /*BlockItemClientModels.alias(models, itemId, ResourceLocation.fromNamespaceAndPath("gt6ce",modelPath), shared, itemModel);
 *///?} else {
-            BlockItemClientModels.alias(models, itemId, GregTech.id(modelPath), shared, itemModel);
+            BlockItemClientModels.alias(models, itemId, ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (modelPath).toLowerCase()), shared, itemModel);
 //?}
             aliased++;
         }
@@ -98,7 +95,7 @@ public final class StoneBlockClientModels {
 //? if >=1.21.1 {
         /*LOGGER.info("[{}] Stone block model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
 *///?} else {
-        LOGGER.info("[{}] Stone block model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
+        LOGGER.info("[{}] Stone block model aliasing: {} mapped, {} missing", GregTechIdentity.REGISTRY_NAMESPACE, aliased, missing);
 //?}
     }
 
@@ -115,7 +112,7 @@ public final class StoneBlockClientModels {
                 event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("gt6ce", stone.modelId())));
 *///?} else {
     private static BakedModel lookupStoneModel(Map<ResourceLocation, BakedModel> models, String modelPath) {
-        ResourceLocation modelId = GregTech.id(modelPath);
+        ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (modelPath).toLowerCase());
         for (String variant : new String[]{"", "inventory", "normal"}) {
             BakedModel model = models.get(new ModelResourceLocation(modelId, variant));
             if (model != null) {

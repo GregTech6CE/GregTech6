@@ -1,4 +1,5 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
 
@@ -6,11 +7,6 @@ package gregtech.client;
 
 
 
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.GregTech;
-
-//?}
 
 
 import gregtech.engine.machine.BasicMachineSpec;
@@ -95,7 +91,7 @@ import java.util.Map;
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 
 
@@ -116,7 +112,7 @@ public final class MachineBlockClientModels {
 /**///?} else {
     private static final ResourceLocation BAROMETER_MODEL =
 
-            GregTech.id("block/machines/barometer/sprites");
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machines/barometer/sprites").toLowerCase());
 
 
 
@@ -206,7 +202,7 @@ public final class MachineBlockClientModels {
 //? if >=1.21.1 {
 /*                    event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + directory + "/" + facing.getSerializedName() + active)));
 *///?} else {
-                    event.register(GregTech.id("block/machine/" + directory + "/" + facing.getSerializedName() + active));
+                    event.register(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/" + directory + "/" + facing.getSerializedName() + active).toLowerCase()));
 //?}
 
 
@@ -706,7 +702,7 @@ public final class MachineBlockClientModels {
 //? if >=1.21.1 {
 /*                "gt6ce", aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
 *///?} else {
-                GregTech.NAMESPACE, aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
+                GregTechIdentity.REGISTRY_NAMESPACE, aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
 //?}
 
 
@@ -770,7 +766,7 @@ public final class MachineBlockClientModels {
 //? if >=1.21.1 {
 /*            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + modelDir + "/" + variant);
 *///?} else {
-            ResourceLocation id = GregTech.id("block/machine/" + modelDir + "/" + variant);
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/" + modelDir + "/" + variant).toLowerCase());
 //?}
 
 
