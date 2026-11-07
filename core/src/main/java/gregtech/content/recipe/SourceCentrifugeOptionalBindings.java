@@ -41,20 +41,23 @@ public final class SourceCentrifugeOptionalBindings {
         MATERIAL_SPEC
     }
 
-    public record Target(TargetKind kind, String value) {
+    public record Target(TargetKind kind, String value, MaterialAmount amount) {
         public Target {
             Objects.requireNonNull(kind);
             Objects.requireNonNull(value);
+            if (kind == TargetKind.MATERIAL_SPEC && amount == null)
+                throw new IllegalArgumentException("Material target needs an amount");
         }
 
-        /**
-         * Typed material amount. The value keeps the legacy {@code omdu:} spelling because the
-         * generated resolver still parses it; this factory is the only place that renders it.
-         */
+        /** Item-only target; the material variant carries its exact amount beside the name. */
+        public Target(TargetKind kind, String value) {
+            this(kind, value, null);
+        }
+
         public static Target materialSpec(String material, MaterialAmount amount) {
             Objects.requireNonNull(material);
             Objects.requireNonNull(amount);
-            return new Target(TargetKind.MATERIAL_SPEC, "omdu:" + material + ":" + amount.units());
+            return new Target(TargetKind.MATERIAL_SPEC, material, amount);
         }
     }
 

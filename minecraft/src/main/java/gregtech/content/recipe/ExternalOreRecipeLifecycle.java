@@ -39,6 +39,7 @@ public final class ExternalOreRecipeLifecycle {
         SharedThermalInputRows.clear();
         SharedThermalRecyclingRows.clear();
         MoltenMetalUnitRecipes.clear();
+        PotionBrewingRecipes.clear();
         gregtech.engine.material.MaterialDisplayBinding.invalidate();
     }
 }

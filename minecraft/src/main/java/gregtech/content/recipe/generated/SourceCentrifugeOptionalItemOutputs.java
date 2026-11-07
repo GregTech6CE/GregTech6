@@ -43,12 +43,13 @@ final class SourceCentrifugeOptionalItemOutputs {
     }
 
     static Result resolve(Plan plan) {
-        return resolve(plan,nativeSnapshot(),SourceCentrifugeOptionalItemOutputs::exactItem,GeneratedRecipeResolver::resolveSpec);
+        return resolve(plan,nativeSnapshot(),SourceCentrifugeOptionalItemOutputs::exactItem,
+                GeneratedRecipeResolver::sourceCentrifugeMaterialTarget);
     }
 
     /** Named package-local test seam. A synthetic supplied view is not an installed optional mod. */
     static Result resolve(Plan plan,Snapshot snapshot,Function<String,ItemStack> exactLookup,
-                          Function<String,ItemStack> materialLookup) {
+                          Function<Target,ItemStack> materialLookup) {
         Map<String,ItemStack> observed=new HashMap<>();
         Function<String,ItemStack> exact=id->observed.computeIfAbsent(id,key->{
             try {
@@ -61,7 +62,7 @@ final class SourceCentrifugeOptionalItemOutputs {
         final ItemStack stack;
         try {
             stack=selected.target().kind()==TargetKind.EXACT_ITEM
-                    ?exact.apply(selected.target().value()):materialLookup.apply(selected.target().value());
+                    ?exact.apply(selected.target().value()):materialLookup.apply(selected.target());
         } catch (RuntimeException failedDefault) { return unresolved(plan,selected); }
         if(stack==null||stack.isEmpty())return unresolved(plan,selected);
         // OM material fallback can legitimately be four small/nine tiny dust: do NOT force count1.

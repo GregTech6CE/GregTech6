@@ -3,7 +3,7 @@ package gregtech.content.recipe;
 import java.math.BigInteger;
 
 /**
- * Explicit source phase bindings for audited Alumina chemistry and fixed Centrifuge rows.
+ * Explicit source phase bindings for audited chemistry and fixed Centrifuge rows.
  * Original CS.U=648648000; FL.createMolten uses144mB/U, createGas1000mB/U.
  * Physical temperature, texture, and current legacy fluid names do not determine this dimension.
  */
@@ -28,6 +28,22 @@ public final class OriginalMaterialFluidUnits {
                 "liquid",
                 "GenLiquid_AluminiumFluoride",
                 "aluminiumfluoride",
+                SOURCE_UNIT,
+                144),
+        new Binding(
+                "LithiumChloride",
+                8029,
+                "liquid",
+                "GenLiquid_LithiumChloride",
+                "lithiumchloride",
+                SOURCE_UNIT,
+                144),
+        new Binding(
+                "LithiumChlorate",
+                8033,
+                "liquid",
+                "GenLiquid_LithiumChlorate",
+                "lithiumchlorate",
                 SOURCE_UNIT,
                 144),
         new Binding("CarbonDioxide", 9836, "gas", "CarbonDioxide", "carbondioxide", SOURCE_UNIT, 1000),

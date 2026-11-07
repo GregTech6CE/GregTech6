@@ -11,10 +11,7 @@ public final class SourceCentrifugeItemOutputs {
     public record Binding(
             String materialName, int materialId, String prefixName, String vanillaPath, long dustSourceUnits) {}
 
-    /**
-     * The reviewed default output in common material-unit semantics. The descriptor form exists
-     * only for the legacy {@code GeneratedRecipeResolver} token boundary.
-     */
+    /** The reviewed default output in common material-unit semantics. */
     public record Output(String materialName, MaterialAmount units) {
         public Output {
             if (materialName == null || materialName.isBlank() || units == null)
@@ -57,19 +54,5 @@ public final class SourceCentrifugeItemOutputs {
         } catch (ArithmeticException overflow) {
             return null;
         }
-    }
-
-    /**
-     * Legacy descriptor for {@code GeneratedRecipeResolver}. The typed {@link Output} is the
-     * production value; this is the single place that still renders {@code omdu:}.
-     */
-    public static String fallback(Binding binding, int count) {
-        if (binding == null || count <= 0) return null;
-        if (binding.dustSourceUnits() == 0)
-            return "i:" + binding.prefixName() + ":" + binding.materialName() + ":" + count;
-        Output output = output(binding, count);
-        return output == null
-                ? null
-                : "omdu:" + output.materialName() + ":" + output.units().units();
     }
 }

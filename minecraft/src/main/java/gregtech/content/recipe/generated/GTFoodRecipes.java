@@ -268,6 +268,10 @@ public final class GTFoodRecipes {
         row(SOURCE, "Fermenter", 16, 64, 75).kept(selector(0)).fluid(nativeFluid("Juice_Grape_Green", 50)).out(nativeFluid("Wine_Grape_Green", 25)).add(rows);
         row(SOURCE, "Fermenter", 16, 64, 76).kept(selector(0)).fluid(nativeFluid("Juice_Grape_Purple", 50)).out(nativeFluid("Wine_Grape_Purple", 25)).add(rows);
         row(SOURCE, "Fermenter", 16, 64, 77).kept(selector(0)).fluid(nativeFluid("Juice_Lemon", 50)).out(nativeFluid("Wine_Lemon", 25)).add(rows);
+        // Loader_Recipes_Food:635-636: the juice falls back to grape wine only when its own wine
+        // is absent; both target fluids are registered here.
+        row(SOURCE + "635/Banana", "Fermenter", 16, 64).kept(selector(0)).fluid(nativeFluid("Juice_Banana", 50)).out(nativeFluid("Wine_Banana", 25)).add(rows);
+        row(SOURCE + "636/Carrot", "Fermenter", 16, 64).kept(selector(0)).fluid(nativeFluid("Juice_Carrot", 50)).out(nativeFluid("Wine_Carrot", 25)).add(rows);
         row(SOURCE, "Drying", 16, 200, 78).fluid(nativeFluid("Sap", 250)).out(dust("Sugar", thousandths(1000))).out(nativeFluid("DistW", 100)).add(rows);
         row(SOURCE, "Drying", 16, 200, 79).fluid(nativeFluid("Sap_Maple", 250)).out(dust("Sugar", thousandths(1000))).out(nativeFluid("DistW", 100)).add(rows);
         row(SOURCE, "Drying", 16, 100, 80).fluid(nativeFluid("Juice_Reed", 200)).out(dust("Sugar", thousandths(1000))).out(nativeFluid("DistW", 50)).add(rows);

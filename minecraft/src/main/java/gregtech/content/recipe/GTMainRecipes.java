@@ -90,7 +90,7 @@ public final class GTMainRecipes {
                             + "i:plate:Steel:1|Put your Steel object into the Bathing Pot below it",
                     "i:plate:SteelGalvanized:1|Galvanized Steel Plate;"
                             + "i:stick:SteelGalvanized:1;i:screw:SteelGalvanized:1",
-                    "m:Zn:144", "m:Zn:144", "Loader_Recipes_Hints:50"),
+                    "f:GenMolten_Zinc:144", "f:GenMolten_Zinc:144", "Loader_Recipes_Hints:50"),
             new Row("DidYouKnow", true, 0, 0,
                     "v:book:1|Insert a basic empty Book into the Printer to get a Manual",
                     "book:Manual_Printer", "f:Dye_Chemical_Black:144", "", "Loader_Recipes_Hints:56"),

@@ -18,7 +18,8 @@ import java.util.List;
 import org.slf4j.Logger;
 
 /**
- * Typed row builder shared by the generated source tables.
+ * Typed row builder shared by the hand-maintained source tables transposed from the fixed
+ * {@code 3703e403} GT6 tree.
  *
  * <p>Amounts are material units, never amount-thousandths or stack counts. A source row is
  * transcribed with its own unit, phase and rounding; the native values are produced only when

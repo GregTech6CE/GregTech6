@@ -38,10 +38,10 @@ public final class GTCombRecipes {
     private static void honeyRows(List<ChemRecipe> rows) {
         row(SOURCE + "251", "Centrifuge", 16, 64)
                 .item(tech("honey_comb", 1)).out(nativeFluid("Honey", 100))
-                .out(dust("WaxBee", U(1)), 1000).add(rows);
+                .out(dust("WaxBee", U(1))).add(rows);
         row(SOURCE + "252", "Centrifuge", 16, 64)
                 .item(tech("water_comb", 1)).out(water(waterUnits(1000), FLOOR))
-                .out(dust("WaxBee", U(1)), 1000).add(rows);
+                .out(dust("WaxBee", U(1))).add(rows);
         row(SOURCE + "259", "Centrifuge", 16, 64)
                 .item(tech("shroomy_comb", 1)).out(nativeFluid("Soup_Mushroom", 1000))
                 .out(vanilla("red_mushroom_block", 1), 6000)
@@ -51,46 +51,46 @@ public final class GTCombRecipes {
     private static void fluidRows(List<ChemRecipe> rows) {
         row(SOURCE + "253", "Centrifuge", 16, 64)
                 .item(tech("magic_comb", 1)).out(nativeFluid("Ambrosia", 100))
-                .out(dust("WaxMagic", U(1)), 1000).add(rows);
+                .out(dust("WaxMagic", U(1))).add(rows);
         row(SOURCE + "254", "Centrifuge", 16, 64)
-                .item(tech("nether_comb", 1)).out(nativeFluid("Blaze", 1000))
-                .out(dust("WaxRefractory", U(1)), 1000).add(rows);
+                .item(tech("nether_comb", 1)).out(nativeFluid("Blaze", 144))
+                .out(dust("WaxRefractory", U(1))).add(rows);
         row(SOURCE + "255", "Centrifuge", 16, 64)
                 .item(tech("end_comb", 1)).out(nativeFluid("Dragon_Breath", 125))
-                .out(dust("Endstone", U(1)), 1000).add(rows);
+                .out(dust("Endstone", U(1))).add(rows);
         row(SOURCE + "256", "Centrifuge", 16, 64)
-                .item(tech("rock_comb", 1)).out(nativeFluid("Concrete", 1000))
-                .out(dust("Stone", U(1)), 1000).add(rows);
+                .item(tech("rock_comb", 1)).out(nativeFluid("Concrete", 144))
+                .out(dust("Stone", U(1))).add(rows);
         row(SOURCE + "258", "Centrifuge", 16, 64)
                 .item(tech("frozen_comb", 1)).out(nativeFluid("Ice", 1000))
-                .out(dust("Ice", U(1)), 1000).add(rows);
+                .out(dust("Ice", U(1))).add(rows);
         row(SOURCE + "260", "Centrifuge", 16, 64)
                 .item(tech("sandy_comb", 1)).out(nativeFluid("Juice_Cactus", 100))
-                .out(vanilla("sand", 1), 1000).add(rows);
+                .out(vanilla("sand", 1)).add(rows);
         row(SOURCE + "264", "Centrifuge", 16, 64)
                 .item(tech("soul_comb", 1)).out(nativeFluid("Oil_Soulsand", 50))
-                .out(dust("WaxSoulful", U(1)), 9000).out(dust("SoulSand", U(1)), 9000).add(rows);
+                .out(dust("WaxSoulful", U(1))).out(dust("SoulSand", U(1)), 9000).add(rows);
         row(SOURCE + "265", "Centrifuge", 16, 64)
                 .item(tech("amnesic_comb", 1)).out(nativeFluid("Lubricant", 1000))
-                .out(dust("WaxAmnesic", U(1)), 1000).add(rows);
+                .out(dust("WaxAmnesic", U(1))).add(rows);
     }
 
     private static void waxRows(List<ChemRecipe> rows) {
         row(SOURCE + "257", "Centrifuge", 16, 64)
                 .item(tech("jungle_comb", 1)).out(liquid("Chocolate", U(1), CEIL))
-                .out(dust("Cocoa", U(1)), 1000).out(vanilla("string", 1), 1000).add(rows);
+                .out(dust("Cocoa", U(1))).out(vanilla("string", 1), 1000).add(rows);
         row(SOURCE + "263", "Centrifuge", 16, 64)
                 .item(tech("royal_comb", 1)).out(nativeFluid("Honey", 50))
                 .out(nativeFluid("RoyalJelly", 10)).out(dust("WaxBee", U(1))).add(rows);
         row(SOURCE + "262", "Centrifuge", true, 16, 64)
-                .item(tech("sticky_comb", 1)).out(nativeFluid("Latex", 1000))
+                .item(tech("sticky_comb", 1)).out(nativeFluid("Latex", 144))
                 .out(dust("WaxBee", U(1)))
                 .out(optional("sticky_resin"), 3000).add(rows);
     }
 
     private static void materialRows(List<ChemRecipe> rows) {
         row(SOURCE + "261", "Centrifuge", 16, 64)
-                .item(tech("clay_comb", 1)).out(nativeFluid("Concrete", 1000))
+                .item(tech("clay_comb", 1)).out(nativeFluid("Concrete", 144))
                 .out(dust("Clay", U(1)), 2000).out(dust("ClayBrown", U(1)), 2000)
                 .out(dust("ClayRed", U(1)), 2000).out(dust("Bentonite", U(1)), 2000)
                 .out(dust("Palygorskite", U(1)), 2000).out(dust("Kaolinite", U(1)), 2000).add(rows);
@@ -109,7 +109,7 @@ public final class GTCombRecipes {
                 .out(dust("Blitz", U(1, 9))).out(form("stick", "Blitz", 1), 500)
                 .out(form("stick", "Breeze", 1), 500).add(rows);
         row(SOURCE + "270", "Centrifuge", 16, 64)
-                .item(tech("tera_comb", 1)).out(nativeFluid("Concrete", 1000))
+                .item(tech("tera_comb", 1)).out(nativeFluid("Concrete", 144))
                 .out(dust("Basalz", U(1, 9))).out(form("stick", "Basalz", 1), 1000).add(rows);
     }
 }

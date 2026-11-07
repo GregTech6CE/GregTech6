@@ -1,7 +1,6 @@
 package gregtech.content.recipe.generated;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluids;
@@ -48,8 +47,8 @@ public final class GeneratedRecipeResolver {
     }
 
     /**
-     * Resolves a fluid spec ({@code m:<material>:<mb>}, {@code f:<registry name>:<mb>}, {@code w:<mb>})
-     * for the hand-ported packs that reuse this loader's grammar.
+     * Resolves a fluid spec ({@code f:<registry name>:<mb>}, {@code fr:<registry name>:<mb>},
+     * {@code w:<mb>}) for the hand-ported packs that reuse this loader's grammar.
      *
      * @return the fluid, or null when the referenced content is absent
      */
@@ -57,37 +56,11 @@ public final class GeneratedRecipeResolver {
         return resolveFluid(spec);
     }
 
-    /** Additive exact original-U dust token. Legacy omd thousandths and item counts are unchanged.
-     * The existing OM selector retains fallback forms; malformed/negative/overflowing quantities
-     * are unsupported rather than rounded to one item. Source CS.U is 648648000.
-     */
-    private static ItemStack sourceDust(String[] parts) {
-        if (parts.length != 3 || parts[1].isEmpty() || !parts[2].matches("[1-9][0-9]*")) return null;
-        final long sourceAmount;
-        try { sourceAmount = Long.parseLong(parts[2]); }
-        catch (NumberFormatException invalidAmount) { return null; }
-        var ratio = java.math.BigInteger.valueOf(sourceAmount)
-                .multiply(java.math.BigInteger.valueOf(GTValues.U))
-                .divideAndRemainder(java.math.BigInteger.valueOf(648648000L));
-        // OM.dust can multiply a fractional amount by72. Keep its long arithmetic bounded.
-        if (ratio[1].signum() != 0 || ratio[0].signum() <= 0
-                || ratio[0].compareTo(java.math.BigInteger.valueOf(Long.MAX_VALUE / 72)) > 0) return null;
-        GTMaterial material = material(parts[1]);
-        return material == null ? null : OM.dust(material, ratio[0].longValueExact());
-    }
-
     /** @return resolved stack, or null/empty when the referenced content is absent. */
     private static ItemStack resolveItem(String spec) {
         String[] parts = spec.split(":");
         switch (parts[0]) {
             case "sci" -> { return sourceCentrifugeItem(spec.split(":", -1)); }
-            case "omdu" -> { return sourceDust(spec.split(":", -1)); }
-            case "omd" -> {
-                GTMaterial material = material(parts[1]);
-                if (material == null) return null;
-                long amount = Long.parseLong(parts[2]) * GTValues.U / 1000;
-                return OM.dust(material, amount);
-            }
             case "i" -> {
 
                 GTMaterial material = "Empty".equals(parts[2]) && prefix(parts[1]) != null
@@ -176,21 +149,33 @@ public final class GeneratedRecipeResolver {
         try { count = Integer.parseInt(parts[3]); }
         catch (NumberFormatException invalid) { return null; }
         var binding = gregtech.content.recipe.SourceCentrifugeItemOutputs.binding(parts[1], parts[2]);
-        String fallback = gregtech.content.recipe.SourceCentrifugeItemOutputs.fallback(binding, count);
-        if (fallback == null) return null;
+        if (binding == null) return null;
         GTMaterial material = material(binding.materialName());
         if (material == null) return null;
         ItemStack target = resolveItem("v:" + binding.vanillaPath() + ":" + count);
-        var form = target == null ? null : gregtech.engine.material.MaterialEquivalence.form(target);
+        if (target == null) return null;
+        var form = gregtech.engine.material.MaterialEquivalence.form(target);
         boolean core = material.isValid() && material.resolve() == material
                 && GTMaterialRegistry.isCoreMaterial(material)
                 && !gregtech.engine.addon.AddonMaterials.owns(material);
         boolean targetMatches = form != null && form.material().resolve() == material
                 && form.prefix().getName().equals(binding.prefixName());
         boolean external = externalForm(binding);
-        return gregtech.content.recipe.SourceCentrifugeItemOutputs.useDefault(binding,
-                material.getId(), material.getName(), core, targetMatches, external)
-                ? target : resolveItem(fallback);
+        if (gregtech.content.recipe.SourceCentrifugeItemOutputs.useDefault(binding,
+                material.getId(), material.getName(), core, targetMatches, external)) return target;
+        var output = gregtech.content.recipe.SourceCentrifugeItemOutputs.output(binding, count);
+        if (output != null) return OM.dust(material, output.units().units());
+        MaterialPrefix prefix = prefix(binding.prefixName());
+        return prefix == null ? null : MaterialStackItemHelper.mat(prefix, material, count);
+    }
+
+    /** The optional-tail material target, resolved from its typed name and material amount. */
+    static ItemStack sourceCentrifugeMaterialTarget(
+            gregtech.content.recipe.SourceCentrifugeOptionalBindings.Target target) {
+        if (target.kind() != gregtech.content.recipe.SourceCentrifugeOptionalBindings.TargetKind.MATERIAL_SPEC
+                || target.amount() == null) return ItemStack.EMPTY;
+        GTMaterial material = material(target.value());
+        return material == null ? ItemStack.EMPTY : OM.dust(material, target.amount().units());
     }
 
     /** A foreign direct material form is public identity even without an explicit composition. */
@@ -228,48 +213,9 @@ public final class GeneratedRecipeResolver {
         return switch (parts[0]) {
             case "w" -> new FluidStack(Fluids.WATER, Integer.parseInt(parts[1]));
             case "f" -> named(parts[1], Integer.parseInt(parts[2]));
-            case "m" -> materialFluid(parts[1], Integer.parseInt(parts[2]));
-            case "mu" -> sourceMaterialFluid(spec.split(":", -1));
             case "fr" -> byRegistryName(parts[1], Integer.parseInt(parts[2]));
             default -> null;
         };
-    }
-
-    /** Additive original-U grammar; legacy m tokens and public materialFluid remain unchanged. */
-    private static FluidStack sourceMaterialFluid(String[] parts) {
-        if (parts.length != 5 || !parts[3].matches("[0-9]+")
-                || !("up".equals(parts[4]) || "down".equals(parts[4]))) return null;
-        long sourceAmount;
-        try {
-            sourceAmount = Long.parseLong(parts[3]);
-        } catch (NumberFormatException invalidAmount) {
-            return null;
-        }
-        GTMaterial material = material(parts[1]);
-        if (material == null || !material.resolve().isValid()) return null;
-        material = material.resolve();
-        var binding = gregtech.content.recipe.OriginalMaterialFluidUnits
-                .binding(material.getName(), material.getId(), parts[2]);
-        if (binding == null) return null;
-        int amount = gregtech.content.recipe.OriginalMaterialFluidUnits.millibuckets(
-                sourceAmount, binding.referenceSourceUnits(), binding.referenceMillibuckets(),
-                "up".equals(parts[4]));
-        // None of the migrated source calls is a zero-volume catalyst. Do not invent 1 mB.
-        if (amount <= 0) return null;
-        var entry = RegisteredFluids.get(binding.fluidField());
-        if (entry == null || !binding.registryName().equals(entry.registryName())
-                || !"gt6ce".equals(GTFluids.namespace(entry))) return null;
-        String boundName = entry.materialKey() != null ? entry.materialKey()
-                : RegisteredFluids.boundMaterial(entry.registryName());
-        if (boundName == null) return null;
-        GTMaterial bound = GTMaterialRegistry.get(boundName).resolve();
-        if (!bound.isValid() || bound.getId() != binding.materialId()
-                || !bound.getName().equals(binding.materialName())) return null;
-        FluidStack stack = named(binding.fluidField(), amount);
-        if (stack == null || stack.isEmpty()) return null;
-        var nativeId = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(stack.getFluid());
-        return nativeId != null && "gt6ce".equals(nativeId.getNamespace())
-                && RegisteredFluids.sanitizePath(binding.registryName()).equals(nativeId.getPath()) ? stack : null;
     }
 
     /** field key by raw 1.7.10 registry name ("nitrofuel", "gas.natural", ...). */
@@ -326,41 +272,29 @@ public final class GeneratedRecipeResolver {
         return named(key, mb);
     }
 
-    /** Material fluid: generated gas/liquid (1U=1000mB) or molten (1U=144mB) or named. */
+    /**
+     * The registered fluid of a material that has exactly one phase binding; {@code mb} is the
+     * native amount. A material with both a gas and a liquid phase is ambiguous and returns null;
+     * callers that know the phase resolve it through {@link gregtech.engine.recipe.chem.MaterialFluidBinding}.
+     */
     public static FluidStack materialFluid(String materialName, int mb) {
         GTMaterial material = material(materialName);
-        String name = material != null ? material.getName() : materialName;
-        FluidStack stack = named("GenGas_" + name, mb);
-        if (stack != null) return stack;
-        stack = named("GenLiquid_" + name, mb);
-        if (stack != null) return stack;
-        stack = named(name, mb);
-        if (stack != null) return stack;
-        // dedicated fluids registered under their registry names skip the
-        // GenGas_/GenLiquid_ keys — fall back to the registry-name forms
-        String lower = name.toLowerCase(java.util.Locale.ROOT);
-        stack = byRegistryName("liquid." + lower, mb);
-        if (stack != null) return stack;
-        stack = byRegistryName("gas." + lower, mb);
-        if (stack != null) return stack;
-        stack = byRegistryName(lower, mb);
-        if (stack != null) return stack;
-        // molten scale: U amounts in mB-of-gas units -> 144/1000 for molten metals
-        return named("GenMolten_" + name, Math.max(1, mb * 144 / 1000));
+        if (material == null) return null;
+        var bindings = gregtech.engine.recipe.chem.MaterialFluidBinding.findAll(material.getName());
+        var fields = new java.util.LinkedHashSet<String>();
+        for (var binding : bindings) fields.add(binding.field());
+        if (fields.size() != 1) return null;
+        FluidStack stack = GTFluids.stack(fields.iterator().next(), mb);
+        return stack == null || stack.isEmpty() ? null : stack;
     }
 
     public static GTMaterial material(String name) {
         GTMaterial material = GTMaterialRegistry.get(name);
         if (material != null && material.resolve().isValid()) return material.resolve();
-        // GT6 field names (TiCl4, HNO3, ...) often differ from the registry
-        // display names ("Titanium Tetrachloride") — fall back to the MT field
-        try {
-            Object value = gregtech.content.data.ImportedMaterialData.class.getField(name).get(null);
-            if (value instanceof GTMaterial mt && mt.resolve().isValid()) return mt.resolve();
-        } catch (ReflectiveOperationException ignored) {
-            // no such field — genuinely unknown material
-        }
-        return null;
+        String canonical = gregtech.content.recipe.generated.GTMaterialFields.materialOf(name);
+        if (canonical == null) return null;
+        material = GTMaterialRegistry.get(GTMaterial.sanitize(canonical));
+        return material == null || !material.resolve().isValid() ? null : material.resolve();
     }
 
     private static MaterialPrefix prefix(String name) {

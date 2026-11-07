@@ -7,6 +7,7 @@ import static gregtech.engine.recipe.chem.Rounding.FLOOR;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialGroups;
+import gregtech.engine.recipe.chem.ChemFluid;
 import gregtech.engine.recipe.chem.ChemRecipe;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,16 +173,22 @@ public final class GTOtherRecipes {
                 .getStack(block, material.resolve()).isEmpty();
     }
 
+    private static ChemFluid waterFluid(String key, int millibuckets) {
+        return key.equals("Water") ? water(waterUnits(millibuckets), FLOOR) : nativeFluid(key, millibuckets);
+    }
+
     private static void sourceRows(List<ChemRecipe> rows) {
         row(SOURCE, "Distillery", 16, 16, 25).kept(selector(0)).fluid(nativeFluid("Resin", 10)).out(nativeFluid("Turpentine", 6)).out(nativeFluid("DistW", 3)).add(rows);
         row(SOURCE, "Distillery", 16, 16, 26).kept(selector(0)).fluid(nativeFluid("Resin_Spruce", 10)).out(nativeFluid("Turpentine", 6)).out(nativeFluid("DistW", 3)).add(rows);
-        row(SOURCE, "Mixer", 16, 64, 28).item(form("gem", "ChargedCertusQuartz", 1)).item(form("gem", "NetherQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(water(waterUnits(500), FLOOR)).out(form("gem", "Fluix", 2)).add(rows);
-        row(SOURCE, "Mixer", 16, 64, 29).item(form("dust", "ChargedCertusQuartz", 1)).item(form("dust", "NetherQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(water(waterUnits(500), FLOOR)).out(form("dust", "Fluix", 2)).add(rows);
-        row(SOURCE, "Mixer", 16, 64, 30).item(form("gem", "ChargedCertusQuartz", 1)).item(form("gem", "MilkyQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(water(waterUnits(500), FLOOR)).out(form("gem", "Fluix", 2)).add(rows);
-        row(SOURCE, "Mixer", 16, 64, 31).item(form("dust", "ChargedCertusQuartz", 1)).item(form("dust", "MilkyQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(water(waterUnits(500), FLOOR)).out(form("dust", "Fluix", 2)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 32).item(dust("ConstructionFoam", thousandths(1000))).fluid(water(waterUnits(100), FLOOR)).out(nativeFluid("CFoam", 100)).add(rows);
-        row(SOURCE, "Mixer", 16, 144, 33).item(form("blockDust", "Concrete", 1)).fluid(water(waterUnits(1125), FLOOR)).out(nativeFluid("Concrete", 1296)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 34).item(form("dust", "Concrete", 1)).fluid(water(waterUnits(125), FLOOR)).out(nativeFluid("Concrete", 144)).add(rows);
+        for (String waterKey : new String[] {"Water", "MnWtr", "DistW"}) {
+            row(SOURCE, "Mixer", 16, 64, 28).item(form("gem", "ChargedCertusQuartz", 1)).item(form("gem", "NetherQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(waterFluid(waterKey, 500)).out(form("gem", "Fluix", 2)).add(rows);
+            row(SOURCE, "Mixer", 16, 64, 29).item(form("dust", "ChargedCertusQuartz", 1)).item(form("dust", "NetherQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(waterFluid(waterKey, 500)).out(form("dust", "Fluix", 2)).add(rows);
+            row(SOURCE, "Mixer", 16, 64, 30).item(form("gem", "ChargedCertusQuartz", 1)).item(form("gem", "MilkyQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(waterFluid(waterKey, 500)).out(form("gem", "Fluix", 2)).add(rows);
+            row(SOURCE, "Mixer", 16, 64, 31).item(form("dust", "ChargedCertusQuartz", 1)).item(form("dust", "MilkyQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(waterFluid(waterKey, 500)).out(form("dust", "Fluix", 2)).add(rows);
+            row(SOURCE, "Mixer", 16, 16, 32).item(dust("ConstructionFoam", thousandths(1000))).fluid(waterFluid(waterKey, 100)).out(nativeFluid("CFoam", 100)).add(rows);
+            row(SOURCE, "Mixer", 16, 144, 33).item(form("blockDust", "Concrete", 1)).fluid(waterFluid(waterKey, 4500)).out(nativeFluid("Concrete", 1296)).add(rows);
+            row(SOURCE, "Mixer", 16, 16, 34).item(form("dust", "Concrete", 1)).fluid(waterFluid(waterKey, 500)).out(nativeFluid("Concrete", 144)).add(rows);
+        }
         row(SOURCE, "Mixer", 16, 1296, 35).item(form("blockDust", "Stone", 9)).item(form("blockDust", "Calcite", 1)).item(form("blockDust", "Ash", 1)).out(form("blockDust", "Concrete", 11)).add(rows);
         row(SOURCE, "Slicer", 16, 16, 36).item(vanilla("paper", 1)).kept(tech("slicer_shape_grid", 1)).out(form("plateTiny", "Paper", 9)).add(rows);
         row(SOURCE, "Bath", 0, 16, 37).item(vanilla("paper", 2)).kept(selector(2)).fluid(nativeFluid("Glue", 125)).out(form("plateDouble", "Paper", 1)).add(rows);

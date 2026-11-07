@@ -134,6 +134,7 @@ public final class MachineRecipeOverlay {
         SharedThermalInputRows.rebuild();
         SharedThermalRecyclingRows.rebuild();
         MoltenMetalUnitRecipes.finish();
+        PotionBrewingRecipes.rebuildStaged();
         long producersMillis = (System.nanoTime() - producersStarted) / 1_000_000L;
         MaterialDisplayBinding.invalidate();
         logged = 0;
@@ -180,6 +181,7 @@ public final class MachineRecipeOverlay {
             SharedThermalRecyclingRows.clear();
             MoltenMetalUnitRecipes.clear();
             CompatRecipes.clear();
+            PotionBrewingRecipes.rebuildStaged();
             MaterialDisplayBinding.invalidate();
             for (var map : RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         } catch (RuntimeException secondary) {
@@ -246,6 +248,7 @@ public final class MachineRecipeOverlay {
     private static void ensureBaseline() {
         var exclude = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
         exclude.addAll(CompatRecipes.owned());
+        exclude.addAll(PotionBrewingRecipes.owned());
         exclude.addAll(ExternalOreProcessing.owned());
         exclude.addAll(gregtech.content.recipe.NonOreMacerationRows.owned());
         exclude.addAll(gregtech.content.recipe.SourceOreOutputRows.owned());
@@ -346,11 +349,18 @@ public final class MachineRecipeOverlay {
                 .filter(i -> spec.fluidInputs().get(i).amount() == 0).toArray());
         if (spec.materialInput() != null) {
             try {
-                gregtech.engine.recipe.MachineRecipeAdapter.addMaterial(map, recipe, 0, spec.materialInput(), source);
-                tally.added++;
-                if (spec.priority() != 0) tally.priority++;
+                Recipe added = gregtech.engine.recipe.MachineRecipeAdapter
+                        .addMaterial(map, recipe, 0, spec.materialInput(), source);
+                if (added == null) {
+                    tally.rejected++;
+                    problem(spec.map() + " material rule was not registered");
+                } else {
+                    tally.added++;
+                    if (spec.priority() != 0) tally.priority++;
+                }
             } catch (IllegalArgumentException failure) {
-                tally.rejected++; problem(spec.map() + " " + failure.getMessage());
+                tally.rejected++;
+                problem(spec.map() + " " + failure.getMessage());
             }
             return;
         }

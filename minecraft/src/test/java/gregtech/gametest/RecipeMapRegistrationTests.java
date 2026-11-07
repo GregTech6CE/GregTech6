@@ -470,6 +470,41 @@ public final class RecipeMapRegistrationTests {
         };
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void presenceAndConsumedFluidRowsCoexist(GameTestHelper helper) {
+        var map = map(helper, "gt.test.recipe.presence.consume");
+        try {
+            var presence = row(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new FluidStack[] {fluid(Fluids.WATER, 1)}).withPresenceFluidInputs(0);
+            var consumed = row(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new FluidStack[] {fluid(Fluids.WATER, 100)});
+            helper.assertTrue(map.addRecipe(presence) == presence, "presence row registered");
+            helper.assertTrue(map.addRecipe(consumed) == consumed,
+                    "same-input consumed row is a condition variant, not a duplicate");
+            helper.assertTrue(map.mRecipeList.size() == 2, "both condition variants remain");
+        } finally {
+            RecipeMap.unregister("gt.test.recipe.presence.consume");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void guardedRowDoesNotRejectTheWideRow(GameTestHelper helper) {
+        var map = map(helper, "gt.test.recipe.guard.wide");
+        try {
+            var guarded = row(new ItemStack[] {stack(Items.IRON_INGOT, 1)}, NO_FLUIDS)
+                    .withItemInputGuard(0, offered -> offered.getCount() == 1);
+            var wide = row(new ItemStack[] {stack(Items.IRON_INGOT, 1)}, NO_FLUIDS);
+            helper.assertTrue(map.addRecipe(guarded) == guarded, "guarded row registered");
+            helper.assertTrue(map.addRecipe(wide) == wide,
+                    "an opaque guard does not prove the wide row is a duplicate");
+            helper.assertTrue(map.mRecipeList.size() == 2, "both rows remain");
+        } finally {
+            RecipeMap.unregister("gt.test.recipe.guard.wide");
+        }
+        helper.succeed();
+    }
+
     private static RecipeMap map(GameTestHelper helper, String name) {
         return map(helper, name, 9);
     }

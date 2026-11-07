@@ -44,11 +44,6 @@ public final class MachineRecipeBootstrap {
         register("GlowtusProcessingRecipes", GlowtusProcessingRecipes::register);
         register("BedrockFlowerProcessingRecipes", BedrockFlowerProcessingRecipes::register);
         register("SurvivalUtilityRecipes", SurvivalUtilityRecipes::register);
-        // NeoForge binds fermentation earlier, before material post-initialization.
-//? if >=1.21.1 {
-//?} else {
-        register("FermenterFoodRecipes", FermenterFoodRecipes::register);
-//?}
         register("CrucibleSmeltingRecipes", CrucibleSmeltingRecipes::register);
         register("StructuralPartRecipes", StructuralPartRecipes::register);
         register("MachineCasingRecipes", MachineCasingRecipes::register);
@@ -101,7 +96,7 @@ public final class MachineRecipeBootstrap {
         register("FoodItemRecipes", FoodItemRecipes::register);
 
         // One typed producer per source table; each row names its source loader and ordinal.
-        // The order is the transpiled tables' previous load order, so collisions resolve the same way.
+        // Explicit priority and condition-aware collisions decide ties, not this registration order.
         runStep("GTChemRecipes", gregtech.content.recipe.generated.GTChemRecipes::register);
         runStep("GTOtherRecipes", gregtech.content.recipe.generated.GTOtherRecipes::register);
         runStep("GTCompoundMixerRecipes", gregtech.content.recipe.generated.GTCompoundMixerRecipes::register);

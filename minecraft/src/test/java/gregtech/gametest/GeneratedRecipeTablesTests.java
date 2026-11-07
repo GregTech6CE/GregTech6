@@ -149,12 +149,32 @@ public final class GeneratedRecipeTablesTests {
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void everyFamilyPublishesRows(GameTestHelper helper) {
-        for (String family : new String[] {
-                "Loader_Recipes_Other:", "Loader_Recipes_Vanilla:", "Loader_Recipes_Food:",
-                "Loader_Recipes_Extruder:", "Loader_Recipes_Ores:", "Loader_Recipes_Temporary:",
-                "MultiItemFood:", "MultiItemRandomTools:"}) {
-            helper.assertTrue(published(family) > 0, "family publishes rows: " + family);
+        // The six stone-metavariant Lathe rows stay excluded: VanillaStoneMachineRecipes owns those
+        // inputs with material-specific outputs, so those six source rows never publish.
+        String[][] families = {
+                {"Loader_Recipes_Other:", "218"}, {"Loader_Recipes_Vanilla:", "310"},
+                {"Loader_Recipes_Food:", "231"}, {"Loader_Recipes_Extruder:", "142"},
+                {"Loader_Recipes_Ores:", "70"}, {"Loader_Recipes_Temporary:", "11"},
+                {"MultiItemFood:", "15"}, {"MultiItemRandomTools:", "255"},
+                {"Loader_Recipes_Other:71-100:", "135"}};
+        for (String[] family : families) {
+            int count = published(family[0]);
+            helper.assertTrue(count >= Integer.parseInt(family[1]),
+                    family[0] + " publishes " + count + " rows, expected at least " + family[1]);
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void generatedLedgerHasNoInvalidRowsOrUnreviewedLoss(GameTestHelper helper) {
+        helper.assertTrue(countGenerated(ChemOutcome.VALIDATION_FAILED) == 0,
+                "no generated row failed validation");
+        int missing = countGenerated(ChemOutcome.MISSING_CONTENT);
+        helper.assertTrue(missing == 53, "generated missing content is the audited 53 rows, was " + missing);
+        int collisions = countGenerated(ChemOutcome.COLLISION);
+        // 138 = the previous 144 minus the six stone-metavariant Lathe rows, which are excluded
+        // because VanillaStoneMachineRecipes owns those inputs; they collided before removal.
+        helper.assertTrue(collisions == 138, "generated collisions are the audited 138 variants, was " + collisions);
         helper.succeed();
     }
 
@@ -246,6 +266,17 @@ public final class GeneratedRecipeTablesTests {
             if (!result.source().contains(family)) continue;
             if (result.outcome() == ChemOutcome.PUBLISHED || result.outcome() == ChemOutcome.SUBSTITUTED)
                 count++;
+        }
+        return count;
+    }
+
+    private static int countGenerated(ChemOutcome outcome) {
+        int count = 0;
+        for (var result : ChemRecipeResolver.results()) {
+            if (result.outcome() != outcome) continue;
+            String source = result.source();
+            if (source.contains("Loader_Recipes_Chem")) continue;
+            if (source.contains("Loader_Recipes_") || source.contains("MultiItem")) count++;
         }
         return count;
     }

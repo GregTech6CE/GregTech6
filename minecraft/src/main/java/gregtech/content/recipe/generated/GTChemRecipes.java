@@ -186,7 +186,7 @@ public final class GTChemRecipes {
                 .fluid(liquid(input, U(line == 84 ? 9 : line == 85 ? 5 : 6), CEIL))
                 .fluid(nativeFluid(water, waterMb))
                 .out(gas("HCl", line == 84 ? U(12) : U(8), CEIL))
-                .out(gas("O", line == 84 ? U(2) : line == 85 ? U(2) : U(1, 2), FLOOR))
+                .out(gas("O", line == 84 ? U(2) : line == 85 ? U(2) : U(3, 2), FLOOR))
                 .out(dust(output, U(1))).add();
     }
 
@@ -1020,37 +1020,39 @@ public final class GTChemRecipes {
                     .fluid(nativeFluid("Oxygen", 8000)).out(gas("CO2", U(12))).add();
         }
 
-        roastSulfide(446, true, "Pyrite", "Air", 8000, U(2), "Fe2O3", U(5, 6), null, null, null, null);
-        roastSulfide(447, true, "Realgar", "Air", 4000, U(3, 2), "As", U(1, 2), null, null, null, null);
-        roastSulfide(448, true, "Sphalerite", "Air", 4000, U(3, 2), "Zn", U(1, 2), null, null, null, null);
-        roastSulfide(449, true, "Molybdenite", "Air", 6000, U(2), "Mo", U(1, 3), null, null, null, null);
-        roastSulfide(450, true, "Stibnite", "Air", 5000, U(9, 5), "Sb", U(2, 5), null, null, null, null);
-        roastSulfide(451, true, "Pentlandite", "Air", 4000, src(24, 17), "Ni", src(9, 17), null, null, null, null);
-        roastSulfide(452, true, "Chalcopyrite", "Air", 6000, U(3, 2), "Fe2O3", U(5, 8), "Cu", U(1, 4), null, null);
-        roastSulfide(453, true, "Arsenopyrite", "Air", 5000, U(1), "Fe2O3", U(5, 6), "As", U(1, 3), null, null);
-        roastSulfide(454, true, "Cobaltite", "Air", 3000, U(1), "Co", U(1, 3), "As", U(1, 3), null, null);
-        roastSulfide(455, true, "Galena", "Air", 2000, U(3, 4), "Ag", U(3, 8), "Pb", U(3, 8), null, null);
-        roastSulfide(456, true, "Cooperite", "Air", 2000, U(1, 2), "Pt", U(1, 2), "Ni", U(1, 6), "Pd", U(1, 6));
-        roastSulfide(457, true, "Tetrahedrite", "Air", 4000, U(9, 8), "Cu", U(3, 8), "Sb", U(1, 8), "Fe2O3", U(5, 16));
-        roastSulfide(458, true, "Stannite", "Air", 5000, U(3, 2), "Cu", U(1, 4), "Sn", U(1, 8), "Fe2O3", U(5, 16));
-        roastSulfide(459, true, "Kesterite", "Air", 4000, U(3, 2), "Cu", U(1, 4), "Zn", U(1, 8), "Sn", U(1, 8));
+        for (String air : new String[] {"Air", "Air_End", "Air_Nether"}) {
+            roastSulfide(446, true, "Pyrite", air, 8000, U(2), "Fe2O3", U(5, 6), null, null, null, null);
+            roastSulfide(447, true, "Realgar", air, 4000, U(3, 2), "As", U(1, 2), null, null, null, null);
+            roastSulfide(448, true, "Sphalerite", air, 4000, U(3, 2), "Zn", U(1, 2), null, null, null, null);
+            roastSulfide(449, true, "Molybdenite", air, 6000, U(2), "Mo", U(1, 3), null, null, null, null);
+            roastSulfide(450, true, "Stibnite", air, 5000, U(9, 5), "Sb", U(2, 5), null, null, null, null);
+            roastSulfide(451, true, "Pentlandite", air, 4000, src(24, 17), "Ni", src(9, 17), null, null, null, null);
+            roastSulfide(452, true, "Chalcopyrite", air, 6000, U(3, 2), "Fe2O3", U(5, 8), "Cu", U(1, 4), null, null);
+            roastSulfide(453, true, "Arsenopyrite", air, 5000, U(1), "Fe2O3", U(5, 6), "As", U(1, 3), null, null);
+            roastSulfide(454, true, "Cobaltite", air, 3000, U(1), "Co", U(1, 3), "As", U(1, 3), null, null);
+            roastSulfide(455, true, "Galena", air, 2000, U(3, 4), "Ag", U(3, 8), "Pb", U(3, 8), null, null);
+            roastSulfide(456, true, "Cooperite", air, 2000, U(1, 2), "Pt", U(1, 2), "Ni", U(1, 6), "Pd", U(1, 6));
+            roastSulfide(457, true, "Tetrahedrite", air, 4000, U(9, 8), "Cu", U(3, 8), "Sb", U(1, 8), "Fe2O3", U(5, 16));
+            roastSulfide(458, true, "Stannite", air, 5000, U(3, 2), "Cu", U(1, 4), "Sn", U(1, 8), "Fe2O3", U(5, 16));
+            roastSulfide(459, true, "Kesterite", air, 4000, U(3, 2), "Cu", U(1, 4), "Zn", U(1, 8), "Sn", U(1, 8));
 
-        row("Roasting", 16, 16, 460).item(form("dust", "S", 1)).fluid(nativeFluid("Air", 8000))
-                .out(gas("SO2", U(3))).add();
-        row("Roasting", 16, 144, 461).item(block("blockDust", "S", 1)).fluid(nativeFluid("Air", 72000))
-                .out(gas("SO2", U(27))).add();
-        row("Roasting", 16, 16, 462).item(form("dustTiny", "Blaze", 1)).fluid(nativeFluid("Air", 8000))
-                .out(gas("SO2", U(3))).add();
-        row("Roasting", 16, 144, 463).item(form("dust", "Blaze", 1)).fluid(nativeFluid("Air", 72000))
-                .out(gas("SO2", U(27))).add();
-        row("Roasting", 16, 1296, 464).item(block("blockDust", "Blaze", 1)).fluid(nativeFluid("Air", 648000))
-                .out(gas("SO2", U(243))).add();
+            row("Roasting", false, 16, 16, SOURCE + "460/" + air).item(form("dust", "S", 1)).fluid(nativeFluid(air, 8000))
+                    .out(gas("SO2", U(3))).add();
+            row("Roasting", false, 16, 144, SOURCE + "461/" + air).item(block("blockDust", "S", 1)).fluid(nativeFluid(air, 72000))
+                    .out(gas("SO2", U(27))).add();
+            row("Roasting", false, 16, 16, SOURCE + "462/" + air).item(form("dustTiny", "Blaze", 1)).fluid(nativeFluid(air, 8000))
+                    .out(gas("SO2", U(3))).add();
+            row("Roasting", false, 16, 144, SOURCE + "463/" + air).item(form("dust", "Blaze", 1)).fluid(nativeFluid(air, 72000))
+                    .out(gas("SO2", U(27))).add();
+            row("Roasting", false, 16, 1296, SOURCE + "464/" + air).item(block("blockDust", "Blaze", 1)).fluid(nativeFluid(air, 648000))
+                    .out(gas("SO2", U(243))).add();
+        }
     }
 
     private void roastSulfide(int line, boolean air, String ore, String oxidizer, int mb, MaterialAmount so2,
                               String solid1, MaterialAmount amount1, String solid2, MaterialAmount amount2,
                               String solid3, MaterialAmount amount3) {
-        Row row = row("Roasting", false, 16, 512, SOURCE + line).item(dust(ore, U(1)))
+        Row row = row("Roasting", false, 16, 512, SOURCE + line + "/" + oxidizer).item(dust(ore, U(1)))
                 .fluid(nativeFluid(oxidizer, mb)).out(gas("SO2", so2));
         int chance = air ? 8000 : CERTAIN;
         if (solid1 != null) row.out(dust(solid1, amount1), chance);

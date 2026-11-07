@@ -85,27 +85,13 @@ public final class LaserEmitterRecipes {
         return ENTRIES.size();
     }
 
-    /** The material's gas phase, registered either as a dedicated fluid or under its material name. */
+    /** The material's registered gas phase. */
     private static FluidStack gas(String materialName, int mb) {
-        // GTGeneratedChem resolves a material's gas exactly like the transpiled GT6 rows do
         var material = gregtech.engine.material.GTMaterialRegistry.get(materialName);
-        if (material != null && material.isValid()) {
-            FluidStack stack = gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid(material.getName(), mb);
-            if (stack != null) return stack;
-        }
-        var still = gregtech.content.registry.GTFluids.still(materialName);
-//? if >=1.21.1 {
-        /*if (still != null && still.isBound()) return new FluidStack(still.get(), mb);
-*///?} else {
-        if (still != null && still.isPresent()) return new FluidStack(still.get(), mb);
-//?}
-        // port fluid keys use the lower-cased registry name for generated gases
-        var generated = gregtech.content.registry.GTFluids.still("GenGas_" + materialName);
-//? if >=1.21.1 {
-        /*return generated != null && generated.isBound() ? new FluidStack(generated.get(), mb) : null;
-*///?} else {
-        return generated != null && generated.isPresent() ? new FluidStack(generated.get(), mb) : null;
-//?}
+        if (material == null || !material.resolve().isValid()) return null;
+        var binding = gregtech.engine.recipe.chem.MaterialFluidBinding
+                .find(material.resolve().getName(), gregtech.engine.recipe.chem.FluidPhase.GAS).orElse(null);
+        return binding == null ? null : gregtech.content.registry.GTFluids.stack(binding.field(), mb);
     }
 
     private static ItemStack item(String id) {

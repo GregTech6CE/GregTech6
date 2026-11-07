@@ -95,26 +95,18 @@ public final class BatteryCellRecipes {
         return ENTRIES.size();
     }
 
-    /** The electrolyte: the material's own fluid phase (1 U = 1000 mB), like the transpiled GT6 rows. */
+    /** The electrolyte's registered liquid phase, then gas if that is the material's sole phase. */
     private static FluidStack electrolyte(String materialName, int mb) {
         var material = gregtech.engine.material.GTMaterialRegistry.get(materialName);
-        if (material != null && material.isValid()) {
-            FluidStack stack = gregtech.content.recipe.generated.GeneratedRecipeResolver
-                    .materialFluid(material.getName(), mb);
-            if (stack != null) return stack;
+        if (material == null || !material.resolve().isValid()) return null;
+        for (var phase : new gregtech.engine.recipe.chem.FluidPhase[]{
+                gregtech.engine.recipe.chem.FluidPhase.LIQUID,
+                gregtech.engine.recipe.chem.FluidPhase.GAS}) {
+            var binding = gregtech.engine.recipe.chem.MaterialFluidBinding
+                    .find(material.resolve().getName(), phase).orElse(null);
+            if (binding != null) return gregtech.content.registry.GTFluids.stack(binding.field(), mb);
         }
-        var still = gregtech.content.registry.GTFluids.still(materialName);
-//? if >=1.21.1 {
-        /*if (still != null && still.isBound()) return new FluidStack(still.get(), mb);
-*///?} else {
-        if (still != null && still.isPresent()) return new FluidStack(still.get(), mb);
-//?}
-        var generated = gregtech.content.registry.GTFluids.still("GenGas_" + materialName);
-//? if >=1.21.1 {
-        /*return generated != null && generated.isBound() ? new FluidStack(generated.get(), mb) : null;
-*///?} else {
-        return generated != null && generated.isPresent() ? new FluidStack(generated.get(), mb) : null;
-//?}
+        return null;
     }
 
     private static ItemStack item(String id) {

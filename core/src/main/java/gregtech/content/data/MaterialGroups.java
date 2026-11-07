@@ -6,8 +6,7 @@ import gregtech.content.data.generated.GT6Materials;
 import gregtech.engine.material.GTMaterialRegistry;
 
 /**
- * Generic "Any X" unification materials from GregTech 6 ANY.java.
- * Auto-transpiled  - do not edit by hand.
+ * Generic "Any X" unification materials from GregTech 6 {@code ANY.java}, maintained by hand.
  */
 public class MaterialGroups {
     protected MaterialGroups() {}
@@ -90,6 +89,18 @@ public class MaterialGroups {
                 GT6Materials.Compounds.DiamondIndustrial);
         var diamantine = GTMaterialRegistry.get("Diamantine");
         if (diamantine.isValid()) Diamond.addReRegistrationToThis(diamantine);
+        // MT.fluorite(...) puts every coloured fluorite into ANY.CaF2.
+        Fluorite.addReRegistrationToThis(
+                GT6Materials.Compounds.CaF2,
+                GT6Materials.Compounds.FluoriteRed,
+                GT6Materials.Compounds.FluoritePink,
+                GT6Materials.Compounds.FluoriteBlue,
+                GT6Materials.Compounds.FluoriteGreen,
+                GT6Materials.Compounds.FluoriteBlack,
+                GT6Materials.Compounds.FluoriteWhite,
+                GT6Materials.Compounds.FluoriteYellow,
+                GT6Materials.Compounds.FluoriteOrange,
+                GT6Materials.Compounds.FluoriteMagenta);
         Amber.addReRegistrationToThis(GT6Materials.Compounds.AmberDominican);
         Amethyst.addReRegistrationToThis(GT6Materials.Compounds.Amethyst);
         Ash.addReRegistrationToThis(GT6Materials.Compounds.Ash, GT6Materials.Compounds.DarkAsh);

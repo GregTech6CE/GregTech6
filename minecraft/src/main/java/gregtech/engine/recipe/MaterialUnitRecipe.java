@@ -81,7 +81,10 @@ public final class MaterialUnitRecipe {
         var shared = pool == null ? SourcePool.freeze(sources) : pool.share(sources);
         sources = shared.sources;
         template.withMaterialInputDisplay(inputIndex, units, shared.stacks, rounding);
-        map.addFakeRecipe(false, template);
+        if (map.addFakeRecipe(false, template) == null) {
+            owner = null;
+            return null;
+        }
         MaterialUnitRecipeIndex.of(map).add(this, shared.keys);
         return template;
     }
@@ -163,7 +166,9 @@ public final class MaterialUnitRecipe {
                     ticks, template.mEUt, template.mSpecialValue)
                     .withCatalystInputs(template.explicitCatalystInputs())
                     .withCatalystFluidInputs(template.explicitCatalystFluidInputs())
-                    .withPresenceFluidInputs(template.explicitPresenceFluidInputs()).withEmptyContainerInputs();
+                    .withPresenceFluidInputs(template.explicitPresenceFluidInputs()).withEmptyContainerInputs()
+                    .withPriority(template.mPriority);
+            if (!template.mSource.isEmpty()) result.withSource(template.mSource);
             result.mExplicitCatalystsOnly = template.mExplicitCatalystsOnly;
             result.mExactItemInputs = template.mExactItemInputs;
             result.mNeedsEmptyOutput = template.mNeedsEmptyOutput;

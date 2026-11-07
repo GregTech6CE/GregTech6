@@ -34,6 +34,13 @@ public record MaterialFluidBinding(
         return Optional.ofNullable(index().get(new Key(material, phase)));
     }
 
+    /** Every registered phase of one material, in index order. */
+    public static java.util.List<MaterialFluidBinding> findAll(String material) {
+        var out = new java.util.ArrayList<MaterialFluidBinding>();
+        for (var entry : index().entrySet()) if (entry.getKey().material.equals(material)) out.add(entry.getValue());
+        return java.util.List.copyOf(out);
+    }
+
     /**
      * Resolves the requested phase, or the material's only registered phase when the source's
      * liquid/gas label differs from the port's registration. The substitution is reported to the
@@ -107,8 +114,14 @@ public record MaterialFluidBinding(
                 throw new IllegalStateException("Invalid material fluid reference for " + material + "/" + phase);
             return (int) millibuckets;
         }
-        if (entry.textureMode() == FluidCatalog.FluidTextureMode.GENERIC_MOLTEN) return 144;
-        if (FluidCatalog.isGeneratedMoltenDefinition(field, entry)) return 144;
+        boolean molten = entry.textureMode() == FluidCatalog.FluidTextureMode.GENERIC_MOLTEN
+                || FluidCatalog.isGeneratedMoltenDefinition(field, entry);
+        if (molten) {
+            var resolved = gregtech.engine.material.GTMaterialRegistry.get(material);
+            return resolved != null && resolved.isValid()
+                    ? gregtech.engine.fluid.MoltenMaterialUnits.ratio(resolved).millibucketsPerUnit()
+                    : 144;
+        }
         // Generated and dedicated gas/liquid material fluids use the original 1000 mB/U unit.
         return 1000;
     }

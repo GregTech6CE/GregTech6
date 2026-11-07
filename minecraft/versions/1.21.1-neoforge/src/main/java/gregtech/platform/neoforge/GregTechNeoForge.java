@@ -109,7 +109,6 @@ public final class GregTechNeoForge {
         LOGGER.info(
                 "[gregtech] Native bumblebee scanning display rows: {}",
                 gregtech.content.recipe.GTBumbleBeeRecipes.registerDisplayRows());
-        gregtech.content.recipe.FermenterFoodRecipes.register();
         GTMaterialRegistry.postInit();
         gregtech.content.recipe.MachineRecipeBootstrap.load();
         gregtech.api.addon.GregTechAddons.dispatchRecipesReady(

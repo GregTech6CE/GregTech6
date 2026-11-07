@@ -111,7 +111,12 @@ final class MoltenMetalUnitRecipes {
                     Math.max(1, ticks), key.power, 0);
             var rule = new MaterialUnitRecipe(template, 0, key.material, GTValues.U, Rounding.EXACT_RATIO);
             for (Input input : inputs) rule.source(input.item, input.units, input.guard, input.ticks, input.fluidAmount);
-            rule.publish(MachineRecipeMaps.Smelter).withMaterialInputTag(0, MaterialUnitInputTags.smeltable(key.material)); OWNED.add(rule); physical += inputs.size();
+            var published = rule.publish(MachineRecipeMaps.Smelter);
+            if (published != null) {
+                published.withMaterialInputTag(0, MaterialUnitInputTags.smeltable(key.material));
+                OWNED.add(rule);
+                physical += inputs.size();
+            }
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Smelter molten-metal unit rules: {} physical inputs -> {} rules", physical, OWNED.size());
         GROUPS.clear(); collecting = false;

@@ -66,12 +66,6 @@ public final class GTVanillaRecipes {
         row(SOURCE, "Sharpening", 16, 64, 2).item(vanilla("glass_pane", 1)).out(form("lens", "Glass", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 16, 3).item(vanilla("glass_pane", 1)).out(form("lens", "Glass", 1)).out(form("dustSmall", "Glass", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 16, 4).item(vanilla("stone", 1)).out(form("stickLong", "Stone", 1)).add(rows);
-        row(SOURCE, "Lathe", 16, 16, 5).item(vanilla("granite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
-        row(SOURCE, "Lathe", 16, 16, 6).item(vanilla("polished_granite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
-        row(SOURCE, "Lathe", 16, 16, 7).item(vanilla("diorite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
-        row(SOURCE, "Lathe", 16, 16, 8).item(vanilla("polished_diorite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
-        row(SOURCE, "Lathe", 16, 16, 9).item(vanilla("andesite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
-        row(SOURCE, "Lathe", 16, 16, 10).item(vanilla("polished_andesite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 32, 11).kept(tech("module_stone_generator", 1)).out(form("stickLong", "Stone", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 32, 12).kept(tech("module_basalt_generator", 1)).out(form("stickLong", "Basalt", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 32, 13).kept(tech("module_blackstone_generator", 1)).out(form("stickLong", "Blackstone", 1)).add(rows);

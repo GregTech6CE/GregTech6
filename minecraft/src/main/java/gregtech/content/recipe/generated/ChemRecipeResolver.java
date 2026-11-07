@@ -205,6 +205,7 @@ public final class ChemRecipeResolver {
                 : new Recipe(inputs.toArray(RecipeMap.ZL_IS), outputs, null, chances,
                 fluidInputs.toArray(RecipeMap.ZL_FS), fluidOutputs.toArray(RecipeMap.ZL_FS), row.ticks(), row.eut(), 0);
         if (recipe == null) throw new IllegalStateException("optimized chemistry row collapsed");
+        recipe.withSource(row.source());
         if (!kept.isEmpty()) recipe.withCatalystInputs(kept.stream().mapToInt(Integer::intValue).toArray());
         if (!keptFluids.isEmpty())
             recipe.withCatalystFluidInputs(keptFluids.stream().mapToInt(Integer::intValue).toArray());

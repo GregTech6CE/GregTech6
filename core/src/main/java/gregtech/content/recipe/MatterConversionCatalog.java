@@ -2,7 +2,10 @@ package gregtech.content.recipe;
 
 import java.util.List;
 
-/** Original Loader_Recipes_Other special matter conversions; native resolution is a separate step. */
+/**
+ * Original {@code Loader_Recipes_Other} special matter conversions that have no generated table row.
+ * The circuit-zero rows live in {@code GTOtherRecipes}; only the circuit-one variants remain here.
+ */
 public final class MatterConversionCatalog {
     private MatterConversionCatalog() {}
 
@@ -17,12 +20,5 @@ public final class MatterConversionCatalog {
             new Conversion("AncientDebris", "dust", 1, 10368L, "Ender", 18000),
             new Conversion("AncientDebris", "ingot", 1, 10368L, "Ender", 18000),
             new Conversion("AncientDebris", "blockDust", 1, 93312L, "Ender", 162000),
-            new Conversion("AncientDebris", "blockIngot", 1, 93312L, "Ender", 162000),
-            new Conversion("AncientDebris", "dustDiv72", 0, 144L, "Ender", 144),
-            new Conversion("AncientDebris", "dustTiny", 0, 1152L, "Ender", 1152),
-            new Conversion("AncientDebris", "dustSmall", 0, 2592L, "Ender", 2592),
-            new Conversion("AncientDebris", "dust", 0, 10368L, "Ender", 10368),
-            new Conversion("AncientDebris", "ingot", 0, 10368L, "Ender", 10368),
-            new Conversion("AncientDebris", "blockDust", 0, 93312L, "Ender", 93312),
-            new Conversion("AncientDebris", "blockIngot", 0, 93312L, "Ender", 93312));
+            new Conversion("AncientDebris", "blockIngot", 1, 93312L, "Ender", 162000));
 }

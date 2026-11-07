@@ -549,9 +549,9 @@ public final class SourceExtruderRecipes {
         PENDING.clear();
         var pool = new gregtech.engine.recipe.MaterialUnitRecipe.SourcePool();
         for (UnitRule rule : UNIT_RULES.values()) {
-            var template = rule.rule
-                    .publish(MachineRecipeMaps.Extruder, pool)
-                    .withMaterialInputTag(0, MaterialUnitInputTags.extrudable(rule.material));
+            var template = rule.rule.publish(MachineRecipeMaps.Extruder, pool);
+            if (template == null) continue;
+            template.withMaterialInputTag(0, MaterialUnitInputTags.extrudable(rule.material));
             ENTRIES.add(new Entry(
                     rule.material,
                     rule.target,

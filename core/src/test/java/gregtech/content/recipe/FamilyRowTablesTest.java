@@ -10,6 +10,7 @@ import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.RecyclablePrefixes;
 import gregtech.engine.machine.PipeSpec;
+import gregtech.engine.recipe.chem.MaterialAmount;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -169,8 +170,14 @@ final class FamilyRowTablesTest {
         var output = SourceCentrifugeItemOutputs.output(binding, 2);
         assertEquals("Bone", output.materialName());
         assertEquals(2 * 648_648_000L, output.units().units());
-        // The legacy descriptor is rendered only at the resolver boundary.
-        assertEquals("omdu:Bone:1297296000", SourceCentrifugeItemOutputs.fallback(binding, 2));
+    }
+
+    @Test
+    void centrifugeOptionalMaterialTargetCarriesItsAmount() {
+        var target = SourceCentrifugeOptionalBindings.Target.materialSpec("Ash", MaterialAmount.units(648_648_000L));
+        assertEquals(SourceCentrifugeOptionalBindings.TargetKind.MATERIAL_SPEC, target.kind());
+        assertEquals("Ash", target.value());
+        assertEquals(648_648_000L, target.amount().units());
     }
 
     @Test

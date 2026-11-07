@@ -32,8 +32,9 @@ public final class MachineRecipeLifecycle {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void tags(TagsUpdatedEvent event) {
-        for (var map : gregtech.engine.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
+        // A client-side tags packet must not mutate the static maps shared with the integrated server.
         if (!event.shouldUpdateStaticData()) return;
+        for (var map : gregtech.engine.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;
         MachineRecipeOverlay.apply(server.getRecipeManager());

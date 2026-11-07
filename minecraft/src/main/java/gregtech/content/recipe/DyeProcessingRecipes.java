@@ -59,13 +59,14 @@ public final class DyeProcessingRecipes {
                     new FluidStack[]{fluid("Dye_Chemical_"+color,2304)},null,256,16,0));
             var dyeColor = net.minecraft.world.item.DyeColor.byName(vanilla, net.minecraft.world.item.DyeColor.WHITE);
             var wet = colored("cfoam_fresh", dyeColor, 1);
-            add(MachineRecipeMaps.Injector,new Recipe(null,new ItemStack[]{wet},null,null,
-                    new FluidStack[]{fluid("CFoam_Dyed_"+color,100),fluid("Air",1000)},null,16,16,0));
+            // Loader_Recipes_Other:488 injects every registered air; spectral dew is not an air here.
+            for(String air:new String[]{"Air","Air_End","Air_Nether"})
+                add(MachineRecipeMaps.Injector,new Recipe(null,new ItemStack[]{colored("cfoam_fresh",dyeColor,1)},null,null,
+                        new FluidStack[]{fluid("CFoam_Dyed_"+color,100),fluid(air,1000)},null,16,16,0));
             add(MachineRecipeMaps.Drying,new Recipe(new ItemStack[]{wet},new ItemStack[]{colored("cfoam",dyeColor,1)},null,null,null,null,16,16,0));
             for(String sulfate:new String[]{"SodiumSulfate","PotassiumSulfate"}) for(int count:new int[]{1,4}) {
                 var powder=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,GTMaterialRegistry.get(sulfate),1);
-                var molten=gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid("Glass",1296*count);
-                if(molten==null||molten.isEmpty())throw new IllegalStateException("Missing molten glass");
+                var molten=fluid("Glass",1296*count);
                 add(MachineRecipeMaps.Mixer,new Recipe(new ItemStack[]{powder},new ItemStack[]{colored("glass_clear",dyeColor,count)},null,null,
                         new FluidStack[]{molten,fluid("Dye_Chemical_"+color,36*count)},null,16*count,16,0));
             }

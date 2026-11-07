@@ -799,9 +799,10 @@ public class RecipeMap {
      * keep the pool scan. Both paths end in {@link #inputsSatisfiedBy}, which decides alone.
      */
     public Recipe findCollision(Recipe aRecipe) {
+        // Guarded rows narrow their domain with an opaque predicate; no other row can prove it
+        // covers or is covered by that domain, so they coexist instead of one being rejected.
+        if (aRecipe.hasItemInputGuards() || aRecipe.hasSameItemInputPredicates()) return null;
         if (aRecipe.hasTaggedInputs()) {
-            // Whole-domain collision checks cannot prove coverage for guarded inputs.
-            if (aRecipe.hasItemInputGuards() || aRecipe.hasSameItemInputPredicates()) return null;
             for (Recipe existing : mRecipeList)
                 if (conditionsEqual(existing, aRecipe) && RecipeTagInputs.covers(existing, aRecipe)) return existing;
             return null;
@@ -893,12 +894,14 @@ public class RecipeMap {
                 && java.util.Objects.equals(a.mSpecialItems, b.mSpecialItems)
                 && Arrays.equals(a.mChances, b.mChances)
                 && Arrays.equals(a.explicitCatalystInputs(), b.explicitCatalystInputs())
-                && Arrays.equals(a.explicitCatalystFluidInputs(), b.explicitCatalystFluidInputs());
+                && Arrays.equals(a.explicitCatalystFluidInputs(), b.explicitCatalystFluidInputs())
+                && Arrays.equals(a.explicitPresenceFluidInputs(), b.explicitPresenceFluidInputs());
     }
 
     /** Whether every input of {@code aExisting} is covered by the inputs of {@code aCandidate}. */
     private boolean inputsSatisfiedBy(Recipe aExisting, Recipe aCandidate) {
         if (aExisting.mFakeRecipe) return false;
+        if (aExisting.hasItemInputGuards() || aExisting.hasSameItemInputPredicates()) return false;
         if (!conditionsEqual(aExisting, aCandidate)) return false;
         // In an anvil recipe an empty entry is a required empty work area, not a wildcard.
         if (mAnvilRowMap) {
@@ -1355,7 +1358,7 @@ public class RecipeMap {
         // runs in that order and the first usable row answers, so ordinary content (one priority
         // everywhere) does not pay for the rest of a shared mold/tool bucket.
         List<Recipe> ordered = stage;
-        if (stage.size() > 1) {
+        if (stage.size() > 1 && !isSelectionOrdered(stage)) {
             ordered = new java.util.ArrayList<>(stage);
             ordered.sort(RecipeMap::compareSelectionOrder);
         }
@@ -1365,6 +1368,21 @@ public class RecipeMap {
             if (matcher.matches(candidate, 1)) return candidate;
         }
         return null;
+    }
+
+    /**
+     * Whether the candidate stage already follows {@link #compareSelectionOrder}. The lookup index
+     * keeps rows in snapshot order, which is not guaranteed to be publication order, so the order
+     * is verified here instead of assuming uniform priorities arrive in registration order.
+     */
+    private static boolean isSelectionOrdered(List<Recipe> stage) {
+        Recipe previous = stage.get(0);
+        for (int i = 1; i < stage.size(); i++) {
+            Recipe candidate = stage.get(i);
+            if (compareSelectionOrder(previous, candidate) > 0) return false;
+            previous = candidate;
+        }
+        return true;
     }
 
     private static int compareSelectionOrder(Recipe a, Recipe b) {
