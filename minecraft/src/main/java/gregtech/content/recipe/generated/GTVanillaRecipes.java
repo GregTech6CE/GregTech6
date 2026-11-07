@@ -4,6 +4,10 @@ import static gregtech.content.recipe.generated.GeneratedRows.*;
 import static gregtech.engine.recipe.chem.Rounding.CEIL;
 import static gregtech.engine.recipe.chem.Rounding.FLOOR;
 
+import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MaterialGroups;
+import gregtech.engine.recipe.chem.ChemFluid;
+import gregtech.engine.recipe.chem.ChemIngredient;
 import gregtech.engine.recipe.chem.ChemRecipe;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +17,10 @@ import java.util.List;
  * the port's hand-written vanilla recipe sets and are not repeated here.
  *
  * <p>Colour loops and the water loops in the source are expanded, so no colour or water variant
- * is silently dropped. The six GT6 stone metadata variants are excluded: this port registers
- * explicit native rows for granite, diorite and andesite, whose materials are distinct here.</p>
+ * is silently dropped. Rows that a dedicated explicit producer already owns (textile finishing,
+ * survival utilities) are recorded as substitutions instead of being registered a second time.
+ * The Lathe stone metavariants are excluded because this port registers explicit native rows for
+ * those distinct materials.</p>
  */
 public final class GTVanillaRecipes {
     private static final String SOURCE = "gt6@3703e403/Loader_Recipes_Vanilla:row/";
@@ -25,6 +31,9 @@ public final class GTVanillaRecipes {
     /** The source iterates water, mineral water and distilled water; spectral dew is retired. */
     private static final String[] WATERS = {"Water", "MnWtr", "DistW"};
 
+    /** GT6's ANY.Blaze family: every blaze-like material keeps the same stick/dust routes. */
+    private static final String[] BLAZES = {"Blaze", "Blizz", "Basalz", "Blitz", "Breeze"};
+
     private GTVanillaRecipes() {}
 
     public static void register() {
@@ -32,12 +41,21 @@ public final class GTVanillaRecipes {
         sourceRows(rows);
         glassRows(rows);
         terracottaRows(rows);
-        waterRows(rows);
+        freezerRows(rows);
+        lavaStoneRows(rows);
+        tntRows(rows);
+        blazeRows(rows);
+        woodSawRows(rows);
         caneRows(rows);
         ChemRecipeResolver.exclude(SOURCE + "5-10",
                 "the Lathe stone metavariants duplicate this port's explicit native granite/diorite/andesite rows");
         ChemRecipeResolver.exclude(SOURCE + "166/211/754/892",
                 "the source iterates four water fluids; spectral dew is retired in this port");
+        ChemRecipeResolver.exclude(SOURCE + "188-203/232-246",
+                "TextileFinishingRecipes and SurvivalUtilityRecipes own the textile, horse-armour, bucket, "
+                        + "obsidian, golden-apple, ender-eye and fire-charge rows");
+        ChemRecipeResolver.exclude(SOURCE + "887",
+                "the redrock material is not registered in this port");
         ChemRecipeResolver.exclude(SOURCE + "958",
                 "the biomass helper registers machines this port does not ship");
         publish("vanilla recipes", rows);
@@ -48,6 +66,12 @@ public final class GTVanillaRecipes {
         row(SOURCE, "Sharpening", 16, 64, 2).item(vanilla("glass_pane", 1)).out(form("lens", "Glass", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 16, 3).item(vanilla("glass_pane", 1)).out(form("lens", "Glass", 1)).out(form("dustSmall", "Glass", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 16, 4).item(vanilla("stone", 1)).out(form("stickLong", "Stone", 1)).add(rows);
+        row(SOURCE, "Lathe", 16, 16, 5).item(vanilla("granite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
+        row(SOURCE, "Lathe", 16, 16, 6).item(vanilla("polished_granite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
+        row(SOURCE, "Lathe", 16, 16, 7).item(vanilla("diorite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
+        row(SOURCE, "Lathe", 16, 16, 8).item(vanilla("polished_diorite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
+        row(SOURCE, "Lathe", 16, 16, 9).item(vanilla("andesite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
+        row(SOURCE, "Lathe", 16, 16, 10).item(vanilla("polished_andesite", 1)).out(form("stickLong", "Stone", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 32, 11).kept(tech("module_stone_generator", 1)).out(form("stickLong", "Stone", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 32, 12).kept(tech("module_basalt_generator", 1)).out(form("stickLong", "Basalt", 1)).add(rows);
         row(SOURCE, "Lathe", 16, 32, 13).kept(tech("module_blackstone_generator", 1)).out(form("stickLong", "Blackstone", 1)).add(rows);
@@ -118,21 +142,6 @@ public final class GTVanillaRecipes {
         row(SOURCE, "Compressor", 16, 32, 112).item(form("dust", "Blaze", 1)).out(form("plate", "Blaze", 1)).add(rows);
         row(SOURCE, "Compressor", 16, 32, 113).item(form("dustSmall", "Blaze", 4)).out(form("plate", "Blaze", 1)).add(rows);
         row(SOURCE, "Compressor", 16, 32, 114).item(form("dustTiny", "Blaze", 9)).out(form("plate", "Blaze", 1)).add(rows);
-        row(SOURCE, "Loom", 16, 16, 163).kept(selector(0)).item(vanilla("string", 4)).out(vanilla("white_wool", 1)).add(rows);
-        row(SOURCE, "Loom", 16, 64, 164).kept(selector(1)).item(vanilla("string", 4)).out(vanilla("cobweb", 1)).add(rows);
-        row(SOURCE, "Loom", 16, 16, 165).kept(selector(0)).item(vanilla("sugar_cane", 1)).out(vanilla("paper", 1)).add(rows);
-        row(SOURCE, "Loom", 64, 128, 167).item(vanilla("leather", 6)).item(form("plate", "Au", 8)).out(vanilla("golden_horse_armor", 1)).add(rows);
-        row(SOURCE, "Loom", 64, 128, 168).item(vanilla("leather", 6)).item(form("plateGem", "Diamond", 8)).out(vanilla("diamond_horse_armor", 1)).add(rows);
-        row(SOURCE, "Loom", 64, 128, 169).item(vanilla("leather", 6)).item(form("ring", "Steel", 2)).item(form("stick", "Steel", 3)).out(vanilla("saddle", 1)).add(rows);
-        row(SOURCE, "Loom", 16, 128, 170).kept(selector(4)).item(vanilla("leather", 5)).out(vanilla("leather_helmet", 1)).add(rows);
-        row(SOURCE, "Loom", 16, 128, 171).kept(selector(5)).item(vanilla("leather", 8)).out(vanilla("leather_chestplate", 1)).add(rows);
-        row(SOURCE, "Loom", 16, 128, 172).kept(selector(6)).item(vanilla("leather", 7)).out(vanilla("leather_leggings", 1)).add(rows);
-        row(SOURCE, "Loom", 16, 128, 173).kept(selector(7)).item(vanilla("leather", 4)).out(vanilla("leather_boots", 1)).add(rows);
-        row(SOURCE, "Loom", 96, 128, 174).kept(selector(4)).item(form("ring", "Steel", 5)).out(vanilla("chainmail_helmet", 1)).add(rows);
-        row(SOURCE, "Loom", 96, 128, 175).kept(selector(5)).item(form("ring", "Steel", 8)).out(vanilla("chainmail_chestplate", 1)).add(rows);
-        row(SOURCE, "Loom", 96, 128, 176).kept(selector(6)).item(form("ring", "Steel", 7)).out(vanilla("chainmail_leggings", 1)).add(rows);
-        row(SOURCE, "Loom", 96, 128, 177).kept(selector(7)).item(form("ring", "Steel", 4)).out(vanilla("chainmail_boots", 1)).add(rows);
-        row(SOURCE, "RollBender", 16, 256, 178).item(form("plateCurved", "Fe", 3)).out(vanilla("bucket", 1)).add(rows);
         row(SOURCE, "Chisel", 16, 16, 179).item(vanilla("stone", 1)).out(vanilla("stone_bricks", 1)).add(rows);
         row(SOURCE, "Chisel", 16, 16, 180).item(vanilla("granite", 1)).out(vanilla("stone_bricks", 1)).add(rows);
         row(SOURCE, "Chisel", 16, 16, 181).item(vanilla("polished_granite", 1)).out(vanilla("stone_bricks", 1)).add(rows);
@@ -161,21 +170,126 @@ public final class GTVanillaRecipes {
         row(SOURCE, "Press", 16, 16, 204).kept(selector(1)).item(form("dust", "Gunpowder", 4)).item(form("dustTiny", "SiO2", 36)).out(vanilla("tnt", 1)).add(rows);
         row(SOURCE, "Press", 16, 16, 205).kept(selector(1)).item(form("dustSmall", "Gunpowder", 16)).item(form("dustTiny", "SiO2", 36)).out(vanilla("tnt", 1)).add(rows);
         row(SOURCE, "Press", 16, 16, 206).kept(selector(1)).item(form("dustTiny", "Gunpowder", 36)).item(form("dustTiny", "SiO2", 36)).out(vanilla("tnt", 1)).add(rows);
-        row(SOURCE, "Bath", 0, 128, 207).item(vanilla("golden_apple", 1)).fluid(liquid("Au", U(64), CEIL)).out(vanilla("enchanted_golden_apple", 1)).add(rows);
-        row(SOURCE, "Bath", 0, 16, 208).item(vanilla("carrot", 1)).fluid(liquid("Au", U(8, 9), CEIL)).out(vanilla("golden_carrot", 1)).add(rows);
-        row(SOURCE, "Bath", 0, 16, 209).item(vanilla("melon", 1)).fluid(liquid("Au", U(8, 9), CEIL)).out(vanilla("glistering_melon_slice", 1)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 210).item(vanilla("melon", 1)).item(form("nugget", "Au", 8)).out(vanilla("glistering_melon_slice", 1)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 212).item(dust("EnderPearl", thousandths(1000))).item(dust("Blaze", U(1, 9))).out(dust("EnderEye", thousandths(1000))).add(rows);
-        row(SOURCE, "Mixer", 16, 144, 213).item(dust("EnderPearl", thousandths(9000))).item(dust("Blaze", thousandths(1000))).out(dust("EnderEye", thousandths(9000))).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 214).item(dust("Sugar", thousandths(1000))).item(vanilla("spider_eye", 1)).item(vanilla("brown_mushroom", 1)).out(vanilla("fermented_spider_eye", 1)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 215).item(form("gemChipped", "Sugar", 4)).item(vanilla("spider_eye", 1)).item(vanilla("brown_mushroom", 1)).out(vanilla("fermented_spider_eye", 1)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 216).item(dust("Coal", thousandths(1000))).item(dust("Blaze", U(1, 9))).item(dust("Gunpowder", thousandths(1000))).out(vanilla("fire_charge", 3)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 217).item(dust("Charcoal", thousandths(1000))).item(dust("Blaze", U(1, 9))).item(dust("Gunpowder", thousandths(1000))).out(vanilla("fire_charge", 3)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 218).item(dust("CoalCoke", thousandths(1000))).item(dust("Blaze", U(1, 9))).item(dust("Gunpowder", thousandths(1000))).out(vanilla("fire_charge", 3)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 219).item(dust("LigniteCoke", thousandths(1000))).item(dust("Blaze", U(1, 9))).item(dust("Gunpowder", thousandths(1000))).out(vanilla("fire_charge", 3)).add(rows);
-        row(SOURCE, "Electrolyzer", 64, 576, 220).kept(selector(0)).item(vanilla("sand", 1)).out(dust("SiO2", thousandths(9000))).add(rows);
-        row(SOURCE, "Electrolyzer", 64, 64, 221).kept(selector(0)).item(dust("Sand", thousandths(1000))).out(dust("SiO2", thousandths(1000))).add(rows);
         row(SOURCE, "Centrifuge", 16, 16, 222).item(vanilla("magma_cream", 1)).out(vanilla("blaze_powder", 1)).out(nativeFluid("Slime_Green", 125)).add(rows);
+    }
+
+    private static void freezerRows(List<ChemRecipe> rows) {
+        // Loader_Recipes_Vanilla:661-672. Spectral dew alone used the x4 duration multiplier.
+        for (String water : WATERS) {
+            String source = SOURCE + "661/" + water;
+            row(source, "Freezer", 16, 16).kept(selector(0))
+                    .fluid(waterInput(water, 250)).out(nativeFluid("Ice", 250)).add(rows);
+            row(source, "Freezer", 16, 16).kept(selector(1))
+                    .fluid(waterInput(water, 250)).out(vanilla("snowball", 1)).add(rows);
+            row(source, "Freezer", 16, 32).kept(selector(2))
+                    .fluid(waterInput(water, 500)).out(vanilla("snow", 1)).add(rows);
+            row(source, "Freezer", 16, 64).kept(selector(3))
+                    .fluid(waterInput(water, 1000)).out(vanilla("snow_block", 1)).add(rows);
+            row(source, "Freezer", 16, 128).kept(selector(4))
+                    .fluid(waterInput(water, 1000)).out(vanilla("ice", 1)).add(rows);
+            row(source, "Freezer", 16, 64).kept(selector(9))
+                    .fluid(waterInput(water, 1000)).out(dust("Snow", U(1))).add(rows);
+            row(source, "Freezer", 16, 128).kept(selector(8))
+                    .fluid(waterInput(water, 1000)).out(dust("Ice", U(1))).add(rows);
+            row(source, "Freezer", 16, 32).kept(selector(5))
+                    .fluid(waterInput(water, 250)).out(form("gemChipped", "Ice", 1)).add(rows);
+            row(source, "Freezer", 16, 64).kept(selector(6))
+                    .fluid(waterInput(water, 500)).out(form("gemFlawed", "Ice", 1)).add(rows);
+            row(source, "Freezer", 16, 128).kept(selector(7))
+                    .fluid(waterInput(water, 1000)).out(form("gem", "Ice", 1)).add(rows);
+        }
+    }
+
+    /** Loader_Recipes_Vanilla:881-886: pahoehoe lava with any water becomes GT basalt. */
+    private static void lavaStoneRows(List<ChemRecipe> rows) {
+        for (String water : WATERS)
+            row(SOURCE + "881/" + water, "Mixer", 16, 16)
+                    .fluid(waterInput(water, 50)).fluid(nativeFluid("Lava_Pahoehoe", 1000))
+                    .out(vanilla("gt6ce:stone_basalt_stone", 1)).add(rows);
+    }
+
+    /** Loader_Recipes_Vanilla:788-800: TNT accepts any silica dust and block form. */
+    private static void tntRows(List<ChemRecipe> rows) {
+        for (GTMaterial silica : group(MaterialGroups.SiO2)) {
+            String name = silica.getName();
+            if (!hasForm("dust", name)) continue;
+            String source = SOURCE + "788/" + name;
+            tnt(rows, source, name, "blockDust", "Gunpowder", "blockDust", 4, 4, 144, 9);
+            tnt(rows, source, name, "dust", "Gunpowder", "dust", 4, 4, 16, 1);
+            tnt(rows, source, name, "dust", "Gunpowder", "dustSmall", 4, 16, 16, 1);
+            tnt(rows, source, name, "dust", "Gunpowder", "dustTiny", 4, 36, 16, 1);
+            tnt(rows, source, name, "dustSmall", "Gunpowder", "dust", 16, 4, 16, 1);
+            tnt(rows, source, name, "dustSmall", "Gunpowder", "dustSmall", 16, 16, 16, 1);
+            tnt(rows, source, name, "dustSmall", "Gunpowder", "dustTiny", 16, 36, 16, 1);
+            tnt(rows, source, name, "dustTiny", "Gunpowder", "dust", 36, 4, 16, 1);
+            tnt(rows, source, name, "dustTiny", "Gunpowder", "dustSmall", 36, 16, 16, 1);
+            tnt(rows, source, name, "dustTiny", "Gunpowder", "dustTiny", 36, 36, 16, 1);
+        }
+    }
+
+    private static void tnt(List<ChemRecipe> rows, String source, String material,
+            String gunpowderPrefix, String gunpowderName, String silicaPrefix,
+            int gunpowderCount, int silicaCount, int ticks, int output) {
+        row(source, "Press", 16, ticks)
+                .kept(selector(1)).item(form(gunpowderPrefix, gunpowderName, gunpowderCount))
+                .item(form(silicaPrefix, material, silicaCount))
+                .out(vanilla("tnt", output)).add(rows);
+    }
+
+    /** Loader_Recipes_Vanilla:702-712: the blaze family's stick and dust routes. */
+    private static void blazeRows(List<ChemRecipe> rows) {
+        for (String blaze : BLAZES) {
+            if (!hasForm("stick", blaze)) continue;
+            String source = SOURCE + "702/" + blaze;
+            row(source, "Mortar", 16, 32).item(form("stick", blaze, 1))
+                    .out(form("dustTiny", blaze, 3)).add(rows);
+            if (hasForm("stickLong", blaze))
+                row(source, "Mortar", 16, 64).item(form("stickLong", blaze, 1))
+                        .out(form("dustTiny", blaze, 6)).add(rows);
+            row(source, "Shredder", 16, 32).item(form("stick", blaze, 1))
+                    .out(form("dustSmall", blaze, 2)).add(rows);
+            if (hasForm("stickLong", blaze))
+                row(source, "Shredder", 16, 64).item(form("stickLong", blaze, 1))
+                        .out(form("dust", blaze, 1)).add(rows);
+            if (!hasForm("plate", blaze)) continue;
+            row(source, "Compressor", 16, 32).item(form("dust", blaze, 1))
+                    .out(form("plate", blaze, 1)).add(rows);
+            if (hasForm("dustSmall", blaze))
+                row(source, "Compressor", 16, 32).item(form("dustSmall", blaze, 4))
+                        .out(form("plate", blaze, 1)).add(rows);
+            if (hasForm("dustTiny", blaze))
+                row(source, "Compressor", 16, 32).item(form("dustTiny", blaze, 9))
+                        .out(form("plate", blaze, 1)).add(rows);
+        }
+    }
+
+    /**
+     * Loader_Recipes_Vanilla:582-585: every wood's stick splits into bolts, and a long stick into
+     * two sticks, through the Cutter's water coolants.
+     */
+    private static void woodSawRows(List<ChemRecipe> rows) {
+        for (GTMaterial wood : group(MaterialGroups.Wood)) {
+            String name = wood.getName();
+            if (!hasForm("stick", name) || !hasForm("bolt", name)) continue;
+            String source = SOURCE + "582/" + name;
+            cutter(rows, source + "/bolt", form("stick", name, 1), form("bolt", name, 4), 3);
+            if (hasForm("stickLong", name))
+                cutter(rows, source + "/long", form("stickLong", name, 1), form("stick", name, 2), 1);
+        }
+    }
+
+    private static void cutter(List<ChemRecipe> rows, String source, ChemIngredient input,
+            ChemIngredient output, int lubricant) {
+        row(source, "Cutter", 16, 64).item(input).fluid(nativeFluid("Water", lubricant * 4))
+                .out(output).add(rows);
+        row(source, "Cutter", 16, 64).item(input).fluid(nativeFluid("MnWtr", lubricant * 4))
+                .out(output).add(rows);
+        row(source, "Cutter", 16, 48).item(input).fluid(nativeFluid("DistW", lubricant * 3))
+                .out(output).add(rows);
+    }
+
+    private static ChemFluid waterInput(String water, int millibuckets) {
+        return water.equals("Water") ? water(waterUnits(millibuckets), FLOOR) : nativeFluid(water, millibuckets);
     }
 
     private static void glassRows(List<ChemRecipe> rows) {
@@ -190,29 +304,10 @@ public final class GTVanillaRecipes {
     }
 
     private static void terracottaRows(List<ChemRecipe> rows) {
-        for (String color : COLORS) {
+        for (String color : COLORS)
             row(SOURCE + "115-130", "Bath", 0, 16)
                     .item(vanilla(color + "_terracotta", 1)).fluid(gas("Cl", thousandths(50), CEIL))
                     .out(vanilla("terracotta", 1)).add(rows);
-            row(SOURCE + "131-146", "Bath", 0, 16)
-                    .item(vanilla(color + "_stained_glass", 1)).fluid(gas("Cl", thousandths(50), CEIL))
-                    .out(vanilla("glass", 1)).add(rows);
-            row(SOURCE + "147-162", "Bath", 0, 16)
-                    .item(vanilla(color + "_stained_glass_pane", 1)).fluid(gas("Cl", thousandths(20), CEIL))
-                    .out(vanilla("glass_pane", 1)).add(rows);
-        }
-    }
-
-    /** The two source water loops, with spectral dew recorded as an absence. */
-    private static void waterRows(List<ChemRecipe> rows) {
-        for (String water : WATERS) {
-            row(SOURCE + "754/" + water, "Bath", 0, 16)
-                    .item(vanilla("sugar_cane", 1)).fluid(nativeFluid(water, 250))
-                    .out(vanilla("paper", 1)).add(rows);
-            row(SOURCE + "892/" + water, "Mixer", 16, 16)
-                    .fluid(nativeFluid(water, 50)).fluid(nativeFluid("Lava", 1000))
-                    .out(vanilla("obsidian", 1)).add(rows);
-        }
     }
 
     /** Reed/cane squeezing rows the transpiler skipped because their chance precedes the fluids. */
@@ -223,5 +318,18 @@ public final class GTVanillaRecipes {
         row(SOURCE + "864", "Juicer", 16, 16)
                 .item(vanilla("sugar_cane", 1)).out(nativeFluid("Juice_Reed", 75))
                 .out(tech("remains_plant", 1), 5000).add(rows);
+    }
+
+    private static boolean hasForm(String prefixName, String materialName) {
+        var material = gregtech.engine.material.GTMaterialRegistry.get(materialName);
+        if (material == null || !material.resolve().isValid()) return false;
+        var entry = gregtech.content.data.MaterialPrefixes.all().get(prefixName);
+        if (entry == null) return false;
+        var prefix = entry.getDelegate();
+        if (prefix != null)
+            return !gregtech.content.registry.GTItems.getStack(prefix, material.resolve(), 1).isEmpty();
+        var block = entry.getBlockDelegate();
+        return block != null
+                && !gregtech.content.registry.GTBlocks.getStack(block, material.resolve()).isEmpty();
     }
 }

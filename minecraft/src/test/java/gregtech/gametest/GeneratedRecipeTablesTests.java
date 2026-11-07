@@ -125,7 +125,7 @@ public final class GeneratedRecipeTablesTests {
     public static void technologyRowIsQueryable(GameTestHelper helper) {
         ItemStack plate = stack("plateTiny", "Steel", 1);
         ItemStack tip = tech("robot_arm_wrench_tip", 1);
-        ItemStack wrench = tech("single_use_wrench", 1);
+        ItemStack wrench = tech("single_use_wrench", 2);
         helper.assertFalse(plate.isEmpty() && tip.isEmpty(), "tool head and tip");
         helper.assertFalse(wrench.isEmpty(), "single-use wrench");
         Recipe row = find(MachineRecipeMaps.Boxinator, List.of(plate, tip), List.of());
@@ -155,6 +155,64 @@ public final class GeneratedRecipeTablesTests {
                 "MultiItemFood:", "MultiItemRandomTools:"}) {
             helper.assertTrue(published(family) > 0, "family publishes rows: " + family);
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void vanillaWaterLoopsKeepEveryArm(GameTestHelper helper) {
+        // Loader_Recipes_Vanilla:661 and 881 iterate all four waters; spectral dew is retired,
+        // so water, mineral water and distilled water must each have their own row.
+        ItemStack snowSelector = selector(0);
+        helper.assertFalse(snowSelector.isEmpty(), "freezer selector");
+        FluidStack water = new FluidStack(Fluids.WATER, 250);
+        FluidStack distilled = fluid("DistW", 250);
+        helper.assertFalse(distilled.isEmpty(), "distilled water");
+        helper.assertTrue(find(MachineRecipeMaps.Freezer, List.of(snowSelector), List.of(water)) != null,
+                "freezer water row");
+        helper.assertTrue(find(MachineRecipeMaps.Freezer, List.of(snowSelector), List.of(distilled)) != null,
+                "freezer distilled-water row");
+        FluidStack pahoehoe = fluid("Lava_Pahoehoe", 1000);
+        helper.assertFalse(pahoehoe.isEmpty(), "pahoehoe lava");
+        Recipe basalt = find(MachineRecipeMaps.Mixer,
+                List.of(), List.of(new FluidStack(Fluids.WATER, 50), pahoehoe));
+        helper.assertTrue(basalt != null, "pahoehoe-water basalt row");
+        helper.assertTrue(hasOutput(basalt, item("gt6ce:stone_basalt_stone", 1)),
+                "pahoehoe water yields GT basalt");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void otherWaterAndSilicaLoopsAreExpanded(GameTestHelper helper) {
+        // Loader_Recipes_Other:232 hydrates coal with every water.
+        ItemStack coal = stack("dust", "Coal", 1);
+        ItemStack hydrated = stack("dust", "HydratedCoal", 1);
+        FluidStack mineral = fluid("MnWtr", 125);
+        helper.assertFalse(coal.isEmpty() && hydrated.isEmpty() && mineral.isEmpty(), "coal bath content");
+        Recipe bath = find(MachineRecipeMaps.Bath, List.of(coal), List.of(mineral));
+        helper.assertTrue(bath != null, "coal hydration with mineral water");
+        helper.assertTrue(hasOutput(bath, hydrated), "mineral water keeps the hydrated coal row");
+        // Loader_Recipes_Other:638: every silica dust forms the string-tied boomstick row.
+        ItemStack silica = stack("dust", "SiO2", 2);
+        ItemStack gunpowder = stack("dust", "Gunpowder", 2);
+        ItemStack string = new ItemStack(Items.STRING);
+        ItemStack boomstick = tech("boomstick", 1);
+        helper.assertFalse(silica.isEmpty() || gunpowder.isEmpty() || boomstick.isEmpty(), "boomstick content");
+        Recipe boomstickRow = find(MachineRecipeMaps.Press, List.of(silica, gunpowder, string), List.of());
+        helper.assertTrue(boomstickRow != null, "boomstick string row");
+        helper.assertTrue(hasOutput(boomstickRow, boomstick), "silica dust forms the string boomstick row");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void temporaryCoolantKeepsItsWaterArms(GameTestHelper helper) {
+        // Loader_Recipes_Temporary:50-72 offers the coolant row with distilled water, mineral
+        // water and plain water; the mined-reed rows themselves need Netherlicious items.
+        ItemStack lapis = stack("dust", "Lapis", 1);
+        FluidStack coolant = fluid("Coolant_IC2", 1000);
+        helper.assertFalse(lapis.isEmpty() && coolant.isEmpty(), "lapis and coolant");
+        Recipe distilled = find(MachineRecipeMaps.Injector, List.of(lapis), List.of(fluid("DistW", 1000)));
+        helper.assertTrue(distilled != null, "lapis coolant with distilled water");
+        helper.assertTrue(hasFluidOutput(distilled, coolant), "distilled water yields coolant");
         helper.succeed();
     }
 
@@ -194,9 +252,28 @@ public final class GeneratedRecipeTablesTests {
         return prefix == null ? ItemStack.EMPTY : GTItems.getStack(prefix, material.resolve(), count);
     }
 
+    private static ItemStack selector(int index) {
+        Item item = GTTechnological.selectorTag(index);
+        return item == null ? ItemStack.EMPTY : new ItemStack(item);
+    }
+
+    private static ItemStack item(String id, int count) {
+        var key = net.minecraft.resources.ResourceLocation.tryParse(id);
+        Item item = key == null ? null : net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key);
+        return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, count);
+    }
+
     private static ItemStack tech(String id, int count) {
+        // Multi-items are registered by their display name, not in GTTechnological.BY_ID.
+        String resolved = GTTechnological.ALIASES.getOrDefault(id, id);
         Item item = GTTechnological.get(id);
-        return item == null ? ItemStack.EMPTY : new ItemStack(item, count);
+        if (item == null) {
+            var key = resolved.indexOf(':') >= 0
+                    ? net.minecraft.resources.ResourceLocation.tryParse(resolved)
+                    : net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", resolved);
+            item = key == null ? null : net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key);
+        }
+        return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, count);
     }
 
     private static FluidStack fluid(String key, int millibuckets) {

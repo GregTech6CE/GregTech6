@@ -37,6 +37,14 @@ public final class GTOreRecipes {
         }
         ChemRecipeResolver.exclude(SOURCE + "owned",
                 "magnetic-separator block dust and purified sifter rows are owned by their reviewed producers");
+        ChemRecipeResolver.exclude(SOURCE + "108-159",
+                "the purified-acid vitriol loops are owned by SharedPurifiedAcidRows");
+        ChemRecipeResolver.exclude(SOURCE + "54-57/174-190",
+                "bedrock, moon and end rows need retired materials; Cryotheum/Pyrotheum loops need retired fluids");
+        ChemRecipeResolver.exclude(SOURCE + "63",
+                "the volcanic-lava arm requires a fluid this port does not register");
+        ChemRecipeResolver.exclude(SOURCE + "45/108/417-443",
+                "each four-water loop keeps its water, mineral-water and distilled-water arms; spectral dew is retired");
         ChemRecipeResolver.exclude(SOURCE + "optional",
                 "other mods' sands and fossils are absent; the rows are not approximated");
     }

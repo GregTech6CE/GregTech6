@@ -4,6 +4,8 @@ import static gregtech.content.recipe.generated.GeneratedRows.*;
 import static gregtech.engine.recipe.chem.Rounding.CEIL;
 import static gregtech.engine.recipe.chem.Rounding.FLOOR;
 
+import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MaterialGroups;
 import gregtech.engine.recipe.chem.ChemRecipe;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,9 @@ public final class GTFoodRecipes {
         new Form("dustSmall", 4, 48), new Form("dustTiny", 9, 48),
     };
 
+    /** The source iterates water, mineral water and distilled water; spectral dew is retired. */
+    private static final String[] WATERS = {"Water", "MnWtr", "DistW"};
+
     private static final String[] SMOOTHIE_JUICES = {"Juice", "Juice_Ananas", "Juice_Apple", "Juice_AppleGrC",
         "Juice_Banana", "Juice_Blackberry", "Juice_Blueberry", "Juice_Cranberry", "Juice_Currant",
         "Juice_Gooseberry", "Juice_Grape_Green", "Juice_Grape_Purple", "Juice_Kiwi", "Juice_Lemon",
@@ -42,12 +47,20 @@ public final class GTFoodRecipes {
     public static void register() {
         List<ChemRecipe> rows = new ArrayList<>();
         meatRows(rows);
+        waterRows(rows);
+        flourDoughRows(rows);
+        flourGrainsRows(rows);
+        compressorRows(rows);
+        wineRows(rows);
         sugarRows(rows);
         chiliRows(rows);
         smoothieRows(rows);
         sourceRows(rows);
         ChemRecipeResolver.exclude(SOURCE + "optional",
                 "other mods' crops, fish and prepared foods are absent; those rows are not approximated");
+        ChemRecipeResolver.exclude(SOURCE + "640-648",
+                "the orange, elderberry and plum wines and the fortified/fruit loops need fluids "
+                        + "this port does not register");
         publish("food recipes", rows);
     }
 
@@ -60,6 +73,109 @@ public final class GTFoodRecipes {
                         .item(form(form.prefix, meat[0], form.count))
                         .out(form(form.prefix, meat[1], form.count)).add(rows);
         }
+    }
+
+    /** Loader_Recipes_Food:581-592: the coffee, milk, honey, honeydew and tea rows per water. */
+    private static void waterRows(List<ChemRecipe> rows) {
+        for (String water : WATERS) {
+            String source = SOURCE + "581/" + water;
+            row(source, "Distillery", 16, 48).item(dust("Coffee", U(1)))
+                    .fluid(waterInput(water, 750)).out(registryFluid("potion.darkcoffee", 750)).add(rows);
+            row(source, "Distillery", 16, 16).item(dust("Coffee", U(1, 3)))
+                    .fluid(waterInput(water, 250)).out(registryFluid("potion.darkcoffee", 250)).add(rows);
+            milk(rows, source, water, "Milk", "Milk");
+            milk(rows, source, water, "Honey", "Honey");
+            milk(rows, source, water, "Honeydew", "Honeydew");
+            row(source, "Mixer", 16, 16).item(dust("Tea", U(1, 9)))
+                    .fluid(waterInput(water, 750)).out(nativeFluid("Tea", 750)).add(rows);
+            row(source, "Mixer", 16, 36).item(dust("Tea", U(1, 4)))
+                    .fluid(waterInput(water, 1687)).out(nativeFluid("Tea", 1687)).add(rows);
+            row(source, "Mixer", 16, 144).item(dust("Tea", U(1)))
+                    .fluid(waterInput(water, 6750)).out(nativeFluid("Tea", 6750)).add(rows);
+        }
+    }
+
+    private static void milk(List<ChemRecipe> rows, String source, String water,
+            String material, String fluidKey) {
+        row(source, "Mixer", 16, 16).item(dust(material, U(1)))
+                .fluid(waterInput(water, 500)).out(nativeFluid(fluidKey, 1000)).add(rows);
+    }
+
+    /** Loader_Recipes_Food:585: the flour group's dough rows. */
+    private static void flourDoughRows(List<ChemRecipe> rows) {
+        for (GTMaterial flour : group(MaterialGroups.Flour)) {
+            String name = flour.getName();
+            if (!hasForm("dust", name)) continue;
+            for (String water : WATERS)
+                row(SOURCE + "585/" + name + "/" + water, "Mixer", 16, 16)
+                        .item(dust(name, U(1))).fluid(waterInput(water, 250))
+                        .out(tech("food_dough", 2)).add(rows);
+        }
+    }
+
+    /** Loader_Recipes_Food:719-724: flour grain turns raw and rotten meat into the ingot form. */
+    private static void flourGrainsRows(List<ChemRecipe> rows) {
+        for (GTMaterial grain : group(MaterialGroups.FlourGrains)) {
+            String name = grain.getName();
+            if (!hasForm("dust", name)) continue;
+            for (String meat : new String[] {"MeatRaw", "FishRaw", "MeatRotten", "FishRotten"}) {
+                if (!hasForm("ingot", meat)) continue;
+                row(SOURCE + "719/" + name + "/" + meat, "Mixer", 16, 16)
+                        .item(dust(name, U(1))).item(dust(meat, U(1)))
+                        .out(ingot(meat, U(1))).add(rows);
+            }
+        }
+    }
+
+    private static gregtech.engine.recipe.chem.ChemFluid waterInput(String water, int millibuckets) {
+        return water.equals("Water") ? water(waterUnits(millibuckets), FLOOR) : nativeFluid(water, millibuckets);
+    }
+
+    private static boolean hasForm(String prefixName, String materialName) {
+        var material = gregtech.engine.material.GTMaterialRegistry.get(materialName);
+        if (material == null || !material.resolve().isValid()) return false;
+        var entry = gregtech.content.data.MaterialPrefixes.all().get(prefixName);
+        if (entry == null) return false;
+        var prefix = entry.getDelegate();
+        if (prefix != null)
+            return !gregtech.content.registry.GTItems.getStack(prefix, material.resolve(), 1).isEmpty();
+        var block = entry.getBlockDelegate();
+        return block != null
+                && !gregtech.content.registry.GTBlocks.getStack(block, material.resolve()).isEmpty();
+    }
+
+
+    /** Loader_Recipes_Food:56-60: compressed meat forms, without the IC2-only extra rows. */
+    private static void compressorRows(List<ChemRecipe> rows) {
+        for (String material : new String[] {"MeatRotten", "MeatRaw", "MeatCooked",
+                "FishRotten", "FishRaw", "FishCooked", "SoylentGreen", "Tofu"}) {
+            compressed(rows, material, "dustTiny", "nugget");
+            compressed(rows, material, "dustSmall", "chunkGt");
+            compressed(rows, material, "dust", "ingot");
+        }
+    }
+
+    private static void compressed(List<ChemRecipe> rows, String material,
+            String inputPrefix, String outputPrefix) {
+        if (!hasForm(inputPrefix, material) || !hasForm(outputPrefix, material)) return;
+        row(SOURCE + "56/" + material + "/" + inputPrefix, "Compressor", 16, 16)
+                .item(form(inputPrefix, material, 1)).out(form(outputPrefix, material, 1)).add(rows);
+    }
+
+
+    /** Loader_Recipes_Food:640-645: wines whose juice and fallback fluid both exist here. */
+    private static void wineRows(List<ChemRecipe> rows) {
+        wine(rows, 16, "Juice_Kiwi", "Wine_Lemon");
+        wine(rows, 16, "Juice_Cranberry", "Wine_Cranberry");
+        wine(rows, 16, "Juice_Tomato", "Wine_Tomato");
+    }
+
+    private static void wine(List<ChemRecipe> rows, long ticks, String juice, String wine) {
+        var stack = gregtech.content.registry.GTFluids.stack(juice, 1);
+        if (stack == null || stack.isEmpty()) return;
+        row(SOURCE + "640/" + juice, "Fermenter", 16, ticks)
+                .kept(selector(0)).fluid(nativeFluid(juice, 50))
+                .out(nativeFluid(wine, 25)).add(rows);
     }
 
     private static void sugarRows(List<ChemRecipe> rows) {
@@ -132,15 +248,6 @@ public final class GTFoodRecipes {
         row(SOURCE, "Distillery", 64, 128, 46).item(dust("Chili", thousandths(1000))).fluid(nativeFluid("Sauce_Diabolo", 750)).out(nativeFluid("Sauce_Diablo", 750)).add(rows);
         row(SOURCE, "Distillery", 64, 128, 47).item(dust("Gunpowder", thousandths(1000))).fluid(nativeFluid("Sauce_Diablo", 250)).out(nativeFluid("Sauce_Cow_Level", 250)).add(rows);
         row(SOURCE, "Distillery", 64, 128, 48).item(dust("Gunpowder", thousandths(1000))).fluid(nativeFluid("Lemonade", 250)).out(nativeFluid("Grenade_Juice", 250)).add(rows);
-        row(SOURCE, "Distillery", 16, 48, 49).item(dust("Coffee", thousandths(1000))).fluid(water(waterUnits(750), FLOOR)).out(registryFluid("potion.darkcoffee", 750)).add(rows);
-        row(SOURCE, "Distillery", 16, 16, 50).item(dust("Coffee", U(1, 3))).fluid(water(waterUnits(250), FLOOR)).out(registryFluid("potion.darkcoffee", 250)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 51).item(dust("Flour", thousandths(1000))).fluid(water(waterUnits(250), FLOOR)).out(tech("food_dough", 2)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 52).item(dust("Milk", thousandths(1000))).fluid(water(waterUnits(500), FLOOR)).out(nativeFluid("Milk", 1000)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 53).item(dust("Honey", thousandths(1000))).fluid(water(waterUnits(500), FLOOR)).out(nativeFluid("Honey", 1000)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 54).item(dust("Honeydew", thousandths(1000))).fluid(water(waterUnits(500), FLOOR)).out(nativeFluid("Honeydew", 1000)).add(rows);
-        row(SOURCE, "Mixer", 16, 16, 55).item(dust("Tea", U(1, 9))).fluid(water(waterUnits(750), FLOOR)).out(nativeFluid("Tea", 750)).add(rows);
-        row(SOURCE, "Mixer", 16, 36, 56).item(dust("Tea", thousandths(250))).fluid(water(waterUnits(1687), FLOOR)).out(nativeFluid("Tea", 1687)).add(rows);
-        row(SOURCE, "Mixer", 16, 144, 57).item(dust("Tea", thousandths(1000))).fluid(water(waterUnits(6750), FLOOR)).out(nativeFluid("Tea", 6750)).add(rows);
         row(SOURCE, "Injector", 16, 16, 58).item(dust("Mg", thousandths(1000))).fluid(water(waterUnits(1000), FLOOR)).out(nativeFluid("MnWtr", 1000)).add(rows);
         row(SOURCE, "Injector", 16, 16, 59).item(dust("Ca", thousandths(1000))).fluid(water(waterUnits(1000), FLOOR)).out(nativeFluid("MnWtr", 1000)).add(rows);
         row(SOURCE, "Injector", 16, 16, 60).fluid(water(waterUnits(250), FLOOR)).fluid(gas("CO2", thousandths(250), CEIL)).out(nativeFluid("Soda", 250)).add(rows);

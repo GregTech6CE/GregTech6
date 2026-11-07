@@ -56,8 +56,15 @@ public final class GTTemporaryRecipes {
 
     /** Netherlicious reed and foxfire rows. */
     private static void reedRows(List<ChemRecipe> rows) {
-        row(SOURCE + "340", "Bath", 0, 16)
-                .item(tech("neli_reed", 1)).fluid(water(waterUnits(250), FLOOR))
+        // Loader_Recipes_Temporary:339 iterates waters(125, 100): mineral water 125, distilled 100.
+        row(SOURCE + "339/Water", "Bath", 0, 16)
+                .item(tech("neli_reed", 1)).fluid(water(waterUnits(125), FLOOR))
+                .out(vanilla("paper", 1)).add(rows);
+        row(SOURCE + "339/MnWtr", "Bath", 0, 16)
+                .item(tech("neli_reed", 1)).fluid(nativeFluid("MnWtr", 125))
+                .out(vanilla("paper", 1)).add(rows);
+        row(SOURCE + "339/DistW", "Bath", 0, 16)
+                .item(tech("neli_reed", 1)).fluid(nativeFluid("DistW", 100))
                 .out(vanilla("paper", 1)).add(rows);
         row(SOURCE + "341", "Loom", 16, 16)
                 .kept(selector(0)).item(tech("neli_reed", 1)).out(vanilla("paper", 1)).add(rows);

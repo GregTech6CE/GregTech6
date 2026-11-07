@@ -21,6 +21,13 @@ import java.util.List;
 public final class GTOtherRecipes {
     private static final String SOURCE = "gt6@3703e403/Loader_Recipes_Other:row/";
 
+    /** The port's wax family; GT6's ANY.Wax loop covers every wax material. */
+    private static final String[] WAXES = {"Wax", "WaxBee", "WaxPlant", "WaxParaffin"};
+
+    /** The port's sapphire family; GT6's ANY.Sapphire loop covers every sapphire gem. */
+    private static final String[] SAPPHIRES = {
+        "Sapphire", "Ruby", "BlueSapphire", "GreenSapphire", "OrangeSapphire", "PurpleSapphire", "YellowSapphire"};
+
     private GTOtherRecipes() {}
 
     public static void register() {
@@ -28,23 +35,31 @@ public final class GTOtherRecipes {
         waxRows(rows);
         compoundBaseRows(rows);
         sapphireRows(rows);
+        coalBathRows(rows);
+        pressRows(rows);
         sourceRows(rows);
         ChemRecipeResolver.exclude(SOURCE + "other-mod",
                 "rows naming other mods' items or machines are absent; they are not approximated");
         ChemRecipeResolver.exclude(SOURCE + "retired",
                 "rows whose materials or fluids this port retired were removed with those definitions");
+        ChemRecipeResolver.exclude(SOURCE + "638/fibre",
+                "the plantGtFiber prefix has no registered items in this port; the fibre arms are omitted");
         publish("other recipes", rows);
     }
 
-    /** {@code OM.dust(tWax, U)} and {@code U4} for every member of the wax group. */
+    /** {@code OM.dust(tWax, U)} and {@code U4} for every member of the wax family. */
     private static void waxRows(List<ChemRecipe> rows) {
-        for (GTMaterial wax : group(MaterialGroups.Wax)) {
-            row(SOURCE + "50/" + wax.getName(), "Compressor", 16, 16)
-                    .item(dust(wax.getName(), U(1))).out(form("plate", wax.getName(), 1)).add(rows);
-            row(SOURCE + "51/" + wax.getName(), "Compressor", 16, 16)
-                    .item(dust(wax.getName(), U(1, 4))).out(form("foil", wax.getName(), 1)).add(rows);
+        for (String wax : WAXES) {
+            if (hasForm("plate", wax))
+                row(SOURCE + "50/" + wax, "Compressor", 16, 16)
+                        .item(dust(wax, U(1))).out(form("plate", wax, 1)).add(rows);
+            if (hasForm("foil", wax))
+                row(SOURCE + "51/" + wax, "Compressor", 16, 16)
+                        .item(dust(wax, U(1, 4))).out(form("foil", wax, 1)).add(rows);
         }
     }
+
+    private static final String[] WATERS = {"Water", "MnWtr", "DistW"};
 
     /** The plain dust and small-dust compound rows; GTCompoundMixerRecipes owns the prefix matrix. */
     private static void compoundBaseRows(List<ChemRecipe> rows) {
@@ -69,8 +84,8 @@ public final class GTOtherRecipes {
 
     /** {@code ANY.Sapphire.mToThis}: both the exact-unit and the ninth-unit Energium recipes. */
     private static void sapphireRows(List<ChemRecipe> rows) {
-        for (GTMaterial sapphire : group(MaterialGroups.Sapphire)) {
-            String name = sapphire.getName();
+        for (String name : SAPPHIRES) {
+            if (!hasForm("dust", name)) continue;
             row(SOURCE + "117/" + name, "Mixer", 16, 144)
                     .item(dust(name, U(4))).item(dust("Redstone", U(5))).out(dust("EnergiumRed", U(9))).add(rows);
             row(SOURCE + "118/" + name, "Mixer", 16, 144)
@@ -84,10 +99,82 @@ public final class GTOtherRecipes {
         }
     }
 
+    /** {@code FL.waters(1000)}: one coal bath per water; spectral dew is retired. */
+    private static void coalBathRows(List<ChemRecipe> rows) {
+        for (String water : WATERS) {
+            row(SOURCE + "232/" + water, "Bath", 0, 16)
+                    .item(dust("Coal", U(1)))
+                    .fluid(water.equals("Water") ? water(waterUnits(125), FLOOR) : nativeFluid(water, 125))
+                    .out(dust("HydratedCoal", U(1))).add(rows);
+        }
+    }
+
+    /**
+     * {@code ANY.SiO2.mToThis}: boomsticks accept every silica dust, with a string or a plant
+     * fibre; the tag-gated dynamite rows keep both fibre variants as well.
+     */
+    private static void pressRows(List<ChemRecipe> rows) {
+        for (GTMaterial silica : group(MaterialGroups.SiO2)) {
+            String name = silica.getName();
+            if (!hasForm("dust", name) || !hasForm("blockDust", name)) continue;
+            row(SOURCE + "638/" + name, "Press", 16, 16)
+                    .item(form("dust", name, 2)).item(form("dust", "Gunpowder", 2))
+                    .item(vanilla("string", 1)).out(tech("boomstick", 1)).add(rows);
+            row(SOURCE + "638/" + name, "Press", 16, 144)
+                    .item(form("blockDust", name, 2)).item(form("blockDust", "Gunpowder", 2))
+                    .item(vanilla("string", 9)).out(tech("boomstick", 9)).add(rows);
+            if (!hasForm("plantGtFiber", "Cu")) continue;
+            row(SOURCE + "638/" + name, "Press", 16, 16)
+                    .item(form("dust", name, 2)).item(form("dust", "Gunpowder", 2))
+                    .item(form("plantGtFiber", "Cu", 1)).out(tech("boomstick", 1)).add(rows);
+            row(SOURCE + "638/" + name, "Press", 16, 144)
+                    .item(form("blockDust", name, 2)).item(form("blockDust", "Gunpowder", 2))
+                    .item(form("plantGtFiber", "Cu", 9)).out(tech("boomstick", 9)).add(rows);
+        }
+        row(SOURCE + "648", "Press", 16, 16)
+                .kept(selector(1)).item(form("dust", "Dynamite", 1)).item(vanilla("string", 1))
+                .out(tech("dynamite", 1)).add(rows);
+        row(SOURCE + "648", "Press", 16, 144)
+                .kept(selector(1)).item(form("blockDust", "Dynamite", 1)).item(vanilla("string", 9))
+                .out(tech("dynamite", 9)).add(rows);
+        row(SOURCE + "648", "Press", 16, 64)
+                .kept(selector(2)).item(form("dust", "Dynamite", 2)).item(vanilla("string", 1))
+                .out(tech("dynamite_strong", 1)).add(rows);
+        row(SOURCE + "648", "Press", 16, 576)
+                .kept(selector(2)).item(form("blockDust", "Dynamite", 2)).item(vanilla("string", 9))
+                .out(tech("dynamite_strong", 9)).add(rows);
+        if (!hasForm("plantGtFiber", "Cu")) return;
+        row(SOURCE + "648/fibre", "Press", 16, 16)
+                .kept(selector(1)).item(form("dust", "Dynamite", 1)).item(form("plantGtFiber", "Cu", 1))
+                .out(tech("dynamite", 1)).add(rows);
+        row(SOURCE + "648/fibre", "Press", 16, 144)
+                .kept(selector(1)).item(form("blockDust", "Dynamite", 1)).item(form("plantGtFiber", "Cu", 9))
+                .out(tech("dynamite", 9)).add(rows);
+        row(SOURCE + "648/fibre", "Press", 16, 64)
+                .kept(selector(2)).item(form("dust", "Dynamite", 2)).item(form("plantGtFiber", "Cu", 1))
+                .out(tech("dynamite_strong", 1)).add(rows);
+        row(SOURCE + "648/fibre", "Press", 16, 576)
+                .kept(selector(2)).item(form("blockDust", "Dynamite", 2)).item(form("plantGtFiber", "Cu", 9))
+                .out(tech("dynamite_strong", 9)).add(rows);
+    }
+
+    /** A form the port actually registers for the material; otherwise the source row cannot exist. */
+    private static boolean hasForm(String prefixName, String materialName) {
+        var material = gregtech.engine.material.GTMaterialRegistry.get(materialName);
+        if (material == null || !material.resolve().isValid()) return false;
+        var entry = gregtech.content.data.MaterialPrefixes.all().get(prefixName);
+        if (entry == null) return false;
+        var prefix = entry.getDelegate();
+        if (prefix != null)
+            return !gregtech.content.registry.GTItems.getStack(prefix, material.resolve(), 1).isEmpty();
+        var block = entry.getBlockDelegate();
+        return block != null && !gregtech.content.registry.GTBlocks
+                .getStack(block, material.resolve()).isEmpty();
+    }
+
     private static void sourceRows(List<ChemRecipe> rows) {
         row(SOURCE, "Distillery", 16, 16, 25).kept(selector(0)).fluid(nativeFluid("Resin", 10)).out(nativeFluid("Turpentine", 6)).out(nativeFluid("DistW", 3)).add(rows);
         row(SOURCE, "Distillery", 16, 16, 26).kept(selector(0)).fluid(nativeFluid("Resin_Spruce", 10)).out(nativeFluid("Turpentine", 6)).out(nativeFluid("DistW", 3)).add(rows);
-        row(SOURCE, "Bath", 0, 16, 27).item(dust("Coal", thousandths(1000))).fluid(water(waterUnits(125), FLOOR)).out(dust("HydratedCoal", thousandths(1000))).add(rows);
         row(SOURCE, "Mixer", 16, 64, 28).item(form("gem", "ChargedCertusQuartz", 1)).item(form("gem", "NetherQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(water(waterUnits(500), FLOOR)).out(form("gem", "Fluix", 2)).add(rows);
         row(SOURCE, "Mixer", 16, 64, 29).item(form("dust", "ChargedCertusQuartz", 1)).item(form("dust", "NetherQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(water(waterUnits(500), FLOOR)).out(form("dust", "Fluix", 2)).add(rows);
         row(SOURCE, "Mixer", 16, 64, 30).item(form("gem", "ChargedCertusQuartz", 1)).item(form("gem", "MilkyQuartz", 1)).item(form("dust", "Redstone", 1)).fluid(water(waterUnits(500), FLOOR)).out(form("gem", "Fluix", 2)).add(rows);

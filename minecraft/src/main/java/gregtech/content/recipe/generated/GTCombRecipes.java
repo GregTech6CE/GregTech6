@@ -30,6 +30,8 @@ public final class GTCombRecipes {
         materialRows(rows);
         ChemRecipeResolver.exclude(SOURCE + "259/260/263/265",
                 "Forestry propolis and Et Futurum chorus fruit are other mods' items; the row keeps its own outputs");
+        ChemRecipeResolver.exclude(SOURCE + "602-785",
+                "the food slicer rows in MultiItemFood are owned by FoodItemRecipes");
         publish("comb recipes", rows);
     }
 
