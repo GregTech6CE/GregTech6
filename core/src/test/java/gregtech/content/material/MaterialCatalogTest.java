@@ -176,6 +176,9 @@ class MaterialCatalogTest {
         assertTrue(mercuryLiquid.hasFlag(gregtech.content.data.FluidCatalog.FluidFlags.LIQUID));
         assertTrue(mercuryLiquid.hasFlag(gregtech.content.data.FluidCatalog.FluidFlags.SIMPLE));
         assertNotNull(gregtech.content.data.FluidCatalog.get("GenMolten_Mercury"));
+        // MT.Hg.liquid(U, T) is one material unit; the drink rows are 250 mB portions.
+        assertEquals(144, gregtech.content.food.GTBottles.amountOf("mercury_bottle"));
+        assertEquals(250, gregtech.content.food.GTBottles.amountOf("soda"));
         assertTrue(!GTMaterialRegistry.get(9884).isValid());
         assertTrue(!GTMaterialRegistry.get(9885).isValid());
     }
