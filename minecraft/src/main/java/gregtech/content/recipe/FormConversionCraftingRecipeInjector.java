@@ -281,11 +281,7 @@ public final class FormConversionCraftingRecipeInjector {
         java.util.Map<String, java.util.Map<Integer, net.minecraft.world.item.Item>> families =
                 new java.util.LinkedHashMap<>();
         for (var entry : gregtech.content.registry.GTWires.allWires()) {
-//? if >=1.21.1 {
-            /*if (!entry.isBound()) continue;
-*///?} else {
             if (!entry.isPresent()) continue;
-//?}
             var block = entry.get();
             families.computeIfAbsent(block.spec().id(), ignored -> new java.util.TreeMap<>())
                     .put(block.spec().size(), block.asItem());

@@ -7,6 +7,7 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.engine.multiblock.MultiblockLayout;
 import gregtech.engine.multiblock.MultiblockPortOwner;
 import gregtech.engine.multiblock.PartBindings;
+import gregtech.engine.stack.StackCompat;
 import gregtech.content.block.machine.LargeCrucibleControllerBlock;
 import gregtech.content.material.Materials;
 import gregtech.content.multiblock.LargeCrucibleSpecs;
@@ -369,11 +370,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         }
         @Override public FluidStack drain(FluidStack resource, FluidAction action) {
             FluidStack offered = getFluidInTank(0);
-//? if >=1.21.1 {
-            /*if (resource.isEmpty() || offered.isEmpty() || !FluidStack.isSameFluidSameComponents(offered,resource)) return FluidStack.EMPTY;
-*///?} else {
-            if (resource.isEmpty() || offered.isEmpty() || !offered.isFluidEqual(resource)) return FluidStack.EMPTY;
-//?}
+            if (resource.isEmpty() || offered.isEmpty() || !StackCompat.sameFluid(offered,resource)) return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }
         @Override public FluidStack drain(int amount, FluidAction action) {

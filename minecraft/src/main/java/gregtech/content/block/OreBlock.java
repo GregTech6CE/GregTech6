@@ -229,11 +229,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
         if (material == null) return ItemStack.EMPTY;
         var registered = gregtech.content.registry.GTBlocks.getObject(
                 BlockMaterialPrefix.ore, material.resolve());
-//? if >=1.21.1 {
-        /*if (registered == null || !registered.isBound() || !(registered.get() instanceof OreBlock ore))
-*///?} else {
         if (registered == null || !registered.isPresent() || !(registered.get() instanceof OreBlock ore))
-//?}
             return ItemStack.EMPTY;
         return withStone(new ItemStack(ore), ore.brokenStateFor(stone));
     }

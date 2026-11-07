@@ -82,11 +82,7 @@ public class GarbageData extends SavedData {
     public void trash(FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return;
         for (FluidStack storedFluid : fluids) {
-//? if >=1.21.1 {
-            /*if (FluidStack.isSameFluidSameComponents(storedFluid, fluid)) {
-*///?} else {
-            if (storedFluid.isFluidEqual(fluid)) {
-//?}
+            if (StackCompat.sameFluid(storedFluid, fluid)) {
                 storedFluid.setAmount(gregtech.content.storage.GarbageStorageRules.fluidMerge(storedFluid.getAmount(),
                         fluid.getAmount()));
                 setDirty();

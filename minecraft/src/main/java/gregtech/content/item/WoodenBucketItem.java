@@ -3,6 +3,7 @@ package gregtech.content.item;
 
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
+import gregtech.engine.stack.StackCompat;
 import gregtech.content.tool.WoodenBucketCatalog;
 import gregtech.content.tool.WoodenBucketCatalog.Band;
 import gregtech.content.tool.WoodenBucketCatalog.Content;
@@ -274,11 +275,7 @@ public final class WoodenBucketItem extends TechItem {
         public int fill(FluidStack resource, FluidAction action) {
             if (container.getCount() != 1 || !current.empty() || resource.isEmpty() || resource.getAmount() < 1000) return 0;
             var plain = new FluidStack(resource.getFluid(), resource.getAmount());
-//? if >=1.21.1 {
-            /*if (!FluidStack.isSameFluidSameComponents(resource, plain)) return 0;
-*///?} else {
-            if (!resource.isFluidEqual(plain)) return 0;
-//?}
+            if (!StackCompat.sameFluid(resource, plain)) return 0;
             Content next = contentOf(resource.getFluid());
             if (next == null) return 0;
             if (action.execute()) {

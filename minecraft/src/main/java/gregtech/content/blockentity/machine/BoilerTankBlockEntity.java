@@ -9,6 +9,7 @@ import gregtech.engine.tool.GTToolType;
 import gregtech.content.block.machine.BoilerTankBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTFluids;
 import gregtech.platform.Mc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -210,11 +211,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     private void boil() {
         if (heat < BoilerSpec.HU_PER_WATER || waterTank.isEmpty()) return;
         var steamFluid = gregtech.content.registry.GTFluids.still("Steam");
-//? if >=1.21.1 {
-        /*if (steamFluid == null || !steamFluid.isBound()) return;
-*///?} else {
-        if (steamFluid == null || !steamFluid.isPresent()) return;
-//?}
+        if (steamFluid == null || !GTFluids.isPresent(steamFluid)) return;
 
         long maxByRate = Math.max(1, steamTank.getCapacity() / 2560);
         long conversions = Math.min(maxByRate, Math.min(heat / BoilerSpec.HU_PER_WATER,
@@ -246,11 +243,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
         FluidStack water = waterTank.getFluid();
         if (water.isEmpty()) return false;
         var distilled=gregtech.content.registry.GTFluids.still("DistW");
-//? if >=1.21.1 {
-        /*return distilled!=null&&distilled.isBound()&&water.getFluid().isSame(distilled.get());
-*///?} else {
-        return distilled!=null&&distilled.isPresent()&&water.getFluid().isSame(distilled.get());
-//?}
+        return distilled!=null&&GTFluids.isPresent(distilled)&&water.getFluid().isSame(distilled.get());
     }
 
     /** GT6 boilers emit steam upward; the output keeps the lower half of its pressure buffer. */

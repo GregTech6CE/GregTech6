@@ -265,13 +265,7 @@ public final class DyeProcessingRecipes {
     public static FluidStack fluid(String field,int amount){
         if(field.equals("Water"))return new FluidStack(Fluids.WATER,amount);
         var fluid=GTFluids.still(field);
-//? if >=1.21.1 {
-
-        /*if(fluid==null||!fluid.isBound())throw new IllegalStateException("Missing dye fluid "+field);
-
-*///?} else {
-        if(fluid==null||!fluid.isPresent())throw new IllegalStateException("Missing dye fluid "+field);
-//?}
+        if(fluid==null||!GTFluids.isPresent(fluid))throw new IllegalStateException("Missing dye fluid "+field);
         return new FluidStack(fluid.get(),amount);
     }
     private static void mixer(int ticks,ItemStack[] items,FluidStack[] inputs,FluidStack output){

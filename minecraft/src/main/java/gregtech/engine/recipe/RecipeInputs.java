@@ -256,11 +256,7 @@ public final class RecipeInputs {
         return StackCompat.sameItem(a, b);
     }
     public static boolean sameFluid(FluidStack available, FluidStack required) {
-//? if >=1.21.1 {
-        /*return FluidStack.isSameFluidSameComponents(available, required);
-*///?} else {
-        return available.isFluidEqual(required);
-//?}
+        return StackCompat.sameFluid(available, required);
     }
 
     /**

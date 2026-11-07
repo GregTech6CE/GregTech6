@@ -50,11 +50,7 @@ public final class StoneBlockClientModels {
         int missing = 0;
 
         for (var entry : GTBlocks.allEntries()) {
-//? if >=1.21.1 {
-            /*if (!entry.isBound()) {
-*///?} else {
             if (!entry.isPresent()) {
-//?}
                 continue;
             }
             Block block = entry.get();

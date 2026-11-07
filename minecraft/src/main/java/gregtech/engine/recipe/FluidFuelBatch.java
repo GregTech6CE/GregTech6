@@ -1,5 +1,6 @@
 package gregtech.engine.recipe;
 
+import gregtech.engine.stack.StackCompat;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -25,11 +26,7 @@ public final class FluidFuelBatch {
         for(int i=0;i<recipe.mFluidOutputs.length;i++) {
             var exhaust=recipe.mFluidOutputs[i];var output=outputs.get(i);
             if(exhaust.isEmpty())continue;
-//? if >=1.21.1 {
-            /*if(!output.isEmpty()&&!FluidStack.isSameFluidSameComponents(output,exhaust))return null;
-*///?} else {
-            if(!output.isEmpty()&&!output.isFluidEqual(exhaust))return null;
-//?}
+            if(!output.isEmpty()&&!StackCompat.sameFluid(output,exhaust))return null;
             target=Math.min(target,Math.max(0,capacities[i]-output.getAmount())/exhaust.getAmount());
         }
         target=(int)Math.min(target,Long.MAX_VALUE/energy);

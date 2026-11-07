@@ -957,11 +957,7 @@ public class RecipeMap {
             int needed = in.getAmount();
             for (FluidStack f : fluids) {
 
-//? if >=1.21.1 {
-/*                if (!f.isEmpty() && FluidStack.isSameFluidSameComponents(f,in)) {
-*///?} else {
-                if (!f.isEmpty() && f.isFluidEqual(in)) {
-//?}
+                if (!f.isEmpty() && StackCompat.sameFluid(f,in)) {
 
                     int take = Math.min(needed, f.getAmount());
                     f.shrink(take); needed -= take;

@@ -3,6 +3,7 @@ package gregtech.content.food;
 import gregtech.content.nuclear.PlayerRadiation;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.generated.GTDrinksGen;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -117,11 +118,7 @@ public final class GTDrinks {
         for (net.minecraftforge.registries.RegistryObject<Fluid> ro
 //?}
                 : gregtech.content.registry.GTFluids.FLUIDS.getEntries()) {
-//? if >=1.21.1 {
-            /*if (ro.isBound() && gregtech.content.registry.GTFluids.entryForFluid(ro.get()) == entry) {
-*///?} else {
-            if (ro.isPresent() && gregtech.content.registry.GTFluids.entryForFluid(ro.get()) == entry) {
-//?}
+            if (GTFluids.isPresent(ro) && gregtech.content.registry.GTFluids.entryForFluid(ro.get()) == entry) {
                 return ro.get();
             }
         }

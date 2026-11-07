@@ -131,11 +131,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     private void registerOilsandsInput(ItemStack input) {
         if(input.isEmpty())return;
         var oil=GTFluids.still("Oil_Normal");
-//? if >=1.21.1 {
-        /*if(oil==null||!oil.isBound())throw new IllegalStateException("Oilsands require registered crude oil");
-*///?} else {
-        if(oil==null||!oil.isPresent())throw new IllegalStateException("Oilsands require registered crude oil");
-//?}
+        if(oil==null||!GTFluids.isPresent(oil))throw new IllegalStateException("Oilsands require registered crude oil");
         // Preserve this special event's early return: independently wiring the generic machines
         // must not route OilSand through the standard OPL Furnace/byproduct listener.
         var candidate = SharedOilSandRows.candidate(input);

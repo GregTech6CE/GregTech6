@@ -65,11 +65,7 @@ final class FiniteCraftingVessels {
     }
 
     private static boolean sameFluid(FluidStack first, FluidStack second) {
-//? if >=1.21.1 {
-        /*return FluidStack.isSameFluidSameComponents(first, second);
-*///?} else {
-        return first.isFluidEqual(second);
-//?}
+        return StackCompat.sameFluid(first, second);
     }
 
     private static void add(List<ItemStack> stacks, String path) {

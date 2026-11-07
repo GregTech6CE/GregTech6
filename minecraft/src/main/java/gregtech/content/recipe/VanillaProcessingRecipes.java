@@ -115,11 +115,7 @@ public final class VanillaProcessingRecipes {
 
     private void ice(ItemStack input, int amount, long duration) {
         var fluid = GTFluids.still("Ice");
-//? if >=1.21.1 {
-        /*if (fluid == null || !fluid.isBound()) throw new IllegalStateException("GT6 ice fluid missing");
-*///?} else {
-        if (fluid == null || !fluid.isPresent()) throw new IllegalStateException("GT6 ice fluid missing");
-//?}
+        if (fluid == null || !GTFluids.isPresent(fluid)) throw new IllegalStateException("GT6 ice fluid missing");
         add(MachineRecipeMaps.Squeezer, input, new ItemStack[0], null,
                 new FluidStack[]{new FluidStack(fluid.get(), amount)}, duration);
     }

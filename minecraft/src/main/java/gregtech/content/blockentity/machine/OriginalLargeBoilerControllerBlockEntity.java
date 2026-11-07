@@ -276,11 +276,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     private void boil() {
         if (heat < HU_PER_WATER || water.isEmpty() || level == null) return;
         var steamFluid = GTFluids.still("Steam");
-//? if >=1.21.1 {
-        /*if (steamFluid == null || !steamFluid.isBound()) return;
-*///?} else {
-        if (steamFluid == null || !steamFluid.isPresent()) return;
-//?}
+        if (steamFluid == null || !GTFluids.isPresent(steamFluid)) return;
         // Source GT6 caps conversions by total steam capacity / 2560, not output space.
         long conversions = Math.min(variant.steamCapacity() / 2560,
                 Math.min(heat / HU_PER_WATER, water.getAmount()));
@@ -297,11 +293,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
     private boolean isDistilledWater() {
         var distilled = GTFluids.still("DistW");
-//? if >=1.21.1 {
-        /*return distilled != null && distilled.isBound() && !water.isEmpty()
-*///?} else {
-        return distilled != null && distilled.isPresent() && !water.isEmpty()
-//?}
+        return distilled != null && GTFluids.isPresent(distilled) && !water.isEmpty()
                 && water.getFluid().getFluid().isSame(distilled.get());
     }
     private void coolDown() {

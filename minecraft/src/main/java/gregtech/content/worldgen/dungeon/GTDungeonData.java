@@ -429,11 +429,7 @@ public final class GTDungeonData {
         for (int step = 0; step < materials.length; step++) {
             GTMaterial material = materials[(start + step) % materials.length];
             var object = GTBlocks.getObject(prefix, material);
-//? if >=1.21.1 {
-            /*if (object != null && object.isBound()) return object.get();
-*///?} else {
             if (object != null && object.isPresent()) return object.get();
-//?}
         }
         return null;
     }

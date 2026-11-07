@@ -86,11 +86,7 @@ public final class MaterialBlockClientModels {
         Map<BakedModel, BakedModel> tintedModels = new java.util.IdentityHashMap<>();
 
         for (var entry : GTBlocks.allEntries()) {
-//? if >=1.21.1 {
-            /*if (!entry.isBound() || !(entry.get() instanceof MaterialBlockLike materialBlock)) {
-*///?} else {
             if (!entry.isPresent() || !(entry.get() instanceof MaterialBlockLike materialBlock)) {
-//?}
                 continue;
             }
             // Ore blocks render via OreBakedModel (NBT-driven stone background), see OreClientModels.

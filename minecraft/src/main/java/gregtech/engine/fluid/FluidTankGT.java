@@ -1,5 +1,6 @@
 package gregtech.engine.fluid;
 
+import gregtech.engine.stack.StackCompat;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -159,11 +160,7 @@ public class FluidTankGT implements IFluidHandler {
     }
 
     private boolean sameIdentity(FluidStack value) {
-//? if >=1.21.1 {
-        /*return FluidStack.isSameFluidSameComponents(fluid, value);
-*///?} else {
-        return fluid.isFluidEqual(value);
-//?}
+        return StackCompat.sameFluid(fluid, value);
     }
 
     public long capacity() {
@@ -260,11 +257,7 @@ public class FluidTankGT implements IFluidHandler {
             }
             return accepted;
         }
-//? if >=1.21.1 {
-        /*if (!FluidStack.isSameFluidSameComponents(fluid, resource)) return 0;
-*///?} else {
-        if (!fluid.isFluidEqual(resource)) return 0;
-//?}
+        if (!StackCompat.sameFluid(fluid, resource)) return 0;
         int accepted = bindInt(Math.min(resource.getAmount(), capacity(resource) - getAmount()));
         if (accepted <= 0) return 0;
         if (action.execute()) {
@@ -277,11 +270,7 @@ public class FluidTankGT implements IFluidHandler {
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
         resource = ContainerFluidIdentity.canonical(resource);
-//? if >=1.21.1 {
-        /*if (resource.isEmpty() || fluid.isEmpty() || storage.preventsDraining() || !FluidStack.isSameFluidSameComponents(fluid, resource)) return FluidStack.EMPTY;
-*///?} else {
-        if (resource.isEmpty() || fluid.isEmpty() || storage.preventsDraining() || !fluid.isFluidEqual(resource)) return FluidStack.EMPTY;
-//?}
+        if (resource.isEmpty() || fluid.isEmpty() || storage.preventsDraining() || !StackCompat.sameFluid(fluid, resource)) return FluidStack.EMPTY;
         return drain(resource.getAmount(), action);
     }
 

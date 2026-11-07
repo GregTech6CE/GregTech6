@@ -28,11 +28,7 @@ public final class OreHostPhysics {
   if(material.has(gregtech.api.material.MaterialProperty.EXPLOSIVE))return Optional.empty();
   if(!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return Optional.empty();
   var canonical=GTBlocks.getObject(prefix,material);
-//? if >=1.21.1 {
-/*  if(canonical==null || !canonical.isBound() || canonical.get()!=block) return Optional.empty();
-*///?} else {
   if(canonical==null || !canonical.isPresent() || canonical.get()!=block) return Optional.empty();
-//?}
 
   boolean small=prefix==BlockMaterialPrefix.oreSmall,broken=OreBlock.isBroken(state);
   if(small&&broken) return Optional.empty(); // no source equivalent proven for this synthetic combination

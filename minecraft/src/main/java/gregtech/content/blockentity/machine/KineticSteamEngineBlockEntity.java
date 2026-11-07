@@ -4,8 +4,10 @@ import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.SteamEngineData;
+import gregtech.engine.stack.StackCompat;
 
 import gregtech.content.data.GregTechTags;
+import gregtech.content.registry.GTFluids;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -156,11 +158,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     long computeOutput() {return spec == null ? outputRate()*(engineState+1)/16 : spec.outputAtPressure(engineState);}
     private static boolean isSteam(FluidStack fluid){
         var steam=gregtech.content.registry.GTFluids.still("Steam");
-//? if >=1.21.1 {
-        /*return !fluid.isEmpty()&&steam!=null&&steam.isBound()&&fluid.getFluid().isSame(steam.get());
-*///?} else {
-        return !fluid.isEmpty()&&steam!=null&&steam.isPresent()&&fluid.getFluid().isSame(steam.get());
-//?}
+        return !fluid.isEmpty()&&steam!=null&&GTFluids.isPresent(steam)&&fluid.getFluid().isSame(steam.get());
     }
     private IFluidHandler steamInput(){return new IFluidHandler(){
         public int getTanks(){return 1;}
@@ -361,11 +359,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         FluidStack existing = distilledWaterTank.getFluidLong();
         if (existing.isEmpty()) {
             distilledWaterTank.setFluid(new FluidStack(cachedDistilledWaterFluid, amount));
-//? if >=1.21.1 {
-        /*} else if (FluidStack.isSameFluidSameComponents(existing,new FluidStack(cachedDistilledWaterFluid,1))) {
-*///?} else {
-        } else if (existing.isFluidEqual(new FluidStack(cachedDistilledWaterFluid, 1))) {
-//?}
+        } else if (StackCompat.sameFluid(existing,new FluidStack(cachedDistilledWaterFluid,1))) {
             distilledWaterTank.add(amount);
         }
     }
@@ -375,11 +369,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         if (cachedDistilledWaterFluid != null) return;
         // Path 1: GTFluids field lookup
         var dwRO = gregtech.content.registry.GTFluids.still("DistW");
-//? if >=1.21.1 {
-        /*if (dwRO != null && dwRO.isBound()) {
-*///?} else {
-        if (dwRO != null && dwRO.isPresent()) {
-//?}
+        if (dwRO != null && GTFluids.isPresent(dwRO)) {
             cachedDistilledWaterFluid = dwRO.get();
             return;
         }

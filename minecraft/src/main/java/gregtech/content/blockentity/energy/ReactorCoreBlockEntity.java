@@ -2,6 +2,7 @@ package gregtech.content.blockentity.energy;
 
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.inventory.BlockContents;
+import gregtech.engine.stack.StackCompat;
 import gregtech.content.nuclear.*;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
@@ -167,11 +168,7 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     private void coolantChanged() {
         setChanged();
         var current = input.getFluid();
-//? if >=1.21.1 {
-        /*boolean same = FluidStack.isSameFluidSameComponents(current, displayedCoolant);
-*///?} else {
-        boolean same = current.isFluidEqual(displayedCoolant);
-//?}
+        boolean same = StackCompat.sameFluid(current, displayedCoolant);
         if (current.isEmpty() && displayedCoolant.isEmpty() || !current.isEmpty() && !displayedCoolant.isEmpty() && same) return;
         displayedCoolant = current.copy();
         if (!displayedCoolant.isEmpty()) displayedCoolant.setAmount(1);

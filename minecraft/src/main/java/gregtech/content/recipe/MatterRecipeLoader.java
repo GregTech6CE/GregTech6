@@ -43,11 +43,7 @@ public final class MatterRecipeLoader implements InitializationStep {
                 if(definition.materialKey()==null||!GTMaterialRegistry.get(definition.materialKey()).resolve().equals(material))continue;
                 var name=definition.registryName();
                 if(!fluidNames.add(name)||definition.isHidden())continue;
-//? if >=1.21.1 {
-                /*var fluid=GTFluids.still(entry.getKey());if(fluid==null||!fluid.isBound())continue;
-*///?} else {
-                var fluid=GTFluids.still(entry.getKey());if(fluid==null||!fluid.isPresent())continue;
-//?}
+                var fluid=GTFluids.still(entry.getKey());if(fluid==null||!GTFluids.isPresent(fluid))continue;
                 boolean molten=name.startsWith("molten.")||name.endsWith(".molten");
                 add(material,ItemStack.EMPTY,new FluidStack(fluid.get(),molten?144:1000),1);
             }
@@ -66,11 +62,7 @@ public final class MatterRecipeLoader implements InitializationStep {
             }
         };
         var fluid=GTFluids.still(fluidName);
-//? if >=1.21.1 {
-        /*if(input.isEmpty()||fluid==null||!fluid.isBound())return;
-*///?} else {
-        if(input.isEmpty()||fluid==null||!fluid.isPresent())return;
-//?}
+        if(input.isEmpty()||fluid==null||!GTFluids.isPresent(fluid))return;
         MachineRecipeMaps.Massfab.addRecipe(new Recipe(new ItemStack[]{new ItemStack(GTTechnological.selectorTag(circuit)),input},null,null,null,null,
                 new FluidStack[]{new FluidStack(fluid.get(),amount)},duration,16,0));added++;
     }

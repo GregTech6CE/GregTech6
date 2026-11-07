@@ -47,13 +47,8 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
     }
 
     private static boolean isSteam(FluidStack stack) {
-//? if >=1.21.1 {
-        /*var fluid = GTFluids.still("Steam");
-        return !stack.isEmpty() && fluid != null && fluid.isBound() && stack.getFluid() == fluid.get();
-*///?} else {
         var fluid = GTFluids.still("Steam");
-        return !stack.isEmpty() && fluid != null && fluid.isPresent() && stack.getFluid() == fluid.get();
-//?}
+        return !stack.isEmpty() && fluid != null && GTFluids.isPresent(fluid) && stack.getFluid() == fluid.get();
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LargeTurbineControllerBlockEntity machine) {
@@ -80,13 +75,8 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
             int condensed = (steamCounter + amount) / gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO;
             steamCounter = (steamCounter + amount) % gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO;
             var distilled = GTFluids.still("DistW");
-//? if >=1.21.1 {
-            /*if (condensed > 0 && distilled != null && distilled.isBound()) water.fill(new FluidStack(distilled.get(), condensed),
+            if (condensed > 0 && distilled != null && GTFluids.isPresent(distilled)) water.fill(new FluidStack(distilled.get(), condensed),
                     FluidAction.EXECUTE);
-*///?} else {
-            if (condensed > 0 && distilled != null && distilled.isPresent()) water.fill(new FluidStack(distilled.get(), condensed),
-                    FluidAction.EXECUTE);
-//?}
             // As in GT6 the distilled-water tank voids excess; a full output never blocks the shaft.
             setChanged();
         }

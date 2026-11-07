@@ -10,6 +10,7 @@ import gregtech.content.registry.GTFluids;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.PipeSpec;
+import gregtech.engine.stack.StackCompat;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
@@ -1189,11 +1190,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (resource.isEmpty()) return -1;
         return FluidPipeChannels.select(tanks.length, i -> {
             FluidStack existing = tanks[i].getFluid();
-//? if >=1.21.1 {
-            /*return !existing.isEmpty() && FluidStack.isSameFluidSameComponents(existing, resource);
-*///?} else {
-            return !existing.isEmpty() && existing.isFluidEqual(resource);
-//?}
+            return !existing.isEmpty() && StackCompat.sameFluid(existing, resource);
         }, i -> tanks[i].isEmpty());
     }
 
@@ -1277,11 +1274,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     private static boolean sameFluid(FluidStack left, FluidStack right) {
-//? if >=1.21.1 {
-        /*return FluidStack.isSameFluidSameComponents(left, right);
-*///?} else {
-        return left.isFluidEqual(right);
-//?}
+        return StackCompat.sameFluid(left, right);
     }
 
     private static FluidStack merge(FluidStack total, FluidStack part) {

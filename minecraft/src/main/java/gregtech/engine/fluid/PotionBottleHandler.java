@@ -1,6 +1,7 @@
 package gregtech.engine.fluid;
 
 import gregtech.content.fluid.VanillaPotionBottling;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -34,11 +35,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
     public static ItemStack filled(FluidStack fluid) {
         if (fluid.isEmpty()) return ItemStack.EMPTY;
         var plain = new FluidStack(fluid.getFluid(), fluid.getAmount());
-//? if >=1.21.1 {
-        /*if (!FluidStack.isSameFluidSameComponents(fluid, plain)) return ItemStack.EMPTY;
-*///?} else {
-        if (!fluid.isFluidEqual(plain)) return ItemStack.EMPTY;
-//?}
+        if (!StackCompat.sameFluid(fluid, plain)) return ItemStack.EMPTY;
         if (fluid.getFluid() == Fluids.WATER) return waterBottle();
         if (fluid.getFluid() == gregtech.content.food.GTDrinks.fluidForField("Honey"))
             return new ItemStack(Items.HONEY_BOTTLE);
@@ -105,11 +102,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
 
     @Override public FluidStack drain(FluidStack resource, FluidAction action) {
         var stored = contents(container);
-//? if >=1.21.1 {
-        /*if (!FluidStack.isSameFluidSameComponents(stored, resource)) return FluidStack.EMPTY;
-*///?} else {
-        if (!stored.isFluidEqual(resource)) return FluidStack.EMPTY;
-//?}
+        if (!StackCompat.sameFluid(stored, resource)) return FluidStack.EMPTY;
         return drain(resource.getAmount(), action);
     }
 

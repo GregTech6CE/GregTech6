@@ -1,5 +1,6 @@
 package gregtech.content.block.misc;
 
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -106,10 +107,6 @@ final class ConnectedCraftingInputs {
         return a.getAmount() == b.getAmount() && sameFluid(a, b);
     }
     private static boolean sameFluid(FluidStack a, FluidStack b) {
-//? if >=1.21.1 {
-        /*return FluidStack.isSameFluidSameComponents(a, b);
-*///?} else {
-        return a.isFluidEqual(b);
-//?}
+        return StackCompat.sameFluid(a, b);
     }
 }

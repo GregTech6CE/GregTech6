@@ -220,11 +220,7 @@ public final class ElectronicsRecipes {
     }
     private static FluidStack fluid(String prefix,String material,int amount) {
         var fluid=GTFluids.still(prefix+GTMaterialRegistry.get(material).getName());
-//? if >=1.21.1 {
-        /*if(fluid==null||!fluid.isBound())throw new IllegalStateException("Missing electronics fluid: "+prefix+material);
-*///?} else {
-        if(fluid==null||!fluid.isPresent())throw new IllegalStateException("Missing electronics fluid: "+prefix+material);
-//?}
+        if(fluid==null||!GTFluids.isPresent(fluid))throw new IllegalStateException("Missing electronics fluid: "+prefix+material);
         return new FluidStack(fluid.get(),amount);
     }
 }

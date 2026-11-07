@@ -143,6 +143,7 @@ public final class GTFluids {
     /*public static String sanitizePath(String name) { return RegisteredFluids.sanitizePath(name); }
     public static DeferredHolder<Fluid, ? extends Fluid> still(String field) { return STILL.get(RegisteredFluids.canonicalField(field)); }
     public static DeferredHolder<Fluid, ? extends Fluid> flowing(String field) { return FLOWING.get(RegisteredFluids.canonicalField(field)); }
+    public static boolean isPresent(DeferredHolder<Fluid, ? extends Fluid> holder) { return holder != null && holder.isBound(); }
     public static RegisteredFluids.FluidEntry entryForTypeId(ResourceLocation id) { return ENTRIES.get(id); }
     public static RegisteredFluids.FluidEntry entryForFluid(Fluid fluid) {
         var id = BuiltInRegistries.FLUID.getKey(fluid);
@@ -253,6 +254,10 @@ public final class GTFluids {
         if (direct != null) return direct;
         String canonical = RegisteredFluids.canonicalField(flField);
         return canonical.equals(flField) ? null : FLOWING_BY_FIELD.get(canonical);
+    }
+
+    public static boolean isPresent(RegistryObject<Fluid> holder) {
+        return holder != null && holder.isPresent();
     }
 
     /**

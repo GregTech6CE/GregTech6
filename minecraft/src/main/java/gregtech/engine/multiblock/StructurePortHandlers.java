@@ -4,6 +4,7 @@ import gregtech.api.machine.MachineFace;
 import gregtech.api.multiblock.*;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.engine.multiblock.tracking.TrackedMultiblock;
+import gregtech.engine.stack.StackCompat;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -176,11 +177,7 @@ public final class StructurePortHandlers {
 
     private static boolean valid(IItemHandler h, int slot) { return h != null && slot >= 0 && slot < h.getSlots(); }
     private static boolean sameFluid(FluidStack first, FluidStack second) {
-//? if >=1.21.1 {
-        /*return FluidStack.isSameFluidSameComponents(first, second);
-*///?} else {
-        return first.isFluidEqual(second);
-//?}
+        return StackCompat.sameFluid(first, second);
     }
     private static boolean valid(IFluidHandler h, int tank) { return h != null && tank >= 0 && tank < h.getTanks(); }
     private static boolean visible(View v, IFluidHandler h, int tank) {

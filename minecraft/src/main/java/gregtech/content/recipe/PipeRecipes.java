@@ -101,11 +101,7 @@ public final class PipeRecipes {
         }
         Map<String, Map<ItemPipeSpec.ItemPipeSize, ItemStack>> item = new HashMap<>();
         for (var holder : GTItemPipes.all()) {
-//? if >=1.21.1 {
-            /*if (!holder.isBound()) continue;
-*///?} else {
             if (!holder.isPresent()) continue;
-//?}
             ItemPipeSpec spec = holder.get().spec();
             item.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .put(spec.size(), new ItemStack(holder.get().asItem()));

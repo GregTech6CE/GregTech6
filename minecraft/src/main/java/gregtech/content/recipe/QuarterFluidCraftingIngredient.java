@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import gregtech.content.food.GTDrinks;
 import gregtech.content.item.BottleItem;
 import gregtech.engine.fluid.FluidDisplayBinding;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -72,11 +73,7 @@ public final class QuarterFluidCraftingIngredient extends AbstractIngredient {
         if (before.isEmpty() || before.getFluid() != wanted || before.getAmount() != 250) return false;
         var requested = new FluidStack(wanted, 250);
         var taken = handler.drain(requested, IFluidHandler.FluidAction.EXECUTE);
-//? if >=1.21.1 {
-        /*if (!FluidStack.isSameFluidSameComponents(taken, requested) || taken.getAmount() != 250) return false;
-*///?} else {
-        if (!taken.isFluidEqual(requested) || taken.getAmount() != 250) return false;
-//?}
+        if (!StackCompat.sameFluid(taken, requested) || taken.getAmount() != 250) return false;
         var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
         return before.getAmount() - after.getAmount() == 250;
     }

@@ -4,6 +4,7 @@ package gregtech.engine.fluid;
 import gregtech.engine.recipe.*;
 import gregtech.engine.recipe.*;
 import gregtech.engine.multiblock.HeatExchangerRules;
+import gregtech.engine.stack.StackCompat;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -42,11 +43,7 @@ public final class HotFluidFuelCycle {
             }
         }
         var output = fuelRecipe.mFluidOutputs.length == 0 ? FluidStack.EMPTY : fuelRecipe.mFluidOutputs[0];
-//? if >=1.21.1 {
-        /*if (!output.isEmpty() && !cold.isEmpty() && !FluidStack.isSameFluidSameComponents(cold.getFluidLong(), output)) return idleResult;
-*///?} else {
-        if (!output.isEmpty() && !cold.isEmpty() && !cold.getFluidLong().isFluidEqual(output)) return idleResult;
-//?}
+        if (!output.isEmpty() && !cold.isEmpty() && !StackCompat.sameFluid(cold.getFluidLong(), output)) return idleResult;
         var plan = HeatExchangerRules.charge(hot.getAmount(), fuelRecipe.mFluidInputs[0].getAmount(), cold.getAmount(),
                 output.getAmount(), heat, settings.bufferTarget(), fuelRecipe.mEUt, fuelRecipe.mDuration, settings.efficiency());
         if (plan == null) {

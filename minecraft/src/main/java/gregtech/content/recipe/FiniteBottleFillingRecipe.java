@@ -364,19 +364,11 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
         // Not every container1000 key is a drink row: GT6's honey container names its fluid directly.
         if (primary == null) {
             var registered = gregtech.content.registry.GTFluids.still(fluidKey);
-//? if >=1.21.1 {
-            /*primary = registered != null && registered.isBound() ? registered.get() : null;
-*///?} else {
-            primary = registered != null && registered.isPresent() ? registered.get() : null;
-//?}
+            primary = registered != null && GTFluids.isPresent(registered) ? registered.get() : null;
         }
         if (!"Lubricant".equals(fluidKey)) return new net.minecraft.world.level.material.Fluid[]{primary};
         var alternate = gregtech.content.registry.GTFluids.still("Lubricant");
-//? if >=1.21.1 {
-        /*var rotary = alternate != null && alternate.isBound() ? alternate.get() : null;
-*///?} else {
-        var rotary = alternate != null && alternate.isPresent() ? alternate.get() : null;
-//?}
+        var rotary = alternate != null && GTFluids.isPresent(alternate) ? alternate.get() : null;
         return new net.minecraft.world.level.material.Fluid[]{primary, rotary};
     }
 

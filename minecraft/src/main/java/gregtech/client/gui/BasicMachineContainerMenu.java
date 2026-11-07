@@ -1,6 +1,7 @@
 package gregtech.client.gui;
 
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackCompat;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
 
@@ -278,11 +279,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
             long capacity = sf.isInput() ? tank.capacity() : blockEntity.fluidOutputDisplayCapacity(sf.tankIndex());
             boolean totalsChanged = sf.amount() != tank.getAmount() || sf.capacity() != capacity;
 
-//? if >=1.21.1 {
-/*            if (totalsChanged || current.getAmount()!=sf.fluid().getAmount() || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(current,sf.fluid())) {
-*///?} else {
-            if (totalsChanged || !current.isFluidStackIdentical(sf.fluid())) {
-//?}
+            if (totalsChanged || current.getAmount() != sf.fluid().getAmount() || !StackCompat.sameFluid(current, sf.fluid())) {
 
                 sf.setFluid(current, tank.getAmount(), capacity);
                 sendFluidUpdate(new PacketSyncFluids(containerId, slot.index, current, tank.getAmount(), capacity));
