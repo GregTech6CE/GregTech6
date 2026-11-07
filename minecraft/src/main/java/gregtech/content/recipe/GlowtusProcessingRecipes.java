@@ -5,6 +5,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.worldgen.GTSurfaceFlora;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -67,11 +68,7 @@ public final class GlowtusProcessingRecipes extends OriginalRecipeBatch {
         FluidStack input = GTFluids.stack(fluid, inputMb);
         FluidStack output = GTFluids.stack("Biomass", outputMb);
         if (input == null || output == null) throw new IllegalStateException("Missing Glowtus fluid " + fluid);
-//? if >=1.21.1 {
-        /*String fluidId = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(input.getFluid()).toString();
-*///?} else {
-        String fluidId = net.minecraftforge.registries.ForgeRegistries.FLUIDS.getKey(input.getFluid()).toString();
-//?}
+        String fluidId = Mc.fluidId(input.getFluid()).toString();
         if (!seenFluids.add(fluidId)) return; // field aliases can identify the same actual fluid.
         add(colour + "/biomass/" + fluid, MachineRecipeMaps.Fermenter, ticks, 16,
                 items(glowtus.copy()), null, fluids(input), fluids(output));

@@ -5,11 +5,6 @@ import gregtech.platform.Mc;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 /**
  * Which items act as covers, and how a cover's tier scales its work.
@@ -159,12 +154,7 @@ public final class CoverItems {
 
     private static String path(ItemStack stack) {
         if (stack.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return key != null && key.getNamespace().equals("gt6ce") ? key.getPath() : null;
-*///?} else {
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        ResourceLocation key = Mc.itemId(stack.getItem());
         return key != null && key.getNamespace().equals(GregTechIdentity.REGISTRY_NAMESPACE) ? key.getPath() : null;
-//?}
     }
 }

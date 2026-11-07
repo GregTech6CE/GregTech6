@@ -1,9 +1,7 @@
 package gregtech.content.item;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
-
 
 import gregtech.content.food.GTDrinks;
+import gregtech.platform.Mc;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,10 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /**
@@ -94,11 +90,7 @@ public class BottleItem extends Item {
 
     /** GT6's empty bottle stack ({@code bottle_empty}), or a vanilla glass bottle when it is absent. */
     public static ItemStack emptyBottle() {
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",EMPTY_BOTTLE_ID));
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (EMPTY_BOTTLE_ID).toLowerCase()));
-//?}
+        Item item = Mc.item(Mc.gregtechId(EMPTY_BOTTLE_ID));
         return item == null || item == Items.AIR ? new ItemStack(Items.GLASS_BOTTLE) : new ItemStack(item);
     }
 

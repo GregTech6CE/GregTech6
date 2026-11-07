@@ -2,6 +2,7 @@ package gregtech.content.block.tool;
 
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -95,13 +96,8 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         // `SIDES_TOP[aSide]`: the bees are only reachable from above.
-//? if >=1.21.1 {
-        /*var heldId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getItemInHand(hand).getItem());
-        if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "quicksilver_thermometer").equals(heldId)
-*///?} else {
-        var heldId = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(player.getItemInHand(hand).getItem());
-        if (gregtech.GregTech.id("quicksilver_thermometer").equals(heldId)
-//?}
+        var heldId = Mc.itemId(player.getItemInHand(hand).getItem());
+        if (Mc.gregtechId("quicksilver_thermometer").equals(heldId)
                 && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
             if (!level.isClientSide) player.displayClientMessage(Component.translatable(
                     "message.gt6ce.bumbliary.climate", machine.temperature(), Float.toString(machine.humidity())), false);

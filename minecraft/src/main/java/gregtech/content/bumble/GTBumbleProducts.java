@@ -1,16 +1,9 @@
 package gregtech.content.bumble;
-import gregtech.engine.mod.GregTechIdentity;
 
-
-import net.minecraft.resources.ResourceLocation;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 /**
  * GT6's bumblebee products: the three tables of {@code MultiItemBumbles} a working queen is rolled
@@ -85,14 +78,8 @@ public final class GTBumbleProducts {
      */
     public static ItemStack stack(int speciesId, int count) {
         String comb = GTBumbleSpecies.combOf(speciesId);
-        if (comb == null) comb = "honey_comb";                      // `default: Comb_Honey`
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", comb));
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, comb));
-//?}
+        if (comb == null) comb = "honey_comb"; // `default: Comb_Honey`
+        Item item = Mc.item(Mc.gregtechId(comb));
         if (item == null || item == Items.AIR) return ItemStack.EMPTY;
         return new ItemStack(item, Math.max(1, count));
     }

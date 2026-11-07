@@ -2,6 +2,8 @@ package gregtech.content.worldgen;
 
 import gregtech.content.block.OreBlock;
 import gregtech.platform.Mc;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -16,14 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Port of GT6's {@code WorldgenBlackSand} ({@code Loader_Worldgen:581}, registered as
@@ -42,11 +36,13 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
     public static final int DIVIDER = 64;
     /** GT6's vertical window: {@code waterLevel + 1} down to {@code waterLevel - 12}. */
     public static final int ABOVE_SEA = 1;
+
     public static final int BELOW_SEA = 12;
     /** GT6 stops a column after two sand blocks ({@code tGenerated < 2}). */
     public static final int MAX_DEPTH = 2;
     /** GT6's noise height and option count for the sand variant. */
     public static final float NOISE_Y = 360.0F;
+
     public static final int SAND_VARIANTS = 3;
 
     /** GT6 {@code BlocksGT.Sands} metas 0/1/2 (Magnetite / BasalticMineralSand / GraniticMineralSand). */
@@ -90,8 +86,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's per-chunk-area sand variant: {@code noise(aMinX / 4, 360, aMinZ / 4, 3)}. */
     public static String sandId(WorldGenLevel level, int minX, int minZ) {
-        int variant = new GTCellNoise(level.getSeed())
-                .get(minX / 4.0F, NOISE_Y, minZ / 4.0F, SAND_VARIANTS);
+        int variant = new GTCellNoise(level.getSeed()).get(minX / 4.0F, NOISE_Y, minZ / 4.0F, SAND_VARIANTS);
         return BLACK_SANDS.get(variant);
     }
 
@@ -140,8 +135,11 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
      * loose sediment count too — read from the ore's {@link OreBlock#STONE} state property.
      */
     private static boolean isSediment(BlockState state) {
-        if (state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(BlockTags.SAND)
-                || state.is(Blocks.GRAVEL) || state.is(Blocks.CLAY)) {
+        if (state.is(Blocks.DIRT)
+                || state.is(Blocks.COARSE_DIRT)
+                || state.is(BlockTags.SAND)
+                || state.is(Blocks.GRAVEL)
+                || state.is(Blocks.CLAY)) {
             return true;
         }
         ResourceLocation id = Mc.blockId(state.getBlock());
@@ -152,23 +150,19 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
 
     /** 1.7.10 {@code Material.wood} / {@code Material.gourd}. */
     private static boolean isWoodOrGourd(BlockState state) {
-        return state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)
-                || state.is(Blocks.MELON) || state.is(Blocks.PUMPKIN);
+        return state.is(BlockTags.LOGS)
+                || state.is(BlockTags.PLANKS)
+                || state.is(Blocks.MELON)
+                || state.is(Blocks.PUMPKIN);
     }
 
     private static BlockState blockState(String id) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, id));
-//?}
+        Block block = Mc.block(Mc.gregtechId(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_black_sand.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_black_sand"));
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_black_sand"));
 }

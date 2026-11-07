@@ -7,18 +7,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;
@@ -150,12 +149,8 @@ public final class GTFoodItems {
     public static Item itemOrNull(String id) {
         if (id == null) return null;
         var key = id.contains(":") ? ResourceLocation.parse(id) : ResourceLocation.fromNamespaceAndPath("gt6ce", id);
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(key);
-        return item == net.minecraft.world.item.Items.AIR ? null : item;
-*///?} else {
-        return ForgeRegistries.ITEMS.getValue(key);
-//?}
+        Item item = Mc.item(key);
+        return item == null || item == Items.AIR ? null : item;
     }
 
     /** Ids {@link #item(String)} could not resolve (a real gap, reported instead of silently dropped). */
@@ -221,13 +216,8 @@ public final class GTFoodItems {
         if (entry == null || entry.container().isEmpty() || entry.containerCount() <= 0) {
             return;
         }
-//? if >=1.21.1 {
-        /*Item container = BuiltInRegistries.ITEM.get(ResourceLocation.parse(entry.container()));
-        if (container == null || container==net.minecraft.world.item.Items.AIR) {
-*///?} else {
-        Item container = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(entry.container()));
-        if (container == null) {
-//?}
+        Item container = Mc.item(ResourceLocation.parse(entry.container()));
+        if (container == null || container == Items.AIR) {
             MISSING_ITEMS.add(entry.container());
             return;
         }

@@ -1,29 +1,21 @@
 package gregtech.content.recipe;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
-
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.Materials;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
-import gregtech.content.material.Materials;
+import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.recipe.Recipe;
+import gregtech.platform.Mc;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** The processing rows of GT6 {@code BlockDiggable:69-96} and {@code MultiItemFood:123-165}. */
 public final class DiggableRecipes {
@@ -45,8 +37,13 @@ public final class DiggableRecipes {
 
     private DiggableRecipes() {}
 
-    public static List<Variant> packable() { return PACKABLE; }
-    public static List<Recipe> entries() { return List.copyOf(ENTRIES); }
+    public static List<Variant> packable() {
+        return PACKABLE;
+    }
+
+    public static List<Recipe> entries() {
+        return List.copyOf(ENTRIES);
+    }
 
     /** GT6 {@code OM.data}: five clay blocks and turf contain four units; clay balls one unit. */
     public static void registerMaterials() {
@@ -63,42 +60,43 @@ public final class DiggableRecipes {
         if (registered) throw new IllegalStateException("Diggable processing rows registered twice");
         registered = true;
         // BlockDiggable:75 includes vanilla clay alongside the five colored clay blocks.
-        add(MachineRecipeMaps.Drying.addRecipe1(true, 16, 64,
-                new ItemStack(Blocks.CLAY), new ItemStack(Blocks.TERRACOTTA)), "dry vanilla clay");
+        add(
+                MachineRecipeMaps.Drying.addRecipe1(
+                        true, 16, 64, new ItemStack(Blocks.CLAY), new ItemStack(Blocks.TERRACOTTA)),
+                "dry vanilla clay");
         // MultiItemFood:159-165 also packs and unpacks the ordinary vanilla clay block.
         ItemStack vanillaBalls = new ItemStack(Items.CLAY_BALL, 4);
         ItemStack vanillaClay = new ItemStack(Blocks.CLAY);
-        add(MachineRecipeMaps.Boxinator.addRecipe2(true, 16, 16, vanillaBalls,
-                new ItemStack(GTTechnological.selectorTag(4)), vanillaClay), "box vanilla clay");
-        add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, vanillaBalls, vanillaClay),
-                "compress vanilla clay");
-        add(MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, vanillaClay, vanillaBalls),
-                "unbox vanilla clay");
+        add(
+                MachineRecipeMaps.Boxinator.addRecipe2(
+                        true, 16, 16, vanillaBalls, new ItemStack(GTTechnological.selectorTag(4)), vanillaClay),
+                "box vanilla clay");
+        add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, vanillaBalls, vanillaClay), "compress vanilla clay");
+        add(MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, vanillaClay, vanillaBalls), "unbox vanilla clay");
         for (Variant row : PACKABLE) {
             ItemStack block = stack(row.block(), 1);
             ItemStack balls = stack(row.ball(), 4);
-            ItemStack dried = row.material() == null
-                    ? new ItemStack(Blocks.COARSE_DIRT) : new ItemStack(Blocks.TERRACOTTA);
+            ItemStack dried =
+                    row.material() == null ? new ItemStack(Blocks.COARSE_DIRT) : new ItemStack(Blocks.TERRACOTTA);
 
-            add(MachineRecipeMaps.Drying.addRecipe1(true, 16, 64, block, dried),
-                    "dry " + row.block());
-            accept(MachineRecipeMaps.add_smelting(block, dried, 0, false, false,
-                    row.material() != null), "furnace " + row.block());
+            add(MachineRecipeMaps.Drying.addRecipe1(true, 16, 64, block, dried), "dry " + row.block());
+            accept(
+                    MachineRecipeMaps.add_smelting(block, dried, 0, false, false, row.material() != null),
+                    "furnace " + row.block());
 
             // RM.compactunpack: Boxinator with selector 4, Compressor, and Unboxinator.
-            add(MachineRecipeMaps.Boxinator.addRecipe2(true, 16, 16,
-                    balls, new ItemStack(GTTechnological.selectorTag(4)), block),
+            add(
+                    MachineRecipeMaps.Boxinator.addRecipe2(
+                            true, 16, 16, balls, new ItemStack(GTTechnological.selectorTag(4)), block),
                     "box " + row.block());
-            add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, balls, block),
-                    "compress " + row.block());
-            add(MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, block, balls),
-                    "unbox " + row.block());
+            add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, balls, block), "compress " + row.block());
+            add(MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, block, balls), "unbox " + row.block());
 
             // RM.generify is a directed Generifier conversion, not a global clay-material alias.
             if (row.material() != null) {
-                accept(MachineRecipeMaps.generify(block, new ItemStack(Blocks.CLAY)),
-                        "generify block " + row.block());
-                accept(MachineRecipeMaps.generify(stack(row.ball(), 1), new ItemStack(Items.CLAY_BALL)),
+                accept(MachineRecipeMaps.generify(block, new ItemStack(Blocks.CLAY)), "generify block " + row.block());
+                accept(
+                        MachineRecipeMaps.generify(stack(row.ball(), 1), new ItemStack(Items.CLAY_BALL)),
                         "generify ball " + row.ball());
             }
         }
@@ -111,8 +109,7 @@ public final class DiggableRecipes {
     static java.util.Map<GTMaterial, ItemStack> clayBalls() {
         var result = new java.util.LinkedHashMap<GTMaterial, ItemStack>();
         result.put(Materials.Clay, new ItemStack(Items.CLAY_BALL));
-        for (Variant row : PACKABLE) if (row.material() != null)
-            result.put(row.material(), stack(row.ball(), 1));
+        for (Variant row : PACKABLE) if (row.material() != null) result.put(row.material(), stack(row.ball(), 1));
         return result;
     }
 
@@ -121,10 +118,8 @@ public final class DiggableRecipes {
         ItemStack dust = GTItems.getStack(MaterialPrefix.dust, material);
         if (plate.isEmpty() || dust.isEmpty())
             throw new IllegalStateException("Missing GT6 clay plate/dust form for " + name);
-        add(MachineRecipeMaps.RollingMill.addRecipe1(true, 16, 32, ball, plate),
-                "roll " + name);
-        add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, dust, ball),
-                "compress clay dust " + name);
+        add(MachineRecipeMaps.RollingMill.addRecipe1(true, 16, 32, ball, plate), "roll " + name);
+        add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, dust, ball), "compress clay dust " + name);
         // Unfired clay is moldable but not SMITHABLE; metal-only shaping rules exclude it.
         var curved = GTItems.getStack(MaterialPrefix.plateCurved, material);
         if (!curved.isEmpty()) {
@@ -145,14 +140,12 @@ public final class DiggableRecipes {
     }
 
     private static Item item(String id) {
-//? if >=1.21.1 {
-        /*Item value = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
-*///?} else {
-        Item value = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
-//?}
+        Item value = Mc.item(Mc.gregtechId(id));
         if (value == null || value == Items.AIR) throw new IllegalStateException("Missing GT6 diggable item " + id);
         return value;
     }
 
-    private static ItemStack stack(String id, int count) { return new ItemStack(item(id), count); }
+    private static ItemStack stack(String id, int count) {
+        return new ItemStack(item(id), count);
+    }
 }

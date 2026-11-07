@@ -327,13 +327,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     /** ItemStack of the registered ore block ({@code ore_<material>} / {@code ore_small_<material>}), or EMPTY. */
     private static ItemStack blockStack(gregtech.engine.prefix.BlockMaterialPrefix prefix, GTMaterial material) {
         if (prefix == null) return ItemStack.EMPTY;
-//? if >=1.21.1 {
-        /*net.minecraft.world.level.block.Block block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", prefix.getBlockId(material)));
-*///?} else {
-        net.minecraft.world.level.block.Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, prefix.getBlockId(material)));
-//?}
+        net.minecraft.world.level.block.Block block = Mc.block(Mc.gregtechId(prefix.getBlockId(material)));
         if (block == null || block == net.minecraft.world.level.block.Blocks.AIR) return ItemStack.EMPTY;
         ItemStack stack = new ItemStack(block);
         return stack.isEmpty() ? ItemStack.EMPTY : stack;

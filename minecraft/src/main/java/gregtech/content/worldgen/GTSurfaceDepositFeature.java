@@ -1,7 +1,8 @@
 package gregtech.content.worldgen;
 
+import gregtech.platform.Mc;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -12,13 +13,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
-
-import javax.annotation.Nullable;
 
 /**
  * The port's surface clay seams: flat blobs of colored clay at the top of the ground next to water
@@ -58,10 +52,12 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
 
     /** The rolled disc: {@code radius = MIN_RADIUS + nextInt(MAX_RADIUS - MIN_RADIUS + 1)}. */
     public static final int MIN_RADIUS = TerrainWorldgenRules.SEAM_MIN_RADIUS;
+
     public static final int MAX_RADIUS = TerrainWorldgenRules.SEAM_MAX_RADIUS;
 
     /** The rolled thickness: {@code depth = MIN_DEPTH + nextInt(MAX_DEPTH - MIN_DEPTH + 1)}. */
     public static final int MIN_DEPTH = TerrainWorldgenRules.SEAM_MIN_DEPTH;
+
     public static final int MAX_DEPTH = TerrainWorldgenRules.SEAM_MAX_DEPTH;
 
     public GTSurfaceDepositFeature() {
@@ -91,7 +87,9 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
         int waterNeighbours = countWater(level, surface);
 
         if (surfaceState.is(Blocks.CLAY)
-                || ((surfaceState.is(Blocks.DIRT) || surfaceState.is(Blocks.GRAVEL) || surfaceState.is(Blocks.GRASS_BLOCK))
+                || ((surfaceState.is(Blocks.DIRT)
+                                || surfaceState.is(Blocks.GRAVEL)
+                                || surfaceState.is(Blocks.GRASS_BLOCK))
                         && waterNeighbours > 0)) {
             BlockState deposit = blockState(CLAYS[random.nextInt(CLAYS.length)]);
             int radius = MIN_RADIUS + random.nextInt(MAX_RADIUS - MIN_RADIUS + 1);
@@ -112,8 +110,7 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
      *
      * @return true when at least one block was replaced
      */
-    public static boolean placeClaySeam(WorldGenLevel level, int x, int z,
-                                        BlockState deposit, int radius, int depth) {
+    public static boolean placeClaySeam(WorldGenLevel level, int x, int z, BlockState deposit, int radius, int depth) {
         boolean placedAny = false;
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         for (int dx = -radius; dx <= radius; dx++) {
@@ -139,8 +136,7 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
      * block of a grass-topped shore, which is what makes the seam reach the surface.
      */
     private static boolean isHost(BlockState state) {
-        return state.is(BlockTags.DIRT) || state.is(Blocks.SAND)
-                || state.is(Blocks.CLAY) || state.is(Blocks.GRAVEL);
+        return state.is(BlockTags.DIRT) || state.is(Blocks.SAND) || state.is(Blocks.CLAY) || state.is(Blocks.GRAVEL);
     }
 
     /** Number of water blocks in the 5x5x2 neighbourhood - 0 = dry, high = river/lake. */
@@ -159,13 +155,7 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
 
     @Nullable
     private static BlockState blockState(String id) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, id));
-//?}
+        Block block = Mc.block(Mc.gregtechId(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 }

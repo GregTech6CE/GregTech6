@@ -14,10 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;
@@ -451,11 +449,7 @@ public final class FoodItemRecipes {
             return item(id, count);
         }
         Item item = GTFoodItems.itemOrNull(id);
-//? if >=1.21.1 {
-        /*if (item == null || item==net.minecraft.world.item.Items.AIR) {
-*///?} else {
         if (item == null) {
-//?}
             SKIPPED.add("gt6ce:" + id + ": the port registers no such GT6 food item");
             return ItemStack.EMPTY;
         }
@@ -464,13 +458,8 @@ public final class FoodItemRecipes {
 
     /** A port item by full id, for the rows that name a material-prefix or vanilla item. */
     private static ItemStack item(String id, int count) {
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
-        if (item == null || item==net.minecraft.world.item.Items.AIR) {
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(id));
-        if (item == null) {
-//?}
+        Item item = Mc.item(ResourceLocation.parse(id));
+        if (item == null || item == Items.AIR) {
             SKIPPED.add(id + ": the port registers no such item");
             return ItemStack.EMPTY;
         }

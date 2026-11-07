@@ -871,13 +871,7 @@ public final class GTDungeonData {
     public boolean cup(int ax, int ay, int az, @Nullable String fluidField) {
         FluidStack fluid = fluidField == null ? null : GTFluids.stack(fluidField, 250);
         if (fluidField != null && fluid == null) return false;
-//? if >=1.21.1 {
-        /*Block cup = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_cup"));
-*///?} else {
-        Block cup = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                gregtech.GregTech.id("fluid_cup"));
-//?}
+        Block cup = Mc.block(Mc.gregtechId("fluid_cup"));
         return cup != null && tank(ax, ay, az, cup, fluid);
     }
 

@@ -1,6 +1,7 @@
 package gregtech.content.block;
 
 import gregtech.content.blockentity.FluidSpringBlockEntity;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -17,11 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -118,12 +114,8 @@ public class FluidSpringBlock extends Block implements EntityBlock {
         if (data == null || !data.contains("spring", Tag.TAG_STRING)
                 || !data.contains("amount", Tag.TAG_INT)) return;
         ResourceLocation fluidId = ResourceLocation.tryParse(data.getString("spring"));
-        if (fluidId == null || data.getInt("amount") <= 0
-//? if >=1.21.1 {
-                /*|| !BuiltInRegistries.FLUID.containsKey(fluidId)) return;
-*///?} else {
-                || !ForgeRegistries.FLUIDS.containsKey(fluidId)) return;
-//?}
+        if (fluidId == null || data.getInt("amount") <= 0) return;
+        if (!Mc.hasFluid(fluidId)) return;
         if (level.getBlockEntity(pos) instanceof FluidSpringBlockEntity spring)
         spring.setSpring(fluidId.toString(), data.getInt("amount"));
     }

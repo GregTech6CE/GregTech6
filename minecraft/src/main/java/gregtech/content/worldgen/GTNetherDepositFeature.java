@@ -1,8 +1,11 @@
 package gregtech.content.worldgen;
 
+import gregtech.platform.Mc;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -11,15 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
-
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Nether deposits, ported from GT6 {@code WorldgenNetherClay} + {@code WorldgenNetherCrystals}:
@@ -40,6 +34,7 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's {@code WorldgenNetherQuartz}: two noise layers at {@code 40 + noise(x, 0|64, z, 200)}. */
     public static final int QUARTZ_BASE_Y = NetherDepositRules.QUARTZ_BASE_Y;
+
     public static final int QUARTZ_OPTIONS = NetherDepositRules.QUARTZ_OPTIONS;
     public static final float[] QUARTZ_NOISE_Y = NetherDepositRules.QUARTZ_NOISE_Y;
 
@@ -144,12 +139,12 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
      *
      * @return true when a crystal cluster was seeded
      */
-    public static boolean placeCrystalAt(WorldGenLevel level, int x, int z, BlockState crystal,
-                                        RandomSource random) {
+    public static boolean placeCrystalAt(WorldGenLevel level, int x, int z, BlockState crystal, RandomSource random) {
         // Ascend through air from the lava sea to the first ceiling (GT6: while (air(++y)));
         int y = NETHER_WATER_LEVEL;
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos(x, y, z);
-        while (y < level.getMaxBuildHeight() - 2 && level.getBlockState(cursor.set(x, y + 1, z)).isAir()) y++;
+        while (y < level.getMaxBuildHeight() - 2
+                && level.getBlockState(cursor.set(x, y + 1, z)).isAir()) y++;
         BlockState ceiling = level.getBlockState(cursor.set(x, y + 1, z));
         // GT6: nether bricks are rejected, and the ceiling must be rock.
         if (ceiling.is(Blocks.NETHER_BRICKS) || !isRockMaterial(ceiling)) return false;
@@ -159,10 +154,22 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
         // GT6 replaces the ceiling block itself, not the air block below it.
         level.setBlock(cursor.set(x, y + 1, z), crystal, 2);
         int seedY = y + 1;
-        NetherDepositRules.growCrystal(x,seedY,z,random::nextInt,new NetherDepositRules.CrystalSink(){
-            public boolean air(int px,int py,int pz){return level.getBlockState(new BlockPos(px,py,pz)).isAir();}
-            public int crystalNeighbors(int px,int py,int pz){int count=0;BlockPos pos=new BlockPos(px,py,pz);for(Direction dir:Direction.values())if(level.getBlockState(pos.relative(dir)).is(crystal.getBlock()))count++;return count;}
-            public void place(int px,int py,int pz){level.setBlock(new BlockPos(px,py,pz),crystal,2);}
+        NetherDepositRules.growCrystal(x, seedY, z, random::nextInt, new NetherDepositRules.CrystalSink() {
+            public boolean air(int px, int py, int pz) {
+                return level.getBlockState(new BlockPos(px, py, pz)).isAir();
+            }
+
+            public int crystalNeighbors(int px, int py, int pz) {
+                int count = 0;
+                BlockPos pos = new BlockPos(px, py, pz);
+                for (Direction dir : Direction.values())
+                    if (level.getBlockState(pos.relative(dir)).is(crystal.getBlock())) count++;
+                return count;
+            }
+
+            public void place(int px, int py, int pz) {
+                level.setBlock(new BlockPos(px, py, pz), crystal, 2);
+            }
         });
         return true;
     }
@@ -177,20 +184,17 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
         return state.is(net.minecraft.tags.BlockTags.BASE_STONE_NETHER)
                 || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD)
                 || state.is(net.minecraft.tags.BlockTags.STONE_BRICKS)
-                || state.is(Blocks.DEEPSLATE) || state.is(Blocks.OBSIDIAN) || state.is(Blocks.MAGMA_BLOCK)
-                || state.is(Blocks.ANCIENT_DEBRIS) || state.is(Blocks.NETHER_QUARTZ_ORE)
+                || state.is(Blocks.DEEPSLATE)
+                || state.is(Blocks.OBSIDIAN)
+                || state.is(Blocks.MAGMA_BLOCK)
+                || state.is(Blocks.ANCIENT_DEBRIS)
+                || state.is(Blocks.NETHER_QUARTZ_ORE)
                 || state.getBlock() instanceof gregtech.content.block.stone.GTStoneBlock;
     }
 
     @Nullable
     private static BlockState blockState(String id) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath(gregtech.GregTech.NAMESPACE, id));
-//?}
+        Block block = Mc.block(Mc.gregtechId(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 }

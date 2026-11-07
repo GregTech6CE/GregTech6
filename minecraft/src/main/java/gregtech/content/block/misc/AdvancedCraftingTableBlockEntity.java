@@ -133,13 +133,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         ItemStack blank = inventory.getStackInSlot(30);
         var id = Mc.itemId(blank.getItem());
         if (id == null || !id.toString().equals("gt6ce:empty_blueprint")) return false;
-//? if >=1.21.1 {
-        /*ItemStack written = new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "blueprint"))));
-*///?} else {
-        ItemStack written = new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-                gregtech.GregTech.id("blueprint"))));
-//?}
+        ItemStack written = new ItemStack(java.util.Objects.requireNonNull(Mc.item(Mc.gregtechId("blueprint"))));
         ItemStack[] pattern = new ItemStack[9];
         for (int i = 0; i < pattern.length; i++) pattern[i] = inventory.getStackInSlot(i + 21).copyWithCount(1);
         gregtech.content.data.CraftingBlueprintData.writeItem(level, written, pattern);

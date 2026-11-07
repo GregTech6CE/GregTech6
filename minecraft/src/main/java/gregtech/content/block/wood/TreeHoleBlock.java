@@ -34,7 +34,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import net.minecraft.resources.ResourceLocation;
 
@@ -94,11 +93,7 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
     }
 
     public FluidStack resinFluid() {
-//? if >=1.21.1 {
-        /*var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(ResourceLocation.parse(yield.substring("fluid:".length())));
-*///?} else {
-        var fluid = ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse(yield.substring("fluid:".length())));
-//?}
+        var fluid = Mc.fluid(ResourceLocation.parse(yield.substring("fluid:".length())));
         return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, 250);
     }
 

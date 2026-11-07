@@ -1,23 +1,15 @@
 package gregtech.content.recipe;
 
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTTechnological;
 import gregtech.platform.Mc;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;
@@ -92,11 +84,7 @@ public final class LaserEmitterRecipes {
     }
 
     private static ItemStack item(String id) {
-//? if >=1.21.1 {
-        /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-*///?} else {
-        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, id));
-//?}
+        var item = Mc.item(Mc.gregtechId(id));
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
 

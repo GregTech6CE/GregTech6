@@ -8,6 +8,7 @@ import gregtech.content.block.misc.*;
 import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.*;
+import gregtech.platform.Mc;
 import net.minecraft.core.*;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,11 +27,7 @@ public final class WorkshopCraftingSupplies {
         for(int i=0;i<8;i++){int count=base[i]+data.next(range[i]);int slot=data.next(16);ItemStack stack=GTItems.getStack(forms[i],Materials.Steel,count);
             if(stack.isEmpty())throw new IllegalStateException("Missing workshop part "+forms[i]);table.items().setStackInSlot(slot,stack);}
         String lighter=data.next1in2()?"lighter_full":"lighter_empty";
-//? if >=1.21.1 {
-        /*ItemStack stack=new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",lighter))));
-*///?} else {
-        ItemStack stack=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(gregtech.GregTech.id(lighter))));
-//?}
+        ItemStack stack=new ItemStack(java.util.Objects.requireNonNull(Mc.item(Mc.gregtechId(lighter))));
         table.items().setStackInSlot(35+data.next(36),stack);
     }
 }

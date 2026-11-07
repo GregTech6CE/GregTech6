@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /**///?} else {
 import net.minecraftforge.registries.ForgeRegistries;
@@ -81,6 +82,38 @@ public final class Mc {
 /*        return BuiltInRegistries.BLOCK.getKey(block);
 *///?} else {
         return ForgeRegistries.BLOCKS.getKey(block);
+//?}
+    }
+
+    public static Fluid fluid(ResourceLocation id) {
+//? if >=1.21.1 {
+/*        return BuiltInRegistries.FLUID.get(id);
+*///?} else {
+        return ForgeRegistries.FLUIDS.getValue(id);
+//?}
+    }
+
+    public static ResourceLocation fluidId(Fluid fluid) {
+//? if >=1.21.1 {
+/*        return BuiltInRegistries.FLUID.getKey(fluid);
+*///?} else {
+        return ForgeRegistries.FLUIDS.getKey(fluid);
+//?}
+    }
+
+    public static boolean hasFluid(ResourceLocation id) {
+//? if >=1.21.1 {
+/*        return BuiltInRegistries.FLUID.containsKey(id);
+*///?} else {
+        return ForgeRegistries.FLUIDS.containsKey(id);
+//?}
+    }
+
+    public static Iterable<Fluid> fluids() {
+//? if >=1.21.1 {
+/*        return BuiltInRegistries.FLUID;
+*///?} else {
+        return ForgeRegistries.FLUIDS.getValues();
 //?}
     }
 

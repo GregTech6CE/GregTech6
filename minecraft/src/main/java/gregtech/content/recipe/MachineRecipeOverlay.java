@@ -12,6 +12,7 @@ import gregtech.engine.recipe.data.MachineRecipeRemovalSpec;
 import gregtech.engine.recipe.data.MachineRecipeSpec;
 import gregtech.compat.common.CompatRecipes;
 import gregtech.content.recipe.ExternalOreProcessing;
+import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -545,11 +546,7 @@ public final class MachineRecipeOverlay {
     }
 
     private static String fluidKey(FluidStack fluid) {
-//? if >=1.21.1 {
-/*        return BuiltInRegistries.FLUID.getKey(fluid.getFluid()).toString();
-*///?} else {
-        return fluid.getFluid().builtInRegistryHolder().key().location().toString();
-//?}
+        return Mc.fluidId(fluid.getFluid()).toString();
     }
 
     private static void problem(String message) {

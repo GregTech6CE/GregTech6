@@ -1,6 +1,4 @@
 package gregtech.content.worldgen.dungeon;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 
@@ -8,17 +6,13 @@ import gregtech.engine.mod.GregTechIdentity;
 *///?} else {
 //?}
 import gregtech.content.book.GTBooks;
+import gregtech.platform.Mc;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 /**
  * Port of GT6's {@code DungeonChunkRoomPortalNether}
@@ -128,11 +122,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
         slots[22] = GTBooks.bookStack("Manual_Hunting_Blaze");
         slots[29] = new ItemStack(Items.GHAST_TEAR, 4);
         slots[33] = new ItemStack(Items.BLAZE_ROD, 4);
-//? if >=1.21.1 {
-        /*var matchBox = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","match_box_full"));
-*///?} else {
-        var matchBox = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("match_box_full").toLowerCase()));
-//?}
+        var matchBox = Mc.item(Mc.gregtechId("match_box_full"));
         if (matchBox == null || matchBox == Items.AIR) {
             throw new IllegalStateException("Missing GT6 dungeon supply item: gt6ce:match_box_full");
         }

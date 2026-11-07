@@ -6,6 +6,7 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.SteamEngineData;
 
 import gregtech.content.data.GregTechTags;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +24,6 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import javax.annotation.Nullable;
@@ -383,24 +383,18 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
             cachedDistilledWaterFluid = dwRO.get();
             return;
         }
-//? if >=1.21.1 {
-        /*var registry=net.minecraft.core.registries.BuiltInRegistries.FLUID;
-        var id=ResourceLocation.fromNamespaceAndPath("gt6ce","ic2distilledwater");
-        if(registry.containsKey(id)){cachedDistilledWaterFluid=registry.get(id);return;}
-        for(var entry:registry.entrySet())if(entry.getKey().location().getPath().equalsIgnoreCase("ic2distilledwater")){
-            cachedDistilledWaterFluid=entry.getValue();return;
-*///?} else {
-        // Path 2: direct Forge registry lookup by known registry name
-        cachedDistilledWaterFluid = ForgeRegistries.FLUIDS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", "ic2distilledwater"));
-        if (cachedDistilledWaterFluid != null) return;
-        // Path 3: case-insensitive scan of Forge fluid registry
-        for (var entry : ForgeRegistries.FLUIDS.getEntries()) {
-            if (entry.getKey().location().getPath().equalsIgnoreCase("ic2distilledwater")) {
-                cachedDistilledWaterFluid = entry.getValue();
+        // Path 2: direct registry lookup by known registry name
+        var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "ic2distilledwater");
+        if (Mc.hasFluid(id)) {
+            cachedDistilledWaterFluid = Mc.fluid(id);
+            return;
+        }
+        // Path 3: case-insensitive scan of the fluid registry
+        for (var entry : Mc.fluids()) {
+            if (Mc.fluidId(entry).getPath().equalsIgnoreCase("ic2distilledwater")) {
+                cachedDistilledWaterFluid = entry;
                 return;
             }
-//?}
         }
     }
 }

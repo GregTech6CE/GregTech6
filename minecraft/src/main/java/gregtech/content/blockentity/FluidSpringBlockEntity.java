@@ -1,6 +1,7 @@
 package gregtech.content.blockentity;
 
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -14,11 +15,9 @@ import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /**
@@ -69,11 +68,7 @@ public class FluidSpringBlockEntity extends BlockEntity {
     }
 
     public Fluid fluid() {
-//? if >=1.21.1 {
-        /*return fluidId().isEmpty() ? null : BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidId()));
-*///?} else {
-        return fluidId().isEmpty() ? null : ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse(fluidId()));
-//?}
+        return fluidId().isEmpty() ? null : Mc.fluid(ResourceLocation.parse(fluidId()));
     }
 
     /** Upgrade recognized legacy spring metadata to the fixed source variant/rate. */
@@ -154,13 +149,8 @@ public class FluidSpringBlockEntity extends BlockEntity {
         FluidType type = fluid.getFluidType();
         if (type == null) return null;
         // This lookup assumes matching fluid/block keys; it does not query a fluid-owned world block.
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.FLUID.getKey(fluid);
-        return id == null ? null : BuiltInRegistries.BLOCK.get(id);
-*///?} else {
-        ResourceLocation id = ForgeRegistries.FLUIDS.getKey(fluid);
-        return id == null ? null : ForgeRegistries.BLOCKS.getValue(id);
-//?}
+        ResourceLocation id = Mc.fluidId(fluid);
+        return id == null ? null : Mc.block(id);
     }
 
     /** Nominal roll interval after positivity clamping; not the first-output delay. */

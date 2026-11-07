@@ -6,6 +6,7 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 import gregtech.content.block.misc.DungeonPortalBlock;
 import gregtech.content.plant.BedrockFlowers;
+import gregtech.platform.Mc;
 
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,17 +61,9 @@ public final class GTDungeonBlocks {
     public static void registerPotPlants() {
         FlowerPotBlock empty = (FlowerPotBlock) Blocks.FLOWER_POT;
         for (String id : POTTED_FLOWERS.keySet()) {
-//? if >=1.21.1 {
-            /*Block flower = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,id));
-*///?} else {
-            Block flower = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
-//?}
+            Block flower = Mc.block(Mc.gregtechId(id));
             if (flower == null) throw new IllegalStateException("Missing GT6 indicator flower " + id);
-//? if >=1.21.1 {
-            /*empty.addPlant(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,id), POTTED_FLOWERS.get(id));
-*///?} else {
-            empty.addPlant(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()), POTTED_FLOWERS.get(id));
-//?}
+            empty.addPlant(Mc.gregtechId(id), POTTED_FLOWERS.get(id));
         }
     }
 

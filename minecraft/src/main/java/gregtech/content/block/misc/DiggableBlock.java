@@ -1,15 +1,13 @@
 package gregtech.content.block.misc;
-import gregtech.engine.mod.GregTechIdentity;
-
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.platform.Mc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -30,13 +28,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 //? if >=1.21.1 {
-
-
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
+//?} else {
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import javax.annotation.Nullable;
@@ -111,11 +105,7 @@ public final class DiggableBlock extends FallingBlock {
             if (peat.isEmpty()) throw new IllegalStateException("Missing GT6 peat ingot drop");
             return List.of(peat);
         }
-//? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", variant.dropItemId));
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (variant.dropItemId).toLowerCase()));
-//?}
+        Item item = Mc.item(Mc.gregtechId(variant.dropItemId));
         if (item == null || item == net.minecraft.world.item.Items.AIR)
             throw new IllegalStateException("Missing GT6 diggable drop " + variant.dropItemId);
         return List.of(new ItemStack(item, 4));

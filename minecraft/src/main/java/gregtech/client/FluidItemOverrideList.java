@@ -1,6 +1,7 @@
 package gregtech.client;
 
 import gregtech.content.data.RegisteredFluids;
+import gregtech.platform.Mc;
 import gregtech.util.BoundedCache;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;
@@ -18,11 +19,9 @@ import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -83,11 +82,7 @@ public final class FluidItemOverrideList extends ItemOverrides {
         String path = RegisteredFluids.sanitizePath(flEntry.registryName());
         ResourceLocation fluidId = ResourceLocation.fromNamespaceAndPath(
                 gregtech.content.registry.GTFluids.namespace(flEntry), path);
-//? if >=1.21.1 {
-        /*Fluid fluid = BuiltInRegistries.FLUID.get(fluidId);
-*///?} else {
-        Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidId);
-//?}
+        Fluid fluid = Mc.fluid(fluidId);
         if (fluid != null) {
             FluidType type = fluid.getFluidType();
             IClientFluidTypeExtensions ext = IClientFluidTypeExtensions.of(type);

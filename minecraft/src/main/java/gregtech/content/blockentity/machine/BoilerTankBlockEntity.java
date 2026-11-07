@@ -9,6 +9,7 @@ import gregtech.engine.tool.GTToolType;
 import gregtech.content.block.machine.BoilerTankBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
+import gregtech.platform.Mc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -447,11 +448,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
 
     private static boolean isWater(net.minecraft.world.level.material.Fluid fluid) {
         if (fluid == net.minecraft.world.level.material.Fluids.WATER) return true;
-//? if >=1.21.1 {
-        /*var key = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(fluid);
-*///?} else {
-        var key = net.minecraftforge.registries.ForgeRegistries.FLUIDS.getKey(fluid);
-//?}
+        var key = Mc.fluidId(fluid);
         return key != null && java.util.Set.of("ic2distilledwater","ice").contains(key.getPath());
     }
 

@@ -3,6 +3,7 @@ package gregtech.content.hazard;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.content.damage.GTHazmat;
 import gregtech.content.data.RegisteredFluids;
+import gregtech.platform.Mc;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -10,11 +11,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.material.Fluid;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 import java.util.List;
 
@@ -236,11 +232,7 @@ public final class WorldFluidEffects {
      * exactly as {@link FluidHazards} does.
      */
     public static String path(Fluid fluid) {
-//? if >=1.21.1 {
-        /*ResourceLocation id = BuiltInRegistries.FLUID.getKey(fluid);
-*///?} else {
-        ResourceLocation id = ForgeRegistries.FLUIDS.getKey(fluid);
-//?}
+        ResourceLocation id = Mc.fluidId(fluid);
         if (id == null) return "";
         String path = RegisteredFluids.sanitizePath(id.getPath());
         return path.endsWith("_flowing") ? path.substring(0, path.length() - "_flowing".length()) : path;

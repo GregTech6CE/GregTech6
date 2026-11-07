@@ -33,14 +33,12 @@ import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import javax.annotation.Nullable;
@@ -474,11 +472,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         if (stack.getFluid().is(FluidTags.WATER)) return true;
         var entry = GTFluids.entryForFluid(stack.getFluid());
         if (entry != null) return entry.hasFlag(RegisteredFluids.FluidFlags.WATER);
-//? if >=1.21.1 {
-        /*var id = BuiltInRegistries.FLUID.getKey(stack.getFluid());
-*///?} else {
-        var id = ForgeRegistries.FLUIDS.getKey(stack.getFluid());
-//?}
+        var id = Mc.fluidId(stack.getFluid());
         return id != null && id.getPath().endsWith("water");
     }
     private final IFluidHandler controllerFluids = new IFluidHandler() {

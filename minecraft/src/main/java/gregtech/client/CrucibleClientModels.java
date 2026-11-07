@@ -20,13 +20,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.slf4j.Logger;
 
@@ -101,13 +99,8 @@ public final class CrucibleClientModels {
             // Hull tint via block/item color handlers (tintindex 0), not vertex multiply.
             BakedModel worldModel = new CrucibleBlockBakedModel(shared);
             BakedModel itemModel = BlockItemClientModels.asBlockItem(shared);
-//? if >=1.21.1 {
-            /*ResourceLocation blockModelId = ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath());
-            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
-*///?} else {
-            ResourceLocation blockModelId = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/blocks/" + blockId.getPath()).toLowerCase());
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
-//?}
+            ResourceLocation blockModelId = Mc.gregtechId("block/blocks/" + blockId.getPath());
+            ResourceLocation itemId = Mc.itemId(block.asItem());
             if (itemId == null) {
                 itemId = blockId;
             }

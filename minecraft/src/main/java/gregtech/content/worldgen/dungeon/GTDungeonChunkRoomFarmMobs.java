@@ -1,6 +1,4 @@
 package gregtech.content.worldgen.dungeon;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 
@@ -25,6 +23,7 @@ import gregtech.content.registry.GTMachines;
 import gregtech.content.registry.GTStorage;
 //?}
 import gregtech.content.data.generated.GT6Materials;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
@@ -35,11 +34,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 /**
  * Port of GT6's {@code DungeonChunkRoomFarmMobs}
@@ -465,11 +459,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     /** GT6 multi-tile 25377: Arsenic Bronze medium pipe; mask uses Direction's DOWN..EAST bit order. */
     private static void pipe(GTDungeonData data, int x, int y, int z, int mask) {
-//? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","item_pipe_medium_arsenic_bronze"));
-*///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item_pipe_medium_arsenic_bronze").toLowerCase()));
-//?}
+        Block block = Mc.block(Mc.gregtechId("item_pipe_medium_arsenic_bronze"));
         if (!(block instanceof ItemPipeBlock)) throw new IllegalStateException("Missing GT6 item pipe 25377");
         BlockState state = block.defaultBlockState();
         for (Direction side : Direction.values())

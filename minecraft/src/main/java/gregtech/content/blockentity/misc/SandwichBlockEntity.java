@@ -1,12 +1,10 @@
 package gregtech.content.blockentity.misc;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
-
 
 import gregtech.content.food.SandwichIngredients;
 import gregtech.content.food.SandwichNutrition;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.stack.StackCompat;
+import gregtech.platform.Mc;
 
 //? if >=1.21.1 {
 //?} else {
@@ -23,11 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-//? if >=1.21.1 {
-//?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,11 +40,7 @@ public final class SandwichBlockEntity extends BlockEntity {
     }
 
     private static ItemStack gt(String id) {
-//? if >=1.21.1 {
-        /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
-*///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
-//?}
+        Item item = Mc.item(Mc.gregtechId(id));
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
 
@@ -129,11 +118,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         int amount = baseQuantity();
         ItemStack remainder = stack.getCraftingRemainingItem();
         if (!remainder.isEmpty() && (remainder.is(Items.GLASS_BOTTLE)
-//? if >=1.21.1 {
-                /*|| net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(remainder.getItem()).equals(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","bottle_empty"))))
-*///?} else {
-                || ForgeRegistries.ITEMS.getKey(remainder.getItem()).equals(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("bottle_empty").toLowerCase()))))
-//?}
+                || Mc.itemId(remainder.getItem()).equals(Mc.gregtechId("bottle_empty"))))
             amount = gregtech.content.food.SandwichRules.containerQuantity(amount,true);
         if (stack.getCount() < amount) return 0;
         if (!redstone && SandwichIngredients.isRedstone(stack)) {

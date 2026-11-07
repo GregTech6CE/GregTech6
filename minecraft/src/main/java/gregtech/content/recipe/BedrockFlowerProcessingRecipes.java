@@ -5,14 +5,13 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluids;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;
@@ -100,11 +99,7 @@ public final class BedrockFlowerProcessingRecipes extends OriginalRecipeBatch {
         FluidStack result = GTFluids.stack("Biomass", outputMb);
         if (liquid == null || result == null)
             throw new IllegalStateException("Missing GT6 bedrock flower fluid " + field);
-//? if >=1.21.1 {
-        /*String fluidId = BuiltInRegistries.FLUID.getKey(liquid.getFluid()).toString();
-*///?} else {
-        String fluidId = ForgeRegistries.FLUIDS.getKey(liquid.getFluid()).toString();
-//?}
+        String fluidId = Mc.fluidId(liquid.getFluid()).toString();
         if (!seenFluids.add(fluidId)) return;
         add(id + "/biomass/" + field, MachineRecipeMaps.Fermenter, ticks, 16,
                 items(flower.copy()), null, fluids(liquid), fluids(result));

@@ -1,6 +1,4 @@
 package gregtech.content.worldgen.dungeon;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 
@@ -15,15 +13,11 @@ import gregtech.content.item.BottleItem;
 //?} else {
 import gregtech.content.registry.GTStorage;
 //?}
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 /** GT6 DungeonChunkRoomWorkshop:149–160 and 183–195, including conditional random-call order. */
 public final class DungeonBottleSupplies {
@@ -64,11 +58,7 @@ public final class DungeonBottleSupplies {
     }
 
     private static ItemStack bottle(String id) {
-//? if >=1.21.1 {
-        /*var item=BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
-*///?} else {
-        var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
-//?}
+        var item=Mc.item(Mc.gregtechId(id));
         if(item==null || item==Items.AIR) throw new IllegalStateException("Missing registered GT6 dungeon bottle: "+id);
         return new ItemStack(item);
     }

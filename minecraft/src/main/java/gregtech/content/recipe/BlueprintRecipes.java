@@ -99,12 +99,8 @@ public final class BlueprintRecipes {
         boolean blank = is(paper, "empty_blueprint");
         FluidStack dye = GTFluids.stack(blank ? "Dye_Chemical_White" : "Dye_Chemical_Blue", blank ? 16 : 144);
         if (dye == null || dye.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
-                "blueprint")));
-*///?} else {
-        ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "blueprint")));
-//?}
+        ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "blueprint")));
         CraftingBlueprintData.writeItem(level, output, pattern);
         ItemStack crafted = preview(level, pattern);
 //? if >=1.21.1 {

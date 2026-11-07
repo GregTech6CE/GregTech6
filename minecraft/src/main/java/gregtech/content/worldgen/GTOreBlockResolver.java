@@ -1,9 +1,5 @@
 package gregtech.content.worldgen;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.OreHostStone;
@@ -11,18 +7,11 @@ import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-import com.mojang.logging.LogUtils;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -155,13 +144,7 @@ public final class GTOreBlockResolver {
     @Nullable
 
     private static Block lookup(String path) {
-//? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", path);
-        return BuiltInRegistries.BLOCK.containsKey(id) ? BuiltInRegistries.BLOCK.get(id) : null;
-*///?} else {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, path);
-        return ForgeRegistries.BLOCKS.containsKey(id) ? ForgeRegistries.BLOCKS.getValue(id) : null;
-//?}
+        return Mc.block(Mc.gregtechId(path));
     }
 
     /**
