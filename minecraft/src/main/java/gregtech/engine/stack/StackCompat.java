@@ -3,8 +3,10 @@ package gregtech.engine.stack;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 //?}
 
 /**
@@ -49,10 +51,12 @@ public final class StackCompat {
 
     /** The fluid a container item holds, or an empty stack. */
     public static FluidStack fluidContained(ItemStack stack) {
-//? if >=1.21.1 {
-/*        return net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
-*///?} else {
-        return net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
-//?}
+        return FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+    }
+
+    /** Capacity of the stack's first fluid tank, or 1 when the stack carries no fluid handler. */
+    public static int fluidCapacity(ItemStack stack) {
+        return FluidUtil.getFluidHandler(stack)
+                .map(handler -> handler.getTankCapacity(0)).orElse(1);
     }
 }

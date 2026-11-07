@@ -30,7 +30,7 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
         if (!shape.equals("cell")) {
             float min = shape.equals("measuring_pot") ? 5/16f : 6/16f;
             float max = 1-min;
-            int capacity = FluidUtil.getFluidHandler(stack).map(handler -> handler.getTankCapacity(0)).orElse(1);
+            int capacity = StackCompat.fluidCapacity(stack);
             float bottom = shape.equals("jug") ? 10/16f : 1/16f;
             float top = shape.equals("jug") ? 14/16f : shape.equals("cup") ? 5/16f : 8/16f;
             float y = bottom + (top-bottom-.001f)*Math.min(1f,fluid.getAmount()/(float)Math.max(1,capacity));

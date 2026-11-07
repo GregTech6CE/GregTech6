@@ -2,6 +2,7 @@ package gregtech.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import gregtech.content.tool.PortableContainerShapes;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
@@ -22,14 +23,10 @@ import net.minecraft.world.level.block.state.BlockState;
 /*import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.model.BakedModelWrapper;
 import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.client.model.BakedModelWrapper;
 import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 //?}
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -51,12 +48,12 @@ public final class PortableFluidItemModel extends BakedModelWrapper<BakedModel> 
         overrides = new ItemOverrides() {
             @Override public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel level,
                                                 @Nullable LivingEntity entity, int seed) {
-                var fluid = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+                var fluid = StackCompat.fluidContained(stack);
                 if (fluid.isEmpty()) return original;
                 var visual = IClientFluidTypeExtensions.of(fluid.getFluid());
                 var texture = visual.getStillTexture(fluid);
                 if (texture == null) return original;
-                int capacity = FluidUtil.getFluidHandler(stack).map(handler -> handler.getTankCapacity(0)).orElse(1);
+                int capacity = StackCompat.fluidCapacity(stack);
                 capacity = Math.max(1, capacity);
                 var key = new Visual(texture, visual.getTintColor(fluid), Math.min(capacity, fluid.getAmount()), capacity);
                 return variants.computeIfAbsent(key, value -> {
