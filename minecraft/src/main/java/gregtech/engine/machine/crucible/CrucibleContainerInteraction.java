@@ -97,7 +97,13 @@ public final class CrucibleContainerInteraction {
         var held = player.getItemInHand(hand);
         var filled = FluidUtil.tryFillContainer(held, blockHandler, Integer.MAX_VALUE, player, true);
         if (filled.isSuccess()) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, filled.getResult()));
+            if (player.getAbilities().instabuild) {
+                // Creative keeps the empty bottle and always stows another filled one.
+                ItemStack result = filled.getResult();
+                if (!player.getInventory().add(result.copy())) player.drop(result.copy(), false);
+            } else {
+                player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, filled.getResult()));
+            }
             return InteractionResult.CONSUME;
         }
         var emptied = FluidUtil.tryEmptyContainer(held, blockHandler, Integer.MAX_VALUE, player, true);
