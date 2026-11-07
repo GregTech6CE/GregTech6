@@ -86,6 +86,70 @@ public final class GeneratedRecipeTablesTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void cookingOilDoublesMeatRows(GameTestHelper helper) {
+        ItemStack beef = new ItemStack(Items.BEEF);
+        FluidStack oil = fluid("Oil_Seed", 50);
+        helper.assertFalse(oil.isEmpty(), "seed oil");
+        Recipe plain = find(MachineRecipeMaps.Furnace, List.of(beef), List.of());
+        helper.assertTrue(plain != null && hasOutput(plain, new ItemStack(Items.COOKED_BEEF)),
+                "without oil the beef row is single");
+        Recipe doubled = find(MachineRecipeMaps.Furnace, List.of(beef), List.of(oil));
+        helper.assertTrue(doubled != null, "beef with cooking oil");
+        helper.assertTrue(hasOutput(doubled, new ItemStack(Items.COOKED_BEEF, 2)),
+                "50 mB cooking oil doubles cooked beef");
+        helper.assertTrue(doubled.fluidTag(0) != null, "the oil row accepts the cooking-oil tag");
+        Recipe frying = find(MachineRecipeMaps.Furnace, List.of(beef), List.of(fluid("Oil_Frying", 50)));
+        helper.assertTrue(frying != null && hasOutput(frying, new ItemStack(Items.COOKED_BEEF, 2)),
+                "hot frying oil doubles as well");
+        Recipe shortOil = find(MachineRecipeMaps.Furnace, List.of(beef), List.of(fluid("Oil_Seed", 49)));
+        helper.assertTrue(shortOil != null && hasOutput(shortOil, new ItemStack(Items.COOKED_BEEF)),
+                "49 mB cooking oil does not double");
+        var consumed = gregtech.engine.recipe.RecipeInputs.consume(doubled,
+                List.of(new ItemStack(Items.BEEF)), List.of(fluid("Oil_Seed", 50)), 1);
+        helper.assertTrue(consumed != null, "the oil row can consume its inputs");
+        helper.assertTrue(consumed.fluids().get(0).getAmount() == 0, "the oil row consumes 50 mB");
+        helper.assertTrue(consumed.items().get(0).isEmpty(), "the oil row consumes the meat");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void cookingOilLeavesNonMeatSingle(GameTestHelper helper) {
+        ItemStack potato = new ItemStack(Items.POTATO);
+        Recipe plain = find(MachineRecipeMaps.Furnace, List.of(potato), List.of());
+        helper.assertTrue(plain != null && hasOutput(plain, new ItemStack(Items.BAKED_POTATO)),
+                "potato smelts without oil");
+        Recipe withOil = find(MachineRecipeMaps.Furnace, List.of(potato), List.of(fluid("Oil_Seed", 50)));
+        helper.assertTrue(withOil != null && hasOutput(withOil, new ItemStack(Items.BAKED_POTATO, 1)),
+                "cooking oil does not double a non-meat food");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void cookingOilScopeFollowsMeatOredict(GameTestHelper helper) {
+        // Whole cuts, the meat bar and the ingot/dust MeatRaw forms carry the meat ore-dict name.
+        assertDoubles(helper, item("gt6ce:raw_ham", 1), item("gt6ce:cooked_ham", 2), "GT ham");
+        assertDoubles(helper, item("gt6ce:raw_meat_bar", 1), item("gt6ce:cooked_meat_bar", 2), "raw meat bar");
+        assertDoubles(helper, stack("ingot", "MeatRaw", 1), stack("ingot", "MeatCooked", 2), "MeatRaw ingot");
+        assertDoubles(helper, stack("dust", "MeatRaw", 1), stack("dust", "MeatCooked", 2), "MeatRaw dust");
+        // The ham slice and the smaller MeatRaw forms have no meat ore-dict name in the source.
+        assertSingle(helper, item("gt6ce:raw_ham_slice", 1), item("gt6ce:cooked_ham_slice", 1), "ham slice");
+        assertSingle(helper, stack("dustTiny", "MeatRaw", 1), stack("dustTiny", "MeatCooked", 1), "MeatRaw dustTiny");
+        helper.succeed();
+    }
+
+    private static void assertDoubles(GameTestHelper helper, ItemStack input, ItemStack doubled, String label) {
+        helper.assertFalse(input.isEmpty() || doubled.isEmpty(), label + " items");
+        Recipe row = find(MachineRecipeMaps.Furnace, List.of(input), List.of(fluid("Oil_Seed", 50)));
+        helper.assertTrue(row != null && hasOutput(row, doubled), label + " doubles with cooking oil");
+    }
+
+    private static void assertSingle(GameTestHelper helper, ItemStack input, ItemStack single, String label) {
+        helper.assertFalse(input.isEmpty() || single.isEmpty(), label + " items");
+        Recipe row = find(MachineRecipeMaps.Furnace, List.of(input), List.of(fluid("Oil_Seed", 50)));
+        helper.assertTrue(row != null && hasOutput(row, single), label + " stays single with cooking oil");
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void extruderModuleRowIsQueryable(GameTestHelper helper) {
         ItemStack module = tech("module_stone_generator", 1);
         ItemStack shape = tech("extruder_shape_plate", 1);
