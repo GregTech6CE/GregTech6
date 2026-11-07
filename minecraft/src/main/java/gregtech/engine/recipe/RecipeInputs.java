@@ -309,14 +309,8 @@ public final class RecipeInputs {
 
     /** Empty shells must stay empty even when a recipe supplies its own stack-data predicate. */
     static boolean emptyContainerMatches(ItemStack required, ItemStack available) {
-//? if >=1.21.1 {
-        /*return !(required.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike
-                && net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(required).isEmpty()
-                && net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(available).isPresent());
-*///?} else {
-        return !(required.getItem() instanceof gregtech.content.item.PortableFluidContainerItem
-                && net.minecraftforge.fluids.FluidUtil.getFluidContained(required).isEmpty()
-                && net.minecraftforge.fluids.FluidUtil.getFluidContained(available).isPresent());
-//?}
+        return !(required.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike
+                && StackCompat.fluidContained(required).isEmpty()
+                && !StackCompat.fluidContained(available).isEmpty());
     }
 }

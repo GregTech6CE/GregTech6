@@ -1,11 +1,10 @@
 package gregtech.client;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
 import gregtech.content.tool.BottleCrateGeometry;
 import gregtech.content.item.BottleItem;
+import gregtech.platform.Mc;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -62,11 +61,7 @@ public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrat
         // Complete each texture pass before changing buffers; a previous consumer may become invalid.
         for(int pass=0;pass<3;pass++) {
             String texture=pass==0?"sides":pass==1?"top":"cap";
-//? if >=1.21.1 {
-            /*out=buffers.getBuffer(RenderType.entityCutout(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
-*///?} else {
-            out=buffers.getBuffer(RenderType.entityCutout(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/block/iconsets/bottlecrate_bottle_"+texture+".png").toLowerCase())));
-//?}
+            out=buffers.getBuffer(RenderType.entityCutout(Mc.gregtechId("textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
             for(int slot=0;slot<9;slot++) if(!crate.items().getStackInSlot(slot).isEmpty()) {
                 if(pass==0) for(int part=1;part<=2;part++) surface(pose.last(),out,BottleCrateGeometry.bounds(slot,part),0,1,0,1,0xFFFFFF,light,false,false);
                 else surface(pose.last(),out,BottleCrateGeometry.bounds(slot,pass),0,1,0,1,0xFFFFFF,light,true,true);

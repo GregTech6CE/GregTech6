@@ -106,11 +106,8 @@ public final class MaterialBlockBakedModel implements BakedModel {
         if (quad.getTintIndex() == 0) {
             return quad;
         }
-//? if >=1.21.1 {
-        /*return new BakedQuad(quad.getVertices(), 0, quad.getDirection(), quad.getSprite(), quad.isShade(), quad.hasAmbientOcclusion());
-*///?} else {
-        return new BakedQuad(quad.getVertices(), 0, quad.getDirection(), quad.getSprite(), quad.isShade());
-//?}
+        return BakedQuadCompat.withAmbientOcclusion(
+                quad.getVertices(), 0, quad.getDirection(), quad.getSprite(), quad.isShade(), quad.hasAmbientOcclusion());
     }
 
     @Override

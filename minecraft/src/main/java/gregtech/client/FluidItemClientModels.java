@@ -62,11 +62,7 @@ import java.util.Map;
 @Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class FluidItemClientModels {
-//? if >=1.21.1 {
-    /*private static final ResourceLocation SHARED_MODEL = ResourceLocation.fromNamespaceAndPath("gt6ce","item/fluid_item");
-*///?} else {
-    private static final ResourceLocation SHARED_MODEL = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/fluid_item").toLowerCase());
-//?}
+    private static final ResourceLocation SHARED_MODEL = Mc.gregtechId("item/fluid_item");
 
     private FluidItemClientModels() {}
 

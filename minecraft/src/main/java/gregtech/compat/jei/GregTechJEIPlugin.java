@@ -78,11 +78,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
 
-//? if >=1.21.1 {
-/*        return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","jei_plugin");
-*///?} else {
-        return GregTech.id("jei_plugin");
-//?}
+        return Mc.gregtechId("jei_plugin");
 
     }
 

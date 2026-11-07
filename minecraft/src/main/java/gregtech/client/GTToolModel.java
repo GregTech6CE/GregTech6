@@ -91,18 +91,10 @@ public final class GTToolModel {
     }
 
     public static ResourceLocation iconsetModelId(ResourceLocation icon) {
-//? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/tool_iconset/" + ToolIconSets.baseName(icon));
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/tool_iconset/" + ToolIconSets.baseName(icon)).toLowerCase());
-//?}
+        return Mc.gregtechId("item/tool_iconset/" + ToolIconSets.baseName(icon));
     }
 
     public static ResourceLocation iconsetOverlayModelId(ResourceLocation icon) {
-//? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay");
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay").toLowerCase());
-//?}
+        return Mc.gregtechId("item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay");
     }
 }

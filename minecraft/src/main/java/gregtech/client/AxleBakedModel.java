@@ -1,9 +1,9 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.content.block.energy.AxleBlock;
 import gregtech.content.blockentity.energy.AxleBlockEntity;
+import gregtech.platform.Mc;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;
@@ -45,17 +45,9 @@ public final class AxleBakedModel extends BakedModelWrapper<PipeWireBakedModel> 
         var faces=new EnumMap<Direction,ResourceLocation>(Direction.class);
         for(var face:Direction.values()) {
             String suffix=TEXTURES[axis][face.ordinal()][rotation];
-//? if >=1.21.1 {
-            /*faces.put(face,ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
-*///?} else {
-            faces.put(face,ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)).toLowerCase()));
-//?}
+            faces.put(face,Mc.gregtechId("block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
         }
-//? if >=1.21.1 {
-        /*var base=ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/axle");
-*///?} else {
-        var base=ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/axle").toLowerCase());
-//?}
+        var base=Mc.gregtechId("block/iconsets/axle");
         return new PipeWireBakedModel(half,base,0,base,0,0,null,faces);
     }
     @Override public List<BakedQuad> getQuads(@Nullable BlockState state,@Nullable Direction side,RandomSource random,ModelData data,@Nullable RenderType layer) {

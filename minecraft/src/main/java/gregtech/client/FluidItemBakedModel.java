@@ -50,11 +50,9 @@ public final class FluidItemBakedModel implements BakedModel {
             out.add(remappedQuads.computeIfAbsent(q, original -> {
                 int[] verts = original.getVertices().clone();
                 remapUv(verts, original.getSprite(), fluidSprite);
-//? if >=1.21.1 {
-                /*return new BakedQuad(verts, original.getTintIndex(), original.getDirection(), fluidSprite, original.isShade(), original.hasAmbientOcclusion());
-*///?} else {
-                return new BakedQuad(verts, original.getTintIndex(), original.getDirection(), fluidSprite, original.isShade());
-//?}
+                return BakedQuadCompat.withAmbientOcclusion(
+                        verts, original.getTintIndex(), original.getDirection(), fluidSprite, original.isShade(),
+                        original.hasAmbientOcclusion());
             }));
         }
         return out;

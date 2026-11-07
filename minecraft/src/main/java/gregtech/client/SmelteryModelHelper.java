@@ -1,9 +1,9 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.platform.Mc;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -99,19 +99,11 @@ public final class SmelteryModelHelper {
     // === Model path builders ===
 
     public static ResourceLocation modelPath(String subfolder, MaterialTextureSet set) {
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid");
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid").toLowerCase());
-//?}
+        return Mc.gregtechId("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid");
     }
 
     public static ResourceLocation modelPath(String subfolder, MaterialTextureSet set, String suffix) {
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix);
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix).toLowerCase());
-//?}
+        return Mc.gregtechId("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix);
     }
 
     // === Faucet geometry (per-facing) ===

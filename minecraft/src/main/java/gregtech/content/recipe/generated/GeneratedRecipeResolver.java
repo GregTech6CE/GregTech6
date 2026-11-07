@@ -112,17 +112,10 @@ public final class GeneratedRecipeResolver {
                         .getOrDefault(parts[1], parts[1]);
                 var techItem = gregtech.content.registry.GTTechnological.get(parts[1]);
                 if (techItem == null) {
-//? if >=1.21.1 {
-                    /*var key = id.indexOf(':') >= 0
-                            ? net.minecraft.resources.ResourceLocation.tryParse(id)
-                            : net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
-                                    "gt6ce", id);
-*///?} else {
                     var key = id.indexOf(':') >= 0
                             ? net.minecraft.resources.ResourceLocation.tryParse(id)
                             : net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
-                                    gregtech.GregTech.NAMESPACE, id);
-//?}
+                                    "gt6ce", id);
                     techItem = key == null ? null
                             : Mc.item(key);
                 }

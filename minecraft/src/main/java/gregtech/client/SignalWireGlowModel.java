@@ -1,13 +1,12 @@
 package gregtech.client;
 
 import gregtech.content.block.energy.SignalWireBlock;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** GT6 draws powered redstone wires at full brightness without emitting world light. */
 final class SignalWireGlowModel {
@@ -18,7 +17,8 @@ final class SignalWireGlowModel {
     }
 
     static boolean lit(@Nullable BlockState state) {
-        return state != null && state.getBlock() instanceof SignalWireBlock
+        return state != null
+                && state.getBlock() instanceof SignalWireBlock
                 && state.getValue(SignalWireBlock.POWER) > 0;
     }
 
@@ -32,10 +32,7 @@ final class SignalWireGlowModel {
     private static BakedQuad fullBright(BakedQuad quad) {
         int[] vertices = quad.getVertices().clone();
         for (int i = 0; i < 4; i++) vertices[i * 8 + 6] = LightTexture.FULL_BRIGHT;
-//? if >=1.21.1 {
-        /*return new BakedQuad(vertices, quad.getTintIndex(), quad.getDirection(), quad.getSprite(), false, false);
-*///?} else {
-        return new BakedQuad(vertices, quad.getTintIndex(), quad.getDirection(), quad.getSprite(), false);
-//?}
+        return BakedQuadCompat.withAmbientOcclusion(
+                vertices, quad.getTintIndex(), quad.getDirection(), quad.getSprite(), false, false);
     }
 }

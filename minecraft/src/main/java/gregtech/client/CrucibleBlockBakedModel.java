@@ -76,11 +76,8 @@ public final class CrucibleBlockBakedModel implements BakedModel {
         for (int i = 0; i < 4; i++) {
             vertices[i * 8 + 6] = LightTexture.FULL_BRIGHT;
         }
-//? if >=1.21.1 {
-        /*return new BakedQuad(vertices, quad.getTintIndex(), quad.getDirection(), quad.getSprite(), quad.isShade(), quad.hasAmbientOcclusion());
-*///?} else {
-        return new BakedQuad(vertices, quad.getTintIndex(), quad.getDirection(), quad.getSprite(), quad.isShade());
-//?}
+        return BakedQuadCompat.withAmbientOcclusion(
+                vertices, quad.getTintIndex(), quad.getDirection(), quad.getSprite(), quad.isShade(), quad.hasAmbientOcclusion());
     }
 
     @Override

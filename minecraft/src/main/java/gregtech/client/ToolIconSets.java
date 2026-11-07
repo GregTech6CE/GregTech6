@@ -1,10 +1,9 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
-import net.minecraft.resources.ResourceLocation;
-
+import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.resources.ResourceLocation;
 
 /** Fixed GT6 tool part textures under {@code textures/item/iconsets/} (lowercase paths). */
 public final class ToolIconSets {
@@ -41,11 +40,7 @@ public final class ToolIconSets {
     private ToolIconSets() {}
 
     public static ResourceLocation icon(String name) {
-//? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/iconsets/" + name);
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/iconsets/" + name).toLowerCase());
-//?}
+        return Mc.gregtechId("item/iconsets/" + name);
     }
 
     public static ResourceLocation overlayTexture(ResourceLocation base) {
@@ -82,8 +77,22 @@ public final class ToolIconSets {
         icons.add(SCISSORS);
         icons.add(PINCERS);
         icons.add(HAND_DRILL);
-        for(var type:gregtech.engine.tool.GTToolType.values()){if(type.headlessIcon()!=null&&!icons.contains(type.headlessIcon()))icons.add(type.headlessIcon());if(type.handleIcon()!=null&&!icons.contains(type.handleIcon()))icons.add(type.handleIcon());}
-        for(String part:java.util.List.of("power_unit_lv","power_unit_mv","power_unit_hv","handle_electric_drill","tip_electric_drill","handle_electric_mixer","tip_electric_mixer","handle_electric_trimmer","tip_electric_trimmer","handle_electric_screwdriver","handle_buzzsaw"))if(!icons.contains(icon(part)))icons.add(icon(part));
+        for (var type : gregtech.engine.tool.GTToolType.values()) {
+            if (type.headlessIcon() != null && !icons.contains(type.headlessIcon())) icons.add(type.headlessIcon());
+            if (type.handleIcon() != null && !icons.contains(type.handleIcon())) icons.add(type.handleIcon());
+        }
+        for (String part : java.util.List.of(
+                "power_unit_lv",
+                "power_unit_mv",
+                "power_unit_hv",
+                "handle_electric_drill",
+                "tip_electric_drill",
+                "handle_electric_mixer",
+                "tip_electric_mixer",
+                "handle_electric_trimmer",
+                "tip_electric_trimmer",
+                "handle_electric_screwdriver",
+                "handle_buzzsaw")) if (!icons.contains(icon(part))) icons.add(icon(part));
         return icons;
     }
 }

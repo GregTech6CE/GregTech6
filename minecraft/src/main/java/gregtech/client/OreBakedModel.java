@@ -166,11 +166,8 @@ public final class OreBakedModel implements IDynamicBakedModel {
             verts[idx + 4] = Float.floatToRawIntBits(tu0 + relU * tdu);
             verts[idx + 5] = Float.floatToRawIntBits(tv0 + relV * tdv);
         }
-//? if >=1.21.1 {
-        /*return new BakedQuad(verts, tintIndex, quad.getDirection(), to, quad.isShade(), quad.hasAmbientOcclusion());
-*///?} else {
-        return new BakedQuad(verts, tintIndex, quad.getDirection(), to, quad.isShade());
-//?}
+        return BakedQuadCompat.withAmbientOcclusion(
+                verts, tintIndex, quad.getDirection(), to, quad.isShade(), quad.hasAmbientOcclusion());
     }
 
     private static TextureAtlasSprite sprite(ResourceLocation texture) {

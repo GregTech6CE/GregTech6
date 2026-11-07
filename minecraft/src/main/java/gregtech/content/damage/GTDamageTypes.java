@@ -1,15 +1,13 @@
 package gregtech.content.damage;
-import gregtech.engine.mod.GregTechIdentity;
 
-
+import gregtech.platform.Mc;
+import java.util.List;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.Level;
-
-import java.util.List;
 
 /**
  * GT6's damage sources, ported to 1.20.1's data-driven damage types.
@@ -73,17 +71,26 @@ public final class GTDamageTypes {
 
     /** Every type this class registers, in GT6's {@code DamageSources} order of the hazard helpers. */
     public static final List<ResourceKey<DamageType>> ALL = List.of(
-            HEAT, FROST, CHEMICAL, BUMBLE, CRUSHER, SHREDDER, SPIKE, EXPLODED,
-            ALCOHOL, CAFFEINE, DEHYDRATION, SUGAR, FAT, ELECTRIC, RADIATION);
+            HEAT,
+            FROST,
+            CHEMICAL,
+            BUMBLE,
+            CRUSHER,
+            SHREDDER,
+            SPIKE,
+            EXPLODED,
+            ALCOHOL,
+            CAFFEINE,
+            DEHYDRATION,
+            SUGAR,
+            FAT,
+            ELECTRIC,
+            RADIATION);
 
     private GTDamageTypes() {}
 
     private static ResourceKey<DamageType> key(String path) {
-//? if >=1.21.1 {
-        /*return ResourceKey.create(Registries.DAMAGE_TYPE, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", path));
-*///?} else {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (path).toLowerCase()));
-//?}
+        return ResourceKey.create(Registries.DAMAGE_TYPE, Mc.gregtechId(path));
     }
 
     /** The {@code ResourceLocation} of a type key, for building its {@code death.attack.<message_id>} key. */
@@ -93,37 +100,68 @@ public final class GTDamageTypes {
 
     /** Builds a source for any of the keys above; every factory below is a one-liner over this. */
     public static DamageSource source(Level level, ResourceKey<DamageType> type) {
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(type));
+        return new DamageSource(
+                level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(type));
     }
 
     /** GT6 {@code DamageSources.getHeatDamage()}. */
-    public static DamageSource heat(Level level) { return source(level, HEAT); }
+    public static DamageSource heat(Level level) {
+        return source(level, HEAT);
+    }
     /** GT6 {@code DamageSources.getFrostDamage()}. */
-    public static DamageSource frost(Level level) { return source(level, FROST); }
+    public static DamageSource frost(Level level) {
+        return source(level, FROST);
+    }
     /** GT6 {@code DamageSources.getChemDamage()}. */
-    public static DamageSource chem(Level level) { return source(level, CHEMICAL); }
+    public static DamageSource chem(Level level) {
+        return source(level, CHEMICAL);
+    }
     /** GT6 {@code DamageSources.getBumbleDamage()}. */
-    public static DamageSource bumble(Level level) { return source(level, BUMBLE); }
+    public static DamageSource bumble(Level level) {
+        return source(level, BUMBLE);
+    }
     /** GT6 {@code DamageSources.getCrusherDamage()}. */
-    public static DamageSource crusher(Level level) { return source(level, CRUSHER); }
+    public static DamageSource crusher(Level level) {
+        return source(level, CRUSHER);
+    }
     /** GT6 {@code DamageSources.getShredderDamage()}. */
-    public static DamageSource shredder(Level level) { return source(level, SHREDDER); }
+    public static DamageSource shredder(Level level) {
+        return source(level, SHREDDER);
+    }
     /** GT6 {@code DamageSources.getSpikeDamage()}. */
-    public static DamageSource spike(Level level) { return source(level, SPIKE); }
+    public static DamageSource spike(Level level) {
+        return source(level, SPIKE);
+    }
     /** GT6 {@code DamageSources.getExplodingDamage()}. */
-    public static DamageSource exploding(Level level) { return source(level, EXPLODED); }
+    public static DamageSource exploding(Level level) {
+        return source(level, EXPLODED);
+    }
     /** GT6 {@code DamageSources.getAlcoholDamage()}. */
-    public static DamageSource alcohol(Level level) { return source(level, ALCOHOL); }
+    public static DamageSource alcohol(Level level) {
+        return source(level, ALCOHOL);
+    }
     /** GT6 {@code DamageSources.getCaffeineDamage()}. */
-    public static DamageSource caffeine(Level level) { return source(level, CAFFEINE); }
+    public static DamageSource caffeine(Level level) {
+        return source(level, CAFFEINE);
+    }
     /** GT6 {@code DamageSources.getDehydrationDamage()}. */
-    public static DamageSource dehydration(Level level) { return source(level, DEHYDRATION); }
+    public static DamageSource dehydration(Level level) {
+        return source(level, DEHYDRATION);
+    }
     /** GT6 {@code DamageSources.getSugarDamage()}. */
-    public static DamageSource sugar(Level level) { return source(level, SUGAR); }
+    public static DamageSource sugar(Level level) {
+        return source(level, SUGAR);
+    }
     /** GT6 {@code DamageSources.getFatDamage()}. */
-    public static DamageSource fat(Level level) { return source(level, FAT); }
+    public static DamageSource fat(Level level) {
+        return source(level, FAT);
+    }
     /** GT6 {@code DamageSources.getElectricDamage()} (IC2's type; see the class javadoc). */
-    public static DamageSource electric(Level level) { return source(level, ELECTRIC); }
+    public static DamageSource electric(Level level) {
+        return source(level, ELECTRIC);
+    }
     /** GT6 {@code DamageSources.getRadioactiveDamage()} (IC2's type; see the class javadoc). */
-    public static DamageSource radiation(Level level) { return source(level, RADIATION); }
+    public static DamageSource radiation(Level level) {
+        return source(level, RADIATION);
+    }
 }

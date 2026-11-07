@@ -1,13 +1,11 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
-
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import gregtech.content.block.BookShelfBlock;
 import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
 import gregtech.content.book.BookShelfGeometry;
 import gregtech.platform.Mc;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -22,7 +20,8 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
     public BookShelfRenderer(BlockEntityRendererProvider.Context context) {}
 
     private static String texture(ItemStack stack) {
-        if(stack.getItem() instanceof gregtech.content.item.ColoredBookItem book)return book.variant().shelfTexture();
+        if (stack.getItem() instanceof gregtech.content.item.ColoredBookItem book)
+            return book.variant().shelfTexture();
         if (stack.is(Items.ENCHANTED_BOOK)) return "book_enchanted";
         // GT6 LoaderBookList display IDs 2 and 255, respectively.
         if (stack.is(Items.STONE_BUTTON) || stack.is(Items.REDSTONE_TORCH)) return "book_enchanted";
@@ -38,40 +37,54 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
     private static ResourceLocation bookTexture(ItemStack stack, String texture, String face) {
         return stack.is(Items.COBBLESTONE)
                 ? ResourceLocation.parse("minecraft:textures/block/cobblestone.png")
-//? if >=1.21.1 {
-                /*: ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/books/" + texture + "_" + face + ".png");
-*///?} else {
-                : ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/block/books/" + texture + "_" + face + ".png").toLowerCase());
-//?}
+                : Mc.gregtechId("textures/block/books/" + texture + "_" + face + ".png");
     }
 
     @Override
-    public void render(BookShelfBlockEntity shelf, float partialTick, PoseStack pose,
-                       MultiBufferSource buffers, int light, int overlay) {
+    public void render(
+            BookShelfBlockEntity shelf,
+            float partialTick,
+            PoseStack pose,
+            MultiBufferSource buffers,
+            int light,
+            int overlay) {
         pose.pushPose();
         pose.translate(.5, 0, .5);
-        pose.mulPose(Axis.YP.rotationDegrees(180 - shelf.getBlockState().getValue(BookShelfBlock.FACING).toYRot()));
+        pose.mulPose(Axis.YP.rotationDegrees(
+                180 - shelf.getBlockState().getValue(BookShelfBlock.FACING).toYRot()));
         pose.translate(-.5, 0, -.5);
         for (int slot = 0; slot < shelf.inventory().getSlots(); slot++) {
             var stack = shelf.inventory().getStackInSlot(slot);
             if (stack.isEmpty()) continue;
             var b = BookShelfGeometry.bookBounds(slot);
             String texture = texture(stack);
-            int tint=stack.getItem() instanceof gregtech.content.item.ColoredBookItem book && !book.variant().color().equals("brown")?book.variant().tint():0xFFFFFF;
+            int tint = stack.getItem() instanceof gregtech.content.item.ColoredBookItem book
+                            && !book.variant().color().equals("brown")
+                    ? book.variant().tint()
+                    : 0xFFFFFF;
             var spine = buffers.getBuffer(RenderType.entityCutout(bookTexture(stack, texture, "back")));
-            float x0=(float)b.minX, x1=(float)b.maxX, y0=(float)b.minY, y1=(float)b.maxY, z0=(float)b.minZ, z1=(float)b.maxZ;
+            float x0 = (float) b.minX,
+                    x1 = (float) b.maxX,
+                    y0 = (float) b.minY,
+                    y1 = (float) b.maxY,
+                    z0 = (float) b.minZ,
+                    z1 = (float) b.maxZ;
             if (slot < 14) {
-                AnvilCuboidRenderer.face(pose.last(),spine,0,1,0,1,tint,light,Direction.NORTH,
-                        new float[]{x0,y0,z0,x0,y1,z0,x1,y1,z0,x1,y0,z0});
+                AnvilCuboidRenderer.face(pose.last(), spine, 0, 1, 0, 1, tint, light, Direction.NORTH, new float[] {
+                    x0, y0, z0, x0, y1, z0, x1, y1, z0, x1, y0, z0
+                });
             } else {
-                AnvilCuboidRenderer.face(pose.last(),spine,0,1,0,1,tint,light,Direction.SOUTH,
-                        new float[]{x0,y0,z1,x1,y0,z1,x1,y1,z1,x0,y1,z1});
+                AnvilCuboidRenderer.face(pose.last(), spine, 0, 1, 0, 1, tint, light, Direction.SOUTH, new float[] {
+                    x0, y0, z1, x1, y0, z1, x1, y1, z1, x0, y1, z1
+                });
             }
             var side = buffers.getBuffer(RenderType.entityCutout(bookTexture(stack, texture, "side")));
-            AnvilCuboidRenderer.face(pose.last(),side,0,1,0,1,tint,light,Direction.WEST,
-                    new float[]{x0,y0,z0,x0,y0,z1,x0,y1,z1,x0,y1,z0});
-            AnvilCuboidRenderer.face(pose.last(),side,0,1,0,1,tint,light,Direction.EAST,
-                    new float[]{x1,y0,z0,x1,y1,z0,x1,y1,z1,x1,y0,z1});
+            AnvilCuboidRenderer.face(pose.last(), side, 0, 1, 0, 1, tint, light, Direction.WEST, new float[] {
+                x0, y0, z0, x0, y0, z1, x0, y1, z1, x0, y1, z0
+            });
+            AnvilCuboidRenderer.face(pose.last(), side, 0, 1, 0, 1, tint, light, Direction.EAST, new float[] {
+                x1, y0, z0, x1, y1, z0, x1, y1, z1, x1, y0, z1
+            });
         }
         pose.popPose();
     }

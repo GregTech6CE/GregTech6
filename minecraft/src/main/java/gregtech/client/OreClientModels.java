@@ -5,6 +5,7 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.OreBlock;
 import gregtech.content.registry.GTBlocks;
+import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
@@ -139,11 +140,7 @@ public final class OreClientModels {
                     return texture;
                 }
             }
-//? if >=1.21.1 {
-            /*return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/" + file);
-*///?} else {
-            return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "block/material_icons/metallic/" + file);
-//?}
+            return Mc.gregtechId("block/material_icons/metallic/" + file);
         });
     }
 }

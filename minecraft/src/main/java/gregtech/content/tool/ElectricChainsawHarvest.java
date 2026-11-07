@@ -1,6 +1,7 @@
 package gregtech.content.tool;
 
 import gregtech.content.item.ElectricToolItem;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -19,11 +20,7 @@ import net.minecraftforge.common.IForgeShearable;
 /** GT_Tool_Chainsaw_LV target/quality rules and leaf/ice drop conversion. */
 public final class ElectricChainsawHarvest {
     private static final net.minecraft.tags.TagKey<Block> SAW = BlockTags.create(
-//? if >=1.21.1 {
-            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","mineable/saw"));
-*///?} else {
-            gregtech.GregTech.id("mineable/saw"));
-//?}
+            Mc.gregtechId("mineable/saw"));
     private ElectricChainsawHarvest() {}
     // Forge's vanilla leaves inherit an empty default onSheared; their shearing is a loot-table rule.
     private static final ClassValue<Boolean> DEFAULT_SHEARING = new ClassValue<>() {

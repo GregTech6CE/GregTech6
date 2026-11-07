@@ -73,11 +73,7 @@ public final class StoneBlockClientModels {
             if (itemId == null) {
                 itemId = blockId;
             }
-//? if >=1.21.1 {
-            /*BlockItemClientModels.alias(models, itemId, ResourceLocation.fromNamespaceAndPath("gt6ce",modelPath), shared, itemModel);
-*///?} else {
-            BlockItemClientModels.alias(models, itemId, ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (modelPath).toLowerCase()), shared, itemModel);
-//?}
+            BlockItemClientModels.alias(models, itemId, Mc.gregtechId(modelPath), shared, itemModel);
             aliased++;
         }
 

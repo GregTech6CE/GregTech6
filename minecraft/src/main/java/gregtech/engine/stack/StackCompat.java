@@ -46,4 +46,13 @@ public final class StackCompat {
         return first.isFluidEqual(second);
 //?}
     }
+
+    /** The fluid a container item holds, or an empty stack. */
+    public static FluidStack fluidContained(ItemStack stack) {
+//? if >=1.21.1 {
+/*        return net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+*///?} else {
+        return net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+//?}
+    }
 }

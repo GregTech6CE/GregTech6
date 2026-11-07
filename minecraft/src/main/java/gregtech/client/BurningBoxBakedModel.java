@@ -1,8 +1,8 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.content.block.machine.GTFacingMachineBlock;
+import gregtech.platform.Mc;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -31,11 +31,7 @@ import java.util.Map;
 /** Picks facing + lit overlay variant; tint via block/item color handlers ({@code tintindex} 0). */
 public final class BurningBoxBakedModel implements BakedModel {
     private static final ResourceLocation PARTICLE =
-//? if >=1.21.1 {
-            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/generators/burning_solid/colored/top");
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machines/generators/burning_solid/colored/top").toLowerCase());
-//?}
+            Mc.gregtechId("block/machines/generators/burning_solid/colored/top");
 
     private final Map<Direction, BakedModel> idleByFacing;
     private final Map<Direction, BakedModel> activeByFacing;

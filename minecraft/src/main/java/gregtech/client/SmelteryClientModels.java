@@ -107,11 +107,7 @@ public final class SmelteryClientModels {
             boolean faucet) {
         int aliased = 0;
         for (var entry : blocks) {
-//? if >=1.21.1 {
-            /*if (!entry.isBound()) {
-*///?} else {
             if (!entry.isPresent()) {
-//?}
                 continue;
             }
             T block = entry.get();

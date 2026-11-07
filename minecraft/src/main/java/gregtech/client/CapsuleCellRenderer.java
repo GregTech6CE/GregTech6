@@ -2,16 +2,15 @@ package gregtech.client;
 
 import gregtech.content.blockentity.tool.PortableContainerBlockEntity;
 import gregtech.content.item.PortableFluidContainerItem;
+import gregtech.engine.stack.StackCompat;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.*;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.fluids.FluidUtil;
 //?}
 
 /** GT6 cell side windows: fluid is behind the casing overlay, full-height even when partly filled. */
@@ -22,11 +21,7 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
         if(!(stack.getItem() instanceof PortableFluidContainerItem item))return;
         String shape = item.spec().shapeId();
         if (!java.util.Set.of("cell", "cup", "measuring_pot", "jug").contains(shape)) return;
-//? if >=1.21.1 {
-        /*var fluid=FluidUtil.getFluidContained(stack).orElse(net.neoforged.neoforge.fluids.FluidStack.EMPTY);
-*///?} else {
-        var fluid=FluidUtil.getFluidContained(stack).orElse(net.minecraftforge.fluids.FluidStack.EMPTY);
-//?}
+        var fluid=StackCompat.fluidContained(stack);
         if(fluid.isEmpty())return;
         var visual=IClientFluidTypeExtensions.of(fluid.getFluid());var texture=visual.getStillTexture(fluid);
         if(texture==null)return;

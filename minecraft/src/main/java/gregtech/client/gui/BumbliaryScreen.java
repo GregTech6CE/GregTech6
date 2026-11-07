@@ -1,5 +1,5 @@
 package gregtech.client.gui;
-import gregtech.engine.mod.GregTechIdentity;
+import gregtech.platform.Mc;
 
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,17 +19,9 @@ import net.minecraft.world.entity.player.Inventory;
 public class BumbliaryScreen extends MachineContainerScreen<BumbliaryContainerMenu> {
 
     private static final ResourceLocation STANDARD =
-//? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/machines/bumbliary.png");
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/machines/bumbliary.png").toLowerCase());
-//?}
+            Mc.gregtechId("textures/gui/machines/bumbliary.png");
     private static final ResourceLocation ADVANCED =
-//? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/machines/bumbliary_advanced.png");
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/machines/bumbliary_advanced.png").toLowerCase());
-//?}
+            Mc.gregtechId("textures/gui/machines/bumbliary_advanced.png");
 
     private final ResourceLocation texture;
 

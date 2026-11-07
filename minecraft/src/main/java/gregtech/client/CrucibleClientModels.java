@@ -109,11 +109,7 @@ public final class CrucibleClientModels {
             aliased++;
         }
 
-//? if >=1.21.1 {
-        /*LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
-*///?} else {
         LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", GregTechIdentity.REGISTRY_NAMESPACE, aliased, missing);
-//?}
     }
 
 //? if >=1.21.1 {

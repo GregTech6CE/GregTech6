@@ -1,10 +1,10 @@
 package gregtech.content.worldgen;
 import gregtech.engine.mod.GregTechIdentity;
+import gregtech.platform.Mc;
 
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
@@ -90,19 +90,11 @@ public final class GTStructures {
 
     /** Key of the dungeon structure ({@code data/gt6ce/worldgen/structure/gt_dungeon.json}). */
     public static final ResourceKey<Structure> DUNGEON = ResourceKey.create(Registries.STRUCTURE,
-//? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "gt_dungeon"));
-//?}
+            Mc.gregtechId("gt_dungeon"));
 
     /** Key of the structure set that carries the dungeon ({@code data/gt6ce/worldgen/structure_set/gt_dungeons.json}). */
     public static final ResourceKey<StructureSet> DUNGEON_SET = ResourceKey.create(Registries.STRUCTURE_SET,
-//? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeons"));
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "gt_dungeons"));
-//?}
+            Mc.gregtechId("gt_dungeons"));
 
     /**
      * The dungeon in a tag of its own ({@code data/gt6ce/tags/worldgen/structure/gt_dungeon.json}), so
@@ -111,11 +103,7 @@ public final class GTStructures {
      * ({@code ServerLevel}) - can ask for it.
      */
     public static final TagKey<Structure> DUNGEON_TAG = TagKey.create(Registries.STRUCTURE,
-//? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "gt_dungeon"));
-//?}
+            Mc.gregtechId("gt_dungeon"));
 
     private GTStructures() {}
 

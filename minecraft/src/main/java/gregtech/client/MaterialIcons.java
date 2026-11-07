@@ -1,10 +1,10 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.platform.Mc;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 
@@ -29,11 +29,7 @@ public final class MaterialIcons {
     }
 
     public static ResourceLocation texture(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
-//? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gt6ce", MaterialIconDefinitions.texturePath(set, prefix, overlay));
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (MaterialIconDefinitions.texturePath(set, prefix, overlay)).toLowerCase());
-//?}
+        return Mc.gregtechId(MaterialIconDefinitions.texturePath(set, prefix, overlay));
     }
 
     public static String modelJson(GTMaterial material, MaterialPrefix prefix) {
@@ -45,11 +41,7 @@ public final class MaterialIcons {
      * Path is relative to the {@code models/} root, so {@code item/} is required.
      */
     public static ResourceLocation sharedModelLocation(MaterialTextureSet set, MaterialPrefix prefix) {
-//? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gt6ce", MaterialIconDefinitions.modelPath(set, prefix));
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (MaterialIconDefinitions.modelPath(set, prefix)).toLowerCase());
-//?}
+        return Mc.gregtechId(MaterialIconDefinitions.modelPath(set, prefix));
     }
 
     public static ModelResourceLocation sharedModelInventory(MaterialTextureSet set, MaterialPrefix prefix) {

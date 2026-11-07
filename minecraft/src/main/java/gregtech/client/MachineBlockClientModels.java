@@ -248,11 +248,7 @@ public final class MachineBlockClientModels {
         for (var entry : MachineRegistry.solidBurningBoxes()) {
 //?}
 
-//? if >=1.21.1 {
-/*            if (!entry.isBound()) {
-*///?} else {
             if (!entry.isPresent()) {
-//?}
 
 
 
@@ -372,11 +368,7 @@ public final class MachineBlockClientModels {
         for (var entry : MachineRegistry.burningBoxes()) {
 //?}
 
-//? if >=1.21.1 {
-/*            if (!entry.isBound()) continue;
-*///?} else {
             if (!entry.isPresent()) continue;
-//?}
 
 
 
@@ -490,11 +482,7 @@ public final class MachineBlockClientModels {
         for (var entry : MachineRegistry.basicMachines()) {
 //?}
 
-//? if >=1.21.1 {
-/*            if (!entry.isBound()) continue;
-*///?} else {
             if (!entry.isPresent()) continue;
-//?}
 
 
 
@@ -618,11 +606,7 @@ public final class MachineBlockClientModels {
         for (var entry : MachineRegistry.allEngines()) {
 //?}
 
-//? if >=1.21.1 {
-/*            if (!entry.isBound()) continue;
-*///?} else {
             if (!entry.isPresent()) continue;
-//?}
 
 
 
@@ -732,11 +716,7 @@ public final class MachineBlockClientModels {
 
 
 
-//? if >=1.21.1 {
-/*            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + modelDir + "/" + variant);
-*///?} else {
-            ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/" + modelDir + "/" + variant).toLowerCase());
-//?}
+            ResourceLocation id = Mc.gregtechId("block/machine/" + modelDir + "/" + variant);
 
 
 

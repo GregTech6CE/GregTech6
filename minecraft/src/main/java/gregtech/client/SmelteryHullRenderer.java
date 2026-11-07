@@ -1,11 +1,11 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.blockentity.machine.MoldBlockEntity;
+import gregtech.platform.Mc;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -23,11 +23,7 @@ import org.joml.Matrix4f;
 public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEntity> {
 
     private static final ResourceLocation SOLID_BASE =
-//? if >=1.21.1 {
-            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blocksolid");
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/metallic/blocksolid").toLowerCase());
-//?}
+            Mc.gregtechId("block/material_icons/metallic/blocksolid");
 
     public SmelteryHullRenderer(BlockEntityRendererProvider.Context context) {
     }

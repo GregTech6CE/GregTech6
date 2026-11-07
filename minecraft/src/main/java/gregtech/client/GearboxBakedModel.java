@@ -1,8 +1,8 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.content.blockentity.energy.GearboxBlockEntity;
+import gregtech.platform.Mc;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -44,19 +44,11 @@ public final class GearboxBakedModel implements IDynamicBakedModel {
 *///?} else {
 //?}
     private static final ResourceLocation[] TEXTURES = {
-//? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gearbox"),
-            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gearbox_axle"),
-            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear"),
-            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear_clockwise"),
-            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear_counterclockwise")
-*///?} else {
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gearbox").toLowerCase()),
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gearbox_axle").toLowerCase()),
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gear").toLowerCase()),
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gear_clockwise").toLowerCase()),
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gear_counterclockwise").toLowerCase())
-//?}
+            Mc.gregtechId("block/iconsets/gearbox"),
+            Mc.gregtechId("block/iconsets/gearbox_axle"),
+            Mc.gregtechId("block/iconsets/gear"),
+            Mc.gregtechId("block/iconsets/gear_clockwise"),
+            Mc.gregtechId("block/iconsets/gear_counterclockwise")
     };
     private static final ChunkRenderTypeSet LAYERS =
             ChunkRenderTypeSet.of(RenderType.solid(), RenderType.cutoutMipped());

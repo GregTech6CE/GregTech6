@@ -110,11 +110,7 @@ public final class MaterialBlockClientModels {
                 itemId = blockId;
             }
             BlockItemClientModels.alias(models, itemId,
-//? if >=1.21.1 {
-                    /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath()), worldModel, itemModel);
-*///?} else {
-                    ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/blocks/" + blockId.getPath()).toLowerCase()), worldModel, itemModel);
-//?}
+                    Mc.gregtechId("block/blocks/" + blockId.getPath()), worldModel, itemModel);
             for (var state : entry.get().getStateDefinition().getPossibleStates())
                 models.put(net.minecraft.client.renderer.block.BlockModelShaper.stateToModelLocation(blockId, state), worldModel);
             aliased++;

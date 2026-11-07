@@ -1,5 +1,5 @@
 package gregtech.client.gui;
-import gregtech.engine.mod.GregTechIdentity;
+import gregtech.platform.Mc;
 
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -28,11 +28,7 @@ public class HopperScreen extends MachineContainerScreen<HopperContainerMenu> {
 
     private static ResourceLocation guiTexture(int slotCount) {
         String name = TEXTURE_SIZES.contains(slotCount) ? String.valueOf(slotCount) : "0";
-//? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","textures/gui/chests/" + name + ".png");
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/chests/" + name + ".png").toLowerCase());
-//?}
+        return Mc.gregtechId("textures/gui/chests/" + name + ".png");
     }
 
     @Override

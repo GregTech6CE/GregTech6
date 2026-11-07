@@ -1,10 +1,10 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.block.stone.GTStoneBlock;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 
 /** Block material icon paths under {@code textures/block/material_icons/{set}/{prefix}.png}. */
@@ -21,27 +21,15 @@ public final class BlockMaterialIcons {
 
     public static ResourceLocation texture(MaterialTextureSet set, BlockMaterialPrefix prefix, boolean overlay) {
         String file = prefix.getTextureFileName() + (overlay ? "_overlay" : "");
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/" + set.folder() + "/" + file);
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/" + set.folder() + "/" + file).toLowerCase());
-//?}
+        return Mc.gregtechId("block/material_icons/" + set.folder() + "/" + file);
     }
 
     public static ResourceLocation addonModel(BlockMaterialPrefix prefix) {
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material/addon/" + prefix.getTextureFileName());
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material/addon/" + prefix.getTextureFileName()).toLowerCase());
-//?}
+        return Mc.gregtechId("block/material/addon/" + prefix.getTextureFileName());
     }
 
     public static ResourceLocation sharedModelLocation(MaterialTextureSet set, BlockMaterialPrefix prefix) {
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material/" + set.folder() + "/" + prefix.getTextureFileName());
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material/" + set.folder() + "/" + prefix.getTextureFileName()).toLowerCase());
-//?}
+        return Mc.gregtechId("block/material/" + set.folder() + "/" + prefix.getTextureFileName());
     }
 
     public static String sharedModelJson(MaterialTextureSet set, BlockMaterialPrefix prefix) {
@@ -88,11 +76,7 @@ public final class BlockMaterialIcons {
     }
 
     public static ResourceLocation stoneTexture(GTStoneBlockPaths paths) {
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/stones/" + paths.folder() + "/" + paths.variantTexture());
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/stones/" + paths.folder() + "/" + paths.variantTexture()).toLowerCase());
-//?}
+        return Mc.gregtechId("block/stones/" + paths.folder() + "/" + paths.variantTexture());
     }
 
     public record GTStoneBlockPaths(String folder, String variantTexture) {}

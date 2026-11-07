@@ -1,6 +1,5 @@
 package gregtech.content.item.behavior;
-import net.minecraft.resources.ResourceLocation;
-import gregtech.engine.mod.GregTechIdentity;
+import gregtech.platform.Mc;
 
 
 import net.minecraft.core.Direction;
@@ -14,13 +13,8 @@ import net.minecraft.world.phys.BlockHitResult;
 
 /** GT6 Behavior_Place_Sapling followed by Behavior_Place_Workbench. */
 public final class BehaviorPlaceWoodworkingSupplies {
-//? if >=1.21.1 {
-    /*private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","saplings"));
-    private static final TagKey<Item> WORKBENCHES=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","crafting_workbenches"));
-*///?} else {
-    private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("saplings").toLowerCase()));
-    private static final TagKey<Item> WORKBENCHES=ItemTags.create(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("crafting_workbenches").toLowerCase()));
-//?}
+    private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(Mc.gregtechId("saplings"));
+    private static final TagKey<Item> WORKBENCHES=ItemTags.create(Mc.gregtechId("crafting_workbenches"));
     private BehaviorPlaceWoodworkingSupplies() {}
     public static InteractionResult use(UseOnContext context) {
         var player=context.getPlayer();var level=context.getLevel();

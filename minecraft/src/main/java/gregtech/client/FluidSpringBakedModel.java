@@ -63,11 +63,8 @@ public final class FluidSpringBakedModel implements BakedModel {
             }
             int[] vertices = quad.getVertices().clone();
             FluidItemBakedModel.remapUv(vertices, quad.getSprite(), sprite);
-//? if >=1.21.1 {
-            /*result.add(new BakedQuad(vertices, 0, quad.getDirection(), sprite, quad.isShade(), quad.hasAmbientOcclusion()));
-*///?} else {
-            result.add(new BakedQuad(vertices, 0, quad.getDirection(), sprite, quad.isShade()));
-//?}
+            result.add(BakedQuadCompat.withAmbientOcclusion(
+                    vertices, 0, quad.getDirection(), sprite, quad.isShade(), quad.hasAmbientOcclusion()));
         }
         return result;
     }
