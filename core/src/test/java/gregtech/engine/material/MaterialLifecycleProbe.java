@@ -124,6 +124,10 @@ public final class MaterialLifecycleProbe {
             rejects(() -> GTMaterialRegistry.get("Iron"));
             rejects(GTMaterialRegistry::allMaterials);
             rejects(MaterialViews::catalog);
+            rejects(() -> MaterialInfoTool.tool(new MaterialKey("Iron")));
+            rejects(() -> MaterialInfoTool.frozenTool(new MaterialKey("Iron")));
+            rejects(() -> MaterialInfoTool.composition(new MaterialKey("Iron")));
+            rejects(() -> MaterialToolHelper.profile(new GTMaterial(260, "Iron", "Iron", 0)));
             return;
         }
         GTMaterialRegistry.init();

@@ -81,6 +81,26 @@ class MaterialRegistrationTest {
         assertTrue(error.getMessage().contains("Test / composition -> TypoCopper"));
         assertFalse(target.hasComposition());
         assertThrows(IllegalArgumentException.class, () -> new MaterialInfoDefinition.Part("Iron", 0));
+        var unknownByproduct = MaterialDefinition.builder(261, "Test")
+                .byproducts("TypoByproduct")
+                .build();
+        var unresolvedTarget = new GTMaterial(261, "Test", "Test", 0);
+        error = assertThrows(
+                IllegalArgumentException.class,
+                () -> MaterialLinker.validate(List.of(unknownByproduct), Map.of("Test", unresolvedTarget)::get));
+        assertTrue(error.getMessage().contains("Test / ore processing byproduct -> TypoByproduct"));
+        assertTrue(unresolvedTarget.getByProducts().isEmpty());
+        var nonMaterialByproduct =
+                MaterialDefinition.builder(262, "Other").byproducts("AnyIron").build();
+        var unresolvedGroupTarget = new GTMaterial(262, "Other", "Other", 0);
+        error = assertThrows(
+                IllegalArgumentException.class,
+                () -> MaterialLinker.validate(
+                        List.of(nonMaterialByproduct),
+                        Map.of("Other", unresolvedGroupTarget, "AnyIron", new GTMaterial(-1, "AnyIron", "Group", 0))
+                                ::get));
+        assertTrue(error.getMessage().contains("Other / ore processing byproduct -> AnyIron"));
+        assertTrue(unresolvedGroupTarget.getByProducts().isEmpty());
         assertThrows(
                 IllegalArgumentException.class,
                 () -> MaterialDefinition.builder(1, "InvalidDivider")

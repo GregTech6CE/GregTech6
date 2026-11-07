@@ -252,14 +252,17 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     @Override
     public MaterialToolProfile tool(MaterialKey key) {
-        var frozen = requireSnapshot();
+        var frozen = requireReadySnapshot();
         return frozen.tools().getOrDefault(Objects.requireNonNull(key).name(), new MaterialToolProfile(0, 1F, 0, 0));
     }
 
     @Override
     public Optional<MaterialToolProfile> toolIfReady(MaterialKey key) {
+        if (GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.FAILED)
+            throw new IllegalStateException("Material initialization previously failed");
         Snapshot frozen = snapshot;
-        if (frozen == null) return Optional.empty();
+        if (frozen == null || GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.READY)
+            return Optional.empty();
         return Optional.of(
                 frozen.tools().getOrDefault(Objects.requireNonNull(key).name(), new MaterialToolProfile(0, 1F, 0, 0)));
     }
@@ -271,12 +274,12 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         var parts = composition.parts().stream()
                 .map(part -> new MaterialComposition.Part(part.material(), part.amount()))
                 .toList();
-        boolean crucible = requireSnapshot().compositionCrucible().getOrDefault(material.name(), false);
+        boolean crucible = requireReadySnapshot().compositionCrucible().getOrDefault(material.name(), false);
         return Optional.of(new MaterialComposition(material.name(), composition.divider(), parts, crucible));
     }
 
     public static MaterialInfoDefinition.Composition compositionDefinition(MaterialKey key) {
-        var frozen = requireSnapshot();
+        var frozen = requireReadySnapshot();
         return frozen.compositions()
                 .getOrDefault(
                         Objects.requireNonNull(key).name(),
@@ -288,7 +291,16 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     }
 
     public static MaterialInfoDefinition.Relations relations(String name) {
-        var frozen = requireSnapshot();
+        var frozen = requireReadySnapshot();
+        return frozen.relations()
+                .getOrDefault(
+                        Objects.requireNonNull(name),
+                        new MaterialInfoDefinition.Relations(
+                                false, java.util.Set.of(), java.util.Set.of(), java.util.List.of()));
+    }
+
+    static MaterialInfoDefinition.Relations relationsForPublication(String name) {
+        var frozen = requireSnapshotForPublication();
         return frozen.relations()
                 .getOrDefault(
                         Objects.requireNonNull(name),
@@ -297,7 +309,13 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     }
 
     public static MaterialInfoDefinition.Processes processes(MaterialKey key) {
-        var frozen = requireSnapshot();
+        var frozen = requireReadySnapshot();
+        return frozen.processes()
+                .getOrDefault(Objects.requireNonNull(key).name(), new MaterialInfoDefinition.Processes(Map.of()));
+    }
+
+    static MaterialInfoDefinition.Processes processesForPublication(MaterialKey key) {
+        var frozen = requireSnapshotForPublication();
         return frozen.processes()
                 .getOrDefault(Objects.requireNonNull(key).name(), new MaterialInfoDefinition.Processes(Map.of()));
     }
@@ -313,7 +331,15 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         return PROCESSES.getOrDefault(name, new MaterialInfoDefinition.Processes(Map.of()));
     }
 
-    private static Snapshot requireSnapshot() {
+    private static Snapshot requireReadySnapshot() {
+        Snapshot frozen = requireSnapshotForPublication();
+        GTMaterialRegistry.RegistrationPhase phase = GTMaterialRegistry.registrationPhase();
+        if (phase != GTMaterialRegistry.RegistrationPhase.READY)
+            throw new IllegalStateException("Material auxiliary indexes are not ready (" + phase + ")");
+        return frozen;
+    }
+
+    private static Snapshot requireSnapshotForPublication() {
         Snapshot frozen = snapshot;
         if (frozen == null)
             throw new IllegalStateException(

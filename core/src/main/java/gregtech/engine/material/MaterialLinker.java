@@ -3,6 +3,7 @@ package gregtech.engine.material;
 import gregtech.api.addon.material.FuelRule;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.OreProcessingRule;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
 import java.util.List;
@@ -36,6 +37,10 @@ final class MaterialLinker {
             })
                 if (target != null)
                     require(definition.name(), "target", target.material().name(), lookup);
+            var oreProcessing = oreProcessing(declaration);
+            if (oreProcessing != null)
+                for (var byproduct : oreProcessing.byproducts())
+                    requireReal(definition.name(), "ore processing byproduct", byproduct.name(), lookup);
             for (var target : processing(definition.name()).values())
                 require(definition.name(), "processing", target.material().name(), lookup);
         }
@@ -66,6 +71,14 @@ final class MaterialLinker {
         return target;
     }
 
+    private static GTMaterial requireReal(
+            String owner, String field, String name, Function<String, GTMaterial> lookup) {
+        GTMaterial target = require(owner, field, name, lookup);
+        if (!target.isValid())
+            throw new IllegalArgumentException("Invalid material reference: " + owner + " / " + field + " -> " + name);
+        return target;
+    }
+
     static void link(
             MaterialDefinition.Declaration declaration, GTMaterial material, Function<String, GTMaterial> lookup) {
         MaterialDefinition definition = declaration.material();
@@ -90,10 +103,10 @@ final class MaterialLinker {
                     info.composition().parts().stream()
                             .map(part -> MaterialComponent.of(lookup.apply(part.material()), part.amount()))
                             .toArray(MaterialComponent[]::new));
-        var oreProcessing = first(definition.name(), MaterialProcessKeys.ORE_PROCESSING);
+        var oreProcessing = oreProcessing(declaration);
         if (oreProcessing != null)
             material.addOreByProducts(oreProcessing.byproducts().stream()
-                    .map(key -> lookup.apply(key.name()))
+                    .map(key -> requireReal(definition.name(), "ore processing byproduct", key.name(), lookup))
                     .toArray(GTMaterial[]::new));
         material.addReRegistrationToThis(
                 info.relations().members().stream().map(lookup).toArray(GTMaterial[]::new));
@@ -107,6 +120,11 @@ final class MaterialLinker {
 
     private static <T> T first(String name, gregtech.api.addon.material.MaterialProcessKey<T> key) {
         var rules = MaterialInfoRegistry.processesBeforeFreeze(name).find(key);
+        return rules.isEmpty() ? null : rules.get(0).value();
+    }
+
+    private static OreProcessingRule oreProcessing(MaterialDefinition.Declaration declaration) {
+        var rules = declaration.info().processes().find(MaterialProcessKeys.ORE_PROCESSING);
         return rules.isEmpty() ? null : rules.get(0).value();
     }
 

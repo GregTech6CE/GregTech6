@@ -31,7 +31,7 @@ public final class MaterialViews {
         var tagFacts = new LinkedHashMap<DataKey, TagFacts>();
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
             var definition = MaterialDefinitions.find(material.getName());
-            var relations = MaterialInfoRegistry.relations(material.getName());
+            var relations = MaterialInfoRegistry.relationsForPublication(material.getName());
             if (!material.isValid() || definition != null && relations.group()) continue;
             var builder = MaterialMetadata.builder()
                     .property(MaterialProperties.MELTING_POINT, material.getMeltingPoint())
@@ -156,7 +156,7 @@ public final class MaterialViews {
         var groupFacts = new LinkedHashMap<MaterialGroupKey, GroupFacts>();
         for (var declaration : MaterialDefinitions.declarations()) {
             var definition = declaration.material();
-            var relations = MaterialInfoRegistry.relations(definition.name());
+            var relations = MaterialInfoRegistry.relationsForPublication(definition.name());
             if (!relations.group()) continue;
             var key = groupKey(definition.name());
             var groupMaterials = new LinkedHashSet<MaterialKey>();
@@ -164,7 +164,7 @@ public final class MaterialViews {
             for (var member : relations.members()) {
                 var memberDefinition = MaterialDefinitions.find(member);
                 if (memberDefinition != null
-                        && MaterialInfoRegistry.relations(memberDefinition.name())
+                        && MaterialInfoRegistry.relationsForPublication(memberDefinition.name())
                                 .group()) {
                     includedGroups.add(groupKey(memberDefinition.name()));
                     continue;
@@ -246,7 +246,7 @@ public final class MaterialViews {
         var processRules = new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
         for (var material : materials.keySet()) processRules.put(material, new LinkedHashMap<>());
         for (var material : materials.keySet()) {
-            MaterialInfoRegistry.processes(material).rules().forEach((key, rules) -> {
+            MaterialInfoRegistry.processesForPublication(material).rules().forEach((key, rules) -> {
                 registerProcessType(processTypes, key, "linked material catalog");
                 for (var rule : rules) addProcessRule(processRules.get(material), key, rule);
             });
