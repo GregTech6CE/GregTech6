@@ -168,6 +168,14 @@ class MaterialCatalogTest {
                 gregtech.content.data.FluidCatalog.get("Lava_Pahoehoe").textureMode());
         assertNotNull(gregtech.content.data.FluidCatalog.get("MatterNeutral"));
         assertNotNull(gregtech.content.data.FluidCatalog.get("MatterCharged"));
+        // Loader_Fluids:618 creates mercury as one ordinary simple liquid. GT6's metal factory does
+        // not set MOLTEN, so the generated molten ID is a port compatibility entry, not a second phase.
+        var mercuryLiquid = gregtech.content.data.FluidCatalog.get("GenLiquid_Mercury");
+        assertNotNull(mercuryLiquid);
+        assertEquals("mercury", mercuryLiquid.registryName());
+        assertTrue(mercuryLiquid.hasFlag(gregtech.content.data.FluidCatalog.FluidFlags.LIQUID));
+        assertTrue(mercuryLiquid.hasFlag(gregtech.content.data.FluidCatalog.FluidFlags.SIMPLE));
+        assertNotNull(gregtech.content.data.FluidCatalog.get("GenMolten_Mercury"));
         assertTrue(!GTMaterialRegistry.get(9884).isValid());
         assertTrue(!GTMaterialRegistry.get(9885).isValid());
     }
