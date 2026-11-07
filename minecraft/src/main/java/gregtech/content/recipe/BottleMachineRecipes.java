@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 /** GT6 RecipeMapFluidCanner:50-72, materialized for both runtime machines and recipe viewers.
- * Every existing bottle consumes/returns its actual 250 mB fluid and empty container.
+ * Every existing bottle consumes/returns its actual source portion and empty container.
  */
 public final class BottleMachineRecipes {
     private BottleMachineRecipes() {}

@@ -21,7 +21,7 @@ public final class BottleContents {
                 || stack.is(BottleItem.emptyBottle().getItem())) return FluidStack.EMPTY;
         if (stack.getItem() instanceof BottleItem bottle) {
             var fluid = bottle.fluid();
-            return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, BottleItem.BOTTLE_AMOUNT);
+            return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, bottle.amount());
         }
         // Preserve third-party fluid stack tags/components for texture and tint extensions.
         var contained = FluidUtil.getFluidContained(stack);

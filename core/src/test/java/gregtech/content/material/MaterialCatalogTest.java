@@ -35,10 +35,10 @@ class MaterialCatalogTest {
             8469, 8509, 8512, 8513, 8523, 8525, 8526, 8527, 8606, 8613, 8637, 8639, 8642, 8649, 8650, 8654, 8678, 8683,
             8688, 8690, 8691, 8692, 8693, 8694, 8695, 8696, 8701, 8711, 8718, 8725, 8728, 8731, 8736, 8753, 8754, 8755,
             8757, 8766, 8769, 8770, 8771, 8776, 8794, 8795, 8805, 8806, 8807, 8808, 8809, 8810, 8811, 8812, 8813, 9172,
-            9173, 9178, 9181, 9182, 9183, 9191, 9244, 9245, 9249, 9250, 9251, 9253, 9254, 9255, 9256, 9257, 9258, 9259,
-            9260, 9262, 9263, 9264, 9265, 9266, 9267, 9268, 9269, 9270, 9320, 9324, 9325, 9326, 9327, 9328, 9331, 9332,
-            9333, 9337, 9338, 9339, 9340, 9341, 9358, 9371, 9406, 9704, 9706, 9707, 9708, 9714, 9716, 9717, 9718, 9719,
-            9778, 9786, 9787, 9788, 9789, 9795, 9797, 9798, 9799, 9807, 9887
+            9173, 9178, 9181, 9182, 9183, 9191, 9244, 9245, 9249, 9250, 9251, 9252, 9253, 9254, 9255, 9256, 9257, 9258,
+            9259, 9260, 9262, 9263, 9264, 9265, 9266, 9267, 9268, 9269, 9270, 9320, 9324, 9325, 9326, 9327, 9328, 9331,
+            9332, 9333, 9337, 9338, 9339, 9340, 9341, 9358, 9371, 9406, 9704, 9706, 9707, 9708, 9714, 9716, 9717, 9718,
+            9719, 9778, 9786, 9787, 9788, 9789, 9795, 9797, 9798, 9799, 9807, 9887
         }) assertTrue(!GTMaterialRegistry.get(id).isValid(), "Retired material " + id);
         for (int i = 0; i < 16; i++) {
             var dye = gregtech.content.data.ImportedMaterialData.DATA.DYE_MATERIALS[i];
@@ -168,6 +168,17 @@ class MaterialCatalogTest {
                 gregtech.content.data.FluidCatalog.get("Lava_Pahoehoe").textureMode());
         assertNotNull(gregtech.content.data.FluidCatalog.get("MatterNeutral"));
         assertNotNull(gregtech.content.data.FluidCatalog.get("MatterCharged"));
+        // Loader_Fluids:618 creates mercury as one ordinary simple liquid. GT6's metal factory does
+        // not set MOLTEN, so the generated molten ID is a port compatibility entry, not a second phase.
+        var mercuryLiquid = gregtech.content.data.FluidCatalog.get("GenLiquid_Mercury");
+        assertNotNull(mercuryLiquid);
+        assertEquals("mercury", mercuryLiquid.registryName());
+        assertTrue(mercuryLiquid.hasFlag(gregtech.content.data.FluidCatalog.FluidFlags.LIQUID));
+        assertTrue(mercuryLiquid.hasFlag(gregtech.content.data.FluidCatalog.FluidFlags.SIMPLE));
+        assertNull(gregtech.content.data.FluidCatalog.get("GenMolten_Mercury"));
+        // MT.Hg.liquid(U, T) is one material unit; the drink rows are 250 mB portions.
+        assertEquals(144, gregtech.content.food.GTBottles.amountOf("mercury_bottle"));
+        assertEquals(250, gregtech.content.food.GTBottles.amountOf("soda"));
         assertTrue(!GTMaterialRegistry.get(9884).isValid());
         assertTrue(!GTMaterialRegistry.get(9885).isValid());
     }

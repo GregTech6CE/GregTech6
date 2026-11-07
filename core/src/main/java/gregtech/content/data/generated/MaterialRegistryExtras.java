@@ -728,7 +728,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Meitnerium", "Meitnerium");
         GTMaterialRegistry.setDisplayName("Mendelevium", "Mendelevium");
         GTMaterialRegistry.setDisplayName("Mercury", "Mercury");
-        GTMaterialRegistry.setDisplayName("MercuryRock", "MercuryRock");
         GTMaterialRegistry.setDisplayName("Methane", "Methane");
         GTMaterialRegistry.setDisplayName("MethaneIce", "Methane Ice");
         GTMaterialRegistry.setDisplayName("Mica", "Mica");

@@ -1,6 +1,7 @@
 package gregtech.engine.fluid;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluids;
@@ -38,7 +39,7 @@ public final class MoltenFluidHandler implements IFluidHandler {
                 || fluid.getFluid() == net.minecraft.world.level.material.Fluids.FLOWING_LAVA)
             return GTMaterialRegistry.get("Lava");
         var entry = GTFluids.entryForFluid(fluid.getFluid());
-        if (!isMoltenPhase(entry)) return null;
+        if (!isMoltenPhase(entry) && !isOrdinaryLiquidPhase(entry)) return null;
         String key = entry.materialKey() != null ? entry.materialKey() : RegisteredFluids.boundMaterial(entry.registryName());
         if (key == null) key = entry.registryName().replaceFirst("^(molten[._]|liquid[._])", "");
         GTMaterial material = GTMaterialRegistry.get(key).resolve();
@@ -48,6 +49,19 @@ public final class MoltenFluidHandler implements IFluidHandler {
     private static boolean isMoltenPhase(RegisteredFluids.FluidEntry entry) {
         return entry != null && (entry.textureMode() == RegisteredFluids.FluidTextureMode.GENERIC_MOLTEN
                 || RegisteredFluids.isMoltenFactoryDefinition(entry));
+    }
+
+    /**
+     * A metal that is liquid at room temperature (mercury) has an ordinary liquid entry instead of a
+     * molten one. GT6 keeps one fluid for such a material, so the liquid is the crucible content.
+     */
+    private static boolean isOrdinaryLiquidPhase(RegisteredFluids.FluidEntry entry) {
+        if (entry == null || entry.materialKey() == null) return false;
+        GTMaterial material = GTMaterialRegistry.get(entry.materialKey()).resolve();
+        if (!material.isValid() || !material.has(MaterialProperty.LIQUID) || !material.has(MaterialProperty.METAL))
+            return false;
+        var liquid = RegisteredFluids.get("GenLiquid_" + material.getName());
+        return liquid != null && liquid.registryName().equals(entry.registryName());
     }
     /** The special source dimension belongs to this actual phase, not every addon fluid of the same material. */
     public static MoltenMaterialUnits.Ratio ratio(GTMaterial material, FluidStack fluid) {
@@ -84,9 +98,11 @@ public final class MoltenFluidHandler implements IFluidHandler {
             var primary = GTFluids.stack("Plastic", amount);
             if (ratio(material, primary).equals(MoltenMaterialUnits.PLASTIC)) return primary;
         }
-        // The original molten salts use these established liquid IDs in chemistry recipes.
+        // The original molten salts and room-temperature liquid metals use these established liquid IDs.
         String liquidField = "GenLiquid_" + material.getName();
-        if (RegisteredFluids.isMoltenFactoryDefinition(RegisteredFluids.get(liquidField))) {
+        var liquidEntry = RegisteredFluids.get(liquidField);
+        if (liquidEntry != null
+                && (RegisteredFluids.isMoltenFactoryDefinition(liquidEntry) || isOrdinaryLiquidPhase(liquidEntry))) {
             var primary = GTFluids.stack(liquidField, amount);
             if (material(primary) == material.resolve()) return primary;
         }

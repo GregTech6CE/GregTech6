@@ -742,7 +742,6 @@ public final class GT6Materials {
         public static final GTMaterial Dacite          = gregtech.content.material.generated.StoneMaterials.Dacite;
         public static final GTMaterial Slate           = gregtech.content.material.generated.StoneMaterials.Slate;
         public static final GTMaterial Deepslate       = gregtech.content.material.generated.StoneMaterials.Deepslate;
-        public static final GTMaterial MercuryRock     = gregtech.content.material.generated.StoneMaterials.MercuryRock;
         public static final GTMaterial TitanRock       = gregtech.content.material.generated.StoneMaterials.TitanRock;
     }
 

@@ -890,7 +890,6 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
                 Dacite = GT6Materials.Stones.Dacite,
                 Slate = GT6Materials.Stones.Slate,
                 Deepslate = GT6Materials.Stones.Deepslate,
-                MercuryRock = GT6Materials.Stones.MercuryRock,
                 TitanRock = GT6Materials.Stones.TitanRock,
                 Bluestone = GT6Materials.Stones.Bluestone,
                 Concrete = GT6Materials.Stones.Concrete,

@@ -12,9 +12,9 @@ public final class FluidDefinitions {
     public static void prepare() {
         FluidCatalog.bootstrap();
         registerGoldenBottleFluids();
-        // Loader_Fluids:618 creates ordinary mercury with L=144 mB per U.
-        // This flag preserves the port's ordinary liquid entry alongside its molten ID;
-        // the generic 1000 mB quantity used by MatterRecipeLoader is still an audited mismatch.
+        // Loader_Fluids:618 creates ordinary mercury with L=144 mB per U. GT6's metal factory does not
+        // set MOLTEN, so this ordinary liquid is mercury's only phase; the generic 1000 mB quantity
+        // used by MatterRecipeLoader is still an audited mismatch.
         gregtech.content.material.generated.ElementMaterials.Mercury.put(gregtech.api.material.MaterialProperty.LIQUID);
         // GT6 reactor coolant isotopologues have liquid phases; retain old gas IDs for saves.
         for (var material : java.util.List.of(

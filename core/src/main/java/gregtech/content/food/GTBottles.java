@@ -11,8 +11,9 @@ import java.util.Map;
  * <p>The port registers the bottle <em>items</em> from {@code GTMultiItemsGen} (transpiled by
  * {@code tools/transpile_gt6_multiitems.py}); the fluid inside them is a separate generated column
  * ({@link GTBottlesGen}, {@code tools/extract_gt6_bottles.py}) because GT6 keeps it in the same
- * {@code addItem(...)} call. A bottle is 250&nbsp;mB of that fluid and reads its numbers from
- * {@link GTDrinks} through {@code FoodStatFluid}, exactly like GT6's {@code MultiItemBottles}.
+ * {@code addItem(...)} call. Drink bottles hold 250&nbsp;mB; the mercury bottle holds one material
+ * unit (144&nbsp;mB, {@code MT.Hg.liquid(U, T)}) and reads its numbers from {@link GTDrinks} through
+ * {@code FoodStatFluid}, exactly like GT6's {@code MultiItemBottles}.
  *
  * <p>The stored value is GT6's <em>fluid expression</em> ({@code Beer}, {@code potion.x},
  * {@code HolyWater}), not a port fluid id: it is resolved with the port's own lookups
@@ -34,6 +35,14 @@ public final class GTBottles {
     /** The GT6 fluid expression of a bottle item id, or {@code null} when the id is not a drink bottle. */
     public static String fluidKeyOf(String itemId) {
         return itemId == null ? null : FLUID_BY_ID.get(itemId);
+    }
+
+    /**
+     * The source portion of a bottle item. GT6's mercury row uses {@code MT.Hg.liquid(U, T)}, i.e. one
+     * material unit (144 mB), while every drink row uses {@code .make(250)}.
+     */
+    public static int amountOf(String itemId) {
+        return "mercury_bottle".equals(itemId) ? 144 : 250;
     }
 
     /** How many bottles the generated table covers (GT6 registers ~180; the rest are other mods' bottles). */

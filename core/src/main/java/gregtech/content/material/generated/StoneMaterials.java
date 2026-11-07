@@ -37,6 +37,5 @@ public final class StoneMaterials {
     public static final GTMaterial Dacite         = stone(9187, "Dacite",         "Dacite",         0x838383).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 1);
     public static final GTMaterial Slate          = stone(9222, "Slate",          "Slate",          0x94979C).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 0);
     public static final GTMaterial Deepslate      = stone(9248, "Deepslate",      "Deepslate",      0x393B3D).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 32, 1);
-    public static final GTMaterial MercuryRock    = stone(9252, "MercuryRock",    "MercuryRock",    0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
     public static final GTMaterial TitanRock      = stone(9261, "TitanRock",      "TitanRock",      0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
 }

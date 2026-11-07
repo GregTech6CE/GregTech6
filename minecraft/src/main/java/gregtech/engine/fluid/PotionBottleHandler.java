@@ -59,6 +59,12 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
 //?}
     }
 
+    /** The portion a filled container holds: one mercury unit (144 mB) or a 250 mB drink. */
+    private static int portion(ItemStack stack) {
+        return stack.getItem() instanceof gregtech.content.item.BottleItem bottle
+                ? bottle.amount() : VanillaPotionBottling.AMOUNT;
+    }
+
     /** Reject custom effects/names/components: draining must not silently discard potion data. */
     public static FluidStack contents(ItemStack stack) {
         if (stack.is(Items.HONEY_BOTTLE)) {
@@ -67,7 +73,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
         }
         if (stack.getItem() instanceof gregtech.content.item.BottleItem bottle) {
             var fluid = bottle.fluid();
-            return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, VanillaPotionBottling.AMOUNT);
+            return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, bottle.amount());
         }
         if (!stack.is(Items.POTION)) return FluidStack.EMPTY;
 //? if >=1.21.1 {
@@ -82,18 +88,19 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
     @Override public ItemStack getContainer() { return container; }
     @Override public int getTanks() { return 1; }
     @Override public FluidStack getFluidInTank(int tank) { return tank == 0 ? contents(container) : FluidStack.EMPTY; }
-    @Override public int getTankCapacity(int tank) { return tank == 0 ? VanillaPotionBottling.AMOUNT : 0; }
+    @Override public int getTankCapacity(int tank) { return tank == 0 ? portion(container) : 0; }
     @Override public boolean isFluidValid(int tank, FluidStack stack) { return tank == 0 && !filled(stack).isEmpty(); }
 
     @Override public int fill(FluidStack resource, FluidAction action) {
         if (container.getCount() != 1 || container.getItem() instanceof gregtech.content.item.BottleItem || container.is(Items.POTION) || container.is(Items.SPLASH_POTION)
-                || container.is(Items.LINGERING_POTION) || container.is(Items.HONEY_BOTTLE)
-                || resource.getAmount() < VanillaPotionBottling.AMOUNT)
+                || container.is(Items.LINGERING_POTION) || container.is(Items.HONEY_BOTTLE))
             return 0;
         var result = filled(resource);
         if (result.isEmpty()) return 0;
+        int amount = portion(result);
+        if (resource.getAmount() < amount) return 0;
         if (action.execute()) container = result;
-        return VanillaPotionBottling.AMOUNT;
+        return amount;
     }
 
     @Override public FluidStack drain(FluidStack resource, FluidAction action) {
@@ -107,9 +114,10 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
     }
 
     @Override public FluidStack drain(int amount, FluidAction action) {
-        if (container.getCount() != 1 || amount < VanillaPotionBottling.AMOUNT) return FluidStack.EMPTY;
+        if (container.getCount() != 1) return FluidStack.EMPTY;
         var stored = contents(container);
-        if (!stored.isEmpty() && action.execute()) container = container.getItem() instanceof gregtech.content.item.BottleItem
+        if (stored.isEmpty() || amount < stored.getAmount()) return FluidStack.EMPTY;
+        if (action.execute()) container = container.getItem() instanceof gregtech.content.item.BottleItem
                 ? gregtech.content.item.BottleItem.emptyBottle() : new ItemStack(Items.GLASS_BOTTLE);
         return stored;
     }
