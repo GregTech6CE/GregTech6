@@ -2,10 +2,12 @@
 
 package gregtech.api.addon.material;
 
+import gregtech.api.addon.AddonNames;
+
 /** A resolved canonical material name, preserving existing case and save identities. */
 public record MaterialKey(String name) {
     public MaterialKey {
-        if (name == null || !name.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, name))
             throw new IllegalArgumentException("Invalid material key: " + name);
     }
 }

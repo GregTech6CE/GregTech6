@@ -4,7 +4,10 @@ package gregtech.api.addon.material;
 
 import java.util.Set;
 
-/** One immutable process rule. An empty form set means the rule is not form-specific. */
+/**
+ * One process rule with an immutable form set. The process-specific value remains caller-owned and
+ * is not deep-frozen. An empty form set means the rule is not form-specific.
+ */
 public record MaterialProcessRule<T>(Set<FormKey> forms, T value) {
     public MaterialProcessRule {
         forms = Set.copyOf(forms);

@@ -2,6 +2,7 @@ package gregtech.engine.material;
 
 import gregtech.api.addon.material.FuelRule;
 import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.addon.material.OreProcessingRule;
 import gregtech.api.material.GTMaterial;
@@ -120,21 +121,29 @@ final class MaterialLinker {
 
     private static <T> T first(
             MaterialDefinition.Declaration declaration, gregtech.api.addon.material.MaterialProcessKey<T> key) {
-        var rules = declaration.info().processes().find(key);
-        return rules.isEmpty() ? null : rules.get(0).value();
+        return declaration
+                .info()
+                .processes()
+                .findSingle(key)
+                .map(MaterialProcessRule::value)
+                .orElse(null);
     }
 
     private static OreProcessingRule oreProcessing(MaterialDefinition.Declaration declaration) {
-        var rules = declaration.info().processes().find(MaterialProcessKeys.ORE_PROCESSING);
-        return rules.isEmpty() ? null : rules.get(0).value();
+        return declaration
+                .info()
+                .processes()
+                .findSingle(MaterialProcessKeys.ORE_PROCESSING)
+                .map(MaterialProcessRule::value)
+                .orElse(null);
     }
 
     private static java.util.Map<String, MaterialTarget> processing(MaterialDefinition.Declaration declaration) {
         var result = new java.util.LinkedHashMap<String, MaterialTarget>();
         var rulesByKey = declaration.info().processes().rules();
         for (var entry : rulesByKey.entrySet()) {
-            String kind = MaterialProcessKeys.legacyTargetName(entry.getKey());
-            if (kind.isEmpty()) continue;
+            String kind = MaterialProcessKeys.legacyTargetName(entry.getKey()).orElse(null);
+            if (kind == null) continue;
             var rules = entry.getValue();
             if (!rules.isEmpty() && rules.get(0).value() instanceof MaterialTarget target) result.put(kind, target);
         }

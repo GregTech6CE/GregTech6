@@ -22,13 +22,13 @@ public final class MaterialDefinitions {
 
     private static List<MaterialDefinition.Declaration> collect() {
         var result = new ArrayList<MaterialDefinition.Declaration>();
-        result.addAll(ElementMaterials.definitions());
-        result.addAll(CompoundMaterials.definitions());
-        result.addAll(OreMaterials.definitions());
-        result.addAll(StoneMaterials.definitions());
-        result.addAll(WoodMaterials.definitions());
-        result.addAll(SpecialMaterials.definitions());
-        result.addAll(GroupMaterials.definitions());
+        ElementMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
+        CompoundMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
+        OreMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
+        StoneMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
+        WoodMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
+        SpecialMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
+        GroupMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
         result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));
         return List.copyOf(result);
     }

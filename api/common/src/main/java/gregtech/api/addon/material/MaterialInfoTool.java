@@ -13,8 +13,8 @@ import org.jetbrains.annotations.ApiStatus;
  * Lifecycle-bound registration and read entry for material auxiliary data.
  *
  * <p>Material identity and intrinsic physical facts stay in the material registry. Tool profiles,
- * compositions, forms, tags and process rules are stored in independent, keyed indexes. A
- * material's convenience accessors are projections over those indexes.</p>
+ * compositions, forms, tags and process rules are stored in one auxiliary state per material and
+ * published as a frozen snapshot. Convenience accessors are compatibility projections.</p>
  */
 public final class MaterialInfoTool {
     private static final InstalledService<Host> HOST = new InstalledService<>();
@@ -26,31 +26,40 @@ public final class MaterialInfoTool {
         HOST.bind(host, "Material info host is missing", "Material info host is already installed");
     }
 
-    /** Opens a typed registration session owned by the addon. It closes at the material freeze. */
+    /**
+     * Compatibility entry for opening a typed registration session by ID.
+     *
+     * @deprecated Override {@link AddonMaterialContributor#materialInfo(Registrar)} and use the
+     *     lifecycle-bound registrar supplied by the host.
+     */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Registrar forAddon(String addonId) {
         return host().registrar(AddonNames.requireAddonId(addonId));
     }
 
-    /** Frozen auxiliary tool profile for a material. */
-    public static MaterialToolProfile tool(MaterialKey material) {
-        return frozenTool(material)
-                .orElseThrow(() ->
-                        new IllegalStateException("Material auxiliary indexes are not frozen: " + material.name()));
+    /**
+     * Frozen auxiliary tool profile for a known material. Missing, not-ready and failed-index reads
+     * return empty instead of inventing a zero profile.
+     */
+    public static Optional<MaterialToolProfile> tool(MaterialKey material) {
+        Objects.requireNonNull(material, "material");
+        return HOST.isBound() ? host().tool(material) : Optional.empty();
     }
 
-    public static MaterialToolProfile tool(String materialName) {
+    public static Optional<MaterialToolProfile> tool(String materialName) {
         return tool(new MaterialKey(materialName));
     }
 
     /** Frozen composition, if one was registered. */
     public static Optional<MaterialComposition> composition(MaterialKey material) {
-        return host().composition(material);
+        Objects.requireNonNull(material, "material");
+        return HOST.isBound() ? host().composition(material) : Optional.empty();
     }
 
     /** Empty before the host installs or before the definition snapshot is frozen. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Optional<MaterialToolProfile> frozenTool(MaterialKey material) {
-        Objects.requireNonNull(material, "material");
-        return HOST.isBound() ? host().toolIfReady(material) : Optional.empty();
+        return tool(material);
     }
 
     private static Host host() {
@@ -61,11 +70,7 @@ public final class MaterialInfoTool {
     public interface Host {
         Registrar registrar(String addonId);
 
-        default Optional<MaterialToolProfile> toolIfReady(MaterialKey material) {
-            return Optional.of(tool(material));
-        }
-
-        MaterialToolProfile tool(MaterialKey material);
+        Optional<MaterialToolProfile> tool(MaterialKey material);
 
         Optional<MaterialComposition> composition(MaterialKey material);
     }
@@ -80,12 +85,26 @@ public final class MaterialInfoTool {
 
         Registrar registerTag(MaterialKey material, DataKey tag);
 
+        Registrar registerMetadata(MaterialMetadataDeclaration declaration);
+
+        Registrar registerTagDeclaration(MaterialTagDeclaration declaration);
+
+        Registrar registerGroup(MaterialGroupDeclaration declaration);
+
         <T> Registrar registerProcess(MaterialKey material, MaterialProcessKey<T> process, MaterialProcessRule<T> rule);
+
+        default <T> Registrar registerProcess(MaterialProcessDeclaration<T> declaration) {
+            return registerProcess(
+                    new MaterialKey(declaration.materialName()),
+                    declaration.process(),
+                    new MaterialProcessRule<>(declaration.forms(), declaration.value()));
+        }
 
         default Registrar registerTool(String material, MaterialToolProfile profile) {
             return registerTool(new MaterialKey(material), profile);
         }
 
+        @Deprecated(since = "1.7.0", forRemoval = false)
         default Registrar registerTool(GregTechMaterials.Material material, MaterialToolProfile profile) {
             return registerTool(material.key(), profile);
         }
@@ -94,18 +113,22 @@ public final class MaterialInfoTool {
             return registerForm(new MaterialKey(material), new FormKey(form));
         }
 
+        @Deprecated(since = "1.7.0", forRemoval = false)
         default Registrar registerForm(GregTechMaterials.Material material, FormKey form) {
             return registerForm(material.key(), form);
         }
 
+        @Deprecated(since = "1.7.0", forRemoval = false)
         default Registrar registerComposition(GregTechMaterials.Material material, MaterialComposition composition) {
             return registerComposition(material.key(), composition);
         }
 
+        @Deprecated(since = "1.7.0", forRemoval = false)
         default Registrar registerTag(GregTechMaterials.Material material, DataKey tag) {
             return registerTag(material.key(), tag);
         }
 
+        @Deprecated(since = "1.7.0", forRemoval = false)
         default <T> Registrar registerProcess(
                 GregTechMaterials.Material material, MaterialProcessKey<T> process, MaterialProcessRule<T> rule) {
             return registerProcess(material.key(), process, rule);

@@ -5,6 +5,7 @@ package gregtech.api.material;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.addon.material.OreProcessingRule;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public final class OreProcessingMaterialHelper {
     private OreProcessingMaterialHelper() {}
 
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static OreProcessingRule rule(GTMaterial material) {
         if (material == null || !material.isValid()) return new OreProcessingRule(List.of(), 1, 1);
         List<MaterialKey> byproducts = legacyByproducts(material).stream()
@@ -23,10 +25,10 @@ public final class OreProcessingMaterialHelper {
     }
 
     public static OreProcessingRule rule(MaterialKey material) {
-        var rules = GregTechMaterials.processes().find(material, MaterialProcessKeys.ORE_PROCESSING);
-        return rules.isEmpty()
-                ? new OreProcessingRule(List.of(), 1, 1)
-                : rules.get(0).value();
+        return GregTechMaterials.processes()
+                .findSingle(material, MaterialProcessKeys.ORE_PROCESSING)
+                .map(MaterialProcessRule::value)
+                .orElseGet(() -> new OreProcessingRule(List.of(), 1, 1));
     }
 
     static List<GTMaterial> legacyByproducts(GTMaterial material) {

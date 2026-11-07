@@ -349,7 +349,8 @@ public record MaterialDefinition(
         }
 
         public Builder processing(String kind, String name, long amount) {
-            MaterialProcessKeys.legacyTarget(kind);
+            MaterialProcessKeys.legacyTarget(kind)
+                    .orElseThrow(() -> new IllegalArgumentException("Unknown processing target: " + kind));
             MaterialTarget target = target(name, amount);
             if (processing.putIfAbsent(kind, target) != null)
                 throw new IllegalArgumentException("Duplicate processing target: " + kind);
@@ -372,8 +373,8 @@ public record MaterialDefinition(
                                 byproducts.stream().map(MaterialKey::new).toList(),
                                 oreMultiplier,
                                 processingMultiplier));
-            processing.forEach(
-                    (kind, target) -> addTarget(processRules, MaterialProcessKeys.legacyTarget(kind), target));
+            processing.forEach((kind, target) -> addTarget(
+                    processRules, MaterialProcessKeys.legacyTarget(kind).orElseThrow(), target));
             var material = new MaterialDefinition(
                     new Identity(id, name, localName, aliases),
                     new Presentation(displayName, color, texture, alpha, formula),

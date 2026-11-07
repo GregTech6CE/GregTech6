@@ -13,7 +13,7 @@ import java.util.Set;
  * Auxiliary declarations associated with a material identity.
  *
  * <p>This is an authoring and installation boundary, not the material's canonical identity.
- * Runtime queries read the independent indexes in {@link MaterialInfoRegistry}.</p>
+ * Runtime queries read the frozen per-material snapshot owned by {@link MaterialInfoRegistry}.</p>
  */
 public record MaterialInfoDefinition(
         Tooling tooling, Composition composition, Relations relations, Processes processes) {
@@ -78,6 +78,10 @@ public record MaterialInfoDefinition(
         public Processes {
             var copied = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
             rules.forEach((key, values) -> {
+                if (key.cardinality() == gregtech.api.addon.material.MaterialProcessCardinality.SINGLE
+                        && values.size() != 1)
+                    throw new IllegalArgumentException("Single-valued process " + key.id()
+                            + " must have exactly one rule, found " + values.size());
                 for (MaterialProcessRule<?> rule : values)
                     if (!key.type().isInstance(rule.value()))
                         throw new IllegalArgumentException("Process value type mismatch for " + key.id());
@@ -89,6 +93,13 @@ public record MaterialInfoDefinition(
         @SuppressWarnings("unchecked")
         public <T> List<MaterialProcessRule<T>> find(MaterialProcessKey<T> key) {
             return (List<MaterialProcessRule<T>>) (List<?>) rules.getOrDefault(key, List.of());
+        }
+
+        public <T> java.util.Optional<MaterialProcessRule<T>> findSingle(MaterialProcessKey<T> key) {
+            if (key.cardinality() != gregtech.api.addon.material.MaterialProcessCardinality.SINGLE)
+                return java.util.Optional.empty();
+            var values = find(key);
+            return values.size() == 1 ? java.util.Optional.of(values.get(0)) : java.util.Optional.empty();
         }
     }
 }

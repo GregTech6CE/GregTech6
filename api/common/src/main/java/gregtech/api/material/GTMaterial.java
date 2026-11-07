@@ -20,15 +20,17 @@ import org.jspecify.annotations.Nullable;
  * {@link gregtech.api.addon.material.MaterialDeclaration} and read them through
  * {@link gregtech.api.addon.material.GregTechMaterials.Material}.
  * <p>
- * Internal: not part of the addon contract. The setters are for host initialization and are not
- * thread-safe; addons must not configure shared materials. A frozen instance (the sentinels in
- * {@link MaterialSentinels}) rejects every mutator with {@link IllegalStateException}.
+ * Internal compatibility model. The canonical authoring model is
+ * {@code MaterialDefinition}; new addon reads use immutable catalog views. The setters are for host
+ * initialization and are not thread-safe. Every material is frozen before the registry becomes
+ * READY, and a frozen instance rejects every mutator with {@link IllegalStateException}.
  * <p>
  * Material-to-material links are stored as declared and resolved by the getters, so a
  * {@link #setRegistration(GTMaterial)} applied after the link is still visible. Registration
  * cycles are rejected when they are created.
  */
 @ApiStatus.Internal
+@Deprecated(since = "1.7.0", forRemoval = false)
 public final class GTMaterial {
     public static final int INVALID_ID = -1;
     public static final int NULL_ID = 0;
@@ -348,7 +350,8 @@ public final class GTMaterial {
         return toolTypes > 0;
     }
 
-    /** Read-only shortcut over the tool index; legacy fields are only a pre-freeze compatibility source. */
+    /** @deprecated Read tool data through {@link MaterialToolHelper#profile(MaterialKey)}. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public MaterialToolProfile tool() {
         return MaterialToolHelper.profile(this);
     }
@@ -688,8 +691,9 @@ public final class GTMaterial {
         return "material.gt6ce." + name.toLowerCase(Locale.ROOT);
     }
 
-    /** Freezes every mutator; only {@link MaterialSentinels} uses this, after initialization. */
-    GTMaterial freeze() {
+    /** Freezes every mutator before the material registry becomes READY. */
+    @ApiStatus.Internal
+    public GTMaterial freeze() {
         frozen = true;
         return this;
     }

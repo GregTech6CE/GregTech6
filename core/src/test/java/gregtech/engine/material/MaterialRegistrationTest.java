@@ -2,7 +2,12 @@ package gregtech.engine.material;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import gregtech.api.addon.material.DataKey;
+import gregtech.api.addon.material.MaterialProcessCardinality;
+import gregtech.api.addon.material.MaterialProcessKey;
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
 import java.io.File;
@@ -15,6 +20,19 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 
 class MaterialRegistrationTest {
+    @Test
+    void singleValuedProcessesRejectMultipleRulesDuringConstruction() {
+        var process = new MaterialProcessKey<>(
+                new DataKey("test_addon", "single"), String.class, MaterialProcessCardinality.SINGLE);
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new MaterialInfoDefinition.Processes(Map.of(
+                        process,
+                        List.of(
+                                new MaterialProcessRule<>(Set.of(), "first"),
+                                new MaterialProcessRule<>(Set.of(), "second")))));
+    }
+
     @Test
     void allIdentityFailuresLeaveEveryIndexUntouched() {
         var state = new MaterialRegistryState();
@@ -113,6 +131,47 @@ class MaterialRegistrationTest {
     }
 
     @Test
+    void processingTargetsMustBeRealMaterials() {
+        var index = Map.of(
+                "Test", new GTMaterial(261, "Test", "Test", 0),
+                "AnyIron", new GTMaterial(-1, "AnyIron", "Group", 0));
+        var invalidTargets = List.of(
+                MaterialDefinition.builder(261, "Test").fuel(1, "AnyIron", 1).build(),
+                MaterialDefinition.builder(261, "Test").crushing("AnyIron", 1).build(),
+                MaterialDefinition.builder(261, "Test").smelting("AnyIron", 1).build(),
+                MaterialDefinition.builder(261, "Test")
+                        .pulverizing("AnyIron", 1)
+                        .build(),
+                MaterialDefinition.builder(261, "Test")
+                        .processing("Solidifying", "AnyIron", 1)
+                        .build(),
+                MaterialDefinition.builder(261, "Test")
+                        .processing("Bending", "AnyIron", 1)
+                        .build(),
+                MaterialDefinition.builder(261, "Test")
+                        .processing("Compressing", "AnyIron", 1)
+                        .build(),
+                MaterialDefinition.builder(261, "Test")
+                        .processing("Cutting", "AnyIron", 1)
+                        .build(),
+                MaterialDefinition.builder(261, "Test")
+                        .processing("Forging", "AnyIron", 1)
+                        .build(),
+                MaterialDefinition.builder(261, "Test")
+                        .processing("Smashing", "AnyIron", 1)
+                        .build(),
+                MaterialDefinition.builder(261, "Test")
+                        .processing("Working", "AnyIron", 1)
+                        .build());
+        for (var declaration : invalidTargets) {
+            var error = assertThrows(
+                    IllegalArgumentException.class, () -> MaterialLinker.validate(List.of(declaration), index::get));
+            assertTrue(error.getMessage().contains("Invalid material reference"));
+            assertTrue(error.getMessage().contains("AnyIron"));
+        }
+    }
+
+    @Test
     void declarationRecordsKeepIdentitySeparateFromAuxiliaryDomains() {
         assertEquals(5, MaterialDefinition.class.getRecordComponents().length);
         assertFalse(java.util.Arrays.stream(MaterialDefinition.class.getRecordComponents())
@@ -124,6 +183,13 @@ class MaterialRegistrationTest {
         var graphite = MaterialDefinitions.info("Graphite");
         assertFalse(graphite.composition().parts().isEmpty());
         assertTrue(graphite.composition().divider() > 0);
+    }
+
+    @Test
+    void fluidPhaseCorrectionsArePartOfCanonicalDefinitions() {
+        assertTrue(MaterialDefinitions.find("Mercury").properties().contains(MaterialProperty.LIQUID));
+        assertTrue(MaterialDefinitions.find("Sulfur").properties().contains(MaterialProperty.MOLTEN));
+        assertTrue(MaterialDefinitions.find("HydrochloricAcid").properties().contains(MaterialProperty.GAS));
     }
 
     @Test
@@ -149,6 +215,7 @@ class MaterialRegistrationTest {
                 "early",
                 "facade",
                 "normal",
+                "aliasPublication",
                 "merge",
                 "conflict",
                 "definitionFailure",
@@ -164,6 +231,10 @@ class MaterialRegistrationTest {
                 "infoOwnerFailure",
                 "infoNamespaceFailure",
                 "infoProcessTypeFailure",
+                "infoProcessFormAlias",
+                "infoProcessSingleConflictFailure",
+                "infoProcessMultiple",
+                "infoProcessUnknownFormFailure",
                 "relations",
                 "relationTagCycleFailure",
                 "relationUnknownTagFailure",
@@ -171,6 +242,10 @@ class MaterialRegistrationTest {
                 "relationUnknownGroupFailure",
                 "relationGroupCycleFailure",
                 "processes",
+                "processFormAlias",
+                "processSingleConflictFailure",
+                "processMultiple",
+                "processUnknownFormFailure",
                 "processNamespaceFailure",
                 "processUnknownMaterialFailure")) {
             var root = Path.of("").toAbsolutePath();

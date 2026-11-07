@@ -20,6 +20,12 @@ public final class MaterialViews {
     private record GroupFacts(
             String owner, String displayName, Set<MaterialKey> materials, Set<MaterialGroupKey> includedGroups) {}
 
+    private record MetadataSubmission(String addonId, MaterialMetadataDeclaration declaration) {}
+
+    private record TagDeclarationSubmission(String addonId, MaterialTagDeclaration declaration) {}
+
+    private record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
+
     private static MaterialCatalogView published;
 
     static void publish() {
@@ -52,7 +58,12 @@ public final class MaterialViews {
             properties.put(key, new LinkedHashMap<>());
             for (var property : builder.build().keys()) types.put(property.id(), property.type());
         }
-        for (var submission : AddonMaterials.metadataDeclarations()) {
+        var metadataSubmissions = new java.util.ArrayList<MetadataSubmission>();
+        for (var submission : AddonMaterials.metadataDeclarations())
+            metadataSubmissions.add(new MetadataSubmission(submission.addonId(), submission.declaration()));
+        for (var submission : MaterialInfoRegistry.metadataSubmissions())
+            metadataSubmissions.add(new MetadataSubmission(submission.addonId(), submission.declaration()));
+        for (var submission : metadataSubmissions) {
             var declaration = submission.declaration();
             GTMaterial material = GTMaterialRegistry.get(declaration.materialName());
             var key = material.isValid() ? new MaterialKey(material.getName()) : null;
@@ -125,7 +136,12 @@ public final class MaterialViews {
                         .add(entry.getKey());
             }
         }
-        for (var submission : AddonMaterials.tagDeclarations()) {
+        var tagDeclarationSubmissions = new java.util.ArrayList<TagDeclarationSubmission>();
+        for (var submission : AddonMaterials.tagDeclarations())
+            tagDeclarationSubmissions.add(new TagDeclarationSubmission(submission.addonId(), submission.declaration()));
+        for (var submission : MaterialInfoRegistry.tagDeclarationSubmissions())
+            tagDeclarationSubmissions.add(new TagDeclarationSubmission(submission.addonId(), submission.declaration()));
+        for (var submission : tagDeclarationSubmissions) {
             var tag = submission.declaration().tag();
             requireNamespace(submission.addonId(), tag);
             var facts =
@@ -182,7 +198,12 @@ public final class MaterialViews {
                             "gt6ce", definition.displayName(), Set.copyOf(groupMaterials), Set.copyOf(includedGroups)),
                     "built-in catalog");
         }
-        for (var submission : AddonMaterials.groupDeclarations()) {
+        var groupSubmissions = new java.util.ArrayList<GroupSubmission>();
+        for (var submission : AddonMaterials.groupDeclarations())
+            groupSubmissions.add(new GroupSubmission(submission.addonId(), submission.declaration()));
+        for (var submission : MaterialInfoRegistry.groupSubmissions())
+            groupSubmissions.add(new GroupSubmission(submission.addonId(), submission.declaration()));
+        for (var submission : groupSubmissions) {
             var declaration = submission.declaration();
             requireNamespace(submission.addonId(), declaration.key().id());
             putGroup(
@@ -243,7 +264,7 @@ public final class MaterialViews {
             }
         };
 
-        var processTypes = new LinkedHashMap<DataKey, Class<?>>();
+        var processTypes = new LinkedHashMap<DataKey, MaterialProcessKey<?>>();
         var processRules = new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
         for (var material : materials.keySet()) processRules.put(material, new LinkedHashMap<>());
         for (var material : materials.keySet()) {
@@ -291,6 +312,7 @@ public final class MaterialViews {
             addProcessRule(
                     processRules.get(key), process, MaterialInfoRegistry.normalizeProcessRule(source, process, rule));
         }
+        validateProcessCardinality(processRules);
         var immutableProcesses =
                 new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
         processRules.forEach((material, byProcess) -> {
@@ -378,11 +400,12 @@ public final class MaterialViews {
             throw new IllegalArgumentException("Addon '" + addonId + "' cannot declare key " + key);
     }
 
-    private static void registerProcessType(Map<DataKey, Class<?>> types, MaterialProcessKey<?> key, String source) {
-        var previous = types.putIfAbsent(key.id(), key.type());
-        if (previous != null && previous != key.type())
+    private static void registerProcessType(
+            Map<DataKey, MaterialProcessKey<?>> processes, MaterialProcessKey<?> key, String source) {
+        var previous = processes.putIfAbsent(key.id(), key);
+        if (previous != null && (previous.type() != key.type() || previous.cardinality() != key.cardinality()))
             throw new IllegalArgumentException(
-                    "Material process '" + key.id() + "' from " + source + " has conflicting value types");
+                    "Material process '" + key.id() + "' from " + source + " has conflicting type or cardinality");
     }
 
     private static void addProcessRule(
@@ -390,7 +413,19 @@ public final class MaterialViews {
             MaterialProcessKey<?> key,
             MaterialProcessRule<?> rule) {
         List<MaterialProcessRule<?>> current = rules.computeIfAbsent(key, ignored -> new java.util.ArrayList<>());
+        if (key.cardinality() == MaterialProcessCardinality.SINGLE && !current.isEmpty())
+            throw new IllegalArgumentException(
+                    "Single-valued process " + key.id() + " already has a rule for this material");
         if (!current.contains(rule)) current.add(rule);
+    }
+
+    private static void validateProcessCardinality(
+            Map<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>> processRules) {
+        processRules.forEach((material, byProcess) -> byProcess.forEach((key, rules) -> {
+            if (key.cardinality() == MaterialProcessCardinality.SINGLE && rules.size() != 1)
+                throw new IllegalArgumentException("Material " + material.name() + " single-valued process " + key.id()
+                        + " must have exactly one rule, found " + rules.size());
+        }));
     }
 
     private static MaterialGroupKey groupKey(String name) {

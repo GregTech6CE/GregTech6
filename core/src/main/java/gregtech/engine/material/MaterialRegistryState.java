@@ -72,4 +72,8 @@ final class MaterialRegistryState {
     Collection<GTMaterial> all() {
         return Collections.unmodifiableSet(materials);
     }
+
+    void freeze() {
+        for (GTMaterial material : materials) material.freeze();
+    }
 }

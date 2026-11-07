@@ -23,7 +23,8 @@ public interface AddonMaterialContributor {
         return List.of();
     }
 
-    /** Item forms to register for this addon's materials. Defaults to none. */
+    /** @deprecated Use {@link #materialInfo(MaterialInfoTool.Registrar)}. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     default List<MaterialFormRequest> forms() {
         return List.of();
     }
@@ -40,6 +41,7 @@ public interface AddonMaterialContributor {
      * Compositions of this addon's own materials. Resolved after the built-in directory has linked.
      * A {@code crucible} composition also becomes one crucible reaction.
      */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     default List<MaterialComposition> compositions() {
         return List.of();
     }
@@ -87,21 +89,25 @@ public interface AddonMaterialContributor {
     }
 
     /** Immutable descriptive metadata; default empty preserves existing contributors. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     default List<MaterialMetadataDeclaration> metadata() {
         return List.of();
     }
 
-    /** Descriptive tag declarations owned by this addon. Defaults to none. */
+    /** @deprecated Use {@link MaterialInfoTool.Registrar#registerTagDeclaration(MaterialTagDeclaration)}. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     default List<MaterialTagDeclaration> materialTags() {
         return List.of();
     }
 
-    /** Substitution group declarations owned by this addon. Defaults to none. */
+    /** @deprecated Use {@link MaterialInfoTool.Registrar#registerGroup(MaterialGroupDeclaration)}. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     default List<MaterialGroupDeclaration> materialGroups() {
         return List.of();
     }
 
-    /** Typed, addon-namespaced process rules. Defaults to none. */
+    /** @deprecated Use {@link MaterialInfoTool.Registrar#registerProcess(MaterialProcessDeclaration)}. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     default List<MaterialProcessDeclaration<?>> processes() {
         return List.of();
     }

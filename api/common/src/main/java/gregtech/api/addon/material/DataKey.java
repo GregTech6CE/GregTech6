@@ -2,10 +2,13 @@
 
 package gregtech.api.addon.material;
 
+import gregtech.api.addon.AddonNames;
+
 /** Namespaced extension key; independent of Minecraft resource-location classes. */
 public record DataKey(String namespace, String path) {
     public DataKey {
-        if (namespace == null || !namespace.matches("[a-z0-9_.-]+") || path == null || !path.matches("[a-z0-9_/.-]+"))
+        if (!AddonNames.matches(AddonNames.RESOURCE_NAMESPACE, namespace)
+                || !AddonNames.matches(AddonNames.RESOURCE_PATH, path))
             throw new IllegalArgumentException("Invalid data key: " + namespace + ":" + path);
     }
     @Override public String toString() { return namespace + ":" + path; }

@@ -31,7 +31,7 @@ final class MaterialViewContracts {
             public List<MaterialProcessDeclaration<?>> processes() {
                 return List.of(new MaterialProcessDeclaration<>(
                         "Iron",
-                        new MaterialProcessKey<>(new DataKey("consumer", "inspection"), Boolean.class),
+                        MaterialProcessKey.multiple(new DataKey("consumer", "inspection"), Boolean.class),
                         java.util.Set.of(new FormKey("dust")),
                         Boolean.TRUE));
             }

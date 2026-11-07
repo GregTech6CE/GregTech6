@@ -9,27 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Read-only material handles. The material table itself stays inside GregTech.
- * This is the recommended read entry for addons; materials are declared through
- * {@link MaterialDeclaration}.
+ * Material catalog entry. Immutable definition snapshots through {@link #catalog()} are the
+ * recommended read path; the legacy {@link Material} handles remain for compatibility. Materials
+ * are declared through {@link MaterialDeclaration}.
  */
 public final class GregTechMaterials {
     private GregTechMaterials() {}
 
     /** The named material, or {@link #invalid()} when the name is unknown. Never null. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Material find(String name) {
         return AddonRuntime.services().materials().find(name);
     }
 
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Material find(int id) {
         return AddonRuntime.services().materials().find(id);
     }
 
     /** The sentinel returned for an unknown name or id. {@link Material#valid()} is false. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Material invalid() {
         return AddonRuntime.services().materials().invalid();
     }
 
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Iterable<Material> all() {
         return AddonRuntime.services().materials().all();
     }
@@ -49,6 +53,7 @@ public final class GregTechMaterials {
         return catalog().forms();
     }
 
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public interface Catalog {
         /** Old hosts fail explicitly, preserving source and binary compatibility for implementers. */
         default MaterialCatalogView catalog() {
@@ -64,7 +69,12 @@ public final class GregTechMaterials {
         Iterable<Material> all();
     }
 
-    /** One material after aliases and links have resolved. */
+    /**
+     * Compatibility material handle after aliases and links have resolved.
+     *
+     * @deprecated New reads use {@link MaterialCatalogView} and {@link MaterialView}.
+     */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public interface Material {
         String name();
 
@@ -101,8 +111,9 @@ public final class GregTechMaterials {
         /** Material-table tool durability. Not converted. */
         long toolDurability();
 
+        @Deprecated(since = "1.7.0", forRemoval = false)
         default MaterialToolProfile tool() {
-            return MaterialToolHelper.profile(key());
+            return MaterialToolHelper.profile(key()).orElseGet(() -> new MaterialToolProfile(0, 1F, 0, 0));
         }
 
         List<Component> composition();

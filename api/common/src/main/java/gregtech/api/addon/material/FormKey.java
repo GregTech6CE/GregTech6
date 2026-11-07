@@ -2,10 +2,12 @@
 
 package gregtech.api.addon.material;
 
+import gregtech.api.addon.AddonNames;
+
 /** A resolved existing prefix name. Construction alone does not prove that a form exists. */
 public record FormKey(String name) {
     public FormKey {
-        if (name == null || !name.matches("[A-Za-z][A-Za-z0-9_]*"))
+        if (!AddonNames.matches(AddonNames.MATERIAL, name))
             throw new IllegalArgumentException("Invalid form key: " + name);
     }
 }

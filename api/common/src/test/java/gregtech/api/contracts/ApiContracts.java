@@ -36,6 +36,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.api.material.MaterialTextureSet;
+import gregtech.api.material.MaterialToolHelper;
 import gregtech.api.mod.ModData;
 import gregtech.api.multiblock.CellMatch;
 import gregtech.api.multiblock.LayoutRepeat;
@@ -327,6 +328,10 @@ public final class ApiContracts {
         check(
                 MaterialInfoTool.frozenTool(new MaterialKey("Test")).isEmpty(),
                 "A tool index must not pretend to be frozen before the host installs");
+        check(MaterialInfoTool.tool(new MaterialKey("Test")).isEmpty(), "An unavailable tool index must be empty");
+        check(
+                MaterialToolHelper.profile(new MaterialKey("Test")).isEmpty(),
+                "Unknown or unavailable material tool queries must be empty");
         try {
             MaterialInfoTool.forAddon("test_addon");
             throw new AssertionError("Material info registration must fail before the host installs");

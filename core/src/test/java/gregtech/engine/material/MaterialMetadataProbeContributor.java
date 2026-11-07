@@ -160,14 +160,32 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
 
     public List<MaterialProcessDeclaration<?>> processes() {
         String scenario = System.getProperty("material.metadata.scenario");
-        var key = new MaterialProcessKey<>(new DataKey(addonId(), "throw_into_water"), String.class);
+        var key = MaterialProcessKey.multiple(new DataKey(addonId(), "throw_into_water"), String.class);
         return switch (scenario) {
             case "processes" ->
                 List.of(new MaterialProcessDeclaration<>("Iron", key, java.util.Set.of(new FormKey("dust")), "wet"));
+            case "processFormAlias" ->
+                List.of(new MaterialProcessDeclaration<>(
+                        "Iron", key, java.util.Set.of(new FormKey("casingSmall")), "wet"));
+            case "processSingleConflictFailure" -> {
+                var single = MaterialProcessKey.single(new DataKey(addonId(), "listed_single"), String.class);
+                yield List.of(
+                        new MaterialProcessDeclaration<>("Iron", single, java.util.Set.of(), "wet"),
+                        new MaterialProcessDeclaration<>("Iron", single, java.util.Set.of(), "dry"));
+            }
+            case "processMultiple" -> {
+                var multiple = MaterialProcessKey.multiple(new DataKey(addonId(), "listed_multi"), String.class);
+                yield List.of(
+                        new MaterialProcessDeclaration<>("Iron", multiple, java.util.Set.of(), "wet"),
+                        new MaterialProcessDeclaration<>("Iron", multiple, java.util.Set.of(), "dry"));
+            }
+            case "processUnknownFormFailure" ->
+                List.of(new MaterialProcessDeclaration<>(
+                        "Iron", key, java.util.Set.of(new FormKey("definitelyNotAPrefix")), "wet"));
             case "processNamespaceFailure" ->
                 List.of(new MaterialProcessDeclaration<>(
                         "Iron",
-                        new MaterialProcessKey<>(new DataKey("another_addon", "throw_into_water"), String.class),
+                        MaterialProcessKey.multiple(new DataKey("another_addon", "throw_into_water"), String.class),
                         java.util.Set.of(),
                         "wet"));
             case "processUnknownMaterialFailure" ->
@@ -193,18 +211,42 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
             case "infoProcessTypeFailure":
                 var key = new DataKey(addonId(), "typed_process");
                 registrar.registerProcess(
-                        material, new MaterialProcessKey<>(key, Integer.class), MaterialProcessRule.anyForm(1));
+                        material, MaterialProcessKey.multiple(key, Integer.class), MaterialProcessRule.anyForm(1));
                 registrar.registerProcess(
                         new MaterialKey("MetadataSecond"),
-                        new MaterialProcessKey<>(key, String.class),
+                        MaterialProcessKey.multiple(key, String.class),
                         MaterialProcessRule.anyForm("typed"));
+                return;
+            case "infoProcessFormAlias":
+                registrar.registerProcess(
+                        new MaterialKey("Iron"),
+                        MaterialProcessKey.multiple(new DataKey(addonId(), "typed_process"), String.class),
+                        new MaterialProcessRule<>(java.util.Set.of(new FormKey("casingSmall")), "typed"));
+                return;
+            case "infoProcessSingleConflictFailure": {
+                var single = MaterialProcessKey.single(new DataKey(addonId(), "typed_single"), String.class);
+                registrar.registerProcess(material, single, MaterialProcessRule.anyForm("wet"));
+                registrar.registerProcess(material, single, MaterialProcessRule.anyForm("dry"));
+                return;
+            }
+            case "infoProcessMultiple": {
+                var multiple = MaterialProcessKey.multiple(new DataKey(addonId(), "typed_multi"), String.class);
+                registrar.registerProcess(material, multiple, MaterialProcessRule.anyForm("wet"));
+                registrar.registerProcess(material, multiple, MaterialProcessRule.anyForm("dry"));
+                return;
+            }
+            case "infoProcessUnknownFormFailure":
+                registrar.registerProcess(
+                        new MaterialKey("Iron"),
+                        MaterialProcessKey.multiple(new DataKey(addonId(), "typed_process"), String.class),
+                        new MaterialProcessRule<>(java.util.Set.of(new FormKey("definitelyNotAPrefix")), "typed"));
                 return;
             case "info":
                 break;
             default:
                 return;
         }
-        MaterialInfoTool.forAddon(addonId())
+        registrar
                 .registerTool(material, new MaterialToolProfile(1, 3F, 64, 1))
                 .registerComposition(
                         material,
@@ -214,7 +256,7 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
                 .registerTag(material, new DataKey(addonId(), "typed_tag"))
                 .registerProcess(
                         material,
-                        new MaterialProcessKey<>(new DataKey(addonId(), "typed_process"), String.class),
+                        MaterialProcessKey.multiple(new DataKey(addonId(), "typed_process"), String.class),
                         MaterialProcessRule.anyForm("typed"));
     }
 }

@@ -66,10 +66,17 @@ public final class MaterialLifecycleProbe {
                 try {
                     AddonMaterials.collectContributors(loader);
                 } catch (IllegalStateException failure) {
-                    if (!scenario.equals("infoNamespaceFailure")) throw failure;
-                    check(failure.getCause() instanceof IllegalArgumentException);
-                    check(failure.getCause().getMessage().contains("cannot declare tag"));
-                    return;
+                    if (scenario.equals("infoNamespaceFailure")) {
+                        check(failure.getCause() instanceof IllegalArgumentException);
+                        check(failure.getCause().getMessage().contains("cannot declare key"));
+                        return;
+                    }
+                    if (scenario.equals("infoProcessSingleConflictFailure")) {
+                        check(failure.getCause() instanceof IllegalArgumentException);
+                        check(failure.getCause().getMessage().contains("already registered"));
+                        return;
+                    }
+                    throw failure;
                 }
             }
         }
@@ -109,6 +116,14 @@ public final class MaterialLifecycleProbe {
                 rejects(MaterialViews::catalog);
                 rejects(() -> GTMaterialRegistry.createMaterial(9000, "Late", "Late", 0));
             });
+        if (scenario.equals("aliasPublication"))
+            AddonMaterials.submit(
+                    "alias_addon",
+                    List.of(
+                            MaterialDefinition.builder(1, "AliasSource").dust().build(),
+                            MaterialDefinition.builder(1, "AliasTarget").dust().build()),
+                    List.of(),
+                    () -> GTMaterialRegistry.get("AliasSource").setRegistration(GTMaterialRegistry.get("AliasTarget")));
         if (scenario.endsWith("Failure") || scenario.equals("conflict")) {
             var failure = rejects(GTMaterialRegistry::init);
             check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.FAILED);
@@ -124,13 +139,15 @@ public final class MaterialLifecycleProbe {
             rejects(() -> GTMaterialRegistry.get("Iron"));
             rejects(GTMaterialRegistry::allMaterials);
             rejects(MaterialViews::catalog);
-            rejects(() -> MaterialInfoTool.tool(new MaterialKey("Iron")));
-            rejects(() -> MaterialInfoTool.frozenTool(new MaterialKey("Iron")));
-            rejects(() -> MaterialInfoTool.composition(new MaterialKey("Iron")));
-            rejects(() -> MaterialToolHelper.profile(new GTMaterial(260, "Iron", "Iron", 0)));
+            check(MaterialInfoTool.tool(new MaterialKey("Iron")).isEmpty());
+            check(MaterialInfoTool.frozenTool(new MaterialKey("Iron")).isEmpty());
+            check(MaterialInfoTool.composition(new MaterialKey("Iron")).isEmpty());
+            check(MaterialToolHelper.profile(new MaterialKey("Iron")).isEmpty());
             return;
         }
         GTMaterialRegistry.init();
+        rejects(() -> Materials.Iron.setOreMultiplier(2));
+        rejects(() -> Materials.Iron.setRegistration(Materials.Gold));
         var before = List.copyOf(GTMaterialRegistry.allMaterials());
         GTMaterialRegistry.init();
         GTMaterialRegistry.postInit();
@@ -142,6 +159,15 @@ public final class MaterialLifecycleProbe {
         check(GTMaterialRegistry.get("Black") == GTMaterialRegistry.get(8250));
         check(GTMaterialRegistry.get("AntiElectron") == GTMaterialRegistry.get("Positron"));
         check(GTMaterialRegistry.get("Iron") != GTMaterialRegistry.get("AntiIron"));
+        if (scenario.equals("aliasPublication")) {
+            var source = new MaterialKey("AliasSource");
+            var target = new MaterialKey("AliasTarget");
+            check(MaterialViews.catalog().resolve(source.name()).orElseThrow().equals(target));
+            check(MaterialViews.catalog().find(source).isEmpty());
+            check(MaterialViews.catalog().materials().stream()
+                    .noneMatch(material -> material.key().equals(source)));
+            check(MaterialViews.catalog().find(target).isPresent());
+        }
         check(MaterialViews.catalog().find(new MaterialKey("AnyIron")).isEmpty());
         check(MaterialViews.catalog()
                         .find(new MaterialKey("Iron"))
@@ -212,7 +238,7 @@ public final class MaterialLifecycleProbe {
                     .contains(new MaterialKey("Steel")));
         }
         if (scenario.equals("processes")) {
-            var key = new MaterialProcessKey<>(new DataKey("metadata_test", "throw_into_water"), String.class);
+            var key = MaterialProcessKey.multiple(new DataKey("metadata_test", "throw_into_water"), String.class);
             var rules = MaterialViews.catalog().processes().find(new MaterialKey("Iron"), new FormKey("dust"), key);
             check(rules.size() == 1 && rules.get(0).value().equals("wet"));
             check(MaterialViews.catalog()
@@ -220,16 +246,32 @@ public final class MaterialLifecycleProbe {
                     .find(new MaterialKey("Iron"), new FormKey("ingot"), key)
                     .isEmpty());
         }
+        if (scenario.equals("processFormAlias") || scenario.equals("infoProcessFormAlias")) {
+            var key = scenario.equals("processFormAlias")
+                    ? MaterialProcessKey.multiple(new DataKey("metadata_test", "throw_into_water"), String.class)
+                    : MaterialProcessKey.multiple(new DataKey("metadata_test", "typed_process"), String.class);
+            var iron = new MaterialKey("Iron");
+            check(MaterialViews.catalog()
+                            .processes()
+                            .find(iron, new FormKey("itemCasing"), key)
+                            .size()
+                    == 1);
+            check(MaterialViews.catalog()
+                    .processes()
+                    .find(iron, new FormKey("casingSmall"), key)
+                    .isEmpty());
+        }
         if (scenario.equals("info")) {
             var material = new MaterialKey("MetadataMaterial");
             check(GTMaterialRegistry.get(material.name()).tool().equals(new MaterialToolProfile(1, 3F, 64, 1)));
-            check(MaterialInfoTool.tool(material).equals(new MaterialToolProfile(1, 3F, 64, 1)));
+            check(MaterialInfoTool.tool(material).orElseThrow().equals(new MaterialToolProfile(1, 3F, 64, 1)));
+            check(MaterialInfoTool.tool(new MaterialKey("DefinitelyUnknown")).isEmpty());
             check(MaterialInfoTool.composition(material).orElseThrow().parts().size() == 1);
             check(SmeltingMaterialHelper.target(new MaterialKey("Graphite"))
                     .orElseThrow()
                     .equals(new MaterialTarget(new MaterialKey("Carbon"), 648648000L)));
             check(MaterialViews.catalog().tags().contains(material, new DataKey("metadata_test", "typed_tag")));
-            var process = new MaterialProcessKey<>(new DataKey("metadata_test", "typed_process"), String.class);
+            var process = MaterialProcessKey.multiple(new DataKey("metadata_test", "typed_process"), String.class);
             check(MaterialViews.catalog()
                     .processes()
                     .find(material, process)
@@ -239,13 +281,31 @@ public final class MaterialLifecycleProbe {
             rejects(() ->
                     MaterialInfoRegistry.addonRegistrar("metadata_test").registerForm(material, new FormKey("dust")));
         }
+        if (scenario.equals("infoProcessMultiple")) {
+            var material = new MaterialKey("MetadataMaterial");
+            var process = new MaterialProcessKey<>(
+                    new DataKey("metadata_test", "typed_multi"), String.class, MaterialProcessCardinality.MULTIPLE);
+            var rules = MaterialViews.catalog().processes().find(material, process);
+            check(rules.size() == 2);
+            check(rules.stream().map(MaterialProcessRule::value).toList().equals(List.of("wet", "dry")));
+            check(MaterialViews.catalog()
+                    .processes()
+                    .findSingle(material, process)
+                    .isEmpty());
+        }
+        if (scenario.equals("processMultiple")) {
+            var material = new MaterialKey("Iron");
+            var process = new MaterialProcessKey<>(
+                    new DataKey("metadata_test", "listed_multi"), String.class, MaterialProcessCardinality.MULTIPLE);
+            check(MaterialViews.catalog().processes().find(material, process).size() == 2);
+        }
         if (scenario.equals("infoLegacy")) {
             var material = new MaterialKey("MetadataMaterial");
             var composition = MaterialInfoTool.composition(material).orElseThrow();
             check(composition.divider() == 2 && composition.parts().size() == 2 && composition.crucible());
             check(composition.parts().get(0).equals(new MaterialComposition.Part("Iron", GTValues.U)));
             check(composition.parts().get(1).equals(new MaterialComposition.Part("Copper", GTValues.U)));
-            check(MaterialInfoTool.tool(material).equals(new MaterialToolProfile(3, 7F, 600L, 4)));
+            check(MaterialInfoTool.tool(material).orElseThrow().equals(new MaterialToolProfile(3, 7F, 600L, 4)));
             check(GregTechMaterials.find(material.name()).toolQuality() == 4);
             check(SmeltingMaterialHelper.target(material)
                     .orElseThrow()

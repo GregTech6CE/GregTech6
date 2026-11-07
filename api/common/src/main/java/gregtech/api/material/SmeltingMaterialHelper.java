@@ -5,6 +5,7 @@ package gregtech.api.material;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.addon.material.MaterialTarget;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 public final class SmeltingMaterialHelper {
     private SmeltingMaterialHelper() {}
 
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Optional<MaterialTarget> target(GTMaterial material) {
         if (material == null || !material.isValid()) return Optional.empty();
         GTMaterial target = legacyTarget(material);
@@ -21,10 +23,12 @@ public final class SmeltingMaterialHelper {
     }
 
     public static Optional<MaterialTarget> target(MaterialKey material) {
-        var rules = GregTechMaterials.processes().find(material, MaterialProcessKeys.SMELTING);
-        return rules.isEmpty() ? Optional.empty() : Optional.of(rules.get(0).value());
+        return GregTechMaterials.processes()
+                .findSingle(material, MaterialProcessKeys.SMELTING)
+                .map(MaterialProcessRule::value);
     }
 
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static boolean isMaterialSmeltable(GTMaterial material) {
         return target(material).isPresent();
     }

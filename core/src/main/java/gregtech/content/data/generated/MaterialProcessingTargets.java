@@ -39,8 +39,9 @@ public final class MaterialProcessingTargets {
     private static java.util.Map<String, gregtech.api.addon.material.MaterialTarget> processing(String name) {
         var result = new java.util.LinkedHashMap<String, gregtech.api.addon.material.MaterialTarget>();
         for (var entry : MaterialDefinitions.info(name).processes().rules().entrySet()) {
-            var kind = gregtech.api.addon.material.MaterialProcessKeys.legacyTargetName(entry.getKey());
-            if (!kind.isEmpty()
+            var kind = gregtech.api.addon.material.MaterialProcessKeys.legacyTargetName(entry.getKey())
+                    .orElse(null);
+            if (kind != null
                     && !entry.getValue().isEmpty()
                     && entry.getValue().get(0).value() instanceof gregtech.api.addon.material.MaterialTarget target)
                 result.put(kind, target);

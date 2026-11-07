@@ -100,8 +100,8 @@ final class MaterialReferenceAudit {
     private static Map<String, MaterialTarget> processing(gregtech.engine.material.MaterialInfoDefinition info) {
         var result = new HashMap<String, MaterialTarget>();
         for (var entry : info.processes().rules().entrySet()) {
-            var kind = MaterialProcessKeys.legacyTargetName(entry.getKey());
-            if (!kind.isEmpty()
+            var kind = MaterialProcessKeys.legacyTargetName(entry.getKey()).orElse(null);
+            if (kind != null
                     && !entry.getValue().isEmpty()
                     && entry.getValue().get(0).value() instanceof MaterialTarget target) result.put(kind, target);
         }

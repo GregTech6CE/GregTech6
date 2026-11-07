@@ -9,6 +9,17 @@ import java.util.Set;
 public interface MaterialProcessesView {
     <T> List<MaterialProcessRule<T>> find(MaterialKey material, MaterialProcessKey<T> process);
 
+    /**
+     * Resolves the single rule declared by {@code process}. Multi-valued processes and missing
+     * rules return empty; registration rejects zero or multiple rules for a single-valued process.
+     */
+    default <T> java.util.Optional<MaterialProcessRule<T>> findSingle(
+            MaterialKey material, MaterialProcessKey<T> process) {
+        if (process.cardinality() != MaterialProcessCardinality.SINGLE) return java.util.Optional.empty();
+        var rules = find(material, process);
+        return rules.size() == 1 ? java.util.Optional.of(rules.get(0)) : java.util.Optional.empty();
+    }
+
     default <T> List<MaterialProcessRule<T>> find(
             MaterialKey material, FormKey inputForm, MaterialProcessKey<T> process) {
         return find(material, process).stream()

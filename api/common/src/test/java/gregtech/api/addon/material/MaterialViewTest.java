@@ -38,6 +38,8 @@ class MaterialViewTest {
         assertThrows(IllegalArgumentException.class, () -> new FormKey(""));
         assertThrows(IllegalArgumentException.class, () -> new DataKey("UpperCase", "value"));
         assertThrows(IllegalArgumentException.class, () -> new MaterialInfo(-1, "group", "group", 0, "gt6ce"));
+        assertTrue(MaterialProcessKeys.legacyTarget(null).isEmpty());
+        assertTrue(MaterialProcessKeys.legacyTargetName(null).isEmpty());
     }
 
     @Test
@@ -85,7 +87,7 @@ class MaterialViewTest {
 
     @Test
     void processDeclarationsAreTypedAndImmutable() {
-        var process = new MaterialProcessKey<>(new DataKey("test_addon", "throw_into_water"), String.class);
+        var process = MaterialProcessKey.multiple(new DataKey("test_addon", "throw_into_water"), String.class);
         var forms = new java.util.HashSet<FormKey>();
         forms.add(new FormKey("dust"));
         var declaration = new MaterialProcessDeclaration<>("Iron", process, forms, "swim");
@@ -95,7 +97,7 @@ class MaterialViewTest {
                 UnsupportedOperationException.class, () -> declaration.forms().clear());
         @SuppressWarnings("rawtypes")
         MaterialProcessKey integerProcess =
-                new MaterialProcessKey<>(new DataKey("test_addon", "throw_into_water"), Integer.class);
+                MaterialProcessKey.multiple(new DataKey("test_addon", "throw_into_water"), Integer.class);
         @SuppressWarnings("unchecked")
         var invalid = assertThrows(
                 IllegalArgumentException.class,
@@ -107,7 +109,7 @@ class MaterialViewTest {
     void processViewSupportsFormSpecificQueries() {
         var iron = new MaterialKey("Iron");
         var dust = new FormKey("dust");
-        var process = new MaterialProcessKey<>(new DataKey("test_addon", "throw_into_water"), String.class);
+        var process = MaterialProcessKey.multiple(new DataKey("test_addon", "throw_into_water"), String.class);
         var rule = new MaterialProcessRule<>(Set.of(dust), "wet");
         MaterialProcessesView view = new MaterialProcessesView() {
             public <T> java.util.List<MaterialProcessRule<T>> find(MaterialKey material, MaterialProcessKey<T> key) {
@@ -124,6 +126,34 @@ class MaterialViewTest {
         assertEquals("wet", view.find(iron, dust, process).get(0).value());
         assertTrue(view.find(iron, new FormKey("ingot"), process).isEmpty());
         assertTrue(view.supports(iron, process));
+    }
+
+    @Test
+    void processViewDistinguishesSingleAndMultipleRules() {
+        var iron = new MaterialKey("Iron");
+        var single = MaterialProcessKey.single(new DataKey("test_addon", "single"), String.class);
+        var multiple = MaterialProcessKey.multiple(new DataKey("test_addon", "multiple"), String.class);
+        var singleRule = new MaterialProcessRule<>(Set.of(), "one");
+        var first = new MaterialProcessRule<>(Set.of(), "first");
+        var second = new MaterialProcessRule<>(Set.of(), "second");
+        MaterialProcessesView view = new MaterialProcessesView() {
+            public <T> java.util.List<MaterialProcessRule<T>> find(MaterialKey material, MaterialProcessKey<T> key) {
+                @SuppressWarnings("unchecked")
+                var typed = key.equals(single)
+                        ? java.util.List.of((MaterialProcessRule<T>) singleRule)
+                        : key.equals(multiple)
+                                ? java.util.List.of((MaterialProcessRule<T>) first, (MaterialProcessRule<T>) second)
+                                : java.util.List.<MaterialProcessRule<T>>of();
+                return typed;
+            }
+
+            public Set<MaterialProcessKey<?>> keys(MaterialKey material) {
+                return Set.of(single, multiple);
+            }
+        };
+        assertEquals("one", view.findSingle(iron, single).orElseThrow().value());
+        assertTrue(view.findSingle(iron, multiple).isEmpty());
+        assertEquals(2, view.find(iron, multiple).size());
     }
 
     @Test

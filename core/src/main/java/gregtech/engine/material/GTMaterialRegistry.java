@@ -76,7 +76,7 @@ public final class GTMaterialRegistry {
             throw new IllegalStateException("Material definitions are closed (" + phase + "): " + name);
     }
 
-    /** Internal compatibility entry; never opens registration or replaces an existing identity. */
+    /** Canonical intrinsic registration entry; never opens registration or replaces an existing identity. */
     public static GTMaterial registerDefinition(MaterialDefinition definition) {
         requireDefinitions(definition.name());
         return install(
@@ -253,6 +253,7 @@ public final class GTMaterialRegistry {
             MaterialRoleFlags.applyDerived();
             MaterialInfoRegistry.freeze();
             MaterialViews.publish();
+            STATE.freeze();
             phase = RegistrationPhase.READY;
         } catch (RuntimeException | Error failure) {
             definitionsOpen = false;

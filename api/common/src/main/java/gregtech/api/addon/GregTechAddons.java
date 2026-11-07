@@ -14,11 +14,11 @@ import java.util.TreeMap;
  */
 public final class GregTechAddons {
     private static final int API_MAJOR = 1;
-    private static final int API_MINOR = 6;
+    private static final int API_MINOR = 7;
 
     /**
      * Monotonic version code of the independent API artifact: {@code major * 1000 + minor}.
-     * The current 1.6 release reports 1006. Development builds still need a matching SDK and host
+     * The current 1.7 release reports 1007. Development builds still need a matching SDK and host
      * runtime; this number alone does not check the installed mod or Minecraft version.
      *
      * <p>Not a compile-time constant. A {@code static final} primitive set to a literal is copied into

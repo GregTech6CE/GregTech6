@@ -5,6 +5,7 @@ package gregtech.api.material;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.addon.material.MaterialTarget;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 public final class PulverizationMaterialHelper {
     private PulverizationMaterialHelper() {}
 
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public static Optional<MaterialTarget> target(GTMaterial material) {
         if (material == null || !material.isValid()) return Optional.empty();
         GTMaterial target = legacyTarget(material);
@@ -21,8 +23,9 @@ public final class PulverizationMaterialHelper {
     }
 
     public static Optional<MaterialTarget> target(MaterialKey material) {
-        var rules = GregTechMaterials.processes().find(material, MaterialProcessKeys.PULVERIZING);
-        return rules.isEmpty() ? Optional.empty() : Optional.of(rules.get(0).value());
+        return GregTechMaterials.processes()
+                .findSingle(material, MaterialProcessKeys.PULVERIZING)
+                .map(MaterialProcessRule::value);
     }
 
     static GTMaterial legacyTarget(GTMaterial material) {
