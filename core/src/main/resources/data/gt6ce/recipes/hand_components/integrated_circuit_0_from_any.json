@@ -1,0 +1,13 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "_comment": "GT6 ItemIntegratedCircuit:59",
+  "ingredients": [
+    {
+      "tag": "gt6ce:integrated_circuits"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:integrated_circuit_0",
+    "count": 1
+  }
+}
