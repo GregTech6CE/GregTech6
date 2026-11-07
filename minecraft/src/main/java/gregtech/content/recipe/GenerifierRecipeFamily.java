@@ -8,6 +8,7 @@ import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
@@ -124,6 +125,11 @@ public final class GenerifierRecipeFamily {
 
     private static Map<String, Item> vanillaOutputs() {
         Map<String, Item> outputs = new java.util.HashMap<>();
+        for (var target : VanillaUnificationDefinitions.blockTargets()) {
+            Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+                    net.minecraft.resources.ResourceLocation.withDefaultNamespace(target.itemPath()));
+            if (item != Items.AIR) outputs.put(target.blockPrefix() + "/" + target.materialName(), item);
+        }
         outputs.put("dust/Glowstone", Items.GLOWSTONE_DUST);
         outputs.put("dust/Redstone", Items.REDSTONE);
         outputs.put("gem/Diamond", Items.DIAMOND);
@@ -137,14 +143,6 @@ public final class GenerifierRecipeFamily {
         outputs.put("ingot/Charcoal", Items.CHARCOAL);
         outputs.put("nugget/Gold", Items.GOLD_NUGGET);
         outputs.put("stick/Wood", Items.STICK);
-        outputs.put("blockDust/Stone", Items.GRAVEL);
-        outputs.put("blockDust/Redstone", Items.REDSTONE_BLOCK);
-        outputs.put("blockGem/Diamond", Items.DIAMOND_BLOCK);
-        outputs.put("blockGem/Emerald", Items.EMERALD_BLOCK);
-        outputs.put("blockGem/Coal", Items.COAL_BLOCK);
-        outputs.put("blockGem/Lapis", Items.LAPIS_BLOCK);
-        outputs.put("blockIngot/Iron", Items.IRON_BLOCK);
-        outputs.put("blockIngot/Gold", Items.GOLD_BLOCK);
         return Map.copyOf(outputs);
     }
 

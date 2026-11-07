@@ -29,3 +29,7 @@
 293	forge:glue	T	-	-	gt6ce:glue_bottle	-	none	glue bottle accepted by glue ingredients
 312	prefix:form_conversion/dust_to_dusttiny/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	dust splits into ninths in the player grid
 312	prefix:form_conversion/dust_to_dustsmall/	R	gt6ce:tool_shapeless	-	-	4	one@1/2x2	dust splits into quarters in the player grid
+345	gt6ce:form_conversion/blockdust_to_dust/soulsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_soulsand	9	one@0/2x2/minecraft:soul_sand	vanilla soul sand unpacks to nine soulsand dust
+345	gt6ce:form_conversion/blockdust_to_dust/sand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_sand	9	one@0/2x2/minecraft:sand	vanilla sand unpacks to nine sand dust
+345	gt6ce:form_conversion/blockdust_to_dust/redsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_redsand	9	one@0/2x2/minecraft:red_sand	vanilla red sand unpacks to nine red sand dust
+345	gt6ce:form_conversion/blockdust_to_dust/stone_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_stone	9	one@0/2x2/minecraft:gravel	vanilla gravel unpacks to nine stone dust

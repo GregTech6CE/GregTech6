@@ -4,6 +4,7 @@ import gregtech.api.material.*;
 
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.ItemTags;
@@ -141,7 +142,14 @@ public final class MaterialEquivalence {
                 && (canonicalRequired.getItem() != required.getItem() || canonicalAvailable.getItem() != available.getItem())) return true;
         var expected=form(required); if(expected==null) return false;
         var actual=form(available);
-        if(actual!=null) return expected.prefix()==actual.prefix()&&expected.material()==actual.material();
+        if(actual!=null) {
+            if (expected.prefix()==actual.prefix()&&expected.material()==actual.material()) return true;
+            // A secondary registration makes one vanilla item supply more than one form.
+            var id=BuiltInRegistries.ITEM.getKey(available.getItem());
+            return id.getNamespace().equals("minecraft")
+                    && VanillaUnificationDefinitions.extraPrefixes(id.getPath()).contains(expected.prefix())
+                    && expected.material()==actual.material();
+        }
         String path=tagPath(expected);
         return path!=null&&hasForgeTag(available,path);
     }

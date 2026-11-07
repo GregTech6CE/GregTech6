@@ -29,6 +29,7 @@ public final class CraftingMaterialForms {
     private static Map<String, String> materialNames = Map.of();
     private static Map<String, String> prefixNames = Map.of();
     private static Map<Item, Form> vanilla = Map.of();
+    private static Map<Item, List<Form>> extraForms = Map.of();
     private static Map<Form, Item> preferred = Map.of();
 
     public static void rebuild() { rebuild(false); }
@@ -59,17 +60,18 @@ public final class CraftingMaterialForms {
                 String.format(Locale.ROOT, "wireGt%02d", size));
         prefixNames = Map.copyOf(prefixes);
         var forms = new IdentityHashMap<Item, Form>();
+        var extras = new IdentityHashMap<Item, List<Form>>();
         var targets = new HashMap<Form, Item>();
         for (var definition : VanillaUnificationDefinitions.entries()) {
             String prefix = definition.prefix() == null ? null : definition.prefix().getName();
             String path = definition.itemPath();
-            if (Set.of("iron_block", "gold_block", "copper_block", "netherite_block").contains(path)) prefix = "blockIngot";
-            else if (Set.of("diamond_block", "emerald_block", "lapis_block", "coal_block").contains(path)) prefix = "blockGem";
-            else if (path.equals("redstone_block")) prefix = "blockDust";
-            // Modern raw metals are not GT6 native ore chunks or their storage blocks.
-            else if (Set.of("raw_iron", "raw_gold", "raw_copper").contains(path)) prefix = "rawVanilla";
-            else if (Set.of("raw_iron_block", "raw_gold_block", "raw_copper_block").contains(path)) prefix = "blockRawVanilla";
-            else if (definition.prefix() == null && (path.endsWith("_ore") || path.equals("ancient_debris"))) prefix = "oreVanillastone";
+            if (prefix == null) {
+                // Modern raw metals are not GT6 native ore chunks or their storage blocks.
+                if (Set.of("raw_iron", "raw_gold", "raw_copper").contains(path)) prefix = "rawVanilla";
+                else if (Set.of("raw_iron_block", "raw_gold_block", "raw_copper_block").contains(path)) prefix = "blockRawVanilla";
+                else if (path.endsWith("_ore") || path.equals("ancient_debris"))
+                    prefix = VanillaUnificationDefinitions.vanillaOreForm(path);
+            }
             if (prefix == null) continue;
             var item = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(path));
             var material = GTMaterialRegistry.get(definition.materialName()).resolve();
@@ -77,6 +79,19 @@ public final class CraftingMaterialForms {
             var form = new Form(prefix, material.getName());
             forms.put(item, form);
             if (!OriginalFormConversions.STANDARD_ORES.contains(prefix)) targets.putIfAbsent(form, item);
+            for (var extraPrefix : definition.extraPrefixes()) {
+                var extraForm = new Form(extraPrefix.getName(), material.getName());
+                extras.computeIfAbsent(item, unused -> new ArrayList<>()).add(extraForm);
+                targets.putIfAbsent(extraForm, item);
+            }
+        }
+        for (var target : VanillaUnificationDefinitions.blockTargets()) {
+            var item = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(target.itemPath()));
+            var material = GTMaterialRegistry.get(target.materialName()).resolve();
+            if (item == Items.AIR || !material.isValid()) continue;
+            var form = new Form(target.blockPrefix(), material.getName());
+            forms.put(item, form);
+            targets.putIfAbsent(form, item);
         }
         // Real plank blocks are registered outside VanillaUnificationDefinitions. Prefer them to
         // generic plate forms, deterministically choosing vanilla before an equivalent mod block.
@@ -102,6 +117,11 @@ public final class CraftingMaterialForms {
             if (form == null && taggedItems) form = tagged(stack);
             if (form != null) indexed.computeIfAbsent(form, unused -> new ArrayList<>()).add(item);
         }
+        for (var entry : extras.entrySet())
+            for (var form : entry.getValue())
+                indexed.computeIfAbsent(form, unused -> new ArrayList<>()).add(entry.getKey());
+        extras.replaceAll((item, values) -> List.copyOf(values));
+        extraForms = Map.copyOf(extras);
         indexed.replaceAll((form, values) -> List.copyOf(values));
         aliases = Map.copyOf(indexed);
     }
@@ -225,7 +245,10 @@ public final class CraftingMaterialForms {
         var value = new JsonObject(); value.addProperty("tag", tag); choices.add(value);
     }
     public static boolean matches(String prefix, String material, ItemStack stack) {
-        return new Form(prefix, material).equals(form(stack));
+        var expected = new Form(prefix, material);
+        if (expected.equals(form(stack))) return true;
+        var extras = extraForms.get(stack.getItem());
+        return extras != null && extras.contains(expected);
     }
     public static ItemStack canonical(ItemStack output) {
         ensureInitialized();

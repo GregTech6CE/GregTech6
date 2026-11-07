@@ -40,7 +40,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class CraftingRecipeIssueSmokeTests {
     private static final Set<String> FIXED_ISSUES = Set.of(
-            "2", "148", "151", "153", "155", "157", "158", "161", "171", "173", "176", "185", "209", "286", "293", "312");
+            "2", "148", "151", "153", "155", "157", "158", "161", "171", "173", "176", "185", "209", "286", "293", "312", "345");
 
     // Checks the table covers every fixed issue and the GameTest runtime is wired.
     @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
@@ -146,7 +146,8 @@ public final class CraftingRecipeIssueSmokeTests {
             width = dims[0];
             height = dims[1];
             items = emptyGrid(width, height);
-            items.set(slot, firstIngredient(found.recipe()));
+            // An optional item id pins the slot to the vanilla stack a row is about.
+            items.set(slot, spec.length > 2 ? new ItemStack(item(spec[2])) : firstIngredient(found.recipe()));
         } else if (row.setup().equals("fill")) {
             var filled = fillFromRecipe(found.recipe());
             width = filled.width();

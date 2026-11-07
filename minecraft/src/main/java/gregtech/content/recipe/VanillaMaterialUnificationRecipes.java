@@ -6,7 +6,8 @@ import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialUnification;
-import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.material.VanillaUnificationDefinitions;
+import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.recipe.Recipe;
 import net.minecraft.world.item.ItemStack;
 
@@ -16,19 +17,11 @@ public final class VanillaMaterialUnificationRecipes {
 
     public static int register() {
         int count = 0;
-        for (String name :
-                new String[] {"Iron", "Gold", "Copper", "Netherite", "Diamond", "Emerald", "Coal", "Lapis", "Redstone"
-                }) {
-            var material = GTMaterialRegistry.get(name);
-            if (material == null) continue;
-            for (var prefix : new BlockMaterialPrefix[] {
-                BlockMaterialPrefix.blockIngot,
-                BlockMaterialPrefix.blockSolid,
-                BlockMaterialPrefix.blockGem,
-                BlockMaterialPrefix.blockDust
-            }) {
-                count += add(GTBlocks.getStack(prefix, material));
-            }
+        for (var target : VanillaUnificationDefinitions.blockTargets()) {
+            var material = GTMaterialRegistry.get(target.materialName());
+            if (material == null || !material.isValid()) continue;
+            var prefix = BlockPrefixRegistry.byName(target.blockPrefix());
+            if (prefix != null) count += add(GTBlocks.getStack(prefix, material));
         }
         for (String name : new String[] {
             "Iron",
@@ -39,6 +32,7 @@ public final class VanillaMaterialUnificationRecipes {
             "Diamond",
             "Emerald",
             "Amethyst",
+            "Flint",
             "Coal",
             "Charcoal",
             "Lapis",
@@ -67,7 +61,8 @@ public final class VanillaMaterialUnificationRecipes {
                 MaterialPrefix.dust,
                 MaterialPrefix.dustTiny,
                 MaterialPrefix.stick,
-                MaterialPrefix.plate
+                MaterialPrefix.plate,
+                MaterialPrefix.plateGem
             }) {
                 var entry = GTItems.getObject(prefix, material);
                 if (entry != null) count += add(new ItemStack(entry.get()));

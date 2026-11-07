@@ -2,6 +2,7 @@ package gregtech.content.data;
 
 import gregtech.api.material.GTValues;
 import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.content.block.MaterialBlockLike;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;import net.minecraft.network.chat.Component;
@@ -194,23 +195,35 @@ public final class MaterialTagPack extends AbstractPackResources {
                 if (!sourcePrefix.equals(form.prefix().getName()))
                     add(tags,"gt6ce","items",MaterialPrefix.camelToSnake(sourcePrefix)+"/"
                             +MaterialEquivalence.materialName(form.material()),id.toString());
+                if (id.getNamespace().equals("minecraft"))
+                    for (var extraForm : VanillaUnificationDefinitions.extraPrefixes(id.getPath()))
+                        add(tags,"gt6ce","items",extraForm.getRegistryName()+"/"
+                                +MaterialEquivalence.materialName(form.material()),id.toString());
             } else {
                 // Vanilla-unified items (minecraft:iron_block, ...) carry a material without a prefix.
                 var data=gregtech.engine.material.ItemMaterialRegistry.explicit(item).orElse(null);
-                if(data!=null&&data.components().size()==1) {
-                    var material=data.components().get(0).material().resolve();
+                var blockTarget=item instanceof BlockItem && id.getNamespace().equals("minecraft")
+                        ? VanillaUnificationDefinitions.blockTarget(id.getPath()) : null;
+                // A block target keeps its form material even when the item also carries a
+                // secondary component (red sand is Sand + Fe2O3).
+                if(data!=null&&(data.components().size()==1||blockTarget!=null)) {
+                    var material=blockTarget!=null
+                            ? gregtech.engine.material.GTMaterialRegistry.get(blockTarget.materialName()).resolve()
+                            : data.components().get(0).material().resolve();
                     if(material.isValid()) {
                         addMaterial(byMaterial,material,id.toString());
                         String name=MaterialEquivalence.materialName(material);
                         // Vanilla block shapes are explicit; a 2U axle/log is not an ore.
-                        if (item instanceof BlockItem && id.getNamespace().equals("minecraft")) {
-                            if (java.util.Set.of("iron_block","gold_block","copper_block","netherite_block","diamond_block","emerald_block","lapis_block","coal_block","redstone_block").contains(id.getPath()))
+                        if (blockTarget!=null) {
+                            add(tags,"gt6ce","items",MaterialPrefix.camelToSnake(blockTarget.blockPrefix())+"/"+name,id.toString());
+                            if (!blockTarget.blockPrefix().equals("blockSolid"))
                                 add(tags,"forge","items","storage_blocks/"+name,id.toString());
-                            else if (id.getPath().endsWith("_ore") || id.getPath().equals("ancient_debris")) {
-                                add(tags,"forge","items","ores/"+name,id.toString());
-                                // CraftingMaterialForms exposes native ores through this GT form too.
-                                add(tags,"gt6ce","items","ore_vanillastone/"+name,id.toString());
-                            }
+                        } else if (item instanceof BlockItem && data.components().size()==1
+                                && (id.getPath().endsWith("_ore") || id.getPath().equals("ancient_debris"))) {
+                            add(tags,"forge","items","ores/"+name,id.toString());
+                            // CraftingMaterialForms exposes native ores through this GT form too.
+                            add(tags,"gt6ce","items",MaterialPrefix.camelToSnake(
+                                    VanillaUnificationDefinitions.vanillaOreForm(id.getPath()))+"/"+name,id.toString());
                         }
                     }
                 }

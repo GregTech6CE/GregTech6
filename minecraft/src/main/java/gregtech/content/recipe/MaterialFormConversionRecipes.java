@@ -6,6 +6,7 @@ import gregtech.GregTech;
 //?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialUnification;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
@@ -209,10 +210,19 @@ public final class MaterialFormConversionRecipes {
 
     private static void unbox(String route, BlockMaterialPrefix from, int fromCount, MaterialPrefix to, int toCount,
                               GTMaterial material) {
-        ItemStack input = GTBlocks.getStack(from, material);
+        ItemStack input = blockStack(from, material);
         ItemStack output = GTItems.getStack(to, material, toCount);
         if (input.isEmpty() || output.isEmpty()) return;
         recipe("unboxinator", route, MachineRecipeMaps.Unboxinator, 16, item(input, fromCount), output, null);
+    }
+
+    /** A vanilla block target replaces the GT stack of that form; other forms keep the GT block. */
+    private static ItemStack blockStack(BlockMaterialPrefix prefix, GTMaterial material) {
+        if (prefix == BlockMaterialPrefix.blockDust) {
+            var vanilla = MaterialUnification.vanillaFormStack(prefix.getName(), material);
+            if (!vanilla.isEmpty()) return vanilla;
+        }
+        return GTBlocks.getStack(prefix, material);
     }
 
     private static void unpack(String route, MaterialPrefix from, int fromCount, MaterialPrefix to, int toCount,
@@ -226,7 +236,7 @@ public final class MaterialFormConversionRecipes {
     private static void box(String route, MaterialPrefix from, int fromCount, int circuit, BlockMaterialPrefix to,
                             int toCount, GTMaterial material) {
         ItemStack input = GTItems.getStack(from, material, fromCount);
-        ItemStack output = GTBlocks.getStack(to, material);
+        ItemStack output = blockStack(to, material);
         if (input.isEmpty() || output.isEmpty()) return;
         recipe("boxinator", route, MachineRecipeMaps.Boxinator, 16, input, item(output, toCount), circuit);
     }
