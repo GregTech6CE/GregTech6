@@ -57,8 +57,7 @@ public final class CrucibleContainerInteraction {
         boolean water = held.is(Items.WATER_BUCKET) || mob;
         boolean lava = held.is(Items.LAVA_BUCKET);
         if (!(honey || snow || milk || water || lava)) {
-            return FluidUtil.interactWithFluidHandler(player, hand, handler)
-                    ? InteractionResult.CONSUME : InteractionResult.FAIL;
+            return transfer(player, hand, handler);
         }
         boolean accepted;
         if (snow) {
@@ -88,5 +87,26 @@ public final class CrucibleContainerInteraction {
             player.setItemInHand(hand, ItemUtils.createFilledResult(held, player,
                     new ItemStack(honey ? Items.GLASS_BOTTLE : Items.BUCKET)));
         return InteractionResult.CONSUME;
+    }
+
+    /**
+     * Container transfers keep the filled result in creative mode. FluidUtil's stow path returns the
+     * unchanged empty container there, which would drain the crucible and hand nothing back.
+     */
+    private static InteractionResult transfer(Player player, InteractionHand hand, IFluidHandler blockHandler) {
+        var held = player.getItemInHand(hand);
+        var filled = FluidUtil.tryFillContainer(held, blockHandler, Integer.MAX_VALUE, player, true);
+        if (filled.isSuccess()) {
+            player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, filled.getResult()));
+            return InteractionResult.CONSUME;
+        }
+        var emptied = FluidUtil.tryEmptyContainer(held, blockHandler, Integer.MAX_VALUE, player, true);
+        if (emptied.isSuccess()) {
+            // Creative keeps the filled container, like a vanilla bucket; only survival swaps it out.
+            if (!player.getAbilities().instabuild)
+                player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, emptied.getResult()));
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.FAIL;
     }
 }
