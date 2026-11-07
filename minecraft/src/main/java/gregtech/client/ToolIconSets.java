@@ -1,9 +1,6 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -47,7 +44,7 @@ public final class ToolIconSets {
 //? if >=1.21.1 {
         /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/iconsets/" + name);
 *///?} else {
-        return GregTech.id("item/iconsets/" + name);
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item/iconsets/" + name).toLowerCase());
 //?}
     }
 

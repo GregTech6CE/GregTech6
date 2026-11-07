@@ -1,10 +1,7 @@
 package gregtech.client.gui;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,7 +31,7 @@ public class HopperScreen extends MachineContainerScreen<HopperContainerMenu> {
 //? if >=1.21.1 {
         /*return ResourceLocation.fromNamespaceAndPath("gt6ce","textures/gui/chests/" + name + ".png");
 *///?} else {
-        return GregTech.id("textures/gui/chests/" + name + ".png");
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/chests/" + name + ".png").toLowerCase());
 //?}
     }
 

@@ -1,10 +1,8 @@
 package gregtech.client;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
 import gregtech.content.tool.BottleCrateGeometry;
 import gregtech.content.item.BottleItem;
@@ -67,7 +65,7 @@ public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrat
 //? if >=1.21.1 {
             /*out=buffers.getBuffer(RenderType.entityCutout(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
 *///?} else {
-            out=buffers.getBuffer(RenderType.entityCutout(GregTech.id("textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
+            out=buffers.getBuffer(RenderType.entityCutout(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/block/iconsets/bottlecrate_bottle_"+texture+".png").toLowerCase())));
 //?}
             for(int slot=0;slot<9;slot++) if(!crate.items().getStackInSlot(slot).isEmpty()) {
                 if(pass==0) for(int part=1;part<=2;part++) surface(pose.last(),out,BottleCrateGeometry.bounds(slot,part),0,1,0,1,0xFFFFFF,light,false,false);

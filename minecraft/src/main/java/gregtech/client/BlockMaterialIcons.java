@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.block.stone.GTStoneBlock;
@@ -27,7 +24,7 @@ public final class BlockMaterialIcons {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/" + set.folder() + "/" + file);
 *///?} else {
-        return GregTech.id("block/material_icons/" + set.folder() + "/" + file);
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/" + set.folder() + "/" + file).toLowerCase());
 //?}
     }
 
@@ -35,7 +32,7 @@ public final class BlockMaterialIcons {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material/addon/" + prefix.getTextureFileName());
 *///?} else {
-        return GregTech.id("block/material/addon/" + prefix.getTextureFileName());
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material/addon/" + prefix.getTextureFileName()).toLowerCase());
 //?}
     }
 
@@ -43,7 +40,7 @@ public final class BlockMaterialIcons {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material/" + set.folder() + "/" + prefix.getTextureFileName());
 *///?} else {
-        return GregTech.id("block/material/" + set.folder() + "/" + prefix.getTextureFileName());
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material/" + set.folder() + "/" + prefix.getTextureFileName()).toLowerCase());
 //?}
     }
 
@@ -94,7 +91,7 @@ public final class BlockMaterialIcons {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/stones/" + paths.folder() + "/" + paths.variantTexture());
 *///?} else {
-        return GregTech.id("block/stones/" + paths.folder() + "/" + paths.variantTexture());
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/stones/" + paths.folder() + "/" + paths.variantTexture()).toLowerCase());
 //?}
     }
 

@@ -1,10 +1,8 @@
 package gregtech.content.item.behavior;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.core.Direction;
 import net.minecraft.tags.*;
 import net.minecraft.world.InteractionResult;
@@ -20,8 +18,8 @@ public final class BehaviorPlaceWoodworkingSupplies {
     /*private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","saplings"));
     private static final TagKey<Item> WORKBENCHES=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","crafting_workbenches"));
 *///?} else {
-    private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(GregTech.id("saplings"));
-    private static final TagKey<Item> WORKBENCHES=ItemTags.create(GregTech.id("crafting_workbenches"));
+    private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("saplings").toLowerCase()));
+    private static final TagKey<Item> WORKBENCHES=ItemTags.create(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("crafting_workbenches").toLowerCase()));
 //?}
     private BehaviorPlaceWoodworkingSupplies() {}
     public static InteractionResult use(UseOnContext context) {

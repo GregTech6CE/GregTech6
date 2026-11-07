@@ -1,10 +1,8 @@
 package gregtech.content.recipe;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.engine.material.ItemMaterialRegistry;
@@ -150,7 +148,7 @@ public final class DiggableRecipes {
 //? if >=1.21.1 {
         /*Item value = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
-        Item value = ForgeRegistries.ITEMS.getValue(GregTech.id(id));
+        Item value = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
 //?}
         if (value == null || value == Items.AIR) throw new IllegalStateException("Missing GT6 diggable item " + id);
         return value;

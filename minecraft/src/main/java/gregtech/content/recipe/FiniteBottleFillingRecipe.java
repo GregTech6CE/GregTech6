@@ -1,4 +1,5 @@
 package gregtech.content.recipe;
+import gregtech.engine.mod.GregTechIdentity;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.*;
 import net.minecraft.core.*;
@@ -168,7 +169,6 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import gregtech.GregTech;
 import gregtech.engine.fluid.FluidDisplayBinding;
 import gregtech.content.food.GTDrinks;
 import gregtech.content.item.FluidItem;
@@ -251,7 +251,7 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
     }
 
     public static void registerIngredient() {
-        CraftingHelper.register(GregTech.id("finite_fluid_container_1000"), ContainerIngredient.SERIALIZER);
+        CraftingHelper.register(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("finite_fluid_container_1000").toLowerCase()), ContainerIngredient.SERIALIZER);
     }
 
     /** Accepts only a drainable finite 1000 mB item, never the creative/display fluid item. */
@@ -294,7 +294,7 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
             Stream<Ingredient.Value> vessels = FiniteCraftingVessels.examples(acceptedFluids(fluidKey))
                     .stream().map(Ingredient.ItemValue::new);
             if (!allowBottle) return vessels;
-            Item bottle = ForgeRegistries.ITEMS.getValue(GregTech.id("lubricant_bottle"));
+            Item bottle = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("lubricant_bottle").toLowerCase()));
             if (bottle == null || bottle == Items.AIR) throw new IllegalStateException("Missing industrial lubricant bottle");
             return Stream.concat(vessels, Stream.of(new Ingredient.ItemValue(new ItemStack(bottle))));
         }
@@ -351,7 +351,7 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
         @Override
         public JsonElement toJson() {
             JsonObject json = new JsonObject();
-            json.addProperty("type", GregTech.id("finite_fluid_container_1000").toString());
+            json.addProperty("type", ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("finite_fluid_container_1000").toLowerCase()).toString());
             json.addProperty("fluid", fluidKey);
             if (allowLubricantBottle) json.addProperty("allow_lubricant_bottle", true);
             return json;

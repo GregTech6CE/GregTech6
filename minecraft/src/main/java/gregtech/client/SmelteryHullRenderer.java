@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
@@ -29,7 +26,7 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
 //? if >=1.21.1 {
             /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blocksolid");
 *///?} else {
-            GregTech.id("block/material_icons/metallic/blocksolid");
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/metallic/blocksolid").toLowerCase());
 //?}
 
     public SmelteryHullRenderer(BlockEntityRendererProvider.Context context) {

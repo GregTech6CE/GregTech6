@@ -1,10 +1,11 @@
 package gregtech.content.worldgen.dungeon;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 
 /*import gregtech.content.registry.*;
 *///?} else {
-import gregtech.GregTech;
 //?}
 import gregtech.content.block.inventory.BottleCrateBlock;
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
@@ -66,7 +67,7 @@ public final class DungeonBottleSupplies {
 //? if >=1.21.1 {
         /*var item=BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
-        var item=ForgeRegistries.ITEMS.getValue(GregTech.id(id));
+        var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
 //?}
         if(item==null || item==Items.AIR) throw new IllegalStateException("Missing registered GT6 dungeon bottle: "+id);
         return new ItemStack(item);

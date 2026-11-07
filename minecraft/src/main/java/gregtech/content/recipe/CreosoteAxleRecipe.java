@@ -1,10 +1,10 @@
 package gregtech.content.recipe;
+import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 //?} else {
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import gregtech.GregTech;
 //?}
 import gregtech.engine.fluid.FluidDisplayBinding;
 //? if >=1.21.1 {
@@ -139,7 +139,7 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
             return holder != null && holder.isBound() ? new FluidStack(holder.get(), 1000) : FluidStack.EMPTY;
 *///?} else {
     public static void registerIngredient() {
-        CraftingHelper.register(GregTech.id("creosote_container_1000"), ContainerIngredient.SERIALIZER);
+        CraftingHelper.register(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("creosote_container_1000").toLowerCase()), ContainerIngredient.SERIALIZER);
     }
 
     /** A real, drainable 1000 mB creosote vessel; viewers show cells and wooden buckets. */
@@ -237,7 +237,7 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         @Override public IIngredientSerializer<? extends Ingredient> getSerializer() { return SERIALIZER; }
         @Override public JsonElement toJson() {
             JsonObject json = new JsonObject();
-            json.addProperty("type", GregTech.id("creosote_container_1000").toString());
+            json.addProperty("type", ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("creosote_container_1000").toLowerCase()).toString());
             return json;
         }
 //?}

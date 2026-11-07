@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.block.machine.GTFacingMachineBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -37,7 +34,7 @@ public final class BurningBoxBakedModel implements BakedModel {
 //? if >=1.21.1 {
             /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/generators/burning_solid/colored/top");
 *///?} else {
-            GregTech.id("block/machines/generators/burning_solid/colored/top");
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machines/generators/burning_solid/colored/top").toLowerCase());
 //?}
 
     private final Map<Direction, BakedModel> idleByFacing;

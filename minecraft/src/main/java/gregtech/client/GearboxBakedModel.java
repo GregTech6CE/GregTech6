@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -54,11 +51,11 @@ public final class GearboxBakedModel implements IDynamicBakedModel {
             ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear_clockwise"),
             ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear_counterclockwise")
 *///?} else {
-            GregTech.id("block/iconsets/gearbox"),
-            GregTech.id("block/iconsets/gearbox_axle"),
-            GregTech.id("block/iconsets/gear"),
-            GregTech.id("block/iconsets/gear_clockwise"),
-            GregTech.id("block/iconsets/gear_counterclockwise")
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gearbox").toLowerCase()),
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gearbox_axle").toLowerCase()),
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gear").toLowerCase()),
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gear_clockwise").toLowerCase()),
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/gear_counterclockwise").toLowerCase())
 //?}
     };
     private static final ChunkRenderTypeSet LAYERS =

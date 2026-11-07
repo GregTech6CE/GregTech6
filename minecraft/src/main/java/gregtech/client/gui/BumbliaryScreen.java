@@ -1,10 +1,7 @@
 package gregtech.client.gui;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -25,13 +22,13 @@ public class BumbliaryScreen extends MachineContainerScreen<BumbliaryContainerMe
 //? if >=1.21.1 {
             /*ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/machines/bumbliary.png");
 *///?} else {
-            GregTech.id("textures/gui/machines/bumbliary.png");
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/machines/bumbliary.png").toLowerCase());
 //?}
     private static final ResourceLocation ADVANCED =
 //? if >=1.21.1 {
             /*ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/machines/bumbliary_advanced.png");
 *///?} else {
-            GregTech.id("textures/gui/machines/bumbliary_advanced.png");
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/machines/bumbliary_advanced.png").toLowerCase());
 //?}
 
     private final ResourceLocation texture;

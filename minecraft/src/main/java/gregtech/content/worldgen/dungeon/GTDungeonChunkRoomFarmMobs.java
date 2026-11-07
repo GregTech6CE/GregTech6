@@ -1,10 +1,11 @@
 package gregtech.content.worldgen.dungeon;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 
 /*import gregtech.content.registry.*;
 *///?} else {
-import gregtech.GregTech;
 //?}
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.block.misc.SpikeBlock;
@@ -467,7 +468,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 //? if >=1.21.1 {
         /*Block block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","item_pipe_medium_arsenic_bronze"));
 *///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(GregTech.id("item_pipe_medium_arsenic_bronze"));
+        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("item_pipe_medium_arsenic_bronze").toLowerCase()));
 //?}
         if (!(block instanceof ItemPipeBlock)) throw new IllegalStateException("Missing GT6 item pipe 25377");
         BlockState state = block.defaultBlockState();

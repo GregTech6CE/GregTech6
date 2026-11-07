@@ -1,10 +1,8 @@
 package gregtech.content.item;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.food.GTDrinks;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -99,7 +97,7 @@ public class BottleItem extends Item {
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",EMPTY_BOTTLE_ID));
 *///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(GregTech.id(EMPTY_BOTTLE_ID));
+        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (EMPTY_BOTTLE_ID).toLowerCase()));
 //?}
         return item == null || item == Items.AIR ? new ItemStack(Items.GLASS_BOTTLE) : new ItemStack(item);
     }

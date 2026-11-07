@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import net.minecraft.core.Direction;
@@ -105,7 +102,7 @@ public final class SmelteryModelHelper {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid");
 *///?} else {
-        return GregTech.id("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid");
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid").toLowerCase());
 //?}
     }
 
@@ -113,7 +110,7 @@ public final class SmelteryModelHelper {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix);
 *///?} else {
-        return GregTech.id("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix);
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix).toLowerCase());
 //?}
     }
 

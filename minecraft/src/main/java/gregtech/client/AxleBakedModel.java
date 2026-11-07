@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.block.energy.AxleBlock;
 import gregtech.content.blockentity.energy.AxleBlockEntity;
 import net.minecraft.client.renderer.RenderType;
@@ -51,13 +48,13 @@ public final class AxleBakedModel extends BakedModelWrapper<PipeWireBakedModel> 
 //? if >=1.21.1 {
             /*faces.put(face,ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
 *///?} else {
-            faces.put(face,GregTech.id("block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
+            faces.put(face,ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)).toLowerCase()));
 //?}
         }
 //? if >=1.21.1 {
         /*var base=ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/axle");
 *///?} else {
-        var base=GregTech.id("block/iconsets/axle");
+        var base=ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/iconsets/axle").toLowerCase());
 //?}
         return new PipeWireBakedModel(half,base,0,base,0,0,null,faces);
     }

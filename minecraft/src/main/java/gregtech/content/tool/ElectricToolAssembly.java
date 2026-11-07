@@ -1,9 +1,6 @@
 package gregtech.content.tool;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import gregtech.engine.tool.*;
@@ -73,7 +70,7 @@ public enum ElectricToolAssembly {
         return new gregtech.content.recipe.PoweredToolAssemblyRecipe(new ShapedRecipe("gt6ce.electric_tools",
                 CraftingBookCategory.EQUIPMENT,new ShapedRecipePattern(3,3,ingredients,Optional.empty()),result),this,material,battery);
 *///?} else {
-        var key=GregTech.id("electric_tools/"+id+"/"+material.getName().toLowerCase(Locale.ROOT)+suffix);
+        var key=ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("electric_tools/"+id+"/"+material.getName().toLowerCase(Locale.ROOT)+suffix).toLowerCase());
         return new ToolShapedRecipe(new ShapedRecipe(key,"gt6ce.electric_tools",
                 CraftingBookCategory.EQUIPMENT,3,3,ingredients,result),false);
 //?}

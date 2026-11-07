@@ -1,4 +1,6 @@
 package gregtech.content.registry;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
@@ -8,7 +10,6 @@ import gregtech.content.plant.BedrockFlowers;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import gregtech.GregTech;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import net.minecraft.world.item.BlockItem;
@@ -62,13 +63,13 @@ public final class GTDungeonBlocks {
 //? if >=1.21.1 {
             /*Block flower = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,id));
 *///?} else {
-            Block flower = ForgeRegistries.BLOCKS.getValue(GregTech.id(id));
+            Block flower = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
 //?}
             if (flower == null) throw new IllegalStateException("Missing GT6 indicator flower " + id);
 //? if >=1.21.1 {
             /*empty.addPlant(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,id), POTTED_FLOWERS.get(id));
 *///?} else {
-            empty.addPlant(GregTech.id(id), POTTED_FLOWERS.get(id));
+            empty.addPlant(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()), POTTED_FLOWERS.get(id));
 //?}
         }
     }
@@ -110,7 +111,7 @@ public final class GTDungeonBlocks {
                             /*() -> BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE,id)),
                             BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_POPPY)));
 *///?} else {
-                            () -> ForgeRegistries.BLOCKS.getValue(GregTech.id(id)),
+                            () -> ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase())),
                             BlockBehaviour.Properties.copy(Blocks.POTTED_POPPY)));
 //?}
             POTTED_FLOWERS.put(id, potted);

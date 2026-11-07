@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
+import gregtech.engine.mod.GregTechIdentity;
 //? if >=1.21.1 {
 //?} else {
 
 import com.google.gson.JsonObject;
-import gregtech.GregTech;
 //?}
 import gregtech.engine.tool.GTToolType;
 //? if >=1.21.1 {
@@ -63,11 +63,11 @@ public final class GTToolRecipeSerializers {
     public static final RecipeSerializer<GTToolHeadRecipe> HEAD = new HeadSerializer();
 
     /** {@code gregtech:tool_assembly} — the id the port's data pack used before. */
-    public static final ResourceLocation ASSEMBLY_ID = GregTech.id("tool_assembly");
+    public static final ResourceLocation ASSEMBLY_ID = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("tool_assembly").toLowerCase());
     /** {@code gt6ce:tool_crafting} */
-    public static final ResourceLocation CRAFTING_ID = GregTech.id("tool_crafting");
+    public static final ResourceLocation CRAFTING_ID = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("tool_crafting").toLowerCase());
     /** {@code gt6ce:tool_head} */
-    public static final ResourceLocation HEAD_ID = GregTech.id("tool_head");
+    public static final ResourceLocation HEAD_ID = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("tool_head").toLowerCase());
 
     private static int intOrDefault(JsonObject json, String key) {
         return json.has(key) ? json.get(key).getAsInt() : 0;

@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.material.Materials;
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialTextureSet;
 import net.minecraft.resources.ResourceLocation;
@@ -22,13 +19,13 @@ public final class CrucibleContentIcons {
 //? if >=1.21.1 {
             /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blockraw");
 *///?} else {
-            GregTech.id("block/material_icons/metallic/blockraw");
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/metallic/blockraw").toLowerCase());
 //?}
     public static final ResourceLocation SOLID_GRAY_OVERLAY =
 //? if >=1.21.1 {
             /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blockraw_overlay");
 *///?} else {
-            GregTech.id("block/material_icons/metallic/blockraw_overlay");
+            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/metallic/blockraw_overlay").toLowerCase());
 //?}
 
     private CrucibleContentIcons() {}
@@ -80,7 +77,7 @@ public final class CrucibleContentIcons {
 //? if >=1.21.1 {
         /*return ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/" + set.folder() + "/" + file);
 *///?} else {
-        return GregTech.id("block/material_icons/" + set.folder() + "/" + file);
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/" + set.folder() + "/" + file).toLowerCase());
 //?}
     }
 }

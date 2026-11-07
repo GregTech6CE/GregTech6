@@ -1,10 +1,8 @@
 package gregtech.content.blockentity.misc;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.food.SandwichIngredients;
 import gregtech.content.food.SandwichNutrition;
 import gregtech.content.registry.GTBlockEntities;
@@ -51,7 +49,7 @@ public final class SandwichBlockEntity extends BlockEntity {
 //? if >=1.21.1 {
         /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(GregTech.id(id));
+        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (id).toLowerCase()));
 //?}
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
@@ -137,7 +135,7 @@ public final class SandwichBlockEntity extends BlockEntity {
 //? if >=1.21.1 {
                 /*|| net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(remainder.getItem()).equals(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","bottle_empty"))))
 *///?} else {
-                || ForgeRegistries.ITEMS.getKey(remainder.getItem()).equals(GregTech.id("bottle_empty"))))
+                || ForgeRegistries.ITEMS.getKey(remainder.getItem()).equals(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("bottle_empty").toLowerCase()))))
 //?}
             amount = gregtech.content.food.SandwichRules.containerQuantity(amount,true);
         if (stack.getCount() < amount) return 0;

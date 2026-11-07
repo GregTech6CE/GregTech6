@@ -1,10 +1,7 @@
 package gregtech.content.block.misc;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
@@ -120,7 +117,7 @@ public final class DiggableBlock extends FallingBlock {
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", variant.dropItemId));
 *///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(GregTech.id(variant.dropItemId));
+        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (variant.dropItemId).toLowerCase()));
 //?}
         if (item == null || item == net.minecraft.world.item.Items.AIR)
             throw new IllegalStateException("Missing GT6 diggable drop " + variant.dropItemId);

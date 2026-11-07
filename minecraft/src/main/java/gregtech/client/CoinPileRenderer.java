@@ -1,9 +1,7 @@
 package gregtech.client;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.blockentity.misc.CoinPileBlockEntity;
 import gregtech.content.tool.CoinGeometry;
 import gregtech.content.item.MaterialItem;
@@ -25,8 +23,8 @@ public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlock
     static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
             "textures/block/iconsets/coin_side.png");
 *///?} else {
-    static final net.minecraft.resources.ResourceLocation TEXTURE = GregTech.id("textures/block/iconsets/coin.png");
-    static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = GregTech.id("textures/block/iconsets/coin_side.png");
+    static final net.minecraft.resources.ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/block/iconsets/coin.png").toLowerCase());
+    static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/block/iconsets/coin_side.png").toLowerCase());
 //?}
     public CoinPileRenderer(BlockEntityRendererProvider.Context context) {
     }

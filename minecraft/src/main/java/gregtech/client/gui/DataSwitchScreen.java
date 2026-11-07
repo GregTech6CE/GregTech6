@@ -1,9 +1,6 @@
 package gregtech.client.gui;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.block.inventory.UsbSwitchBlock;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -16,8 +13,8 @@ public final class DataSwitchScreen extends MachineContainerScreen<DataSwitchMen
     /*private static final ResourceLocation USB = ResourceLocation.fromNamespaceAndPath("gt6ce","textures/gui/machines/usb_switch.png");
     private static final ResourceLocation HDD = ResourceLocation.fromNamespaceAndPath("gt6ce","textures/gui/machines/hdd_switch.png");
 *///?} else {
-    private static final ResourceLocation USB = GregTech.id("textures/gui/machines/usb_switch.png");
-    private static final ResourceLocation HDD = GregTech.id("textures/gui/machines/hdd_switch.png");
+    private static final ResourceLocation USB = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/machines/usb_switch.png").toLowerCase());
+    private static final ResourceLocation HDD = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/gui/machines/hdd_switch.png").toLowerCase());
 //?}
 
     public DataSwitchScreen(DataSwitchMenu menu, Inventory inventory, Component title) {

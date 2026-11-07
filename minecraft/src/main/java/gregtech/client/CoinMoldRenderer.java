@@ -1,9 +1,7 @@
 package gregtech.client;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.blockentity.tool.CoinMoldBlockEntity;
 import gregtech.content.tool.CoinMoldGeometry;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -26,14 +24,14 @@ public final class CoinMoldRenderer implements BlockEntityRenderer<CoinMoldBlock
         /*var texture = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
                 "block/material_icons/"+MaterialIcons.resolveTextureSet(material).folder()+"/blocksolid");
 *///?} else {
-        var texture = GregTech.id("block/material_icons/"+MaterialIcons.resolveTextureSet(material).folder()+"/blocksolid");
+        var texture = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/"+MaterialIcons.resolveTextureSet(material).folder()+"/blocksolid").toLowerCase());
 //?}
         var out = buffers.getBuffer(RenderType.entityCutoutNoCull(TextureAtlas.LOCATION_BLOCKS));
         AnvilCuboidRenderer.draw(pose.last(), out, CoinMoldGeometry.CONTENT, CrucibleRenderSprites.resolve(texture), material.getColor(), light);
 //? if >=1.21.1 {
         /*var detail = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", texture.getPath()+"_overlay");
 *///?} else {
-        var detail = GregTech.id(texture.getPath()+"_overlay");
+        var detail = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (texture.getPath()+"_overlay").toLowerCase());
 //?}
         if (CrucibleRenderSprites.hasTexture(detail))
             AnvilCuboidRenderer.draw(pose.last(), out, CoinMoldGeometry.CONTENT, CrucibleRenderSprites.resolve(detail), 0xFFFFFF, light);

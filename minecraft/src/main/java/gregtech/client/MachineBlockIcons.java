@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
@@ -17,8 +14,8 @@ public final class MachineBlockIcons {
 //? if >=1.21.1 {
         /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machine/burning_box_" + shell + "/"
 *///?} else {
-        return GregTech.id("block/machine/burning_box_" + shell + "/"
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/burning_box_" + shell + "/"
 //?}
-                + facing.getSerializedName() + (active ? "_on" : "_off"));
+                + facing.getSerializedName() + (active ? "_on" : "_off")).toLowerCase());
     }
 }

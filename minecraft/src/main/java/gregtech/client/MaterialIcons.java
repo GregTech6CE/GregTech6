@@ -1,9 +1,6 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.api.material.MaterialTextureSet;
@@ -35,7 +32,7 @@ public final class MaterialIcons {
 //? if >=1.21.1 {
         /*return ResourceLocation.fromNamespaceAndPath("gt6ce", MaterialIconDefinitions.texturePath(set, prefix, overlay));
 *///?} else {
-        return GregTech.id(MaterialIconDefinitions.texturePath(set, prefix, overlay));
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (MaterialIconDefinitions.texturePath(set, prefix, overlay)).toLowerCase());
 //?}
     }
 
@@ -51,7 +48,7 @@ public final class MaterialIcons {
 //? if >=1.21.1 {
         /*return ResourceLocation.fromNamespaceAndPath("gt6ce", MaterialIconDefinitions.modelPath(set, prefix));
 *///?} else {
-        return GregTech.id(MaterialIconDefinitions.modelPath(set, prefix));
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (MaterialIconDefinitions.modelPath(set, prefix)).toLowerCase());
 //?}
     }
 

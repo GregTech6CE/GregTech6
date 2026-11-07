@@ -1,10 +1,7 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.block.BookShelfBlock;
 import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
 import gregtech.content.book.BookShelfGeometry;
@@ -47,7 +44,7 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
 //? if >=1.21.1 {
                 /*: ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/books/" + texture + "_" + face + ".png");
 *///?} else {
-                : GregTech.id("textures/block/books/" + texture + "_" + face + ".png");
+                : ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("textures/block/books/" + texture + "_" + face + ".png").toLowerCase());
 //?}
     }
 

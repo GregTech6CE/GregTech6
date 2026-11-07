@@ -1,9 +1,6 @@
 package gregtech.client;
+import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -15,7 +12,7 @@ public final class CrucibleRenderSprites {
 //? if >=1.21.1 {
     /*private static final ResourceLocation FALLBACK = ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blockraw");
 *///?} else {
-    private static final ResourceLocation FALLBACK = GregTech.id("block/material_icons/metallic/blockraw");
+    private static final ResourceLocation FALLBACK = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/metallic/blockraw").toLowerCase());
 //?}
 
     private CrucibleRenderSprites() {}

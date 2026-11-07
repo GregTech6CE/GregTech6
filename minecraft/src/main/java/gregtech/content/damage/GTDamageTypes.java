@@ -1,10 +1,7 @@
 package gregtech.content.damage;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -85,7 +82,7 @@ public final class GTDamageTypes {
 //? if >=1.21.1 {
         /*return ResourceKey.create(Registries.DAMAGE_TYPE, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", path));
 *///?} else {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, GregTech.id(path));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (path).toLowerCase()));
 //?}
     }
 

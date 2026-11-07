@@ -1,10 +1,7 @@
 package gregtech.engine.fluid;
+import gregtech.engine.mod.GregTechIdentity;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.RegisteredFluids;
@@ -41,9 +38,9 @@ public final class FluidVisualPolicy {
 //? if >=1.21.1 {
             /*template=ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/"+material.getTextureSet().folder()+
 *///?} else {
-            template=GregTech.id("block/material_icons/"+material.getTextureSet().folder()+
+            template=ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/material_icons/"+material.getTextureSet().folder()+
 //?}
-                    (kind==FluidTexturePolicy.Kind.PLASMA?"/plasma":"/molten"));
+                    (kind==FluidTexturePolicy.Kind.PLASMA?"/plasma":"/molten")).toLowerCase());
         }
         return new Visual(FluidTexturePolicy.select(template,kind,exists),rawTint(entry));
     }

@@ -1,10 +1,11 @@
 package gregtech.content.worldgen.dungeon;
+import net.minecraft.resources.ResourceLocation;
+import gregtech.engine.mod.GregTechIdentity;
 
 //? if >=1.21.1 {
 
 /*import gregtech.content.registry.*;
 *///?} else {
-import gregtech.GregTech;
 //?}
 import gregtech.content.book.GTBooks;
 import net.minecraft.core.Direction;
@@ -130,7 +131,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
 //? if >=1.21.1 {
         /*var matchBox = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","match_box_full"));
 *///?} else {
-        var matchBox = ForgeRegistries.ITEMS.getValue(GregTech.id("match_box_full"));
+        var matchBox = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("match_box_full").toLowerCase()));
 //?}
         if (matchBox == null || matchBox == Items.AIR) {
             throw new IllegalStateException("Missing GT6 dungeon supply item: gt6ce:match_box_full");
