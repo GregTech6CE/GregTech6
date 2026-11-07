@@ -362,6 +362,114 @@ public final class RecipeMapRegistrationTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void adapterPublishesDatapackAndAddonRowsWithProvenance(GameTestHelper helper) {
+        var map = map(helper, "gt.test.recipe.adapter");
+        try {
+            var datapack = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                    .withPriority(5);
+            helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
+                            map, datapack, "datapack:test") == datapack, "datapack row published");
+            helper.assertTrue("datapack:test".equals(datapack.mSource),
+                    "datapack provenance recorded: " + datapack.mSource);
+            helper.assertTrue(datapack.mPriority == 5, "datapack priority recorded");
+
+            var addon = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.COPPER_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+            helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
+                            map, addon, gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON) == addon,
+                    "an addon row with another priority is a distinct variant");
+            helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON.equals(addon.mSource),
+                    "addon provenance recorded: " + addon.mSource);
+            var found = map.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
+                    false, 9, 9);
+            helper.assertTrue(found == datapack, "the datapack priority outranks the neutral addon row: " + found);
+
+            var duplicate = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                    .withPriority(5);
+            helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
+                            map, duplicate, gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON) == null,
+                    "the adapter still rejects identical conditions");
+
+            var dynamicMap = map(helper, "gt.test.recipe.adapter.dynamic");
+            try {
+                var low = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                var high = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                gregtech.engine.recipe.MachineRecipeAdapter.addDynamic(dynamicMap, 1, (items, fluids) -> low);
+                gregtech.engine.recipe.MachineRecipeAdapter.addDynamic(dynamicMap, 9, (items, fluids) -> high);
+                helper.assertTrue(java.util.Arrays.equals(
+                                new long[] {9, 1}, dynamicMap.dynamicProviderPriorities()),
+                        "adapter dynamic providers keep priority order: "
+                                + java.util.Arrays.toString(dynamicMap.dynamicProviderPriorities()));
+                helper.assertTrue(dynamicMap.findRecipe(
+                                java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(), false, 9, 9) == high,
+                        "the higher-priority adapter provider answers first");
+            } finally {
+                RecipeMap.unregister("gt.test.recipe.adapter.dynamic");
+            }
+        } finally {
+            RecipeMap.unregister("gt.test.recipe.adapter");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void removalMatchesRowsRegardlessOfPriorityAndSource(GameTestHelper helper) {
+        var recipe = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
+                new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                .withPriority(7).withSource("datapack:test");
+        var match = gregtech.engine.recipe.data.MachineRecipeDocuments.removal("""
+                {"map":"gt.test.recipe.removal.priority",
+                 "item_inputs":[{"item":"minecraft:iron_ingot"}],
+                 "item_outputs":[{"item":"minecraft:gold_ingot"}]}
+                """);
+        helper.assertTrue(gregtech.engine.recipe.data.MachineRecipeMatch.matches(match, view(recipe), NO_TAGS),
+                "priority and provenance do not keep a row out of a datapack removal");
+        var other = gregtech.engine.recipe.data.MachineRecipeDocuments.removal("""
+                {"map":"gt.test.recipe.removal.priority",
+                 "item_inputs":[{"item":"minecraft:iron_ingot"}],
+                 "item_outputs":[{"item":"minecraft:diamond"}]}
+                """);
+        helper.assertFalse(gregtech.engine.recipe.data.MachineRecipeMatch.matches(other, view(recipe), NO_TAGS),
+                "a different output still fails the removal condition");
+        helper.succeed();
+    }
+
+    private static final gregtech.engine.recipe.data.MachineRecipeMatch.TagQuery NO_TAGS =
+            new gregtech.engine.recipe.data.MachineRecipeMatch.TagQuery() {
+                public boolean itemInTag(String itemId, String tagId) { return false; }
+            };
+
+    private static gregtech.engine.recipe.data.MachineRecipeMatch.RecipeView view(Recipe recipe) {
+        var inputs = new java.util.ArrayList<ItemStack>();
+        for (var input : recipe.mInputs) if (input != null && !input.isEmpty()) inputs.add(input);
+        var outputs = new java.util.ArrayList<ItemStack>();
+        for (var output : recipe.mOutputs) if (output != null && !output.isEmpty()) outputs.add(output);
+        return new gregtech.engine.recipe.data.MachineRecipeMatch.RecipeView() {
+            public int inputItems() { return inputs.size(); }
+            public String inputItem(int index) {
+                return net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(inputs.get(index).getItem()).toString();
+            }
+            public int inputItemCount(int index) { return inputs.get(index).getCount(); }
+            public int inputFluids() { return 0; }
+            public String inputFluid(int index) { return ""; }
+            public long inputFluidAmount(int index) { return 0; }
+            public int outputItems() { return outputs.size(); }
+            public String outputItem(int index) {
+                return net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(outputs.get(index).getItem()).toString();
+            }
+            public int outputItemCount(int index) { return outputs.get(index).getCount(); }
+            public int outputItemChance(int index) { return recipe.getOutputChance(index); }
+            public int outputFluids() { return 0; }
+            public String outputFluid(int index) { return ""; }
+            public long outputFluidAmount(int index) { return 0; }
+        };
+    }
+
     private static RecipeMap map(GameTestHelper helper, String name) {
         return map(helper, name, 9);
     }

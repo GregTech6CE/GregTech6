@@ -37,6 +37,16 @@ final class MachineRecipeDocumentsTest {
     }
 
     @Test
+    void removalConditionsDoNotTakePriority() {
+        // Removal matches inputs/outputs; a priority filter would silently change an old datapack's
+        // meaning, so the field stays an addition-only annotation and is rejected on removal.
+        assertThrows(IllegalArgumentException.class, () -> MachineRecipeDocuments.removal("""
+                        {"map":"gt.recipe.crusher","priority":5,
+                         "item_inputs":[{"item":"minecraft:stone"}]}
+                        """));
+    }
+
+    @Test
     void priorityIsOptionalAndRoundTripsOnlyWhenSet() {
         var ordinary = MachineRecipeDocuments.addition("""
                 {"map":"gt.recipe.crusher",
