@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Direct Ores 174-187 rows at original 3703e40308c8c030763fd6297dea8b210d2a77b1.
- * ANY.Amber is GoldenAmber + DominicanAmber, not the unrelated ordinary Amber identity.
+ * ANY.Amber is GoldenAmber; DominicanAmber was retired with its source mod.
  * Each row resolves its physical input and output independently, with no OM fallback.
  */
 public final class SourceOreCryotheumRules {
@@ -25,7 +25,6 @@ public final class SourceOreCryotheumRules {
     public record Shape(Input input, int inputCount, MaterialPrefix output, int outputCount, int cryotheumMb) {}
 
     private static final List<Binding> BINDINGS = List.of(
-            new Binding(8422, "DominicanAmber"),
             new Binding(8341, "Glowstone"),
             new Binding(8470, "Carminite"),
             new Binding(8340, "Nikolite"),

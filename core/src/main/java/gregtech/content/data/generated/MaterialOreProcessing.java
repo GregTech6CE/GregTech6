@@ -263,9 +263,6 @@ public final class MaterialOreProcessing {
         Compounds.SmokeyQuartz.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.SmokeyQuartz.setSmelting(Ores.SiO2, GregTechConstants.U);
         Compounds.SmokeyQuartz.setOreMultiplier(2);
-        Compounds.ManaQuartz.put(MaterialProperty.GENERATE_ORE_PROCESSING);
-        Compounds.ManaQuartz.setSmelting(Ores.SiO2, GregTechConstants.U);
-        Compounds.ManaQuartz.setOreMultiplier(2);
         Compounds.ElvenQuartz.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.ElvenQuartz.setSmelting(Ores.SiO2, GregTechConstants.U);
         Compounds.ElvenQuartz.setOreMultiplier(2);
@@ -335,12 +332,8 @@ public final class MaterialOreProcessing {
         Elements.Nq_522.setCrushing(Elements.Nq, GregTechConstants.U);
         Compounds.Amber.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.Amber.setOreMultiplier(2);
-        Compounds.AmberDominican.put(MaterialProperty.GENERATE_ORE_PROCESSING);
-        Compounds.AmberDominican.setOreMultiplier(2);
         Compounds.Zircon.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Compounds.Zircon.setOreMultiplier(2);
-        Compounds.Draconium.put(MaterialProperty.GENERATE_ORE_PROCESSING);
-        Compounds.Draconium.setOreMultiplier(2);
         Ores.Borax.put(MaterialProperty.GENERATE_ORE_PROCESSING);
         Ores.Borax.setOreMultiplier(2);
         Ores.Cassiterite.put(MaterialProperty.GENERATE_ORE_PROCESSING);

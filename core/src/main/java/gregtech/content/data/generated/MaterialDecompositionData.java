@@ -271,7 +271,6 @@ public final class MaterialDecompositionData {
         bind(8756, "Duralumin", DECOMPOSABLE);
         bind(8784, "Adamantine", DECOMPOSABLE);
         bind(8790, "Trinitanium", DECOMPOSABLE, CENTRIFUGE);
-        bind(8792, "DraconiumAwakened", DECOMPOSABLE);
         bind(8793, "TitaniumIridium", DECOMPOSABLE, CENTRIFUGE);
         bind(8796, "HSSG", DECOMPOSABLE, CENTRIFUGE);
         bind(8797, "HSSE", DECOMPOSABLE, CENTRIFUGE);

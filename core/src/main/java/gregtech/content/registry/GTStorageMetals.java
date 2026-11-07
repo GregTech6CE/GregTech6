@@ -64,7 +64,6 @@ public final class GTStorageMetals {
                     12.5F,
                     12.5F),
             new Spec("duranium", gregtech.content.material.generated.CompoundMaterials.Duranium, 20.0F, 20.0F),
-            new Spec("draconium", gregtech.content.material.generated.CompoundMaterials.Draconium, 50.0F, 50.0F),
             new Spec("ultimet", gregtech.content.material.generated.CompoundMaterials.Ultimet, 12.5F, 12.5F),
             new Spec("tungsten", gregtech.content.material.generated.ElementMaterials.Tungsten, 10.0F, 10.0F),
             new Spec("palladium", gregtech.content.material.generated.ElementMaterials.Palladium, 15.0F, 15.0F),
@@ -76,11 +75,5 @@ public final class GTStorageMetals {
                     30.0F,
                     30.0F),
             new Spec("tritanium", gregtech.content.material.generated.CompoundMaterials.Tritanium, 30.0F, 30.0F),
-            new Spec("adamantium", gregtech.content.material.generated.ElementMaterials.Adamantium, 100.0F, 100.0F),
-            new Spec(
-                    "draconium_awakened",
-                    gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened,
-                    100.0F,
-                    100.0F),
-            new Spec("infinity", gregtech.content.material.generated.CompoundMaterials.Infinity, 100.0F, 100.0F));
+            new Spec("adamantium", gregtech.content.material.generated.ElementMaterials.Adamantium, 100.0F, 100.0F));
 }

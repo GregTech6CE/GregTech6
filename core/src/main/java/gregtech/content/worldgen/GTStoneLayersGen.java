@@ -321,27 +321,9 @@ public final class GTStoneLayersGen {
                 ore("CertusQuartz", true, 16, 16, 48),
                 ore("Barite", true, 32, 0, 32));
 
-        contact(
-                true,
-                "Coal",
-                "Stone",
-                ore("Amber", true, 4, 30, 70),
-                ore("Amber", true, 8, 30, 70),
-                ore("AmberDominican", true, 8, 30, 70));
-        contact(
-                true,
-                "Lignite",
-                "Stone",
-                ore("Amber", true, 4, 30, 70),
-                ore("Amber", true, 8, 30, 70),
-                ore("AmberDominican", true, 8, 30, 70));
-        contact(
-                true,
-                "Oilshale",
-                "Stone",
-                ore("Amber", true, 4, 30, 70),
-                ore("Amber", true, 8, 30, 70),
-                ore("AmberDominican", true, 8, 30, 70));
+        contact(true, "Coal", "Stone", ore("Amber", true, 4, 30, 70), ore("Amber", true, 8, 30, 70));
+        contact(true, "Lignite", "Stone", ore("Amber", true, 4, 30, 70), ore("Amber", true, 8, 30, 70));
+        contact(true, "Oilshale", "Stone", ore("Amber", true, 4, 30, 70), ore("Amber", true, 8, 30, 70));
         contact(true, "Komatiite", "Basalt", ore("Perlite", true, 4, 0, 16));
         contact(true, "Limestone", "Basalt", ore("Ilmenite", true, 8, 0, 32), ore("TiO2", true, 12, 0, 32));
         contact(true, "Granite", "NaCl", ore("Zeolite", true, 8, 16, 48));

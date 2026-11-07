@@ -33,6 +33,7 @@
 | 外部作品熔融流体 | 停注 `molten.adamantite`、`molten.carmot`、`molten.mithril`、`molten.orichalcum`、`molten.oriharukon`。 | 名称取自《星际迷航》、托尔金作品与神话，相关模组未接入本端。 |
 | 现实名称化合物熔融流体 | 停注 `molten.ferrite`、`molten.niobiumnitride`。 | 本端未保留对应配方与物品形态，停注。 |
 | 药水系统（整套移除） | 停注全部 94 条带药水标志的流体，含基底、即时效果、时长效果及喷溅/滞留形态；注册名与数量见[药水系统移除](potion-removal.md)附录A。 | 药水身份改由原版药水物品承载，流体侧保持单一体系；该标志没有运行期读取者。 |
+| Draconic Evolution、Avaritia 熔融流体 | 停注 `molten.draconium`、`molten.draconiumawakened`、`molten.infinity`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 | 无来源/无消费端材料熔融流体 | 停注 `molten.bedrockium`、`molten.crystallinepinkslime`、`molten.unstable`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 | GT 水目录项（奥卡姆剃刀） | 删除 `Water` 目录项、`fluid_item_water` 物品与 `VANILLA_WATER` 贴图模式；配方中的 `Water` 字段改指 `minecraft:water`，材料 `Water` 不再生成 GT 流体。 | 原版已有水，GT 目录项只是原版水的别名；保留目录项会继续产生重复的流体物品与语言键。 |
 | 热温泉水、河水、海水（奥卡姆剃刀） | 停注 `watergeothermal`、`riverwater`、`seawater`，删除海洋/河流水体温替换特性 `gt_water_bodies`、地热泉 `overworld.fluid.water` 及其方块、模型、贴图与语言键；`minecraft:water` 流体标签不再追加 GT 水体。相关配方改指原版水或删除重复行：电解、干燥、蒸馏保留 `w:` 行，海水电解、干燥保留 `Saltwater` 行；`watergeothermal` 的重水离心、燃料与再生饮品行随流体删除。 | 三种流体都是原版水的变体；世界生成直接保留原版水，避免整块替换与地图模组不贴合，也去掉热泉水独有的重水与再生效果。 |

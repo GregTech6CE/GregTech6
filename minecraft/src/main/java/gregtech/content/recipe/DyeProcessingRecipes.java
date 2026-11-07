@@ -239,7 +239,7 @@ public final class DyeProcessingRecipes {
     /** GT6 {@code ANY.SiO2.mToThis}, in the order the source group registers them. */
     private static final String[] FOAM_SANDS={
             "SiliconDioxide","Glass","Flint","Sand","RedSand","NetherQuartz","CertusQuartz","ChargedCertusQuartz","Fluix","SunnyQuartz",
-            "RedQuartz","BlazeQuartz","SmokeyQuartz","ManaQuartz","ElvenQuartz",
+            "RedQuartz","BlazeQuartz","SmokeyQuartz","ElvenQuartz",
             "MilkyQuartz","Quartzite"};
 
     /** GT6 {@code ANY.Clay.mToThis}. */

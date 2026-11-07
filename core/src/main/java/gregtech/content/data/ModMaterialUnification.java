@@ -34,7 +34,6 @@ public final class ModMaterialUnification {
             new ItemForm("botania:livingwood_planks", "plate", "Livingwood"),
             new ItemForm("botania:dreamwood_planks", "plate", "Dreamwood"),
             new ItemForm("botania:dark_quartz", "gem", "SmokeyQuartz"),
-            new ItemForm("botania:mana_quartz", "gem", "ManaQuartz"),
             new ItemForm("botania:blaze_quartz", "gem", "BlazeQuartz"),
             new ItemForm("botania:red_quartz", "gem", "RedQuartz"),
             new ItemForm("botania:elf_quartz", "gem", "ElvenQuartz"),

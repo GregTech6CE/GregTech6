@@ -807,8 +807,6 @@ public final class MaterialCompositionData {
                 MaterialComponent.of(GTMaterialRegistry.get("SiO2"), GTValues.U * 1));
         bind("SmokeyQuartz", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("SiO2"), GTValues.U * 1));
-        bind("ManaQuartz", 0,
-                MaterialComponent.of(GTMaterialRegistry.get("SiO2"), GTValues.U * 1));
         bind("ElvenQuartz", 0,
                 MaterialComponent.of(GTMaterialRegistry.get("SiO2"), GTValues.U * 1));
         bind("CertusQuartz", 0,
@@ -1126,8 +1124,6 @@ public final class MaterialCompositionData {
                 MaterialComponent.of(GTMaterialRegistry.get("HSSG"), GTValues.U * 6),
                 MaterialComponent.of(GTMaterialRegistry.get("Osmiridium"), GTValues.U * 2),
                 MaterialComponent.of(GTMaterialRegistry.get("Ir"), GTValues.U * 1));
-        bind("DraconiumAwakened", 1,
-                MaterialComponent.of(GTMaterialRegistry.get("Draconium"), GTValues.U * 1));
         bind("CrystalMatrix", 1,
                 MaterialComponent.of(GTMaterialRegistry.get("Diamond"), GTValues.U * 20),
                 MaterialComponent.of(GTMaterialRegistry.get("NetherStar"), GTValues.U * 2));

@@ -100,8 +100,7 @@ public final class LongDistanceCatalog {
             pipe("long_dist_pipe_item", 0, "Electrum", -1),
             pipe("long_dist_pipe_fluid", 1, "StainlessSteel", 1943),
             pipe("long_dist_pipe_tungsten", 2, "Tungsten", 3695),
-            pipe("long_dist_pipe_adamantium", 3, "Adamantium", 5225),
-            pipe("long_dist_pipe_draconium", 4, "Draconium", 4500));
+            pipe("long_dist_pipe_adamantium", 3, "Adamantium", 5225));
     public static final List<Spec> ALL;
 
     static {

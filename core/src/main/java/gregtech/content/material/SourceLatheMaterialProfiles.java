@@ -286,8 +286,8 @@ public final class SourceLatheMaterialProfiles {
             8683, 8685, 8686, 8687, 8688, 8689, 8700, 8707, 8702, 8703, 8704, 8705, 8706, 8708, 8709, 8729, 8710, 8713,
             8714, 8715, 8716, 8717, 8723, 8718, 8731, 8725, 8728, 8726, 8730, 8732, 8806, 8807, 8809, 8810, 8811, 8812,
             8813, 8734, 8720, 8721, 8722, 8735, 8736, 8739, 8740, 8741, 8742, 8744, 8745, 8746, 8747, 8750, 8780, 8751,
-            8752, 8754, 8755, 8756, 8757, 8758, 8759, 8785, 8786, 8796, 8797, 8798, 8795, 8791, 8792, 8799, 8800, 8801,
-            8805, 8684, 8790, 8793, 8794);
+            8752, 8754, 8755, 8756, 8757, 8758, 8759, 8785, 8786, 8796, 8797, 8798, 8795, 8799, 8800, 8805, 8684, 8790,
+            8793, 8794);
 
     // id | canonical native name | COATED,LAYERED,FURNACE-or-SOFT,lens-generation
     private static final String SOURCE = """
@@ -620,7 +620,6 @@ public final class SourceLatheMaterialProfiles {
             8395|RedQuartz|0000
             8396|BlazeQuartz|0000
             8397|SmokeyQuartz|0000
-            8398|ManaQuartz|0000
             8399|ElvenQuartz|0000
             8400|ChloroauricAcid|0000
             8401|ChloroplatinicAcid|0000
@@ -642,7 +641,6 @@ public final class SourceLatheMaterialProfiles {
             8419|Zircon|0001
             8420|Azurite|0010
             8421|Eudialyte|0000
-            8422|DominicanAmber|0001
             8423|DiamondIndustrial|0001
             8424|PinkDiamond|0001
             8425|OceanJasper|0001
@@ -781,15 +779,12 @@ public final class SourceLatheMaterialProfiles {
             8756|Duralumin|0000
             8784|Adamantine|0000
             8790|Trinitanium|0000
-            8791|Draconium|0000
-            8792|DraconiumAwakened|0000
             8793|TitaniumIridium|0000
             8796|HSSG|0000
             8797|HSSE|0000
             8798|HSSS|0000
             8799|CrystalMatrix|0000
             8800|CosmicNeutronium|0000
-            8801|Infinity|0000
             8802|TantalumHafniumCarbide|0000
             8803|CastIron|0000
             9000|Pumice|0010

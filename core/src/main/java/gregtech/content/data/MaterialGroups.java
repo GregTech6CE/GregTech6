@@ -101,7 +101,6 @@ public class MaterialGroups {
                 GT6Materials.Compounds.FluoriteYellow,
                 GT6Materials.Compounds.FluoriteOrange,
                 GT6Materials.Compounds.FluoriteMagenta);
-        Amber.addReRegistrationToThis(GT6Materials.Compounds.AmberDominican);
         Amethyst.addReRegistrationToThis(GT6Materials.Compounds.Amethyst);
         Ash.addReRegistrationToThis(GT6Materials.Compounds.Ash, GT6Materials.Compounds.DarkAsh);
         BlackSteel.addReRegistrationToThis(GT6Materials.Compounds.BlackSteel);

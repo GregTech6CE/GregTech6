@@ -34,8 +34,5 @@ public final class AnvilVariantCatalog {
             new Variant("anvil_tungsten", "Tungsten", 2000000000L),
             new Variant("anvil_iridium", "Iridium", 10000000000L),
             new Variant("anvil_gaiaspirit", "GaiaSpirit", 100000000000L),
-            new Variant("anvil_adamantium", "Adamantium", 1000000000000L),
-            new Variant("anvil_draconium", "Draconium", 1000000000000L),
-            new Variant("anvil_draconiumawakened", "DraconiumAwakened", 2000000000000L),
-            new Variant("anvil_infinity", "Infinity", 1000000000000000L));
+            new Variant("anvil_adamantium", "Adamantium", 1000000000000L));
 }

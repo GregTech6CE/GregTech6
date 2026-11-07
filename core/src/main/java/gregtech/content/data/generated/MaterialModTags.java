@@ -18,7 +18,6 @@ public final class MaterialModTags {
         ImportedMaterialData.AluminiumBrass.mod(ModReferences.TiC);
         ImportedMaterialData.Alumite.mod(ModReferences.TiC);
         ImportedMaterialData.Amber.mod(ModReferences.AspectReferences);
-        ImportedMaterialData.AmberDominican.mod(ModReferences.Fossil);
         ImportedMaterialData.Amethyst.mod(ModReferences.BoP);
         ImportedMaterialData.AncientDebris.mod(ModReferences.NePl);
         ImportedMaterialData.AnnealedCopper.mod(ModReferences.GT);
@@ -92,8 +91,6 @@ public final class MaterialModTags {
         ImportedMaterialData.DiamondYellow.mod(ModReferences.GC_EXTRAPLANETS);
         ImportedMaterialData.DistWater.mod(ModReferences.IC2);
         ImportedMaterialData.Dn.mod(ModReferences.GT);
-        ImportedMaterialData.Draconium.mod(ModReferences.DE);
-        ImportedMaterialData.DraconiumAwakened.mod(ModReferences.DE);
         ImportedMaterialData.Duralumin.mod(ModReferences.GC_GALAXYSPACE);
         ImportedMaterialData.DuraniumAlloy.mod(ModReferences.GT);
         ImportedMaterialData.ElectricalSteel.mod(ModReferences.EIO);
@@ -148,7 +145,6 @@ public final class MaterialModTags {
         ImportedMaterialData.I.mod(ModReferences.FR);
         ImportedMaterialData.Ice.mod(ModReferences.MC);
         ImportedMaterialData.In.mod(ModReferences.ReC);
-        ImportedMaterialData.Infinity.mod(ModReferences.AV);
         ImportedMaterialData.Invar.mod(ModReferences.TE);
         ImportedMaterialData.Ir.mod(ModReferences.IC2);
         ImportedMaterialData.Iritanium.mod(ModReferences.GC_ADV_ROCKETRY);
@@ -178,7 +174,6 @@ public final class MaterialModTags {
         ImportedMaterialData.Magenta.mod(ModReferences.MC);
         ImportedMaterialData.Magnalium.mod(ModReferences.GT);
         ImportedMaterialData.ManaDiamond.mod(ModReferences.BOTA);
-        ImportedMaterialData.ManaQuartz.mod(ModReferences.BOTA);
         ImportedMaterialData.Manasteel.mod(ModReferences.BOTA);
         ImportedMaterialData.MeatCooked.mod(ModReferences.MFR);
         ImportedMaterialData.MeatRaw.mod(ModReferences.MFR);

@@ -174,9 +174,6 @@ public final class Materials {
     public static final GTMaterial Diesel = CompoundMaterials.Diesel;
     public static final GTMaterial Dioptase = CompoundMaterials.Dioptase;
     public static final GTMaterial DisulfuricAcid = CompoundMaterials.DisulfuricAcid;
-    public static final GTMaterial DominicanAmber = CompoundMaterials.DominicanAmber;
-    public static final GTMaterial Draconium = CompoundMaterials.Draconium;
-    public static final GTMaterial DraconiumAwakened = CompoundMaterials.DraconiumAwakened;
     public static final GTMaterial DragonEye = CompoundMaterials.DragonEye;
     public static final GTMaterial Dubnium = ElementMaterials.Dubnium;
     public static final GTMaterial Duralumin = CompoundMaterials.Duralumin;
@@ -282,7 +279,6 @@ public final class Materials {
     public static final GTMaterial HydrosulfuricAcid = CompoundMaterials.HydrosulfuricAcid;
     public static final GTMaterial Ice = CompoundMaterials.Ice;
     public static final GTMaterial Indium = ElementMaterials.Indium;
-    public static final GTMaterial Infinity = CompoundMaterials.Infinity;
     public static final GTMaterial Invar = CompoundMaterials.Invar;
     public static final GTMaterial Iodine = ElementMaterials.Iodine;
     public static final GTMaterial IodineSalt = OreMaterials.IodineSalt;
@@ -328,7 +324,6 @@ public final class Materials {
     public static final GTMaterial MagnesiumCarbonate = OreMaterials.MagnesiumCarbonate;
     public static final GTMaterial MagnesiumChloride = OreMaterials.MagnesiumChloride;
     public static final GTMaterial ManaDiamond = CompoundMaterials.ManaDiamond;
-    public static final GTMaterial ManaQuartz = CompoundMaterials.ManaQuartz;
     public static final GTMaterial Manasteel = CompoundMaterials.Manasteel;
     public static final GTMaterial Manganese = ElementMaterials.Manganese;
     public static final GTMaterial ManganeseChloride = CompoundMaterials.ManganeseChloride;

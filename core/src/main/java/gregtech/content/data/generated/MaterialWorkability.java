@@ -36,7 +36,7 @@ public final class MaterialWorkability {
                  "plastic",   "pvc", "realgar", "redalloy", "redsand",
                 "rubber", "sand", "signalum", "sio2", "solderingalloy", "sphalerite", "sugar", "teflon",
                 "tetrahedrite", "tinalloy", "wax");
-    private static final Set<String> MORTAR = Set.of("aluminiumbrass", "alunite", "amber", "amberdominican",
+    private static final Set<String> MORTAR = Set.of("aluminiumbrass", "alunite", "amber",
                 "annealedcopper", "apatite",  "arsenicbronze", "arseniccopper", "arsenopyrite",
                 "asbestos", "ash", "azurite",  "barite", "bark", "basalticmineralsand", "bastnasite",
                 "batteryalloy", "bauxite", "beryllium", "bischofite", "bismuthbronze", "blackbronze", "blaze",
@@ -75,10 +75,10 @@ public final class MaterialWorkability {
     private static final Set<String> FOOD = Set.of("d2o", "distwater", "dustfood", "fishoil", "food", "freshwater", "fryingoilhot", "h2o", "hdo", "hempoil", "ice",
                 "linoil",  "mixfood", "nacl", "nutoil", "oliveoil", "orefood", "seedoil", "snow",
                 "sugar", "sunfloweroil", "t2o", "waxbee", "waxplant");
-    private static final Set<String> CRYSTALLISABLE = Set.of("amber", "amberdominican",   "apatite",  "blazequartz", "carminite",
+    private static final Set<String> CRYSTALLISABLE = Set.of("amber",   "apatite",  "blazequartz", "carminite",
                 "certusquartz",  "craponite",  "elvenquartz", "energiumcyan",
                 "energiumred",  "fluix", "fluorite",   "glowstone",
-                 "hexorium", "jade", "lapis",  "lazurite", "manaquartz",
+                 "hexorium", "jade", "lapis",  "lazurite",
                 "milkyquartz", "monazite", "netherquartz", "phosphorite", "prismarinedark", "prismarinelight",
                 "quartzite", "redquartz", "redstone", "sio2", "smokeyquartz", "sodalite", "sunnyquartz");
 
@@ -104,7 +104,7 @@ public final class MaterialWorkability {
                 "8201:darkashes", "8203:sylvite", "8204:salt", "8205:potassiumnitrate",
                 "8207:phosphate", "820:lead", "8236:waxbee", "8238:waxparaffin",
                 "8239:waxplant", "8242:iodinesalt", "8274:calciumsulfate",
-                "830:bismuth", "840:polonium", "8422:dominicanamber",
+                "830:bismuth", "840:polonium",
                 "8458:bluephosphorus", "8459:redphosphorus", "8460:whitephosphorus", "850:astatine", "870:francium", "8803:castiron",
                 "880:radium", "9104:hematite", "9107:calcite", "9126:pyrolusite", "9143:vanadiummagnetite",
                 "9243:claybrick", "930:neptunium", "940:plutonium", "942:plutonium240", "943:plutonium241",

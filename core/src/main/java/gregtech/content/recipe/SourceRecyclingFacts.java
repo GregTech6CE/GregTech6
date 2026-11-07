@@ -137,8 +137,8 @@ public final class SourceRecyclingFacts {
             8638, 8640, 8643, 8645, 8646, 8647, 8651, 8652, 8653, 8658, 8659, 8660, 8661, 8662, 8663, 8664, 8665, 8666,
             8667, 8668, 8669, 8672, 8673, 8674, 8675, 8679, 8682, 8684, 8685, 8686, 8687, 8689, 8697, 8698, 8700, 8702,
             8704, 8705, 8706, 8708, 8709, 8710, 8717, 8720, 8721, 8722, 8726, 8727, 8729, 8730, 8732, 8733, 8735, 8737,
-            8744, 8745, 8746, 8751, 8752, 8756, 8784, 8790, 8791, 8792, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8801,
-            8802, 8803, 8805, 8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
+            8744, 8745, 8746, 8751, 8752, 8756, 8784, 8790, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8802, 8803, 8805,
+            8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
     // Loader_Fluids135-189 optional external receivers. Default-positive bindings still require native proof.
     private static final Set<Integer> OPTIONAL_EXTERNAL = Set.of(
             120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600, 8610, 8630,
@@ -577,7 +577,6 @@ public final class SourceRecyclingFacts {
         row(rows, 8395, "RedQuartz", M | B, 8000, U, 1558);
         row(rows, 8396, "BlazeQuartz", M | B, 8000, U, 1559);
         row(rows, 8397, "SmokeyQuartz", M | B, 8000, U, 1560);
-        row(rows, 8398, "ManaQuartz", M | B, 8000, U, 1561);
         row(rows, 8399, "ElvenQuartz", M | B, 8000, U, 1562);
         row(rows, 8400, "ChloroauricAcid", 0, 8400, U, 1163);
         row(rows, 8401, "ChloroplatinicAcid", 0, 8401, U, 1164);
@@ -602,7 +601,6 @@ public final class SourceRecyclingFacts {
         row(rows, 8419, "Zircon", M, 400, U / 9, 1511);
         row(rows, 8420, "Azurite", M | F, 290, U / 9, 1512);
         row(rows, 8421, "Eudialyte", 0, 8421, U, 1513);
-        row(rows, 8422, "DominicanAmber", 0, 8422, U, 1441);
         row(rows, 8423, "DiamondIndustrial", M, 60, 2 * U, 1365);
         row(rows, 8424, "PinkDiamond", M, 60, 2 * U, 1364);
         row(rows, 8425, "OceanJasper", 0, 8425, 0, 1402);
@@ -754,15 +752,12 @@ public final class SourceRecyclingFacts {
         row(rows, 8756, "Duralumin", M, 8756, U, 1845);
         row(rows, 8784, "Adamantine", M, 8784, U, 1675);
         row(rows, 8790, "Trinitanium", M, 8790, U, 1872);
-        row(rows, 8791, "Draconium", M, 8791, U, 1861);
-        row(rows, 8792, "DraconiumAwakened", M, 8792, U, 1862);
         row(rows, 8793, "TitaniumIridium", M, 8793, U, 1875);
         row(rows, 8796, "HSSG", M, 8796, U, 1853);
         row(rows, 8797, "HSSE", M, 8797, U, 1854);
         row(rows, 8798, "HSSS", M, 8798, U, 1855);
         row(rows, 8799, "CrystalMatrix", M, 8799, U, 1865);
         row(rows, 8800, "CosmicNeutronium", M, 8800, U, 1866);
-        row(rows, 8801, "Infinity", M, 8801, U, 1867);
         row(rows, 8802, "TantalumHafniumCarbide", M, 8802, U, 1734);
         row(rows, 8803, "CastIron", M, 8803, U, 1726);
         row(rows, 9000, "Pumice", F, 9000, U, 3817);
@@ -1107,8 +1102,6 @@ public final class SourceRecyclingFacts {
         bind(result, 8737, "molten.nikolinealloy", Accessor.LIQUID, 144, U, 659);
         bind(result, 8744, "molten.ancientdebris", Accessor.LIQUID, 144, U, 659);
         bind(result, 8745, "molten.netherite", Accessor.LIQUID, 144, U, 659);
-        bind(result, 8791, "molten.draconium", Accessor.LIQUID, 144, U, 659);
-        bind(result, 8792, "molten.draconiumawakened", Accessor.LIQUID, 144, U, 659);
         bind(result, 8796, "molten.hssg", Accessor.LIQUID, 144, U, 659);
         bind(result, 8797, "molten.hsse", Accessor.LIQUID, 144, U, 659);
         bind(result, 8798, "molten.hsss", Accessor.LIQUID, 144, U, 659);

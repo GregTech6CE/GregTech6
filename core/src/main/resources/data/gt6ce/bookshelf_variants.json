@@ -551,17 +551,6 @@
       "flammability": 0
     },
     {
-      "path": "bookshelf_metal_draconium",
-      "gt6_id": 7135,
-      "kind": "metal",
-      "material": "Draconium",
-      "display": "Draconium",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 50.0,
-      "resistance": 50.0,
-      "flammability": 0
-    },
-    {
       "path": "bookshelf_metal_ultimet",
       "gt6_id": 7148,
       "kind": "metal",
@@ -645,28 +634,6 @@
       "material": "Adamantium",
       "display": "Adamantium",
       "texture": "gt6ce:block/material_icons/shiny/casingmachine",
-      "hardness": 100.0,
-      "resistance": 100.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_draconium_awakened",
-      "gt6_id": 7136,
-      "kind": "metal",
-      "material": "DraconiumAwakened",
-      "display": "DraconiumAwakened",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
-      "hardness": 100.0,
-      "resistance": 100.0,
-      "flammability": 0
-    },
-    {
-      "path": "bookshelf_metal_infinity",
-      "gt6_id": 7150,
-      "kind": "metal",
-      "material": "Infinity",
-      "display": "Infinity",
-      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 100.0,
       "resistance": 100.0,
       "flammability": 0

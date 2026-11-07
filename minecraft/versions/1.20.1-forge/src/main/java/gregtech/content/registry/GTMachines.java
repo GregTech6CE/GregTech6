@@ -1165,8 +1165,6 @@ public final class GTMachines {
             12.5F);
     public static final RegistryObject<HopperBlock> HOPPER_DURANIUM =
             hopper("hopper_duranium", gregtech.content.material.generated.CompoundMaterials.Duranium, 27, 20.0F, 20.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_DRACONIUM = hopper(
-            "hopper_draconium", gregtech.content.material.generated.CompoundMaterials.Draconium, 27, 50.0F, 50.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ULTIMET =
             hopper("hopper_ultimet", gregtech.content.material.generated.CompoundMaterials.Ultimet, 27, 12.5F, 12.5F);
     public static final RegistryObject<HopperBlock> HOPPER_TUNGSTEN =
@@ -1187,14 +1185,6 @@ public final class GTMachines {
             "hopper_tritanium", gregtech.content.material.generated.CompoundMaterials.Tritanium, 36, 30.0F, 30.0F);
     public static final RegistryObject<HopperBlock> HOPPER_ADAMANTIUM = hopper(
             "hopper_adamantium", gregtech.content.material.generated.ElementMaterials.Adamantium, 36, 100.0F, 100.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_DRACONIUM_AWAKENED = hopper(
-            "hopper_draconium_awakened",
-            gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened,
-            36,
-            100.0F,
-            100.0F);
-    public static final RegistryObject<HopperBlock> HOPPER_INFINITY = hopper(
-            "hopper_infinity", gregtech.content.material.generated.CompoundMaterials.Infinity, 36, 100.0F, 100.0F);
 
     // --- Queue Hoppers (GT6 meta 8200+aID, ordered by original GT6 aID) ---
 
@@ -1310,12 +1300,6 @@ public final class GTMachines {
             12.5F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_DURANIUM = queueHopper(
             "queue_hopper_duranium", gregtech.content.material.generated.CompoundMaterials.Duranium, 27, 20.0F, 20.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_DRACONIUM = queueHopper(
-            "queue_hopper_draconium",
-            gregtech.content.material.generated.CompoundMaterials.Draconium,
-            27,
-            50.0F,
-            50.0F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ULTIMET = queueHopper(
             "queue_hopper_ultimet", gregtech.content.material.generated.CompoundMaterials.Ultimet, 27, 12.5F, 12.5F);
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_TUNGSTEN = queueHopper(
@@ -1345,18 +1329,6 @@ public final class GTMachines {
     public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_ADAMANTIUM = queueHopper(
             "queue_hopper_adamantium",
             gregtech.content.material.generated.ElementMaterials.Adamantium,
-            36,
-            100.0F,
-            100.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_DRACONIUM_AWAKENED = queueHopper(
-            "queue_hopper_draconium_awakened",
-            gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened,
-            36,
-            100.0F,
-            100.0F);
-    public static final RegistryObject<QueueHopperBlock> QUEUE_HOPPER_INFINITY = queueHopper(
-            "queue_hopper_infinity",
-            gregtech.content.material.generated.CompoundMaterials.Infinity,
             36,
             100.0F,
             100.0F);

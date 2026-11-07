@@ -431,8 +431,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("chest_chromium", new Entry("chests", 0));
         ITEMS.put("chest_cobalt", new Entry("chests", 0));
         ITEMS.put("chest_constantan", new Entry("chests", 0));
-        ITEMS.put("chest_draconium", new Entry("chests", 0));
-        ITEMS.put("chest_draconium_awakened", new Entry("chests", 0));
         ITEMS.put("chest_duranium", new Entry("chests", 0));
         ITEMS.put("chest_electrum", new Entry("chests", 0));
         ITEMS.put("chest_elven_elementium", new Entry("chests", 0));
@@ -441,7 +439,6 @@ public final class SourceCreativeCatalog {
     }
 
     private static void init1() {
-        ITEMS.put("chest_infinity", new Entry("chests", 0));
         ITEMS.put("chest_invar", new Entry("chests", 0));
         ITEMS.put("chest_iridium", new Entry("chests", 0));
         ITEMS.put("chest_knightmetal", new Entry("chests", 0));
@@ -1014,14 +1011,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("hopper_chromium", new Entry("hoppers", 13));
         ITEMS.put("hopper_cobalt", new Entry("hoppers", 13));
         ITEMS.put("hopper_constantan", new Entry("hoppers", 13));
-        ITEMS.put("hopper_draconium", new Entry("hoppers", 13));
-        ITEMS.put("hopper_draconium_awakened", new Entry("hoppers", 13));
         ITEMS.put("hopper_duranium", new Entry("hoppers", 13));
         ITEMS.put("hopper_electrum", new Entry("hoppers", 13));
         ITEMS.put("hopper_elven_elementium", new Entry("hoppers", 13));
         ITEMS.put("hopper_germanium", new Entry("hoppers", 13));
         ITEMS.put("hopper_gold", new Entry("hoppers", 13));
-        ITEMS.put("hopper_infinity", new Entry("hoppers", 13));
         ITEMS.put("hopper_invar", new Entry("hoppers", 13));
         ITEMS.put("hopper_iridium", new Entry("hoppers", 13));
         ITEMS.put("hopper_knightmetal", new Entry("hoppers", 13));
@@ -1136,14 +1130,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("key_safe_chromium", new Entry("safes", 3));
         ITEMS.put("key_safe_cobalt", new Entry("safes", 3));
         ITEMS.put("key_safe_constantan", new Entry("safes", 3));
-        ITEMS.put("key_safe_draconium", new Entry("safes", 3));
-        ITEMS.put("key_safe_draconium_awakened", new Entry("safes", 3));
         ITEMS.put("key_safe_duranium", new Entry("safes", 3));
         ITEMS.put("key_safe_electrum", new Entry("safes", 3));
         ITEMS.put("key_safe_elven_elementium", new Entry("safes", 3));
         ITEMS.put("key_safe_germanium", new Entry("safes", 3));
         ITEMS.put("key_safe_gold", new Entry("safes", 3));
-        ITEMS.put("key_safe_infinity", new Entry("safes", 3));
         ITEMS.put("key_safe_invar", new Entry("safes", 3));
         ITEMS.put("key_safe_iridium", new Entry("safes", 3));
         ITEMS.put("key_safe_knightmetal", new Entry("safes", 3));
@@ -1258,14 +1249,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("logistics_mass_storage_chromium", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_cobalt", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_constantan", new Entry("logistics", 10));
-        ITEMS.put("logistics_mass_storage_draconium", new Entry("logistics", 10));
-        ITEMS.put("logistics_mass_storage_draconium_awakened", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_duranium", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_electrum", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_elven_elementium", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_germanium", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_gold", new Entry("logistics", 10));
-        ITEMS.put("logistics_mass_storage_infinity", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_invar", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_iridium", new Entry("logistics", 10));
         ITEMS.put("logistics_mass_storage_knightmetal", new Entry("logistics", 10));
@@ -1394,14 +1382,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("mass_storage_chromium", new Entry("storage", 9));
         ITEMS.put("mass_storage_cobalt", new Entry("storage", 9));
         ITEMS.put("mass_storage_constantan", new Entry("storage", 9));
-        ITEMS.put("mass_storage_draconium", new Entry("storage", 9));
-        ITEMS.put("mass_storage_draconium_awakened", new Entry("storage", 9));
         ITEMS.put("mass_storage_duranium", new Entry("storage", 9));
         ITEMS.put("mass_storage_electrum", new Entry("storage", 9));
         ITEMS.put("mass_storage_elven_elementium", new Entry("storage", 9));
         ITEMS.put("mass_storage_germanium", new Entry("storage", 9));
         ITEMS.put("mass_storage_gold", new Entry("storage", 9));
-        ITEMS.put("mass_storage_infinity", new Entry("storage", 9));
         ITEMS.put("mass_storage_invar", new Entry("storage", 9));
         ITEMS.put("mass_storage_iridium", new Entry("storage", 9));
         ITEMS.put("mass_storage_knightmetal", new Entry("storage", 9));
@@ -1689,14 +1674,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("queue_hopper_chromium", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_cobalt", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_constantan", new Entry("hoppers", 13));
-        ITEMS.put("queue_hopper_draconium", new Entry("hoppers", 13));
-        ITEMS.put("queue_hopper_draconium_awakened", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_duranium", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_electrum", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_elven_elementium", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_germanium", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_gold", new Entry("hoppers", 13));
-        ITEMS.put("queue_hopper_infinity", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_invar", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_iridium", new Entry("hoppers", 13));
         ITEMS.put("queue_hopper_knightmetal", new Entry("hoppers", 13));
@@ -1797,14 +1779,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("reinforced_wood_chest_chromium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_cobalt", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_constantan", new Entry("chests", 0));
-        ITEMS.put("reinforced_wood_chest_draconium", new Entry("chests", 0));
-        ITEMS.put("reinforced_wood_chest_draconium_awakened", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_duranium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_electrum", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_elven_elementium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_germanium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_gold", new Entry("chests", 0));
-        ITEMS.put("reinforced_wood_chest_infinity", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_invar", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_iridium", new Entry("chests", 0));
         ITEMS.put("reinforced_wood_chest_knightmetal", new Entry("chests", 0));
@@ -1909,14 +1888,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("safe_chromium", new Entry("safes", 2));
         ITEMS.put("safe_cobalt", new Entry("safes", 2));
         ITEMS.put("safe_constantan", new Entry("safes", 2));
-        ITEMS.put("safe_draconium", new Entry("safes", 2));
-        ITEMS.put("safe_draconium_awakened", new Entry("safes", 2));
         ITEMS.put("safe_duranium", new Entry("safes", 2));
         ITEMS.put("safe_electrum", new Entry("safes", 2));
         ITEMS.put("safe_elven_elementium", new Entry("safes", 2));
         ITEMS.put("safe_germanium", new Entry("safes", 2));
         ITEMS.put("safe_gold", new Entry("safes", 2));
-        ITEMS.put("safe_infinity", new Entry("safes", 2));
         ITEMS.put("safe_invar", new Entry("safes", 2));
         ITEMS.put("safe_iridium", new Entry("safes", 2));
         ITEMS.put("safe_knightmetal", new Entry("safes", 2));
@@ -1989,14 +1965,11 @@ public final class SourceCreativeCatalog {
         ITEMS.put("scaffold_chromium", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_cobalt", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_constantan", new Entry("scaffolds", 15));
-        ITEMS.put("scaffold_draconium", new Entry("scaffolds", 15));
-        ITEMS.put("scaffold_draconium_awakened", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_duranium", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_electrum", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_elven_elementium", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_germanium", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_gold", new Entry("scaffolds", 15));
-        ITEMS.put("scaffold_infinity", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_invar", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_iridium", new Entry("scaffolds", 15));
         ITEMS.put("scaffold_knightmetal", new Entry("scaffolds", 15));

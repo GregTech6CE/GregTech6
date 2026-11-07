@@ -450,7 +450,6 @@ public final class GT6Materials {
         public static final GTMaterial Dioptase             = gregtech.content.material.generated.CompoundMaterials.Dioptase;
         public static final GTMaterial Carminite            = gregtech.content.material.generated.CompoundMaterials.Carminite;
         public static final GTMaterial Amber                = gregtech.content.material.generated.CompoundMaterials.Amber;
-        public static final GTMaterial AmberDominican       = gregtech.content.material.generated.CompoundMaterials.DominicanAmber;
         public static final GTMaterial Craponite            = gregtech.content.material.generated.CompoundMaterials.Craponite;
         public static final GTMaterial Jade                 = gregtech.content.material.generated.CompoundMaterials.Jade;
         public static final GTMaterial EnderPearl           = gregtech.content.material.generated.CompoundMaterials.EnderPearl;
@@ -477,7 +476,6 @@ public final class GT6Materials {
         public static final GTMaterial RedQuartz            = gregtech.content.material.generated.CompoundMaterials.RedQuartz;
         public static final GTMaterial BlazeQuartz          = gregtech.content.material.generated.CompoundMaterials.BlazeQuartz;
         public static final GTMaterial SmokeyQuartz         = gregtech.content.material.generated.CompoundMaterials.SmokeyQuartz;
-        public static final GTMaterial ManaQuartz           = gregtech.content.material.generated.CompoundMaterials.ManaQuartz;
         public static final GTMaterial ElvenQuartz          = gregtech.content.material.generated.CompoundMaterials.ElvenQuartz;
         public static final GTMaterial CertusQuartz         = gregtech.content.material.generated.CompoundMaterials.CertusQuartz;
         public static final GTMaterial ChargedCertusQuartz  = gregtech.content.material.generated.CompoundMaterials.ChargedCertusQuartz;
@@ -578,11 +576,8 @@ public final class GT6Materials {
         public static final GTMaterial HSSG                 = gregtech.content.material.generated.CompoundMaterials.HSSG;
         public static final GTMaterial HSSE                 = gregtech.content.material.generated.CompoundMaterials.HSSE;
         public static final GTMaterial HSSS                 = gregtech.content.material.generated.CompoundMaterials.HSSS;
-        public static final GTMaterial Draconium            = gregtech.content.material.generated.CompoundMaterials.Draconium;
-        public static final GTMaterial DraconiumAwakened    = gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened;
         public static final GTMaterial CrystalMatrix        = gregtech.content.material.generated.CompoundMaterials.CrystalMatrix;
         public static final GTMaterial CosmicNeutronium     = gregtech.content.material.generated.CompoundMaterials.CosmicNeutronium;
-        public static final GTMaterial Infinity             = gregtech.content.material.generated.CompoundMaterials.Infinity;
         public static final GTMaterial Trinaquadalloy       = gregtech.content.material.generated.CompoundMaterials.Trinaquadalloy;
         public static final GTMaterial Trinitanium          = gregtech.content.material.generated.CompoundMaterials.Trinitanium;
         public static final GTMaterial Iritanium            = gregtech.content.material.generated.CompoundMaterials.TitaniumIridium;

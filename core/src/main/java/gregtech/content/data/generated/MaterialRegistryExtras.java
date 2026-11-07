@@ -37,7 +37,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.registerAlias("Am", "Americium");
         GTMaterialRegistry.registerAlias("Am_241", "Americium241");
         GTMaterialRegistry.registerAlias("Am_242", "Americium242");
-        GTMaterialRegistry.registerAlias("AmberDominican", "DominicanAmber");
         GTMaterialRegistry.registerAlias("Ar", "Argon");
         GTMaterialRegistry.registerAlias("As", "Arsenic");
         GTMaterialRegistry.registerAlias("Ash", "Ashes");
@@ -529,9 +528,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Dioptase", "Dioptase");
         GTMaterialRegistry.setDisplayName("Diorite", "Diorite");
         GTMaterialRegistry.setDisplayName("DisulfuricAcid", "Disulfuric Acid");
-        GTMaterialRegistry.setDisplayName("DominicanAmber", "Dominican Amber");
-        GTMaterialRegistry.setDisplayName("Draconium", "Draconium");
-        GTMaterialRegistry.setDisplayName("DraconiumAwakened", "DraconiumAwakened");
         GTMaterialRegistry.setDisplayName("DragonEye", "Dragon Eye");
         GTMaterialRegistry.setDisplayName("Dreamwood", "Dreamwood");
         GTMaterialRegistry.setDisplayName("Dubnium", "Dubnium");
@@ -655,7 +651,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Ice", "Ice");
         GTMaterialRegistry.setDisplayName("Ilmenite", "Ilmenite");
         GTMaterialRegistry.setDisplayName("Indium", "Indium");
-        GTMaterialRegistry.setDisplayName("Infinity", "Infinity");
         GTMaterialRegistry.setDisplayName("Invar", "Invar");
         GTMaterialRegistry.setDisplayName("Iodine", "Iodine");
         GTMaterialRegistry.setDisplayName("IodineSalt", "Iodine Salt");
@@ -713,7 +708,6 @@ public final class MaterialRegistryExtras {
         GTMaterialRegistry.setDisplayName("Magnetite", "Magnetite");
         GTMaterialRegistry.setDisplayName("Malachite", "Malachite");
         GTMaterialRegistry.setDisplayName("ManaDiamond", "Mana Diamond");
-        GTMaterialRegistry.setDisplayName("ManaQuartz", "Mana Quartz");
         GTMaterialRegistry.setDisplayName("Manasteel", "Manasteel");
         GTMaterialRegistry.setDisplayName("Manganese", "Manganese");
         GTMaterialRegistry.setDisplayName("ManganeseChloride", "Manganese Chloride");

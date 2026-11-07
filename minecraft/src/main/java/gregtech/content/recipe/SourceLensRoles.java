@@ -60,7 +60,6 @@ public final class SourceLensRoles {
             new Role(8415, "OnyxRed", Color.RED) /* MT:1432 */,
             new Role(8313, "Amethyst", Color.PINK) /* MT:1436 */,
             new Role(8325, "Dioptase", Color.CYAN) /* MT:1437 */,
-            new Role(8422, "DominicanAmber", Color.BLUE) /* MT:1441 */,
             new Role(8322, "Craponite", Color.MAGENTA) /* MT:1442 */,
             new Role(8321, "Jade", Color.GREEN) /* MT:1443 */,
             new Role(8419, "Zircon", Color.RED) /* MT:1511 */,

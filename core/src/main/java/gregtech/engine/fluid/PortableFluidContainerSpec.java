@@ -60,10 +60,7 @@ public enum PortableFluidContainerSpec {
     CELL_TERRASTEEL("cell_terrasteel", "Terrasteel", 50, 0, true, true, false),
     CELL_ELVEN_ELEMENTIUM("cell_elven_elementium", "ElvenElementium", 50, 0, true, true, false),
     CELL_GAIA_SPIRIT("cell_gaia_spirit", "GaiaSpirit", 50, 0, true, true, true),
-    CELL_DURANIUM("cell_duranium", "Duranium", 50, 0, true, true, true),
-    CELL_DRACONIUM("cell_draconium", "Draconium", 50, 0, true, true, true),
-    CELL_DRACONIUM_AWAKENED("cell_draconium_awakened", "DraconiumAwakened", 50, 0, true, true, true),
-    CELL_INFINITY("cell_infinity", "Infinity", 0, 2147483647, true, true, true);
+    CELL_DURANIUM("cell_duranium", "Duranium", 50, 0, true, true, true);
 
     private final String id;
     private final int capacity, temperatureMargin;

@@ -284,14 +284,6 @@ public final class HopperCatalog {
             new Entry(
                     false,
                     HopperSpec.of(
-                            "hopper_draconium",
-                            gregtech.content.material.generated.CompoundMaterials.Draconium,
-                            27,
-                            50.0F,
-                            50.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
                             "hopper_ultimet",
                             gregtech.content.material.generated.CompoundMaterials.Ultimet,
                             27,
@@ -361,22 +353,6 @@ public final class HopperCatalog {
                             9,
                             8.0F,
                             8.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_draconium_awakened",
-                            gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened,
-                            36,
-                            100.0F,
-                            100.0F)),
-            new Entry(
-                    false,
-                    HopperSpec.of(
-                            "hopper_infinity",
-                            gregtech.content.material.generated.CompoundMaterials.Infinity,
-                            36,
-                            100.0F,
-                            100.0F)),
             new Entry(
                     true,
                     HopperSpec.of(
@@ -660,14 +636,6 @@ public final class HopperCatalog {
             new Entry(
                     true,
                     HopperSpec.of(
-                            "queue_hopper_draconium",
-                            gregtech.content.material.generated.CompoundMaterials.Draconium,
-                            27,
-                            50.0F,
-                            50.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
                             "queue_hopper_ultimet",
                             gregtech.content.material.generated.CompoundMaterials.Ultimet,
                             27,
@@ -736,23 +704,7 @@ public final class HopperCatalog {
                             gregtech.content.material.generated.CompoundMaterials.Efrine,
                             9,
                             8.0F,
-                            8.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_draconium_awakened",
-                            gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened,
-                            36,
-                            100.0F,
-                            100.0F)),
-            new Entry(
-                    true,
-                    HopperSpec.of(
-                            "queue_hopper_infinity",
-                            gregtech.content.material.generated.CompoundMaterials.Infinity,
-                            36,
-                            100.0F,
-                            100.0F)));
+                            8.0F)));
 
     public static HopperSpec get(String id) {
         return ALL.stream()

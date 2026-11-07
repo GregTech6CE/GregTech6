@@ -60,7 +60,6 @@ public final class OriginalStorageMaterialData {
         metalset("tungstensteel", 14, ImportedMaterialData.TungstenSteel, "bookshelf_metal_tungstensteel");
         metalset("tungsten_carbide", 17, ImportedMaterialData.TungstenCarbide, "bookshelf_metal_tungsten_carbide");
         metalset("duranium", 31, ImportedMaterialData.DuraniumAlloy, "bookshelf_metal_duranium");
-        metalset("draconium", 35, ImportedMaterialData.Draconium, "bookshelf_metal_draconium");
         metalset("ultimet", 48, ImportedMaterialData.Ultimet, "bookshelf_metal_ultimet");
 
         metalset("tungsten", 26, ImportedMaterialData.W, "bookshelf_metal_tungsten");
@@ -72,10 +71,6 @@ public final class OriginalStorageMaterialData {
         metalset("tritanium", 32, ImportedMaterialData.TritaniumAlloy, "bookshelf_metal_tritanium");
         metalset("adamantium", 33, ImportedMaterialData.Ad, "bookshelf_metal_adamantium");
         metalset("efrine", 53, ImportedMaterialData.Efrine, "bookshelf_metal_efrine");
-
-        metalset(
-                "draconium_awakened", 36, ImportedMaterialData.DraconiumAwakened, "bookshelf_metal_draconium_awakened");
-        metalset("infinity", 50, ImportedMaterialData.Infinity, "bookshelf_metal_infinity");
     }
 
     public static Map<String, ItemComposition> blocks() {

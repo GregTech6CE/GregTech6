@@ -3,7 +3,6 @@
   "name": "emi.group.gt6ce.functional_long_dist_pipe_fluid",
   "contents": [
     "item:gt6ce:long_dist_pipe_adamantium",
-    "item:gt6ce:long_dist_pipe_draconium",
     "item:gt6ce:long_dist_pipe_fluid",
     "item:gt6ce:long_dist_pipe_tungsten"
   ],

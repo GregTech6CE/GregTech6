@@ -350,7 +350,6 @@ public final class SourceExtrusionRules {
             8395|RedQuartz|000||648648000
             8396|BlazeQuartz|000||648648000
             8397|SmokeyQuartz|000||648648000
-            8398|ManaQuartz|000||648648000
             8399|ElvenQuartz|000||648648000
             8400|ChloroauricAcid|000||648648000
             8401|ChloroplatinicAcid|000||648648000
@@ -372,7 +371,6 @@ public final class SourceExtrusionRules {
             8419|Zircon|000||648648000
             8420|Azurite|000||648648000
             8421|Eudialyte|000||648648000
-            8422|DominicanAmber|000||648648000
             8423|DiamondIndustrial|000||648648000
             8424|PinkDiamond|000||648648000
             8425|OceanJasper|000||648648000
@@ -511,15 +509,12 @@ public final class SourceExtrusionRules {
             8756|Duralumin|101||648648000
             8784|Adamantine|101||648648000
             8790|Trinitanium|101||648648000
-            8791|Draconium|101||648648000
-            8792|DraconiumAwakened|101||648648000
             8793|TitaniumIridium|101||648648000
             8796|HSSG|101||648648000
             8797|HSSE|101||648648000
             8798|HSSS|101||648648000
             8799|CrystalMatrix|101||648648000
             8800|CosmicNeutronium|101||648648000
-            8801|Infinity|101||648648000
             8802|TantalumHafniumCarbide|101||648648000
             8803|CastIron|101||648648000
             9000|Pumice|110||648648000

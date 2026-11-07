@@ -155,9 +155,6 @@ public final class StoneLayerOreRules {
                     new GTStoneLayersGen.OreDef("Amber", true, 8, 30, 70),
                     new Rule("", List.of(BiomeGroup.RIVER_LAKE))),
             Map.entry(
-                    new GTStoneLayersGen.OreDef("AmberDominican", true, 8, 30, 70),
-                    new Rule("", List.of(BiomeGroup.SHROOM))),
-            Map.entry(
                     new GTStoneLayersGen.OreDef("DiamondPink", true, 32, 0, 32),
                     new Rule("", List.of(BiomeGroup.JUNGLE))));
 

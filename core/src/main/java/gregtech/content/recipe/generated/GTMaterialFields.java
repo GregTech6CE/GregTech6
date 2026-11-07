@@ -479,7 +479,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("Dioptase", "Dioptase");
         BY_FIELD.put("Carminite", "Carminite");
         BY_FIELD.put("Amber", "Amber");
-        BY_FIELD.put("AmberDominican", "Dominican Amber");
         BY_FIELD.put("Craponite", "Craponite");
         BY_FIELD.put("Jade", "Jade");
         BY_FIELD.put("Sunstone", "Sunstone");
@@ -538,7 +537,6 @@ public final class GTMaterialFields {
         BY_FIELD.put("RedQuartz", "Red Quartz");
         BY_FIELD.put("BlazeQuartz", "Blaze Quartz");
         BY_FIELD.put("SmokeyQuartz", "Smokey Quartz");
-        BY_FIELD.put("ManaQuartz", "Mana Quartz");
         BY_FIELD.put("ElvenQuartz", "Elven Quartz");
         BY_FIELD.put("CertusQuartz", "Certus Quartz");
         BY_FIELD.put("ChargedCertusQuartz", "Charged Certus Quartz");
@@ -656,11 +654,8 @@ public final class GTMaterialFields {
         BY_FIELD.put("HSSG", "HSS-G");
         BY_FIELD.put("HSSE", "HSS-E");
         BY_FIELD.put("HSSS", "HSS-S");
-        BY_FIELD.put("Draconium", "Draconium");
-        BY_FIELD.put("DraconiumAwakened", "DraconiumAwakened");
         BY_FIELD.put("CrystalMatrix", "Crystal Matrix");
         BY_FIELD.put("CosmicNeutronium", "Cosmic Neutronium");
-        BY_FIELD.put("Infinity", "Infinity");
         BY_FIELD.put("Trinaquadalloy", "Trinaquadalloy");
         BY_FIELD.put("Trinitanium", "Trinitanium");
         BY_FIELD.put("Iritanium", "Titanium Iridium");
