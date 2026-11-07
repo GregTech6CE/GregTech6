@@ -1,40 +1,48 @@
 package gregtech.engine.material;
 
 import gregtech.api.addon.material.FuelRule;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 /** Checks the complete keyed graph before applying any of its associations. */
 final class MaterialLinker {
     private MaterialLinker() {}
 
-    static void validate(List<MaterialDefinition> definitions, Function<String, GTMaterial> lookup) {
-        for (var definition : definitions) {
+    static void validate(List<MaterialDefinition.Declaration> declarations, Function<String, GTMaterial> lookup) {
+        for (var declaration : declarations) {
+            var definition = declaration.material();
+            var info = declaration.info();
             var owner = lookup.apply(definition.name());
             if (owner == null) throw new IllegalArgumentException("Missing definition owner: " + definition.name());
-            for (var part : definition.composition().parts()) {
+            for (var part : info.composition().parts()) {
                 GTMaterial target = require(definition.name(), "composition", part.material(), lookup);
                 if (!target.isValid() || target == owner)
                     throw new IllegalArgumentException(
                             "Invalid composition of " + definition.name() + ": " + part.material());
             }
-            for (var name : definition.byproducts()) require(definition.name(), "byproduct", name, lookup);
-            for (var name : definition.members()) require(definition.name(), "group member", name, lookup);
+            for (var name : info.relations().members()) require(definition.name(), "group member", name, lookup);
             MaterialTarget burning =
-                    definition.fuel().flatMap(FuelRule::residue).orElse(null);
+                    fuel(definition.name()).flatMap(FuelRule::residue).orElse(null);
             for (var target : new MaterialTarget[] {
-                burning, definition.crushing(), definition.smelting(), definition.pulverizing()
+                burning,
+                first(definition.name(), MaterialProcessKeys.CRUSHING),
+                first(definition.name(), MaterialProcessKeys.SMELTING),
+                first(definition.name(), MaterialProcessKeys.PULVERIZING)
             })
                 if (target != null)
                     require(definition.name(), "target", target.material().name(), lookup);
-            for (var target : definition.processing().values())
+            for (var target : processing(definition.name()).values())
                 require(definition.name(), "processing", target.material().name(), lookup);
         }
         var groups = new java.util.HashMap<String, List<String>>();
-        for (var definition : definitions) if (definition.group()) groups.put(definition.name(), definition.members());
+        for (var declaration : declarations)
+            if (declaration.info().relations().group())
+                groups.put(declaration.name(), declaration.info().relations().members());
         var complete = new java.util.HashSet<String>();
         for (var group : groups.keySet()) visit(group, groups, new java.util.HashSet<>(), complete);
     }
@@ -58,34 +66,59 @@ final class MaterialLinker {
         return target;
     }
 
-    static void link(MaterialDefinition definition, GTMaterial material, Function<String, GTMaterial> lookup) {
-        var fuel = definition.fuel();
+    static void link(
+            MaterialDefinition.Declaration declaration, GTMaterial material, Function<String, GTMaterial> lookup) {
+        MaterialDefinition definition = declaration.material();
+        var info = declaration.info();
+        var fuel = fuel(definition.name());
         material.setFurnaceBurnTime(fuel.map(FuelRule::burnTime).orElse(0L));
         fuel.flatMap(FuelRule::residue)
                 .ifPresent(target ->
                         material.setBurning(lookup.apply(target.material().name()), target.amount()));
-        if (definition.crushing() != null)
-            material.setCrushing(
-                    lookup.apply(definition.crushing().material().name()),
-                    definition.crushing().amount());
-        if (definition.smelting() != null)
-            material.setSmelting(
-                    lookup.apply(definition.smelting().material().name()),
-                    definition.smelting().amount());
-        if (definition.pulverizing() != null)
-            material.setPulver(
-                    lookup.apply(definition.pulverizing().material().name()),
-                    definition.pulverizing().amount());
-        if (!definition.composition().parts().isEmpty())
+        var crushing = first(definition.name(), MaterialProcessKeys.CRUSHING);
+        if (crushing != null)
+            material.setCrushing(lookup.apply(crushing.material().name()), crushing.amount());
+        var smelting = first(definition.name(), MaterialProcessKeys.SMELTING);
+        if (smelting != null)
+            material.setSmelting(lookup.apply(smelting.material().name()), smelting.amount());
+        var pulverizing = first(definition.name(), MaterialProcessKeys.PULVERIZING);
+        if (pulverizing != null)
+            material.setPulver(lookup.apply(pulverizing.material().name()), pulverizing.amount());
+        if (!info.composition().parts().isEmpty())
             material.setComposition(
-                    definition.composition().divider(),
-                    definition.composition().parts().stream()
+                    info.composition().divider(),
+                    info.composition().parts().stream()
                             .map(part -> MaterialComponent.of(lookup.apply(part.material()), part.amount()))
                             .toArray(MaterialComponent[]::new));
-        material.addOreByProducts(definition.byproducts().stream().map(lookup).toArray(GTMaterial[]::new));
+        var oreProcessing = first(definition.name(), MaterialProcessKeys.ORE_PROCESSING);
+        if (oreProcessing != null)
+            material.addOreByProducts(oreProcessing.byproducts().stream()
+                    .map(key -> lookup.apply(key.name()))
+                    .toArray(GTMaterial[]::new));
         material.addReRegistrationToThis(
-                definition.members().stream().map(lookup).toArray(GTMaterial[]::new));
-        material.setOreMultiplier(definition.oreMultiplier())
-                .setOreProcessingMultiplier(definition.processingMultiplier());
+                info.relations().members().stream().map(lookup).toArray(GTMaterial[]::new));
+        material.setOreMultiplier(oreProcessing == null ? 1 : oreProcessing.oreMultiplier())
+                .setOreProcessingMultiplier(oreProcessing == null ? 1 : oreProcessing.processingMultiplier());
+    }
+
+    private static Optional<FuelRule> fuel(String name) {
+        return Optional.ofNullable(first(name, MaterialProcessKeys.FUEL));
+    }
+
+    private static <T> T first(String name, gregtech.api.addon.material.MaterialProcessKey<T> key) {
+        var rules = MaterialInfoRegistry.processesBeforeFreeze(name).find(key);
+        return rules.isEmpty() ? null : rules.get(0).value();
+    }
+
+    private static java.util.Map<String, MaterialTarget> processing(String name) {
+        var result = new java.util.LinkedHashMap<String, MaterialTarget>();
+        var rulesByKey = MaterialInfoRegistry.processesBeforeFreeze(name).rules();
+        for (var entry : rulesByKey.entrySet()) {
+            String kind = MaterialProcessKeys.legacyTargetName(entry.getKey());
+            if (kind.isEmpty()) continue;
+            var rules = entry.getValue();
+            if (!rules.isEmpty() && rules.get(0).value() instanceof MaterialTarget target) result.put(kind, target);
+        }
+        return result;
     }
 }

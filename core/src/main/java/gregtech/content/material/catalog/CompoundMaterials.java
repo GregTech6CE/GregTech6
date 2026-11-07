@@ -3,6 +3,7 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,8 @@ import java.util.List;
 public final class CompoundMaterials {
     private CompoundMaterials() {}
 
-    public static List<MaterialDefinition> definitions() {
-        var result = new ArrayList<MaterialDefinition>();
+    public static List<MaterialDefinition.Declaration> definitions() {
+        var result = new ArrayList<MaterialDefinition.Declaration>();
         part0(result);
         part1(result);
         part2(result);
@@ -44,7 +45,7 @@ public final class CompoundMaterials {
         return List.copyOf(result);
     }
 
-    private static void part0(List<MaterialDefinition> result) {
+    private static void part0(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8784, "Adamantine")
                 .displayName("Adamantine")
                 .color(0xFF0040)
@@ -83,8 +84,8 @@ public final class CompoundMaterials {
                 .tools(3, 10.0F, 4500L, 5)
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Adamantium", 1945944000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Adamantium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .byproducts("GraniticMineralSand")
                 .forms(
                         "ARMORS",
@@ -115,9 +116,9 @@ public final class CompoundMaterials {
                 .localName("Air")
                 .composition(
                         52L,
-                        new MaterialDefinition.Part("Nitrogen", 25945920000L),
-                        new MaterialDefinition.Part("Oxygen", 7135128000L),
-                        new MaterialDefinition.Part("Argon", 648648000L))
+                        new MaterialInfoDefinition.Part("Nitrogen", 25945920000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 7135128000L),
+                        new MaterialInfoDefinition.Part("Argon", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9101, "Almandine")
@@ -149,10 +150,10 @@ public final class CompoundMaterials {
                 .smelting("Almandine", 0L)
                 .composition(
                         20L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Iron", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Iron", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts("Grossular", "Pyrope", "Spessartine", "Andradite", "Uvarovite")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -195,8 +196,8 @@ public final class CompoundMaterials {
                 .tools(2, 10.0F, 128L, 2)
                 .composition(
                         45L,
-                        new MaterialDefinition.Part("Aluminium", 29189160000L),
-                        new MaterialDefinition.Part("Silicon", 648648000L))
+                        new MaterialInfoDefinition.Part("Aluminium", 29189160000L),
+                        new MaterialInfoDefinition.Part("Silicon", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -250,8 +251,8 @@ public final class CompoundMaterials {
                 .tools(2, 6.0F, 64L, 2)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Aluminium", 1945944000L),
-                        new MaterialDefinition.Part("Copper", 648648000L))
+                        new MaterialInfoDefinition.Part("Aluminium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Copper", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -288,8 +289,8 @@ public final class CompoundMaterials {
                 .localName("Aluminium Fluoride")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Aluminium", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 1945944000L))
+                        new MaterialInfoDefinition.Part("Aluminium", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 1945944000L))
                 .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
                 .aliases("AlF3")
                 .build());
@@ -330,9 +331,9 @@ public final class CompoundMaterials {
                 .tools(2, 1.5F, 64L, 3)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("WroughtIron", 1297296000L),
-                        new MaterialDefinition.Part("Obsidian", 11675664000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("WroughtIron", 1297296000L),
+                        new MaterialInfoDefinition.Part("Obsidian", 11675664000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -377,10 +378,10 @@ public final class CompoundMaterials {
                 .smelting("Amazonite", 0L)
                 .composition(
                         26L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Potassium", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Potassium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8310, "Amber")
@@ -437,8 +438,8 @@ public final class CompoundMaterials {
                 .smelting("Amethyst", 0L)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("SiliconDioxide", 2594592000L),
-                        new MaterialDefinition.Part("Iron", 648648000L))
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 2594592000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8025, "Ammonia")
@@ -460,8 +461,8 @@ public final class CompoundMaterials {
                 .localName("Ammonia")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Nitrogen", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 1945944000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("NH3")
                 .build());
@@ -494,10 +495,10 @@ public final class CompoundMaterials {
                 .smelting("Andradite", 0L)
                 .composition(
                         20L,
-                        new MaterialDefinition.Part("Calcium", 1945944000L),
-                        new MaterialDefinition.Part("Iron", 1297296000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
-                        new MaterialDefinition.Part("Oxygen", 3891888000L))
+                        new MaterialInfoDefinition.Part("Calcium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Iron", 1297296000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 3891888000L))
                 .byproducts("Almandine", "Grossular", "Pyrope", "Spessartine", "Uvarovite")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -539,7 +540,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(2, 4.0F, 64L, 0)
                 .pulverizing("Copper", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Copper", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Copper", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -584,9 +585,9 @@ public final class CompoundMaterials {
                 .source("Forestry", "Forestry")
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Calcium", 3243240000L),
-                        new MaterialDefinition.Part("Phosphate", 1945944000L),
-                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                        new MaterialInfoDefinition.Part("Calcium", 3243240000L),
+                        new MaterialInfoDefinition.Part("Phosphate", 1945944000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 648648000L))
                 .byproducts("Phosphorite", "BluePhosphorus", "BlueFluorite", "Phosphate")
                 .multipliers(4, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -621,17 +622,17 @@ public final class CompoundMaterials {
                 .smelting("Beryllium", 18018000L)
                 .composition(
                         29L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Beryllium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts(
                         "Alumina", "Beryllium", "Emerald", "Morganite", "Goshenite", "Bixbite", "Heliodor", "Maxixe")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part1(List<MaterialDefinition> result) {
+    private static void part1(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(9827, "AquaRegia")
                 .displayName("Aqua Regia")
                 .color(0x40FF40)
@@ -659,8 +660,8 @@ public final class CompoundMaterials {
                 .source("factorization", "Factorization")
                 .composition(
                         13L,
-                        new MaterialDefinition.Part("NitricAcid", 3243240000L),
-                        new MaterialDefinition.Part("HydrochloricAcid", 5189184000L))
+                        new MaterialInfoDefinition.Part("NitricAcid", 3243240000L),
+                        new MaterialInfoDefinition.Part("HydrochloricAcid", 5189184000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8615, "ArsenicBronze")
@@ -700,8 +701,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 480L, 2)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Arsenic", 648648000L),
-                        new MaterialDefinition.Part("Bronze", 2594592000L))
+                        new MaterialInfoDefinition.Part("Arsenic", 648648000L),
+                        new MaterialInfoDefinition.Part("Bronze", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -755,8 +756,8 @@ public final class CompoundMaterials {
                 .tools(3, 5.5F, 448L, 2)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Copper", 1945944000L),
-                        new MaterialDefinition.Part("Arsenic", 648648000L))
+                        new MaterialInfoDefinition.Part("Copper", 1945944000L),
+                        new MaterialInfoDefinition.Part("Arsenic", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -831,10 +832,10 @@ public final class CompoundMaterials {
                 .smelting("Copper", 72072000L)
                 .composition(
                         15L,
-                        new MaterialDefinition.Part("Copper", 1945944000L),
-                        new MaterialDefinition.Part("CarbonTrioxide", 5189184000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L),
-                        new MaterialDefinition.Part("Water", 1945944000L))
+                        new MaterialInfoDefinition.Part("Copper", 1945944000L),
+                        new MaterialInfoDefinition.Part("CarbonTrioxide", 5189184000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L),
+                        new MaterialInfoDefinition.Part("Water", 1945944000L))
                 .byproducts("Zircon", "Malachite", "Hafnium")
                 .multipliers(5, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -868,9 +869,9 @@ public final class CompoundMaterials {
                 .smelting("BalasRuby", 0L)
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Chromium", 1297296000L),
-                        new MaterialDefinition.Part("Magnesium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Chromium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .byproducts("Chromite", "Spinel")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -896,8 +897,8 @@ public final class CompoundMaterials {
                 .smelting("Ashes", 162162000L)
                 .composition(
                         21L,
-                        new MaterialDefinition.Part("Carbon", 3891888000L),
-                        new MaterialDefinition.Part("Water", 9729720000L))
+                        new MaterialInfoDefinition.Part("Carbon", 3891888000L),
+                        new MaterialInfoDefinition.Part("Water", 9729720000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8247, "Basalz")
@@ -953,8 +954,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Lead", 2594592000L),
-                        new MaterialDefinition.Part("Antimony", 648648000L))
+                        new MaterialInfoDefinition.Part("Lead", 2594592000L),
+                        new MaterialInfoDefinition.Part("Antimony", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -1064,8 +1065,8 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 512L, 2)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Bismuth", 648648000L),
-                        new MaterialDefinition.Part("Brass", 2594592000L))
+                        new MaterialInfoDefinition.Part("Bismuth", 648648000L),
+                        new MaterialInfoDefinition.Part("Brass", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -1112,17 +1113,17 @@ public final class CompoundMaterials {
                 .smelting("Beryllium", 18018000L)
                 .composition(
                         29L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Beryllium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts(
                         "Alumina", "Beryllium", "Emerald", "Aquamarine", "Morganite", "Goshenite", "Heliodor", "Maxixe")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part2(List<MaterialDefinition> result) {
+    private static void part2(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8449, "BlackAventurine")
                 .displayName("Black Aventurine")
                 .color(0x323232)
@@ -1191,8 +1192,8 @@ public final class CompoundMaterials {
                 .tools(3, 12.0F, 512L, 2)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Copper", 1945944000L),
-                        new MaterialDefinition.Part("Electrum", 1297296000L))
+                        new MaterialInfoDefinition.Part("Copper", 1945944000L),
+                        new MaterialInfoDefinition.Part("Electrum", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -1306,9 +1307,9 @@ public final class CompoundMaterials {
                 .tools(3, 6.5F, 768L, 2)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Nickel", 648648000L),
-                        new MaterialDefinition.Part("BlackBronze", 648648000L),
-                        new MaterialDefinition.Part("Steel", 1945944000L))
+                        new MaterialInfoDefinition.Part("Nickel", 648648000L),
+                        new MaterialInfoDefinition.Part("BlackBronze", 648648000L),
+                        new MaterialInfoDefinition.Part("Steel", 1945944000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -1352,8 +1353,8 @@ public final class CompoundMaterials {
                 .localName("Black Vitriol")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8211, "Blaze")
@@ -1398,7 +1399,7 @@ public final class CompoundMaterials {
                 .source("Botania", "Botania")
                 .tools(1, 2.5F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -1471,8 +1472,8 @@ public final class CompoundMaterials {
                 .source("Redpower", "Redpower")
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Silver", 648648000L),
-                        new MaterialDefinition.Part("Nikolite", 2594592000L))
+                        new MaterialInfoDefinition.Part("Silver", 648648000L),
+                        new MaterialInfoDefinition.Part("Nikolite", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -1548,7 +1549,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 8.0F, 1280L, 3)
                 .smelting("Carbon", 1297296000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 2594592000L))
                 .byproducts("Graphite", "Diamond")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("DiamondBlue")
@@ -1614,7 +1615,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part3(List<MaterialDefinition> result) {
+    private static void part3(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8458, "BluePhosphorus")
                 .displayName("Blue Phosphorus")
                 .color(0x9BE3E4)
@@ -1642,8 +1643,8 @@ public final class CompoundMaterials {
                 .source("Forestry", "Forestry")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Calcium", 1945944000L),
-                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                        new MaterialInfoDefinition.Part("Calcium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Phosphate", 1297296000L))
                 .byproducts("Phosphorite", "Apatite", "BlueFluorite", "Phosphate", "RedPhosphorus", "WhitePhosphorus")
                 .multipliers(3, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -1681,8 +1682,8 @@ public final class CompoundMaterials {
                 .smelting("Alumina", 486486000L)
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Iron", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .byproducts("Alumina", "Ruby", "GreenSapphire", "PurpleSapphire")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -1723,10 +1724,10 @@ public final class CompoundMaterials {
                 .tools(3, 7.0F, 896L, 2)
                 .composition(
                         8L,
-                        new MaterialDefinition.Part("SterlingSilver", 648648000L),
-                        new MaterialDefinition.Part("BismuthBronze", 648648000L),
-                        new MaterialDefinition.Part("Steel", 1297296000L),
-                        new MaterialDefinition.Part("BlackSteel", 2594592000L))
+                        new MaterialInfoDefinition.Part("SterlingSilver", 648648000L),
+                        new MaterialInfoDefinition.Part("BismuthBronze", 648648000L),
+                        new MaterialInfoDefinition.Part("Steel", 1297296000L),
+                        new MaterialInfoDefinition.Part("BlackSteel", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -1772,10 +1773,10 @@ public final class CompoundMaterials {
                 .smelting("BlueTopaz", 0L)
                 .composition(
                         13L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
-                        new MaterialDefinition.Part("Fluorine", 1297296000L),
-                        new MaterialDefinition.Part("Water", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 1297296000L),
+                        new MaterialInfoDefinition.Part("Water", 1945944000L))
                 .byproducts("Topaz")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -1799,9 +1800,9 @@ public final class CompoundMaterials {
                 .localName("RomanVitriol")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Copper", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Copper", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8620, "Brass")
@@ -1843,8 +1844,8 @@ public final class CompoundMaterials {
                 .tools(2, 7.0F, 96L, 1)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Copper", 1945944000L),
-                        new MaterialDefinition.Part("Zinc", 648648000L))
+                        new MaterialInfoDefinition.Part("Copper", 1945944000L),
+                        new MaterialInfoDefinition.Part("Zinc", 648648000L))
                 .byproducts("Copper", "Zinc", "Arsenic")
                 .forms(
                         "ARMORS",
@@ -1917,8 +1918,8 @@ public final class CompoundMaterials {
                 .tools(3, 5.5F, 448L, 2)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Copper", 1945944000L),
-                        new MaterialDefinition.Part("Tin", 648648000L))
+                        new MaterialInfoDefinition.Part("Copper", 1945944000L),
+                        new MaterialInfoDefinition.Part("Tin", 648648000L))
                 .byproducts("Copper", "Tin", "Arsenic")
                 .forms(
                         "ARMORS",
@@ -1999,9 +2000,9 @@ public final class CompoundMaterials {
                 .localName("CalciumSulphate")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Calcium", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Calcium", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("CaSO4")
                 .build());
@@ -2024,8 +2025,8 @@ public final class CompoundMaterials {
                 .localName("Carbon Dioxide")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Carbon", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("CO2")
                 .build());
@@ -2048,8 +2049,8 @@ public final class CompoundMaterials {
                 .localName("Carbon Monoxide")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Carbon", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("CO")
                 .build());
@@ -2073,8 +2074,8 @@ public final class CompoundMaterials {
                 .localName("Carbon Trioxide")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Carbon", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("CO3")
                 .build());
@@ -2116,8 +2117,8 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 256L, 3)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Silicon", 648648000L),
-                        new MaterialDefinition.Part("Carbon", 648648000L))
+                        new MaterialInfoDefinition.Part("Silicon", 648648000L),
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -2136,7 +2137,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part4(List<MaterialDefinition> result) {
+    private static void part4(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8470, "Carminite")
                 .displayName("Carminite")
                 .color(0x960000)
@@ -2197,7 +2198,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 6.0F, 256L, 2)
                 .pulverizing("Iron", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Iron", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -2279,9 +2280,9 @@ public final class CompoundMaterials {
                 .source("RotaryCraft", "RotaryCraft")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Cadmium", 648648000L),
-                        new MaterialDefinition.Part("Indium", 648648000L),
-                        new MaterialDefinition.Part("Silver", 648648000L))
+                        new MaterialInfoDefinition.Part("Cadmium", 648648000L),
+                        new MaterialInfoDefinition.Part("Indium", 648648000L),
+                        new MaterialInfoDefinition.Part("Silver", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -2319,8 +2320,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         18L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 7783776000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 7783776000L))
                 .forms("DUSTS", "PLANTS", "PLATES")
                 .processing("Compressing", "Ceramic", 0L)
                 .processing("Bending", "Ceramic", 0L)
@@ -2353,7 +2354,7 @@ public final class CompoundMaterials {
                 .source("appliedenergistics2", "Applied Energistics")
                 .tools(1, 5.0F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("MilkyQuartz", "Barite")
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -2382,7 +2383,7 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .fuel(1600L, "Ashes", 162162000L)
                 .smelting("Carbon", 324324000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8348, "ChargedCertusQuartz")
@@ -2413,7 +2414,7 @@ public final class CompoundMaterials {
                 .tools(1, 5.0F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
                 .pulverizing("CertusQuartz", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("MilkyQuartz", "Barite")
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -2465,9 +2466,9 @@ public final class CompoundMaterials {
                 .localName("Chloroauric Acid")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Gold", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 2594592000L),
-                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                        new MaterialInfoDefinition.Part("Gold", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 2594592000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8401, "ChloroplatinicAcid")
@@ -2490,9 +2491,9 @@ public final class CompoundMaterials {
                 .localName("Chloroplatinic Acid")
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Platinum", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 3891888000L),
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Platinum", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 3891888000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9783, "Chocolate")
@@ -2515,8 +2516,8 @@ public final class CompoundMaterials {
                 .source("harvestcraft", "HarvestCraft")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Cocoa", 648648000L),
-                        new MaterialDefinition.Part("Sugar", 648648000L))
+                        new MaterialInfoDefinition.Part("Cocoa", 648648000L),
+                        new MaterialInfoDefinition.Part("Sugar", 648648000L))
                 .forms("DUSTS", "INGOTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8685, "ChromiumDioxide")
@@ -2556,8 +2557,8 @@ public final class CompoundMaterials {
                 .tools(3, 11.0F, 256L, 3)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Chromium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Chromium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -2589,7 +2590,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part5(List<MaterialDefinition> result) {
+    private static void part5(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(9243, "ClayBrick")
                 .displayName("Clay Brick")
                 .color(0xB75A40)
@@ -2608,7 +2609,7 @@ public final class CompoundMaterials {
                 .localName("Brick")
                 .correctedToolStats()
                 .tools(0, 1.0F, 1L, 0)
-                .composition(1L, new MaterialDefinition.Part("Ceramic", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Ceramic", 648648000L))
                 .aliases("Brick")
                 .build());
         result.add(MaterialDefinition.builder(8276, "ClayBrown")
@@ -2683,7 +2684,7 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .fuel(1600L, "DarkAshes", 162162000L)
                 .smelting("Carbon", 324324000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .byproducts("Lignite", "Sulfur")
                 .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -2713,7 +2714,7 @@ public final class CompoundMaterials {
                 .tools(0, 1.0F, 1L, 0)
                 .fuel(3200L, "DarkAshes", 72072000L)
                 .smelting("Carbon", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8621, "CobaltBrass")
@@ -2754,9 +2755,9 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 256L, 2)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Brass", 4540536000L),
-                        new MaterialDefinition.Part("Aluminium", 648648000L),
-                        new MaterialDefinition.Part("Cobalt", 648648000L))
+                        new MaterialInfoDefinition.Part("Brass", 4540536000L),
+                        new MaterialInfoDefinition.Part("Aluminium", 648648000L),
+                        new MaterialInfoDefinition.Part("Cobalt", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -2793,8 +2794,8 @@ public final class CompoundMaterials {
                 .localName("Cobalt Hexahydrate")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Cobalt", 648648000L),
-                        new MaterialDefinition.Part("Water", 3891888000L))
+                        new MaterialInfoDefinition.Part("Cobalt", 648648000L),
+                        new MaterialInfoDefinition.Part("Water", 3891888000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9782, "Cocoa")
@@ -2864,8 +2865,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 384L, 2)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("WroughtIron", 648648000L),
-                        new MaterialDefinition.Part("Redstone", 648648000L))
+                        new MaterialInfoDefinition.Part("WroughtIron", 648648000L),
+                        new MaterialInfoDefinition.Part("Redstone", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -2918,8 +2919,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 64L, 1)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Copper", 648648000L),
-                        new MaterialDefinition.Part("Nickel", 648648000L))
+                        new MaterialInfoDefinition.Part("Copper", 648648000L),
+                        new MaterialInfoDefinition.Part("Nickel", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -3056,8 +3057,8 @@ public final class CompoundMaterials {
                 .tools(3, 20.0F, 25600L, 4)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Diamond", 12972960000L),
-                        new MaterialDefinition.Part("NetherStar", 1297296000L))
+                        new MaterialInfoDefinition.Part("Diamond", 12972960000L),
+                        new MaterialInfoDefinition.Part("NetherStar", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -3075,7 +3076,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part6(List<MaterialDefinition> result) {
+    private static void part6(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8717, "Cyanite")
                 .displayName("Cyanite")
                 .color(0x326E96)
@@ -3144,9 +3145,9 @@ public final class CompoundMaterials {
                 .localName("SolutionNickelSulfate")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Nickel", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Nickel", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8634, "DamascusSteel")
@@ -3187,9 +3188,9 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 1280L, 2)
                 .composition(
                         50L,
-                        new MaterialDefinition.Part("Steel", 32432400000L),
-                        new MaterialDefinition.Part("Vanadium", 648648000L),
-                        new MaterialDefinition.Part("Tungsten", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 32432400000L),
+                        new MaterialInfoDefinition.Part("Vanadium", 648648000L),
+                        new MaterialInfoDefinition.Part("Tungsten", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -3248,7 +3249,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 8.0F, 1280L, 3)
                 .smelting("Carbon", 1297296000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 2594592000L))
                 .byproducts("Graphite", "PinkDiamond")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -3278,7 +3279,7 @@ public final class CompoundMaterials {
                 .localName("DiamondIndustrial")
                 .tools(3, 9.0F, 1440L, 3)
                 .smelting("Carbon", 1297296000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 2594592000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9863, "Diesel")
@@ -3322,10 +3323,10 @@ public final class CompoundMaterials {
                 .smelting("Dioptase", 0L)
                 .composition(
                         8L,
-                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
-                        new MaterialDefinition.Part("Copper", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L),
-                        new MaterialDefinition.Part("Water", 1945944000L))
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialInfoDefinition.Part("Copper", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L),
+                        new MaterialInfoDefinition.Part("Water", 1945944000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9844, "DisulfuricAcid")
@@ -3348,9 +3349,9 @@ public final class CompoundMaterials {
                 .localName("Disulfuric Acid")
                 .composition(
                         11L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 4540536000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("H2S2O7")
                 .build());
@@ -3421,8 +3422,8 @@ public final class CompoundMaterials {
                 .tools(3, 10.0F, 512L, 2)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Aluminium", 648648000L),
-                        new MaterialDefinition.Part("Copper", 648648000L))
+                        new MaterialInfoDefinition.Part("Aluminium", 648648000L),
+                        new MaterialInfoDefinition.Part("Copper", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -3478,8 +3479,8 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 1280L, 4)
                 .composition(
                         8L,
-                        new MaterialDefinition.Part("DuraniumElemental", 4540536000L),
-                        new MaterialDefinition.Part("Magnesium", 648648000L))
+                        new MaterialInfoDefinition.Part("DuraniumElemental", 4540536000L),
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L))
                 .byproducts("TritaniumDioxide", "Trinium")
                 .forms(
                         "ARMORS",
@@ -3499,7 +3500,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part7(List<MaterialDefinition> result) {
+    private static void part7(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8250, "DyeBlack")
                 .displayName("DyeBlack")
                 .color(0x202020)
@@ -3727,7 +3728,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part8(List<MaterialDefinition> result) {
+    private static void part8(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8261, "DyeYellow")
                 .displayName("DyeYellow")
                 .color(0xFFFF00)
@@ -3763,8 +3764,8 @@ public final class CompoundMaterials {
                 .localName("Dynamite")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Glyceryl", 648648000L),
-                        new MaterialDefinition.Part("Wood", 648648000L))
+                        new MaterialInfoDefinition.Part("Glyceryl", 648648000L),
+                        new MaterialInfoDefinition.Part("Wood", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8747, "Efrine")
@@ -3857,8 +3858,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 512L, 2)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Steel", 648648000L),
-                        new MaterialDefinition.Part("Silicon", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 648648000L),
+                        new MaterialInfoDefinition.Part("Silicon", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -3910,8 +3911,8 @@ public final class CompoundMaterials {
                 .source("ProjRed|Core", "Project Red")
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("WroughtIron", 648648000L),
-                        new MaterialDefinition.Part("Nikolite", 5189184000L))
+                        new MaterialInfoDefinition.Part("WroughtIron", 648648000L),
+                        new MaterialInfoDefinition.Part("Nikolite", 5189184000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -3967,8 +3968,8 @@ public final class CompoundMaterials {
                 .tools(3, 12.0F, 64L, 2)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Silver", 648648000L),
-                        new MaterialDefinition.Part("Gold", 648648000L))
+                        new MaterialInfoDefinition.Part("Silver", 648648000L),
+                        new MaterialInfoDefinition.Part("Gold", 648648000L))
                 .byproducts("Gold", "Silver")
                 .forms(
                         "ARMORS",
@@ -4059,7 +4060,7 @@ public final class CompoundMaterials {
                 .source("Botania", "Botania")
                 .tools(1, 2.5F, 64L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -4094,10 +4095,10 @@ public final class CompoundMaterials {
                 .smelting("Beryllium", 18018000L)
                 .composition(
                         29L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Beryllium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts(
                         "Alumina", "Beryllium", "Aquamarine", "Morganite", "Goshenite", "Bixbite", "Heliodor", "Maxixe")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -4128,8 +4129,8 @@ public final class CompoundMaterials {
                 .tools(3, 1.0F, 16L, 1)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("EnderPearl", 5837832000L),
-                        new MaterialDefinition.Part("Blaze", 648648000L))
+                        new MaterialInfoDefinition.Part("EnderPearl", 5837832000L),
+                        new MaterialInfoDefinition.Part("Blaze", 648648000L))
                 .forms("DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES")
                 .build());
         result.add(MaterialDefinition.builder(8710, "Enderium")
@@ -4169,8 +4170,8 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 256L, 3)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("EnderiumBase", 648648000L),
-                        new MaterialDefinition.Part("EnderPearl", 648648000L))
+                        new MaterialInfoDefinition.Part("EnderiumBase", 648648000L),
+                        new MaterialInfoDefinition.Part("EnderPearl", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -4224,9 +4225,9 @@ public final class CompoundMaterials {
                 .source("EnderIO", "Ender IO")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Tin", 1297296000L),
-                        new MaterialDefinition.Part("Silver", 648648000L),
-                        new MaterialDefinition.Part("Platinum", 648648000L))
+                        new MaterialInfoDefinition.Part("Tin", 1297296000L),
+                        new MaterialInfoDefinition.Part("Silver", 648648000L),
+                        new MaterialInfoDefinition.Part("Platinum", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -4270,10 +4271,10 @@ public final class CompoundMaterials {
                 .tools(3, 1.0F, 16L, 1)
                 .composition(
                         10L,
-                        new MaterialDefinition.Part("Beryllium", 648648000L),
-                        new MaterialDefinition.Part("Potassium", 2594592000L),
-                        new MaterialDefinition.Part("Nitrogen", 3243240000L),
-                        new MaterialDefinition.Part("Magic", 3891888000L))
+                        new MaterialInfoDefinition.Part("Beryllium", 648648000L),
+                        new MaterialInfoDefinition.Part("Potassium", 2594592000L),
+                        new MaterialInfoDefinition.Part("Nitrogen", 3243240000L),
+                        new MaterialInfoDefinition.Part("Magic", 3891888000L))
                 .forms("DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES")
                 .build());
         result.add(MaterialDefinition.builder(8299, "EnergiumCyan")
@@ -4301,8 +4302,8 @@ public final class CompoundMaterials {
                 .localName("EnergiumCyan")
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Sapphire", 2594592000L),
-                        new MaterialDefinition.Part("Nikolite", 3243240000L))
+                        new MaterialInfoDefinition.Part("Sapphire", 2594592000L),
+                        new MaterialInfoDefinition.Part("Nikolite", 3243240000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8298, "EnergiumRed")
@@ -4331,13 +4332,13 @@ public final class CompoundMaterials {
                 .source("IC2", "IndustrialCraft 2")
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Sapphire", 2594592000L),
-                        new MaterialDefinition.Part("Redstone", 3243240000L))
+                        new MaterialInfoDefinition.Part("Sapphire", 2594592000L),
+                        new MaterialInfoDefinition.Part("Redstone", 3243240000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part9(List<MaterialDefinition> result) {
+    private static void part9(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(9842, "Ethanol")
                 .displayName("Ethanol")
                 .color(0xFF8000)
@@ -4390,13 +4391,13 @@ public final class CompoundMaterials {
                 .localName("Eudialyte")
                 .composition(
                         130L,
-                        new MaterialDefinition.Part("Zircon", 11675664000L),
-                        new MaterialDefinition.Part("Pyrolusite", 1945944000L),
-                        new MaterialDefinition.Part("Sodium", 9729720000L),
-                        new MaterialDefinition.Part("Calcium", 3891888000L),
-                        new MaterialDefinition.Part("Chlorine", 648648000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 48648600000L),
-                        new MaterialDefinition.Part("Oxygen", 7783776000L))
+                        new MaterialInfoDefinition.Part("Zircon", 11675664000L),
+                        new MaterialInfoDefinition.Part("Pyrolusite", 1945944000L),
+                        new MaterialInfoDefinition.Part("Sodium", 9729720000L),
+                        new MaterialInfoDefinition.Part("Calcium", 3891888000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 648648000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 48648600000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 7783776000L))
                 .byproducts("Zircon", "RareEarth", "Hafnium", "Lead")
                 .multipliers(5, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -4420,8 +4421,8 @@ public final class CompoundMaterials {
                 .localName("Ferric Chloride")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 1945944000L))
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 1945944000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("FeCl3")
                 .build());
@@ -4447,9 +4448,9 @@ public final class CompoundMaterials {
                 .smelting("Hematite", 231660000L)
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L),
-                        new MaterialDefinition.Part("Hydrogen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 1945944000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("FeO3H3")
                 .build());
@@ -4473,8 +4474,8 @@ public final class CompoundMaterials {
                 .localName("Ferrous Chloride")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 1297296000L))
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 1297296000L))
                 .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
                 .aliases("FeCl2")
                 .build());
@@ -4515,8 +4516,8 @@ public final class CompoundMaterials {
                 .tools(3, 9.0F, 1024L, 4)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Steel", 648648000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 648648000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -4572,8 +4573,8 @@ public final class CompoundMaterials {
                 .smelting("FierySteel", 162162000L)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Steel", 648648000L),
-                        new MaterialDefinition.Part("Magic", 1297296000L))
+                        new MaterialInfoDefinition.Part("Steel", 648648000L),
+                        new MaterialInfoDefinition.Part("Magic", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -4709,8 +4710,8 @@ public final class CompoundMaterials {
                 .tools(3, 12.0F, 1280L, 4)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("DamascusSteel", 648648000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("DamascusSteel", 648648000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -4755,13 +4756,13 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .tools(1, 2.5F, 48L, 1)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Obsidian")
                 .forms("ARMORS", "DUSTS", "GEMS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part10(List<MaterialDefinition> result) {
+    private static void part10(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8389, "Fluix")
                 .displayName("Fluix")
                 .color(0x78468C)
@@ -4789,8 +4790,8 @@ public final class CompoundMaterials {
                 .smelting("SiliconDioxide", 648648000L)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("SiliconDioxide", 1297296000L),
-                        new MaterialDefinition.Part("Redstone", 648648000L))
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Redstone", 648648000L))
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -4847,8 +4848,8 @@ public final class CompoundMaterials {
                 .localName("Fresh Water")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9880, "FryingOilHot")
@@ -4938,7 +4939,7 @@ public final class CompoundMaterials {
                 .localName("Glass")
                 .source("minecraft", "Minecraft")
                 .tools(1, 1.0F, 1L, 0)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8341, "Glowstone")
@@ -4968,10 +4969,10 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .composition(
                         10L,
-                        new MaterialDefinition.Part("Phosphorite", 3243240000L),
-                        new MaterialDefinition.Part("Gold", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
-                        new MaterialDefinition.Part("Helium", 648648000L))
+                        new MaterialInfoDefinition.Part("Phosphorite", 3243240000L),
+                        new MaterialInfoDefinition.Part("Gold", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialInfoDefinition.Part("Helium", 648648000L))
                 .byproducts("Redstone", "Gold", "YellowFluorite")
                 .multipliers(4, 1)
                 .forms(
@@ -5019,9 +5020,9 @@ public final class CompoundMaterials {
                 .localName("Glycerol")
                 .composition(
                         14L,
-                        new MaterialDefinition.Part("Carbon", 1945944000L),
-                        new MaterialDefinition.Part("Hydrogen", 5189184000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Carbon", 1945944000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 5189184000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9821, "Glyceryl")
@@ -5043,10 +5044,10 @@ public final class CompoundMaterials {
                 .localName("Glyceryl")
                 .composition(
                         20L,
-                        new MaterialDefinition.Part("Carbon", 1945944000L),
-                        new MaterialDefinition.Part("Hydrogen", 3243240000L),
-                        new MaterialDefinition.Part("Nitrogen", 1945944000L),
-                        new MaterialDefinition.Part("Oxygen", 5837832000L))
+                        new MaterialInfoDefinition.Part("Carbon", 1945944000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 3243240000L),
+                        new MaterialInfoDefinition.Part("Nitrogen", 1945944000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 5837832000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8385, "Goshenite")
@@ -5079,10 +5080,10 @@ public final class CompoundMaterials {
                 .smelting("Beryllium", 18018000L)
                 .composition(
                         29L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Beryllium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts(
                         "Alumina", "Beryllium", "Emerald", "Aquamarine", "Morganite", "Bixbite", "Heliodor", "Maxixe")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -5113,9 +5114,9 @@ public final class CompoundMaterials {
                 .tools(1, 3.0F, 64L, 1)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Biotite", 648648000L),
-                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L),
-                        new MaterialDefinition.Part("Flint", 648648000L))
+                        new MaterialInfoDefinition.Part("Biotite", 648648000L),
+                        new MaterialInfoDefinition.Part("PotassiumFeldspar", 648648000L),
+                        new MaterialInfoDefinition.Part("Flint", 648648000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8508, "GraniteBlack")
@@ -5144,9 +5145,9 @@ public final class CompoundMaterials {
                 .tools(1, 3.0F, 64L, 3)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Biotite", 648648000L),
-                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L),
-                        new MaterialDefinition.Part("Flint", 648648000L))
+                        new MaterialInfoDefinition.Part("Biotite", 648648000L),
+                        new MaterialInfoDefinition.Part("PotassiumFeldspar", 648648000L),
+                        new MaterialInfoDefinition.Part("Flint", 648648000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8507, "GraniteRed")
@@ -5175,9 +5176,9 @@ public final class CompoundMaterials {
                 .tools(1, 3.0F, 64L, 3)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Biotite", 648648000L),
-                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L),
-                        new MaterialDefinition.Part("Flint", 648648000L))
+                        new MaterialInfoDefinition.Part("Biotite", 648648000L),
+                        new MaterialInfoDefinition.Part("PotassiumFeldspar", 648648000L),
+                        new MaterialInfoDefinition.Part("Flint", 648648000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9175, "Graphene")
@@ -5216,12 +5217,12 @@ public final class CompoundMaterials {
                 .localName("Graphene")
                 .smelting("Carbon", 324324000L)
                 .pulverizing("Carbon", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .forms("ARMORS", "FOILS", "PARTS", "PLATES", "PROJECTILES", "STICKS", "WIRES")
                 .build());
     }
 
-    private static void part11(List<MaterialDefinition> result) {
+    private static void part11(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8410, "GrayVitriol")
                 .displayName("Gray Vitriol")
                 .color(0x6F6F6F)
@@ -5242,9 +5243,9 @@ public final class CompoundMaterials {
                 .localName("Gray Vitriol")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Manganese", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Manganese", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8448, "GreenAventurine")
@@ -5305,7 +5306,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 8.0F, 1280L, 3)
                 .smelting("Carbon", 1297296000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 2594592000L))
                 .byproducts("Graphite", "Diamond")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("DiamondGreen")
@@ -5401,8 +5402,8 @@ public final class CompoundMaterials {
                 .smelting("Alumina", 486486000L)
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Magnesium", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L))
                 .byproducts("Alumina", "Ruby", "YellowSapphire", "BlueSapphire")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -5426,9 +5427,9 @@ public final class CompoundMaterials {
                 .localName("Green Vitriol")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9119, "Grossular")
@@ -5460,10 +5461,10 @@ public final class CompoundMaterials {
                 .smelting("Grossular", 0L)
                 .composition(
                         20L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Calcium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Calcium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts("Almandine", "Pyrope", "Spessartine", "Andradite", "Uvarovite")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -5488,9 +5489,9 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Carbon", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("SodiumNitrate", 648648000L))
+                        new MaterialInfoDefinition.Part("Carbon", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("SodiumNitrate", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8433, "HawksEye")
@@ -5551,8 +5552,8 @@ public final class CompoundMaterials {
                 .localName("Heavy Water")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Deuterium", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Deuterium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("D2O")
                 .build());
@@ -5586,10 +5587,10 @@ public final class CompoundMaterials {
                 .smelting("Beryllium", 18018000L)
                 .composition(
                         29L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Beryllium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts(
                         "Alumina", "Beryllium", "Emerald", "Aquamarine", "Morganite", "Goshenite", "Bixbite", "Maxixe")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -5613,8 +5614,8 @@ public final class CompoundMaterials {
                 .localName("Helium-Neon")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Helium", 648648000L),
-                        new MaterialDefinition.Part("Neon", 648648000L))
+                        new MaterialInfoDefinition.Part("Helium", 648648000L),
+                        new MaterialInfoDefinition.Part("Neon", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("HeNe")
                 .build());
@@ -5634,7 +5635,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part12(List<MaterialDefinition> result) {
+    private static void part12(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8011, "HexafluorosilicicAcid")
                 .displayName("Hexafluorosilicic Acid")
                 .color(0xBEC8BE)
@@ -5662,9 +5663,9 @@ public final class CompoundMaterials {
                 .localName("Hexafluorosilicic Acid")
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Silicon", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Silicon", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 3891888000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("H2SiF6")
                 .build());
@@ -5683,8 +5684,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9791, "Honey")
@@ -5753,10 +5754,10 @@ public final class CompoundMaterials {
                 .tools(3, 10.0F, 5120L, 4)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("HSSG", 3891888000L),
-                        new MaterialDefinition.Part("Cobalt", 648648000L),
-                        new MaterialDefinition.Part("Manganese", 648648000L),
-                        new MaterialDefinition.Part("Silicon", 648648000L))
+                        new MaterialInfoDefinition.Part("HSSG", 3891888000L),
+                        new MaterialInfoDefinition.Part("Cobalt", 648648000L),
+                        new MaterialInfoDefinition.Part("Manganese", 648648000L),
+                        new MaterialInfoDefinition.Part("Silicon", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -5812,10 +5813,10 @@ public final class CompoundMaterials {
                 .tools(3, 10.0F, 4000L, 3)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Tungstensteel", 3243240000L),
-                        new MaterialDefinition.Part("Chromium", 648648000L),
-                        new MaterialDefinition.Part("Molybdenum", 1297296000L),
-                        new MaterialDefinition.Part("Vanadium", 648648000L))
+                        new MaterialInfoDefinition.Part("Tungstensteel", 3243240000L),
+                        new MaterialInfoDefinition.Part("Chromium", 648648000L),
+                        new MaterialInfoDefinition.Part("Molybdenum", 1297296000L),
+                        new MaterialInfoDefinition.Part("Vanadium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -5871,9 +5872,9 @@ public final class CompoundMaterials {
                 .tools(3, 14.0F, 3000L, 4)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("HSSG", 3891888000L),
-                        new MaterialDefinition.Part("Osmiridium", 1297296000L),
-                        new MaterialDefinition.Part("Iridium", 648648000L))
+                        new MaterialInfoDefinition.Part("HSSG", 3891888000L),
+                        new MaterialInfoDefinition.Part("Osmiridium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iridium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -5911,8 +5912,8 @@ public final class CompoundMaterials {
                 .localName("Hydrated Coal")
                 .composition(
                         8L,
-                        new MaterialDefinition.Part("Coal", 5189184000L),
-                        new MaterialDefinition.Part("Water", 648648000L))
+                        new MaterialInfoDefinition.Part("Coal", 5189184000L),
+                        new MaterialInfoDefinition.Part("Water", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9826, "HydrochloricAcid")
@@ -5934,8 +5935,8 @@ public final class CompoundMaterials {
                 .localName("Hydrochloric Acid")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Hydrogen", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("HCl")
                 .build());
@@ -5960,9 +5961,9 @@ public final class CompoundMaterials {
                 .source("ihl", "IHL")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Hydrogen", 1945944000L),
-                        new MaterialDefinition.Part("Boron", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1945944000L),
+                        new MaterialInfoDefinition.Part("Boron", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("H3BO3")
                 .build());
@@ -5985,8 +5986,8 @@ public final class CompoundMaterials {
                 .localName("Hydrogen Fluoride")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Hydrogen", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("HF")
                 .build());
@@ -6009,8 +6010,8 @@ public final class CompoundMaterials {
                 .source("ihl", "IHL")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("H2O2")
                 .build());
@@ -6033,8 +6034,8 @@ public final class CompoundMaterials {
                 .localName("Hydrosulfuric Acid")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("H2S")
                 .build());
@@ -6067,13 +6068,13 @@ public final class CompoundMaterials {
                 .smelting("Water", 648648000L)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("ARMORS", "CONTAINERS", "DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part13(List<MaterialDefinition> result) {
+    private static void part13(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8661, "Invar")
                 .displayName("Invar")
                 .color(0xDCDC96)
@@ -6113,8 +6114,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 256L, 2)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("WroughtIron", 1297296000L),
-                        new MaterialDefinition.Part("Nickel", 648648000L))
+                        new MaterialInfoDefinition.Part("WroughtIron", 1297296000L),
+                        new MaterialInfoDefinition.Part("Nickel", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -6169,7 +6170,7 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 256L, 2)
                 .smelting("Iron", 648648000L)
                 .pulverizing("Iron", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Iron", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -6303,9 +6304,9 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 64L, 2)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("WroughtIron", 648648000L),
-                        new MaterialDefinition.Part("Aluminium", 648648000L),
-                        new MaterialDefinition.Part("Chromium", 648648000L))
+                        new MaterialInfoDefinition.Part("WroughtIron", 648648000L),
+                        new MaterialInfoDefinition.Part("Aluminium", 648648000L),
+                        new MaterialInfoDefinition.Part("Chromium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -6396,8 +6397,8 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 512L, 3)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Steel", 1297296000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 1297296000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -6441,10 +6442,10 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .composition(
                         16L,
-                        new MaterialDefinition.Part("Lazurite", 7783776000L),
-                        new MaterialDefinition.Part("Sodalite", 1297296000L),
-                        new MaterialDefinition.Part("Pyrite", 648648000L),
-                        new MaterialDefinition.Part("Calcite", 648648000L))
+                        new MaterialInfoDefinition.Part("Lazurite", 7783776000L),
+                        new MaterialInfoDefinition.Part("Sodalite", 1297296000L),
+                        new MaterialInfoDefinition.Part("Pyrite", 648648000L),
+                        new MaterialInfoDefinition.Part("Calcite", 648648000L))
                 .byproducts("Lazurite", "Sodalite", "Pyrite")
                 .multipliers(5, 1)
                 .forms("ARMORS", "DENSEPLATES", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -6504,10 +6505,10 @@ public final class CompoundMaterials {
                 .localName("Lazurite")
                 .composition(
                         28L,
-                        new MaterialDefinition.Part("Alumina", 3891888000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 3891888000L),
-                        new MaterialDefinition.Part("Calcium", 5189184000L),
-                        new MaterialDefinition.Part("Sodium", 5189184000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3891888000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 3891888000L),
+                        new MaterialInfoDefinition.Part("Calcium", 5189184000L),
+                        new MaterialInfoDefinition.Part("Sodium", 5189184000L))
                 .byproducts("Sodalite", "Lapis")
                 .multipliers(5, 1)
                 .forms("ARMORS", "DENSEPLATES", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -6554,9 +6555,9 @@ public final class CompoundMaterials {
                 .fuel(800L, "DarkAshes", 162162000L)
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Carbon", 1297296000L),
-                        new MaterialDefinition.Part("Water", 2594592000L),
-                        new MaterialDefinition.Part("DarkAshes", 648648000L))
+                        new MaterialInfoDefinition.Part("Carbon", 1297296000L),
+                        new MaterialInfoDefinition.Part("Water", 2594592000L),
+                        new MaterialInfoDefinition.Part("DarkAshes", 648648000L))
                 .byproducts("Coal", "Sulfur", "Germanium")
                 .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -6582,13 +6583,13 @@ public final class CompoundMaterials {
                 .fuel(1600L, "DarkAshes", 72072000L)
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Carbon", 1297296000L),
-                        new MaterialDefinition.Part("DarkAshes", 648648000L))
+                        new MaterialInfoDefinition.Part("Carbon", 1297296000L),
+                        new MaterialInfoDefinition.Part("DarkAshes", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part14(List<MaterialDefinition> result) {
+    private static void part14(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(9874, "LinOil")
                 .displayName("Lin Oil")
                 .color(0xC4FF00)
@@ -6622,9 +6623,9 @@ public final class CompoundMaterials {
                 .localName("Lithium Chlorate")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Lithium", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Lithium", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
                 .aliases("LiClO3")
                 .build());
@@ -6648,9 +6649,9 @@ public final class CompoundMaterials {
                 .localName("Lithium Hydroxide")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Lithium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                        new MaterialInfoDefinition.Part("Lithium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("LiOH")
                 .build());
@@ -6673,9 +6674,9 @@ public final class CompoundMaterials {
                 .localName("Lithium Perchlorate")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Lithium", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Lithium", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
                 .aliases("LiClO4")
                 .build());
@@ -6699,8 +6700,8 @@ public final class CompoundMaterials {
                 .source("TwilightForest", "Twilight Forest")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Wood", 1945944000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("Wood", 1945944000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9882, "Lubricant")
@@ -6754,9 +6755,9 @@ public final class CompoundMaterials {
                 .source("ThermalExpansion", "Thermal Expansion")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Tin", 1945944000L),
-                        new MaterialDefinition.Part("Silver", 648648000L),
-                        new MaterialDefinition.Part("Glowstone", 2594592000L))
+                        new MaterialInfoDefinition.Part("Tin", 1945944000L),
+                        new MaterialInfoDefinition.Part("Silver", 648648000L),
+                        new MaterialInfoDefinition.Part("Glowstone", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -6840,8 +6841,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 256L, 2)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Magnesium", 648648000L),
-                        new MaterialDefinition.Part("Aluminium", 1297296000L))
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L),
+                        new MaterialInfoDefinition.Part("Aluminium", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -6887,8 +6888,8 @@ public final class CompoundMaterials {
                 .smelting("Carbon", 1297296000L)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Carbon", 2594592000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("Carbon", 2594592000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .byproducts("Graphite", "Diamond")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -6929,8 +6930,8 @@ public final class CompoundMaterials {
                 .tools(3, 12.0F, 256L, 3)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -6965,8 +6966,8 @@ public final class CompoundMaterials {
                 .localName("Manganese Chloride")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Manganese", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 1297296000L))
+                        new MaterialInfoDefinition.Part("Manganese", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 1297296000L))
                 .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
                 .aliases("MnCl2")
                 .build());
@@ -7000,10 +7001,10 @@ public final class CompoundMaterials {
                 .smelting("Beryllium", 18018000L)
                 .composition(
                         29L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Beryllium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts(
                         "Alumina",
                         "Beryllium",
@@ -7031,7 +7032,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part15(List<MaterialDefinition> result) {
+    private static void part15(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(9700, "MeatRaw")
                 .displayName("MeatRaw")
                 .color(0xFF6464)
@@ -7086,8 +7087,8 @@ public final class CompoundMaterials {
                 .localName("Methane")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Carbon", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("CH4")
                 .build());
@@ -7110,8 +7111,8 @@ public final class CompoundMaterials {
                 .localName("Methane Ice")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Methane", 648648000L),
-                        new MaterialDefinition.Part("Ice", 1297296000L))
+                        new MaterialInfoDefinition.Part("Methane", 648648000L),
+                        new MaterialInfoDefinition.Part("Ice", 1297296000L))
                 .forms("CONTAINERS", "DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9790, "Milk")
@@ -7148,7 +7149,7 @@ public final class CompoundMaterials {
                 .localName("Milky Quartz")
                 .tools(1, 2.5F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("CertusQuartz", "Barite")
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -7192,8 +7193,8 @@ public final class CompoundMaterials {
                 .localName("Monazite")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("RareEarth", 648648000L),
-                        new MaterialDefinition.Part("Phosphate", 648648000L))
+                        new MaterialInfoDefinition.Part("RareEarth", 648648000L),
+                        new MaterialInfoDefinition.Part("Phosphate", 648648000L))
                 .byproducts("Thorium", "Neodymium", "RareEarth")
                 .multipliers(2, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -7228,10 +7229,10 @@ public final class CompoundMaterials {
                 .smelting("Beryllium", 18018000L)
                 .composition(
                         29L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Beryllium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts(
                         "Alumina", "Beryllium", "Emerald", "Aquamarine", "Goshenite", "Bixbite", "Heliodor", "Maxixe")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -7274,7 +7275,7 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 512L, 3)
                 .smelting("Neodymium", 648648000L)
                 .pulverizing("Neodymium", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Neodymium", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Neodymium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -7331,8 +7332,8 @@ public final class CompoundMaterials {
                 .tools(2, 10.0F, 500L, 4)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Gold", 2594592000L),
-                        new MaterialDefinition.Part("AncientDebris", 2594592000L))
+                        new MaterialInfoDefinition.Part("Gold", 2594592000L),
+                        new MaterialInfoDefinition.Part("AncientDebris", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -7385,8 +7386,8 @@ public final class CompoundMaterials {
                 .tools(3, 12.0F, 2560L, 4)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Netherite", 648648000L),
-                        new MaterialDefinition.Part("Diamond", 2594592000L))
+                        new MaterialInfoDefinition.Part("Netherite", 648648000L),
+                        new MaterialInfoDefinition.Part("Diamond", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -7429,7 +7430,7 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .tools(1, 2.5F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Barite", "Efrine", "WhiteFluorite")
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -7495,8 +7496,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 64L, 2)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Nickel", 2594592000L),
-                        new MaterialDefinition.Part("Chromium", 648648000L))
+                        new MaterialInfoDefinition.Part("Nickel", 2594592000L),
+                        new MaterialInfoDefinition.Part("Chromium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -7515,7 +7516,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part16(List<MaterialDefinition> result) {
+    private static void part16(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8737, "NikolineAlloy")
                 .displayName("Nikoline Alloy")
                 .color(0x325A8C)
@@ -7554,8 +7555,8 @@ public final class CompoundMaterials {
                 .source("Redpower", "Redpower")
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Silicon", 648648000L),
-                        new MaterialDefinition.Part("Nikolite", 648648000L))
+                        new MaterialInfoDefinition.Part("Silicon", 648648000L),
+                        new MaterialInfoDefinition.Part("Nikolite", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -7599,10 +7600,10 @@ public final class CompoundMaterials {
                 .tools(0, 1.0F, 1L, 0)
                 .composition(
                         10L,
-                        new MaterialDefinition.Part("Sodalite", 3243240000L),
-                        new MaterialDefinition.Part("Copper", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
-                        new MaterialDefinition.Part("Argon", 648648000L))
+                        new MaterialInfoDefinition.Part("Sodalite", 3243240000L),
+                        new MaterialInfoDefinition.Part("Copper", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialInfoDefinition.Part("Argon", 648648000L))
                 .byproducts("Copper", "RareEarth", "Azurite", "Arsenic")
                 .multipliers(4, 1)
                 .forms(
@@ -7654,8 +7655,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Niobium", 648648000L),
-                        new MaterialDefinition.Part("Titanium", 648648000L))
+                        new MaterialInfoDefinition.Part("Niobium", 648648000L),
+                        new MaterialInfoDefinition.Part("Titanium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -7690,9 +7691,9 @@ public final class CompoundMaterials {
                 .localName("Nitric Acid")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Hydrogen", 648648000L),
-                        new MaterialDefinition.Part("Nitrogen", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("HNO3")
                 .build());
@@ -7723,8 +7724,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Nitrogen", 648648000L),
-                        new MaterialDefinition.Part("Carbon", 648648000L))
+                        new MaterialInfoDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .forms("CONTAINERS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9861, "NitroFuel")
@@ -7742,8 +7743,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Glyceryl", 648648000L),
-                        new MaterialDefinition.Part("Fuel", 2594592000L))
+                        new MaterialInfoDefinition.Part("Glyceryl", 648648000L),
+                        new MaterialInfoDefinition.Part("Fuel", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9831, "NitrogenDioxide")
@@ -7765,8 +7766,8 @@ public final class CompoundMaterials {
                 .localName("Nitrogen Dioxide")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Nitrogen", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("NO2")
                 .build());
@@ -7789,8 +7790,8 @@ public final class CompoundMaterials {
                 .localName("Nitrogen Monoxide")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Nitrogen", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("NO")
                 .build());
@@ -7838,10 +7839,10 @@ public final class CompoundMaterials {
                 .smelting("Lava", 648648000L)
                 .composition(
                         64L,
-                        new MaterialDefinition.Part("Magnesium", 648648000L),
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 3891888000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 3891888000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .byproducts("Peridot", "MagnesiumCarbonate")
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -7929,7 +7930,7 @@ public final class CompoundMaterials {
                 .localName("Onyx")
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("OnyxBlack", 0L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8415, "OnyxRed")
@@ -7958,12 +7959,12 @@ public final class CompoundMaterials {
                 .localName("OnyxRed")
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("OnyxRed", 0L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part17(List<MaterialDefinition> result) {
+    private static void part17(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8312, "Opal")
                 .displayName("Opal")
                 .color(0x0000FF)
@@ -7990,7 +7991,7 @@ public final class CompoundMaterials {
                 .localName("Opal")
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("Opal", 0L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Tanzanite")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -8054,8 +8055,8 @@ public final class CompoundMaterials {
                 .smelting("Alumina", 486486000L)
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Copper", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Copper", 648648000L))
                 .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -8097,8 +8098,8 @@ public final class CompoundMaterials {
                 .tools(3, 11.0F, 3840L, 4)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("OsmiumElemental", 648648000L),
-                        new MaterialDefinition.Part("Iridium", 648648000L))
+                        new MaterialInfoDefinition.Part("OsmiumElemental", 648648000L),
+                        new MaterialInfoDefinition.Part("Iridium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -8201,9 +8202,9 @@ public final class CompoundMaterials {
                 .smelting("Peridot", 0L)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("SiliconDioxide", 1297296000L),
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Magnesium", 1297296000L))
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Magnesium", 1297296000L))
                 .byproducts("Obsidian", "MagnesiumCarbonate")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -8229,7 +8230,7 @@ public final class CompoundMaterials {
                 .source("erebus", "Erebus")
                 .tools(1, 2.0F, 24L, 1)
                 .fuel(50L, "", 0L)
-                .composition(1L, new MaterialDefinition.Part("Wood", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Wood", 648648000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8390, "PetroleumCoke")
@@ -8257,8 +8258,8 @@ public final class CompoundMaterials {
                 .fuel(6400L, "DarkAshes", 72072000L)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Carbon", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                        new MaterialInfoDefinition.Part("Carbon", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L))
                 .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("PetCoke")
                 .build());
@@ -8289,9 +8290,9 @@ public final class CompoundMaterials {
                 .localName("Phosphorite")
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Calcium", 3243240000L),
-                        new MaterialDefinition.Part("Phosphate", 1945944000L),
-                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                        new MaterialInfoDefinition.Part("Calcium", 3243240000L),
+                        new MaterialInfoDefinition.Part("Phosphate", 1945944000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 648648000L))
                 .byproducts("Phosphorus", "Apatite", "YellowFluorite", "Phosphate", "RedPhosphorus", "WhitePhosphorus")
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -8322,8 +8323,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Calcium", 1945944000L),
-                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                        new MaterialInfoDefinition.Part("Calcium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Phosphate", 1297296000L))
                 .byproducts("Phosphorite", "Apatite", "YellowFluorite", "Phosphate", "RedPhosphorus", "WhitePhosphorus")
                 .multipliers(3, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -8354,7 +8355,7 @@ public final class CompoundMaterials {
                 .localName("Pink Diamond")
                 .tools(3, 12.0F, 1600L, 3)
                 .smelting("Carbon", 1297296000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 2594592000L))
                 .byproducts("Graphite", "Diamond")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("DiamondPink")
@@ -8408,14 +8409,14 @@ public final class CompoundMaterials {
                 .localName("Pink Vitriol")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Magnesium", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
     }
 
-    private static void part18(List<MaterialDefinition> result) {
+    private static void part18(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8218, "Plastic")
                 .displayName("Plastic")
                 .color(0xC8C8C8)
@@ -8447,8 +8448,8 @@ public final class CompoundMaterials {
                 .smelting("Plastic", 432432000L)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Carbon", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -8484,9 +8485,9 @@ public final class CompoundMaterials {
                 .localName("Potassium Aluminate")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Potassium", 648648000L),
-                        new MaterialDefinition.Part("Aluminium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Potassium", 648648000L),
+                        new MaterialInfoDefinition.Part("Aluminium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("KAlO2")
                 .build());
@@ -8509,10 +8510,10 @@ public final class CompoundMaterials {
                 .localName("PotassiumBisulphate")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Potassium", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Potassium", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("KHSO4")
                 .build());
@@ -8535,8 +8536,8 @@ public final class CompoundMaterials {
                 .localName("Potassium Carbonate")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Potassium", 1297296000L),
-                        new MaterialDefinition.Part("CarbonTrioxide", 2594592000L))
+                        new MaterialInfoDefinition.Part("Potassium", 1297296000L),
+                        new MaterialInfoDefinition.Part("CarbonTrioxide", 2594592000L))
                 .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
                 .aliases("K2CO3")
                 .build());
@@ -8560,8 +8561,8 @@ public final class CompoundMaterials {
                 .localName("Potassium Fluoride")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Potassium", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                        new MaterialInfoDefinition.Part("Potassium", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("KF")
                 .build());
@@ -8584,9 +8585,9 @@ public final class CompoundMaterials {
                 .localName("Potassium Heptafluorotantalate")
                 .composition(
                         10L,
-                        new MaterialDefinition.Part("Potassium", 1297296000L),
-                        new MaterialDefinition.Part("Tantalum", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 4540536000L))
+                        new MaterialInfoDefinition.Part("Potassium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Tantalum", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 4540536000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("K2TaF7")
                 .build());
@@ -8610,9 +8611,9 @@ public final class CompoundMaterials {
                 .localName("Potassium Hydroxide")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Potassium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                        new MaterialInfoDefinition.Part("Potassium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("KOH")
                 .build());
@@ -8635,9 +8636,9 @@ public final class CompoundMaterials {
                 .localName("PotassiumPersulphate")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Potassium", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Potassium", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("KSO4")
                 .build());
@@ -8660,9 +8661,9 @@ public final class CompoundMaterials {
                 .localName("PotassiumPyrosulphate")
                 .composition(
                         11L,
-                        new MaterialDefinition.Part("Potassium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                        new MaterialInfoDefinition.Part("Potassium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 4540536000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("K2S2O7")
                 .build());
@@ -8685,9 +8686,9 @@ public final class CompoundMaterials {
                 .localName("PotassiumSulphate")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Potassium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Potassium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("K2SO4")
                 .build());
@@ -8710,8 +8711,8 @@ public final class CompoundMaterials {
                 .localName("PotassiumSulphide")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Potassium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                        new MaterialInfoDefinition.Part("Potassium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("K2S")
                 .build());
@@ -8734,9 +8735,9 @@ public final class CompoundMaterials {
                 .localName("PotassiumSulphite")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Potassium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Potassium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("K2SO3")
                 .build());
@@ -8782,7 +8783,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part19(List<MaterialDefinition> result) {
+    private static void part19(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8383, "PurpleSapphire")
                 .displayName("Purple Sapphire")
                 .color(0xDC32FF)
@@ -8814,8 +8815,8 @@ public final class CompoundMaterials {
                 .smelting("Alumina", 486486000L)
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Vanadium", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Vanadium", 648648000L))
                 .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -8842,8 +8843,8 @@ public final class CompoundMaterials {
                 .smelting("PVC", 432432000L)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Carbon", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -8889,10 +8890,10 @@ public final class CompoundMaterials {
                 .smelting("Pyrope", 0L)
                 .composition(
                         20L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Magnesium", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Magnesium", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts("Almandine", "Grossular", "Spessartine", "Andradite", "Uvarovite")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -8963,8 +8964,8 @@ public final class CompoundMaterials {
                 .source("Redpower", "Redpower")
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Copper", 648648000L),
-                        new MaterialDefinition.Part("Redstone", 2594592000L))
+                        new MaterialInfoDefinition.Part("Copper", 648648000L),
+                        new MaterialInfoDefinition.Part("Redstone", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -9040,7 +9041,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 8.0F, 1280L, 3)
                 .smelting("Carbon", 1297296000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 2594592000L))
                 .byproducts("Graphite", "Diamond")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("DiamondRed")
@@ -9132,8 +9133,8 @@ public final class CompoundMaterials {
                 .source("hbm", "HBM's Nuclear Tech Mod")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Calcium", 1945944000L),
-                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                        new MaterialInfoDefinition.Part("Calcium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Phosphate", 1297296000L))
                 .byproducts("Phosphorite", "Apatite", "RedFluorite", "Phosphate", "BluePhosphorus", "WhitePhosphorus")
                 .multipliers(3, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -9160,7 +9161,7 @@ public final class CompoundMaterials {
                 .source("Botania", "Botania")
                 .tools(1, 2.5F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -9223,10 +9224,10 @@ public final class CompoundMaterials {
                 .tools(3, 7.5F, 1024L, 2)
                 .composition(
                         8L,
-                        new MaterialDefinition.Part("RoseGold", 648648000L),
-                        new MaterialDefinition.Part("Brass", 648648000L),
-                        new MaterialDefinition.Part("Steel", 1297296000L),
-                        new MaterialDefinition.Part("BlackSteel", 2594592000L))
+                        new MaterialInfoDefinition.Part("RoseGold", 648648000L),
+                        new MaterialInfoDefinition.Part("Brass", 648648000L),
+                        new MaterialInfoDefinition.Part("Steel", 1297296000L),
+                        new MaterialInfoDefinition.Part("BlackSteel", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -9271,10 +9272,10 @@ public final class CompoundMaterials {
                 .tools(0, 1.0F, 1L, 0)
                 .composition(
                         10L,
-                        new MaterialDefinition.Part("Pyrite", 3243240000L),
-                        new MaterialDefinition.Part("Mercury", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
-                        new MaterialDefinition.Part("Ruby", 648648000L))
+                        new MaterialInfoDefinition.Part("Pyrite", 3243240000L),
+                        new MaterialInfoDefinition.Part("Mercury", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialInfoDefinition.Part("Ruby", 648648000L))
                 .byproducts("Cinnabar", "RareEarth", "Glowstone")
                 .multipliers(4, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -9317,8 +9318,8 @@ public final class CompoundMaterials {
                 .source("EnderIO", "Ender IO")
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Silicon", 648648000L),
-                        new MaterialDefinition.Part("Redstone", 648648000L))
+                        new MaterialInfoDefinition.Part("Silicon", 648648000L),
+                        new MaterialInfoDefinition.Part("Redstone", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -9336,7 +9337,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part20(List<MaterialDefinition> result) {
+    private static void part20(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8406, "RedVitriol")
                 .displayName("Red Vitriol")
                 .color(0xDE4242)
@@ -9357,9 +9358,9 @@ public final class CompoundMaterials {
                 .localName("Red Vitriol")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Cobalt", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Cobalt", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8602, "RoseGold")
@@ -9400,8 +9401,8 @@ public final class CompoundMaterials {
                 .tools(3, 14.0F, 128L, 2)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Copper", 648648000L),
-                        new MaterialDefinition.Part("Gold", 2594592000L))
+                        new MaterialInfoDefinition.Part("Copper", 648648000L),
+                        new MaterialInfoDefinition.Part("Gold", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -9449,8 +9450,8 @@ public final class CompoundMaterials {
                 .smelting("Rubber", 432432000L)
                 .composition(
                         13L,
-                        new MaterialDefinition.Part("Carbon", 3243240000L),
-                        new MaterialDefinition.Part("Hydrogen", 5189184000L))
+                        new MaterialInfoDefinition.Part("Carbon", 3243240000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 5189184000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -9499,8 +9500,8 @@ public final class CompoundMaterials {
                 .smelting("Alumina", 486486000L)
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Chromium", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Chromium", 648648000L))
                 .byproducts("Alumina", "OrangeSapphire", "GreenSapphire", "BlueSapphire")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -9569,7 +9570,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 512L, 3)
                 .smelting("Alumina", 486486000L)
-                .composition(6L, new MaterialDefinition.Part("Alumina", 3243240000L))
+                .composition(6L, new MaterialInfoDefinition.Part("Alumina", 3243240000L))
                 .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -9587,8 +9588,8 @@ public final class CompoundMaterials {
                 .localName("Sea Water")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9872, "SeedOil")
@@ -9619,9 +9620,9 @@ public final class CompoundMaterials {
                 .localName("Semiheavy Water")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 648648000L),
-                        new MaterialDefinition.Part("Deuterium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Deuterium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("HDO")
                 .build());
@@ -9662,9 +9663,9 @@ public final class CompoundMaterials {
                 .source("ThermalExpansion", "Thermal Expansion")
                 .composition(
                         8L,
-                        new MaterialDefinition.Part("Copper", 648648000L),
-                        new MaterialDefinition.Part("Silver", 1297296000L),
-                        new MaterialDefinition.Part("RedAlloy", 3243240000L))
+                        new MaterialInfoDefinition.Part("Copper", 648648000L),
+                        new MaterialInfoDefinition.Part("Silver", 1297296000L),
+                        new MaterialInfoDefinition.Part("RedAlloy", 3243240000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -9716,7 +9717,7 @@ public final class CompoundMaterials {
                 .source("Botania", "Botania")
                 .tools(1, 2.5F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -9742,8 +9743,8 @@ public final class CompoundMaterials {
                 .smelting("Water", 648648000L)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8331, "Sodalite")
@@ -9773,17 +9774,17 @@ public final class CompoundMaterials {
                 .localName("Sodalite")
                 .composition(
                         11L,
-                        new MaterialDefinition.Part("Alumina", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
-                        new MaterialDefinition.Part("Sodium", 2594592000L),
-                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialInfoDefinition.Part("Sodium", 2594592000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 648648000L))
                 .byproducts("Lazurite", "Lapis")
                 .multipliers(5, 1)
                 .forms("ARMORS", "DENSEPLATES", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part21(List<MaterialDefinition> result) {
+    private static void part21(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8012, "SodiumAluminate")
                 .displayName("Sodium Aluminate")
                 .color(0xE6E6FA)
@@ -9803,9 +9804,9 @@ public final class CompoundMaterials {
                 .localName("Sodium Aluminate")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Sodium", 648648000L),
-                        new MaterialDefinition.Part("Aluminium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Sodium", 648648000L),
+                        new MaterialInfoDefinition.Part("Aluminium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("NaAlO2")
                 .build());
@@ -9829,10 +9830,10 @@ public final class CompoundMaterials {
                 .source("ihl", "IHL")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Sodium", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Sodium", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("NaHSO4")
                 .build());
@@ -9855,8 +9856,8 @@ public final class CompoundMaterials {
                 .localName("Sodium Carbonate")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Sodium", 1297296000L),
-                        new MaterialDefinition.Part("CarbonTrioxide", 2594592000L))
+                        new MaterialInfoDefinition.Part("Sodium", 1297296000L),
+                        new MaterialInfoDefinition.Part("CarbonTrioxide", 2594592000L))
                 .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
                 .aliases("Na2CO3")
                 .build());
@@ -9880,8 +9881,8 @@ public final class CompoundMaterials {
                 .localName("Sodium Fluoride")
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Sodium", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                        new MaterialInfoDefinition.Part("Sodium", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("NaF")
                 .build());
@@ -9906,9 +9907,9 @@ public final class CompoundMaterials {
                 .source("ihl", "IHL")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Sodium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                        new MaterialInfoDefinition.Part("Sodium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("NaOH")
                 .build());
@@ -9931,9 +9932,9 @@ public final class CompoundMaterials {
                 .localName("SodiumPersulphate")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Sodium", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Sodium", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("NaSO4")
                 .build());
@@ -9956,9 +9957,9 @@ public final class CompoundMaterials {
                 .localName("SodiumPyrosulphate")
                 .composition(
                         11L,
-                        new MaterialDefinition.Part("Sodium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                        new MaterialInfoDefinition.Part("Sodium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 4540536000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("Na2S2O7")
                 .build());
@@ -9981,9 +9982,9 @@ public final class CompoundMaterials {
                 .localName("SodiumSulphate")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Sodium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Sodium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("Na2SO4")
                 .build());
@@ -10006,8 +10007,8 @@ public final class CompoundMaterials {
                 .localName("SodiumSulphide")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Sodium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                        new MaterialInfoDefinition.Part("Sodium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("Na2S")
                 .build());
@@ -10030,9 +10031,9 @@ public final class CompoundMaterials {
                 .localName("SodiumSulphite")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Sodium", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Sodium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("Na2SO3")
                 .build());
@@ -10073,8 +10074,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         10L,
-                        new MaterialDefinition.Part("Tin", 5837832000L),
-                        new MaterialDefinition.Part("Antimony", 648648000L))
+                        new MaterialInfoDefinition.Part("Tin", 5837832000L),
+                        new MaterialInfoDefinition.Part("Antimony", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10128,8 +10129,8 @@ public final class CompoundMaterials {
                 .tools(3, 15.0F, 128L, 2)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Soulsand", 5837832000L),
-                        new MaterialDefinition.Part("Gold", 648648000L))
+                        new MaterialInfoDefinition.Part("Soulsand", 5837832000L),
+                        new MaterialInfoDefinition.Part("Gold", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10187,10 +10188,10 @@ public final class CompoundMaterials {
                 .smelting("Spessartine", 0L)
                 .composition(
                         20L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Manganese", 1945944000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Manganese", 1945944000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .byproducts("Almandine", "Grossular", "Pyrope", "Andradite", "Uvarovite")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -10222,15 +10223,15 @@ public final class CompoundMaterials {
                 .smelting("Spinel", 0L)
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Magnesium", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .byproducts("Alumina", "BalasRuby")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part22(List<MaterialDefinition> result) {
+    private static void part22(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8636, "StainlessSteel")
                 .displayName("Stainless Steel")
                 .color(0xC8C8DC)
@@ -10270,10 +10271,10 @@ public final class CompoundMaterials {
                 .tools(3, 7.0F, 480L, 2)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("WroughtIron", 2594592000L),
-                        new MaterialDefinition.Part("Invar", 1945944000L),
-                        new MaterialDefinition.Part("Chromium", 648648000L),
-                        new MaterialDefinition.Part("Manganese", 648648000L))
+                        new MaterialInfoDefinition.Part("WroughtIron", 2594592000L),
+                        new MaterialInfoDefinition.Part("Invar", 1945944000L),
+                        new MaterialInfoDefinition.Part("Chromium", 648648000L),
+                        new MaterialInfoDefinition.Part("Manganese", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10311,8 +10312,8 @@ public final class CompoundMaterials {
                 .localName("Stannic Chloride")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Tin", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 2594592000L))
+                        new MaterialInfoDefinition.Part("Tin", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9814, "Steam")
@@ -10333,8 +10334,8 @@ public final class CompoundMaterials {
                 .localName("Steam")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8630, "Steel")
@@ -10374,7 +10375,7 @@ public final class CompoundMaterials {
                 .localName("Steel")
                 .source("Railcraft", "Railcraft")
                 .tools(3, 6.0F, 512L, 2)
-                .composition(1L, new MaterialDefinition.Part("WroughtIron", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("WroughtIron", 648648000L))
                 .byproducts("Hematite")
                 .forms(
                         "ARMORS",
@@ -10433,8 +10434,8 @@ public final class CompoundMaterials {
                 .smelting("Steel", 162162000L)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Steel", 648648000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 648648000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10489,8 +10490,8 @@ public final class CompoundMaterials {
                 .smelting("Steel", 648648000L)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Steel", 5837832000L),
-                        new MaterialDefinition.Part("Zinc", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 5837832000L),
+                        new MaterialInfoDefinition.Part("Zinc", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10545,7 +10546,7 @@ public final class CompoundMaterials {
                 .tools(3, 6.0F, 512L, 2)
                 .smelting("Steel", 648648000L)
                 .pulverizing("Steel", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Steel", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Steel", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10602,8 +10603,8 @@ public final class CompoundMaterials {
                 .tools(3, 13.0F, 128L, 2)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Copper", 648648000L),
-                        new MaterialDefinition.Part("Silver", 2594592000L))
+                        new MaterialInfoDefinition.Part("Copper", 648648000L),
+                        new MaterialInfoDefinition.Part("Silver", 2594592000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10640,9 +10641,9 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .composition(
                         45L,
-                        new MaterialDefinition.Part("Carbon", 7783776000L),
-                        new MaterialDefinition.Part("Hydrogen", 14270256000L),
-                        new MaterialDefinition.Part("Oxygen", 7135128000L))
+                        new MaterialInfoDefinition.Part("Carbon", 7783776000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 14270256000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 7135128000L))
                 .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9824, "SulfuricAcid")
@@ -10666,9 +10667,9 @@ public final class CompoundMaterials {
                 .source("factorization", "Factorization")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("H2SO4")
                 .build());
@@ -10707,7 +10708,7 @@ public final class CompoundMaterials {
                 .source("Botania", "Botania")
                 .tools(1, 2.5F, 32L, 3)
                 .smelting("SiliconDioxide", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .multipliers(2, 1)
                 .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -10781,9 +10782,9 @@ public final class CompoundMaterials {
                 .tools(0, 1.0F, 1L, 2)
                 .composition(
                         10L,
-                        new MaterialDefinition.Part("Tantalum", 2594592000L),
-                        new MaterialDefinition.Part("Hafnium", 648648000L),
-                        new MaterialDefinition.Part("Carbon", 3243240000L))
+                        new MaterialInfoDefinition.Part("Tantalum", 2594592000L),
+                        new MaterialInfoDefinition.Part("Hafnium", 648648000L),
+                        new MaterialInfoDefinition.Part("Carbon", 3243240000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10828,17 +10829,17 @@ public final class CompoundMaterials {
                 .smelting("Tanzanite", 0L)
                 .composition(
                         44L,
-                        new MaterialDefinition.Part("Alumina", 9729720000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
-                        new MaterialDefinition.Part("Calcium", 2594592000L),
-                        new MaterialDefinition.Part("Water", 1945944000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Alumina", 9729720000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialInfoDefinition.Part("Calcium", 2594592000L),
+                        new MaterialInfoDefinition.Part("Water", 1945944000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .byproducts("Opal")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
-    private static void part23(List<MaterialDefinition> result) {
+    private static void part23(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(9792, "Tea")
                 .displayName("Tea")
                 .color(0x64FA64)
@@ -10875,8 +10876,8 @@ public final class CompoundMaterials {
                 .smelting("Teflon", 432432000L)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Carbon", 648648000L),
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L),
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -10981,8 +10982,8 @@ public final class CompoundMaterials {
                 .tools(3, 12.0F, 256L, 3)
                 .composition(
                         1L,
-                        new MaterialDefinition.Part("Iron", 648648000L),
-                        new MaterialDefinition.Part("Magic", 648648000L))
+                        new MaterialInfoDefinition.Part("Iron", 648648000L),
+                        new MaterialInfoDefinition.Part("Magic", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11098,8 +11099,8 @@ public final class CompoundMaterials {
                 .tools(3, 6.5F, 96L, 2)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Tin", 648648000L),
-                        new MaterialDefinition.Part("WroughtIron", 648648000L))
+                        new MaterialInfoDefinition.Part("Tin", 648648000L),
+                        new MaterialInfoDefinition.Part("WroughtIron", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11154,8 +11155,8 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 7680L, 4)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Iridium", 648648000L),
-                        new MaterialDefinition.Part("Titanium", 648648000L))
+                        new MaterialInfoDefinition.Part("Iridium", 648648000L),
+                        new MaterialInfoDefinition.Part("Titanium", 648648000L))
                 .aliases("Iritanium")
                 .build());
         result.add(MaterialDefinition.builder(8413, "TitaniumTetrachloride")
@@ -11178,8 +11179,8 @@ public final class CompoundMaterials {
                 .localName("Titanium Tetrachloride")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Titanium", 648648000L),
-                        new MaterialDefinition.Part("Chlorine", 2594592000L))
+                        new MaterialInfoDefinition.Part("Titanium", 648648000L),
+                        new MaterialInfoDefinition.Part("Chlorine", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("TiCl4")
                 .build());
@@ -11212,10 +11213,10 @@ public final class CompoundMaterials {
                 .smelting("Topaz", 0L)
                 .composition(
                         13L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
-                        new MaterialDefinition.Part("Fluorine", 1297296000L),
-                        new MaterialDefinition.Part("Water", 1945944000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 1297296000L),
+                        new MaterialInfoDefinition.Part("Water", 1945944000L))
                 .byproducts("BlueTopaz")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -11256,9 +11257,9 @@ public final class CompoundMaterials {
                 .tools(3, 14.0F, 20480L, 5)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Trinium", 3891888000L),
-                        new MaterialDefinition.Part("Naquadah", 1297296000L),
-                        new MaterialDefinition.Part("Carbon", 648648000L))
+                        new MaterialInfoDefinition.Part("Trinium", 3891888000L),
+                        new MaterialInfoDefinition.Part("Naquadah", 1297296000L),
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11313,8 +11314,8 @@ public final class CompoundMaterials {
                 .tools(3, 16.0F, 5120L, 4)
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Trinium", 1297296000L),
-                        new MaterialDefinition.Part("Titanium", 648648000L))
+                        new MaterialInfoDefinition.Part("Trinium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Titanium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11369,8 +11370,8 @@ public final class CompoundMaterials {
                 .tools(3, 12.0F, 2560L, 5)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("TritaniumElemental", 1945944000L),
-                        new MaterialDefinition.Part("DuraniumElemental", 648648000L))
+                        new MaterialInfoDefinition.Part("TritaniumElemental", 1945944000L),
+                        new MaterialInfoDefinition.Part("DuraniumElemental", 648648000L))
                 .byproducts("DiduraniumTrioxide", "Trinium")
                 .forms(
                         "ARMORS",
@@ -11402,8 +11403,8 @@ public final class CompoundMaterials {
                 .localName("Tritiated Water")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Tritium", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Tritium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("T2O")
                 .build());
@@ -11446,8 +11447,8 @@ public final class CompoundMaterials {
                 .tools(3, 10.0F, 5120L, 4)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Tungsten", 648648000L),
-                        new MaterialDefinition.Part("Carbon", 648648000L))
+                        new MaterialInfoDefinition.Part("Tungsten", 648648000L),
+                        new MaterialInfoDefinition.Part("Carbon", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11466,7 +11467,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part24(List<MaterialDefinition> result) {
+    private static void part24(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8652, "TungstenSintered")
                 .displayName("TungstenSintered")
                 .color(0x464646)
@@ -11502,7 +11503,7 @@ public final class CompoundMaterials {
                 .localName("TungstenSintered")
                 .source("RotaryCraft", "RotaryCraft")
                 .tools(3, 8.0F, 5120L, 3)
-                .composition(1L, new MaterialDefinition.Part("Tungsten", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Tungsten", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11560,8 +11561,8 @@ public final class CompoundMaterials {
                 .tools(3, 10.0F, 5120L, 4)
                 .composition(
                         2L,
-                        new MaterialDefinition.Part("Steel", 648648000L),
-                        new MaterialDefinition.Part("Tungsten", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 648648000L),
+                        new MaterialInfoDefinition.Part("Tungsten", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11603,9 +11604,9 @@ public final class CompoundMaterials {
                 .smelting("TungstenTrioxide", 370656000L)
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Tungsten", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Tungsten", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("DUSTS", "PLANTS")
                 .aliases("H2WO4")
                 .build());
@@ -11647,10 +11648,10 @@ public final class CompoundMaterials {
                 .tools(3, 8.0F, 1024L, 3)
                 .composition(
                         9L,
-                        new MaterialDefinition.Part("Cobalt", 3243240000L),
-                        new MaterialDefinition.Part("Nickel", 648648000L),
-                        new MaterialDefinition.Part("Chromium", 1297296000L),
-                        new MaterialDefinition.Part("Molybdenum", 648648000L))
+                        new MaterialInfoDefinition.Part("Cobalt", 3243240000L),
+                        new MaterialInfoDefinition.Part("Nickel", 648648000L),
+                        new MaterialInfoDefinition.Part("Chromium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Molybdenum", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11681,8 +11682,8 @@ public final class CompoundMaterials {
                 .localName("Uranium-235 Hexafluoride")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Uranium235", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                        new MaterialInfoDefinition.Part("Uranium235", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 3891888000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("U235F6")
                 .build());
@@ -11704,8 +11705,8 @@ public final class CompoundMaterials {
                 .localName("Uranium-235 Tetrafluoride")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Uranium235", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 2594592000L))
+                        new MaterialInfoDefinition.Part("Uranium235", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 2594592000L))
                 .forms("DUSTS", "MOLTEN", "PLANTS")
                 .aliases("U235F4")
                 .build());
@@ -11723,8 +11724,8 @@ public final class CompoundMaterials {
                 .localName("Uranium-238 Hexafluoride")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Uranium", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                        new MaterialInfoDefinition.Part("Uranium", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 3891888000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("U238F6")
                 .build());
@@ -11746,8 +11747,8 @@ public final class CompoundMaterials {
                 .localName("Uranium-238 Tetrafluoride")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Uranium", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 2594592000L))
+                        new MaterialInfoDefinition.Part("Uranium", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 2594592000L))
                 .forms("DUSTS", "MOLTEN", "PLANTS")
                 .aliases("U238F4")
                 .build());
@@ -11765,8 +11766,8 @@ public final class CompoundMaterials {
                 .localName("Uranium Hexafluoride")
                 .composition(
                         7L,
-                        new MaterialDefinition.Part("Uranium", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                        new MaterialInfoDefinition.Part("Uranium", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 3891888000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("UF6")
                 .build());
@@ -11788,8 +11789,8 @@ public final class CompoundMaterials {
                 .localName("Uranium Tetrafluoride")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Uranium", 648648000L),
-                        new MaterialDefinition.Part("Fluorine", 2594592000L))
+                        new MaterialInfoDefinition.Part("Uranium", 648648000L),
+                        new MaterialInfoDefinition.Part("Fluorine", 2594592000L))
                 .forms("DUSTS", "MOLTEN", "PLANTS")
                 .aliases("UF4")
                 .build());
@@ -11822,10 +11823,10 @@ public final class CompoundMaterials {
                 .smelting("Uvarovite", 0L)
                 .composition(
                         20L,
-                        new MaterialDefinition.Part("Calcium", 1945944000L),
-                        new MaterialDefinition.Part("Chromium", 1297296000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
-                        new MaterialDefinition.Part("Oxygen", 3891888000L))
+                        new MaterialInfoDefinition.Part("Calcium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Chromium", 1297296000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 3891888000L))
                 .byproducts("Almandine", "Grossular", "Pyrope", "Spessartine", "Andradite")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -11866,8 +11867,8 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Vanadium", 1945944000L),
-                        new MaterialDefinition.Part("Gallium", 648648000L))
+                        new MaterialInfoDefinition.Part("Vanadium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Gallium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11919,8 +11920,8 @@ public final class CompoundMaterials {
                 .tools(3, 7.0F, 512L, 3)
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Steel", 2594592000L),
-                        new MaterialDefinition.Part("Vanadium", 648648000L))
+                        new MaterialInfoDefinition.Part("Steel", 2594592000L),
+                        new MaterialInfoDefinition.Part("Vanadium", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -11975,8 +11976,8 @@ public final class CompoundMaterials {
                 .tools(3, 1000.0F, 5120L, 15)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Vibranium", 648648000L),
-                        new MaterialDefinition.Part("Adamantium", 1945944000L))
+                        new MaterialInfoDefinition.Part("Vibranium", 648648000L),
+                        new MaterialInfoDefinition.Part("Adamantium", 1945944000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -12030,8 +12031,8 @@ public final class CompoundMaterials {
                 .tools(3, 100.0F, 512L, 9)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Vibranium", 648648000L),
-                        new MaterialDefinition.Part("Silver", 1945944000L))
+                        new MaterialInfoDefinition.Part("Vibranium", 648648000L),
+                        new MaterialInfoDefinition.Part("Silver", 1945944000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -12048,7 +12049,7 @@ public final class CompoundMaterials {
                 .build());
     }
 
-    private static void part25(List<MaterialDefinition> result) {
+    private static void part25(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8704, "VibraniumSteel")
                 .displayName("Vibranium Steel")
                 .color(0x281832)
@@ -12087,8 +12088,8 @@ public final class CompoundMaterials {
                 .tools(3, 50.0F, 2048L, 10)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Vibranium", 648648000L),
-                        new MaterialDefinition.Part("Steel", 1945944000L))
+                        new MaterialInfoDefinition.Part("Vibranium", 648648000L),
+                        new MaterialInfoDefinition.Part("Steel", 1945944000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -12174,9 +12175,9 @@ public final class CompoundMaterials {
                 .localName("Vitriol Of Clay")
                 .composition(
                         17L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Sulfur", 1945944000L),
-                        new MaterialDefinition.Part("Oxygen", 5837832000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 1945944000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 5837832000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9800, "Water")
@@ -12198,8 +12199,8 @@ public final class CompoundMaterials {
                 .source("minecraft", "Minecraft")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .aliases("H2O")
                 .processing("Solidifying", "Ice", 648648000L)
@@ -12223,8 +12224,8 @@ public final class CompoundMaterials {
                 .source("IC2", "IndustrialCraft 2")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
-                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                        new MaterialInfoDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .aliases("DistWater")
                 .build());
@@ -12378,8 +12379,8 @@ public final class CompoundMaterials {
                 .source("hbm", "HBM's Nuclear Tech Mod")
                 .composition(
                         5L,
-                        new MaterialDefinition.Part("Calcium", 1945944000L),
-                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                        new MaterialInfoDefinition.Part("Calcium", 1945944000L),
+                        new MaterialInfoDefinition.Part("Phosphate", 1297296000L))
                 .byproducts("Phosphorite", "Apatite", "WhiteFluorite", "Phosphate", "RedPhosphorus", "BluePhosphorus")
                 .multipliers(3, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -12405,9 +12406,9 @@ public final class CompoundMaterials {
                 .localName("White Vitriol")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Zinc", 648648000L),
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                        new MaterialInfoDefinition.Part("Zinc", 648648000L),
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 2594592000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8447, "YellowAventurine")
@@ -12468,14 +12469,14 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 8.0F, 1280L, 3)
                 .smelting("Carbon", 1297296000L)
-                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Carbon", 2594592000L))
                 .byproducts("Graphite", "Diamond")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("DiamondYellow")
                 .build());
     }
 
-    private static void part26(List<MaterialDefinition> result) {
+    private static void part26(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8442, "YellowFluorite")
                 .displayName("Yellow Fluorite")
                 .color(0xCEB650)
@@ -12566,8 +12567,8 @@ public final class CompoundMaterials {
                 .smelting("Alumina", 486486000L)
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Alumina", 3243240000L),
-                        new MaterialDefinition.Part("Rutile", 648648000L))
+                        new MaterialInfoDefinition.Part("Alumina", 3243240000L),
+                        new MaterialInfoDefinition.Part("Rutile", 648648000L))
                 .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -12608,10 +12609,10 @@ public final class CompoundMaterials {
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Yttrium", 648648000L),
-                        new MaterialDefinition.Part("Barium", 1297296000L),
-                        new MaterialDefinition.Part("Copper", 1945944000L),
-                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                        new MaterialInfoDefinition.Part("Yttrium", 648648000L),
+                        new MaterialInfoDefinition.Part("Barium", 1297296000L),
+                        new MaterialInfoDefinition.Part("Copper", 1945944000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 4540536000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",
@@ -12656,9 +12657,9 @@ public final class CompoundMaterials {
                 .smelting("Zirconium", 72072000L)
                 .composition(
                         6L,
-                        new MaterialDefinition.Part("Zirconium", 648648000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Zirconium", 648648000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .byproducts("Rutile", "Hafnium", "Uraninite")
                 .multipliers(2, 1)
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")

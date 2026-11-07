@@ -2,7 +2,9 @@
 
 package gregtech.api.material;
 
+import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.OreProcessingRule;
 import java.util.List;
 
@@ -12,11 +14,19 @@ public final class OreProcessingMaterialHelper {
 
     public static OreProcessingRule rule(GTMaterial material) {
         if (material == null || !material.isValid()) return new OreProcessingRule(List.of(), 1, 1);
-        List<MaterialKey> byproducts =
-                legacyByproducts(material).stream().map(value -> new MaterialKey(value.resolve().getName())).toList();
+        List<MaterialKey> byproducts = legacyByproducts(material).stream()
+                .map(value -> new MaterialKey(value.resolve().getName()))
+                .toList();
         int oreMultiplier = legacyOreMultiplier(material);
         int processingMultiplier = legacyProcessingMultiplier(material);
         return new OreProcessingRule(byproducts, Math.max(1, oreMultiplier), Math.max(1, processingMultiplier));
+    }
+
+    public static OreProcessingRule rule(MaterialKey material) {
+        var rules = GregTechMaterials.processes().find(material, MaterialProcessKeys.ORE_PROCESSING);
+        return rules.isEmpty()
+                ? new OreProcessingRule(List.of(), 1, 1)
+                : rules.get(0).value();
     }
 
     static List<GTMaterial> legacyByproducts(GTMaterial material) {

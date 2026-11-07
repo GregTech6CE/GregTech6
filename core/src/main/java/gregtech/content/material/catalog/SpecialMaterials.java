@@ -3,6 +3,7 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +13,14 @@ import java.util.List;
 public final class SpecialMaterials {
     private SpecialMaterials() {}
 
-    public static List<MaterialDefinition> definitions() {
-        var result = new ArrayList<MaterialDefinition>();
+    public static List<MaterialDefinition.Declaration> definitions() {
+        var result = new ArrayList<MaterialDefinition.Declaration>();
         part0(result);
         part1(result);
         return List.copyOf(result);
     }
 
-    private static void part0(List<MaterialDefinition> result) {
+    private static void part0(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(4290, "AntiCopper")
                 .displayName("Anti-Copper")
                 .color(0xFFFFFF)
@@ -230,7 +231,7 @@ public final class SpecialMaterials {
                 .build());
     }
 
-    private static void part1(List<MaterialDefinition> result) {
+    private static void part1(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8273, "Porcelain")
                 .displayName("Porcelain")
                 .color(0xEBEBF5)
@@ -252,9 +253,9 @@ public final class SpecialMaterials {
                 .localName("Porcelain")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Ceramic", 1297296000L),
-                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
-                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L))
+                        new MaterialInfoDefinition.Part("Ceramic", 1297296000L),
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialInfoDefinition.Part("PotassiumFeldspar", 648648000L))
                 .forms("DUSTS", "PLANTS", "PLATES")
                 .processing("Compressing", "Porcelain", 0L)
                 .processing("Bending", "Porcelain", 0L)

@@ -13,11 +13,12 @@ public final class SourceMaterialToolStats {
         if (material == null || !material.isValid() || material.resolve() != material || AddonMaterials.owns(material))
             return false;
         var definition = MaterialDefinitions.find(material.getName());
+        var info = MaterialDefinitions.info(material.getName());
         return definition != null
                 && definition.id() == material.getId()
                 && GTMaterialRegistry.get(material.getId()) == material
                 && GTMaterialRegistry.get(material.getName()) == material
-                && definition.correctedToolStats()
-                && definition.tools().equals(MaterialToolHelper.profile(material));
+                && info.tooling().correctedToolStats()
+                && info.toolProfile().equals(MaterialToolHelper.profile(material));
     }
 }

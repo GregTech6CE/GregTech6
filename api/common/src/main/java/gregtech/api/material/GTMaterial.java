@@ -56,22 +56,26 @@ public final class GTMaterial {
     private long toolDurability = 0;
     /** GT6 {@code mFurnaceBurnTime}; HU = value * CS.EU_PER_FURNACE_TICK. */
     private long furnaceBurnTime = 0;
+
     private GTMaterial targetBurningMaterial;
     private long targetBurningAmount = 0;
     /** GT6 {@code mByProducts}; ordered list of ore-processing byproduct materials. */
     private final List<GTMaterial> byProducts = new ArrayList<>();
     /** GT6 {@code mTargetCrushing}; default is (this, U). */
     private GTMaterial targetPulverMaterial;
+
     private long targetPulverAmount = GTValues.U;
     private GTMaterial targetCrushingMaterial;
     private long targetCrushingAmount;
     /** GT6 {@code mTargetSmelting}; default is (this, U). */
     private GTMaterial targetSmeltingMaterial;
+
     private long targetSmeltingAmount;
     /** GT6 {@code mOreMultiplier}; crushed-ore output multiplier. */
     private byte oreMultiplier = 1;
     /** GT6 {@code mOreProcessingMultiplier}. */
     private byte oreProcessingMultiplier = 1;
+
     private final Set<MaterialProperty> properties = EnumSet.noneOf(MaterialProperty.class);
     private final Set<GTMaterial> reRegistrations = new HashSet<>();
     private final Set<GTMaterial> aliasesToThis = new HashSet<>();
@@ -102,12 +106,29 @@ public final class GTMaterial {
         return id;
     }
 
-    public AtomicProperties getAtomicProperties() { return atomicProperties; }
-    public long getProtons() { return atomicProperties.protons(); }
-    public long getElectrons() { return atomicProperties.electrons(); }
-    public long getNeutrons() { return atomicProperties.neutrons(); }
-    public long getMass() { return atomicProperties.mass(); }
-    public int getAlpha() { return alpha; }
+    public AtomicProperties getAtomicProperties() {
+        return atomicProperties;
+    }
+
+    public long getProtons() {
+        return atomicProperties.protons();
+    }
+
+    public long getElectrons() {
+        return atomicProperties.electrons();
+    }
+
+    public long getNeutrons() {
+        return atomicProperties.neutrons();
+    }
+
+    public long getMass() {
+        return atomicProperties.mass();
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
 
     public GTMaterial setAtomicProperties(AtomicProperties value) {
         checkMutable();
@@ -187,7 +208,8 @@ public final class GTMaterial {
         return furnaceBurnTime;
     }
 
-    @Nullable GTMaterial rawTargetBurningMaterial() {
+    @Nullable
+    GTMaterial rawTargetBurningMaterial() {
         return targetBurningMaterial == null ? null : targetBurningMaterial.resolve();
     }
 
@@ -326,6 +348,11 @@ public final class GTMaterial {
         return toolTypes > 0;
     }
 
+    /** Read-only shortcut over the tool index; legacy fields are only a pre-freeze compatibility source. */
+    public MaterialToolProfile tool() {
+        return MaterialToolHelper.profile(this);
+    }
+
     public Set<MaterialProperty> getProperties() {
         return Collections.unmodifiableSet(properties);
     }
@@ -448,9 +475,8 @@ public final class GTMaterial {
         List<MaterialComponent> resolved = new ArrayList<>(compositionComponents.size());
         for (MaterialComponent component : compositionComponents) {
             GTMaterial material = component.material().resolve();
-            resolved.add(material == component.material()
-                    ? component
-                    : new MaterialComponent(material, component.amount()));
+            resolved.add(
+                    material == component.material() ? component : new MaterialComponent(material, component.amount()));
         }
         return List.copyOf(resolved);
     }
@@ -517,8 +543,11 @@ public final class GTMaterial {
     @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setToolQuality(int toolQuality) {
         checkMutable();
-        return setToolStats(Math.max(0, Math.min(3, this.toolTypes)), this.toolSpeed,
-                Math.max(1L, this.toolDurability), Math.max(0, Math.min(15, toolQuality)));
+        return setToolStats(
+                Math.max(0, Math.min(3, this.toolTypes)),
+                this.toolSpeed,
+                Math.max(1L, this.toolDurability),
+                Math.max(0, Math.min(15, toolQuality)));
     }
 
     /** GT6 {@code setFurnaceBurnTime}; a negative value is stored as zero. */

@@ -9,9 +9,16 @@ public interface MaterialCatalogView {
     long revision();
     /** Resolves existing names and aliases to real materials; groups and sentinels return empty. */
     java.util.Optional<MaterialKey> resolve(String name);
+
     MaterialTagsView tags();
+
     java.util.Optional<MaterialView> find(MaterialKey key);
+
     java.util.List<MaterialView> materials();
+    /** Immutable definition-time item-form rules. */
+    default MaterialFormRulesView forms() {
+        throw new UnsupportedOperationException("This material catalog does not expose form rules");
+    }
     /** Immutable process rules captured with this definition view. */
     default MaterialProcessesView processes() {
         throw new UnsupportedOperationException("This material catalog does not expose process views");

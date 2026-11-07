@@ -19,64 +19,98 @@ public interface AddonMaterialContributor {
     String addonId();
 
     /** Materials this addon declares. Defaults to none, so declaration-only contributors can skip it. */
-    default List<MaterialDeclaration> materials() { return List.of(); }
+    default List<MaterialDeclaration> materials() {
+        return List.of();
+    }
 
     /** Item forms to register for this addon's materials. Defaults to none. */
-    default List<MaterialFormRequest> forms() { return List.of(); }
+    default List<MaterialFormRequest> forms() {
+        return List.of();
+    }
 
     /**
      * Item prefixes this addon adds. GregTech registers them after the built-in prefixes.
      * A name that already exists fails startup. Return pure data.
      */
-    default List<PrefixDeclaration> prefixes() { return List.of(); }
+    default List<PrefixDeclaration> prefixes() {
+        return List.of();
+    }
 
     /**
      * Compositions of this addon's own materials. Resolved after the built-in directory has linked.
      * A {@code crucible} composition also becomes one crucible reaction.
      */
-    default List<MaterialComposition> compositions() { return List.of(); }
+    default List<MaterialComposition> compositions() {
+        return List.of();
+    }
 
     /** Smelting results for this addon's own materials. Omitted materials still melt into themselves. */
-    default List<SmeltingTargetDeclaration> smeltingTargets() { return List.of(); }
+    default List<SmeltingTargetDeclaration> smeltingTargets() {
+        return List.of();
+    }
 
     /**
      * Crucible smelting targets to drop, including built-in ones. Applied after every addon's
      * smelting targets. Use this for ores that must not melt into a metal.
      */
-    default List<SmeltingTargetRemoval> smeltingTargetRemovals() { return List.of(); }
+    default List<SmeltingTargetRemoval> smeltingTargetRemovals() {
+        return List.of();
+    }
 
     /** Explicit crucible alloy rows, in addition to composition-derived rows. */
-    default List<CrucibleReactionDeclaration> crucibleReactions() { return List.of(); }
+    default List<CrucibleReactionDeclaration> crucibleReactions() {
+        return List.of();
+    }
 
     /**
      * Crucible rows to drop, applied after every addon's additions.
      * An empty input list drops every row of that output. A miss warns and does not fail startup.
      */
-    default List<CrucibleReactionRemoval> crucibleRemovals() { return List.of(); }
+    default List<CrucibleReactionRemoval> crucibleRemovals() {
+        return List.of();
+    }
 
     /**
      * Large ore veins. GregTech appends them after the built-in veins of the same dimension.
      * A name that already exists in that dimension fails startup. Return pure data.
      */
-    default List<OreVeinDeclaration> oreVeins() { return List.of(); }
+    default List<OreVeinDeclaration> oreVeins() {
+        return List.of();
+    }
 
     /**
      * Small ores. GregTech appends them after the built-in small ores of the same dimension.
      * A name that already exists in that dimension fails startup. Return pure data.
      */
-    default List<SmallOreDeclaration> smallOres() { return List.of(); }
+    default List<SmallOreDeclaration> smallOres() {
+        return List.of();
+    }
 
     /** Immutable descriptive metadata; default empty preserves existing contributors. */
-    default List<MaterialMetadataDeclaration> metadata() { return List.of(); }
+    default List<MaterialMetadataDeclaration> metadata() {
+        return List.of();
+    }
 
     /** Descriptive tag declarations owned by this addon. Defaults to none. */
-    default List<MaterialTagDeclaration> materialTags() { return List.of(); }
+    default List<MaterialTagDeclaration> materialTags() {
+        return List.of();
+    }
 
     /** Substitution group declarations owned by this addon. Defaults to none. */
-    default List<MaterialGroupDeclaration> materialGroups() { return List.of(); }
+    default List<MaterialGroupDeclaration> materialGroups() {
+        return List.of();
+    }
 
     /** Typed, addon-namespaced process rules. Defaults to none. */
-    default List<MaterialProcessDeclaration<?>> processes() { return List.of(); }
+    default List<MaterialProcessDeclaration<?>> processes() {
+        return List.of();
+    }
+
+    /**
+     * Typed auxiliary registration for this material session. The registrar is owned by
+     * {@link #addonId()} and closes when material definitions are frozen.
+     */
+    default void materialInfo(MaterialInfoTool.Registrar registrar) {}
 
     /** Other cross-material links. New materials still belong in {@link #materials()}. */
     default void link() {}

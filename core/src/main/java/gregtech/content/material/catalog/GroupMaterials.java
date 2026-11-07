@@ -11,8 +11,8 @@ import java.util.List;
 public final class GroupMaterials {
     private GroupMaterials() {}
 
-    public static List<MaterialDefinition> definitions() {
-        var result = new ArrayList<MaterialDefinition>();
+    public static List<MaterialDefinition.Declaration> definitions() {
+        var result = new ArrayList<MaterialDefinition.Declaration>();
         part0(result);
         part1(result);
         part2(result);
@@ -20,7 +20,7 @@ public final class GroupMaterials {
         return List.copyOf(result);
     }
 
-    private static void part0(List<MaterialDefinition> result) {
+    private static void part0(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(-1, "AnyAmber")
                 .displayName("AnyAmber")
                 .color(0xFFFFFF)
@@ -260,7 +260,7 @@ public final class GroupMaterials {
                 .build());
     }
 
-    private static void part1(List<MaterialDefinition> result) {
+    private static void part1(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(-1, "AnyEmerald")
                 .displayName("AnyEmerald")
                 .color(0xFFFFFF)
@@ -477,7 +477,7 @@ public final class GroupMaterials {
                 .build());
     }
 
-    private static void part2(List<MaterialDefinition> result) {
+    private static void part2(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(-1, "AnyNormalWood")
                 .displayName("AnyNormalWood")
                 .color(0xFFFFFF)
@@ -711,7 +711,7 @@ public final class GroupMaterials {
                 .build());
     }
 
-    private static void part3(List<MaterialDefinition> result) {
+    private static void part3(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(-1, "AnyTreatedWood")
                 .displayName("AnyTreatedWood")
                 .color(0xFFFFFF)

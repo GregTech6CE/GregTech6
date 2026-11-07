@@ -4,12 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonMaterials;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /** Compatibility query facade over canonical form facts, migrated from the GT6 MT/TD import. */
@@ -18,7 +13,39 @@ public final class MaterialForms {
 
     /** Flags in {@code TD.java} order. */
     public static final List<String> FLAGS = List.of(
-            "ARMORS", "CONTAINERS", "CONTAINERS_FLUID", "CONTAINERS_GAS", "CONTAINERS_PLASMA", "CONTAINERS_SOLID", "DENSEPLATES", "DIRTY_DUSTS", "DUSTS", "EMPTY", "FOILS", "GASES", "GEMS", "INGOTS", "INGOTS_HOT", "LENSES", "LIQUID", "MOLTEN", "MULTIINGOTS", "MULTIPLATES", "ORES", "PARTS", "PIPES", "PLANTS", "PLASMA", "PLATES", "PROJECTILES", "RAILS", "STICKS", "TOOLS", "VAPORS", "WEAPONS", "WIRES");
+            "ARMORS",
+            "CONTAINERS",
+            "CONTAINERS_FLUID",
+            "CONTAINERS_GAS",
+            "CONTAINERS_PLASMA",
+            "CONTAINERS_SOLID",
+            "DENSEPLATES",
+            "DIRTY_DUSTS",
+            "DUSTS",
+            "EMPTY",
+            "FOILS",
+            "GASES",
+            "GEMS",
+            "INGOTS",
+            "INGOTS_HOT",
+            "LENSES",
+            "LIQUID",
+            "MOLTEN",
+            "MULTIINGOTS",
+            "MULTIPLATES",
+            "ORES",
+            "PARTS",
+            "PIPES",
+            "PLANTS",
+            "PLASMA",
+            "PLATES",
+            "PROJECTILES",
+            "RAILS",
+            "STICKS",
+            "TOOLS",
+            "VAPORS",
+            "WEAPONS",
+            "WIRES");
 
     /** One line per material: {@code <GT6 id or normalised name>|<FLAG>,<FLAG>,…}. */
     /** Canonical per-material form facts; no ID-first/name-fallback import at runtime. */
@@ -27,7 +54,7 @@ public final class MaterialForms {
         if (material == MaterialSentinels.EMPTY) return Set.of("EMPTY");
         var definition = MaterialDefinitions.find(material.getName());
         if (definition == null || definition.id() != material.getId()) return Set.of();
-        return definition.forms();
+        return MaterialDefinitions.info(material.getName()).relations().forms();
     }
 
     /**
@@ -35,8 +62,7 @@ public final class MaterialForms {
      * An addon material that declared ores also has {@code ORES}. That overlay is not part of the generated table.
      */
     public static boolean has(GTMaterial material, String flag) {
-        if (material != null && "ORES".equals(flag)
-                && AddonMaterials.hasOreForm(material)) return true;
+        if (material != null && "ORES".equals(flag) && AddonMaterials.hasOreForm(material)) return true;
         return of(material).contains(flag);
     }
 
@@ -44,7 +70,7 @@ public final class MaterialForms {
     public static int count(String flag) {
         int total = 0;
         for (var definition : MaterialDefinitions.all())
-            if (definition.forms().contains(flag)) total++;
+            if (MaterialDefinitions.info(definition.name()).relations().forms().contains(flag)) total++;
         return total;
     }
 

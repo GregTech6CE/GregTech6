@@ -3,6 +3,7 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +13,14 @@ import java.util.List;
 public final class StoneMaterials {
     private StoneMaterials() {}
 
-    public static List<MaterialDefinition> definitions() {
-        var result = new ArrayList<MaterialDefinition>();
+    public static List<MaterialDefinition.Declaration> definitions() {
+        var result = new ArrayList<MaterialDefinition.Declaration>();
         part0(result);
         part1(result);
         return List.copyOf(result);
     }
 
-    private static void part0(List<MaterialDefinition> result) {
+    private static void part0(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(9188, "Andesite")
                 .displayName("Andesite")
                 .color(0xBFBFBF)
@@ -67,10 +68,10 @@ public final class StoneMaterials {
                 .tools(1, 3.0F, 32L, 2)
                 .composition(
                         16L,
-                        new MaterialDefinition.Part("Peridot", 648648000L),
-                        new MaterialDefinition.Part("Calcite", 1945944000L),
-                        new MaterialDefinition.Part("Flint", 5189184000L),
-                        new MaterialDefinition.Part("DarkAshes", 2594592000L))
+                        new MaterialInfoDefinition.Part("Peridot", 648648000L),
+                        new MaterialInfoDefinition.Part("Calcite", 1945944000L),
+                        new MaterialInfoDefinition.Part("Flint", 5189184000L),
+                        new MaterialInfoDefinition.Part("DarkAshes", 2594592000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9184, "Blueschist")
@@ -158,7 +159,7 @@ public final class StoneMaterials {
                 .localName("Concrete")
                 .tools(1, 2.5F, 32L, 0)
                 .smelting("Stone", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Stone", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Stone", 648648000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9187, "Dacite")
@@ -316,10 +317,10 @@ public final class StoneMaterials {
                 .tools(1, 3.0F, 32L, 2)
                 .composition(
                         12L,
-                        new MaterialDefinition.Part("Peridot", 648648000L),
-                        new MaterialDefinition.Part("MagnesiumCarbonate", 1297296000L),
-                        new MaterialDefinition.Part("Flint", 3891888000L),
-                        new MaterialDefinition.Part("DarkAshes", 1945944000L))
+                        new MaterialInfoDefinition.Part("Peridot", 648648000L),
+                        new MaterialInfoDefinition.Part("MagnesiumCarbonate", 1297296000L),
+                        new MaterialInfoDefinition.Part("Flint", 3891888000L),
+                        new MaterialInfoDefinition.Part("DarkAshes", 1945944000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9189, "Limestone")
@@ -347,7 +348,7 @@ public final class StoneMaterials {
                 .localName("Limestone")
                 .tools(1, 2.5F, 16L, 1)
                 .smelting("Calcite", 324324000L)
-                .composition(1L, new MaterialDefinition.Part("Calcite", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Calcite", 648648000L))
                 .byproducts("Calcite", "Phosphorite")
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -375,7 +376,7 @@ public final class StoneMaterials {
                 .build());
     }
 
-    private static void part1(List<MaterialDefinition> result) {
+    private static void part1(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(8506, "Marble")
                 .displayName("Marble")
                 .color(0xC8C8C8)
@@ -404,8 +405,8 @@ public final class StoneMaterials {
                 .smelting("Calcite", 432432000L)
                 .composition(
                         8L,
-                        new MaterialDefinition.Part("Magnesium", 648648000L),
-                        new MaterialDefinition.Part("Calcite", 4540536000L))
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L),
+                        new MaterialInfoDefinition.Part("Calcite", 4540536000L))
                 .byproducts("Calcite")
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -549,10 +550,10 @@ public final class StoneMaterials {
                 .tools(1, 3.0F, 32L, 2)
                 .composition(
                         11L,
-                        new MaterialDefinition.Part("Peridot", 1945944000L),
-                        new MaterialDefinition.Part("MagnesiumCarbonate", 1297296000L),
-                        new MaterialDefinition.Part("Flint", 2594592000L),
-                        new MaterialDefinition.Part("DarkAshes", 1297296000L))
+                        new MaterialInfoDefinition.Part("Peridot", 1945944000L),
+                        new MaterialInfoDefinition.Part("MagnesiumCarbonate", 1297296000L),
+                        new MaterialInfoDefinition.Part("Flint", 2594592000L),
+                        new MaterialInfoDefinition.Part("DarkAshes", 1297296000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9180, "Quartzite")
@@ -604,9 +605,9 @@ public final class StoneMaterials {
                 .tools(1, 2.0F, 16L, 0)
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Calcite", 1297296000L),
-                        new MaterialDefinition.Part("MilkyQuartz", 648648000L),
-                        new MaterialDefinition.Part("Clay", 648648000L))
+                        new MaterialInfoDefinition.Part("Calcite", 1297296000L),
+                        new MaterialInfoDefinition.Part("MilkyQuartz", 648648000L),
+                        new MaterialInfoDefinition.Part("Clay", 648648000L))
                 .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8528, "SkyStone")

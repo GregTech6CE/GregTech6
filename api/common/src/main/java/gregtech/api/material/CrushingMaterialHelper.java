@@ -2,7 +2,9 @@
 
 package gregtech.api.material;
 
+import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialTarget;
 import java.util.Optional;
 
@@ -16,6 +18,11 @@ public final class CrushingMaterialHelper {
         long amount = legacyAmount(material);
         if (!target.isValid() || amount <= 0) return Optional.empty();
         return Optional.of(new MaterialTarget(new MaterialKey(target.getName()), amount));
+    }
+
+    public static Optional<MaterialTarget> target(MaterialKey material) {
+        var rules = GregTechMaterials.processes().find(material, MaterialProcessKeys.CRUSHING);
+        return rules.isEmpty() ? Optional.empty() : Optional.of(rules.get(0).value());
     }
 
     static GTMaterial legacyTarget(GTMaterial material) {

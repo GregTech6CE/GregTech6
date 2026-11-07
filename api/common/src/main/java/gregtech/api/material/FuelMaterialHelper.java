@@ -3,7 +3,9 @@
 package gregtech.api.material;
 
 import gregtech.api.addon.material.FuelRule;
+import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialTarget;
 import java.util.Optional;
 import org.jspecify.annotations.Nullable;
@@ -18,9 +20,15 @@ public final class FuelMaterialHelper {
         GTMaterial residue = legacyResidue(material);
         long residueAmount = legacyResidueAmount(material);
         Optional<MaterialTarget> output = residue != null && residue.isValid() && residueAmount > 0
-                ? Optional.of(new MaterialTarget(new MaterialKey(residue.resolve().getName()), residueAmount))
+                ? Optional.of(
+                        new MaterialTarget(new MaterialKey(residue.resolve().getName()), residueAmount))
                 : Optional.empty();
         return burnTime > 0 || output.isPresent() ? Optional.of(new FuelRule(burnTime, output)) : Optional.empty();
+    }
+
+    public static Optional<FuelRule> rule(MaterialKey material) {
+        var rules = GregTechMaterials.processes().find(material, MaterialProcessKeys.FUEL);
+        return rules.isEmpty() ? Optional.empty() : Optional.of(rules.get(0).value());
     }
 
     static long legacyBurnTime(GTMaterial material) {

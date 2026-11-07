@@ -3,6 +3,8 @@
 package gregtech.api.addon.material;
 
 import gregtech.api.addon.AddonRuntime;
+import gregtech.api.material.MaterialToolHelper;
+import gregtech.api.material.MaterialToolProfile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,24 +17,43 @@ public final class GregTechMaterials {
     private GregTechMaterials() {}
 
     /** The named material, or {@link #invalid()} when the name is unknown. Never null. */
-    public static Material find(String name) { return AddonRuntime.services().materials().find(name); }
+    public static Material find(String name) {
+        return AddonRuntime.services().materials().find(name);
+    }
 
-    public static Material find(int id) { return AddonRuntime.services().materials().find(id); }
+    public static Material find(int id) {
+        return AddonRuntime.services().materials().find(id);
+    }
 
     /** The sentinel returned for an unknown name or id. {@link Material#valid()} is false. */
-    public static Material invalid() { return AddonRuntime.services().materials().invalid(); }
+    public static Material invalid() {
+        return AddonRuntime.services().materials().invalid();
+    }
 
-    public static Iterable<Material> all() { return AddonRuntime.services().materials().all(); }
+    public static Iterable<Material> all() {
+        return AddonRuntime.services().materials().all();
+    }
 
     /** Immutable definition view. Requires a host supporting API 1.5 and completed material bootstrap. */
-    public static MaterialCatalogView catalog() { return AddonRuntime.services().materials().catalog(); }
+    public static MaterialCatalogView catalog() {
+        return AddonRuntime.services().materials().catalog();
+    }
 
     /** Immutable process rules from the current definition view. */
-    public static MaterialProcessesView processes() { return catalog().processes(); }
+    public static MaterialProcessesView processes() {
+        return catalog().processes();
+    }
+
+    /** Immutable definition-time form rules from the current definition view. */
+    public static MaterialFormRulesView forms() {
+        return catalog().forms();
+    }
 
     public interface Catalog {
         /** Old hosts fail explicitly, preserving source and binary compatibility for implementers. */
-        default MaterialCatalogView catalog() { throw new UnsupportedOperationException("Material definition views require a supporting host"); }
+        default MaterialCatalogView catalog() {
+            throw new UnsupportedOperationException("Material definition views require a supporting host");
+        }
 
         Material find(String name);
 
@@ -46,6 +67,10 @@ public final class GregTechMaterials {
     /** One material after aliases and links have resolved. */
     public interface Material {
         String name();
+
+        default MaterialKey key() {
+            return new MaterialKey(name());
+        }
 
         int id();
 
@@ -75,6 +100,10 @@ public final class GregTechMaterials {
 
         /** Material-table tool durability. Not converted. */
         long toolDurability();
+
+        default MaterialToolProfile tool() {
+            return MaterialToolHelper.profile(key());
+        }
 
         List<Component> composition();
 
@@ -124,13 +153,16 @@ public final class GregTechMaterials {
             if (units == null || units.isEmpty()) return EMPTY;
             var copy = new ArrayList<Component>();
             for (Component unit : units) {
-                if (unit == null || unit.material() == null || unit.material().isEmpty() || unit.amount() <= 0) continue;
+                if (unit == null || unit.material() == null || unit.material().isEmpty() || unit.amount() <= 0)
+                    continue;
                 copy.add(new Component(unit.material(), unit.amount()));
             }
             if (copy.isEmpty()) return EMPTY;
             return new StackComposition(prefix, copy);
         }
 
-        public boolean present() { return !units.isEmpty(); }
+        public boolean present() {
+            return !units.isEmpty();
+        }
     }
 }

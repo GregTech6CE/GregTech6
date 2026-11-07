@@ -4,9 +4,11 @@ import gregtech.api.addon.*;
 import gregtech.api.addon.AddonRuntime;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialCatalogView;
+import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialInfoRegistry;
 import gregtech.engine.material.MaterialViews;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public final class AddonCoreServices {
 
     public static void bind() {
         AddonRuntime.bind(new Services());
+        MaterialInfoTool.bindHost(MaterialInfoRegistry.host());
     }
 
     private static final class Services implements AddonRuntime.Services {
@@ -122,17 +125,17 @@ public final class AddonCoreServices {
 
         @Override
         public int toolQuality() {
-            return material.getToolQuality();
+            return material.tool().quality();
         }
 
         @Override
         public float toolSpeed() {
-            return material.getToolSpeed();
+            return material.tool().speed();
         }
 
         @Override
         public long toolDurability() {
-            return material.getToolDurability();
+            return material.tool().durability();
         }
 
         @Override

@@ -5,6 +5,7 @@ import gregtech.api.material.*;
 import gregtech.api.mod.ModData;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.content.material.Materials;
+import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public final class MaterialLifecycleProbe {
 
     public static void main(String[] args) throws Exception {
         ModData.bindPresence(id -> false);
+        AddonCoreServices.bind();
         String scenario = args[0];
         check(!MaterialDefinitions.all().isEmpty());
         check(GTMaterialRegistry.allMaterials().size() == 2);
@@ -50,7 +52,10 @@ public final class MaterialLifecycleProbe {
             check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.DEFINITIONS);
             return;
         }
-        if (scenario.startsWith("metadata") || scenario.startsWith("relation") || scenario.startsWith("process")) {
+        if (scenario.startsWith("metadata")
+                || scenario.startsWith("relation")
+                || scenario.startsWith("process")
+                || scenario.startsWith("info")) {
             System.setProperty("material.metadata.scenario", scenario);
             var spi = java.nio.file.Files.createTempDirectory("gt6ce-material-metadata-");
             var service = spi.resolve("META-INF/services/" + AddonMaterialContributor.class.getName());
@@ -58,7 +63,14 @@ public final class MaterialLifecycleProbe {
             java.nio.file.Files.writeString(service, MaterialMetadataProbeContributor.class.getName());
             try (var loader = new java.net.URLClassLoader(
                     new java.net.URL[] {spi.toUri().toURL()}, MaterialLifecycleProbe.class.getClassLoader())) {
-                AddonMaterials.collectContributors(loader);
+                try {
+                    AddonMaterials.collectContributors(loader);
+                } catch (IllegalStateException failure) {
+                    if (!scenario.equals("infoNamespaceFailure")) throw failure;
+                    check(failure.getCause() instanceof IllegalArgumentException);
+                    check(failure.getCause().getMessage().contains("cannot declare tag"));
+                    return;
+                }
             }
         }
         var shared = MaterialDefinition.builder(1, "SharedMaterial")
@@ -131,6 +143,7 @@ public final class MaterialLifecycleProbe {
                 == Materials.Iron.getMeltingPoint());
         check(MaterialViews.catalog().find(new MaterialKey("UnknownMaterial")).isEmpty());
         rejects(() -> MaterialViews.catalog().materials().clear());
+        rejects(() -> MaterialViews.catalog().forms().forms().clear());
         if (scenario.equals("merge")) {
             var material = GTMaterialRegistry.get("SharedMaterial");
             check(material.getId() >= GTMaterialRegistry.ADDON_ID_START);
@@ -147,10 +160,12 @@ public final class MaterialLifecycleProbe {
                 .orElseThrow();
         check(group.members().contains(new MaterialKey("Iron")));
         check(!MaterialViews.catalog().resolve("AnyIron").isPresent());
+        check(MaterialViews.catalog().forms().allows(new MaterialKey("Graphite"), new FormKey("dust")));
         var graphiteSmelting =
                 MaterialViews.catalog().processes().find(new MaterialKey("Graphite"), MaterialProcessKeys.SMELTING);
         check(graphiteSmelting.size() == 1);
         check(graphiteSmelting.get(0).value().equals(new MaterialTarget(new MaterialKey("Carbon"), 648648000L)));
+        rejects(() -> graphiteSmelting.clear());
         if (scenario.equals("metadata")) {
             check(MaterialViews.catalog()
                             .find(new MaterialKey("MetadataMaterial"))
@@ -196,7 +211,26 @@ public final class MaterialLifecycleProbe {
                     .find(new MaterialKey("Iron"), new FormKey("ingot"), key)
                     .isEmpty());
         }
-        rejects(() -> GTMaterialRegistry.registerDefinition(shared));
+        if (scenario.equals("info")) {
+            var material = new MaterialKey("MetadataMaterial");
+            check(GTMaterialRegistry.get(material.name()).tool().equals(new MaterialToolProfile(1, 3F, 64, 1)));
+            check(MaterialInfoTool.tool(material).equals(new MaterialToolProfile(1, 3F, 64, 1)));
+            check(MaterialInfoTool.composition(material).orElseThrow().parts().size() == 1);
+            check(SmeltingMaterialHelper.target(new MaterialKey("Graphite"))
+                    .orElseThrow()
+                    .equals(new MaterialTarget(new MaterialKey("Carbon"), 648648000L)));
+            check(MaterialViews.catalog().tags().contains(material, new DataKey("metadata_test", "typed_tag")));
+            var process = new MaterialProcessKey<>(new DataKey("metadata_test", "typed_process"), String.class);
+            check(MaterialViews.catalog()
+                    .processes()
+                    .find(material, process)
+                    .get(0)
+                    .value()
+                    .equals("typed"));
+            rejects(() ->
+                    MaterialInfoRegistry.addonRegistrar("metadata_test").registerForm(material, new FormKey("dust")));
+        }
+        rejects(() -> GTMaterialRegistry.registerDefinition(shared.material()));
         rejects(() -> GTMaterialRegistry.installAddonMaterial(shared, 10001));
         rejects(() -> GTMaterialRegistry.registerAlias("Fe", "Iron"));
     }

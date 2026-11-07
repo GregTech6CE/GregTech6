@@ -31,7 +31,8 @@ public final class MaterialViews {
         var tagFacts = new LinkedHashMap<DataKey, TagFacts>();
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
             var definition = MaterialDefinitions.find(material.getName());
-            if (!material.isValid() || definition != null && definition.group()) continue;
+            var relations = MaterialInfoRegistry.relations(material.getName());
+            if (!material.isValid() || definition != null && relations.group()) continue;
             var builder = MaterialMetadata.builder()
                     .property(MaterialProperties.MELTING_POINT, material.getMeltingPoint())
                     .property(MaterialProperties.BOILING_POINT, material.getBoilingPoint())
@@ -40,7 +41,7 @@ public final class MaterialViews {
             for (var flag : material.getProperties())
                 builder.flag(new DataKey("gt6ce", flag.name().toLowerCase(java.util.Locale.ROOT)));
             if (definition != null)
-                for (String tag : definition.classifications()) {
+                for (String tag : relations.classifications()) {
                     var key = new DataKey("gt6ce", tag);
                     builder.tag(key);
                     tagFacts.putIfAbsent(key, new TagFacts("gt6ce", Set.of()));
@@ -84,6 +85,22 @@ public final class MaterialViews {
                             "Addon '" + submission.addonId() + "' property type conflict: " + property.id());
                 addProperty(submission.addonId(), key, property, metadata, builder, properties.get(key), origins);
             }
+        }
+        for (var submission : MaterialInfoRegistry.tagSubmissions()) {
+            GTMaterial material = GTMaterialRegistry.get(submission.material().name());
+            if (!material.isValid())
+                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' tag uses unknown material '"
+                        + submission.material().name() + "'");
+            var key = new MaterialKey(material.getName());
+            var builder = builders.get(key);
+            if (builder == null)
+                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' cannot tag non-material '"
+                        + submission.material().name() + "'");
+            builder.tag(submission.tag());
+            var previous = tagFacts.putIfAbsent(submission.tag(), new TagFacts(submission.addonId(), Set.of()));
+            if (previous != null && !previous.owner().equals(submission.addonId()))
+                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' material tag '"
+                        + submission.tag() + "' conflicts with owner '" + previous.owner() + "'");
         }
         var materials = new LinkedHashMap<MaterialKey, MaterialView>();
         for (var entry : builders.entrySet()) {
@@ -137,14 +154,18 @@ public final class MaterialViews {
         });
 
         var groupFacts = new LinkedHashMap<MaterialGroupKey, GroupFacts>();
-        for (var definition : MaterialDefinitions.all()) {
-            if (!definition.group()) continue;
+        for (var declaration : MaterialDefinitions.declarations()) {
+            var definition = declaration.material();
+            var relations = MaterialInfoRegistry.relations(definition.name());
+            if (!relations.group()) continue;
             var key = groupKey(definition.name());
             var groupMaterials = new LinkedHashSet<MaterialKey>();
             var includedGroups = new LinkedHashSet<MaterialGroupKey>();
-            for (var member : definition.members()) {
+            for (var member : relations.members()) {
                 var memberDefinition = MaterialDefinitions.find(member);
-                if (memberDefinition != null && memberDefinition.group()) {
+                if (memberDefinition != null
+                        && MaterialInfoRegistry.relations(memberDefinition.name())
+                                .group()) {
                     includedGroups.add(groupKey(memberDefinition.name()));
                     continue;
                 }
@@ -192,13 +213,42 @@ public final class MaterialViews {
                             entry.getValue().displayName(),
                             resolveGroupMembers(entry.getKey(), groupFacts, groups, new LinkedHashSet<>())));
 
+        var formRules = new LinkedHashMap<MaterialKey, Set<FormKey>>();
+        var allForms = new LinkedHashSet<FormKey>();
+        for (var material : materials.keySet()) formRules.put(material, new LinkedHashSet<>());
+        for (var definition : MaterialItemDefinitions.all()) {
+            GTMaterial material = definition.material().resolve();
+            if (!material.isValid()) continue;
+            var materialKey = new MaterialKey(material.getName());
+            if (!formRules.containsKey(materialKey)) continue;
+            var form = new FormKey(definition.prefix().getName());
+            formRules.get(materialKey).add(form);
+            allForms.add(form);
+        }
+        var immutableFormRules = new LinkedHashMap<MaterialKey, Set<FormKey>>();
+        formRules.forEach((material, forms) -> immutableFormRules.put(material, Set.copyOf(forms)));
+        var immutableAllForms = Set.copyOf(allForms);
+        MaterialFormRulesView formView = new MaterialFormRulesView() {
+            public Set<FormKey> forms() {
+                return immutableAllForms;
+            }
+
+            public Set<FormKey> forms(MaterialKey material) {
+                return immutableFormRules.getOrDefault(java.util.Objects.requireNonNull(material), Set.of());
+            }
+
+            public boolean allows(MaterialKey material, FormKey form) {
+                return forms(material).contains(java.util.Objects.requireNonNull(form));
+            }
+        };
+
         var processTypes = new LinkedHashMap<DataKey, Class<?>>();
         var processRules = new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
         for (var material : materials.keySet()) processRules.put(material, new LinkedHashMap<>());
         for (var material : materials.keySet()) {
             var definition = MaterialDefinitions.find(material.name());
             if (definition == null) continue;
-            definition.processes().rules().forEach((key, rules) -> {
+            MaterialInfoRegistry.processes(material).rules().forEach((key, rules) -> {
                 registerProcessType(processTypes, key, "built-in catalog");
                 for (var rule : rules) addProcessRule(processRules.get(material), key, rule);
             });
@@ -216,6 +266,20 @@ public final class MaterialViews {
                     processRules.get(key),
                     declaration.process(),
                     new MaterialProcessRule<>(declaration.forms(), declaration.value()));
+        }
+        for (var submission : MaterialInfoRegistry.processSubmissions()) {
+            GTMaterial material = GTMaterialRegistry.get(submission.material().name());
+            if (!material.isValid())
+                throw new IllegalArgumentException(
+                        "Addon '" + submission.addonId() + "' process uses unknown material '"
+                                + submission.material().name() + "'");
+            var key = new MaterialKey(material.getName());
+            registerProcessType(processTypes, submission.process(), "addon '" + submission.addonId() + "'");
+            @SuppressWarnings("unchecked")
+            var process = (MaterialProcessKey<Object>) submission.process();
+            @SuppressWarnings("unchecked")
+            var rule = (MaterialProcessRule<Object>) submission.rule();
+            addProcessRule(processRules.get(key), process, rule);
         }
         var immutableProcesses =
                 new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
@@ -285,6 +349,10 @@ public final class MaterialViews {
 
             public List<MaterialView> materials() {
                 return ordered;
+            }
+
+            public MaterialFormRulesView forms() {
+                return formView;
             }
 
             public MaterialProcessesView processes() {

@@ -1,5 +1,6 @@
 package gregtech.content.material;
 
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.generated.MaterialForms;
@@ -50,22 +51,24 @@ final class MaterialReferenceAudit {
                 refs.add(new Reference(cells[0], cells[1], cells[2], cells[3], Integer.parseInt(cells[4])));
             }
         }
-        for (var definition : MaterialDefinitions.all()) {
+        for (var declaration : MaterialDefinitions.declarations()) {
+            var definition = declaration.material();
+            var info = declaration.info();
             if (definition.id() > 0)
                 refs.add(new Reference("catalog", definition.name(), "owner", definition.name(), definition.id()));
             int slot = 0;
-            for (var part : definition.composition().parts())
+            for (var part : info.composition().parts())
                 refs.add(new Reference("catalog", definition.name(), "component[" + slot++ + "]", part.material(), 0));
-            for (String target : definition.byproducts())
-                refs.add(new Reference("catalog", definition.name(), "byproduct", target, 0));
+            var byproducts = info.processes().find(MaterialProcessKeys.ORE_PROCESSING);
+            if (!byproducts.isEmpty())
+                for (var target : byproducts.get(0).value().byproducts())
+                    refs.add(new Reference("catalog", definition.name(), "byproduct", target.name(), 0));
+            var fuel = info.processes().find(MaterialProcessKeys.FUEL);
             for (var target : new MaterialTarget[] {
-                definition
-                        .fuel()
-                        .flatMap(gregtech.api.addon.material.FuelRule::residue)
-                        .orElse(null),
-                definition.crushing(),
-                definition.smelting(),
-                definition.pulverizing()
+                fuel.isEmpty() ? null : fuel.get(0).value().residue().orElse(null),
+                first(info, MaterialProcessKeys.CRUSHING),
+                first(info, MaterialProcessKeys.SMELTING),
+                first(info, MaterialProcessKeys.PULVERIZING)
             })
                 if (target != null)
                     refs.add(new Reference(
@@ -74,17 +77,35 @@ final class MaterialReferenceAudit {
                             "target",
                             target.material().name(),
                             0));
-            for (var target : definition.processing().values())
+            for (var target : processing(info).values())
                 refs.add(new Reference(
                         "catalog",
                         definition.name(),
                         "processing",
                         target.material().name(),
                         0));
-            for (String target : definition.members())
+            for (String target : info.relations().members())
                 refs.add(new Reference("catalog", definition.name(), "member", target, 0));
         }
         return refs;
+    }
+
+    private static <T> T first(
+            gregtech.engine.material.MaterialInfoDefinition info,
+            gregtech.api.addon.material.MaterialProcessKey<T> key) {
+        var rules = info.processes().find(key);
+        return rules.isEmpty() ? null : rules.get(0).value();
+    }
+
+    private static Map<String, MaterialTarget> processing(gregtech.engine.material.MaterialInfoDefinition info) {
+        var result = new HashMap<String, MaterialTarget>();
+        for (var entry : info.processes().rules().entrySet()) {
+            var kind = MaterialProcessKeys.legacyTargetName(entry.getKey());
+            if (!kind.isEmpty()
+                    && !entry.getValue().isEmpty()
+                    && entry.getValue().get(0).value() instanceof MaterialTarget target) result.put(kind, target);
+        }
+        return result;
     }
 
     static Map<String, String> retired() throws Exception {

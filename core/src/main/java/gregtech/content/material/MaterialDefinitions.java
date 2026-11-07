@@ -2,6 +2,7 @@ package gregtech.content.material;
 
 import gregtech.content.material.catalog.*;
 import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -13,11 +14,14 @@ import java.util.Map;
 public final class MaterialDefinitions {
     private MaterialDefinitions() {}
 
-    private static final List<MaterialDefinition> ALL = collect();
+    private static final List<MaterialDefinition.Declaration> DECLARATIONS = collect();
+    private static final List<MaterialDefinition> ALL =
+            DECLARATIONS.stream().map(MaterialDefinition.Declaration::material).toList();
     private static final Map<String, MaterialDefinition> BY_NAME = index();
+    private static final Map<String, MaterialInfoDefinition> INFO = indexInfo();
 
-    private static List<MaterialDefinition> collect() {
-        var result = new ArrayList<MaterialDefinition>();
+    private static List<MaterialDefinition.Declaration> collect() {
+        var result = new ArrayList<MaterialDefinition.Declaration>();
         result.addAll(ElementMaterials.definitions());
         result.addAll(CompoundMaterials.definitions());
         result.addAll(OreMaterials.definitions());
@@ -25,7 +29,7 @@ public final class MaterialDefinitions {
         result.addAll(WoodMaterials.definitions());
         result.addAll(SpecialMaterials.definitions());
         result.addAll(GroupMaterials.definitions());
-        result.sort(Comparator.comparing(MaterialDefinition::name));
+        result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));
         return List.copyOf(result);
     }
 
@@ -48,12 +52,26 @@ public final class MaterialDefinitions {
         return Map.copyOf(result);
     }
 
+    private static Map<String, MaterialInfoDefinition> indexInfo() {
+        var result = new LinkedHashMap<String, MaterialInfoDefinition>();
+        for (var declaration : DECLARATIONS) result.put(declaration.name(), declaration.info());
+        return Map.copyOf(result);
+    }
+
     public static List<MaterialDefinition> all() {
         return ALL;
     }
 
+    public static List<MaterialDefinition.Declaration> declarations() {
+        return DECLARATIONS;
+    }
+
     public static MaterialDefinition find(String name) {
         return BY_NAME.get(name);
+    }
+
+    public static MaterialInfoDefinition info(String name) {
+        return INFO.getOrDefault(name, MaterialInfoDefinition.empty());
     }
 
     /** Recipe-family snapshots remain explicit, after all built-in facts and before addon callbacks. */

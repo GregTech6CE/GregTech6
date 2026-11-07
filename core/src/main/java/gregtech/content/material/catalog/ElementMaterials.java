@@ -3,6 +3,7 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,8 @@ import java.util.List;
 public final class ElementMaterials {
     private ElementMaterials() {}
 
-    public static List<MaterialDefinition> definitions() {
-        var result = new ArrayList<MaterialDefinition>();
+    public static List<MaterialDefinition.Declaration> definitions() {
+        var result = new ArrayList<MaterialDefinition.Declaration>();
         part0(result);
         part1(result);
         part2(result);
@@ -28,7 +29,7 @@ public final class ElementMaterials {
         return List.copyOf(result);
     }
 
-    private static void part0(List<MaterialDefinition> result) {
+    private static void part0(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(890, "Actinium")
                 .displayName("Actinium")
                 .color(0x7D7101)
@@ -746,7 +747,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part1(List<MaterialDefinition> result) {
+    private static void part1(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(42, "Beryllium8")
                 .displayName("Beryllium-8")
                 .color(0x6EC86E)
@@ -1326,7 +1327,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part2(List<MaterialDefinition> result) {
+    private static void part2(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(170, "Chlorine")
                 .displayName("Chlorine")
                 .color(0x00F0FF)
@@ -1912,7 +1913,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part3(List<MaterialDefinition> result) {
+    private static void part3(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(630, "Europium")
                 .displayName("Europium")
                 .color(0x3F5800)
@@ -2538,7 +2539,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part4(List<MaterialDefinition> result) {
+    private static void part4(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(1080, "Hassium")
                 .displayName("Hassium")
                 .color(0x6CA902)
@@ -3131,7 +3132,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part5(List<MaterialDefinition> result) {
+    private static void part5(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(1160, "Livermorium")
                 .displayName("Livermorium")
                 .color(0x74B102)
@@ -3747,7 +3748,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part6(List<MaterialDefinition> result) {
+    private static void part6(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(280, "Nickel")
                 .displayName("Nickel")
                 .color(0xFAFAC8)
@@ -4332,7 +4333,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part7(List<MaterialDefinition> result) {
+    private static void part7(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(942, "Plutonium240")
                 .displayName("Plutonium-240")
                 .color(0xEB1E1E)
@@ -5000,7 +5001,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part8(List<MaterialDefinition> result) {
+    private static void part8(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(1040, "Rutherfordium")
                 .displayName("Rutherfordium")
                 .color(0x68A102)
@@ -5066,8 +5067,8 @@ public final class ElementMaterials {
                 .localName("Saltedwater")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Water", 1945944000L),
-                        new MaterialDefinition.Part("Sylvite", 648648000L))
+                        new MaterialInfoDefinition.Part("Water", 1945944000L),
+                        new MaterialInfoDefinition.Part("Sylvite", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9804, "Saltwater")
@@ -5089,8 +5090,8 @@ public final class ElementMaterials {
                 .localName("SaltWater")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Water", 1945944000L),
-                        new MaterialDefinition.Part("Salt", 648648000L))
+                        new MaterialInfoDefinition.Part("Water", 1945944000L),
+                        new MaterialInfoDefinition.Part("Salt", 648648000L))
                 .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .aliases("SaltWater")
                 .build());
@@ -5512,8 +5513,8 @@ public final class ElementMaterials {
                 .localName("SulphurDioxide")
                 .composition(
                         3L,
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1297296000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("SO2")
                 .build());
@@ -5535,8 +5536,8 @@ public final class ElementMaterials {
                 .localName("SulphurTrioxide")
                 .composition(
                         4L,
-                        new MaterialDefinition.Part("Sulfur", 648648000L),
-                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                        new MaterialInfoDefinition.Part("Sulfur", 648648000L),
+                        new MaterialInfoDefinition.Part("Oxygen", 1945944000L))
                 .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .aliases("SO3")
                 .build());
@@ -5594,7 +5595,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part9(List<MaterialDefinition> result) {
+    private static void part9(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(430, "Technetium")
                 .displayName("Technetium")
                 .color(0x424263)
@@ -6299,7 +6300,7 @@ public final class ElementMaterials {
                 .build());
     }
 
-    private static void part10(List<MaterialDefinition> result) {
+    private static void part10(List<MaterialDefinition.Declaration> result) {
         result.add(MaterialDefinition.builder(230, "Vanadium")
                 .displayName("Vanadium")
                 .color(0x323232)
@@ -6408,7 +6409,7 @@ public final class ElementMaterials {
                 .source("terrafirmacraft", "TerraFirmaCraft")
                 .tools(3, 6.0F, 384L, 2)
                 .pulverizing("Iron", 648648000L)
-                .composition(1L, new MaterialDefinition.Part("Iron", 648648000L))
+                .composition(1L, new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .forms(
                         "ARMORS",
                         "DENSEPLATES",

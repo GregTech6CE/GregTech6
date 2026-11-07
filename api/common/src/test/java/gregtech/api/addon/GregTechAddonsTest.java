@@ -2,14 +2,14 @@
 
 package gregtech.api.addon;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GregTechAddonsTest {
     private static final GregTechAddon.Context CONTEXT = new GregTechAddon.Context("forge", "1.20.1");
@@ -21,11 +21,10 @@ class GregTechAddonsTest {
 
     @Test
     void apiVersionCodeMatchesTheMajorAndMinorParts() {
-        assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(),
-                GregTechAddons.apiVersion());
+        assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(), GregTechAddons.apiVersion());
         assertEquals(1, GregTechAddons.apiMajor());
-        assertEquals(5, GregTechAddons.apiMinor());
-        assertEquals(1005, GregTechAddons.apiVersion());
+        assertEquals(6, GregTechAddons.apiMinor());
+        assertEquals(1006, GregTechAddons.apiVersion());
     }
 
     @Test
@@ -43,12 +42,10 @@ class GregTechAddonsTest {
     @Test
     void duplicateAndLateRegistrationsFail() {
         GregTechAddons.register(addon("test_addon", context -> {}));
-        assertThrows(IllegalStateException.class,
-                () -> GregTechAddons.register(addon("test_addon", context -> {})));
+        assertThrows(IllegalStateException.class, () -> GregTechAddons.register(addon("test_addon", context -> {})));
 
         GregTechAddons.dispatchRecipesReady(CONTEXT);
-        assertThrows(IllegalStateException.class,
-                () -> GregTechAddons.register(addon("late_addon", context -> {})));
+        assertThrows(IllegalStateException.class, () -> GregTechAddons.register(addon("late_addon", context -> {})));
     }
 
     @Test

@@ -71,7 +71,8 @@ class MaterialRegistrationTest {
     void invalidReferencesAndIncompleteCompositionsFailBeforeLinksAreWritten() {
         var iron = new GTMaterial(260, "Iron", "Iron", 0);
         var invalid = MaterialDefinition.builder(261, "Test")
-                .composition(2, new MaterialDefinition.Part("Iron", 1), new MaterialDefinition.Part("TypoCopper", 1))
+                .composition(
+                        2, new MaterialInfoDefinition.Part("Iron", 1), new MaterialInfoDefinition.Part("TypoCopper", 1))
                 .build();
         var target = new GTMaterial(261, "Test", "Test", 0);
         var index = Map.of("Iron", iron, "Test", target);
@@ -79,11 +80,11 @@ class MaterialRegistrationTest {
                 IllegalArgumentException.class, () -> MaterialLinker.validate(List.of(invalid), index::get));
         assertTrue(error.getMessage().contains("Test / composition -> TypoCopper"));
         assertFalse(target.hasComposition());
-        assertThrows(IllegalArgumentException.class, () -> new MaterialDefinition.Part("Iron", 0));
+        assertThrows(IllegalArgumentException.class, () -> new MaterialInfoDefinition.Part("Iron", 0));
         assertThrows(
                 IllegalArgumentException.class,
                 () -> MaterialDefinition.builder(1, "InvalidDivider")
-                        .composition(0, new MaterialDefinition.Part("Iron", 1))
+                        .composition(0, new MaterialInfoDefinition.Part("Iron", 1))
                         .build());
         var a = MaterialDefinition.builder(-1, "AnyA").group().members("AnyB").build();
         var b = MaterialDefinition.builder(-1, "AnyB").group().members("AnyA").build();
@@ -92,15 +93,15 @@ class MaterialRegistrationTest {
     }
 
     @Test
-    void declarationRecordsExposeDomainGroupsInsteadOfFlatFields() {
-        assertEquals(9, MaterialDefinition.class.getRecordComponents().length);
+    void declarationRecordsKeepIdentitySeparateFromAuxiliaryDomains() {
+        assertEquals(5, MaterialDefinition.class.getRecordComponents().length);
         assertFalse(java.util.Arrays.stream(MaterialDefinition.class.getRecordComponents())
                 .anyMatch(component -> component.getName().equals("facts")));
         var definition = MaterialDefinitions.find("Iron");
         assertNotNull(definition);
         assertEquals("Iron", definition.identity().name());
         assertEquals(definition.identity().id(), definition.id());
-        var graphite = MaterialDefinitions.find("Graphite");
+        var graphite = MaterialDefinitions.info("Graphite");
         assertFalse(graphite.composition().parts().isEmpty());
         assertTrue(graphite.composition().divider() > 0);
     }
@@ -113,13 +114,13 @@ class MaterialRegistrationTest {
             String language = Files.readString(
                     root.resolve("core/src/main/resources/assets/gt6ce/lang").resolve(file));
             for (var definition : gregtech.content.material.MaterialDefinitions.all()) {
-                if (definition.group()) continue;
+                if (MaterialDefinitions.info(definition.name()).relations().group()) continue;
                 String key = "material.gt6ce." + definition.name().toLowerCase(java.util.Locale.ROOT);
                 assertTrue(language.contains("\"" + key + "\""), definition.name() + " lacks " + key + " in " + file);
             }
         }
-        var almandine = gregtech.content.material.MaterialDefinitions.find("Almandine");
-        assertTrue(almandine.forms().contains("ORES"));
+        var almandine = MaterialDefinitions.info("Almandine");
+        assertTrue(almandine.relations().forms().contains("ORES"));
     }
 
     @Test
@@ -137,6 +138,10 @@ class MaterialRegistrationTest {
                 "metadataOwnerFailure",
                 "metadataNamespaceFailure",
                 "metadataTypeFailure",
+                "info",
+                "infoOwnerFailure",
+                "infoNamespaceFailure",
+                "infoProcessTypeFailure",
                 "relations",
                 "relationTagCycleFailure",
                 "relationUnknownTagFailure",

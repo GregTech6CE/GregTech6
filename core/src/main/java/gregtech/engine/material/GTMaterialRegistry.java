@@ -79,8 +79,10 @@ public final class GTMaterialRegistry {
     /** Internal compatibility entry; never opens registration or replaces an existing identity. */
     public static GTMaterial registerDefinition(MaterialDefinition definition) {
         requireDefinitions(definition.name());
-        if (definition.group()) throw new IllegalArgumentException("Groups belong to the built-in catalog");
-        return install(definition, definition.id(), MaterialRegistryState.Mode.BUILTIN);
+        return install(
+                new MaterialDefinition.Declaration(definition, MaterialInfoDefinition.empty()),
+                definition.id(),
+                MaterialRegistryState.Mode.BUILTIN);
     }
 
     /** @deprecated Declare built-ins in the canonical directory; addons use the public declaration SPI. */
@@ -89,17 +91,22 @@ public final class GTMaterialRegistry {
         return registerDefinition(MaterialDefinition.builder(id, GTMaterial.sanitize(name))
                 .displayName(localName)
                 .color(color)
-                .build());
+                .build()
+                .material());
     }
 
     /** Host-assigned addon identity; shared declarations are merged by AddonMaterials before this call. */
-    public static GTMaterial installAddonMaterial(MaterialDefinition definition, int id) {
+    public static GTMaterial installAddonMaterial(MaterialDefinition.Declaration declaration, int id) {
+        MaterialDefinition definition = declaration.material();
         requireDefinitions(definition.name());
-        if (definition.group()) throw new IllegalArgumentException("Addon definitions cannot install legacy groups");
-        return install(definition, id, MaterialRegistryState.Mode.ADDON);
+        if (declaration.info().relations().group())
+            throw new IllegalArgumentException("Addon definitions cannot install legacy groups");
+        return install(declaration, id, MaterialRegistryState.Mode.ADDON);
     }
 
-    private static GTMaterial install(MaterialDefinition definition, int id, MaterialRegistryState.Mode mode) {
+    private static GTMaterial install(
+            MaterialDefinition.Declaration declaration, int id, MaterialRegistryState.Mode mode) {
+        MaterialDefinition definition = declaration.material();
         // Construct and validate the complete scalar object before any registry index is changed.
         GTMaterial material = new GTMaterial(
                         id,
@@ -113,15 +120,19 @@ public final class GTMaterialRegistry {
                 .setAlpha(definition.alpha())
                 .setStats(definition.meltingPointKelvin(), definition.boilingPointKelvin(), definition.density())
                 .setTooltipChemical(definition.chemicalFormula());
-        if (!definition.tools().equals(new MaterialToolProfile(0, 1F, 0, 0)))
+        var tooling = declaration.info().tooling();
+        if (!tooling.profile().equals(new MaterialToolProfile(0, 1F, 0, 0)))
             material.setToolStats(
-                    definition.tools().types(),
-                    definition.tools().speed(),
-                    definition.tools().durability(),
-                    definition.tools().quality());
+                    tooling.profile().types(),
+                    tooling.profile().speed(),
+                    tooling.profile().durability(),
+                    tooling.profile().quality());
         if (!definition.sourceId().isEmpty())
             material.setSourceMod(ModData.of(definition.sourceId(), definition.sourceName()));
-        return STATE.install(material, mode, definition.aliases());
+        MaterialInfoRegistry.validateInstall(declaration);
+        GTMaterial installed = STATE.install(material, mode, definition.aliases());
+        MaterialInfoRegistry.install(declaration);
+        return installed;
     }
 
     public static String registeredNameIgnoringCase(String name) {
@@ -212,30 +223,35 @@ public final class GTMaterialRegistry {
             ModReferences.GT.getClass();
             definitionsOpen = true;
             try {
-                for (var definition : MaterialDefinitions.all())
+                for (var declaration : MaterialDefinitions.declarations())
                     install(
-                            definition,
-                            definition.id(),
-                            definition.group() ? MaterialRegistryState.Mode.GROUP : MaterialRegistryState.Mode.BUILTIN);
+                            declaration,
+                            declaration.id(),
+                            declaration.info().relations().group()
+                                    ? MaterialRegistryState.Mode.GROUP
+                                    : MaterialRegistryState.Mode.BUILTIN);
                 coreMaterials = Set.copyOf(STATE.materials);
                 catalogInstalled = true;
                 AddonMaterials.installDefinitions();
             } finally {
                 definitionsOpen = false;
             }
+            MaterialInfoRegistry.resolveAddonRegistrations();
+            MaterialInfoRegistry.closeRegistrations();
             phase = RegistrationPhase.LINKS;
-            MaterialLinker.validate(MaterialDefinitions.all(), BY_NAME::get);
-            for (var definition : MaterialDefinitions.all())
-                MaterialLinker.link(definition, BY_NAME.get(definition.name()), BY_NAME::get);
+            MaterialLinker.validate(MaterialDefinitions.declarations(), BY_NAME::get);
+            for (var declaration : MaterialDefinitions.declarations())
+                MaterialLinker.link(declaration, BY_NAME.get(declaration.name()), BY_NAME::get);
             MaterialDefinitions.captureDefaults();
             stampBuiltinIdentity();
             AddonMaterials.linkAddons();
             AddonMaterials.publishOreByproducts();
             AddonMaterials.publishOreVeins();
             AddonMaterials.publishPrefixes();
-            AddonMaterials.publishForms();
+            AddonMaterials.publishForms(MaterialInfoRegistry.formRequests());
             phase = RegistrationPhase.FINALIZING;
             MaterialRoleFlags.applyDerived();
+            MaterialInfoRegistry.freeze();
             MaterialViews.publish();
             phase = RegistrationPhase.READY;
         } catch (RuntimeException | Error failure) {

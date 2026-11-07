@@ -20,30 +20,22 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-/** Canonical material declaration grouped by stable identity, physical facts and owned relations. */
+/** Canonical material identity, presentation and intrinsic physical facts. */
 public record MaterialDefinition(
         Identity identity,
         Presentation presentation,
         PhysicalProperties physical,
         Set<MaterialProperty> properties,
-        Source source,
-        MaterialToolProfile tools,
-        Composition composition,
-        Relations relations,
-        Processes processes) {
+        Source source) {
     public MaterialDefinition {
         Objects.requireNonNull(identity, "identity");
         Objects.requireNonNull(presentation, "presentation");
         Objects.requireNonNull(physical, "physical");
         Objects.requireNonNull(source, "source");
-        Objects.requireNonNull(tools, "tools");
-        Objects.requireNonNull(composition, "composition");
-        Objects.requireNonNull(relations, "relations");
-        Objects.requireNonNull(processes, "processes");
         properties = Set.copyOf(properties);
-        if ((identity.id() <= 0 || identity.id() >= 10_000) && !(identity.id() == -1 && relations.group()))
+        if ((identity.id() <= 0 || identity.id() >= 10_000) && identity.id() != -1)
             throw new IllegalArgumentException("Material ID must be 1..9999: " + identity.name());
-        if (!identity.name().matches(relations.group() ? "[A-Za-z][A-Za-z0-9_/]*" : "[A-Za-z][A-Za-z0-9_]*"))
+        if (!identity.name().matches("[A-Za-z][A-Za-z0-9_/]*"))
             throw new IllegalArgumentException("Use a stable, readable material name: " + identity.name());
         if (presentation.displayName().isBlank() || (presentation.color() & 0xFF000000) != 0)
             throw new IllegalArgumentException("Material requires a display name and RGB color: " + identity.name());
@@ -116,75 +108,6 @@ public record MaterialDefinition(
         return source.name();
     }
 
-    public boolean correctedToolStats() {
-        return source.correctedToolStats();
-    }
-
-    public boolean group() {
-        return relations.group();
-    }
-
-    public Set<String> forms() {
-        return relations.forms();
-    }
-
-    public Set<String> classifications() {
-        return relations.classifications();
-    }
-
-    public List<String> members() {
-        return relations.members();
-    }
-
-    public MaterialTarget smelting() {
-        return first(MaterialProcessKeys.SMELTING);
-    }
-
-    public MaterialTarget crushing() {
-        return first(MaterialProcessKeys.CRUSHING);
-    }
-
-    public MaterialTarget pulverizing() {
-        return first(MaterialProcessKeys.PULVERIZING);
-    }
-
-    public Optional<FuelRule> fuel() {
-        return Optional.ofNullable(first(MaterialProcessKeys.FUEL));
-    }
-
-    public List<String> byproducts() {
-        OreProcessingRule rule = first(MaterialProcessKeys.ORE_PROCESSING);
-        return rule == null
-                ? List.of()
-                : rule.byproducts().stream().map(MaterialKey::name).toList();
-    }
-
-    public int oreMultiplier() {
-        OreProcessingRule rule = first(MaterialProcessKeys.ORE_PROCESSING);
-        return rule == null ? 1 : rule.oreMultiplier();
-    }
-
-    public int processingMultiplier() {
-        OreProcessingRule rule = first(MaterialProcessKeys.ORE_PROCESSING);
-        return rule == null ? 1 : rule.processingMultiplier();
-    }
-
-    public Map<String, MaterialTarget> processing() {
-        var result = new LinkedHashMap<String, MaterialTarget>();
-        for (var entry : processes.rules().entrySet()) {
-            String kind = MaterialProcessKeys.legacyTargetName(entry.getKey());
-            if (kind.isEmpty()) continue;
-            List<MaterialProcessRule<?>> rules = entry.getValue();
-            if (!rules.isEmpty() && rules.get(0).value() instanceof MaterialTarget target) result.put(kind, target);
-        }
-        return Map.copyOf(result);
-    }
-
-    private <T> T first(MaterialProcessKey<T> key) {
-        List<MaterialProcessRule<T>> rules = processes.find(key);
-        return rules.isEmpty() ? null : rules.get(0).value();
-    }
-
     public record Identity(int id, String name, String localName, List<String> aliases) {
         public Identity {
             Objects.requireNonNull(name, "name");
@@ -208,61 +131,35 @@ public record MaterialDefinition(
         }
     }
 
-    public record Source(String id, String name, boolean correctedToolStats) {
+    public record Source(String id, String name) {
         public Source {
             Objects.requireNonNull(id, "id");
             Objects.requireNonNull(name, "name");
         }
     }
 
-    public record Composition(long divider, List<Part> parts) {
-        public Composition {
-            parts = List.copyOf(parts);
-            if (divider < 0 || (!parts.isEmpty() && divider == 0))
-                throw new IllegalArgumentException("Invalid composition divider");
-            long total = 0;
-            for (Part part : parts) total = Math.addExact(total, part.amount());
-        }
-    }
-
-    public record Relations(boolean group, Set<String> forms, Set<String> classifications, List<String> members) {
-        public Relations {
-            forms = Set.copyOf(forms);
-            classifications = Set.copyOf(classifications);
-            members = List.copyOf(members);
-        }
-    }
-
-    public record Processes(Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules) {
-        public Processes {
-            var copied = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
-            rules.forEach((key, values) -> {
-                for (MaterialProcessRule<?> rule : values)
-                    if (!key.type().isInstance(rule.value()))
-                        throw new IllegalArgumentException("Process value type mismatch for " + key.id());
-                copied.put(key, List.copyOf(values));
-            });
-            rules = Map.copyOf(copied);
+    /**
+     * One catalog declaration before installation. The intrinsic definition and auxiliary
+     * domains travel together for authoring, but are installed into separate indexes.
+     */
+    public record Declaration(MaterialDefinition material, MaterialInfoDefinition info) {
+        public Declaration {
+            Objects.requireNonNull(material, "material");
+            Objects.requireNonNull(info, "info");
+            boolean group = info.relations().group();
+            if (group != (material.id() == -1))
+                throw new IllegalArgumentException("Group status and material ID disagree: " + material.name());
+            if (!group && !material.name().matches("[A-Za-z][A-Za-z0-9_]*"))
+                throw new IllegalArgumentException("Use a stable, readable material name: " + material.name());
         }
 
-        @SuppressWarnings("unchecked")
-        public <T> List<MaterialProcessRule<T>> find(MaterialProcessKey<T> key) {
-            return (List<MaterialProcessRule<T>>) (List<?>) rules.getOrDefault(key, List.of());
+        public int id() {
+            return material.id();
         }
-    }
 
-    public record Part(String material, long amount) {
-        public Part {
-            requireKey(material);
-            if (amount <= 0) throw new IllegalArgumentException("Component amount must be positive: " + material);
+        public String name() {
+            return material.name();
         }
-    }
-
-    private static void requireKey(String key) {
-        if (key == null
-                || key.isBlank()
-                || !gregtech.api.material.GTMaterial.sanitize(key).equals(key))
-            throw new IllegalArgumentException("Expected canonical material key: " + key);
     }
 
     private static MaterialTarget target(String material, long amount) {
@@ -292,7 +189,7 @@ public record MaterialDefinition(
         private MaterialToolProfile tools = new MaterialToolProfile(0, 1F, 0, 0);
         private long burnTime, divider;
         private MaterialTarget burning, crushing, smelting, pulverizing;
-        private List<Part> composition = List.of();
+        private List<MaterialInfoDefinition.Part> composition = List.of();
         private List<String> byproducts = List.of(), aliases = List.of(), members = List.of();
         private int oreMultiplier = 1, processingMultiplier = 1;
         private Set<String> forms = Set.of();
@@ -414,7 +311,7 @@ public record MaterialDefinition(
             return this;
         }
 
-        public Builder composition(long value, Part... parts) {
+        public Builder composition(long value, MaterialInfoDefinition.Part... parts) {
             divider = value;
             composition = List.of(parts);
             return this;
@@ -459,7 +356,7 @@ public record MaterialDefinition(
             return this;
         }
 
-        public MaterialDefinition build() {
+        public Declaration build() {
             var processRules = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
             addTarget(processRules, MaterialProcessKeys.SMELTING, smelting);
             addTarget(processRules, MaterialProcessKeys.CRUSHING, crushing);
@@ -477,16 +374,18 @@ public record MaterialDefinition(
                                 processingMultiplier));
             processing.forEach(
                     (kind, target) -> addTarget(processRules, MaterialProcessKeys.legacyTarget(kind), target));
-            return new MaterialDefinition(
+            var material = new MaterialDefinition(
                     new Identity(id, name, localName, aliases),
                     new Presentation(displayName, color, texture, alpha, formula),
                     new PhysicalProperties(meltingPointKelvin, boilingPointKelvin, density, atoms),
                     properties,
-                    new Source(sourceId, sourceName, corrected),
-                    tools,
-                    new Composition(divider, composition),
-                    new Relations(group, forms, classifications, members),
-                    new Processes(processRules));
+                    new Source(sourceId, sourceName));
+            var info = new MaterialInfoDefinition(
+                    new MaterialInfoDefinition.Tooling(tools, corrected),
+                    new MaterialInfoDefinition.Composition(divider, composition),
+                    new MaterialInfoDefinition.Relations(group, forms, classifications, members),
+                    new MaterialInfoDefinition.Processes(processRules));
+            return new Declaration(material, info);
         }
 
         private static void addTarget(

@@ -1,6 +1,8 @@
 package gregtech.engine.material;
 
 import gregtech.api.addon.material.*;
+import gregtech.api.material.GTValues;
+import gregtech.api.material.MaterialToolProfile;
 import java.util.List;
 
 /** Test-only SPI fixture for side metadata ownership, namespace and catalog-wide type checks. */
@@ -124,5 +126,44 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
                 List.of(new MaterialProcessDeclaration<>("MissingMaterial", key, java.util.Set.of(), "wet"));
             default -> List.of();
         };
+    }
+
+    @Override
+    public void materialInfo(MaterialInfoTool.Registrar registrar) {
+        String scenario = System.getProperty("material.metadata.scenario");
+        var material = new MaterialKey("MetadataMaterial");
+        switch (scenario) {
+            case "infoOwnerFailure":
+                registrar.registerTool(new MaterialKey("Iron"), new MaterialToolProfile(1, 2F, 8, 1));
+                return;
+            case "infoNamespaceFailure":
+                registrar.registerTag(new MaterialKey("Iron"), new DataKey("another_addon", "typed_tag"));
+                return;
+            case "infoProcessTypeFailure":
+                var key = new DataKey(addonId(), "typed_process");
+                registrar.registerProcess(
+                        material, new MaterialProcessKey<>(key, Integer.class), MaterialProcessRule.anyForm(1));
+                registrar.registerProcess(
+                        new MaterialKey("MetadataSecond"),
+                        new MaterialProcessKey<>(key, String.class),
+                        MaterialProcessRule.anyForm("typed"));
+                return;
+            case "info":
+                break;
+            default:
+                return;
+        }
+        MaterialInfoTool.forAddon(addonId())
+                .registerTool(material, new MaterialToolProfile(1, 3F, 64, 1))
+                .registerComposition(
+                        material,
+                        new MaterialComposition(
+                                material.name(), 1, List.of(new MaterialComposition.Part("Iron", GTValues.U)), false))
+                .registerForm(material, new FormKey("dust"))
+                .registerTag(material, new DataKey(addonId(), "typed_tag"))
+                .registerProcess(
+                        material,
+                        new MaterialProcessKey<>(new DataKey(addonId(), "typed_process"), String.class),
+                        MaterialProcessRule.anyForm("typed"));
     }
 }
